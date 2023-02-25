@@ -6,12 +6,11 @@ import {
 
 export default function ReportCard(props) {
   return (
-    <div style={{ display: 'flex', }} className={'dragMe'}>
-      <div
-        className=" flex flex-col overscroll-x-scroll p-10 max-w-[100%]"
-      >
-        <div className="flex m-1 justify-between"
-        style={{position:"sticky", top:"0px", background:"#e5e5e5"}}
+    <div style={{ display: 'flex' }} className={'dragMe'}>
+      <div className=" flex flex-col overscroll-x-scroll p-10 max-w-[100%]">
+        <div
+          className="flex m-1 justify-between"
+          style={{ position: 'sticky', top: '0px', background: '#e5e5e5' }}
         >
           <div className="relative  flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 mt-4 ">
             <div className="text-md font-bold leading-none">{props.title}</div>
@@ -104,7 +103,7 @@ export default function ReportCard(props) {
                     </td>
                     <td>
                       <div style={{ width: '200px' }}>
-                        <div
+                        {/* <div
                           className={`height-[30px]  opacity-100  rounded-lg `}
                           style={{
                             width: `${data.percetage}%`,
@@ -114,6 +113,38 @@ export default function ReportCard(props) {
                         >
                           <span className="pt-1 leading-normal text-red-900">
                             {`${data.percetage}%`}
+                          </span>
+                        </div> */}
+                        <div
+                          style={{
+                            position: 'relative',
+                            width: '210px',
+                            height: '30px',
+                            background: '#DFDFDF',
+                            borderRadius: '5px',
+                            overflow: 'hidden',
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: `${data.percetage}%`,
+                              height: '100%',
+                              background: '#0078D4',
+                              transition: 'all 0.2s',
+                            }}
+                          ></div>
+                          <span
+                            style={{
+                              position: 'absolute',
+                              top: '50%',
+                              right: '5px',
+                              transform: 'translateY(-50%)',
+                              font: 'bold 14px Quicksand, sans-serif',
+                              color: '#ffffff',
+                            }}
+                          >
+
+                           {data.percetage} %
                           </span>
                         </div>
                       </div>
