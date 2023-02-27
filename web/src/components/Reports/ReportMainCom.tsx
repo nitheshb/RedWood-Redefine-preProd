@@ -29,6 +29,10 @@ import {
 } from '../../util/formFields/slimSelectBoxField'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import '../../../../node_modules/react-grid-layout/css/styles.css'
+import {
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
+} from '@heroicons/react/solid'
 const ResponsiveGridLayout = WidthProvider(Responsive)
 export default function ReportMainCom() {
   const d = new window.Date()
@@ -127,6 +131,17 @@ export default function ReportMainCom() {
     'archieve',
     'others',
   ])
+  const [employeeTaskColumn, setEmployeeTaskColumn] = useState([
+    'no',
+    'name',
+    'all',
+    "rnr",
+    "busy",
+    'new',
+    'followup',
+    'visitfixed'
+  ])
+  const [showEmployeeTaskAllData, setShowEmployeeTaskAllData] = useState(false)
   const [compactType, setcompactType] = useState('vertical')
   const [mounted, setmounted] = useState(false)
   const [layout, setlayout] = useState([
@@ -166,10 +181,11 @@ export default function ReportMainCom() {
   const showColumnsProjectFun = async (id) => {
     const y = ['new', 'followup', 'visitfixed', 'visitdone', 'neogotiation']
     const y1 = ['notinterested', 'dead', 'blocked', 'junk']
+
     if (id === 'inprogress') {
       const check = !showInproFProject
       await setShowInproFProject(check)
-      const x = viewSourceStats1A
+      const x = viewProjectStats1A
       if (check) {
         SetViewProjectStats1A([...x, ...y])
       } else {
@@ -181,17 +197,20 @@ export default function ReportMainCom() {
     } else if (id === 'archieve') {
       const check = !showArchiFProject
       await setShowArchiFProject(check)
-      const x = await viewSourceStats1A
+      console.log(check, 'check')
+      const x = viewProjectStats1A
       if (check) {
-        await SetViewProjectStats1A([...x, ...y1])
+        SetViewProjectStats1A([...x, ...y1])
       } else {
         const z = viewProjectStats1A.filter((d1) => {
           return !y1.includes(d1)
         })
-        await SetViewProjectStats1A(z)
+        SetViewProjectStats1A(z)
       }
     }
+    console.log(id, 'id',showInproFProject, 'showInproFProject', showArchiFProject, 'showArchiFProject' )
   }
+  console.log(viewProjectStats1A, 'viewProjectStats1A')
   const showColumnsEmployeeFun = async (id) => {
     const y = ['new', 'followup', 'visitfixed', 'visitdone', 'neogotiation']
     const y1 = ['notinterested', 'dead', 'blocked', 'junk']
@@ -220,6 +239,92 @@ export default function ReportMainCom() {
         await SetViewEmployeeStats1A(z)
       }
     }
+  }
+  const showColumnsEmployeeTaskFun = async () => {
+    const y = [
+      'visitdone',
+      'visitCancel',
+      'booked',
+      'dead',
+      'blocked',
+      'junk',
+      'negotiation',
+      'others',
+
+
+
+    ]
+    // [
+    //   { label: 'sNo', id: 'no' },
+    //   { label: 'Name', id: 'name' },
+    //   { label: 'All', id: 'all' },
+    //   { label: 'Rnr', id: 'rnr' },
+    //   { label: 'Busy', id: 'busy' },
+    //   { label: 'New', id: 'new' },
+    //   { label: 'Follow Up', id: 'followup' },
+    //   { label: 'Visit Fixed', id: 'visitfixed' },
+    //   { label: 'Visit Done', id: 'visitdone' },
+    //   { label: 'Visit Cancel', id: 'visitCancel' },
+    //   { label: 'Booked', id: 'booked' },
+    //   { label: 'Dead', id: 'dead' },
+    //   { label: 'Blocked', id: 'blocked' },
+    //   { label: 'Junk', id: 'junk' },
+
+    //   { label: 'Negotiations', id: 'negotiation' },
+    //   { label: 'Others', id: 'others' },
+    // ]
+    // { label: 'sNo', id: 'no' },
+    // { label: 'Name', id: 'label' },
+    // { label: 'Rnr', id: 'all' },
+    // { label: 'Busy', id: 'new' },
+    // { label: 'All', id: 'all' },
+    // { label: 'New', id: 'new' },
+    // { label: 'Follow Up', id: 'followup' },
+    // { label: 'Visit Fixed', id: 'visitfixed' },
+    // { label: 'Visit Done', id: 'visitdone' },
+    // { label: 'Visit Cancel', id: 'visitCancel' },
+    // { label: 'Booked', id: 'booked' },
+    // { label: 'Dead', id: 'dead' },
+    // { label: 'Blocked', id: 'blocked' },
+    // { label: 'Junk', id: 'junk' },
+
+    // { label: 'Negotiations', id: 'negotiation' },
+    // { label: 'Others', id: 'others' }
+    if (!showEmployeeTaskAllData) {
+      const x = employeeTaskColumn
+      setEmployeeTaskColumn([...x, ...y])
+    } else {
+      const z = employeeTaskColumn.filter((d1) => {
+        return !y.includes(d1)
+      })
+      await setEmployeeTaskColumn(z)
+    }
+    setShowEmployeeTaskAllData(!showEmployeeTaskAllData)
+    // if (id === 'inprogress') {
+    //   const check = !showInproFEmployee
+    //   await setShowInproFEmployee(check)
+    //   const x = viewEmployeeStats1A
+    //   if (check) {
+    //     SetViewEmployeeStats1A([...x, ...y])
+    //   } else {
+    //     const z = viewEmployeeStats1A.filter((d1) => {
+    //       return !y.includes(d1)
+    //     })
+    //     await SetViewEmployeeStats1A(z)
+    //   }
+    // } else if (id === 'archieve') {
+    //   const check = !showArchiFEmployee
+    //   await setShowArchiFEmployee(check)
+    //   const x = await viewEmployeeStats1A
+    //   if (check) {
+    //     await SetViewEmployeeStats1A([...x, ...y1])
+    //   } else {
+    //     const z = viewEmployee1A.filter((d1) => {
+    //       return !y1.includes(d1)
+    //     })
+    //     await SetViewEmployeeStats1A(z)
+    //   }
+    // }
   }
   useEffect(() => {
     if (viewProjs?.value == 'allprojects') {
@@ -270,6 +375,210 @@ export default function ReportMainCom() {
     setmounted(true)
     getLeadsDataFun(startOfDay(d).getTime(), true, true, true)
   }, [])
+  useEffect(() => {
+    getUsersDataFun1()
+  }, [])
+  useEffect(() => {
+    if (usersCleanList && usersCleanList.length) showAllEmpTodayActivity()
+  }, [usersCleanList])
+  const GenerateTasksDailyReportForEmp = async () => {
+    // get all the employees based on orgId
+    console.log('employee list is ', usersList)
+    // const data = []
+    // for (const empListD of [
+    //   { uid: 'yP5IMRXqByUNYZ6atk5AaJjaoGH3', name: 'RAM PRASAD' },
+    // ]) {
+    //   const dataUser = await getRestEmpTodayTasksCount(
+    //     empListD?.uid,
+    //     empListD?.name
+    //   )
+    //   data.push(dataUser)
+    // }
+    // return
+    await getEmployeesListDept(orgId, {}).then(async (empList) => {
+      console.log('employee list is ', empList)
+      const data = []
+      for (const empListD of empList) {
+        const dataUser = await getRestEmpTodayTasksCount(
+          empListD?.uid,
+          empListD?.name
+        )
+        data.push(dataUser)
+      }
+    })
+    await setResettingEmpValues(false)
+    // const empDempListA = await getEmployeesListDept(orgId, {})
+    // await empDempListA.map(async (empDetails) => {
+    //   const { uid } = empDetails
+    //   if (uid) {
+    //     await getRestEmpTodayTasksCount(uid)
+    //   } else {
+    //     return
+    //   }
+    // })
+
+    // await console.log('get users list is', empDempListA)
+    return
+    const unsubscribe = steamUsersListByRole(
+      orgId,
+      async (querySnapshot) => {
+        const usersListA1 = await querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        // setusersList(usersListA)
+        usersListA1.map((user) => {
+          user.label = user.displayName || user.name
+          user.value = user.uid
+        })
+        console.log('fetched users list is', usersListA1)
+
+        const usersListA = await [
+          ...usersListA1,
+          ...[{ label: 'others', value: 'others' }],
+        ]
+        await usersListA.map(async (empDetails) => {
+          const { uid } = empDetails
+          if (uid) {
+            await getRestEmpTodayTasksCount(uid)
+          } else {
+            return
+          }
+        })
+        await setResettingEmpValues(false)
+        return usersListA
+      },
+      (error) => []
+    )
+  }
+  const getRestEmpTodayTasksCount = async (empID, name) => {
+    // Get all the employees of sales,crm , finance, legal of each dept
+    // Loop through each emp and get TastDate < Tomorrow
+    // get the Lead status of each task and put that into that section count
+    // save count in db too
+    // send to whats app
+
+    return await getTodayTodoLeadsDataByUser(
+      orgId,
+      async (querySnapshot) => {
+        let pro
+        let y = []
+        // const projects = await querySnapshot.docs.map(async (docSnapshot) => {
+        //   const x = docSnapshot.data()
+        //   console.log('git values is 2', x)
+        //   const { staDA } = x
+        //   y = staDA
+        //   if (y.length > 0) {
+        //     x.uid = docSnapshot.id
+        //     // eslint-disable-next-line prefer-const
+        //     let y1 = await getLeadbyId1(orgId, x.uid)
+        //     x.leadUser = await y1
+        //     return x
+        //   }
+        // })
+
+        const userTodoTasksList = []
+        console.log('Total fetcher is ', querySnapshot.docs.length, name)
+        for (const docSnapshot of querySnapshot.docs) {
+          const x = docSnapshot.data()
+          // results.filter((data) => data != 'remove')
+          console.log('Total Tasks count is ', x, name)
+          const { staDA } = x
+          y = staDA
+          if (y.length > 0) {
+            x.uid = docSnapshot.id
+            // eslint-disable-next-line prefer-const
+            let leadDetails = await getLeadbyId1(orgId, x.uid)
+            x.leadUser = await leadDetails
+            userTodoTasksList.push(x)
+          }
+        }
+        //  get the task details from docid
+        if (userTodoTasksList.length > 0) {
+          // projects.filter((data) => data != undefined)
+          // const data = []
+          // for (const results of userTodoTasksList) {
+          //   console.log('TaskListResults is', results)
+          //   results?.filter((data) => data != 'remove')
+          //   const dataUser = await filterTodayTodoFun(
+          //     results?.filter((data) => data != 'remove'),
+          //     empID,
+          //     name
+          //   )
+          //   data.push(dataUser)
+          // }
+          Promise.all(userTodoTasksList).then(function (results) {
+            results.filter((data) => data != 'remove')
+            filterTodayTodoFun(
+              results.filter((data) => data != 'remove'),
+              empID,
+              name
+            )
+            console.log(
+              'fetched values is 1',
+              results.filter((data) => data != 'remove')
+            )
+          })
+        }
+      },
+      { uid: empID, type: 'today' },
+      () => {
+        console.log('error')
+      }
+    )
+  }
+  const showAllEmpTodayActivity = async () => {
+    const todaydate = new Date()
+    console.log('employee list is ', usersCleanList)
+
+    getEmployeesTaskProgressDept(
+      orgId,
+      async (querySnapshot) => {
+        const empTodayTasksCountA = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        // const sortVal = empTodayTasksCountA.sort((a, b) => {
+        //   return b.emp < a.emp
+        // })
+        const sortVal = empTodayTasksCountA.sort((a, b) =>
+          a.emp.localeCompare(b.emp)
+        )
+        setEmpPerDayTasksCountsA(sortVal)
+        console.log('sort valis ', sortVal)
+      },
+      {
+        dateFull:
+          'D' +
+          todaydate.getDate() +
+          'M' +
+          todaydate.getMonth() +
+          'Y' +
+          todaydate.getFullYear(),
+      },
+      (error) => setEmpPerDayTasksCountsA([])
+    )
+  }
+
+  const getUsersDataFun1 = async () => {
+    const unsubscribe = steamUsersListByRole(
+      orgId,
+      async (querySnapshot) => {
+        const usersListA = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        // setusersList(usersListA)
+        usersListA.map((user) => {
+          user.label = user.displayName || user.name
+          user.value = user.uid
+        })
+        console.log('fetched users list is clean', usersListA)
+
+        await setusersCleanList(usersListA)
+      },
+      (error) => setusersCleanList([])
+    )
+
+    return unsubscribe
+  }
   // useEffect(() => {
   //   fetchLogsData()
   // }, [])
@@ -571,27 +880,15 @@ export default function ReportMainCom() {
     )
   }
 
-  console.log(
-    projectList,
-    'projectlist',
-    sourceListTuned,
-    'sourcelist',
-    sourceFiltListTuned,
-    calculatePercentage(sourceFiltListTuned),
-    'percentage',
-    sourceDateRange,
-    'date',
-    usersList,
-    'usersList',
-    empFiltListTuned,
-    'empFiltListTuned',
-    leadLogsRawData,
-    'leadLogsRawData'
-  )
+  console.log(empPerDayTasksCountsA, 'empPerDayTasksCountsA')
   return (
     <div
       className="drop-shadow-md  z-10"
-      style={{ background: 'white', marginTop: '15px', borderRadius: '15px' }}
+      style={{
+        background: 'rgb(229, 229, 229)',
+        marginTop: '15px',
+        borderRadius: '15px',
+      }}
     >
       <div
         style={{
@@ -601,6 +898,8 @@ export default function ReportMainCom() {
           borderBottom: '1px solid gray',
           display: 'flex',
           alignItems: 'center',
+          background:'white',
+          borderRadius:"15px"
         }}
       >
         <svg
@@ -624,7 +923,7 @@ export default function ReportMainCom() {
         </svg>
         <h1 className="text-2xl font-bold">Reports</h1>
       </div>
-      <div style={{ width:'100vm',height:'100vh', overflow: 'scroll' }}>
+      <div style={{ width: '100vm', height: '100vh', overflow: 'scroll' }}>
         <ResponsiveGridLayout
           rowHeight={50}
           breakpoints={{ lg: 1200, md: 996, sm: 768 }}
@@ -680,7 +979,7 @@ export default function ReportMainCom() {
                 y: 2,
                 i: 'graph7',
               },
-            ]
+            ],
           }}
           width={1200}
           verticalCompact={true}
@@ -691,14 +990,375 @@ export default function ReportMainCom() {
             key={'graph-1'}
             data-grid={{
               w: 6,
-              h: 15,
+              h: 11,
               x: 0,
               y: 0,
               i: 'graph1',
             }}
             className="drop-shadow-md  rounded-lg "
             style={{
-              backgroundColor: '#e5e5e5'
+              backgroundColor: 'white',
+            }}
+          >
+            <div style={{ height: '100%', overflow: 'scroll' }}>
+              <div style={{ display: 'flex' }} className={'dragMe'}>
+                <div className=" flex flex-col overscroll-x-scroll p-10 max-w-[100%]">
+                  <div>
+                    <div>
+                      <div
+                        className="flex m-1 justify-between"
+                        style={{
+                          position: 'sticky',
+                          top: '0px',
+                          background: 'white',
+                        }}
+                      >
+                        <div className="relative  flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 mt-4 ">
+                          <div className="text-md font-bold leading-none">
+                            {`Employee vs Tasks `}
+                          </div>
+                        </div>
+
+                        <div
+                          className="relative  flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 mt-4 ml-4 text-blue cursor-pointer"
+                          style={{ gap: '50px' }}
+                        >
+                          Generate Daily Task Report
+                        </div>
+                      </div>
+                      {/* <div className=" text-md font-bold leading-none pl-0 mt-4 border-b pb-4 mb-4 ">
+                    {`Employee vs Tasks `}
+                  </div>
+
+                  <section className="flex flex-row justify-between mt-[18px]">
+                    <section></section>
+                    <div className=" flex   ">
+                      <div
+                        className="ml-4 text-blue cursor-pointer"
+                        onClick={() => {
+                          setResettingEmpValues(true)
+                          GenerateTasksDailyReportForEmp()
+                        }}
+                      >
+                        Generate Daily Task Report
+                      </div>
+
+                      {resettingEmpValues && <span>InProgress</span>}
+                    </div>
+                  </section> */}
+
+                  <div style={{ overflowX: 'scroll' }}>
+                      <table className="text-center mt-6">
+                        <thead >
+                          <tr style={{ background: 'rgb(229,229,229)' }}>
+                            {[
+                              { label: 'sNo', id: 'no' },
+                              { label: 'Name', id: 'name' },
+                              { label: 'All', id: 'all' },
+                              { label: 'Rnr', id: 'rnr' },
+                              { label: 'Busy', id: 'busy' },
+                              { label: 'New', id: 'new' },
+                              { label: 'Follow Up', id: 'followup' },
+                              { label: 'Visit Fixed', id: 'visitfixed' },
+                              { label: 'Visit Done', id: 'visitdone' },
+                              { label: 'Visit Cancel', id: 'visitCancel' },
+                              { label: 'Booked', id: 'booked' },
+                              { label: 'Dead', id: 'dead' },
+                              { label: 'Blocked', id: 'blocked' },
+                              { label: 'Junk', id: 'junk' },
+
+                              { label: 'Negotiations', id: 'negotiation' },
+                              { label: 'Others', id: 'others' },
+                            ].map((d, i) => (
+                              <th
+                                key={i}
+                                scope="col"
+                                style={{
+                                  display: employeeTaskColumn.includes(d.id)
+                                    ? ''
+                                    : 'none',
+                                  color:
+                                    ['all'].includes(d.id) &&
+                                    showEmployeeTaskAllData
+                                      ? 'blue'
+                                      : 'rgb(146,146,146)',
+                                  border: '1px solid rgb(223,223,223)',
+                                }}
+                                className={`text-sm font-medium text-gray-900 px-6 py-4 ${
+                                  ['name'].includes(d.label) ? 'text-left' : ''
+                                }`}
+                                onClick={() => {
+                                  if (['all'].includes(d.id))
+                                    showColumnsEmployeeTaskFun()
+                                }}
+                              >
+                                <div style={{ display: 'flex' }}>
+                                  {d.label}
+                                  {d.id === 'all' ? (
+                                    !showEmployeeTaskAllData ? (
+                                      <ChevronDoubleRightIcon
+                                        className="w-4 h-5 inline"
+                                        aria-hidden="true"
+                                      />
+                                    ) : (
+                                      <ChevronDoubleLeftIcon
+                                        className="w-4 h-5 inline"
+                                        aria-hidden="true"
+                                      />
+                                    )
+                                  ) : null}
+                                </div>
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {empPerDayTasksCountsA?.map((data, i) => {
+                            return (
+                              <tr
+                                className={`  ${
+                                  i % 2 === 0
+                                    ? 'bg-white border-blue-200'
+                                    : 'bg-gray-100'
+                                }`}
+                                key={i}
+                              >
+                                <td
+                                  className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left"
+                                  style={{
+                                    border: '1px solid rgb(231,231,231)',
+                                  }}
+                                >
+                                  {i + 1}
+                                </td>
+                                <td
+                                  className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left"
+                                  style={{
+                                    border: '1px solid rgb(231,231,231)',
+                                  }}
+                                >
+                                  {data?.emp}
+                                </td>
+                                <td
+                                  className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                  style={{
+                                    border: '1px solid rgb(231,231,231)',
+                                  }}
+                                >
+                                  {data?.all_comp || 0}/{data?.all || 0}
+                                </td>
+
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.rnr || 0}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.busy || 0}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.new_comp || 0}/{data?.new || 0}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.followup_comp || 0}/
+                                      {data?.followup || 0}
+                                    </td>
+
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.visitfixed_comp || 0}/{' '}
+                                      {data?.visitfixed || 0}
+                                    </td>
+                                    {showEmployeeTaskAllData && (
+                                  <>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.visitdone_comp || 0}/{' '}
+                                      {data?.visitdone || 0}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.visitCancel_comp || 0}/{' '}
+                                      {data?.visitCancel || 0}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.booked_comp || 0}/{' '}
+                                      {data?.booked || 0}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.dead_comp || 0}/ {data?.dead || 0}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.blocked_comp || 0}/{' '}
+                                      {data?.blocked || 0}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.junk_comp || 0}/ {data?.junk || 0}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.negotiation_comp || 0}/
+                                      {data?.negotiation || 0}
+                                    </td>
+                                    <td
+                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                                      style={{
+                                        border: '1px solid rgb(231,231,231)',
+                                      }}
+                                    >
+                                      {data?.others_comp || 0}/{' '}
+                                      {data?.others || 0}
+                                    </td>
+                                  </>
+                                )}
+                              </tr>
+                            )
+                          })}
+
+                          <tr className="border-b bg-gray-800 boder-gray-900">
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap text-left">
+                              Total
+                            </td>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {/* {Object.keys(empTaskListTuned.Total).length
+                            empTaskListTuned.reduce((a, b) => {
+                              return a.Total + b.Total
+                            }).length
+                          } */}
+                              {/* {empTaskListTuned.reduce(
+                            (previousValue, currentValue) =>
+                              previousValue.Total + currentValue.Total,
+                            0
+                          )} */}
+
+                            </td>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+
+
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+                            { showEmployeeTaskAllData && (
+                              <>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                              {}
+                            </td>
+                            </>
+                            )}
+                          </tr>
+                        </tbody>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            key={'graph-5'}
+            data-grid={{
+              w: 6,
+              h: 11,
+              x: 6,
+              y: 0,
+              i: 'graph5',
+            }}
+            className="drop-shadow-md  rounded-lg "
+            style={{
+              backgroundColor: 'white'
             }}
           >
 
@@ -740,16 +1400,16 @@ export default function ReportMainCom() {
             data-grid={{
               w: 6,
               h: 11,
-              x: 8,
-              y: 0,
+              x: 0,
+              y: 11,
               i: 'graph2',
             }}
             className="drop-shadow-md  rounded-lg "
             style={{
-              backgroundColor: '#e5e5e5'
+              backgroundColor: 'white',
             }}
           >
-            <div style={{height:'100%', overflow:"scroll"}}>
+            <div style={{ height: '100%', overflow: 'scroll' }}>
               <ReportCard
                 title="Project vs Status"
                 headers={[
@@ -778,20 +1438,20 @@ export default function ReportMainCom() {
                 showArchiFSource={showArchiFProject}
                 viewSourceStats1A={viewProjectStats1A}
                 DateComponent={DateProjectComponent}
-                id='test1'
+                id="test1"
               />
             </div>
           </div>
 
           <div
             key={'graph-3'}
-            data-grid={{ x: 0, y: 9, w: 7, h: 11 }}
+            data-grid={{ x: 0, y: 22, w: 7, h: 11 }}
             className="drop-shadow-md  rounded-lg "
             style={{
-              backgroundColor: '#e5e5e5'
+              backgroundColor: 'white',
             }}
           >
-            <div  style={{height:'100%', overflow:"scroll"}}>
+            <div style={{ height: '100%', overflow: 'scroll' }}>
               <ReportCard
                 title="Employee vs Status"
                 headers={[
@@ -826,13 +1486,13 @@ export default function ReportMainCom() {
           </div>
           <div
             key={'graph-4'}
-            data-grid={{ x: 0, y: 9, w: 6, h: 12 }}
+            data-grid={{ x: 6, y: 11, w: 6, h: 11 }}
             className="drop-shadow-md  rounded-lg "
             style={{
-              backgroundColor: '#e5e5e5'
+              backgroundColor: 'white',
             }}
           >
-            <div  style={{height:'100%', overflow:"scroll"}}>
+            <div style={{ height: '100%', overflow: 'scroll' }}>
               <ReportCard
                 title="Visits Performance Counts"
                 headers={[
