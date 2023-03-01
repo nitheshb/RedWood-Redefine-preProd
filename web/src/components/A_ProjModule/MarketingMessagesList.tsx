@@ -1685,19 +1685,18 @@ else if (btnTxt === 'On Refund Pay' && target==='Administrator'){
   return (
     <>
 <section className='flex flex-row'>
-    <span className="ml-5 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex flex-row">
-
-      <input
-        type="text"
-        id="tstPhKey"
-        placeholder="Enter Target WhatsApp No..."
-        onChange={phKeyFieldFun}
-        autoComplete="on"
-        // value={searchKey}
-        className=" ml-3 w-[240px] bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900  relative"
-      />
-
-      </span>
+<div className=" ml-5 relative" data-te-input-wrapper-init>
+<input
+      type="tel"
+      className="peer block min-h-[auto] w-full rounded border-2 bg-primary py-1 px-3 leading-[1.6] with-outline transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-success-200 dark:placeholder:text-success-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+      id="exampleFormControlInputTel"
+      placeholder="Example label" />
+    <label
+      htmlFor="exampleFormControlInputTel"
+      className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-light px-2 peer-focus:px-2 peer-focus:text-Danger-600 peer-focus:dark:text-Danger-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+      >Whatsapp number
+    </label>
+  </div>
       <span className='text-gray-300 text-xs mt-3 ml-2'>Hint: This is playground to test whatsapp notifiaction templates</span>
       </section>
       <div className="w-full  flex flex-row">
