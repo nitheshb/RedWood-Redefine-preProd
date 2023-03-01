@@ -40,6 +40,7 @@ import { currentStatusDispFun } from 'src/util/leadStatusDispFun'
 
 import AssigedToDropComp from './assignedToDropComp'
 import Loader from './Loader/Loader'
+import { TextField2 } from 'src/util/formFields/TextField2'
 
 const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
   const d = new window.Date()
@@ -417,7 +418,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                       </div> */}
 
                       <div className="mb-3 space-y-2 w-full text-xs">
-                        <TextField
+                      <TextField
                           label="Customer Name"
                           name="name"
                           type="text"
@@ -459,7 +460,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                       </div>
                       <div className="mb-3 space-y-2 w-full text-xs">
                         <span className="inline">
-                          <label className="label font-regular text-sm block mb-1">
+                          <label className="label font-regular text-sm block bg-white mb-1">
                             Enquiry Date
                           </label>
                           <DatePicker

@@ -31,6 +31,7 @@ import { PhoneNoField } from 'src/util/formFields/phNoField'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { TextField } from 'src/util/formFields/TextField'
 import { TextField2 } from 'src/util/formFields/TextField2'
+import { DateField2 } from 'src/util/formFields/DateField2'
 
 import Loader from './Loader/Loader'
 import { useFileUpload } from './useFileUpload'
@@ -534,10 +535,10 @@ const AddBookingForm = ({
                                         </div>
                                         <div className="w-full lg:w-4/12 ">
                                           <div className="relative w-full mb-3 mt-2">
-                                            <TextField2
+                                            <DateField2
                                               label="Date Of Birth"
                                               name="dob1"
-                                              type="text"
+                                              type="number"
                                             />
                                           </div>
                                         </div>
@@ -713,7 +714,7 @@ const AddBookingForm = ({
                                         </div>
                                         <div className="w-full lg:w-4/12 ">
                                           <div className="relative w-full mb-3 mt-2">
-                                            <TextField2
+                                            <DateField2
                                               label="Date Of Birth"
                                               name="dob2"
                                               type="text"

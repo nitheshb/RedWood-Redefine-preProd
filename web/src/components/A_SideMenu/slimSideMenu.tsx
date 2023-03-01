@@ -5,6 +5,7 @@ import { Link, routes } from '@redwoodjs/router'
 
 import { USER_ROLES } from 'src/constants/userRoles'
 import { useAuth } from 'src/context/firebase-auth-context'
+import React, { useState } from 'react';
 
 const SlimSideMenuBar = (props) => {
   const { pgName, sourceLink, showSideView1, setViewable, viewable } = props
@@ -13,7 +14,6 @@ const SlimSideMenuBar = (props) => {
   // if (!user?.role?.includes(USER_ROLES.ADMIN)) {
   //   return null
   // }
-
   return (
     <div className="flex flex-col items-center w-20 min-w-[83px] pb-4   bg-white bg-opacity-75  bg-[#f0f3ff] h-screen w-[83px] max-w-[83px]">
       {['hrModule', 'financeModule', 'crmModule', 'projectModule', 'salesModule', 'constructModule', 'legalModule'].includes(sourceLink) && (
@@ -138,11 +138,13 @@ const SlimSideMenuBar = (props) => {
                   display: 'block',
                   marginLeft: 'auto',
                   marginRight: 'auto',
+
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#eb8909' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
+
                       width="24"
                       height="24"
                       fill="none"
@@ -300,7 +302,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#692fc2' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -399,7 +401,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#eb8909' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       width="24"
                       height="24"
@@ -522,7 +524,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#692fc2' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -622,13 +624,14 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#eb8909' }}>
+                  <span style={{ color: '#058527' }} >
                     <svg
                       width="24"
                       height="24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                    >
+>
+
                       <path
                         opacity="0.1"
                         fillRule="evenodd"
@@ -644,7 +647,7 @@ const SlimSideMenuBar = (props) => {
                       ></path>
                     </svg>
                   </span>
-                  <span className="text-[9px] font-bold  pl-1">Projects</span>
+                  <span className="text-[9px] font-bold  pl-1" >Projects</span>
                 </span>
               </span>
             </li>
@@ -677,7 +680,7 @@ const SlimSideMenuBar = (props) => {
 
                     <UserGroupIcon className="h-5 w-5 " aria-hidden="true" />
                   </span>
-                  <span className="text-[9px] font-bold  pl-1">Marketing</span>
+                  <span className="text-[9px] font-bold  pl-1 ">Marketing</span>
                 </span>
                 <span className="flex ml-auto items-bottom">
                   <span className="flex ml-auto items-bottom text-xs mt-2"></span>
@@ -783,7 +786,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#692fc2' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -883,7 +886,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#eb8909' }}>
+                  <span style={{ color: 'currentColor'}}>
                     <svg
                       width="24"
                       height="24"
@@ -1047,7 +1050,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#692fc2' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -1093,7 +1096,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#692fc2' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -1195,7 +1198,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#eb8909' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       width="24"
                       height="24"
@@ -1237,7 +1240,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#692fc2' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -1339,7 +1342,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#eb8909' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       width="24"
                       height="24"
@@ -1421,7 +1424,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#692fc2' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -1520,7 +1523,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#eb8909' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       width="24"
                       height="24"
@@ -1679,7 +1682,7 @@ const SlimSideMenuBar = (props) => {
                 }}
               >
                 <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#692fc2' }}>
+                  <span style={{ color: '#058527' }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -1739,3 +1742,7 @@ const SlimSideMenuBar = (props) => {
 }
 
 export default SlimSideMenuBar
+function setIconColor(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

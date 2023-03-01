@@ -32,12 +32,13 @@ export default function ModuleSwitchDrop({
     <div className="text-right inline-block ml-2 mt-[px]">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center w-full px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-slate-400/10 dark:highlight-white/5 flex font-semibold hover:bg-slate-400/20 items-center leading-5 px-3 py-1 rounded-full space-x-2 text-xs px-2.5 py-1.5">
-            <span className=" text-[12px] leading-[10px] tracking-wide text-[#0091ae]  ">
-              {type} Module
-            </span>
-            <ChevronDownIcon className="w-5 h-5 mr-3 mt-[2px] inline text-[#058527]" />
-          </Menu.Button>
+        <Menu.Button className="inline-flex justify-center w-40 h-10 px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-slate-400/10 dark:highlight-white/5 flex font-semibold hover:bg-slate-400/20 items-center leading-5 px-3 py-1 rounded-full space-x-2 text-xs px-2.5 py-1.5">
+  <span className="text-ellipsis text-[12px] leading-[10px] tracking-wide text-[#0091ae]">
+    {type} Module
+  </span>
+  <ChevronDownIcon className="w-5 h-5 mr-3 mt-[2px] inline text-[#058527]" />
+</Menu.Button>
+
         </div>
         <Transition
           as={Fragment}

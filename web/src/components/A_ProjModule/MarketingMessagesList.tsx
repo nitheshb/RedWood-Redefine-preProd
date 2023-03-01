@@ -1681,21 +1681,26 @@ else if (btnTxt === 'On Refund Pay' && target==='Administrator'){
   }
 }
 
+//input textbox color
+const inputField: HTMLInputElement = document.getElementById('inputbox') as HTMLInputElement;
+const phoneRegex = /^[0-9+\-() ]*$/;
+
+inputField.addEventListener('input', (event) => {
+  const inputValue = (event.target as HTMLInputElement).value;
+  if (phoneRegex.test(inputValue)) {
+    inputField.style.borderColor = 'green';
+  } else {
+    inputField.style.borderColor = 'red';
+  }
+});
+
 
   return (
     <>
 <section className='flex flex-row'>
-<div className=" ml-5 relative" data-te-input-wrapper-init>
-<input
-      type="tel"
-      className="peer block min-h-[auto] w-full rounded border-2 bg-primary py-1 px-3 leading-[1.6] with-outline transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-success-200 dark:placeholder:text-success-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-      id="exampleFormControlInputTel"
-      placeholder="Example label" />
-    <label
-      htmlFor="exampleFormControlInputTel"
-      className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-light px-2 peer-focus:px-2 peer-focus:text-Danger-600 peer-focus:dark:text-Danger-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-      >Whatsapp number
-    </label>
+<div className=" ml-5 relative" >
+<input type="tel" id="inputbox" name="input" className="block w-full px-3 py-2 leading-5 text-gray-700 bg-white border-2 border-blue-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out" />
+  <label htmlFor="input" className="block bg-white absolute left-3 -top-3 text-gray-600 text-sm">Whatsapp Number</label>
   </div>
       <span className='text-gray-300 text-xs mt-3 ml-2'>Hint: This is playground to test whatsapp notifiaction templates</span>
       </section>

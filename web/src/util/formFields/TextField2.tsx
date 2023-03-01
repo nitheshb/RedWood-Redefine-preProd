@@ -13,7 +13,7 @@ export const TextField2 = ({ label, ...props }) => {
         name="name"
         className={`${
           meta.touched && meta.error && 'is-invalid'
-        } peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0`}
+        } block w-full px-3 py-2 leading-5 text-gray-700 bg-white border-2 border-blue-300 rounded-md shadow-sm appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out`}
         placeholder=" "
         autoComplete="off"
         {...field}
@@ -21,7 +21,7 @@ export const TextField2 = ({ label, ...props }) => {
       />
       <label
         htmlFor={field.name}
-        className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-md text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500"
+        className="block bg-white absolute left-3 -top-3 text-gray-600 text-sm"
       >
         {label}
         <ErrorMessage
@@ -31,30 +31,5 @@ export const TextField2 = ({ label, ...props }) => {
         />
       </label>
     </div>
-    // <div className="mb-2 w-full">
-    //   <div className="flex flex-row">
-    //     <label
-    //       htmlFor={field.name}
-    //       className="label font-regular text-[#4b4b4b]  text-sm block mb-1 text-opacity-40 text-[12px]"
-    //     >
-    //       {label}
-    //     </label>
-    //     <ErrorMessage
-    //       component="div"
-    //       name={field.name}
-    //       className="error-message text-red-700 text-xs p-1 mx-auto"
-    //     />
-    //   </div>
-
-    //   <input
-    //     className={` ${meta.touched && meta.error && 'is-invalid'} ${
-    //       field.name === 'blockName' ? '' : ' h-8  '
-    //     }
-    //        w-full min-w-full text-[16px] flex  text-[#4b4b4b]  border-b border-[#2b2a351a] rounded-sm leading-normal `}
-    //     {...field}
-    //     {...props}
-    //     autoComplete="off"
-    //   />
-    // </div>
   )
 }
