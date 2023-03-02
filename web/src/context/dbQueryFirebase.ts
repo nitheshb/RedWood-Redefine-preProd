@@ -38,6 +38,13 @@ export const steamUsersList = (orgId, snapshot, error) => {
   console.log('orgname is ====>', orgId)
   return onSnapshot(itemsQuery, snapshot, error)
 }
+
+export const steamAssetsList = (orgId, snapshot, error) => {
+  const itemsQuery = query(collection(db, 'users'), where('orgId', '==', orgId))
+  console.log('orgname is ====>', orgId)
+  return onSnapshot(itemsQuery, snapshot, error)
+}
+
 // get users list
 export const steamUsersListByRole = (orgId, snapshot, error) => {
   const itemsQuery = query(

@@ -10,6 +10,7 @@ import HeadSideBarDetailView from 'src/components/HeadDetailSideBar'
 import MyActivityHome from 'src/components/MyActivityHome/MyActivityHome'
 import SlimSideMenuBar from 'src/components/A_SideMenu/slimSideMenu'
 import HeadNavBar2 from 'src/components/HeadNavBar/HeadNavBar2'
+import AssetsManageTable from 'src/components/A_HRModule/AssetsManageTable'
 
 const UsersAdminPage = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -77,7 +78,9 @@ const UsersAdminPage = () => {
             {viewable === 'User Management' && (
               <UserManageTable editEmployeeFun={editEmployeeFun} />
             )}
-
+              {viewable === 'Assets Management' && (
+              <AssetsManageTable editEmployeeFun={editEmployeeFun} />
+            )}
             {viewable === 'Roles Management' && (
               <>
                 <UserAccessTable />

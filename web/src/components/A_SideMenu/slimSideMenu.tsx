@@ -1508,11 +1508,11 @@ const SlimSideMenuBar = (props) => {
               <span
                 className={
                   'flex items-center text-sm py-1  overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded  rounded-tl-[30px] rounded-bl-[30px]  hover:text-blue-600 hover:bg-[#ecdbd1] transition duration-300 ease-in-out cursor-pointer ' +
-                  (viewable === 'ongoing_projects'
+                  (viewable === 'Assets Management'
                     ? 'bg-[#ecdbd1] w-100 rounded-tl-[30px] rounded-bl-[30px] '
                     : '')
                 }
-                onClick={() => setViewable('ongoing_projects')}
+                onClick={() => setViewable('Assets Management')}
                 style={{
                   display: 'block',
                   marginLeft: 'auto',
@@ -1542,7 +1542,7 @@ const SlimSideMenuBar = (props) => {
                       ></path>
                     </svg>
                   </span>
-                  <span className="text-[9px] font-bold  pl-1">HR</span>
+                  <span className="text-[9px] font-bold  pl-1">Assets</span>
                 </span>
               </span>
             </li>
