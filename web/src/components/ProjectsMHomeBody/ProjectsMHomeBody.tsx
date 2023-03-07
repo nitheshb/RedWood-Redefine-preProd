@@ -42,6 +42,14 @@ const ProjectsMHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     projectName,
     projectType,
     uid = 0,
+    s_agreeCount,
+    s_registerCount,
+    s_constCount,
+    s_possCount,
+    t_collect,
+    t_mtd,
+    t_bal,
+    t_refund
   } = project
 
   const aprtConfig = [
@@ -277,15 +285,18 @@ const ProjectsMHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           <h6 className="font-bodyLato font-semibold text-xs m-1 mb-4">
                           {"Units"}
                         </h6>
-                <div className="flex flex-row">
+                <div className="flex flex-row h-[101px]">
 
                   {[
-                    { item: 'Total', value: 78 },
-                    { item: 'Available', value: 58 },
-                    { item: 'Sold', value: 38 },
-                    { item: 'Blocked', value: 10 },
+                    { item: 'Total', value: totalUnitCount || 0 },
+                    { item: 'Available', value: availableCount || 0 },
+                    { item: 'Sold', value:  soldUnitCount || 0 },
+                    { item: 'Blocked', value: blockUnitCount || 0 },
                   ].map((data, i) => (
                     <div className=" w-1/4  mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+  <h6 className="font-bodyLato flex justify-center font-semibold text-xs mt-1">
+                          {t(data?.value)}
+                        </h6>
 
                       <div className="">
                         <LinearProgress
@@ -300,7 +311,7 @@ const ProjectsMHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                           style={{
                             backgroundColor: '#E5EAF2',
                             borderRadius: '3px',
-                            height: `${data.value}px`,
+                            height: `${58* (data.value/totalUnitCount) }px`,
                             width: `100%`,
                           }}
                         />
@@ -325,9 +336,9 @@ const ProjectsMHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 <div className="flex flex-row justify-between px-1">
 
                   {[
-                    { item: 'Booked', value: 78 },
-                    { item: 'Agreement', value: 58 },
-                    { item: 'Registered', value: 38 },
+                    { item: 'Booked', value: bookUnitCount || 0 },
+                    { item: 'Agreement', value: s_agreeCount || 0 },
+                    { item: 'Registered', value: s_registerCount || 0 },
                   ].map((data, i) => (
                     <div className=" w-1/4  mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
 
@@ -346,8 +357,8 @@ const ProjectsMHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 <div className="flex flex-row justify-between px-1 mt-3">
 
 {[
-  { item: 'Construction', value: 10 },
-  { item: 'Possession', value: 10 },
+  { item: 'Construction', value: s_constCount || 0 },
+  { item: 'Possession', value: s_possCount || 0 },
   { item: '', value: "" },
 ].map((data, i) => (
   <div className=" w-1/4  mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
@@ -373,15 +384,15 @@ const ProjectsMHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 <div className="flex flex-row justify-between px-1">
 
                   {[
-                    { item: 'Sale', value: 78 },
-                    { item: 'Collected', value: 58 },
-                    { item: 'MTD ', value: 38 },
+                    { item: 'Sale', value: soldValue || 0 },
+                    { item: 'Collected', value: t_collect || 0 },
+                    { item: 'MTD ', value: t_mtd || 0 },
                   ].map((data, i) => (
                     <div className=" w-1/4  mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
 
                       <div className="flex flex-col  justify-center mr-1  mb-1 mt[2px]">
                         <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                          {t(data.value)}
+                        ₹{t(data.value)}
                         </h6>
                         <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
                           {t(data.item)}
@@ -392,24 +403,22 @@ const ProjectsMHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                   ))}
                 </div>
                 <div className="flex flex-row justify-between px-1 mt-3">
-
-{[
-  { item: 'Balance', value: 10 },
-  { item: 'Refends', value: 10 },
-  { item: '', value: "" },
-].map((data, i) => (
-  <div className=" w-1/4  mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
-
-<div className="flex flex-col  justify-center mr-1  mb-1 mt[2px]">
-                        <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                          {t(data.value)}
-                        </h6>
-                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                          {t(data.item)}
-                        </h6>
+                    {[
+                      { item: 'Balance', value: t_bal || 0 },
+                      { item: 'Refunds', value: t_refund || 0 },
+                      { item: '', value: "" },
+                    ].map((data, i) => (
+                      <div key={i} className=" w-1/4  mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+                    <div className="flex flex-col  justify-center mr-1  mb-1 mt[2px]">
+                                            <h6 className="font-bodyLato font-semibold text-xs mt-1">
+                                            ₹{t(data.value)}
+                                            </h6>
+                                            <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                              {t(data.item)}
+                                            </h6>
+                                          </div>
                       </div>
-  </div>
-))}
+                    ))}
 </div>
                 </div>
         </div>

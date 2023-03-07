@@ -15,6 +15,7 @@ import {
   createBookedCustomer,
   steamBankDetailsList,
   updateLeadStatus,
+  updateProjectCounts,
   updateUnitAsBooked,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -95,7 +96,7 @@ const AddPaymentDetailsForm = ({
     const { amount } = data
     const { projectName } = projectDetails
     fullPs.map((dataObj) => {
-      if (dataObj?.elgible) {
+      if (dataObj?.elgible) {0
         T_elgible = dataObj?.value + T_elgible
         stepsComp = stepsComp + 1
         T_transaction = T_transaction + (amount || undefined)
@@ -270,6 +271,13 @@ const AddPaymentDetailsForm = ({
       id,
       leadDetailsObj2?.Status,
       'booked',
+      'nitheshreddy.email@gmail.com',
+      enqueueSnackbar
+    )
+    updateProjectCounts(
+      orgId,
+      leadDetailsObj2?.ProjectId,
+       {soldVal: T_elgible, t_collect : amount},
       'nitheshreddy.email@gmail.com',
       enqueueSnackbar
     )

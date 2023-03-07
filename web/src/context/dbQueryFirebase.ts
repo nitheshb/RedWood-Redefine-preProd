@@ -2256,6 +2256,41 @@ export const updateLeadStatus = async (
     })
   }
 }
+export const updateProjectCounts = async (
+  orgId,
+  pId,
+data,
+  by,
+  enqueueSnackbar
+) => {
+  try {
+    const {soldVal, t_collect,} = data
+    await updateDoc(doc(db, `${orgId}_projects`, pId), {
+      bookUnitCount: increment(1),
+      availableCount :increment(-1),
+      soldUnitCount: increment(1),
+      // s_agreeCount: increment(1),
+      // s_registerCount: increment(1),
+      // s_constCount: increment(1),
+      // s_possCount: increment(1),
+      // t_mtd: increment(1),
+      soldValue: increment(soldVal),
+      t_collect:increment(t_collect),
+
+      t_bal: soldVal - t_collect ,
+      // t_refund: increment(1)
+    })
+
+    console.log('chek if ther is any erro in supa', data)
+    enqueueSnackbar(`Project Status Updated`, {
+      variant: 'success',
+    })
+  } catch (e) {
+    enqueueSnackbar(e.message, {
+      variant: 'error',
+    })
+  }
+}
 export const updateLeadProject = async (orgId, leadDocId, newProjObj) => {
   console.log('wow it should be here', leadDocId, newProjObj)
   await updateDoc(doc(db, `${orgId}_leads`, leadDocId), newProjObj)

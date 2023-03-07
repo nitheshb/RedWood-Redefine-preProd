@@ -7,6 +7,17 @@ import {
   PhoneIcon,
   ShieldExclamationIcon,
 } from '@heroicons/react/outline'
+
+import {
+  ChartPieIcon,
+  OfficeBuildingIcon,
+  NewspaperIcon,
+  UserGroupIcon,
+  ScaleIcon,
+  PuzzleIcon
+
+
+} from '@heroicons/react/outline'
 import CheckCircleIcon from '@heroicons/react/solid/CheckCircleIcon'
 import { Box, LinearProgress, useTheme } from '@mui/material'
 import { MetaTags } from '@redwoodjs/web'
@@ -540,262 +551,63 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
   }
   return (
     <>
-      <div className="bg-white rounded">
+      <div className="bg-white rounded-t-lg ">
         <div className="">
           <div
             className="
             "
           >
-            <div className="items-center justify-between rounded-md my-1 py-2 px-2 bg-white ">
+            <div className="items-center justify-between  my-1 bg-white rounded-lg  ">
               {/* <div>
                 <h2 className="text-lg font-semibold text-gray-900 leading-light py-2 ">
                   Accounts Transactions Space
                 </h2>
               </div> */}
-              <div className="flex flex-row">
-                {/* section 1 */}
-                <div className="flex flex-col">
-                  <div className="flex flex-row">
-                    <h2 className="headTxt1 font-semibold text-[11px] ml-2">
-                      CATEGORY
-                    </h2>
-                    <span className="headTxt1 font-semibold text-[11px] ml-4 bg-[#d6e9ed] text-[#53a0a3] px-2 rounded-md ">
-                      10
-                    </span>
-                  </div>
-                  <section className="flex flex-row justify-between">
-                    <section className="flex flex-row mt-2 mr-1  mb-1 leading-7 text-gray-900  rounded-lg  ">
-                      {[
-                        { count: 2, name: 'BOOKING REVIEW', color: '000000' },
-                      ].map((dat, i) => (
-                        <div className=" m-1" key={i}>
-                          <div
-                            key={i}
-                            className={`border-[#E5EAF2] rounded-xl border w-30`}
-                            onClick={() => setSelCategory('booking_review')}
-                          >
-                            <section>
-                              <div className="px-2 py-2 flex flex-row justify-between">
-                                <h3 className=" css-5mn5yy text-sm">
-                                  {dat.count}
-                                </h3>
-                              </div>
-                              <div
-                                className={`flex flex-row justify-between ${
-                                  selCategory === 'booking_review'
-                                    ? 'bg-gradient-to-r from-orange-300 to-rose-300'
-                                    : 'bg-[#F7F7F7]'
-                                }  `}
-                                style={{
-                                  borderBottomLeftRadius: '12px',
-                                  borderBottomRightRadius: '12px',
-                                }}
-                              >
-                                <div className=" flexCenter p-2">
-                                  <span
-                                    className={`w-2 h-2 rounded-full bg-[#${dat.color}]`}
-                                  ></span>
-                                  <span
-                                    className={`css-1lpgd8m text-[#${dat.color}] text-[10px]`}
-                                  >
-                                    {dat.name}
-                                  </span>
-                                </div>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      ))}
-                    </section>
-                  </section>
-                </div>
-                <div className="flex flex-col ml-3 mt-2">
-                  <section className="flex flex-row justify-between pt-4">
-                    <section className="flex flex-row mt-2 mr-1  mb-1 leading-7 text-gray-900  rounded-lg  ">
-                      {[
-                        { count: 2, name: 'PRE AGREEMENT', color: '000000' },
-                      ].map((dat, i) => (
-                        <div className=" m-1" key={i}>
-                          <div
-                            key={i}
-                            className=" border-[#E5EAF2] rounded-xl border w-30"
-                            onClick={() => setSelCategory('pre_register')}
-                          >
-                            <section>
-                              <div className="px-2 py-2 flex flex-row justify-between">
-                                <h3 className=" css-5mn5yy text-sm">
-                                  {dat.count}
-                                </h3>
-                              </div>
-                              <div
-                                className={`flex flex-row justify-between ${
-                                  selCategory === 'pre_register'
-                                    ? 'text-black bg-gradient-to-r from-orange-300 to-rose-300'
-                                    : 'bg-[#F7F7F7]'
-                                }  `}
-                                style={{
-                                  borderBottomLeftRadius: '12px',
-                                  borderBottomRightRadius: '12px',
-                                }}
-                              >
-                                <div className=" flexCenter p-2">
-                                  <span
-                                    className={`w-2 h-2 rounded-full bg-[#${dat.color}]`}
-                                  ></span>
-                                  <span
-                                    className={`css-1lpgd8m text-[#${dat.color}] text-[10px]`}
-                                  >
-                                    {dat.name}
-                                  </span>
-                                </div>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      ))}
-                    </section>
-                  </section>
-                </div>
-                {/* <div className="flex flex-col ml-3 mt-2">
-                  <section className="flex flex-row justify-between pt-4">
-                    <section className="flex flex-row mt-2 mr-1  mb-1 leading-7 text-gray-900  rounded-lg  ">
-                      {[
-                        { count: 2, name: 'POST REGISTER', color: '209653' },
-                      ].map((dat, i) => (
-                        <div className=" m-1" key={i}>
-                          <div
-                            key={i}
-                            className=" border-[#E5EAF2] rounded-xl border w-30"
-                            onClick={() => setSelCategory('post_register')}
-                          >
-                            <section>
-                              <div className="px-2 py-2 flex flex-row justify-between">
-                                <h3 className=" css-5mn5yy text-sm">
-                                  {dat.count}
-                                </h3>
-                              </div>
-                              <div
-                                className="flex flex-row justify-between bg-[#F7F7F7]"
-                                style={{
-                                  borderBottomLeftRadius: '12px',
-                                  borderBottomRightRadius: '12px',
-                                }}
-                              >
-                                <div className=" flexCenter p-2">
-                                  <span
-                                    className={`w-2 h-2 rounded-full bg-[#${dat.color}]`}
-                                  ></span>
-                                  <span
-                                    className={`css-1lpgd8m text-[#${dat.color}] text-[10px]`}
-                                  >
-                                    {dat.name}
-                                  </span>
-                                </div>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      ))}
-                    </section>
-                  </section>
-                </div> */}
-                {/* section 2 */}
-                <div className="flex flex-col ml-3 mt-2">
-                  <section className="flex flex-row justify-between pt-4">
-                    <section className="flex flex-row mt-2 mr-1  mb-1 leading-7 text-gray-900  rounded-lg  ">
-                      {[
-                        { count: 2, name: 'POST AGREEMENT', color: '000000' },
-                      ].map((dat, i) => (
-                        <div className=" m-1" key={i}>
-                          <div
-                            key={i}
-                            className=" border-[#E5EAF2] rounded-xl border w-30"
-                            onClick={() => setSelCategory('post_register')}
-                          >
-                            <section>
-                              <div className="px-2 py-2 flex flex-row justify-between">
-                                <h3 className=" css-5mn5yy text-sm">
-                                  {dat.count}
-                                </h3>
-                              </div>
-                              <div
-                                className={`flex flex-row justify-between ${
-                                  selCategory === 'post_register'
-                                    ? 'bg-gradient-to-r from-orange-300 to-rose-300'
-                                    : 'bg-[#F7F7F7]'
-                                }  `}
-                                style={{
-                                  borderBottomLeftRadius: '12px',
-                                  borderBottomRightRadius: '12px',
-                                }}
-                              >
-                                <div className=" flexCenter p-2">
-                                  <span
-                                    className={`w-2 h-2 rounded-full bg-[#${dat.color}]`}
-                                  ></span>
-                                  <span
-                                    className={`css-1lpgd8m text-[#${dat.color}] text-[10px]`}
-                                  >
-                                    {dat.name}
-                                  </span>
-                                </div>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-                      ))}
-                    </section>
-                  </section>
-                </div>
-                {/* section 3 */}
-                <div className="flex flex-col ml-3 mt-6">
-                  <section className="flex flex-row justify-between">
-                    <section className="flex flex-row mt-2 mr-1  mb-1 leading-7 text-gray-900  rounded-lg  ">
-                      {[{ count: 4, name: 'QUERIES', color: 'F59A4C' }].map(
-                        (dat, i) => (
-                          <div className=" m-1" key={i}>
-                            <div
-                              key={i}
-                              className=" border-[#E5EAF2] rounded-xl border w-30"
-                              onClick={() => setSelCategory('queries')}
-                            >
-                              <section>
-                                <div className="px-2 py-2 flex flex-row justify-between">
-                                  <h3 className=" css-5mn5yy text-sm">
-                                    {dat.count}
-                                  </h3>
-                                </div>
-                                <div
-                                  className={`flex flex-row justify-between ${
-                                    selCategory === 'queries'
-                                      ? 'bg-[#FFD700]'
-                                      : 'bg-[#F7F7F7]'
-                                  }  `}
-                                  style={{
-                                    borderBottomLeftRadius: '12px',
-                                    borderBottomRightRadius: '12px',
-                                  }}
-                                >
-                                  <div className=" flexCenter p-2">
-                                    <span
-                                      className={`w-2 h-2 rounded-full bg-[#${dat.color}]`}
-                                    ></span>
-                                    <span
-                                      className={`css-1lpgd8m text-[#${dat.color}] text-[10px]`}
-                                    >
-                                      {dat.name}
-                                    </span>
-                                  </div>
-                                </div>
-                              </section>
-                            </div>
-                          </div>
-                        )
-                      )}
-                    </section>
-                  </section>
-                </div>
+               <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg ">
+                <ul
+                  className="flex justify-center  rounded-t-lg "
+                  id="myTab"
+                  data-tabs-toggle="#myTabContent"
+                  role="tablist"
+                >
+                  {[
+                    // { lab: 'Schedules', val: 'appointments' },
+                    { lab: 'Booked Units', val: 'booking_review' },
+                    { lab: 'Pre Agreement', val: 'pre_register' },
+
+                    // { lab: 'Attachments', val: 'attachments' },
+                    // { lab: 'Phone', val: 'phone' },
+
+                    { lab: 'Post Agreement', val: 'post_register' },
+                    { lab: 'Queries', val: 'queries' },
+
+                  ].map((d, i) => {
+                    return (
+                      <li
+                        key={i}
+                        className="mr-2 ml-2 text-sm font-bodyLato"
+                        role="presentation"
+                      >
+                        <button
+                          className={`inline-block py-3 mr-3 px-1 text-sm font-medium text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
+                            selCategory === d.val
+                              ? 'border-black text-black'
+                              : 'border-transparent'
+                          }`}
+                          type="button"
+                          role="tab"
+                          onClick={() => setSelCategory(d.val)}
+                        >
+                          {`${d.lab} `}
+                          {/* <span className="bg-gray-100 px-2 py-1 rounded-full">
+                          {/* {rowsCounter(leadsFetchedData, d.val).length} */}
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
               </div>
+
 
               <div className="flex px-6">
                 {leadsTyper == 'inProgress' && (
@@ -852,38 +664,205 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
 
             {!ready && (
               <div className="overflow-hidden  px-1 pb-1 rounded-md">
-                <div className="flex flex-col app-bg-white-1  pb-10">
+                <div className="flex flex-col app-bg-white-1  pb-[1px]">
                   <div className="flex flex-row pt-[1px]">
                     <span className="text-lg font-bold app-color-black"></span>
                   </div>
 
                   {selCategory === 'booking_review' &&
-                    leadsFetchedData.map((finData, i) => (
-                      <section
+                    leadsFetchedData.map((finData, i) => {
+                      const {
+                        uid,
+                        assets,
+                        customerDetailsObj,
+                        customerName1,
+                        phoneNo1,
+                      } = finData
+                  return (<section
                         key={i}
-                        className="border mb-1 rounded-sm w-[765px] shadow"
+                        className="border mb-1 bg-[#E9E9F2] shadow rounded-md  shadow"
                       >
                         <section className="flex flex-row">
-                          <div className="flex flex-row py-2 ml-4 mt- mr-[1px]">
-                            <div className="flex flex-col w-[81px] bg-gradient-to-r from-orange-300 to-rose-300 text-black p-2 rounded-md py-4">
-                              <span className="font-semibold text-sm app-color-black">
-                                {finData?.assetName}
-                              </span>
-                              <span className="font-normal text-xs app-color-gray-1">
-                                Eco Stone
-                              </span>
+                          <div className="">
+                          <div className="flex flex-row  mt- mr-[1px] py-1">
+                            <div
+                              className="flex flex-col bg-gradient-to-r from-[#A798FF] to-[#c8c2f1] text-black p-2 rounded-sm py-4 w-[170px] h-[82px] ml-1"
+                              onClick={() =>
+                                viewTransaction(
+                                  finData,
+                                  'unit_information',
+                                  'unit_information'
+                                )
+                              }
+                            >
+                              <section className="flex flex-row">
+                                <img
+                                  className="w-10 h-10 mr-2"
+                                  alt=""
+                                  src="/apart.svg"
+                                ></img>
+                                <section className="flex flex-col ml-2 max-w-[100px] ">
+                                  <span className="font-semibold text-sm app-color-black">
+                                  {finData?.[`${assets[0]}_unitDetails`]
+                                      ?.unit_no || ''}
+
+                                  </span>
+                                  <span className="text-xs">{customerName1}</span>
+                                  <span className="font-normal text-xs app-color-gray-1">
+                                    Eco Stone
+                                  </span>
+                                </section>
+                              </section>
+
                               {/* <span className="font-normal text-xs app-color-gray-1">
                                   {finData?.ph}
                                 </span> */}
                             </div>
                           </div>
-                          <div className="flex flex-col-reverse ml-3">
+                          </div>
+                          <div className="w-3/4 bg-[#E9E9F2] px-1 ">     <Box >
+          <>
+
+          <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
+          <div className="flex flex-row justify-between mx-1">
+          <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
+                          {"1,11,10,340"}
+                        </h6>
+                        <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
+                        {"7,10,340"}
+
+                        </h6>
+                        </div>
+                <div className="flex flex-row mx-1">
+
+                  {[
+                    { item: 'Total', value: 6 },
+                  ].map((data, i) => (
+                    <div className=" w-3/4  " style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="">
+                        <LinearProgress
+                          sx={{
+                            backgroundColor: 'white',
+                            '& .MuiLinearProgress-bar': {
+                              backgroundColor: '#A798FF',
+                            },
+                          }}
+                          variant="determinate"
+                          value={100}
+                          style={{
+                            backgroundColor: '#E5EAF2',
+                            borderRadius: '3px',
+                            borderTopRightRadius: '0px',
+                            borderBottomRightRadius: '0px',
+                            height: `${data.value}px`,
+                            width: `100%`,
+                          }}
+                        />
+                      </div>
+                      <div className="flex  justify-left mr-1  mb-1 mt-[4px]">
+                        <h6 className="font-bodyLato font-semibold text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                      {[
+                    { item: 'Balance', value: 6 },
+                  ].map((data, i) => (
+                    <div className=" w-2/4  " style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="">
+                        <LinearProgress
+                          sx={{
+                            backgroundColor: 'white',
+                            '& .MuiLinearProgress-bar': {
+                              backgroundColor: '#E87F7F',
+                            },
+                          }}
+                          variant="determinate"
+                          value={100}
+                          style={{
+                            backgroundColor: '#E87F7F',
+                            borderRadius: '3px',
+                            borderTopLeftRadius: '0px',
+                            borderBottomLeftRadius: '0px',
+                            height: `${data.value}px`,
+                            width: `100%`,
+                          }}
+                        />
+                      </div>
+                      <div className="flex  justify-end mr-1  mb-1 mt-[4px]">
+                        <h6 className="font-bodyLato font-semibold text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                </div>
+          </>
+              </Box></div>
+              <div className="w-2/4 bg-[#E9E9F2] px-1">
+        <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
+
+                <div className="flex flex-row justify-between px-1">
+
+                  {[
+                    { item: 'Manager', value: 78 , icon: ChartPieIcon},
+                    { item: 'Welcome ', value: 58, icon: ChartPieIcon },
+                    { item: 'KYC ', value: 38,  icon: NewspaperIcon },
+                  ].map((data, i) => (
+                    <div className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="flex flex-col items-center justify-center mr-1  mb-1 mt[2px]">
+                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <data.icon className="h-4 w-4 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                </div>
+        </div>
+        <div className="w-2/4 bg-[#E9E9F2] px-1">
+        <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
+
+                <div className="flex flex-row justify-between px-1">
+
+                  {[
+                    { item: 'PS', value: 78 , icon: ChartPieIcon},
+                    { item: 'CS', value: 58, icon: ChartPieIcon },
+                    { item: 'Loan', value: 38,  icon: NewspaperIcon },
+                  ].map((data, i) => (
+                    <div className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="flex flex-col items-center justify-center mr-1  mb-1 mt[2px]">
+                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <data.icon className="h-4 w-4 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                </div>
+        </div>
+                          {/* <div className=" w-1/4 flex flex-col-reverse ml-3">
                             <div className="flex flex-wrap  p-1 pl-0 pt-0 pb-0  mb-[16px] bg-[#F1F5F9]">
                               {[
-                                {
-                                  item: 'Manager Approval',
-                                  status: 'completed',
-                                },
+
                                 {
                                   item: 'Payment Schedule',
                                   status: 'completed',
@@ -893,11 +872,8 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   item: 'Cost Sheet',
                                   status: 'completed',
                                 },
-                                {
-                                  item: 'Welcome Call',
-                                  status: 'pending',
-                                },
-                                { item: 'KYC', status: 'pending' },
+
+
 
                                 {
                                   item: 'Bank Loan',
@@ -917,30 +893,12 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     <CheckCircleIcon className="w-4 h-4 ml-1 inline text-[#3EE494]" />
                                   )}
                                   {dat?.status === 'pending' && (
-                                    <ShieldExclamationIcon className="w-4 h-4 ml-1 inline text-[##8e544d]" />
+                                    <ShieldExclamationIcon className="w-4 h-4 ml-1 inline text-[#8e544d]" />
                                   )}
 
-                                  {/* <button className="bg-transparent hover focus:outline-none">
-                                    <svg
-                                      aria-hidden="true"
-                                      focusable="false"
-                                      data-prefix="fas"
-                                      data-icon="times"
-                                      className="w-2 ml-3"
-                                      role="img"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 352 512"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                      ></path>
-                                    </svg>
-                                  </button> */}
                                 </span>
                               ))}
                             </div>
-                            {/* <div className="w-[300px] ml-[150px] h-[1px] bg-[#efefef] mt-2 rounded-xl text-center"></div> */}
                             <div className="flex flex-row justify-between px-2 py-1  text-black   w-[640px]">
                               <section>
                                 <span className="font-normal text-sm text-uppercase app-color-gray-1 inline-block max-w-[100px] min-w-[100px] w-[100px] mb-[4px]">
@@ -975,11 +933,12 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                 </span>
                               </section>
                             </div>
-                          </div>
+                          </div> */}
                         </section>
-                      </section>
-                    ))}
-                  {selCategory === 'pre_register' &&
+                      </section>)
+})}
+
+{selCategory === 'pre_register' &&
                     leadsFetchedData.map((finData, i) => {
                       const {
                         uid,
@@ -988,14 +947,15 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                         customerName1,
                         phoneNo1,
                       } = finData
-                      return (
-                        <section
-                          key={i}
-                          className="flex flex-row border mb-1  shadow"
-                        >
-                          <div className="flex flex-row  mt- mr-[1px]">
+                  return (<section
+                        key={i}
+                        className="border mb-1 bg-[#E9E9F2] shadow rounded-md  shadow"
+                      >
+                        <section className="flex flex-row">
+                          <div className="">
+                          <div className="flex flex-row  mt- mr-[1px] py-1">
                             <div
-                              className="flex flex-col w-[181px] bg-gradient-to-r from-orange-300 to-rose-300 text-black p-2 rounded-sm py-4"
+                              className="flex flex-col bg-gradient-to-r from-[#A798FF] to-[#c8c2f1] text-black p-2 rounded-sm py-4 w-[170px] h-[82px] ml-1"
                               onClick={() =>
                                 viewTransaction(
                                   finData,
@@ -1012,8 +972,9 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                 ></img>
                                 <section className="flex flex-col ml-2 max-w-[100px] ">
                                   <span className="font-semibold text-sm app-color-black">
-                                    {finData?.[`${assets[0]}_unitDetails`]
+                                  {finData?.[`${assets[0]}_unitDetails`]
                                       ?.unit_no || ''}
+
                                   </span>
                                   <span className="text-xs">{customerName1}</span>
                                   <span className="font-normal text-xs app-color-gray-1">
@@ -1027,21 +988,28 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                 </span> */}
                             </div>
                           </div>
-                          <Box my={2} mx={2}>
-                <div className="flex flex-col">
-                  {[
-                    { item: 'Total', value: 100 },
-                    { item: 'Balance', value: 80 },
+                          </div>
+                          <div className="w-3/4 bg-[#E9E9F2] px-1 ">     <Box >
+          <>
 
-                  ].map((data, i) => (
-                    <div className="flex inline-block mt-2" key={i}>
-                      <div className="flex flex-row align-middle justify-between mr-1 w-12">
-                        <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                          {(data.item)}
+          <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
+          <div className="flex flex-row justify-between mx-1">
+          <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
+                          {"1,11,10,340"}
                         </h6>
-                        <span className="font-bodyLato text-[12px] text-[#94A4C4]"></span>
-                      </div>
-                      <div className="inline-block ml-2">
+                        <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
+                        {"7,10,340"}
+
+                        </h6>
+                        </div>
+                <div className="flex flex-row mx-1">
+
+                  {[
+                    { item: 'Total', value: 6 },
+                  ].map((data, i) => (
+                    <div className=" w-3/4  " style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="">
                         <LinearProgress
                           sx={{
                             backgroundColor: 'white',
@@ -1050,522 +1018,477 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                             },
                           }}
                           variant="determinate"
-                          value={data.value}
+                          value={100}
                           style={{
                             backgroundColor: '#E5EAF2',
                             borderRadius: '3px',
-                            height: '18px',
-                            width: '10rem',
+                            borderTopRightRadius: '0px',
+                            borderBottomRightRadius: '0px',
+                            height: `${data.value}px`,
+                            width: `100%`,
                           }}
                         />
+                      </div>
+                      <div className="flex  justify-left mr-1  mb-1 mt-[4px]">
+                        <h6 className="font-bodyLato font-semibold text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                      {[
+                    { item: 'Balance', value: 6 },
+                  ].map((data, i) => (
+                    <div className=" w-2/4  " style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="">
+                        <LinearProgress
+                          sx={{
+                            backgroundColor: 'white',
+                            '& .MuiLinearProgress-bar': {
+                              backgroundColor: '#E87F7F',
+                            },
+                          }}
+                          variant="determinate"
+                          value={100}
+                          style={{
+                            backgroundColor: '#E87F7F',
+                            borderRadius: '3px',
+                            borderTopLeftRadius: '0px',
+                            borderBottomLeftRadius: '0px',
+                            height: `${data.value}px`,
+                            width: `100%`,
+                          }}
+                        />
+                      </div>
+                      <div className="flex  justify-end mr-1  mb-1 mt-[4px]">
+                        <h6 className="font-bodyLato font-semibold text-xs mt-1">
+                          {data.item}
+                        </h6>
+
                       </div>
                     </div>
                   ))}
                 </div>
-              </Box>
-                          {/* <CrmSubMenu
-                            selMenuItem={selMenuItem}
-                            viewTransaction={viewTransaction}
-                            finData={finData}
-                            setSelMenuTitle={setSelMenuTitle}
-                          /> */}
+                </div>
+          </>
+              </Box></div>
+              <div className="w-2/4 bg-[#E9E9F2] px-1">
+        <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
 
-                          <div>
-                            <div className="flex flex-col hover:bg-[#F6F7FF]">
-                          <div className="flex flex-wrap  p-1 pl-0 pt-0 pb-0 mt-4  mb-[4px] bg-[#F1F5F9]">
-                              {[{
-    item: 'Manager Approval',
-    status: 'completed',
-  },
-  {
-    item: 'Customer Approval',
-    status: 'completed',
-  }
-]?.map((dat, i) => (
-                                <span
-                                  key={i}
-                                  className={`pl-2 pr-1 py-[4px] mr-2  text-[#333] bg-[#${
-                                    dat.status === 'completed'
-                                      ? 'F1F5F9'
-                                      : 'F1F5F9'
-                                  }] flex flex-row justify-between font-bodyLato text-[10px] flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease`}
-                                  onClick={() =>
-                                    viewTransaction(
-                                      finData,
-                                      'finance_info',
-                                      'finance_info'
-                                    )
-                                  }
-                                >
+                <div className="flex flex-row justify-between px-1">
 
-                                  {dat?.item}
-                                  {dat?.status === 'completed' && (
-                                    <CheckCircleIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[#3EE494]" />
-                                  )}
-                                  {dat?.status === 'pending' && (
-                                    <ShieldExclamationIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[##8e544d]" />
-                                  )}
+                  {[
+                    { item: 'Manager', value: 78 , icon: ChartPieIcon},
+                    { item: 'Customer ', value: 58, icon: ChartPieIcon },
+                  ].map((data, i) => (
+                    <div className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
 
+                      <div className="flex flex-col items-center justify-center mr-1  mb-1 mt[2px]">
+                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <data.icon className="h-4 w-4 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                          {data.item}
+                        </h6>
 
-                                  {/* <button className="bg-transparent hover focus:outline-none">
-                                    <svg
-                                      aria-hidden="true"
-                                      focusable="false"
-                                      data-prefix="fas"
-                                      data-icon="times"
-                                      className="w-2 ml-3"
-                                      role="img"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 352 512"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                      ></path>
-                                    </svg>
-                                  </button> */}
-                                </span>
-                              ))}
-                            </div>
-                            <span
-                                  className={`font-normal ml- text-[10px] text-center app-color-gray-1 text-[#435ad9]`}
-                                  onClick={() => {
-                                    setSelMenuTitle('agreeement_home')
-                                  }}
-                                >
-                                 Cost Sheet Approvals
-                                </span>
-                            </div>
-                          </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
-                          <div className="flex flex-col ml-1 hover:bg-[#F6F7FF]">
-                          <div className="flex flex-wrap  p-1 pl-0 pt-0 pb-0 mt-4  mb-[4px] bg-[#F1F5F9]">
-                              {[{
-    item: 'Agreement Draft',
-    status: 'completed',
-  },
-  {
-    item: 'Customer Approval',
-    status: 'completed',
-  }
-]?.map((dat, i) => (
-                                <span
-                                  key={i}
-                                  className={`pl-2 pr-1 py-[4px] mr-2  text-[#333] bg-[#${
-                                    dat.status === 'completed'
-                                      ? 'F1F5F9'
-                                      : 'F1F5F9'
-                                  }] font-bodyLato text-[10px] flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease`}
-                                  onClick={() =>
-                                    viewTransaction(
-                                      finData,
-                                      'finance_info',
-                                      'finance_info'
-                                    )
-                                  }
-                                >
-                                  {dat?.item}
-                                  {dat?.status === 'completed' && (
-                                    <CheckCircleIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[#3EE494]" />
-                                  )}
-                                  {dat?.status === 'pending' && (
-                                    <ShieldExclamationIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[##8e544d]" />
-                                  )}
+                </div>
+        </div>
+        <div className="w-2/4 bg-[#E9E9F2] px-1">
+        <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
 
-                                  {/* <button className="bg-transparent hover focus:outline-none">
-                                    <svg
-                                      aria-hidden="true"
-                                      focusable="false"
-                                      data-prefix="fas"
-                                      data-icon="times"
-                                      className="w-2 ml-3"
-                                      role="img"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 352 512"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                      ></path>
-                                    </svg>
-                                  </button> */}
-                                </span>
-                              ))}
-                            </div>
-                            <span
-                                  className={`font-normal ml- text-[10px] text-center app-color-gray-1 text-[#435ad9]`}
-                                  onClick={() => {
-                                    setSelMenuTitle('agreeement_home')
-                                  }}
-                                >
-                                  AGREEMENT
-                                </span>
-                            </div>
+                <div className="flex flex-row justify-between px-1">
 
-                            <div className="flex flex-col ml-1 hover:bg-[#F6F7FF]">
-                          <div className="flex flex-wrap  p-1 pl-0 pt-0 pb-0 mt-4  mb-[4px] bg-[#F1F5F9]">
-                              {[{
-    item: 'Loan KYC',
-    status: 'completed',
-  },
-  {
-    item: 'Loan Approval',
-    status: 'completed',
-  }
-]?.map((dat, i) => (
-                                <span
-                                  key={i}
-                                  className={`pl-2 pr-1 py-[4px] mr-2  text-[#333] bg-[#${
-                                    dat.status === 'completed'
-                                      ? 'F1F5F9'
-                                      : 'F1F5F9'
-                                  }] font-bodyLato text-[10px] flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease`}
-                                  onClick={() =>
-                                    viewTransaction(
-                                      finData,
-                                      'finance_info',
-                                      'finance_info'
-                                    )
-                                  }
-                                >
-                                  {dat?.item}
-                                  {dat?.status === 'completed' && (
-                                    <CheckCircleIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[#3EE494]" />
-                                  )}
-                                  {dat?.status === 'pending' && (
-                                    <ShieldExclamationIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[##8e544d]" />
-                                  )}
+                  {[
+                    { item: 'Agre Draft', value: 78 , icon: ChartPieIcon},
+                    { item: 'Agre Appro ', value: 58, icon: ChartPieIcon },
+                  ].map((data, i) => (
+                    <div className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
 
-                                  {/* <button className="bg-transparent hover focus:outline-none">
-                                    <svg
-                                      aria-hidden="true"
-                                      focusable="false"
-                                      data-prefix="fas"
-                                      data-icon="times"
-                                      className="w-2 ml-3"
-                                      role="img"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 352 512"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                      ></path>
-                                    </svg>
-                                  </button> */}
-                                </span>
-                              ))}
-                            </div>
-                            <span
-                                  className={`font-normal ml- text-[10px] text-center app-color-gray-1 text-[#435ad9]`}
-                                  onClick={() => {
-                                    setSelMenuTitle('agreeement_home')
-                                  }}
-                                >
-                                  Loan
-                                </span>
-                            </div>
-                            <div className="flex flex-col ml-1 hover:bg-[#F6F7FF]">
-                          <div className="flex flex-wrap  p-1 pl-0 pt-0 pb-0 mt-4  mb-[4px] bg-[#F1F5F9]">
-                              {[{
-    item: 'New Request',
-    status: 'completed',
-  },
-  {
-    item: 'Request Approvals',
-    status: 'completed',
-  }
-]?.map((dat, i) => (
-                                <span
-                                  key={i}
-                                  className={`pl-2 pr-1 py-[4px] mr-2  text-[#333] bg-[#${
-                                    dat.status === 'completed'
-                                      ? 'F1F5F9'
-                                      : 'F1F5F9'
-                                  }] font-bodyLato text-[10px] flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease`}
-                                  onClick={() =>
-                                    viewTransaction(
-                                      finData,
-                                      'finance_info',
-                                      'finance_info'
-                                    )
-                                  }
-                                >
-                                  {dat?.item}
-                                  {dat?.status === 'completed' && (
-                                    <CheckCircleIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[#3EE494]" />
-                                  )}
-                                  {dat?.status === 'pending' && (
-                                    <ShieldExclamationIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[##8e544d]" />
-                                  )}
+                      <div className="flex flex-col items-center justify-center mr-1  mb-1 mt[2px]">
+                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <data.icon className="h-4 w-4 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                          {data.item}
+                        </h6>
 
-                                  {/* <button className="bg-transparent hover focus:outline-none">
-                                    <svg
-                                      aria-hidden="true"
-                                      focusable="false"
-                                      data-prefix="fas"
-                                      data-icon="times"
-                                      className="w-2 ml-3"
-                                      role="img"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 352 512"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                      ></path>
-                                    </svg>
-                                  </button> */}
-                                </span>
-                              ))}
-                            </div>
-                            <span
-                                  className={`font-normal ml- text-[10px] text-center app-color-gray-1 text-[#435ad9]`}
-                                  onClick={() => {
-                                    setSelMenuTitle('agreeement_home')
-                                  }}
-                                >
-                                  Unit Modification
-                                </span>
-                            </div>
-                            <div className="flex flex-col ml-1 hover:bg-[#F6F7FF]">
-                          <div className="flex flex-wrap  p-1 pl-0 pt-0 pb-0 mt-4  mb-[4px] bg-[#F1F5F9]">
-                              {[{
-    item: 'Franking Charges',
-    status: 'completed',
-  },
-  {
-    item: 'Stamp Duty',
-    status: 'completed',
-  }
-]?.map((dat, i) => (
-                                <span
-                                  key={i}
-                                  className={`pl-2 pr-1 py-[4px] mr-2  text-[#333] bg-[#${
-                                    dat.status === 'completed'
-                                      ? 'F1F5F9'
-                                      : 'F1F5F9'
-                                  }] font-bodyLato text-[10px] flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease`}
-                                  onClick={() =>
-                                    viewTransaction(
-                                      finData,
-                                      'finance_info',
-                                      'finance_info'
-                                    )
-                                  }
-                                >
-                                  {dat?.item}
-                                  {dat?.status === 'completed' && (
-                                    <CheckCircleIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[#3EE494]" />
-                                  )}
-                                  {dat?.status === 'pending' && (
-                                    <ShieldExclamationIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[##8e544d]" />
-                                  )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
-                                  {/* <button className="bg-transparent hover focus:outline-none">
-                                    <svg
-                                      aria-hidden="true"
-                                      focusable="false"
-                                      data-prefix="fas"
-                                      data-icon="times"
-                                      className="w-2 ml-3"
-                                      role="img"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 352 512"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                      ></path>
-                                    </svg>
-                                  </button> */}
-                                </span>
-                              ))}
-                            </div>
-                            <span
-                                  className={`font-normal ml- text-[10px] text-center app-color-gray-1 text-[#435ad9]`}
-                                  onClick={() => {
-                                    setSelMenuTitle('agreeement_home')
-                                  }}
-                                >
-                                  Charges
-                                </span>
-                            </div>
+                </div>
+        </div>
+        <div className="w-2/4 bg-[#E9E9F2] px-1">
+        <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
+
+                <div className="flex flex-row justify-between px-1">
+
+                  {[
+                    { item: 'Loan', value: 38,  icon: NewspaperIcon },
+                  ].map((data, i) => (
+                    <div className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="flex flex-col items-center justify-center mr-1  mb-1 mt[2px]">
+                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <data.icon className="h-4 w-4 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                </div>
+        </div>
+        <div className="w-2/4 bg-[#E9E9F2] px-1">
+        <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
+
+                <div className="flex flex-row justify-between px-1">
+
+                  {[
+                    { item: 'Modify', value: 78 , icon: ChartPieIcon},
+                  ].map((data, i) => (
+                    <div className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="flex flex-col items-center justify-center mr-1  mb-1 mt[2px]">
+                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <data.icon className="h-4 w-4 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                </div>
+        </div>
+
                         </section>
-                      )
-                    })}
-                  {selCategory === 'post_register' &&
-                    tableData.map((finData, i) => (
-                      <section
+                      </section>)
+})}
+{selCategory === 'post_register' &&
+                    tableData.map((finData, i) => {
+                      const {
+                        uid,
+                        assets,
+                        customerDetailsObj,
+                        customerName1,
+                        phoneNo1,
+                      } = finData
+                  return (<section
                         key={i}
-                        className="flex flex-row border mb-1 w-[768px] shadow"
+                        className="border mb-1 bg-[#E9E9F2] shadow rounded-md  shadow"
                       >
-                        <div className="flex flex-row  mr-[1px]">
-                          <div className="flex flex-col bg-gradient-to-r from-orange-300 to-rose-300 text-black p-2 rounded-sm py-4">
-                            <span className="font-semibold text-sm app-color-black">
-                              {finData?.assetName}
-                            </span>
-                            <span className="font-normal text-xs app-color-gray-1">
-                              Eco Stone
-                            </span>
-                            {/* <span className="font-normal text-xs app-color-gray-1">
+                        <section className="flex flex-row">
+                          <div className="">
+                          <div className="flex flex-row  mt- mr-[1px] py-1">
+                            <div
+                              className="flex flex-col bg-gradient-to-r from-[#A798FF] to-[#c8c2f1] text-black p-2 rounded-sm py-2 w-[170px] h-[82px] ml-1"
+                              onClick={() =>
+                                viewTransaction(
+                                  finData,
+                                  'unit_information',
+                                  'unit_information'
+                                )
+                              }
+                            >
+                              <section className="flex flex-row">
+                                <img
+                                  className="w-10 h-10 mr-2"
+                                  alt=""
+                                  src="/apart.svg"
+                                ></img>
+                                <section className="flex flex-col ml-2 max-w-[100px] ">
+                                  <span className="font-semibold text-sm app-color-black">
+                                  {finData?.assetName}
+
+                                  </span>
+                                  <span className="text-xs">{finData?.ownerName}</span>
+
+                                  <span className="text-xs"> {finData?.ph}</span>
+                                  <span className="font-normal text-xs app-color-gray-1">
+                                    Eco Stone
+                                  </span>
+                                </section>
+                              </section>
+
+                              {/* <span className="font-normal text-xs app-color-gray-1">
                                   {finData?.ph}
                                 </span> */}
+                            </div>
                           </div>
+                          </div>
+                          <div className="w-3/4  h-[78px] bg-[#E9E9F2] px-1 ">     <Box >
+          <>
+
+          <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
+          <div className="flex flex-row justify-between mx-1">
+          <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
+                          {"1,11,10,340"}
+                        </h6>
+                        <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
+                        {"7,10,340"}
+
+                        </h6>
                         </div>
-                        <div className="flex flex-col-reverse ml-3">
-                          <div className="flex flex-wrap  p-1 pl-0 pt-0 pb-0  mb-[16px] bg-[#F1F5F9]">
-                            {[
-                              // { item: 'Share Agreement', status: 'completed' },
-                              {
-                                item: 'Register Doc Approval',
-                                status: 'completed',
-                              },
+                <div className="flex flex-row mx-1">
 
-                              {
-                                item: 'Register',
-                                status: 'pending',
-                              },
-                              {
-                                item: 'Purchase Stamp Duty',
-                                status: 'pending',
-                              },
-                              {
-                                item: 'Save',
-                                status: 'pending',
-                              },
-                              { item: 'construct' },
-                            ].map((dat, i) => (
-                              <span
-                                key={i}
-                                className={`pl-2 pr-1 py-[4px] mr-2  text-[#333] bg-[#${
-                                  dat.status === 'completed'
-                                    ? 'F1F5F9'
-                                    : 'F1F5F9'
-                                }] font-bodyLato text-[10px] flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease`}
-                              >
-                                {dat?.item}
-                                {dat?.status === 'completed' && (
-                                  <CheckCircleIcon className="w-4 h-4 ml-1 inline text-[#3EE494]" />
-                                )}
-                                {dat?.status === 'pending' && (
-                                  <ShieldExclamationIcon className="w-4 h-4 ml-1 inline text-[##8e544d]" />
-                                )}
-                                {/* {dat?.item === 'construct' && (
-                                  <div>
-                                    <SmallCircleProgress />
-                                  </div>
-                                )} */}
+                  {[
+                    { item: 'Total', value: 6 },
+                  ].map((data, i) => (
+                    <div className=" w-3/4  " style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
 
-                                {/* <button className="bg-transparent hover focus:outline-none">
-                                    <svg
-                                      aria-hidden="true"
-                                      focusable="false"
-                                      data-prefix="fas"
-                                      data-icon="times"
-                                      className="w-2 ml-3"
-                                      role="img"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 352 512"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                      ></path>
-                                    </svg>
-                                  </button> */}
-                              </span>
-                            ))}
-                          </div>
-                          {/* <div className="w-[300px] ml-[150px] h-[1px] bg-[#efefef] mt-2 rounded-xl text-center"></div> */}
-                          <div className="flex flex-row justify-between  py-2  text-black   w-[640px]">
-                            <section>
-                              <span className="font-normal font-Playfair text-sm text-uppercase app-color-gray-1 inline-block max-w-[100px] min-w-[100px] w-[100px] mb-[4px]">
-                                {finData?.ownerName}
-                              </span>
-                              <span className="font-normal ml-4 text-xs app-color-gray-1 inline-block max-w-[100px] min-w-[100px] w-[100px]">
-                                <PhoneIcon className="w-3 h-3 mr-1 inline text-[##8e544d]" />
-                                {finData?.ph}
-                              </span>
-                            </section>
-                            {/* <section className="inline-block max-w-[100px] min-w-[100px] w-[100px]">
-                              <span className="font-normal ml-6 text-[10px] app-color-gray-1 text-[#b3b3b3]">
-                                Bal
-                              </span>
-                              <span className="font-normal ml-2 text-xs app-color-gray-1 text-[#F59A4C]">
-                                {finData?.pending || 0}
-                              </span>
-                            </section> */}
-                            <section className="inline-block max-w-[400px] min-w-[100px] flex flex-row">
-                              <span className="font-normal ml-6  mt-2 text-[10px] app-color-gray-1 text-[#b3b3b3]">
-                                Bal
-                              </span>
-                              <span className="font-normal ml-2 text-sm mt-1 app-color-gray-1">
-                                {finData?.reviw || 0}
-                              </span>
-                              <ShieldExclamationIcon className="w-4 h-4 ml-1  mt-1 inline text-[#83a4f5]" />
-                            </section>
-                            <section className="inline-block max-w-[400px] min-w-[100px] flex flex-row">
-                              <span className="font-normal ml-6 mt-2 text-[10px] app-color-gray-1 text-[#b3b3b3]">
-                                Paid
-                              </span>
-                              <span className="font-normal ml-2 text-sm mt-1 app-color-gray-1">
-                                {finData?.pend || 0}
-                              </span>
-                              {finData?.paymentStatus === 'completed' && (
-                                <CheckCircleIcon className="w-4 h-4 ml-1  mt-1 inline text-[#8becbd]" />
-                              )}
-                              {finData?.paymentStatus === 'pending' && (
-                                <ShieldExclamationIcon className="w-4 h-4 ml-1  mt-1 inline text-[##8e544d]" />
-                              )}
-                            </section>
+                      <div className="">
+                        <LinearProgress
+                          sx={{
+                            backgroundColor: 'white',
+                            '& .MuiLinearProgress-bar': {
+                              backgroundColor: '#A798FF',
+                            },
+                          }}
+                          variant="determinate"
+                          value={100}
+                          style={{
+                            backgroundColor: '#E5EAF2',
+                            borderRadius: '3px',
+                            borderTopRightRadius: '0px',
+                            borderBottomRightRadius: '0px',
+                            height: `${data.value}px`,
+                            width: `100%`,
+                          }}
+                        />
+                      </div>
+                      <div className="flex  justify-left mr-1  mb-1 mt-[4px]">
+                        <h6 className="font-bodyLato font-semibold text-xs mt-1">
+                          {data.item}
+                        </h6>
 
-                            <section className="inline-block max-w-[400px] min-w-[100px] text-right">
-                              <span className="font-normal ml-6 text-[10px] app-color-gray-1 text-[#435ad9]">
-                                LOAN
-                              </span>
-                              <span className="font-normal ml-6 text-[10px] app-color-gray-1 text-[#435ad9]">
-                                MODIFY
-                              </span>
-                            </section>
-                          </div>
-                        </div>
-                      </section>
-                    ))}
-                  {/* <div className="flex flex-row bg-white px-[4px] py-2 relative">
-                    <div className="flex w-full  ">
-                      <table className="w-full pt-[1px]">
-                        <thead className="">
-                          <tr className="p-2">
-                            <th className="w-2"></th>
-
-                            {tableHeadFieldsA.map((dat, i) => (
-                              <th
-                                key={i}
-                                className={` text-${
-                                  dat?.align || 'left'
-                                } text-xs app-color-black py-2 whitespace-nowrap px-3`}
-                              >
-                                <span className="ml-4">{dat.lab}</span>
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                      </table>
+                      </div>
                     </div>
-                  </div> */}
+                  ))}
+                      {[
+                    { item: 'Balance', value: 6 },
+                  ].map((data, i) => (
+                    <div className=" w-2/4  " style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="">
+                        <LinearProgress
+                          sx={{
+                            backgroundColor: 'white',
+                            '& .MuiLinearProgress-bar': {
+                              backgroundColor: '#E87F7F',
+                            },
+                          }}
+                          variant="determinate"
+                          value={100}
+                          style={{
+                            backgroundColor: '#E87F7F',
+                            borderRadius: '3px',
+                            borderTopLeftRadius: '0px',
+                            borderBottomLeftRadius: '0px',
+                            height: `${data.value}px`,
+                            width: `100%`,
+                          }}
+                        />
+                      </div>
+                      <div className="flex  justify-end mr-1  mb-1 mt-[4px]">
+                        <h6 className="font-bodyLato font-semibold text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                </div>
+          </>
+              </Box></div>
+              <div className="w-3/4  bg-[#E9E9F2] px-1 ">     <Box >
+          <>
+
+          <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2  h-[78px]">
+
+
+          <div className="flex flex-row justify-between mx-1">
+          <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
+                          {"Construction"}
+                        </h6>
+                        <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
+                        {"20%"}
+
+                        </h6>
+                        </div>
+                <div className="flex flex-row mx-1">
+
+                  {[
+                    { item: '', value: 6 },
+                  ].map((data, i) => (
+                    <div className=" w-3/4  " style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="">
+                        <LinearProgress
+                          sx={{
+                            backgroundColor: 'white',
+                            '& .MuiLinearProgress-bar': {
+                              backgroundColor: '#A798FF',
+                            },
+                          }}
+                          variant="determinate"
+                          value={100}
+                          style={{
+                            backgroundColor: '#E5EAF2',
+                            borderRadius: '3px',
+                            borderTopRightRadius: '0px',
+                            borderBottomRightRadius: '0px',
+                            height: `${data.value}px`,
+                            width: `100%`,
+                          }}
+                        />
+                      </div>
+                      <div className="flex  justify-left mr-1  mb-1 mt-[4px]">
+                        <h6 className="font-bodyLato font-semibold text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                      {[
+                    { item: '', value: 6 },
+                  ].map((data, i) => (
+                    <div className=" w-2/4  " style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="">
+                        <LinearProgress
+                          sx={{
+                            backgroundColor: 'white',
+                            '& .MuiLinearProgress-bar': {
+                              backgroundColor: '#E87F7F',
+                            },
+                          }}
+                          variant="determinate"
+                          value={100}
+                          style={{
+                            backgroundColor: '#E87F7F',
+                            borderRadius: '3px',
+                            borderTopLeftRadius: '0px',
+                            borderBottomLeftRadius: '0px',
+                            height: `${data.value}px`,
+                            width: `100%`,
+                          }}
+                        />
+                      </div>
+                      <div className="flex  justify-end mr-1  mb-1 mt-[4px]">
+                        <h6 className="font-bodyLato font-semibold text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                </div>
+          </>
+              </Box></div>
+              <div className=" bg-[#E9E9F2] px-1">
+        <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
+
+                <div className="flex flex-row justify-between px-1">
+
+                  {[
+                    { item: 'Reg Draft', value: 78 , icon: ChartPieIcon},
+                    { item: 'Stamp Duty', value: 58, icon: NewspaperIcon },
+                    { item: 'Registration', value: 58, icon: NewspaperIcon },
+                  ].map((data, i) => (
+                    <div className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="flex flex-col items-center justify-center mr-1  mb-1 mt[2px]">
+                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <data.icon className="h-4 w-4 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                </div>
+        </div>
+
+        <div className="w-1/4  bg-[#E9E9F2] px-1">
+        <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
+
+                <div className="flex flex-row justify-between px-1">
+
+                  {[
+                    { item: 'Loan', value: 38,  icon: NewspaperIcon },
+                  ].map((data, i) => (
+                    <div className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="flex flex-col items-center justify-center mr-1  mb-1 mt[2px]">
+                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <data.icon className="h-4 w-4 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                </div>
+        </div>
+        <div className="w-1/4 bg-[#E9E9F2] px-1">
+        <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
+
+                <div className="flex flex-row justify-between px-1">
+
+                  {[
+                    { item: 'Modify', value: 78 , icon: ChartPieIcon},
+                  ].map((data, i) => (
+                    <div className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1" style={{display: "inline-block",  alignSelf: "flex-end"}}key={i}>
+
+                      <div className="flex flex-col items-center justify-center mr-1  mb-1 mt[2px]">
+                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <data.icon className="h-4 w-4 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
+                      </div>
+                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                          {data.item}
+                        </h6>
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                </div>
+        </div>
+
+                        </section>
+                      </section>)
+})}
                 </div>
               </div>
             )}
-
-            {/* {!ready && (
-              <FinanceTableView
-                leadsFetchedData={leadsFetchedData}
-                setisImportLeadsOpen={setisImportLeadsOpen}
-                selUserProfileF={selUserProfileF}
-                leadsTyper={leadsTyper}
-              />
-            )} */}
           </div>
         </div>
       </div>
