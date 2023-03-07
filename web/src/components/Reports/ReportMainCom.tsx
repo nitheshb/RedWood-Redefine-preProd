@@ -959,15 +959,7 @@ export default function ReportMainCom() {
     }
     return []
   }
-  const formattedLineChart = (data, value = 'total') => {
-    console.log(data, 'formattedLineChart')
-    if (data.length && value === 'total') {
-      return data.map((item) => {
-        return { name: item?.name, total: item?.total }
-      })
-    }
-    return []
-  }
+
   // console.log(formattedPieChart())
   return (
     <>
