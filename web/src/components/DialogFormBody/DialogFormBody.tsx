@@ -1,29 +1,33 @@
-import { Dialog } from '@headlessui/react'
 import { useState, useEffect } from 'react'
-import { Form, Formik } from 'formik'
-import * as Yup from 'yup'
-import { useSnackbar } from 'notistack'
-import { InputAdornment, TextField as MuiTextField } from '@mui/material'
+
+import { Dialog } from '@headlessui/react'
 import { Add, Remove } from '@mui/icons-material'
+import { InputAdornment, TextField as MuiTextField } from '@mui/material'
+import { Form, Formik } from 'formik'
+import { useSnackbar } from 'notistack'
+import * as Yup from 'yup'
+
+import { AreaConverter } from 'src/components/AreaConverter'
 import Loader from 'src/components/Loader/Loader'
-import { TextField } from 'src/util/formFields/TextField'
-import { TextAreaField } from 'src/util/formFields/TextAreaField'
-import { CustomRadioGroup } from 'src/util/formFields/CustomRadioGroup'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 import {
   developmentTypes,
   projectPlans,
   statesList,
 } from 'src/constants/projects'
-import { AreaConverter } from 'src/components/AreaConverter'
 import {
   createProject,
   steamBankDetailsList,
   updateProject,
 } from 'src/context/dbQueryFirebase'
-import AddBankDetailsForm from '../addBankDetailsForm'
 import { useAuth } from 'src/context/firebase-auth-context'
+import { CustomRadioGroup } from 'src/util/formFields/CustomRadioGroup'
+import { CustomSelect } from 'src/util/formFields/selectBoxField'
+import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
+import { TextAreaField } from 'src/util/formFields/TextAreaField'
+import { TextField } from 'src/util/formFields/TextField'
+
+import AddBankDetailsForm from '../addBankDetailsForm'
+import { MultipleFileUploadField } from '../LeadUplodCsv/MultipleFileUploadField'
 
 const DialogFormBody = ({ title, dialogOpen, project }) => {
   const { user } = useAuth()
@@ -325,6 +329,13 @@ const DialogFormBody = ({ title, dialogOpen, project }) => {
                       )}
                     </div>
                     <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
+                      <MultipleFileUploadField
+                        name="files"
+                        // title={title}
+                        // pId={pId}
+                        // myPhase={myPhase}
+                        // myBlock={myBlock}
+                      />
                       <div className="mb-3">
                         <label
                           htmlFor="area"

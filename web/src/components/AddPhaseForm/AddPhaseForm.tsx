@@ -23,6 +23,8 @@ import { DateField } from 'src/util/formFields/DateField'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { TextField } from 'src/util/formFields/TextField'
 
+import SiderForm from '../SiderForm/SiderForm'
+
 const AddPhaseForm = ({ title, dialogOpen, phase }) => {
   const { user } = useAuth()
 
@@ -150,6 +152,7 @@ const AddPhaseForm = ({ title, dialogOpen, phase }) => {
                             name="phaseName"
                             type="text"
                           />
+                          <SiderForm open={true} title={'Edit Project'} />
                           <div className="mb-3">
                             <label
                               htmlFor="area"
