@@ -677,7 +677,7 @@ const SlimSideMenuBar = (props) => {
 
                     <UserGroupIcon className="h-5 w-5 " aria-hidden="true" />
                   </span>
-                  <span className="text-[9px] font-bold  pl-1">Marketing</span>
+                  <span className="text-[9px] font-bold  pl-1">Templates</span>
                 </span>
                 <span className="flex ml-auto items-bottom">
                   <span className="flex ml-auto items-bottom text-xs mt-2"></span>

@@ -41,7 +41,7 @@ export default function LeadsLakeHomeComponent({ todaySch, schLoading }) {
   const [addLeadsTypes, setAddLeadsTypes] = React.useState('')
   const [selUserProfile, setSelUserProfile] = React.useState({})
   const [schFetData, setSchFetData] = React.useState([])
-  const [searchKey, setSearchKey] = React.useState(['all'])
+  const [searchKey, setSearchKey] = React.useState(['unassigned'])
   const [leadByViewLayout, setLeadByViewLayout] = React.useState(false)
   const [leadsRawList, setLeadsRawList] = useState([])
   const [allProjectsA, setAllProjectsA] = useState([])

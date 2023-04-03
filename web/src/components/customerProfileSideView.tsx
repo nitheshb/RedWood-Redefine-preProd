@@ -109,6 +109,9 @@ import EmailForm from './customerProfileView/emailForm'
 import Confetti from './shared/confetti'
 
 import '../styles/myStyles.css'
+import { Slider } from '@mui/material'
+
+import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 
 // interface iToastInfo {
 //   open: boolean
@@ -188,29 +191,31 @@ const siteVisitFeedbackOptions = [
   // { label: 'Dead', value: 'Dead' },
 ]
 const lookingAtBudgetRange = [
-  { label: 'less than 25 lakhs', value: 'less25L' },
-  { label: 'less than 50 lakhs', value: 'less50L' },
-  { label: 'less than 1 Cr', value: 'less1Cr' },
-  { label: 'less than 1.5 Cr', value: 'less1.5Cr' },
-  { label: 'less than 2 Cr', value: 'less2Cr' },
+  { label: 'less than 25 lakhs', value: 'less25L', str: 10 },
+  { label: 'less than 50 lakhs', value: 'less50L', str: 20 },
+  { label: 'less than 1 Cr', value: 'less1Cr', str: 30 },
+  { label: 'less than 1.5 Cr', value: 'less1.5Cr', str: 40 },
+  { label: 'less than 2 Cr', value: 'less2Cr', str: 50 },
 ]
 const exitstingAsset = [
-  { label: 'Plot', value: 'plot' },
-  { label: 'Apartment', value: 'apartment' },
-  { label: 'Villa', value: 'villa' },
-  { label: 'Apartment & Villa', value: 'apart_villa' },
-  { label: 'Plot & Apartment', value: 'plot_villa' },
-  { label: 'Others', value: 'other' },
+  { label: 'Plot', value: 'plot', str: 10 },
+  { label: 'Apartment', value: 'apartment', str: 20 },
+  { label: 'Villa', value: 'villa', str: 30 },
+  { label: 'Apartment & Villa', value: 'apart_villa', str: 40 },
+  { label: 'Plot & Apartment', value: 'plot_villa', str: 50 },
+  { label: 'Others', value: 'other', str: 60 },
 ]
 const reasonPurchase = [
-  { label: 'Living', value: 'living' },
-  { label: 'Commercial', value: 'Commercial' },
-  { label: 'Rental', value: 'renatal' },
-  { label: 'Investment', value: 'investment' },
+  { label: 'Living', value: 'living', str: 10 },
+  { label: 'Commercial', value: 'Commercial', str: 20 },
+  { label: 'Rental', value: 'renatal', str: 30 },
+  { label: 'Investment', value: 'investment', str: 40 },
 ]
 const preferredArea = [
-  { label: 'East', value: 'east' },
-  { label: 'west', value: 'west' },
+  { label: 'East Banglore', value: 'eastBanglore', str: 10 },
+  { label: 'West Banglore', value: 'westBanglore', str: 20 },
+  { label: 'North Banglore', value: 'northBanglore', str: 30 },
+  { label: 'South Banglore ', value: 'southBanglore', str: 40 },
 ]
 const torrowDate = new Date(
   +new Date().setHours(0, 0, 0, 0) + 86400000
@@ -244,6 +249,17 @@ export default function CustomerProfileSideView({
   const [tempLeadStatus, setLeadStatus] = useState('')
   const [assignerName, setAssignerName] = useState('')
   const [assignedTo, setAssignedTo] = useState('')
+  const [optionvalues, setoptionvalues] = useState({
+    budget: '',
+    bstr: 0,
+    purchase: '',
+    pstr: 0,
+    area: '',
+    astr: 0,
+    asset: '',
+    asstr: 0,
+  })
+  const [opstr, setopstr] = useState(0)
   const [showNotInterested, setShowNotInterested] = useState(false)
   const [showJunk, setShowJunk] = useState(false)
 
@@ -351,6 +367,15 @@ export default function CustomerProfileSideView({
   const [streamfrom, setStreamFrom] = useState('')
 
   const [closePrevious, setClosePrevious] = useState(false)
+
+  useEffect(() => {
+    setopstr(
+      optionvalues.asstr +
+        optionvalues.astr +
+        optionvalues.bstr +
+        optionvalues.pstr
+    )
+  }, [optionvalues])
 
   useEffect(() => {
     //   get lead data by id
@@ -501,6 +526,18 @@ export default function CustomerProfileSideView({
     getCustomerDocsFun()
     getProjectsListFun()
   }, [])
+  const receiverDetails = {
+    customerName: Name,
+    executiveName: assignerName,
+    receiverPhNo: Mobile,
+  }
+  const msgPayload = {
+    projectName: Project,
+    broucherLink: '',
+    locLink: '',
+    projContactNo: '',
+    scheduleTime: startDate,
+  }
 
   const getCustomerDocsFun = () => {
     const unsubscribe = getCustomerDocs(
@@ -561,6 +598,15 @@ export default function CustomerProfileSideView({
         todayTasksIncre,
         txt,
         by
+      )
+      getWhatsAppTemplates(
+        'on_lead_assign',
+        'wa',
+        'customer',
+        // 'ProjectId',
+        ProjectId,
+        receiverDetails,
+        msgPayload
       )
     }
   }
@@ -799,14 +845,20 @@ export default function CustomerProfileSideView({
       (startDate?.getTime() || Timestamp.now().toMillis() + 10800000) <
       torrowDate
     ) {
-      IncrementTastTotalCount(
-        orgId,
-        assignedTo,
-        ddMy,
-        tempLeadStatus,
-        1,
-        `New Task-${tempLeadStatus}`
-      )
+      try {
+        IncrementTastTotalCount(
+          orgId,
+          assignedTo,
+          ddMy,
+          tempLeadStatus,
+          1,
+          `New Task-${tempLeadStatus}`
+        )
+      } catch (error) {
+        enqueueSnackbar('error in updating ur performance', {
+          variant: 'error',
+        })
+      }
     }
 
     const { name } = assignedTo
@@ -820,32 +872,38 @@ export default function CustomerProfileSideView({
         user?.email,
         enqueueSnackbar
       )
+
+      console.log('not interested', tempLeadStatus)
+
       if (tempLeadStatus === 'visitfixed') {
-        sendWhatAppTextSms1(
-          '7760959579',
-          `Greetings From MAA Homes !!\n
-        As per our conversation,  I am happy to welcome you to our project ${Project} and looking forward to seeing what we can accomplish together, I will be on hand to offer you a tour of our villa project.\n
-        Your visit is confirmed on ${prettyDateTime(
-          startDate.getTime()
-        )} \n\nWarm Regards \n${assignerName}\nMaa Homes`
+        getWhatsAppTemplates(
+          'on_sitevisit_fix',
+          'wa',
+          'customer',
+          // 'ProjectId',
+          ProjectId,
+          receiverDetails,
+          msgPayload
         )
       } else if (tempLeadStatus === 'visitdone') {
-        sendWhatAppTextSms1(
-          '7760959579',
-          `Greetings From MAA Homes !!\n
-
-          It was great meeting you at our project today, you’re one step closer to your dream home,
-          Please let me know when we can meet for further discussions and actions.
-
-         \n\nWarm Regards \n${assignerName}\nMaa Homes`
+        getWhatsAppTemplates(
+          'on_sitevisit_done',
+          'wa',
+          'customer',
+          // 'ProjectId',
+          ProjectId,
+          receiverDetails,
+          msgPayload
         )
       } else if (tempLeadStatus === 'booking') {
-        sendWhatAppTextSms1(
-          '7760959579',
-          `Greetings From MAA Homes !!\n
-          It was great to meet you at our project today, you’re one step closer to your dream home.
-          Please let me know when we can meet for further discussion and action.
-         \n\nWarm Regards \n${assignerName}\nMaa Homes`
+        getWhatsAppTemplates(
+          'on_booking',
+          'wa',
+          'customer',
+          // 'ProjectId',
+          ProjectId,
+          receiverDetails,
+          msgPayload
         )
       }
     }
@@ -908,7 +966,6 @@ export default function CustomerProfileSideView({
     updateSchLog(orgId, id, data.ct, 'completed', schStsA)
   }
   const EditTaskOpenWindowFun = (data) => {
-
     cancelResetStatusFun()
     setEditTaskObj(data)
     setTakTitle(data?.notes || '')
@@ -922,7 +979,6 @@ export default function CustomerProfileSideView({
     // updateSchLog(orgId, id, data.ct, 'completed', schStsA)
   }
   const editTaskFun = (data) => {
-
     const inx = schStsMA.indexOf(data.ct)
     data.schTime = startDate
     data.notes = takTitle
@@ -931,6 +987,16 @@ export default function CustomerProfileSideView({
     setschStsA(x)
 
     editTaskDB(orgId, id, data.ct, 'pending', schStsA, data)
+    if (leadDetailsObj?.Status == 'visitfixed') {
+      getWhatsAppTemplates(
+        'on_sitevisit_reschedule',
+        'wa',
+        'customer',
+        ProjectId,
+        receiverDetails,
+        msgPayload
+      )
+    }
     cancelResetStatusFun()
   }
   const addTaskCommentFun = async (data) => {
@@ -999,6 +1065,14 @@ export default function CustomerProfileSideView({
     await closeAllPerviousTasks('closed by Not-Interested')
     //3) set status as not interested
     await fAddNotes()
+    await getWhatsAppTemplates(
+      'on_not_interested',
+      'wa',
+      'customer',
+      ProjectId,
+      receiverDetails,
+      msgPayload
+    )
     await cancelResetStatusFun()
     return
     data.comments = [
@@ -1200,7 +1274,6 @@ export default function CustomerProfileSideView({
       setLeadStatus('junk')
       cancelResetStatusFun()
     } else if (tempLeadStatus === 'visitdone') {
-
       const covA = [
         ...(customerDetails?.coveredA || []),
         ...['visitfixed', 'visitdone'],
@@ -1808,53 +1881,105 @@ export default function CustomerProfileSideView({
                   </div>
                   {selFeature == 'lead_strength' && (
                     <>
-                      <div className="flex flex-col pt-0 my-10 mt-[30px] rounded bg-gradient-to-r from-teal-200 to-teal-400 mx-4 p-4">
-                        <div className="grid grid-cols-2 gap-8 pt-3 mx-3  mt-2">
-                          <CustomSelect
-                            name="bugetRange"
-                            label="Looking at Budget Range*"
-                            className="input mt-3"
-                            onChange={(value) => {
-                              // formik.setFieldValue('source', value.value)
-                              // setNotInterestType(value.value)
-                            }}
-                            value={notInterestType}
-                            options={lookingAtBudgetRange}
-                          />
-                          <CustomSelect
-                            name="assetPossesed"
-                            label="Any Existing Banglore Assets ?*"
-                            className="input mt-3"
-                            onChange={(value) => {
-                              // formik.setFieldValue('source', value.value)
-                              // setNotInterestType(value.value)
-                            }}
-                            value={notInterestType}
-                            options={exitstingAsset}
-                          />
-                          <CustomSelect
-                            name="reasonPurchase"
-                            label="Reason For Purchase ?*"
-                            className="input"
-                            onChange={(value) => {
-                              // formik.setFieldValue('source', value.value)
-                              // setNotInterestType(value.value)
-                            }}
-                            value={notInterestType}
-                            options={reasonPurchase}
-                          />
-                          <CustomSelect
-                            name="preferredArea"
-                            label="Preferred Area ?*"
-                            className="input"
-                            onChange={(value) => {
-                              // formik.setFieldValue('source', value.value)
-                              // setNotInterestType(value.value)
-                            }}
-                            value={notInterestType}
-                            options={reasonPurchase}
+                      <div className="flex flex-col pt-0 my-10 mt-[30px] rounded bg-gradient-to-b from-purple-300 to-purple-200 mx-4 p-4">
+                        <div className="border border-red-100 mt-2 mt-4 bg-white rounded-md p-4 font-bold">
+                          <div className="flex justify-between w-full ">
+                            <div>Total Lead Strength</div>
+                            <div>{`${opstr}%`}</div>
+                          </div>
+                          <Slider
+                            onChange={(e) => setopstr(e.target.value)}
+                            value={opstr}
+                            defaultValue={opstr}
+                            aria-label="Default"
+                            valueLabelDisplay="auto"
                           />
                         </div>
+                        <div className="grid grid-cols-2 gap-8 pt-3 mx-3  mt-2">
+                          <div className="mt-2">
+                            <div className="flex justify-between w-11.7/12 m-auto">
+                              <div> Looking at Budget Range*</div>
+                              <div> {`${optionvalues.bstr}%`}</div>
+                            </div>
+                            <CustomSelect
+                              name="bugetRange"
+                              className="input"
+                              onChange={(value) => {
+                                // formik.setFieldValue('source', value.value)
+
+                                setoptionvalues({
+                                  ...optionvalues,
+                                  budget: value.value,
+                                  bstr: value.str,
+                                })
+                              }}
+                              value={optionvalues.budget}
+                              options={lookingAtBudgetRange}
+                            />
+                          </div>
+                          <div className="mt-2">
+                            <div className="flex justify-between w-11.7/12 m-auto">
+                              <div>Any Existing Banglore Assets ?*</div>
+                              <div> {`${optionvalues.asstr}%`}</div>
+                            </div>
+                            <CustomSelect
+                              name="assetPossesed"
+                              className="input"
+                              onChange={(value) => {
+                                // formik.setFieldValue('source', value.value)
+                                setoptionvalues({
+                                  ...optionvalues,
+                                  asset: value.value,
+                                  asstr: value.str,
+                                })
+                              }}
+                              value={optionvalues.asset}
+                              options={exitstingAsset}
+                            />
+                          </div>
+                          <div className="mt-2">
+                            <div className="flex justify-between w-11.7/12 m-auto">
+                              <div>Reason For Purchase ?*</div>
+                              <div> {`${optionvalues.pstr}%`}</div>
+                            </div>
+                            <CustomSelect
+                              name="reasonPurchase"
+                              className="input"
+                              onChange={(value) => {
+                                // formik.setFieldValue('source', value.value)
+                                //  setNotInterestType(value.value)
+                                setoptionvalues({
+                                  ...optionvalues,
+                                  purchase: value.value,
+                                  pstr: value.str,
+                                })
+                              }}
+                              value={optionvalues.purchase}
+                              options={reasonPurchase}
+                            />
+                          </div>
+                          <div className="mt-2">
+                            <div className="flex justify-between w-11.7/12 m-auto">
+                              <div>Preferred Area ?*</div>
+                              <div> {`${optionvalues.astr}%`}</div>
+                            </div>
+                            <CustomSelect
+                              name="preferredArea"
+                              className="input"
+                              onChange={(value) => {
+                                // formik.setFieldValue('source', value.value)
+                                setoptionvalues({
+                                  ...optionvalues,
+                                  area: value.value,
+                                  astr: value.str,
+                                })
+                              }}
+                              value={optionvalues.area}
+                              options={reasonPurchase}
+                            />
+                          </div>
+                        </div>
+                        <div></div>
 
                         <div className="flex flex-row justify-end mt-6">
                           <section className="flex flex-row">
@@ -2076,6 +2201,7 @@ export default function CustomerProfileSideView({
                               className="input mt-3"
                               onChange={(value) => {
                                 // formik.setFieldValue('source', value.value)
+
                                 setNotInterestType(value.value)
                               }}
                               value={notInterestType}
@@ -2087,7 +2213,7 @@ export default function CustomerProfileSideView({
                             <textarea
                               value={takNotes}
                               onChange={(e) => setNotesTitle(e.target.value)}
-                              placeholder="Type & make a notes"
+                              placeholder="Type & make a notes *"
                               className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFF9F2] "
                             ></textarea>
                           </div>
@@ -3156,11 +3282,12 @@ export default function CustomerProfileSideView({
                                     {showVisitFeedBackStatus && (
                                       <div className="w-full flex flex-col mb-3 mt-2">
                                         <SelectDropDownComp
-                                          label="Sites Visit Feedback*"
+                                          label="Sites Visit Feedback *"
                                           options={siteVisitFeedbackOptions}
                                           value={fbTitle}
                                           onChange={(value) => {
                                             // formik.setFieldValue('source', value.value)
+
                                             setFbTitle(value.value)
                                           }}
                                         />
@@ -3173,19 +3300,28 @@ export default function CustomerProfileSideView({
                                         onChange={(e) =>
                                           setfbNotes(e.target.value)
                                         }
-                                        placeholder="Type & make a notes"
+                                        placeholder="Type & make a notes *"
                                         className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFF9F2] "
                                       ></textarea>
                                     </div>
                                     <div className="flex flex-row mt-1">
                                       <button
                                         onClick={() => {
-                                          setLeadStatus('visitdone')
-                                          if (showNotInterested) {
-                                            notInterestedFun()
-                                            return
+                                          if (fbNotes != '') {
+                                            setLeadStatus('visitdone')
+                                            if (showNotInterested) {
+                                              notInterestedFun()
+                                              return
+                                            }
+                                            addFeedbackFun(data)
+                                          } else {
+                                            enqueueSnackbar(
+                                              'Please Enter Notes',
+                                              {
+                                                variant: 'warning',
+                                              }
+                                            )
                                           }
-                                          addFeedbackFun(data)
                                         }}
                                         className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
                                       >
@@ -3193,12 +3329,24 @@ export default function CustomerProfileSideView({
                                       </button>
                                       <button
                                         onClick={() => {
+                                          console.log('am i clicked')
+
                                           setLeadStatus('visitdone')
                                           if (showNotInterested) {
                                             notInterestedFun()
                                             return
                                           }
                                           addFeedbackFun(data)
+
+                                          getWhatsAppTemplates(
+                                            'on_sitevisit_done',
+                                            'wa',
+                                            'customer',
+                                            // 'ProjectId',
+                                            ProjectId,
+                                            receiverDetails,
+                                            msgPayload
+                                          )
                                         }}
                                         className={`flex mt-2 ml-4 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
                                       >

@@ -57,6 +57,16 @@ const LeadsDisplayTable = ({
             return b.cT - a.cT
           })
       )
+    } else if (searchKey.includes('DUPLICATE_ENTRY')) {
+      setSortedList(
+        leadsRawList
+          .filter((item) =>
+            ['DUPLICATE_ENTRY', 'INVALID_DATA'].includes(item?.currentStatus)
+          )
+          .sort((a, b) => {
+            return b.cT - a.cT
+          })
+      )
     } else {
       setSortedList(
         leadsRawList.sort((a, b) => {
@@ -86,6 +96,7 @@ const LeadsDisplayTable = ({
                   All
                 </div>
               </a>
+
               <a
                 className="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
                 href="javascript:void(0)"
@@ -99,6 +110,22 @@ const LeadsDisplayTable = ({
                   }`}
                 >
                   <p>Unassigned</p>
+                </div>
+              </a>
+              <a
+                className="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8"
+                href="javascript:void(0)"
+                onClick={() => setSearchKey(['DUPLICATE_ENTRY'])}
+              >
+                <div
+                  className={`py-2 px-8 rounded-full hover:text-indigo-700 hover:bg-indigo-100  ${
+                    searchKey.includes('DUPLICATE_ENTRY') &&
+                    searchKey.length === 1
+                      ? 'bg-indigo-100 text-indigo-700'
+                      : 'text-gray-600'
+                  }`}
+                >
+                  <p>Bin</p>
                 </div>
               </a>
             </div>

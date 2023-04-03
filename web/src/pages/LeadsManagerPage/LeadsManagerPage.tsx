@@ -130,17 +130,17 @@ const LeadsManagerPage = (props) => {
 
               {viewable === 'LeadsManagerHome' && <LeadsManagementHome />}
               {viewable === 'Team Lead Report' && (
-                <ReportMain/>
-                // <LeadsTeamReportBody
-                //   project={{
-                //     area: 1000,
-                //     builderName: 'hello',
-                //     location: 'local',
-                //     projectName: 'Team Leads Report',
-                //     projectType: 'aprtment',
-                //   }}
-                //   isEdit={false}
-                // />
+                // <ReportMain/>
+                <LeadsTeamReportBody
+                  project={{
+                    area: 1000,
+                    builderName: 'hello',
+                    location: 'local',
+                    projectName: 'Team Leads Report',
+                    projectType: 'aprtment',
+                  }}
+                  isEdit={false}
+                />
               )}
               {viewable === 'My Lead Report' && (
                 <MyLeadsReportHome

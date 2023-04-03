@@ -1209,7 +1209,7 @@ export default function TodayLeadsActivitySearchView({
         setOpen={setisImportLeadsOpen}
         title={addLeadsTypes}
         customerDetails={selUserProfile}
-        widthClass="max-w-2xl"
+        widthClass="max-w-4xl"
       />
       <SiderForm
         open={isImportLeadsOpen1}
