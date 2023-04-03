@@ -373,6 +373,8 @@ const SiderForm = ({
                 {title === 'capturePayment' && (
                   <CaptureUnitPayment selUnitDetails={selUnitDetails} />
                 )}
+
+                
               </div>
             </Transition.Child>
           </div>
