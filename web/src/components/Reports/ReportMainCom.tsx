@@ -1,5 +1,10 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useEffect, useState } from 'react'
+
 import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
+import { Responsive, WidthProvider } from 'react-grid-layout'
+
 import { sourceList, sourceListItems } from '../../constants/projects'
 import {
   getAllProjects,
@@ -17,30 +22,36 @@ import {
   updateTodayTasksTotal,
 } from '../../context/dbQueryFirebase'
 import { useAuth } from '../../context/firebase-auth-context'
+import {
+  SlimSelectBox,
+  SlimDateSelectBox,
+} from '../../util/formFields/slimSelectBoxField'
 import { serialEmployeeLeadData } from '../LeadsTeamReport/serialEmployeeLeadData'
 import { serialEmployeeTaskLeadData } from '../LeadsTeamReport/serialEmployeeTaskLeadData'
 import { serialProjectLeadData } from '../LeadsTeamReport/serialProjectLeadData'
 import { serialProjecVisitFixedData } from '../LeadsTeamReport/serialProjectVisitsFixedData'
 import { serialMyData } from '../LeadsTeamReport/SourceLeads'
+
 import ReportCard from './ReportCard'
-import {
-  SlimSelectBox,
-  SlimDateSelectBox,
-} from '../../util/formFields/slimSelectBoxField'
-import { Responsive, WidthProvider } from 'react-grid-layout'
+
 import '../../../../node_modules/react-grid-layout/css/styles.css'
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from '@heroicons/react/solid'
+
 const ResponsiveGridLayout = WidthProvider(Responsive)
 import ChartBar from './ChartExm'
 import PieChart from './PieChart'
 import LineChart from './LineChart'
+
+import ReportsSideForm from '../SiderForm/ReportsSideForm'
 export default function ReportMainCom() {
   const d = new window.Date()
   const { user } = useAuth()
   const { orgId, access, uid } = user
+  const [isImportLeadsOpen1, setisImportLeadsOpen1] = React.useState(false)
+
   const [leadsFetchedRawData, setLeadsFetchedRawData] = useState([])
   const [leadLogsRawData, setLeadLogsRawData] = useState([])
   const [empPerDayTasksCountsA, setEmpPerDayTasksCountsA] = useState([])
@@ -151,11 +162,27 @@ export default function ReportMainCom() {
     { i: 'a', x: 0, y: 0, w: 9, h: 9 },
     { i: 'b', x: 1, y: 12, w: 9, h: 9 },
   ])
-  const [btnBackgroundColor, SetBtnBackgroundColor] = useState({task:true, source:false, project:false, employee:false, performance:false})
-  const [btnChartDisplay, SetBtnChartDisplay] = useState({task:false, source:false, project:false, employee:false, performance:false})
+  const [btnBackgroundColor, SetBtnBackgroundColor] = useState({
+    task: true,
+    source: false,
+    project: false,
+    employee: false,
+    performance: false,
+  })
+  const [btnChartDisplay, SetBtnChartDisplay] = useState({
+    task: false,
+    source: false,
+    project: false,
+    employee: false,
+    performance: false,
+  })
   const [formattedSourceData, setFormattedSourceData] = useState([])
   const [formattedProjectData, setFormattedProjectData] = useState([])
   const [formattedEmployeeData, setFormattedEmployeeData] = useState([])
+
+  const openingTaskAddWindow = () => {
+    setisImportLeadsOpen1(true)
+  }
   const showColumnsSourceFun = async (id) => {
     const y = ['new', 'followup', 'visitfixed', 'visitdone', 'neogotiation']
     const y1 = ['notinterested', 'dead', 'blocked', 'junk']
@@ -893,7 +920,7 @@ export default function ReportMainCom() {
 
   console.log(empPerDayTasksCountsA, 'empPerDayTasksCountsA')
   useEffect(() => {
-    const formattedArr = (data)=> {
+    const formattedArr = (data) => {
       return data.map((data) => {
         return {
           name: data?.label,
@@ -922,11 +949,10 @@ export default function ReportMainCom() {
       const arr = formattedArr(projectFilList)
       setFormattedProjectData([...arr])
     }
-    if(empFiltListTuned.length){
+    if (empFiltListTuned.length) {
       const arr = formattedArr(empFiltListTuned)
       setFormattedEmployeeData([...arr])
     }
-
   }, [sourceFiltListTuned, projectFilList, empFiltListTuned])
   console.log(formattedSourceData, 'formattedSourceData')
   const numFormatter = new Intl.NumberFormat('en-US')
@@ -963,436 +989,168 @@ export default function ReportMainCom() {
   // console.log(formattedPieChart())
   return (
     <>
-    <div
-      className="  z-10"
-      style={{
-        background: 'rgb(229, 229, 229)',
-        position:'sticky',
-        top:'0px',
-        borderRadius: '15px',
-      }}
-    >
       <div
+        className="  z-10"
         style={{
-          padding: '10px',
-          paddingLeft: '10px',
-          /* padding: 5px; */
-          borderBottom: '1px solid gray',
-          display: 'flex',
-          alignItems: 'center',
-          background: 'rgb(69,186,102)',
-          justifyContent:"space-between"
+          background: 'rgb(229, 229, 229)',
+          position: 'sticky',
+          top: '0px',
+          borderRadius: '15px',
         }}
       >
-        <div style={{display:"flex", alignItems:"center"}}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="50"
-          height="50"
-          viewBox="0 0 24 24"
-          style={{color:'white'}}
+        <div
+          style={{
+            padding: '10px',
+            paddingLeft: '10px',
+            /* padding: 5px; */
+            borderBottom: '1px solid gray',
+            display: 'flex',
+            alignItems: 'center',
+            background: 'rgb(69,186,102)',
+            justifyContent: 'space-between',
+          }}
         >
-          <g fill="none" fillRule="evenodd">
-            <g fill="currentColor" fillRule="nonzero">
-              <g>
-                <g>
-                  <path
-                    d="M12 3c4.97 0 9 4.03 9 9s-4.03 9-9 9-9-4.03-9-9 4.03-9 9-9zm0 1c-4.418 0-8 3.582-8 8 0 .702.09 1.383.26 2.031l2.886-2.885c.196-.195.512-.195.708 0l2.646 2.647 4.793-4.794L13 9c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h3.52l.052.005L16.5 8c.036 0 .071.004.105.011l.046.012.04.015c.014.005.027.012.04.019.013.006.025.013.036.02l.035.025c.014.01.027.02.04.033l.012.011.011.013c.012.012.023.025.033.039l-.044-.052c.026.027.05.056.069.087l.02.034.02.042.014.04c.005.015.009.03.012.046l.006.033.005.051V12c0 .276-.224.5-.5.5s-.5-.224-.5-.5V9.706l-5.146 5.148c-.196.195-.512.195-.708 0L7.5 12.207 4.618 15.09C5.827 17.974 8.677 20 12 20c4.418 0 8-3.582 8-8s-3.582-8-8-8z"
-                    transform="translate(-564 -480) translate(528 444) translate(36 36)"
-                  ></path>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              viewBox="0 0 24 24"
+              style={{ color: 'white' }}
+            >
+              <g fill="none" fillRule="evenodd">
+                <g fill="currentColor" fillRule="nonzero">
+                  <g>
+                    <g>
+                      <path
+                        d="M12 3c4.97 0 9 4.03 9 9s-4.03 9-9 9-9-4.03-9-9 4.03-9 9-9zm0 1c-4.418 0-8 3.582-8 8 0 .702.09 1.383.26 2.031l2.886-2.885c.196-.195.512-.195.708 0l2.646 2.647 4.793-4.794L13 9c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h3.52l.052.005L16.5 8c.036 0 .071.004.105.011l.046.012.04.015c.014.005.027.012.04.019.013.006.025.013.036.02l.035.025c.014.01.027.02.04.033l.012.011.011.013c.012.012.023.025.033.039l-.044-.052c.026.027.05.056.069.087l.02.034.02.042.014.04c.005.015.009.03.012.046l.006.033.005.051V12c0 .276-.224.5-.5.5s-.5-.224-.5-.5V9.706l-5.146 5.148c-.196.195-.512.195-.708 0L7.5 12.207 4.618 15.09C5.827 17.974 8.677 20 12 20c4.418 0 8-3.582 8-8s-3.582-8-8-8z"
+                        transform="translate(-564 -480) translate(528 444) translate(36 36)"
+                      ></path>
+                    </g>
+                  </g>
                 </g>
               </g>
-            </g>
-          </g>
-        </svg>
-        <h1 className="text-2xl font-bold" style={{color:'white'}}>Reports</h1>
+            </svg>
+            <h1
+              className="text-2xl font-bold"
+              style={{ color: 'white' }}
+              onClick={() => openingTaskAddWindow()}
+            >
+              Reports
+            </h1>
+          </div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button
+              style={{
+                color: 'white',
+                padding: '4px',
+                background: btnBackgroundColor.task ? 'rgb(53,149,82)' : '',
+              }}
+              onClick={() => {
+                SetBtnBackgroundColor({
+                  task: true,
+                  source: false,
+                  project: false,
+                  employee: false,
+                  performance: false,
+                })
+              }}
+            >
+              <a href="#section-1">Employee vs Tasks</a>
+            </button>
+            <button
+              style={{
+                color: 'white',
+                padding: '4px',
+                background: btnBackgroundColor.source ? 'rgb(53,149,82)' : '',
+              }}
+              onClick={() => {
+                SetBtnBackgroundColor({
+                  task: false,
+                  source: true,
+                  project: false,
+                  employee: false,
+                  performance: false,
+                })
+              }}
+            >
+              <a href="#section-2">Source vs Status</a>
+            </button>
+            <button
+              style={{
+                color: 'white',
+                padding: '4px',
+                background: btnBackgroundColor.project ? 'rgb(53,149,82)' : '',
+              }}
+              onClick={() => {
+                SetBtnBackgroundColor({
+                  task: false,
+                  source: false,
+                  project: true,
+                  employee: false,
+                  performance: false,
+                })
+              }}
+            >
+              <a href="#section-3">Project vs Status</a>
+            </button>
+            <button
+              style={{
+                color: 'white',
+                padding: '4px',
+                background: btnBackgroundColor.employee ? 'rgb(53,149,82)' : '',
+              }}
+              onClick={() => {
+                SetBtnBackgroundColor({
+                  task: false,
+                  source: false,
+                  project: false,
+                  employee: true,
+                  performance: false,
+                })
+              }}
+            >
+              <a href="#section-4">Employee vs Status</a>
+            </button>
+            <button
+              style={{
+                color: 'white',
+                padding: '4px',
+                background: btnBackgroundColor.performance
+                  ? 'rgb(53,149,82)'
+                  : '',
+              }}
+              onClick={() => {
+                SetBtnBackgroundColor({
+                  task: false,
+                  source: false,
+                  project: false,
+                  employee: false,
+                  performance: true,
+                })
+              }}
+            >
+              <a href="#section-5">Visits Performance Counts</a>
+            </button>
+          </div>
         </div>
-        <div style={{display:"flex", gap:'10px'}}>
-          <button style={{color:'white',padding:'4px', background: btnBackgroundColor.task ? "rgb(53,149,82)" : ""}} onClick={()=>{SetBtnBackgroundColor({task:true, source:false, project:false, employee:false, performance:false})}}><a href="#section-1">Employee vs Tasks</a></button>
-          <button style={{color:'white',padding:'4px', background: btnBackgroundColor.source ? "rgb(53,149,82)" : ""}} onClick={()=>{SetBtnBackgroundColor({task:false, source:true, project:false, employee:false, performance:false})}}><a href="#section-2">Source vs Status</a></button>
-          <button style={{color:'white', padding:'4px',background: btnBackgroundColor.project ? "rgb(53,149,82)" : ""}} onClick={()=>{SetBtnBackgroundColor({task:false, source:false, project:true, employee:false, performance:false})}}><a href="#section-3">Project vs Status</a></button>
-          <button style={{color:'white', padding:'4px',background: btnBackgroundColor.employee ? "rgb(53,149,82)" : ""}} onClick={()=>{SetBtnBackgroundColor({task:false, source:false, project:false, employee:true, performance:false})}}><a href="#section-4">Employee vs Status</a></button>
-          <button style={{color:'white', padding:'4px',background: btnBackgroundColor.performance ? "rgb(53,149,82)" : ""}}onClick={()=>{SetBtnBackgroundColor({task:false, source:false, project:false, employee:false, performance:true})}}><a href="#section-5">Visits Performance Counts</a></button>
-        </div>
-      </div>
       </div>
       {/* <div className="drop-shadow-md  rounded-lg " style={{height:"100vh", width:"33%", background: 'red'}}>Content</div> */}
       <div
+        className="m-2"
         style={{
-          width: '100vm',
-          height: '100vh',
-          overflow: 'scroll',
           display: 'flex',
           flexDirection: 'column',
           gap: '50px',
         }}
       >
-
         <div
           className="  rounded-lg "
           style={{
             backgroundColor: 'white',
             width: '95vw',
           }}
-        >
-          <div style={{ height: '100%', overflow: 'scroll' }}>
-            <div style={{ display: 'flex' }} className={'dragMe'}>
-              <div className=" flex flex-col overscroll-x-scroll p-10 max-w-[100%]">
-                <div>
-                  <div>
-                    <div
-                      className="flex m-1 justify-between"
-                      style={{
-                        position: 'sticky',
-                        top: '0px',
-                        background: 'white',
-                      }}
-                      id='section-1'
-                    >
-                      <div className="relative  flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 mt-4 ">
-                        <div className="text-md font-bold leading-none">
-                          {`Employee vs Tasks `}
-                        </div>
-                      </div>
-
-                      <div
-                        className="relative  flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 mt-4 ml-4 text-blue cursor-pointer"
-                        style={{ gap: '50px' }}
-                        onClick={() => {
-                          setResettingEmpValues(true)
-                          GenerateTasksDailyReportForEmp()
-                        }}
-                      >
-                        Generate Daily Task Report
-                      </div>
-                    </div>
-                    {/* <div className=" text-md font-bold leading-none pl-0 mt-4 border-b pb-4 mb-4 ">
-                    {`Employee vs Tasks `}
-                  </div>
-
-                  <section className="flex flex-row justify-between mt-[18px]">
-                    <section></section>
-                    <div className=" flex   ">
-                      <div
-                        className="ml-4 text-blue cursor-pointer"
-                        onClick={() => {
-                          setResettingEmpValues(true)
-                          GenerateTasksDailyReportForEmp()
-                        }}
-                      >
-                        Generate Daily Task Report
-                      </div>
-
-                      {resettingEmpValues && <span>InProgress</span>}
-                    </div>
-                  </section> */}
-
-                    <div style={{ overflowX: 'scroll' }}>
-                      <table className="text-center mt-6">
-                        <thead>
-                          <tr style={{ background: 'rgb(229,229,229)' }}>
-                            {[
-                              { label: 'sNo', id: 'no' },
-                              { label: 'Name', id: 'name' },
-                              { label: 'All', id: 'all' },
-                              { label: 'Rnr', id: 'rnr' },
-                              { label: 'Busy', id: 'busy' },
-                              { label: 'New', id: 'new' },
-                              { label: 'Follow Up', id: 'followup' },
-                              { label: 'Visit Fixed', id: 'visitfixed' },
-                              { label: 'Visit Done', id: 'visitdone' },
-                              { label: 'Visit Cancel', id: 'visitCancel' },
-                              { label: 'Booked', id: 'booked' },
-                              { label: 'Dead', id: 'dead' },
-                              { label: 'Blocked', id: 'blocked' },
-                              { label: 'Junk', id: 'junk' },
-
-                              { label: 'Negotiations', id: 'negotiation' },
-                              { label: 'Others', id: 'others' },
-                            ].map((d, i) => (
-                              <th
-                                key={i}
-                                scope="col"
-                                style={{
-                                  display: employeeTaskColumn.includes(d.id)
-                                    ? ''
-                                    : 'none',
-                                  color:
-                                    ['all'].includes(d.id) &&
-                                    showEmployeeTaskAllData
-                                      ? 'blue'
-                                      : 'rgb(146,146,146)',
-                                  border: '1px solid rgb(223,223,223)',
-                                }}
-                                className={`text-sm font-medium text-gray-900 px-6 py-4 ${
-                                  ['name'].includes(d.label) ? 'text-left' : ''
-                                }`}
-                                onClick={() => {
-                                  if (['all'].includes(d.id))
-                                    showColumnsEmployeeTaskFun()
-                                }}
-                              >
-                                <div style={{ display: 'flex' }}>
-                                  {d.label}
-                                  {d.id === 'all' ? (
-                                    !showEmployeeTaskAllData ? (
-                                      <ChevronDoubleRightIcon
-                                        className="w-4 h-5 inline"
-                                        aria-hidden="true"
-                                      />
-                                    ) : (
-                                      <ChevronDoubleLeftIcon
-                                        className="w-4 h-5 inline"
-                                        aria-hidden="true"
-                                      />
-                                    )
-                                  ) : null}
-                                </div>
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {empPerDayTasksCountsA?.map((data, i) => {
-                            return (
-                              <tr
-                                className={`  ${
-                                  i % 2 === 0
-                                    ? 'bg-white border-blue-200'
-                                    : 'bg-gray-100'
-                                }`}
-                                key={i}
-                              >
-                                <td
-                                  className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left"
-                                  style={{
-                                    border: '1px solid rgb(231,231,231)',
-                                  }}
-                                >
-                                  {i + 1}
-                                </td>
-                                <td
-                                  className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left"
-                                  style={{
-                                    border: '1px solid rgb(231,231,231)',
-                                  }}
-                                >
-                                  {data?.emp}
-                                </td>
-                                <td
-                                  className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                  style={{
-                                    border: '1px solid rgb(231,231,231)',
-                                  }}
-                                >
-                                  {data?.all_comp || 0}/{data?.all || 0}
-                                </td>
-
-                                <td
-                                  className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                  style={{
-                                    border: '1px solid rgb(231,231,231)',
-                                  }}
-                                >
-                                  {data?.rnr || 0}
-                                </td>
-                                <td
-                                  className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                  style={{
-                                    border: '1px solid rgb(231,231,231)',
-                                  }}
-                                >
-                                  {data?.busy || 0}
-                                </td>
-                                <td
-                                  className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                  style={{
-                                    border: '1px solid rgb(231,231,231)',
-                                  }}
-                                >
-                                  {data?.new_comp || 0}/{data?.new || 0}
-                                </td>
-                                <td
-                                  className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                  style={{
-                                    border: '1px solid rgb(231,231,231)',
-                                  }}
-                                >
-                                  {data?.followup_comp || 0}/
-                                  {data?.followup || 0}
-                                </td>
-
-                                <td
-                                  className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                  style={{
-                                    border: '1px solid rgb(231,231,231)',
-                                  }}
-                                >
-                                  {data?.visitfixed_comp || 0}/{' '}
-                                  {data?.visitfixed || 0}
-                                </td>
-                                {showEmployeeTaskAllData && (
-                                  <>
-                                    <td
-                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                      style={{
-                                        border: '1px solid rgb(231,231,231)',
-                                      }}
-                                    >
-                                      {data?.visitdone_comp || 0}/{' '}
-                                      {data?.visitdone || 0}
-                                    </td>
-                                    <td
-                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                      style={{
-                                        border: '1px solid rgb(231,231,231)',
-                                      }}
-                                    >
-                                      {data?.visitCancel_comp || 0}/{' '}
-                                      {data?.visitCancel || 0}
-                                    </td>
-                                    <td
-                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                      style={{
-                                        border: '1px solid rgb(231,231,231)',
-                                      }}
-                                    >
-                                      {data?.booked_comp || 0}/{' '}
-                                      {data?.booked || 0}
-                                    </td>
-                                    <td
-                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                      style={{
-                                        border: '1px solid rgb(231,231,231)',
-                                      }}
-                                    >
-                                      {data?.dead_comp || 0}/ {data?.dead || 0}
-                                    </td>
-                                    <td
-                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                      style={{
-                                        border: '1px solid rgb(231,231,231)',
-                                      }}
-                                    >
-                                      {data?.blocked_comp || 0}/{' '}
-                                      {data?.blocked || 0}
-                                    </td>
-                                    <td
-                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                      style={{
-                                        border: '1px solid rgb(231,231,231)',
-                                      }}
-                                    >
-                                      {data?.junk_comp || 0}/ {data?.junk || 0}
-                                    </td>
-                                    <td
-                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                      style={{
-                                        border: '1px solid rgb(231,231,231)',
-                                      }}
-                                    >
-                                      {data?.negotiation_comp || 0}/
-                                      {data?.negotiation || 0}
-                                    </td>
-                                    <td
-                                      className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
-                                      style={{
-                                        border: '1px solid rgb(231,231,231)',
-                                      }}
-                                    >
-                                      {data?.others_comp || 0}/{' '}
-                                      {data?.others || 0}
-                                    </td>
-                                  </>
-                                )}
-                              </tr>
-                            )
-                          })}
-
-                          <tr className="border-b bg-gray-800 boder-gray-900">
-                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap text-left">
-                              Total
-                            </td>
-                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                              {/* {Object.keys(empTaskListTuned.Total).length
-                            empTaskListTuned.reduce((a, b) => {
-                              return a.Total + b.Total
-                            }).length
-                          } */}
-                              {/* {empTaskListTuned.reduce(
-                            (previousValue, currentValue) =>
-                              previousValue.Total + currentValue.Total,
-                            0
-                          )} */}
-                            </td>
-                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                              {}
-                            </td>
-
-                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                              {}
-                            </td>
-
-                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                              {}
-                            </td>
-                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                              {}
-                            </td>
-                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                              {}
-                            </td>
-
-                            <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                              {}
-                            </td>
-                            {showEmployeeTaskAllData && (
-                              <>
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {}
-                                </td>
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {}
-                                </td>
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {}
-                                </td>
-
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {}
-                                </td>
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {}
-                                </td>
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {}
-                                </td>
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {}
-                                </td>
-                                <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                                  {}
-                                </td>
-                              </>
-                            )}
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          className="  rounded-lg "
-          style={{
-            backgroundColor: 'white',
-            width: '95vw',
-          }}
-          id='section-2'
+          id="section-2"
         >
           <div style={{ height: '100%', overflow: 'scroll' }}>
             <ReportCard
@@ -1424,12 +1182,15 @@ export default function ReportMainCom() {
               viewSourceStats1A={viewSourceStats1A}
               DateComponent={DateSourceComponent}
               id="test"
-              chartOpen = {btnChartDisplay.source}
-              chartOpenfn = {()=> {SetBtnChartDisplay({...btnChartDisplay, source:!btnChartDisplay.source})}}
-              lineChartData = {formattedSourceData}
-              pieChartdata={formattedPieChart(
-                formattedSourceData
-              )}
+              chartOpen={btnChartDisplay.source}
+              chartOpenfn={() => {
+                SetBtnChartDisplay({
+                  ...btnChartDisplay,
+                  source: !btnChartDisplay.source,
+                })
+              }}
+              lineChartData={formattedSourceData}
+              pieChartdata={formattedPieChart(formattedSourceData)}
               barData1={sourceFiltListTuned.map((data) => {
                 return {
                   name: data?.label,
@@ -1489,7 +1250,7 @@ export default function ReportMainCom() {
             backgroundColor: 'white',
             width: '95vw',
           }}
-          id='section-3'
+          id="section-3"
         >
           <div style={{ height: '100%', overflow: 'scroll' }}>
             <ReportCard
@@ -1521,12 +1282,15 @@ export default function ReportMainCom() {
               viewSourceStats1A={viewProjectStats1A}
               DateComponent={DateProjectComponent}
               id="test1"
-              chartOpen = {btnChartDisplay.project}
-              chartOpenfn = {()=> {SetBtnChartDisplay({...btnChartDisplay, project:!btnChartDisplay.project})}}
-              lineChartData = {formattedProjectData}
-              pieChartdata={formattedPieChart(
-                formattedProjectData
-              )}
+              chartOpen={btnChartDisplay.project}
+              chartOpenfn={() => {
+                SetBtnChartDisplay({
+                  ...btnChartDisplay,
+                  project: !btnChartDisplay.project,
+                })
+              }}
+              lineChartData={formattedProjectData}
+              pieChartdata={formattedPieChart(formattedProjectData)}
               barData1={projectFilList.map((data) => {
                 return {
                   name: data?.label,
@@ -1587,7 +1351,7 @@ export default function ReportMainCom() {
             backgroundColor: 'white',
             width: '95vw',
           }}
-          id='section-4'
+          id="section-4"
         >
           <div style={{ height: '100%', overflow: 'scroll' }}>
             <ReportCard
@@ -1619,12 +1383,15 @@ export default function ReportMainCom() {
               viewSourceStats1A={viewEmployeeStats1A}
               DateComponent={DateEmployeeComponent}
               employeeDataDropDown={employeeDataDropDown}
-              chartOpen = {btnChartDisplay.employee}
-              chartOpenfn = {()=> {SetBtnChartDisplay({...btnChartDisplay, employee:!btnChartDisplay.employee})}}
-              lineChartData = {formattedEmployeeData}
-              pieChartdata={formattedPieChart(
-                formattedEmployeeData
-              )}
+              chartOpen={btnChartDisplay.employee}
+              chartOpenfn={() => {
+                SetBtnChartDisplay({
+                  ...btnChartDisplay,
+                  employee: !btnChartDisplay.employee,
+                })
+              }}
+              lineChartData={formattedEmployeeData}
+              pieChartdata={formattedPieChart(formattedEmployeeData)}
               barData1={empFiltListTuned.map((data) => {
                 return {
                   name: data?.label,
@@ -1684,7 +1451,7 @@ export default function ReportMainCom() {
             backgroundColor: 'white',
             width: '95vw',
           }}
-          id='section-5'
+          id="section-5"
         >
           <div style={{ height: '100%', overflow: 'scroll' }}>
             <ReportCard
@@ -1715,12 +1482,15 @@ export default function ReportMainCom() {
               showArchiFSource={showArchiFProject}
               viewSourceStats1A={viewProjectStats1A}
               DateComponent={DateProjectComponent}
-              chartOpen = {btnChartDisplay.project}
-              chartOpenfn = {()=> {SetBtnChartDisplay({...btnChartDisplay, project:!btnChartDisplay.project})}}
-              lineChartData = {formattedProjectData}
-              pieChartdata={formattedPieChart(
-                formattedProjectData
-              )}
+              chartOpen={btnChartDisplay.project}
+              chartOpenfn={() => {
+                SetBtnChartDisplay({
+                  ...btnChartDisplay,
+                  project: !btnChartDisplay.project,
+                })
+              }}
+              lineChartData={formattedProjectData}
+              pieChartdata={formattedPieChart(formattedProjectData)}
               barData1={projectFilList.map((data) => {
                 return {
                   name: data?.label,
@@ -1775,7 +1545,18 @@ export default function ReportMainCom() {
           </div>
         </div>
       </div>
-
+      <ReportsSideForm
+        open={isImportLeadsOpen1}
+        setOpen={setisImportLeadsOpen1}
+        title={'Employee VS Tasks'}
+        setResettingEmpValues={setResettingEmpValues}
+        GenerateTasksDailyReportForEmp={GenerateTasksDailyReportForEmp}
+        employeeTaskColumn={employeeTaskColumn}
+        showEmployeeTaskAllData={showEmployeeTaskAllData}
+        showColumnsEmployeeTaskFun={showColumnsEmployeeTaskFun}
+        empPerDayTasksCountsA={empPerDayTasksCountsA}
+        widthClass="max-w-7xl"
+      />
     </>
   )
 }
