@@ -171,7 +171,7 @@ export const sourceListItems = [
     rep: ['adventures', 'Adventures'],
   },
   { label: 'CP Skagen', value: 'cpskagen', rep: ['cpskagen'] },
-  { label: 'Direct Contact', value: 'directcontact', rep: ['directcontact'] },
+
   {
     label: 'Facebook Ad',
     value: 'facebookad',
