@@ -10,6 +10,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import FinanceHomePagePage from './pages/FinanceHomePagePage/FinanceHomePagePage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage/PrivacyPolicyPage'
 import Profile from './pages/Profile/Profile'
+import TestSvg from './components/Svg/TestSvg'
 
 const defaultRoutes = () => {
   return (
@@ -116,6 +117,7 @@ const Routes = () => {
   return (
     <Router>
       <Route path="/privacyPolicy" page={PrivacyPolicyPage} name="privacyPolicy" />
+      <Route path="/svg" page={TestSvg} name="svg" />
       <Route path="/construct-module" page={ConstructModulePage} name="constructModule" />
       {/* <Route path="/admin/home" page={HomePage} name="home" /> */}
       <Route path="/erp-account-home" page={ErpAccountHomePage} name="erpAccountHome" />
