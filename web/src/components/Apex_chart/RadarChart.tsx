@@ -25,14 +25,12 @@ const RadarChart = () => {
           top: 1
         }
       },
-      title: {
-        text: 'Radar Chart - Multi Series'
-      },
+
       stroke: {
         width: 2
       },
       fill: {
-        opacity: 0.1
+        opacity: 0.3
       },
       markers: {
         size: 0
@@ -44,11 +42,11 @@ const RadarChart = () => {
   });
   return (
     <div id="chart">
-       <Card >
-      <CardHeader title="Conversion Rates" subheader="(+43%) than last year" />
+       <Card sx={{  borderRadius:4 }}>
+      <CardHeader title="Current Subject"  />
 
       <Box sx={{ mx: 3 }}>
-      <ReactApexChart options={state.options} series={state.series} type="radar" height={350} />
+      <ReactApexChart options={state.options} series={state.series} type="radar" height={400} />
       </Box>
     </Card>
     </div>

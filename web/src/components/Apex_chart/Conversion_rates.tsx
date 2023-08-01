@@ -16,9 +16,30 @@ const Conversion_rates = () => {
       },
       plotOptions: {
         bar: {
-          borderRadius: 4,
+          barHeight: '30%',
+          borderRadius: 5,
+          borderRadiusApplication: 'right',
           horizontal: true,
         },
+      },
+      fill: {
+        colors: ['#48a854'],
+
+        gradient: {
+          inverseColors: false,
+          shade: 'light',
+          type: 'vertical',
+          opacityFrom: 0.85,
+          opacityTo: 0.55,
+          stops: [0, 100, 100, 100],
+        },
+      },
+      grid: {
+
+        strokeDashArray: 4,
+      }, stroke: {
+        width: 0,
+        curve: 'smooth',
       },
       dataLabels: {
         enabled: false,
@@ -41,7 +62,7 @@ const Conversion_rates = () => {
   })
   return (
     <div id="chart3">
-       <Card >
+       <Card sx={{  borderRadius:4 }}>
       <CardHeader title="Conversion Rates" subheader="(+43%) than last year" />
 
       <Box sx={{ mx: 3 }}>
