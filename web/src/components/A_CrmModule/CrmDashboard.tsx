@@ -634,11 +634,11 @@ const CrmDashboardHome = ({ project }) => {
             <Grid xs={6} xl={4} sm={9} md={6} lg={4.5} sx={{ borderRadius: 5 }} className=' m-2 md:pl-10 md:ml-5' >
               <PieChart />
             </Grid>
-            <Grid xs={9} md={10} lg={6.5}  sx={{ borderRadius:10 }} className='m-2 lg:ml-10 lg:pl-5 md:pl-10 md:ml-5'>
+            <Grid xs={9} xl={6} sm={11} md={7} lg={6.5}  sx={{ borderRadius:10 }} className='m-2 lg:ml-10 lg:pl-5 md:pl-10 md:ml-5'>
               <Conversion_rates/>
             </Grid>
 
-            <Grid xs={6} md={6} lg={4.5} sx={{  borderRadius: 5 }} className=' m-2 md:pl-10 md:ml-5'>
+            <Grid xs={6} xl={4} sm={9} md={6} lg={4.5} sx={{  borderRadius: 5 }} className=' m-2 md:pl-10 md:ml-5'>
               <RadarChart/>
             </Grid>
 
