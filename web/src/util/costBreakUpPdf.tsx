@@ -439,6 +439,7 @@ const CostBreakUpPdf = ({
     y[inx].gst.value = gstTotal
     y[inx].TotalNetSaleValueGsT = total + gstTotal
     console.log('gen costSheetA', y)
+    console.log(costSheetA)
 
     setCostSheetA(y)
     setTotalFun()

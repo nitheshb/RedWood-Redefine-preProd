@@ -48,6 +48,7 @@ import Loader from './Loader/Loader'
 import PaymentScheduleSheet from './paymentScheduleSheet'
 import SiderForm from './SiderForm/SiderForm'
 import UnitTransactionForm from './UnitBillTransactionForm'
+import PdfInvoiceGenerator from 'src/util/PdfInvoiceGenerator'
 
 const CostBreakUpSheet = ({
   selMode,
@@ -390,6 +391,7 @@ const CostBreakUpSheet = ({
             <div className="bg-[white] rounded-b-md">
               <div className=" mt-">
                 <div className=" pb-1">
+                <div><PdfInvoiceGenerator/></div>
                   <div
                     className="flex flex-row justify-between   py-3 px-3  mt-[0.5px] mb-0 rounded-xs bg-[#F2F5F8]"
                     style={{ flex: '4 0 100%' }}
@@ -773,6 +775,7 @@ const CostBreakUpSheet = ({
                                 />
                               )}
                             </section>
+
                             <div className="flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
                               <div className="mt-2 text-right md:space-x-3 md:block flex flex-col-reverse mb-3">
                                 <button
@@ -798,6 +801,7 @@ const CostBreakUpSheet = ({
                                 </button>
                               )}
                             </Pdf> */}
+
                                 <button
                                   onClick={() => {
                                     if (
