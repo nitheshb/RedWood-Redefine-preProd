@@ -86,12 +86,16 @@ const CostBreakUpSheet = ({
   const [newAdditonalChargesObj, setNewAdditonalChargesObj] = useState([])
   const [StatusListA, setStatusListA] = useState([])
 
+  const [netTotal, setNetTotal] = useState(0)
+  const [partATotal, setPartATotal] = useState(0)
+  const [partBTotal, setPartBTotal] = useState(0)
+
   const pdfExportComponent = useRef(null)
   const pdfExportComponentConstruct = useRef(null)
 
   useEffect(() => {
-    console.log('new cost sheet value is ', newPlotCsObj)
-  }, [newPlotCsObj])
+    console.log('new cost sheet value is ', newPlotCsObj, newPlotCostSheetA)
+  }, [newPlotCsObj, newPlotCostSheetA])
   useEffect(() => {
     if (actionMode === 'quoteMode') {
       setStatusListA([
@@ -732,6 +736,9 @@ const CostBreakUpSheet = ({
                                   newConstructPS={newConstructPS}
                                 />
                               )}
+                              {/*   const [netTotal, setNetTotal] = useState(0)
+  const [partATotal, setPartATotal] = useState(0)
+  const [partBTotal, setPartBTotal] = useState(0) */}
                               {csMode === 'plot_cs' && (
                                 <CostBreakUpPdf
                                   projectDetails={projectDetails}
@@ -749,6 +756,12 @@ const CostBreakUpSheet = ({
                                   setNewPS={setNewPlotPS}
                                   newPlotPS={newPlotPS}
                                   showGstCol={showGstCol}
+                                  netTotal
+                                  setNetTotal
+                                  partATotal
+                                  partBTotal
+                                  setPartATotal
+                                  setPartBTotal
                                 />
                               )}
                               {csMode === 'construct_cs' && (
@@ -801,8 +814,13 @@ const CostBreakUpSheet = ({
                                 </button>
                               )}
                             </Pdf> */}
-
-                                <button
+  <div className="inline-block"><PdfInvoiceGenerator selUnitDetails={selUnitDetails} myObj={newPlotCostSheetA} myAdditionalCharges= {newAdditonalChargesObj}  netTotal
+                                  setNetTotal
+                                  partATotal
+                                  partBTotal
+                                  setPartATotal
+                                  setPartBTotal/></div>
+                                {/* <button
                                   onClick={() => {
                                     if (
                                       pdfExportComponent.current &&
@@ -825,7 +843,7 @@ const CostBreakUpSheet = ({
                                 >
                                   {' '}
                                   Download{' '}
-                                </button>
+                                </button> */}
 
                                 <button
                                   className="mb-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
@@ -848,8 +866,11 @@ const CostBreakUpSheet = ({
                       </Formik>
                     </div>
                   </div>
+
                 </div>
               )}
+
+
               {/* PaymentScheduleSheet */}
               {/* {['payment_sch', 'allsheets'].includes(onStep) && (
                 <PaymentScheduleSheet

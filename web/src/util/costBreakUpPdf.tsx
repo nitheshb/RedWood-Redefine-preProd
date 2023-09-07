@@ -33,6 +33,12 @@ const CostBreakUpPdf = ({
   newPlotCostSheetA,
   setNewPlotCostSheetA,
   setNewPlotPS,
+  netTotal,
+  setNetTotal,
+  partATotal,
+  partBTotal,
+  setPartATotal,
+  setPartBTotal,
 }) => {
   const { user } = useAuth()
   const ref = createRef()
@@ -44,9 +50,7 @@ const CostBreakUpPdf = ({
 
   const [newSqftPrice, setNewSqftPrice] = useState(0)
 
-  const [netTotal, setNetTotal] = useState(0)
-  const [partATotal, setPartATotal] = useState(0)
-  const [partBTotal, setPartBTotal] = useState(0)
+
   const [plotBookingAdv, setPlotBookingAdv] = useState(0)
   const [partBPayload, setPartBPayload] = useState([])
   const [psPayload, setPSPayload] = useState([])

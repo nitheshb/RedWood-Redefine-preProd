@@ -1,4 +1,6 @@
 import React from 'react'
+import { useMemo, useEffect } from 'react'
+
 import {
   Document,
   Page,
@@ -9,10 +11,10 @@ import {
   Image,
   Font,
 } from '@react-pdf/renderer'
-import { useMemo } from 'react'
-
-import numeral from 'numeral'
 import { format, getTime, formatDistanceToNow } from 'date-fns'
+import numeral from 'numeral'
+
+import { computeTotal } from './computeCsTotals'
 
 Font.register({
   family: 'Roboto',
@@ -32,7 +34,7 @@ const useStyles = () =>
           marginRight: '10px',
           paddingRight: '20px',
         },
-        col:{width: '23%',},
+        col: { width: '23%' },
         col8: { width: '75%' },
         col2: { width: '13%', marginTop: '10px' },
         col6: { width: '50%' },
@@ -138,7 +140,7 @@ const useStyles = () =>
         tableCell_4: {
           width: '53%',
           paddingRight: 8,
-          marginRight:2
+          marginRight: 2,
         },
         tableCell_3: {
           width: '15%',
@@ -371,293 +373,345 @@ const invoiceDet: IInvoice[] = [
     },
   },
 ]
-const PdfInvoiceGenerator: React.FC = () => {
-  const MyDocument: React.FC = () => {
-    const styles = useStyles()
-    return (
-      <Document>
-        <Page size="A4" style={styles.page}>
-          <View style={[styles.gridContainer, styles.mb30]}>
-            <Text style={styles.h1}>{invoiceDet[i].projectName}</Text>
-            {/* <Image source="logo.png" style={{ width: 208, height: 38 }} /> */}
+const MyDocument = ({ selUnitDetails, myObj, myAdditionalCharges, netTotal,
+  setNetTotal,
+  partATotal,
+  partBTotal,
+  setPartATotal,
+  setPartBTotal }) => {
+  const styles = useStyles()
+  useEffect(() => {
+    console.log('myObj', myObj, myAdditionalCharges)
+  }, [myObj])
+
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={[styles.gridContainer, styles.mb30]}>
+          <Text style={styles.h1}>{invoiceDet[i].projectName}</Text>
+          {/* <Text>{myObj} </Text> */}
+          {/* <Image source="logo.png" style={{ width: 208, height: 38 }} /> */}
+        </View>
+
+        <View style={[styles.gridContainer, styles.mb20]}>
+          <View style={styles.col4}>
+            <Text style={[styles.subtitle2, styles.mb4]}>Invoice To</Text>
+            <Text style={styles.body2}>{invoiceDet[i].invoiceTo.name}</Text>
+            <Text style={styles.body2}>
+              {invoiceDet[i].invoiceTo.fullAddress}
+            </Text>
+            <Text style={styles.body2}>
+              {invoiceDet[i].invoiceTo.phoneNumber}
+            </Text>
           </View>
 
-          <View style={[styles.gridContainer, styles.mb20]}>
-            <View style={styles.col4}>
-              <Text style={[styles.subtitle2, styles.mb4]}>Invoice To</Text>
-              <Text style={styles.body2}>{invoiceDet[i].invoiceTo.name}</Text>
-              <Text style={styles.body2}>
-                {invoiceDet[i].invoiceTo.fullAddress}
-              </Text>
-              <Text style={styles.body2}>
-                {invoiceDet[i].invoiceTo.phoneNumber}
-              </Text>
-            </View>
-
-            <View style={styles.col4}>
-              <Text style={[styles.subtitle2, styles.mb4]}>Invoice From</Text>
-              <Text style={styles.body2}>{invoiceDet[i].invoiceFrom.name}</Text>
-              <Text style={styles.body2}>
-                {invoiceDet[i].invoiceFrom.fullAddress}
-              </Text>
-              <Text style={styles.body2}>
-                {invoiceDet[i].invoiceFrom.phoneNumber}
-              </Text>
-            </View>
-            <View style={styles.col4}>
-              <View style={styles.col8}>
-                <Text style={[styles.subtitle2, styles.mb2]}>Date create</Text>
-                <Text style={styles.body2}>
-                  {fDate(invoiceDet[i].createDate)}
-                </Text>
-              </View>
-              <View style={styles.col8}>
-                <Text style={[styles.subtitle2, styles.mb2]}>Due date</Text>
-                <Text style={styles.body2}>{fDate(invoiceDet[i].dueDate)}</Text>
-              </View>
-            </View>
+          <View style={styles.col4}>
+            <Text style={[styles.subtitle2, styles.mb4]}>Invoice From</Text>
+            <Text style={styles.body2}>{invoiceDet[i].invoiceFrom.name}</Text>
+            <Text style={styles.body2}>
+              {invoiceDet[i].invoiceFrom.fullAddress}
+            </Text>
+            <Text style={styles.body2}>
+              {invoiceDet[i].invoiceFrom.phoneNumber}
+            </Text>
           </View>
-
-          {/* <View style={[styles.gridContainer, styles.mb40]}>
-            <View style={styles.col6}>
-              <Text style={[styles.subtitle2, styles.mb4]}>Date create</Text>
+          <View style={styles.col4}>
+            <View style={styles.col8}>
+              <Text style={[styles.subtitle2, styles.mb2]}>Date create</Text>
               <Text style={styles.body2}>
                 {fDate(invoiceDet[i].createDate)}
               </Text>
             </View>
-            <View style={styles.col6}>
-              <Text style={[styles.subtitle2, styles.mb4]}>Due date</Text>
+            <View style={styles.col8}>
+              <Text style={[styles.subtitle2, styles.mb2]}>Due date</Text>
               <Text style={styles.body2}>{fDate(invoiceDet[i].dueDate)}</Text>
             </View>
-          </View> */}
+          </View>
+        </View>
 
-          <Text style={[styles.subtitle1, styles.bg, styles.borderbottom]}>
-            {invoiceDet[i].invoiceName}
-          </Text>
+        {/* <View style={[styles.gridContainer, styles.mb40]}>
+          <View style={styles.col6}>
+            <Text style={[styles.subtitle2, styles.mb4]}>Date create</Text>
+            <Text style={styles.body2}>
+              {fDate(invoiceDet[i].createDate)}
+            </Text>
+          </View>
+          <View style={styles.col6}>
+            <Text style={[styles.subtitle2, styles.mb4]}>Due date</Text>
+            <Text style={styles.body2}>{fDate(invoiceDet[i].dueDate)}</Text>
+          </View>
+        </View> */}
 
-          <View style={styles.table}>
-            <View>
-              <View style={styles.bg2}>
-                <View style={styles.tableCell_1}>
-                  <Text style={styles.subtitle2}>#</Text>
-                </View>
+        <Text style={[styles.subtitle1, styles.bg, styles.borderbottom]}>
+          {invoiceDet[i].invoiceName}
+        </Text>
 
-                <View style={styles.tableCell_2}>
-                  <Text style={styles.subtitle2}>PARTICULARS</Text>
-                </View>
-
-                <View style={styles.tableCell_3}>
-                  <Text style={styles.subtitle2}>RATE/SQFT</Text>
-                </View>
-
-                <View style={styles.tableCell_3}>
-                  <Text style={styles.subtitle2}>SALE VALUE</Text>
-                </View>
-
-                <View style={[styles.tableCell_3, styles.alignRight]}>
-                  <Text style={styles.subtitle2}>TOTAL</Text>
-                </View>
+        <View style={styles.table}>
+          <View>
+            <View style={styles.bg2}>
+              <View style={styles.tableCell_1}>
+                <Text style={styles.subtitle2}>#</Text>
               </View>
-            </View>
-            <View>
-              {invoiceDet[i].items.map((item, index) => (
-                <View style={styles.tableRow} key={item.id}>
-                  <View style={styles.tableCell_1}>
-                    <Text>{index + 1}</Text>
-                  </View>
 
-                  <View style={styles.tableCell_2}>
-                    <Text style={styles.subtitle2}>{item.title}</Text>
-                  </View>
-
-                  <View style={styles.tableCell_3}>
-                    <Text>{item.RatePerSqft}</Text>
-                  </View>
-
-                  <View style={styles.tableCell_3}>
-                    <Text>{fCurrency(item.SaleValue)}</Text>
-                  </View>
-
-                  <View style={[styles.tableCell_3, styles.alignRight]}>
-                    <Text>{fCurrency(item.total)}</Text>
-                  </View>
-                </View>
-              ))}
-              <View style={styles.totalRow}>
-                <View style={styles.tableCell_1}></View>
-
-                <View style={styles.tableCell_2}>
-                  <Text style={styles.subtitle2}>
-                    {invoiceDet[i].itemTotal.title}
-                  </Text>
-                </View>
-
-                <View style={styles.tableCell_3}>
-                  <Text>{invoiceDet[i].itemTotal.RatePerSqft}</Text>
-                </View>
-
-                <View style={styles.tableCell_3}>
-                  <Text>{fCurrency(invoiceDet[i].itemTotal.SaleValue)}</Text>
-                </View>
-
-                <View style={[styles.tableCell_3, styles.alignRight]}>
-                  <Text>{fCurrency(invoiceDet[i].itemTotal.total)}</Text>
-                </View>
+              <View style={styles.tableCell_2}>
+                <Text style={styles.subtitle2}>PARTICULARS</Text>
               </View>
-              {invoiceDet[i].charges.map((item, index) => (
-                <View style={styles.tableRow} key={item.id}>
-                  <View style={styles.tableCell_1}></View>
 
-                  <View style={styles.tableCell_2}>
-                    <Text style={styles.subtitle2}>{item.title}</Text>
-                  </View>
-
-                  <View style={styles.tableCell_2}>
-                    <Text>{item.description}</Text>
-                  </View>
-
-                  <View style={[styles.tableCell_3, styles.alignRight]}>
-                    <Text>{fCurrency(item.total)}</Text>
-                  </View>
-                </View>
-              ))}
-              <View style={styles.totalRow}>
-                <View style={styles.tableCell_1}></View>
-
-                <View style={styles.tableCell_2}>
-                  <Text style={styles.subtitle2}>
-                    {invoiceDet[i].chargeTotal.title}
-                  </Text>
-                </View>
-
-                <View style={styles.tableCell_3}></View>
-
-                <View style={styles.tableCell_3}></View>
-
-                <View style={[styles.tableCell_3, styles.alignRight]}>
-                  <Text>{fCurrency(invoiceDet[i].chargeTotal.total)}</Text>
-                </View>
+              <View style={styles.tableCell_3}>
+                <Text style={styles.subtitle2}>RATE/SQFT</Text>
               </View>
-              <View style={[styles.totalRow, styles.mb20, styles.bg3]}>
-                <View style={styles.tableCell_1}></View>
 
-                <View style={styles.tableCell_2}>
-                  <Text style={styles.subtitle2}>
-                    {invoiceDet[i].totalSaleValue.title}
-                  </Text>
-                </View>
-
-                <View style={styles.tableCell_3}>
-                  <Text>{fCurrency(invoiceDet[i].totalSaleValue.total_A)}</Text>
-                </View>
-                <View style={[styles.tableCell_3, styles.alignCenter]}>
-                  <Text>+</Text>
-                </View>
-
-                <View style={styles.tableCell_3}>
-                  <Text>{fCurrency(invoiceDet[i].totalSaleValue.total_B)}</Text>
-                </View>
-
-                <View style={[styles.tableCell_3, styles.alignRight]}>
-                  <Text>{fCurrency(invoiceDet[i].totalSaleValue.total)}</Text>
-                </View>
+              <View style={styles.tableCell_3}>
+                <Text style={styles.subtitle2}>SALE VALUE</Text>
               </View>
-              <Text
-                style={[
-                  styles.subtitle1,
-                  styles.mb10,
-                  styles.col,
-                  styles.borderbottom,
-                ]}
-              >
-                {invoiceDet[i].paymentHeader}
-              </Text>
-              <View>
-                <View style={styles.bg2}>
-                  <View style={styles.tableCell_1}></View>
 
-                  <View style={styles.tableCell_4}>
-                    <Text style={styles.subtitle2}>PARTICULARS</Text>
-                  </View>
-
-                  <View style={styles.tableCell_2}>
-                    <Text style={styles.subtitle2}>PAYMENT TIMELINE</Text>
-                  </View>
-
-                  <View style={[styles.tableCell_2, styles.alignRight]}>
-                    <Text style={styles.subtitle2}>TOTAL INC GST</Text>
-                  </View>
-                </View>
-              </View>
-              {invoiceDet[i].PaymentItems.map((item, index) => (
-                <View style={styles.tableRow} key={item.id}>
-                  <View style={styles.tableCell_1}></View>
-
-                  <View style={styles.tableCell_4}>
-                    <Text style={styles.subtitle2}>{item.title}</Text>
-                  </View>
-
-                  <View style={styles.tableCell_2}>
-                    <Text>{item.timeline}</Text>
-                  </View>
-
-                  <View style={[styles.tableCell_2, styles.alignRight]}>
-                    <Text>{fCurrency(item.total)}</Text>
-                  </View>
-                </View>
-              ))}
-              <View style={styles.totalRow}>
-                <View style={styles.tableCell_1}></View>
-
-                <View style={styles.tableCell_4}>
-                  <Text style={styles.subtitle2}>
-                    {invoiceDet[i].payment.title}
-                  </Text>
-                </View>
-
-                <View style={styles.tableCell_3}>
-
-                </View>
-
-                <View style={styles.tableCell_3}>
-
-                </View>
-
-                <View style={[styles.tableCell_3, styles.alignRight]}>
-                  <Text>{fCurrency(invoiceDet[i].payment.total)}</Text>
-                </View>
+              <View style={[styles.tableCell_3, styles.alignRight]}>
+                <Text style={styles.subtitle2}>TOTAL</Text>
               </View>
             </View>
           </View>
+          <View>
+            {myObj?.map((item, index) => (
+              <View style={styles.tableRow} key={item.id}>
+                <View style={styles.tableCell_1}>
+                  <Text>{index + 1}</Text>
+                </View>
 
-          {/* <View style={[styles.gridContainer, styles.footer]} fixed>
-            <View style={styles.col8}>
-              <Text style={styles.subtitle2}>NOTES</Text>
-              <Text style={{ fontSize: 9 }}>
-                We appreciate your business. Should you need us to add VAT or
-                extra notes let us know!
-              </Text>
+                <View style={styles.tableCell_2}>
+                  <Text style={styles.subtitle2}>{item?.component?.label}</Text>
+                </View>
+
+                <View style={styles.tableCell_3}>
+                  <Text>{item?.charges}</Text>
+                </View>
+
+                <View style={[styles.tableCell_3, styles.alignRight]}>
+                  <Text>{fCurrency(item?.TotalSaleValue)}</Text>
+                </View>
+
+                <View style={[styles.tableCell_3, styles.alignRight]}>
+                  <Text>{fCurrency(item?.TotalNetSaleValueGsT)}</Text>
+                </View>
+              </View>
+            ))}
+            <View style={styles.totalRow}>
+              <View style={styles.tableCell_1}></View>
+
+              <View style={styles.tableCell_2}>
+                <Text style={styles.subtitle2}>
+                  {invoiceDet[i].itemTotal.title}
+                </Text>
+              </View>
+
+              <View style={styles.tableCell_3}>
+                <Text>{invoiceDet[i].itemTotal.RatePerSqft}</Text>
+              </View>
+
+              <View style={styles.tableCell_3}>
+                <Text>{fCurrency(partATotal)}</Text>
+              </View>
+
+              <View style={[styles.tableCell_3, styles.alignRight]}>
+                <Text>{fCurrency(setNetTotal)}</Text>
+              </View>
             </View>
-            <View style={[styles.col4, styles.alignRight]}>
-              <Text style={styles.subtitle2}>Have a Question?</Text>
-              <Text style={{ fontSize: 9 }}>support@abcapp.com</Text>
+
+            {myAdditionalCharges?.map((item, index) => (
+              <View style={styles.tableRow} key={item.id}>
+                <View style={styles.tableCell_1}>
+                  <Text>{index + 1}</Text>
+                </View>
+
+                <View style={styles.tableCell_2}>
+                  <Text style={styles.subtitle2}>{item?.component?.label}</Text>
+                </View>
+
+                <View style={styles.tableCell_3}>
+                  <Text>{item?.charges}</Text>
+                </View>
+                {/*
+                <View style={styles.tableCell_3}>
+                  <Text>{fCurrency(item?.TotalSaleValue )}</Text>
+                </View> */}
+                <View style={[styles.tableCell_3, styles.alignRight]}>
+                  <Text>{item?.TotalNetSaleValueGsT}</Text>
+                </View>
+                <View style={[styles.tableCell_3, styles.alignRight]}>
+                  <Text>
+                    {fCurrency(
+                      Number(
+                        computeTotal(item, selUnitDetails?.area)
+                      )?.toLocaleString('en-IN')
+                    )}
+                  </Text>
+                </View>
+              </View>
+            ))}
+            <View style={styles.totalRow}>
+              <View style={styles.tableCell_1}></View>
+
+              <View style={styles.tableCell_2}>
+                <Text style={styles.subtitle2}>
+                  {invoiceDet[i].chargeTotal.title}
+                </Text>
+              </View>
+
+              <View style={styles.tableCell_3}></View>
+
+              <View style={styles.tableCell_3}></View>
+
+              <View style={[styles.tableCell_3, styles.alignRight]}>
+                <Text>{fCurrency(invoiceDet[i].chargeTotal.total)}</Text>
+              </View>
             </View>
-          </View> */}
-        </Page>
-      </Document>
-    )
-  }
+            <View style={[styles.totalRow, styles.mb20, styles.bg3]}>
+              <View style={styles.tableCell_1}></View>
+
+              <View style={styles.tableCell_2}>
+                <Text style={styles.subtitle2}>
+                  {invoiceDet[i].totalSaleValue.title}
+                </Text>
+              </View>
+
+              <View style={styles.tableCell_3}>
+                <Text>{fCurrency(invoiceDet[i].totalSaleValue.total_A)}</Text>
+              </View>
+              <View style={[styles.tableCell_3, styles.alignCenter]}>
+                <Text>+</Text>
+              </View>
+
+              <View style={styles.tableCell_3}>
+                <Text>{fCurrency(invoiceDet[i].totalSaleValue.total_B)}</Text>
+              </View>
+
+              <View style={[styles.tableCell_3, styles.alignRight]}>
+                <Text>{fCurrency(invoiceDet[i].totalSaleValue.total)}</Text>
+              </View>
+            </View>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb10,
+                styles.col,
+                styles.borderbottom,
+              ]}
+            >
+              {invoiceDet[i].paymentHeader}
+            </Text>
+            <View>
+              <View style={styles.bg2}>
+                <View style={styles.tableCell_1}></View>
+
+                <View style={styles.tableCell_4}>
+                  <Text style={styles.subtitle2}>PARTICULARS</Text>
+                </View>
+
+                <View style={styles.tableCell_2}>
+                  <Text style={styles.subtitle2}>PAYMENT TIMELINE</Text>
+                </View>
+
+                <View style={[styles.tableCell_2, styles.alignRight]}>
+                  <Text style={styles.subtitle2}>TOTAL INC GST</Text>
+                </View>
+              </View>
+            </View>
+            {invoiceDet[i].PaymentItems.map((item, index) => (
+              <View style={styles.tableRow} key={item.id}>
+                <View style={styles.tableCell_1}></View>
+
+                <View style={styles.tableCell_4}>
+                  <Text style={styles.subtitle2}>{item.title}</Text>
+                </View>
+
+                <View style={styles.tableCell_2}>
+                  <Text>{item.timeline}</Text>
+                </View>
+
+                <View style={[styles.tableCell_2, styles.alignRight]}>
+                  <Text>{fCurrency(item.total)}</Text>
+                </View>
+              </View>
+            ))}
+            <View style={styles.totalRow}>
+              <View style={styles.tableCell_1}></View>
+
+              <View style={styles.tableCell_4}>
+                <Text style={styles.subtitle2}>
+                  {invoiceDet[i].payment.title}
+                </Text>
+              </View>
+
+              <View style={styles.tableCell_3}></View>
+
+              <View style={styles.tableCell_3}></View>
+
+              <View style={[styles.tableCell_3, styles.alignRight]}>
+                <Text>{fCurrency(invoiceDet[i].payment.total)}</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        {/* <View style={[styles.gridContainer, styles.footer]} fixed>
+          <View style={styles.col8}>
+            <Text style={styles.subtitle2}>NOTES</Text>
+            <Text style={{ fontSize: 9 }}>
+              We appreciate your business. Should you need us to add VAT or
+              extra notes let us know!
+            </Text>
+          </View>
+          <View style={[styles.col4, styles.alignRight]}>
+            <Text style={styles.subtitle2}>Have a Question?</Text>
+            <Text style={{ fontSize: 9 }}>support@abcapp.com</Text>
+          </View>
+        </View> */}
+      </Page>
+    </Document>
+  )
+}
+const PdfInvoiceGenerator = ({
+  selUnitDetails,
+  myObj,
+  myAdditionalCharges,
+  netTotal,
+  setNetTotal,
+  partATotal,
+  partBTotal,
+  setPartATotal,
+  setPartBTotal,
+}) => {
   return (
     <div>
       {' '}
-      <PDFDownloadLink document={<MyDocument />} fileName="sample.pdf">
+      <PDFDownloadLink
+        document={
+          <MyDocument
+            selUnitDetails={selUnitDetails}
+            myObj={myObj}
+            myAdditionalCharges={myAdditionalCharges}
+            netTotal
+            setNetTotal
+            partATotal
+            partBTotal
+            setPartATotal
+            setPartBTotal
+          />
+        }
+        fileName="sample.pdf"
+      >
         {({ blob, url, loading, error }) =>
           loading ? (
             <button>Loading document...</button>
           ) : (
-            <button className="border border-black m-5 p-2 h-15 w-15">
-              Download PDF
-            </button>
+            <span
+              className="mb-4 md:mb-0 hover:scale-110 focus:outline-none bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100         hover:bg-teal-200
+            bg-teal-100
+            text-teal-700
+            border duration-200 ease-in-out
+            border-[#5671fc] transition"
+            >
+              Download Cost Sheet
+            </span>
           )
         }
       </PDFDownloadLink>
