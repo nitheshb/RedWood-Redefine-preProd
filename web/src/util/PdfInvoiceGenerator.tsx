@@ -15,6 +15,9 @@ import { format, getTime, formatDistanceToNow } from 'date-fns'
 import numeral from 'numeral'
 
 import { computeTotal } from './computeCsTotals'
+import { useAuth } from 'src/context/firebase-auth-context'
+import { Timestamp } from 'firebase/firestore'
+import { prettyDate } from './dateConverter'
 
 Font.register({
   family: 'Roboto',
@@ -254,7 +257,7 @@ const i = 0
 const invoiceDet: IInvoice[] = [
   {
     id: 1,
-    projectName: 'PSP NIRVANA',
+    projectName: 'PSP NIRVANA1',
     invoiceName: 'COST SHEET',
     sent: 1,
     paymentHeader: 'PAYMENT SCHEDULE',
@@ -373,13 +376,16 @@ const invoiceDet: IInvoice[] = [
     },
   },
 ]
-const MyDocument = ({ selUnitDetails, myObj, myAdditionalCharges, netTotal,
+const MyDocument = ({ user,  selUnitDetails, myObj, myAdditionalCharges, netTotal,projectDetails,
   setNetTotal,
   partATotal,
   partBTotal,
+  leadDetailsObj1,
+
   setPartATotal,
   setPartBTotal }) => {
   const styles = useStyles()
+
   useEffect(() => {
     console.log('myObj', myObj, myAdditionalCharges)
   }, [myObj])
@@ -388,7 +394,7 @@ const MyDocument = ({ selUnitDetails, myObj, myAdditionalCharges, netTotal,
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={[styles.gridContainer, styles.mb30]}>
-          <Text style={styles.h1}>{invoiceDet[i].projectName}</Text>
+          <Text style={styles.h1}>{projectDetails?.projectName}</Text>
           {/* <Text>{myObj} </Text> */}
           {/* <Image source="logo.png" style={{ width: 208, height: 38 }} /> */}
         </View>
@@ -396,35 +402,47 @@ const MyDocument = ({ selUnitDetails, myObj, myAdditionalCharges, netTotal,
         <View style={[styles.gridContainer, styles.mb20]}>
           <View style={styles.col4}>
             <Text style={[styles.subtitle2, styles.mb4]}>Invoice To</Text>
-            <Text style={styles.body2}>{invoiceDet[i].invoiceTo.name}</Text>
+            <Text style={styles.body2}>{leadDetailsObj1?.Name}</Text>
             <Text style={styles.body2}>
-              {invoiceDet[i].invoiceTo.fullAddress}
+              {leadDetailsObj1?.Address}
             </Text>
             <Text style={styles.body2}>
-              {invoiceDet[i].invoiceTo.phoneNumber}
+              {leadDetailsObj1?.Email}
+            </Text>
+            <Text style={styles.body2}>
+              {leadDetailsObj1?.Mobile}
             </Text>
           </View>
 
           <View style={styles.col4}>
             <Text style={[styles.subtitle2, styles.mb4]}>Invoice From</Text>
-            <Text style={styles.body2}>{invoiceDet[i].invoiceFrom.name}</Text>
+            <Text style={styles.body2}>{user?.displayName || user?.name}</Text>
+            {/* <Text style={styles.body2}>
+              {user?.role[0]}
+            </Text> */}
             <Text style={styles.body2}>
-              {invoiceDet[i].invoiceFrom.fullAddress}
+              Phone:{user?.phone}
             </Text>
             <Text style={styles.body2}>
-              {invoiceDet[i].invoiceFrom.phoneNumber}
+              Maa Homes,HSR Layout,
             </Text>
+            <Text style={styles.body2}>
+              Banglore.
+            </Text>
+
+
           </View>
           <View style={styles.col4}>
-            <View style={styles.col8}>
-              <Text style={[styles.subtitle2, styles.mb2]}>Date create</Text>
-              <Text style={styles.body2}>
-                {fDate(invoiceDet[i].createDate)}
-              </Text>
+            <View >
+              <Text style={[styles.subtitle2, styles.mb2]}>Date create:  <Text style={styles.body2}>
+                {fDate(prettyDate(Timestamp.now().toMillis()))}
+              </Text></Text>
+
             </View>
             <View style={styles.col8}>
-              <Text style={[styles.subtitle2, styles.mb2]}>Due date</Text>
-              <Text style={styles.body2}>{fDate(invoiceDet[i].dueDate)}</Text>
+              <Text style={[styles.subtitle2, styles.mb2]}>Unit No: <Text style={styles.body2}>{selUnitDetails?.unit_no}</Text></Text>
+              <Text style={[styles.subtitle2, styles.mb2]}>Size: <Text style={styles.body2}>{selUnitDetails?.size}<Text style={styles.body2}>{selUnitDetails?.area}sqft</Text></Text></Text>
+              <Text style={[styles.subtitle2, styles.mb2]}>Facing: <Text style={styles.body2}>{selUnitDetails?.facing}</Text></Text>
             </View>
           </View>
         </View>
@@ -499,20 +517,24 @@ const MyDocument = ({ selUnitDetails, myObj, myAdditionalCharges, netTotal,
 
               <View style={styles.tableCell_2}>
                 <Text style={styles.subtitle2}>
-                  {invoiceDet[i].itemTotal.title}
+                  {/* {invoiceDet[i].itemTotal.title} */}
                 </Text>
               </View>
 
               <View style={styles.tableCell_3}>
-                <Text>{invoiceDet[i].itemTotal.RatePerSqft}</Text>
-              </View>
-
-              <View style={styles.tableCell_3}>
-                <Text>{fCurrency(partATotal)}</Text>
+                <Text></Text>
               </View>
 
               <View style={[styles.tableCell_3, styles.alignRight]}>
-                <Text>{fCurrency(setNetTotal)}</Text>
+                <Text style={styles.subtitle2}>
+                    {invoiceDet[i].itemTotal.title}
+                </Text>
+              </View>
+
+
+              <View style={[styles.tableCell_3, styles.alignRight]}>
+
+                <Text>{fCurrency(partATotal)}</Text>
               </View>
             </View>
 
@@ -552,16 +574,20 @@ const MyDocument = ({ selUnitDetails, myObj, myAdditionalCharges, netTotal,
 
               <View style={styles.tableCell_2}>
                 <Text style={styles.subtitle2}>
-                  {invoiceDet[i].chargeTotal.title}
+                  {/* {invoiceDet[i].chargeTotal.title} */}
                 </Text>
               </View>
 
               <View style={styles.tableCell_3}></View>
 
-              <View style={styles.tableCell_3}></View>
+              <View style={[styles.tableCell_3, styles.alignRight]}>
+              <Text style={styles.subtitle2}>
+                  {invoiceDet[i].chargeTotal.title}
+                </Text>
+              </View>
 
               <View style={[styles.tableCell_3, styles.alignRight]}>
-                <Text>{fCurrency(invoiceDet[i].chargeTotal.total)}</Text>
+                <Text>{fCurrency(partBTotal)}</Text>
               </View>
             </View>
             <View style={[styles.totalRow, styles.mb20, styles.bg3]}>
@@ -574,18 +600,18 @@ const MyDocument = ({ selUnitDetails, myObj, myAdditionalCharges, netTotal,
               </View>
 
               <View style={styles.tableCell_3}>
-                <Text>{fCurrency(invoiceDet[i].totalSaleValue.total_A)}</Text>
+                <Text>{fCurrency(partATotal)}</Text>
               </View>
               <View style={[styles.tableCell_3, styles.alignCenter]}>
                 <Text>+</Text>
               </View>
 
               <View style={styles.tableCell_3}>
-                <Text>{fCurrency(invoiceDet[i].totalSaleValue.total_B)}</Text>
+                <Text>{fCurrency(partBTotal)}</Text>
               </View>
 
               <View style={[styles.tableCell_3, styles.alignRight]}>
-                <Text>{fCurrency(invoiceDet[i].totalSaleValue.total)}</Text>
+                <Text>{fCurrency(netTotal)}</Text>
               </View>
             </View>
             <Text
@@ -670,6 +696,7 @@ const MyDocument = ({ selUnitDetails, myObj, myAdditionalCharges, netTotal,
   )
 }
 const PdfInvoiceGenerator = ({
+  user,
   selUnitDetails,
   myObj,
   myAdditionalCharges,
@@ -679,22 +706,31 @@ const PdfInvoiceGenerator = ({
   partBTotal,
   setPartATotal,
   setPartBTotal,
+  projectDetails,
+  leadDetailsObj1
+
 }) => {
+
   return (
     <div>
       {' '}
       <PDFDownloadLink
         document={
           <MyDocument
+          user={user}
             selUnitDetails={selUnitDetails}
             myObj={myObj}
             myAdditionalCharges={myAdditionalCharges}
-            netTotal
-            setNetTotal
-            partATotal
-            partBTotal
-            setPartATotal
-            setPartBTotal
+            netTotal={netTotal}
+            setNetTotal={setNetTotal}
+            partATotal={partATotal}
+            partBTotal={partBTotal}
+            setPartATotal={setPartATotal}
+            setPartBTotal={setPartBTotal}
+            projectDetails={projectDetails}
+            leadDetailsObj1={leadDetailsObj1}
+
+
           />
         }
         fileName="sample.pdf"

@@ -40,6 +40,7 @@ import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { TextField } from 'src/util/formFields/TextField'
 import { TextField2 } from 'src/util/formFields/TextField2'
 import { TextFieldFlat } from 'src/util/formFields/TextFieldFlatType'
+import PdfInvoiceGenerator from 'src/util/PdfInvoiceGenerator'
 
 import AddApplicantDetails from './AddApplicantDetails'
 import BlockingUnitForm from './BlockingUnitForm'
@@ -48,7 +49,6 @@ import Loader from './Loader/Loader'
 import PaymentScheduleSheet from './paymentScheduleSheet'
 import SiderForm from './SiderForm/SiderForm'
 import UnitTransactionForm from './UnitBillTransactionForm'
-import PdfInvoiceGenerator from 'src/util/PdfInvoiceGenerator'
 
 const CostBreakUpSheet = ({
   selMode,
@@ -395,7 +395,9 @@ const CostBreakUpSheet = ({
             <div className="bg-[white] rounded-b-md">
               <div className=" mt-">
                 <div className=" pb-1">
-                <div><PdfInvoiceGenerator/></div>
+                  <div>
+                    <PdfInvoiceGenerator />
+                  </div>
                   <div
                     className="flex flex-row justify-between   py-3 px-3  mt-[0.5px] mb-0 rounded-xs bg-[#F2F5F8]"
                     style={{ flex: '4 0 100%' }}
@@ -706,7 +708,7 @@ const CostBreakUpSheet = ({
                         }}
                       >
                         {(formik) => (
-                          <Form ref={ref} className=''>
+                          <Form ref={ref} className="">
                             <section
                               className="bg-[#fff] rounded-md border m-2"
                               style={{
@@ -756,12 +758,12 @@ const CostBreakUpSheet = ({
                                   setNewPS={setNewPlotPS}
                                   newPlotPS={newPlotPS}
                                   showGstCol={showGstCol}
-                                  netTotal
-                                  setNetTotal
-                                  partATotal
-                                  partBTotal
-                                  setPartATotal
-                                  setPartBTotal
+                                  netTotal={netTotal}
+                                  setNetTotal={setNetTotal}
+                                  partATotal={partATotal}
+                                  partBTotal={partBTotal}
+                                  setPartATotal={setPartATotal}
+                                  setPartBTotal={setPartBTotal}
                                 />
                               )}
                               {csMode === 'construct_cs' && (
@@ -814,12 +816,23 @@ const CostBreakUpSheet = ({
                                 </button>
                               )}
                             </Pdf> */}
-  <div className="inline-block"><PdfInvoiceGenerator selUnitDetails={selUnitDetails} myObj={newPlotCostSheetA} myAdditionalCharges= {newAdditonalChargesObj}  netTotal
-                                  setNetTotal
-                                  partATotal
-                                  partBTotal
-                                  setPartATotal
-                                  setPartBTotal/></div>
+                                <div className="inline-block">
+                                  <PdfInvoiceGenerator
+                                  user={user}
+                                    selUnitDetails={selUnitDetails}
+                                    myObj={newPlotCostSheetA}
+                                    myAdditionalCharges={newAdditonalChargesObj}
+                                    netTotal={netTotal}
+                                    setNetTotal={setNetTotal}
+                                    partATotal={partATotal}
+                                    partBTotal={partBTotal}
+                                    setPartATotal={setPartATotal}
+                                    setPartBTotal={setPartBTotal}
+                                    projectDetails={projectDetails}
+                                  leadDetailsObj1={leadDetailsObj1}
+
+                                  />
+                                </div>
                                 {/* <button
                                   onClick={() => {
                                     if (
@@ -866,10 +879,8 @@ const CostBreakUpSheet = ({
                       </Formik>
                     </div>
                   </div>
-
                 </div>
               )}
-
 
               {/* PaymentScheduleSheet */}
               {/* {['payment_sch', 'allsheets'].includes(onStep) && (

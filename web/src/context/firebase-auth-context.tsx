@@ -106,7 +106,7 @@ export default function AuthContextProvider({ children }) {
         avatar: currentUser.photoURL,
         email: currentUser.email,
         displayName: currentUser.displayName || additionalUserInfo?.name,
-        phone: currentUser.phoneNumber,
+        phone: currentUser?.phoneNumber || currentUser?.offPh,
         token: currentUser.uid,
         projAccessA: additionalUserInfo.projAccessA || [],
         department: additionalUserInfo?.department,

@@ -27,6 +27,9 @@ const CostBreakUpPdfPreview = ({
   setCostSheetA,
   setNewPS,
   showGstCol,
+  partATotal,
+  partBTotal,
+  netTotal
 }) => {
   const { user } = useAuth()
   const ref = createRef()
@@ -38,9 +41,9 @@ const CostBreakUpPdfPreview = ({
 
   const [newSqftPrice, setNewSqftPrice] = useState(0)
 
-  const [netTotal, setNetTotal] = useState(0)
-  const [partATotal, setPartATotal] = useState(0)
-  const [partBTotal, setPartBTotal] = useState(0)
+  const [netTotal_new, setNetTotal] = useState(0)
+  const [partATotalNew, setPartATotal] = useState(0)
+  const [partBTotal_new, setPartBTotal] = useState(0)
   const [plotBookingAdv, setPlotBookingAdv] = useState(0)
   const [partBPayload, setPartBPayload] = useState([])
   const [psPayload, setPSPayload] = useState([])
@@ -258,9 +261,9 @@ const CostBreakUpPdfPreview = ({
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
       0
     )
-    setPartBTotal(partBTotal)
-    setPartATotal(partATotal)
-    setNetTotal(partATotal + partBTotal)
+    // setPartBTotal(partBTotal)
+    // setPartATotal(partATotal)
+    // setNetTotal(partATotal + partBTotal)
     selPhaseObj?.paymentScheduleObj.map((data) => {
       if (data.stage?.value === 'on_booking') {
         setPlotBookingAdv(data?.percentage)

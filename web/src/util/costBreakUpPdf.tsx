@@ -815,6 +815,10 @@ const CostBreakUpPdf = ({
           setNewPS={setNewPlotPS}
           newPlotPS={newPlotPS}
           showGstCol={showGstCol}
+          partATotal={partATotal}
+          partBTotal={partBTotal}
+          netTotal={netTotal}
+
         />
       )}
     </div>
