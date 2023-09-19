@@ -12,11 +12,12 @@ import {
   Font,
 } from '@react-pdf/renderer'
 import { format, getTime, formatDistanceToNow } from 'date-fns'
+import { Timestamp } from 'firebase/firestore'
 import numeral from 'numeral'
 
-import { computeTotal } from './computeCsTotals'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { Timestamp } from 'firebase/firestore'
+
+import { computeTotal } from './computeCsTotals'
 import { prettyDate } from './dateConverter'
 
 Font.register({
@@ -30,6 +31,15 @@ const useStyles = () =>
   useMemo(
     () =>
       StyleSheet.create({
+        fitter: {
+          paddingLeft: '20px',
+          marginLeft: '10px',
+          marginRight: '10px',
+          paddingRight: '20px',
+        },
+        smallFitter: {
+          paddingLeft: '10px',
+        },
         col4: {
           width: '33%',
           paddingLeft: '20px',
@@ -41,6 +51,11 @@ const useStyles = () =>
         col8: { width: '75%' },
         col2: { width: '13%', marginTop: '10px' },
         col6: { width: '50%' },
+        p10: { padding: '4px 6px' },
+        p11: { padding: '0px 0px' },
+        p12: { paddingTop: '4px', paddingBottom: '2px' },
+        pr0: { paddingRight: '0px' },
+        pr4: { paddingRight: '4px' },
         mb4: { marginBottom: 4 },
         mb2: { marginBottom: 2 },
         mb8: { marginBottom: 8 },
@@ -48,18 +63,28 @@ const useStyles = () =>
         mb30: { marginBottom: 30 },
         mb20: { marginBottom: 20 },
         mb10: { marginBottom: 10 },
-        h3: { fontSize: 16, fontWeight: 700 },
+        mb5: { marginBottom: 5 },
+        mT0: { marginTop: 0 },
+        mT1: { marginTop: 10 },
+        ml1: { marginLeft: 5 },
+        ml2: { marginLeft: 10 },
+        mr2: { marginRight: 10, paddingRight: 10 },
+        ml4: { marginLeft: 20 },
+        ml5: { marginLeft: 30 },
+        pl1: { paddingLeft: 5 },
+        pl2: { paddingLeft: 10 },
+        pt2: { paddingTop: 4 },
+        pt5: { paddingTop: 10 },
+        h3: { fontSize: 16, fontWeight: 400 },
         h4: { fontSize: 13, fontWeight: 700 },
         h1: {
           fontSize: 20,
-          fontWeight: 400,
-          marginLeft: '10px',
-          paddingLeft: '20px',
+          fontWeight: 700,
         },
         body1: { fontSize: 10 },
         body2: { fontSize: 9 },
         subtitle1: { fontSize: 10, fontWeight: 700 },
-        subtitle2: { fontSize: 9, fontWeight: 700 },
+        subtitle2: { fontSize: 8, fontWeight: 700 },
         alignRight: { textAlign: 'right' },
         alignLeft: { textAlign: 'left' },
         alignCenter: { textAlign: 'center' },
@@ -93,7 +118,7 @@ const useStyles = () =>
         tableRow: {
           padding: '8px 0',
           flexDirection: 'row',
-          borderBottomWidth: 1,
+          borderBottomWidth: 0.5,
           borderStyle: 'solid',
           borderColor: '#DFE3E8',
         },
@@ -112,10 +137,25 @@ const useStyles = () =>
           // borderColor: '#DFE3E8',
           // backgroundColor: '#DFF6DD',
         },
+        totalRowNew: {
+          // padding: '6px 0',
+          // marginTop: '8px',
+
+          flexDirection: 'row',
+          borderRadius: 1,
+          // borderWidth: 1,
+          // borderStyle: 'solid',
+          // borderColor: '#DFE3E8',
+          // backgroundColor: '#DFF6DD',
+        },
         bg: {
           backgroundColor: '#F3FFF2',
           paddingHorizontal: '4px',
           paddingVertical: '8px',
+        },
+        bg1: {
+          backgroundColor: '#fff',
+          // paddingHorizontal: '4px',
         },
         bg2: {
           backgroundColor: '#F3FFF2',
@@ -134,11 +174,23 @@ const useStyles = () =>
         },
         tableCell_1: {
           width: '5%',
-          paddingLeft: 10,
+          //  paddingLeft: 10,
+        },
+        tableCell_35: {
+          width: '35%',
+          // paddingRight: 16,
+        },
+        tableCell_20: {
+          width: '20%',
+          paddingRight: 16,
         },
         tableCell_2: {
           width: '50%',
-          paddingRight: 16,
+          // paddingRight: 16,
+        },
+        tableCell_5: {
+          width: '30%',
+          // paddingRight: 16,
         },
         tableCell_4: {
           width: '53%',
@@ -148,6 +200,21 @@ const useStyles = () =>
         tableCell_3: {
           width: '15%',
           paddingRight: 16,
+        },
+        cellBg0: {
+          backgroundColor: '#fffaee',
+        },
+        cellBg1: {
+          backgroundColor: '#f8f2e2',
+        },
+        cellBg2: {
+          backgroundColor: '#f8efd2',
+        },
+        cellBg3: {
+          backgroundColor: '#f6e8c2',
+        },
+        cellBgHead: {
+          backgroundColor: '#fff3d2',
         },
       }),
     []
@@ -376,14 +443,21 @@ const invoiceDet: IInvoice[] = [
     },
   },
 ]
-const MyDocument = ({ user,  selUnitDetails, myObj, myAdditionalCharges, netTotal,projectDetails,
+const MyDocument = ({
+  user,
+  selUnitDetails,
+  myObj,
+  myAdditionalCharges,
+  netTotal,
+  projectDetails,
   setNetTotal,
   partATotal,
   partBTotal,
   leadDetailsObj1,
 
   setPartATotal,
-  setPartBTotal }) => {
+  setPartBTotal,
+}) => {
   const styles = useStyles()
 
   useEffect(() => {
@@ -393,25 +467,34 @@ const MyDocument = ({ user,  selUnitDetails, myObj, myAdditionalCharges, netTota
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View style={[styles.gridContainer, styles.mb30]}>
-          <Text style={styles.h1}>{projectDetails?.projectName}</Text>
-          {/* <Text>{myObj} </Text> */}
-          {/* <Image source="logo.png" style={{ width: 208, height: 38 }} /> */}
+        <View
+          style={[
+            styles.gridContainer,
+            styles.mb20,
+            styles.fitter,
+            styles.borderbottom,
+          ]}
+        >
+          <View style={[styles.col6]}>
+            <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} />
+            <Text style={[styles.h4, styles.ml1]}>
+              {projectDetails?.projectName}
+            </Text>
+            {/* <Text>{myObj} </Text> */}
+          </View>
+          <View style={[styles.col6]}>
+            <Text style={[styles.h4, styles.alignRight, styles.mT1, styles.pt5]}>Cost Sheet</Text>
+            {/* <Text>{myObj} </Text> */}
+          </View>
         </View>
 
         <View style={[styles.gridContainer, styles.mb20]}>
-          <View style={styles.col4}>
+          <View style={[styles.col4, styles.ml4]}>
             <Text style={[styles.subtitle2, styles.mb4]}>Invoice To</Text>
             <Text style={styles.body2}>{leadDetailsObj1?.Name}</Text>
-            <Text style={styles.body2}>
-              {leadDetailsObj1?.Address}
-            </Text>
-            <Text style={styles.body2}>
-              {leadDetailsObj1?.Email}
-            </Text>
-            <Text style={styles.body2}>
-              {leadDetailsObj1?.Mobile}
-            </Text>
+            <Text style={styles.body2}>{leadDetailsObj1?.Address}</Text>
+            <Text style={styles.body2}>{leadDetailsObj1?.Email}</Text>
+            <Text style={styles.body2}>{leadDetailsObj1?.Mobile}</Text>
           </View>
 
           <View style={styles.col4}>
@@ -420,29 +503,35 @@ const MyDocument = ({ user,  selUnitDetails, myObj, myAdditionalCharges, netTota
             {/* <Text style={styles.body2}>
               {user?.role[0]}
             </Text> */}
-            <Text style={styles.body2}>
-              Phone:{user?.phone}
-            </Text>
-            <Text style={styles.body2}>
-              Maa Homes,HSR Layout,
-            </Text>
-            <Text style={styles.body2}>
-              Banglore.
-            </Text>
-
-
+            <Text style={styles.body2}>Phone:{user?.phone}</Text>
+            <Text style={styles.body2}>Maa Homes,HSR Layout,</Text>
+            <Text style={styles.body2}>Banglore.</Text>
           </View>
           <View style={styles.col4}>
-            <View >
-              <Text style={[styles.subtitle2, styles.mb2]}>Date create:  <Text style={styles.body2}>
-                {fDate(prettyDate(Timestamp.now().toMillis()))}
-              </Text></Text>
-
+            <View>
+              <Text style={[styles.subtitle2, styles.mb2]}>
+                Date create:{' '}
+                <Text style={styles.body2}>
+                  {fDate(prettyDate(Timestamp.now().toMillis()))}
+                </Text>
+              </Text>
             </View>
             <View style={styles.col8}>
-              <Text style={[styles.subtitle2, styles.mb2]}>Unit No: <Text style={styles.body2}>{selUnitDetails?.unit_no}</Text></Text>
-              <Text style={[styles.subtitle2, styles.mb2]}>Size: <Text style={styles.body2}>{selUnitDetails?.size}<Text style={styles.body2}>{selUnitDetails?.area}sqft</Text></Text></Text>
-              <Text style={[styles.subtitle2, styles.mb2]}>Facing: <Text style={styles.body2}>{selUnitDetails?.facing}</Text></Text>
+              <Text style={[styles.subtitle2, styles.mb2]}>
+                Unit No:{' '}
+                <Text style={styles.body2}>{selUnitDetails?.unit_no}</Text>
+              </Text>
+              <Text style={[styles.subtitle2, styles.mb2]}>
+                Size:{' '}
+                <Text style={styles.body2}>
+                  {selUnitDetails?.size}
+                  <Text style={styles.body2}>{'('}{selUnitDetails?.area}sqft{')'}</Text>
+                </Text>
+              </Text>
+              <Text style={[styles.subtitle2, styles.mb2]}>
+                Facing:{' '}
+                <Text style={styles.body2}>{selUnitDetails?.facing}</Text>
+              </Text>
             </View>
           </View>
         </View>
@@ -459,143 +548,228 @@ const MyDocument = ({ user,  selUnitDetails, myObj, myAdditionalCharges, netTota
             <Text style={styles.body2}>{fDate(invoiceDet[i].dueDate)}</Text>
           </View>
         </View> */}
+        <View style={styles.ml4}>
+          <Text
+            style={[
+              styles.subtitle1,
+              styles.mb5,
+              styles.col,
+              styles.smallFitter,
+              styles.ml2,
 
-        <Text style={[styles.subtitle1, styles.bg, styles.borderbottom]}>
-          {invoiceDet[i].invoiceName}
-        </Text>
+            ]}
+          >
+            Cost Sheet
+          </Text>
+        </View>
+        <View style={[styles.subtitle1, styles.bg1, styles.fitter, styles.ml2]}>
+          <View style={[styles.bg2, styles.cellBgHead, styles.p11]}>
+            <View style={[styles.tableCell_1, styles.p11]}>
+              <Text style={styles.subtitle2}></Text>
+            </View>
 
-        <View style={styles.table}>
-          <View>
-            <View style={styles.bg2}>
-              <View style={styles.tableCell_1}>
-                <Text style={styles.subtitle2}>#</Text>
-              </View>
+            <View style={[styles.tableCell_35, styles.p12]}>
+              <Text style={styles.subtitle2}>PARTICULARS</Text>
+            </View>
 
-              <View style={styles.tableCell_2}>
-                <Text style={styles.subtitle2}>PARTICULARS</Text>
-              </View>
+            <View
+              style={[
+                styles.tableCell_20,
+                styles.alignRight,
+                styles.p12,
+                styles.pr4,
+              ]}
+            >
+              <Text style={styles.subtitle2}>RATE/SQFT</Text>
+            </View>
 
-              <View style={styles.tableCell_3}>
-                <Text style={styles.subtitle2}>RATE/SQFT</Text>
-              </View>
+            <View
+              style={[
+                styles.tableCell_20,
+                styles.alignRight,
+                styles.p12,
+                styles.pr4,
+              ]}
+            >
+              <Text style={styles.subtitle2}>SALE VALUE</Text>
+            </View>
 
-              <View style={styles.tableCell_3}>
-                <Text style={styles.subtitle2}>SALE VALUE</Text>
-              </View>
-
-              <View style={[styles.tableCell_3, styles.alignRight]}>
-                <Text style={styles.subtitle2}>TOTAL</Text>
-              </View>
+            <View
+              style={[
+                styles.tableCell_20,
+                styles.alignRight,
+                styles.p12,
+                styles.pr4,
+              ]}
+            >
+              <Text style={styles.subtitle2}>TOTAL</Text>
             </View>
           </View>
+        </View>
+        <View style={[styles.fitter]}>
           <View>
             {myObj?.map((item, index) => (
-              <View style={styles.tableRow} key={item.id}>
-                <View style={styles.tableCell_1}>
+              <View style={styles.totalRowNew} key={item.id}>
+                <View
+                  style={[
+                    styles.tableCell_1,
+                    styles.pl2,
+                    styles.p10,
+                    styles.cellBg0,
+                  ]}
+                >
                   <Text>{index + 1}</Text>
                 </View>
 
-                <View style={styles.tableCell_2}>
+                <View style={[styles.tableCell_35, styles.p10, styles.cellBg0]}>
                   <Text style={styles.subtitle2}>{item?.component?.label}</Text>
                 </View>
 
-                <View style={styles.tableCell_3}>
+                <View
+                  style={[
+                    styles.tableCell_20,
+                    styles.alignRight,
+                    styles.cellBg1,
+                    styles.p10,
+                  ]}
+                >
                   <Text>{item?.charges}</Text>
                 </View>
 
-                <View style={[styles.tableCell_3, styles.alignRight]}>
+                <View
+                  style={[
+                    styles.tableCell_20,
+                    styles.alignRight,
+                    styles.cellBg2,
+                    styles.p10,
+                  ]}
+                >
                   <Text>{fCurrency(item?.TotalSaleValue)}</Text>
                 </View>
 
-                <View style={[styles.tableCell_3, styles.alignRight]}>
+                <View
+                  style={[
+                    styles.tableCell_20,
+                    styles.alignRight,
+                    styles.cellBg3,
+                    styles.p10,
+                  ]}
+                >
                   <Text>{fCurrency(item?.TotalNetSaleValueGsT)}</Text>
                 </View>
               </View>
             ))}
-            <View style={styles.totalRow}>
-              <View style={styles.tableCell_1}></View>
+            <View style={styles.totalRowNew}>
+              <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
 
-              <View style={styles.tableCell_2}>
-                <Text style={styles.subtitle2}>
-                  {/* {invoiceDet[i].itemTotal.title} */}
-                </Text>
+              <View style={[styles.tableCell_35, styles.p10]}></View>
+
+              <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+              <View style={[styles.tableCell_20, styles.alignRight, styles.pr4]}>
+                <Text style={[styles.subtitle2, styles.pt2]}>Total (A)</Text>
               </View>
 
-              <View style={styles.tableCell_3}>
-                <Text></Text>
-              </View>
-
-              <View style={[styles.tableCell_3, styles.alignRight]}>
-                <Text style={styles.subtitle2}>
-                    {invoiceDet[i].itemTotal.title}
-                </Text>
-              </View>
-
-
-              <View style={[styles.tableCell_3, styles.alignRight]}>
-
+              <View
+                style={[
+                  styles.tableCell_20,
+                  styles.alignRight,
+                  styles.cellBg3,
+                  styles.p10,
+                  styles.pt2,
+                ]}
+              >
                 <Text>{fCurrency(partATotal)}</Text>
               </View>
             </View>
 
-            {myAdditionalCharges?.map((item, index) => (
-              <View style={styles.tableRow} key={item.id}>
-                <View style={styles.tableCell_1}>
-                  <Text>{index + 1}</Text>
+{/* part 2 */}
+{myAdditionalCharges?.map((item, index) => (
+              <View style={styles.totalRowNew} key={item.id}>
+                <View
+                  style={[
+                    styles.tableCell_1,
+                    styles.pl2,
+                    styles.p10,
+                    styles.cellBg0,
+                  ]}
+                >
+                  <Text>{(myObj?.length || 0) + (index + 1)}</Text>
                 </View>
 
-                <View style={styles.tableCell_2}>
+                <View style={[styles.tableCell_35, styles.p10, styles.cellBg0]}>
                   <Text style={styles.subtitle2}>{item?.component?.label}</Text>
                 </View>
 
-                <View style={styles.tableCell_3}>
+                <View
+                  style={[
+                    styles.tableCell_20,
+                    styles.alignRight,
+                    styles.cellBg1,
+                    styles.p10,
+                  ]}
+                >
                   <Text>{item?.charges}</Text>
                 </View>
-                {/*
-                <View style={styles.tableCell_3}>
-                  <Text>{fCurrency(item?.TotalSaleValue )}</Text>
-                </View> */}
-                <View style={[styles.tableCell_3, styles.alignRight]}>
-                  <Text>{item?.TotalNetSaleValueGsT}</Text>
+
+                <View
+                  style={[
+                    styles.tableCell_20,
+                    styles.alignRight,
+                    styles.cellBg2,
+                    styles.p10,
+                  ]}
+                >
+                  <Text>{fCurrency(item?.TotalSaleValue)}</Text>
                 </View>
-                <View style={[styles.tableCell_3, styles.alignRight]}>
-                  <Text>
-                    {fCurrency(
+
+                <View
+                  style={[
+                    styles.tableCell_20,
+                    styles.alignRight,
+                    styles.cellBg3,
+                    styles.p10,
+                  ]}
+                >
+                  <Text> {fCurrency(
                       Number(
                         computeTotal(item, selUnitDetails?.area)
                       )?.toLocaleString('en-IN')
-                    )}
-                  </Text>
+                    )}</Text>
                 </View>
               </View>
             ))}
-            <View style={styles.totalRow}>
-              <View style={styles.tableCell_1}></View>
+            <View style={styles.totalRowNew}>
+              <View style={[styles.tableCell_1, styles.pl2, styles.p10, styles.cellBg0]}></View>
 
-              <View style={styles.tableCell_2}>
-                <Text style={styles.subtitle2}>
-                  {/* {invoiceDet[i].chargeTotal.title} */}
-                </Text>
+              <View style={[styles.tableCell_35, styles.p10,styles.cellBg0]}></View>
+
+              <View style={[styles.tableCell_20, styles.alignRight,styles.cellBg1,]}></View>
+
+              <View style={[styles.tableCell_20, styles.alignRight, styles.cellBg2,styles.pr4]}>
+                <Text style={[styles.subtitle2, styles.pt2]}>Total (B)</Text>
               </View>
 
-              <View style={styles.tableCell_3}></View>
-
-              <View style={[styles.tableCell_3, styles.alignRight]}>
-              <Text style={styles.subtitle2}>
-                  {invoiceDet[i].chargeTotal.title}
-                </Text>
-              </View>
-
-              <View style={[styles.tableCell_3, styles.alignRight]}>
+              <View
+                style={[
+                  styles.tableCell_20,
+                  styles.alignRight,
+                  styles.cellBg3,
+                  styles.p10,
+                  styles.pt2,
+                ]}
+              >
                 <Text>{fCurrency(partBTotal)}</Text>
               </View>
             </View>
-            <View style={[styles.totalRow, styles.mb20, styles.bg3]}>
+
+
+            <View style={[styles.totalRow, styles.mb20, styles.mT0, styles.cellBgHead]}>
               <View style={styles.tableCell_1}></View>
 
               <View style={styles.tableCell_2}>
                 <Text style={styles.subtitle2}>
-                  {invoiceDet[i].totalSaleValue.title}
+                  Total Plot Cost (A+B)
                 </Text>
               </View>
 
@@ -610,60 +784,66 @@ const MyDocument = ({ user,  selUnitDetails, myObj, myAdditionalCharges, netTota
                 <Text>{fCurrency(partBTotal)}</Text>
               </View>
 
-              <View style={[styles.tableCell_3, styles.alignRight]}>
+              <View style={[styles.tableCell_3, styles.alignRight, styles.pr4,]}>
                 <Text>{fCurrency(netTotal)}</Text>
               </View>
             </View>
             <Text
               style={[
                 styles.subtitle1,
-                styles.mb10,
+                styles.mb5,
                 styles.col,
-                styles.borderbottom,
+
+                styles.smallFitter,
               ]}
             >
-              {invoiceDet[i].paymentHeader}
+              Payment Schedule
             </Text>
-            <View>
-              <View style={styles.bg2}>
-                <View style={styles.tableCell_1}></View>
+
+            <View style={[styles.subtitle1, styles.cellBgHead]}>
+              <View style={[styles.bg2, styles.cellBgHead]}>
+                <View style={styles.tableCell_1}>
+                  <Text style={styles.subtitle2}></Text>
+                </View>
 
                 <View style={styles.tableCell_4}>
-                  <Text style={styles.subtitle2}>PARTICULARS</Text>
+                  <Text style={[styles.subtitle2, styles.ml1]}>
+                    Schedule
+                  </Text>
                 </View>
-
-                <View style={styles.tableCell_2}>
+                <View style={styles.tableCell_5}>
                   <Text style={styles.subtitle2}>PAYMENT TIMELINE</Text>
                 </View>
-
-                <View style={[styles.tableCell_2, styles.alignRight]}>
-                  <Text style={styles.subtitle2}>TOTAL INC GST</Text>
+                <View style={[styles.tableCell_3, styles.alignRight]}>
+                  <Text style={styles.subtitle2}>TOTAL</Text>
                 </View>
               </View>
             </View>
             {invoiceDet[i].PaymentItems.map((item, index) => (
-              <View style={styles.tableRow} key={item.id}>
-                <View style={styles.tableCell_1}></View>
+              <View style={[styles.tableRow, styles.ml1]} key={item.id}>
+                <View style={[styles.tableCell_1, styles.pl2]}>
+                  <Text>{index + 1}</Text>
+                </View>
 
                 <View style={styles.tableCell_4}>
                   <Text style={styles.subtitle2}>{item.title}</Text>
                 </View>
 
-                <View style={styles.tableCell_2}>
+                <View style={styles.tableCell_5}>
                   <Text>{item.timeline}</Text>
                 </View>
 
-                <View style={[styles.tableCell_2, styles.alignRight]}>
+                <View style={[styles.tableCell_3, styles.alignRight]}>
                   <Text>{fCurrency(item.total)}</Text>
                 </View>
               </View>
             ))}
-            <View style={styles.totalRow}>
+            <View style={[styles.totalRow, styles.cellBgHead,styles.mT0,]}>
               <View style={styles.tableCell_1}></View>
 
-              <View style={styles.tableCell_4}>
+              <View style={[styles.tableCell_4, styles.ml1]}>
                 <Text style={styles.subtitle2}>
-                  {invoiceDet[i].payment.title}
+                  Total Plot Cost
                 </Text>
               </View>
 
@@ -707,17 +887,15 @@ const PdfInvoiceGenerator = ({
   setPartATotal,
   setPartBTotal,
   projectDetails,
-  leadDetailsObj1
-
+  leadDetailsObj1,
 }) => {
-
   return (
     <div>
       {' '}
       <PDFDownloadLink
         document={
           <MyDocument
-          user={user}
+            user={user}
             selUnitDetails={selUnitDetails}
             myObj={myObj}
             myAdditionalCharges={myAdditionalCharges}
@@ -729,8 +907,6 @@ const PdfInvoiceGenerator = ({
             setPartBTotal={setPartBTotal}
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
-
-
           />
         }
         fileName="sample.pdf"

@@ -395,9 +395,7 @@ const CostBreakUpSheet = ({
             <div className="bg-[white] rounded-b-md">
               <div className=" mt-">
                 <div className=" pb-1">
-                  <div>
-                    <PdfInvoiceGenerator />
-                  </div>
+               
                   <div
                     className="flex flex-row justify-between   py-3 px-3  mt-[0.5px] mb-0 rounded-xs bg-[#F2F5F8]"
                     style={{ flex: '4 0 100%' }}
