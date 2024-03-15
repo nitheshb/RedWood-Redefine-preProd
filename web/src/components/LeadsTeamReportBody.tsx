@@ -1183,7 +1183,9 @@ console.log('selected project is ', selProjectIs?.value)
                 { label: 'Source Performance', value: 'source_perf' },
                 { label: 'Site Visits', value: 'site_visits' },
                 { label: 'Employee Performance', value: 'emp_tasks' },
+
                 { label: 'Top Bar', value: 'bar_tasks' },
+             
 
                 // { label: 'Source Report', value: 'source_report' },
                 // { label: 'Employee Report', value: 'emp_status_report' },
@@ -1703,10 +1705,11 @@ console.log('selected project is ', selProjectIs?.value)
           )}
 
 
-          {/* Graph Bar start */}
+
+                   {/* Graph Bar start */}
 
 
-          {selCat === 'bar_tasks' && (
+                   {selCat === 'bar_tasks' && (
             <div className='bg-[#fff] rounded-lg shadow-xl min-h-[390px] max-w-[490px]'>
 
               <div className="flex justify-between px-4 py-4">
@@ -1804,6 +1807,8 @@ console.log('selected project is ', selProjectIs?.value)
 
 
           {/* Graph Bar end */}
+
+
 
 
 
