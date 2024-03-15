@@ -1184,6 +1184,9 @@ console.log('selected project is ', selProjectIs?.value)
                 { label: 'Site Visits', value: 'site_visits' },
                 { label: 'Employee Performance', value: 'emp_tasks' },
 
+                { label: 'Top Bar', value: 'bar_tasks' },  
+
+
               
 
               
@@ -1707,6 +1710,109 @@ console.log('selected project is ', selProjectIs?.value)
           )}
 
 
+
+
+                   {/* Graph Bar start */}
+
+
+                   {selCat === 'bar_tasks' && (
+            <div className='bg-[#fff] rounded-lg shadow-xl min-h-[390px] max-w-[490px]'>
+
+              <div className="flex justify-between px-4 py-4">
+                <p className='text-black'>Top countries</p>
+                <p className='text-[#16A34A] font-bold'>Reports</p>
+              </div>
+
+               <div className="flex justify-between items-end  px-4 py-4">
+
+               <div className="bar-1 text-center ">
+                <div className='bg-[#F5F5F4] rounded-lg  min-h-[220px] min-w-[140px]'>
+                <div className="text-center px-5 py-5" >
+                <p>1st</p>
+                <p className="bg-white rounded-2xl border-gray-300  p-1">1,265</p>
+                </div>
+                </div>
+
+                <div className='text-bar'>
+                  <p>united states</p>
+                </div>
+              </div>
+
+              <div className="bar-2  text-center ">
+                <div className='bg-[#F5F5F4] rounded-lg  min-h-[170px] min-w-[140px]'>
+                <div className="text-center px-5 py-5" >
+                <p>2st</p>
+                <p className="bg-white rounded-2xl border-gray-300  p-1">1,009</p>
+                </div>
+                </div>
+
+                <div className='text-bar'>
+                  <p>united states</p>
+                </div>
+              </div>
+
+
+              <div className="bar-3 text-center">
+                <div className='bg-[#F5F5F4] rounded-lg  min-h-[120px] min-w-[140px]'>
+                <div className="text-center px-5 py-5" >
+                <p>3st</p>
+                <p className="bg-white rounded-2xl border-gray-300  p-1">922</p>
+                </div>
+                </div>
+
+                <div className='text-bar'>
+                  <p>united states</p>
+                </div>
+              </div>
+
+               </div>
+
+
+
+
+{/* 
+
+<div className="text-center relative">
+    <div className="relative box-line-btn inline-flex text-center items-center mx-2 border-r border-l">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4">
+            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm3.844-8.791a.75.75 0 0 0-1.188-.918l-3.7 4.79-1.649-1.833a.75.75 0 1 0-1.114 1.004l2.25 2.5a.75.75 0 0 0 1.15-.043l4.25-5.5Z" clip-rule="evenodd" />
+        </svg>
+        <p className="p-1">Good</p>
+    </div>
+</div>
+
+*/}
+
+
+<div className="flex justify-center items-center">
+  <h1 className="font-sans text-center text-1xl max-w-xs relative">
+  <span className="bg-[#CCFBF1] p-1 rounded-lg">Good</span>
+
+    
+    <div className="absolute w-24 h-0.5 bg-[#F5F5F4] top-1/2 left-10 translate-x-6 "></div>
+    
+    <div className="absolute w-24 h-0.5 bg-[#F5F5F4] top-1/2 right-20 translate-x-6 "></div>
+  </h1>
+</div>
+
+
+
+
+
+
+               <div className="p-4 text-center">Your overall performance is 98% higher than average.</div>
+
+
+               {/* line bar */}
+
+
+
+
+            </div>
+          )}
+
+
+          {/* Graph Bar end */}
 
 
 
