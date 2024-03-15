@@ -33,7 +33,6 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
-import UnitBookingSummaryTableLayout from './UnitBookingSummary.tsx/bookingSummaryTableLayout'
 import CreditNoteSummaryTableLayout from './CreditNoteSummary/CreditNoteSummaryTableLayout'
 
 const CreditNoteSummaryHomePage = ({

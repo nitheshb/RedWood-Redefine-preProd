@@ -6,7 +6,7 @@ const PieChartComp = ({ pieVal }) => {
   console.log(pieVal, 'pievallllll')
   const RADIAN = Math.PI / 200
   const data = [
-    { name: 'A', value: pieVal, color: '#4fa183' },
+    { name: 'A', value: pieVal, color: '#ffe0bb' },
     { name: 'B', value: 100 - pieVal, color: '#ececec' },
   ]
   const cx = 110

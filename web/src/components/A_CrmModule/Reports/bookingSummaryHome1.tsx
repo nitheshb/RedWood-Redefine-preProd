@@ -217,15 +217,15 @@ switch (selProjectIs.value) {
 
   return (
     <>
-      <div className="">
+      <div className="bg-white rounded-xl mt-1">
         <div className="">
           <div
             className="
-            px-3 py-6"
+             py-2"
           >
-            <div className="flex items-center flex-row flex-wrap py-1 pb-5 justify-between">
-              <h2 className="text-md font-semibold text-black leading-light font-Playfair">
-                Booked Unit Summary
+            <div className="flex items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
+              <h2 className="text-md font-semibold text-black leading-light">
+                Booked Units Summary
               </h2>
 
               <div className="flex">

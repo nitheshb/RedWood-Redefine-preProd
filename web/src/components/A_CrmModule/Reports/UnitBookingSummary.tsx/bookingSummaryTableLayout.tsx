@@ -351,10 +351,8 @@ const UnitBookingSummaryTableLayout = ({
   }
   return (
     <Section pb={4}>
-      <Card
-        sx={{
-          boxShadow: 4,
-        }}
+      <section
+       className="bg-white"
       >
         <Grid container>
           <Grid item xs={12}>
@@ -469,7 +467,7 @@ const UnitBookingSummaryTableLayout = ({
             )}
           </Grid>
         </Grid>
-      </Card>
+      </section>
     </Section>
   )
 }

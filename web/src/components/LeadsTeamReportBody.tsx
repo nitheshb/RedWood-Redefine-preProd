@@ -1761,11 +1761,23 @@ console.log('selected project is ', selProjectIs?.value)
 
 
 
+{/* 
+
+<div className="text-center relative">
+    <div className="relative box-line-btn inline-flex text-center items-center mx-2 border-r border-l">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4">
+            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm3.844-8.791a.75.75 0 0 0-1.188-.918l-3.7 4.79-1.649-1.833a.75.75 0 1 0-1.114 1.004l2.25 2.5a.75.75 0 0 0 1.15-.043l4.25-5.5Z" clip-rule="evenodd" />
+        </svg>
+        <p className="p-1">Good</p>
+    </div>
+</div>
+
+*/}
 
 
 <div className="flex justify-center items-center">
   <h1 className="font-sans text-center text-1xl max-w-xs relative">
-  <span className="bg-[#CCFBF1] p-2 rounded-lg">Good</span>
+  <span className="bg-[#CCFBF1] p-1 rounded-lg">Good</span>
 
     
     <div className="absolute w-24 h-0.5 bg-[#F5F5F4] top-1/2 left-10 translate-x-6 "></div>
@@ -1777,36 +1789,7 @@ console.log('selected project is ', selProjectIs?.value)
 
 
 
-{/* 
-<div className="text-center relative">
-    <div className="relative box-line-btn inline-flex text-center items-center mx-2">
-        <div className="absolute top-0 left-0 right-0 border-t"></div> 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4">
-            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm3.844-8.791a.75.75 0 0 0-1.188-.918l-3.7 4.79-1.649-1.833a.75.75 0 1 0-1.114 1.004l2.25 2.5a.75.75 0 0 0 1.15-.043l4.25-5.5Z" clip-rule="evenodd" />
-        </svg>
-        <p className="p-1">Good</p>
-        <div className="absolute bottom-0 left-0 right-0 border-t"></div> 
-    </div>
-</div>
-
-*/}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div className="p-4 text-center text-[#B4B4B8] font-bold">Your overall performance is 98% higher than average.</div>
+               <div className="p-4 text-center">Your overall performance is 98% higher than average.</div>
 
 
                {/* line bar */}

@@ -839,6 +839,7 @@ export default function UnitSummaryTableBody({
                         key={index}
                         selected={isItemSelected}
                         style={{ cursor: 'pointer' }}
+
                       >
                         <TableCell
                           align="center"
@@ -857,7 +858,7 @@ export default function UnitSummaryTableBody({
                           id={labelId}
                           scope="row"
                           padding="none"
-                          sx={{ whiteSpace: 'nowrap',  paddingRight: '6px' , paddingLeft: '6px',  }}
+                          sx={{ whiteSpace: 'nowrap',  paddingRight: '6px' , paddingLeft: '6px',  border: '1px solid #e0e0e0', }}
 
                         >
                           <section>
@@ -896,7 +897,7 @@ export default function UnitSummaryTableBody({
                           <span className="font-bodyLato" style={{maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '12px' }}>{row.projName}</span>
                         </TableCell>
                         <TableCell align="center" sx={{background: "#FFFF"}} padding="none">
-                        <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full bg-[#CCFBF1] text-[#115e59]">
                           <HighlighterStyle
                             searchKey={searchKey}
                             source={row.status.toString()}

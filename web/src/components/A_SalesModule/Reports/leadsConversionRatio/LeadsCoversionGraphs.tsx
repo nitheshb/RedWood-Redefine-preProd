@@ -78,6 +78,7 @@ const LeadsCoversionGraphs = ({
   console.log(show)
   return (
     <div
+    className='rounded-xl'
       style={{
         padding: '1rem',
         backgroundColor: 'white',
@@ -86,9 +87,9 @@ const LeadsCoversionGraphs = ({
       {show && (
         <div style={{ display: 'flex' }}>
           <div style={{ width: '15rem' }}>
-            <div style={{ height: '12.5rem' }} className="bg-[#397D8A] p-6">
-              <span className="text-white text-lg ">Lead Conversion Ratio</span>
-              <div className="text-white text-[44px] my-5">
+            <div style={{ height: '12.5rem' }} className="bg-[#ffe0bb] p-6 rounded-t-lg">
+              <span className=" text-lg ">Lead Conversion Ratio</span>
+              <div className=" text-[44px] my-5">
                 {`${
                   sourceRawFilData.filter((datObj) =>
                     [
@@ -107,7 +108,7 @@ const LeadsCoversionGraphs = ({
                   ).length
                 }`}
               </div>
-              <div className="text-white text-sm">Qualified vs Bookings </div>
+              <div className=" text-sm">Qualified vs Bookings </div>
             </div>
             <div
               style={{
@@ -169,7 +170,7 @@ const LeadsCoversionGraphs = ({
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="bg-[#3C7E7D] my-[0.5px] cursor-pointer"
+                  className={`bg-[#ffefdb] my-[0.5px] cursor-pointer ${i === 5 ? 'rounded-b-lg' : ''}`}
                   style={{
                     height: '4rem',
                     display: 'flex',
@@ -183,8 +184,8 @@ const LeadsCoversionGraphs = ({
                     showDrillDownFun(`Total ${item?.stausTitle}`, item?.data)
                   }
                 >
-                  <div className="text-white">{item?.stausTitle}</div>
-                  <div className="text-white">{item?.data?.length}</div>
+                  <div className="">{item?.stausTitle}</div>
+                  <div className="">{item?.data?.length}</div>
                 </div>
               ))}
             </div>
@@ -201,12 +202,14 @@ const LeadsCoversionGraphs = ({
               <Bargraph />
             </div> */}
             <div
+            className=''
               style={{
                 padding: '1.5rem',
-                width: '52rem',
+
               }}
             >
               <div
+                className='shadow rounded-xl p-2 pl-4'
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -218,7 +221,7 @@ const LeadsCoversionGraphs = ({
                     width: '14rem',
                     height: '12rem',
                     position: 'relative',
-                    backgroundColor: 'white',
+
                   }}
                 >
                   <PieChartComp pieVal={pieVals.val1} />
@@ -229,7 +232,7 @@ const LeadsCoversionGraphs = ({
                       left: '39%',
                       fontSize: '2rem',
                       fontWeight: '600',
-                      color: '#4fa183',
+                      color: '#000',
                     }}
                   >
                     {pieVals.val1}%
@@ -241,11 +244,11 @@ const LeadsCoversionGraphs = ({
                       left: '4.5%',
                       padding: '0 0.5rem',
                       fontSize: '0.9rem',
-                      color: '#4fa183',
+                      color: '#000',
                     }}
-                    className="bg-[#4DA283]"
+                    className="bg-[#ffe0bb] rounded-lg"
                   >
-                    <span className="text-white">New Lead-to-Opportunity</span>
+                    <span className="">New Lead-to-Opportunity</span>
                   </div>
                 </div>
                 <div
@@ -264,7 +267,7 @@ const LeadsCoversionGraphs = ({
                       left: '39%',
                       fontSize: '2rem',
                       fontWeight: '600',
-                      color: '#4fa183',
+                      color: '#000',
                     }}
                   >
                     {pieVals.val2}%
@@ -276,11 +279,11 @@ const LeadsCoversionGraphs = ({
                       left: '18.5%',
                       padding: '0 0.5rem',
                       fontSize: '0.9rem',
-                      color: '#4fa183',
+                      color: '#000',
                     }}
-                    className="bg-[#4DA283]"
+                    className="bg-[#ffe0bb] rounded-lg"
                   >
-                    <span className="text-white">New Lead-to-Junk</span>
+                    <span className="">New Lead-to-Junk</span>
                   </div>
                 </div>
                 <div
@@ -298,7 +301,7 @@ const LeadsCoversionGraphs = ({
                       left: '39%',
                       fontSize: '2rem',
                       fontWeight: '600',
-                      color: '#4fa183',
+                      color: '#000',
                     }}
                   >
                     {pieVals.val3}%
@@ -310,11 +313,11 @@ const LeadsCoversionGraphs = ({
                       left: '9%',
                       padding: '0 0.5rem',
                       fontSize: '0.9rem',
-                      color: '#4fa183',
+                      color: '#000',
                     }}
-                    className="bg-[#4DA283]"
+                    className="bg-[#ffe0bb] rounded-lg"
                   >
-                    <span className="text-white">Opportunity-to-Booking</span>
+                    <span className="">Opportunity-to-Booking</span>
                   </div>
                 </div>
               </div>
@@ -539,7 +542,7 @@ const LeadsCoversionGraphs = ({
                         </span>
                       </div> */}
               </section>
-              <table className="min-w-full cardborder text-center mt-6">
+              <table className="min-w-full cardborder text-center">
                 <thead className="border-b">
                   <tr>
                     {[
@@ -564,7 +567,7 @@ const LeadsCoversionGraphs = ({
                       <th
                         key={i}
                         scope="col"
-                        className={`text-sm font-semibold font-medium text-gray-900 px-6 py-4 ${
+                        className={`text-sm font-semibold font-medium text-gray-900 px-6 py-4 border ${
                           ['Source'].includes(d.label) ? 'text-left' : ''
                         }`}
                         // style={{
@@ -616,18 +619,18 @@ const LeadsCoversionGraphs = ({
                   {projectFilList.map((data, i) => {
                     return (
                       <tr
-                        className={` ${
-                          i % 2 === 0
-                            ? 'bg-white border-blue-200'
-                            : 'bg-gray-100'
-                        }`}
+                        // className={` ${
+                        //   i % 2 === 0
+                        //     ? 'bg-white border-blue-200'
+                        //     : 'bg-gray-100'
+                        // }`}
                         key={i}
                       >
-                        <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left">
+                        <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left border">
                           {data?.label}
                         </td>
                         <td
-                          className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                          className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap border"
                           onClick={() =>
                             showDrillDownFun(
                               `${data?.label} Total Leads`,
@@ -638,7 +641,7 @@ const LeadsCoversionGraphs = ({
                           {data?.TotalNew?.length}
                         </td>
                         <td
-                          className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                          className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap border"
                           onClick={() =>
                             showDrillDownFun(
                               `${data?.label} Inprogress Leads`,
@@ -668,7 +671,7 @@ const LeadsCoversionGraphs = ({
                           </>
                         )} */}
                         <td
-                          className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                          className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap border"
                           onClick={() =>
                             showDrillDownFun(
                               `${data?.label} Booked Leads`,
@@ -695,7 +698,7 @@ const LeadsCoversionGraphs = ({
                           </>
                         )} */}
                         <td
-                          className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap"
+                          className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap border"
                           onClick={() =>
                             showDrillDownFun(
                               `${data?.label} Archieve Leads`,
@@ -705,18 +708,18 @@ const LeadsCoversionGraphs = ({
                         >
                           {data?.archieve_new?.length}
                         </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
+                        <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap border">
                           {data?.others?.length}
                         </td>
                       </tr>
                     )
                   })}
                   <tr className="border-b bg-gray-800 boder-gray-900">
-                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap text-left">
+                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap text-left border">
                       Total
                     </td>
                     <td
-                      className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap"
+                      className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap border"
                       onClick={() =>
                         showDrillDownFun(`Total Leads`, leadsFetchedRawData)
                       }
@@ -724,7 +727,7 @@ const LeadsCoversionGraphs = ({
                       {leadsFetchedRawData?.length}
                     </td>
                     <td
-                      className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap"
+                      className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap border"
                       onClick={() =>
                         showDrillDownFun(
                           `Inprogress Leads`,
@@ -755,7 +758,7 @@ const LeadsCoversionGraphs = ({
                       }
                     </td>
                     <td
-                      className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap"
+                      className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap border"
                       onClick={() =>
                         showDrillDownFun(`Total Leads`, leadsFetchedRawData)
                       }
@@ -767,7 +770,7 @@ const LeadsCoversionGraphs = ({
                       }
                     </td>
                     <td
-                      className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap"
+                      className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap border"
                       onClick={() =>
                         showDrillDownFun(
                           `Archieve Leads`,
@@ -790,7 +793,7 @@ const LeadsCoversionGraphs = ({
                         ).length
                       }
                     </td>
-                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
+                    <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap border">
                       {/* {
                         leadsFetchedRawData?.filter((datObj) =>
                           [
@@ -929,6 +932,9 @@ const LeadsCoversionGraphs = ({
                   )} */}
                 </tbody>
               </table>
+
+
+
             </div>
           </div>
         </div>

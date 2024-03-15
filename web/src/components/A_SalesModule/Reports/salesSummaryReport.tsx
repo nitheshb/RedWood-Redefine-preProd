@@ -59,11 +59,11 @@ const rows = [
   },
 ]
 
-const data1 = ['BTC']
-const data2 = ['SOL']
-const data3 = ['ETH ']
-const data4 = ['ADA']
-const data5 = ['BHB']
+const data1 = ['Leads']
+const data2 = ['Progress']
+const data3 = ['Site Visits ']
+const data4 = ['Booking']
+const data5 = ['Not Interested']
 const data6 = ['Highest volume(24h)']
 
 const totalProfit = '98,6543.53'
@@ -97,7 +97,7 @@ const avgGrowingData = [
   },
   {
     percentage: '3.45%',
-    text: 'Registered',
+    text: 'Site Visit',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -122,7 +122,7 @@ const avgGrowingData = [
   },
   {
     percentage: '1.98%',
-    text: 'Resilience index',
+    text: 'Le5ad Sources',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +150,7 @@ const avgGrowingData = [
   },
   {
     percentage: '2.87%',
-    text: 'Portfolio score',
+    text: 'Cost per lead',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -174,7 +174,7 @@ const avgGrowingData = [
   },
 ]
 
-const CrmSummaryReport = () => {
+const SalesSummaryReport = () => {
   return (
     <div className="mx-auto m-2 max-w-screen-2xl">
       <div>
@@ -186,7 +186,7 @@ const CrmSummaryReport = () => {
                 <div className="flex-1 mr-4  p-4">
                   <div>
                     <h5 className="text-black text-xl font-medium mt-1 mb-2">
-                      Total Collected
+                      Total Leads
                     </h5>
 
                     <span>12 January 2023 - 12 January 2024</span>
@@ -520,4 +520,4 @@ const CrmSummaryReport = () => {
   )
 }
 
-export default CrmSummaryReport
+export default SalesSummaryReport
