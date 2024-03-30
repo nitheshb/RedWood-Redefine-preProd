@@ -60,15 +60,11 @@ import { serialMyData } from './LeadsTeamReport/SourceLeads'
 import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 
-<<<<<<< HEAD
-import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
-import ProfileSummary from './A_SalesModule/Reports/profileSummary'
+
 import Chat from './A_SalesModule/Reports/chatSummary'
 
 
 
-=======
->>>>>>> c6bc66951b3d3593efb288b157022776b5697540
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
   { k: 'Progress', v: 100, pic: '' },
@@ -1216,21 +1212,15 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 { label: 'Home', value: 'sale_report_home' },
                 { label: 'Marketing', value: 'marketing_Dashboard' },
 
-<<<<<<< HEAD
-                  { label: 'Top Bar', value: 'bar_tasks' },  
-                  { label: 'Profile', value: 'profile_tasks' },  
-                  { label: 'chat', value: 'chat_tasks' },  
+                  { label: 'Top Bar', value: 'bar_tasks' },
+                  { label: 'Profile', value: 'profile_tasks' },
+                  { label: 'chat', value: 'chat_tasks' },
 
 
 
-              
 
-              
-             
-=======
-                { label: 'Top Bar', value: 'bar_tasks' },
-                { label: 'Profile', value: 'profile_tasks' },
->>>>>>> c6bc66951b3d3593efb288b157022776b5697540
+
+
 
                 // { label: 'Source Report', value: 'source_report' },
                 // { label: 'Employee Report', value: 'emp_status_report' },
@@ -1753,18 +1743,14 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           {selCat === 'marketing_Dashboard' && <MarketingAnalyticsHome />}
 
-<<<<<<< HEAD
 {selCat === 'profile_tasks' && (
             <ProfileSummary/>
-            
+
           )}
-=======
           {selCat === 'profile_tasks' && <ProfileSummary />}
->>>>>>> c6bc66951b3d3593efb288b157022776b5697540
 
           {/* Graph Bar start */}
 
-<<<<<<< HEAD
 
 {selCat === 'chat_tasks' && (
             <Chat/>
@@ -1793,9 +1779,9 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 <svg className="justify-center items-center   mx-auto" xmlns="http://www.w3.org/2000/svg" id="flag-icon-css-us" viewBox="0 0 512 512"     style={{
         width: '30px',
         height: '30px',
-      
+
         borderRadius: '50%',
-     
+
       }}>
                       <g fill-rule="evenodd">
                         <g stroke-width="1pt">
@@ -1808,7 +1794,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                     </svg>
                 </div>
 
-    
+
 
                 <div className='bg-[#F5F5F4] rounded-lg  min-h-[220px] min-w-[140px]'>
                 <div className="text-center px-5 py-5" >
@@ -1831,9 +1817,9 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 <svg className="justify-center items-center   mx-auto" xmlns="http://www.w3.org/2000/svg" id="flag-icon-css-us" viewBox="0 0 512 512"     style={{
         width: '30px',
         height: '30px',
-        
+
         borderRadius: '50%',
-     
+
       }}>
                       <g fill-rule="evenodd">
                         <g stroke-width="1pt">
@@ -1847,7 +1833,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 </div>
 
 
-                
+
 
 
 
@@ -1872,9 +1858,9 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 <svg className="justify-center items-center   mx-auto" xmlns="http://www.w3.org/2000/svg" id="flag-icon-css-us" viewBox="0 0 512 512"     style={{
         width: '30px',
         height: '30px',
-        
+
         borderRadius: '50%',
-     
+
       }}>
                       <g fill-rule="evenodd">
                         <g stroke-width="1pt">
@@ -1909,7 +1895,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
 
 
-{/* 
+{/*
 
 <div className="text-center relative">
     <div className="relative box-line-btn inline-flex text-center items-center mx-2 border-r border-l">
@@ -1927,9 +1913,9 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   <h1 className="font-sans text-center text-1xl max-w-xs relative">
   <span className="bg-[#CCFBF1] p-1 rounded-lg">Good</span>
 
-    
+
     <div className="absolute w-24 h-0.5 bg-[#F5F5F4] top-1/2 left-10 translate-x-6 "></div>
-    
+
     <div className="absolute w-24 h-0.5 bg-[#F5F5F4] top-1/2 right-20 translate-x-6 "></div>
   </h1>
 </div>
@@ -1950,9 +1936,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             </div>
           )}
 
-=======
           {selCat === 'bar_tasks' && <CampaingsTopBarsComponent />}
->>>>>>> c6bc66951b3d3593efb288b157022776b5697540
 
           {/* Graph Bar end */}
 
