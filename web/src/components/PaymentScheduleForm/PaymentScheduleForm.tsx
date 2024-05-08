@@ -66,7 +66,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
   }
   const columns = [
     {
-      title: 'Stage*',
+      title: 'Stage of*',
       field: 'stage',
       headerStyle: {
         padding: '0.25rem',
@@ -319,6 +319,8 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
 
   return (
     <div className="h-full w-full shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll">
+
+
       <div className="z-10">
         {/* <Dialog.Title className="font-semibold text-xl mr-auto ml-3 text-[#053219]">
           {title}
@@ -367,7 +369,12 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
           )}
         </div>
       </div>
+
     </div>
+
+
+
+
   )
 }
 

@@ -909,42 +909,62 @@ const nextStep = () => {
       <section className="ml-4 text-md font-[500]">Part-A</section>
           {/* Your Part A content here */}
 
-          <EditableTable />
 
-<div className=" min border border-radius-4">
-  <MaterialCRUDTable
-    title=""
-    columns={partAcolumns}
-    data={partAData}
-    options={{
-      headerStyle: {
-        borderTopLeftRadius: '12px',
-        borderTopRightRadius: '12px',
-        borderBottomWidth: '2px',
-        background: '#f8fafd',
-        fontWeight: '600px',
-        padding: '13px',
-      },
-      actionsColumnIndex: -1,
-      search: false,
-      paging: false,
-      doubleHorizontalScroll: true,
-      position: 'absolute',
-    }}
-    style={{
-      padding: '0px 20px',
-      borderRadius: '0px',
-      boxShadow: 'none',
-      fontSize: '12px',
-    }}
-    actionsCellStyle={{
-      width: 'auto',
-      justifyCenter: 'center',
-    }}
-    source={source}
-    editable={editOpitionsObjPartA}
-  />
+    <div className='h-full w-full shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll'>
+
+<div className='z-10'>
+
+<div className='mt-1'> 
+
+
+<EditableTable />
+
+
+<MaterialCRUDTable
+  title=""
+  columns={partAcolumns}
+  data={partAData}
+  options={{
+    headerStyle: {
+      borderTopLeftRadius: '12px',
+      borderTopRightRadius: '12px',
+      borderBottomWidth: '2px',
+      background: '#f8fafd',
+      fontWeight: '600px',
+      padding: '13px',
+    },
+    actionsColumnIndex: -1,
+    minBodyHeight: '500px',
+    search: false,
+    paging: false,
+    doubleHorizontalScroll: true,
+    position: 'absolute',
+  }}
+  style={{
+    padding: '0px 20px',
+    borderRadius: '0px',
+    boxShadow: 'none',
+    fontSize: '12px',
+  }}
+  actionsCellStyle={{
+    width: 'auto',
+    justifyCenter: 'center',
+  }}
+  source={source}
+  editable={editOpitionsObjPartA}
+/>
+
+
+
 </div>
+
+</div>
+
+</div>
+             
+
+
+
  
         </>
       )}
@@ -984,6 +1004,7 @@ const nextStep = () => {
                   padding: '13px',
                 },
                 actionsColumnIndex: -1,
+                minBodyHeight: '1000px',
                 paging: false,
                 search: false,
                 doubleHorizontalScroll: true,
@@ -1023,7 +1044,7 @@ const nextStep = () => {
         <>
           <section className="ml-4 text-md font-[500]">Part-C</section>
           {/* Your Part C content here */}
-          <div className=" min">
+          <div className="">
           {/* <section className="ml-4 text-md font-[500]">Part-C</section> */}
           <MaterialCRUDTable
             title=""
@@ -1039,6 +1060,7 @@ const nextStep = () => {
                 padding: '13px',
               },
               actionsColumnIndex: -1,
+              minBodyHeight: '1000px',
               paging: false,
               search: false,
               doubleHorizontalScroll: true,
