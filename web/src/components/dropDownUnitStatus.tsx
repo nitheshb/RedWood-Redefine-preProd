@@ -10,6 +10,7 @@ import {
   DocumentTextIcon,
   EyeIcon,
 } from '@heroicons/react/solid'
+
 import { uniTypes } from 'src/constants/projects'
 
 export default function DropCompUnitStatus({
@@ -41,9 +42,7 @@ export default function DropCompUnitStatus({
                 <span className=" text-[11px] tracking-wide text-[#0091ae] mt-[5px]">
                   {type?.toLocaleUpperCase()}
                 </span>
-                <EyeIcon className="w-3 h-3 mr- ml-1 mt-[9px] inline text-[#058527]" />
-
-
+                <ChevronDownIcon className="w-5 h-5 mr- ml-1 mt-[5px] inline text-[#058527]" />
               </>
             )}
             {type === 'unitMode' && (
@@ -269,7 +268,7 @@ export default function DropCompUnitStatus({
                     'Cost Split',
                     'CRM Executive',
                     'Sales Executive',
-                    'Remarks'
+                    'Remarks',
                   ].map((viewData, i) => (
                     <Menu.Item key={i}>
                       {({ active }) => (
@@ -423,8 +422,9 @@ export default function DropCompUnitStatus({
                                   (dat) =>
                                     dat['facing']?.toLocaleLowerCase() ===
                                     viewData?.toLocaleLowerCase()
-                                ).length}/
-                                 {viewData === 'Any'
+                                ).length}
+                            /
+                            {viewData === 'Any'
                               ? totalUnits.length
                               : totalUnits.filter(
                                   (dat) =>
@@ -482,8 +482,9 @@ export default function DropCompUnitStatus({
                                   (dat) =>
                                     dat['size']?.toLocaleLowerCase() ===
                                     viewData?.toLocaleLowerCase()
-                                ).length}/
-                                 {viewData === 'Any'
+                                ).length}
+                            /
+                            {viewData === 'Any'
                               ? totalUnits.length
                               : totalUnits.filter(
                                   (dat) =>

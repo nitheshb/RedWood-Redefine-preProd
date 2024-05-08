@@ -816,9 +816,8 @@ const HomePage = () => {
                                     </section>
                                   </section>
 
-                                  <section className="flex flex-row bg-indigo-100 rounded-bl-xl rounded-br-xl border border-white">
+                                  {/* <section className="flex flex-row bg-indigo-100 rounded-bl-xl rounded-br-xl border border-white">
                                     <section className="flex flex-row px-4 py-4">
-                                      {/* sales Section */}
                                       <section className="w-[33%]">
                                         <section>
                                           <span className="text-slate-600 text-lg font-medium">
@@ -970,8 +969,7 @@ const HomePage = () => {
                                         </section>
                                       </section>
 
-                                      {/* CRM
-                                      Section */}
+
                                       <section className="w-[33%] mx-3">
                                         <section>
                                           <span className="text-slate-600 text-lg font-medium">
@@ -1078,8 +1076,7 @@ const HomePage = () => {
                                         </section>
                                       </section>
 
-                                      {/* Marketing
-                                      Section */}
+
                                       <section className="w-[33%]">
                                         <section>
                                           <span className="text-slate-600 text-lg font-medium">
@@ -1186,7 +1183,7 @@ const HomePage = () => {
                                         </section>
                                       </section>
                                     </section>
-                                  </section>
+                                  </section> */}
 
                                   {projects.length > 0 ? (
                                     <section className="bg-white py-2 rounded-sm">

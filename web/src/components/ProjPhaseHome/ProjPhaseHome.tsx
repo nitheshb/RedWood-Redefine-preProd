@@ -39,6 +39,7 @@ import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import PaymentLeadAccess from '../PaymentScheduleForm/ProjectLeadAccess'
 import PaymentScheduleSetup from '../paymentScheduleSetup'
 import PlanDiagramView from '../planDiagramView'
+import DialogFormBody from '../DialogFormBody/DialogFormBody'
 
 const ProjPhaseHome = ({
   projectDetails,
@@ -529,6 +530,15 @@ const ProjPhaseHome = ({
                       {phaseViewFeature === 'Payment Schedule' && (
                         <PaymentScheduleSetup phase={phase} source={source} />
                       )}
+                       {phaseViewFeature === 'projectDetails' && (
+                        <DialogFormBody
+                        title={'Create Project'}
+                        // dialogOpen={(=>())}
+                        project={phase}
+                      />
+                      )}
+
+
                       {phaseViewFeature === 'Blocks' &&
                         (selPhaseObj?.projectType?.name == 'Plots' ? (
                           <Floordetails

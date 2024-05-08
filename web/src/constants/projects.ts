@@ -167,30 +167,36 @@ export const projectPlans = [
 
 export const projectDetailFlow = [
   {
+    name: 'Project Details',
+    value: 'projectDetails',
+    img: '/apart1.svg',
+    indx:0,
+  },
+  {
     name: 'Cost sheet',
     value: 'CostDetails',
     img: '/apart1.svg',
-    indx:0,
+    indx:1,
   },
   {
     name: 'Payment Schedule',
     value: 'Payment Schedule',
     img: '/plot.svg',
-    indx:1,
+    indx:2,
 
   },
   {
     name: 'Project Units',
     value: 'Blocks',
     img: '/weekend.svg',
-    indx:2,
+    indx:3,
 
   },
   {
     name: 'Access',
     value: 'projectAccess',
     img: '/villa.svg',
-    indx:3,
+    indx:4,
 
   },
 ]

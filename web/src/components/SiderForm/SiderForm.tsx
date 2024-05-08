@@ -182,7 +182,7 @@ const SiderForm = ({
                     project={data}
                   />
                 )}
-                {title === 'project_details' && (
+                {title === 'project_details'  && (
                   <ProjectDetailsFlowBody
                     title={title}
                     dialogOpen={setOpen}

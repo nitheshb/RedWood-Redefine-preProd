@@ -41,13 +41,15 @@ import DropCompUnitStatus from '../dropDownUnitStatus'
 import SiderForm from '../SiderForm/SiderForm'
 import UnitsSmallViewCard from '../unitsSmallView'
 
-const Floordetails = ({
+const FloordetailsSearch = ({
   block = 'A',
   pId,
   phaseDetails,
   projectDetails,
   phaseFeed,
   BlockFeed,
+  unitsFeedA,
+  filUnitsFeedA,
   selBlock,
   source,
   setSelUnitDetails,
@@ -78,6 +80,7 @@ const Floordetails = ({
   } = selBlock
 
   const { user } = useAuth()
+  console.log('phase feed is ', phaseFeed)
 
   const { orgId } = user
   const unitStatsData = [
@@ -546,7 +549,12 @@ const Floordetails = ({
   const selReportFun = async (data) => {
     setReportFeed(data)
   }
+  useEffect(() => {
+    setUnitsFeed(filUnitsFeedA)
+  }, [unitsFeedA, filUnitsFeedA])
+
   const getUnitsFun = async () => {
+    return
     console.log('get dataf un is ', selBlock, selBlock?.uid)
     const todoData = await getUnits(
       orgId,
@@ -817,12 +825,12 @@ const Floordetails = ({
                 </span>{' '}
                 in{' '}
                 <span className="font-semibold font-blue mx-1">
-                  {unitsFeed.length}
+                  {unitsFeedA.length}
                 </span>{' '}
                 units
               </section>
               <section className="flex flex-row">
-                <section className="text-sm mt-[2px]  rounded flex flex-row border">
+                {/* <section className="text-sm mt-[2px]  rounded flex flex-row border">
                   <section
                     className={`flex flex-row pr-2 ${
                       selStatus.includes('available') ? 'bg-[#c6fff0]' : ''
@@ -873,9 +881,9 @@ const Floordetails = ({
                       ).length
                     }
                   </section>
-                </section>
+                </section> */}
 
-                <section className="mt-[-3px]">
+                {/* <section className="mt-[-3px]">
                   <div>
                     {/* <DropCompUnitStatus
                       type={'Status'}
@@ -885,13 +893,13 @@ const Floordetails = ({
                       pickedValue={filStatus}
                     /> */}
 
-                    <DropCompUnitStatus
+                    {/* <DropCompUnitStatus
                       type={'bedrooms'}
                       id={'bed_rooms'}
                       setStatusFun={makeFilterFun}
                       filteredUnits={unitsFeed}
                       pickedValue={filBedRooms}
-                    />
+                    /> */}
                     {/* <DropCompUnitStatus
                   type={'bathrooms'}
                   id={'bath_rooms'}
@@ -899,13 +907,13 @@ const Floordetails = ({
                   filteredUnits={filteredUnits}
                   pickedValue={filBathrooms}
                 /> */}
-                    <DropCompUnitStatus
+                    {/* <DropCompUnitStatus
                       type={'Size'}
                       id={'super_built_up_area'}
                       setStatusFun={makeFilterFun}
                       filteredUnits={unitsFeed}
                       pickedValue={filSuperBuildUpArea}
-                    />
+                    /> */}
                     {/* <DropCompUnitStatus
                   type={'Price'}
                   id={'rate_per_sqft'}
@@ -913,7 +921,7 @@ const Floordetails = ({
                   filteredUnits={filteredUnits}
                   pickedValue={filRatePerSqft}
                 /> */}
-                    <DropCompUnitStatus
+                    {/* <DropCompUnitStatus
                       type={'Type'}
                       id={'type'}
                       setStatusFun={makeFilterFun}
@@ -930,7 +938,8 @@ const Floordetails = ({
                       pickedValue={filFacing}
                     />
                   </div>
-                </section>
+                </section> */}
+
                 <section className="flex">
                   <button
                     onClick={() => {
@@ -1768,4 +1777,4 @@ const Floordetails = ({
   )
 }
 
-export default Floordetails
+export default FloordetailsSearch

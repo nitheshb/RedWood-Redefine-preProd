@@ -1050,6 +1050,7 @@ export const MyComponent = ({ data }) => {
   if (data && data?.customerDetailsObj) {
     // CustomerDetailsObj exists
     const customerDetails = data?.customerDetailsObj
+
     const emptyValueCount = Object.values(customerDetails).filter(
       (value) => value != ''
     ).length
@@ -1072,13 +1073,20 @@ export const PaymentScheduleStats = ({ newPlotPS }) => {
   if (newPlotPS?.length > 0) {
     // CustomerDetailsObj exists
 
-    const start = prettyDate(newPlotPS[0]['schDate'])
-    const end = prettyDate(newPlotPS[newPlotPS.length - 1]['schDate'])
+    let start= 'NA'
+    let end = 'NA'
+    if(newPlotPS[0]['schDate']){
+    start = prettyDate(newPlotPS[0]['schDate'])
+    }
+    if(newPlotPS[newPlotPS.length - 1]['schDate']){
+
+    end = prettyDate(newPlotPS[newPlotPS.length - 1]['schDate'])
+    }
     return (
       <div>
         <p className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
           {' '}
-          {start}-{end}
+          {start || 'NA'}-{end||'NA'}
         </p>
       </div>
     )
