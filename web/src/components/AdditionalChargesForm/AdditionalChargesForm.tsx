@@ -428,6 +428,40 @@ const columns = [
       </SelectMAT>
     ),
   },
+
+  {
+          title: 'Charges*',
+          field: 'charges',
+          headerStyle: {
+            padding: '0.25rem',
+          },
+          cellStyle: {
+            padding: '0.25rem',
+          },
+          render: (rowData) =>
+            rowData?.units?.value === 'percentage'
+              ? `${rowData?.charges} %`
+              : `₹ ${rowData?.charges?.toLocaleString('en-IN')}`,
+          editComponent: ({ value, onChange, rowData }) => {
+            return (
+              <input
+                placeholder="Charges"
+                className="w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 px-2"
+                autoComplete="off"
+                onChange={(e) =>
+                  rowData?.units?.value === 'percentage'
+                    ? onChange(
+                        parseInt(e.target.value) > 100 ? 100 : e.target.value
+                      )
+                    : onChange(e.target.value)
+                }
+                value={value}
+                type="number"
+                max="100"
+              />
+            )
+          },
+        },
   {
     title: 'GST*',
     field: 'gst',
