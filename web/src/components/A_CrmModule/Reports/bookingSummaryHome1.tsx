@@ -176,7 +176,7 @@ switch (selProjectIs.value) {
           user.value = user.projectName
         })
         console.log('fetched proejcts list is', projectsListA)
-        let z = [{'label': 'All Projects', value: 'allprojects'}, ...projectsListA]
+        let z = [ ...projectsListA]
         setprojectList(z)
       },
       (error) => setprojectList([])

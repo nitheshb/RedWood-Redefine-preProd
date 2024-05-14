@@ -1138,6 +1138,7 @@ export const getMyLeadsByDate = async (orgId, data) => {
 }
 export const getLeadsByDate = async (orgId, data) => {
   const { cutoffDate, dateRange } = data
+  console.log('my Array data is delayer 1 inside two ranges', dateRange, data)
   let itemsQuery
   if (dateRange?.[0] == null) {
     console.log('my Array data is delayer 1 inside two ranges', dateRange)
