@@ -502,7 +502,7 @@ const CostBreakUpPdf = ({
       (d) => d?.component.value === 'sqft_cost_tax'
     )
     const gstTaxIs =
-      gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+      gstTaxForProjA?.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
     const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'plc_tax'
     )
@@ -637,6 +637,7 @@ const CostBreakUpPdf = ({
                                         name="ratePerSqft"
                                         onChange={(e) => {
                                           // setNewSqftPrice(e.target.value)
+                                          console.log('iam hre')
                                           if (
                                             d1?.component?.value ===
                                             'unit_cost_charges'
