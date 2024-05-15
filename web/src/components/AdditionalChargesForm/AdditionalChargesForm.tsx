@@ -810,7 +810,7 @@ const nextStep = () => {
 
 
   return (
-    <section>
+    <section className='z-10'>
       {/* <table>
         <thead>
           {partAcolumns?.map((rowDa, i) => (

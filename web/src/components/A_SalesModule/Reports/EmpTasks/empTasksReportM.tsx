@@ -54,6 +54,7 @@ const EmpTasksReportM = ({
   console.log(show)
   return (
     <div
+    className='rounded-xl'
       style={{
         padding: '1rem',
         backgroundColor: 'white',
@@ -64,7 +65,7 @@ const EmpTasksReportM = ({
           <div style={{ width: '15rem' }}>
             <div
               style={{ height: '12.5rem' }}
-              className="bg-[#397D8A] p-6 cursor-pointer"
+              className="bg-[#397D8A] p-6 cursor-pointer rounded-t-lg"
               onClick={() =>
                 showDrillDownFun(
                   'Total Visits Fixed',
@@ -117,7 +118,7 @@ const EmpTasksReportM = ({
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="bg-[#3C7E7D] my-[0.5px] cursor-pointer"
+                  className={`bg-[#3C7E7D] my-[0.5px] cursor-pointer ${i === 1 ? 'rounded-b-lg' : ''}`}
                   style={{
                     height: '4rem',
                     display: 'flex',

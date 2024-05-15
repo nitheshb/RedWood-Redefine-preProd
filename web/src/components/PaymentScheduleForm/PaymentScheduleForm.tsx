@@ -66,7 +66,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
   }
   const columns = [
     {
-      title: 'Stage of*',
+      title: 'Stage*',
       field: 'stage',
       headerStyle: {
         padding: '0.25rem',
