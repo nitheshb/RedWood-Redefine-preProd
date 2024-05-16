@@ -48,12 +48,16 @@ import {
 import MarketingAnalyticsHome from './A_MarketingModule/MarketinAnalyticsHome'
 import StackedBarChart from './A_MarketingModule/Reports/Charts/marketingStackedBarChart'
 import CampaingsTopBarsComponent from './A_MarketingModule/Reports/Charts/marketingTopBars'
+import BookingSummaryReport from './A_SalesModule/Reports/bookingSummaryReport'
 import StackedLeadsChart from './A_SalesModule/Reports/charts/salesStackedChart'
+import Chat from './A_SalesModule/Reports/chatSummary'
 import EmpTasksReportM from './A_SalesModule/Reports/EmpTasks/empTasksReportM'
 import LeadsCoversionGraphs from './A_SalesModule/Reports/leadsConversionRatio/LeadsCoversionGraphs'
 import ProfileSummary from './A_SalesModule/Reports/profileSummary'
 import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
 import SiteVisitM from './A_SalesModule/Reports/SiteVisitM'
+import TableEdit from './A_SalesModule/Reports/TableEdit'
+// import TabTask from './A_SalesModule/Reports/TabTask'
 import { serialEmployeeLeadData } from './LeadsTeamReport/serialEmployeeLeadData'
 import { serialEmployeeTaskLeadData } from './LeadsTeamReport/serialEmployeeTaskLeadData'
 import { serialProjectLeadData } from './LeadsTeamReport/serialProjectLeadData'
@@ -62,12 +66,9 @@ import { serialMyData } from './LeadsTeamReport/SourceLeads'
 import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 
-
 //import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
 //import ProfileSummary from './A_SalesModule/Reports/profileSummary'
-import Chat from './A_SalesModule/Reports/chatSummary'
 //import StepperTask from './A_SalesModule/Reports/StepperTask'
-import TableEdit from './A_SalesModule/Reports/TableEdit'
 
 
 
@@ -253,9 +254,11 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   ])
 
   useEffect(() => {
+    console.log('was this updated', dateRange)
     if (dateRange[0] != null) {
       const [startDate, endDate] = dateRange
       setSourceDateRange(startDate?.getTime())
+      setEmpDateRange(endDate?.getTime())
     }
   }, [dateRange])
   useEffect(() => {
@@ -643,6 +646,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     if (access?.includes('manage_leads')) {
       const unsubscribe = getLeadsByDate(orgId, {
         cutoffDate: sourceDateRange,
+        endDate: empDateRange,
         dateRange: dateRange,
       })
       await console.log('my Array data is delayer 1 ccc', await unsubscribe)
@@ -1211,6 +1215,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 {/* </Link> */}
               </div>
               {[
+                { label: 'Booking Performance', value: 'booking_perf' },
                 { label: 'Leads Performance', value: 'lead_perf' },
                 { label: 'Source Performance', value: 'source_perf' },
                 { label: 'Site Visits', value: 'site_visits' },
@@ -1220,18 +1225,24 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
                 { label: 'Top Bar', value: 'bar_tasks' },
                 { label: 'Profile', value: 'profile_tasks' },
-              
-                { label: 'Table Edit', value: 'edit_table' },
 
-              
+                // { label: 'Table Edit', value: 'edit_table' },
+
+
 
                 // { label: 'Source Report', value: 'source_report' },
                 // { label: 'Employee Report', value: 'emp_status_report' },
                 // { label: 'Project Leads Report', value: 'proj_leads_report' },
                 //  { label: 'Employee Leads Aging', value: 'emp_leads_report' },
               ].map((data, i) => {
-              return !(['sale_report_home', 'marketing_Dashboard', 'bar_tasks', 'profile_tasks' ].includes(data.value) &&
-                  orgId != 'spark') ? (
+                return !(
+                  [
+                    'sale_report_home',
+                    'marketing_Dashboard',
+                    'bar_tasks',
+                    'profile_tasks',
+                  ].includes(data.value) && orgId != 'spark'
+                ) ? (
                   <section
                     key={i}
                     className="flex  mt-[18px]"
@@ -1437,25 +1448,182 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                       }}
                       className=" text-md font-bold leading-none pl-0 mt-4 border-b pb-4 mb-4 "
                     >
-                      <div>Performance by Lead Created Date</div>
+                      <div>Lead Performance vs Created Date</div>
                       <div className="flex flex-row">
-                        {orgId =='spark' && <div
-                          className="mt-3 mr-2 cursor-pointer"
-                          onClick={() => updateAgreegatedValues(projectFilList)}
-                        >
-                          Calculate
-                        </div>}
-                        <div className="mr-3">
-                          <SlimDateSelectBox
-                            onChange={async (value) => {
-                              console.log(value, 'dateValueSource')
-                              setSourceDateRange(value)
-                              //getLeadsDataFun()
+                        {orgId == 'spark' && (
+                          <div
+                            className="mt-3 mr-2 cursor-pointer"
+                            onClick={() =>
+                              updateAgreegatedValues(projectFilList)
+                            }
+                          >
+                            Calculate
+                          </div>
+                        )}
+
+                        <section className="flex mb-2">
+                          {!isEdit && (
+                            // <Link to={routes.projectEdit({ uid })}>
+                            <button
+                              onClick={() => {
+                                setSourceDateRange(startOfDay(d).getTime())
+                              }}
+                            >
+                              <span
+                                className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
+                                  sourceDateRange === startOfDay(d).getTime()
+                                    ? 'font-semibold text-pink-800 bg-pink-200 '
+                                    : 'text-green-800 bg-green-200 '
+                                }rounded-full`}
+                              >
+                                <EyeIcon
+                                  className="h-3 w-3 mr-1"
+                                  aria-hidden="true"
+                                />
+                                Today
+                              </span>
+                            </button>
+                            // </Link>
+                          )}
+
+                          <button
+                            onClick={() => {
+                              setSourceDateRange(startOfWeek(d).getTime())
                             }}
-                            label={sourceDateRange}
-                            placeholder={undefined}
-                          />
-                        </div>
+                          >
+                            <span
+                              className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
+                                sourceDateRange === startOfWeek(d).getTime()
+                                  ? 'font-semibold text-pink-800 bg-pink-200 '
+                                  : 'text-green-800 bg-green-200 '
+                              }rounded-full`}
+                            >
+                              <CalendarIcon
+                                className="h-3 w-3 mr-1"
+                                aria-hidden="true"
+                              />
+                              This Week
+                            </span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSourceDateRange(startOfMonth(d).getTime())
+                            }}
+                          >
+                            <span
+                              className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
+                                sourceDateRange === startOfMonth(d).getTime()
+                                  ? 'font-semibold text-pink-800 bg-pink-200 '
+                                  : 'text-green-800 bg-green-200 '
+                              }rounded-full`}
+                            >
+                              <CalendarIcon
+                                className="h-3 w-3 mr-1"
+                                aria-hidden="true"
+                              />
+                              This Month
+                            </span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSourceDateRange(
+                                subMonths(startOfMonth(d), 6).getTime()
+                              )
+                            }}
+                          >
+                            <span
+                              className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
+                                sourceDateRange ===
+                                subMonths(startOfMonth(d), 6).getTime()
+                                  ? 'font-semibold text-pink-800 bg-pink-200 '
+                                  : 'text-green-800 bg-green-200 '
+                              }rounded-full`}
+                            >
+                              <CalendarIcon
+                                className="h-3 w-3 mr-1"
+                                aria-hidden="true"
+                              />
+                              Last 6 Months
+                            </span>
+                          </button>
+                          <span className="max-h-[42px] mt-[2px] ml-3">
+                            <label className="bg-green   pl-   flex flex-row cursor-pointer">
+                              {!isOpened && (
+                                <span
+                                  className={`flex ml-1 mt-[6px] items-center h-6 px-3 text-xs ${
+                                    sourceDateRange === startDate?.getTime()
+                                      ? 'font-semibold text-pink-800 bg-pink-200 '
+                                      : 'text-green-800 bg-green-200 '
+                                  } rounded-full`}
+                                  onClick={() => {
+                                    setIsOpened(true)
+                                  }}
+                                >
+                                  <CalendarIcon
+                                    className="h-3 w-3 mr-1"
+                                    aria-hidden="true"
+                                  />
+                                  {startDate == null ? 'Custom' : ''}
+                                  {/* {sourceDateRange} -- {startDate?.getTime()} */}
+                                  {startDate != null
+                                    ? prettyDate(
+                                        startDate?.getTime() + 21600000
+                                      )
+                                    : ''}
+                                  {endDate != null ? '-' : ''}
+                                  {endDate != null
+                                    ? prettyDate(endDate?.getTime() + 21600000)
+                                    : ''}
+                                </span>
+                              )}
+                              {
+                                <span
+                                  className="inline"
+                                  style={{
+                                    visibility: isOpened ? 'visible' : 'hidden',
+                                  }}
+                                >
+                                  <DatePicker
+                                    className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
+                                      sourceDateRange === startDate?.getTime()
+                                        ? 'font-semibold text-pink-800 bg-pink-200 '
+                                        : 'text-green-800 bg-green-200 '
+                                    } rounded-full`}
+                                    onCalendarClose={() => setIsOpened(false)}
+                                    placeholderText="&#128467;	 Custom"
+                                    onChange={(update) => {
+                                      setDateRange(update)
+
+                                      console.log(
+                                        'was this updated',
+                                        update,
+                                        dateRange,
+                                        startDate,
+                                        endDate
+                                      )
+                                    }}
+                                    selectsRange={true}
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    isClearable={true}
+                                    onClear={() => {
+                                      console.log('am i cleared')
+                                    }}
+                                    dateFormat="MMM d, yyyy "
+                                  />
+                                </span>
+                              }
+                            </label>
+                          </span>
+
+                          <span style={{ display: '' }}>
+                            <CSVDownloader
+                              className="mr-6 h-[20px] w-[20px]"
+                              downloadRows={sourceRawFilData}
+                              style={{ height: '20px', width: '20px' }}
+                            />
+                          </span>
+                        </section>
                         {/* <div style={{ width: '13rem' }} className="ml-2 mt-1">
                           <SlimSelectBox
                             name="project"
@@ -1472,13 +1640,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               ...projectList,
                             ]} placeholder={undefined}                          />
                         </div> */}
-                        <span style={{ display: '' }}>
-                          <CSVDownloader
-                            className="mr-6 h-[20px] w-[20px]"
-                            downloadRows={sourceRawFilData}
-                            style={{ height: '20px', width: '20px' }}
-                          />
-                        </span>
                       </div>
                     </div>
                     <LeadsCoversionGraphs
@@ -1569,7 +1730,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                     />
 
                     {/* hiding this table till we setup tables */}
-                    <table className="text-center mt-6 hidden">
+                    <table className="text-center mt-6 ">
                       <thead className="border-b">
                         <tr>
                           {[
@@ -1749,13 +1910,14 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           {selCat === 'profile_tasks' && <ProfileSummary />}
 
+          {selCat === 'edit_table' && <TableEdit />}
 
-        
+
           {selCat === 'edit_table' && <TableEdit/>}
 
 
 
-          
+          {/* {selCat === 'tab_task' && <TabTask />} */}
 
           {/* Graph Bar start */}
 
@@ -1940,7 +2102,9 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                       console.log(
                                         'was this updated',
                                         update,
-                                        startDate
+                                        dateRange,
+                                        startDate,
+                                        endDate
                                       )
                                     }}
                                     selectsRange={true}
@@ -2523,6 +2687,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
               </div>
             </>
           )}
+          {selCat === 'booking_perf' && <BookingSummaryReport />}
           {selCat === 'source_perf' && (
             <section>
               <section className="flex flex-row flex-wrap gap-2">
@@ -2535,7 +2700,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                         00,000
                       </div>
                       <div className="text-[#EF4444] text-xs mt-1">
-                        0.2% less than the previous 30 days
+                        0.0% less than the previous 30 days
                       </div>
                     </article>
                     <article>date</article>

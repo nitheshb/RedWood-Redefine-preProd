@@ -120,7 +120,22 @@ const CrmUnitSummary = ({
       supabase.removeSubscription(subscription)
     }
   }, [])
+  const activieLogNamer = (dat) => {
+    const { type, subtype, from, to, by } = dat
+    let tex = type
 
+    switch (subtype) {
+      case 'cs_approval':
+        return (tex = 'Cost Sheet')
+      case 'pay_capture':
+        return (tex = `Payment`)
+      case 'assign_change':
+        return (tex = `Lead Assigned To`)
+      default:
+        return (tex = type)
+    }
+    return tex
+  }
   const boot = async () => {
     const unsubscribe = steamUnitActivityLog(orgId, {
       uid: selUnitPayload?.id,
@@ -159,7 +174,7 @@ const CrmUnitSummary = ({
 
   return (
     <PDFExport paperSize="A4" margin="1cm" ref={pdfUnitSummaryComp}>
-      <div className="py-1 px-1 m-2 mt-[1px] rounded-lg border border-gray-100 h-[100%] overflow-y-scroll overflow-auto no-scrollbar">
+      <div className="py-1 px-1 m-2 mt-[1px] rounded-lg border border-gray-100 h-[100%] overflow-y-scroll overflow-auto no-scrollba ">
         {/* customer details */}
         {/* Unit details */}
         {/* payment schedule */}
@@ -170,20 +185,7 @@ const CrmUnitSummary = ({
           <div className="w-full">
             {/* customer details */}
             <div className="flex flex-row justify-between text-end items-end mr-2">
-              <div className="flex flex-row">
-                <div>
-                  <CrmUnitPaymentGraph
-                    selCustomerPayload={selUnitPayload}
-                    assets={assets}
-                  />
-                </div>
-                <div className="ml-1">
-                  <CrmPaymentSummary
-                    selCustomerPayload={selUnitPayload}
-                    assets={assets}
-                  />
-                </div>
-              </div>
+
               {/* <PdfUnitSummaryFile
                 user={user}
                 selUnitDetails={selUnitPayload}
@@ -223,12 +225,51 @@ const CrmUnitSummary = ({
                 totalIs={totalIs}
               />
             </div>
+            <div>
+          <CrmUnitPaymentSchedule
+            selCustomerPayload={selUnitPayload}
+            assets={assets}
+            totalIs={totalIs}
+          />
+        </div>
           </div>
-          <div className="rounded w-[300px] ml-2 bg-[#fff] mt-1 px-4 py-3">
-            <span className="text-[20px] text-[#10153e] font-bold">
-              Activity
-            </span>
-            <div className="relative col-span-12 px-4 space-y-2 sm:col-span-9 mt-3">
+
+          <div className="rounded w-[300px] ml-2 py-3 flex flex-col">
+          <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 ">
+          <div className="flex flex-row ">
+                <img
+                  src="https://static.ambitionbox.com/static/benefits/WFH.svg"
+                  alt=""
+                />
+                <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
+                  Payments Summary
+                </h1>
+              </div>
+                <div>
+                  <CrmUnitPaymentGraph
+                    selCustomerPayload={selUnitPayload}
+                    assets={assets}
+                  />
+                </div>
+                <div className="mt-1">
+                  <CrmPaymentSummary
+                    selCustomerPayload={selUnitPayload}
+                    assets={assets}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 ">
+          <div className="flex flex-row ">
+                <img
+                  src="https://static.ambitionbox.com/static/benefits/WFH.svg"
+                  alt=""
+                />
+                <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
+                  Activity
+                </h1>
+              </div>
+
+            <div className="relative col-span-12 px-6 space-y-2 sm:col-span-9 mt-3">
               {unitFetchedActivityData?.length == 0 && (
                 <div className="py-8 px-8 flex flex-col items-center">
                   <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
@@ -246,35 +287,32 @@ const CrmUnitSummary = ({
                   </time>
                 </div>
               )}
-              <div className="col-span-12 space-y-6 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:dark:bg-gray-200">
+              <div className="col-span-12 space-y-6 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-200">
                 {unitFetchedActivityData?.map((data, i) => {
                   return (
                     <div
                       key={i}
-                      className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:dark:bg-violet-200"
+                      className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-violet-200 bg-white p-3 rounded-lg"
                     >
                       <section>
-                        <span className="text-sm font-bold text-[#151F2B]">
-                          {/* {data?.type?.toUpperCase()} */}
-                          {data?.by}
+                      <span className="text-[11px]  font-bold    py-[2px] rounded-lg   ">
+                      {activieLogNamer(data)}:
+                        </span>
+                      <span className="text-[10px] ml-1 text-[#398A58] font-bold  bg-[#D9d8ff] px-[6px] py-[2px] rounded-lg   ">
+                     {data?.to} {'  '}
                         </span>
 
-                        <span className="text-[9px] text-red-900 ml-2 ">
-                          {data?.subtype?.toUpperCase()} {'  '}
-                        </span>
+
+
+
+
+
                       </section>
-                      <section className="my-2">
-                        <span className="text-xs text-[#8E5100] font-bold text-[9px] bg-[#FDEED6] px-[4px] py-[2px] rounded-lg ">
-                          {data?.from?.toUpperCase()} {'  '}
+                      <span className="text-[12px] font- text-[#151F2B] flex flex-row">
+                          {/* {data?.type?.toUpperCase()} */}
+                         By: {data?.by}
                         </span>
-                        <span className="text-gray-400 mx-1 font-bold">
-                          {'->'}
-                        </span>
-                        <span className="text-xs text-[#398A58] font-bold text-[9px] bg-[#D6F4E4] px-[4px] py-[2px] rounded-lg   ">
-                          {data?.to?.toUpperCase()} {'  '}
-                        </span>
-                      </section>
-                      <span className="inline-flex flex-row items-center text-xs font-normal text-gray-500 ">
+                      <span className="inline-flex flex-row items-center text-[12px] font-normal text-gray-500 ">
                         <ClockIcon className=" w-3 h-3 text-gray-300" />
                         <span className="text-gray-500 ml-1 mr-4">
                           {data?.type == 'ph'
@@ -287,6 +325,7 @@ const CrmUnitSummary = ({
                 })}
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

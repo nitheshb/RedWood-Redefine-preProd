@@ -170,7 +170,7 @@ export default function CustomerSideViewCRM({
     <div
       className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
     >
-      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F2F5F8]">
+      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#D9D8FF]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full  xl:w-4/12  ">
             {/* <div className="">

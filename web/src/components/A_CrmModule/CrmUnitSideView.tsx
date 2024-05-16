@@ -1018,7 +1018,7 @@ export default function UnitSideViewCRM({
     <div
       className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
     >
-      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F8E7E3]">
+      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#D9d8ff]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full   ">
             {/* <div className="">
@@ -1039,7 +1039,7 @@ export default function UnitSideViewCRM({
               </div> */}
 
             <div className="flex flex-col justify-between">
-              <section className="flex flex-row justify-between bg-[#F8E7E3] px-3 py-1 border border-[#e5e7f8] rounded-md ">
+              <section className="flex flex-row justify-between bg-[#D9d8ff] px-3 py-1 border border-[#e5e7f8] rounded-md ">
                 <section>
                   <section className="flex flex-row">
                     <img
@@ -1093,7 +1093,7 @@ export default function UnitSideViewCRM({
                   </p>
                 </section>
                 <section className="flex flex-row  h-[28px] mt-6">
-                  <section className="flex flow-row justify-between mb-1 mr-2 py-[0px] px-[10px] bg-gradient-to-r from-violet-200 to-pink-200 text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
+                  <section className="flex flow-row justify-between mb-1 mr-2 py-[0px] px-[10px] bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
                     <div className="font-md text-xs text-gray-700 tracking-wide mr-1">
                       CRM Owner
                     </div>
@@ -1117,7 +1117,7 @@ export default function UnitSideViewCRM({
                       )}
                     </div>
                   </section>
-                  <section className="flex flow-row justify-between mb-1 mr-2 py-[0px] px-[10px] bg-gradient-to-r from-violet-200 to-pink-200 text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
+                  <section className="flex flow-row justify-between mb-1 mr-2 py-[0px] px-[10px] bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
                     <div className="font-md text-xs text-gray-700 tracking-wide mr-1">
                       Status
                     </div>
@@ -1142,7 +1142,7 @@ export default function UnitSideViewCRM({
                     </div>
                   </section>
                   <section
-                    className="text-center px-[10px] py-[2px] pt-[3px] h-[24px] bg-gradient-to-r from-violet-200 to-pink-200 text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
+                    className="text-center px-[10px] py-[2px] pt-[3px] h-[24px] bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
                     onClickCapture={() => {
                       openPaymentFun()
                     }}
@@ -1150,7 +1150,7 @@ export default function UnitSideViewCRM({
                     CAPTURE PAYMENT
                   </section>
                   <section
-                    className="text-center px-[10px] py-[2px]  pt-[3px] h-[24px] ml-2 bg-gradient-to-r from-violet-200 to-pink-200 text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
+                    className="text-center px-[10px] py-[2px]  pt-[3px] h-[24px] ml-2 bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
                     onClickCapture={() => {
                       openPaymentFun()
                     }}

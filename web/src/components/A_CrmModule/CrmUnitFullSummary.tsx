@@ -754,7 +754,7 @@ export default function UnitFullSummary({
   }
   return (
     <div
-      className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`bg-[#d9d8ff]  h-screen    ${openUserProfile ? 'hidden' : ''} `}
     >
 <section className="flex flex-row">
     <div className='w-full'>

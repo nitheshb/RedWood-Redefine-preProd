@@ -496,8 +496,8 @@ const UnitsInventoryHome = ({ project }) => {
                 />
 
                 <DropDownSearchBar
-                  label={'Type'}
-                  type={'Even & Odd'}
+                  label={'Dimension'}
+                  type={'All'}
                   id={'id'}
                   setStatusFun={{}}
                   viewUnitStatusA={[]}
