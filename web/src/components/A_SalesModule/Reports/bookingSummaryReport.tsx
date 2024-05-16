@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Paper from '@material-ui/core/Paper'
 import TableCell from '@material-ui/core/TableCell'
@@ -8,22 +8,15 @@ import TableRow from '@material-ui/core/TableRow'
 import '../../../styles/myStyles.css'
 import { GoTrue } from '@redwoodjs/auth/dist/authClients/goTrue'
 
+import CrmProjectionReport from 'src/components/A_CrmModule/Reports/CrmProjectionReport'
+import { getAllProjectMonthlyBookingsSum, getAllProjects } from 'src/context/dbQueryFirebase'
+import { useAuth } from 'src/context/firebase-auth-context'
+
 import PieChartComponent from './charts/salePieChart'
 import BubbleChartComponent from './charts/salesBubbleChart'
 import StackedLeadsChart from './charts/salesStackedChart'
-
-const data = [
-  { label: 'Desktop', value: 20, color: '#ff6347' }, // Red
-  { label: 'Mobile', value: 30, color: '#4682b4' }, // Blue
-  { label: 'Others', value: 40, color: '#32cd32' }, // Green
-]
-
-const data1 = ['Inprogress']
-const data2 = ['Not Interested']
-const data3 = ['Site Visits ']
-const data4 = ['Followup']
-const data5 = ['Booking']
-const data6 = ['Highest volume(24h)']
+import SalesBookingSummaryTable from './bookingSummaryTable'
+import BookingsMonthlyStackedChart from './charts/bookingsMonthlyStackedChart'
 
 const totalProfit = '98,6543.53'
 const profitPercentage = '24.21%'
@@ -134,7 +127,109 @@ const avgGrowingData = [
 ]
 
 const BookingSummaryReport = () => {
-  const [isClicked, setisClicked] = useState('business_tasks')
+  const { user } = useAuth()
+
+  const { orgId } = user
+  const [isClicked, setisClicked] = useState('project_bookings')
+  const [projects, setProjects] = useState([])
+  useEffect(() => {
+    getProjects()
+  }, [])
+  const getProjects = async () => {
+    const unsubscribe = getAllProjects(
+      orgId,
+      (querySnapshot) => {
+        const projects = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        projects.map((user) => {
+          user.label = user?.projectName
+          user.value = user?.uid
+        })
+        setProjects([...projects])
+        console.log('project are ', projects)
+      },
+      () => setProjects([])
+    )
+    return unsubscribe
+  }
+  const getNextMonths = (startMonthOffset, monthCount) => {
+    const months = []
+    const today = new Date()
+    today.setMonth(today.getMonth() + startMonthOffset)
+
+    for (let i = 0; i < monthCount; i++) {
+      const month = today.toLocaleString('default', { month: 'short' })
+      const year = today.getFullYear()
+      const startOfMonth = new Date(year, today.getMonth(), 1).getTime()
+      const endOfMonth = new Date(
+        year,
+        today.getMonth() + 1,
+        0,
+        23,
+        59,
+        59,
+        999
+      ).getTime()
+      months.push({
+        name: `${month} ${year}`,
+        count: today.getMonth() + 1,
+        startOfMonth: Number(startOfMonth),
+        endOfMonth: Number(endOfMonth),
+        currentYear: year,
+      })
+      today.setMonth(today.getMonth() + 1)
+    }
+    console.log('month is', months, startMonthOffset, monthCount)
+    return months
+  }
+  const [loader, setLoaderIcon] = useState(false)
+  const [startMonthOffset, setStartMonthOffset] = useState(-4)
+  const [monthCount, setMonthCount] = useState(5)
+  const [dataView, setDataView] = useState('monthly')
+
+  const [projectAValues, setProjectWithValues] = useState([])
+  const [monthsA, setMonthsA] = useState(
+    getNextMonths(startMonthOffset, monthCount)
+  )
+  useEffect(() => {
+    setMonthsA(getNextMonths(startMonthOffset, monthCount))
+  }, [monthCount, startMonthOffset])
+  useEffect(() => {
+    calMonthlyOverallBookings()
+    // calMonthlyOverallBookings()
+  }, [projects, monthsA])
+  const calMonthlyOverallBookings = async () => {
+    try {
+      setLoaderIcon(true)
+      const insideValues = []
+
+      await Promise.all(
+        monthsA.map(async (month) => {
+
+          const payload = {
+            startTime: month.startOfMonth,
+            endTime: month.endOfMonth,
+          }
+          const totalReceivableValue = await getAllProjectMonthlyBookingsSum(
+            orgId,
+            payload
+          )
+
+          const updatedMonth = { ...month, receive: totalReceivableValue }
+
+          insideValues.push(updatedMonth)
+        })
+      )
+
+      setProjectWithValues(insideValues)
+    } catch (error) {
+      console.error('Error calculating monthly values:', error)
+    } finally {
+      setLoaderIcon(false)
+    }
+  }
+
   return (
     <div className="flex flex-col  mt-4 drop-shadow-md rounded-lg  ">
       <div className="flex flex-col  mt-4 drop-shadow-md rounded-lg ">
@@ -165,8 +260,10 @@ const BookingSummaryReport = () => {
                         </span>
                       </p>
                     </div>
-                    <div className="flex-1 bg-green-200 rounded-lg p-4">
-                      <p>Graph</p>
+                    <div className="flex-1  rounded-lg p-1">
+
+                  <BookingsMonthlyStackedChart payload={projectAValues} />
+
                     </div>
                   </div>
 
@@ -192,7 +289,6 @@ const BookingSummaryReport = () => {
                 </div>
               </div>
               {/* section 2 */}
-
             </div>
 
             {/* section - 2 */}
@@ -265,7 +361,8 @@ const BookingSummaryReport = () => {
                       </section>
                     </article>
                   </section>
-                  <StackedLeadsChart />
+                  <BookingsMonthlyStackedChart source= {'full-view'} payload={projectAValues} />
+                  {/* <StackedLeadsChart /> */}
                 </div>
                 {/* bottom sheet */}
                 <section className="mt-3 ml-4">
@@ -360,6 +457,106 @@ const BookingSummaryReport = () => {
                 </div>
               </section>
             </section>
+            <section className="w-full border-[#e7e5eb] bg-white rounded-lg p-4">
+                <div className="flex flex-col"></div>
+                <section className="flex flex-row justify-between">
+                  <article className="flex flex-col">
+                    <div className="text-[#1f2937]">Bookings</div>
+                    <div className="text-[#1f2937] font-[700] text-2xl mt-2">
+                      0
+                    </div>
+                    <div className="text-[#EF4444] text-xs mt-1">
+                      0.0% less than the previous 30 days
+                    </div>
+                  </article>
+                  <article></article>
+                </section>
+
+                <div className="w-full h-[300px] mt-4">
+                  <section className="flex flex-row justify-between">
+                    <article></article>
+                    <article className="flex flex-row mr-2 mb-3">
+                      <section className="flex flex-row">
+                        <div className="text-[#1f2937] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#9333ea]"></div>
+                        <div className="text-[#4b5563] text-xs">
+                          {' '}
+                          This month
+                        </div>
+                      </section>
+                      <section className="flex flex-row">
+                        <div className="text-[#2563eb] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#2563eb]"></div>
+                        <div className="text-[#4b5563] text-xs">
+                          {' '}
+                          Last month
+                        </div>
+                      </section>
+                    </article>
+                  </section>
+                  <BookingsMonthlyStackedChart source= {'full-view'} payload={projectAValues} />
+                  {/* <StackedLeadsChart /> */}
+                </div>
+                {/* bottom sheet */}
+                <section className="mt-3 ml-4">
+                  {/* <div className="text-[#1f2937] font-[600] text-xl">
+                    Conversion funnel
+                  </div> */}
+                  <div className="flex flex-row border-b border-gray-200">
+                    <ul
+                      className="flex flex-wrap -mb-px mt-1"
+                      id="myTab"
+                      data-tabs-toggle="#myTabContent"
+                      role="tablist"
+                    >
+                      {[
+                        {
+                          lab: 'Project Bookings',
+                          val: 'project_bookings',
+                          color: '#4F46E5',
+                        },
+                        {
+                          lab: 'Source-wise Bookings',
+                          val: 'source_bookings',
+                          color: '#9333EA',
+                        },
+                        {
+                          lab: 'Employee-wise Bookings',
+                          val: 'emp_bookings',
+                          color: '#9333EA',
+                        },
+                      ].map((d, i) => {
+                        return (
+                          <li key={i} className="mr-4">
+                            {' '}
+                            <button
+                              className={`inline-block pb-[6px] mr-3 text-sm  text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
+                                isClicked === d.val
+                                  ? 'border-black'
+                                  : 'border-transparent'
+                              }`}
+                              type="button"
+                              role="tab"
+                              onClick={() => setisClicked(d.val)}
+                            >
+                              <section className="flex flex-row text-[15px] mb-1ss ">
+                                <div
+                                  className={`w-3 h-3 bg-[${d.color}] mt-1 mr-1 rounded-sm`}
+                                ></div>
+                                {d.lab}
+                              </section>
+                            </button>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </div>
+                </section>
+           {isClicked === 'project_bookings' && <SalesBookingSummaryTable projects={projects} />}
+
+                <article className="text-[#4f46e5] text-center font-[500] text-[13px]">
+                  View full Report
+                </article>
+              </section>
+            {/* section-3a */}
             {/* section-4 */}
             <section className="flex flex-row flex-wrap gap-2">
               <section className="w-[49%] border-[#e7e5eb] bg-white rounded-lg p-4">
@@ -470,7 +667,6 @@ const BookingSummaryReport = () => {
               </section>
             </section>
             {/* section-5 */}
-        
           </div>
         </div>
       </div>

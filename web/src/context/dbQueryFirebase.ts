@@ -2646,6 +2646,61 @@ export const gretProjectionSum = async (orgId, data) => {
   console.log('total is ', receivable)
   return receivable
 }
+export const greProjectBookingsSum = async (orgId, data) => {
+  // db.collection(`${orgId}_leads`).doc().set(data)
+  // db.collection('')
+  const { pId, startTime, endTime } = data
+  console.log('pushed values are', pId)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('ProjectId', '==', pId),
+    where('Status', '==', 'booked'),
+    // where('pId', '==', '02dce2f6-f056-4dcb-9819-01b9710781e1'), //
+
+
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+
+    // where('year', '==', currentYear)
+  )
+  const parentDocs = []
+  const querySnapshot = await getDocs(q)
+  await console.log('foundLength @@', querySnapshot.docs.length)
+  let receivable = 0
+  querySnapshot.forEach((doc) => {
+    const x = doc.data()
+    console.log('dc', doc.id, ' => ', doc.data())
+    receivable = receivable + 1
+    parentDocs.push(doc.data())
+  })
+  console.log('total is ', receivable)
+  return receivable
+}
+export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('pushed values are', pId)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+    // where('year', '==', currentYear)
+  )
+  const parentDocs = []
+  const querySnapshot = await getDocs(q)
+  await console.log('foundLength ==<  @@', querySnapshot.docs.length)
+  let receivable = 0
+  querySnapshot.forEach((doc) => {
+    const x = doc.data()
+    console.log('dc', doc.id, ' => ', doc.data())
+    receivable = receivable + 1
+    parentDocs.push(doc.data())
+  })
+  console.log('total is ', receivable)
+  return receivable
+}
 export const getEmpCollectionsSum = async (orgId, data) => {
 
   const { pId, monthNo, currentYear } = data
