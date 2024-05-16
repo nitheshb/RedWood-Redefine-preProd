@@ -57,7 +57,7 @@ import ProfileSummary from './A_SalesModule/Reports/profileSummary'
 import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
 import SiteVisitM from './A_SalesModule/Reports/SiteVisitM'
 import TableEdit from './A_SalesModule/Reports/TableEdit'
-import TabTask from './A_SalesModule/Reports/TabTask'
+// import TabTask from './A_SalesModule/Reports/TabTask'
 import { serialEmployeeLeadData } from './LeadsTeamReport/serialEmployeeLeadData'
 import { serialEmployeeTaskLeadData } from './LeadsTeamReport/serialEmployeeTaskLeadData'
 import { serialProjectLeadData } from './LeadsTeamReport/serialProjectLeadData'
@@ -69,6 +69,9 @@ import SiderForm from './SiderForm/SiderForm'
 //import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
 //import ProfileSummary from './A_SalesModule/Reports/profileSummary'
 //import StepperTask from './A_SalesModule/Reports/StepperTask'
+
+
+
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -1225,7 +1228,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
                 // { label: 'Table Edit', value: 'edit_table' },
 
-                // { label: 'Tabs', value: 'tab_task' },
+
 
                 // { label: 'Source Report', value: 'source_report' },
                 // { label: 'Employee Report', value: 'emp_status_report' },
@@ -1909,7 +1912,12 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           {selCat === 'edit_table' && <TableEdit />}
 
-          {selCat === 'tab_task' && <TabTask />}
+
+          {selCat === 'edit_table' && <TableEdit/>}
+
+
+
+          {/* {selCat === 'tab_task' && <TabTask />} */}
 
           {/* Graph Bar start */}
 
