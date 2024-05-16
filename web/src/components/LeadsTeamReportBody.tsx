@@ -48,12 +48,16 @@ import {
 import MarketingAnalyticsHome from './A_MarketingModule/MarketinAnalyticsHome'
 import StackedBarChart from './A_MarketingModule/Reports/Charts/marketingStackedBarChart'
 import CampaingsTopBarsComponent from './A_MarketingModule/Reports/Charts/marketingTopBars'
+import BookingSummaryReport from './A_SalesModule/Reports/bookingSummaryReport'
 import StackedLeadsChart from './A_SalesModule/Reports/charts/salesStackedChart'
+import Chat from './A_SalesModule/Reports/chatSummary'
 import EmpTasksReportM from './A_SalesModule/Reports/EmpTasks/empTasksReportM'
 import LeadsCoversionGraphs from './A_SalesModule/Reports/leadsConversionRatio/LeadsCoversionGraphs'
 import ProfileSummary from './A_SalesModule/Reports/profileSummary'
 import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
 import SiteVisitM from './A_SalesModule/Reports/SiteVisitM'
+import TableEdit from './A_SalesModule/Reports/TableEdit'
+import TabTask from './A_SalesModule/Reports/TabTask'
 import { serialEmployeeLeadData } from './LeadsTeamReport/serialEmployeeLeadData'
 import { serialEmployeeTaskLeadData } from './LeadsTeamReport/serialEmployeeTaskLeadData'
 import { serialProjectLeadData } from './LeadsTeamReport/serialProjectLeadData'
@@ -62,15 +66,9 @@ import { serialMyData } from './LeadsTeamReport/SourceLeads'
 import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 
-
 //import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
 //import ProfileSummary from './A_SalesModule/Reports/profileSummary'
-import Chat from './A_SalesModule/Reports/chatSummary'
 //import StepperTask from './A_SalesModule/Reports/StepperTask'
-import TableEdit from './A_SalesModule/Reports/TableEdit'
-import TabTask from './A_SalesModule/Reports/TabTask'
-
-
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -1214,6 +1212,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 {/* </Link> */}
               </div>
               {[
+                { label: 'Booking Performance', value: 'booking_perf' },
                 { label: 'Leads Performance', value: 'lead_perf' },
                 { label: 'Source Performance', value: 'source_perf' },
                 { label: 'Site Visits', value: 'site_visits' },
@@ -1233,8 +1232,14 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 // { label: 'Project Leads Report', value: 'proj_leads_report' },
                 //  { label: 'Employee Leads Aging', value: 'emp_leads_report' },
               ].map((data, i) => {
-              return !(['sale_report_home', 'marketing_Dashboard', 'bar_tasks', 'profile_tasks' ].includes(data.value) &&
-                  orgId != 'spark') ? (
+                return !(
+                  [
+                    'sale_report_home',
+                    'marketing_Dashboard',
+                    'bar_tasks',
+                    'profile_tasks',
+                  ].includes(data.value) && orgId != 'spark'
+                ) ? (
                   <section
                     key={i}
                     className="flex  mt-[18px]"
@@ -1442,12 +1447,16 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                     >
                       <div>Lead Performance vs Created Date</div>
                       <div className="flex flex-row">
-                        {orgId =='spark' && <div
-                          className="mt-3 mr-2 cursor-pointer"
-                          onClick={() => updateAgreegatedValues(projectFilList)}
-                        >
-                          Calculate
-                        </div>}
+                        {orgId == 'spark' && (
+                          <div
+                            className="mt-3 mr-2 cursor-pointer"
+                            onClick={() =>
+                              updateAgreegatedValues(projectFilList)
+                            }
+                          >
+                            Calculate
+                          </div>
+                        )}
 
                         <section className="flex mb-2">
                           {!isEdit && (
@@ -1605,12 +1614,12 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                           </span>
 
                           <span style={{ display: '' }}>
-                          <CSVDownloader
-                            className="mr-6 h-[20px] w-[20px]"
-                            downloadRows={sourceRawFilData}
-                            style={{ height: '20px', width: '20px' }}
-                          />
-                        </span>
+                            <CSVDownloader
+                              className="mr-6 h-[20px] w-[20px]"
+                              downloadRows={sourceRawFilData}
+                              style={{ height: '20px', width: '20px' }}
+                            />
+                          </span>
                         </section>
                         {/* <div style={{ width: '13rem' }} className="ml-2 mt-1">
                           <SlimSelectBox
@@ -1628,7 +1637,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               ...projectList,
                             ]} placeholder={undefined}                          />
                         </div> */}
-
                       </div>
                     </div>
                     <LeadsCoversionGraphs
@@ -1899,11 +1907,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           {selCat === 'profile_tasks' && <ProfileSummary />}
 
-
-
-          {selCat === 'edit_table' && <TableEdit/>}
-
-
+          {selCat === 'edit_table' && <TableEdit />}
 
           {selCat === 'tab_task' && <TabTask />}
 
@@ -2675,6 +2679,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
               </div>
             </>
           )}
+          {selCat === 'booking_perf' && <BookingSummaryReport />}
           {selCat === 'source_perf' && (
             <section>
               <section className="flex flex-row flex-wrap gap-2">
@@ -2687,7 +2692,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                         00,000
                       </div>
                       <div className="text-[#EF4444] text-xs mt-1">
-                        0.2% less than the previous 30 days
+                        0.0% less than the previous 30 days
                       </div>
                     </article>
                     <article>date</article>
