@@ -262,7 +262,7 @@ const BookingSummaryReport = () => {
                     </div>
                     <div className="flex-1  rounded-lg p-1">
 
-                  <BookingsMonthlyStackedChart payload={projectAValues} />
+                   <BookingsMonthlyStackedChart payload={projectAValues} />
 
                     </div>
                   </div>
