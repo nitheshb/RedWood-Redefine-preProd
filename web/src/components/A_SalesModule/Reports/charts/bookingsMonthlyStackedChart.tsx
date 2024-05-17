@@ -71,10 +71,10 @@ const CustomTooltip = ({ active, payload, label }) => {
             <div className="w-3 h-3 mt-2 mr-3 rounded-full bg-[#8884d8]"> </div>{' '}
             <div>{`Booked: ${payload[0].value}`}</div>
           </div>{' '} */}
-          <div className="flex flex-row">
+          {payload?.length >0 && <div className="flex flex-row">
             <div className="w-3 h-3 mt-2 mr-3 rounded-full bg-[#8884d8]"> </div>{' '}
             <div>{`Booked: ${payload[0].value}`}</div>
-          </div>
+          </div> }
         </section>
       </div>
     )

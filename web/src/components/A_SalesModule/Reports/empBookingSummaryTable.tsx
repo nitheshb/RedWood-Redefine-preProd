@@ -5,7 +5,7 @@ import { X, Add, Remove } from '@mui/icons-material'
 import TableSkeleton from 'src/components/A_CrmModule/Reports/_mock/comps/table/table-skeleton'
 import {
   getAllProjectMonthlyBookingsSum,
-  greProjectBookingsSum,
+  getEmpBookingsSum,
   gretProjectionSum,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -102,7 +102,8 @@ const reportData = [
   },
 ]
 
-const ProjectBookingSummaryTable = ({ projects }) => {
+const EmployeeBookingSummaryTable = ({ projects }) => {
+  console.log('check it', projects)
   const { user } = useAuth()
   const { orgId } = user
 
@@ -160,7 +161,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
       for (const projectData of projects) {
         const newProjectData = { ...projectData }
         const projectMonthArray = []
-
+        console.log('check it @@@', projectData?.name, projectData?.uid, )
         await Promise.all(
           monthsA.map(async (month) => {
             const payload = {
@@ -171,7 +172,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
               currentYear: month.currentYear,
             }
 
-            const totalReceivableValue = await greProjectBookingsSum(
+            const totalReceivableValue = await getEmpBookingsSum(
               orgId,
               payload
             )
@@ -180,14 +181,14 @@ const ProjectBookingSummaryTable = ({ projects }) => {
             projectMonthArray.push(updatedMonth)
           })
         )
-
-        newProjectData.months = projectMonthArray
         newProjectData.totalCount = projectMonthArray?.reduce(
           (accumulator, currentValue) => {
             return accumulator + (currentValue?.receive || 0)
           },
           0
         )
+
+        newProjectData.months = projectMonthArray
         insideValues.push(newProjectData)
       }
 
@@ -222,7 +223,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
     <div className="p-4 m-1 border-[#e7e5eb] bg-white rounded-lg">
       <div className="flex justify-between">
         <div className="text-[#1f2937] font-[600] text-xl mb-2 ml-2">
-          Project Booking Report
+          Employee Booking Report
         </div>
 
         {/* <div className="mb-4">
@@ -317,7 +318,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
           </tr> */}
 
           {loader && <TableSkeleton rows={3} columns={7} />}
-          {projectAValues?.sort((a, b) => {
+          {projectAValues ?.sort((a, b) => {
               return b.totalCount - a.totalCount
             })?.map((data, index) => {
             const monthlyData = data?.monthly
@@ -392,7 +393,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
                 className="border-b border-gray-200 hover:bg-gray-100"
               >
                 <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b font-medium text-gray-900">
-                  {capitalizeFirstLetter(data?.projectName)}
+                  {data?.projectName} {data?.name}
                 </td>
 
                 <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900">
@@ -414,4 +415,4 @@ const ProjectBookingSummaryTable = ({ projects }) => {
   )
 }
 
-export default ProjectBookingSummaryTable
+export default EmployeeBookingSummaryTable

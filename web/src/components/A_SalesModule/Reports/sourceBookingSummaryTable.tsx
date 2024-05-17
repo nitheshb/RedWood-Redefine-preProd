@@ -5,6 +5,7 @@ import { X, Add, Remove } from '@mui/icons-material'
 import TableSkeleton from 'src/components/A_CrmModule/Reports/_mock/comps/table/table-skeleton'
 import {
   getAllProjectMonthlyBookingsSum,
+  getSourceBookingsSum,
   greProjectBookingsSum,
   gretProjectionSum,
 } from 'src/context/dbQueryFirebase'
@@ -102,7 +103,7 @@ const reportData = [
   },
 ]
 
-const ProjectBookingSummaryTable = ({ projects }) => {
+const SourceBookingSummaryTable = ({ projects }) => {
   const { user } = useAuth()
   const { orgId } = user
 
@@ -164,14 +165,14 @@ const ProjectBookingSummaryTable = ({ projects }) => {
         await Promise.all(
           monthsA.map(async (month) => {
             const payload = {
-              pId: projectData.uid,
+              pId: projectData.value,
               monthNo: month.count,
               startTime: month.startOfMonth,
               endTime: month.endOfMonth,
               currentYear: month.currentYear,
             }
 
-            const totalReceivableValue = await greProjectBookingsSum(
+            const totalReceivableValue = await getSourceBookingsSum(
               orgId,
               payload
             )
@@ -188,6 +189,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
           },
           0
         )
+
         insideValues.push(newProjectData)
       }
 
@@ -222,7 +224,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
     <div className="p-4 m-1 border-[#e7e5eb] bg-white rounded-lg">
       <div className="flex justify-between">
         <div className="text-[#1f2937] font-[600] text-xl mb-2 ml-2">
-          Project Booking Report
+          Source Booking Report
         </div>
 
         {/* <div className="mb-4">
@@ -317,101 +319,110 @@ const ProjectBookingSummaryTable = ({ projects }) => {
           </tr> */}
 
           {loader && <TableSkeleton rows={3} columns={7} />}
-          {projectAValues?.sort((a, b) => {
+          {projectAValues
+            ?.sort((a, b) => {
               return b.totalCount - a.totalCount
-            })?.map((data, index) => {
-            const monthlyData = data?.monthly
-            let totalReceived = 0
-            let totalOutstanding = 0
-            const week1 = data?.weekly?.week1
-            const week2 = data?.weekly?.week2
-            const week3 = data?.weekly?.week3
-            const week4 = data?.weekly?.week4
+            })
+            ?.map((data, index) => {
+              const monthlyData = data?.monthly
+              let totalReceived = 0
+              let totalOutstanding = 0
+              const week1 = data?.weekly?.week1
+              const week2 = data?.weekly?.week2
+              const week3 = data?.weekly?.week3
+              const week4 = data?.weekly?.week4
 
-            const getMonthlyValues = (data, dataView) => {
-              const monthly = data.monthly
-              const weekly = data.weekly
-              const total = 0
+              const getMonthlyValues = (data, dataView) => {
+                const monthly = data.monthly
+                const weekly = data.weekly
+                const total = 0
+                if (dataView === 'weekly') {
+                  return (
+                    weekly?.week1 +
+                    weekly?.week2 +
+                    weekly?.week3 +
+                    weekly?.week4
+                  )
+                } else {
+                  return monthly?.april + monthly?.may + monthly?.june
+                }
+              }
+
               if (dataView === 'weekly') {
-                return (
-                  weekly?.week1 + weekly?.week2 + weekly?.week3 + weekly?.week4
-                )
+                totalReceived = week1 + week2 + week3 + week4
+                totalOutstanding =
+                  data?.totalAmount - totalReceived - data?.oldDue
               } else {
-                return monthly?.april + monthly?.may + monthly?.june
+                totalReceived = getMonthlyValues(data, 'monthly')
+                totalOutstanding =
+                  data?.totalAmount - totalReceived - data?.oldDue
               }
-            }
-
-            if (dataView === 'weekly') {
-              totalReceived = week1 + week2 + week3 + week4
-              totalOutstanding =
-                data?.totalAmount - totalReceived - data?.oldDue
-            } else {
-              totalReceived = getMonthlyValues(data, 'monthly')
-              totalOutstanding =
-                data?.totalAmount - totalReceived - data?.oldDue
-            }
-            const monthData = () => {
-              if (dataView === 'monthly') {
-                return (
-                  <>
-                    {data?.months?.map((month, i) => {
-                      return (
-                        <td
-                          key={i}
-                          className="py-3 px-6 text-right font-medium text-gray-900"
-                        >
-                          {`${month?.receive?.toLocaleString('en-IN')}`}
-                        </td>
-                      )
-                    })}
-                  </>
-                )
-              } else {
-                return (
-                  <>
-                    <td className="py-3 px-6 text-right bg-white border-b">
-                      {data?.weekly?.week1.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py-3 px-6 text-right bg-white border-b">
-                      {data?.weekly?.week2.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py-3 px-6 text-right bg-white border-b">
-                      {data?.weekly?.week3.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py-3 px-6 text-right bg-white border-b">
-                      {data?.weekly?.week4.toLocaleString('en-IN')}
-                    </td>
-                  </>
-                )
+              const monthData = () => {
+                if (dataView === 'monthly') {
+                  return (
+                    <>
+                      {data?.months?.map((month, i) => {
+                        return (
+                          <td
+                            key={i}
+                            className="py-3 px-6 text-right font-medium text-gray-900"
+                          >
+                            {`${month?.receive?.toLocaleString('en-IN')}`}
+                          </td>
+                        )
+                      })}
+                    </>
+                  )
+                } else {
+                  return (
+                    <>
+                      <td className="py-3 px-6 text-right bg-white border-b">
+                        {data?.weekly?.week1.toLocaleString('en-IN')}
+                      </td>
+                      <td className="py-3 px-6 text-right bg-white border-b">
+                        {data?.weekly?.week2.toLocaleString('en-IN')}
+                      </td>
+                      <td className="py-3 px-6 text-right bg-white border-b">
+                        {data?.weekly?.week3.toLocaleString('en-IN')}
+                      </td>
+                      <td className="py-3 px-6 text-right bg-white border-b">
+                        {data?.weekly?.week4.toLocaleString('en-IN')}
+                      </td>
+                    </>
+                  )
+                }
               }
-            }
 
-            return (
-              <tr
-                key={index}
-                className="border-b border-gray-200 hover:bg-gray-100"
-              >
-                <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b font-medium text-gray-900">
-                  {capitalizeFirstLetter(data?.projectName)}
-                </td>
+              return (
+                <tr
+                  key={index}
+                  className="border-b border-gray-200 hover:bg-gray-100"
+                >
+                  <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b font-medium text-gray-900">
+                    {/* {capitalizeFirstLetter(data?.projectName)} */}
+                    {data?.label}
+                  </td>
 
-                <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900">
-                  {data?.totalCount
-                    ?.toLocaleString('en-IN')}
-                </td>
-                <td className=" pl-2  border text-center bg-white border-b">
-                  <section className="w-[100px] h-[30px]">
-                    <BookingsMonthlyStackedChart payload={data?.months} />
-                  </section>
-                </td>
-                {monthData()}
-              </tr>
-            )
-          })}
+                  <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900">
+                    {data?.months
+                      ?.reduce((accumulator, currentValue) => {
+                        return accumulator + (currentValue?.receive || 0)
+                      }, 0)
+                      ?.toLocaleString('en-IN')}
+                  </td>
+                  <td className=" pl-2  border text-center bg-white border-b">
+                    <section className="w-[100px] h-[30px]">
+                      <BookingsMonthlyStackedChart payload={data?.months} />
+                    </section>
+                  </td>
+                  {monthData()}
+                </tr>
+              )
+            })}
         </tbody>
       </table>
     </div>
   )
 }
 
-export default ProjectBookingSummaryTable
+export default SourceBookingSummaryTable
