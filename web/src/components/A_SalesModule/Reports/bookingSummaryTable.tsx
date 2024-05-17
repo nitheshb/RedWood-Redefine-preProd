@@ -213,12 +213,10 @@ const SalesBookingSummaryTable = ({ projects }) => {
   }
 
   return (
-    <div className="p-4 m-1 bg-white rounded-lg">
+    <div className="p-4 m-1 border-[#e7e5eb] bg-white rounded-lg">
       <div className="flex justify-between">
-        <div>
-          <h2 className="mb-4 text-lg font-semibold text-black leading-light">
+        <div className='text-[#1f2937] font-[600] text-xl mb-2 ml-2'>
             Sales Booking Report
-          </h2>
         </div>
 
         {/* <div className="mb-4">
@@ -248,30 +246,30 @@ const SalesBookingSummaryTable = ({ projects }) => {
           </button>
         </div>
       </div>
-      <table className="min-w-full bg-white border border-black">
-        <thead>
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
           <tr
             className={
               dataView === 'monthly'
-                ? 'bg-orange-200 text-gray-600 text-sm leading-normal border border-black'
-                : 'bg-green-200 text-gray-600 text-sm leading-normal border border-black'
+                ? 'bg-gray-100 text-gray-600 text-sm leading-normal'
+                : 'bg-green-200 text-gray-600 text-sm leading-normal'
             }
           >
             <th
-              className="py-3 px-6 text-center border border-black"
+              className="py-3 px-6 text-center"
               colSpan="1"
             ></th>
             <th
-              className="py-3 px-6 text-center border border-black"
+              className="py-3 px-6 text-center"
               colSpan="1"
             ></th>
             <th
-              className="py-3 px-6 text-center border border-black"
+              className="py-3 px-6 text-center"
               colSpan="1"
             ></th>
             {dataView === 'weekly' && (
               <th
-                className="py-3 px-6 text-center border border-black"
+                className="py-3 px-6 text-center border"
                 colSpan="4"
               >
                 Weekly
@@ -279,22 +277,22 @@ const SalesBookingSummaryTable = ({ projects }) => {
             )}
             {dataView === 'monthly' && (
               <th
-                className="py-3 px-6 text-center border border-black"
-                colSpan="4"
+                className="py-3 px-6 text-center"
+                colSpan="5"
               >
                 Monthly
               </th>
             )}
           </tr>
-          <tr className="bg-blue-200 text-gray-600 text-sm leading-normal">
-            <th className="py-3 px-3 text-left border border-black">
+          <tr className="bg-gray-50   text-gray-600 text-sm leading-normal">
+            <th className="py-3 px-6 text-left">
               Project Name
             </th>
 
-            <th className="py-3 px-6 text-right border border-black w-[100px]">
+            <th className="py-3 px-6 text-right w-[100px]">
               Total Sold
             </th>
-            <th className="py-3  text-center border border-black w-[100px]">
+            <th className="py-3  text-right w-[100px]">
               Stats
             </th>
             {dataView === 'monthly' ? (
@@ -303,7 +301,7 @@ const SalesBookingSummaryTable = ({ projects }) => {
                   return (
                     <th
                       key={i}
-                      className="py-3 px-6 text-right border border-black w-[100px]"
+                      className="py-4 px-6 text-right  w-[100px]"
                     >
                       {month?.name}
                     </th>
@@ -312,16 +310,16 @@ const SalesBookingSummaryTable = ({ projects }) => {
               </>
             ) : (
               <>
-                <th className="py-3 px-6 text-right border border-black">
+                <th className="py-3 px-6 text-right bg-white border-b ">
                   Week 1 <br /> ({getDateForWeek(1)})
                 </th>
-                <th className="py-3 px-6 text-right border border-black">
+                <th className="py-3 px-6 text-right bg-white border-b ">
                   Week 2 <br /> ({getDateForWeek(2)})
                 </th>
-                <th className="py-3 px-6 text-right border border-black">
+                <th className="py-3 px-6 text-right bg-white border-b ">
                   Week 3 <br /> ({getDateForWeek(3)})
                 </th>
-                <th className="py-3 px-6 text-right border border-black">
+                <th className="py-3 px-6 text-right bg-white border-b ">
                   Week 4 <br /> ({getDateForWeek(4)})
                 </th>
               </>
@@ -376,7 +374,7 @@ const SalesBookingSummaryTable = ({ projects }) => {
                       return (
                         <td
                           key={i}
-                          className="py-3 px-6 text-right border border-black"
+                          className="py-3 px-6 text-right"
                         >
                           {`${month?.receive?.toLocaleString('en-IN')}`}
                         </td>
@@ -387,16 +385,16 @@ const SalesBookingSummaryTable = ({ projects }) => {
               } else {
                 return (
                   <>
-                    <td className="py-3 px-6 text-right border border-black">
+                    <td className="py-3 px-6 text-right bg-white border-b">
                       {data?.weekly?.week1.toLocaleString('en-IN')}
                     </td>
-                    <td className="py-3 px-6 text-right border border-black">
+                    <td className="py-3 px-6 text-right bg-white border-b">
                       {data?.weekly?.week2.toLocaleString('en-IN')}
                     </td>
-                    <td className="py-3 px-6 text-right border border-black">
+                    <td className="py-3 px-6 text-right bg-white border-b">
                       {data?.weekly?.week3.toLocaleString('en-IN')}
                     </td>
-                    <td className="py-3 px-6 text-right border border-black">
+                    <td className="py-3 px-6 text-right bg-white border-b">
                       {data?.weekly?.week4.toLocaleString('en-IN')}
                     </td>
                   </>
@@ -409,18 +407,18 @@ const SalesBookingSummaryTable = ({ projects }) => {
                 key={index}
                 className="border-b border-gray-200 hover:bg-gray-100"
               >
-                <td className="py-3 px-6 text-left whitespace-nowrap border border-black">
+                <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b">
                   {capitalizeFirstLetter(data?.projectName)}
                 </td>
 
-                <td className="py-3 px-6  border text-right border-black">
+                <td className="py-3 px-6  border text-right bg-white border-b">
                   {data?.months
                     ?.reduce((accumulator, currentValue) => {
                       return accumulator + (currentValue?.receive || 0)
                     }, 0)
                     ?.toLocaleString('en-IN')}
                 </td>
-                <td className=" pl-2  border text-center border-black">
+                <td className=" pl-2  border text-center bg-white border-b">
                   <section className="w-[100px] h-[30px]">
                     <BookingsMonthlyStackedChart
 

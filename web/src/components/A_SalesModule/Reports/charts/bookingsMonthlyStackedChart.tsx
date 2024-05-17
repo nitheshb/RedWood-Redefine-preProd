@@ -56,7 +56,7 @@ const data = [
   },
 ]
 const CustomTooltip = ({ active, payload, label }) => {
-  if (active) {
+  if (active)  {
     return (
       <div className="custom-tooltip bg-[#fff] py-[4px] shadow  rounded-lg border-[#90a4ae] text-[#373d3f] w-full  flex flex-col">
         <div className="label border-b border-[#90a4ae] ">
