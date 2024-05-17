@@ -64,9 +64,12 @@ const UnitBookingSummaryTableLayout = ({
     const tabHeadFieldsA1 = [
       { value: 'all', lab: 'All', val: 'all' },
       { value: 'booked', lab: 'Booked' },
-      { value: 'agreement_pipeline', lab: 'Agreements' },
-      { value: 'sd_pipeline', lab: 'Sale Deeds' },
+      { value: 'allotment', lab: 'Allotment' },
+      { value: 'agreement', lab: 'Agreement' },
       { value: 'registered', lab: 'Registered' },
+      { value: 'construction', lab: 'Construction' },
+      { value: 'possession', lab: 'Possession' },
+
     ]
 
     settabHeadFieldsA(tabHeadFieldsA1)

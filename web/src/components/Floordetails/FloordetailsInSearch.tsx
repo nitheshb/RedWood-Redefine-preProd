@@ -1138,7 +1138,8 @@ const FloordetailsSearch = ({
                                               </div>
                                             </div>
                                           )}
-                                          {data?.status === 'booked' && (
+
+                                          {['booked', 'allotment', 'agreement_pipeline', 'agreement', 'registered', 'possession'].includes(data?.status) && (
                                             <div className="flex flex-col items-right justify-between">
                                               <div className="flex flex-row justify-between items-right">
                                                 <h3
@@ -1390,7 +1391,7 @@ const FloordetailsSearch = ({
                                           </div>
                                         </div>
                                       )}
-                                      {data?.status === 'booked' && (
+                                      {['booked', 'allotment', 'agreement_pipeline', 'agreement', 'registered', 'possession'].includes(data?.status) && (
                                         <div className="flex flex-col items-right justify-between">
                                           <div className="flex flex-row justify-between items-right">
                                             <h3

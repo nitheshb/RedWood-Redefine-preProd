@@ -73,6 +73,7 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
   console.log(show)
   return (
     <div
+    className='rounded-xl'
       style={{
         padding: '1rem',
         backgroundColor: 'white',
@@ -83,7 +84,7 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
           <div style={{ width: '15rem' }}>
             <div
               style={{ height: '12.5rem' }}
-              className="bg-[#397D8A] p-6 cursor-pointer"
+              className="bg-[#397D8A] p-6 cursor-pointer rounded-t-lg"
               onClick={() =>
                 showDrillDownFun(
                   'Total Visits Fixed',
@@ -101,11 +102,16 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
               <div className="text-white text-sm">during * days </div>
             </div>
             <div
+             className='rounded-b-lg'
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
+          
+             
+                
+                
               }}
             >
               {[
@@ -131,7 +137,8 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="bg-[#3C7E7D] my-[0.5px] cursor-pointer"
+                  className={`bg-[#3C7E7D] my-[0.5px] cursor-pointer ${i === 1 ? 'rounded-b-lg' : ''}`}
+                  
                   style={{
                     height: '4rem',
                     display: 'flex',
@@ -169,6 +176,7 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
               }}
             >
               <div
+               className='shadow rounded-xl p-10 pl-4'
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -185,10 +193,11 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
                 >
                   <PieChartComp pieVal={pieVals.val1} />
                   <div
+                  
                     style={{
                       position: 'absolute',
                       top: '40%',
-                      left: '39%',
+                      left: '32%',
                       fontSize: '2rem',
                       fontWeight: '600',
                       color: '#4fa183',
@@ -250,7 +259,7 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
                     style={{
                       position: 'absolute',
                       top: '40%',
-                      left: '39%',
+                      left: '32%',
                       fontSize: '2rem',
                       fontWeight: '600',
                       color: '#4fa183',

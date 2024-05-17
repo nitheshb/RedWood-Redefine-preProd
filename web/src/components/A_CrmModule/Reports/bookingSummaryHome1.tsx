@@ -146,7 +146,7 @@ const UnitBookingSummaryHomePage = ({
 
       },
       {
-        status: ['booked', 'agreement_pipeline', 'sd_pipeline', 'registered'],
+        status: ['booked', 'agreement_pipeline', 'sd_pipeline', 'agreement','registered', 'construction', 'possession'],
       },
       () => setTableData([])
     )

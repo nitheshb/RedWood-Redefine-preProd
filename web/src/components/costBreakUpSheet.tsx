@@ -441,13 +441,16 @@ const CostBreakUpSheet = ({
         orgId,
         selUnitDetails?.uid,
         xData,
-        'nitheshreddy.email@gmail.com',
+        user?.email,
         enqueueSnackbar,
         resetForm
       )
     }
 
     setOnStep('payment_schedule')
+    if(onStep=== "payment_schedule"){
+    setOnStep('booksheet')
+    }
   }
 
   const setStatusFun = async (index, newStatus) => {

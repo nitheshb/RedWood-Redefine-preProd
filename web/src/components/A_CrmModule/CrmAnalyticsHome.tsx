@@ -41,15 +41,15 @@ import DummyBodyLayout from '../DummyBodyLayout/DummyBodyLayout'
 import AdvancedDataTableTest from './Reports/bookingSummaryHome'
 import UnitBookingSummaryHomePage from './Reports/bookingSummaryHome1'
 import CircleBar from './Reports/CircleBar'
+import CrmCollectionReport from './Reports/collectionReport'
 import CreditNoteSummaryHomePage from './Reports/creditNoteSummaryHome'
 import CrmSummaryReport from './Reports/Crm_SummaryReport'
 import CrmAnalyticsUnitHome from './Reports/CrmAnalyticsUnitHome'
+import CrmProjectionReport from './Reports/CrmProjectionReport'
 import CrmInventorySummaryTable from './Reports/CrmSummaryTable'
 import ReportBars from './Reports/ReportBars'
 import TransactionCard from './Reports/TransactionCard'
 import UnitStatusCardReport from './Reports/UnitStatusCardReport'
-import CrmProjectionReport from './Reports/CrmProjectionReport'
-import CrmCollectionReport from './Reports/collectionReport'
 
 const CrmAnalyticsHome = ({ project }) => {
   const theme = useTheme()
@@ -99,8 +99,10 @@ const CrmAnalyticsHome = ({ project }) => {
           { label: 'Booking Summary', value: 'booking_summary' },
           { label: 'Collections', value: 'collection_performance' },
           { label: 'CRM Inventory Report', value: 'crm_table' },
-          { label: 'Collection Projection Report', value: 'crm_projection_report' },
-
+          {
+            label: 'Collection Projection Report',
+            value: 'crm_projection_report',
+          },
 
           { label: 'Project Summary', value: 'proj_summary' },
           { label: 'Credit Note', value: 'creditnote_summary' },
@@ -250,10 +252,10 @@ const CrmAnalyticsHome = ({ project }) => {
         </div>
       )}
 
-{selCat === 'crm_projection_report' && (
+      {selCat === 'crm_projection_report' && (
         <div className="">
           {/* <AdvancedDataTableTest /> */}
-          <CrmProjectionReport projects={projects}/>
+          <CrmProjectionReport projects={projects} />
 
           {projects.length === 0 && <DummyBodyLayout />}
         </div>
@@ -261,13 +263,11 @@ const CrmAnalyticsHome = ({ project }) => {
       {selCat === 'collection_performance' && (
         <div className="">
           {/* <AdvancedDataTableTest /> */}
-          <CrmCollectionReport projects={projects}/>
+          <CrmCollectionReport projects={projects} />
 
           {projects.length === 0 && <DummyBodyLayout />}
         </div>
       )}
-
-
 
       {selCat === 'creditnote_summary' && (
         <div className="">

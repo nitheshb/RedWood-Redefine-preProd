@@ -116,28 +116,35 @@ const StatusListA = [
     allowed: ['cancel_booking', 'swapUnit', 'agreement_pipeline'],
   },
   {
-    label: 'Agreement Pipeline',
+    label: 'Allotment',
     value: 'agreement_pipeline',
     logo: 'RefreshIcon',
     color: 'bg-violet-500',
-    allowed: ['agreement_pipeline', 'sd_pipeline'],
+    allowed: ['agreement_pipeline', 'sd_pipeline', 'agreement'],
   },
   {
-    label: 'SD/Registration Pipleline',
-    value: 'sd_pipeline',
+    label: 'Agreement',
+    value: 'agreement',
     logo: 'FireIcon',
     color: 'bg-violet-500',
-    allowed: ['sd_pipeline'],
+    allowed: ['registered'],
   },
   {
     label: 'Registered',
     value: 'registered',
     logo: 'DuplicateInactiveIcon',
     color: 'bg-violet-500',
-    allowed: [],
+    allowed: ['possession'],
   },
   {
-    label: 'Cancel Booking 1',
+    label: 'Possession',
+    value: 'possession',
+    logo: 'DuplicateInactiveIcon',
+    color: 'bg-violet-500',
+    allowed: [''],
+  },
+  {
+    label: 'Cancel Booking',
     value: 'cancel_booking',
     logo: 'DuplicateInactiveIcon',
     color: 'bg-violet-500',
@@ -622,7 +629,6 @@ export default function UnitSideViewCRM({
       const dataObj = { status: newStatus?.value }
       console.log('payment stuff is ', selCustomerPayload)
       const { fullPs } = selCustomerPayload
-
       if (
         newStatus?.value === 'agreement_pipeline' &&
         selCustomerPayload?.kyc_status &&
@@ -693,8 +699,61 @@ export default function UnitSideViewCRM({
           user.email,
           enqueueSnackbar
         )
-      } else {
+      }else if (
+        newStatus?.value === 'agreement' &&
+        selCustomerPayload?.T_balance <= 0
+
+      ) {
+        setUnitStatus(newStatus)
+        dataObj.fullPs = selCustomerPayload?.fullPs
+        dataObj.T_elgible_new = selCustomerPayload?.T_elgible
+        dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
+
+        updateUnitStatus(
+          orgId,
+          selCustomerPayload?.id,
+          dataObj,
+          user.email,
+          enqueueSnackbar
+        )
+      } else if (
+        newStatus?.value === 'registered' &&
+        selCustomerPayload?.T_balance <= 0
+
+      ) {
+        setUnitStatus(newStatus)
+        dataObj.fullPs = selCustomerPayload?.fullPs
+        dataObj.T_elgible_new = selCustomerPayload?.T_elgible
+        dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
+
+        updateUnitStatus(
+          orgId,
+          selCustomerPayload?.id,
+          dataObj,
+          user.email,
+          enqueueSnackbar
+        )
+      }else if (
+        newStatus?.value === 'possession' &&
+        selCustomerPayload?.T_balance <= 0
+
+      ) {
+        setUnitStatus(newStatus)
+        dataObj.fullPs = selCustomerPayload?.fullPs
+        dataObj.T_elgible_new = selCustomerPayload?.T_elgible
+        dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
+
+        updateUnitStatus(
+          orgId,
+          selCustomerPayload?.id,
+          dataObj,
+          user.email,
+          enqueueSnackbar
+        )
+      }else {
         setStatusValidError(true)
+console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
+
         console.log('is this in statusvalidat or ')
         let errorList = ''
         if (

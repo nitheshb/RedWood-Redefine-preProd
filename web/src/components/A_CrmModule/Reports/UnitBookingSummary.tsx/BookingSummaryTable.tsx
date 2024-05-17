@@ -1055,7 +1055,7 @@ EnhancedTableHead.propTypes = {
         ₹{row?.T_balance?.toLocaleString('en-IN')}
         </TableCell>
 
-        {viewUnitStatusA.includes('CRM Executive') && <TableCell sx={{ whiteSpace: 'nowrap',  paddingRight: '8px' , paddingLeft: '8px', background: "#d1d1fb",  }} padding="none">{row?.by}</TableCell>}
+        {viewUnitStatusA.includes('CRM Executive') && <TableCell sx={{ whiteSpace: 'nowrap',  paddingRight: '8px' , paddingLeft: '8px', background: "#d1d1fb",  }} padding="none">{row?.assignedToObj?.email}</TableCell>}
 
        {viewUnitStatusA.includes('Sales Executive') && <TableCell sx={{ whiteSpace: 'nowrap',  paddingRight: '8px' , paddingLeft: '8px', background: "#d1d1fb",  }} padding="none">{row?.by}</TableCell>}
 

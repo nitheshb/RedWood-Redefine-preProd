@@ -129,7 +129,6 @@ const BookingSummaryView = ({
     let x = []
     // if (csMode === 'plot_cs') {
     if ('plot_cs' === 'plot_cs') {
-
       additonalChargesObj?.map((data, inx) => {
         let total = 0
         let gstTotal = 0
@@ -142,8 +141,7 @@ const BookingSummaryView = ({
             : data?.gst?.value
         total = isChargedPerSqft
           ? Number(
-              selUnitDetails?.super_built_up_area ||
-                selUnitDetails?.area
+              selUnitDetails?.super_built_up_area || selUnitDetails?.area
             ) * Number(data?.charges)
           : Number(data?.charges)
 
@@ -306,19 +304,18 @@ const BookingSummaryView = ({
     let merged = []
     try {
       if (leadDetailsObj1) {
-        if(additonalChargesObj){
-        if (leadDetailsObj1[`${uid}_cs`]['costSheetA']) {
-          const removeFulCostFieldA = leadDetailsObj1[`${uid}_cs`][
-            'costSheetA'
-          ].filter((dat) => dat?.component?.value != 'unit_cost_charges')
-          merged = [...x, ...removeFulCostFieldA]
+        if (additonalChargesObj) {
+          if (leadDetailsObj1[`${uid}_cs`]['costSheetA']) {
+            const removeFulCostFieldA = leadDetailsObj1[`${uid}_cs`][
+              'costSheetA'
+            ].filter((dat) => dat?.component?.value != 'unit_cost_charges')
+            merged = [...x, ...removeFulCostFieldA]
+          } else {
+            merged = [...x, ...additonalChargesObj]
+          }
         } else {
-          merged = [...x, ...additonalChargesObj]
+          merged = [...x]
         }
-      }else{
-        merged = [...x]
-
-      }
       }
     } catch (error) {
       console.log('error at feching the leadDetails Obj')
@@ -348,7 +345,6 @@ const BookingSummaryView = ({
       const z = d1
       // if (csMode === 'plot_cs') {
       if ('plot_cs' === 'plot_cs') {
-
         z.value = ['on_booking'].includes(d1?.stage?.value)
           ? Number(d1?.percentage)
           : Math.round((netTotal - plotBookingAdv) * (d1?.percentage / 100))
@@ -384,8 +380,7 @@ const BookingSummaryView = ({
         Number(
           computeTotal(
             obj,
-            selUnitDetails?.super_built_up_area ||
-              selUnitDetails?.area
+            selUnitDetails?.super_built_up_area || selUnitDetails?.area
           )
         ),
       0
@@ -557,22 +552,31 @@ const BookingSummaryView = ({
                               </section>
                               <section className="flex flex-col  mt-2 mb-2">
                                 <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                  {customerInfo?.customerDetailsObj
+                                  {customerInfo?.secondaryCustomerDetailsObj
                                     ?.customerName2 || 'NA'}
                                 </h1>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
                                   s/o{' '}
-                                  {customerInfo?.customerDetailsObj?.co_Name2 ||
-                                    'NA'}
+                                  {customerInfo?.secondaryCustomerDetailsObj
+                                    ?.co_Name2 || 'NA'}
                                 </span>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                  {customerInfo?.customerDetailsObj?.address2}
+                                  {
+                                    customerInfo?.secondaryCustomerDetailsObj
+                                      ?.address2
+                                  }
                                 </span>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                  {customerInfo?.customerDetailsObj?.phoneNo2}
+                                  {
+                                    customerInfo?.secondaryCustomerDetailsObj
+                                      ?.phoneNo2
+                                  }
                                 </span>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                  {customerInfo?.customerDetailsObj?.email2}
+                                  {
+                                    customerInfo?.secondaryCustomerDetailsObj
+                                      ?.email2
+                                  }
                                 </span>
                               </section>
                             </div>
@@ -585,7 +589,7 @@ const BookingSummaryView = ({
 
                           <div className="border rounded-lg shadow-lg w-full">
                             <section className="flex flex-row mt-2 px-2  ">
-                              <div className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
+                              <div className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 ">
                                 <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
                                   {selUnitDetails?.unit_no}
                                 </div>
@@ -596,8 +600,8 @@ const BookingSummaryView = ({
                                   Unit No
                                 </span>
                               </div>
-                              <section className="flex flex-col ml-2">
-                                <div className="flex flex-row">
+                              <section className="flex flex-col ml-2 justify-between">
+                                <div className="flex flex-row justify-between w-full">
                                   <span className="  text-[12px] text-left  text-[12px] font-normal font-['Lato']">
                                     Area:
                                   </span>
@@ -608,7 +612,7 @@ const BookingSummaryView = ({
                                   </div>
                                 </div>
 
-                                <div className="flex flex-row">
+                                <div className="flex flex-row justify-between w-full">
                                   <span className="  text-[12px] text-left  text-[12px] font-normal font-['Lato']">
                                     Facing:
                                   </span>
@@ -618,7 +622,7 @@ const BookingSummaryView = ({
                                     </div>
                                   </div>
                                 </div>
-                                <div className="flex flex-row">
+                                <div className="flex flex-row justify-between w-full">
                                   <span className="  text-[12px] text-left  text-[12px] font-normal font-['Lato']">
                                     Type:
                                   </span>
@@ -628,7 +632,7 @@ const BookingSummaryView = ({
                                     </div>
                                   </div>
                                 </div>
-                                <div className="flex flex-row">
+                                <div className="flex flex-row justify-between w-full">
                                   <span className="  text-[12px] text-left  text-[12px] font-normal font-['Lato']">
                                     Size:
                                   </span>
