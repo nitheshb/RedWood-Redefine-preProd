@@ -269,7 +269,7 @@ const CrmUnitSummary = ({
                 </h1>
               </div>
 
-            <div className="relative col-span-12 px-6 space-y-2 sm:col-span-9 mt-3">
+            <div className="relative col-span-12 pl-6 space-y-2 sm:col-span-9 mt-3">
               {unitFetchedActivityData?.length == 0 && (
                 <div className="py-8 px-8 flex flex-col items-center">
                   <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
@@ -287,7 +287,7 @@ const CrmUnitSummary = ({
                   </time>
                 </div>
               )}
-              <div className="col-span-12 space-y-6 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-200">
+              <div className="col-span-12 space-y-2 relative pl-4 sm:col-span-8  sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-200">
                 {unitFetchedActivityData?.map((data, i) => {
                   return (
                     <div
