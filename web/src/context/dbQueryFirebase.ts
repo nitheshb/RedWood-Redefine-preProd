@@ -2676,6 +2676,54 @@ export const greProjectBookingsSum = async (orgId, data) => {
   console.log('total is ', receivable)
   return receivable
 }
+export const getSourceBookingsSum = async (orgId, data) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('check it ==>', pId)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('Source', '==', pId),
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+  )
+  const parentDocs = []
+  const querySnapshot = await getDocs(q)
+  await console.log('foundLength @@', querySnapshot.docs.length)
+  let receivable = 0
+  querySnapshot.forEach((doc) => {
+    const x = doc.data()
+    console.log('dc', doc.id, ' => ', doc.data())
+    receivable = receivable + 1
+    parentDocs.push(doc.data())
+  })
+  console.log('total is ', receivable)
+  return receivable
+}
+export const getEmpBookingsSum = async (orgId, data) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('check it ==>', pId)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('assignedTo', '==', pId),
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+  )
+  const parentDocs = []
+  const querySnapshot = await getDocs(q)
+  await console.log('foundLength @@', querySnapshot.docs.length)
+  let receivable = 0
+  querySnapshot.forEach((doc) => {
+    const x = doc.data()
+    console.log('dc', doc.id, ' => ', doc.data())
+    receivable = receivable + 1
+    parentDocs.push(doc.data())
+  })
+  console.log('total is ', receivable)
+  return receivable
+}
 export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
 
   const { pId, startTime, endTime } = data
@@ -2700,6 +2748,22 @@ export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
   })
   console.log('total is ', receivable)
   return receivable
+}
+
+export const streamBookedLeads = async (orgId, data, snapshot, error) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('pushed values are', pId)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('ProjectId', '==', pId),
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+    // where('year', '==', currentYear)
+  )
+
+  return onSnapshot(q, snapshot, error)
 }
 export const getEmpCollectionsSum = async (orgId, data) => {
 
