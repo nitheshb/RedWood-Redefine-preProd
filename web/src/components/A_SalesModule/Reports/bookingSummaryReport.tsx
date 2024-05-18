@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState, useEffect } from 'react'
 
 import Paper from '@material-ui/core/Paper'
@@ -25,6 +27,7 @@ import BubbleChartComponent from './charts/salesBubbleChart'
 import StackedLeadsChart from './charts/salesStackedChart'
 import EmployeeBookingSummaryTable from './empBookingSummaryTable'
 import SourceBookingSummaryTable from './sourceBookingSummaryTable'
+import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
 
 const totalProfit = '98,6543.53'
 const profitPercentage = '24.21%'
@@ -218,6 +221,10 @@ const BookingSummaryReport = () => {
   const [dataView, setDataView] = useState('monthly')
 
   const [projectAValues, setProjectWithValues] = useState([])
+  const [isOpenSideForm, setReportSideForm] = useState(false)
+  const [drillDownPayload, setDrillDownPayload] = useState([])
+  const [subTitle, setSubTitle] = useState('false')
+
   const [monthsA, setMonthsA] = useState(
     getNextMonths(startMonthOffset, monthCount)
   )
@@ -228,6 +235,12 @@ const BookingSummaryReport = () => {
     calMonthlyOverallBookings()
     // calMonthlyOverallBookings()
   }, [projects, usersList, monthsA])
+  const showDrillDownFun = async (text, data) => {
+    // Display sideForm
+    setReportSideForm(true)
+    setDrillDownPayload(data)
+    setSubTitle(text)
+  }
   const calMonthlyOverallBookings = async () => {
     try {
       setLoaderIcon(true)
@@ -273,8 +286,6 @@ const BookingSummaryReport = () => {
                         <section className="text-black  font-weight-[600] mt-1 mb-2">
                           Bookings
                         </section>
-
-
                       </div>
                       <div className="inline-flex mt-8">
                         <p className="text-3xl font-bold">
@@ -296,7 +307,7 @@ const BookingSummaryReport = () => {
                       </div>
                       <p className="p-0 cursor-pointer">
                         <span className="border p-1 border-gray-300 text-black m-1 rounded-tl-2xl px-2 rounded-br-2xl rounded-bl-2xl rounded-tr-2xl font-medium text-sm">
-                        January 2024 - May 2024
+                          January 2024 - May 2024
                         </span>
                       </p>
                     </div>
@@ -320,20 +331,23 @@ const BookingSummaryReport = () => {
                           {data.icon}
                           <p className="ml-2">{data.text}</p>
                         </div>
-                        {data.text === 'Booked' &&
-                          projectAValues.length > 0 && (
-                            <p className="font-bold text-xl ml-12 ">
-                              {
-                                projectAValues[projectAValues?.length - 1][
-                                  'receive'
-                                ]
-                              }
-                            </p>
-                          )}
+                        {data.text === 'Booked' && projectAValues.length > 0 && (
+                          <p
+                            className="font-bold text-xl ml-12 "
+                            onClick={() =>
+                              showDrillDownFun('Booked Units', projectAValues)
+                            }
+                          >
+                            {
+                              projectAValues[projectAValues?.length - 1][
+                                'receive'
+                              ]
+                            }
+                          </p>
+                        )}
                         {data.text === 'Projects' && (
                           <p className="font-bold text-xl ml-12">
                             <CountUpComp value={projects?.length} />{' '}
-
                           </p>
                         )}
                         {data.text === 'LeadSources' && (
@@ -343,7 +357,7 @@ const BookingSummaryReport = () => {
                         )}{' '}
                         {data.text === 'SalesTeam' && (
                           <p className="font-bold text-xl ml-12">
-                            <CountUpComp value={usersList.length} />
+                            <CountUpComp value={usersList?.length} />
                           </p>
                         )}
                       </div>
@@ -735,6 +749,15 @@ const BookingSummaryReport = () => {
           </div>
         </div>
       </div>
+      <ReportSideWindow
+            open={isOpenSideForm}
+            setOpen={setReportSideForm}
+            title="Bookings"
+            subtitle={subTitle}
+            leadsLogsPayload={drillDownPayload}
+            widthClass="max-w-5xl"
+
+          />
     </div>
   )
 }

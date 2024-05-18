@@ -13,6 +13,7 @@ import {
 import SideVisitLeadsBody from '../A_SalesModule/Reports/SideVisitsLeadsBody'
 import AddTaskForm from '../A_TaskMan/AddTaskForm'
 import ProjectInventorySummaryReport from '../A_CrmModule/Reports/InventorySummary.tsx/ProjectInventorySummaryReport'
+import BookedLeadsSideViewBody from '../A_SalesModule/Reports/BookedLeadsSideViewBody'
 
 const ReportSideWindow = ({
   open,
@@ -100,6 +101,18 @@ const ReportSideWindow = ({
 
                 {title === 'Site Visit Leads' && (
                   <SideVisitLeadsBody
+                    title={title}
+                    subtitle={subtitle}
+                    dialogOpen={setOpen}
+                    leadsLogsPayload={leadsLogsPayload}
+                    setCustomerDetails= {setCustomerDetails}
+                    setisImportLeadsOpen={setisImportLeadsOpen}
+
+                  />
+                )}
+
+                   {title === 'Bookings' && (
+                  <BookedLeadsSideViewBody
                     title={title}
                     subtitle={subtitle}
                     dialogOpen={setOpen}

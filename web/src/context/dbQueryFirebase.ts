@@ -2749,6 +2749,22 @@ export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
   console.log('total is ', receivable)
   return receivable
 }
+
+export const streamBookedLeads = async (orgId, data, snapshot, error) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('pushed values are', pId)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('ProjectId', '==', pId),
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+    // where('year', '==', currentYear)
+  )
+
+  return onSnapshot(q, snapshot, error)
+}
 export const getEmpCollectionsSum = async (orgId, data) => {
 
   const { pId, monthNo, currentYear } = data
