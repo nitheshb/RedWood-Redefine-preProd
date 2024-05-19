@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState, useEffect } from 'react'
 
 import Paper from '@material-ui/core/Paper'
@@ -9,21 +11,30 @@ import '../../../styles/myStyles.css'
 import { GoTrue } from '@redwoodjs/auth/dist/authClients/goTrue'
 
 import CrmProjectionReport from 'src/components/A_CrmModule/Reports/CrmProjectionReport'
-import { getAllProjectMonthlyBookingsSum, getAllProjects } from 'src/context/dbQueryFirebase'
+import { CountUpComp } from 'src/components/comps/countUpComp'
+import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
+import { sourceListItems } from 'src/constants/projects'
+import {
+  getAllProjectMonthlyBookingsSum,
+  getAllProjects,
+  steamUsersListByRole,
+} from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
+import ProjectBookingSummaryTable from './bookingSummaryTable'
+import BookingsMonthlyStackedChart from './charts/bookingsMonthlyStackedChart'
 import PieChartComponent from './charts/salePieChart'
 import BubbleChartComponent from './charts/salesBubbleChart'
 import StackedLeadsChart from './charts/salesStackedChart'
-import SalesBookingSummaryTable from './bookingSummaryTable'
-import BookingsMonthlyStackedChart from './charts/bookingsMonthlyStackedChart'
+import EmployeeBookingSummaryTable from './empLeadsTasksSummaryTable'
+import SourceBookingSummaryTable from './sourceBookingSummaryTable'
 
 const totalProfit = '98,6543.53'
 const profitPercentage = '24.21%'
 const performanceText = 'You have a great Performance'
 const avgGrowingData = [
   {
-    percentage: '2.34%',
+    percentage: 74,
     text: 'Booked',
     icon: (
       <svg
@@ -49,7 +60,7 @@ const avgGrowingData = [
   },
   {
     percentage: '3.45%',
-    text: 'Site Visit',
+    text: 'Projects',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +113,7 @@ const avgGrowingData = [
   },
   {
     percentage: '2.87%',
-    text: 'Cost per lead',
+    text: 'SalesTeam',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -132,8 +143,11 @@ const BookingSummaryReport = () => {
   const { orgId } = user
   const [isClicked, setisClicked] = useState('project_bookings')
   const [projects, setProjects] = useState([])
+  const [usersList, setusersList] = useState([])
+
   useEffect(() => {
     getProjects()
+    getEmployees()
   }, [])
   const getProjects = async () => {
     const unsubscribe = getAllProjects(
@@ -150,6 +164,24 @@ const BookingSummaryReport = () => {
         console.log('project are ', projects)
       },
       () => setProjects([])
+    )
+    return unsubscribe
+  }
+  const getEmployees = async () => {
+    const unsubscribe = steamUsersListByRole(
+      orgId,
+      (querySnapshot) => {
+        const projects = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        projects.map((user) => {
+          user.label = user?.projectName
+          user.value = user?.uid
+        })
+        setusersList([...projects])
+        console.log('project are ', projects)
+      },
+      () => setusersList([])
     )
     return unsubscribe
   }
@@ -189,6 +221,10 @@ const BookingSummaryReport = () => {
   const [dataView, setDataView] = useState('monthly')
 
   const [projectAValues, setProjectWithValues] = useState([])
+  const [isOpenSideForm, setReportSideForm] = useState(false)
+  const [drillDownPayload, setDrillDownPayload] = useState([])
+  const [subTitle, setSubTitle] = useState('false')
+
   const [monthsA, setMonthsA] = useState(
     getNextMonths(startMonthOffset, monthCount)
   )
@@ -198,7 +234,13 @@ const BookingSummaryReport = () => {
   useEffect(() => {
     calMonthlyOverallBookings()
     // calMonthlyOverallBookings()
-  }, [projects, monthsA])
+  }, [projects, usersList, monthsA])
+  const showDrillDownFun = async (text, data) => {
+    // Display sideForm
+    setReportSideForm(true)
+    setDrillDownPayload(data)
+    setSubTitle(text)
+  }
   const calMonthlyOverallBookings = async () => {
     try {
       setLoaderIcon(true)
@@ -206,7 +248,6 @@ const BookingSummaryReport = () => {
 
       await Promise.all(
         monthsA.map(async (month) => {
-
           const payload = {
             startTime: month.startOfMonth,
             endTime: month.endOfMonth,
@@ -243,27 +284,35 @@ const BookingSummaryReport = () => {
                     <div className="flex-1 mr-4  p-4">
                       <div>
                         <section className="text-black  font-weight-[600] mt-1 mb-2">
-                          Total Leads
+                          Bookings
                         </section>
-
-                        <span>12 January 2023 - 12 January 2024</span>
                       </div>
                       <div className="inline-flex mt-8">
-                        <p className="text-3xl font-bold">₹{totalProfit}</p>
+                        <p className="text-3xl font-bold">
+                          {' '}
+                          <CountUpComp
+                            value={projectAValues?.reduce(
+                              (accumulator, currentValue) => {
+                                return (
+                                  accumulator + (currentValue?.receive || 0)
+                                )
+                              },
+                              0
+                            )}
+                          />
+                        </p>
                         <span className="p-3 pl-4 font-medium">
                           {profitPercentage}
                         </span>
                       </div>
                       <p className="p-0 cursor-pointer">
-                        <span className="border p-1 border-gray-300 text-black m-1 rounded-tl-2xl rounded-br-2xl rounded-tr-2xl font-medium text-sm">
-                          {performanceText}
+                        <span className="border p-1 border-gray-300 text-black m-1 rounded-tl-2xl px-2 rounded-br-2xl rounded-bl-2xl rounded-tr-2xl font-medium text-sm">
+                          January 2024 - May 2024
                         </span>
                       </p>
                     </div>
                     <div className="flex-1  rounded-lg p-1">
-
-                   <BookingsMonthlyStackedChart payload={projectAValues} />
-
+                      <BookingsMonthlyStackedChart payload={projectAValues} />
                     </div>
                   </div>
 
@@ -282,7 +331,35 @@ const BookingSummaryReport = () => {
                           {data.icon}
                           <p className="ml-2">{data.text}</p>
                         </div>
-                        <p className="font-bold text-xl">{data.percentage}</p>
+                        {data.text === 'Booked' && projectAValues.length > 0 && (
+                          <p
+                            className="font-bold text-xl ml-12 "
+                            onClick={() =>
+                              showDrillDownFun('Booked Units', projectAValues)
+                            }
+                          >
+                            {
+                              projectAValues[projectAValues?.length - 1][
+                                'receive'
+                              ]
+                            }
+                          </p>
+                        )}
+                        {data.text === 'Projects' && (
+                          <p className="font-bold text-xl ml-12">
+                            <CountUpComp value={projects?.length} />{' '}
+                          </p>
+                        )}
+                        {data.text === 'LeadSources' && (
+                          <p className="font-bold text-xl ml-12">
+                            <CountUpComp value={sourceListItems?.length} />
+                          </p>
+                        )}{' '}
+                        {data.text === 'SalesTeam' && (
+                          <p className="font-bold text-xl ml-12">
+                            <CountUpComp value={usersList?.length} />
+                          </p>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -292,39 +369,105 @@ const BookingSummaryReport = () => {
             </div>
 
             {/* section - 2 */}
+
             <section className="w-full border-[#e7e5eb] bg-white rounded-lg p-4">
               <div className="flex flex-col"></div>
-              <section className="flex flex-row justify-between">
+              <section className="flex flex-row justify-between px-4">
                 <article className="flex flex-col">
-                  <div className="text-[#1f2937]">Revenue</div>
+                  <div className="text-[#1f2937]">Bookings</div>
                   <div className="text-[#1f2937] font-[700] text-2xl mt-2">
-                    ₹62,820.59
+                    {projectAValues?.reduce((accumulator, currentValue) => {
+                      return accumulator + (currentValue?.receive || 0)
+                    }, 0)}
                   </div>
                   <div className="text-[#EF4444] text-xs mt-1">
-                    0.2% less than the previous 30 days
+                    0.0% less than the previous 30 days
                   </div>
                 </article>
-                <article>date</article>
+                <article></article>
               </section>
 
-              <div className="w-full h-[400px] mt-4">
+              <div className="w-full h-[300px] mt-4">
                 <section className="flex flex-row justify-between">
                   <article></article>
-                  <article className="flex flex-row mr-2 mb-3">
-                    <section className="flex flex-row">
-                      <div className="text-[#1f2937] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#9333ea]"></div>
-                      <div className="text-[#4b5563] text-xs"> This month</div>
-                    </section>
-                    <section className="flex flex-row">
-                      <div className="text-[#2563eb] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#2563eb]"></div>
-                      <div className="text-[#4b5563] text-xs"> Last month</div>
-                    </section>
-                  </article>
+                  <article className="flex flex-row mr-2 mb-3"></article>
                 </section>
-                <StackedLeadsChart />
+                <BookingsMonthlyStackedChart
+                  source={'full-view'}
+                  payload={projectAValues}
+                />
+                {/* <StackedLeadsChart /> */}
               </div>
+              {/* bottom sheet */}
+              <section className="mt-3 ml-4">
+                {/* <div className="text-[#1f2937] font-[600] text-xl">
+                    Conversion funnel
+                  </div> */}
+                <div className="flex flex-row border-b border-gray-200">
+                  <ul
+                    className="flex flex-wrap -mb-px mt-1"
+                    id="myTab"
+                    data-tabs-toggle="#myTabContent"
+                    role="tablist"
+                  >
+                    {[
+                      {
+                        lab: 'Project Bookings',
+                        val: 'project_bookings',
+                        color: '#4F46E5',
+                      },
+                      {
+                        lab: 'Source-wise Bookings',
+                        val: 'source_bookings',
+                        color: '#9333EA',
+                      },
+                      {
+                        lab: 'Employee-wise Bookings',
+                        val: 'emp_bookings',
+                        color: '#9333EA',
+                      },
+                    ].map((d, i) => {
+                      return (
+                        <li key={i} className="mr-4">
+                          {' '}
+                          <button
+                            className={`inline-block pb-[6px] mr-3 text-sm  text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
+                              isClicked === d.val
+                                ? 'border-black'
+                                : 'border-transparent'
+                            }`}
+                            type="button"
+                            role="tab"
+                            onClick={() => setisClicked(d.val)}
+                          >
+                            <section className="flex flex-row text-[15px] mb-1ss ">
+                              <div
+                                className={`w-3 h-3 bg-[${d.color}] mt-1 mr-1 rounded-sm`}
+                              ></div>
+                              {d.lab}
+                            </section>
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              </section>
+              {isClicked === 'project_bookings' && (
+                <ProjectBookingSummaryTable projects={projects} />
+              )}
+              {isClicked === 'source_bookings' && (
+                <SourceBookingSummaryTable projects={sourceListItems} />
+              )}
+              {isClicked === 'emp_bookings' && (
+                <EmployeeBookingSummaryTable projects={usersList} />
+              )}
+
+              <article className="text-[#4f46e5] text-center font-[500] text-[13px]">
+                View full Report
+              </article>
             </section>
-            {/* section - 3 */}
+            {/* section-3a */}
             <section className="flex flex-row flex-wrap gap-2">
               <section className="w-[49%] border-[#e7e5eb] bg-white rounded-lg p-4">
                 <div className="flex flex-col"></div>
@@ -361,7 +504,10 @@ const BookingSummaryReport = () => {
                       </section>
                     </article>
                   </section>
-                  <BookingsMonthlyStackedChart source= {'full-view'} payload={projectAValues} />
+                  <BookingsMonthlyStackedChart
+                    source={'full-view'}
+                    payload={projectAValues}
+                  />
                   {/* <StackedLeadsChart /> */}
                 </div>
                 {/* bottom sheet */}
@@ -458,105 +604,38 @@ const BookingSummaryReport = () => {
               </section>
             </section>
             <section className="w-full border-[#e7e5eb] bg-white rounded-lg p-4">
-                <div className="flex flex-col"></div>
-                <section className="flex flex-row justify-between">
-                  <article className="flex flex-col">
-                    <div className="text-[#1f2937]">Bookings</div>
-                    <div className="text-[#1f2937] font-[700] text-2xl mt-2">
-                      0
-                    </div>
-                    <div className="text-[#EF4444] text-xs mt-1">
-                      0.0% less than the previous 30 days
-                    </div>
-                  </article>
-                  <article></article>
-                </section>
-
-                <div className="w-full h-[300px] mt-4">
-                  <section className="flex flex-row justify-between">
-                    <article></article>
-                    <article className="flex flex-row mr-2 mb-3">
-                      <section className="flex flex-row">
-                        <div className="text-[#1f2937] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#9333ea]"></div>
-                        <div className="text-[#4b5563] text-xs">
-                          {' '}
-                          This month
-                        </div>
-                      </section>
-                      <section className="flex flex-row">
-                        <div className="text-[#2563eb] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#2563eb]"></div>
-                        <div className="text-[#4b5563] text-xs">
-                          {' '}
-                          Last month
-                        </div>
-                      </section>
-                    </article>
-                  </section>
-                  <BookingsMonthlyStackedChart source= {'full-view'} payload={projectAValues} />
-                  {/* <StackedLeadsChart /> */}
-                </div>
-                {/* bottom sheet */}
-                <section className="mt-3 ml-4">
-                  {/* <div className="text-[#1f2937] font-[600] text-xl">
-                    Conversion funnel
-                  </div> */}
-                  <div className="flex flex-row border-b border-gray-200">
-                    <ul
-                      className="flex flex-wrap -mb-px mt-1"
-                      id="myTab"
-                      data-tabs-toggle="#myTabContent"
-                      role="tablist"
-                    >
-                      {[
-                        {
-                          lab: 'Project Bookings',
-                          val: 'project_bookings',
-                          color: '#4F46E5',
-                        },
-                        {
-                          lab: 'Source-wise Bookings',
-                          val: 'source_bookings',
-                          color: '#9333EA',
-                        },
-                        {
-                          lab: 'Employee-wise Bookings',
-                          val: 'emp_bookings',
-                          color: '#9333EA',
-                        },
-                      ].map((d, i) => {
-                        return (
-                          <li key={i} className="mr-4">
-                            {' '}
-                            <button
-                              className={`inline-block pb-[6px] mr-3 text-sm  text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
-                                isClicked === d.val
-                                  ? 'border-black'
-                                  : 'border-transparent'
-                              }`}
-                              type="button"
-                              role="tab"
-                              onClick={() => setisClicked(d.val)}
-                            >
-                              <section className="flex flex-row text-[15px] mb-1ss ">
-                                <div
-                                  className={`w-3 h-3 bg-[${d.color}] mt-1 mr-1 rounded-sm`}
-                                ></div>
-                                {d.lab}
-                              </section>
-                            </button>
-                          </li>
-                        )
-                      })}
-                    </ul>
+              <div className="flex flex-col"></div>
+              <section className="flex flex-row justify-between">
+                <article className="flex flex-col">
+                  <div className="text-[#1f2937]">Revenue</div>
+                  <div className="text-[#1f2937] font-[700] text-2xl mt-2">
+                    ₹62,820.59
                   </div>
-                </section>
-           {isClicked === 'project_bookings' && <SalesBookingSummaryTable projects={projects} />}
-
-                <article className="text-[#4f46e5] text-center font-[500] text-[13px]">
-                  View full Report
+                  <div className="text-[#EF4444] text-xs mt-1">
+                    0.2% less than the previous 30 days
+                  </div>
                 </article>
+                <article>date</article>
               </section>
-            {/* section-3a */}
+
+              <div className="w-full h-[400px] mt-4">
+                <section className="flex flex-row justify-between">
+                  <article></article>
+                  <article className="flex flex-row mr-2 mb-3">
+                    <section className="flex flex-row">
+                      <div className="text-[#1f2937] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#9333ea]"></div>
+                      <div className="text-[#4b5563] text-xs"> This month</div>
+                    </section>
+                    <section className="flex flex-row">
+                      <div className="text-[#2563eb] w-3 h-3 mt-1 mx-2 rounded-sm bg-[#2563eb]"></div>
+                      <div className="text-[#4b5563] text-xs"> Last month</div>
+                    </section>
+                  </article>
+                </section>
+                <StackedLeadsChart />
+              </div>
+            </section>
+            {/* section - 3 */}
             {/* section-4 */}
             <section className="flex flex-row flex-wrap gap-2">
               <section className="w-[49%] border-[#e7e5eb] bg-white rounded-lg p-4">
@@ -670,6 +749,14 @@ const BookingSummaryReport = () => {
           </div>
         </div>
       </div>
+      <ReportSideWindow
+        open={isOpenSideForm}
+        setOpen={setReportSideForm}
+        title="Bookings"
+        subtitle={subTitle}
+        leadsLogsPayload={drillDownPayload}
+        widthClass="max-w-5xl"
+      />
     </div>
   )
 }

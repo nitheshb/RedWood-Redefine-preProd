@@ -1,15 +1,11 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect, useState } from 'react'
 
 import { X, Add, Remove } from '@mui/icons-material'
-import { endOfMonth } from 'date-fns/esm'
 
 import TableSkeleton from 'src/components/A_CrmModule/Reports/_mock/comps/table/table-skeleton'
-import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
 import {
   getAllProjectMonthlyBookingsSum,
-  greProjectBookingsSum,
+  getEmpBookingsSum,
   gretProjectionSum,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -106,7 +102,8 @@ const reportData = [
   },
 ]
 
-const ProjectBookingSummaryTable = ({ projects }) => {
+const EmployeeBookingSummaryTable = ({ projects }) => {
+  console.log('check it', projects)
   const { user } = useAuth()
   const { orgId } = user
 
@@ -119,9 +116,6 @@ const ProjectBookingSummaryTable = ({ projects }) => {
   )
   const [projectAValues, setProjectWithValues] = useState([])
 
-  const [isOpenSideForm, setReportSideForm] = useState(false)
-  const [drillDownPayload, setDrillDownPayload] = useState([])
-  const [subTitle, setSubTitle] = useState('false')
   const [loader, setLoaderIcon] = useState(false)
 
   useEffect(() => {
@@ -151,12 +145,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
   const handleChangeView = (view) => {
     setDataView(view)
   }
-  const showDrillDownFun = async (text, data) => {
-    // Display sideForm
-    setReportSideForm(true)
-    setDrillDownPayload(data)
-    setSubTitle(text)
-  }
+
   const calculateTotal = (data, key) => {
     return data.reduce((acc, item) => {
       return acc + (item[key] || 0)
@@ -172,7 +161,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
       for (const projectData of projects) {
         const newProjectData = { ...projectData }
         const projectMonthArray = []
-
+        console.log('check it @@@', projectData?.name, projectData?.uid, )
         await Promise.all(
           monthsA.map(async (month) => {
             const payload = {
@@ -183,7 +172,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
               currentYear: month.currentYear,
             }
 
-            const totalReceivableValue = await greProjectBookingsSum(
+            const totalReceivableValue = await getEmpBookingsSum(
               orgId,
               payload
             )
@@ -192,14 +181,14 @@ const ProjectBookingSummaryTable = ({ projects }) => {
             projectMonthArray.push(updatedMonth)
           })
         )
-
-        newProjectData.months = projectMonthArray
         newProjectData.totalCount = projectMonthArray?.reduce(
           (accumulator, currentValue) => {
             return accumulator + (currentValue?.receive || 0)
           },
           0
         )
+
+        newProjectData.months = projectMonthArray
         insideValues.push(newProjectData)
       }
 
@@ -234,7 +223,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
     <div className="p-4 m-1 border-[#e7e5eb] bg-white rounded-lg">
       <div className="flex justify-between">
         <div className="text-[#1f2937] font-[600] text-xl mb-2 ml-2">
-          Project Booking Report
+          Employee Booking Report
         </div>
 
         {/* <div className="mb-4">
@@ -329,136 +318,101 @@ const ProjectBookingSummaryTable = ({ projects }) => {
           </tr> */}
 
           {loader && <TableSkeleton rows={3} columns={7} />}
-          {projectAValues
-            ?.sort((a, b) => {
+          {projectAValues ?.sort((a, b) => {
               return b.totalCount - a.totalCount
-            })
-            ?.map((data, index) => {
-              const monthlyData = data?.monthly
-              let totalReceived = 0
-              let totalOutstanding = 0
-              const week1 = data?.weekly?.week1
-              const week2 = data?.weekly?.week2
-              const week3 = data?.weekly?.week3
-              const week4 = data?.weekly?.week4
+            })?.map((data, index) => {
+            const monthlyData = data?.monthly
+            let totalReceived = 0
+            let totalOutstanding = 0
+            const week1 = data?.weekly?.week1
+            const week2 = data?.weekly?.week2
+            const week3 = data?.weekly?.week3
+            const week4 = data?.weekly?.week4
 
-              const getMonthlyValues = (data, dataView) => {
-                const monthly = data.monthly
-                const weekly = data.weekly
-                const total = 0
-                if (dataView === 'weekly') {
-                  return (
-                    weekly?.week1 +
-                    weekly?.week2 +
-                    weekly?.week3 +
-                    weekly?.week4
-                  )
-                } else {
-                  return monthly?.april + monthly?.may + monthly?.june
-                }
-              }
-
+            const getMonthlyValues = (data, dataView) => {
+              const monthly = data.monthly
+              const weekly = data.weekly
+              const total = 0
               if (dataView === 'weekly') {
-                totalReceived = week1 + week2 + week3 + week4
-                totalOutstanding =
-                  data?.totalAmount - totalReceived - data?.oldDue
+                return (
+                  weekly?.week1 + weekly?.week2 + weekly?.week3 + weekly?.week4
+                )
               } else {
-                totalReceived = getMonthlyValues(data, 'monthly')
-                totalOutstanding =
-                  data?.totalAmount - totalReceived - data?.oldDue
+                return monthly?.april + monthly?.may + monthly?.june
               }
-              const monthData = () => {
-                if (dataView === 'monthly') {
-                  return (
-                    <>
-                      {data?.months?.map((month, i) => {
-                        return (
-                          <td
-                            key={i}
-                            className="py-3 px-6 text-right font-medium text-gray-900"
-                            onClick={() =>
-                              showDrillDownFun('Bookings', {
-                                uid: data.uid,
-                                months: data?.months,
-                                thisMonth: month,
-                              })
-                            }
-                          >
-                            {`${month?.receive?.toLocaleString('en-IN')}`}
-                          </td>
-                        )
-                      })}
-                    </>
-                  )
-                } else {
-                  return (
-                    <>
-                      <td className="py-3 px-6 text-right bg-white border-b">
-                        {data?.weekly?.week1.toLocaleString('en-IN')}
-                      </td>
-                      <td className="py-3 px-6 text-right bg-white border-b">
-                        {data?.weekly?.week2.toLocaleString('en-IN')}
-                      </td>
-                      <td className="py-3 px-6 text-right bg-white border-b">
-                        {data?.weekly?.week3.toLocaleString('en-IN')}
-                      </td>
-                      <td className="py-3 px-6 text-right bg-white border-b">
-                        {data?.weekly?.week4.toLocaleString('en-IN')}
-                      </td>
-                    </>
-                  )
-                }
+            }
+
+            if (dataView === 'weekly') {
+              totalReceived = week1 + week2 + week3 + week4
+              totalOutstanding =
+                data?.totalAmount - totalReceived - data?.oldDue
+            } else {
+              totalReceived = getMonthlyValues(data, 'monthly')
+              totalOutstanding =
+                data?.totalAmount - totalReceived - data?.oldDue
+            }
+            const monthData = () => {
+              if (dataView === 'monthly') {
+                return (
+                  <>
+                    {data?.months?.map((month, i) => {
+                      return (
+                        <td
+                          key={i}
+                          className="py-3 px-6 text-right font-medium text-gray-900"
+                        >
+                          {`${month?.receive?.toLocaleString('en-IN')}`}
+                        </td>
+                      )
+                    })}
+                  </>
+                )
+              } else {
+                return (
+                  <>
+                    <td className="py-3 px-6 text-right bg-white border-b">
+                      {data?.weekly?.week1.toLocaleString('en-IN')}
+                    </td>
+                    <td className="py-3 px-6 text-right bg-white border-b">
+                      {data?.weekly?.week2.toLocaleString('en-IN')}
+                    </td>
+                    <td className="py-3 px-6 text-right bg-white border-b">
+                      {data?.weekly?.week3.toLocaleString('en-IN')}
+                    </td>
+                    <td className="py-3 px-6 text-right bg-white border-b">
+                      {data?.weekly?.week4.toLocaleString('en-IN')}
+                    </td>
+                  </>
+                )
               }
+            }
 
-              return (
-                <tr
-                  key={index}
-                  className="border-b border-gray-200 hover:bg-gray-100"
-                >
-                  <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b font-medium text-gray-900">
-                    {capitalizeFirstLetter(data?.projectName)}
+            return (
+              <tr
+                key={index}
+                className="border-b border-gray-200 hover:bg-gray-100"
+              >
+                <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b font-medium text-gray-900">
+                  {data?.projectName} {data?.name}
+                </td>
 
-                  </td>
-
-                  <td
-                    className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900"
-                    onClick={() =>{
-                      console.log('data is ', data)
-                      showDrillDownFun('Bookings', {
-                        uid: data.uid,
-                        months: data?.months,
-                       thisMonth: {
-                          startOfMonth: data?.months[0]['startOfMonth'],
-                          endOfMonth:
-                            data?.months[data?.months.length - 1]['endOfMonth'],
-                        },
-                      })
-                    }
-                  }
-                  >
-                    {data?.totalCount?.toLocaleString('en-IN')}
-                  </td>
-                  <td className=" pl-2  border text-center bg-white border-b">
-                    <section className="w-[100px] h-[30px]">
-                      <BookingsMonthlyStackedChart payload={data?.months} />
-                    </section>
-                  </td>
-                  {monthData()}
-                </tr>
-              )
-            })}
+                <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900">
+                  {data?.totalCount
+                    ?.toLocaleString('en-IN')}
+                </td>
+                <td className=" pl-2  border text-center bg-white border-b">
+                  <section className="w-[100px] h-[30px]">
+                    <BookingsMonthlyStackedChart payload={data?.months} />
+                  </section>
+                </td>
+                {monthData()}
+              </tr>
+            )
+          })}
         </tbody>
       </table>
-      <ReportSideWindow
-        open={isOpenSideForm}
-        setOpen={setReportSideForm}
-        title="Bookings"
-        subtitle={subTitle}
-        leadsLogsPayload={drillDownPayload}
-        widthClass="max-w-5xl"
-      />
     </div>
   )
 }
 
-export default ProjectBookingSummaryTable
+export default EmployeeBookingSummaryTable
