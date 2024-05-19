@@ -1,16 +1,17 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react'
 
 import { X, Add, Remove } from '@mui/icons-material'
-import { endOfMonth } from 'date-fns/esm'
 
 import TableSkeleton from 'src/components/A_CrmModule/Reports/_mock/comps/table/table-skeleton'
 import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
 import {
   getAllProjectMonthlyBookingsSum,
-  greProjectBookingsSum,
+  getEmpBookingsSum,
+  getEmpCompletedTasks,
   gretProjectionSum,
+  streamSalesActitvityReport,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import SkeletonLoaderPage from 'src/pages/SkeletonLoader/skeletonLoaderPage'
@@ -106,7 +107,8 @@ const reportData = [
   },
 ]
 
-const ProjectBookingSummaryTable = ({ projects }) => {
+const EmpLeadsTasksSummaryTable = ({ projects }) => {
+  console.log('check it', projects)
   const { user } = useAuth()
   const { orgId } = user
 
@@ -118,10 +120,10 @@ const ProjectBookingSummaryTable = ({ projects }) => {
     getNextMonths(startMonthOffset, monthCount)
   )
   const [projectAValues, setProjectWithValues] = useState([])
-
   const [isOpenSideForm, setReportSideForm] = useState(false)
   const [drillDownPayload, setDrillDownPayload] = useState([])
   const [subTitle, setSubTitle] = useState('false')
+
   const [loader, setLoaderIcon] = useState(false)
 
   useEffect(() => {
@@ -136,7 +138,12 @@ const ProjectBookingSummaryTable = ({ projects }) => {
   const handleIncreaseMonth = () => {
     setMonthCount((prevCount) => prevCount + 1)
   }
-
+  const showDrillDownFun = async (text, data) => {
+    // Display sideForm
+    setReportSideForm(true)
+    setDrillDownPayload(data)
+    setSubTitle(text)
+  }
   const handleDecreaseMonth = () => {
     setStartMonthOffset((prevOffset) => prevOffset - 1)
   }
@@ -151,12 +158,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
   const handleChangeView = (view) => {
     setDataView(view)
   }
-  const showDrillDownFun = async (text, data) => {
-    // Display sideForm
-    setReportSideForm(true)
-    setDrillDownPayload(data)
-    setSubTitle(text)
-  }
+
   const calculateTotal = (data, key) => {
     return data.reduce((acc, item) => {
       return acc + (item[key] || 0)
@@ -172,18 +174,18 @@ const ProjectBookingSummaryTable = ({ projects }) => {
       for (const projectData of projects) {
         const newProjectData = { ...projectData }
         const projectMonthArray = []
-
+        console.log('check it @@@', projectData?.name, projectData?.uid)
         await Promise.all(
           monthsA.map(async (month) => {
             const payload = {
-              pId: projectData.uid,
+              pId: projectData.email,
               monthNo: month.count,
               startTime: month.startOfMonth,
               endTime: month.endOfMonth,
               currentYear: month.currentYear,
             }
 
-            const totalReceivableValue = await greProjectBookingsSum(
+            const totalReceivableValue = await streamSalesActitvityReport(
               orgId,
               payload
             )
@@ -192,14 +194,14 @@ const ProjectBookingSummaryTable = ({ projects }) => {
             projectMonthArray.push(updatedMonth)
           })
         )
-
-        newProjectData.months = projectMonthArray
         newProjectData.totalCount = projectMonthArray?.reduce(
           (accumulator, currentValue) => {
             return accumulator + (currentValue?.receive || 0)
           },
           0
         )
+
+        newProjectData.months = projectMonthArray
         insideValues.push(newProjectData)
       }
 
@@ -234,12 +236,13 @@ const ProjectBookingSummaryTable = ({ projects }) => {
     <div className="p-4 m-1 border-[#e7e5eb] bg-white rounded-lg">
       <div className="flex justify-between">
         <div className="text-[#1f2937] font-[600] text-xl mb-2 ml-2">
-          Project Booking Report
+          Employee Tasks Report
         </div>
 
         {/* <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
 
+          </label>
           </label>
           <select
             id="view"
@@ -288,7 +291,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
             )}
           </tr>
           <tr className="bg-gray-50   text-gray-600 text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Project Name</th>
+            <th className="py-3 px-6 text-left">Employee Name</th>
 
             <th className="py-3 px-6 text-right w-[100px]">Total Sold</th>
             <th className="py-3  text-right w-[100px]">Stats</th>
@@ -376,13 +379,14 @@ const ProjectBookingSummaryTable = ({ projects }) => {
                           <td
                             key={i}
                             className="py-3 px-6 text-right font-medium text-gray-900"
-                            onClick={() =>
-                              showDrillDownFun('Bookings', {
-                                uid: data.uid,
+                            onClick={() => {
+                    
+                              showDrillDownFun(`Employee Tasks of ${data.email}`, {
+                                uid: data.email,
                                 months: data?.months,
                                 thisMonth: month,
                               })
-                            }
+                            }}
                           >
                             {`${month?.receive?.toLocaleString('en-IN')}`}
                           </td>
@@ -416,26 +420,10 @@ const ProjectBookingSummaryTable = ({ projects }) => {
                   className="border-b border-gray-200 hover:bg-gray-100"
                 >
                   <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b font-medium text-gray-900">
-                    {capitalizeFirstLetter(data?.projectName)}
-
+                    {data?.projectName} {data?.name}
                   </td>
 
-                  <td
-                    className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900"
-                    onClick={() =>{
-                      console.log('data is ', data)
-                      showDrillDownFun('Bookings', {
-                        uid: data.uid,
-                        months: data?.months,
-                       thisMonth: {
-                          startOfMonth: data?.months[0]['startOfMonth'],
-                          endOfMonth:
-                            data?.months[data?.months.length - 1]['endOfMonth'],
-                        },
-                      })
-                    }
-                  }
-                  >
+                  <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900">
                     {data?.totalCount?.toLocaleString('en-IN')}
                   </td>
                   <td className=" pl-2  border text-center bg-white border-b">
@@ -452,7 +440,7 @@ const ProjectBookingSummaryTable = ({ projects }) => {
       <ReportSideWindow
         open={isOpenSideForm}
         setOpen={setReportSideForm}
-        title="Bookings"
+        title="Employee Tasks"
         subtitle={subTitle}
         leadsLogsPayload={drillDownPayload}
         widthClass="max-w-5xl"
@@ -461,4 +449,4 @@ const ProjectBookingSummaryTable = ({ projects }) => {
   )
 }
 
-export default ProjectBookingSummaryTable
+export default EmpLeadsTasksSummaryTable

@@ -51,6 +51,7 @@ import CampaingsTopBarsComponent from './A_MarketingModule/Reports/Charts/market
 import BookingSummaryReport from './A_SalesModule/Reports/bookingSummaryReport'
 import StackedLeadsChart from './A_SalesModule/Reports/charts/salesStackedChart'
 import Chat from './A_SalesModule/Reports/chatSummary'
+import EmpLeadsTasksSummaryTable from './A_SalesModule/Reports/empLeadsTasksSummaryTable'
 import EmpTasksReportM from './A_SalesModule/Reports/EmpTasks/empTasksReportM'
 import LeadsCoversionGraphs from './A_SalesModule/Reports/leadsConversionRatio/LeadsCoversionGraphs'
 import ProfileSummary from './A_SalesModule/Reports/profileSummary'
@@ -69,9 +70,6 @@ import SiderForm from './SiderForm/SiderForm'
 //import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
 //import ProfileSummary from './A_SalesModule/Reports/profileSummary'
 //import StepperTask from './A_SalesModule/Reports/StepperTask'
-
-
-
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -193,6 +191,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   const [showInproFSource, setShowInproFSource] = useState(false)
   const [showArchiFSource, setShowArchiFSource] = useState(false)
   const [usersList, setusersList] = useState([])
+  const [usersList1, setusersList1] = useState([])
   const [usersCleanList, setusersCleanList] = useState([])
   const [projectList, setprojectList] = useState([])
   const [projectFilList, setFiltProjectListTuned] = useState([])
@@ -263,6 +262,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   }, [dateRange])
   useEffect(() => {
     getLeadsDataFun()
+    getEmployees()
   }, [])
   useEffect(() => {
     getLeadsDataFun()
@@ -409,7 +409,24 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
     updateTodaySourceStatsDB(orgId, 'snap', {}, (error) => [])
   }
-
+  const getEmployees = async () => {
+    const unsubscribe = steamUsersListByRole(
+      orgId,
+      (querySnapshot) => {
+        const projects = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        projects.map((user) => {
+          user.label = user?.projectName
+          user.value = user?.uid
+        })
+        setusersList1([...projects])
+        console.log('project are ', projects)
+      },
+      () => setusersList1([])
+    )
+    return unsubscribe
+  }
   const updateAgreegatedValues = async (projectFilList) => {
     projectFilList.map((data) => {
       const payload = {
@@ -1228,8 +1245,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
                 // { label: 'Table Edit', value: 'edit_table' },
 
-
-
                 // { label: 'Source Report', value: 'source_report' },
                 // { label: 'Employee Report', value: 'emp_status_report' },
                 // { label: 'Project Leads Report', value: 'proj_leads_report' },
@@ -1661,9 +1676,11 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                   style={{ backgroundColor: '#ebfafa' }}
                 >
                   <div className="overflow-hidden">
+
+                  <EmpLeadsTasksSummaryTable projects={usersList1} />
                     <div className="flex flex-row justify-between pl-0 mt-4 border-b pb-4 mb-4 ">
                       <div className=" text-md font-bold leading-none mt-2">
-                        {`Today Employee Tasks Performance`}
+                        {`Employee Tasks Performance`}
                         {/* <div>DateSourceComponent()</div> */}
                       </div>
                       <section className="flex flex-row justify-between">
@@ -1912,10 +1929,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           {selCat === 'edit_table' && <TableEdit />}
 
-
-          {selCat === 'edit_table' && <TableEdit/>}
-
-
+          {selCat === 'edit_table' && <TableEdit />}
 
           {/* {selCat === 'tab_task' && <TabTask />} */}
 

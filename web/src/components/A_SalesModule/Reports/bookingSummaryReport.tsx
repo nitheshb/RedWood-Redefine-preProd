@@ -12,6 +12,7 @@ import { GoTrue } from '@redwoodjs/auth/dist/authClients/goTrue'
 
 import CrmProjectionReport from 'src/components/A_CrmModule/Reports/CrmProjectionReport'
 import { CountUpComp } from 'src/components/comps/countUpComp'
+import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
 import { sourceListItems } from 'src/constants/projects'
 import {
   getAllProjectMonthlyBookingsSum,
@@ -25,9 +26,8 @@ import BookingsMonthlyStackedChart from './charts/bookingsMonthlyStackedChart'
 import PieChartComponent from './charts/salePieChart'
 import BubbleChartComponent from './charts/salesBubbleChart'
 import StackedLeadsChart from './charts/salesStackedChart'
-import EmployeeBookingSummaryTable from './empBookingSummaryTable'
+import EmployeeBookingSummaryTable from './empLeadsTasksSummaryTable'
 import SourceBookingSummaryTable from './sourceBookingSummaryTable'
-import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
 
 const totalProfit = '98,6543.53'
 const profitPercentage = '24.21%'
@@ -750,14 +750,13 @@ const BookingSummaryReport = () => {
         </div>
       </div>
       <ReportSideWindow
-            open={isOpenSideForm}
-            setOpen={setReportSideForm}
-            title="Bookings"
-            subtitle={subTitle}
-            leadsLogsPayload={drillDownPayload}
-            widthClass="max-w-5xl"
-
-          />
+        open={isOpenSideForm}
+        setOpen={setReportSideForm}
+        title="Bookings"
+        subtitle={subTitle}
+        leadsLogsPayload={drillDownPayload}
+        widthClass="max-w-5xl"
+      />
     </div>
   )
 }

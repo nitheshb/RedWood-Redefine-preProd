@@ -964,17 +964,42 @@ export const AddCommentTaskManData = async (orgId, dta, user) => {
 }
 //  get lead activity list
 export const steamLeadActivityLog = async (orgId, snapshot, data, error) => {
-  // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
   const { uid } = data
   console.log('is uid g', data, uid)
-  // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
   const { data: lead_logs, error1 } = await supabase
     .from(`${orgId}_lead_logs`)
     .select('type,subtype,T, by, from, to ')
     .eq('Luid', uid)
     .order('T', { ascending: false })
   return lead_logs
-  // return onSnapshot(itemsQuery, snapshot, error)
+}
+export const streamSalesActitvityReport = async (orgId,  data,) => {
+  const { pId, startTime, endTime } = data
+
+  const { data: lead_logs, error1 } = await supabase
+    .from(`${orgId}_lead_logs`)
+    .select('type,subtype,T, by, from, to ')
+    .eq('by', pId)
+    .gte('T', startTime)
+    .lte('T', endTime)
+    .order('T', { ascending: false })
+    console.log('counts are ',lead_logs, data, pId)
+
+  return lead_logs.length
+}
+export const streamSalesActitvityLogReportData = async (orgId,  data,) => {
+  const { pId, startTime, endTime } = data
+
+  const { data: lead_logs, error1 } = await supabase
+    .from(`${orgId}_lead_logs`)
+    .select('*')
+    .eq('by', pId)
+    .gte('T', startTime)
+    .lte('T', endTime)
+    .order('T', { ascending: false })
+    console.log('counts are ',lead_logs, data, pId)
+
+  return lead_logs
 }
 //  get lead activity list
 export const steamUnitActivityLog = async (orgId, data) => {
@@ -2764,6 +2789,30 @@ export const streamBookedLeads = async (orgId, data, snapshot, error) => {
   )
 
   return onSnapshot(q, snapshot, error)
+}
+export const getEmpCompletedTasks = async (orgId, data) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('check it ==>', pId)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('assignedTo', '==', pId),
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+  )
+  const parentDocs = []
+  const querySnapshot = await getDocs(q)
+  await console.log('foundLength @@', querySnapshot.docs.length)
+  let receivable = 0
+  querySnapshot.forEach((doc) => {
+    const x = doc.data()
+    console.log('dc', doc.id, ' => ', doc.data())
+    receivable = receivable + 1
+    parentDocs.push(doc.data())
+  })
+  console.log('total is ', receivable)
+  return receivable
 }
 export const getEmpCollectionsSum = async (orgId, data) => {
 
