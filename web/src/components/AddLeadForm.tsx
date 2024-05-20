@@ -479,7 +479,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                           type="text"
                         />
                       </div>
-                      <div className="mb-3 space-y-2 w-full text-xs">
+                      <div className="mb-1 space-y-2 w-full text-xs">
                         {/* <TextField
                           label="Mobile No*"
                           name="mobileNo"
@@ -496,9 +496,10 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                           format="+91 ###-###-####"
                           mask=""
                         /> */}
+
                         <PhoneNoField
                           name="mobileNo"
-                          label="Mobile No*"
+                          label="Mobile No of*"
                           className="input"
                           onChange={(value) => {
                             formik.setFieldValue('mobileNo', value.value)
@@ -506,6 +507,24 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                           value={formik.values.mobileNo}
                           options={sourceList}
                         />
+
+
+                        
+
+
+{/* <PhoneNoField
+  name="mobileNo"
+  label={<span style={{ fontSize: '12px' }}>Mobile No of*</span>}
+  className="input mt-0" // Apply margin-top-0 class
+  onChange={(value) => {
+    formik.setFieldValue('mobileNo', value.value)
+  }}
+  value={formik.values.mobileNo ? formik.values.mobileNo : '+91'}
+  options={sourceList}
+/>  */}
+
+
+
                       </div>
                     </div>
                     {/* 2 */}
@@ -515,11 +534,11 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                       </div>
                       <div className="mb-3 space-y-2 w-full text-xs">
                         <span className="inline">
-                          <label className="label font-regular text-sm block mb-1">
+                          <label className="label font-regular mb-1 text-xs block">
                             Enquiry Date
                           </label>
-                          <DatePicker
-                            className=" pl- px- h-10 rounded-md   min-w-[151px] inline  text-[#0091ae]   w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
+                          {/* <DatePicker
+                            className=" pl- px- h-10 rounded-md  text-[#0091ae]   w-full  flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
                             selected={startDate}
                             onChange={(date) => {
                               formik.setFieldValue('enquiryDat', date.getTime())
@@ -532,7 +551,24 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                               setHours(setMinutes(d, 59), 23),
                             ]}
                             dateFormat="MMMM d, yyyy"
-                          />
+                          /> */}
+
+<DatePicker
+  className="h-8 w-[400px]  rounded-md text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
+  selected={startDate}
+  onChange={(date) => {
+    formik.setFieldValue('enquiryDat', date.getTime())
+    setStartDate(date)
+  }}
+  timeFormat="HH:mm"
+  injectTimes={[
+    setHours(setMinutes(d, 1), 0),
+    setHours(setMinutes(d, 5), 12),
+    setHours(setMinutes(d, 59), 23),
+  ]}
+  dateFormat="MMMM d, yyyy"
+/>
+
                         </span>
                       </div>
                     </div>

@@ -26,9 +26,7 @@ import {
   getLeadbyId1,
   steamBankDetailsList,
   steamUsersListByRole,
-  streamBookedLeads,
   sourceBookedLeads,
-  streamSalesActitvityLogReportData,
   updateLeadsLogWithProject,
   updateProject,
 } from 'src/context/dbQueryFirebase'
@@ -46,7 +44,7 @@ import {
 import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import { TextField } from 'src/util/formFields/TextField'
 
-const SalesCompletedTasksBody = ({
+const SourceBookedLeadsSideViewBody = ({
   title,
   subtitle,
   leadsLogsPayload: projectPayload,
@@ -75,20 +73,29 @@ const SalesCompletedTasksBody = ({
     getLeadsData()
   }, [projectPayload])
 
-  const getLeadsData = async () => {
-    console.log('count is ', projectPayload);
-    const unsubscribe = await streamSalesActitvityLogReportData(
+
+
+
+  const getLeadsData = () => {
+    const unsubscribe = sourceBookedLeads(
       orgId,
       {
         pId: projectPayload?.uid,
         startTime: projectPayload.thisMonth['startOfMonth'],
         endTime: projectPayload.thisMonth['endOfMonth'],
       },
+      (querySnapshot) => {
+        const usersListA = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        setLeadsFetchedData(usersListA)
+      },
+      () => setLeadsFetchedData([])
     )
-    const y = await unsubscribe
-    setLeadsFetchedData(y)
     return unsubscribe
   }
+
+
   const selLeadFun = (data) => {
     console.log('data is ', data)
     setisImportLeadsOpen(true)
@@ -121,13 +128,15 @@ const SalesCompletedTasksBody = ({
                     {' '}
                     {[
                       { label: 'sNo', id: 'no' },
-                      { label: 'Task Owner', id: 'label' },
-                      { label: 'Type', id: 'all' },
-                      { label: 'From', id: 'new' },
-                      { label: 'To', id: 'all' },
-                      { label: 'Time', id: 'all' },
-                      { label: 'Lead Id', id: 'new' },
-                     
+                      { label: 'Project', id: 'label' },
+                      { label: 'Lead Name', id: 'all' },
+                      { label: 'Status', id: 'new' },
+                      { label: 'Booked On', id: 'all' },
+                      { label: 'Created on', id: 'all' },
+                      { label: 'Source', id: 'new' },
+                      { label: 'Executive', id: 'all' },
+
+                      { label: 'Visit Fixed By', id: 'new' },
                     ].map((d, i) => (
                       <th
                         key={i}
@@ -146,7 +155,7 @@ const SalesCompletedTasksBody = ({
 
                 <tbody>
                   {leadsFetchedData?.map((data, i) => {
-                    console.log('Employee Tasks', data);
+                     console.log('Source Bookings', data);
                     return (
                       <tr
                         className={`  ${
@@ -161,32 +170,37 @@ const SalesCompletedTasksBody = ({
                           {i + 1}
                         </td>
                         <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left">
-                          {data?.by}
+                          {data?.Project}
                         </td>
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap text-left">
-                          {data?.type}
+                          {data?.Name}
                         </td>
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.from}
+                          {data?.Status}
                         </td>
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                        {data?.to}
+                          {prettyDate(data?.stsUpT)}
                         </td>
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {prettyDateTime(data?.T)}
+                          {prettyDate(data?.Date)}
                         </td>
 
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.Luid}
+                          {data?.Source}
                         </td>
+                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                          {data?.assignedToObj?.name}
+                        </td>
+                        {/* <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                          {data?.visitFixedBy}
+                        </td> */}
 
-
-
+                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
+                          {data?.by}
+                        </td>
                       </tr>
                     )
                   })}
-
-                  
                 </tbody>
               </table>
             )}
@@ -198,4 +212,4 @@ const SalesCompletedTasksBody = ({
   )
 }
 
-export default SalesCompletedTasksBody
+export default SourceBookedLeadsSideViewBody

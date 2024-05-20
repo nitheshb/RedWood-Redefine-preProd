@@ -2790,6 +2790,31 @@ export const streamBookedLeads = async (orgId, data, snapshot, error) => {
 
   return onSnapshot(q, snapshot, error)
 }
+
+
+
+export const sourceBookedLeads = async (orgId, data, snapshot, error) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('pushed values are', pId)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('ProjectId', '==', pId),
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+    // where('year', '==', currentYear)
+  )
+
+  return onSnapshot(q, snapshot, error)
+}
+
+
+
+
+
+
+
 export const getEmpCompletedTasks = async (orgId, data) => {
 
   const { pId, startTime, endTime } = data
