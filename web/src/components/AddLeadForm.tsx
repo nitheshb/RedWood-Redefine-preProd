@@ -499,7 +499,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
 
                         <PhoneNoField
                           name="mobileNo"
-                          label="Mobile No of*"
+                          label="Mobile No*"
                           className="input"
                           onChange={(value) => {
                             formik.setFieldValue('mobileNo', value.value)
