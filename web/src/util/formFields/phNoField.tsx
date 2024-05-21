@@ -19,16 +19,19 @@ export const PhoneNoField = ({
       <label className={`label font-regular  mb-2 ${labelSize === undefined ? 'text-sm': labelSize}`}>{label}</label>
       <NumberFormat
         // label="Mobile No*"
-        className={`w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-[2rem] px-4 mt-1 ${textSize} ${txtPad}`}
+        className={`w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-[2rem] px-4  ${textSize} ${txtPad}`}
         name="mobileNo"
         value={value}
+        //value={value || '+91'}
         onValueChange={(value) => {
           console.log('PhoneNoField value:', value);
 
           onChange(value)
         }}
-        format="###-###-####"
+        //format="###-###-####"
+        format="+91 ###-###-####"
         mask=""
+        placeholder="+91"
       />
       <ErrorMessage
         component="div"
