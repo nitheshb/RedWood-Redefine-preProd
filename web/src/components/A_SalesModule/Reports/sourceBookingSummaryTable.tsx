@@ -302,7 +302,7 @@ const SourceBookingSummaryTable = ({ projects }) => {
             )}
           </tr>
           <tr className="bg-gray-50   text-gray-600 text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Project Name</th>
+            <th className="py-3 px-6 text-left">Source</th>
 
             <th className="py-3 px-6 text-right w-[100px]">Total Sold</th>
             <th className="py-3  text-right w-[100px]">Stats</th>
@@ -391,13 +391,15 @@ const SourceBookingSummaryTable = ({ projects }) => {
                             key={i}
                             className="py-3 px-6 text-right font-medium text-gray-900"
 
-                            onClick={() =>
+                            onClick={() =>{
+                              console.log('fetched values', data)
                               showDrillDownFun('Source Bookings', {
-                                uid: data.uid,
+                                uid: data.rep,
                                 months: data?.months,
                                 thisMonth: month,
                               })
-                            }
+
+                            }}
 
 
 
@@ -428,7 +430,7 @@ const SourceBookingSummaryTable = ({ projects }) => {
                 }
               }
 
-              
+
 
               return (
                 <tr
@@ -440,7 +442,7 @@ const SourceBookingSummaryTable = ({ projects }) => {
                     {data?.label}
                   </td>
 
-                  
+
 
                   {/* <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900"
                                    onClick={() =>{
@@ -470,7 +472,7 @@ const SourceBookingSummaryTable = ({ projects }) => {
   onClick={() => {
     console.log('data is ', data);
     showDrillDownFun('Source Bookings', {
-      uid: data.uid,
+      uid: data.rep,
       months: data?.months,
       thisMonth: {
         startOfMonth: data?.months[0]['startOfMonth'],

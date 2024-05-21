@@ -16,6 +16,7 @@ import ProjectInventorySummaryReport from '../A_CrmModule/Reports/InventorySumma
 import BookedLeadsSideViewBody from '../A_SalesModule/Reports/BookedLeadsSideViewBody'
 import SourceBookedLeadsSideViewBody from '../A_SalesModule/Reports/SourceBookedLeadsSideViewBody'
 import SalesCompletedTasksBody from '../A_SalesModule/Reports/SalesCompletedTasksBody'
+import EmpBookingSideBody from '../A_SalesModule/Reports/EmpBookingsSideBody'
 
 const ReportSideWindow = ({
   open,
@@ -146,6 +147,17 @@ const ReportSideWindow = ({
 
                   {title === 'Employee Tasks' && (
                   <SalesCompletedTasksBody
+                    title={title}
+                    subtitle={subtitle}
+                    dialogOpen={setOpen}
+                    leadsLogsPayload={leadsLogsPayload}
+                    setCustomerDetails= {setCustomerDetails}
+                    setisImportLeadsOpen={setisImportLeadsOpen}
+
+                  />
+                )}
+                {title === 'Employee Bookings' && (
+                  <EmpBookingSideBody
                     title={title}
                     subtitle={subtitle}
                     dialogOpen={setOpen}

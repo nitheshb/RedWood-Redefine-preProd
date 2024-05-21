@@ -26,7 +26,7 @@ import BookingsMonthlyStackedChart from './charts/bookingsMonthlyStackedChart'
 import PieChartComponent from './charts/salePieChart'
 import BubbleChartComponent from './charts/salesBubbleChart'
 import StackedLeadsChart from './charts/salesStackedChart'
-import EmployeeBookingSummaryTable from './empLeadsTasksSummaryTable'
+import EmployeeBookingSummaryTable from './empBookingSummaryTable'
 import SourceBookingSummaryTable from './sourceBookingSummaryTable'
 
 const totalProfit = '98,6543.53'
