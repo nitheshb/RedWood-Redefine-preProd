@@ -295,7 +295,7 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
           <tr className="bg-gray-50   text-gray-600 text-sm leading-normal">
             <th className="py-3 px-6 text-left">Employee Name</th>
 
-            <th className="py-3 px-6 text-right w-[100px]">Total Sold</th>
+            <th className="py-3 px-6 text-right w-[100px]">Total Tasks</th>
             <th className="py-3  text-right w-[100px]">Stats</th>
             {dataView === 'monthly' ? (
               <>
@@ -382,7 +382,7 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
                             key={i}
                             className="py-3 px-6 text-right font-medium text-gray-900"
                             onClick={() => {
-                    
+
                               showDrillDownFun(`Employee Tasks of ${data.email}`, {
                                 uid: data.email,
                                 months: data?.months,
@@ -418,7 +418,7 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
 
               return (
 
-              
+
                 <tr
                   key={index}
                   className="border-b border-gray-200 hover:bg-gray-100"
@@ -436,7 +436,11 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
     showDrillDownFun(`Employee Tasks of ${data.email}`, {
       uid: data.email,
       months: data?.months,
-      thisMonth: month,
+      thisMonth: {
+        startOfMonth: data?.months[0]['startOfMonth'],
+        endOfMonth:
+          data?.months[data?.months.length - 1]['endOfMonth'],
+      },
     });
   }}
 >
@@ -453,7 +457,7 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
                 </tr>
 
 
-                
+
               )
             })}
         </tbody>

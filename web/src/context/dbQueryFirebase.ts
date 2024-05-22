@@ -2790,17 +2790,48 @@ export const streamBookedLeads = async (orgId, data, snapshot, error) => {
 
   return onSnapshot(q, snapshot, error)
 }
+export const streamSourceBookedLeads = async (orgId, data, snapshot, error) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('pushed values are', pId, data)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('Source', 'in', pId),
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+    // where('year', '==', currentYear)
+  )
+
+  return onSnapshot(q, snapshot, error)
+}
+
+export const streamEmpBookedLeads = async (orgId, data, snapshot, error) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('pushed values are', pId, data)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('assignedTo', '==', pId),
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+    // where('year', '==', currentYear)
+  )
+
+  return onSnapshot(q, snapshot, error)
+}
 
 
 
 export const sourceBookedLeads = async (orgId, data, snapshot, error) => {
 
-  const { pId, startTime, endTime } = data
-  console.log('pushed values are', pId)
+  const { pId,SourceA, startTime, endTime } = data
+  console.log('pushed values are', data)
   const q = await query(
     collection(db, `${orgId}_leads`),
-    where('ProjectId', '==', pId),
-    where('Status', '==', 'booked'),
+    where('Source', '==', SourceA),
+    // where('Status', '==', 'booked'),
     where('stsUpT', '>=', startTime),
     where('stsUpT', '<=', endTime)
     // where('year', '==', currentYear)

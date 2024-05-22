@@ -1,12 +1,18 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react'
 
 import { X, Add, Remove } from '@mui/icons-material'
+import { endOfMonth } from 'date-fns/esm'
 
 import TableSkeleton from 'src/components/A_CrmModule/Reports/_mock/comps/table/table-skeleton'
+import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
 import {
   getAllProjectMonthlyBookingsSum,
   getEmpBookingsSum,
+  getEmpCompletedTasks,
   gretProjectionSum,
+  streamSalesActitvityReport,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import SkeletonLoaderPage from 'src/pages/SkeletonLoader/skeletonLoaderPage'
@@ -115,6 +121,9 @@ const EmployeeBookingSummaryTable = ({ projects }) => {
     getNextMonths(startMonthOffset, monthCount)
   )
   const [projectAValues, setProjectWithValues] = useState([])
+  const [isOpenSideForm, setReportSideForm] = useState(false)
+  const [drillDownPayload, setDrillDownPayload] = useState([])
+  const [subTitle, setSubTitle] = useState('false')
 
   const [loader, setLoaderIcon] = useState(false)
 
@@ -130,7 +139,12 @@ const EmployeeBookingSummaryTable = ({ projects }) => {
   const handleIncreaseMonth = () => {
     setMonthCount((prevCount) => prevCount + 1)
   }
-
+  const showDrillDownFun = async (text, data) => {
+    // Display sideForm
+    setReportSideForm(true)
+    setDrillDownPayload(data)
+    setSubTitle(text)
+  }
   const handleDecreaseMonth = () => {
     setStartMonthOffset((prevOffset) => prevOffset - 1)
   }
@@ -161,7 +175,7 @@ const EmployeeBookingSummaryTable = ({ projects }) => {
       for (const projectData of projects) {
         const newProjectData = { ...projectData }
         const projectMonthArray = []
-        console.log('check it @@@', projectData?.name, projectData?.uid, )
+        console.log('check it @@@', projectData?.name, projectData?.uid)
         await Promise.all(
           monthsA.map(async (month) => {
             const payload = {
@@ -223,12 +237,13 @@ const EmployeeBookingSummaryTable = ({ projects }) => {
     <div className="p-4 m-1 border-[#e7e5eb] bg-white rounded-lg">
       <div className="flex justify-between">
         <div className="text-[#1f2937] font-[600] text-xl mb-2 ml-2">
-          Employee Booking Report
+          Employee Tasks Report
         </div>
 
         {/* <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
 
+          </label>
           </label>
           <select
             id="view"
@@ -277,7 +292,7 @@ const EmployeeBookingSummaryTable = ({ projects }) => {
             )}
           </tr>
           <tr className="bg-gray-50   text-gray-600 text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Project Name</th>
+            <th className="py-3 px-6 text-left">Employee Name</th>
 
             <th className="py-3 px-6 text-right w-[100px]">Total Sold</th>
             <th className="py-3  text-right w-[100px]">Stats</th>
@@ -318,101 +333,146 @@ const EmployeeBookingSummaryTable = ({ projects }) => {
           </tr> */}
 
           {loader && <TableSkeleton rows={3} columns={7} />}
-          {projectAValues ?.sort((a, b) => {
+          {projectAValues
+            ?.sort((a, b) => {
               return b.totalCount - a.totalCount
-            })?.map((data, index) => {
-            const monthlyData = data?.monthly
-            let totalReceived = 0
-            let totalOutstanding = 0
-            const week1 = data?.weekly?.week1
-            const week2 = data?.weekly?.week2
-            const week3 = data?.weekly?.week3
-            const week4 = data?.weekly?.week4
+            })
+            ?.map((data, index) => {
+              const monthlyData = data?.monthly
+              let totalReceived = 0
+              let totalOutstanding = 0
+              const week1 = data?.weekly?.week1
+              const week2 = data?.weekly?.week2
+              const week3 = data?.weekly?.week3
+              const week4 = data?.weekly?.week4
 
-            const getMonthlyValues = (data, dataView) => {
-              const monthly = data.monthly
-              const weekly = data.weekly
-              const total = 0
+              const getMonthlyValues = (data, dataView) => {
+                const monthly = data.monthly
+                const weekly = data.weekly
+                const total = 0
+                if (dataView === 'weekly') {
+                  return (
+                    weekly?.week1 +
+                    weekly?.week2 +
+                    weekly?.week3 +
+                    weekly?.week4
+                  )
+                } else {
+                  return monthly?.april + monthly?.may + monthly?.june
+                }
+              }
+
               if (dataView === 'weekly') {
-                return (
-                  weekly?.week1 + weekly?.week2 + weekly?.week3 + weekly?.week4
-                )
+                totalReceived = week1 + week2 + week3 + week4
+                totalOutstanding =
+                  data?.totalAmount - totalReceived - data?.oldDue
               } else {
-                return monthly?.april + monthly?.may + monthly?.june
+                totalReceived = getMonthlyValues(data, 'monthly')
+                totalOutstanding =
+                  data?.totalAmount - totalReceived - data?.oldDue
               }
-            }
+              const monthData = () => {
+                if (dataView === 'monthly') {
+                  return (
+                    <>
+                      {data?.months?.map((month, i) => {
+                        return (
+                          <td
+                            key={i}
+                            className="py-3 px-6 text-right font-medium text-gray-900"
+                            onClick={() => {
 
-            if (dataView === 'weekly') {
-              totalReceived = week1 + week2 + week3 + week4
-              totalOutstanding =
-                data?.totalAmount - totalReceived - data?.oldDue
-            } else {
-              totalReceived = getMonthlyValues(data, 'monthly')
-              totalOutstanding =
-                data?.totalAmount - totalReceived - data?.oldDue
-            }
-            const monthData = () => {
-              if (dataView === 'monthly') {
-                return (
-                  <>
-                    {data?.months?.map((month, i) => {
-                      return (
-                        <td
-                          key={i}
-                          className="py-3 px-6 text-right font-medium text-gray-900"
-                        >
-                          {`${month?.receive?.toLocaleString('en-IN')}`}
-                        </td>
-                      )
-                    })}
-                  </>
-                )
-              } else {
-                return (
-                  <>
-                    <td className="py-3 px-6 text-right bg-white border-b">
-                      {data?.weekly?.week1.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py-3 px-6 text-right bg-white border-b">
-                      {data?.weekly?.week2.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py-3 px-6 text-right bg-white border-b">
-                      {data?.weekly?.week3.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py-3 px-6 text-right bg-white border-b">
-                      {data?.weekly?.week4.toLocaleString('en-IN')}
-                    </td>
-                  </>
-                )
+                              showDrillDownFun(`Employee Tasks of ${data.email}`, {
+                                uid: data.uid,
+                                months: data?.months,
+                                thisMonth: month,
+                              })
+                            }}
+                          >
+                            {`${month?.receive?.toLocaleString('en-IN')}`}
+                          </td>
+                        )
+                      })}
+                    </>
+                  )
+                } else {
+                  return (
+                    <>
+                      <td className="py-3 px-6 text-right bg-white border-b">
+                        {data?.weekly?.week1.toLocaleString('en-IN')}
+                      </td>
+                      <td className="py-3 px-6 text-right bg-white border-b">
+                        {data?.weekly?.week2.toLocaleString('en-IN')}
+                      </td>
+                      <td className="py-3 px-6 text-right bg-white border-b">
+                        {data?.weekly?.week3.toLocaleString('en-IN')}
+                      </td>
+                      <td className="py-3 px-6 text-right bg-white border-b">
+                        {data?.weekly?.week4.toLocaleString('en-IN')}
+                      </td>
+                    </>
+                  )
+                }
               }
-            }
 
-            return (
-              <tr
-                key={index}
-                className="border-b border-gray-200 hover:bg-gray-100"
-              >
-                <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b font-medium text-gray-900">
-                  {data?.projectName} {data?.name}
-                </td>
+              return (
 
-                <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900">
-                  {data?.totalCount
-                    ?.toLocaleString('en-IN')}
-                </td>
-                <td className=" pl-2  border text-center bg-white border-b">
-                  <section className="w-[100px] h-[30px]">
-                    <BookingsMonthlyStackedChart payload={data?.months} />
-                  </section>
-                </td>
-                {monthData()}
-              </tr>
-            )
-          })}
+
+                <tr
+                  key={index}
+                  className="border-b border-gray-200 hover:bg-gray-100"
+                >
+                  <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b font-medium text-gray-900">
+                    {data?.projectName} {data?.name}
+                  </td>
+
+
+
+
+<td
+  className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900"
+  onClick={(month) => {
+    showDrillDownFun(`Employee Tasks of ${data.email}`, {
+      uid: data.uid,
+      months: data?.months,
+      thisMonth: {
+        startOfMonth: data?.months[0]['startOfMonth'],
+        endOfMonth:
+          data?.months[data?.months.length - 1]['endOfMonth'],
+      },
+    });
+  }}
+>
+  {data?.totalCount?.toLocaleString('en-IN')}
+</td>
+
+
+                  <td className=" pl-2  border text-center bg-white border-b">
+                    <section className="w-[100px] h-[30px]">
+                      <BookingsMonthlyStackedChart payload={data?.months} />
+                    </section>
+                  </td>
+                  {monthData()}
+                </tr>
+
+
+
+              )
+            })}
         </tbody>
       </table>
+      <ReportSideWindow
+        open={isOpenSideForm}
+        setOpen={setReportSideForm}
+        title="Employee Bookings"
+        subtitle={subTitle}
+        leadsLogsPayload={drillDownPayload}
+        widthClass="max-w-5xl"
+      />
     </div>
   )
 }
 
 export default EmployeeBookingSummaryTable
+
+

@@ -27,7 +27,7 @@ import {
   steamBankDetailsList,
   steamUsersListByRole,
   streamBookedLeads,
-  streamSourceBookedLeads,
+  streamEmpBookedLeads,
   updateLeadsLogWithProject,
   updateProject,
 } from 'src/context/dbQueryFirebase'
@@ -45,7 +45,7 @@ import {
 import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import { TextField } from 'src/util/formFields/TextField'
 
-const SourceBookedLeadsSideViewBody = ({
+const EmpBookingSideBody = ({
   title,
   subtitle,
   leadsLogsPayload: projectPayload,
@@ -75,7 +75,7 @@ const SourceBookedLeadsSideViewBody = ({
   }, [projectPayload])
 
   const getLeadsData = () => {
-    const unsubscribe = streamSourceBookedLeads(
+    const unsubscribe = streamEmpBookedLeads(
       orgId,
       {
         pId: projectPayload?.uid,
@@ -207,5 +207,6 @@ const SourceBookedLeadsSideViewBody = ({
   )
 }
 
-export default SourceBookedLeadsSideViewBody
+export default EmpBookingSideBody
+
 
