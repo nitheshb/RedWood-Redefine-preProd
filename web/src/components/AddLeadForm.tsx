@@ -100,7 +100,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       )
       custObj.name = responderName
       custObj.email = responderEmail
-      custObj.phone = responderPhone?.slice(-10)
+      custObj.phone = responderPhone?.slice(-15)
       custObj.Date = cT
       custObj.source = sourceListMatch[0]?.value || ''
       custObj.project = projectListMatch[0]?.projectName || ''
@@ -255,15 +255,38 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
 
     // updateUserRole(uid, deptVal, myRole, email, 'nitheshreddy.email@gmail.com')
 
-    const foundLength = await checkIfLeadAlreadyExists(
-      `${orgId}_leads`,
-      mobileNo
-    )
+
+
+    // let formattedMobileNo = mobileNo;
+    // // Check if the mobile number doesn't start with "+91" and is not empty
+    // if (!mobileNo.startsWith('+91') && mobileNo.trim() !== '') {
+    //   formattedMobileNo = `+91${mobileNo.replace(/\D/g, '')}`;
+    // }
+
+
+    const formattedMobileNo = mobileNo.startsWith('+91') ? mobileNo : `+91 ${mobileNo}`;
+
+
+    // const foundLength = await checkIfLeadAlreadyExists(
+    //   `${orgId}_leads`,
+    //   //mobileNo
+    //   formattedMobileNo
+    // )
+
+
+
+
+
+const foundLength = await checkIfLeadAlreadyExists(`${orgId}_leads`, formattedMobileNo);
+
+
+
     // Timestamp.now().toMillis()
     const leadData = {
       Date: startDate.getTime(),
       Email: email,
-      Mobile: mobileNo,
+      //Mobile: mobileNo,
+      Mobile: formattedMobileNo,
       Name: name,
       Note: '',
       Project: project,
@@ -507,6 +530,22 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                           value={formik.values.mobileNo}
                           options={sourceList}
                         />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                         
