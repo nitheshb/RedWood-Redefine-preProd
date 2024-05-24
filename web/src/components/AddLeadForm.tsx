@@ -57,6 +57,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
   const [closeWindowMode, setCloseWindowMode] = useState(false)
   const [trashMode, setTrashMode] = useState(false)
   const [binReason, setBinreason] = useState('DUPLICATE_ENTRY')
+  //const [countryCode, setCountryCode] = useState('+91');
 
   const [startDate, setStartDate] = useState(d)
   const [customerDetailsTuned, setCustomerDetailsTuned] = useState({})
@@ -100,7 +101,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       )
       custObj.name = responderName
       custObj.email = responderEmail
-      custObj.phone = responderPhone?.slice(-10)
+      custObj.phone = responderPhone?.slice(-15)
       custObj.Date = cT
       custObj.source = sourceListMatch[0]?.value || ''
       custObj.project = projectListMatch[0]?.projectName || ''
@@ -152,11 +153,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
     return unsubscribe
   }, [])
 
-  // const usersList = [
-  //   { label: 'User1', value: 'User1' },
-  //   { label: 'User2', value: 'User2' },
-  //   { label: 'User3', value: 'User3' },
-  // ]
+
   const budgetList = [
     { label: 'Select Customer Budget', value: '' },
     { label: '5 - 10 Lacs', value: '5-10L' },
@@ -224,7 +221,9 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
     await setdevType(sel)
   }
   const onSubmitFun = async (data, resetForm) => {
-    // set status as uploaded
+
+    //console.log(data)
+    // set status as uploadeddata
     setLoading(true)
     if (user?.role?.includes(USER_ROLES.CP_AGENT)) {
       const { uid, email, displayName, department, role, orgId, phone } = user
@@ -246,6 +245,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       email,
       name,
       mobileNo,
+      countryCode,
       assignedTo,
       assignedToObj,
       source,
@@ -253,17 +253,27 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       projectId,
     } = data
 
-    // updateUserRole(uid, deptVal, myRole, email, 'nitheshreddy.email@gmail.com')
+  
+  
+
 
     const foundLength = await checkIfLeadAlreadyExists(
       `${orgId}_leads`,
-      mobileNo
+       mobileNo
     )
-    // Timestamp.now().toMillis()
+
+
+
+
+
+
+
+
     const leadData = {
       Date: startDate.getTime(),
       Email: email,
       Mobile: mobileNo,
+      countryCode: countryCode,
       Name: name,
       Note: '',
       Project: project,
@@ -285,7 +295,8 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       },
       by: user?.email,
     }
-    console.log('user is ', user)
+
+
     if (foundLength?.length > 0) {
       console.log('foundLENGTH IS ', foundLength)
       setFoundDocs(foundLength)
@@ -302,7 +313,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
           `lead created and assidged to ${assignedToObj?.email || assignedTo}`
         )
       } else {
-        // proceed to copy
+        
         await addLead(
           orgId,
           leadData,
@@ -314,15 +325,15 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
             status: 'added',
           })
         }
-        //
+     
       }
-      // update the leads bank status
+
       await sendWhatAppTextSms(
         mobileNo,
         `Thank you ${name} for choosing the world class ${project || 'project'}`
       )
 
-      // msg2
+     
       await sendWhatAppMediaSms(mobileNo)
       const smg =
         assignedTo === ''
@@ -341,18 +352,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
     }
   }
 
-  // const sourceList = [
-  //   { label: 'Select the Source', value: '' },
-  //   { label: 'CP Skagen', value: 'cpskagen' },
-  //   { label: 'Direct Contact', value: 'directcontact' },
-  //   { label: 'Facebook Ad', value: 'facebookad' },
-  //   { label: 'Google Adwords', value: 'googleadwords' },
-  //   { label: 'Instagram Ad', value: 'instagramad' },
-  //   { label: 'Magic Bricks', value: 'magicbricks' },
-  //   { label: 'MCube', value: 'mcube' },
-  //   { label: 'Website', value: 'website' },
-  //   { label: '99acres', value: '99acres' },
-  // ]
+
   const validate = Yup.object({
     name: Yup.string()
       .max(45, 'Must be 45 characters or less')
@@ -364,30 +364,19 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
     assignedTo: Yup.string()
       .min(3, 'Project Selection is required')
       .required('Assigner is Required'),
-    // lastName: Yup.string()
-    //   .max(20, 'Must be 20 characters or less')
-    //   .required('Required'),
+  
     email: Yup.string().email('Email is invalid'),
 
-    // password: Yup.string()
-    //   .min(6, 'Password must be at least 6 charaters')
-    //   .required('Password is required'),
-    // confirmPassword: Yup.string()
-    //   .oneOf([Yup.ref('password'), null], 'Password must match')
-    //   .required('Confirm password is required'),
-    // mobileNo
+    countryCode: Yup.string().required('Country Code is required'),
+
+
     mobileNo: Yup.string()
       .required('Phone number is required')
       .matches(phoneRegExp, 'Phone number is not valid')
       .min(10, 'to short')
       .max(10, 'to long'),
 
-    // deptVal: Yup.string()
-    //   // .oneOf(['Admin', 'CRM'], 'Required Dept')
-    //   .required('Req Dept'),
-    // myRole: Yup.string()
-    //   //  .oneOf(['Admin', 'CRM'], 'DEPT IS REQ')
-    //   .required('Required Role'),
+
   })
   const resetter = () => {
     setSelected({})
@@ -404,11 +393,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
             <span
               className="cursor-pointer"
               onClick={() => {
-                // deleteAssetFun(
-                //   bankDe?.docId,
-                //   bankDe?.accountName,
-                //   bankDe?.usedInA?.length || 0
-                // )
+       
                 setTrashMode(true)
               }}
             >
@@ -432,6 +417,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                 name: customerDetailsTuned?.name || '',
                 cDate: customerDetailsTuned?.Date || '',
                 mobileNo: customerDetailsTuned?.phone || '',
+                countryCode: customerDetailsTuned?.countryCode || '+91',
                 email: customerDetailsTuned?.email || '',
                 source: customerDetailsTuned?.source || '',
                 project: customerDetailsTuned?.projectName || '',
@@ -479,33 +465,43 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                           type="text"
                         />
                       </div>
-                      <div className="mb-3 space-y-2 w-full text-xs">
-                        {/* <TextField
-                          label="Mobile No*"
-                          name="mobileNo"
-                          type="text"
-                        /> */}
-                        {/* <NumberFormat
-                          // label="Mobile No*"
-                          className=" w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 px-4 mt-1"
-                          name="mobileNo"
-                          value={formik.values.mobileNo}
-                          onValueChange={(value) => {
-                            formik.setFieldValue('mobileNo', value.value)
-                          }}
-                          format="+91 ###-###-####"
-                          mask=""
-                        /> */}
-                        <PhoneNoField
-                          name="mobileNo"
-                          label="Mobile No*"
-                          className="input"
-                          onChange={(value) => {
-                            formik.setFieldValue('mobileNo', value.value)
-                          }}
-                          value={formik.values.mobileNo}
-                          options={sourceList}
-                        />
+                      <div className="mb-1 space-y-2 w-full text-xs">
+
+
+
+
+<div className="flex">
+    <div className="inline-block mt-5">
+    <input
+      type="text"
+      id="countryCode"
+      name="countryCode"
+      value={formik.values.countryCode}
+      onChange={(e) => { 
+        formik.setFieldValue('countryCode', e.target.value)}}
+      onBlur={formik.handleBlur}
+      className="w-20 bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-8 px-4"
+    />
+    {formik.errors.countryCode && formik.touched.countryCode && (
+      <div className="text-red-500 text-xs">{formik.errors.countryCode}</div>
+    )}
+     </div>
+  
+    <PhoneNoField
+      name="mobileNo"
+      label="Mobile No*"
+      className="input w-full"
+      onChange={(value) => {
+        formik.setFieldValue('mobileNo', value.value)
+      }}
+      value={formik.values.mobileNo}
+      options={sourceList}
+    />
+  
+</div>
+
+
+
                       </div>
                     </div>
                     {/* 2 */}
@@ -515,24 +511,27 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                       </div>
                       <div className="mb-3 space-y-2 w-full text-xs">
                         <span className="inline">
-                          <label className="label font-regular text-sm block mb-1">
+                          <label className="label font-regular mb-1 text-xs block">
                             Enquiry Date
                           </label>
-                          <DatePicker
-                            className=" pl- px- h-10 rounded-md   min-w-[151px] inline  text-[#0091ae]   w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
-                            selected={startDate}
-                            onChange={(date) => {
-                              formik.setFieldValue('enquiryDat', date.getTime())
-                              setStartDate(date)
-                            }}
-                            timeFormat="HH:mm"
-                            injectTimes={[
-                              setHours(setMinutes(d, 1), 0),
-                              setHours(setMinutes(d, 5), 12),
-                              setHours(setMinutes(d, 59), 23),
-                            ]}
-                            dateFormat="MMMM d, yyyy"
-                          />
+                        
+                  
+<DatePicker
+  className="h-8 w-[400px]  rounded-md text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
+  selected={startDate}
+  onChange={(date) => {
+    formik.setFieldValue('enquiryDat', date.getTime())
+    setStartDate(date)
+  }}
+  timeFormat="HH:mm"
+  injectTimes={[
+    setHours(setMinutes(d, 1), 0),
+    setHours(setMinutes(d, 5), 12),
+    setHours(setMinutes(d, 59), 23),
+  ]}
+  dateFormat="MMMM d, yyyy"
+/>
+
                         </span>
                       </div>
                     </div>

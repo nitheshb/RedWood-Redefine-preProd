@@ -1,8 +1,15 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect, useState } from 'react'
 
 import { X, Add, Remove } from '@mui/icons-material'
 
+import { endOfMonth } from 'date-fns/esm'
+
 import TableSkeleton from 'src/components/A_CrmModule/Reports/_mock/comps/table/table-skeleton'
+
+import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
+
 import {
   getAllProjectMonthlyBookingsSum,
   getSourceBookingsSum,
@@ -116,6 +123,12 @@ const SourceBookingSummaryTable = ({ projects }) => {
   )
   const [projectAValues, setProjectWithValues] = useState([])
 
+
+
+  const [isOpenSideForm, setReportSideForm] = useState(false)
+  const [drillDownPayload, setDrillDownPayload] = useState([])
+  const [subTitle, setSubTitle] = useState('false')
+
   const [loader, setLoaderIcon] = useState(false)
 
   useEffect(() => {
@@ -133,6 +146,7 @@ const SourceBookingSummaryTable = ({ projects }) => {
 
   const handleDecreaseMonth = () => {
     setStartMonthOffset((prevOffset) => prevOffset - 1)
+    setMonthCount((prevCount) => prevCount + 1);
   }
 
   const filteredData = reportData.filter((item) => {
@@ -145,6 +159,17 @@ const SourceBookingSummaryTable = ({ projects }) => {
   const handleChangeView = (view) => {
     setDataView(view)
   }
+
+
+  const showDrillDownFun = async (text, data) => {
+    // Display sideForm
+    setReportSideForm(true)
+    setDrillDownPayload(data)
+    setSubTitle(text)
+  }
+
+
+
 
   const calculateTotal = (data, key) => {
     return data.reduce((acc, item) => {
@@ -278,7 +303,7 @@ const SourceBookingSummaryTable = ({ projects }) => {
             )}
           </tr>
           <tr className="bg-gray-50   text-gray-600 text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Project Name</th>
+            <th className="py-3 px-6 text-left">Source</th>
 
             <th className="py-3 px-6 text-right w-[100px]">Total Sold</th>
             <th className="py-3  text-right w-[100px]">Stats</th>
@@ -366,6 +391,19 @@ const SourceBookingSummaryTable = ({ projects }) => {
                           <td
                             key={i}
                             className="py-3 px-6 text-right font-medium text-gray-900"
+
+                            onClick={() =>{
+                              console.log('fetched values', data)
+                              showDrillDownFun('Source Bookings', {
+                                uid: data.rep,
+                                months: data?.months,
+                                thisMonth: month,
+                              })
+
+                            }}
+
+
+
                           >
                             {`${month?.receive?.toLocaleString('en-IN')}`}
                           </td>
@@ -393,6 +431,8 @@ const SourceBookingSummaryTable = ({ projects }) => {
                 }
               }
 
+
+
               return (
                 <tr
                   key={index}
@@ -403,13 +443,67 @@ const SourceBookingSummaryTable = ({ projects }) => {
                     {data?.label}
                   </td>
 
-                  <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900">
+
+
+                  {/* <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900"
+                                   onClick={() =>{
+                                    console.log('data is ', data)
+                                    showDrillDownFun('Source Bookings', {
+                                      uid: data.uid,
+                                      months: data?.months,
+                                     thisMonth: {
+                                        startOfMonth: data?.months[0]['startOfMonth'],
+                                        endOfMonth:
+                                          data?.months[data?.months.length - 1]['endOfMonth'],
+                                      },
+                                    })
+                                  }
+                                }
+                  >
                     {data?.months
                       ?.reduce((accumulator, currentValue) => {
                         return accumulator + (currentValue?.receive || 0)
                       }, 0)
                       ?.toLocaleString('en-IN')}
-                  </td>
+                  </td> */}
+
+
+<td
+  className="py-3 px-6 border text-right bg-white border-b font-medium text-gray-900"
+  onClick={() => {
+    console.log('data is ', data);
+    showDrillDownFun('Source Bookings', {
+      uid: data.rep,
+      months: data?.months,
+      thisMonth: {
+        startOfMonth: data?.months[0]['startOfMonth'],
+        endOfMonth: data?.months[data?.months.length - 1]['endOfMonth'],
+      },
+    });
+  }}
+>
+  <div>
+    {data?.months
+      ?.reduce((accumulator, currentValue) => {
+        return accumulator + (currentValue?.receive || 0);
+      }, 0)
+      ?.toLocaleString('en-IN')}
+  </div>
+</td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                   <td className=" pl-2  border text-center bg-white border-b">
                     <section className="w-[100px] h-[30px]">
                       <BookingsMonthlyStackedChart payload={data?.months} />
@@ -419,8 +513,22 @@ const SourceBookingSummaryTable = ({ projects }) => {
                 </tr>
               )
             })}
+
+
+
         </tbody>
       </table>
+
+      <ReportSideWindow
+        open={isOpenSideForm}
+        setOpen={setReportSideForm}
+        title="Source Bookings"
+        subtitle={subTitle}
+        leadsLogsPayload={drillDownPayload}
+        widthClass="max-w-5xl"
+      />
+
+
     </div>
   )
 }

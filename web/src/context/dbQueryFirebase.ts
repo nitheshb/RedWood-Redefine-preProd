@@ -2179,7 +2179,8 @@ export const addLead = async (orgId, data, by, msg) => {
     delete data['']
     const x = await addDoc(collection(db, `${orgId}_leads`), data)
     await console.log('add Lead value is ', x, x.id, data)
-    const { intype, Name, Mobile, assignedTo, Project, assignedToObj } = data
+    const { intype, Name, Mobile, countryCode, assignedTo, Project, assignedToObj } = data
+    
     const { data3, errorx } = await supabase.from(`${orgId}_lead_logs`).insert([
       {
         type: 'l_ctd',
@@ -2789,6 +2790,62 @@ export const streamBookedLeads = async (orgId, data, snapshot, error) => {
 
   return onSnapshot(q, snapshot, error)
 }
+export const streamSourceBookedLeads = async (orgId, data, snapshot, error) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('pushed values are', pId, data)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('Source', 'in', pId),
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+    // where('year', '==', currentYear)
+  )
+
+  return onSnapshot(q, snapshot, error)
+}
+
+export const streamEmpBookedLeads = async (orgId, data, snapshot, error) => {
+
+  const { pId, startTime, endTime } = data
+  console.log('pushed values are', pId, data)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('assignedTo', '==', pId),
+    where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+    // where('year', '==', currentYear)
+  )
+
+  return onSnapshot(q, snapshot, error)
+}
+
+
+
+export const sourceBookedLeads = async (orgId, data, snapshot, error) => {
+
+  const { pId,SourceA, startTime, endTime } = data
+  console.log('pushed values are', data)
+  const q = await query(
+    collection(db, `${orgId}_leads`),
+    where('Source', '==', SourceA),
+    // where('Status', '==', 'booked'),
+    where('stsUpT', '>=', startTime),
+    where('stsUpT', '<=', endTime)
+    // where('year', '==', currentYear)
+  )
+
+  return onSnapshot(q, snapshot, error)
+}
+
+
+
+
+
+
+
 export const getEmpCompletedTasks = async (orgId, data) => {
   const { pId, startTime, endTime } = data
   console.log('check it ==>', pId)
