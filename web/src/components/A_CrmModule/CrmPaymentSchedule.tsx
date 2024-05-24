@@ -36,21 +36,36 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
         ),
       0
     )
+    const c = selCustomerPayload?.addOnCS?.reduce(
+      (partialSum, obj) =>
+        partialSum +
+        Number(
+          computeTotal(
+            obj,
+            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area
+          )
+        ),
+      0
+    ) || 0
     setPartA(a)
     setPartB(b)
-    setUnitTotal(a + b)
+    setUnitTotal(a + b + c)
     setReceivedTotal(selCustomerPayload?.T_review?.toLocaleString('en-IN'))
     const paidAmount = selCustomerPayload?.T_review
     let bal = 0
     let leftOver = paidAmount
+    let newPaidAmount = paidAmount
     let outStanding = 0
     const z = selCustomerPayload?.fullPs?.map((d1, inx) => {
+      console.log('left over stuff',inx, leftOver, d1.value)
       bal = leftOver >= d1?.value ? d1?.value : leftOver
-      leftOver = paidAmount - d1?.value > 0 ? paidAmount - d1?.value : 0
 
+      leftOver = newPaidAmount - d1?.value > 0 ? newPaidAmount - d1?.value : 0
+      newPaidAmount = newPaidAmount - d1?.value
       outStanding = bal - d1?.value
       return { ...d1, amt: bal, leftOver, outStanding }
     })
+
     setPSa(z)
   }, [selCustomerPayload])
 
@@ -121,7 +136,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
                       Total inc GST
                     </th>
                     <th className="w-[15%] text-[10px]  px-2 text-right    tracking-wide uppercase ">
-                      Amount Received
+                      Received
                     </th>
                     <th className="w-[15%] text-[10px]  px-2 text-right  tracking-wide uppercase ">
                       Balance

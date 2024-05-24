@@ -41,6 +41,7 @@ import MoreDetailsPhaseForm from '../MoreDetailsPhaseForm/MoreDetailsPhaseForm'
 import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import TransactionUpdateSideView from '../transactionUpdateSideView'
 import ViewUnitDetails from '../ViewUnitDetails'
+import AddNewDemand from '../A_CrmModule/CrmNewDemand'
 
 const SiderForm = ({
   mode,
@@ -485,6 +486,13 @@ const SiderForm = ({
                 )}
                 {title === 'capturePayment' && (
                   <CaptureUnitPayment
+                    title={title}
+                    selUnitDetails={selUnitDetails}
+                    onSubmitFun={paymentCaptureFun}
+                  />
+                )}
+                  {title === 'newDemand' && (
+                  <AddNewDemand
                     title={title}
                     selUnitDetails={selUnitDetails}
                     onSubmitFun={paymentCaptureFun}

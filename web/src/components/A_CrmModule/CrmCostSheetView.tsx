@@ -11,6 +11,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
   const { orgId } = user
   const [partATotal, setPartA] = useState(0)
   const [partBTotal, setPartB] = useState(0)
+  const [addOnTotal, setPartAddOn] = useState(0)
   const [unitTotal, setUnitTotal] = useState(0)
 
   console.log('payload is ', selCustomerPayload)
@@ -30,9 +31,22 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
         ),
       0
     )
+    const c = selCustomerPayload?.addOnCS?.reduce(
+      (partialSum, obj) =>
+        partialSum +
+        Number(
+          computeTotal(
+            obj,
+            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area
+          )
+        ),
+      0
+    ) || 0
+
     setPartA(a)
     setPartB(b)
-    setUnitTotal(a + b)
+    setPartAddOn(c)
+    setUnitTotal(a + b + c)
   }, [selCustomerPayload])
 
   return (
@@ -175,7 +189,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
 
               <section className="flex flex-row justify-between mt- rounded px-3">
                 <h1 className=" mt-2 text-bodyLato text-left text-gray-800 font-semibold text-[12px] mb-2">
-                  Total Plot Sale Value(A+B): ₹{' '}
+                  Total unit sale value(A+B): ₹{' '}
                   {unitTotal?.toLocaleString('en-IN')}
                 </h1>
                 <section className="flex flex-row mt-2">
@@ -188,6 +202,13 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
 
                   <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
                     ₹{partBTotal?.toLocaleString('en-IN')}
+                  </section>
+                  <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
+                    +
+                  </section>
+
+                  <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
+                    ₹{addOnTotal?.toLocaleString('en-IN')}
                   </section>
                   <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
                     =
