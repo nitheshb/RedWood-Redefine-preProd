@@ -375,7 +375,7 @@ const EnhancedTableToolbar = (props) => {
       }
       row.Date = prettyDate(data?.Date).toLocaleString()
       row.Name = data?.Name
-      row.CountryCode = data['Country Code']
+      row.countryCode = data?.countryCode
       row.Mobile = data?.Mobile
       row.Email = data?.Email
       row.AssignedTo = data?.assignedToObj?.name
@@ -932,15 +932,29 @@ export default function LLeadsTableBody({
                                         />
                                       </div>
                                       <div>
-                                        <span className="font-bodyLato">
+
+
+
+                                      <span className="font-bodyLato">
+    <HighlighterStyle
+      searchKey={searchKey}
+      source={row?.countryCode}
+    />
+  </span>
+  {' '}
+
+                                      <span className="font-bodyLato">
                                           <HighlighterStyle
                                             searchKey={searchKey}
-                                            source={row.Mobile.toString().replace(
+                                            source={row?.Mobile?.toString()?.replace(
                                               /(\d{3})(\d{3})(\d{4})/,
                                               '$1-$2-$3'
                                             )}
                                           />
                                         </span>
+
+                                       
+
                                       </div>
                                     </div>
                                   </span>
@@ -972,15 +986,27 @@ export default function LLeadsTableBody({
                             )}
                             {viewUnitStatusA.includes('Phone No') && (
                               <div>
+                              
+
+                              <span className="font-bodyLato">
+    <HighlighterStyle
+      searchKey={searchKey}
+      source={row?.countryCode}
+    />
+  </span>
+
+  {' '}
                                 <span className="font-bodyLato">
                                   <HighlighterStyle
                                     searchKey={searchKey}
-                                    source={row.Mobile.toString().replace(
+                                    source={row?.Mobile?.toString()?.replace(
                                       /(\d{3})(\d{3})(\d{4})/,
                                       '$1-$2-$3'
                                     )}
                                   />
                                 </span>
+
+                              
                               </div>
                             )}
                           </section>

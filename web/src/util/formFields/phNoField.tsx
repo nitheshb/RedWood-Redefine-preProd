@@ -3,6 +3,9 @@ import React from 'react'
 import NumberFormat from 'react-number-format'
 import Select from 'react-select'
 
+
+
+
 export const PhoneNoField = ({
   onChange,
   options,
@@ -29,9 +32,9 @@ export const PhoneNoField = ({
           onChange(value)
         }}
         //format="###-###-####"
-        format="+91 ###-###-####"
+        format="###-###-####"
         mask=""
-        placeholder="+91"
+        placeholder="Mobile No"
       />
       <ErrorMessage
         component="div"
@@ -41,3 +44,8 @@ export const PhoneNoField = ({
     </div>
   )
 }
+
+
+
+
+

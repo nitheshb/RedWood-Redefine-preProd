@@ -146,6 +146,7 @@ const SourceBookingSummaryTable = ({ projects }) => {
 
   const handleDecreaseMonth = () => {
     setStartMonthOffset((prevOffset) => prevOffset - 1)
+    setMonthCount((prevCount) => prevCount + 1);
   }
 
   const filteredData = reportData.filter((item) => {
