@@ -2174,7 +2174,8 @@ export const addLead = async (orgId, data, by, msg) => {
     delete data['']
     const x = await addDoc(collection(db, `${orgId}_leads`), data)
     await console.log('add Lead value is ', x, x.id, data)
-    const { intype, Name, Mobile, assignedTo, Project, assignedToObj } = data
+    const { intype, Name, Mobile, countryCode, assignedTo, Project, assignedToObj } = data
+    
     const { data3, errorx } = await supabase.from(`${orgId}_lead_logs`).insert([
       {
         type: 'l_ctd',

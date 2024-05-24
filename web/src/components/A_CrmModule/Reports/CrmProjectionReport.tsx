@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { X, Add, Remove} from '@mui/icons-material';
+import { X, Add, Remove } from '@mui/icons-material';
 
 import { gretProjectionSum } from 'src/context/dbQueryFirebase';
 import { useAuth } from 'src/context/firebase-auth-context';
@@ -190,7 +190,8 @@ const CrmProjectionReport = ({ projects }) => {
           </h2>
         </div>
 
-                {/* <div className="mb-4">
+
+        {/* <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
 
           </label>
@@ -207,8 +208,6 @@ const CrmProjectionReport = ({ projects }) => {
             <option value=''>Halferly</option>
           </select>
         </div> */}
-
-
 
         <div className="flex mb-2 space-x-2">
           <button onClick={handleDecreaseMonth} className="flex items-center space-x-2  bg-gray-200 text-gray-800 px-4 py-2 rounded">
@@ -299,7 +298,6 @@ const CrmProjectionReport = ({ projects }) => {
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-
           {/* <tr className="bg-gray-100">
             <td
               colSpan={dataView === 'monthly' ? 7 : 6}
