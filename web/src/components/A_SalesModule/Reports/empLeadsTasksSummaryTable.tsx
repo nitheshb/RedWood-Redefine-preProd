@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { X, Add, Remove } from '@mui/icons-material'
+import { endOfMonth } from 'date-fns/esm'
 
 import TableSkeleton from 'src/components/A_CrmModule/Reports/_mock/comps/table/table-skeleton'
 import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
@@ -293,7 +294,7 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
           <tr className="bg-gray-50   text-gray-600 text-sm leading-normal">
             <th className="py-3 px-6 text-left">Employee Name</th>
 
-            <th className="py-3 px-6 text-right w-[100px]">Total Sold</th>
+            <th className="py-3 px-6 text-right w-[100px]">Total Tasks</th>
             <th className="py-3  text-right w-[100px]">Stats</th>
             {dataView === 'monthly' ? (
               <>
@@ -380,7 +381,7 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
                             key={i}
                             className="py-3 px-6 text-right font-medium text-gray-900"
                             onClick={() => {
-                    
+
                               showDrillDownFun(`Employee Tasks of ${data.email}`, {
                                 uid: data.email,
                                 months: data?.months,
@@ -415,6 +416,8 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
               }
 
               return (
+
+
                 <tr
                   key={index}
                   className="border-b border-gray-200 hover:bg-gray-100"
@@ -423,9 +426,27 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
                     {data?.projectName} {data?.name}
                   </td>
 
-                  <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900">
-                    {data?.totalCount?.toLocaleString('en-IN')}
-                  </td>
+
+
+
+<td
+  className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900"
+  onClick={(month) => {
+    showDrillDownFun(`Employee Tasks of ${data.email}`, {
+      uid: data.email,
+      months: data?.months,
+      thisMonth: {
+        startOfMonth: data?.months[0]['startOfMonth'],
+        endOfMonth:
+          data?.months[data?.months.length - 1]['endOfMonth'],
+      },
+    });
+  }}
+>
+  {data?.totalCount?.toLocaleString('en-IN')}
+</td>
+
+
                   <td className=" pl-2  border text-center bg-white border-b">
                     <section className="w-[100px] h-[30px]">
                       <BookingsMonthlyStackedChart payload={data?.months} />
@@ -433,6 +454,9 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
                   </td>
                   {monthData()}
                 </tr>
+
+
+
               )
             })}
         </tbody>
