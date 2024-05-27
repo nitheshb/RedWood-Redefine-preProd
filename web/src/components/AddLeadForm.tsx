@@ -101,7 +101,8 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       )
       custObj.name = responderName
       custObj.email = responderEmail
-      custObj.phone = responderPhone?.slice(-15)
+      custObj.phone = responderPhone?.slice(-10)
+      // custObj.countryCode = responderPhone?.slice(-2)
       custObj.Date = cT
       custObj.source = sourceListMatch[0]?.value || ''
       custObj.project = projectListMatch[0]?.projectName || ''
@@ -253,8 +254,8 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       projectId,
     } = data
 
-  
-  
+
+
 
 
     const foundLength = await checkIfLeadAlreadyExists(
@@ -313,7 +314,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
           `lead created and assidged to ${assignedToObj?.email || assignedTo}`
         )
       } else {
-        
+
         await addLead(
           orgId,
           leadData,
@@ -325,7 +326,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
             status: 'added',
           })
         }
-     
+
       }
 
       await sendWhatAppTextSms(
@@ -333,7 +334,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
         `Thank you ${name} for choosing the world class ${project || 'project'}`
       )
 
-     
+
       await sendWhatAppMediaSms(mobileNo)
       const smg =
         assignedTo === ''
@@ -364,7 +365,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
     assignedTo: Yup.string()
       .min(3, 'Project Selection is required')
       .required('Assigner is Required'),
-  
+
     email: Yup.string().email('Email is invalid'),
 
     countryCode: Yup.string().required('Country Code is required'),
@@ -393,7 +394,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
             <span
               className="cursor-pointer"
               onClick={() => {
-       
+
                 setTrashMode(true)
               }}
             >
@@ -477,7 +478,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       id="countryCode"
       name="countryCode"
       value={formik.values.countryCode}
-      onChange={(e) => { 
+      onChange={(e) => {
         formik.setFieldValue('countryCode', e.target.value)}}
       onBlur={formik.handleBlur}
       className="w-20 bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-8 px-4"
@@ -486,7 +487,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       <div className="text-red-500 text-xs">{formik.errors.countryCode}</div>
     )}
      </div>
-  
+
     <PhoneNoField
       name="mobileNo"
       label="Mobile No*"
@@ -497,7 +498,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       value={formik.values.mobileNo}
       options={sourceList}
     />
-  
+
 </div>
 
 
@@ -514,8 +515,8 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                           <label className="label font-regular mb-1 text-xs block">
                             Enquiry Date
                           </label>
-                        
-                  
+
+
 <DatePicker
   className="h-8 w-[400px]  rounded-md text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
   selected={startDate}
