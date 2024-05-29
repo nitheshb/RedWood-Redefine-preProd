@@ -160,6 +160,7 @@ export default function UnitFullSummary({
   const [assignerName, setAssignerName] = useState('')
   const [assignedTo, setAssignedTo] = useState('')
   const [leadsActivityFetchedData, setLeadsFetchedActivityData] = useState([])
+  const [customerInfo, setCustomerInfo] = useState({})
 
   const [leadSchFetchedData, setLeadsFetchedSchData] = useState([])
   const [leadNotesFetchedData, setLeadsFetchedNotesData] = useState([])
@@ -1100,6 +1101,8 @@ export default function UnitFullSummary({
               <AddApplicantDetails
                 source="fromBookedUnit"
                 title="Booking Form"
+                customerInfo= {customerInfo}
+                setCustomerInfo= {setCustomerInfo}
                 selUnitDetails={selCustomerPayload}
                 leadDetailsObj2={selCustomerPayload}
                 setShowApplicantEdit={setShowApplicantEdit}

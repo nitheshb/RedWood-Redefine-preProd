@@ -16,11 +16,11 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
 
   console.log('payload is ', selCustomerPayload)
   useEffect(() => {
-    const a = selCustomerPayload?.plotCS?.reduce(
+    let a = selCustomerPayload?.plotCS?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
       0
     )
-    const b = selCustomerPayload?.addChargesCS?.reduce(
+    let b = selCustomerPayload?.addChargesCS?.reduce(
       (partialSum, obj) =>
         partialSum +
         Number(
@@ -31,22 +31,33 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
         ),
       0
     )
-    const c = selCustomerPayload?.addOnCS?.reduce(
-      (partialSum, obj) =>
-        partialSum +
-        Number(
-          computeTotal(
-            obj,
-            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area
-          )
-        ),
-      0
-    ) || 0
+    let c =
+      selCustomerPayload?.addOnCS?.reduce(
+        (partialSum, obj) =>
+          partialSum +
+          Number(
+            computeTotal(
+              obj,
+              selCustomerPayload?.super_built_up_area ||
+                selCustomerPayload?.area
+            )
+          ),
+        0
+      ) || 0
+
+    if (isNaN(a)) {
+      a = 0
+    }
+    if (isNaN(b)) {
+      b = 0
+    } if (isNaN(c)) {
+      c = 0
+    }
 
     setPartA(a)
     setPartB(b)
     setPartAddOn(c)
-    setUnitTotal(a + b + c)
+    setUnitTotal(a + b +c)
   }, [selCustomerPayload])
 
   return (
@@ -116,19 +127,19 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                         </tr>
                       ))}
                       <tr className="border-b-[0.05px] border-gray-300 h-[32px]">
-                        <th className="w-[40%] text-[10px] text-left text-gray-800 bg-[#D9D8FF] ">
-
-                        </th>
+                        <th className="w-[40%] text-[10px] text-left text-gray-800 bg-[#D9D8FF] "></th>
                         <td className="w-[15%] font-bold text-[10px] text-right text-gray-800 bg-[#D9D8FF] bg-[#D9D8FF] "></td>
                         <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800 bg-[#D9D8FF] bg-[#D9D8FF]  "></td>
-                        <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800 pr-2 bg-[#D9D8FF] bg-[#D9D8FF] "> Total (A)</td>
+                        <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800 pr-2 bg-[#D9D8FF] bg-[#D9D8FF] ">
+                          {' '}
+                          Total (A)
+                        </td>
                         <td className="w-[15%] font-bold  text-[12px] text-right text-gray-800 bg-[#D9D8FF] px-2">
                           ₹{partATotal?.toLocaleString('en-IN')}
                         </td>
                       </tr>
                     </tbody>
                   </table>
-
 
                   <table className="w-full">
                     {/* <thead>
@@ -220,7 +231,6 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
               </section>
             </div>
           </div>
-
         </section>
       </div>
     </>

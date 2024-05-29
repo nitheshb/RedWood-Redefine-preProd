@@ -21,6 +21,7 @@ import {
   checkIfLeadAlreadyExists,
   getAllProjects,
   steamUsersListByRole,
+  updateUnitCustomerDetailsTo,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
@@ -227,6 +228,16 @@ const AddApplicantDetails = ({
       bookedBy,
       purchasePurpose,
     } = data
+
+    updateUnitCustomerDetailsTo(
+      orgId,
+      selUnitDetails?.uid || selUnitDetails?.id,
+      updateDoc,
+      user?.email,
+      enqueueSnackbar,
+      resetForm
+    )
+    return
     const foundLength = await checkIfLeadAlreadyExists(
       `${orgId}_leads`,
       phoneNo1
@@ -345,12 +356,13 @@ const AddApplicantDetails = ({
       '',
     dob1:
       leadPayload?.customerDetailsObj?.dob1 ||
-      leadPayload?.customerDetailsObj?.dob1 ||
+      selUnitDetails?.customerDetailsObj?.dob1 ||
+
       customerInfo?.customerDetailsObj?.dob1 ||
       d,
     dob2:
       leadPayload?.secondaryCustomerDetailsObj?.dob2 ||
-      leadPayload?.secondaryCustomerDetailsObj?.dob2 ||
+      selUnitDetails?.secondaryCustomerDetailsObj?.dob2 ||
       customerInfo?.secondaryCustomerDetailsObj?.dob2 ||
       datee,
     marital1: leadPayload?.customerDetailsObj?.marital1 ||
@@ -551,6 +563,7 @@ const AddApplicantDetails = ({
 
   const onSubmit = async (data, resetForm) => {
     console.log('customer details form', data)
+
     const {
       customerName1,
       relation1,
@@ -653,12 +666,14 @@ const AddApplicantDetails = ({
       designation,
       annualIncome,
     }
+  // local updater
+  setCustomerInfo(updateDoc)
 
-    // local updater
-    setCustomerInfo(updateDoc)
 
     if (source === 'fromBookedUnit' || source === 'Booking') {
       // create lead and call below function
+
+
 
       await onSubmitFun(data, updateDoc, resetForm)
       console.log('am here', leadPayload)
@@ -958,10 +973,10 @@ const AddApplicantDetails = ({
                                                 onChange={(value) => {
                                                   formik.setFieldValue(
                                                     'marital1',
-                                                    value.value
+                                                    value
                                                   )
                                                 }}
-                                                value={formik.values.marital1}
+                                                value={formik?.values?.marital1.value}
                                                 options={[
                                                   {
                                                     label: 'Divorced',
@@ -1006,7 +1021,7 @@ const AddApplicantDetails = ({
                                                   )
                                                   formik.setFieldValue(
                                                     'dob1',
-                                                    milliseconds
+                                                    date.getTime()
                                                   )
                                                   // setStartDate(date)
                                                   // console.log(startDate)
@@ -1455,10 +1470,10 @@ const AddApplicantDetails = ({
                                                   onChange={(value) => {
                                                     formik.setFieldValue(
                                                       'marital2',
-                                                      value.value
+                                                      value
                                                     )
                                                   }}
-                                                  value={formik.values.marital2}
+                                                  value={formik?.values?.marital2?.value}
                                                   options={[
                                                     {
                                                       label: 'Divorced',
