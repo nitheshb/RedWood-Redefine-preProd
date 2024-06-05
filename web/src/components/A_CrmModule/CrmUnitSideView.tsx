@@ -1238,14 +1238,14 @@ return
                   >
                     CAPTURE PAYMENT
                   </section>
-                  <section
+                  {customerDetails?.man_cs_approval==="approved" &&<section
                     className="text-center px-[10px] py-[2px]  pt-[3px] h-[24px] ml-2 bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
                     onClickCapture={() => {
                       openDemandFun()
                     }}
                   >
                     NEW DEMAND
-                  </section>
+                  </section>}
                 </section>
               </section>
             </div>
