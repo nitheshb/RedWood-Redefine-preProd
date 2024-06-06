@@ -297,7 +297,9 @@ const AddApplicantDetails = ({
       setLoading(false)
     }
   }
-
+  const isValidDate = (time) => {
+    return !isNaN(new Date(time).getTime())
+  }
   // const { uid } = selUnitDetails
   const uid = selUnitDetails?.uid || selUnitDetails?.id
   const datee = new Date().getTime()
@@ -354,12 +356,11 @@ const AddApplicantDetails = ({
       selUnitDetails?.secondaryCustomerDetailsObj?.email2 ||
       customerInfo?.secondaryCustomerDetailsObj?.email2 ||
       '',
-    dob1:
-      leadPayload?.customerDetailsObj?.dob1 ||
-      selUnitDetails?.customerDetailsObj?.dob1 ||
-
-      customerInfo?.customerDetailsObj?.dob1 ||
-      d,
+    dob1: isValidDate(selUnitDetails?.customerDetailsObj?.dob1)
+      ? selUnitDetails.customerDetailsObj.dob1
+      : leadPayload?.customerDetailsObj?.dob1 ||
+        customerInfo?.customerDetailsObj?.dob1 ||
+        datee,
     dob2:
       leadPayload?.secondaryCustomerDetailsObj?.dob2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.dob2 ||
@@ -666,14 +667,11 @@ const AddApplicantDetails = ({
       designation,
       annualIncome,
     }
-  // local updater
-  setCustomerInfo(updateDoc)
-
+    // local updater
+    setCustomerInfo(updateDoc)
 
     if (source === 'fromBookedUnit' || source === 'Booking') {
       // create lead and call below function
-
-
 
       await onSubmitFun(data, updateDoc, resetForm)
       console.log('am here', leadPayload)
@@ -826,7 +824,6 @@ const AddApplicantDetails = ({
                                           {stepIndx} of {StatusListA?.length}{' '}
                                           steps
                                         </label>
-
                                       </section>
                                     </div>
                                     {showLeadLink && (
@@ -976,7 +973,9 @@ const AddApplicantDetails = ({
                                                     value
                                                   )
                                                 }}
-                                                value={formik?.values?.marital1.value}
+                                                value={
+                                                  formik?.values?.marital1.value
+                                                }
                                                 options={[
                                                   {
                                                     label: 'Divorced',
@@ -1013,18 +1012,10 @@ const AddApplicantDetails = ({
                                                 name="dob1"
                                                 selected={formik.values.dob1}
                                                 onChange={(date) => {
-                                                  const milliseconds =
-                                                    Date.parse(date)
-                                                  console.log(
-                                                    'data is ==>',
-                                                    milliseconds
-                                                  )
                                                   formik.setFieldValue(
                                                     'dob1',
                                                     date.getTime()
                                                   )
-                                                  // setStartDate(date)
-                                                  // console.log(startDate)
                                                 }}
                                                 timeFormat="HH:mm"
                                                 injectTimes={[
@@ -1044,7 +1035,7 @@ const AddApplicantDetails = ({
                                           </div>
                                         </div>
                                       </div>
-                                      {/* col dob etc */}
+                                      {}
                                       <div className="w-full">
                                         <div className="flex flex-row justify-between">
                                           <section className="w-12/12 w-full">
@@ -1473,7 +1464,10 @@ const AddApplicantDetails = ({
                                                       value
                                                     )
                                                   }}
-                                                  value={formik?.values?.marital2?.value}
+                                                  value={
+                                                    formik?.values?.marital2
+                                                      ?.value
+                                                  }
                                                   options={[
                                                     {
                                                       label: 'Divorced',
@@ -1514,10 +1508,12 @@ const AddApplicantDetails = ({
                                                   name="dob2"
                                                   selected={formik.values.dob2}
                                                   onChange={(date) => {
-                                                    formik.setFieldValue(
-                                                      'dob2',
-                                                      date.getTime()
-                                                    )
+                                                    if (date) {
+                                                      formik.setFieldValue(
+                                                        'dob2',
+                                                        date.getTime()
+                                                      )
+                                                    }
                                                     // setStartDate(date)
                                                     // console.log(startDate)
                                                   }}

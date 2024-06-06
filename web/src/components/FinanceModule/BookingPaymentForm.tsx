@@ -186,12 +186,11 @@ const AddPaymentDetailsForm = ({
       phase?.paymentScheduleObj
     )
 
-
     const fullPs1 = [...newPlotPS, ...newConstructPS]
-   const fullPs=  fullPs1.map((d)=> {
-      let x = d;
-      x.schDate= d.schDate || Timestamp.now().toMillis()
-      x.oldDate= d.schDate || Timestamp.now().toMillis()
+    const fullPs = fullPs1.map((d) => {
+      const x = d
+      x.schDate = d.schDate || Timestamp.now().toMillis()
+      x.oldDate = d.schDate || Timestamp.now().toMillis()
 
       return x
     })
@@ -234,8 +233,8 @@ const AddPaymentDetailsForm = ({
       return
     }
     await capturePayment_log(data, txId, resetForm)
-    const s1 = await  bookCompSteps;
-    await  s1.push('payment_captured')
+    const s1 = await bookCompSteps
+    await s1.push('payment_captured')
     await setBookCompSteps(s1)
 
     await setBookCurentStep(['CS_updated', 'customer_created'])
@@ -288,12 +287,11 @@ const AddPaymentDetailsForm = ({
     }
     // const { id, purpose,  } =
     //   leadDetailsObj2
-// check if lead already exists
-const {id} = leadData
+    // check if lead already exists
+    const { id } = leadData
     // proceed to copy
 
-
-      const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
+    const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
     const { uid } = selUnitDetails
     // 1)Make an entry to finance Table {source: ''}
     console.log(
@@ -332,30 +330,25 @@ const {id} = leadData
       ct: Timestamp.now().toMillis(),
     }
     fullPs.map((d, i) => {
-
       //
-     // this will set the previous date immutable as current date
+      // this will set the previous date immutable as current date
 
+      const dataPayload = {
+        pId: selUnitDetails?.pId,
+        oldDate: d?.oldDate,
+        schDate: d?.schDate,
+        stageId: d?.stage.value,
+        newPrice: d?.value,
+        used: d?.used,
+        assignedTo: selUnitDetails?.assignedTo || 'unassigned',
+      }
 
-        const dataPayload = {
-          pId: selUnitDetails?.pId,
-          oldDate: d?.oldDate,
-          schDate: d?.schDate,
-          stageId: d?.stage.value,
-          newPrice: d?.value,
-          used: d?.used,
-          assignedTo: selUnitDetails?.assignedTo || 'unassigned'
-        }
-
-
-
-    updateProjectionsAgreegationsOnBooking(
-      orgId,
-      dataPayload,
-      user.email,
-      enqueueSnackbar
-    )
-      
+      updateProjectionsAgreegationsOnBooking(
+        orgId,
+        dataPayload,
+        user.email,
+        enqueueSnackbar
+      )
     })
     addModuleScheduler(
       `${orgId}_fin_tasks`,
@@ -441,12 +434,12 @@ const {id} = leadData
       enqueueSnackbar
     )
 
-    const s2 = await  bookCompSteps;
-    await  s2.push('CS_updated')
-    await  s2.push('customer_created')
-  await setBookCompSteps(s2)
+    const s2 = await bookCompSteps
+    await s2.push('CS_updated')
+    await s2.push('customer_created')
+    await setBookCompSteps(s2)
 
-  await setBookCurentStep(['unit_booked'])
+    await setBookCurentStep(['unit_booked'])
 
     //
     // 3)Update unit record with customer record and mark it as booked
@@ -473,7 +466,7 @@ const {id} = leadData
     unitUpdate[`T_review`] = T_review
     unitUpdate[`T_balance`] = T_balance
     console.log('unit space is ', uid)
-   await updateUnitAsBooked(
+    await updateUnitAsBooked(
       orgId,
       leadDetailsObj2?.ProjectId,
       uid,
@@ -483,17 +476,17 @@ const {id} = leadData
       enqueueSnackbar,
       resetForm
     )
-    const s3 = await  bookCompSteps;
-    await  s3.push('unit_booked')
+    const s3 = await bookCompSteps
+    await s3.push('unit_booked')
 
-  await setBookCompSteps(s3)
+    await setBookCompSteps(s3)
 
-  await setBookCurentStep(['customer_email_send', 'notify_to_manager'])
+    await setBookCurentStep(['customer_email_send', 'notify_to_manager'])
     // 4)update lead status to book
     // updateLeadStatus(leadDocId, newStatus)
     updateProjectCounts(
       orgId,
-      leadDetailsObj2?.ProjectId,
+      selUnitDetails?.pId,
       { soldVal: T_elgible, t_collect: amount },
       user?.email,
       enqueueSnackbar
@@ -514,7 +507,6 @@ const {id} = leadData
     }
     console.log('submit data i s', updatedData)
   }
-
 
   const initialState = {
     amount: bankData?.amount || '',
@@ -553,14 +545,13 @@ const {id} = leadData
         <div className="flex flex-col rounded-lg bg-white">
           <div className="mt-0">
             <CaptureUnitPayment
-
-             bookCompSteps={bookCompSteps}
+              bookCompSteps={bookCompSteps}
               bookCurentStep={bookCurentStep}
               selUnitDetails={selUnitDetails}
               projectDetails={projectDetails}
               leadDetailsObj2={leadDetailsObj2}
               onSubmitFun={onSubmitFun}
-              stepIndx = {stepIndx}
+              stepIndx={stepIndx}
               StatusListA={StatusListA}
             />
           </div>

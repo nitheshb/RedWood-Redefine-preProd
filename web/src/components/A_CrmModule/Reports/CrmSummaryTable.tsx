@@ -21,7 +21,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
     seTUnitStatus(typeA)
   }
 
-  
+
   const calculateTotal = (data, key) => {
     return data.reduce((acc, item) => {
       return acc + (item[key] || 0)
@@ -156,6 +156,12 @@ const CrmInventorySummaryTable = ({ projects }) => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
 
                           'booked',
+                          'allotment',
+                          'agreement_pipeline',
+                          'agreement',
+                          'registered',
+                          'construction',
+                          'possession'
 
                         ])
                       }}

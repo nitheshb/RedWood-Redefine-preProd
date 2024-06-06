@@ -745,7 +745,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
 
             {!ready && (
               <div className="overflow-hidden  px-1 pb-1 rounded-md  ">
-                <div className="flex flex-col app-bg-white-1  pb-[1px]">
+                <div className="flex flex-col   pb-[1px]">
                   <div className="flex flex-row pt-[1px]">
                     <span className="text-lg font-bold app-color-black"></span>
                   </div>
@@ -898,7 +898,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                 </div>
 
                                 <div className="flex flex-row mx-3 ml-4 pt-3">
-                                  {[{ item: 'Paid', value: 3 }].map(
+                                  {[{ item: 'Paid', value: 6 }].map(
                                     (data, i) => (
                                       <div
                                         className=" w-3/4  "
@@ -931,7 +931,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       </div>
                                     )
                                   )}
-                                  {[{ item: 'Due', value: 3 }].map(
+                                  {[{ item: 'Due', value: 6 }].map(
                                     (data, i) => (
                                       <div
                                         className=" w-2/4  "
@@ -1049,7 +1049,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                             <div className="w-[387px]">
                               <div className="flex flex-row   ">
                                 <div
-                                  className="flex flex-col bg-gradient-to-r from-[#d8daff] to-[#9ae8fd] text-black  py-1 rounded-sm w-[437px] "
+                                  className="flex flex-col bg-gradient-to-r from-[#d8daff] to-[#d8daff] text-black  py-1 rounded-sm w-[437px] "
                                   // className="flex flex-col bg-gradient-to-r from-[#d8daff] to-[#9ae8fd] text-black p-1 rounded-sm w-[220px] h-[96px]"
                                   onClick={() =>
                                     viewTransaction(
@@ -1125,7 +1125,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         </div>
                                       </section>
 
-                                      <section className="flex flex-row mt-3  ">
+                                      <section className="flex flex-row mt-  ">
                                         {/* <span className=" text-[10px] h-[20px]  text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl  mr-1">
                                           {finData?.unit_type}
 
@@ -1368,7 +1368,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   </section>
                                 </div>
                                 <div className="flex flex-row mx-1 pt-">
-                                  {[{ item: 'Paid', value: 3 }].map(
+                                  {[{ item: 'Paid', value: 7 }].map(
                                     (data, i) => (
                                       <div
                                         className=" w-3/4  "
@@ -1401,7 +1401,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       </div>
                                     )
                                   )}
-                                  {[{ item: 'Due', value: 3 }].map(
+                                  {[{ item: 'Due', value: 7 }].map(
                                     (data, i) => (
                                       <div
                                         className=" w-2/4  "
@@ -1443,7 +1443,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                 <div className="flex flex-row justify-between mx- mb-2">
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full">
                                     <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
-                                      Eligible Amount
+                                      Stage Cost
                                     </div>
                                     <div className="text-zinc-800 text-[20px] font-bold font-['Lato'] tracking-wide">
                                       ₹
@@ -1457,7 +1457,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   </section>
                                   <section className="flex flex-col mt-3 w-full">
                                     <div className="flex flex-row justify-end text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
-                                      🔥 Balance: ₹
+                                        Balance: ₹
                                       {finData?.T_elgible_balance?.toLocaleString(
                                         'en-IN'
                                       )}
@@ -1473,7 +1473,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   </section>
                                 </div>
                                 <div className="flex flex-row mx-1 pt-">
-                                  {[{ item: 'Paid', value: 3 }].map(
+                                  {[{ item: 'Paid', value: 7 }].map(
                                     (data, i) => (
                                       <div
                                         className=" w-3/4  "
@@ -1506,7 +1506,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       </div>
                                     )
                                   )}
-                                  {[{ item: 'Due', value: 3 }].map(
+                                  {[{ item: 'Due', value: 7 }].map(
                                     (data, i) => (
                                       <div
                                         className=" w-2/4  "
