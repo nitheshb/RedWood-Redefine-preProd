@@ -369,14 +369,14 @@ const AddApplicantDetails = ({
     marital1: leadPayload?.customerDetailsObj?.marital1 ||
       selUnitDetails?.customerDetailsObj?.marital1 ||
       customerInfo?.customerDetailsObj?.marital1 || {
-        label: 'Divorced',
-        value: 'Divorced',
+        label: 'Single',
+        value: 'Single',
       },
     marital2: leadPayload?.secondaryCustomerDetailsObj?.marital2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.marital2 ||
       customerInfo?.secondaryCustomerDetailsObj?.marital2 || {
-        label: 'Married',
-        value: 'Married',
+        label: 'Single',
+        value: 'Single',
       },
     address1:
       leadPayload?.customerDetailsObj?.address1 ||
