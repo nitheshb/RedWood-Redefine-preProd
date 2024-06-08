@@ -1342,7 +1342,7 @@ const AddApplicantDetails = ({
                                       style={bgImgStyle}
                                     >
                                       <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px]"></div>
-                                      <div className="w-full flex flex-col">
+                                      <div className="w-full flex flex-col ml-2">
                                         <h6 className="w-full lg:w-12/12 text-white text-[13px] mt-[9px] mb- font-bold uppercase">
                                           Co-applicant
                                         </h6>
@@ -1353,15 +1353,15 @@ const AddApplicantDetails = ({
                                       </div>
                                     </div>
                                     <div className="flex flex-wrap p-4 pt-2 ">
-                                      <div className="w-full lg:w-12/12 ">
-                                        <div className="relative w-full mb-3 mt-2">
+                                      <div className="w-full flex flex-row justify-between lg:w-12/12 ">
+                                        <div className="relative lg:w-6/12 mb-3 mt-2">
                                           <TextField
                                             label="Co-applicant Name*"
                                             name="customerName2"
                                             type="text"
                                           />
                                         </div>
-                                      </div>
+                                        <div className="relative lg:w-6/12  mt-1 ml-2">
                                       <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
                                         Son/Daughter/Wife of{' '}
                                       </label>
@@ -1414,8 +1414,11 @@ const AddApplicantDetails = ({
                                         value={formik.values.co_Name2}
                                         onChange={formik.handleChange}
                                       />
+                                      </div>
+                                      </div>
+
                                       <div className="w-full  flex flex-row lg:w-12/12 mt-1">
-                                        <div className="w-full lg:w-5/12 px- ">
+                                        <div className="w-full lg:w-3/12 px- ">
                                           <div className="relative w-full mb-3 mt-[10px]">
                                             <PhoneNoField
                                               label="Phone No"
@@ -1438,7 +1441,7 @@ const AddApplicantDetails = ({
                                             />
                                           </div>
                                         </div>
-                                        <div className="w-full lg:w-7/12 pl-4">
+                                        <div className="w-full lg:w-3/12 pl-4">
                                           <div className="relative w-full mb-3 mt-2">
                                             <TextField
                                               label="Email"
@@ -1447,13 +1450,9 @@ const AddApplicantDetails = ({
                                             />
                                           </div>
                                         </div>
-                                      </div>
-                                      {/* col dob etc */}
-                                      <div>
-                                        <div className="flex flex-wrap mt-3">
-                                          <div className="w-full lg:w-5/12 px-">
+                                        <div className="w-full lg:w-3/12 pl-4">
                                             <section className="">
-                                              <div className="w-full flex flex-col mb-3">
+                                              <div className="w-full flex flex-col mb-3 mt-2">
                                                 <CustomSelect
                                                   name="MaritualStatus"
                                                   label="Status"
@@ -1492,9 +1491,8 @@ const AddApplicantDetails = ({
                                               </div>
                                             </section>
                                           </div>
-
-                                          <div className="w-full lg:w-7/12 mt-[px] pl-4 ">
-                                            <div className="relative w-full mb-3 ">
+                                          <div className="w-full lg:w-3/12 mt-[px] pl-4 mr-3">
+                                            <div className="relative w-full mb-3 mt-2">
                                               <label
                                                 htmlFor={'dob2'}
                                                 className="text-gray-500 text-[10px]"
@@ -1537,54 +1535,14 @@ const AddApplicantDetails = ({
                                               </span>
                                             </div>
                                           </div>
-                                        </div>
+                                      </div>
+                                      {/* col dob etc */}
 
-                                        <div className="w-full lg:w-12/12 ">
-                                          <div className="relative w-full mb-3 mt-2">
-                                            <TextField
-                                              label="Address"
-                                              name="address2"
-                                              type="text"
-                                            />
-                                          </div>
-                                        </div>
-                                        <div className="w-full  flex flex-row lg:w-12/12 mt-1">
-                                          <div className="w-full lg:w-5/12 px- ">
-                                            <div className="relative w-full mb-3 mt-2">
-                                              <TextField
-                                                label="City"
-                                                name="city2"
-                                                type="text"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className="w-full lg:w-7/12 pl-4">
-                                            <div className="relative w-full mb-3 mt-2">
-                                              <div className="w-full flex flex-col mb-3">
-                                                <CustomSelect
-                                                  name="state2"
-                                                  label="State"
-                                                  className="input"
-                                                  onChange={(value) => {
-                                                    formik.setFieldValue(
-                                                      'state2',
-                                                      value.value
-                                                    )
-                                                  }}
-                                                  value={formik.values.state2}
-                                                  options={statesList}
-                                                />
-                                                <p
-                                                  className="text-sm text-red-500 hidden mt-3"
-                                                  id="error"
-                                                >
-                                                  Please fill out this field.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
+                                      <div className="w-full">
+
+                                      <div className="flex flex-row justify-between">
+                                          <section className="w-6/12 w-full">
+                                          <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
                                           PAN No{' '}
                                         </label>
                                         <MuiTextField
@@ -1659,7 +1617,9 @@ const AddApplicantDetails = ({
                                           value={formik.values.panNo2}
                                           onChange={formik.handleChange}
                                         />
-                                        <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
+                                          </section>
+                                          <section className="w-6/12 ml-4">
+                                          <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
                                           Aadhar No{' '}
                                         </label>
                                         <MuiTextField
@@ -1738,6 +1698,55 @@ const AddApplicantDetails = ({
                                           value={formik.values.aadharNo2}
                                           onChange={formik.handleChange}
                                         />
+                                          </section>
+                                        </div>
+                                        <div className="w-full lg:w-12/12 ">
+                                          <div className="relative w-full mb-3 mt-2">
+                                            <TextField
+                                              label="Address"
+                                              name="address2"
+                                              type="text"
+                                            />
+                                          </div>
+                                        </div>
+                                        <div className="w-full  flex flex-row lg:w-12/12 mt-1">
+                                          <div className="w-full lg:w-5/12 px- ">
+                                            <div className="relative w-full mb-3 mt-2">
+                                              <TextField
+                                                label="City"
+                                                name="city2"
+                                                type="text"
+                                              />
+                                            </div>
+                                          </div>
+                                          <div className="w-full lg:w-7/12 pl-4">
+                                            <div className="relative w-full mb-3 mt-2">
+                                              <div className="w-full flex flex-col mb-3">
+                                                <CustomSelect
+                                                  name="state2"
+                                                  label="State"
+                                                  className="input"
+                                                  onChange={(value) => {
+                                                    formik.setFieldValue(
+                                                      'state2',
+                                                      value.value
+                                                    )
+                                                  }}
+                                                  value={formik.values.state2}
+                                                  options={statesList}
+                                                />
+                                                <p
+                                                  className="text-sm text-red-500 hidden mt-3"
+                                                  id="error"
+                                                >
+                                                  Please fill out this field.
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+
 
                                         <div className="w-full  flex flex-row lg:w-12/12 mt-1">
                                           <div className="w-full lg:w-5/12 px- ">

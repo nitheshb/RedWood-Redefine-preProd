@@ -1035,7 +1035,7 @@ EnhancedTableHead.propTypes = {
                         </TableCell>
 
                         <TableCell align="center" sx={{ whiteSpace: 'nowrap', background: "#fff",  }} padding="none">
-          {prettyDate(row?.Date)}
+          {prettyDate(row?.booked_on)}
         </TableCell>
         {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
           ₹{partACost?.toLocaleString('en-IN')}
