@@ -1234,7 +1234,9 @@ const HomePage = () => {
                                       </section>
                                     </section>
                                   ) : (
-                                    <DummyBodyLayout />
+                                    <span onClick={() => setIsNewProjectOpen(true)}>
+                                        <DummyBodyLayout />
+                                    </span>
                                   )}
                                 </>
                               )}
