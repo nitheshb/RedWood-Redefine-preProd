@@ -64,7 +64,7 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
               {(selCustomerPayload?.T_review || 0 + selCustomerPayload?.T_approved || 0 )?.toLocaleString('en-IN') || 0}
             </h6>
             <h6 className="font-bodyLato font-semibold text-xs m-1">
-            <span className="text-[#637381] tracking-wide font-thin">Left:</span> ₹
+            <span className="text-[#637381] tracking-wide font-thin">Balance:</span> ₹
               {(selCustomerPayload?.T_balance)?.toLocaleString(
                 'en-IN'
               ) || 0}

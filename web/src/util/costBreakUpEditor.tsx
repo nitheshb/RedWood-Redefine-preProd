@@ -32,6 +32,8 @@ const CostBreakUpEditor = ({
   pdfExportComponent,
   selPhaseObj,
   selUnitDetails,
+  netTotal,
+  setNetTotal,
   leadDetailsObj1,
   setNewPlotCsObj,
   newPlotCsObj,
@@ -58,7 +60,7 @@ const CostBreakUpEditor = ({
 
   const [newSqftPrice, setNewSqftPrice] = useState(0)
 
-  const [netTotal, setNetTotal] = useState(0)
+
   const [partATotal, setPartATotal] = useState(0)
   const [partBTotal, setPartBTotal] = useState(0)
   const [plotBookingAdv, setPlotBookingAdv] = useState(0)

@@ -26,7 +26,8 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
         Number(
           computeTotal(
             obj,
-            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
+            selCustomerPayload?.super_built_up_area ||
+              selCustomerPayload?.area?.toString()?.replace(',', '')
           )
         ),
       0
@@ -121,7 +122,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                           <td className="w-[15%] text-[12px] text-right text-gray-700 px-2 bg-[#F0f1ff]">
                             ₹{d1?.gst?.value?.toLocaleString('en-IN')}
                           </td>
-                          <td className="w-[15%] text-[12px] text-right font-bold text-gray-800 bg-[#F0f1ff] px-2">
+                          <td className="w-[15%] text-[12px] text-right  text-gray-800 bg-[#F0f1ff] px-2">
                             ₹{' '}
                             {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
                           </td>
@@ -176,10 +177,15 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                             {d1?.description}
                           </td>
 
-                          <td className="text-[12px] w-[15%] text-right text-gray-700 font-bold bg-[#F0f1ff] px-2">
+                          <td className="text-[12px] w-[15%] text-right text-gray-700  bg-[#F0f1ff] px-2">
                             ₹{' '}
                             {Number(
-                              computeTotal(d1, selCustomerPayload?.area?.toString()?.replace(',', ''))
+                              computeTotal(
+                                d1,
+                                selCustomerPayload?.area
+                                  ?.toString()
+                                  ?.replace(',', '')
+                              )
                             )?.toLocaleString('en-IN')}
                           </td>
                         </tr>
@@ -234,7 +240,12 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                             <td className="text-[12px] w-[15%] text-right text-gray-700 font-bold bg-[#F0f1ff] px-2">
                               ₹{' '}
                               {Number(
-                                computeTotal(d1, selCustomerPayload?.area?.toString()?.replace(',', ''))
+                                computeTotal(
+                                  d1,
+                                  selCustomerPayload?.area
+                                    ?.toString()
+                                    ?.replace(',', '')
+                                )
                               )?.toLocaleString('en-IN')}
                             </td>
                           </tr>
@@ -256,44 +267,37 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
               </div>
 
               <section className="flex flex-row-reverse justify-between w-full mt- rounded px-3">
-                <div className="flex flex-row mt-2 text-bodyLato text-left text-gray-800 font-semibold text-[16px] mb-2 ">
+                <div className="flex flex-row mt-2 text-bodyLato text-left text-gray-800  text-[14px] mb-2 ">
                   Total unit sale value(A+B{' '}
                   {selCustomerPayload?.addOnCS?.length > 0 && (
-                    <span className="  ">
-                      +c
-                    </span>
+                    <span className="  ">+c</span>
                   )}
                   ):
+                  <section className="flex flex-row mt-1">
+                    <section className="px-2 d-md  text-[12px]  ">
+                      ₹{partATotal?.toLocaleString('en-IN')}
+                    </section>
+                    <section className=" d-md  text-[12px]  ">+</section>
 
-                <section className="flex flex-row mt-1">
-                  <section className="px-2 d-md font-bold text-[12px]  ">
-                    ₹{partATotal?.toLocaleString('en-IN')}
-                  </section>
-                  <section className=" d-md font-bold text-[12px]  ">
-                    +
-                  </section>
+                    <section className="px-2 d-md  text-[12px]  ">
+                      ₹{partBTotal?.toLocaleString('en-IN')}
+                    </section>
+                    {selCustomerPayload?.addOnCS?.length > 0 && (
+                      <>
+                        <section className=" d-md text-[12px]  ">+</section>
+                        <section className="px-2 d-md  text-[12px]">
+                          ₹{addOnTotal?.toLocaleString('en-IN')}
+                        </section>
+                      </>
+                    )}
 
-                  <section className="px-2 d-md font-bold text-[12px]  ">
-                    ₹{partBTotal?.toLocaleString('en-IN')}
+                    <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
+                      =
+                    </section>
+                    <section className="px-2 d-md font-bold text-[14px] text-[#000000e6] leading-none mr-1">
+                      ₹{unitTotal?.toLocaleString('en-IN')}
+                    </section>
                   </section>
-                  {selCustomerPayload?.addOnCS?.length > 0 && (
-                    <>
-                      <section className=" d-md font-bold text-[12px]  ">
-                        +
-                      </section>
-                      <section className="px-2 d-md font-bold text-[12px]">
-                        ₹{addOnTotal?.toLocaleString('en-IN')}
-                      </section>
-                    </>
-                  )}
-
-                  <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
-                    =
-                  </section>
-                  <section className="px-2 d-md font-bold text-[16px] text-[#000000e6] leading-none">
-                    ₹{unitTotal?.toLocaleString('en-IN')}
-                  </section>
-                </section>
                 </div>
               </section>
             </div>
