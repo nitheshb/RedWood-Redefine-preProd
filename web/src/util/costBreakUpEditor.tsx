@@ -116,7 +116,7 @@ const CostBreakUpEditor = ({
         ? updatedRows[index]?.gst?.value * 0.01
         : updatedRows[index]?.gst?.value
     total = isChargedPerSqft
-      ? Number(selUnitDetails?.super_built_up_area || selUnitDetails?.area) *
+      ? Number(selUnitDetails?.super_built_up_area?.toString()?.replace(',', '') || selUnitDetails?.area?.toString()?.replace(',', '')) *
         Number(updatedRows[index]?.charges)
       : Number(updatedRows[index]?.charges)
 
@@ -147,7 +147,7 @@ const CostBreakUpEditor = ({
       (d) => d?.component.value === 'plc_tax'
     )
     if (csMode === 'plot_cs') {
-      total = Math.round(selUnitDetails?.area * newValue)
+      total = Math.round(selUnitDetails?.area?.toString()?.replace(',', '') * newValue)
       gstTotal = Math.round(total * gstTaxIs)
     } else {
       total = Math.round(selUnitDetails?.super_built_up_area * newValue)
@@ -175,7 +175,7 @@ const CostBreakUpEditor = ({
         Number(
           computeTotal(
             obj,
-            selUnitDetails?.super_built_up_area || selUnitDetails?.area
+            selUnitDetails?.super_built_up_area || selUnitDetails?.area?.toString()?.replace(',', '')
           )
         ),
       0
@@ -550,7 +550,7 @@ const CostBreakUpEditor = ({
                                   <td className="w-[15%] px-2 text-[12px] text-right text-slate-900 border ">
                                     ₹
                                     {Number(
-                                      computeTotal(d1, selUnitDetails?.area)
+                                      computeTotal(d1, selUnitDetails?.area?.toString()?.replace(',', ''))
                                     )?.toLocaleString('en-IN')}
                                   </td>
                                 </tr>

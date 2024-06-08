@@ -869,7 +869,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                                   computeTotal(
                                                     obj,
                                                     finData?.super_built_up_area ||
-                                                      finData?.area
+                                                      finData?.area?.toString()?.replace(',', '')
                                                   )
                                                 ),
                                               0
@@ -1342,7 +1342,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                                 computeTotal(
                                                   obj,
                                                   finData?.super_built_up_area ||
-                                                    finData?.area
+                                                    finData?.area?.toString()?.replace(',', '')
                                                 )
                                               ),
                                             0

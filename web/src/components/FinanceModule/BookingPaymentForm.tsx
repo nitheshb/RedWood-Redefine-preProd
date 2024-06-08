@@ -211,14 +211,14 @@ const AddPaymentDetailsForm = ({
 
     const customerfbA = await createNewCustoreSupa(data, resetForm)
 
-    fullPs.map((dataObj, i) => {
+    fullPs?.map((dataObj, i) => {
       dataObj.order = i
       updatePS(dataObj, resetForm)
     })
 
     // customerfbA
     let custNo
-    if ((await customerfbA.length) > 0) {
+    if ((await customerfbA?.length) > 0) {
       custNo = customerfbA[0].id
     } else {
       return
@@ -227,8 +227,8 @@ const AddPaymentDetailsForm = ({
     const y = await capturePayment(custNo, data, resetForm)
     // get paymentTxn id
     let txId
-    if ((await y.length) > 0) {
-      txId = y[0].id
+    if ((await y?.length) > 0) {
+      txId = y[0]?.id
     } else {
       return
     }

@@ -26,7 +26,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
         Number(
           computeTotal(
             obj,
-            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area
+            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
           )
         ),
       0
@@ -39,7 +39,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
             computeTotal(
               obj,
               selCustomerPayload?.super_built_up_area ||
-                selCustomerPayload?.area
+                selCustomerPayload?.area?.toString()?.replace(',', '')
             )
           ),
         0
@@ -179,7 +179,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                           <td className="text-[12px] w-[15%] text-right text-gray-700 font-bold bg-[#F0f1ff] px-2">
                             ₹{' '}
                             {Number(
-                              computeTotal(d1, selCustomerPayload?.area)
+                              computeTotal(d1, selCustomerPayload?.area?.toString()?.replace(',', ''))
                             )?.toLocaleString('en-IN')}
                           </td>
                         </tr>
@@ -234,7 +234,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                             <td className="text-[12px] w-[15%] text-right text-gray-700 font-bold bg-[#F0f1ff] px-2">
                               ₹{' '}
                               {Number(
-                                computeTotal(d1, selCustomerPayload?.area)
+                                computeTotal(d1, selCustomerPayload?.area?.toString()?.replace(',', ''))
                               )?.toLocaleString('en-IN')}
                             </td>
                           </tr>

@@ -753,7 +753,7 @@ const MyDocument = ({
                 >
                   <Text> {fCurrency(
                       Number(
-                        computeTotal(item, selUnitDetails?.area)
+                        computeTotal(item, selUnitDetails?.area?.toString()?.replace(',', ''))
                       )?.toLocaleString('en-IN')
                     )}</Text>
                 </View>

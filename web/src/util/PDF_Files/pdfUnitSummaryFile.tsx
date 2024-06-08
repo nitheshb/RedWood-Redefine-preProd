@@ -759,7 +759,7 @@ const MyDocument = ({
                     {' '}
                     {fCurrency(
                       Number(
-                        computeTotal(item, selUnitDetails?.area)
+                        computeTotal(item, selUnitDetails?.area?.toString()?.replace(',', ''))
                       )?.toLocaleString('en-IN')
                     )}
                   </Text>
@@ -813,7 +813,7 @@ const MyDocument = ({
                         computeTotal(
                           obj,
                           selUnitDetails?.super_built_up_area ||
-                            selUnitDetails?.area
+                            selUnitDetails?.area?.toString()?.replace(',', '')
                         )
                       ),
                     0
@@ -861,7 +861,7 @@ const MyDocument = ({
                         computeTotal(
                           obj,
                           selUnitDetails?.super_built_up_area ||
-                            selUnitDetails?.area
+                            selUnitDetails?.area?.toString()?.replace(',', '')
                         )
                       ),
                     0
@@ -880,7 +880,7 @@ const MyDocument = ({
                         computeTotal(
                           obj,
                           selUnitDetails?.super_built_up_area ||
-                            selUnitDetails?.area
+                            selUnitDetails?.area?.toString()?.replace(',', '')
                         )
                       ),
                     0
@@ -963,7 +963,7 @@ const MyDocument = ({
                         computeTotal(
                           obj,
                           selUnitDetails?.super_built_up_area ||
-                            selUnitDetails?.area
+                            selUnitDetails?.area?.toString()?.replace(',', '')
                         )
                       ),
                     0

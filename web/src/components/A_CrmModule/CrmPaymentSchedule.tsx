@@ -31,7 +31,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
         Number(
           computeTotal(
             obj,
-            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area
+            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
           )
         ),
       0
@@ -42,7 +42,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
         Number(
           computeTotal(
             obj,
-            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area
+            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
           )
         ),
       0
