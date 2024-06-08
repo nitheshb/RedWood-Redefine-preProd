@@ -30,7 +30,7 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
             computeTotal(
               obj,
               selCustomerPayload?.super_built_up_area ||
-                selCustomerPayload?.area
+                selCustomerPayload?.area?.toString()?.replace(',', '')
             )
           ),
         0
@@ -42,7 +42,7 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
           Number(
             computeTotal(
               obj,
-              selCustomerPayload?.super_built_up_area || selCustomerPayload?.area
+              selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
             )
           ),
         0

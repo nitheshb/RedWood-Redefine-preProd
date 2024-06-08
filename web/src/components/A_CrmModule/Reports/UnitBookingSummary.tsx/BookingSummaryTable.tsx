@@ -942,7 +942,7 @@ EnhancedTableHead.propTypes = {
                         (partialSum, obj) =>
                           partialSum +
                           Number(
-                            computeTotal(obj, row?.super_built_up_area || row?.area)
+                            computeTotal(obj, row?.super_built_up_area || row?.area?.toString()?.replace(',', ''))
                           ),
                         0
                       ) || 0
@@ -954,7 +954,7 @@ EnhancedTableHead.propTypes = {
                             computeTotal(
                               obj,
                               row?.super_built_up_area ||
-                              row?.area
+                              row?.area?.toString()?.replace(',', '')
                             )
                           ),
                         0

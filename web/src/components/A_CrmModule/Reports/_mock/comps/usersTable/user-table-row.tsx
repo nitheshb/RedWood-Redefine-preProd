@@ -111,7 +111,7 @@ export default function UserTableRow({
       (partialSum, obj) =>
         partialSum +
         Number(
-          computeTotal(obj, super_built_up_area || area)
+          computeTotal(obj, super_built_up_area || area?.toString()?.replace(',', ''))
         ),
       0
     ) || 0
