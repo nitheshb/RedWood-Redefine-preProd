@@ -343,6 +343,24 @@ export const paymentMode = [
     label: 'Credit Note',
   },
 ]
+export const demandMode = [
+  {
+    value: 'civil_alter',
+    label: 'Civil Upgrade',
+  },{
+    value: 'Maintenance',
+    label: 'Maintenance',
+  },
+  {
+    value: 'remainder_entry',
+    label: 'Remainder Entry',
+    desc: 'indicate an entry made for the purpose of future follow-up or reference.Often used for informational purposes'
+  },
+  {
+    value: 'Upgrade',
+    label: 'Upgrade',
+  },
+]
 export const areaConversions = [
   {
     value: 'acre',

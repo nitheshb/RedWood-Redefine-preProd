@@ -70,7 +70,7 @@ export default function CSManagerApprovalBody({
   const [showGstCol, setShowGstCol] = useState(true)
   const [bootedPs, setBootedPs] = useState([])
 
-
+  const [netTotal, setNetTotal] = useState(0)
   if (!user?.role?.includes(USER_ROLES.ADMIN)) {
     return null
   }
@@ -144,7 +144,7 @@ export default function CSManagerApprovalBody({
         </div>
         <div className="min-w-[120px]">
           <p className="text-title text-xs font-bold uppercase">Booking Date</p>
-          <span className="text-content3 text-[#848789]">{prettyDate(selUnitPayload?.Date || "NA")}</span>
+          <span className="text-content3 text-[#848789]">{prettyDate(selUnitPayload?.booked_on || "NA")}</span>
         </div>
         <div className="min-w-[120px]">
           <p className="text-title text-xs font-bold uppercase">
@@ -155,7 +155,7 @@ export default function CSManagerApprovalBody({
         <div className="min-w-[120px] text-right">
           <p className="text-title text-xs font-bold uppercase">Total Amount</p>
           <span className=" text-medium text-content3 text-[#848789]">
-            NA-
+            Rs {netTotal?.toLocaleString('en-IN') || 'NA'}
           </span>
         </div>
       </div>
@@ -170,6 +170,8 @@ export default function CSManagerApprovalBody({
       /> */}
       <CostBreakUpEditor
         csMode={'plot_cs'}
+        netTotal= {netTotal}
+        setNetTotal ={setNetTotal}
         // costSheetA={costSheetA}
         pdfExportComponent={pdfExportComponent}
         selPhaseObj={selPhaseObj}

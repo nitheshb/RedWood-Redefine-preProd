@@ -231,6 +231,7 @@ export default function UnitSideViewCRM({
   const [docsList, setDocsList] = useState([])
   const [progress, setProgress] = useState(0)
   const [openCapturePayment, setOpenCapturePayment] = useState(false)
+  const [newDemand, setOpenNewDemand] = useState(false)
 
   const d = new window.Date()
   const [value, setValue] = useState(d)
@@ -968,6 +969,9 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
   const openPaymentFun = () => {
     setOpenCapturePayment(true)
   }
+  const openDemandFun = () => {
+    setOpenNewDemand(true)
+  }
   const doneFun = (data) => {
     console.log('clicked schedule is', data)
     const inx = schStsMA.indexOf(data.ct)
@@ -1062,6 +1066,32 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
 
     console.log('unit log ', data, y, y.m, y['m']['url'])
 
+    const x = await capturePaymentS(
+      orgId,
+      projectId,
+      unitId,
+      8,
+      customLeadObj,
+      data,
+      user?.email,
+      enqueueSnackbar
+    )
+  }
+  const demandCaptureFun = async (data, resetForm) => {
+    const {
+      pId: projectId,
+      id: unitId,
+      phaseId,
+      customerDetailsObj,
+    } = selCustomerPayload
+    const customLeadObj = { Name: customerDetailsObj?.customerName1 }
+    data.attchUrl = data?.fileUploader?.url || ''
+    data.category = 'Payment'
+    const y = {}
+    y.m = data?.fileUploader
+
+    console.log('unit log ', data, y, y.m, y['m']['url'])
+return
     const x = await capturePaymentS(
       orgId,
       projectId,
@@ -1208,14 +1238,14 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
                   >
                     CAPTURE PAYMENT
                   </section>
-                  <section
+                  {customerDetails?.man_cs_approval==="approved" &&<section
                     className="text-center px-[10px] py-[2px]  pt-[3px] h-[24px] ml-2 bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
                     onClickCapture={() => {
-                      openPaymentFun()
+                      openDemandFun()
                     }}
                   >
-                    RAISE NEW DEMAND
-                  </section>
+                    NEW DEMAND
+                  </section>}
                 </section>
               </section>
             </div>
@@ -1359,6 +1389,15 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
         widthClass="max-w-xl"
         selUnitDetails={selCustomerPayload}
         paymentCaptureFun={paymentCaptureFun}
+      />
+      <SiderForm
+        open={newDemand}
+        setOpen={setOpenNewDemand}
+        title={'newDemand'}
+        unitsViewMode={false}
+        widthClass="max-w-xl"
+        selUnitDetails={selCustomerPayload}
+        paymentCaptureFun={demandCaptureFun}
       />
     </div>
   )

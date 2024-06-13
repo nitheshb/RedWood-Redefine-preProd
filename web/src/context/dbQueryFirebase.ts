@@ -77,7 +77,12 @@ export const steamUsersListByDept = (orgId, dept, snapshot, error) => {
   return onSnapshot(itemsQuery, snapshot, error)
 }
 // get users list by Dept
-export const steamUsersListByDeptWithInactive = (orgId, dept, snapshot, error) => {
+export const steamUsersListByDeptWithInactive = (
+  orgId,
+  dept,
+  snapshot,
+  error
+) => {
   const itemsQuery = query(
     collection(db, 'users'),
     where('orgId', '==', orgId),
@@ -973,7 +978,7 @@ export const steamLeadActivityLog = async (orgId, snapshot, data, error) => {
     .order('T', { ascending: false })
   return lead_logs
 }
-export const streamSalesActitvityReport = async (orgId,  data,) => {
+export const streamSalesActitvityReport = async (orgId, data) => {
   const { pId, startTime, endTime } = data
 
   const { data: lead_logs, error1 } = await supabase
@@ -983,11 +988,11 @@ export const streamSalesActitvityReport = async (orgId,  data,) => {
     .gte('T', startTime)
     .lte('T', endTime)
     .order('T', { ascending: false })
-    console.log('counts are ',lead_logs, data, pId)
+  console.log('counts are ', lead_logs, data, pId)
 
   return lead_logs.length
 }
-export const streamSalesActitvityLogReportData = async (orgId,  data,) => {
+export const streamSalesActitvityLogReportData = async (orgId, data) => {
   const { pId, startTime, endTime } = data
 
   const { data: lead_logs, error1 } = await supabase
@@ -997,7 +1002,7 @@ export const streamSalesActitvityLogReportData = async (orgId,  data,) => {
     .gte('T', startTime)
     .lte('T', endTime)
     .order('T', { ascending: false })
-    console.log('counts are ',lead_logs, data, pId)
+  console.log('counts are ', lead_logs, data, pId)
 
   return lead_logs
 }
@@ -2655,7 +2660,6 @@ export const gretProjectionSum = async (orgId, data) => {
     collection(db, `${orgId}_payment_projections`),
     where('pId', '==', pId),
     // where('pId', '==', '02dce2f6-f056-4dcb-9819-01b9710781e1'), //
-
     where('month', '==', monthNo)
     // where('year', '==', currentYear)
   )
@@ -2683,7 +2687,6 @@ export const greProjectBookingsSum = async (orgId, data) => {
     where('Status', '==', 'booked'),
     // where('pId', '==', '02dce2f6-f056-4dcb-9819-01b9710781e1'), //
 
-
     where('stsUpT', '>=', startTime),
     where('stsUpT', '<=', endTime)
 
@@ -2703,7 +2706,6 @@ export const greProjectBookingsSum = async (orgId, data) => {
   return receivable
 }
 export const getSourceBookingsSum = async (orgId, data) => {
-
   const { pId, startTime, endTime } = data
   console.log('check it ==>', pId)
   const q = await query(
@@ -2727,7 +2729,6 @@ export const getSourceBookingsSum = async (orgId, data) => {
   return receivable
 }
 export const getEmpBookingsSum = async (orgId, data) => {
-
   const { pId, startTime, endTime } = data
   console.log('check it ==>', pId)
   const q = await query(
@@ -2751,7 +2752,6 @@ export const getEmpBookingsSum = async (orgId, data) => {
   return receivable
 }
 export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
-
   const { pId, startTime, endTime } = data
   console.log('pushed values are', pId)
   const q = await query(
@@ -2777,7 +2777,6 @@ export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
 }
 
 export const streamBookedLeads = async (orgId, data, snapshot, error) => {
-
   const { pId, startTime, endTime } = data
   console.log('pushed values are', pId)
   const q = await query(
@@ -2848,7 +2847,6 @@ export const sourceBookedLeads = async (orgId, data, snapshot, error) => {
 
 
 export const getEmpCompletedTasks = async (orgId, data) => {
-
   const { pId, startTime, endTime } = data
   console.log('check it ==>', pId)
   const q = await query(
@@ -2872,7 +2870,6 @@ export const getEmpCompletedTasks = async (orgId, data) => {
   return receivable
 }
 export const getEmpCollectionsSum = async (orgId, data) => {
-
   const { pId, monthNo, currentYear } = data
   console.log('pushed values are', pId)
   const q = await query(
@@ -3756,12 +3753,7 @@ export const addPhasePartAtax = async (
     })
   }
 }
-export const updateCampaign = async (
-  orgId,
-  uid,
-  payload,
-  enqueueSnackbar
-) => {
+export const updateCampaign = async (orgId, uid, payload, enqueueSnackbar) => {
   try {
     await updateDoc(doc(db, `${orgId}_campaigns`, uid), {
       ...payload,
@@ -4632,8 +4624,7 @@ export const updateProjectionsAgreegationsOnBooking = async (
 ) => {
   console.log('data is===>', data)
   const { oldDate, schDate, pId, newPrice } = data
-  console.log('data is===>', oldDate,schDate)
-
+  console.log('data is===>', oldDate, schDate)
 
   const x = getWeekMonthNo(schDate)
   const y = getWeekMonthNo(oldDate)
@@ -4673,62 +4664,59 @@ export const updateProjectionsAgreegations = async (
 ) => {
   console.log('data is===>', data)
   const { oldDate, schDate, pId, newPrice } = data
-  console.log('data is===>', oldDate,schDate)
+  console.log('data is===>', oldDate, schDate)
   if (oldDate != schDate) {
+    const x = getWeekMonthNo(schDate)
+    const y = getWeekMonthNo(oldDate)
+    console.log('value of schDate', x)
+    const docId_d = `${pId}W${x.weekNumberOfYear}M${x.month}Y${x.year}s${data.stageId}`
+    const old_doc_Id = `${pId}W${y.weekNumberOfYear}M${y.month}Y${y.year}s${data.stageId}`
 
-  const x = getWeekMonthNo(schDate)
-  const y = getWeekMonthNo(oldDate)
-  console.log('value of schDate', x)
-  const docId_d = `${pId}W${x.weekNumberOfYear}M${x.month}Y${x.year}s${data.stageId}`
-  const old_doc_Id = `${pId}W${y.weekNumberOfYear}M${y.month}Y${y.year}s${data.stageId}`
+    const payload = {
+      pId: pId,
+      block: 1,
+      week: x.weekNumberOfYear,
+      month: x.month,
+      year: x.year,
+      receivable: increment(newPrice),
+    }
+    const oldPayload = {
+      pId: pId,
+      block: 1,
+      week: y.weekNumberOfYear,
+      month: y.month,
+      year: y.year,
+      receivable: increment(-newPrice),
+    }
+    console.log('Projection  updation failed', docId_d, payload)
+    try {
+      await updateDoc(doc(db, `${orgId}_payment_projections`, docId_d), payload)
+    } catch (error) {
+      console.log('Projection  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_payment_projections`, docId_d), payload)
+      enqueueSnackbar('Projection updation failed BBB', {
+        variant: 'error',
+      })
+    }
+    try {
+      await updateDoc(
+        doc(db, `${orgId}_payment_projections`, old_doc_Id),
+        oldPayload
+      )
+    } catch (error) {
+      console.log('Projection  updation failed', error, {
+        ...data,
+      })
 
-  const payload = {
-    pId: pId,
-    block: 1,
-    week: x.weekNumberOfYear,
-    month: x.month,
-    year: x.year,
-    receivable: increment(newPrice),
+      enqueueSnackbar('Projection old now found', {
+        variant: 'error',
+      })
+    }
+  } else {
+    return
   }
-  const oldPayload = {
-    pId: pId,
-    block: 1,
-    week: y.weekNumberOfYear,
-    month: y.month,
-    year: y.year,
-    receivable: increment(-newPrice),
-  }
-  console.log('Projection  updation failed', docId_d, payload)
-  try {
-
-    await updateDoc(doc(db, `${orgId}_payment_projections`, docId_d), payload)
-  } catch (error) {
-    console.log('Projection  updation failed', error, {
-      ...data,
-    })
-    await setDoc(doc(db, `${orgId}_payment_projections`, docId_d), payload)
-    enqueueSnackbar('Projection updation failed BBB', {
-      variant: 'error',
-    })
-  }
-  try {
-    await updateDoc(
-      doc(db, `${orgId}_payment_projections`, old_doc_Id),
-      oldPayload
-    )
-
-  } catch (error) {
-    console.log('Projection  updation failed', error, {
-      ...data,
-    })
-
-    enqueueSnackbar('Projection updation failed BBB', {
-      variant: 'error',
-    })
-  }
-}else{
-  return
-}
   return
 }
 
@@ -4740,62 +4728,58 @@ export const updateCrmExecutiveAgreegations = async (
 ) => {
   console.log('data is===>', data)
   const { oldDate, schDate, assignedTo, newPrice } = data
-  console.log('data is===>', oldDate,schDate)
+  console.log('data is===>', oldDate, schDate)
   if (oldDate != schDate) {
+    const x = getWeekMonthNo(schDate)
+    const y = getWeekMonthNo(oldDate)
+    console.log('value of schDate', x)
+    const docId_d = `${assignedTo}W${x.weekNumberOfYear}M${x.month}Y${x.year}s${data.stageId}`
+    const old_doc_Id = `${assignedTo}W${y.weekNumberOfYear}M${y.month}Y${y.year}s${data.stageId}`
 
-  const x = getWeekMonthNo(schDate)
-  const y = getWeekMonthNo(oldDate)
-  console.log('value of schDate', x)
-  const docId_d = `${assignedTo}W${x.weekNumberOfYear}M${x.month}Y${x.year}s${data.stageId}`
-  const old_doc_Id = `${assignedTo}W${y.weekNumberOfYear}M${y.month}Y${y.year}s${data.stageId}`
-
-  const payload = {
-    uId: assignedTo,
-    block: 1,
-    week: x.weekNumberOfYear,
-    month: x.month,
-    year: x.year,
-    receivable: increment(newPrice),
+    const payload = {
+      uId: assignedTo,
+      block: 1,
+      week: x.weekNumberOfYear,
+      month: x.month,
+      year: x.year,
+      receivable: increment(newPrice),
+    }
+    const oldPayload = {
+      uId: assignedTo,
+      block: 1,
+      week: y.weekNumberOfYear,
+      month: y.month,
+      year: y.year,
+      receivable: increment(-newPrice),
+    }
+    console.log('Employee  updation failed', docId_d, payload)
+    try {
+      await updateDoc(
+        doc(db, `${orgId}_emp_collections`, old_doc_Id),
+        oldPayload
+      )
+    } catch (error) {
+      console.log('Emp Projection Removal failed', error, {
+        ...data,
+      })
+      enqueueSnackbar('Emp Projection Removal failed', {
+        variant: 'error',
+      })
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
+      enqueueSnackbar('Emp Projections updation', {
+        variant: 'error',
+      })
+    }
+  } else {
+    return
   }
-  const oldPayload = {
-    uId: assignedTo,
-    block: 1,
-    week: y.weekNumberOfYear,
-    month: y.month,
-    year: y.year,
-    receivable: increment(-newPrice),
-  }
-  console.log('Employee  updation failed', docId_d, payload)
-  try {
-    await updateDoc(
-      doc(db, `${orgId}_emp_collections`, old_doc_Id),
-      oldPayload
-    )
-
-
-  } catch (error) {
-    console.log('Emp Projection Removal failed', error, {
-      ...data,
-    })
-    enqueueSnackbar('Emp Projection Removal failed', {
-      variant: 'error',
-    })
-  }
-  try {
-
-    await updateDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
-  } catch (error) {
-    console.log('Employee  updation failed', error, {
-      ...data,
-    })
-    await setDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
-    enqueueSnackbar('Emp Projections updation', {
-      variant: 'error',
-    })
-  }
-}else{
-  return
-}
   return
 }
 export const updateCrmExecutiveReAssignAgreegations = async (
@@ -4806,9 +4790,14 @@ export const updateCrmExecutiveReAssignAgreegations = async (
 ) => {
   console.log('data is===>', data)
 
-  const { oldSchDate, schDate, assignedTo,oldAssignedTo, value:newPrice } = data
-  console.log('data is===>',  assignedTo,oldAssignedTo,)
-
+  const {
+    oldSchDate,
+    schDate,
+    assignedTo,
+    oldAssignedTo,
+    value: newPrice,
+  } = data
+  console.log('data is===>', assignedTo, oldAssignedTo)
 
   const x = getWeekMonthNo(schDate)
   const y = getWeekMonthNo(schDate)
@@ -4836,12 +4825,7 @@ export const updateCrmExecutiveReAssignAgreegations = async (
   }
   console.log('Employee  updation failed', docId_d, payload)
   try {
-    await updateDoc(
-      doc(db, `${orgId}_emp_collections`, old_doc_Id),
-      oldPayload
-    )
-
-
+    await updateDoc(doc(db, `${orgId}_emp_collections`, old_doc_Id), oldPayload)
   } catch (error) {
     console.log('Employee  updation failed', error, {
       ...data,
@@ -4851,8 +4835,6 @@ export const updateCrmExecutiveReAssignAgreegations = async (
     })
   }
   try {
-
-
     await updateDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
   } catch (error) {
     console.log('Employee  updation failed', error, {
@@ -4916,6 +4898,79 @@ export const updateManagerApproval = async (
       ...data,
     })
     enqueueSnackbar('CS Approved Updation Failed .', {
+      variant: 'error',
+    })
+  }
+  return
+}
+export const addNewUnitDemand = async (
+  orgId,
+  selUnitDetails,
+  unitId,
+  data,
+  by,
+  enqueueSnackbar
+) => {
+  try {
+    console.log('data is===>', unitId, data)
+    const {
+      status,
+      addOnCS,
+      fullPs,
+      T_balance,
+      T_Total,
+      T_elgible_balance,
+    } = data
+
+    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+      addOnCS: addOnCS,
+      fullPs,
+      T_balance,
+      T_Total,
+      T_elgible_balance,
+    })
+    const { data: data4, error: error4 } = await supabase
+      .from(`${orgId}_unit_logs`)
+      .insert([
+        {
+          type: 'cs_addon',
+          subtype: 'cs_approval',
+          T: Timestamp.now().toMillis(),
+          Uuid: unitId,
+          by,
+          payload: {},
+          from: 'cs_review',
+          to: status,
+        },
+      ])
+    fullPs.map((d, i) => {
+      //
+      // this will set the previous date immutable as current date
+
+      if (d?.oldDate != d?.schDate) {
+        const dataPayload = {
+          pId: selUnitDetails?.pId,
+          oldDate: d?.oldDate,
+          schDate: d?.schDate,
+          stageId: d?.stage.value,
+          newPrice: d?.value,
+          used: d?.used,
+          assignedTo: selUnitDetails?.assignedTo || 'unassigned',
+        }
+
+        updateProjectionsAgreegations(orgId, dataPayload, by, enqueueSnackbar)
+
+        updateCrmExecutiveAgreegations(orgId, dataPayload, by, enqueueSnackbar)
+      }
+    })
+    enqueueSnackbar('Costsheet & Payment Schedule Updated.', {
+      variant: 'success',
+    })
+  } catch (error) {
+    console.log('Costsheet & Payment Schedule Updation Failed', error, {
+      ...data,
+    })
+    enqueueSnackbar('Costsheet & Payment Schedule Updation Failed .', {
       variant: 'error',
     })
   }

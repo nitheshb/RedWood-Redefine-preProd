@@ -154,7 +154,7 @@ const CrmUnitSummary = ({
         Number(
           computeTotal(
             obj,
-            selUnitPayload?.super_built_up_area || selUnitPayload?.area
+            selUnitPayload?.super_built_up_area || selUnitPayload?.area?.toString()?.replace(',', '')
           )
         ),
       0

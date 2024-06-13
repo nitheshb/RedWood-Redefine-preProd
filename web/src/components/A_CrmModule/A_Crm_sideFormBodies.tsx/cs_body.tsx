@@ -622,7 +622,8 @@ const CSBody = ({
                                   {Number(
                                     computeTotal(
                                       d1,
-                                      selUnitDetails?.super_built_up_area
+                                      selUnitDetails?.super_built_up_area||
+                                      selUnitDetails?.area?.toString()?.replace(',', '')
                                     )
                                   )?.toLocaleString('en-IN')}
                                 </td>

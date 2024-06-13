@@ -11,6 +11,8 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
   const { orgId } = user
   const [partATotal, setPartA] = useState(0)
   const [partBTotal, setPartB] = useState(0)
+  const [addOnTotal, setPartAddOn] = useState(0)
+
   const [unitTotal, setUnitTotal] = useState(0)
 
   console.log('payload is ', selCustomerPayload)
@@ -28,15 +30,28 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
             computeTotal(
               obj,
               selCustomerPayload?.super_built_up_area ||
-                selCustomerPayload?.area
+                selCustomerPayload?.area?.toString()?.replace(',', '')
+            )
+          ),
+        0
+      ) || 0
+
+      const c = selCustomerPayload?.addOnCS?.reduce(
+        (partialSum, obj) =>
+          partialSum +
+          Number(
+            computeTotal(
+              obj,
+              selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
             )
           ),
         0
       ) || 0
     setPartA(a)
     setPartB(b)
+    setPartAddOn(c)
     console.log('value is ', a, b)
-    setUnitTotal(a + b)
+    setUnitTotal(a + b + c)
   }, [selCustomerPayload])
 
   return (
@@ -49,7 +64,7 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
               {(selCustomerPayload?.T_review || 0 + selCustomerPayload?.T_approved || 0 )?.toLocaleString('en-IN') || 0}
             </h6>
             <h6 className="font-bodyLato font-semibold text-xs m-1">
-            <span className="text-[#637381] tracking-wide font-thin">Left:</span> ₹
+            <span className="text-[#637381] tracking-wide font-thin">Balance:</span> ₹
               {(selCustomerPayload?.T_balance)?.toLocaleString(
                 'en-IN'
               ) || 0}

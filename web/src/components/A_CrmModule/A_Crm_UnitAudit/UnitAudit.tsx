@@ -206,7 +206,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
               computeTotal(
                 obj,
                 selUnitDetails?.super_built_up_area ||
-                selUnitDetails?.area
+                selUnitDetails?.area?.toString()?.replace(',', '')
               )
             ),
           0

@@ -96,14 +96,14 @@ const BookingSummaryView = ({
       leadDetailsObj1[`${uid}_cs`]?.newPLC || selUnitDetails?.plc_per_sqft
 
     const plotSaleValue = Number.isFinite(y)
-      ? Number(selUnitDetails?.selUnitDetails?.area * y)
+      ? Number(selUnitDetails?.selUnitDetails?.area?.toString()?.replace(',', '') * y)
       : Number(
-          selUnitDetails?.area *
+          selUnitDetails?.area?.toString()?.replace(',', '') *
             (selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate)
         )
     const plcSaleValue = Math.round(
       selUnitDetails?.super_built_up_area ||
-        selUnitDetails?.area *
+        selUnitDetails?.area?.toString()?.replace(',', '') *
           (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
     )
     const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
@@ -122,7 +122,7 @@ const BookingSummaryView = ({
       'gen costSheetA values are ',
       Number.isFinite(y),
       y,
-      selUnitDetails?.selUnitDetails?.area,
+      selUnitDetails?.selUnitDetails?.area?.toString()?.replace(',', ''),
       selUnitDetails?.rate_per_sqft,
       selUnitDetails
     )
@@ -141,7 +141,7 @@ const BookingSummaryView = ({
             : data?.gst?.value
         total = isChargedPerSqft
           ? Number(
-              selUnitDetails?.super_built_up_area || selUnitDetails?.area
+              selUnitDetails?.super_built_up_area || selUnitDetails?.area.toString()?.replace(',', '')
             ) * Number(data?.charges)
           : Number(data?.charges)
 
@@ -380,7 +380,7 @@ const BookingSummaryView = ({
         Number(
           computeTotal(
             obj,
-            selUnitDetails?.super_built_up_area || selUnitDetails?.area
+            selUnitDetails?.super_built_up_area || selUnitDetails?.area?.toString()?.replace(',', '')
           )
         ),
       0
@@ -988,7 +988,7 @@ const BookingSummaryView = ({
                                             {Number(
                                               computeTotal(
                                                 d1,
-                                                selUnitDetails?.area
+                                                selUnitDetails?.area?.toString()?.replace(',', '')
                                               )
                                             )?.toLocaleString('en-IN')}
                                           </td>
