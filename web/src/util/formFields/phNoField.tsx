@@ -15,7 +15,8 @@ export const PhoneNoField = ({
   className,
   labelSize,
   textSize,
-  txtPad
+  txtPad,
+  customStyles
 }) => {
   return (
     <div className={className}>
@@ -35,6 +36,7 @@ export const PhoneNoField = ({
         format="###-###-####"
         mask=""
         placeholder="Mobile No"
+        style={customStyles}
       />
       <ErrorMessage
         component="div"
