@@ -48,8 +48,8 @@ const CRMHomeList = ({
   })
 
   return (
-    <div className="h-full flex flex-col  bg-white shadow-xl overflow-y-scroll">
-      <div className="px-4   z-10">
+    <div className="h-full flex flex-col  bg-[#F0F1FF] shadow-xl ">
+      <div className="">
         {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
           {title}
         </Dialog.Title> */}

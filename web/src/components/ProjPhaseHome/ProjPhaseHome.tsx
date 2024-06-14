@@ -42,6 +42,7 @@ import PlanDiagramView from '../planDiagramView'
 import DialogFormBody from '../DialogFormBody/DialogFormBody'
 
 const ProjPhaseHome = ({
+  ref,
   projectDetails,
   source,
   unitDetails,
@@ -532,6 +533,7 @@ const ProjPhaseHome = ({
                       )}
                        {phaseViewFeature === 'projectDetails' && (
                         <DialogFormBody
+                        ref={ref}
                         title={'Create Project'}
                         // dialogOpen={(=>())}
                         project={phase}

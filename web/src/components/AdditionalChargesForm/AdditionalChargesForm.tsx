@@ -8,7 +8,6 @@ import Select from 'react-select'
 //import { Stepper, Step, Button } from "@material-tailwind/react";
 
 
-import EditableTable from 'src/components/A_ProjModule/Comps/EditableTable'
 import { MaterialCRUDTable } from 'src/components/MaterialCRUDTable'
 import {
   costSheetAdditionalChargesA,
@@ -391,7 +390,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       },
     },
   ]
-   
+
   // Part-3
   // partC columns
   const partCcolumns = [
@@ -796,7 +795,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
 
 
 
-  
+
 const prevStep = () => {
   setCurrentStep(prevStep => (prevStep === 0 ? 2 : prevStep - 1));
 };
@@ -807,10 +806,17 @@ const nextStep = () => {
 };
 
 
-
+const headerStyles = (index) => ({
+  borderTopLeftRadius: index === 0 ? '12px' : '0px',
+  borderTopRightRadius: index === partAcolumns.length - 1 ? '12px' : '0px',
+  borderBottomWidth: '2px',
+  background: '#fff',
+  fontWeight: '600',
+  padding: '13px',
+});
 
   return (
-    <section className='z-10'>
+    <section className=''>
       {/* <table>
         <thead>
           {partAcolumns?.map((rowDa, i) => (
@@ -857,22 +863,22 @@ const nextStep = () => {
 
 
 <div className="flex flex-col px-4 my-6 space-y-4">
-  <div className="flex items-center space-x-4">
+  <div className="flex items-center ">
     {/* Step1*/}
     <div className={`flex items-center ${currentStep === 0 ? 'text-blue-500' : 'text-gray-500'}`}>
-      <div className={`rounded-full ${currentStep >= 0 ? 'bg-[#516F90]' : 'bg-gray-300'} w-8 h-8 flex items-center justify-center text-white`}>1</div>
+      <div className={`rounded-full ${currentStep >= 0 ? 'bg-[#DDD6FE]' : 'bg-gray-300'} w-8 h-8 flex items-center justify-center `}>A</div>
     </div>
     {/* Line1*/}
-    <div className="w-full h-1 bg-gray-300"></div> 
+    <div className="w-full h-[2px] bg-[#E5E7EB]"></div>
     {/* Step2*/}
     <div className={`flex items-center ${currentStep === 1 ? 'text-blue-500' : 'text-gray-500'}`}>
-      <div className={`rounded-full ${currentStep >= 1 ? 'bg-[#516F90]' : 'bg-gray-300'} w-8 h-8 flex items-center justify-center text-white`}>2</div>
+      <div className={`rounded-full ${currentStep >= 1 ? 'bg-[#DDD6FE]' : 'bg-gray-300'} w-8 h-8 flex items-center justify-center `}>B</div>
     </div>
     {/* Line2*/}
-    <div className="w-full h-1 bg-gray-300"></div> 
+    <div className="w-full h-[2px] bg-[#E5E7EB]"></div>
     {/* Step3*/}
     <div className={`flex items-center ${currentStep === 2 ? 'text-blue-500' : 'text-gray-500'}`}>
-      <div className={`rounded-full ${currentStep >= 2 ? 'bg-[#516F90]' : 'bg-gray-300'} w-8 h-8 flex items-center justify-center text-white`}>3</div>
+      <div className={`rounded-full ${currentStep >= 2 ? 'bg-[#DDD6FE]' : 'bg-gray-300'} w-8 h-8 flex items-center justify-center `}>C</div>
     </div>
   </div>
 </div>
@@ -892,8 +898,8 @@ const nextStep = () => {
 
 
 <div className="flex justify-between px-4 mb-4">
-  <button className="px-4 py-2 bg-[#516F90] text-white rounded" onClick={prevStep}>Back</button>
-  <button className="px-4 py-2 bg-[#516F90] text-white rounded" onClick={nextStep}>Next</button>
+  <button className="px-2 py-0 bg-[#DDD6FE] text-[10px] rounded-xl" onClick={prevStep}>Back</button>
+  <button className="px-2 py-0 bg-[#DDD6FE] text-[10px] rounded-xl" onClick={nextStep}>Next</button>
 </div>
 
 
@@ -912,29 +918,36 @@ const nextStep = () => {
 
     <div className='h-full w-full shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll'>
 
-<div className='z-10'>
+<div className=''>
 
-<div className='mt-1'> 
+<div className='mt-1'>
 
 
-<EditableTable />
+
 
 
 <MaterialCRUDTable
   title=""
-  columns={partAcolumns}
+  columns={partAcolumns.map((column, index) => ({
+    ...column,
+    headerStyle: headerStyles(index),
+  }))}
   data={partAData}
   options={{
     headerStyle: {
       borderTopLeftRadius: '12px',
       borderTopRightRadius: '12px',
       borderBottomWidth: '2px',
-      background: '#f8fafd',
+      // background: '#DDD6FE',
       fontWeight: '600px',
       padding: '13px',
+      borderRadius: '0px',
+      zIndex: '0',
+
     },
     actionsColumnIndex: -1,
-    minBodyHeight: '500px',
+    minBodyHeight: '600px',
+    borderRadius: '30px',
     search: false,
     paging: false,
     doubleHorizontalScroll: true,
@@ -942,9 +955,12 @@ const nextStep = () => {
   }}
   style={{
     padding: '0px 20px',
-    borderRadius: '0px',
+    borderRadius: '30px',
     boxShadow: 'none',
     fontSize: '12px',
+    marginLeft: '10px',
+    marginRight: '10px'
+
   }}
   actionsCellStyle={{
     width: 'auto',
@@ -961,11 +977,11 @@ const nextStep = () => {
 </div>
 
 </div>
-             
 
 
 
- 
+
+
         </>
       )}
 
@@ -977,7 +993,7 @@ const nextStep = () => {
           <section className="ml-4 text-md font-[500]">Part-B</section>
           {/* Your Part B content here */}
 
-          <div className="z-10">
+          <div className="">
           {/* <Dialog.Title className="font-semibold text-xl mr-auto ml-3 text-[#053219]">
           {title}
         </Dialog.Title> */}
@@ -999,9 +1015,11 @@ const nextStep = () => {
                   borderTopLeftRadius: '12px',
                   borderTopRightRadius: '12px',
                   borderBottomWidth: '2px',
-                  background: '#f8fafd',
+                  // background: '#D9D8FF',
                   fontWeight: '600px',
                   padding: '13px',
+                  zIndex: '0',
+
                 },
                 actionsColumnIndex: -1,
                 minBodyHeight: '1000px',
@@ -1012,9 +1030,11 @@ const nextStep = () => {
               }}
               style={{
                 padding: '0px 20px',
-                borderRadius: '0px',
+                borderRadius: '30px',
                 boxShadow: 'none',
                 fontSize: '12px',
+                marginLeft: '10px',
+                marginRight: '10px'
               }}
               actionsCellStyle={{
                 width: 'auto',
@@ -1058,6 +1078,8 @@ const nextStep = () => {
                 background: '#f8fafd',
                 fontWeight: '600px',
                 padding: '13px',
+                zIndex: '0',
+
               },
               actionsColumnIndex: -1,
               minBodyHeight: '1000px',
@@ -1068,9 +1090,11 @@ const nextStep = () => {
             }}
             style={{
               padding: '0px 30px',
-              borderRadius: '0px',
+              borderRadius: '30px',
               boxShadow: 'none',
               fontSize: '12px',
+              marginLeft: '10px',
+              marginRight: '10px'
             }}
             actionsCellStyle={{
               width: 'auto',

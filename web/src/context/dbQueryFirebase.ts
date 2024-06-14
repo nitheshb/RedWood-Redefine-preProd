@@ -1656,7 +1656,21 @@ export const getPlanDiagramByPhase = async (orgId, data, snapshot, error) => {
     console.log('error in db', error)
   }
 }
-
+export const getProject = async (orgId, uid: string) => {
+  try {
+    const userRef = doc(db, `${orgId}_projects`, uid)
+    const docSnap = await getDoc(userRef)
+    if (docSnap.exists()) {
+      return docSnap.data()
+    } else {
+      // doc.data() will be undefined in this case
+      console.log('No such document!')
+      return null
+    }
+  } catch (error) {
+    console.log('error in db', error)
+  }
+}
 export const getUser = async (uid: string) => {
   try {
     const userRef = doc(db, 'users', uid)
@@ -2180,7 +2194,7 @@ export const addLead = async (orgId, data, by, msg) => {
     const x = await addDoc(collection(db, `${orgId}_leads`), data)
     await console.log('add Lead value is ', x, x.id, data)
     const { intype, Name, Mobile, countryCode, assignedTo, Project, assignedToObj } = data
-    
+
     const { data3, errorx } = await supabase.from(`${orgId}_lead_logs`).insert([
       {
         type: 'l_ctd',
@@ -3198,12 +3212,13 @@ export const addSchedulerLog = async (orgId, did, data) => {
 
 export const createProject = async (
   orgId,
+  uid,
   element,
   enqueueSnackbar,
   resetForm
 ) => {
   try {
-    const uid = uuidv4()
+
     const uid1 = uuidv4()
     const updated = {
       ...element,
@@ -3262,7 +3277,7 @@ export const createProject = async (
     enqueueSnackbar('Project added successfully', {
       variant: 'success',
     })
-    resetForm()
+    // resetForm()
   } catch (e) {
     enqueueSnackbar(e.message, {
       variant: 'error',

@@ -614,54 +614,7 @@ const SlimSideMenuBar = (props) => {
       {['projectModule'].includes(sourceLink) && (
         <>
           <ul className="w-full">
-            <li className="relative justify-center ">
-              <span
-                className={
-                  'flex items-center justify-center text-sm py-1  overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded  rounded-tl-[30px] rounded-bl-[30px]  hover:text-blue-600 hover:bg-[#ecdbd1] transition duration-300 ease-in-out cursor-pointer ' +
-                  (viewable === 'Today1'
-                    ? 'bg-[#ecdbd1] w-100 rounded-tl-[30px] rounded-bl-[30px] '
-                    : '')
-                }
-                onClick={() => setViewable('MyProjectTasks')}
-                style={{
-                  display: 'block',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                }}
-              >
-                <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#058527' }}>
-                    <svg width="24" height="24" viewBox="0 0 24 24">
-                      <g fill="currentColor" fillRule="evenodd">
-                        <path
-                          fillRule="nonzero"
-                          d="M6 4.5h12A1.5 1.5 0 0 1 19.5 6v2.5h-15V6A1.5 1.5 0 0 1 6 4.5z"
-                          opacity=".1"
-                        ></path>
-                        <path
-                          fillRule="nonzero"
-                          d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6zm1 3h10a.5.5 0 1 1 0 1H7a.5.5 0 0 1 0-1z"
-                        ></path>
-                        <text
-                          fontFamily="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
-                          fontSize="9"
-                          transform="translate(4 2)"
-                          fontWeight="500"
-                        >
-                          <tspan x="8" y="15" textAnchor="middle">
-                            28
-                          </tspan>
-                        </text>
-                      </g>
-                    </svg>
-                  </span>
-                  <span className="text-xs pl-1">Tasks</span>
-                </span>
-                <span className="flex ml-auto items-bottom">
-                  <span className="flex ml-auto items-bottom text-xs mt-2"></span>
-                </span>
-              </span>
-            </li>
+
             <li className="relative mt-1 pt-1">
               <span
                 className={
