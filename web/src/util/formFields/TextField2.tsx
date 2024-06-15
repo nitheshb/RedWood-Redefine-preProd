@@ -4,7 +4,12 @@ import React from 'react'
 import { ErrorMessage, useField } from 'formik'
 // import { InputField, Label } from '@redwoodjs/forms'
 
+
+
+
 export const TextField2 = ({ label, ...props }) => {
+
+
   const [field, meta] = useField(props)
   return (
     <div className="relative z-0 text-sm">
@@ -18,6 +23,7 @@ export const TextField2 = ({ label, ...props }) => {
         autoComplete="off"
         {...field}
         {...props}
+       
       />
    
 
@@ -34,7 +40,13 @@ export const TextField2 = ({ label, ...props }) => {
           className="error-message text-red-700 text-xs p-1 mx-auto"
         />
     </div>
-    // <div className="mb-2 w-full">
+  
+  )
+}
+
+
+
+  // <div className="mb-2 w-full">
     //   <div className="flex flex-row">
     //     <label
     //       htmlFor={field.name}
@@ -59,5 +71,3 @@ export const TextField2 = ({ label, ...props }) => {
     //     autoComplete="off"
     //   />
     // </div>
-  )
-}

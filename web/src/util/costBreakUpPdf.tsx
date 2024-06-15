@@ -80,6 +80,19 @@ const CostBreakUpPdf = ({
   }
 
 
+  // const handlePSdateChange = (index, newDate) => {
+
+  //   const updatedRows = [...newPlotPS];
+  //   const incrementedDate = new Date(newDate);
+  //   incrementedDate.setDate(incrementedDate.getDate() + 30);
+  //   updatedRows[index].schDate = incrementedDate;
+  //   setNewPS(updatedRows);
+  // }
+
+
+
+
+
 
   useEffect(() => {
     console.log('gen costSheetA', costSheetA, costSheet)
@@ -403,9 +416,7 @@ const CostBreakUpPdf = ({
 
   const initialState = initialValuesA
   const validate = Yup.object({
-    // blockReason: Yup.number()
-    //   .max(15, 'Must be 15 characters or less')
-    //   .required('Name is Required'),
+
   })
 
   const setTotalFun = async () => {
@@ -557,10 +568,10 @@ const CostBreakUpPdf = ({
                 </div>
                 </section>
                 <section className="w-full ">
-                                        {' '}
-                                        {stepIndx} of {StatusListA?.length}{' '}
-                                        steps
-                                      </section>
+                  {' '}
+                  {stepIndx} of {StatusListA?.length}{' '}
+                  steps
+                </section>
               </div>
               <div className="mt-4">
                 <div>
@@ -1077,7 +1088,7 @@ const CostBreakUpPdf = ({
                                   Particulars
                                 </th>
                                 <th className="w-[30%] px-2   text-left  tracking-wide uppercase text-[11px] ">
-                                  Payment Timeline
+                                  Payment Timeline of
                                 </th>
                                 <th className="w-[20%] px-2   text-right  tracking-wide uppercase  text-[11px]">
                                   Total inc GST
@@ -1106,6 +1117,8 @@ const CostBreakUpPdf = ({
                                         //   date.getTime()
                                         // )
                                         console.log('data', date.getTime())
+
+                                      
                                         // setStartDate(date)
                                         handlePSdateChange(inx, date.getTime())
                                       }}
