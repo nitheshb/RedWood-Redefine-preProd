@@ -11,6 +11,7 @@ import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import DatePicker from 'react-datepicker'
 import * as Yup from 'yup'
+import { ArrowRightIcon } from '@heroicons/react/outline'
 
 import { AreaConverter } from 'src/components/AreaConverter'
 import Loader from 'src/components/Loader/Loader'
@@ -177,7 +178,9 @@ const setLoading1 = (x)=>{
                               : 'flex-shrink-0 text-black ml-auto'
                           } mt-1 font-light`}
                         >
-                          <svg
+                                <ArrowRightIcon className={`${selFlow.value === option.value ? 'text-[#57C0D0]' : 'text-[#9da7b2]'} w-4 h-4`} />
+
+                          {/* <svg
                             viewBox="0 0 24 24"
                             fill="none"
                             className="w-4 h-4"
@@ -195,7 +198,7 @@ const setLoading1 = (x)=>{
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
-                          </svg>
+                          </svg> */}
                         </div>
                       </section>{' '}
                       <div className="mt-1 mr-2 inline text-sm text-b font-light ">
