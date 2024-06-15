@@ -8,6 +8,7 @@ import { useSnackbar } from 'notistack'
 import { updateUnitStatus } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { computeTotal } from 'src/util/computeCsTotals'
+import { prettyDate } from 'src/util/dateConverter'
 
 const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
   const { user } = useAuth()
@@ -62,7 +63,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
 
       leftOver = newPaidAmount - d1?.value > 0 ? newPaidAmount - d1?.value : 0
       newPaidAmount = newPaidAmount - d1?.value
-      outStanding = bal - d1?.value
+      outStanding =  d1?.value - bal
       return { ...d1, amt: bal, leftOver, outStanding }
     })
 
@@ -166,7 +167,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
                             {d1?.stage?.label}
                             <div className="text-[9px] text-left text-[#60679f] tracking-wider ">
                               {' '}
-                              {d1?.description}
+                              {d1?.description}-{prettyDate(d1?.schDate)}
                             </div>
                           </div>
                         </th>

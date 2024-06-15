@@ -135,6 +135,8 @@ const AdditonalBookingDetails = ({
       leadDetailsObj2?.assignedToObj?.label ||
       additionalInfo?.bookedBy ||
       '',
+
+      referralName: '', // New field for referral name
   }
   // Custom PAN card validation function
 
@@ -152,6 +154,7 @@ const AdditonalBookingDetails = ({
       bookedBy,
       purchasePurpose,
       bookedOn,
+      referralName,
     } = data
     const { uid } = selUnitDetails
 
@@ -161,7 +164,7 @@ const AdditonalBookingDetails = ({
 
     const xData = {}
     xData[`${uid}${'_source_of_pay'}`] = { self: 20, bank: 80 } // sourceOfPay
-    xData[`${uid}${'_otherInfo'}`] = { leadSource, sourceOfPay, purpose }
+    xData[`${uid}${'_otherInfo'}`] = { leadSource, sourceOfPay, purpose, referralName }
 
     const updateDoc = {
       aggrementDetailsObj,
@@ -204,24 +207,24 @@ const AdditonalBookingDetails = ({
   }
   return (
     <>
-      <div className="font-['Inter'] p-2">
+      <div className="font-['Inter'] p-2" >
         <div className="z-10">
         <div
-                                      className="w-full  flex flex-row justify-between mb-2 p-4 bg-violet-100 rounded-t-md"
-                                      style={bgImgStyle}
+                                      className="w-full  flex flex-row justify-between mb-2 p-4 bg-white rounded-t-md"
+                                      // style={bgImgStyle}
                                     >
-                                      <section className="flex flex-row">
+                                      <section className="flex flex-row" >
                                         <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px] mr-2"></div>
                                         <div className="w-full flex flex-col">
-                                          <h6 className="w-full lg:w-12/12 text-white text-[13px] mt-[9px] mb- font-bold uppercase">
+                                          <h6 className="w-full lg:w-12/12 text-black text-[13px] mt-[9px] mb- font-bold uppercase">
                                             More details
                                           </h6>
-                                          <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
+                                          <div className="w-[455.80px] opacity-50 text-black  text-[12px] font-normal ">
                                             Optional details
                                           </div>
                                         </div>
                                       </section>
-                                      <section className="text-white ">
+                                      <section className="text-black ">
                                         {' '}
                                         {stepIndx} of {StatusListA?.length}{' '}
                                         steps
@@ -249,7 +252,7 @@ const AdditonalBookingDetails = ({
                             <div className="flex-auto">
                               <section className=" lg:px-2 ">
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
-                                <section
+                                {/* <section
                                   className="rounded-md  p-4 mt-2 bg-[#fff]"
                                   style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                 >
@@ -267,7 +270,7 @@ const AdditonalBookingDetails = ({
                                       </div>
                                     </div>
                                   </div>
-                                </section>
+                                </section> */}
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
                                 <section
@@ -379,22 +382,43 @@ const AdditonalBookingDetails = ({
 
                                       </div>
                                     </div>
+
+
                                     <div className="w-full lg:w-4/12 px-4">
                                       <div className="relative w-full">
                                       <div className="w-full flex flex-col mb-3">
-                            <CustomSelect
-                              name="leadSource"
-                              label="Lead Source"
-                              className="input"
-                              onChange={(value) => {
-                                formik.setFieldValue('leadSource', value.value)
-                              }}
-                              value={formik.values.leadSource}
-                              options={sourceList}
-                            />
-                          </div>
+                                       <CustomSelect
+                                        name="leadSource"
+                                          label="Lead Source"
+                                           className="input"
+                                         onChange={(value) => {
+                                             formik.setFieldValue('leadSource', value.value)
+                                                  }}
+                                            value={formik.values.leadSource}
+                                            options={sourceList}
+                                                  />
+                                        </div>
                                       </div>
                                     </div>
+
+
+                                    
+                                    <div className="w-full lg:w-4/12 px-4">
+                                      <div className="relative w-full">
+                                      <div className="w-full flex flex-col mb-3">
+                                      <TextField
+                                       label="Referral Name"
+                                       name="referralName"
+                                       type="text"
+                                      
+                                      //  placeholder="Referral name"
+                                       />
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+
                                   </div>
                                 </section>
 

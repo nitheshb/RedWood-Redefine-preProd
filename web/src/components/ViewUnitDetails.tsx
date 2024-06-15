@@ -398,7 +398,9 @@ const ViewUnitDetails = ({
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
                             {data?.unitDetail?.builtup_area?.toLocaleString(
                               'en-IN'
-                            )}
+                            )|| data?.unitDetail?.area?.toLocaleString(
+                              'en-IN'
+                            ) }
                           </div>
                         </section>
                         <section className="flex flow-row justify-between mb-1">
@@ -416,7 +418,9 @@ const ViewUnitDetails = ({
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
                             {data?.unitDetail?.builtup_area?.toLocaleString(
                               'en-IN'
-                            )}
+                            )|| data?.unitDetail?.area?.toLocaleString(
+                              'en-IN'
+                            ) }
                           </div>
                         </section>
                       </section>
@@ -426,7 +430,7 @@ const ViewUnitDetails = ({
                             East
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {data?.unitDetail?.east?.toLocaleString('en-IN')}
+                            {data?.unitDetail?.east_d?.toLocaleString('en-IN')}
                           </div>
                         </section>
                         <section className="flex flow-row justify-between mb-1">
@@ -434,7 +438,7 @@ const ViewUnitDetails = ({
                             West
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {data?.unitDetail?.west?.toLocaleString('en-IN')}
+                            {data?.unitDetail?.west_d?.toLocaleString('en-IN')}
                           </div>
                         </section>
                         <section className="flex flow-row justify-between mb-1">
@@ -442,7 +446,7 @@ const ViewUnitDetails = ({
                             South
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {data?.unitDetail?.south?.toLocaleString('en-IN')}
+                            {data?.unitDetail?.south_d?.toLocaleString('en-IN')}
                           </div>
                         </section>
                         <section className="flex flow-row justify-between mb-1">
@@ -450,38 +454,37 @@ const ViewUnitDetails = ({
                             North
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {data?.unitDetail?.north?.toLocaleString('en-IN')}
+                            {data?.unitDetail?.north_d?.toLocaleString('en-IN')}
                           </div>
                         </section>
                       </section>
                       <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
                         <section className="flex flow-row justify-between mb-1">
                           <div className="font-md text-xs text-gray-700 tracking-wide">
-                            Cost
+                          Release Status
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
                             {(
-                              data?.unitDetail?.builtup_area *
-                              data?.unitDetail?.rate_per_sqft
-                            )?.toLocaleString('en-IN')}
-                          </div>
-                        </section>
-                        <section className="flex flow-row justify-between mb-1">
-                          <div className="font-md text-xs text-gray-500  tracking-wide">
-                            PLC
-                          </div>
-                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {data?.unitDetail?.builtup_area?.toLocaleString(
-                              'en-IN'
+                          
+                              data?.unitDetail?.release_status
                             )}
                           </div>
                         </section>
                         <section className="flex flow-row justify-between mb-1">
                           <div className="font-md text-xs text-gray-500  tracking-wide">
-                            Total
+                          Survey No
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {data?.unitDetail?.facing}
+                            {data?.unitDetail?.survey_no
+                            }
+                          </div>
+                        </section>
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-500  tracking-wide">
+                            Type
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {data?.unitDetail?.size}
                           </div>
                         </section>
                         <section className="flex flow-row justify-between mb-1">
