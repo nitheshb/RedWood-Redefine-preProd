@@ -656,7 +656,7 @@ const ShowCustomerDetails = ({
                 {prettyDate(leadDetailsObj2?.customerDetailsObj?.dob1 || datee)}
               </span>
               <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">Maritural Status:</span>{' '}
+                <span className="text-[#99488e]">Marital Status:</span>{' '}
                 {leadDetailsObj2?.customerDetailsObj?.marital1?.value}
               </span>
               <section className="flex flex-row justify-between mt-4">
@@ -721,7 +721,7 @@ const ShowCustomerDetails = ({
                 )}
               </span>
               <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">Maritural Status:</span>{' '}
+                <span className="text-[#99488e]">Marital Status:</span>{' '}
                 {leadDetailsObj2?.secondaryCustomerDetailsObj?.marital2?.value}
               </span>
               <section className="flex flex-row justify-between mt-4">

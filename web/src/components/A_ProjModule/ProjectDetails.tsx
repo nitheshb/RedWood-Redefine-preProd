@@ -50,6 +50,8 @@ const ProjectDetailsFlowBody = ({setProject, title, dialogOpen, project }) => {
   const [selOptionalItem, setoptionalItem] = useState('Blocks')
   const [loading, setLoading] = useState(false)
   const [submitter, setSubmitter] = useState(0)
+  const { enqueueSnackbar } = useSnackbar()
+
 
   const [bankDetailsA, setBankDetailsA] = useState([])
   const [selFlow, setSelFlow] = useState({
@@ -141,8 +143,14 @@ const setLoading1 = (x)=>{
                   selFlow.value === option.value ? 'bg-blue-100' : ''
                 } `}
                 onClick={() => {
+                  if(project?.uid){
                   setoptionalItem(option?.value)
                   setSelFlow(option)
+                  }else{
+                    enqueueSnackbar('Please create project to proceed..!', {
+                      variant: 'warning',
+                    })
+                  }
                 }}
               >
                 <div className="w-full">
@@ -262,7 +270,14 @@ const setLoading1 = (x)=>{
             className="mb-2 md:mb-0 bg-[#57C0D0] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg "
             disabled={loading}
             onClick={() =>  {
+              if(project?.uid){
+
              goToNext()
+              }else{
+                enqueueSnackbar('Please create project to proceed..!', {
+                  variant: 'warning',
+                })
+              }
 
             }
             }

@@ -66,6 +66,20 @@ const CaptureUnitPayment = ({
   const [bankDetailsA, setBankDetailsA] = useState([])
   const [creditNotersA, setCreditNoters] = useState([])
 
+
+
+  // const [formattedValue, setFormattedValue] = useState('');
+
+  // const handleChange = (e) => {
+  //   const value = e.target.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+  //   const formatted = value ? `Rs.${parseInt(value, 10).toLocaleString('en-IN')}` : '';
+  //   setFormattedValue(formatted);
+  // };
+
+
+
+  
+
   const [startDate, setStartDate] = useState(d)
 
   const [paymentModex, setPaymentModex] = useState('cheque')
@@ -501,6 +515,7 @@ const CaptureUnitPayment = ({
                                                 label="Amount"
                                                 name="amount"
                                                 type="number"
+                                              
                                               />
                                             </div>
                                           </div>

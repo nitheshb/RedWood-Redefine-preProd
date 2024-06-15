@@ -174,7 +174,7 @@ const AddNewDemand = ({
 
     // await handleFileUploadFun(data?.fileUploader, 'panCard1')
     // const z = await commentAttachUrl
-    const { amount, mode, payReason, gst } = data
+    const { amount, mode, payReason,dated, gst } = data
     const gstV = gst / 100
     const totalWithGst = Number(amount) + Number(amount) * Number(gstV)
     const x = {
@@ -198,13 +198,13 @@ const AddNewDemand = ({
         value: mode,
         label: mode,
       },
-      schDate: 1694422421000,
+      schDate: dated,
       myId: 'uuid',
       leftOver: totalWithGst,
       oldDate: 0,
       percentage: '200000',
       zeroDay: '0',
-      elgFrom: 1715764326197,
+      elgFrom: dated,
       amt: totalWithGst,
       order: selUnitDetails?.fullPS?.length + 1,
       preCheck: totalWithGst,

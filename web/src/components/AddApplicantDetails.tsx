@@ -63,6 +63,17 @@ const AddApplicantDetails = ({
   const [startDate, setStartDate] = useState(d)
   const [showLeadLink, setShowLeadLink] = useState(false)
 
+  const customPhoneNoFieldStyles = {
+    border: 'none',
+    borderRadius: '10px',
+    outline: 'none'
+
+    // Add any other custom styles you want to apply
+  };
+
+
+
+
   useEffect(() => {
     console.log('yo yo ', selUnitDetails, leadPayload)
     setPanCard1(leadPayload?.customerDetailsObj?.panDocUrl1)
@@ -340,11 +351,24 @@ const AddApplicantDetails = ({
       customerInfo?.customerDetailsObj?.phoneNo1 ||
       leadPayload?.Mobile ||
       '',
+    phoneNo3:
+      leadPayload?.customerDetailsObj?.phoneNo3 ||
+      selUnitDetails?.customerDetailsObj?.phoneNo3 ||
+      customerInfo?.customerDetailsObj?.phoneNo3 ||
+      leadPayload?.Mobile ||
+      '',
     phoneNo2:
       leadPayload?.secondaryCustomerDetailsObj?.phoneNo2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.phoneNo2 ||
       customerInfo?.secondaryCustomerDetailsObj?.phoneNo2 ||
       '',
+
+    phoneNo4:
+      leadPayload?.secondaryCustomerDetailsObj?.phoneNo4 ||
+      selUnitDetails?.secondaryCustomerDetailsObj?.phoneNo4 ||
+      customerInfo?.secondaryCustomerDetailsObj?.phoneNo4 ||
+      '',
+ 
     email1:
       leadPayload?.customerDetailsObj?.email1 ||
       selUnitDetails?.customerDetailsObj?.email1 ||
@@ -393,11 +417,83 @@ const AddApplicantDetails = ({
       selUnitDetails?.customerDetailsObj?.city1 ||
       customerInfo?.customerDetailsObj?.city1 ||
       '',
+
+
+
+    countryName1:
+      leadPayload?.customerDetailsObj?.countryName1 ||
+      selUnitDetails?.customerDetailsObj?.countryName1 ||
+      customerInfo?.customerDetailsObj?.countryName1 ||
+      '',
+
+  
+    pincode1:
+      leadPayload?.customerDetailsObj?.pincode1 ||
+      selUnitDetails?.customerDetailsObj?.pincode1 ||
+      customerInfo?.customerDetailsObj?.pincode1 ||
+      '',
+
+
+    countryCode1:
+      leadPayload?.customerDetailsObj?. countryCode1 ||
+      selUnitDetails?.customerDetailsObj?. countryCode1 ||
+      customerInfo?.customerDetailsObj?. countryCode1 ||
+      '',
+
+
+
+
+    countryCode2:
+      leadPayload?.customerDetailsObj?. countryCode2 ||
+      selUnitDetails?.customerDetailsObj?. countryCode2 ||
+      customerInfo?.customerDetailsObj?. countryCode2 ||
+      '',
+
+
+
+     
+
+
+     
+
+
     city2:
       leadPayload?.secondaryCustomerDetailsObj?.city2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.city2 ||
       customerInfo?.secondaryCustomerDetailsObj?.city2 ||
       '',
+
+    countryName2:
+      leadPayload?.secondaryCustomerDetailsObj?.countryName2 ||
+      selUnitDetails?.secondaryCustomerDetailsObj?.countryName2 ||
+      customerInfo?.secondaryCustomerDetailsObj?.countryName2 ||
+      '',
+
+
+      pincode2:
+      leadPayload?.secondaryCustomerDetailsObj?.pincode2 ||
+      selUnitDetails?.secondaryCustomerDetailsObj?.pincode2 ||
+      customerInfo?.secondaryCustomerDetailsObj?.pincode2 ||
+      '',
+
+
+
+
+      countryCode3:
+      leadPayload?.secondaryCustomerDetailsObj?.countryCode3 ||
+      selUnitDetails?.secondaryCustomerDetailsObj?.countryCode3 ||
+      customerInfo?.secondaryCustomerDetailsObj?.countryCode3 ||
+      '',
+
+
+      countryCode4:
+      leadPayload?.secondaryCustomerDetailsObj?.countryCode4 ||
+      selUnitDetails?.secondaryCustomerDetailsObj?.countryCode4 ||
+      customerInfo?.secondaryCustomerDetailsObj?.countryCode4 ||
+      '',
+
+
+
     state1: leadPayload?.customerDetailsObj?.state1 ||
       selUnitDetails?.customerDetailsObj?.state1 ||
       customerInfo?.customerDetailsObj?.state1 || {
@@ -570,6 +666,11 @@ const AddApplicantDetails = ({
       relation1,
       co_Name1,
       phoneNo1,
+      phoneNo3,
+      countryName1,
+      countryCode1,
+      countryCode2,
+      pincode1,
       email1,
       dob1,
       marital1,
@@ -583,6 +684,11 @@ const AddApplicantDetails = ({
       relation2,
       co_Name2,
       phoneNo2,
+      phoneNo4,
+      countryCode3,
+      countryCode4,
+      countryName2,
+      pincode2,
       email2,
       dob2,
       marital2,
@@ -617,6 +723,11 @@ const AddApplicantDetails = ({
       relation1: relation1,
       co_Name1: co_Name1,
       phoneNo1: phoneNo1,
+      phoneNo3: phoneNo3,
+      countryCode1: countryCode1,
+      countryCode2 : countryCode2,
+      pincode1: pincode1,
+      countryName1: countryName1,
       email1: email1,
       dob1: dob1,
       marital1: marital1,
@@ -636,6 +747,11 @@ const AddApplicantDetails = ({
       relation2,
       co_Name2,
       phoneNo2,
+      phoneNo4,
+      pincode2,
+      countryName2,
+      countryCode3,
+      countryCode4,
       email2,
       dob2,
       marital2,
@@ -794,17 +910,17 @@ const AddApplicantDetails = ({
                                     style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                   >
                                     <div
-                                      className="w-full  flex flex-row justify-between mb-2 p-4 bg-violet-100 rounded-t-md"
-                                      style={bgImgStyle}
+                                      className="w-full  flex flex-row justify-between mb-2 p-4 bg-white-100 rounded-t-md"
+                                      // style={bgImgStyle}
                                     >
                                       <section className="flex flex-row">
                                         <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px] mr-2"></div>
                                         <div className="w-full flex flex-col">
-                                          <h6 className="w-full lg:w-12/12 text-white text-[13px] mt-[2px] mb- font-bold uppercase">
+                                          <h6 className="w-full lg:w-12/12 text-black text-[13px] mt-[2px] mb- font-bold uppercase">
                                             Applicant
                                           </h6>
                                           <div
-                                            className="text-[12px] cursor-pointer  bg-white rounded-full px-2 py-[2px]"
+                                            className="text-[12px] cursor-pointer  bg-[#EBE7FC] rounded-full px-2 py-[2px]"
                                             onClick={() =>
                                               setShowLeadLink(!showLeadLink)
                                             }
@@ -818,7 +934,7 @@ const AddApplicantDetails = ({
                                         </div>
                                       </section>
 
-                                      <section className="text-white flex flex-col">
+                                      <section className="text-black flex flex-col">
                                         <label className="text-right">
                                           {' '}
                                           {stepIndx} of {StatusListA?.length}{' '}
@@ -926,9 +1042,10 @@ const AddApplicantDetails = ({
 
                                       <div className="w-full  flex flex-row lg:w-12/12 ">
                                         <div className="w-full lg:w-3/12 px- ">
-                                          <div className="relative w-full ">
-                                            <PhoneNoField
-                                              label="Phone No"
+                                          <div className="relative w-full mt-1">
+                                            
+                                            {/* <PhoneNoField
+                                              label="Primary Phone No"
                                               name="phoneNo1"
                                               // type="text"
                                               value={formik.values.phoneNo1}
@@ -948,21 +1065,130 @@ const AddApplicantDetails = ({
                                               textSize="text-[12px]"
                                               txtPad="px-1"
                                               className="text-[10px]"
-                                            />
+                                            /> */}
+
+
+
+<div className="space-y-1 w-full text-xs">
+  <label htmlFor="countryCode" className="inline-block">
+  Primary Phone No
+  </label>
+  
+  <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
+  <div className="inline-block">
+      <input
+        type="text"
+        id="countryCode1"
+        name="countryCode1"
+        value={formik.values.countryCode1}
+        onChange={(e) => {
+          formik.setFieldValue('countryCode1', e.target.value);
+        }}
+        onBlur={formik.handleBlur}
+        className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none rounded-l-md focus:outline-none"
+        placeholder="+91"
+      />
+      {formik.errors.countryCode1 && formik.touched.countryCode1 && (
+        <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode1}</div>
+      )}
+    </div>
+
+
+
+    <div className='border-l border-gray-400 mt-1 mb-1'></div>
+
+   
+      <PhoneNoField
+        name="phoneNo1"
+        value={formik.values.phoneNo1}
+        customStyles={customPhoneNoFieldStyles}
+        onChange={(value) => {
+          console.log('value is ', value);
+          formik.setFieldValue('phoneNo1', value.value);
+        }}
+        options={{}}
+        labelSize="text-[11px]"
+        textSize="text-[12px]"
+        txtPad="px-1"
+        className="w-full h-8 !rounded-none border-none !rounded-r-md focus:outline-none my-custom-class"
+      />
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
                                           </div>
                                         </div>
-                                        <div className="w-full lg:w-3/12 pl-4">
-                                          <div className="relative w-full">
-                                            <TextField
-                                              label="Email"
-                                              name="email1"
-                                              type="text"
-                                            />
+
+
+                                      <div className="w-full lg:w-3/12 pl-4">
+                                          <div className="relative w-full mt-1">
+
+
+
+                                          <div className="space-y-1 w-full text-xs">
+                                          <label htmlFor="countryCode" className="inline-block">
+                                            Secondary Phone No
+                                          </label>
+  
+                                          <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
+                                          <div className="inline-block">
+                                          <input
+                                          type="text"
+                                           id="countryCode2"
+                                           name="countryCode2"
+                                           value={formik.values.countryCode2}
+                                           onChange={(e) => formik.setFieldValue('countryCode2', e.target.value)}
+                                           onBlur={formik.handleBlur}
+                                           className="w-11 bg-grey-lighter text-grey-darker h-7 px-1 border-none rounded-l-md focus:outline-none"
+                                           placeholder="+91"
+                                             />
+                                          {formik.errors.countryCode2 && formik.touched.countryCode2 && (
+                                          <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode2}</div>
+                                            )}
+                                          </div>
+
+
+
+                                        <div className='border-l border-gray-400 mt-1 mb-1'></div>
+
+
+
+    
+                                          <PhoneNoField
+                                           
+                                           name="phoneNo3"
+                                           value={formik.values.phoneNo3}
+                                           customStyles={customPhoneNoFieldStyles}
+                                           onChange={(value) => {
+                                           formik.setFieldValue('phoneNo3', value.value);
+                                           }}
+                                           options={{}}
+                                           labelSize="text-[11px]"
+                                          textSize="text-[12px]"
+                                          txtPad="px-1"
+                                          className="w-full h-8 !rounded-none border-none !rounded-r-md focus:outline-none my-custom-class"
+                                           />
+
+    
+                                         </div>
+                                            </div>
+
+                                            
                                           </div>
                                         </div>
+
+                                        
+
                                         <div className="w-full lg:w-3/12 pl-4  ">
                                           <section className="">
-                                            <div className="w-full flex flex-col mb-3">
+                                            <div className="w-full flex flex-col mt-1">
                                               <CustomSelect
                                                 name="MaritualStatus"
                                                 label="Status"
@@ -1001,13 +1227,13 @@ const AddApplicantDetails = ({
                                           </section>
                                         </div>
                                         <div className="w-full lg:w-3/12 mt-[px] pl-4 mr-3">
-                                          <div className="relative w-full mb-3 ">
+                                          <div className="relative w-full mb-3 mt-1 ">
                                             <label className="text-gray-500 text-[10px]">
                                               Date Of Birth
                                             </label>
                                             <span className="inline">
                                               <DatePicker
-                                                className="h-8 outline-none border-radius rounded-md  px-2 border-[#cccccc] border-gray-500 text-sm mt-[-4px] pb-1  w-[90%] inline  w-full flex bg-grey-lighter text-grey-darker border border-gray-500 "
+                                                className="h-8 outline-none border-radius rounded-md  px-2 border-[#cccccc] border-gray-500 text-sm mt-[-4px] pb-1  w-[90%] inline   flex bg-grey-lighter text-grey-darker border border-gray-500 "
                                                 label="Dated"
                                                 name="dob1"
                                                 selected={formik.values.dob1}
@@ -1040,7 +1266,7 @@ const AddApplicantDetails = ({
                                         <div className="flex flex-row justify-between">
                                           <section className="w-12/12 w-full">
                                             <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
-                                              PAN No{' '}
+                                              PAN No frist{' '}
                                             </label>
                                             <MuiTextField
                                               id="area"
@@ -1204,6 +1430,23 @@ const AddApplicantDetails = ({
                                             />
                                           </section>
                                         </div>
+
+
+
+                                        <div className="w-full lg:w-12/12">
+                                          <div className="relative w-full">
+                                            
+                                            <TextField
+                                              label="Email"
+                                              name="email1"
+                                              type="text"
+                                            />
+                                          </div>
+                                        </div>
+
+
+
+
                                         <div className="w-full lg:w-12/12 ">
                                           <div className="relative w-full mb-3 mt-2">
                                             <TextField
@@ -1213,6 +1456,28 @@ const AddApplicantDetails = ({
                                             />
                                           </div>
                                         </div>
+
+
+
+
+                                        <div className="w-full flex flex-row lg:w-12/12">
+                                         <div className="w-full lg:w-12/12 px-">
+                                         {/* Country Name  */}
+                                         <div className="relative w-full mb-3 mt-2">
+                                            <TextField label="Country Name" name="countryName1" type="text" />
+                                         </div>
+                                         </div>
+                                         <div className="w-full lg:w-12/12 pl-4">
+                                         {/* Pincode*/}
+                                         <div className="relative w-full mb-3 mt-2">
+                                            <TextField label="Pincode" name="pincode1" type="text" />
+                                         </div>
+                                          </div>
+                                        </div>
+
+
+
+
                                         <div className="w-full  flex flex-row lg:w-12/12">
                                           <div className="w-full lg:w-12/12 px- ">
                                             <div className="relative w-full mb-3 mt-2">
@@ -1328,6 +1593,8 @@ const AddApplicantDetails = ({
                                             </div>
                                           </div>
                                         </div>
+
+
                                       </div>
                                     </div>
                                   </section>
@@ -1338,15 +1605,15 @@ const AddApplicantDetails = ({
                                     style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                   >
                                     <div
-                                      className="w-full  flex flex-row mb-2 p-4 bg-violet-100 rounded-t-md"
-                                      style={bgImgStyle}
+                                      className="w-full  flex flex-row mb-2 p-4 bg-white rounded-t-md"
+                                      // style={bgImgStyle}
                                     >
                                       <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px]"></div>
                                       <div className="w-full flex flex-col ml-2">
-                                        <h6 className="w-full lg:w-12/12 text-white text-[13px] mt-[9px] mb- font-bold uppercase">
+                                        <h6 className="w-full lg:w-12/12 text-black text-[13px] mt-[9px] mb- font-bold uppercase">
                                           Co-applicant
                                         </h6>
-                                        <div className="w-[455.80px] opacity-50 text-gray-100  text-[12px] font-normal ">
+                                        <div className="w-[455.80px] opacity-50 text-black text-[12px] font-normal ">
                                           Details of co-applicant is not a
                                           mandatory
                                         </div>
@@ -1417,14 +1684,44 @@ const AddApplicantDetails = ({
                                       </div>
                                       </div>
 
-                                      <div className="w-full  flex flex-row lg:w-12/12 mt-1">
-                                        <div className="w-full lg:w-3/12 px- ">
-                                          <div className="relative w-full mb-3 mt-[10px]">
-                                            <PhoneNoField
-                                              label="Phone No"
+                                      <div className="w-full  flex flex-row lg:w-12/12">
+                                        <div className="w-full lg:w-3/12 mb-2 ">
+                                          <div className="relative w-full mt-2">
+
+
+
+                                          <div className="space-y-1 w-full text-xs">
+  <label htmlFor="countryCode" className="inline-block">
+    Primary Phone No
+  </label>
+  
+  <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
+    <div className="inline-block">
+      <input
+        type="text"
+        id="countryCode3"
+        name="countryCode3"
+        value={formik.values.countryCode3}
+        onChange={(e) => formik.setFieldValue('countryCode3', e.target.value)}
+        onBlur={formik.handleBlur}
+        className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none rounded-l-md focus:outline-none"
+        placeholder="+91"
+      />
+      {formik.errors.countryCode3 && formik.touched.countryCode3 && (
+        <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode3}</div>
+      )}
+    </div>
+
+    <div className='border-l border-gray-400 mt-1 mb-1'></div>
+
+
+
+                                          <PhoneNoField
+                                            
                                               name="phoneNo2"
                                               // type="text"
                                               value={formik.values.phoneNo2}
+                                              customStyles={customPhoneNoFieldStyles}
                                               onChange={(value) => {
                                                 // formik.setFieldValue('mobileNo', value.value)
                                                 formik.setFieldValue(
@@ -1439,20 +1736,99 @@ const AddApplicantDetails = ({
                                               txtPad="px-2"
                                               className="text-[10px]"
                                             />
+
+
+
+
+
+
+  </div>
+</div>
+
+
+
                                           </div>
                                         </div>
+
+{/* 
                                         <div className="w-full lg:w-3/12 pl-4">
-                                          <div className="relative w-full mb-3 mt-2">
+                                          <div className="relative w-full mt-2">
                                             <TextField
                                               label="Email"
                                               name="email2"
                                               type="text"
                                             />
                                           </div>
-                                        </div>
+                                        </div> */}
+
+
+
+
+<div className="w-full lg:w-3/12 pl-4">
+    <div className="relative w-full mt-2">
+
+
+
+
+
+
+
+    <div className="space-y-1 w-full text-xs">
+  <label htmlFor="countryCode" className="inline-block">
+  Secondary Phone No
+  </label>
+  
+  <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
+    <div className="inline-block">
+      <input
+        type="text"
+        id="countryCode4"
+        name="countryCode4"
+        value={formik.values.countryCode4}
+        onChange={(e) => formik.setFieldValue('countryCode4', e.target.value)}
+        onBlur={formik.handleBlur}
+        className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none rounded-l-md focus:outline-none"
+        placeholder="+91"
+      />
+      {formik.errors.countryCode4 && formik.touched.countryCode4 && (
+        <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode4}</div>
+      )}
+    </div>
+
+    <div className='border-l border-gray-400 mt-1 mb-1'></div>
+
+
+
+   
+
+    <PhoneNoField
+      
+        name="phoneNo4"
+        value={formik.values.phoneNo4}
+        customStyles={customPhoneNoFieldStyles}
+       
+        onChange={(value) => {
+          formik.setFieldValue('phoneNo4', value.value);
+        }}
+        options={{}}
+        labelSize="text-[11px]"
+        textSize="text-[12px]"
+        txtPad="px-1"
+        className="text-[10px]"
+      />
+
+  </div>
+</div>
+
+
+
+    </div>
+  </div>
+
+
                                         <div className="w-full lg:w-3/12 pl-4">
                                             <section className="">
-                                              <div className="w-full flex flex-col mb-3 mt-2">
+                                              <div className="w-full flex flex-col mt-2">
                                                 <CustomSelect
                                                   name="MaritualStatus"
                                                   label="Status"
@@ -1492,7 +1868,7 @@ const AddApplicantDetails = ({
                                             </section>
                                           </div>
                                           <div className="w-full lg:w-3/12 mt-[px] pl-4 mr-3">
-                                            <div className="relative w-full mb-3 mt-2">
+                                            <div className="relative w-full mt-2 ">
                                               <label
                                                 htmlFor={'dob2'}
                                                 className="text-gray-500 text-[10px]"
@@ -1501,7 +1877,7 @@ const AddApplicantDetails = ({
                                               </label>
                                               <span className="inline">
                                                 <DatePicker
-                                                  className="h-8 outline-none border-[#cccccc] rounded-md px-2 border-gray-500 text-sm mt-[-4px] pb-1   w-[90%]  inline      w-full flex bg-grey-lighter text-grey-darker border border-gray-500 "
+                                                  className="h-8 outline-none border-[#cccccc] rounded-md px-2 border-gray-500 text-sm mt-[-4px] pb-1   w-[90%]  inline   flex bg-grey-lighter text-grey-darker border border-gray-500 "
                                                   label="Dated"
                                                   name="dob2"
                                                   selected={formik.values.dob2}
@@ -1541,9 +1917,9 @@ const AddApplicantDetails = ({
                                       <div className="w-full">
 
                                       <div className="flex flex-row justify-between">
-                                          <section className="w-6/12 w-full">
+                                          <section className="w-6/12">
                                           <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
-                                          PAN No{' '}
+                                          PAN No secound{' '}
                                         </label>
                                         <MuiTextField
                                           id="area"
@@ -1700,6 +2076,22 @@ const AddApplicantDetails = ({
                                         />
                                           </section>
                                         </div>
+
+
+                                        
+                                        <div className="w-full lg:w-12/12">
+                                          <div className="relative w-full mt-2">
+                                            <TextField
+                                              label="Email"
+                                              name="email2"
+                                              type="text"
+                                            />
+                                          </div>
+                                        </div>
+
+
+
+
                                         <div className="w-full lg:w-12/12 ">
                                           <div className="relative w-full mb-3 mt-2">
                                             <TextField
@@ -1709,6 +2101,22 @@ const AddApplicantDetails = ({
                                             />
                                           </div>
                                         </div>
+
+                                        <div className="w-full flex flex-row lg:w-12/12 mt-4">
+  <div className="w-full lg:w-12/12 px-">
+    {/* Country Name 2 */}
+    <div className="relative w-full mb-3 mt-2">
+      <TextField label="Country Name" name="countryName2" type="text" />
+    </div>
+  </div>
+  <div className="w-full lg:w-12/12 pl-4">
+    {/* Pincode 2 */}
+    <div className="relative w-full mb-3 mt-2">
+      <TextField label="Pincode" name="pincode2" type="text" />
+    </div>
+  </div>
+</div>
+
                                         <div className="w-full  flex flex-row lg:w-12/12 mt-1">
                                           <div className="w-full lg:w-5/12 px- ">
                                             <div className="relative w-full mb-3 mt-2">

@@ -35,6 +35,7 @@ import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import { TextField } from 'src/util/formFields/TextField'
 
 import AddBankDetailsForm from '../addBankDetailsForm'
+import { constants } from 'os'
 
 const DialogFormBody = ({
   title,
@@ -95,6 +96,11 @@ const DialogFormBody = ({
     setNowBuilderBankDocId(project?.builderBankDocId)
     setNowLandLordBankDocId(project?.landlordBankDocId)
   }, [project?.editMode])
+  useEffect(() => {
+   const bankAccountsA = project?.bankAccounts || [];
+    setBankAccounts(bankAccountsA)
+  }, [])
+
 
   const EditedLandlord = (e, formik) => {
     //
@@ -137,6 +143,7 @@ const DialogFormBody = ({
   const onSubmit = async (data, resetForm) => {
     const updatedData = {
       ...data,
+      bankAccounts:bankAccounts,
       projectType: selected,
       developmentType: devType,
       editMode: true,
@@ -236,9 +243,9 @@ const DialogFormBody = ({
     projectName: Yup.string()
       .max(30, 'Must be 30 characters or less')
       .required('Required'),
-    builderName: Yup.string()
-      .min(3, 'Must be 3 characters or more')
-      .required('Required'),
+    // builderName: Yup.string()
+    //   .min(3, 'Must be 3 characters or more')
+    //   .required('Required'),
     location: Yup.string().required('Required'),
     pincode: Yup.string()
       .required('Required')
@@ -252,10 +259,10 @@ const DialogFormBody = ({
     //     : Yup.string().notRequired(),
     // builderShare: Yup.number().required('Required'),
     // builderBankDocId: Yup.string().required('Required'),
-    landlordBankDocId:
-      devType.name === 'Joint'
-        ? Yup.string().required('Required')
-        : Yup.string().notRequired(),
+    // landlordBankDocId:
+    //   devType.name === 'Joint'
+    //     ? Yup.string().required('Required')
+    //     : Yup.string().notRequired(),
   })
   return (
     <div className=" lg:col-span-10 border w-full bg-[#F0F1FF] ">
@@ -279,7 +286,7 @@ const DialogFormBody = ({
             <Formik
               //  innerRef={ref}
               initialValues={initialState}
-              // validationSchema={createProjectSchema}
+              validationSchema={createProjectSchema}
               onSubmit={(values, { resetForm }) => {
                 console.log('selected value is')
                 onSubmit(values, resetForm)
