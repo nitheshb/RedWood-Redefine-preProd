@@ -1545,7 +1545,7 @@ const Floordetails = ({
               </ul>
             )}
             {/* 1 */}
-            {source === 'projectManagement' && (
+            {['projectManagement', 'projectOnboard'].includes(source) && (
               <div className=" z-10 flex flex-row my-[30px]">
                 {['Apartments'].includes(projectDetails?.projectType?.name) && (
                   <div

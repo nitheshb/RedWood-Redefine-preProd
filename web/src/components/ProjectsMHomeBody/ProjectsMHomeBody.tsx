@@ -19,7 +19,7 @@ import PieChartProject from '../comps/pieChartProject'
 import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
 import SiderForm from '../SiderForm/SiderForm'
 
-const ProjectsMHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
+const ProjectsMHomeBody = ({ project,setProject, onSliderOpen = () => {}, isEdit }) => {
   const [isNewProjectOpen, setIsNewProjectOpen] = useState(false)
   const handleNewProjectClose = () => setIsNewProjectOpen(false)
 
@@ -426,6 +426,7 @@ const ProjectsMHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
         setOpen={handleNewProjectClose}
         title="project_details"
         data={project}
+        setProject={setProject}
         widthClass="max-w-6xl"
       />
     </>

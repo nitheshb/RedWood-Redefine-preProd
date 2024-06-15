@@ -42,7 +42,7 @@ const HomePage = () => {
   const handleEditProjectClose = () => setIsEditProjectOpen(false)
   const [projects, setProjects] = useState([])
   const [salesReportsDbData, setSalesReportsDbData] = useState([])
-  const [viewable, setViewable] = useState('Home')
+  const [viewable, setViewable] = useState('ongoing_projects')
   const { loading } = usePageLoadingContext()
   const [selModule, setSelModule] = useState('Projects')
 
@@ -1224,6 +1224,7 @@ const HomePage = () => {
                                           <ProjectsMHomeBody
                                             key={project.uid}
                                             project={project}
+                                            setProject={setProject}
                                             onSliderOpen={() => {
                                               setProject(project)
                                               setIsEditProjectOpen(true)
@@ -1643,7 +1644,8 @@ const HomePage = () => {
                             open={isNewProjectOpen}
                             setOpen={handleNewProjectClose}
                             title="Create Project"
-                            data={{}}
+                            data={project}
+                            setProject={setProject}
                             widthClass="max-w-2xl"
                           />
                           <SiderForm

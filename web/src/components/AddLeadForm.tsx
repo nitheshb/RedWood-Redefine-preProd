@@ -57,7 +57,13 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
   const [closeWindowMode, setCloseWindowMode] = useState(false)
   const [trashMode, setTrashMode] = useState(false)
   const [binReason, setBinreason] = useState('DUPLICATE_ENTRY')
-  //const [countryCode, setCountryCode] = useState('+91');
+  const customPhoneNoFieldStyles = {
+    border: 'none',
+    borderRadius: '10px',
+    outline: 'none'
+
+    // Add any other custom styles you want to apply
+  };
 
   const [startDate, setStartDate] = useState(d)
   const [customerDetailsTuned, setCustomerDetailsTuned] = useState({})
@@ -224,7 +230,6 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
   const onSubmitFun = async (data, resetForm) => {
 
     //console.log(data)
-    // set status as uploadeddata
     setLoading(true)
     if (user?.role?.includes(USER_ROLES.CP_AGENT)) {
       const { uid, email, displayName, department, role, orgId, phone } = user
@@ -410,7 +415,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col  my-10 rounded-lg bg-white border border-gray-100 px-4 m-4 mt-4">
           <div className="mt-0">
-            {/* new one */}
+          
 
             <Formik
               enableReinitialize={true}
@@ -450,15 +455,6 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                       </div>
                     </div>
                     <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2">
-                      {/* <div className="mb-3 space-y-2 w-full text-xs">
-
-                        <TextField
-                          label="Contact Date"
-                          name="cDate"
-                          type="text"
-                        />
-                      </div> */}
-
                       <div className="mb-3 space-y-2 w-full text-xs">
                         <TextField
                           label="Customer Name"
@@ -466,11 +462,9 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                           type="text"
                         />
                       </div>
-                      <div className="mb-1 space-y-2 w-full text-xs">
 
-
-
-
+                      
+                      {/* <div className="mb-1 space-y-2 w-full text-xs">
 <div className="flex">
     <div className="inline-block mt-5">
     <input
@@ -481,7 +475,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       onChange={(e) => {
         formik.setFieldValue('countryCode', e.target.value)}}
       onBlur={formik.handleBlur}
-      className="w-20 bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-8 px-4"
+      className="w-20 bg-grey-lighter text-grey-darker border-l border-t border-b border-[#cccccc] border-r-0 rounded-l-md rounded-tr-none rounded-br-none h-8 px-4"
     />
     {formik.errors.countryCode && formik.touched.countryCode && (
       <div className="text-red-500 text-xs">{formik.errors.countryCode}</div>
@@ -491,7 +485,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
     <PhoneNoField
       name="mobileNo"
       label="Mobile No*"
-      className="input w-full"
+      className="input w-full !rounded-none !rounded-r-md"
       onChange={(value) => {
         formik.setFieldValue('mobileNo', value.value)
       }}
@@ -500,10 +494,54 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
     />
 
 </div>
+                      </div> */}
+
+
+<div className=" space-y-1 w-full text-xs">
+<label htmlFor="countryCode" className="inline-block">
+Mobile No
+    </label>
+  <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md ">
+
+    <div className="inline-block">
+      
+      <input
+        type="text"
+        id="countryCode"
+        name="countryCode"
+        value={formik.values.countryCode}
+        onChange={(e) => {
+          formik.setFieldValue('countryCode', e.target.value);
+        }}
+        onBlur={formik.handleBlur}
+        className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none  rounded-l-md focus:outline-none"
+      />
+      {formik.errors.countryCode && formik.touched.countryCode && (
+        <div className="text-red-500 text-xs">{formik.errors.countryCode}</div>
+      )}
+    </div>
+
+    <div className='border-l border-gray-400 mt-1 mb-1 mr-2'></div>
+
+    <PhoneNoField
+      name="mobileNo"
+      className="input w-full h-8 !rounded-none !rounded-r-md focus:outline-none my-custom-class"
+      customStyles={customPhoneNoFieldStyles}
+      onChange={(value) => {
+        formik.setFieldValue('mobileNo', value.value)
+      }}
+      value={formik.values.mobileNo}
+      options={sourceList}
+    />
+  </div>
+</div>
 
 
 
-                      </div>
+
+
+
+
                     </div>
                     {/* 2 */}
                     <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-">
@@ -511,8 +549,8 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                         <TextField label="Email" name="email" type="text" />
                       </div>
                       <div className="mb-3 space-y-2 w-full text-xs">
-                        <span className="inline">
-                          <label className="label font-regular mb-1 text-xs block">
+                        <span className="inline w-full">
+                          <label className="label  font-regular mb-1 text-xs block">
                             Enquiry Date
                           </label>
 
@@ -531,7 +569,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
     setHours(setMinutes(d, 59), 23),
   ]}
   dateFormat="MMMM d, yyyy"
-/>
+/> 
 
                         </span>
                       </div>
@@ -551,9 +589,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                               label="Bin Reason*"
                               className="input mt-3"
                               onChange={(value) => {
-                                // call db to update
                                 setBinreason(value.value)
-                                // formik.setFieldValue('source', value.value)
                               }}
                               value={binReason}
                               options={leadBinReasonList}
@@ -626,9 +662,6 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                           </label>
                         </div>
                         <div className="border-t-4 rounded-xl w-16 mt-1  border-green-600"></div>
-
-                        {/* </div>
-                      <div className="rounded-lg bg-white border border-gray-100 p-4 mt-4"> */}
                         {/* 3 */}
                         <div className="md:flex md:flex-row md:space-x-4 w-full text-xs ">
                           <div className="w-full flex flex-col mb-3 mt-2">
@@ -655,7 +688,6 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                                 formik.setFieldValue('project', value.value)
                               }}
                               value={formik.values.project}
-                              // options={aquaticCreatures}
                               options={projectList}
                             />
                           </div>
@@ -930,9 +962,6 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                                                   ].includes(Status) && (
                                                     <div className="font-semibold text-[#053219] text-sm  mt- px-[3px] pt-[2px] rounded ">
                                                       {Project}{' '}
-                                                      {/* {leadDetailsObj?.Status != tempLeadStatus
-  ? `--> ${' '}${tempLeadStatus}`
-  : ''} */}
                                                     </div>
                                                   )}
                                               </div>
@@ -956,7 +985,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                                                         assignedToObj?.label
                                                       }
                                                       id={id}
-                                                      // setAssigner={setAssigner}
+                                                    
                                                       usersList={usersList}
                                                       align={undefined}
                                                     />
@@ -1091,33 +1120,50 @@ source={row.Source.toString()}
                               })}
                             </p>
                           )}
-                          <div className="mt-5 mt-8 text-right md:space-x-3 md:block flex flex-col-reverse">
-                            <button
-                              className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
-                              type="reset"
-                              onClick={() => resetter()}
-                            >
-                              Reset
-                            </button>
-                            <button
-                              className="mb-2 md:mb-0 bg-green-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
-                              type="submit"
-                              disabled={loading}
-                            >
-                              {loading && <Loader />}
-                              Add Lead
-                            </button>
-                            <button
-                              className="mb-2 md:mb-0 bg-green-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
-                              type="submit"
-                              onClick={() => setCloseWindowMode(true)}
-                              disabled={loading}
-                            >
-                              {loading && <Loader />}
-                              Add Lead & Close
-                            </button>
+                          
+                         
+
+                          
+                          <div className='mr-10'>
+
+
+                          <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4" >
+
+                        
+                          
+                              <button
+                                   className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+                                   type="reset"
+                                   onClick={() => resetter()}
+                                 >
+                                   Reset
+                                 </button>
+                                 <button
+                                   className="mb-2 md:mb-0 bg-green-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                   type="submit"
+                                   disabled={loading}
+                                 >
+                                   {loading && <Loader />}
+                                   Add Lead
+                                 </button>
+                                 <button
+                                   className="mb-2 md:mb-0 bg-green-700 px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                   type="submit"
+                                   onClick={() => setCloseWindowMode(true)}
+                                   disabled={loading}
+                                 >
+                                   {loading && <Loader />}
+                                   Add Lead & Close
+                                 </button>
+                              </div>
+
                           </div>
-                        </div>
+
+                         
+
+                        
+                          </div>
+                      
                       </>
                     )}
                   </Form>

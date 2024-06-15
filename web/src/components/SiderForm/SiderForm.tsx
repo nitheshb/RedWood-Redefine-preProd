@@ -68,6 +68,7 @@ const SiderForm = ({
   leadDetailsObj,
   setUnitsViewMode,
   selCustomerPayload,
+  setProject,
   selUnitDetails,
   setSelUnitDetails,
   selPhaseObj,
@@ -177,10 +178,16 @@ const SiderForm = ({
                   />
                 )}
                 {(title === 'Create Project' || title === 'Edit Project') && (
-                  <DialogFormBody
+                  // <DialogFormBody
+                  //   title={title}
+                  //   dialogOpen={setOpen}
+                  //   project={data}
+                  // />
+                  <ProjectDetailsFlowBody
                     title={title}
                     dialogOpen={setOpen}
                     project={data}
+                    setProject={setProject}
                   />
                 )}
                 {title === 'project_details'  && (

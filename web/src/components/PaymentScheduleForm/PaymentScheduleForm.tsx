@@ -321,7 +321,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
     <div className="h-full w-full shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll">
 
 
-      <div className="z-10">
+      <div className="">
         {/* <Dialog.Title className="font-semibold text-xl mr-auto ml-3 text-[#053219]">
           {title}
         </Dialog.Title> */}
@@ -338,11 +338,13 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
             options={{
               headerStyle: {
                 borderBottomWidth: '3px',
+                zIndex: '0',
               },
               actionsColumnIndex: -1,
               paging: false,
               minBodyHeight: '1000px',
               doubleHorizontalScroll: true,
+              zIndex: '0',
             }}
             style={{
               padding: '30px',
