@@ -531,14 +531,14 @@ const ProjPhaseHome = ({
                       {phaseViewFeature === 'Payment Schedule' && (
                         <PaymentScheduleSetup phase={phase} source={source} />
                       )}
-                       {phaseViewFeature === 'projectDetails' && (
+                       {/* {phaseViewFeature === 'projectDetails' && (
                         <DialogFormBody
                         ref={ref}
                         title={'Create Project'}
                         // dialogOpen={(=>())}
                         project={phase}
                       />
-                      )}
+                      )} */}
 
 
                       {phaseViewFeature === 'Blocks' &&
