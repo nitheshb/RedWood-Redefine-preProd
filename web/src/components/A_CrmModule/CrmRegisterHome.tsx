@@ -970,7 +970,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`grow shrink basis-0 px-2.5 py-1.5 rounded-[16px] flex-col justify-center items-center gap-2 inline-flex ${
                                       finData?.man_cs_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.man_cs_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -994,7 +994,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`grow shrink basis-0 px-2.5 py-1.5 bg-gray-200 rounded-[16px] flex-col justify-center items-center gap-2 inline-flex ${
                                       finData?.kyc_status == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.kyc_status == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -1177,7 +1177,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full cursor-pointer  h-[80px] ${
                                       T_elgible_balance <= 0
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     onClick={() => {
@@ -1210,7 +1210,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  cursor-pointer  h-[80px] ${
                                       finData?.man_cs_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.man_cs_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -1246,7 +1246,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full cursor-pointer  h-[80px] ${
                                       finData?.kyc_status == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.kyc_status == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -1266,7 +1266,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         <NewspaperIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.kyc_status == 'approved'
-                                              ? 'bg-green-100'
+                                              ? 'bg-[#CCC5F7]'
                                               : finData?.kyc_status ==
                                                 'rejected'
                                               ? 'bg-[#ffdbdb]'
@@ -1283,7 +1283,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   {/* section 4*/}
                                   <div
                                     className={`w-full cursor-pointer  h-[80px] ${
-                                      true ? 'bg-green-100' : 'bg-[#F1F5F9] '
+                                      true ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
                                       display: 'inline-block',
@@ -1317,14 +1317,129 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
 
                             {/* check it  */}
                             <div>
-                              <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 pb-4 min-w-[244px] justify-between mx-2">
+                              <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 pb-4 min-w-[274px] justify-between mr-1">
                                 <div className="flex flex-row justify-between mx- mb-2">
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full">
-                                    <div className="text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
-                                      Unit Cost
+                                    <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
+                                      Stage Balance
                                     </div>
-                                    <div className="text-zinc-800 text-[20px] font-bold font-['Lato'] tracking-wide">
+                                    <div className="text-zinc-800 text-[16px] font-bold font-['Lato'] tracking-wide">
+                                    ₹
+                                      {finData?.T_elgible_balance?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                    </div>
+                                  </section>
+                                  <section className="flex flex-col mt-3 w-full">
+                                    <div className="flex flex-row justify-end text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
+                                        Stage Cost:
+                                        ₹
+                                      {/* {finData?.T_elgible_balance?.toLocaleString(
+                                          'en-IN'
+                                        )} */}
+                                      {finData?.T_elgible?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                    </div>
+                                    <div className="text-zinc-500 flex flex-row justify-end text-[11px] font-normal font-['Lato'] tracking-wide">
+                                      Paid: ₹
+                                      {(
+                                        finData?.T_review ||
+                                        0 + finData?.T_approved ||
+                                        0
+                                      )?.toLocaleString('en-IN')}
+                                    </div>
+                                  </section>
+                                </div>
+                                <div className="flex flex-row mx-1 pt-">
+                                  {[{ item: 'Paid', value: 7 }].map(
+                                    (data, i) => (
+                                      <div
+                                        className=" w-3/4  "
+                                        style={{
+                                          display: 'inline-block',
+                                          alignSelf: 'flex-end',
+                                        }}
+                                        key={i}
+                                      >
+                                        <div className="">
+                                          <LinearProgress
+                                            sx={{
+                                              backgroundColor: 'white',
+                                              '& .MuiLinearProgress-bar': {
+                                                backgroundColor: '#e3bdff',
+                                              },
+                                            }}
+                                            variant="determinate"
+                                            value={100}
+                                            style={{
+                                              backgroundColor: '#E5EAF2',
+                                              borderRadius: '3px',
+                                              borderTopRightRadius: '0px',
+                                              borderBottomRightRadius: '0px',
+                                              height: `${data.value}px`,
+                                              width: `100%`,
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    )
+                                  )}
+                                  {[{ item: 'Due', value: 7 }].map(
+                                    (data, i) => (
+                                      <div
+                                        className=" w-2/4  "
+                                        style={{
+                                          display: 'inline-block',
+                                          alignSelf: 'flex-end',
+                                        }}
+                                        key={i}
+                                      >
+                                        <div className="">
+                                          <LinearProgress
+                                            sx={{
+                                              backgroundColor: 'white',
+                                              '& .MuiLinearProgress-bar': {
+                                                backgroundColor: '#F0F4F8',
+                                              },
+                                            }}
+                                            variant="determinate"
+                                            value={100}
+                                            style={{
+                                              backgroundColor: '#22c55e3d',
+                                              borderRadius: '3px',
+                                              borderTopLeftRadius: '0px',
+                                              borderBottomLeftRadius: '0px',
+                                              height: `${data.value}px`,
+                                              width: `100%`,
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            {/* other one */}
+                            <div>
+                              <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 pb-4 min-w-[244px] justify-between mx-">
+                                <div className="flex flex-row justify-between mx- mb-2">
+                                  <section className="font-bodyLato font-semibold text-xs m-1 ">
+                                    <div className="text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
+                                      Balance
+                                    </div>
+                                    <div className="text-zinc-800 text-[16px] font-bold font-['Lato'] tracking-wide">
                                       ₹
+                                      {finData?.T_balance?.toLocaleString(
+                                        'en-IN'
+                                      )}
+
+                                    </div>
+                                  </section>
+                                  <section className="flex flex-col mt-3 w-full">
+                                    <p className="flex flex-row justify-end text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
+                                      Unit Cost: ₹
                                       {(
                                         (finData?.plotCS?.reduce(function (
                                           _this,
@@ -1348,14 +1463,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                             0
                                           ) || 0
                                       )?.toLocaleString('en-IN')}
-                                    </div>
-                                  </section>
-                                  <section className="flex flex-col mt-3 w-full">
-                                    <p className="flex flex-row justify-end text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
-                                      Balance: ₹
-                                      {finData?.T_balance?.toLocaleString(
-                                        'en-IN'
-                                      )}
                                     </p>
                                     <div className="text-zinc-500 flex flex-row justify-end text-[11px] font-normal font-['Lato'] tracking-wide">
                                       Paid: ₹
@@ -1383,13 +1490,13 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                             sx={{
                                               backgroundColor: 'white',
                                               '& .MuiLinearProgress-bar': {
-                                                backgroundColor: '#ffab00',
+                                                backgroundColor: '#CCC5F7',
                                               },
                                             }}
                                             variant="determinate"
                                             value={100}
                                             style={{
-                                              backgroundColor: '#E5EAF2',
+                                              backgroundColor: '#CCC5F7',
                                               borderRadius: '3px',
                                               borderTopRightRadius: '0px',
                                               borderBottomRightRadius: '0px',
@@ -1416,7 +1523,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                             sx={{
                                               backgroundColor: 'white',
                                               '& .MuiLinearProgress-bar': {
-                                                backgroundColor: '#ffab003d',
+                                                backgroundColor: '#F0F4F8',
                                               },
                                             }}
                                             variant="determinate"
@@ -1438,110 +1545,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                               </div>
                             </div>
 
-                            <div>
-                              <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 pb-4 min-w-[244px] justify-between mr-1">
-                                <div className="flex flex-row justify-between mx- mb-2">
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full">
-                                    <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
-                                      Stage Cost
-                                    </div>
-                                    <div className="text-zinc-800 text-[20px] font-bold font-['Lato'] tracking-wide">
-                                      ₹
-                                      {/* {finData?.T_elgible_balance?.toLocaleString(
-                                          'en-IN'
-                                        )} */}
-                                      {finData?.T_elgible?.toLocaleString(
-                                        'en-IN'
-                                      )}
-                                    </div>
-                                  </section>
-                                  <section className="flex flex-col mt-3 w-full">
-                                    <div className="flex flex-row justify-end text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Balance: ₹
-                                      {finData?.T_elgible_balance?.toLocaleString(
-                                        'en-IN'
-                                      )}
-                                    </div>
-                                    <div className="text-zinc-500 flex flex-row justify-end text-[11px] font-normal font-['Lato'] tracking-wide">
-                                      Paid: ₹
-                                      {(
-                                        finData?.T_review ||
-                                        0 + finData?.T_approved ||
-                                        0
-                                      )?.toLocaleString('en-IN')}
-                                    </div>
-                                  </section>
-                                </div>
-                                <div className="flex flex-row mx-1 pt-">
-                                  {[{ item: 'Paid', value: 7 }].map(
-                                    (data, i) => (
-                                      <div
-                                        className=" w-3/4  "
-                                        style={{
-                                          display: 'inline-block',
-                                          alignSelf: 'flex-end',
-                                        }}
-                                        key={i}
-                                      >
-                                        <div className="">
-                                          <LinearProgress
-                                            sx={{
-                                              backgroundColor: 'white',
-                                              '& .MuiLinearProgress-bar': {
-                                                backgroundColor: '#22c55e',
-                                              },
-                                            }}
-                                            variant="determinate"
-                                            value={100}
-                                            style={{
-                                              backgroundColor: '#E5EAF2',
-                                              borderRadius: '3px',
-                                              borderTopRightRadius: '0px',
-                                              borderBottomRightRadius: '0px',
-                                              height: `${data.value}px`,
-                                              width: `100%`,
-                                            }}
-                                          />
-                                        </div>
-                                      </div>
-                                    )
-                                  )}
-                                  {[{ item: 'Due', value: 7 }].map(
-                                    (data, i) => (
-                                      <div
-                                        className=" w-2/4  "
-                                        style={{
-                                          display: 'inline-block',
-                                          alignSelf: 'flex-end',
-                                        }}
-                                        key={i}
-                                      >
-                                        <div className="">
-                                          <LinearProgress
-                                            sx={{
-                                              backgroundColor: 'white',
-                                              '& .MuiLinearProgress-bar': {
-                                                backgroundColor: '#22c55e3d',
-                                              },
-                                            }}
-                                            variant="determinate"
-                                            value={100}
-                                            style={{
-                                              backgroundColor: '#22c55e3d',
-                                              borderRadius: '3px',
-                                              borderTopLeftRadius: '0px',
-                                              borderBottomLeftRadius: '0px',
-                                              height: `${data.value}px`,
-                                              width: `100%`,
-                                            }}
-                                          />
-                                        </div>
-                                      </div>
-                                    )
-                                  )}
-                                </div>
-                              </div>
-                            </div>
+
 
                             {/* <div className=" w-1/4 flex flex-col-reverse ml-3">
                             <div className="flex flex-wrap  p-1 pl-0 pt-0 pb-0  mb-[16px] bg-[#F1F5F9]">
@@ -1721,7 +1725,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       T_balance <= 0
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
@@ -1749,7 +1753,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       finData?.man_cs_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.man_cs_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -1770,7 +1774,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.man_ats_approval ==
                                             'approved'
-                                              ? 'bg-green-100'
+                                              ? 'bg-[#CCC5F7]'
                                               : finData?.man_ats_approval ==
                                                 'rejected'
                                               ? 'bg-[#ffdbdb]'
@@ -1788,7 +1792,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       finData?.man_ats_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.man_ats_approval ==
                                           'rejected'
                                         ? 'bg-[#ffdbdb]'
@@ -1823,7 +1827,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   {/* section 4*/}
                                   <div
                                     className={`w-full  h-[80px] ${
-                                      true ? 'bg-green-100' : 'bg-[#F1F5F9] '
+                                      true ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
                                       display: 'inline-block',
@@ -2297,7 +2301,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       T_balance <= 0
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
@@ -2325,7 +2329,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       finData?.both_sd_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.both_sd_approval ==
                                           'rejected'
                                         ? 'bg-[#ffdbdb]'
@@ -2347,7 +2351,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.both_sd_approval ==
                                             'approved'
-                                              ? 'bg-green-100'
+                                              ? 'bg-[#CCC5F7]'
                                               : finData?.both_sd_approval ==
                                                 'rejected'
                                               ? 'bg-[#ffdbdb]'
@@ -2365,7 +2369,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       finData?.both_sd_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.both_sd_approval ==
                                           'rejected'
                                         ? 'bg-[#ffdbdb]'
@@ -2387,7 +2391,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.both_sd_approval ==
                                             'approved'
-                                              ? 'bg-green-100'
+                                              ? 'bg-[#CCC5F7]'
                                               : finData?.both_sd_approval ==
                                                 'rejected'
                                               ? 'bg-[#ffdbdb]'
@@ -2404,7 +2408,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   {/* section 4*/}
                                   <div
                                     className={`w-full  h-[80px] ${
-                                      false ? 'bg-green-100' : 'bg-[#F1F5F9] '
+                                      false ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
                                       display: 'inline-block',
@@ -2747,7 +2751,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       T_balance <= 0
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
@@ -2775,7 +2779,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       finData?.ats_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.ats_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -2795,7 +2799,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         <ChartPieIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.ats_approval == 'approved'
-                                              ? 'bg-green-100'
+                                              ? 'bg-[#CCC5F7]'
                                               : finData?.ats_approval ==
                                                 'rejected'
                                               ? 'bg-[#ffdbdb]'
@@ -2813,7 +2817,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       finData?.ats_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.ats_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -2833,7 +2837,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         <NewspaperIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.ats_approval == 'approved'
-                                              ? 'bg-green-100'
+                                              ? 'bg-[#CCC5F7]'
                                               : finData?.ats_approval ==
                                                 'rejected'
                                               ? 'bg-[#ffdbdb]'
@@ -2851,7 +2855,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-[120px]  h-[80px] ${
                                       finData?.kyc_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.kyc_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -2871,7 +2875,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         <ChartPieIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.kyc_approval == 'approved'
-                                              ? 'bg-green-100'
+                                              ? 'bg-[#CCC5F7]'
                                               : finData?.kyc_approval ==
                                                 'rejected'
                                               ? 'bg-[#ffdbdb]'
@@ -2888,7 +2892,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   {/* section 5*/}
                                   <div
                                     className={`w-full  h-[80px] ${
-                                      false ? 'bg-green-100' : 'bg-[#F1F5F9] '
+                                      false ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
                                       display: 'inline-block',
@@ -3232,7 +3236,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       T_balance <= 0
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
@@ -3260,7 +3264,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       finData?.ats_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.ats_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -3280,7 +3284,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         <ChartPieIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.ats_approval == 'approved'
-                                              ? 'bg-green-100'
+                                              ? 'bg-[#CCC5F7]'
                                               : finData?.ats_approval ==
                                                 'rejected'
                                               ? 'bg-[#ffdbdb]'
@@ -3298,7 +3302,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-full  h-[80px] ${
                                       finData?.ats_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.ats_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -3318,7 +3322,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         <NewspaperIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.ats_approval == 'approved'
-                                              ? 'bg-green-100'
+                                              ? 'bg-[#CCC5F7]'
                                               : finData?.ats_approval ==
                                                 'rejected'
                                               ? 'bg-[#ffdbdb]'
@@ -3336,7 +3340,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <div
                                     className={`w-[120px]  h-[80px] ${
                                       finData?.kyc_approval == 'approved'
-                                        ? 'bg-green-100'
+                                        ? 'bg-[#CCC5F7]'
                                         : finData?.kyc_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
@@ -3356,7 +3360,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         <ChartPieIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.kyc_approval == 'approved'
-                                              ? 'bg-green-100'
+                                              ? 'bg-[#CCC5F7]'
                                               : finData?.kyc_approval ==
                                                 'rejected'
                                               ? 'bg-[#ffdbdb]'
@@ -3373,7 +3377,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   {/* section 5*/}
                                   <div
                                     className={`w-full  h-[80px] ${
-                                      false ? 'bg-green-100' : 'bg-[#F1F5F9] '
+                                      false ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
                                       display: 'inline-block',
