@@ -136,9 +136,39 @@ const AdditonalBookingDetails = ({
       additionalInfo?.bookedBy ||
       '',
 
-      referralName: '', // New field for referral name
+
+      
+      referralName: leadDetailsObj2?.referralName || '',
+    
+
+      referralPhone: '',
+      projectName: '',
+      //referralType: '',
+
+      
   }
   // Custom PAN card validation function
+
+
+  const referralOptions = [
+    { value: 'customer', label: 'Customer' },
+    { value: 'other', label: 'Other' },
+    { value: 'management', label: 'Management' },
+    { value: 'employees', label: 'Employees' },
+  ]
+
+
+
+
+
+  // const referralTypeOptions = [
+  //   { value: 'type1', label: 'Type 1' },
+  //   { value: 'type2', label: 'Type 2' },
+  //   { value: 'type3', label: 'Type 3' },
+  // ];
+
+
+
 
   const onSubmit = async (data, resetForm) => {
     console.log('customer details form', data)
@@ -155,6 +185,9 @@ const AdditonalBookingDetails = ({
       purchasePurpose,
       bookedOn,
       referralName,
+      referralPhone,
+      projectName,
+      //referralType
     } = data
     const { uid } = selUnitDetails
 
@@ -164,7 +197,7 @@ const AdditonalBookingDetails = ({
 
     const xData = {}
     xData[`${uid}${'_source_of_pay'}`] = { self: 20, bank: 80 } // sourceOfPay
-    xData[`${uid}${'_otherInfo'}`] = { leadSource, sourceOfPay, purpose, referralName }
+    xData[`${uid}${'_otherInfo'}`] = { leadSource, sourceOfPay, purpose} //referralName
 
     const updateDoc = {
       aggrementDetailsObj,
@@ -205,6 +238,14 @@ const AdditonalBookingDetails = ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   }
+
+
+
+
+  function setFieldValue(arg0: string, value: any) {
+    throw new Error('Function not implemented.')
+  }
+
   return (
     <>
       <div className="font-['Inter'] p-2" >
@@ -387,7 +428,29 @@ const AdditonalBookingDetails = ({
                                     <div className="w-full lg:w-4/12 px-4">
                                       <div className="relative w-full">
                                       <div className="w-full flex flex-col mb-3">
-                                       <CustomSelect
+
+                                      <CustomSelect
+                                      name="leadSource"
+                                      label="Lead Source"
+                                      className="input"
+                                      onChange={(value) => {
+                                      formik.setFieldValue('leadSource', value.value);
+
+    // Optionally, if you want to clear referralName when leadSource changes away from 'referral'
+                                     if (value.value !== 'referral') {
+                                         formik.setFieldValue('referralName', '');
+                                            }
+                                            }}
+                                      value={formik.values.leadSource}
+                                       options={[
+                                      ...sourceList, // your existing options
+                                     { label: 'Referral', value: 'referral' },
+                                     ]}
+                                     />
+
+
+
+                                       {/* <CustomSelect
                                         name="leadSource"
                                           label="Lead Source"
                                            className="input"
@@ -395,15 +458,19 @@ const AdditonalBookingDetails = ({
                                              formik.setFieldValue('leadSource', value.value)
                                                   }}
                                             value={formik.values.leadSource}
-                                            options={sourceList}
-                                                  />
+                                            // options={sourceList}
+                                            options={[
+                                              ...sourceList, // your existing options
+                                              { label: 'Referral', value: 'referral' },
+                                            ]}
+                                          /> */}
                                         </div>
                                       </div>
                                     </div>
 
 
                                     
-                                    <div className="w-full lg:w-4/12 px-4">
+                                    {/* <div className="w-full lg:w-4/12 px-4">
                                       <div className="relative w-full">
                                       <div className="w-full flex flex-col mb-3">
                                       <TextField
@@ -415,9 +482,84 @@ const AdditonalBookingDetails = ({
                                        />
                                         </div>
                                       </div>
-                                    </div>
+                                    </div> */}
 
 
+                                      {formik.values.leadSource === 'referral' && (
+                                      <>                                    
+                                      <div className="w-full lg:w-4/12 px-4">
+                                        <div className="relative w-full">
+                                          <div className="w-full flex flex-col mb-3">
+
+                                          {/* <CustomSelect
+                              name="referralName"
+                              label="Referral Name"
+                              className="input"
+                              onChange={(value) => {
+                                formik.setFieldValue('referralName', value.value)
+                              }}
+                              value={referralOptions.find(option => option.value === formik.values.referralName)}
+                              options={referralOptions}
+                            /> */}
+
+
+
+<CustomSelect
+  name="referralName"
+  label="Referral Name"
+  className="input"
+  onChange={(value) => {
+    formik.setFieldValue('referralName', value ? value.value : '');
+  }}
+  value={formik.values.referralName}  
+  options={referralOptions}
+/>
+
+           
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="w-full lg:w-4/12 px-4">
+                                          <div className="relative w-full mb-3">
+                                            <TextField
+                                              label="Referral Phone Number"
+                                              name="referralPhone"
+                                              type="text" />
+                                          </div>
+                                        </div>
+
+
+                                        <div className="w-full lg:w-4/12 px-4">
+  <div className="relative w-full mb-3">
+    <TextField
+      label="Project Name"
+      name="projectName"
+      type="text"
+    />
+  </div>
+</div>
+
+
+<div className="w-full lg:w-4/12 px-4">
+                          <div className="relative w-full mb-3">
+                            {/* CustomSelect for referralType */}
+                            {/* <CustomSelect
+                              name="referralType"
+                              label="Referral Type"
+                              className="input"
+                              onChange={(value) => {
+                                formik.setFieldValue('referralType', value.value);
+                              }}
+                              value={referralTypeOptions.find(
+                                (option) => option.value === formik.values.referralType
+                              )}
+                              options={referralTypeOptions}
+                            /> */}
+                          </div>
+                        </div>
+
+                                        </>
+                                      )}
 
                                   </div>
                                 </section>

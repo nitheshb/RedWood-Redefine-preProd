@@ -49,7 +49,7 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
     return null
   }
   return (
-    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100vh] overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         {/* <div className="flex p-4 items-center justify-between">
           <div className="flex flex-row">

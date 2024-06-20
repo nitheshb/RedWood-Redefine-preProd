@@ -1097,7 +1097,7 @@ export default function UnitFullSummary({
             </div>
           )}
           {openApplicantEdit && (
-            <div className="  mt-2 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+            <div className="  mt-2 pb-[250px] overflow-auto  overflow-y-scroll" style={{ height: `calc(100vh - 120px)` }}>
               <AddApplicantDetails
                 source="fromBookedUnit"
                 title="Booking Form"
@@ -1274,7 +1274,7 @@ export default function UnitFullSummary({
       )}
       {['finance_info', 'summary'].includes(selFeature) && (
         <>
-          <div className="py-3 px-3 pb-[250px] m-4 mt-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll">
+          <div className="py-3 px-3 pb-[250px] m-4 mt-2 rounded-lg border border-gray-100   overflow-y-scroll" style={{ height: 'calc(100vh - 120px)' }}>
             <CrmUnitPsHome
               financeMode={financeMode}
               setFinanceMode={setFinanceMode}
