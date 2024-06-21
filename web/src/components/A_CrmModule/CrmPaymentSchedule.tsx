@@ -51,8 +51,8 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
     setPartA(a)
     setPartB(b)
     setUnitTotal(a + b + c)
-    setReceivedTotal(selCustomerPayload?.T_review?.toLocaleString('en-IN'))
-    const paidAmount = selCustomerPayload?.T_review
+    setReceivedTotal(selCustomerPayload?.T_received?.toLocaleString('en-IN'))
+    const paidAmount = selCustomerPayload?.T_received
     let bal = 0
     let leftOver = paidAmount
     let newPaidAmount = paidAmount

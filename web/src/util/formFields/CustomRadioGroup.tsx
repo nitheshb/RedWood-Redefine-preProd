@@ -44,7 +44,7 @@ relative rounded-lg px-5 py-2 cursor-pointer flex focus:outline-none col-span-2`
                           <section className=" col-span-2 flex flex-row justify-center ">
                             {option.img && (
                               <img
-                                className="w-7 h-7 inline"
+                                className="w-5 h-5 inline"
                                 alt=""
                                 src={option.img}
                               ></img>
