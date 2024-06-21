@@ -666,7 +666,7 @@ export default function UnitSideViewCRM({
         )
       } else if (
         newStatus?.value === 'ats_pipeline' &&
-        selCustomerPayload?.T_balance <= 0 &&
+        // selCustomerPayload?.T_balance <= 0 &&
         selCustomerPayload?.ats_creation &&
         selCustomerPayload?.both_ats_approval
       ) {
@@ -701,8 +701,9 @@ export default function UnitSideViewCRM({
           enqueueSnackbar
         )
       }else if (
-        newStatus?.value === 'agreement' &&
-        selCustomerPayload?.T_balance <= 0
+        newStatus?.value === 'agreement'
+        // &&
+        // selCustomerPayload?.T_balance <= 0
 
       ) {
         setUnitStatus(newStatus)
@@ -718,8 +719,9 @@ export default function UnitSideViewCRM({
           enqueueSnackbar
         )
       } else if (
-        newStatus?.value === 'registered' &&
-        selCustomerPayload?.T_balance <= 0
+        newStatus?.value === 'registered'
+        //  &&
+        // selCustomerPayload?.T_balance <= 0
 
       ) {
         setUnitStatus(newStatus)
@@ -735,8 +737,9 @@ export default function UnitSideViewCRM({
           enqueueSnackbar
         )
       }else if (
-        newStatus?.value === 'possession' &&
-        selCustomerPayload?.T_balance <= 0
+        newStatus?.value === 'possession'
+        // &&
+        // selCustomerPayload?.T_balance <= 0
 
       ) {
         setUnitStatus(newStatus)
