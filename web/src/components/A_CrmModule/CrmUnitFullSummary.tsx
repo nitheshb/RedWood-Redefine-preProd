@@ -1272,6 +1272,16 @@ export default function UnitFullSummary({
           />
         </div>
       )}
+           {selFeature === 'costsheet_info' && (
+        <div className="  mt-2 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+          <CrmUnitSummary
+            selCustomerPayload={selCustomerPayload}
+            assets={selCustomerPayload?.assets}
+            totalIs={totalIs}
+            unitTransactionsA={unitTransactionsA}
+          />
+        </div>
+      )}
       {['finance_info', 'summary'].includes(selFeature) && (
         <>
           <div className="py-3 px-3 pb-[250px] m-4 mt-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll">
@@ -1473,7 +1483,9 @@ export default function UnitFullSummary({
                      { lab: 'Summary', val: 'summary' },
                     { lab: 'Applicant details', val: 'applicant_info' },
                     { lab: 'Unit details', val: 'unit_information' },
-                    { lab: 'Cost & Payments', val: 'finance_info' },
+                    { lab: 'Payment schedule', val: 'finance_info' },
+                    { lab: 'Cost sheet', val: 'costsheet_info' },
+
                     { lab: 'Loan details', val: 'loan_info' },
                     { lab: 'Agreement  details', val: 'agreement_info' },
                     { lab: 'Brokerage  details', val: 'brokerage_info' },

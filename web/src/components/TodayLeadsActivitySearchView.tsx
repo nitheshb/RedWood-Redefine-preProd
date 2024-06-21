@@ -680,10 +680,9 @@ export default function TodayLeadsActivitySearchView({
     setisImportLeadsOpen(true)
     setSelUserProfile(data)
   }
-  const selTaskManObjF =(data)=>{
+  const selTaskManObjF = (data) => {
     setisViewTaskMan(true)
     setSelTaskMan(data)
-
   }
   const handleSortDrop = (e) => {
     setSortType(e.target.value)
@@ -861,12 +860,153 @@ export default function TodayLeadsActivitySearchView({
           }
           {/* searchKey, setSearchKey */}
 
-
-
           {!schLoading && !leadByViewLayout && todaySch && (
             <>
-              <div className=" ">
-                <div className="flex flex-wrap">
+              <div className="max-w-screen-2xl mx-auto w-full ">
+                <div className="flex flex-wrap  ">
+                  <section className="grid grid-cols-1 lg:grid-cols-4 gap-4 pb-2 mb-8">
+
+                    <section className="rounded-lg border bg-white text-card-foreground shadow-sm border-none drop-shadow-sm ">
+                      <div className="space-y-1.5 p-6 flex flex-row items-center justify-between gap-x-4">
+                        <div className="space-y-2">
+                          <h3 className="font-semibold tracking-tight text-2xl line-clamp-1">
+                            Remaining
+                          </h3>
+                          <p className="text-sm text-[#64748b] line-clamp1">
+                            Jan 01 - Jun 20, 2024
+                          </p>
+                        </div>
+                        <div className="shrink-0 rounded-md p-3 bg-blue-500/20">
+                          <svg
+                            stroke="currentColor"
+                            fill="currentColor"
+                            strokeWidth="0"
+                            viewBox="0 0 576 512"
+                            className="size-6 fill-blue-500"
+                            height="1em"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M560 224h-29.5c-8.8-20-21.6-37.7-37.4-52.5L512 96h-32c-29.4 0-55.4 13.5-73 34.3-7.6-1.1-15.1-2.3-23-2.3H256c-77.4 0-141.9 55-156.8 128H56c-14.8 0-26.5-13.5-23.5-28.8C34.7 215.8 45.4 208 57 208h1c3.3 0 6-2.7 6-6v-20c0-3.3-2.7-6-6-6-28.5 0-53.9 20.4-57.5 48.6C-3.9 258.8 22.7 288 56 288h40c0 52.2 25.4 98.1 64 127.3V496c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16v-48h128v48c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16v-80.7c11.8-8.9 22.3-19.4 31.3-31.3H560c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16zm-128 64c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zM256 96h128c5.4 0 10.7.4 15.9.8 0-.3.1-.5.1-.8 0-53-43-96-96-96s-96 43-96 96c0 2.1.5 4.1.6 6.2 15.2-3.9 31-6.2 47.4-6.2z"></path>
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="p-6 pt-0">
+                        <h1 className="font-bold text-2xl mb-2 line-clamp-1 break-all">
+                          <span>-₹13,20,000.00</span>
+                        </h1>
+                        <p className="text-[#64748b]  text-sm line-clamp-1">
+                          0% from last period
+                        </p>
+                      </div>
+
+                    </section>
+                    <section className="rounded-lg border bg-white text-card-foreground shadow-sm border-none drop-shadow-sm ">
+                      <div className="space-y-1.5 p-6 flex flex-row items-center justify-between gap-x-4">
+                        <div className="space-y-2">
+                          <h3 className="font-semibold tracking-tight text-2xl line-clamp-1">
+                            Collected
+                          </h3>
+                          <p className="text-sm text-[#64748b] line-clamp1">
+                            Jan 01 - Jun 20, 2024
+                          </p>
+                        </div>
+                        <div className="shrink-0 rounded-md p-3 bg-blue-500/20">
+                          <svg
+                            stroke="currentColor"
+                            fill="currentColor"
+                            strokeWidth="0"
+                            viewBox="0 0 576 512"
+                            className="size-6 fill-blue-500"
+                            height="1em"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M560 224h-29.5c-8.8-20-21.6-37.7-37.4-52.5L512 96h-32c-29.4 0-55.4 13.5-73 34.3-7.6-1.1-15.1-2.3-23-2.3H256c-77.4 0-141.9 55-156.8 128H56c-14.8 0-26.5-13.5-23.5-28.8C34.7 215.8 45.4 208 57 208h1c3.3 0 6-2.7 6-6v-20c0-3.3-2.7-6-6-6-28.5 0-53.9 20.4-57.5 48.6C-3.9 258.8 22.7 288 56 288h40c0 52.2 25.4 98.1 64 127.3V496c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16v-48h128v48c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16v-80.7c11.8-8.9 22.3-19.4 31.3-31.3H560c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16zm-128 64c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zM256 96h128c5.4 0 10.7.4 15.9.8 0-.3.1-.5.1-.8 0-53-43-96-96-96s-96 43-96 96c0 2.1.5 4.1.6 6.2 15.2-3.9 31-6.2 47.4-6.2z"></path>
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="p-6 pt-0">
+                        <h1 className="font-bold text-2xl mb-2 line-clamp-1 break-all">
+                          <span>-₹13,20,000.00</span>
+                        </h1>
+                        <p className="text-[#64748b]  text-sm line-clamp-1">
+                          0% from last period
+                        </p>
+                      </div>
+
+                    </section>
+                    <section className="rounded-lg border bg-white text-card-foreground shadow-sm border-none drop-shadow-sm ">
+                      <div className="space-y-1.5 p-6 flex flex-row items-center justify-between gap-x-4">
+                        <div className="space-y-2">
+                          <h3 className="font-semibold tracking-tight text-2xl line-clamp-1">
+                            Target
+                          </h3>
+                          <p className="text-sm text-[#64748b] line-clamp1">
+                            Jan 01 - Jun 20, 2024
+                          </p>
+                        </div>
+                        <div className="shrink-0 rounded-md p-3 bg-blue-500/20">
+                          <svg
+                            stroke="currentColor"
+                            fill="currentColor"
+                            strokeWidth="0"
+                            viewBox="0 0 576 512"
+                            className="size-6 fill-blue-500"
+                            height="1em"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M560 224h-29.5c-8.8-20-21.6-37.7-37.4-52.5L512 96h-32c-29.4 0-55.4 13.5-73 34.3-7.6-1.1-15.1-2.3-23-2.3H256c-77.4 0-141.9 55-156.8 128H56c-14.8 0-26.5-13.5-23.5-28.8C34.7 215.8 45.4 208 57 208h1c3.3 0 6-2.7 6-6v-20c0-3.3-2.7-6-6-6-28.5 0-53.9 20.4-57.5 48.6C-3.9 258.8 22.7 288 56 288h40c0 52.2 25.4 98.1 64 127.3V496c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16v-48h128v48c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16v-80.7c11.8-8.9 22.3-19.4 31.3-31.3H560c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16zm-128 64c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zM256 96h128c5.4 0 10.7.4 15.9.8 0-.3.1-.5.1-.8 0-53-43-96-96-96s-96 43-96 96c0 2.1.5 4.1.6 6.2 15.2-3.9 31-6.2 47.4-6.2z"></path>
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="p-6 pt-0">
+                        <h1 className="font-bold text-2xl mb-2 line-clamp-1 break-all">
+                          <span>-₹13,20,000.00</span>
+                        </h1>
+                        <p className="text-[#64748b]  text-sm line-clamp-1">
+                          0% from last period
+                        </p>
+                      </div>
+
+                    </section>
+                    <section className="rounded-lg border bg-white text-card-foreground shadow-sm border-none drop-shadow-sm ">
+                      <div className="space-y-1.5 p-6 flex flex-row items-center justify-between gap-x-4">
+                        <div className="space-y-2">
+                          <h3 className="font-semibold tracking-tight text-2xl line-clamp-1">
+                            Performance
+                          </h3>
+                          <p className="text-sm text-[#64748b] line-clamp1">
+                            Jan 01 - Jun 20, 2024
+                          </p>
+                        </div>
+                        <div className="shrink-0 rounded-md p-3 bg-blue-500/20">
+                          <svg
+                            stroke="currentColor"
+                            fill="currentColor"
+                            strokeWidth="0"
+                            viewBox="0 0 576 512"
+                            className="size-6 fill-blue-500"
+                            height="1em"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M560 224h-29.5c-8.8-20-21.6-37.7-37.4-52.5L512 96h-32c-29.4 0-55.4 13.5-73 34.3-7.6-1.1-15.1-2.3-23-2.3H256c-77.4 0-141.9 55-156.8 128H56c-14.8 0-26.5-13.5-23.5-28.8C34.7 215.8 45.4 208 57 208h1c3.3 0 6-2.7 6-6v-20c0-3.3-2.7-6-6-6-28.5 0-53.9 20.4-57.5 48.6C-3.9 258.8 22.7 288 56 288h40c0 52.2 25.4 98.1 64 127.3V496c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16v-48h128v48c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16v-80.7c11.8-8.9 22.3-19.4 31.3-31.3H560c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16zm-128 64c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zM256 96h128c5.4 0 10.7.4 15.9.8 0-.3.1-.5.1-.8 0-53-43-96-96-96s-96 43-96 96c0 2.1.5 4.1.6 6.2 15.2-3.9 31-6.2 47.4-6.2z"></path>
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="p-6 pt-0">
+                        <h1 className="font-bold text-2xl mb-2 line-clamp-1 break-all">
+                          <span>-₹13,20,000.00</span>
+                        </h1>
+                        <p className="text-[#64748b]  text-sm line-clamp-1">
+                          0% from last period
+                        </p>
+                      </div>
+
+                    </section>
+                  </section>
                   <div className="w-10/12">
                     <TodoListView
                       moduleName={moduleName}
@@ -882,7 +1022,7 @@ export default function TodayLeadsActivitySearchView({
                       setSearchKey={setSearchKey}
                     />
                   </div>
-                    <div className="w-2/12 flex flex-col">
+                  <div className="w-2/12 flex flex-col">
                     <section className="bg-white rounded  flex flex-col p-4 ml-1 mb-1 w-100 ">
                       <h5 className="text-sm">{greet}...!🖐</h5>
                       <h2 className="text-md font-semibold text-black leading-light font-Playfair pb-1">
@@ -902,7 +1042,7 @@ export default function TodayLeadsActivitySearchView({
                    }
                     </span>{' '}
                    tasks
-  
+
                    </h2> */}
                     </section>
                     <section className="ml-1">
@@ -927,32 +1067,9 @@ export default function TodayLeadsActivitySearchView({
             </>
           )}
 
-
-          
-
-          
-
-
-
-
-
-
-          
-
-
-
-
-
-
-
-
-
-
-
           {leadByViewLayout && todaySch && (
             <div className=" w-full">
               <div className="bg-white py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded">
-
                 <div className="sm:flex items-center justify-between">
                   <div className="flex items-center">
                     <a
