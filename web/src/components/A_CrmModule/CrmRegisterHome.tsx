@@ -1322,7 +1322,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                 <div className="flex flex-row justify-between mx- mb-2">
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full">
                                     <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
-                                      Stage Balance of
+                                      Stage Balance
                                       
                                     </div>
                                     <div className="text-zinc-800 text-[16px] font-bold font-['Lato'] tracking-wide">
