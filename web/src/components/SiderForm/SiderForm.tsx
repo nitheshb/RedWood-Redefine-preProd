@@ -42,6 +42,7 @@ import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import TransactionUpdateSideView from '../transactionUpdateSideView'
 import ViewUnitDetails from '../ViewUnitDetails'
 import AddNewDemand from '../A_CrmModule/CrmNewDemand'
+import CrmConfirmationDialog from '../A_CrmModule/CrmConfirmationDialog'
 
 const SiderForm = ({
   mode,
@@ -505,6 +506,21 @@ const SiderForm = ({
                     onSubmitFun={paymentCaptureFun}
                   />
                 )}
+
+
+               {title === 'confirmationDialog' && (
+                  <CrmConfirmationDialog
+                    title={title}
+                    selUnitDetails={selUnitDetails}
+                    onSubmitFun={paymentCaptureFun}
+                  />
+                )}
+
+
+
+
+
+
 
                 {title === 'costSheetPreview' && (
                   <CostBreakUpPdfPreview

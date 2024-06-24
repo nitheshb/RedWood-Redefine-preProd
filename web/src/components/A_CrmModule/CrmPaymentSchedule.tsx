@@ -9,6 +9,8 @@ import { updateUnitStatus } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { computeTotal } from 'src/util/computeCsTotals'
 import { prettyDate } from 'src/util/dateConverter'
+import SiderForm from '../SiderForm/SiderForm'
+import CrmConfirmationDialog from './CrmConfirmationDialog'
 
 const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
   const { user } = useAuth()
@@ -19,6 +21,82 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
   const [unitTotal, setUnitTotal] = useState(0)
   const [unitReceivedTotal, setReceivedTotal] = useState(0)
   const [PSa, setPSa] = useState([])
+
+
+  
+  // const [isOpenSideView, setIsOpenSideView] = useState(false);
+  // const [isSwitchOn, setIsSwitchOn] = useState(false); 
+  // const [isDialogOpen, setIsDialogOpen] = useState(false); 
+
+
+  // const toggleSiderForm = () => {
+  //   setIsOpenSideView((prev) => !prev);
+  // };
+
+
+  // const handleConfirm = () => {
+  //   console.log('Confirm button clicked');
+  //   setIsSwitchOn(true);
+  //   setIsDialogOpen(false);
+  //   setIsOpenSideView(false); 
+  // };
+
+
+  // const handleCancel = () => {
+  //   console.log('Cancel button clicked');
+  //   setIsSwitchOn(false);
+  //   setIsDialogOpen(false);
+  //   setIsOpenSideView(false); 
+  // };
+
+
+
+
+
+
+
+
+  const [isOpenSideView, setIsOpenSideView] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [switchOn, setSwitchOn] = useState(false); 
+
+
+  const toggleSiderForm = () => {
+    setIsOpenSideView((prev) => !prev);
+  };
+
+
+  const handleConfirm = () => {
+    if (selectedItem) {
+      setSwitchOn(true); 
+      triggerPaymentScheudlefun(selectedItem);
+    }
+    setIsDialogOpen(false);
+    setIsOpenSideView(false); 
+  };
+
+
+  const handleCancel = () => {
+    setSwitchOn(false); 
+    setIsDialogOpen(false);
+    setIsOpenSideView(false);
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   console.log('payload is ', selCustomerPayload)
   useEffect(() => {
@@ -249,6 +327,60 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
             </div>
           </div>
         </section>
+
+
+
+        
+
+        <Switch
+        checked={isOpenSideView}
+        onChange={toggleSiderForm}
+        className={`${
+          isOpenSideView ? 'bg-blue-600' : 'bg-gray-200'
+        } relative inline-flex h-6 w-11 items-center rounded-full`}
+      >
+        <span
+          className={`${
+            isOpenSideView ? 'translate-x-6' : 'translate-x-1'
+          } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+        />
+      </Switch>
+
+      {isOpenSideView && (
+        <SiderForm
+          open={isOpenSideView}
+          setOpen={setIsOpenSideView}
+          title={'confirmationDialog'}
+          unitsViewMode={false}
+          widthClass="max-w-xl"
+          selUnitDetails={selCustomerPayload}
+        />
+      )}
+
+      {isDialogOpen && (
+        <CrmConfirmationDialog
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
     </>
   )
