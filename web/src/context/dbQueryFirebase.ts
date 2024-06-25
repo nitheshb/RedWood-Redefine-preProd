@@ -4617,7 +4617,22 @@ export const updateUnitStatus = async (
       status: data?.status,
       T_elgible: data?.T_elgible_new,
       T_elgible_balance: data?.T_elgible_balance,
+      [`${data?.status}_on`]: data[`${data?.status}_on`]
     })
+    const { data: data4, error: error4 } = await supabase
+    .from(`${orgId}_unit_logs`)
+    .insert([
+      {
+        type: 'sts_change',
+        subtype: 'sts_change',
+        T: Timestamp.now().toMillis(),
+        Uuid: unitId,
+        by,
+        payload: {},
+        from: 'sts_change',
+        to: data?.status,
+      },
+    ])
     enqueueSnackbar('Unit Status Updated', {
       variant: 'success',
     })

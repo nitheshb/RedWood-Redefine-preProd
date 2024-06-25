@@ -368,7 +368,7 @@ const AddApplicantDetails = ({
       selUnitDetails?.secondaryCustomerDetailsObj?.phoneNo4 ||
       customerInfo?.secondaryCustomerDetailsObj?.phoneNo4 ||
       '',
- 
+
     email1:
       leadPayload?.customerDetailsObj?.email1 ||
       selUnitDetails?.customerDetailsObj?.email1 ||
@@ -426,7 +426,7 @@ const AddApplicantDetails = ({
       customerInfo?.customerDetailsObj?.countryName1 ||
       '',
 
-  
+
     pincode1:
       leadPayload?.customerDetailsObj?.pincode1 ||
       selUnitDetails?.customerDetailsObj?.pincode1 ||
@@ -451,10 +451,10 @@ const AddApplicantDetails = ({
 
 
 
-     
 
 
-     
+
+
 
 
     city2:
@@ -875,7 +875,7 @@ const AddApplicantDetails = ({
   }
   return (
     <>
-      <div className="font-['Inter']">
+      <div className="font-['Inter'] py-1 px-1 m-2 mt-[1px] rounded-lg border border-gray-100  overflow-y-scroll" style={{ height: `calc(100vh - 120px)` }}>
         <div className="z-10">
           {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
           {title}
@@ -1043,7 +1043,7 @@ const AddApplicantDetails = ({
                                       <div className="w-full  flex flex-row lg:w-12/12 ">
                                         <div className="w-full lg:w-3/12 px- ">
                                           <div className="relative w-full mt-1">
-                                            
+
                                             {/* <PhoneNoField
                                               label="Primary Phone No"
                                               name="phoneNo1"
@@ -1073,7 +1073,7 @@ const AddApplicantDetails = ({
   <label htmlFor="countryCode" className="inline-block">
   Primary Phone No
   </label>
-  
+
   <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
   <div className="inline-block">
       <input
@@ -1097,7 +1097,7 @@ const AddApplicantDetails = ({
 
     <div className='border-l border-gray-400 mt-1 mb-1'></div>
 
-   
+
       <PhoneNoField
         name="phoneNo1"
         value={formik.values.phoneNo1}
@@ -1112,7 +1112,7 @@ const AddApplicantDetails = ({
         txtPad="px-1"
         className="w-full h-8 !rounded-none border-none !rounded-r-md focus:outline-none my-custom-class"
       />
-    
+
   </div>
 </div>
 
@@ -1136,7 +1136,7 @@ const AddApplicantDetails = ({
                                           <label htmlFor="countryCode" className="inline-block">
                                             Secondary Phone No
                                           </label>
-  
+
                                           <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
                                           <div className="inline-block">
                                           <input
@@ -1160,9 +1160,9 @@ const AddApplicantDetails = ({
 
 
 
-    
+
                                           <PhoneNoField
-                                           
+
                                            name="phoneNo3"
                                            value={formik.values.phoneNo3}
                                            customStyles={customPhoneNoFieldStyles}
@@ -1176,15 +1176,15 @@ const AddApplicantDetails = ({
                                           className="w-full h-8 !rounded-none border-none !rounded-r-md focus:outline-none my-custom-class"
                                            />
 
-    
+
                                          </div>
                                             </div>
 
-                                            
+
                                           </div>
                                         </div>
 
-                                        
+
 
                                         <div className="w-full lg:w-3/12 pl-4  ">
                                           <section className="">
@@ -1435,7 +1435,7 @@ const AddApplicantDetails = ({
 
                                         <div className="w-full lg:w-12/12">
                                           <div className="relative w-full">
-                                            
+
                                             <TextField
                                               label="Email"
                                               name="email1"
@@ -1694,7 +1694,7 @@ const AddApplicantDetails = ({
   <label htmlFor="countryCode" className="inline-block">
     Primary Phone No
   </label>
-  
+
   <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
     <div className="inline-block">
       <input
@@ -1717,7 +1717,7 @@ const AddApplicantDetails = ({
 
 
                                           <PhoneNoField
-                                            
+
                                               name="phoneNo2"
                                               // type="text"
                                               value={formik.values.phoneNo2}
@@ -1750,7 +1750,7 @@ const AddApplicantDetails = ({
                                           </div>
                                         </div>
 
-{/* 
+{/*
                                         <div className="w-full lg:w-3/12 pl-4">
                                           <div className="relative w-full mt-2">
                                             <TextField
@@ -1777,7 +1777,7 @@ const AddApplicantDetails = ({
   <label htmlFor="countryCode" className="inline-block">
   Secondary Phone No
   </label>
-  
+
   <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
     <div className="inline-block">
       <input
@@ -1799,14 +1799,14 @@ const AddApplicantDetails = ({
 
 
 
-   
+
 
     <PhoneNoField
-      
+
         name="phoneNo4"
         value={formik.values.phoneNo4}
         customStyles={customPhoneNoFieldStyles}
-       
+
         onChange={(value) => {
           formik.setFieldValue('phoneNo4', value.value);
         }}
@@ -2078,7 +2078,7 @@ const AddApplicantDetails = ({
                                         </div>
 
 
-                                        
+
                                         <div className="w-full lg:w-12/12">
                                           <div className="relative w-full mt-2">
                                             <TextField
