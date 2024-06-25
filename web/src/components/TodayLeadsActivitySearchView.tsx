@@ -864,8 +864,7 @@ export default function TodayLeadsActivitySearchView({
             <>
               <div className="max-w-screen-2xl mx-auto w-full ">
                 <div className="flex flex-wrap  ">
-                  <section className="grid grid-cols-1 lg:grid-cols-4 gap-4 pb-2 mb-8">
-
+                  <section className="w-full grid grid-cols-1 lg:grid-cols-4 gap-2 pb-2">
                     <section className="rounded-lg border bg-white text-card-foreground shadow-sm border-none drop-shadow-sm ">
                       <div className="space-y-1.5 p-6 flex flex-row items-center justify-between gap-x-4">
                         <div className="space-y-2">

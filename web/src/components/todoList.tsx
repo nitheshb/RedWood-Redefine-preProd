@@ -26,6 +26,7 @@ import {
   getDifferenceInDays,
   getDifferenceInHours,
   getDifferenceInMinutes,
+  prettyDate,
   prettyDateTime,
 } from 'src/util/dateConverter'
 import {
@@ -907,14 +908,48 @@ const TodoListView = ({
                             }}
                           >
                             <td>
-                              <div className="ml-5">
-                                <div className="rounded-sm h-5 w-5 flex flex-shrink-0 justify-center items-center relative">
+                              <div className="ml-2">
+                                <div className="rounded-2xl  flex flex-shrink-0 justify-center items-center relative flex flex-col bg-[#EDE9FE]">
                                   {/* <input
                                 placeholder="checkbox"
                                 type="checkbox"
                                 className="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full"
                               /> */}
-                                  {i + 1}
+                                  {/* {i + 1} */}
+                                  <p className="text-[11px] leading-none text-gray-600 ml-2 mt-2">
+                                    {prettyDate(dat['schTime'])}
+                                </p>
+                                  <button className="py-3 px-3 text-[13px] focus:outline-none leading-none text-red-700 rounded flex flex-col">
+                                  {Math.abs(
+                                    getDifferenceInMinutes(dat['schTime'], '')
+                                  ) > 60
+                                    ? Math.abs(
+                                        getDifferenceInMinutes(
+                                          dat['schTime'],
+                                          ''
+                                        )
+                                      ) > 1440
+                                      ? `${getDifferenceInDays(
+                                          dat['schTime'],
+                                          ''
+                                        )} Days `
+                                      : `${getDifferenceInHours(
+                                          dat['schTime'],
+                                          ''
+                                        )} Hours `
+                                    : `${getDifferenceInMinutes(
+                                        dat['schTime'],
+                                        ''
+                                      )} Min`}
+                                  {getDifferenceInMinutes(dat['schTime'], '') <
+                                  0
+                                    ? 'Due'
+                                    : 'Left'}
+
+                                </button>
+                                {/* <p className="text-[11px] leading-none text-gray-600 ml-2 mt-2">
+                                    {prettyDateTime(dat['schTime'])}
+                                </p> */}
                                   {/* <div className="check-icon hidden bg-indigo-700 text-white rounded-sm">
                                 <svg
                                   className="icon icon-tabler icon-tabler-check"
@@ -1506,12 +1541,7 @@ const TodoListView = ({
                             Status{' '}
                           </span>
                         </th>
-                        <th className=" text-left pl-[3rem] headTxt">
-                          {' '}
-                          <span className="" tabIndex="0" role="button">
-                            Deadline{' '}
-                          </span>
-                        </th>
+
                       </tr>
                     </thead>
                     <tbody>
@@ -1525,18 +1555,95 @@ const TodoListView = ({
                           }}
                         >
                           <td>
-                            <div className="ml-5">
-                              <div className="rounded-sm h-5 w-5 flex flex-shrink-0 justify-center items-center relative">
-                                {i + 1}
+                            <div className="ml-2">
+                              <div className="rounded-2xl flex flex-shrink-0 flex-col py-2 text-[14px]  justify-center items-center relative bg-[#EDE9FE]">
+                                {/* {i + 1} */}
+                                {dat?.status != 'Done' && (
+                                  <span>
+                                    {' '}
+                                    {Math.abs(
+                                      getDifferenceInMinutes(
+                                        dat['due_date'],
+                                        ''
+                                      )
+                                    ) > 60
+                                      ? Math.abs(
+                                          getDifferenceInMinutes(
+                                            dat['due_date'],
+                                            ''
+                                          )
+                                        ) > 1440
+                                        ? `${Math.abs(getDifferenceInDays(
+                                            dat['due_date'],
+                                            ''
+                                          ))} Days `
+                                        : `${Math.abs(getDifferenceInHours(
+                                            dat['due_date'],
+                                            ''
+                                          ))} Hours `
+                                      : `${Math.abs(getDifferenceInMinutes(
+                                          dat['due_date'],
+                                          ''
+                                        ))} Min`}
+                                    {getDifferenceInMinutes(
+                                      dat['due_date'],
+                                      ''
+                                    ) < 0
+                                      ? 'Due'
+                                      : 'Left'}
+                                  </span>
+                                )}
+                                {dat?.status == 'Done' && (
+                                  <p className="text-[11px] leading-none text-green-600 ml-2 mt-2">
+                                    {prettyDate(dat['closedOn'])}
+                                  </p>
+                                )}
+                                <p className="text-[11px] leading-none text-gray-600 ml-2 mt-2">
+                                  {prettyDate(dat['due_date'])}
+                                </p>
                               </div>
                             </div>
                           </td>
-                          <td className=" max-w-[300px]">
-                            <div className="flex items-center ">
+                          <td className=" max-w-[300px] ml-2">
+                            <div className="flex items-center ml-2 ">
                               <div className="flex flex-col">
-                                <span className="relative flex flex-col  group">
+                              <div className="flex flex-row mt-2">
+
+                                  <section>
+                                    <PaperClipIcon className="w-3 h-3 mr-[2px] inline-block text-gray-400 mb-[10px]" />
+                                  </section>
+                                  <p className="text-[9px]  leading-none text-red-800   font-sanF  py-[4px]  rounded-full   mb-1 mr-4  ">
+                                  {prettyDateTime(dat['due_date'])}
+
+
+                                  </p>
+
+                                </div>
+
+                                <div className="flex flex-row mt-[2px]">
+                                  <p className="text-[9px]   leading-none  pr-2 text-green-800 ]  py-[4px]  rounded-full   mb-1 mr-2  ">
+                                    {dat?.priority?.toUpperCase()}
+                                  </p>
+                                  <section>
+                                    <PaperClipIcon className="w-3 h-3 mr-[2px] inline-block text-gray-400 mb-[10px]" />
+                                  </section>
+                                  <p className="text-[9px]  leading-none text-red-800   font-sanF  py-[4px]  rounded-full   mb-1 mr-4  ">
+                                    {dat?.attachmentsCount || 0}
+                                  </p>
+                                  <section>
+                                    <UsersIcon className="w-3 h-3 mr-[2px]  inline-block text-gray-400 mb-[10px]  " />{' '}
+                                  </section>
+                                  <p className="text-[9px]  leading-none text-red-800   font-sanF  py-[4px]  rounded-full   mb-1 mr-4  ">
+                                    {dat?.participantsA?.length || 0}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="text">
+                          <span className="relative flex flex-col  group">
                                   <div
-                                    className="absolute bottom-0 flex-col items-center hidden mb-4 group-hover:flex"
+                                    className="absolute bottom-0 flex-col justify-between hidden mb-4 group-hover:flex"
                                     // style={{  width: '300px' }}
                                     style={{ zIndex: '9' }}
                                   >
@@ -1564,7 +1671,7 @@ const TodoListView = ({
                                       }}
                                     ></div>
                                   </div>
-                                  <p className="text-base max-w-[350px] text-[13px] overflow-ellipsis overflow-hidden font-semibold leading-none text-blue-800 mr-2 mt-2">
+                                  <p className="max-w-[350px]  overflow-ellipsis overflow-hidden  leading-none text-blue-800 mr-2 mt-2 text-[14px]">
                                     {dat?.title}
                                   </p>
                                 </span>
@@ -1611,27 +1718,6 @@ const TodoListView = ({
                                   </div>
 
                                 </span>
-                                <div className="flex flex-row mt-[2px]">
-                                  <p className="text-[9px]   leading-none  pr-2 text-green-800 ]  py-[4px]  rounded-full   mb-1 mr-2  ">
-                                    {dat?.priority?.toUpperCase()}
-                                  </p>
-                                  <section>
-                                    <PaperClipIcon className="w-3 h-3 mr-[2px] inline-block text-gray-400 mb-[10px]" />
-                                  </section>
-                                  <p className="text-[9px]  leading-none text-red-800   font-sanF  py-[4px]  rounded-full   mb-1 mr-4  ">
-                                    {dat?.attachmentsCount || 0}
-                                  </p>
-                                  <section>
-                                    <UsersIcon className="w-3 h-3 mr-[2px]  inline-block text-gray-400 mb-[10px]  " />{' '}
-                                  </section>
-                                  <p className="text-[9px]  leading-none text-red-800   font-sanF  py-[4px]  rounded-full   mb-1 mr-4  ">
-                                    {dat?.participantsA?.length || 0}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="text">
                             <p className="text-[13px] leading-none text-[#212b36]">
                               {dat?.by_name}
                             </p>
@@ -1647,55 +1733,7 @@ const TodoListView = ({
                               <p className="text-sm leading-none text-gray-600 ml-2"></p>
                             </div>
                           </td>
-                          <td className="pl-5">
-                            <div className="flex flex-row">
-                              <button className="py-3 px-3 text-[13px] focus:outline-none leading-none text-red-700 rounded">
-                                {dat?.status != 'Done' && (
-                                  <span>
-                                    {' '}
-                                    {Math.abs(
-                                      getDifferenceInMinutes(
-                                        dat['due_date'],
-                                        ''
-                                      )
-                                    ) > 60
-                                      ? Math.abs(
-                                          getDifferenceInMinutes(
-                                            dat['due_date'],
-                                            ''
-                                          )
-                                        ) > 1440
-                                        ? `${getDifferenceInDays(
-                                            dat['due_date'],
-                                            ''
-                                          )} Days `
-                                        : `${getDifferenceInHours(
-                                            dat['due_date'],
-                                            ''
-                                          )} Hours `
-                                      : `${getDifferenceInMinutes(
-                                          dat['due_date'],
-                                          ''
-                                        )} Min`}
-                                    {getDifferenceInMinutes(
-                                      dat['due_date'],
-                                      ''
-                                    ) < 0
-                                      ? 'Due'
-                                      : 'Left'}
-                                  </span>
-                                )}
-                                {dat?.status == 'Done' && (
-                                  <p className="text-[11px] leading-none text-green-600 ml-2 mt-2">
-                                    {prettyDateTime(dat['closedOn'])}
-                                  </p>
-                                )}
-                                <p className="text-[11px] leading-none text-gray-600 ml-2 mt-2">
-                                  {prettyDateTime(dat['due_date'])}
-                                </p>
-                              </button>
-                            </div>
-                          </td>
+
                         </tr>
                       ))}
 
