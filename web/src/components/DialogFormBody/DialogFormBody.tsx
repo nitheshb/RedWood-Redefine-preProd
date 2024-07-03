@@ -83,12 +83,14 @@ const DialogFormBody = ({
   const [loading, setLoading] = useState(false)
   const [openAreaFields, setOpenAreaFields] = useState(false)
   const [bankDetailsA, setBankDetailsA] = useState([])
-  const [startDate, setStartDate] = useState(d)
+  const [startDate, setStartDate] = useState(project?.hdmaStartDate|| d)
   const [existingBuildBankId, setNowBuilderBankDocId] = useState('')
   const [existingLandBankId, setNowLandLordBankDocId] = useState('')
   const [builerShare, setBuilderShare] = useState(100)
   const [landLordShare, setLandLordShare] = useState(0)
-  const [endDate, setEndDate] = useState(d)
+  const [endDate, setEndDate] = useState(project?.hdmaEndDate|| d)
+  const [authorityStartDate, setAuthorityStartDate] = useState(project?.authorityStartDate|| d)
+  const [authorityEndDate, setAuthorityEndDate] = useState(project?.authorityEndDate|| d)
   const { enqueueSnackbar } = useSnackbar()
   const [bankAccounts, setBankAccounts] = useState([])
 
@@ -147,6 +149,8 @@ const DialogFormBody = ({
       projectType: selected,
       developmentType: devType,
       editMode: true,
+      planningApproval: planningApproval,
+      reraApproval: reraApproval
     }
     console.log('selected value is ',project?.editMode )
     // setLoading(true)
@@ -217,7 +221,8 @@ const DialogFormBody = ({
     hdmaNo: project?.hdmaNo || '',
     hdmaStartDate: project?.hdmaStartDate || '',
     hdmaEndDate: project?.hdmaEndDate || '',
-
+    authorityStartDate: project?.authorityStartDate || '',
+    authorityEndDate: project?.authorityEndDate || '',
     builderName: project?.builderName || '',
     builder_bank_details: project?.builder_bank_details || '',
     builderGSTno: project?.builderGSTno || '',
@@ -405,16 +410,16 @@ const DialogFormBody = ({
                                   Approval Date*
                                 </label>
                                 <DatePicker
-                                  id="bmrdaStartDate"
-                                  name="bmrdaStartDate"
+                                  id="authorityStartDate"
+                                  name="authorityStartDate"
                                   className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
-                                  selected={startDate}
+                                  selected={authorityStartDate}
                                   onChange={(date) => {
                                     formik.setFieldValue(
-                                      'bmrdaStartDate',
+                                      'authorityStartDate',
                                       date.getTime()
                                     )
-                                    setStartDate(date)
+                                    setAuthorityStartDate(date)
                                   }}
                                   timeFormat="HH:mm"
                                   injectTimes={[
@@ -436,16 +441,16 @@ const DialogFormBody = ({
                                   End Date*
                                 </label>
                                 <DatePicker
-                                  id="bmrdaEndDate"
-                                  name="bmrdaEndDate"
+                                  id="authrorityEndDate"
+                                  name="authrorityEndDate"
                                   className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
-                                  selected={endDate}
+                                  selected={authorityEndDate}
                                   onChange={(date) => {
                                     formik.setFieldValue(
-                                      'bmrdaEndDate',
+                                      'authorityEndDate',
                                       date.getTime()
                                     )
-                                    setEndDate(date)
+                                    setAuthorityEndDate(date)
                                   }}
                                   timeFormat="HH:mm"
                                   injectTimes={[

@@ -173,7 +173,7 @@ export const projectDetailFlow = [
     indx:0,
   },
   {
-    name: 'Cost sheet',
+    name: 'Cost Setup',
     value: 'CostDetails',
     img: '/apart1.svg',
     indx:1,
