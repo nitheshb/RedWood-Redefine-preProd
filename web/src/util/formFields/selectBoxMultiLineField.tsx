@@ -234,11 +234,11 @@ export const MultiSelectMultiLineField = ({
         valueComponent={GravatarValue}
         className="text-sm  mt-1 border-none"
       />
-        <ErrorMessage
+        {/* <ErrorMessage
           component="div"
           name={name}
           className="error-message text-red-700 text-xs p-1 mx-auto"
-        />
+        /> */}
     </div>
     // <div>
     //   <label className="label font-regular text-sm mb-2">{label}</label>

@@ -779,7 +779,7 @@ const HomePage = () => {
                                           <div className="flex flex-row">
                                             <div className="w-3.5 h-3.5 bg-emerald-500 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
-                                              1500
+                                              0
                                             </div>
                                             <div className="text-slate-400  font-medium font-['Inter'] text-[12px] ml-[2px] mt-[10px]">
                                               Posession
@@ -789,7 +789,7 @@ const HomePage = () => {
                                           <div className="flex flex-row mt-3">
                                             <div className="w-3.5 h-3.5 bg-violet-500 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
-                                              03
+                                              0
                                             </div>
                                             <div className="text-slate-400  font-medium font-['Inter']  text-[12px] ml-[2px] mt-[10px]">
                                               Released
