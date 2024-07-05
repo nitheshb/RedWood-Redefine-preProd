@@ -225,7 +225,7 @@ const ProjectsMHomeBody = ({ project,setProject, onSliderOpen = () => {}, isEdit
                   <div className="flex flex-col align-middle justify-between">
                     <Link
                       className="flex flex-col items-center"
-                      to={routes.projectEdit({ uid })}
+                      // to={routes.projectEdit({ uid })}
                     >
                       <img className="w-10 h-10" alt="" src="/apart.svg"></img>
                       <span className="relative  flex items-center w-auto text-md font-bold leading-none pl-0 mt-[8px]">

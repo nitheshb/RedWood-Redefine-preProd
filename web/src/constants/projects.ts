@@ -399,6 +399,31 @@ export const unitsCancellation = [
     label: 'Cost Per sqft',
   },
 ]
+export const csSections = [
+  {
+    value: 'unitCost',
+    label: 'Unit charges',
+  },
+  {
+    value: 'additionalCost',
+    label: 'Additional Charges',
+  },
+  {
+    value: 'otherCharges',
+    label: 'Other Charges',
+  },  {
+    value: 'partA',
+    label: 'Part-A',
+  },
+  {
+    value: 'partB',
+    label: 'Part-B',
+  },
+  {
+    value: 'partC',
+    label: 'Part-C',
+  },
+]
 export const paymentSheduleCompA = [
   {
     value: 'plenth',
@@ -469,6 +494,14 @@ export const csPartATax = [
   },
 ]
 export const costSheetAdditionalChargesA = [
+  {
+    value: 'sqft_cost_tax',
+    label: 'Cost/Sqft',
+  },
+  {
+    value: 'plc_tax',
+    label: 'PLC Cost',
+  },
   {
     value: 'bescom_sanitary_deposits',
     label: 'BESCOM & Sanitary deposits',
