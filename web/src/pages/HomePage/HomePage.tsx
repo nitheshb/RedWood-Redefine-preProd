@@ -12,6 +12,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import MarkeingMessagesList from 'src/components/A_ProjModule/MarketingMessagesList'
+import ProjectMastersSetupHome from 'src/components/A_ProjModule/ProjectMastersSetup'
 import ProjectReportsBody from 'src/components/A_ProjModule/ProjectReports'
 import ProjectsTaskHome from 'src/components/A_ProjModule/ProjTaskHome'
 import SlimSideMenuBar from 'src/components/A_SideMenu/slimSideMenu'
@@ -392,7 +393,23 @@ const HomePage = () => {
 
             <div className="flex-grow   items-center overflow-y-auto no-scrollbar  h-[98%]  px-300  pt-300">
               <HeadNavBar2 selModule={selModule} setSelModule={setSelModule} />
-              {viewable === 'Marketing' && (
+              {viewable === 'Setup' && (
+                <>
+                {/*Sales Executive Notifications border */}
+                  <div className="mt-1 mx-1">
+                    <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
+                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
+                        <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
+                          <ProjectMastersSetupHome
+                            title={'WhatsApp Message Templates'}
+                          />
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </>
+              )}
+                 {viewable === 'Marketing' && (
                 <>
                 {/*Sales Executive Notifications border */}
                   <div className="mt-1 mx-1">
@@ -480,6 +497,7 @@ const HomePage = () => {
                 viewable != 'Bank Accounts' &&
                 viewable != 'Virtual Accounts' &&
                 viewable != 'unitsInventory' &&
+                viewable != 'Setup' &&
                 viewable != 'Marketing' &&
                 viewable != 'projectReports' && (
                   <>
@@ -1646,7 +1664,7 @@ const HomePage = () => {
                             title="Create Project"
                             data={project}
                             setProject={setProject}
-                            widthClass="max-w-2xl"
+                            widthClass="max-w-6xl"
                           />
                           <SiderForm
                             open={isEditProjectOpen}

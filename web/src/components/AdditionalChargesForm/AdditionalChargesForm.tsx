@@ -30,6 +30,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
 
   const { orgId } = user
   const [tableData, setTableData] = useState([])
+  const [fullCs, setFullCs] = useState([])
   const [partAData, setPartAData] = useState([])
   const [partCData, setPartCData] = useState([])
   const [iserror, setIserror] = useState(false)
@@ -80,6 +81,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         ? ConstructOtherChargesObj
         : additonalChargesObj
     setTableData(x)
+    console.log('helolo',phase?.fullCs )
+    setFullCs(phase?.fullCs || [])
     setPartAData(phase?.partATaxObj || [])
     setPartCData(phase?.partCTaxObj || [])
 
@@ -279,6 +282,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         padding: '0.25rem',
       },
       cellStyle: {
+        padding: '0.25rem',
         padding: '0.25rem',
       },
       render: (rowData) => rowData?.gst?.label,
@@ -850,9 +854,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         </tbody>
       </table> */}
 
-      <div className="flex flex-col px-4 my-6 space-y-4">
+      {/* <div className="flex flex-col px-4 my-6 space-y-4">
         <div className="flex items-center ">
-          {/* Step1*/}
           <div
             className={`flex items-center ${
               currentStep === 0 ? 'text-blue-500' : 'text-gray-500'
@@ -866,9 +869,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
               A
             </div>
           </div>
-          {/* Line1*/}
           <div className="w-full h-[2px] bg-[#E5E7EB]"></div>
-          {/* Step2*/}
           <div
             className={`flex items-center ${
               currentStep === 1 ? 'text-blue-500' : 'text-gray-500'
@@ -882,9 +883,9 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
               B
             </div>
           </div>
-          {/* Line2*/}
+
           <div className="w-full h-[2px] bg-[#E5E7EB]"></div>
-          {/* Step3*/}
+
           <div
             className={`flex items-center ${
               currentStep === 2 ? 'text-blue-500' : 'text-gray-500'
@@ -899,7 +900,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Buttons for navigation */}
       {/* <div className="flex justify-between px-4 mb-4">
@@ -911,7 +912,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         )}
       </div> */}
 
-      <div className="flex justify-between px-4 mb-4">
+      {/* <div className="flex justify-between px-4 mb-4">
         <button
           className="px-2 py-0 bg-[#DDD6FE] text-[10px] rounded-xl"
           onClick={prevStep}
@@ -924,15 +925,17 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         >
           Next
         </button>
+      </div> */}
+      <div className="h-full w-full bg-white shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll">
+      <EditableTable  phase={data?.phase || {}}  partAData={partAData} fullCs= {fullCs} source={'project'}/>
       </div>
-      {/* <EditableTable /> */}
 
-      {currentStep === 0 && (
+      {/* {currentStep === 0 && (
         <>
           <section className="ml-4 text-md font-[500]">
             Unit Pricing & PLC
           </section>
-          {/* Your Part A content here */}
+
 
           <div className="h-full w-full shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll">
             <div className="">
@@ -951,7 +954,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
                       borderTopLeftRadius: '12px',
                       borderTopRightRadius: '12px',
                       borderBottomWidth: '2px',
-                      // background: '#DDD6FE',
                       fontWeight: '600px',
                       padding: '13px',
                       borderRadius: '0px',
@@ -984,24 +986,14 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
             </div>
           </div>
         </>
-      )}
+      )} */}
 
       {/* Part B */}
-      {currentStep === 1 && (
+      {/* {currentStep === 1 && (
         <>
           <section className="ml-4 text-md font-[500]">Additional Charges</section>
-          {/* Your Part B content here */}
 
           <div className="">
-            {/* <Dialog.Title className="font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
-            {/* <span className="mr-auto ml-3  text-md font-extrabold tracking-tight uppercase font-body ">
-          {blocksViewFeature === 'Construction_Other_Charges'
-            ? 'Construction Other Charges (section B)'
-            : 'Plot Other Charges (section B)'}
-        </span> */}
-            {/* <section className="ml-4 text-md font-[500]">Part-B</section> */}
 
             <div className=" min">
               <MaterialCRUDTable
@@ -1013,7 +1005,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
                     borderTopLeftRadius: '12px',
                     borderTopRightRadius: '12px',
                     borderBottomWidth: '2px',
-                    // background: '#D9D8FF',
                     fontWeight: '600px',
                     padding: '13px',
                     zIndex: '0',
@@ -1054,15 +1045,13 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
             </div>
           </div>
         </>
-      )}
+      )} */}
 
       {/* Part C */}
-      {currentStep === 2 && (
+      {/* {currentStep === 2 && (
         <>
           <section className="ml-4 text-md font-[500]">Other Charges</section>
-          {/* Your Part C content here */}
           <div className="">
-            {/* <section className="ml-4 text-md font-[500]">Part-C</section> */}
             <MaterialCRUDTable
               title=""
               columns={partCcolumns}
@@ -1101,7 +1090,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
             />
           </div>
         </>
-      )}
+      )} */}
 
       {/* <section className="ml-4 text-md font-[500]">Part-A</section> */}
 

@@ -25,6 +25,7 @@ import {
   createProject,
   getProject,
   steamBankDetailsList,
+  streamProjectMaster,
   updateProject,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -81,6 +82,7 @@ const DialogFormBody = ({
   )
   const [addNewBankStuff, setAddNewBankStuff] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [openExtendFields, setOpenExtendFields] = useState(false)
   const [openAreaFields, setOpenAreaFields] = useState(false)
   const [bankDetailsA, setBankDetailsA] = useState([])
   const [startDate, setStartDate] = useState(project?.hdmaStartDate|| d)
@@ -167,7 +169,27 @@ const DialogFormBody = ({
     } else {
       console.log('selected value is ', )
       const uid = uuidv4()
-      await createProject(orgId,uid, updatedData, enqueueSnackbar, resetForm)
+      let fullCsA =[]
+      const unsubscribe = await streamProjectMaster(
+        orgId,
+        async (querySnapshot) => {
+          const bankA = querySnapshot.docs.map((docSnapshot) => {
+            const x = docSnapshot.data()
+            x.id = docSnapshot.id
+            return x
+          })
+          // fullCs
+
+          if(bankA?.length>0){
+         const y= await   bankA.filter((item) => item.type == updatedData?.projectType?.name)
+           fullCsA = y[0]['fullCs']
+          }
+          updatedData.fullCsA =fullCsA
+       await createProject(orgId,uid, updatedData, enqueueSnackbar, resetForm)
+
+        },
+        (error) => fullCsA =[]
+      )
       setLoading1(false)
 
       const additionalUserInfo =    await getProject(orgId, uid)
@@ -181,6 +203,9 @@ const DialogFormBody = ({
 
   const onAreaClick = () => {
     setOpenAreaFields(!openAreaFields)
+  }
+  const onExtendClick = () => {
+    setOpenExtendFields(!openExtendFields)
   }
 
   useEffect(() => {
@@ -233,6 +258,7 @@ const DialogFormBody = ({
     landlordShare: project?.landlordShare || landLordShare,
     builderShare: project?.builderShare || builerShare,
     area: project?.area || '',
+    extend: project?.extend || '',
     location: project?.location || '',
     pincode: project?.pincode || '',
     state: project?.state || '',
@@ -307,7 +333,58 @@ const DialogFormBody = ({
                           Project Name*
                         </p>
                         <TextField label="" name="projectName" type="text" />
-                        <div className="mb-3">
+                        <section className="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                        <div className="mb-3 w-[50%]">
+                          <label
+                            htmlFor="extend"
+                            className="label font-medium text-sm"
+                          >
+                            Project Extend*
+                          </label>
+                          <MuiTextField
+                            id="extend"
+                            className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+                            size="small"
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  Sqft
+                                </InputAdornment>
+                              ),
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <button
+                                    type="button"
+                                    style={{ marginRight: '-13px' }}
+                                    onClick={onExtendClick}
+                                    className="border border-green-400 font-semibold text-3xl px-2 bg-green-400 shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-green-500"
+                                  >
+                                    {openExtendFields ? <Remove /> : <Add />}
+                                  </button>
+                                </InputAdornment>
+                              ),
+                            }}
+                            label=""
+                            name="extend"
+                            type="text"
+                            value={formik.values.extend}
+                            onChange={formik.handleChange}
+                          />
+                          {formik.errors.extend ? (
+                            <div className="error-message text-red-700 text-xs p-2">
+                              {formik.errors.extend}
+                              {formik.values.extend}
+                            </div>
+                          ) : null}
+                          {openExtendFields && (
+                            <AreaConverter
+                              formik={formik}
+                              hideField={setOpenExtendFields}
+                              fieldName="extend"
+                            />
+                          )}
+                        </div>
+                        <div className="mb-3 w-[50%]">
                           <label
                             htmlFor="area"
                             className="label font-medium text-sm"
@@ -321,7 +398,7 @@ const DialogFormBody = ({
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment position="start">
-                                  Saleable Area
+                                  Sqft
                                 </InputAdornment>
                               ),
                               endAdornment: (
@@ -357,6 +434,7 @@ const DialogFormBody = ({
                             />
                           )}
                         </div>
+                        </section>
                       </div>
                       <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
                         <CustomRadioGroup
