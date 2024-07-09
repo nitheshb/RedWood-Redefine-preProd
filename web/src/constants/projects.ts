@@ -494,14 +494,14 @@ export const csPartATax = [
   },
 ]
 export const costSheetAdditionalChargesA = [
-  {
-    value: 'sqft_cost_tax',
-    label: 'Cost/Sqft',
-  },
-  {
-    value: 'plc_tax',
-    label: 'PLC Cost',
-  },
+  // {
+  //   value: 'sqft_cost_tax',
+  //   label: 'Cost/Sqft',
+  // },
+  // {
+  //   value: 'plc_tax',
+  //   label: 'PLC Cost',
+  // },
   {
     value: 'bescom_sanitary_deposits',
     label: 'BESCOM & Sanitary deposits',
