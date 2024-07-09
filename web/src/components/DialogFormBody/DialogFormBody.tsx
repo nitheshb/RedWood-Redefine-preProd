@@ -307,7 +307,7 @@ const DialogFormBody = ({
         <div className="flex flex-col ">
           <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 m-4 pt-1 mb-0 ">
             <CustomRadioGroup
-              label="Type"
+              label="TYPE"
               value={selected}
               options={projectPlans}
               onChange={setSelected}
@@ -329,15 +329,20 @@ const DialogFormBody = ({
                   <Form>
                     <div className="form m-4 mt-2 ">
                       <div className="flex flex-col mt-0 rounded-lg bg-white border border-gray-100 p-4 ">
-                        <p className="text-sm text-gray-800 font-medium">
+                      <div className="py-2">
+                          <p className="text-sm text-gray-800 font-medium">
+                            DETAILS
+                          </p>
+                        </div>
+                        <p className="text-sm text-gray-800 ">
                           Project Name*
                         </p>
                         <TextField label="" name="projectName" type="text" />
-                        <section className="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                        <section className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-2">
                         <div className="mb-3 w-[50%]">
                           <label
                             htmlFor="extent"
-                            className="label font-medium text-sm"
+                            className="label  text-sm"
                           >
                             Project Extent*
                           </label>
@@ -387,7 +392,7 @@ const DialogFormBody = ({
                         <div className="mb-3 w-[50%]">
                           <label
                             htmlFor="area"
-                            className="label font-medium text-sm"
+                            className="label  text-sm"
                           >
                             Saleable Area*
                           </label>
@@ -438,7 +443,7 @@ const DialogFormBody = ({
                       </div>
                       <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
                         <CustomRadioGroup
-                          label="Planning Authority Approval"
+                          label="PLANNING AUTHORITY APPROVAL"
                           value={planningApproval}
                           options={chooseAuthorityApproval}
                           onChange={setPlanningApproval}
@@ -546,7 +551,7 @@ const DialogFormBody = ({
 
                       <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
                         <CustomRadioGroup
-                          label="Rera Approval"
+                          label="RERA APPROVAL"
                           value={reraApproval}
                           options={chooseReraApproval}
                           onChange={setReraApproval}
@@ -626,15 +631,20 @@ const DialogFormBody = ({
                         )}
                       </div>
                       <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
-                        <CustomRadioGroup
+                      <div className="py-2">
+                          <p className="text-sm text-gray-800 font-medium">
+                            ADD BANK ACCOUNT *
+                          </p>
+                        </div>
+                        {/* <CustomRadioGroup
                           label="Development Type"
                           value={devType}
                           options={developmentTypes}
                           onChange={setdevType}
-                        />
-                        <label className="label font-regular text-sm mb-2 mt-3">
+                        /> */}
+                        {/* <label className="label font-regular text-sm mb-2 mt-3">
                           Builder Bank Account *
-                        </label>
+                        </label> */}
 
                         {bankAccounts.length > 0 && (
                           <div className="flex  space-x-2 w-full text-xs">
@@ -760,7 +770,7 @@ const DialogFormBody = ({
                       <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
                         <div className="py-2">
                           <p className="text-sm text-gray-800 font-medium">
-                            Project Location Details
+                            LOCATION DETAILS
                           </p>
                         </div>
 

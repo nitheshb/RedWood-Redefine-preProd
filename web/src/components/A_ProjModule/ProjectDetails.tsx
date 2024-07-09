@@ -128,7 +128,7 @@ const setLoading1 = (x)=>{
       <div className="h-full flex flex-col  py-6  shadow-xl overflow-y-scroll bg-[#D9D8FF]">
       <div className="px-2 sm:px-6  z-10 absolute top-0  w-full  py-2 bg-[#D9D8FF]">
         <Dialog.Title className=" font-semibold text-xl mr-auto    tracking-wider text-[14px]">
-          Project Details
+          Project Information
         </Dialog.Title>
         {/* <CustomRadioGroup
           label="Type"

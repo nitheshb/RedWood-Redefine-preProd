@@ -504,14 +504,10 @@ export const costSheetAdditionalChargesA = [
   // },
   {
     value: 'bescom_sanitary_deposits',
-    label: 'BESCOM & Sanitary deposits',
+    label: 'BESCOM & Sanitary Deposits',
   },  {
     value: 'carparking',
     label: 'Car Parking',
-  },
-  {
-    value: 'clubhouse_charges',
-    label: 'Club House Charges',
   },
   {
     value: 'clubhouse_membership',
@@ -525,51 +521,42 @@ export const costSheetAdditionalChargesA = [
 
   {
     value: 'frankingcharges',
-    label: 'Franking Charges',
+    label: 'Franking',
   },
   {
     value: 'infrastructurecharges',
-    label: 'Infrastructure charges',
+    label: 'Infrastructure',
   },
   {
     value: 'legalcharges',
-    label: 'Legal charges',
+    label: 'Legal',
   },
   {
     value: 'maintenancecharges',
-    label: 'Maintenance Charges',
+    label: 'Maintenance',
   },
   {
     value: 'power_backup_charges',
-    label: 'Power Back-up Charges',
+    label: 'Power Back-up',
   },
   {
     value: 'dg_backup',
     label: 'DG Backup ',
   },
-  {
-    value: 'plc',
-    label: 'PLC',
-  },
+
+
 
   {
-    value: 'premium',
-    label: 'Premium',
-  },
-  {
     value: 'legalCharges_onsale',
-    label: 'Legal Charges on sale Deed',
+    label: 'Legal',
   },
-  {
-    value: 'gst',
-    label: 'GST',
-  },
+
 ]
 export const costSheetPartcChargesA = [
 
   {
     value: 'legal_incidental_charges',
-    label: 'Legal & Incidental Charges',
+    label: 'Legal & Incidental',
   },
   {
     value: 'Stamp_duty_registration',
@@ -577,16 +564,13 @@ export const costSheetPartcChargesA = [
   },
   {
     value: 'legalcharges',
-    label: 'Legal charges',
+    label: 'Legal',
   },
   {
     value: 'maintenancecharges',
-    label: 'Maintenance Charges',
+    label: 'Maintenance',
   },
-  {
-    value: 'legalCharges_onsale',
-    label: 'Legal Charges on sale Deed',
-  },
+
   {
     value: 'gst',
     label: 'GST',

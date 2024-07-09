@@ -397,6 +397,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       '&:hover': {
         border: 'none',
       },
+      fontSize: '13px'
     }),
     indicatorSeparator: () => ({
       display: 'none',
@@ -405,6 +406,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       ...provided,
       position: 'absolute',
       zIndex: 9999,
+
     }),
     menuPortal: (provided) => ({
       ...provided,
@@ -434,14 +436,20 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
     setGST(e.target.value)
   }
   return (
-    <div className="container mx-auto mt-10 p-4 bg-white rounded-xl">
-      <section className="flex flex-row space-x-4 mx-4">
+    <>
+    <div className="container  m-2 p-4 bg-white rounded-xl">
+        <div className="pt-2 mt-">
+                          <p className="text-sm text-gray-800 font-medium">
+                            UNIT COST
+                          </p>
+                        </div>
+      <section className="flex flex-row space-x-4 mx-">
         <div className="mb-3 w-[140px]">
-          <label htmlFor="area" className="label font-medium text-sm">
-            Basic Land Price per sqft*
+          <label htmlFor="area" className="label  text-sm">
+            Base Cost per sqft*
           </label>
           <div className="flex">
-            <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+            <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
               {/* <svg
               className="w-4 h-4 text-gray-500 "
               aria-hidden="true"
@@ -464,11 +472,11 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           </div>
         </div>
         <div className="mb-3 w-[120px]">
-          <label htmlFor="area" className="label font-medium text-sm">
-            Standard GST Rate*
+          <label htmlFor="area" className="label text-sm">
+            Standard Tax Rate*
           </label>
           <div className="flex">
-            <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+            <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
               {/* <svg
               className="w-4 h-4 text-gray-500 "
               aria-hidden="true"
@@ -483,7 +491,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
             <input
               type="text"
               id="website-admin"
-              className="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+              className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
               placeholder="GST"
               value={gst}
               onChange={handleCostGSTChange}
@@ -493,32 +501,40 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       </section>
       <p className="text-xs text-red-400 text-left my-3 mt-1 mx-3">
         <abbr title="Required field">Note:</abbr> Set PLC value at unit level.
-        unit entry
       </p>
-      <div className="container mx-auto p-4">
+      </div>
+       <div className="container  m-2 p-4 bg-white rounded-xl">
+      <div className="">
+      <div className="py-2 pb-1 mb-1">
+                          <p className="text-sm text-gray-800 font-medium">
+                            MORE CHARGES
+                          </p>
+                        </div>
+<div className=" overflow-x-auto shadow-md sm:rounded-lg">
+
         <DragDropContext onDragEnd={onDragEnd}>
-          <table className="w-full border-collapse rounded-md">
-            <thead>
-              <tr className="bg-white rounded-xl">
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-center rounded-tl-sm rounded-xl text-md">
+          <table className="w-full text-sm text-left text-gray-500 ">
+            <thead className='text-xs text-gray-700 uppercase'>
+              <tr className="bg-gray-100 rounded-xl rounded-x-md">
+                <th className=" p-2 pl-2 text-center   text-md">
                   Charges For
                 </th>
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-center">
+                <th className=" p-1 pl-2 text-center">
                   Category
                 </th>
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-center">
+                <th className=" p-1 pl-2 text-center">
                   Cost Type
                 </th>
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-center">
+                <th className=" p-1 pl-2 text-center">
                   Amount
                 </th>
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-center">
+                <th className=" p-1 pl-2 text-center">
                   Tax Rate
                 </th>
                 {/* <th className="border border-[#e0e0e0] p-2 text-left">
                   Description
                 </th> */}
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-center">
+                <th className=" p-1 pl-2 text-center">
                   Action
                 </th>
               </tr>
@@ -541,7 +557,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                             {...provided.dragHandleProps}
                             className="hover:bg-gray-100 transition-colors duration-150 ease-in-out"
                           >
-                            <td className="border border-[#e0e0e0] ">
+                            <td className="border-b border-[#e0e0e0] ">
                               {/* <select
                               value={row.col1}
                               onChange={(e) =>
@@ -578,10 +594,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                 // value={defaultValue(costSheetAdditionalChargesA, row.component.value)}
                                 value={row.component}
                                 styles={customStyles}
-                                className="text-md mr-2"
+                                className="text-sm mr-2"
                               />
                             </td>
-                            <td className="border border-[#e0e0e0]">
+                            <td className="border-b border-[#e0e0e0]">
                               {/* <input
                               type="text"
                               value={row.unit}
@@ -603,10 +619,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                 styles={customStyles}
                                 // value={defaultValue(gstValesA, item.unit)}
                                 value={row.section}
-                                className="text-md mr-2 border-0"
+                                className="text-sm mr-2 border-0"
                               />
                             </td>
-                            <td className="border border-[#e0e0e0]">
+                            <td className="border-b border-[#e0e0e0]">
                               {/* <input
                               type="number"
                               value={row.unit}
@@ -627,10 +643,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                 styles={customStyles}
                                 value={row.units}
                                 // value={defaultValue(gstValesA, item.unit)}
-                                className="text-md mr-2"
+                                className="text-sm mr-2"
                               />
                             </td>
-                            <td className="border border-[#e0e0e0]">
+                            <td className="border-b border-[#e0e0e0]">
                               <input
                                 type="number"
                                 value={row?.charges}
@@ -642,10 +658,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                     e.target.value
                                   )
                                 }
-                                className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                               />
                             </td>
-                            <td className="border border-[#e0e0e0] ">
+                            <td className="border-b border-[#e0e0e0] ">
                               {/* <input
                               type="number"
                               value={row.unit}
@@ -666,7 +682,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                 value={row.gst}
                                 // value={defaultValue(gstValesA, item.unit)}
                                 styles={customStyles}
-                                className="text-md mr-2 text-right"
+                                className="text-md mr-2 text-right text-sm"
                               />
                             </td>
                             {/* <td className="border border-[#e0e0e0] p-2">
@@ -680,10 +696,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                             />
 
                           </td> */}
-                            <td className="border border-[#e0e0e0] ">
+                            <td className="border-b border-[#e0e0e0] text-center">
                               <button
                                 onClick={() => handleDelete(row.id)}
-                                className="text-red-500 hover:text-red-700"
+                                className="text-gray-500 hover:text-red-700"
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -709,22 +725,24 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
             </Droppable>
           </table>
         </DragDropContext>
+        </div>
         <div className="flex justify-between">
           <button
             onClick={addRow}
-            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-md py-1 px-2 rounded focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+            className="mt-4 bg-[#57C0D0]  text-white font-md py-1 px-2 rounded focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
           >
-            + Row
+            Add Charges
           </button>
           <button
             onClick={saveSetup}
-            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-md py-1 px-2 rounded focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+            className="mt-4 bg-[#57C0D0] text-white font-md py-1 px-2 rounded focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
           >
             Save
           </button>
         </div>
       </div>
     </div>
+    </>
   )
 }
 
