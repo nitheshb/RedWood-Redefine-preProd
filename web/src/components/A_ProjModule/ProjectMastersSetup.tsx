@@ -100,7 +100,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
           <section className="m-4 inline-block">
             <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                {'Apartment Cost Setup Templete'}
+                {`${selCat} Cost Setup Templete`}
               </h2>
               <EditableTable type={'Apartment'} />
             </div>
@@ -112,7 +112,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
           <section className="m-4 inline-block">
             <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                {'Apartment Cost Setup Templete'}
+                {`${selCat} Cost Setup Templete`}
               </h2>
               <EditableTable type={'Plots'} />
             </div>
@@ -124,7 +124,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
           <section className="m-4 inline-block">
             <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                {'Apartment Cost Setup Templete'}
+                {`${selCat} Cost Setup Templete`}
               </h2>
               <EditableTable type={'Villas'} />
             </div>
@@ -136,7 +136,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
           <section className="m-4 inline-block">
             <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                {'Apartment Cost Setup Templete'}
+                {`${selCat} Cost Setup Templete`}
               </h2>
               <EditableTable type={'WeekendVillas'} />
             </div>

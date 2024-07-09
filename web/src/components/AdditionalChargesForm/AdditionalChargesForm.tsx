@@ -926,7 +926,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
           Next
         </button>
       </div> */}
-      <div className="h-full w-full bg-white shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll">
+      <div className=" ">
       <EditableTable  phase={data?.phase || {}}  partAData={partAData} fullCs= {fullCs} source={'project'}/>
       </div>
 

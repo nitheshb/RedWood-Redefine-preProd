@@ -3793,6 +3793,7 @@ export const addPhaseFullCs  = async (
       partATaxObj: fullCsA?.filter((item) => item?.section?.value == 'unitCost') || [],
       partCTaxObj: fullCsA?.filter((item) => item?.section?.value == 'otherCharges') || [],
       additonalChargesObj: fullCsA?.filter((item) => item?.section?.value == 'additionalCost') || [],
+      fullCs: fullCsA
     })
     enqueueSnackbar('Charges added successfully', {
       variant: 'success',

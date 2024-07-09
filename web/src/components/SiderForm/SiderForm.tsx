@@ -15,6 +15,7 @@ import CostBreakUpPdfPreview from 'src/util/costBreakUpPdfPreview'
 import CrmCustomerSummary from '../A_CrmModule/A_CrmCustomerSummary'
 import UnitBookingCancelCRM from '../A_CrmModule/A_UnitCancel.tsx/CrmUnitCancel'
 import CustomerSideViewCRM from '../A_CrmModule/CrmCustomerSideView'
+import AddNewDemand from '../A_CrmModule/CrmNewDemand'
 import UnitSideViewCRM from '../A_CrmModule/CrmUnitSideView'
 import ViewDocxFile from '../A_LegalModule/viewDocxFile'
 import AddCampaignForm from '../A_MarketingModule/AddCampaign'
@@ -41,7 +42,6 @@ import MoreDetailsPhaseForm from '../MoreDetailsPhaseForm/MoreDetailsPhaseForm'
 import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import TransactionUpdateSideView from '../transactionUpdateSideView'
 import ViewUnitDetails from '../ViewUnitDetails'
-import AddNewDemand from '../A_CrmModule/CrmNewDemand'
 
 const SiderForm = ({
   mode,
@@ -190,7 +190,7 @@ const SiderForm = ({
                     setProject={setProject}
                   />
                 )}
-                {title === 'project_details'  && (
+                {title === 'project_details' && (
                   <ProjectDetailsFlowBody
                     title={title}
                     dialogOpen={setOpen}
@@ -498,7 +498,7 @@ const SiderForm = ({
                     onSubmitFun={paymentCaptureFun}
                   />
                 )}
-                  {title === 'newDemand' && (
+                {title === 'newDemand' && (
                   <AddNewDemand
                     title={title}
                     selUnitDetails={selUnitDetails}

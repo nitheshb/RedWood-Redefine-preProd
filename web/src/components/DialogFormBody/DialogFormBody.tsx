@@ -258,7 +258,7 @@ const DialogFormBody = ({
     landlordShare: project?.landlordShare || landLordShare,
     builderShare: project?.builderShare || builerShare,
     area: project?.area || '',
-    extend: project?.extend || '',
+    extent: project?.extent || '',
     location: project?.location || '',
     pincode: project?.pincode || '',
     state: project?.state || '',
@@ -336,13 +336,13 @@ const DialogFormBody = ({
                         <section className="md:flex md:flex-row md:space-x-4 w-full text-xs">
                         <div className="mb-3 w-[50%]">
                           <label
-                            htmlFor="extend"
+                            htmlFor="extent"
                             className="label font-medium text-sm"
                           >
-                            Project Extend*
+                            Project Extent*
                           </label>
                           <MuiTextField
-                            id="extend"
+                            id="extent"
                             className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
                             size="small"
                             InputProps={{
@@ -365,22 +365,22 @@ const DialogFormBody = ({
                               ),
                             }}
                             label=""
-                            name="extend"
+                            name="extent"
                             type="text"
-                            value={formik.values.extend}
+                            value={formik.values.extent}
                             onChange={formik.handleChange}
                           />
-                          {formik.errors.extend ? (
+                          {formik.errors.extent ? (
                             <div className="error-message text-red-700 text-xs p-2">
-                              {formik.errors.extend}
-                              {formik.values.extend}
+                              {formik.errors.extent}
+                              {formik.values.extent}
                             </div>
                           ) : null}
                           {openExtendFields && (
                             <AreaConverter
                               formik={formik}
                               hideField={setOpenExtendFields}
-                              fieldName="extend"
+                              fieldName="extent"
                             />
                           )}
                         </div>

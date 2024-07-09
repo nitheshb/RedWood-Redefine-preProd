@@ -8,11 +8,13 @@ import { MetaTags } from '@redwoodjs/web'
 
 import CrmHome from 'src/components/A_CRMcomp/CrmHome'
 import FinanceHome from 'src/components/A_FinanceModule/FinanceHome'
+import FinanceSummaryReport from 'src/components/A_FinanceModule/FinanceSummaryReport'
 import SlimSideMenuBar from 'src/components/A_SideMenu/slimSideMenu'
 import AllBankDetailsView from 'src/components/All_BankDetailsView'
 import HeadSideBarDetailView from 'src/components/HeadDetailSideBar'
 import HeadSideBarDetailView2 from 'src/components/HeadDetailSideBar2'
 import HeadNavBar2 from 'src/components/HeadNavBar/HeadNavBar2'
+import HeadNavBarAccounts from 'src/components/HeadNavBar/HeadNavBarAccounts'
 import FinanceTransactionsHome from 'src/components/TableComp/FinanceTransactionsHome'
 import LeadsDummyHome from 'src/components/TableComp/LeadsDummyHome'
 import { getAllProjects } from 'src/context/dbQueryFirebase'
@@ -23,10 +25,6 @@ import HeadNavBar from '../../components/HeadNavBar/HeadNavBar'
 import HeadSideBar from '../../components/HeadSideBar/HeadSideBar'
 import ProjectsMHomeBody from '../../components/ProjectsMHomeBody/ProjectsMHomeBody'
 import SiderForm from '../../components/SiderForm/SiderForm'
-import HeadNavBarAccounts from 'src/components/HeadNavBar/HeadNavBarAccounts'
-
-import FinanceSummaryReport from 'src/components/A_FinanceModule/FinanceSummaryReport'
-
 
 const FinanceHomePagePage = () => {
   const { user } = useAuth()
@@ -371,17 +369,12 @@ const FinanceHomePagePage = () => {
                 selModule={selModule}
                 setSelModule={setSelModule}
               />   */}
-              <HeadNavBar2
-                selModule={selModule}
-                setSelModule={setSelModule}
-              />
+              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule} />
               {(viewable === 'Today1' || viewable === 'Home') && (
                 <FinanceHome leadsTyper={undefined} />
               )}
 
-
-
-              {/* 
+              {/*
               {viewable === 'Dashboard' && (
                 <div className="flex flex-row h-full">
                   <div className="flex flex-col w-full mx-16 ">
@@ -599,14 +592,11 @@ const FinanceHomePagePage = () => {
 
                             */}
 
-
               {viewable === 'Dashboard' && (
                 <>
-                <FinanceSummaryReport/>
+                  <FinanceSummaryReport />
                 </>
               )}
-
-
 
               {viewable === 'Payments' && (
                 <div className=" h-full rounded-3xl">
