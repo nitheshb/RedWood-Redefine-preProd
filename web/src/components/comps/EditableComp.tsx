@@ -438,7 +438,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       <section className="flex flex-row space-x-4 mx-4">
         <div className="mb-3 w-[140px]">
           <label htmlFor="area" className="label font-medium text-sm">
-            Basic Cost per sqft*
+            Basic Land Price per sqft*
           </label>
           <div className="flex">
             <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
@@ -465,7 +465,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         </div>
         <div className="mb-3 w-[120px]">
           <label htmlFor="area" className="label font-medium text-sm">
-            Default Tax Rate*
+            Standard GST Rate*
           </label>
           <div className="flex">
             <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
@@ -492,7 +492,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         </div>
       </section>
       <p className="text-xs text-red-400 text-left my-3 mt-1 mx-3">
-        <abbr title="Required field">*</abbr> PLC value will be picked from each
+        <abbr title="Required field">Note:</abbr> Set PLC value at unit level.
         unit entry
       </p>
       <div className="container mx-auto p-4">
@@ -500,25 +500,25 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           <table className="w-full border-collapse rounded-md">
             <thead>
               <tr className="bg-white rounded-xl">
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-left rounded-tl-sm rounded-xl text-md">
+                <th className="border border-[#e0e0e0] p-1 pl-2 text-center rounded-tl-sm rounded-xl text-md">
                   Charges For
                 </th>
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-left">
+                <th className="border border-[#e0e0e0] p-1 pl-2 text-center">
                   Category
                 </th>
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-left">
+                <th className="border border-[#e0e0e0] p-1 pl-2 text-center">
                   Cost Type
                 </th>
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-right">
+                <th className="border border-[#e0e0e0] p-1 pl-2 text-center">
                   Amount
                 </th>
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-left">
+                <th className="border border-[#e0e0e0] p-1 pl-2 text-center">
                   Tax Rate
                 </th>
                 {/* <th className="border border-[#e0e0e0] p-2 text-left">
                   Description
                 </th> */}
-                <th className="border border-[#e0e0e0] p-1 pl-2 text-left">
+                <th className="border border-[#e0e0e0] p-1 pl-2 text-center">
                   Action
                 </th>
               </tr>
