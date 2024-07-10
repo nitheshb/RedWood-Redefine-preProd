@@ -37,6 +37,7 @@ import { TextField } from 'src/util/formFields/TextField'
 
 import AddBankDetailsForm from '../addBankDetailsForm'
 import { constants } from 'os'
+import { sqftConverter } from 'src/util/areaConverter'
 
 const DialogFormBody = ({
   title,
@@ -344,7 +345,7 @@ const DialogFormBody = ({
                             htmlFor="extent"
                             className="label  text-sm"
                           >
-                            Project Extent*
+                            Project Extent*  <span className="text-[11px] ">({sqftConverter(formik?.values?.extent, 'square-meter')?.toLocaleString('en-IN')} sqft)</span>
                           </label>
                           <MuiTextField
                             id="extent"
@@ -353,7 +354,7 @@ const DialogFormBody = ({
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment position="start">
-                                  Sqft
+                                  Sqmt
                                 </InputAdornment>
                               ),
                               endAdornment: (
@@ -394,7 +395,7 @@ const DialogFormBody = ({
                             htmlFor="area"
                             className="label  text-sm"
                           >
-                            Saleable Area*
+                            Saleable Area* <span className="text-[11px] ">({sqftConverter(formik?.values?.area, 'square-meter')?.toLocaleString('en-IN')} sqft)</span>
                           </label>
                           <MuiTextField
                             id="area"
@@ -403,7 +404,7 @@ const DialogFormBody = ({
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment position="start">
-                                  Sqft
+                                  Sqmt
                                 </InputAdornment>
                               ),
                               endAdornment: (
@@ -431,6 +432,7 @@ const DialogFormBody = ({
                               {formik.values.area}
                             </div>
                           ) : null}
+
                           {openAreaFields && (
                             <AreaConverter
                               formik={formik}
@@ -520,7 +522,7 @@ const DialogFormBody = ({
                             type="text"
                             />*/}
 
-                                <label className="label font-regular block mb-1">
+                                {/* <label className="label font-regular block mb-1">
                                   End Date*
                                 </label>
                                 <DatePicker
@@ -542,7 +544,7 @@ const DialogFormBody = ({
                                     setHours(setMinutes(d, 59), 23),
                                   ]}
                                   dateFormat="MMMM d, yyyy"
-                                />
+                                /> */}
                               </div>
                             </div>
                           </>
@@ -581,11 +583,14 @@ const DialogFormBody = ({
                                 className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
                                 selected={startDate}
                                 onChange={(date) => {
+                                  if(date.getTime()< formik.values.hdmaEndDate){
+
                                   formik.setFieldValue(
                                     'hdmaStartDate',
                                     date.getTime()
                                   )
                                   setStartDate(date)
+                                }
                                 }}
                                 timeFormat="HH:mm"
                                 injectTimes={[
@@ -612,11 +617,14 @@ const DialogFormBody = ({
                                 className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
                                 selected={endDate}
                                 onChange={(date) => {
+                                  console.log('date', date.getTime(), date)
+                                  if(date.getTime()> formik.values.hdmaStartDate){
                                   formik.setFieldValue(
                                     'hdmaEndDate',
                                     date.getTime()
                                   )
                                   setEndDate(date)
+                                }
                                 }}
                                 timeFormat="HH:mm"
                                 injectTimes={[

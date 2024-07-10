@@ -104,9 +104,11 @@ const customStyles = {
 
   valueContainer: (provided, state) => ({
     ...provided,
-    height: '30px',
+    height: '31px',
     padding: '0px',
     fontSize: '12px',
+    background: '#E5E7EB',
+    margin: '0px'
 
   }),
 
@@ -119,9 +121,11 @@ const customStyles = {
   }),
   indicatorsContainer: (provided, state) => ({
     ...provided,
-    height: '30px',
+    height: '31px',
     paddingLeft: '0px',
     paddingRight: '0px',
+    background: '#E5E7EB'
+
   }),
   singleValue: (provided, state) => ({
     ...provided,
@@ -163,7 +167,7 @@ export const NoBorderDropDown = ({
     <label>
       <div className={className}>
         {(label != '' || label != 'Assigned To') && (
-          <label className=" font-regular text-[10px] block text-gray-500">{label}</label>
+          <label className=" font-regular text-[10px] block text-gray-500 bg-red">{label}</label>
         )}
         <label>
           <Select
@@ -175,7 +179,7 @@ export const NoBorderDropDown = ({
               onChange(value)
             }}
             options={options}
-            className={`text-sm text-gray-darker ${
+            className={`text-sm text-gray-darker bg-red ${
               label != '' ? 'mt-' : ''
             } border-transparent`}
             styles={customStyles}
