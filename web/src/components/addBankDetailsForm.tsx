@@ -175,20 +175,20 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
                               {formik.errors.bank ? (
                                 <div className="error-message text-red-700 text-xs p-2">
                                   {formik.errors.bank}
-                                  {formik.values.bank}
+                                  {/* {formik.values.bank} */}
                                 </div>
                               ) : null}
                             </div>
                           </div>
                           <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
-                            <div className="mt-2 w-full">
+                            {/* <div className="mt-2 w-full">
                               <TextField
-                                label="GST No*"
+                                label="GST No"
                                 name="gstNo"
                                 type="text"
                               />
-                            </div>
-                            <div className="w-full">
+                            </div> */}
+                            <div className="w-[49%]">
                               <CustomSelect
                                 name="preferredtype"
                                 label="Preferred Type*"
@@ -202,7 +202,7 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
                               {formik.errors.preferredtype ? (
                                 <div className="error-message text-red-700 text-xs p-2">
                                   {formik.errors.preferredtype}
-                                  {formik.values.preferredtype}
+                                  {/* {formik.values.preferredtype} */}
                                 </div>
                               ) : null}
                             </div>

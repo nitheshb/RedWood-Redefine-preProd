@@ -169,33 +169,33 @@ export const projectDetailFlow = [
   {
     name: 'Project Details',
     value: 'projectDetails',
-    img: '/apart1.svg',
+    img: 'https://www.svgrepo.com/show/530258/medal.svg',
     indx:0,
   },
   {
     name: 'Cost Setup',
     value: 'CostDetails',
-    img: '/apart1.svg',
+    img: 'https://www.svgrepo.com/show/530260/map.svg',
     indx:1,
   },
   {
     name: 'Payment Schedule',
     value: 'Payment Schedule',
-    img: '/plot.svg',
+    img: 'https://www.svgrepo.com/show/530140/calendar.svg',
     indx:2,
 
   },
   {
     name: 'Project Units',
     value: 'Blocks',
-    img: '/weekend.svg',
+    img: 'https://www.svgrepo.com/show/530256/calculator.svg',
     indx:3,
 
   },
   {
     name: 'Access',
     value: 'projectAccess',
-    img: '/villa.svg',
+    img: 'https://www.svgrepo.com/show/530263/distributed.svg',
     indx:4,
 
   },
@@ -375,8 +375,8 @@ export const areaConversions = [
     label: 'Square yard',
   },
   {
-    value: 'square-meter',
-    label: 'Square meter',
+    value: 'square-feet',
+    label: 'Square Feet',
   },
   {
     value: 'gunta',
