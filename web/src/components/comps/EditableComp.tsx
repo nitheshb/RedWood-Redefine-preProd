@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-
-import { Rowing } from '@mui/icons-material'
+import { styled } from '@mui/material/styles';
+import { Select as SelectMAT, MenuItem } from '@material-ui/core'
+import { Rowing, Widgets } from '@mui/icons-material'
+import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid'
 import { useSnackbar } from 'notistack'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Select from 'react-select'
@@ -23,8 +25,47 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 
 import { gstValesPartA } from '../../../../../RedefineV2/web/src/constants/projects'
-// import './styles.css'
 
+// import './styles.css'
+const StyledSelect = styled(SelectMAT)(({ theme }) => ({
+  // width: '170px',
+  fontSize: '13px',
+  '&.MuiInputBase-root': {
+    width: '100%',
+    fontSize: '13px', //
+  },
+  '&.MuiOutlinedInput-root': {
+    width: '100%',
+  },
+  '&.MuiFilledInput-root': {
+    width: '100%',
+  },
+  '& .MuiSelect-select': {
+    borderBottom: 'none',
+    paddingRight: '32px',
+    fontSize: '13px', //
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    border: 'none',
+  },
+  '& .MuiSelect-icon': {
+    right: 0,
+    width: '32px',
+    pointerEvents: 'none',
+  },
+  '& .MuiInput-underline:before': {
+  borderBottom: 'none',
+},
+'& .MuiInput-underline:after': {
+  borderBottom: 'none',
+},
+'& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+  borderBottom: 'none',
+},
+'& .MuiMenuItem-root': {
+  fontSize: '13px', // Set font size for menu items
+},
+}));
 const EditableTablex = () => {
   const [rows, setRows] = useState([
     { id: '1', col1: 'option1', col2: '', col3: '' },
@@ -272,6 +313,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
   }
 
   const handleChange1 = (id, column, value) => {
+    console.log('latest check', value)
     setRows(
       rows.map((row) => (row.id === id ? { ...row, [column]: value } : row))
     )
@@ -541,18 +583,51 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                 {...provided.dragHandleProps}
                                 className="hover:bg-gray-100 transition-colors duration-150 ease-in-out"
                               >
-                                <td className="border-b border-[#e0e0e0] ">
+                                <td className="border-b border-[#e0e0e0] px-2">
                                   {/* <select
-                              value={row.col1}
-                              onChange={(e) =>
-                                handleChange1(row.id, 'col1', e.target.value)
+
+                              value={row.component.value}
+
+                              onChange={(e) =>{
+                                // handleChange1(row.id, 'col1', e.target.value)
+                                console.log('data new ', e.target.value, e.target)
+                                 handleChange1(row.id, 'component', e.target.value)
+                              }
                               }
                               className="w-full p-1 border border-[#e0e0e0] rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
-                              <option value="option1">Option 1</option>
-                              <option value="option2">Option 2</option>
-                              <option value="option3">Option 3</option>
+
+                              {costSheetAdditionalChargesA.map((d, i)=> <option key={i} value={d.value}>{d.label}</option>)}
                             </select> */}
+                                  <StyledSelect
+                                    disableUnderline={true}
+                                    defaultValue={row?.component?.value}
+                                    value={row?.component?.value}
+                                    onChange={(e) => {
+                                      const selectedOptionObject =
+                                        costSheetAdditionalChargesA.find(
+                                          (option) =>
+                                            option.value === e.target.value
+                                        )
+                                      handleChange1(
+                                        row.id,
+                                        'component',
+                                        selectedOptionObject
+                                      )
+                                    }}
+
+                                  >
+                                    {costSheetAdditionalChargesA.map(
+                                      (option) => (
+                                        <MenuItem
+                                          key={option.value}
+                                          value={option.value}
+                                        >
+                                          {option.label}
+                                        </MenuItem>
+                                      )
+                                    )}
+                                  </StyledSelect>
                                   {/* <MultiSelectMultiLineField
                               label=""
                               name="builderBankDocId"
@@ -561,17 +636,18 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
 
                                 handleChange1(row.id, 'category', payload)
                               }}
-                              value={row.category.value}
+                              value={row.component}
+
 
                               // value={'optionx'}
                               options={costSheetAdditionalChargesA}
-                              setAddNewBankStuff={setAddNewBankStuff}
+                              // setAddNewBankStuff={setAddNewBankStuff}
                             /> */}
-                                  <Select
+                                  {/* <Select
                                     name="Chargesdropdown"
                                     onChange={(e) => {
-                                      // onChange(value_x)
-                                      // handleChange(row.id, 'value', e.value)
+
+                                      console.log('old', e)
                                       handleChange1(row.id, 'component', e)
                                     }}
                                     options={costSheetAdditionalChargesA}
@@ -579,24 +655,43 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                     value={row.component}
                                     styles={customStyles}
                                     className="text-sm mr-2"
-                                  />
+                                  /> */}
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
-                                  {/* <input
-                              type="text"
-                              value={row.unit}
-                              onChange={(e) =>
-                                handleChange(row.id, 'unit', e.target.value)
-                              }
-                              className="w-full p-1 border border-[#e0e0e0] rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            /> */}
 
-                                  <Select
+                                <StyledSelect
+                                    disableUnderline={true}
+                                    defaultValue={row?.section?.value}
+                                    value={row?.section?.value}
+                                    onChange={(e) => {
+                                      const selectedOptionObject =
+                                      csSections.find(
+                                          (option) =>
+                                            option.value === e.target.value
+                                        )
+                                      handleChange1(
+                                        row.id,
+                                        'section',
+                                        selectedOptionObject
+                                      )
+                                    }}
+
+                                  >
+                                    {csSections.map(
+                                      (option) => (
+                                        <MenuItem
+                                          key={option.value}
+                                          value={option.value}
+                                        >
+                                          {option.label}
+                                        </MenuItem>
+                                      )
+                                    )}
+                                  </StyledSelect>
+                                  {/* <Select
                                     name="Chargesdropdown"
                                     onChange={(e) => {
-                                      // onChange(value_x)
-                                      // handleChange(row.id, 'value', e.value)
-                                      // handleChange(row.id, 'unit', e.target.value)
+
                                       handleChange1(row.id, 'section', e)
                                     }}
                                     options={csSections}
@@ -604,31 +699,40 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                     // value={defaultValue(gstValesA, item.unit)}
                                     value={row.section}
                                     className="text-sm mr-2 border-0"
-                                  />
+                                  /> */}
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
-                                  {/* <input
-                              type="number"
-                              value={row.unit}
-                              onChange={(e) =>
-                                handleChange(row.id, 'unit', e.target.value)
-                              }
-                              className="w-full p-1 border border-[#e0e0e0] rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            /> */}
-                                  <Select
-                                    name="Chargesdropdown"
+
+                                <StyledSelect
+                                    disableUnderline={true}
+                                    defaultValue={row?.units?.value}
+                                    value={row?.units?.value}
                                     onChange={(e) => {
-                                      // onChange(value_x)
-                                      // handleChange(row.id, 'value', e.value)
-                                      // handleChange(row.id, 'unit', e.target.value)
-                                      handleChange1(row.id, 'units', e)
+                                      const selectedOptionObject =
+                                      unitsCancellation.find(
+                                          (option) =>
+                                            option.value === e.target.value
+                                        )
+                                      handleChange1(
+                                        row.id,
+                                        'units',
+                                        selectedOptionObject
+                                      )
                                     }}
-                                    options={unitsCancellation}
-                                    styles={customStyles}
-                                    value={row.units}
-                                    // value={defaultValue(gstValesA, item.unit)}
-                                    className="text-sm mr-2"
-                                  />
+
+                                  >
+                                    {unitsCancellation.map(
+                                      (option) => (
+                                        <MenuItem
+                                          key={option.value}
+                                          value={option.value}
+                                        >
+                                          {option.label}
+                                        </MenuItem>
+                                      )
+                                    )}
+                                  </StyledSelect>
+
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
                                   <input
@@ -646,15 +750,36 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                   />
                                 </td>
                                 <td className="border-b border-[#e0e0e0] ">
-                                  {/* <input
-                              type="number"
-                              value={row.unit}
-                              onChange={(e) =>
-                                handleChange(row.id, 'unit', e.target.value)
-                              }
-                              className="w-full p-1 border border-[#e0e0e0] rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            /> */}
-                                  <Select
+                                <StyledSelect
+                                    disableUnderline={true}
+                                    defaultValue={row?.gst?.value}
+                                    value={row?.gst?.value}
+                                    onChange={(e) => {
+                                      const selectedOptionObject =
+                                      gstValesA.find(
+                                          (option) =>
+                                            option.value === e.target.value
+                                        )
+                                      handleChange1(
+                                        row.id,
+                                        'gst',
+                                        selectedOptionObject
+                                      )
+                                    }}
+
+                                  >
+                                    {gstValesA.map(
+                                      (option) => (
+                                        <MenuItem
+                                          key={option.value}
+                                          value={option.value}
+                                        >
+                                          {option.label}
+                                        </MenuItem>
+                                      )
+                                    )}
+                                  </StyledSelect>
+                                  {/* <Select
                                     name="Chargesdropdown"
                                     onChange={(e) => {
                                       // onChange(value_x)
@@ -667,7 +792,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                     // value={defaultValue(gstValesA, item.unit)}
                                     styles={customStyles}
                                     className="text-md mr-2 text-right text-sm"
-                                  />
+                                  /> */}
                                 </td>
                                 {/* <td className="border border-[#e0e0e0] p-2">
                             <input
