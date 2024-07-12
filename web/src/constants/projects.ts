@@ -503,6 +503,10 @@ export const costSheetAdditionalChargesA = [
   //   label: 'PLC Cost',
   // },
   {
+    value: 'sqft_construct_cost_tax',
+    label: 'Construction Cost/Sqft',
+  },
+  {
     value: 'bescom_sanitary_deposits',
     label: 'BESCOM & Sanitary Deposits',
   },  {
