@@ -244,7 +244,7 @@ const ProjectsMHomeBody = ({ project,setProject, onSliderOpen = () => {}, isEdit
                     </section> */}
                   <section className="flex flex-row justify-between mt-2">
                     <span className="text-sm  font-light  font text-gray-800 ">
-                      {location}
+                    {projectType?.name}
                     </span>
                     <section>
                       <span className="text-sm  font-light  font text-gray-800 ">
