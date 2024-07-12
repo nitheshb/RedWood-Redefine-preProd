@@ -787,18 +787,284 @@ export const apartUnitChargesMock = [
 
 
 export const approvalAuthority = [
-  {
-    label: 'BMRDA',
-    value: 'bmrda'
-  },
-  {
-    label: 'BDA',
-    value: 'bda'
-  },
-  {
-    label: 'HUDA',
-    value: 'huda'
+  // {
+  //   label: 'BMRDA',
+  //   value: 'bmrda'
+  // },
+  // {
+  //   label: 'BDA',
+  //   value: 'bda'
+  // },
+  // {
+  //   label: 'HUDA',
+  //   value: 'huda'
 
-  }
+  // },
+
+  
+
+  {
+    label: 'Bangalore Development Authority (BDA)',
+    value: 'BangaloreDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Bangalore Metropolitan Region Development Authority (BMRDA)',
+    value: 'BangaloreMetropolitanRegionDevelopmentAuthority',
+
+  },
+
+
+  {
+    label: 'Bruhat Bengaluru Mahanagara Palike (BBMP)',
+    value: 'BruhatBengaluruMahanagaraPalike'
+
+  },
+
+  {
+    label: 'Mysore Urban Development Authority (MUDA)',
+    value: 'MysoreUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Hubli-Dharwad Urban Development Authority (HDUDA)',
+    value: 'HubliDharwadUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Mangalore Urban Development Authority (MUDA)',
+    value: 'MangaloreUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Belgaum Urban Development Authority (BUDA)',
+    value: 'BelgaumUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Gulbarga Urban Development Authority (GUDA)',
+    value: 'GulbargaUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Davangere Urban Development Authority (DUDA)',
+    value: 'DavangereUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Shimoga Urban Development Authority (SUDA)',
+    value: 'ShimogaUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Tumkur Urban Development Authority (TUDA)',
+    value: 'TumkurUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Bijapur Urban Development Authority (BUDA)',
+    value: 'BijapurUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Kolar-Chikkaballapur Urban Development Authority (KCUDA)',
+    value: 'KolarChikkaballapurUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Hassan Urban Development Authority (HUDA)',
+    value: 'HassanUrbanDevelopmentAuthority'
+
+  },
+
+  {
+    label: 'Chikmagalur Urban Development Authority (CUDA)',
+    value: 'ChikmagalurUrbanDevelopmentAuthority',
+
+  },
+
+
+  {
+    label: 'Bagalkot Urban Development Authority (BUDA)',
+    value: 'BagalkotUrbanDevelopmentAuthority',
+
+  },
+
+
+  {
+    label: 'Udupi Urban Development Authority (UUDA)',
+    value: 'UdupiUrbanDevelopmentAuthority',
+
+  },
+
+
+  {
+    label: 'Karwar Urban Development Authority (KUDA)',
+    value: 'KarwarUrbanDevelopmentAuthority',
+
+  },
+
+
+  {
+    label: 'Bidar Urban Development Authority (BUDA)',
+    value: 'BidarUrbanDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Mandya Urban Development Authority (MUDA)',
+    value: 'MandyaUrbanDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Chitradurga Urban Development Authority (CUDA)',
+    value: 'ChitradurgaUrbanDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Raichur Urban Development Authority (RUDA)',
+    value: 'RaichurUrbanDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Koppal Urban Development Authority (KUDA)',
+    value: 'KoppalUrbanDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Delhi Development Authority (DDA)',
+    value: 'DelhiDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Mumbai Metropolitan Region Development Authority (MMRDA)',
+    value: 'MumbaiMetropolitanRegionDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Bangalore Development Authority (BDA)',
+    value: 'BangaloreDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Chennai Metropolitan Development Authority (CMDA)',
+    value: 'ChennaiMetropolitanDevelopmentAuthority(CMDA)',
+
+  },  
+  
+  {
+    label: 'Hyderabad Metropolitan Development Authority (HMDA)',
+    value: 'HyderabadMetropolitanDevelopmentAuthority',
+
+  },
+
+
+  {
+    label: 'Pune Metropolitan Region Development Authority (PMRDA)',
+    value: 'PuneMetropolitanRegionDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Kolkata Metropolitan Development Authority (KMDA)',
+    value: 'KolkataMetropolitanDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Ahmedabad Urban Development Authority (AUDA)',
+    value: 'AhmedabadUrbanDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Lucknow Development Authority (LDA)',
+    value: 'LucknowDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Jaipur Development Authority (JDA)',
+    value: 'JaipurDevelopmentAuthority',
+
+  },
+
+
+  {
+    label: 'Chandigarh Housing Board (CHB)',
+    value: 'ChandigarhHousingBoard',
+
+  },
+
+  {
+    label: 'New Town Kolkata Development Authority (NKDA)',
+    value: 'NewTownKolkataDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Noida Authority ',
+    value: 'NoidaAuthority',
+
+  },
+
+  {
+    label: 'Greater Noida Industrial Development Authority (GNIDA)',
+    value: 'GreaterNoidaIndustrialDevelopmentAuthority',
+
+  },
+
+
+  {
+    label: 'Haryana Urban Development Authority (HUDA)',
+    value: 'HaryanaUrbanDevelopmentAuthority',
+
+  },
+
+  {
+    label: 'Urban Improvement Trust (UIT)',
+    value: 'UrbanImprovementTrust',
+
+  },
+
+  {
+    label: 'Goa State Urban Development Agency (GSUDA)',
+    value: 'GoaStateUrbanDevelopmentAgency',
+
+  },
+
+  {
+    label: 'Visakhapatnam Urban Development Authority (VUDA)',
+    value: 'VisakhapatnamUrbanDevelopmentAuthority',
+
+  },
+
+
+  
+
+
+
+
+
+
+
 ]
 
