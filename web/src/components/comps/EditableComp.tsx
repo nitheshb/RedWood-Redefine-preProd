@@ -218,6 +218,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
   const [costPerSqft, setCostPerSqft] = useState(1000)
   const [constructionPerSqft, setConstructionPerSqft] = useState(1200)
   const [gst, setGST] = useState(12)
+  const [constGst, setConstGST] = useState(12)
   const [open, setOpen] = useState(false)
   const [saveWarn, setSaveWarn] = useState(false)
   const [selcDelRow, SetSelDelRow] = useState({})
@@ -241,6 +242,8 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         console.log('setUpData', costSqftA)
         const x = costConstructSqftA[0]
         setConstructionPerSqft(x?.charges)
+        setConstGST(x?.gst.value)
+
       }
       setRows(fullCs)
     } else {
@@ -524,6 +527,17 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
     )
     setGST(e.target.value)
   }
+  const handleConstCostGSTChange = (e) => {
+    const inputValue = e.target.value
+    setRows(
+      rows.map((row) =>
+        row.component.value === 'sqft_construct_cost_tax'
+          ? { ...row, ['gst']: { value: inputValue, label: `${inputValue}%` } }
+          : row
+      )
+    )
+    setConstGST(e.target.value)
+  }
   return (
     <>
       <div className=" m-2 p-4 bg-white rounded-xl">
@@ -566,26 +580,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
               />
             </div>
           </div>
-          {type === 'Villas' && (
-            <div className="mb-3 w-[220px]">
-              <label htmlFor="area" className="label  text-sm">
-                Base Construction Cost per sqft*
-              </label>
-              <div className="flex w-[140px]">
-                <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-                  Rs
-                </span>
-                <input
-                  type="text"
-                  id="website-admin"
-                  className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
-                  placeholder="cost/sqft"
-                  value={constructionPerSqft}
-                  onChange={handleConstructCostChange}
-                />
-              </div>
-            </div>
-          )}
+
           <div className="mb-3 w-[140px]">
             <label htmlFor="area" className="label text-sm">
               Standard Tax Rate*
@@ -613,6 +608,49 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
               />
             </div>
           </div>
+          {type === 'Villas' && (
+            <>
+            <div className="mb-3 w-[220px]">
+              <label htmlFor="area" className="label  text-sm">
+                Base Construction Cost per sqft*
+              </label>
+              <div className="flex w-[140px]">
+                <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+                  Rs
+                </span>
+                <input
+                  type="text"
+                  id="website-admin"
+                  className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                  placeholder="cost/sqft"
+                  value={constructionPerSqft}
+                  onChange={handleConstructCostChange}
+                />
+              </div>
+            </div>
+            <div className="mb-3 w-[210px]">
+            <label htmlFor="area" className="label text-sm">
+              Construction Standard Tax Rate*
+            </label>
+            <div className="flex">
+              <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+                %
+              </span>
+              <input
+                type="number"
+                id="website-admin"
+                className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 max-w-[120px] text-sm border-gray-300 p-2.5"
+                placeholder="GST"
+                value={constGst}
+                min="0"
+                max="100"
+                step="1"
+                onChange={handleConstCostGSTChange}
+              />
+            </div>
+          </div>
+            </>
+          )}
         </section>
         <p className="text-xs text-red-400 text-left my-3 mt-1">
           <abbr title="Required field">Note:</abbr> Set PLC value at unit level.

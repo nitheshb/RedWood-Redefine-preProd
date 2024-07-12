@@ -446,7 +446,7 @@ const EditablePaymentTable = ({
                     <tbody {...provided.droppableProps} ref={provided.innerRef}>
                       {rows
                         // .filter((row) => row.section.value != 'unitCost')
-                        .map((row, index) => (
+                        ?.map((row, index) => (
                           <Draggable
                             key={row.id}
                             draggableId={row.id}

@@ -57,7 +57,9 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
 
     setTableData(x)
     const y =
-         ConstructPayScheduleObj || data?.phase?.phase?.ConstructPayScheduleObj || []
+      ConstructPayScheduleObj ||
+      data?.phase?.phase?.ConstructPayScheduleObj ||
+      []
 
     setConstructSchedule(y)
     console.log('payment', paymentScheduleObj)
@@ -328,17 +330,23 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
       <div className="">
         <EditablePaymentTable
           blocksViewFeature={'Plot_Payment_Schedule'}
-          title={'Plot Payment Schedule'}
+          title={
+            data?.projectType?.name === 'Apartment'
+              ? 'Flat Payment Schedule'
+              : 'Plot Payment Schedule'
+          }
           dataPayload={tableData}
-          projData= {data}
+          projData={data}
         />
-        <EditablePaymentTable
-          blocksViewFeature={'Construction_Payment_Schedule'}
-          title={'Construction Payment Schedule'}
-          dataPayload={constructSchedule}
-          projData= {data}
-
-        />
+        {data?.projectType?.name === 'Villas' ||
+          (data?.phase?.projectType?.name === 'Villas' && (
+            <EditablePaymentTable
+              blocksViewFeature={'Construction_Payment_Schedule'}
+              title={'Construction Payment Schedule'}
+              dataPayload={constructSchedule}
+              projData={data}
+            />
+          ))}
         {/* <div className="mt-1">
           <MaterialCRUDTable
             title={

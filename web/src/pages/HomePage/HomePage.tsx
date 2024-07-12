@@ -1664,14 +1664,14 @@ const HomePage = () => {
                             title="Create Project"
                             data={project}
                             setProject={setProject}
-                            widthClass="max-w-6xl"
+                            widthClass="max-w-4xl"
                           />
                           <SiderForm
                             open={isEditProjectOpen}
                             setOpen={handleEditProjectClose}
                             title="Edit Project"
                             data={project}
-                            widthClass="max-w-2xl"
+                            widthClass="max-w-4xl"
                           />
                         </div>
                       </div>

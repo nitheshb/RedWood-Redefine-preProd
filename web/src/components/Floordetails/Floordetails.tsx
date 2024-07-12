@@ -885,13 +885,13 @@ const Floordetails = ({
                       pickedValue={filStatus}
                     /> */}
 
-                    <DropCompUnitStatus
+                    {/* <DropCompUnitStatus
                       type={'bedrooms'}
                       id={'bed_rooms'}
                       setStatusFun={makeFilterFun}
                       filteredUnits={unitsFeed}
                       pickedValue={filBedRooms}
-                    />
+                    /> */}
                     {/* <DropCompUnitStatus
                   type={'bathrooms'}
                   id={'bath_rooms'}
@@ -899,13 +899,13 @@ const Floordetails = ({
                   filteredUnits={filteredUnits}
                   pickedValue={filBathrooms}
                 /> */}
-                    <DropCompUnitStatus
+                    {/* <DropCompUnitStatus
                       type={'Size'}
                       id={'super_built_up_area'}
                       setStatusFun={makeFilterFun}
                       filteredUnits={unitsFeed}
                       pickedValue={filSuperBuildUpArea}
-                    />
+                    /> */}
                     {/* <DropCompUnitStatus
                   type={'Price'}
                   id={'rate_per_sqft'}
@@ -913,22 +913,22 @@ const Floordetails = ({
                   filteredUnits={filteredUnits}
                   pickedValue={filRatePerSqft}
                 /> */}
-                    <DropCompUnitStatus
+                    {/* <DropCompUnitStatus
                       type={'Type'}
                       id={'type'}
                       setStatusFun={makeFilterFun}
                       totalunits={unitsFeed}
                       filteredUnits={filterTypeResults}
                       pickedValue={filFacing}
-                    />
-                    <DropCompUnitStatus
+                    /> */}
+                    {/* <DropCompUnitStatus
                       type={'Facing'}
                       id={'facing'}
                       setStatusFun={makeFilterFun}
                       totalunits={unitsFeed}
                       filteredUnits={filterFacingResults}
                       pickedValue={filFacing}
-                    />
+                    /> */}
                   </div>
                 </section>
                 <section className="flex">
