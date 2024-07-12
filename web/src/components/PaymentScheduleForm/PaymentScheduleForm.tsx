@@ -22,6 +22,7 @@ import {
   updatePaymentScheduleCharges,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+
 import EditablePaymentTable from '../comps/EditablePaymentComp'
 
 const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
@@ -29,6 +30,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
 
   const { orgId } = user
   const [tableData, setTableData] = useState([])
+  const [constructSchedule, setConstructSchedule] = useState([])
   const [iserror, setIserror] = useState(false)
   const [errorMessages, setErrorMessages] = useState([])
   const { enqueueSnackbar } = useSnackbar()
@@ -47,14 +49,17 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
   useEffect(() => {
     const { phase } = data
 
-    const { paymentScheduleObj, ConstructPayScheduleObj } =
-      phase
+    const { paymentScheduleObj, ConstructPayScheduleObj } = phase
     const x =
       blocksViewFeature === 'Construction_Payment_Schedule'
         ? ConstructPayScheduleObj || data?.phase?.phase?.ConstructPayScheduleObj
         : paymentScheduleObj || data?.phase?.phase?.paymentScheduleObj
 
     setTableData(x)
+    const y =
+         ConstructPayScheduleObj || data?.phase?.phase?.ConstructPayScheduleObj || []
+
+    setConstructSchedule(y)
     console.log('payment', paymentScheduleObj)
   }, [data, blocksViewFeature])
 
@@ -249,7 +254,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
         if (e.myId === oldData.myId) {
           return update
         }
-        const { tableData, ...rest } = e;
+        const { tableData, ...rest } = e
         return rest
       })
 
@@ -274,9 +279,9 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
     const { uid } = data?.phase || {}
     const c = tableData.filter((e) => e.myId != oldData.myId)
     const newArray = c.map((obj) => {
-      const { tableData, ...rest } = obj;
-      return rest;
-    });
+      const { tableData, ...rest } = obj
+      return rest
+    })
     console.log('check this stuff', c)
     await updatePaymentScheduleCharges(
       orgId,
@@ -320,14 +325,21 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
 
   return (
     <div className="h-full w-full shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll">
-
-
       <div className="">
-        {/* <Dialog.Title className="font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
-        {/* <EditablePaymentTable  /> */}
-        <div className="mt-1">
+        <EditablePaymentTable
+          blocksViewFeature={'Plot_Payment_Schedule'}
+          title={'Plot Payment Schedule'}
+          dataPayload={tableData}
+          projData= {data}
+        />
+        <EditablePaymentTable
+          blocksViewFeature={'Construction_Payment_Schedule'}
+          title={'Construction Payment Schedule'}
+          dataPayload={constructSchedule}
+          projData= {data}
+
+        />
+        {/* <div className="mt-1">
           <MaterialCRUDTable
             title={
               blocksViewFeature === 'Construction_Payment_Schedule'
@@ -359,7 +371,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
             }}
             editable={editOpitionsObj}
           />
-        </div>
+        </div> */}
 
         <div>
           {iserror && (
@@ -372,12 +384,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
           )}
         </div>
       </div>
-
     </div>
-
-
-
-
   )
 }
 
