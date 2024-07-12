@@ -210,6 +210,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
 
   const [errors, setErrors] = useState({})
   const [costPerSqft, setCostPerSqft] = useState(1000)
+  const [constructionPerSqft, setConstructionPerSqft] = useState(1200)
   const [gst, setGST] = useState(12)
 
   useEffect(() => {
@@ -218,11 +219,19 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       const costSqftA = fullCs.filter(
         (row) => row.component.value === 'sqft_cost_tax'
       )
+      const costConstructSqftA = fullCs.filter(
+        (row) => row.component.value === 'sqft_construct_cost_tax'
+      )
       if (costSqftA.length > 0) {
         console.log('setUpData', costSqftA)
         const x = costSqftA[0]
         setCostPerSqft(x?.charges)
         setGST(x?.gst.value)
+      }
+      if (costConstructSqftA.length > 0) {
+        console.log('setUpData', costSqftA)
+        const x = costConstructSqftA[0]
+        setConstructionPerSqft(x?.charges)
       }
       setRows(fullCs)
     } else {
@@ -466,6 +475,17 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
     )
     setCostPerSqft(e.target.value)
   }
+  const handleConstructCostChange = (e) => {
+    const inputValue = e.target.value
+    setRows(
+      rows.map((row) =>
+        row.component.value === 'sqft_construct_cost_tax'
+          ? { ...row, ['charges']: inputValue, }
+          : row
+      )
+    )
+    setConstructionPerSqft(e.target.value)
+  }
   const handleCostGSTChange = (e) => {
     const inputValue = e.target.value
     setRows(
@@ -519,13 +539,12 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
               />
             </div>
           </div>
-          {type=== 'Villas' && <div className="mb-3 w-[200px]">
+          {type=== 'Villas' && <div className="mb-3 w-[220px]">
             <label htmlFor="area" className="label  text-sm">
               Base Construction Cost per sqft*
             </label>
             <div className="flex w-[140px]">
               <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-
                 Rs
               </span>
               <input
@@ -533,8 +552,8 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                 id="website-admin"
                 className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
                 placeholder="cost/sqft"
-                value={costPerSqft}
-                onChange={handleCostChange}
+                value={constructionPerSqft}
+                onChange={handleConstructCostChange}
               />
             </div>
           </div>}

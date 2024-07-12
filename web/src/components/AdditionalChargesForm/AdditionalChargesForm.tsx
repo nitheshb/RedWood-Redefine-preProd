@@ -927,7 +927,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         </button>
       </div> */}
       <div className=" ">
-      <EditableTable  phase={data?.phase || {}}  partAData={partAData} fullCs= {fullCs} source={'project'}/>
+      <EditableTable  phase={data?.phase || {}}  partAData={partAData} fullCs= {fullCs} source={'project'} type={data?.phase?.projectType.name}/>
       </div>
 
       {/* {currentStep === 0 && (
