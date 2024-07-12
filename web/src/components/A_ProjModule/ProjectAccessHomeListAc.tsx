@@ -55,6 +55,7 @@ const ProjectAccessHomeList = ({
   })
   const handleDelete = async () => {
     // projectDetails.uid
+    if(projectDetails?.bookUnitCount == undefined || projectDetails?.bookUnitCount ==0){
     deleteProject(
       orgId,
       projectDetails.uid,
@@ -62,6 +63,15 @@ const ProjectAccessHomeList = ({
       projectDetails,
       enqueueSnackbar
     )
+    // enqueueSnackbar('Deleted Successfully', {
+    //   variant: 'success',
+    // })
+  }else{
+      enqueueSnackbar(`Cannot delete: ${projectDetails?.bookUnitCount} Booked unit exists `, {
+        variant: 'error',
+      })
+    }
+
     dialogOpen(false)
 
   }
