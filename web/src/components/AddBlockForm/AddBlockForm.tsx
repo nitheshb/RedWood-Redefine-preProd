@@ -17,9 +17,10 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
   const { uid } = useParams()
 
   const onSubmit = async (formData, resetForm) => {
+    console.log('it is ==>', data, data?.projectId)
     const updatedData = {
       ...formData,
-      projectId: uid,
+      projectId:  uid || data?.phase?.projectId,
       phaseId: data?.phase?.uid,
       editMode: true,
     }
