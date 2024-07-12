@@ -986,7 +986,7 @@ const Floordetails = ({
                                   // onClick={() => handleDetailView_Close(data)}
                                   onClick={() => {
                                     console.log('check is ', leadDetailsObj)
-                                    if (source === 'projectManagement') {
+                                    if (['projectManagement', 'projectOnboard'].includes(source)) {
                                       setSelUnitDetails1(data)
                                       setSliderInfo({
                                         open: true,
@@ -1024,6 +1024,8 @@ const Floordetails = ({
                                         >
                                           {data?.status === 'available' && (
                                             <div className="flex flex-col items-right justify-between">
+
+                                              {!['projectManagement', 'projectOnboard'].includes(source) &&
                                               <div className="flex flex-row justify-between items-right">
                                                 <h3
                                                   className="m-0 ml-2 text-sm   leading-tight tracking-tight text-blue-800 border-0 border-blue-200 h-[16px] hover:border-b hover:border-blue-800"
@@ -1071,39 +1073,14 @@ const Floordetails = ({
                                                     })
                                                   }}
                                                 >
-                                                  Quote
+                                                  Quotee
                                                 </h3>
-                                              </div>
+                                              </div>}
 
                                               <div className="flex flex-row justify-between items-right">
-                                                <h3
-                                                  className="m-0 ml-2 mt-3 text-sm  leading-tight tracking-tight text-blue-800 text-black border-0 border-blue-200 h-[16px] hover:border-b hover:border-blue-800  "
-                                                  onClick={() => {
-                                                    setActionType(
-                                                      'unitBlockMode'
-                                                    )
-                                                    setisUnitQuoteBookBlock(
-                                                      true
-                                                    )
-                                                    setSliderInfo({
-                                                      open: true,
-                                                      title: 'View Unit',
-                                                      sliderData: {
-                                                        unitDetail: data,
-                                                        phaseDetail: phaseFeed,
-                                                        leadDetailsObj:
-                                                          leadDetailsObj,
-                                                      },
-                                                      widthClass: 'max-w-4xl',
-                                                    })
-                                                  }}
-                                                >
-                                                  Block
-                                                </h3>
-                                                {source ===
-                                                  'projectManagement' && (
+                                              {['projectManagement', 'projectOnboard'].includes(source) && (
                                                   <h3
-                                                    className="m-0 mr-2 mt-2 mr-[21px] text-sm  leading-tight tracking-tight text-blue-800 border-0 border-blue-800 h-[16px]  hover:border-b hover:border-blue-800"
+                                                    className="m-0 mr-2 mt-2 ml-2 mr-[21px] text-sm  leading-tight tracking-tight text-blue-800 border-0 border-blue-800 h-[16px]  hover:border-b hover:border-blue-800"
                                                     onClick={() => {
                                                       setisUnitQuoteBookBlock(
                                                         true
@@ -1126,10 +1103,35 @@ const Floordetails = ({
                                                     Edit
                                                   </h3>
                                                 )}
+                                                {!['projectManagement', 'projectOnboard'].includes(source) && <h3
+                                                  className="m-0 mr-2 mt-3 text-sm  leading-tight tracking-tight text-blue-800 text-black border-0 border-blue-200 h-[16px] hover:border-b hover:border-blue-800  "
+                                                  onClick={() => {
+                                                    setActionType(
+                                                      'unitBlockMode'
+                                                    )
+                                                    setisUnitQuoteBookBlock(
+                                                      true
+                                                    )
+                                                    setSliderInfo({
+                                                      open: true,
+                                                      title: 'View Unit',
+                                                      sliderData: {
+                                                        unitDetail: data,
+                                                        phaseDetail: phaseFeed,
+                                                        leadDetailsObj:
+                                                          leadDetailsObj,
+                                                      },
+                                                      widthClass: 'max-w-4xl',
+                                                    })
+                                                  }}
+                                                >
+                                                  Block
+                                                </h3>}
+
                                               </div>
                                             </div>
                                           )}
-                                          {['booked', 'allotment', 'agreement_pipeline', 'agreement', 'registered', 'possession'] && (
+                                          {['booked', 'allotment', 'agreement_pipeline', 'agreement', 'registered', 'possession'].includes(data?.status) && (
                                             <div className="flex flex-col items-right justify-between">
                                               <div className="flex flex-row justify-between items-right">
                                                 <h3
@@ -1254,7 +1256,7 @@ const Floordetails = ({
                               // onClick={() => handleDetailView_Close(data)}
                               onClick={() => {
                                 console.log('check is ', leadDetailsObj)
-                                if (source === 'projectManagement') {
+                                if (['projectManagement', 'projectOnboard'].includes(source)) {
                                   setSelUnitDetails1(data)
                                   setSliderInfo({
                                     open: true,
@@ -1292,7 +1294,7 @@ const Floordetails = ({
                                     >
                                       {data?.status === 'available' && (
                                         <div className="flex flex-col items-right justify-between">
-                                          <div className="flex flex-row justify-between items-right">
+                                         {!['projectManagement', 'projectOnboard'].includes(source) && <div className="flex flex-row justify-between items-right">
                                             <h3
                                               className="m-0 ml-2 text-sm   leading-tight tracking-tight text-blue-800 border-0 border-blue-200 h-[16px] hover:border-b hover:border-blue-800"
                                               onClick={() => {
@@ -1334,31 +1336,12 @@ const Floordetails = ({
                                               Quote
                                             </h3>
                                           </div>
+                        }
 
                                           <div className="flex flex-row justify-between items-right">
-                                            <h3
-                                              className="m-0 ml-2 mt-3 text-sm  leading-tight tracking-tight text-blue-800 text-black border-0 border-blue-200 h-[16px] hover:border-b hover:border-blue-800  "
-                                              onClick={() => {
-                                                setActionType('unitBlockMode')
-                                                setisUnitQuoteBookBlock(true)
-                                                setSliderInfo({
-                                                  open: true,
-                                                  title: 'View Unit',
-                                                  sliderData: {
-                                                    unitDetail: data,
-                                                    phaseDetail: phaseFeed,
-                                                    leadDetailsObj:
-                                                      leadDetailsObj,
-                                                  },
-                                                  widthClass: 'max-w-4xl',
-                                                })
-                                              }}
-                                            >
-                                              Block
-                                            </h3>
-                                            {source === 'projectManagement' && (
+                                          {['projectManagement', 'projectOnboard'].includes(source) && (
                                               <h3
-                                                className="m-0 mr-2 mt-2 mr-[21px] text-sm  leading-tight tracking-tight text-blue-800 border-0 border-blue-800 h-[16px]  hover:border-b hover:border-blue-800"
+                                                className="m-0 ml-2 mt-2 mr-[21px] text-sm  leading-tight tracking-tight text-blue-800 border-0 border-blue-800 h-[16px]  hover:border-b hover:border-blue-800"
                                                 onClick={() => {
                                                   setisUnitQuoteBookBlock(true)
 
@@ -1378,10 +1361,33 @@ const Floordetails = ({
                                                 Edit
                                               </h3>
                                             )}
+                                            {!['projectManagement', 'projectOnboard'].includes(source) && <h3
+                                              className="m-0 mr-2 mt-3 text-sm  leading-tight tracking-tight text-blue-800 text-black border-0 border-blue-200 h-[16px] hover:border-b hover:border-blue-800  "
+                                              onClick={() => {
+                                                setActionType('unitBlockMode')
+                                                setisUnitQuoteBookBlock(true)
+                                                setSliderInfo({
+                                                  open: true,
+                                                  title: 'View Unit',
+                                                  sliderData: {
+                                                    unitDetail: data,
+                                                    phaseDetail: phaseFeed,
+                                                    leadDetailsObj:
+                                                      leadDetailsObj,
+                                                  },
+                                                  widthClass: 'max-w-4xl',
+                                                })
+                                              }}
+                                            >
+                                              Block
+                                            </h3>
+                                      }
+
                                           </div>
                                         </div>
                                       )}
-                                      {['booked', 'allotment', 'agreement_pipeline', 'agreement', 'registered', 'possession'] && (
+
+                                      {['booked', 'allotment', 'agreement_pipeline', 'agreement', 'registered', 'possession'].includes(data?.status) &&  !['projectManagement', 'projectOnboard'].includes(source) && (
                                         <div className="flex flex-col items-right justify-between">
                                           <div className="flex flex-row justify-between items-right">
                                             <h3
@@ -1427,7 +1433,7 @@ const Floordetails = ({
                                                 setisUnitDetailsOpen(true)
                                               }}
                                             >
-                                              Swap
+                                              Swap4
                                             </h3>
                                           </div>
                                         </div>
@@ -1437,7 +1443,7 @@ const Floordetails = ({
                                         'blocked',
                                         'customer_blocked',
                                         'management_blocked',
-                                      ].includes(data?.status) && (
+                                      ].includes(data?.status) &&  !['projectManagement', 'projectOnboard'].includes(source) &&  (
                                         <div className="flex flex-col items-right justify-between">
                                           <div className="flex flex-row justify-between items-right">
                                             <h3 className="m-0 ml-2 mt-4 text-sm   leading-tight tracking-tight text-blue-800 border-0 border-blue-200">
