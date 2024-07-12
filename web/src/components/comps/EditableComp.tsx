@@ -553,6 +553,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           </div>
         </div>
         <section className="flex flex-row space-x-4 mx-">
+            <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
           <div className="mb-3 w-[140px]">
             <label htmlFor="area" className="label  text-sm">
               Base Cost per sqft*
@@ -581,7 +582,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
             </div>
           </div>
 
-          <div className="mb-3 w-[140px]">
+          <div className="ml-2 mb-3 w-[140px]">
             <label htmlFor="area" className="label text-sm">
               Standard Tax Rate*
             </label>
@@ -608,9 +609,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
               />
             </div>
           </div>
+          </section>
           {type === 'Villas' && (
-            <>
-            <div className="mb-3 w-[220px]">
+            <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
+            <div className="mb-3 w-[220px] ">
               <label htmlFor="area" className="label  text-sm">
                 Base Construction Cost per sqft*
               </label>
@@ -630,7 +632,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
             </div>
             <div className="mb-3 w-[210px]">
             <label htmlFor="area" className="label text-sm">
-              Construction Standard Tax Rate*
+               Standard Tax Rate*
             </label>
             <div className="flex">
               <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
@@ -649,7 +651,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
               />
             </div>
           </div>
-            </>
+            </section>
           )}
         </section>
         <p className="text-xs text-red-400 text-left my-3 mt-1">
