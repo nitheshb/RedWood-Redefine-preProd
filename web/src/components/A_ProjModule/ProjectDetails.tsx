@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef } from 'react'
 
 import { Dialog } from '@headlessui/react'
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline'
 import { Add, Remove } from '@mui/icons-material'
 import { InputAdornment, TextField as MuiTextField } from '@mui/material'
 import { setHours, setMinutes } from 'date-fns'
@@ -11,7 +12,6 @@ import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import DatePicker from 'react-datepicker'
 import * as Yup from 'yup'
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline'
 
 import { AreaConverter } from 'src/components/AreaConverter'
 import Loader from 'src/components/Loader/Loader'
@@ -36,13 +36,13 @@ import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import { TextField } from 'src/util/formFields/TextField'
 
 import AddBankDetailsForm from '../addBankDetailsForm'
+import DialogFormBody from '../DialogFormBody/DialogFormBody'
 import ProjPhaseHome from '../ProjPhaseHome/ProjPhaseHome'
 
 import CRMHomeList from './CRMHomeList'
-import DialogFormBody from '../DialogFormBody/DialogFormBody'
 
-const ProjectDetailsFlowBody = ({setProject, title, dialogOpen, project }) => {
-  const formikRef = useRef();
+const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
+  const formikRef = useRef()
   // const { submitForm } = useFormikContext();
 
   const d = new window.Date()
@@ -53,20 +53,19 @@ const ProjectDetailsFlowBody = ({setProject, title, dialogOpen, project }) => {
   const [submitter, setSubmitter] = useState(0)
   const { enqueueSnackbar } = useSnackbar()
 
-
   const [bankDetailsA, setBankDetailsA] = useState([])
   const [selFlow, setSelFlow] = useState({
     name: 'Project Details',
     value: 'projectDetails',
     img: '/apart1.svg',
-    indx:0,
-  },)
-const setSub = ()=>{
-  setSubmitter(2)
-}
-const setLoading1 = (x)=>{
-  setLoading(x)
-}
+    indx: 0,
+  })
+  const setSub = () => {
+    setSubmitter(2)
+  }
+  const setLoading1 = (x) => {
+    setLoading(x)
+  }
   useEffect(() => {
     const unsubscribe = steamBankDetailsList(
       orgId,
@@ -91,13 +90,17 @@ const setLoading1 = (x)=>{
   }, [])
   const goToNext = () => {
     setSelFlow(
-      selFlow.indx === projectDetailFlow.length - 1 ? projectDetailFlow[0] : projectDetailFlow[selFlow.indx + 1]
+      selFlow.indx === projectDetailFlow.length - 1
+        ? projectDetailFlow[0]
+        : projectDetailFlow[selFlow.indx + 1]
     )
   }
 
   const goToPrevious = () => {
     setSelFlow(
-      selFlow.indx === 0 ? projectDetailFlow[projectDetailFlow.length - 1] : projectDetailFlow[selFlow.indx - 1]
+      selFlow.indx === 0
+        ? projectDetailFlow[projectDetailFlow.length - 1]
+        : projectDetailFlow[selFlow.indx - 1]
     )
   }
   const submitForm1 = () => {
@@ -105,27 +108,27 @@ const setLoading1 = (x)=>{
 
     if (formikRef.current) {
       console.log('selected value is')
-      formikRef?.current?.submitForm();
+      formikRef?.current?.submitForm()
     }
-  };
+  }
   // const { submitForm } = useFormikContext();
-  let submitMyForm = null;
+  const submitMyForm = null
 
   const handleSubmitMyForm = (e) => {
-      if (submitMyForm) {
-          submitMyForm(e);
-      }
-  };
+    if (submitMyForm) {
+      submitMyForm(e)
+    }
+  }
   // const bindSubmitForm = (submitForm) => {
   //   return
   //   submitMyForm = submitForm;
   // };
   const bindSubmitForm = (submitFormFunction: () => void) => {
-   return
+    return
     // setSubmitForm(() => submitFormFunction);
-  };
+  }
   return (
-      <div className="h-full flex flex-col  py-6  shadow-xl overflow-y-scroll bg-gradient-to-r from-blue-300 to-cyan-300">
+    <div className="h-full flex flex-col  py-6  shadow-xl overflow-y-scroll bg-gradient-to-r from-blue-300 to-cyan-300">
       <div className="px-2 sm:px-6  z-10 absolute top-0  w-full  py-2 bg-gradient-to-r from-blue-300 to-cyan-300">
         <Dialog.Title className=" font-semibold text-xl mr-auto    tracking-wider text-[14px]">
           Project Information
@@ -144,10 +147,10 @@ const setLoading1 = (x)=>{
                   selFlow.value === option.value ? 'bg-blue-100' : ''
                 } `}
                 onClick={() => {
-                  if(project?.uid){
-                  setoptionalItem(option?.value)
-                  setSelFlow(option)
-                  }else{
+                  if (project?.uid) {
+                    setoptionalItem(option?.value)
+                    setSelFlow(option)
+                  } else {
                     enqueueSnackbar('Please create project to proceed..!', {
                       variant: 'warning',
                     })
@@ -178,7 +181,13 @@ const setLoading1 = (x)=>{
                               : 'flex-shrink-0 text-black ml-auto'
                           } mt-1 font-light`}
                         >
-                                <ArrowRightIcon className={`${selFlow.value === option.value ? 'text-[#57C0D0]' : 'text-[#6e6464]'} w-4 h-4`} />
+                          <ArrowRightIcon
+                            className={`${
+                              selFlow.value === option.value
+                                ? 'text-[#57C0D0]'
+                                : 'text-[#6e6464]'
+                            } w-4 h-4`}
+                          />
 
                           {/* <svg
                             viewBox="0 0 24 24"
@@ -213,23 +222,23 @@ const setLoading1 = (x)=>{
         </div>
       </div>
 
-
-
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col ">
           <div className="mt-[100px]">
-          {selFlow.value === 'projectDetails' && <DialogFormBody
-                        ref={formikRef}
-                        title={'Create Project'}
-                        // dialogOpen={(=>())}
-                        project={project}
-                        bindSubmitForm={bindSubmitForm}
-                        setSubmitter={setSub}
-                        submitter ={submitter}
-                        loading1={loading}
-                        setLoading1={setLoading1}
-                        setProject={setProject}
-                      /> }
+            {selFlow.value === 'projectDetails' && (
+              <DialogFormBody
+                ref={formikRef}
+                title={'Create Project'}
+                // dialogOpen={(=>())}
+                project={project}
+                bindSubmitForm={bindSubmitForm}
+                setSubmitter={setSub}
+                submitter={submitter}
+                loading1={loading}
+                setLoading1={setLoading1}
+                setProject={setProject}
+              />
+            )}
             <ProjPhaseHome
               projectDetails={project}
               source="projectOnboard"
@@ -243,61 +252,60 @@ const setLoading1 = (x)=>{
         <div className="mt-5  md:space-x-3 md:block ml-3 w-full">
           <button
             // onClick={() => dialogOpen(false)}
-            onClick={() =>  goToPrevious()}
+            onClick={() => goToPrevious()}
             type="button"
             className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
           >
-            <section className='flex flex-row'>
-            <ArrowLeftIcon className={` w-4 h-4 mt-[2px] mr-1`} />
-            Back
-
-</section>
+            <section className="flex flex-row">
+              <ArrowLeftIcon className={` w-4 h-4 mt-[2px] mr-1`} />
+              Back
+            </section>
           </button>
         </div>
-        <section className='w-[300px] mt-6 text-center flex flex-row text-red-400 '>{selFlow?.indx +1 } of {projectDetailFlow.length} steps</section>
+        <section className="w-[300px] mt-6 text-center flex flex-row text-red-400 ">
+          {selFlow?.indx + 1} of {projectDetailFlow.length} steps
+        </section>
 
         <div className="mt-5 w-full text-right md:space-x-3 md:block flex flex-row mb-6 justify-between w-full ">
-            {selFlow.value === 'projectDetails' &&
-                <button
-             className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
-            type="submit"
-           onClick={() =>  {
-              setLoading(true)
-              setSubmitter(1)
-            }
-            // onClick={submitForm}
-            // onClick={submitForm}
-          }
-          >
-            {loading && <Loader />}
-            Save
-
-          </button>}
+          {selFlow.value === 'projectDetails' && (
+            <button
+              className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
+              type="submit"
+              onClick={
+                () => {
+                  setLoading(true)
+                  setSubmitter(1)
+                }
+                // onClick={submitForm}
+                // onClick={submitForm}
+              }
+            >
+              {loading && <Loader />}
+              Save
+            </button>
+          )}
           <button
             className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg "
             disabled={loading}
-            onClick={() =>  {
-              if(project?.uid){
-
-             goToNext()
-              }else{
+            onClick={() => {
+              if (project?.uid) {
+                goToNext()
+              } else {
                 enqueueSnackbar('Please create project to proceed..!', {
                   variant: 'warning',
                 })
               }
-
-            }
-            }
+            }}
           >
-<section className='flex flex-row'>
-            Next:
-
-{selFlow.indx === projectDetailFlow.length - 1 ? projectDetailFlow[0]['name'] : projectDetailFlow[selFlow.indx + 1]['name']}
-<ArrowRightIcon className={` w-4 h-4 mt-1 ml-1`} />
-</section>
+            <section className="flex flex-row">
+              Next:
+              {selFlow.indx === projectDetailFlow.length - 1
+                ? projectDetailFlow[0]['name']
+                : projectDetailFlow[selFlow.indx + 1]['name']}
+              <ArrowRightIcon className={` w-4 h-4 mt-1 ml-1`} />
+            </section>
           </button>
         </div>
-
       </div>
     </div>
   )

@@ -23,7 +23,7 @@ const ProjectEditPage = ({
 }) => {
   const [isAddPhaseOpen, setIsAddPhaseOpen] = useState(false)
   const [isEditProjectOpen, setIsEditProjectOpen] = useState(false)
-  
+
   const [project, setProject] = useState({
     projectName: '',
   })
@@ -110,7 +110,7 @@ const ProjectEditPage = ({
                 setOpen={handleEditProjectClose}
                 title="Edit Project"
                 data={project}
-                widthClass="max-w-2xl"
+                widthClass="max-w-4xl"
               />
             </div>
           </div>

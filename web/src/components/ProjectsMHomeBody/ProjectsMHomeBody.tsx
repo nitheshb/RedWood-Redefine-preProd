@@ -427,7 +427,7 @@ const ProjectsMHomeBody = ({ project,setProject, onSliderOpen = () => {}, isEdit
         title="project_details"
         data={project}
         setProject={setProject}
-        widthClass="max-w-6xl"
+        widthClass="max-w-4xl"
       />
     </>
   )
