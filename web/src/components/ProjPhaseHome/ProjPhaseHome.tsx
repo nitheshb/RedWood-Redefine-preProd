@@ -598,7 +598,7 @@ const ProjPhaseHome = ({
                               src="/l1.png"
                             ></img>
                             Blocks are not created yet{' '}
-                            {source === 'projectManagement' && (
+                            {/* {source === 'projectManagement' && ( */}
                               <button
                                 onClick={() => {
                                   setSliderInfo({
@@ -612,7 +612,7 @@ const ProjPhaseHome = ({
                                   })
                                 }}
                                 className={
-                                  'flex ml-2  cursor-pointer items-center h-6 px-3 text-xs font-semibold  rounded-full hover:bg-pink-200 hover:text-pink-800 text-green-800 '
+                                  'flex ml-2  cursor-pointer items-center h-6 px-3 text-xs font-semibold  rounded-full bg-pink-200 hover:bg-pink-300 hover:text-pink-800 text-pink-800 '
                                 }
                               >
                                 <PlusIcon
@@ -621,7 +621,7 @@ const ProjPhaseHome = ({
                                 />
                                 Add block
                               </button>
-                            )}
+                            {/* )} */}
                           </div>
                         ))}
 
