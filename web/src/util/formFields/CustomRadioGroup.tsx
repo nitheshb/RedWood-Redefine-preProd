@@ -4,10 +4,22 @@ import { RadioGroup } from '@headlessui/react'
 export const CustomRadioGroup = ({ label, value, onChange, options }) => {
   return (
     <>
-      <label className="font-semibold text-[#053219] py-2 text-sm mb-2 mt-0">
+      {/* <label className="font-semibold text-[#053219] py-2 text-sm mb-2 mt-0">
         {label}
         <abbr title="required"></abbr>
-      </label>
+      </label> */}
+      <div className="mb-4 mt-2">
+          <div className="inline">
+            <div className="">
+              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+              {label}<abbr title="required"></abbr>
+              </label>
+            </div>
+
+            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+          </div>
+        </div>
+
       <RadioGroup value={value} onChange={onChange}>
         <div className="grid grid-cols-8 gap-4">
           {options.map((option) => (
@@ -22,7 +34,7 @@ export const CustomRadioGroup = ({ label, value, onChange, options }) => {
                 }
 ${
   value.name == option.name
-    ? 'ring-1  ring-green-400 bg-opacity-75 text-black'
+    ? 'ring-1  ring-[#57c0d0] bg-opacity-75 text-black'
     : 'bg-[#f7f9f8]'
 }
 relative rounded-lg px-5 py-2 cursor-pointer flex focus:outline-none col-span-2`
@@ -66,7 +78,7 @@ relative rounded-lg px-5 py-2 cursor-pointer flex focus:outline-none col-span-2`
                                   cy={11}
                                   r={11}
                                   fill={
-                                    value.name == option.name ? '#61d38a' : ''
+                                    value.name == option.name ? '#57c0d0' : ''
                                   }
                                 />
                                 <path

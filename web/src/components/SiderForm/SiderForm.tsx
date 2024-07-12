@@ -15,6 +15,7 @@ import CostBreakUpPdfPreview from 'src/util/costBreakUpPdfPreview'
 import CrmCustomerSummary from '../A_CrmModule/A_CrmCustomerSummary'
 import UnitBookingCancelCRM from '../A_CrmModule/A_UnitCancel.tsx/CrmUnitCancel'
 import CustomerSideViewCRM from '../A_CrmModule/CrmCustomerSideView'
+import AddNewDemand from '../A_CrmModule/CrmNewDemand'
 import UnitSideViewCRM from '../A_CrmModule/CrmUnitSideView'
 import ViewDocxFile from '../A_LegalModule/viewDocxFile'
 import AddCampaignForm from '../A_MarketingModule/AddCampaign'
@@ -41,8 +42,6 @@ import MoreDetailsPhaseForm from '../MoreDetailsPhaseForm/MoreDetailsPhaseForm'
 import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import TransactionUpdateSideView from '../transactionUpdateSideView'
 import ViewUnitDetails from '../ViewUnitDetails'
-import AddNewDemand from '../A_CrmModule/CrmNewDemand'
-import CrmConfirmationDialog from '../A_CrmModule/CrmConfirmationDialog'
 
 const SiderForm = ({
   mode,
@@ -112,6 +111,7 @@ const SiderForm = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
+
             <Dialog.Overlay className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
           <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
@@ -127,8 +127,6 @@ const SiderForm = ({
               <div
                 className={`relative w-screen ${
                   title === 'Add Lead' ||
-                  title === 'Create Project' ||
-                  title === 'Edit Project' ||
                   title === 'upload_legal_docs'
                     ? 'max-w-2xl'
                     : widthClass
@@ -191,7 +189,7 @@ const SiderForm = ({
                     setProject={setProject}
                   />
                 )}
-                {title === 'project_details'  && (
+                {title === 'project_details' && (
                   <ProjectDetailsFlowBody
                     title={title}
                     dialogOpen={setOpen}
@@ -499,7 +497,7 @@ const SiderForm = ({
                     onSubmitFun={paymentCaptureFun}
                   />
                 )}
-                  {title === 'newDemand' && (
+                {title === 'newDemand' && (
                   <AddNewDemand
                     title={title}
                     selUnitDetails={selUnitDetails}

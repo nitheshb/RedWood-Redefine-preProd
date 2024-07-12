@@ -22,6 +22,7 @@ import {
   updatePaymentScheduleCharges,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import EditablePaymentTable from '../comps/EditablePaymentComp'
 
 const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
   const { user } = useAuth()
@@ -102,7 +103,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
       },
     },
     {
-      title: ' ₹ or % *',
+      title: 'Cost Type',
       field: 'percentage',
       headerStyle: {
         padding: '0.25rem',
@@ -325,7 +326,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
         {/* <Dialog.Title className="font-semibold text-xl mr-auto ml-3 text-[#053219]">
           {title}
         </Dialog.Title> */}
-
+        {/* <EditablePaymentTable  /> */}
         <div className="mt-1">
           <MaterialCRUDTable
             title={

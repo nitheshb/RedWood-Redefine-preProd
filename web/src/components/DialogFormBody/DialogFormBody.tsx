@@ -1,5 +1,8 @@
+import { constants } from 'os'
+
 import { useState, useEffect } from 'react'
 
+// import { Prompt } from 'react-router-dom'
 import { Dialog } from '@headlessui/react'
 import { Add, Remove } from '@mui/icons-material'
 import { InputAdornment, TextField as MuiTextField } from '@mui/material'
@@ -25,9 +28,11 @@ import {
   createProject,
   getProject,
   steamBankDetailsList,
+  streamProjectMaster,
   updateProject,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import { sqftConverter } from 'src/util/areaConverter'
 import { CustomRadioGroup } from 'src/util/formFields/CustomRadioGroup'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
@@ -35,7 +40,6 @@ import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import { TextField } from 'src/util/formFields/TextField'
 
 import AddBankDetailsForm from '../addBankDetailsForm'
-import { constants } from 'os'
 
 const DialogFormBody = ({
   title,
@@ -81,14 +85,21 @@ const DialogFormBody = ({
   )
   const [addNewBankStuff, setAddNewBankStuff] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [openExtendFields, setOpenExtendFields] = useState(false)
   const [openAreaFields, setOpenAreaFields] = useState(false)
   const [bankDetailsA, setBankDetailsA] = useState([])
-  const [startDate, setStartDate] = useState(d)
+  const [startDate, setStartDate] = useState(project?.hdmaStartDate || d)
   const [existingBuildBankId, setNowBuilderBankDocId] = useState('')
   const [existingLandBankId, setNowLandLordBankDocId] = useState('')
   const [builerShare, setBuilderShare] = useState(100)
   const [landLordShare, setLandLordShare] = useState(0)
-  const [endDate, setEndDate] = useState(d)
+  const [endDate, setEndDate] = useState(project?.hdmaEndDate || d)
+  const [authorityStartDate, setAuthorityStartDate] = useState(
+    project?.authorityStartDate || d
+  )
+  const [authorityEndDate, setAuthorityEndDate] = useState(
+    project?.authorityEndDate || d
+  )
   const { enqueueSnackbar } = useSnackbar()
   const [bankAccounts, setBankAccounts] = useState([])
 
@@ -97,10 +108,9 @@ const DialogFormBody = ({
     setNowLandLordBankDocId(project?.landlordBankDocId)
   }, [project?.editMode])
   useEffect(() => {
-   const bankAccountsA = project?.bankAccounts || [];
+    const bankAccountsA = project?.bankAccounts || []
     setBankAccounts(bankAccountsA)
   }, [])
-
 
   const EditedLandlord = (e, formik) => {
     //
@@ -143,12 +153,14 @@ const DialogFormBody = ({
   const onSubmit = async (data, resetForm) => {
     const updatedData = {
       ...data,
-      bankAccounts:bankAccounts,
+      bankAccounts: bankAccounts,
       projectType: selected,
       developmentType: devType,
       editMode: true,
+      planningApproval: planningApproval,
+      reraApproval: reraApproval,
     }
-    console.log('selected value is ',project?.editMode )
+    console.log('selected value is ', project?.editMode)
     // setLoading(true)
     if (project?.editMode) {
       await updateProject(
@@ -161,22 +173,51 @@ const DialogFormBody = ({
       )
       setLoading1(false)
     } else {
-      console.log('selected value is ', )
+      console.log('selected value is ')
       const uid = uuidv4()
-      await createProject(orgId,uid, updatedData, enqueueSnackbar, resetForm)
+      let fullCsA = []
+      const unsubscribe = await streamProjectMaster(
+        orgId,
+        async (querySnapshot) => {
+          const bankA = querySnapshot.docs.map((docSnapshot) => {
+            const x = docSnapshot.data()
+            x.id = docSnapshot.id
+            return x
+          })
+          // fullCs
+
+          if (bankA?.length > 0) {
+            const y = await bankA.filter(
+              (item) => item.type == updatedData?.projectType?.name
+            )
+            fullCsA = y[0]['fullCs']
+          }
+          updatedData.fullCsA = fullCsA
+          await createProject(
+            orgId,
+            uid,
+            updatedData,
+            enqueueSnackbar,
+            resetForm
+          )
+        },
+        (error) => (fullCsA = [])
+      )
       setLoading1(false)
 
-      const additionalUserInfo =    await getProject(orgId, uid)
-      await  console.log('selected value is xxx ', additionalUserInfo)
-    await  setProject(additionalUserInfo)
-    await  console.log('selected value is ==> ', project)
-
+      const additionalUserInfo = await getProject(orgId, uid)
+      await console.log('selected value is xxx ', additionalUserInfo)
+      await setProject(additionalUserInfo)
+      await console.log('selected value is ==> ', project)
     }
     setLoading1(false)
   }
 
   const onAreaClick = () => {
     setOpenAreaFields(!openAreaFields)
+  }
+  const onExtendClick = () => {
+    setOpenExtendFields(!openExtendFields)
   }
 
   useEffect(() => {
@@ -217,7 +258,8 @@ const DialogFormBody = ({
     hdmaNo: project?.hdmaNo || '',
     hdmaStartDate: project?.hdmaStartDate || '',
     hdmaEndDate: project?.hdmaEndDate || '',
-
+    authorityStartDate: project?.authorityStartDate || '',
+    authorityEndDate: project?.authorityEndDate || '',
     builderName: project?.builderName || '',
     builder_bank_details: project?.builder_bank_details || '',
     builderGSTno: project?.builderGSTno || '',
@@ -228,6 +270,7 @@ const DialogFormBody = ({
     landlordShare: project?.landlordShare || landLordShare,
     builderShare: project?.builderShare || builerShare,
     area: project?.area || '',
+    extent: project?.extent || '',
     location: project?.location || '',
     pincode: project?.pincode || '',
     state: project?.state || '',
@@ -273,8 +316,9 @@ const DialogFormBody = ({
       </div> */}
 
       <div className="grid  gap-8 grid-cols-1">
-        <div className="flex flex-col ">
-          <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 m-4 pt-1 mb-0 ">
+        <div className="flex flex-col">
+          <div className='bg-white p-4'>
+          <div className="flex flex-col mt-2  bg-white  m-4 pt-1 mb-0 ">
             <CustomRadioGroup
               label="Type"
               value={selected}
@@ -296,64 +340,137 @@ const DialogFormBody = ({
                 // bindSubmitForm(formik.submitForm);
                 return (
                   <Form>
-                    <div className="form m-4 mt-2 ">
-                      <div className="flex flex-col mt-0 rounded-lg bg-white border border-gray-100 p-4 ">
-                        <p className="text-sm text-gray-800 font-medium">
-                          Project Name*
-                        </p>
+                    <div className="form m-4 mt-0 ">
+                      <div className="flex flex-col mt-0  bg-white pt-4 ">
+
+                        <div className="mb-4 mt-4">
+          <div className="inline">
+            <div className="">
+              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+              Details<abbr title="required"></abbr>
+              </label>
+            </div>
+
+            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+          </div>
+        </div>
+                        <p className="text-sm text-gray-800 ">Project Name*</p>
                         <TextField label="" name="projectName" type="text" />
-                        <div className="mb-3">
-                          <label
-                            htmlFor="area"
-                            className="label font-medium text-sm"
-                          >
-                            Saleable Area*
-                          </label>
-                          <MuiTextField
-                            id="area"
-                            className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
-                            size="small"
-                            InputProps={{
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  Saleable Area
-                                </InputAdornment>
-                              ),
-                              endAdornment: (
-                                <InputAdornment position="end">
-                                  <button
-                                    type="button"
-                                    style={{ marginRight: '-13px' }}
-                                    onClick={onAreaClick}
-                                    className="border border-green-400 font-semibold text-3xl px-2 bg-green-400 shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-green-500"
-                                  >
-                                    {openAreaFields ? <Remove /> : <Add />}
-                                  </button>
-                                </InputAdornment>
-                              ),
-                            }}
-                            label=""
-                            name="area"
-                            type="text"
-                            value={formik.values.area}
-                            onChange={formik.handleChange}
-                          />
-                          {formik.errors.area ? (
-                            <div className="error-message text-red-700 text-xs p-2">
-                              {formik.errors.area}
-                              {formik.values.area}
-                            </div>
-                          ) : null}
-                          {openAreaFields && (
-                            <AreaConverter
-                              formik={formik}
-                              hideField={setOpenAreaFields}
-                              fieldName="area"
+                        <section className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-2">
+                          <div className="mb-3 w-[50%]">
+                            <label htmlFor="extent" className="label  text-sm">
+                              Project Extent*{' '}
+                              <span className="text-[11px] ">
+                                (
+                                {sqftConverter(
+                                  formik?.values?.extent,
+                                  'square-meter'
+                                )?.toLocaleString('en-IN')}{' '}
+                                sqft)
+                              </span>
+                            </label>
+                            <MuiTextField
+                              id="extent"
+                              className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+                              size="small"
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    Sqmt
+                                  </InputAdornment>
+                                ),
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <button
+                                      type="button"
+                                      style={{ marginRight: '-13px' }}
+                                      onClick={onExtendClick}
+                                      className="border  font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
+                                    >
+                                      {openExtendFields ? <Remove /> : <Add />}
+                                    </button>
+                                  </InputAdornment>
+                                ),
+                              }}
+                              label=""
+                              name="extent"
+                              type="text"
+                              value={formik.values.extent}
+                              onChange={formik.handleChange}
                             />
-                          )}
-                        </div>
+                            {formik.errors.extent ? (
+                              <div className="error-message text-red-700 text-xs p-2">
+                                {formik.errors.extent}
+                                {formik.values.extent}
+                              </div>
+                            ) : null}
+                            {openExtendFields && (
+                              <AreaConverter
+                                formik={formik}
+                                hideField={setOpenExtendFields}
+                                fieldName="extent"
+                              />
+                            )}
+                          </div>
+                          <div className="mb-3 w-[50%]">
+                            <label htmlFor="area" className="label  text-sm">
+                              Saleable Area*{' '}
+                              <span className="text-[11px] ">
+                                (
+                                {sqftConverter(
+                                  formik?.values?.area,
+                                  'square-meter'
+                                )?.toLocaleString('en-IN')}{' '}
+                                sqft)
+                              </span>
+                            </label>
+                            <MuiTextField
+                              id="area"
+                              className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+                              size="small"
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    Sqmt
+                                  </InputAdornment>
+                                ),
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <button
+                                      type="button"
+                                      style={{ marginRight: '-13px' }}
+                                      onClick={onAreaClick}
+                                      className="border bg-[#57c0d0] font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
+                                    >
+                                      {openAreaFields ? <Remove /> : <Add />}
+                                    </button>
+                                  </InputAdornment>
+                                ),
+                              }}
+                              label=""
+                              name="area"
+                              type="text"
+                              value={formik.values.area}
+                              onChange={formik.handleChange}
+                            />
+                            {formik.errors.area ? (
+                              <div className="error-message text-red-700 text-xs p-2">
+                                {formik.errors.area}
+                                {formik.values.area}
+                              </div>
+                            ) : null}
+
+                            {openAreaFields && (
+                              <AreaConverter
+                                formik={formik}
+                                hideField={setOpenAreaFields}
+                                fieldName="area"
+                              />
+                            )}
+                          </div>
+                        </section>
                       </div>
-                      <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
+                      <div className="flex flex-col mt-2  pt-2 ">
                         <CustomRadioGroup
                           label="Planning Authority Approval"
                           value={planningApproval}
@@ -405,16 +522,16 @@ const DialogFormBody = ({
                                   Approval Date*
                                 </label>
                                 <DatePicker
-                                  id="bmrdaStartDate"
-                                  name="bmrdaStartDate"
+                                  id="authorityStartDate"
+                                  name="authorityStartDate"
                                   className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
-                                  selected={startDate}
+                                  selected={authorityStartDate}
                                   onChange={(date) => {
                                     formik.setFieldValue(
-                                      'bmrdaStartDate',
+                                      'authorityStartDate',
                                       date.getTime()
                                     )
-                                    setStartDate(date)
+                                    setAuthorityStartDate(date)
                                   }}
                                   timeFormat="HH:mm"
                                   injectTimes={[
@@ -432,20 +549,20 @@ const DialogFormBody = ({
                             type="text"
                             />*/}
 
-                                <label className="label font-regular block mb-1">
+                                {/* <label className="label font-regular block mb-1">
                                   End Date*
                                 </label>
                                 <DatePicker
-                                  id="bmrdaEndDate"
-                                  name="bmrdaEndDate"
+                                  id="authrorityEndDate"
+                                  name="authrorityEndDate"
                                   className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
-                                  selected={endDate}
+                                  selected={authorityEndDate}
                                   onChange={(date) => {
                                     formik.setFieldValue(
-                                      'bmrdaEndDate',
+                                      'authorityEndDate',
                                       date.getTime()
                                     )
-                                    setEndDate(date)
+                                    setAuthorityEndDate(date)
                                   }}
                                   timeFormat="HH:mm"
                                   injectTimes={[
@@ -454,14 +571,14 @@ const DialogFormBody = ({
                                     setHours(setMinutes(d, 59), 23),
                                   ]}
                                   dateFormat="MMMM d, yyyy"
-                                />
+                                /> */}
                               </div>
                             </div>
                           </>
                         )}
                       </div>
 
-                      <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
+                      <div className="flex flex-col mt-2  pt-4 ">
                         <CustomRadioGroup
                           label="Rera Approval"
                           value={reraApproval}
@@ -493,11 +610,15 @@ const DialogFormBody = ({
                                 className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
                                 selected={startDate}
                                 onChange={(date) => {
-                                  formik.setFieldValue(
-                                    'hdmaStartDate',
-                                    date.getTime()
-                                  )
-                                  setStartDate(date)
+                                  if (
+                                    date.getTime() < formik.values.hdmaEndDate
+                                  ) {
+                                    formik.setFieldValue(
+                                      'hdmaStartDate',
+                                      date.getTime()
+                                    )
+                                    setStartDate(date)
+                                  }
                                 }}
                                 timeFormat="HH:mm"
                                 injectTimes={[
@@ -524,11 +645,16 @@ const DialogFormBody = ({
                                 className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
                                 selected={endDate}
                                 onChange={(date) => {
-                                  formik.setFieldValue(
-                                    'hdmaEndDate',
-                                    date.getTime()
-                                  )
-                                  setEndDate(date)
+                                  console.log('date', date.getTime(), date)
+                                  if (
+                                    date.getTime() > formik.values.hdmaStartDate
+                                  ) {
+                                    formik.setFieldValue(
+                                      'hdmaEndDate',
+                                      date.getTime()
+                                    )
+                                    setEndDate(date)
+                                  }
                                 }}
                                 timeFormat="HH:mm"
                                 injectTimes={[
@@ -542,16 +668,28 @@ const DialogFormBody = ({
                           </div>
                         )}
                       </div>
-                      <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
-                        <CustomRadioGroup
+                      <div className="flex flex-col mt-2 rounded-lg  pt-4 ">
+
+                        <div className="mb-4 mt-2">
+          <div className="inline">
+            <div className="">
+              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+              Add Bank Accont*<abbr title="required"></abbr>
+              </label>
+            </div>
+
+            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+          </div>
+        </div>
+                        {/* <CustomRadioGroup
                           label="Development Type"
                           value={devType}
                           options={developmentTypes}
                           onChange={setdevType}
-                        />
-                        <label className="label font-regular text-sm mb-2 mt-3">
+                        /> */}
+                        {/* <label className="label font-regular text-sm mb-2 mt-3">
                           Builder Bank Account *
-                        </label>
+                        </label> */}
 
                         {bankAccounts.length > 0 && (
                           <div className="flex  space-x-2 w-full text-xs">
@@ -674,12 +812,20 @@ const DialogFormBody = ({
                         </div>
                       )} */}
                       </div>
-                      <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
-                        <div className="py-2">
-                          <p className="text-sm text-gray-800 font-medium">
-                            Project Location Details
-                          </p>
-                        </div>
+                      <div className="flex flex-col mt-2 rounded-lg pt-4 ">
+
+                        <div className="mb-4 mt-2">
+          <div className="inline">
+            <div className="">
+              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+                Location Details<abbr title="required"></abbr>
+              </label>
+            </div>
+
+            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+          </div>
+        </div>
+
 
                         <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
                           <TextField
@@ -752,6 +898,7 @@ const DialogFormBody = ({
               }}
             </Formik>
           </div>
+        </div>
         </div>
       </div>
     </div>

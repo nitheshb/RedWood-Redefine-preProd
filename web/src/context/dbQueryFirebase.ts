@@ -95,6 +95,11 @@ export const steamBankDetailsList = (orgId, snapshot, error) => {
   const itemsQuery = query(collection(db, `${orgId}_BankDetails`))
   return onSnapshot(itemsQuery, snapshot, error)
 }
+// get all project master cost sheet template list
+export const streamProjectMaster = (orgId, snapshot, error) => {
+  const itemsQuery = query(collection(db, `${orgId}_projectMasters`))
+  return onSnapshot(itemsQuery, snapshot, error)
+}
 
 export const steamUsersProjAccessList = (orgId, snapshot, data, error) => {
   const itemsQuery = query(
@@ -3121,6 +3126,15 @@ export const addUserLog = (orgId, data) => {
   data.time = Timestamp.now().toMillis()
   addDoc(collection(db, `${orgId}_user_log`), data)
 }
+export const addProjectLog = (orgId, data) => {
+  // type    === addUser || updateUserRole || deleteUser
+  // subtype === addUser
+  // subType === RoleAdd || RoleRemoved
+  // subType === deleteUser
+  data.time = Timestamp.now().toMillis()
+  addDoc(collection(db, `${orgId}_project_log`), data)
+}
+
 
 export const addLeadLog = async (orgId, did, data) => {
   const xo = Timestamp.now().toMillis()
@@ -3234,6 +3248,10 @@ export const createProject = async (
       uid: uid1,
       availableCount: 0,
       projectType: element?.projectType,
+      partATaxObj: updated?.fullCsA.filter((item) => item?.section?.value == 'unitCost') || [],
+      partCTaxObj: updated?.fullCsA.filter((item) => item?.section?.value == 'otherCharges') || [],
+      additonalChargesObj: updated?.fullCsA.filter((item) => item?.section?.value == 'additionalCost') || [],
+      fullCs: updated?.fullCsA
     }
     const {
       builderBankDocId,
@@ -3757,6 +3775,34 @@ export const addPhasePartAtax = async (
   try {
     await updateDoc(doc(db, `${orgId}_phases`, uid), {
       [type]: arrayUnion(chargePayload),
+    })
+    enqueueSnackbar('Charges added successfully', {
+      variant: 'success',
+    })
+  } catch (e) {
+    console.log(' error is here', e)
+    enqueueSnackbar(e.message, {
+      variant: 'error',
+    })
+  }
+}
+export const addPhaseFullCs  = async (
+  orgId,
+  uid,
+  fullCsA,
+  type,
+  enqueueSnackbar
+) => {
+  const usersUpdate = {}
+
+
+
+  try {
+    await updateDoc(doc(db, `${orgId}_phases`, uid), {
+      partATaxObj: fullCsA?.filter((item) => item?.section?.value == 'unitCost') || [],
+      partCTaxObj: fullCsA?.filter((item) => item?.section?.value == 'otherCharges') || [],
+      additonalChargesObj: fullCsA?.filter((item) => item?.section?.value == 'additionalCost') || [],
+      fullCs: fullCsA
     })
     enqueueSnackbar('Charges added successfully', {
       variant: 'success',
@@ -4617,7 +4663,22 @@ export const updateUnitStatus = async (
       status: data?.status,
       T_elgible: data?.T_elgible_new,
       T_elgible_balance: data?.T_elgible_balance,
+      [`${data?.status}_on`]: data[`${data?.status}_on`]
     })
+    const { data: data4, error: error4 } = await supabase
+    .from(`${orgId}_unit_logs`)
+    .insert([
+      {
+        type: 'sts_change',
+        subtype: 'sts_change',
+        T: Timestamp.now().toMillis(),
+        Uuid: unitId,
+        by,
+        payload: {},
+        from: 'sts_change',
+        to: data?.status,
+      },
+    ])
     enqueueSnackbar('Unit Status Updated', {
       variant: 'success',
     })
@@ -5827,6 +5888,21 @@ export const deleteUser = async (orgId, uid, by, email, myRole) => {
     by,
   })
 }
+export const deleteProject = async (orgId, uid, by, Project,enqueueSnackbar ) => {
+  await deleteDoc(doc(db,  `${orgId}_projects`, uid))
+  const {projectName} = Project
+   await addProjectLog(orgId, {
+    pId: uid,
+    s: 's',
+    type: 'deleteProject',
+    subtype: 'deleteProject',
+    txt: `${projectName} is deleted by ${by}`,
+    by,
+  })
+  enqueueSnackbar('Project deleted successfully', {
+    variant: 'success',
+  })
+}
 
 export const deleteAsset = async (orgId, uid, by, email, myRole) => {
   await deleteDoc(doc(db, `${orgId}_project_docs`, uid))
@@ -6002,6 +6078,22 @@ export const addAgreegatedSalesValues = async (orgId, docId, data) => {
   } catch (error) {
     console.log('error at addUnitBankComputed', error, data)
     await setDoc(doc(db, `${orgId}_sales_reports`, docId), data)
+  }
+  return
+}
+export const addCostSheetMaster = async (orgId, docId, data, enqueueSnackbar) => {
+  try {
+    const washingtonRef = doc(db, `${orgId}_projectMasters`, docId)
+    await updateDoc(washingtonRef, data)
+    enqueueSnackbar('Template Updated..!', {
+      variant: 'success',
+    })
+  } catch (error) {
+    console.log('error at addUnitBankComputed', error, data)
+    await setDoc(doc(db, `${orgId}_projectMasters`, docId), data)
+    enqueueSnackbar('Template Added..!', {
+      variant: 'success',
+    })
   }
   return
 }

@@ -630,6 +630,7 @@ export default function UnitSideViewCRM({
       const dataObj = { status: newStatus?.value }
       console.log('payment stuff is ', selCustomerPayload)
       const { fullPs } = selCustomerPayload
+      dataObj[`${newStatus?.value}_on`] = Timestamp.now().toMillis()
       if (
         newStatus?.value === 'agreement_pipeline' &&
         selCustomerPayload?.kyc_status &&
@@ -746,6 +747,7 @@ export default function UnitSideViewCRM({
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
+        
 
         updateUnitStatus(
           orgId,

@@ -245,18 +245,19 @@ const CrmUnitSummary = ({
                   Payments Summary
                 </h1>
               </div>
-                <div>
-                  <CrmUnitPaymentGraph
-                    selCustomerPayload={selUnitPayload}
-                    assets={assets}
-                  />
-                </div>
-                <div className="mt-1">
+              <div >
                   <CrmPaymentSummary
                     selCustomerPayload={selUnitPayload}
                     assets={assets}
                   />
                 </div>
+                <div className="mt-1">
+                  <CrmUnitPaymentGraph
+                    selCustomerPayload={selUnitPayload}
+                    assets={assets}
+                  />
+                </div>
+
               </div>
               <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 ">
           <div className="flex flex-row ">

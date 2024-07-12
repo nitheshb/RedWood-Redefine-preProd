@@ -1,4 +1,4 @@
-export const areaCoverter = (value: number, unit: string) => {
+export const sqftConverter = (value: number, unit: string) => {
   switch (unit) {
     case 'acre':
       return value * 43560

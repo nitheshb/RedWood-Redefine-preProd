@@ -213,7 +213,8 @@ export const MultiSelectMultiLineField = ({
 }) => {
   const placeholder = <span>Select Bank Account</span>
   const defaultValue = (options, value) => {
-    return (options ? options.find((option) => option.id === value) : '') || ''
+    console.log('check it ', options, value)
+    return (options ? options.find((option) => option.value === value) : '') || ''
   }
   return (
     <div className="section">
@@ -234,11 +235,11 @@ export const MultiSelectMultiLineField = ({
         valueComponent={GravatarValue}
         className="text-sm  mt-1 border-none"
       />
-        <ErrorMessage
+        {/* <ErrorMessage
           component="div"
           name={name}
           className="error-message text-red-700 text-xs p-1 mx-auto"
-        />
+        /> */}
     </div>
     // <div>
     //   <label className="label font-regular text-sm mb-2">{label}</label>

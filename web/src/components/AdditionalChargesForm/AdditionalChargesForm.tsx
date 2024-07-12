@@ -5,9 +5,9 @@ import { Select as SelectMAT, MenuItem } from '@material-ui/core'
 import { Alert, AlertTitle } from '@mui/lab'
 import { useSnackbar } from 'notistack'
 import Select from 'react-select'
+
 //import { Stepper, Step, Button } from "@material-tailwind/react";
-
-
+import EditableTable from 'src/components/comps/EditableComp'
 import { MaterialCRUDTable } from 'src/components/MaterialCRUDTable'
 import {
   costSheetAdditionalChargesA,
@@ -30,6 +30,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
 
   const { orgId } = user
   const [tableData, setTableData] = useState([])
+  const [fullCs, setFullCs] = useState([])
   const [partAData, setPartAData] = useState([])
   const [partCData, setPartCData] = useState([])
   const [iserror, setIserror] = useState(false)
@@ -80,6 +81,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         ? ConstructOtherChargesObj
         : additonalChargesObj
     setTableData(x)
+    console.log('helolo',phase?.fullCs )
+    setFullCs(phase?.fullCs || [])
     setPartAData(phase?.partATaxObj || [])
     setPartCData(phase?.partCTaxObj || [])
 
@@ -102,7 +105,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       (options ? options.find((option) => option.value === value) : value) || ''
     )
   }
-
 
   // Part-1
   // paymentScheduleA
@@ -280,6 +282,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         padding: '0.25rem',
       },
       cellStyle: {
+        padding: '0.25rem',
         padding: '0.25rem',
       },
       render: (rowData) => rowData?.gst?.label,
@@ -784,39 +787,31 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
     }
   }
 
-
-  const [currentStep, setCurrentStep] = useState(0);
-
+  const [currentStep, setCurrentStep] = useState(0)
 
   const goToStep = (stepIndex) => {
-    setCurrentStep(stepIndex);
-  };
+    setCurrentStep(stepIndex)
+  }
 
+  const prevStep = () => {
+    setCurrentStep((prevStep) => (prevStep === 0 ? 2 : prevStep - 1))
+  }
 
+  const nextStep = () => {
+    setCurrentStep((prevStep) => (prevStep === 2 ? 0 : prevStep + 1))
+  }
 
-
-
-const prevStep = () => {
-  setCurrentStep(prevStep => (prevStep === 0 ? 2 : prevStep - 1));
-};
-
-
-const nextStep = () => {
-  setCurrentStep(prevStep => (prevStep === 2 ? 0 : prevStep + 1));
-};
-
-
-const headerStyles = (index) => ({
-  borderTopLeftRadius: index === 0 ? '12px' : '0px',
-  borderTopRightRadius: index === partAcolumns.length - 1 ? '12px' : '0px',
-  borderBottomWidth: '2px',
-  background: '#fff',
-  fontWeight: '600',
-  padding: '13px',
-});
+  const headerStyles = (index) => ({
+    borderTopLeftRadius: index === 0 ? '12px' : '0px',
+    borderTopRightRadius: index === partAcolumns.length - 1 ? '12px' : '0px',
+    borderBottomWidth: '2px',
+    background: '#fff',
+    fontWeight: '600',
+    padding: '13px',
+  })
 
   return (
-    <section className=''>
+    <section className="">
       {/* <table>
         <thead>
           {partAcolumns?.map((rowDa, i) => (
@@ -859,35 +854,56 @@ const headerStyles = (index) => ({
         </tbody>
       </table> */}
 
+      {/* <div className="flex flex-col px-4 my-6 space-y-4">
+        <div className="flex items-center ">
+          <div
+            className={`flex items-center ${
+              currentStep === 0 ? 'text-blue-500' : 'text-gray-500'
+            }`}
+          >
+            <div
+              className={`rounded-full ${
+                currentStep >= 0 ? 'bg-[#DDD6FE]' : 'bg-gray-300'
+              } w-8 h-8 flex items-center justify-center `}
+            >
+              A
+            </div>
+          </div>
+          <div className="w-full h-[2px] bg-[#E5E7EB]"></div>
+          <div
+            className={`flex items-center ${
+              currentStep === 1 ? 'text-blue-500' : 'text-gray-500'
+            }`}
+          >
+            <div
+              className={`rounded-full ${
+                currentStep >= 1 ? 'bg-[#DDD6FE]' : 'bg-gray-300'
+              } w-8 h-8 flex items-center justify-center `}
+            >
+              B
+            </div>
+          </div>
 
+          <div className="w-full h-[2px] bg-[#E5E7EB]"></div>
 
+          <div
+            className={`flex items-center ${
+              currentStep === 2 ? 'text-blue-500' : 'text-gray-500'
+            }`}
+          >
+            <div
+              className={`rounded-full ${
+                currentStep >= 2 ? 'bg-[#DDD6FE]' : 'bg-gray-300'
+              } w-8 h-8 flex items-center justify-center `}
+            >
+              C
+            </div>
+          </div>
+        </div>
+      </div> */}
 
-<div className="flex flex-col px-4 my-6 space-y-4">
-  <div className="flex items-center ">
-    {/* Step1*/}
-    <div className={`flex items-center ${currentStep === 0 ? 'text-blue-500' : 'text-gray-500'}`}>
-      <div className={`rounded-full ${currentStep >= 0 ? 'bg-[#DDD6FE]' : 'bg-gray-300'} w-8 h-8 flex items-center justify-center `}>A</div>
-    </div>
-    {/* Line1*/}
-    <div className="w-full h-[2px] bg-[#E5E7EB]"></div>
-    {/* Step2*/}
-    <div className={`flex items-center ${currentStep === 1 ? 'text-blue-500' : 'text-gray-500'}`}>
-      <div className={`rounded-full ${currentStep >= 1 ? 'bg-[#DDD6FE]' : 'bg-gray-300'} w-8 h-8 flex items-center justify-center `}>B</div>
-    </div>
-    {/* Line2*/}
-    <div className="w-full h-[2px] bg-[#E5E7EB]"></div>
-    {/* Step3*/}
-    <div className={`flex items-center ${currentStep === 2 ? 'text-blue-500' : 'text-gray-500'}`}>
-      <div className={`rounded-full ${currentStep >= 2 ? 'bg-[#DDD6FE]' : 'bg-gray-300'} w-8 h-8 flex items-center justify-center `}>C</div>
-    </div>
-  </div>
-</div>
-
-
-
-
-          {/* Buttons for navigation */}
-          {/* <div className="flex justify-between px-4 mb-4">
+      {/* Buttons for navigation */}
+      {/* <div className="flex justify-between px-4 mb-4">
         {currentStep > 0 && (
           <button className="px-4 py-2 bg-blue-500 text-white rounded" onClick={prevStep}>Back</button>
         )}
@@ -896,130 +912,159 @@ const headerStyles = (index) => ({
         )}
       </div> */}
 
+      {/* <div className="flex justify-between px-4 mb-4">
+        <button
+          className="px-2 py-0 bg-[#DDD6FE] text-[10px] rounded-xl"
+          onClick={prevStep}
+        >
+          Back
+        </button>
+        <button
+          className="px-2 py-0 bg-[#DDD6FE] text-[10px] rounded-xl"
+          onClick={nextStep}
+        >
+          Next
+        </button>
+      </div> */}
+      <div className=" ">
+      <EditableTable  phase={data?.phase || {}}  partAData={partAData} fullCs= {fullCs} source={'project'} type={data?.phase?.projectType.name}/>
+      </div>
 
-<div className="flex justify-between px-4 mb-4">
-  <button className="px-2 py-0 bg-[#DDD6FE] text-[10px] rounded-xl" onClick={prevStep}>Back</button>
-  <button className="px-2 py-0 bg-[#DDD6FE] text-[10px] rounded-xl" onClick={nextStep}>Next</button>
-</div>
-
-
-
-
-
-
-
-
-
-      {currentStep === 0 && (
+      {/* {currentStep === 0 && (
         <>
-      <section className="ml-4 text-md font-[500]">Part-A</section>
-          {/* Your Part A content here */}
+          <section className="ml-4 text-md font-[500]">
+            Unit Pricing & PLC
+          </section>
 
 
-    <div className='h-full w-full shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll'>
-
-<div className=''>
-
-<div className='mt-1'>
+          <div className="h-full w-full shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll">
+            <div className="">
+              <div className="mt-1">
 
 
-
-
-
-<MaterialCRUDTable
-  title=""
-  columns={partAcolumns.map((column, index) => ({
-    ...column,
-    headerStyle: headerStyles(index),
-  }))}
-  data={partAData}
-  options={{
-    headerStyle: {
-      borderTopLeftRadius: '12px',
-      borderTopRightRadius: '12px',
-      borderBottomWidth: '2px',
-      // background: '#DDD6FE',
-      fontWeight: '600px',
-      padding: '13px',
-      borderRadius: '0px',
-      zIndex: '0',
-
-    },
-    actionsColumnIndex: -1,
-    minBodyHeight: '600px',
-    borderRadius: '30px',
-    search: false,
-    paging: false,
-    doubleHorizontalScroll: true,
-    position: 'absolute',
-  }}
-  style={{
-    padding: '0px 20px',
-    borderRadius: '30px',
-    boxShadow: 'none',
-    fontSize: '12px',
-    marginLeft: '10px',
-    marginRight: '10px'
-
-  }}
-  actionsCellStyle={{
-    width: 'auto',
-    justifyCenter: 'center',
-  }}
-  source={source}
-  editable={editOpitionsObjPartA}
-/>
-
-
-
-</div>
-
-</div>
-
-</div>
-
-
-
-
-
+                <MaterialCRUDTable
+                  title=""
+                  columns={partAcolumns.map((column, index) => ({
+                    ...column,
+                    headerStyle: headerStyles(index),
+                  }))}
+                  data={partAData}
+                  options={{
+                    headerStyle: {
+                      borderTopLeftRadius: '12px',
+                      borderTopRightRadius: '12px',
+                      borderBottomWidth: '2px',
+                      fontWeight: '600px',
+                      padding: '13px',
+                      borderRadius: '0px',
+                      zIndex: '0',
+                    },
+                    actionsColumnIndex: -1,
+                    minBodyHeight: '600px',
+                    borderRadius: '30px',
+                    search: false,
+                    paging: false,
+                    doubleHorizontalScroll: true,
+                    position: 'absolute',
+                  }}
+                  style={{
+                    padding: '0px 20px',
+                    borderRadius: '30px',
+                    boxShadow: 'none',
+                    fontSize: '12px',
+                    marginLeft: '10px',
+                    marginRight: '10px',
+                  }}
+                  actionsCellStyle={{
+                    width: 'auto',
+                    justifyCenter: 'center',
+                  }}
+                  source={source}
+                  editable={editOpitionsObjPartA}
+                />
+              </div>
+            </div>
+          </div>
         </>
-      )}
+      )} */}
 
-
-
-           {/* Part B */}
-           {currentStep === 1 && (
+      {/* Part B */}
+      {/* {currentStep === 1 && (
         <>
-          <section className="ml-4 text-md font-[500]">Part-B</section>
-          {/* Your Part B content here */}
+          <section className="ml-4 text-md font-[500]">Additional Charges</section>
 
           <div className="">
-          {/* <Dialog.Title className="font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
-          {/* <span className="mr-auto ml-3  text-md font-extrabold tracking-tight uppercase font-body ">
-          {blocksViewFeature === 'Construction_Other_Charges'
-            ? 'Construction Other Charges (section B)'
-            : 'Plot Other Charges (section B)'}
-        </span> */}
-          {/* <section className="ml-4 text-md font-[500]">Part-B</section> */}
 
+            <div className=" min">
+              <MaterialCRUDTable
+                title=""
+                columns={columns}
+                data={tableData}
+                options={{
+                  headerStyle: {
+                    borderTopLeftRadius: '12px',
+                    borderTopRightRadius: '12px',
+                    borderBottomWidth: '2px',
+                    fontWeight: '600px',
+                    padding: '13px',
+                    zIndex: '0',
+                  },
+                  actionsColumnIndex: -1,
+                  minBodyHeight: '1000px',
+                  paging: false,
+                  search: false,
+                  doubleHorizontalScroll: true,
+                  position: 'absolute',
+                }}
+                style={{
+                  padding: '0px 20px',
+                  borderRadius: '30px',
+                  boxShadow: 'none',
+                  fontSize: '12px',
+                  marginLeft: '10px',
+                  marginRight: '10px',
+                }}
+                actionsCellStyle={{
+                  width: 'auto',
+                  justifyCenter: 'center',
+                }}
+                source={source}
+                editable={editOpitionsObj}
+              />
+            </div>
 
-          <div className=" min">
+            <div>
+              {iserror && (
+                <Alert severity="error">
+                  <AlertTitle>ERROR</AlertTitle>
+                  {errorMessages.map((msg, i) => {
+                    return <div key={i}>{msg}</div>
+                  })}
+                </Alert>
+              )}
+            </div>
+          </div>
+        </>
+      )} */}
+
+      {/* Part C */}
+      {/* {currentStep === 2 && (
+        <>
+          <section className="ml-4 text-md font-[500]">Other Charges</section>
+          <div className="">
             <MaterialCRUDTable
               title=""
-              columns={columns}
-              data={tableData}
+              columns={partCcolumns}
+              data={partCData}
               options={{
                 headerStyle: {
                   borderTopLeftRadius: '12px',
                   borderTopRightRadius: '12px',
                   borderBottomWidth: '2px',
-                  // background: '#D9D8FF',
+                  background: '#f8fafd',
                   fontWeight: '600px',
                   padding: '13px',
                   zIndex: '0',
-
                 },
                 actionsColumnIndex: -1,
                 minBodyHeight: '1000px',
@@ -1029,106 +1074,28 @@ const headerStyles = (index) => ({
                 position: 'absolute',
               }}
               style={{
-                padding: '0px 20px',
+                padding: '0px 30px',
                 borderRadius: '30px',
                 boxShadow: 'none',
                 fontSize: '12px',
                 marginLeft: '10px',
-                marginRight: '10px'
+                marginRight: '10px',
               }}
               actionsCellStyle={{
                 width: 'auto',
                 justifyCenter: 'center',
               }}
               source={source}
-              editable={editOpitionsObj}
+              editable={editOpitionsObjPartC}
             />
           </div>
-
-          <div>
-            {iserror && (
-              <Alert severity="error">
-                <AlertTitle>ERROR</AlertTitle>
-                {errorMessages.map((msg, i) => {
-                  return <div key={i}>{msg}</div>
-                })}
-              </Alert>
-            )}
-          </div>
-        </div>
         </>
-      )}
-
-      {/* Part C */}
-      {currentStep === 2 && (
-        <>
-          <section className="ml-4 text-md font-[500]">Part-C</section>
-          {/* Your Part C content here */}
-          <div className="">
-          {/* <section className="ml-4 text-md font-[500]">Part-C</section> */}
-          <MaterialCRUDTable
-            title=""
-            columns={partCcolumns}
-            data={partCData}
-            options={{
-              headerStyle: {
-                borderTopLeftRadius: '12px',
-                borderTopRightRadius: '12px',
-                borderBottomWidth: '2px',
-                background: '#f8fafd',
-                fontWeight: '600px',
-                padding: '13px',
-                zIndex: '0',
-
-              },
-              actionsColumnIndex: -1,
-              minBodyHeight: '1000px',
-              paging: false,
-              search: false,
-              doubleHorizontalScroll: true,
-              position: 'absolute',
-            }}
-            style={{
-              padding: '0px 30px',
-              borderRadius: '30px',
-              boxShadow: 'none',
-              fontSize: '12px',
-              marginLeft: '10px',
-              marginRight: '10px'
-            }}
-            actionsCellStyle={{
-              width: 'auto',
-              justifyCenter: 'center',
-            }}
-            source={source}
-            editable={editOpitionsObjPartC}
-          />
-        </div>
-        </>
-      )}
-
-
-
-
-
-
-
-
+      )} */}
 
       {/* <section className="ml-4 text-md font-[500]">Part-A</section> */}
 
-
       {/* part b */}
-      <div className="h-full shadow-xl flex flex-col  mb-6 bg-[#F1F5F9] rounded-t overflow-y-scroll">
-
-
-
-
-
-      </div>
-
-
-
+      <div className="h-full shadow-xl flex flex-col  mb-6 bg-[#F1F5F9] rounded-t overflow-y-scroll"></div>
     </section>
   )
 }
