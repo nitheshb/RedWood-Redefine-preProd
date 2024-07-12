@@ -519,7 +519,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
               />
             </div>
           </div>
-          <div className="mb-3 w-[200px]">
+          {type=== 'Villas' && <div className="mb-3 w-[200px]">
             <label htmlFor="area" className="label  text-sm">
               Base Construction Cost per sqft*
             </label>
@@ -537,7 +537,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                 onChange={handleCostChange}
               />
             </div>
-          </div>
+          </div>}
           <div className="mb-3 w-[140px]">
             <label htmlFor="area" className="label text-sm">
               Standard Tax Rate*
