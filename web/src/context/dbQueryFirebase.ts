@@ -3126,6 +3126,15 @@ export const addUserLog = (orgId, data) => {
   data.time = Timestamp.now().toMillis()
   addDoc(collection(db, `${orgId}_user_log`), data)
 }
+export const addProjectLog = (orgId, data) => {
+  // type    === addUser || updateUserRole || deleteUser
+  // subtype === addUser
+  // subType === RoleAdd || RoleRemoved
+  // subType === deleteUser
+  data.time = Timestamp.now().toMillis()
+  addDoc(collection(db, `${orgId}_project_log`), data)
+}
+
 
 export const addLeadLog = async (orgId, did, data) => {
   const xo = Timestamp.now().toMillis()
@@ -5877,6 +5886,21 @@ export const deleteUser = async (orgId, uid, by, email, myRole) => {
     subtype: 'deleteRole',
     txt: `Employee ${email} as ${myRole} is deleted`,
     by,
+  })
+}
+export const deleteProject = async (orgId, uid, by, Project,enqueueSnackbar ) => {
+  await deleteDoc(doc(db,  `${orgId}_projects`, uid))
+  const {projectName} = Project
+   await addProjectLog(orgId, {
+    pId: uid,
+    s: 's',
+    type: 'deleteProject',
+    subtype: 'deleteProject',
+    txt: `${projectName} is deleted by ${by}`,
+    by,
+  })
+  enqueueSnackbar('Project deleted successfully', {
+    variant: 'success',
   })
 }
 

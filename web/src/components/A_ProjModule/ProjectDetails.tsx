@@ -201,7 +201,7 @@ const setLoading1 = (x)=>{
                           </svg> */}
                         </div>
                       </section>{' '}
-                      <div className="mt-1 mr-2 inline text-sm text-b font-light ">
+                      <div className="mt-1 mr-2 inline text-sm text-b  ">
                         {option.name}
                       </div>
                     </label>
@@ -259,7 +259,7 @@ const setLoading1 = (x)=>{
         <div className="mt-5 w-full text-right md:space-x-3 md:block flex flex-row mb-6 justify-between w-full ">
             {selFlow.value === 'projectDetails' &&
                 <button
-             className="mb-2 md:mb-0 bg-[#57c0d0] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
+             className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
             type="submit"
            onClick={() =>  {
               setLoading(true)
@@ -270,11 +270,11 @@ const setLoading1 = (x)=>{
           }
           >
             {loading && <Loader />}
-            save
+            Save
 
           </button>}
           <button
-            className="mb-2 md:mb-0 bg-[#57c0d0] px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg "
+            className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg "
             disabled={loading}
             onClick={() =>  {
               if(project?.uid){

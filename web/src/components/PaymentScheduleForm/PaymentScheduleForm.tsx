@@ -103,7 +103,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
       },
     },
     {
-      title: ' ₹ or % *',
+      title: 'Cost Type',
       field: 'percentage',
       headerStyle: {
         padding: '0.25rem',

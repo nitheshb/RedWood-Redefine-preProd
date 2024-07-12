@@ -1,17 +1,20 @@
 import { useState } from 'react'
 
 import { Dialog } from '@headlessui/react'
+import { TrashIcon } from '@heroicons/react/solid'
 import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
 
 import Loader from 'src/components/Loader/Loader'
-import { updateMoreDetails } from 'src/context/dbQueryFirebase'
+import { deleteProject, updateMoreDetails } from 'src/context/dbQueryFirebase'
 import { TextAreaField } from 'src/util/formFields/TextAreaField'
 
+import WarningModel from '../comps/warnPopUp'
 import CostSheetSetup from '../costSheetSetup'
 import PaymentLeadAccess from '../PaymentScheduleForm/ProjectLeadAccess'
 import PaymentScheduleSetup from '../paymentScheduleSetup'
+import { useAuth } from 'src/context/firebase-auth-context'
 
 const ProjectAccessHomeList = ({
   title,
@@ -21,10 +24,13 @@ const ProjectAccessHomeList = ({
   projectDetails,
   pId,
 }) => {
+  const { user } = useAuth()
+  const { orgId } = user
   const [loading, setLoading] = useState(false)
 
   const [subView, setSubView] = useState('salesAccess')
   const { enqueueSnackbar } = useSnackbar()
+  const [open, setOpen] = useState(false)
 
   const onSubmit = async (formData, resetForm) => {
     const updatedData = {
@@ -47,6 +53,18 @@ const ProjectAccessHomeList = ({
   const schema = Yup.object({
     highlights: Yup.string().required('Required'),
   })
+  const handleDelete = async () => {
+    // projectDetails.uid
+    deleteProject(
+      orgId,
+      projectDetails.uid,
+      user?.email,
+      projectDetails,
+      enqueueSnackbar
+    )
+    dialogOpen(false)
+
+  }
 
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
@@ -248,15 +266,15 @@ const ProjectAccessHomeList = ({
             <PaymentLeadAccess
               title={'Leads Access'}
               data={{ phase: data, project: projectDetails }}
-              dept= "sales"
+              dept="sales"
               source={source}
             />
           )}
-             {subView === 'creditNoteIssuers' && (
+          {subView === 'creditNoteIssuers' && (
             <PaymentLeadAccess
               title={'Credit Note Issuers'}
               data={{ phase: data, project: projectDetails }}
-              dept= "admin"
+              dept="admin"
               source={source}
             />
           )}
@@ -265,7 +283,7 @@ const ProjectAccessHomeList = ({
             <PaymentLeadAccess
               title={'Marketing Access'}
               data={{ phase: data, project: projectDetails }}
-              dept= "marketing"
+              dept="marketing"
               source={source}
             />
           )}
@@ -277,12 +295,11 @@ const ProjectAccessHomeList = ({
               source={source}
             />
           )}
-           {subView === 'FinAccess' && (
+          {subView === 'FinAccess' && (
             <PaymentLeadAccess
               title={'Finance Access'}
               data={{ phase: data, project: projectDetails }}
               dept="finance"
-
               source={source}
             />
           )}
@@ -303,6 +320,47 @@ const ProjectAccessHomeList = ({
             />
           )}
         </div>
+      </div>
+      <div className="mx-4 my-4 p-4 rounded-md border border-[#E5EAF2] flex flex-row justify-between">
+        <section className="flex flex-col">
+          <h2 className="text-xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+            Danger Zone
+          </h2>
+
+          <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+            <div className="mt-2 flex items-center text-sm text-gray-500">
+              Irreversible and destructive action
+            </div>
+          </div>
+        </section>
+        <section className="">
+          <WarningModel
+            type={'Danger'}
+            open={open}
+            setOpen={setOpen}
+            proceedAction={handleDelete}
+            title={'Are you sure you want to delete this project?'}
+            subtext={
+              'This Project will be permanently removed. This action cannot be undone.'
+            }
+            actionBtnTxt={'Delete project'}
+          />
+          <button
+            type="button"
+            onClick={() => {
+              // proceedAction()
+              // setOpen(false)
+              setOpen(true)
+            }}
+            className={`inline-flex w-full justify-center rounded-sm mt-3 px-3 py-2 bg-cyan-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
+          >
+            <TrashIcon
+              className="h-4 w-4 mr-1 ml- mt-[1px] inline text-white"
+              aria-hidden="true"
+            />{' '}
+            Delete Project
+          </button>
+        </section>
       </div>
     </div>
   )
