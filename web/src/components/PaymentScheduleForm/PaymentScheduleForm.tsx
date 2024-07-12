@@ -326,7 +326,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
         {/* <Dialog.Title className="font-semibold text-xl mr-auto ml-3 text-[#053219]">
           {title}
         </Dialog.Title> */}
-        <EditablePaymentTable  />
+        {/* <EditablePaymentTable  /> */}
         <div className="mt-1">
           <MaterialCRUDTable
             title={
