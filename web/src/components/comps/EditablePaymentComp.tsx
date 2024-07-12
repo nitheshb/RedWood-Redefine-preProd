@@ -240,7 +240,7 @@ const EditablePaymentTable = ({
       setRows(fullCs)
     } else {
       console.log('data is ', dataPayload)
-      setRows(dataPayload)
+      setRows(dataPayload || [])
       return
       const unsubscribe = streamProjectMaster(
         orgId,
@@ -347,16 +347,20 @@ const EditablePaymentTable = ({
 
     const newRow = {
       zeroDay: '0',
-      description: 'On Booking',
+      description: '',
       myId: uid,
       id: uid,
+      units:{
+        "value": "fixedcost",
+        "label": "Fixed cost"
+    },
       stage: {
         label: 'On Booking',
         value: 'on_booking',
       },
       percentage: '100000',
       tableData: {
-        id: rows.length + 1,
+        id: rows?.length || 0 + 1,
       },
     }
 
