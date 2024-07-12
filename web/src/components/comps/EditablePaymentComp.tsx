@@ -23,6 +23,7 @@ import {
   addPhaseFullCs,
   steamBankDetailsList,
   streamProjectMaster,
+  addPhasePaymentScheduleCharges,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
@@ -184,7 +185,17 @@ const EditableTablex = () => {
   )
 }
 
-const EditablePaymentTable = ({ phase, partAData, fullCs, source, type, blocksViewFeature }) => {
+const EditablePaymentTable = ({
+  title,
+  phase,
+  dataPayload,
+  projData,
+  partAData,
+  fullCs,
+  source,
+  type,
+  blocksViewFeature,
+}) => {
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
@@ -228,6 +239,9 @@ const EditablePaymentTable = ({ phase, partAData, fullCs, source, type, blocksVi
       }
       setRows(fullCs)
     } else {
+      console.log('data is ', dataPayload)
+      setRows(dataPayload)
+      return
       const unsubscribe = streamProjectMaster(
         orgId,
         (querySnapshot) => {
@@ -256,7 +270,7 @@ const EditablePaymentTable = ({ phase, partAData, fullCs, source, type, blocksVi
 
       return unsubscribe
     }
-  }, [fullCs])
+  }, [fullCs, dataPayload])
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
 
   const handleChange = (id, field, value) => {
@@ -332,40 +346,48 @@ const EditablePaymentTable = ({ phase, partAData, fullCs, source, type, blocksVi
     const uid = uuidv4()
 
     const newRow = {
+      zeroDay: '0',
+      description: 'On Booking',
+      myId: uid,
       id: uid,
-      myId: '2c7bcd74-d334-471e-9138-5de5c96ee484',
-      section: {
-        value: 'additionalCost',
-        label: 'Additional Charges',
+      stage: {
+        label: 'On Booking',
+        value: 'on_booking',
       },
-      component: {
-        value: 'carparking',
-        label: 'Car Parking',
-      },
-      gst: {
-        value: '5',
-        label: '5%',
-      },
-      units: {
-        label: 'Fixed cost',
-        value: 'fixedcost',
-      },
-      description: 'Car parking',
-      charges: '200000',
+      percentage: '100000',
       tableData: {
         id: rows.length + 1,
       },
     }
+
     setRows([...rows, newRow])
   }
-  const saveSetup = () => {
+  const saveSetup = async () => {
     console.log('setUpData is ', rows, source)
     const data = { fullCs: rows, type: type }
     const { projectId, uid } = phase || {}
     if (source === 'project') {
-      addPhaseFullCs(orgId, uid, rows, 'partATaxObj', enqueueSnackbar)
+      // addPhaseFullCs(orgId, uid, rows, 'partATaxObj', enqueueSnackbar)
+      await addPhasePaymentScheduleCharges(
+        orgId,
+        uid || projData?.phase?.uid,
+        rows,
+        blocksViewFeature === 'Construction_Payment_Schedule'
+          ? 'ConstructPayScheduleObj'
+          : 'paymentScheduleObj',
+        enqueueSnackbar
+      )
     } else {
-      addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
+      await addPhasePaymentScheduleCharges(
+        orgId,
+        uid || projData?.phase?.uid,
+        rows,
+        blocksViewFeature === 'Construction_Payment_Schedule'
+          ? 'ConstructPayScheduleObj'
+          : 'paymentScheduleObj',
+        enqueueSnackbar
+      )
+      // addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }
   }
   const [rows, setRows] = useState([
@@ -378,86 +400,44 @@ const EditablePaymentTable = ({ phase, partAData, fullCs, source, type, blocksVi
     {
       id: '0',
       myId: '2c7bcd74-d334-471e-9138-5de5c96ee484',
-      section: {
-        value: 'additionalCost',
-        label: 'Additional Charges',
+      zeroDay: '0',
+      description: 'On Booking',
+      stage: {
+        label: 'On Booking',
+        value: 'on_booking',
       },
-      component: {
-        value: 'carparking',
-        label: 'Car Parking',
-      },
-      gst: {
-        value: '10',
-        label: '10%',
-      },
-      units: {
-        label: 'Fixed cost',
-        value: 'fixedcost',
-      },
-      description: 'Car parking',
-      charges: '200000',
+      percentage: '100000',
       tableData: {
         id: 0,
       },
     },
-    {
-      id: '1',
-      section: {
-        value: 'additionalCost',
-        label: 'Additional Charges',
-      },
-      gst: {
-        label: '18%',
-        value: '18',
-      },
-      component: {
-        label: 'Club House',
-        value: 'clubhouse_charges',
-      },
-      description: 'club house charges',
-      charges: '250',
-      units: {
-        value: 'costpersqft',
-        label: 'Cost Per sqft',
-      },
-      myId: 'e95e001a-a2d3-4df9-b4a9-7339ef634d9d',
-      tableData: {
-        id: 1,
-      },
-    },
   ])
- useEffect(() => {
-  // if(blocksViewFeature === 'Plot_Payment_Schedule'){
-  //   setRows(paymentScheduleA)
-  // }else{
-  //   setRows(paymetScheduleConstruct)
-  // }
-
- }, [])
+  useEffect(() => {
+    // if(blocksViewFeature === 'Plot_Payment_Schedule'){
+    //   setRows(paymentScheduleA)
+    // }else{
+    //   setRows(paymetScheduleConstruct)
+    // }
+  }, [])
 
   return (
     <>
       <div className=" m-2 p-4 bg-white rounded-xl">
         <div className="">
           <div className="py-2 pb-1 mb-1">
-            <p className="text-sm text-gray-800 font-medium">
-              LAND PAYMENT SCHEDULE
-            </p>
+            <p className="text-sm text-gray-800 font-medium">{title}</p>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <DragDropContext onDragEnd={onDragEnd}>
               <table className="w-full text-sm text-left text-gray-500 ">
-                <thead className="text-xs text-gray-700 uppercase">
+                <thead className="text-xs text-gray-700">
                   <tr className="bg-gray-100 rounded-xl rounded-x-md">
                     <th className=" p-2 pl-2 text-center   text-md">
-                      PAYMENT STAGE
+                      Payment Stage
                     </th>
                     <th className=" p-1 pl-2 text-center">Cost Type</th>
                     <th className=" p-1 pl-2 text-center">Amount</th>
-                    <th className=" p-1 pl-2 text-center">DESCRIPTION</th>
-                    {/* <th className="border border-[#e0e0e0] p-2 text-left">
-                  Description
-                </th> */}
+                    <th className=" p-1 pl-2 text-center">Description</th>
                     <th className=" p-1 pl-2 text-center">Action</th>
                   </tr>
                 </thead>
@@ -465,7 +445,7 @@ const EditablePaymentTable = ({ phase, partAData, fullCs, source, type, blocksVi
                   {(provided) => (
                     <tbody {...provided.droppableProps} ref={provided.innerRef}>
                       {rows
-                        .filter((row) => row.section.value != 'unitCost')
+                        // .filter((row) => row.section.value != 'unitCost')
                         .map((row, index) => (
                           <Draggable
                             key={row.id}
@@ -482,33 +462,44 @@ const EditablePaymentTable = ({ phase, partAData, fullCs, source, type, blocksVi
                                 <td className="border-b border-[#e0e0e0] px-2">
                                   <StyledSelect
                                     disableUnderline={true}
-                                    defaultValue={row?.component?.value}
-                                    value={row?.component?.value}
+                                    defaultValue={row?.stage?.value}
+                                    value={row?.stage?.value}
                                     onChange={(e) => {
+                                  const chargesForDropDown=     blocksViewFeature ===
+                                    'Plot_Payment_Schedule'
+                                      ? paymentScheduleA : paymetScheduleConstruct
                                       const selectedOptionObject =
-                                        costSheetAdditionalChargesA.find(
+                                      chargesForDropDown.find(
                                           (option) =>
                                             option.value === e.target.value
                                         )
                                       handleChange1(
                                         row.id,
-                                        'component',
+                                        'stage',
                                         selectedOptionObject
                                       )
                                     }}
                                   >
-                                    {    blocksViewFeature === 'Plot_Payment_Schedule'
-                ? paymentScheduleA
-                : paymetScheduleConstruct.map(
-                                      (option) => (
-                                        <MenuItem
-                                          key={option.value}
-                                          value={option.value}
-                                        >
-                                          {option.label}
-                                        </MenuItem>
-                                      )
-                                    )}
+                                    {blocksViewFeature ===
+                                    'Plot_Payment_Schedule'
+                                      ? paymentScheduleA.map((option) => (
+                                          <MenuItem
+                                            key={option.value}
+                                            value={option.value}
+                                          >
+                                            {option.label}
+                                          </MenuItem>
+                                        ))
+                                      : paymetScheduleConstruct.map(
+                                          (option) => (
+                                            <MenuItem
+                                              key={option.value}
+                                              value={option.value}
+                                            >
+                                              {option.label}
+                                            </MenuItem>
+                                          )
+                                        )}
                                   </StyledSelect>
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
@@ -542,12 +533,11 @@ const EditablePaymentTable = ({ phase, partAData, fullCs, source, type, blocksVi
                                 <td className="border-b border-[#e0e0e0]">
                                   <input
                                     type="number"
-                                    value={row?.charges}
+                                    value={row?.percentage}
                                     onChange={(e) =>
-                                      // handleChange(row.id, 'unit', e.target.value)
                                       handleChange1(
                                         row.id,
-                                        'charges',
+                                        'percentage',
                                         e.target.value
                                       )
                                     }
@@ -555,32 +545,19 @@ const EditablePaymentTable = ({ phase, partAData, fullCs, source, type, blocksVi
                                   />
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
-                                  <StyledSelect
-                                    disableUnderline={true}
-                                    defaultValue={row?.section?.value}
-                                    value={row?.section?.value}
-                                    onChange={(e) => {
-                                      const selectedOptionObject =
-                                        csSections.find(
-                                          (option) =>
-                                            option.value === e.target.value
-                                        )
+                                  <input
+                                    type="text"
+                                    value={row?.description}
+                                    onChange={(e) =>
+                                      // handleChange(row.id, 'unit', e.target.value)
                                       handleChange1(
                                         row.id,
-                                        'section',
-                                        selectedOptionObject
+                                        'description',
+                                        e.target.value
                                       )
-                                    }}
-                                  >
-                                    {csSections.map((option) => (
-                                      <MenuItem
-                                        key={option.value}
-                                        value={option.value}
-                                      >
-                                        {option.label}
-                                      </MenuItem>
-                                    ))}
-                                  </StyledSelect>
+                                    }
+                                    className="w-full p-1 border  border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                  />
                                 </td>
                                 <td className="border-b border-[#e0e0e0] text-center">
                                   <button

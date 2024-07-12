@@ -3910,7 +3910,7 @@ export const addPhasePaymentScheduleCharges = async (
   chargePayload.myId = uuxid
   try {
     await updateDoc(doc(db, `${orgId}_phases`, uid), {
-      [type]: arrayUnion(chargePayload),
+      [type]: chargePayload,
     })
     enqueueSnackbar('Charges added successfully', {
       variant: 'success',

@@ -36,7 +36,7 @@ const PaymentScheduleSetup = ({ phase, source }) => {
 
   return (
     <div className="lg:col-span-10 border w-full bg-[#F0F1FF]   ">
-      <div className=" border-gray-800 bg-[#D9D8FF]  text-black">
+      {/* <div className=" border-gray-800 bg-[#D9D8FF]  text-black">
         <ul
           className="flex justify-  rounded-t-lg border-b  "
           id="myTab"
@@ -62,7 +62,7 @@ const PaymentScheduleSetup = ({ phase, source }) => {
             )
           })}
         </ul>
-      </div>
+      </div> */}
 
       <PaymentScheduleForm
         blocksViewFeature={blocksViewFeature}
