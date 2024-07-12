@@ -13,6 +13,8 @@ import {
   costSheetAdditionalChargesA,
   csSections,
   gstValesA,
+  paymentScheduleA,
+  paymetScheduleConstruct,
   unitsCancellation,
 } from 'src/constants/projects'
 import {
@@ -182,7 +184,7 @@ const EditableTablex = () => {
   )
 }
 
-const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
+const EditablePaymentTable = ({ phase, partAData, fullCs, source, type, blocksViewFeature }) => {
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
@@ -385,8 +387,8 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         label: 'Car Parking',
       },
       gst: {
-        value: '5',
-        label: '5%',
+        value: '10',
+        label: '10%',
       },
       units: {
         label: 'Fixed cost',
@@ -409,7 +411,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         value: '18',
       },
       component: {
-        label: 'Club House Charges',
+        label: 'Club House',
         value: 'clubhouse_charges',
       },
       description: 'club house charges',
@@ -424,177 +426,35 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       },
     },
   ])
-  const defaultValue = (options, value) => {
-    console.log('vale is', value)
-    return (
-      (options
-        ? options.find((option) => option.value === value?.value)
-        : '') || ''
-    )
-  }
-  const customStyles = {
-    control: (provided) => ({
-      ...provided,
-      border: 'none',
-      boxShadow: 'none',
-      '&:hover': {
-        border: 'none',
-      },
-      fontSize: '13px',
-    }),
-    indicatorSeparator: () => ({
-      display: 'none',
-    }),
-    menu: (provided) => ({
-      ...provided,
-      position: 'absolute',
-      zIndex: 9999,
-    }),
-    menuPortal: (provided) => ({
-      ...provided,
-      zIndex: 9999,
-    }),
-  }
-  const handleCostChange = (e) => {
-    const inputValue = e.target.value
-    setRows(
-      rows.map((row) =>
-        row.component.value === 'sqft_cost_tax'
-          ? { ...row, ['charges']: inputValue }
-          : row
-      )
-    )
-    setCostPerSqft(e.target.value)
-  }
-  const handleCostGSTChange = (e) => {
-    const inputValue = e.target.value
-    setRows(
-      rows.map((row) =>
-        row.component.value === 'sqft_cost_tax'
-          ? { ...row, ['gst']: { value: inputValue, label: `${inputValue}%` } }
-          : row
-      )
-    )
-    setGST(e.target.value)
-  }
+ useEffect(() => {
+  // if(blocksViewFeature === 'Plot_Payment_Schedule'){
+  //   setRows(paymentScheduleA)
+  // }else{
+  //   setRows(paymetScheduleConstruct)
+  // }
+
+ }, [])
+
   return (
     <>
       <div className=" m-2 p-4 bg-white rounded-xl">
-        <div className="mb-4 ">
-          <div className="inline">
-            <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                Unit Pricing Details<abbr title="required"></abbr>
-              </label>
-            </div>
-
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
-          </div>
-        </div>
-        <section className="flex flex-row space-x-4 mx-">
-          <div className="mb-3 w-[140px]">
-            <label htmlFor="area" className="label  text-sm">
-              Base Cost per sqft*
-            </label>
-            <div className="flex">
-              <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-                {/* <svg
-              className="w-4 h-4 text-gray-500 "
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-            </svg> */}
-                Rs
-              </span>
-              <input
-                type="text"
-                id="website-admin"
-                className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
-                placeholder="cost/sqft"
-                value={costPerSqft}
-                onChange={handleCostChange}
-              />
-            </div>
-          </div>
-          <div className="mb-3 w-[200px]">
-            <label htmlFor="area" className="label  text-sm">
-              Base Construction Cost per sqft*
-            </label>
-            <div className="flex w-[140px]">
-              <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-
-                Rs
-              </span>
-              <input
-                type="text"
-                id="website-admin"
-                className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
-                placeholder="cost/sqft"
-                value={costPerSqft}
-                onChange={handleCostChange}
-              />
-            </div>
-          </div>
-          <div className="mb-3 w-[140px]">
-            <label htmlFor="area" className="label text-sm">
-              Standard Tax Rate*
-            </label>
-            <div className="flex">
-              <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-                {/* <svg
-              className="w-4 h-4 text-gray-500 "
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-            </svg> */}
-                %
-              </span>
-              <input
-                type="text"
-                id="website-admin"
-                className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
-                placeholder="GST"
-                value={gst}
-                onChange={handleCostGSTChange}
-              />
-            </div>
-          </div>
-        </section>
-        <p className="text-xs text-red-400 text-left my-3 mt-1">
-          <abbr title="Required field">Note:</abbr> Set PLC value at unit level.
-        </p>
-
         <div className="">
-
-          <div className="mb-4 mt-2">
-          <div className="inline">
-            <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                More Charges<abbr title="required"></abbr>
-              </label>
-            </div>
-
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+          <div className="py-2 pb-1 mb-1">
+            <p className="text-sm text-gray-800 font-medium">
+              LAND PAYMENT SCHEDULE
+            </p>
           </div>
-        </div>
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <DragDropContext onDragEnd={onDragEnd}>
               <table className="w-full text-sm text-left text-gray-500 ">
-                <thead className="text-sm text-gray-700">
+                <thead className="text-xs text-gray-700 uppercase">
                   <tr className="bg-gray-100 rounded-xl rounded-x-md">
                     <th className=" p-2 pl-2 text-center   text-md">
-                      Charges For
+                      PAYMENT STAGE
                     </th>
-                    <th className=" p-1 pl-2 text-center">Category</th>
                     <th className=" p-1 pl-2 text-center">Cost Type</th>
                     <th className=" p-1 pl-2 text-center">Amount</th>
-                    <th className=" p-1 pl-2 text-center">Tax Rate</th>
+                    <th className=" p-1 pl-2 text-center">DESCRIPTION</th>
                     {/* <th className="border border-[#e0e0e0] p-2 text-left">
                   Description
                 </th> */}
@@ -620,21 +480,6 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                 className="hover:bg-gray-100 transition-colors duration-150 ease-in-out"
                               >
                                 <td className="border-b border-[#e0e0e0] px-2">
-                                  {/* <select
-
-                              value={row.component.value}
-
-                              onChange={(e) =>{
-                                // handleChange1(row.id, 'col1', e.target.value)
-                                console.log('data new ', e.target.value, e.target)
-                                 handleChange1(row.id, 'component', e.target.value)
-                              }
-                              }
-                              className="w-full p-1 border border-[#e0e0e0] rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
-
-                              {costSheetAdditionalChargesA.map((d, i)=> <option key={i} value={d.value}>{d.label}</option>)}
-                            </select> */}
                                   <StyledSelect
                                     disableUnderline={true}
                                     defaultValue={row?.component?.value}
@@ -652,7 +497,9 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                       )
                                     }}
                                   >
-                                    {costSheetAdditionalChargesA.map(
+                                    {    blocksViewFeature === 'Plot_Payment_Schedule'
+                ? paymentScheduleA
+                : paymetScheduleConstruct.map(
                                       (option) => (
                                         <MenuItem
                                           key={option.value}
@@ -663,74 +510,6 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                       )
                                     )}
                                   </StyledSelect>
-                                  {/* <MultiSelectMultiLineField
-                              label=""
-                              name="builderBankDocId"
-                              onChange={(payload) => {
-                                console.log('changed value is ', payload)
-
-                                handleChange1(row.id, 'category', payload)
-                              }}
-                              value={row.component}
-
-
-                              // value={'optionx'}
-                              options={costSheetAdditionalChargesA}
-                              // setAddNewBankStuff={setAddNewBankStuff}
-                            /> */}
-                                  {/* <Select
-                                    name="Chargesdropdown"
-                                    onChange={(e) => {
-
-                                      console.log('old', e)
-                                      handleChange1(row.id, 'component', e)
-                                    }}
-                                    options={costSheetAdditionalChargesA}
-                                    // value={defaultValue(costSheetAdditionalChargesA, row.component.value)}
-                                    value={row.component}
-                                    styles={customStyles}
-                                    className="text-sm mr-2"
-                                  /> */}
-                                </td>
-                                <td className="border-b border-[#e0e0e0]">
-                                  <StyledSelect
-                                    disableUnderline={true}
-                                    defaultValue={row?.section?.value}
-                                    value={row?.section?.value}
-                                    onChange={(e) => {
-                                      const selectedOptionObject =
-                                        csSections.find(
-                                          (option) =>
-                                            option.value === e.target.value
-                                        )
-                                      handleChange1(
-                                        row.id,
-                                        'section',
-                                        selectedOptionObject
-                                      )
-                                    }}
-                                  >
-                                    {csSections.map((option) => (
-                                      <MenuItem
-                                        key={option.value}
-                                        value={option.value}
-                                      >
-                                        {option.label}
-                                      </MenuItem>
-                                    ))}
-                                  </StyledSelect>
-                                  {/* <Select
-                                    name="Chargesdropdown"
-                                    onChange={(e) => {
-
-                                      handleChange1(row.id, 'section', e)
-                                    }}
-                                    options={csSections}
-                                    styles={customStyles}
-                                    // value={defaultValue(gstValesA, item.unit)}
-                                    value={row.section}
-                                    className="text-sm mr-2 border-0"
-                                  /> */}
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
                                   <StyledSelect
@@ -775,25 +554,25 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                     className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                                   />
                                 </td>
-                                <td className="border-b border-[#e0e0e0] text-right ">
+                                <td className="border-b border-[#e0e0e0]">
                                   <StyledSelect
                                     disableUnderline={true}
-                                    defaultValue={row?.gst?.value}
-                                    value={row?.gst?.value}
+                                    defaultValue={row?.section?.value}
+                                    value={row?.section?.value}
                                     onChange={(e) => {
                                       const selectedOptionObject =
-                                        gstValesA.find(
+                                        csSections.find(
                                           (option) =>
                                             option.value === e.target.value
                                         )
                                       handleChange1(
                                         row.id,
-                                        'gst',
+                                        'section',
                                         selectedOptionObject
                                       )
                                     }}
                                   >
-                                    {gstValesA.map((option) => (
+                                    {csSections.map((option) => (
                                       <MenuItem
                                         key={option.value}
                                         value={option.value}
@@ -802,32 +581,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                       </MenuItem>
                                     ))}
                                   </StyledSelect>
-                                  {/* <Select
-                                    name="Chargesdropdown"
-                                    onChange={(e) => {
-                                      // onChange(value_x)
-                                      // handleChange(row.id, 'value', e.value)
-                                      // handleChange(row.id, 'unit', e.target.value)
-                                      handleChange1(row.id, 'gst', e)
-                                    }}
-                                    options={gstValesA}
-                                    value={row.gst}
-                                    // value={defaultValue(gstValesA, item.unit)}
-                                    styles={customStyles}
-                                    className="text-md mr-2 text-right text-sm"
-                                  /> */}
                                 </td>
-                                {/* <td className="border border-[#e0e0e0] p-2">
-                            <input
-                              type="text"
-                              // value={row.unit}
-                              onChange={(e) =>
-                                handleChange(row.id, 'unit', e.target.value)
-                              }
-                              className="w-full p-1 border border-[#e0e0e0] rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-
-                          </td> */}
                                 <td className="border-b border-[#e0e0e0] text-center">
                                   <button
                                     onClick={() => handleDelete(row.id)}
@@ -878,4 +632,4 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
   )
 }
 
-export default EditableTable
+export default EditablePaymentTable

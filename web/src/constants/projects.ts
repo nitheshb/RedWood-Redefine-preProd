@@ -316,7 +316,7 @@ export const chooseAuthorityApproval = [
 export const chooseReraApproval = [
   {
     name: 'Yes',
-    img: '/approval-78.png',
+    img: '/check-mark-48.png',
   },
   {
     name: 'No',
