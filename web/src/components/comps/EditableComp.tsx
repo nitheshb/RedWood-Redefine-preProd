@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { Dialog } from '@headlessui/react'
+import { ExclamationCircleIcon } from '@heroicons/react/outline'
 import { Select as SelectMAT, MenuItem } from '@material-ui/core'
 import { Rowing, Widgets } from '@mui/icons-material'
 import { styled } from '@mui/material/styles'
@@ -26,6 +28,10 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 
 import { gstValesPartA } from '../../../../../RedefineV2/web/src/constants/projects'
+// import WarnPopUpNew from '../SiderForm/WarnPopUp'
+
+import WarningModel from './warnPopUp'
+import WarnPopUp from './warnPopUp'
 
 // import './styles.css'
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
@@ -212,6 +218,9 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
   const [costPerSqft, setCostPerSqft] = useState(1000)
   const [constructionPerSqft, setConstructionPerSqft] = useState(1200)
   const [gst, setGST] = useState(12)
+  const [open, setOpen] = useState(false)
+  const [saveWarn, setSaveWarn] = useState(false)
+  const [selcDelRow, SetSelDelRow] = useState({})
 
   useEffect(() => {
     if (source === 'project') {
@@ -297,13 +306,25 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
     )
   }
 
-  const handleDelete = (id) => {
-    setRows(rows.filter((item) => item.id !== id))
+  const WarnDeletion = (id) => {
+    setOpen(true)
+    SetSelDelRow(id)
+  }
+  const yesDelete = () => {
+    setOpen(false)
+    saveSetup()
+  }
+  const handleDelete = async () => {
+    console.log('delete operatin is', selcDelRow)
+    const id = selcDelRow?.id
+    await setRows(rows.filter((item) => item.id !== id))
+
     setErrors((prev) => {
       const newErrors = { ...prev }
       delete newErrors[id]
       return newErrors
     })
+    await handleCostSheetSave()
   }
 
   const handleAdd = () => {
@@ -366,11 +387,17 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
     setRows([...rows, newRow])
   }
   const saveSetup = () => {
+    setSaveWarn(true)
+  }
+  const handleCostSheetSave = () => {
     console.log('setUpData is ', rows, source)
     const data = { fullCs: rows, type: type }
     const { projectId, uid } = phase || {}
     if (source === 'project') {
-      addPhaseFullCs(orgId, uid, rows, 'partATaxObj', enqueueSnackbar)
+      const myId = selcDelRow?.id
+      if (myId) setRows(rows.filter((item) => item.id !== myId))
+      const newSet = rows.filter((item) => item.id !== myId)
+      addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', enqueueSnackbar)
     } else {
       addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }
@@ -480,7 +507,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
     setRows(
       rows.map((row) =>
         row.component.value === 'sqft_construct_cost_tax'
-          ? { ...row, ['charges']: inputValue, }
+          ? { ...row, ['charges']: inputValue }
           : row
       )
     )
@@ -539,24 +566,26 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
               />
             </div>
           </div>
-          {type=== 'Villas' && <div className="mb-3 w-[220px]">
-            <label htmlFor="area" className="label  text-sm">
-              Base Construction Cost per sqft*
-            </label>
-            <div className="flex w-[140px]">
-              <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-                Rs
-              </span>
-              <input
-                type="text"
-                id="website-admin"
-                className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
-                placeholder="cost/sqft"
-                value={constructionPerSqft}
-                onChange={handleConstructCostChange}
-              />
+          {type === 'Villas' && (
+            <div className="mb-3 w-[220px]">
+              <label htmlFor="area" className="label  text-sm">
+                Base Construction Cost per sqft*
+              </label>
+              <div className="flex w-[140px]">
+                <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+                  Rs
+                </span>
+                <input
+                  type="text"
+                  id="website-admin"
+                  className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                  placeholder="cost/sqft"
+                  value={constructionPerSqft}
+                  onChange={handleConstructCostChange}
+                />
+              </div>
             </div>
-          </div>}
+          )}
           <div className="mb-3 w-[140px]">
             <label htmlFor="area" className="label text-sm">
               Standard Tax Rate*
@@ -590,18 +619,17 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         </p>
 
         <div className="">
-
           <div className="mb-4 mt-2">
-          <div className="inline">
-            <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                More Charges<abbr title="required"></abbr>
-              </label>
-            </div>
+            <div className="inline">
+              <div className="">
+                <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+                  More Charges<abbr title="required"></abbr>
+                </label>
+              </div>
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+            </div>
           </div>
-        </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
             <DragDropContext onDragEnd={onDragEnd}>
               <table className="w-full text-sm text-left text-gray-500 ">
@@ -849,7 +877,9 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                           </td> */}
                                 <td className="border-b border-[#e0e0e0] text-center">
                                   <button
-                                    onClick={() => handleDelete(row.id)}
+                                    onClick={() => {
+                                      WarnDeletion(row)
+                                    }}
                                     className="text-gray-500 hover:text-red-700"
                                   >
                                     <svg
@@ -877,16 +907,46 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
               </table>
             </DragDropContext>
           </div>
+          {/* <div className="max-w-2xl">
+            <WarnPopUpNew
+              open={open}
+              setOpen={setOpen}
+              widthClass={'max-w-2xl'}
+            />
+          </div> */}
+          <WarningModel
+            type={'Danger'}
+            open={open}
+            setOpen={setOpen}
+            proceedAction={handleDelete}
+            title={'Are you sure you want to delete?'}
+            subtext={
+              '   Selected data will be permanently removed. This action cannot be undone.'
+            }
+            actionBtnTxt={'Delete'}
+          />
+          <WarningModel
+            type={'Success'}
+            open={saveWarn}
+            setOpen={setSaveWarn}
+            proceedAction={handleCostSheetSave}
+            title={'Are you sure you save changes?'}
+            subtext={
+              'Changes will be permanently saved. This action cannot be undone.'
+            }
+            actionBtnTxt={'Save Cost Sheet'}
+          />
+
           <div className="flex justify-between">
             <button
               onClick={addRow}
-              className="mt-4 bg-[#57C0D0]  text-white font-md py-1 px-2 rounded focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className="mt-4 bg-cyan-500  text-white font-md py-1 px-2 rounded-sm focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
             >
               Add Charges
             </button>
             <button
               onClick={saveSetup}
-              className="mt-4 bg-[#57C0D0] text-white font-md py-1 px-2 rounded focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className="mt-4 bg-cyan-500 text-white font-md py-1 px-2 rounded-sm focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
             >
               Save
             </button>

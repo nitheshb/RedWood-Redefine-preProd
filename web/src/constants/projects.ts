@@ -193,7 +193,7 @@ export const projectDetailFlow = [
 
   },
   {
-    name: 'Access',
+    name: 'Access & Others',
     value: 'projectAccess',
     img: 'https://www.svgrepo.com/show/530263/distributed.svg',
     indx:4,

@@ -662,7 +662,7 @@ const ProjPhaseHome = ({
 
                       {phaseViewFeature === 'Lead Access' && (
                         <PaymentLeadAccess
-                          title={'Leads Access'}
+                          title={'Leads Access c'}
                           data={{ phase: phase, project: projectDetails }}
                           source={source}
                         />
