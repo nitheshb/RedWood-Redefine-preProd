@@ -11,7 +11,7 @@ import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import DatePicker from 'react-datepicker'
 import * as Yup from 'yup'
-import { ArrowRightIcon } from '@heroicons/react/outline'
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline'
 
 import { AreaConverter } from 'src/components/AreaConverter'
 import Loader from 'src/components/Loader/Loader'
@@ -125,8 +125,8 @@ const setLoading1 = (x)=>{
     // setSubmitForm(() => submitFormFunction);
   };
   return (
-      <div className="h-full flex flex-col  py-6  shadow-xl overflow-y-scroll bg-[#D9D8FF]">
-      <div className="px-2 sm:px-6  z-10 absolute top-0  w-full  py-2 bg-[#D9D8FF]">
+      <div className="h-full flex flex-col  py-6  shadow-xl overflow-y-scroll bg-[#57C0D0]">
+      <div className="px-2 sm:px-6  z-10 absolute top-0  w-full  py-2 bg-[#57C0D0]">
         <Dialog.Title className=" font-semibold text-xl mr-auto    tracking-wider text-[14px]">
           Project Information
         </Dialog.Title>
@@ -136,7 +136,7 @@ const setLoading1 = (x)=>{
           options={projectPlans}
           onChange={setSelected}
         /> */}
-        <div className="flex flex-row mt-1 bg-[#D9D8FF]">
+        <div className="flex flex-row mt-1 ">
           {projectDetailFlow.map((option) => (
             <>
               <div
@@ -178,7 +178,7 @@ const setLoading1 = (x)=>{
                               : 'flex-shrink-0 text-black ml-auto'
                           } mt-1 font-light`}
                         >
-                                <ArrowRightIcon className={`${selFlow.value === option.value ? 'text-[#57C0D0]' : 'text-[#9da7b2]'} w-4 h-4`} />
+                                <ArrowRightIcon className={`${selFlow.value === option.value ? 'text-[#57C0D0]' : 'text-[#6e6464]'} w-4 h-4`} />
 
                           {/* <svg
                             viewBox="0 0 24 24"
@@ -245,9 +245,13 @@ const setLoading1 = (x)=>{
             // onClick={() => dialogOpen(false)}
             onClick={() =>  goToPrevious()}
             type="button"
-            className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100"
+            className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
           >
-            Back{' '}
+            <section className='flex flex-row'>
+            <ArrowLeftIcon className={` w-4 h-4 mt-[2px] mr-1`} />
+            Back
+
+</section>
           </button>
         </div>
         <section className='w-[300px] mt-6 text-center flex flex-row text-red-400 '>{selFlow?.indx +1 } of {projectDetailFlow.length} steps</section>
@@ -255,7 +259,7 @@ const setLoading1 = (x)=>{
         <div className="mt-5 w-full text-right md:space-x-3 md:block flex flex-row mb-6 justify-between w-full ">
             {selFlow.value === 'projectDetails' &&
                 <button
-             className="mb-2 md:mb-0 bg-[#57C0D0] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg "
+             className="mb-2 md:mb-0 bg-[#57c0d0] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
             type="submit"
            onClick={() =>  {
               setLoading(true)
@@ -270,7 +274,7 @@ const setLoading1 = (x)=>{
 
           </button>}
           <button
-            className="mb-2 md:mb-0 bg-[#57C0D0] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg "
+            className="mb-2 md:mb-0 bg-[#57c0d0] px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg "
             disabled={loading}
             onClick={() =>  {
               if(project?.uid){
@@ -285,11 +289,12 @@ const setLoading1 = (x)=>{
             }
             }
           >
-
+<section className='flex flex-row'>
             Next:
 
 {selFlow.indx === projectDetailFlow.length - 1 ? projectDetailFlow[0]['name'] : projectDetailFlow[selFlow.indx + 1]['name']}
-
+<ArrowRightIcon className={` w-4 h-4 mt-1 ml-1`} />
+</section>
           </button>
         </div>
 
