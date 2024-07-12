@@ -505,6 +505,21 @@ const SiderForm = ({
                   />
                 )}
 
+
+               {title === 'confirmationDialog' && (
+                  <CrmConfirmationDialog
+                    title={title}
+                    selUnitDetails={selUnitDetails}
+                    onSubmitFun={paymentCaptureFun}
+                  />
+                )}
+
+
+
+
+
+
+
                 {title === 'costSheetPreview' && (
                   <CostBreakUpPdfPreview
                     csMode={csMode}

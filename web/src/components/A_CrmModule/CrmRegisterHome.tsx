@@ -17,6 +17,7 @@ import {
   NewspaperIcon,
   UserGroupIcon,
   ScaleIcon,
+  InformationCircleIcon,
 } from '@heroicons/react/solid'
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 import {} from '@heroicons/react/solid'
@@ -1317,17 +1318,21 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
 
                             {/* check it  */}
                             <div>
-                              <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 pb-4 min-w-[274px] justify-between mr-1">
+                              <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 pb-4 min-w-[340px] justify-between mr-1">
                                 <div className="flex flex-row justify-between mx- mb-2">
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full">
                                     <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
                                       Stage Balance
+                                      
                                     </div>
                                     <div className="text-zinc-800 text-[16px] font-bold font-['Lato'] tracking-wide">
                                     ₹
                                       {finData?.T_elgible_balance?.toLocaleString(
                                         'en-IN'
                                       )}
+                                    <span title="This is the balance available at this stage will change"  className="ml-2 bg-[white]">
+                                      <InformationCircleIcon className="h-4 w-5 inline text-zinc-400" />
+                                    </span>
                                     </div>
                                   </section>
                                   <section className="flex flex-col mt-3 w-full">
@@ -1423,7 +1428,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                             </div>
                             {/* other one */}
                             <div>
-                              <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 pb-4 min-w-[244px] justify-between mx-">
+                              <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 pb-4 min-w-[340px] justify-between mx-">
                                 <div className="flex flex-row justify-between mx- mb-2">
                                   <section className="font-bodyLato font-semibold text-xs m-1 ">
                                     <div className="text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
