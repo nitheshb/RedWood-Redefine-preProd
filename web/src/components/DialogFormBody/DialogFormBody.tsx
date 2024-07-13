@@ -280,6 +280,10 @@ const DialogFormBody = ({
     areaTextSecondary: project?.areaTextSecondary || '',
     areaDropDownPrimary: project?.areaDropDownPrimary || 'acre',
     areaDropdownSecondary: project?.areaDropdownSecondary || 'gunta',
+    extentTextPrimary: project?.extentTextPrimary || '',
+    extentTextSecondary: project?.extentTextSecondary || '',
+    extentDropDownPrimary: project?.extentDropDownPrimary || 'acre',
+    extentDropdownSecondary: project?.extentDropdownSecondary || 'gunta',
   }
 
   const createProjectSchema = Yup.object({
@@ -409,6 +413,12 @@ const DialogFormBody = ({
                                 formik={formik}
                                 hideField={setOpenExtendFields}
                                 fieldName="extent"
+                                textPrimaryName="extentTextPrimary"
+                                textSecondaryName="extentTextSecondary"
+                                dropDownPrimaryName="extentDropDownPrimary"
+                                dropdownSecondaryName="extentDropdownSecondary"
+
+
                               />
                             )}
                           </div>
@@ -465,6 +475,10 @@ const DialogFormBody = ({
                                 formik={formik}
                                 hideField={setOpenAreaFields}
                                 fieldName="area"
+                                textPrimaryName="areaTextPrimary"
+                                textSecondaryName="areaTextSecondary"
+                                dropDownPrimaryName="areaDropDownPrimary"
+                                dropdownSecondaryName="areaDropdownSecondary"
                               />
                             )}
                           </div>
