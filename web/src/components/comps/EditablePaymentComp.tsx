@@ -26,6 +26,7 @@ import {
   addPhasePaymentScheduleCharges,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 
 import { gstValesPartA } from '../../../../../RedefineV2/web/src/constants/projects'
@@ -350,15 +351,15 @@ const EditablePaymentTable = ({
       description: '',
       myId: uid,
       id: uid,
-      units:{
-        "value": "fixedcost",
-        "label": "Fixed cost"
-    },
+      units: {
+        value: 'percentage',
+        label: 'Percentage',
+      },
       stage: {
         label: 'On Booking',
         value: 'on_booking',
       },
-      percentage: '100000',
+      percentage: '10',
       tableData: {
         id: rows?.length || 0 + 1,
       },
@@ -440,7 +441,8 @@ const EditablePaymentTable = ({
                       Payment Stage
                     </th>
                     <th className=" p-1 pl-2 text-center">Cost Type</th>
-                    <th className=" p-1 pl-2 text-center">Amount</th>
+                    <th className=" p-1 pl-2 text-center">Amount/Percentage</th>
+                    <th className=" p-1 pl-2 text-center">Timeline</th>
                     <th className=" p-1 pl-2 text-center">Description</th>
                     <th className=" p-1 pl-2 text-center">Action</th>
                   </tr>
@@ -469,11 +471,13 @@ const EditablePaymentTable = ({
                                     defaultValue={row?.stage?.value}
                                     value={row?.stage?.value}
                                     onChange={(e) => {
-                                  const chargesForDropDown=     blocksViewFeature ===
-                                    'Plot_Payment_Schedule'
-                                      ? paymentScheduleA : paymetScheduleConstruct
+                                      const chargesForDropDown =
+                                        blocksViewFeature ===
+                                        'Plot_Payment_Schedule'
+                                          ? paymentScheduleA
+                                          : paymetScheduleConstruct
                                       const selectedOptionObject =
-                                      chargesForDropDown.find(
+                                        chargesForDropDown.find(
                                           (option) =>
                                             option.value === e.target.value
                                         )
@@ -534,19 +538,60 @@ const EditablePaymentTable = ({
                                     ))}
                                   </StyledSelect>
                                 </td>
-                                <td className="border-b border-[#e0e0e0]">
-                                  <input
-                                    type="number"
-                                    value={row?.percentage}
-                                    onChange={(e) =>
-                                      handleChange1(
-                                        row.id,
-                                        'percentage',
-                                        e.target.value
-                                      )
-                                    }
-                                    className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                                  />
+                                <td className="border-b border-[#e0e0e0] mr-2 pr-4">
+                                  <section className="flex flex-row">
+
+                                    <input
+                                      type="text"
+                                      value={formatIndianNumber(
+                                        row?.percentage || 0
+                                      )}
+                                      onChange={(e) => {
+                                        const rawValue = e.target.value.replace(
+                                          /,/g,
+                                          ''
+                                        )
+                                        const numValue = parseFloat(rawValue)
+                                        if (!isNaN(numValue)) {
+                                          handleChange1(
+                                            row.id,
+                                            'percentage',
+                                            numValue
+                                          )
+                                        } else {
+                                          handleChange1(row.id, 'percentage', 0)
+                                        }
+                                      }}
+                                      className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                    /><span className="mt-1">{row?.units?.value ==='percentage'? '%' : '₹'}</span>
+                                  </section>
+                                </td>              <td className="border-b border-[#e0e0e0] mr-2 pr-4">
+                                  <section className="flex flex-row">
+
+                                    <input
+                                      type="text"
+                                      value={formatIndianNumber(
+                                        row?.zeroDay || 0
+                                      )}
+                                      onChange={(e) => {
+                                        const rawValue = e.target.value.replace(
+                                          /,/g,
+                                          ''
+                                        )
+                                        const numValue = parseFloat(rawValue)
+                                        if (!isNaN(numValue)) {
+                                          handleChange1(
+                                            row.id,
+                                            'zeroDay',
+                                            numValue
+                                          )
+                                        } else {
+                                          handleChange1(row.id, 'zeroDay', 0)
+                                        }
+                                      }}
+                                      className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                    /><span className="mt-1">Days</span>
+                                  </section>
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
                                   <input

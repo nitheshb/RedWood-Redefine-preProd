@@ -611,7 +611,7 @@ const DialogFormBody = ({
                                 selected={startDate}
                                 onChange={(date) => {
                                   if (
-                                    date.getTime() < formik.values.hdmaEndDate
+                                    date.getTime() < endDate
                                   ) {
                                     formik.setFieldValue(
                                       'hdmaStartDate',
@@ -645,9 +645,9 @@ const DialogFormBody = ({
                                 className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
                                 selected={endDate}
                                 onChange={(date) => {
-                                  console.log('date', date.getTime(), date)
+                                  console.log('date', date.getTime(), date, formik.values.hdmaStartDate,  date.getTime() > startDate)
                                   if (
-                                    date.getTime() > formik.values.hdmaStartDate
+                                    date.getTime() > startDate
                                   ) {
                                     formik.setFieldValue(
                                       'hdmaEndDate',

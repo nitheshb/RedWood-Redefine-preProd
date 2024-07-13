@@ -643,36 +643,7 @@ export function MultipleFileUploadField({
               </a>
             </div>
           )}
-          {title === 'Import Apartment Units' && (
-            <div className="w-full flex flex-row justify-between ">
-              <span></span>
-              <a
-                download="unitTemplate.csv"
-                target="_blank"
-                href="/unitTemplate.csv"
-              >
-                <span className="text-xs text-blue-500">
-                  <DownloadIcon className="h-3 w-3 mr-1 mb-1 inline-block" />
-                  Sample Unit Template
-                </span>
-              </a>
-            </div>
-          )}
-          {title === 'Import Plot Units' && (
-            <div className="w-full flex flex-row justify-between ">
-              <span></span>
-              <a
-                download="unitTemplate.csv"
-                target="_blank"
-                href="/unitTemplate.csv"
-              >
-                <span className="text-xs text-blue-500">
-                  <DownloadIcon className="h-3 w-3 mr-1 mb-1 inline-block" />
-                  Sample Plot Template
-                </span>
-              </a>
-            </div>
-          )}
+        
 
 {title === 'ImportAssets' && (
             <div className="w-full flex flex-row justify-between ">
