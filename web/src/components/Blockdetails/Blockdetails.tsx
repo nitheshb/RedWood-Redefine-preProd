@@ -57,17 +57,17 @@ const Blockdetails = ({
     }
   }
   return (
-    <div className="grid lg:grid-cols-12 md:grid-cols-2 gap-2 w-full  mt-10 ">
-      <div className="lg:col-span-2 px-2 min-w-[130px]">
+    <div className="  mt-4 ">
+      <div className="lg:col-span-2 px-2 min-w-[130px] hidden">
         <section className="flex flex-row justify-between bg-[#203129] text-white py-3 px-4 ">
           <h2 className="text-sm font-semibold">Blocks</h2>
-          {/* <DropCompUnitStatus
+          <DropCompUnitStatus
             type={'View'}
             id={'id'}
             setStatusFun={setSelBlock}
             viewUnitStatusA={viewUnitStatusA}
             pickCustomViewer={pickCustomViewer}
-          /> */}
+          />
         </section>
         <ul>
           {openAddBlock && (
@@ -153,6 +153,7 @@ BlockFeed */}
         phaseFeed={phaseFeed}
         BlockFeed={blocks}
         selBlock={selBlock}
+        setSelBlock={setSelBlock}
         projectDetails={projectDetails}
         phaseDetails={phaseDetails}
         source={source}

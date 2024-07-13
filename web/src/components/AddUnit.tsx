@@ -369,7 +369,7 @@ const AddUnit = ({
 
       // msg2
       resetForm()
-      setFormMessage('Saved Successfully..!')
+      setFormMessage('Unit Added Successfully.')
       setLoading(false)
     }
     return
@@ -492,7 +492,7 @@ const AddUnit = ({
 
     // msg2
     await resetForm()
-    await setFormMessage('Saved Successfully..!')
+    await setFormMessage('Unit Saved Successfully..!')
     await setLoading(false)
     return
   }
@@ -942,7 +942,7 @@ const AddUnit = ({
                           <abbr title="Required field">*</abbr> fields are
                           mandatory
                         </p>
-                        {formMessage === 'Saved Successfully..!' && (
+                        {['Unit Added Successfully.','Saved Successfully..!','Unit Saved Successfully..!'].includes(formMessage) && (
                           <p className=" flex text-md text-slate-800 text-right my-3">
                             <img
                               className="w-[40px] h-[40px] inline mr-2"
