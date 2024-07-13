@@ -45,6 +45,7 @@ const AddUnit = ({
   phaseDetails,
   blockDetails,
   data,
+  type,
 }) => {
   const { user } = useAuth()
   const { orgId } = user
@@ -67,6 +68,13 @@ const AddUnit = ({
     blockDetails,
     data,
   })
+
+
+  
+
+
+
+
 
   useEffect(() => {
     const unsubscribe = steamUsersListByRole(
@@ -295,7 +303,10 @@ const AddUnit = ({
       PID_no,
       area,
       sqft_rate,
+      sqft_rate_c,
       plc_per_sqft,
+      plc_per_sqft_c,
+      min_rate_per_sqft_c,
       size,
       facing,
       unit_d,
@@ -338,6 +349,9 @@ const AddUnit = ({
       area: area,
       sqft_rate: sqft_rate,
       plc_per_sqft: plc_per_sqft,
+      plc_per_sqft_c: plc_per_sqft_c,
+      sqft_rate_c: sqft_rate_c,
+      min_rate_per_sqft_c: min_rate_per_sqft_c,
       size: size,
       facing: facing,
       unit_d: unit_d,
@@ -429,6 +443,9 @@ const AddUnit = ({
       area,
       sqft_rate,
       plc_per_sqft,
+      plc_per_sqft_c,
+      min_rate_per_sqft_c,
+      sqft_rate_c,
       size,
       facing,
       unit_d,
@@ -461,6 +478,9 @@ const AddUnit = ({
       area: area,
       sqft_rate: sqft_rate,
       plc_per_sqft: plc_per_sqft,
+      plc_per_sqft_c: plc_per_sqft_c,
+      sqft_rate_c: sqft_rate_c,
+      min_rate_per_sqft_c: min_rate_per_sqft_c,
       size: size,
       facing: facing,
       unit_d,
@@ -602,11 +622,15 @@ const AddUnit = ({
                 sqft_rate: unitDetails?.sqft_rate ||
                  defaultCost?.sqft_cost_gst || 0,
                 plc_per_sqft: unitDetails?.plc_per_sqft || 0,
+                plc_per_sqft_c: unitDetails?.plc_per_sqft_c || 0,
+                min_rate_per_sqft_c: unitDetails?.min_rate_per_sqft_c ||0,
+
                 size: unitDetails?.size || '',
                 facing: unitDetails?.facing || '',
                 unit_d: unitDetails?.unit_d || '',
                 min_rate_per_sqft:
                   unitDetails?.min_rate_per_sqft || unitDetails?.sqft_rate || 0,
+                  sqft_rate_c: unitDetails?.sqft_rate_c || 0,
                 east_d: unitDetails?.east_d || 0,
                 west_d: unitDetails?.west_d || 0,
                 north_d: unitDetails?.north_d || 0,
@@ -735,6 +759,49 @@ const AddUnit = ({
                             </div>
                           </div>
                         </section>
+
+                        {/* {type === 'Villas' && ( */}
+                        <section className="mt-1 px-4 rounded-lg bg-white border border-gray-100 shadow">
+                          <section className="flex flex-row  pt-2 ">
+                            <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-cyan-200"></div>
+                            <span className="ml-1 leading-[15px] ">
+                              <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
+                              Construction Pricing<abbr title="required"></abbr>
+                              </label>
+                            </span>
+                          </section>
+                          <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
+                            <div className=" space-y-2 w-full text-xs mt-">
+                              <TextField
+                                label="Rate per Sqft *"
+                                name="sqft_rate_c"
+                                type="number"
+                              />
+                            </div>
+                            <div className="space-y-2 w-full text-xs mt-">
+                              <TextField
+                                label="PLC per sqft*"
+                                name="plc_per_sqft_c"
+                                type="number"
+                              />
+                            </div>
+
+                            <div className="mb-3 space-y-2 w-full text-xs mt-">
+                              <TextField
+                                label="Min Rate per Sqft"
+                                name="min_rate_per_sqft_c"
+                                type="text"
+                              />
+                            </div>
+                          </div>
+                        </section>
+                        {/* )}  */}
+
+
+
+
+
+
 
                         <section className="mt-1 px-4 rounded-lg bg-white border border-gray-100 shadow">
                           <section className="flex flex-row  pt-2 ">

@@ -7,7 +7,7 @@ import { sqmtConverter } from 'src/util/sqmtConverter'
 
 import NoBorderDropDown from './comps/noBorderDropDown'
 
-export const AreaConverter = ({ formik, hideField, fieldName }) => {
+export const AreaConverter = ({ formik, hideField, fieldName,textPrimaryName, textSecondaryName, dropDownPrimaryName, dropdownSecondaryName }) => {
   const onConverterAdd = ({
     primary,
     primaryUnit,
@@ -15,13 +15,24 @@ export const AreaConverter = ({ formik, hideField, fieldName }) => {
     secondaryUnit,
     formik,
   }) => {
-    const primaryValue = primary ? sqmtConverter(primary, primaryUnit) : 0
-    const secondaryValue = secondary
-      ? sqmtConverter(secondary, secondaryUnit)
-      : 0
-    const value = primaryValue + secondaryValue
-    value && formik.setFieldValue(fieldName, value) && hideField(false)
+    // const primaryValue = primary ? sqmtConverter(primary, primaryUnit) : 0
+    // const secondaryValue = secondary
+    //   ? sqmtConverter(secondary, secondaryUnit)
+    //   : 0
+    // const value = primaryValue + secondaryValue
+    // value && formik.setFieldValue(fieldName, value) && hideField(false)
+    const primaryValue = formik.values[textPrimaryName] 
+    ? sqmtConverter(formik.values[textPrimaryName], formik.values[dropDownPrimaryName]) 
+    : 0
+  const secondaryValue = formik.values[textSecondaryName]
+    ? sqmtConverter(formik.values[textSecondaryName], formik.values[dropdownSecondaryName])
+    : 0
+  const value = primaryValue + secondaryValue
+  value && formik.setFieldValue(fieldName, value) && hideField(false)
   }
+
+
+
   return (
     <div className="mt-3 mb-6">
       <label htmlFor="area" className="label font-regular text-sm">
@@ -32,7 +43,14 @@ export const AreaConverter = ({ formik, hideField, fieldName }) => {
           <TextField label="" name="areaTextPrimary" type="text" />
         </div> */}
         <MuiTextField
-          id="area"
+
+
+id={fieldName}
+// ... other props ...
+name={textPrimaryName}
+value={formik.values[textPrimaryName]}
+onChange={formik.handleChange}
+          //id="area"
           className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
           size="small"
           InputProps={{
@@ -64,7 +82,7 @@ export const AreaConverter = ({ formik, hideField, fieldName }) => {
             ),
           }}
           label=""
-          name="areaTextPrimary"
+          //name="areaTextPrimary"
           type="text"
           sx={{
             '& .MuiOutlinedInput-root': {
@@ -82,11 +100,21 @@ export const AreaConverter = ({ formik, hideField, fieldName }) => {
               },
             },
           }}
-          value={formik.values.areaTextPrimary}
-          onChange={formik.handleChange}
+          //value={formik.values.areaTextPrimary}
+          //onChange={formik.handleChange}
         />
         <MuiTextField
-          id="area"
+
+id={`${fieldName}Secondary`}
+
+
+
+name={textSecondaryName}
+value={formik.values[textSecondaryName]}
+onChange={formik.handleChange}
+
+        
+          //id="area"
           className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 m-0 mt-1 p-0 border-l-none`}
           size="small"
           InputProps={{
@@ -140,10 +168,10 @@ export const AreaConverter = ({ formik, hideField, fieldName }) => {
               },
             },
           }}
-          name="areaTextSecondary"
+          //name="areaTextSecondary"
           type="text"
-          value={formik.values.areaTextSecondary}
-          onChange={formik.handleChange}
+          //value={formik.values.areaTextSecondary}
+          //onChange={formik.handleChange}
         />
       </div>
       <button
