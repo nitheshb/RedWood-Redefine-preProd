@@ -8,21 +8,62 @@ import { parse } from 'papaparse'
 import { array, object, string } from 'yup'
 
 import { MultipleFileUploadField } from './MultipleFileUploadField'
+import { DownloadIcon } from '@heroicons/react/solid'
 
-export default function LeadsDropHomes({
-  title,
-  pId,
-  myPhase,
-  myBlock,
-}) {
+export default function LeadsDropHomes({ title, pId, myPhase, myBlock }) {
   const [existingCols, setexistingCols] = useState([])
 
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
-      <div className="px-4 sm:px-6  z-10">
-        <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
+      <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
+        <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219] w-sreen ">
+          {['Import Apartment Units','Import Plot Units' ].includes(title)? 'Import Units' : title}
         </Dialog.Title>
+        {title === 'Import Apartment Units' && (
+          <div className="flex flex-row justify-between mr-8 ">
+            <span></span>
+            <a
+              download="unitTemplate.csv"
+              target="_blank"
+              href="/unitTemplate.csv"
+            >
+              <span className="text-xs text-blue-500">
+                <DownloadIcon className="h-3 w-3 mr-1 mb-1 inline-block" />
+                Sample Unit Template
+              </span>
+            </a>
+          </div>
+        )}
+        {title === 'Import Plot Units' && (
+          <div className="flex flex-row justify-between mr-8 ">
+            <span></span>
+            <a
+              download="unitTemplate.csv"
+              target="_blank"
+              href="/unitTemplate.csv"
+            >
+              <span className="text-xs text-blue-500">
+                <DownloadIcon className="h-3 w-3 mr-1 mb-1 inline-block" />
+                Sample Plot Template
+              </span>
+            </a>
+          </div>
+        )}
+        {title === 'ImportAssets' && (
+            <div className=" flex flex-row justify-between mr-8">
+              <span></span>
+              <a
+                download="unitTemplate.csv"
+                target="_blank"
+                href="/assetsTemplate.csv"
+              >
+                <span className="text-xs text-blue-500">
+                  <DownloadIcon className="h-3 w-3 mr-1 mb-1 inline-block" />
+                  Sample Assets Template
+                </span>
+              </a>
+            </div>
+          )}
       </div>
       <div className="grid  gap-8 grid-cols-1">
         {title === 'import Unit' && (

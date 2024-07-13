@@ -55,6 +55,7 @@ const AddUnit = ({
   const [projectList, setprojectList] = useState([])
   const [phaseList, setphaseList] = useState([])
   const [blockList, setblockList] = useState([])
+  const [defaultCost, setDefaultCost] = useState({})
   const [unitDetails, setUnitDetails] = useState({})
   console.log('inside it ', {
     title,
@@ -92,6 +93,67 @@ const AddUnit = ({
   useEffect(() => {
     setUnitDetails(data?.unitDetail || {})
   }, [])
+  useEffect(() => {
+    // sqft_construct_cost_tax plc_tax ,
+    // let defaultValues = {
+    //   sqft_cost_tax: 10,
+    //   sqft_cost_gst: 0,
+    //   sqft_construct_cost_tax: 0,
+    //   sqft_construct_gst: 0,
+    //   plc_tax: 0,
+    //   plc_gst: 0,
+    // }
+    // phaseDetails?.fullcs?.forEach((item) => {
+    //   if (item.component.value === 'sqft_cost_tax') {
+    //     defaultValues.sqft_cost_tax = parseFloat(item.charges) || 10
+    //     defaultValues.sqft_cost_gst = parseFloat(item.gst.value) || 0
+    //   } else if (item.component.value === 'sqft_construct_cost_tax') {
+    //     defaultValues.sqft_construct_cost_tax = parseFloat(item.charges) || 0
+    //     defaultValues.sqft_construct_gst = parseFloat(item.gst.value) || 0
+    //   } else if (item.component.value === 'plc_tax') {
+    //     defaultValues.plc_tax = parseFloat(item.charges) || 0
+    //     defaultValues.plc_gst = parseFloat(item.gst.value) || 0
+    //   }
+    // })
+    // setDefaultCost(
+
+    //   defaultValues
+    // )
+
+  }, [])
+
+  useEffect(() => {
+    const extractDefaultValues = async () => {
+      const defaultValues = {
+        sqft_cost_tax: 0,
+        sqft_cost_gst: 0,
+        sqft_construct_cost_tax: 0,
+        sqft_construct_gst: 0,
+        plc_tax: 0,
+        plc_gst: 0,
+      }
+
+      // Simulating asynchronous operation
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      phaseDetails?.fullcs?.forEach((item) => {
+        if (item.component.value === 'sqft_cost_tax') {
+          defaultValues.sqft_cost_tax = parseFloat(item.charges) || 0
+          defaultValues.sqft_cost_gst = parseFloat(item.gst.value) || 0
+        } else if (item.component.value === 'sqft_construct_cost_tax') {
+          defaultValues.sqft_construct_cost_tax = parseFloat(item.charges) || 0
+          defaultValues.sqft_construct_gst = parseFloat(item.gst.value) || 0
+        } else if (item.component.value === 'plc_tax') {
+          defaultValues.plc_tax = parseFloat(item.charges) || 0
+          defaultValues.plc_gst = parseFloat(item.gst.value) || 0
+        }
+      })
+
+      setDefaultCost(defaultValues);
+    };
+
+    extractDefaultValues();
+  }, [phaseDetails])
 
   useEffect(() => {
     const unsubscribe = getAllProjects(
@@ -537,7 +599,8 @@ const AddUnit = ({
                 Katha_no: unitDetails?.Katha_no || '',
                 PID_no: unitDetails?.PID_no || '',
                 area: unitDetails?.area || 0,
-                sqft_rate: unitDetails?.sqft_rate || 0,
+                sqft_rate: unitDetails?.sqft_rate ||
+                 defaultCost?.sqft_cost_gst || 0,
                 plc_per_sqft: unitDetails?.plc_per_sqft || 0,
                 size: unitDetails?.size || '',
                 facing: unitDetails?.facing || '',
@@ -913,7 +976,10 @@ const AddUnit = ({
                             disabled={loading}
                           >
                             {loading && <Loader />}
-                           <span> {title === 'Edit Plot' ? 'Edit Unit' : 'Add Unit'}</span>
+                            <span>
+                              {' '}
+                              {title === 'Edit Plot' ? 'Edit Unit' : 'Add Unit'}
+                            </span>
                           </button>
                         </div>
                       </div>

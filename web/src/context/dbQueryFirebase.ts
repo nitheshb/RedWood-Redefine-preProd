@@ -3799,7 +3799,7 @@ export const addPhaseFullCs  = async (
 
   try {
     await updateDoc(doc(db, `${orgId}_phases`, uid), {
-      partATaxObj: fullCsA?.filter((item) => item?.section?.value == 'unitCost') || [],
+      partATaxObj: fullCsA?.filter((item) => ['unitCost', 'unitCostNew'].includes(item?.section?.value)) || [],
       partCTaxObj: fullCsA?.filter((item) => item?.section?.value == 'otherCharges') || [],
       additonalChargesObj: fullCsA?.filter((item) => item?.section?.value == 'additionalCost') || [],
       fullCs: fullCsA
@@ -3912,7 +3912,7 @@ export const addPhasePaymentScheduleCharges = async (
     await updateDoc(doc(db, `${orgId}_phases`, uid), {
       [type]: chargePayload,
     })
-    enqueueSnackbar('Charges added successfully', {
+    enqueueSnackbar('Schedule added successfully', {
       variant: 'success',
     })
   } catch (e) {

@@ -401,7 +401,7 @@ export const unitsCancellation = [
 ]
 export const csSections = [
   {
-    value: 'unitCost',
+    value: 'unitCostNew',
     label: 'Unit charges',
   },
   {
@@ -502,10 +502,7 @@ export const costSheetAdditionalChargesA = [
   //   value: 'plc_tax',
   //   label: 'PLC Cost',
   // },
-  {
-    value: 'sqft_construct_cost_tax',
-    label: 'Construction Cost/Sqft',
-  },
+
   {
     value: 'bescom_sanitary_deposits',
     label: 'BESCOM & Sanitary Deposits',
@@ -603,9 +600,10 @@ export const csConstruAdditionalChargesA = [
   },
 ]
 export const paymetScheduleConstruct = [
+
   {
-    value: 'advance_construct',
-    label: 'Advance',
+    value: 'On_execution_of_ATB',
+    label: 'On Execution of ATB',
   },
   {
     value: 'On_Completion_of_Plinth_Beam',
@@ -613,23 +611,27 @@ export const paymetScheduleConstruct = [
   },
   {
     value: 'On_Completion_of_First_FLoor_Slab',
-    label: 'On Completion of First FLoor Slab',
+    label: 'On Completion of First Slab',
   },
   {
-    value: 'On Completion of Second Floor Slab',
-    label: 'On Completion of Second Floor Slab',
+    value: 'On_Completion_of_Second_FLoor_Slab',
+    label: 'On Completion of Second Slab',
   },
   {
     value: 'On_Completion_of_Brick_work',
     label: 'On Completion of Brick work',
   },
   {
-    value: 'On_Completion_of_Plastering_Flooring ',
-    label: 'On Completion of Plastering & Flooring ',
+    value: 'On_Completion_of_Plastering',
+    label: 'On Completion of Plastering',
+  },
+  {
+    value: 'On_Completion_of_Flooring ',
+    label: 'On Completion of Flooring ',
   },
   {
     value: 'On_Possession_Balance_Construction_Cost',
-    label: 'On On Possession - Balance Construction Cost',
+    label: 'On Possession(Balance Construction Amount)',
   },
   {
     value: 'Total_Other_Charges_Amenities:	',
@@ -643,39 +645,20 @@ export const paymentScheduleA = [
   },
   {
     value: 'on_execution_agree',
-    label: 'On Execution of Agreement to sell',
+    label: 'On Execution Of  Sale Agreement',
   },
   {
     value: 'on_registration',
-    label: 'On Execution of Sale Deed for registration',
+    label: 'On Execution Of Sale Deed',
   },
   {
     value: 'executionofats_atb',
-    label: 'Execution of ATS & ATB',
+    label: 'On Execution Of ATB',
   },
-  {
-    value: 'maintenancecharges',
-    label: 'Execution of Sale Deed',
-  },
-  {
-    value: 'power_backup_charges',
-    label: 'Plinth Beam',
-  },
-  {
-    value: 'firstfloorslab',
-    label: 'First Floor Slab',
-  },
-  {
-    value: 'secondfloorslab',
-    label: 'Second Floor Slab',
-  },
-  {
-    value: 'blockwork',
-    label: 'Block Work',
-  },
+
   {
     value: 'possession',
-    label: 'Possession',
+    label: 'On Possession',
   },
 ]
 export const bankPreferredType = [
@@ -801,7 +784,7 @@ export const approvalAuthority = [
 
   // },
 
-  
+
 
   {
     label: 'Bangalore Development Authority (BDA)',
@@ -968,8 +951,8 @@ export const approvalAuthority = [
     label: 'Chennai Metropolitan Development Authority (CMDA)',
     value: 'ChennaiMetropolitanDevelopmentAuthority(CMDA)',
 
-  },  
-  
+  },
+
   {
     label: 'Hyderabad Metropolitan Development Authority (HMDA)',
     value: 'HyderabadMetropolitanDevelopmentAuthority',
@@ -1058,7 +1041,7 @@ export const approvalAuthority = [
   },
 
 
-  
+
 
 
 
