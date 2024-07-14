@@ -19,8 +19,10 @@ import AddNewDemand from '../A_CrmModule/CrmNewDemand'
 import UnitSideViewCRM from '../A_CrmModule/CrmUnitSideView'
 import ViewDocxFile from '../A_LegalModule/viewDocxFile'
 import AddCampaignForm from '../A_MarketingModule/AddCampaign'
+import LegalHomeList from '../A_ProjModule/LegalHomeList'
 import NotificationsSetupForm from '../A_ProjModule/NotificatoinsSetupFromHome'
 import ProjectDetailsFlowBody from '../A_ProjModule/ProjectDetails'
+import ProjectsDocsListView from '../A_ProjModule/viewLegalDocument'
 import AddTaskForm from '../A_TaskMan/AddTaskForm'
 import ViewEditTaskManForm from '../A_TaskMan/ViewEditTaskManForm'
 import AddBankDetailsForm from '../addBankDetailsForm'
@@ -42,6 +44,7 @@ import MoreDetailsPhaseForm from '../MoreDetailsPhaseForm/MoreDetailsPhaseForm'
 import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import TransactionUpdateSideView from '../transactionUpdateSideView'
 import ViewUnitDetails from '../ViewUnitDetails'
+import ProjectAccessSideView from '../A_ProjModule/ProjectAccessSideView'
 
 const SiderForm = ({
   mode,
@@ -76,6 +79,7 @@ const SiderForm = ({
   selSubMenu2,
   setIsClicked,
   setOpen,
+  subView,
   taskManObj,
   title,
   transactionData,
@@ -111,7 +115,6 @@ const SiderForm = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-
             <Dialog.Overlay className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
           <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
@@ -126,8 +129,7 @@ const SiderForm = ({
             >
               <div
                 className={`relative w-screen ${
-                  title === 'Add Lead' ||
-                  title === 'upload_legal_docs'
+                  title === 'Add Lead' || title === 'upload_legal_docs'
                     ? 'max-w-2xl'
                     : widthClass
                 }
@@ -283,6 +285,42 @@ const SiderForm = ({
                     projectsList={projectsList}
                     viewLegalDocData={viewLegalDocData}
                   />
+                )}
+                {title === 'disp_project_docs' && (
+                  <>
+                    {/* <ProjectsDocsListView
+                      title={title}
+                      dialogOpen={setOpen}
+                      pId={pId}
+                      source={'planDiagram'}
+                      myPhase={phaseDetails}
+                      myBlock={myBlock}
+                      projectsList={projectsList}
+                      viewLegalDocData={viewLegalDocData}
+                    /> */}
+                    <LegalHomeList
+                      title={'Finance'}
+                      dialogOpen={'false'}
+                      data={phaseDetails}
+                      source={'projectManagement'}
+                      // setSubView={setSubView}
+                      subView={subView}
+                      projectDetails={projectDetails}
+                      pId={projectDetails?.uid}
+                    />
+                  </>
+                )}
+                {title === 'disp_project_access' && (
+                  <>
+                   <ProjectAccessSideView
+                          title={'Project Access'}
+                          dialogOpen={'false'}
+                          data={{ phase: phaseDetails }}
+                          projectDetails={projectDetails}
+                          subView={subView}
+                        />
+
+                  </>
                 )}
                 {title === 'disp_unit_constDetails' && (
                   <ConstructUnitsDetails
@@ -505,20 +543,13 @@ const SiderForm = ({
                   />
                 )}
 
-
-               {title === 'confirmationDialog' && (
+                {title === 'confirmationDialog' && (
                   <CrmConfirmationDialog
                     title={title}
                     selUnitDetails={selUnitDetails}
                     onSubmitFun={paymentCaptureFun}
                   />
                 )}
-
-
-
-
-
-
 
                 {title === 'costSheetPreview' && (
                   <CostBreakUpPdfPreview

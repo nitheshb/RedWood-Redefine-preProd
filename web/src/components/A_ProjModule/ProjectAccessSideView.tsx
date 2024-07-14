@@ -24,11 +24,13 @@ import SiderForm from '../SiderForm/SiderForm'
 
 import LegalHomeList from './LegalHomeList'
 
-const ProjectAccessHomeList = ({
+const ProjectAccessSideView = ({
   title,
   dialogOpen,
   data,
   source,
+  setSubView,
+  subView,
   projectDetails,
   pId,
 }) => {
@@ -36,7 +38,7 @@ const ProjectAccessHomeList = ({
   const { orgId } = user
   const [loading, setLoading] = useState(false)
 
-  const [subView, setSubView] = useState('salesAccess')
+  // const [subView, setSubView] = useState('salesAccess')
   const { enqueueSnackbar } = useSnackbar()
   const [open, setOpen] = useState(false)
   const [projects, setProjects] = useState([])
@@ -148,137 +150,78 @@ const ProjectAccessHomeList = ({
     setSubView(type)
     setIsDocViewOpenSideView(!isDocViewOpenSideView)
   }
-  const dispAccess = (docData, type) => {
-    setViewDocData(docData)
-    setSubView(type)
-    setIsAccessSideView(!isAccessSideView)
-  }
   return (
-    <div className="h-full flex flex-col py-6 bg-white shadow-xl ">
-      {/* documents page */}
-      <div className="mx-4 my-2 p-2 rounded-md border border-[#E5EAF2] flex flex-col justify-between">
-        <div className="ml-3 mt-5 font-bold">Project Documents</div>
-        <ul className="">
-          <li className="py-2">
-            <section className="flex flex-row mt-5 grid grid-cols-3 ">
-              {ProjectFolders?.map((project, i) => (
-                // <span key={i}>{project?.projectName}</span>
-                <>
-                  {project.type === 'folder' ? (
-                    <>
-                      <div
-                        key={i}
-                        className=" cursor-pointer relative mx-auto break-words bg-white  mb-4  rounded-xl  transition duration-300 ease-in-out  "
-                        onClick={() => dispDoc(project, project.category)}
-                      >
-                        {/* <FileCardAnim projectDetails={project} /> */}
-                        <Card
-                          sx={{
-                            borderRadius: 4,
-                          }}
-                          variant="outlined"
-                          className="w-[230px] m-3 p-3"
-                        >
-                          <img
-                            alt=""
-                            className="h-12 w-10 bg-white "
-                            src={project.img}
-                          />
-                          <div className="font-semibold	">{project.name}</div>
-                          {/* <div className="text-xs">{project.size}</div>
-                          <div className="text-xs">{project.shared}</div> */}
-                        </Card>
-                      </div>
-                    </>
-                  ) : null}
-                </>
-              ))}
-            </section>
-          </li>
-        </ul>
-      </div><div className="mx-4 my-4 p-4 rounded-md border border-[#E5EAF2] flex flex-col justify-between">
-        <div className="ml-3 mt-5 font-bold">Module Access Management</div>
-        <ul className="">
-          <li className="py-2">
-            <section className="flex flex-row mt-3 grid grid-cols-3 ">
-              {ProjectAccessFolder?.map((project, i) => (
-                // <span key={i}>{project?.projectName}</span>
-                <>
-                  {project.type === 'ppt' ? (
-                    <>
-                      <div
-                        key={i}
-                        className=" cursor-pointer relative mx-auto break-words bg-white  mb-4  rounded-xl  transition duration-300 ease-in-out  "
-                        onClick={() => dispAccess(project, project.category)}
-                      >
-                        {/* <FileCardAnim projectDetails={project} /> */}
-                        <Card
-                          sx={{
-                            borderRadius: 4,
-                          }}
-                          variant="outlined"
-                          className="w-[230px] m-3 p-3"
-                        >
-                          <img
-                            alt=""
-                            className="h-12 w-10 bg-white "
-                            src={project.img}
-                          />
-                          <div className="font-semibold	">{project.name}</div>
-                          {/* <div className="text-xs">{project.size}</div>
-                          <div className="text-xs">{project.shared}</div> */}
-                        </Card>
-                      </div>
-                    </>
-                  ) : null}
-                </>
-              ))}
-            </section>
-          </li>
-        </ul>
+    <div className="h-full flex flex-col  bg-white shadow-xl">
+      <div className="   z-10">
+        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
+          {title}
+        </Dialog.Title> */}
+
+        <div className="flex flex-row ">
+
+          {subView === 'salesAccess' && (
+            <PaymentLeadAccess
+              title={'Leads Access'}
+              data={{ phase: data, project: projectDetails }}
+              dept="sales"
+              source={source}
+            />
+          )}
+          {subView === 'creditNoteIssuers' && (
+            <PaymentLeadAccess
+              title={'Credit Note Issuers'}
+              data={{ phase: data, project: projectDetails }}
+              dept="admin"
+              source={source}
+            />
+          )}
+
+          {subView === 'marketingAccess' && (
+            <PaymentLeadAccess
+              title={'Marketing Access'}
+              data={{ phase: data, project: projectDetails }}
+              dept="marketing"
+              source={source}
+            />
+          )}
+          {subView === 'crmAccess' && (
+            <PaymentLeadAccess
+              title={'CRM Access'}
+              data={{ phase: data, project: projectDetails }}
+              dept="crm"
+              source={source}
+            />
+          )}
+          {subView === 'FinAccess' && (
+            <PaymentLeadAccess
+              title={'Finance Access'}
+              data={{ phase: data, project: projectDetails }}
+              dept="finance"
+              source={source}
+            />
+          )}
+          {subView === 'legalAccess' && (
+            <PaymentLeadAccess
+              title={'Legal Access'}
+              data={{ phase: data, project: projectDetails }}
+              dept="legal"
+              source={source}
+            />
+          )}
+          {subView === 'constructAccess' && (
+            <PaymentLeadAccess
+              title={'Contruction Access'}
+              data={{ phase: data, project: projectDetails }}
+              dept="construction"
+              source={source}
+            />
+          )}
+        </div>
       </div>
 
-      <div className="mx-4 my-4 p-4 rounded-md border border-[#E5EAF2] flex flex-row justify-between">
-        <section className="flex flex-col">
-          <h2 className="text-xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-            Danger Zone
-          </h2>
 
-          <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
-            <div className="mt-2 flex items-center text-sm text-gray-500">
-              Irreversible and destructive action
-            </div>
-          </div>
-        </section>
-        <section className="">
-          <WarningModel
-            type={'Danger'}
-            open={open}
-            setOpen={setOpen}
-            proceedAction={handleDelete}
-            title={'Are you sure you want to delete this project?'}
-            subtext={
-              'This Project will be permanently removed. This action cannot be undone.'
-            }
-            actionBtnTxt={'Delete project'}
-          />
-          <button
-            type="button"
-            onClick={() => {
-              // proceedAction()
-              // setOpen(false)
-              setOpen(true)
-            }}
-            className={`inline-flex w-full justify-center rounded-sm mt-3 px-3 py-2 bg-cyan-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
-          >
-            <TrashIcon
-              className="h-4 w-4 mr-1 ml- mt-[1px] inline text-white"
-              aria-hidden="true"
-            />{' '}
-            Delete Project
-          </button>
-        </section>
-      </div>
+
+
       <SiderForm
         open={isOpenSideView}
         setOpen={setIsOpenSideView}
@@ -328,4 +271,4 @@ const ProjectAccessHomeList = ({
   )
 }
 
-export default ProjectAccessHomeList
+export default ProjectAccessSideView

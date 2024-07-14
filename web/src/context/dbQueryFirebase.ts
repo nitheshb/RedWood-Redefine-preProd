@@ -1653,7 +1653,7 @@ export const getPlanDiagramByPhase = async (orgId, data, snapshot, error) => {
     const getAllProjectByIdQuery = await query(
       collection(db, `${orgId}_project_docs`),
       where('pId', '==', pId),
-      where('phaseId', '==', phaseId),
+      // where('phaseId', '==', phaseId),
       where('type', '==', type)
     )
     return onSnapshot(getAllProjectByIdQuery, snapshot, error)
@@ -3566,12 +3566,13 @@ export const createPhaseAssets = async (
   format
 ) => {
   try {
+    console.log('docs detals are',pId,phaseId,)
     const docRef = await addDoc(collection(db, `${orgId}_project_docs`), {
       name,
       url,
       by,
       pId,
-      phaseId,
+      phaseId: phaseId || 0,
       type,
       format,
       cTime: Timestamp.now().toMillis(),

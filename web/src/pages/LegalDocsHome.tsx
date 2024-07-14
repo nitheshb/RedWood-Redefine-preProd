@@ -20,6 +20,7 @@ import DropDownSearchBar from 'src/components/dropDownSearchBar'
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import DummyBodyLayout from 'src/components/DummyBodyLayout/DummyBodyLayout'
 import SiderForm from 'src/components/SiderForm/SiderForm'
+import { LegalFolders } from 'src/constants/projects'
 import { getAllProjects } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import 'flowbite'
@@ -68,113 +69,6 @@ const LegalDocsHome = ({ project }) => {
     { field: 'type', headerName: 'Type', width: 130 },
     { field: 'modified', headerName: 'Modified', width: 140 },
     { field: 'shared', type: 'string[]', headerName: 'Shared', width: 120 },
-  ]
-
-  const Folders = [
-    {
-      name: 'Agreements',
-      size: '2.4 GB',
-      type: 'folder',
-      modified: '10 Aug 2023',
-      shared: ['kunal', 'nithesh'],
-      id: 1,
-      files: '10',
-      img: '/folder.png',
-    },
-    {
-      img: '/folder.png',
-      name: 'EC',
-      size: '2.4 GB',
-      type: 'folder',
-      modified: '10 Aug 2023',
-      files: '10',
-      shared: ['kunal', 'nithesh'],
-      id: 2,
-    },
-    {
-      img: '/folder.png',
-      name: 'Registrations',
-      size: '2.4 GB',
-      type: 'folder',
-      modified: '10 Aug 2023',
-      shared: ['kunal', 'nithesh'],
-      id: 3,
-      files: '10',
-    },
-    {
-      img: '/folder.png',
-      name: 'Other Docs',
-      size: '2.4 GB',
-      type: 'folder',
-      modified: '10 Aug 2023',
-      shared: ['kunal', 'nithesh'],
-      id: 4,
-      files: '10',
-    },
-    {
-      img: '/folder.png',
-      name: 'Docs',
-      size: '2.4 GB',
-      type: 'folder',
-      modified: '10 Aug 2023',
-      shared: ['kunal', 'nithesh'],
-      id: 5,
-    },
-    {
-      img: '/jpgIcon.png',
-      name: 'Unit-101',
-      size: '2.2 MB',
-      type: 'jpg',
-      modified: '10 Aug 2023',
-      shared: ['kunal', 'nithesh'],
-
-      id: 6,
-    },
-    {
-      img: '/jpgIcon.png',
-      name: 'Unit-102',
-      size: '1.2 MB',
-      type: 'jpg',
-      modified: '10 Aug 2023',
-      shared: ['kunal', 'nithesh'],
-      id: 7,
-    },
-    {
-      img: '/music.png',
-      name: 'Unit-103',
-      size: '177 KB',
-      type: 'mp3',
-      modified: '10 Aug 2023',
-      shared: ['kunal', 'nithesh'],
-      id: 8,
-    },
-    {
-      img: '/pptIcon.png',
-      name: 'Unit-104',
-      size: '144 MB',
-      type: 'ppt',
-      modified: '10 Aug 2023',
-      shared: ['kunal', 'nithesh'],
-      id: 9,
-    },
-    {
-      img: '/video.png',
-      name: 'Unit-203',
-      size: '1.4 GB',
-      type: 'mp4',
-      modified: '10 Aug 2023',
-      shared: ['kunal', 'nithesh'],
-      id: 10,
-    },
-    {
-      img: '/docxIcon.png',
-      name: 'Unit-206',
-      size: '10 MB',
-      type: 'docx',
-      modified: '10 Aug 2023',
-      shared: ['kunal', 'nithesh'],
-      id: 11,
-    },
   ]
 
   useEffect(() => {
@@ -331,7 +225,7 @@ const LegalDocsHome = ({ project }) => {
           {formats === 'list' ? (
             <div style={{ width: '98%' }} className="mt-16 h-auto">
               <DataGrid
-                rows={Folders}
+                rows={LegalFolders}
                 columns={columns}
                 rowHeight={75}
                 sx={{
@@ -409,7 +303,7 @@ const LegalDocsHome = ({ project }) => {
               <ul className="">
                 <li className="py-2">
                   <section className="flex flex-row mt-5 grid grid-cols-5 ">
-                    {Folders?.map((project, i) => (
+                    {LegalFolders?.map((project, i) => (
                       // <span key={i}>{project?.projectName}</span>
                       <>
                         {project.type === 'folder' ? (
@@ -461,7 +355,7 @@ const LegalDocsHome = ({ project }) => {
               <ul className="">
                 <li className="py-2">
                   <section className="flex flex-row mt-5 grid grid-cols-5 ">
-                    {Folders?.map((project, i) => (
+                    {LegalFolders?.map((project, i) => (
                       // <span key={i}>{project?.projectName}</span>
                       <>
                         {project.type !== 'folder' ? (
