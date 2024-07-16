@@ -19,7 +19,12 @@ import PieChartProject from '../comps/pieChartProject'
 import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
 import SiderForm from '../SiderForm/SiderForm'
 
-const ProjectsMHomeBody = ({ project,setProject, onSliderOpen = () => {}, isEdit }) => {
+const ProjectsMHomeBody = ({
+  project,
+  setProject,
+  onSliderOpen = () => {},
+  isEdit,
+}) => {
   const [isNewProjectOpen, setIsNewProjectOpen] = useState(false)
   const handleNewProjectClose = () => setIsNewProjectOpen(false)
 
@@ -216,7 +221,7 @@ const ProjectsMHomeBody = ({ project,setProject, onSliderOpen = () => {}, isEdit
   return (
     // <div className="px-4 pb-[0.1px] flex bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700 ">
     <>
-      <div onClick={() => setIsNewProjectOpen(true)} className='cursor-pointer'>
+      <div onClick={() => setIsNewProjectOpen(true)} className="cursor-pointer">
         <div className="flex flex-row mb-[2px] ">
           <div className="w-2/4 bg-[#E9E9F2]">
             <div className="">
@@ -244,7 +249,7 @@ const ProjectsMHomeBody = ({ project,setProject, onSliderOpen = () => {}, isEdit
                     </section> */}
                   <section className="flex flex-row justify-between mt-2">
                     <span className="text-sm  font-light  font text-gray-800 ">
-                    {projectType?.name}
+                      {projectType?.name}
                     </span>
                     <section>
                       <span className="text-sm  font-light  font text-gray-800 ">

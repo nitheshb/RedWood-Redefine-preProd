@@ -800,9 +800,15 @@ const Floordetails = ({
               </div>
             </div> */}
 
-            <section className={`flex flex-row px- py- justify-between ${['Apartment', 'Villas', 'Plots'].includes(
+            <section
+              className={`flex flex-row px- py- justify-between ${
+                ['Apartment', 'Villas', 'Plots'].includes(
                   projectDetails?.projectType?.name
-                )? 'my-4' : ''}`}>
+                )
+                  ? 'my-4'
+                  : ''
+              }`}
+            >
               <div className="flex flex-row">
                 {['Apartment', 'Villas'].includes(
                   projectDetails?.projectType?.name
@@ -1011,13 +1017,13 @@ const Floordetails = ({
                                       setSelUnitDetails1(data)
                                       setSliderInfo({
                                         open: true,
-                                        title: 'Edit Plot',
+                                        title: 'Edit Unit',
                                         sliderData: {
                                           unitDetail: data,
                                           phaseDetail: phaseFeed,
                                           leadDetailsObj: leadDetailsObj,
                                         },
-                                        widthClass: 'max-w-4xl',
+                                        widthClass: 'max-w-2xl',
                                       })
                                     } else {
                                       console.log('customer Detailsare', data)
@@ -1117,7 +1123,7 @@ const Floordetails = ({
 
                                                       setSliderInfo({
                                                         open: true,
-                                                        title: 'Edit Plot',
+                                                        title: 'Edit Unit',
                                                         sliderData: {
                                                           unitDetail: data,
                                                           phaseDetail:
@@ -1125,7 +1131,7 @@ const Floordetails = ({
                                                           leadDetailsObj:
                                                             leadDetailsObj,
                                                         },
-                                                        widthClass: 'max-w-4xl',
+                                                        widthClass: 'max-w-2xl',
                                                       })
                                                     }}
                                                   >
@@ -1306,13 +1312,13 @@ const Floordetails = ({
                                   setSelUnitDetails1(data)
                                   setSliderInfo({
                                     open: true,
-                                    title: 'Edit Plot',
+                                    title: 'Edit Unit',
                                     sliderData: {
                                       unitDetail: data,
                                       phaseDetail: phaseFeed,
                                       leadDetailsObj: leadDetailsObj,
                                     },
-                                    widthClass: 'max-w-4xl',
+                                    widthClass: 'max-w-2xl',
                                   })
                                 } else {
                                   console.log('customer Detailsare', data)
@@ -1402,14 +1408,14 @@ const Floordetails = ({
 
                                                   setSliderInfo({
                                                     open: true,
-                                                    title: 'Edit Plot',
+                                                    title: 'Edit Unit',
                                                     sliderData: {
                                                       unitDetail: data,
                                                       phaseDetail: phaseFeed,
                                                       leadDetailsObj:
                                                         leadDetailsObj,
                                                     },
-                                                    widthClass: 'max-w-4xl',
+                                                    widthClass: 'max-w-2xl',
                                                   })
                                                 }}
                                               >
@@ -1626,7 +1632,9 @@ const Floordetails = ({
             {/* 1 */}
             {['projectManagement', 'projectOnboard'].includes(source) && (
               <div className=" z-10 flex flex-row my-[30px] ml-5">
-                {['Apartments', 'Apartment'].includes(projectDetails?.projectType?.name) && (
+                {['Apartments', 'Apartment'].includes(
+                  projectDetails?.projectType?.name
+                ) && (
                   <div
                     className=" cursor-pointer  z-10 flex flex-col  max-w-md p-2 my-0 mx-3 rounded-md inline-block min-h-[50px]  min-w-[100px] border border-dotted border-black"
                     // style={{ backgroundColor: '#fef7f7' }}
@@ -1705,7 +1713,7 @@ const Floordetails = ({
 
                     setAddUnitSlider({
                       open: true,
-                      title: ['Apartments','Apartment'].includes(
+                      title: ['Apartments', 'Apartment'].includes(
                         projectDetails?.projectType?.name
                       )
                         ? 'Import Units'
