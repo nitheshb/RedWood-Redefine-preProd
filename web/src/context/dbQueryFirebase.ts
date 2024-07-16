@@ -2584,11 +2584,11 @@ export const editPlotUnit = async (
     await updateDoc(doc(db, `${orgId}_units`, uid), {
       ...data,
     })
-    enqueueSnackbar('Plot updated successfully', {
+    enqueueSnackbar('Updated successfully', {
       variant: 'success',
     })
   } catch (error) {
-    enqueueSnackbar('Plot details Updation Failed', {
+    enqueueSnackbar('Updation Failed', {
       variant: 'success',
     })
   }
