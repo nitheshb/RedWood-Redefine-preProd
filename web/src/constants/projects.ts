@@ -1171,7 +1171,7 @@ export const ProjectFolders = [
   },
   {
     img: '/folder.png',
-    name: 'Marketing & Brouchers',
+    name: 'Marketing Docs',
     category: 'Brouchers',
 
     size: '2.4 GB',
@@ -1183,7 +1183,7 @@ export const ProjectFolders = [
   },
   {
     img: '/folder.png',
-    name: 'Legal Documents',
+    name: 'Legal Docs',
     category: 'legalDocs',
     // category: 'planDiagram',
     size: '2.4 GB',
