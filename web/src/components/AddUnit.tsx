@@ -306,6 +306,15 @@ const AddUnit = ({
       sqft_rate_c,
       plc_per_sqft,
       plc_per_sqft_c,
+      UDS_D,
+      Floor_Plan_D,
+      Carpet_Area_D,
+      Dimension_D,
+      Bedrooms_D,
+      BathRooms_D,
+      Car_Parking_D,
+      tower_d,
+      block_d,
       min_rate_per_sqft_c,
       size,
       facing,
@@ -350,6 +359,15 @@ const AddUnit = ({
       sqft_rate: sqft_rate,
       plc_per_sqft: plc_per_sqft,
       plc_per_sqft_c: plc_per_sqft_c,
+      Floor_Plan_D: Floor_Plan_D,
+      Carpet_Area_D: Carpet_Area_D,
+      UDS_D: UDS_D,
+      Dimension_D: Dimension_D,
+      Car_Parking_D: Car_Parking_D,
+      block_d: block_d,
+      tower_d: tower_d,
+      BathRooms_D: BathRooms_D,
+      Bedrooms_D: Bedrooms_D,
       sqft_rate_c: sqft_rate_c,
       min_rate_per_sqft_c: min_rate_per_sqft_c,
       size: size,
@@ -444,6 +462,15 @@ const AddUnit = ({
       sqft_rate,
       plc_per_sqft,
       plc_per_sqft_c,
+      UDS_D,
+      Carpet_Area_D,
+      Floor_Plan_D,
+      Dimension_D,
+      Bedrooms_D,
+      BathRooms_D,
+      Car_Parking_D,
+      tower_d,
+      block_d,
       min_rate_per_sqft_c,
       sqft_rate_c,
       size,
@@ -479,6 +506,15 @@ const AddUnit = ({
       sqft_rate: sqft_rate,
       plc_per_sqft: plc_per_sqft,
       plc_per_sqft_c: plc_per_sqft_c,
+      Floor_Plan_D: Floor_Plan_D,
+      Carpet_Area_D: Carpet_Area_D,
+      UDS_D: UDS_D,
+      Dimension_D: Dimension_D,
+      Car_Parking_D: Car_Parking_D,
+      block_d: block_d,
+      tower_d: tower_d,
+      BathRooms_D: BathRooms_D,
+      Bedrooms_D: Bedrooms_D,
       sqft_rate_c: sqft_rate_c,
       min_rate_per_sqft_c: min_rate_per_sqft_c,
       size: size,
@@ -525,6 +561,23 @@ const AddUnit = ({
     { label: '4 Bhk', value: 4 },
     { label: '5 Bhk', value: 5 },
   ]
+
+
+
+  const plotTypeList = [
+    { label: 'Select Count', value: '' },
+    { label: 'Rectangle', value: 'plot1' },
+    { label: 'Irregular', value: 'plot2' },
+    { label: 'Square', value: 'plot3' },
+  ]
+
+
+
+
+
+
+
+
   const bathTypeList = [
     { label: 'Select Count', value: '' },
     { label: '1', value: 1 },
@@ -544,6 +597,12 @@ const AddUnit = ({
     { label: 'North-East', value: 'North-East' },
     { label: 'North-West', value: 'North-West' },
   ]
+
+
+
+
+
+
   const statusList = [
     { label: 'Select the Status', value: '' },
     { label: 'Available', value: 'available' },
@@ -623,6 +682,15 @@ const AddUnit = ({
                  defaultCost?.sqft_cost_gst || 0,
                 plc_per_sqft: unitDetails?.plc_per_sqft || 0,
                 plc_per_sqft_c: unitDetails?.plc_per_sqft_c || 0,
+                Carpet_Area_D: unitDetails?.Carpet_Area_D || 0,
+                UDS_D: unitDetails?.UDS_D || 0,
+                Floor_Plan_D: unitDetails?.Floor_Plan_D || 0,
+                Bedrooms_D: unitDetails?.Bedrooms_D || 0,
+                BathRooms_D: unitDetails?.BathRooms_D || 0,
+                Car_Parking_D: unitDetails?.Car_Parking_D || 0,
+                tower_d: unitDetails?.tower_d || 0,
+                block_d: unitDetails?.block_d || 0,
+                Dimension_D: unitDetails?.Dimension_D || 0,
                 min_rate_per_sqft_c: unitDetails?.min_rate_per_sqft_c ||0,
 
                 size: unitDetails?.size || '',
@@ -694,13 +762,37 @@ const AddUnit = ({
                                 type="text"
                               />
                             </div>
-                            <div className="mb-3 space-y-2 w-full text-xs mt-2">
+                            {/* <div className="mb-3 space-y-2 w-full text-xs mt-2">
                               <TextField
                                 label="Type*"
                                 name="size"
                                 type="text"
                               />
+                            </div> */}
+
+
+
+
+                            <div className="w-full flex flex-col mt-2">
+                              <CustomSelect
+                                name="size"
+                                label="Type*"
+                                className="input mt-"
+                                onChange={(value) => {
+                                  formik.setFieldValue('size', value.value)
+                                }}
+                                value={formik.values.size}
+                                // options={aquaticCreatures}
+                                options={projectDetails?.projectType?.name === "Plots" ? plotTypeList : unitTypeList}
+
+                                //options={unitTypeList}
+                              />
                             </div>
+
+
+
+
+
                             <div className="w-full flex flex-col mt-2">
                               <CustomSelect
                                 name="facing"
@@ -715,16 +807,147 @@ const AddUnit = ({
                               />
                             </div>
 
-                            <div className="space-y-2 w-full text-xs mt-2">
+
+
+                            {(projectDetails?.projectType?.name === 'Villas' || projectDetails?.projectType?.name === "Plots") && (
+
+                            <div className="mb-3 space-y-2 w-full text-xs mt-2">
                               <TextField
-                                label="Area Sqft*"
-                                name="area"
-                                type="number"
+                                label="Dimension"
+                                name="Dimension_D"
+                                type="text"
                               />
                             </div>
+
+                             )} 
+
                           </div>
                         </section>
 
+
+
+
+                        {(projectDetails?.projectType?.name === 'Villas' || projectDetails?.projectType?.name === "Apartment") && (
+                        <section className="mt-1 px-4 rounded-lg bg-white border border-gray-100 shadow">
+                          <section className="flex flex-row  pt-2 ">
+                            <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-cyan-200"></div>
+                            <span className="ml-1 leading-[15px] ">
+                              <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
+                              Details<abbr title="required"></abbr>
+                              </label>
+                            </span>
+                          </section>
+                          <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
+
+                          <div className=" space-y-2 w-full text-xs mt-">
+                              <TextField
+                                label="Bedrooms"
+                                name="Bedrooms_D"
+                                type="number"
+                              />
+                            </div>
+                          {/* <div className="space-y-2 w-full text-xs ">
+                              <TextField
+                                label={`${["Villas","Plots"].includes(projectDetails?.projectType?.name)? "BUA Sqft*" : "Super BUA" 
+                                }`}
+                                name="area"
+                                type="number"
+                              />
+                            </div> */}
+
+                            <div className="space-y-2 w-full text-xs mt-">
+                              <TextField
+                                label="Bathrooms"
+                                name="BathRooms_D"
+                                type="number"
+                              />
+                            </div>
+
+                            <div className="mb-3 space-y-2 w-full text-xs mt-">
+                              <TextField
+                                label="Car Parking"
+                                name="Car_Parking_D"
+                                type="text"
+                              />
+                            </div>
+                          </div>
+
+
+
+
+                          {(projectDetails?.projectType?.name === "Apartment") && (
+                          <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
+
+<div className=" space-y-2 w-full text-xs mt-">
+    <TextField
+      label="UDS"
+      name="UDS_D"
+      type="number"
+    />
+  </div>
+{/* <div className="space-y-2 w-full text-xs ">
+    <TextField
+      label={`${["Villas","Plots"].includes(projectDetails?.projectType?.name)? "BUA Sqft*" : "Super BUA" 
+      }`}
+      name="area"
+      type="number"
+    />
+  </div> */}
+
+  <div className="space-y-2 w-full text-xs mt-">
+    <TextField
+      label="Carpet Area"
+      name="Carpet_Area_D"
+      type="number"
+    />
+  </div>
+
+
+  <div className="mb-3 space-y-2 w-full text-xs mt-">
+                              <TextField
+                                label="Tower"
+                                name="tower_d"
+                                type="text"
+                              />
+                            </div>
+
+
+
+                            <div className="mb-3 space-y-2 w-full text-xs mt-">
+                              <TextField
+                                label="Block"
+                                name="block_d"
+                                type="text"
+                              />
+                            </div>
+
+  <div className="mb-3 space-y-2 w-full text-xs mt-">
+    <TextField
+      label="Floor"
+      name="Floor_Plan_D"
+      type="text"
+    />
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+ )} 
+                        </section>
+                       )} 
+
+           
                         <section className="mt-1 px-4 rounded-lg bg-white border border-gray-100 shadow">
                           <section className="flex flex-row  pt-2 ">
                             <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-cyan-200"></div>
@@ -735,6 +958,26 @@ const AddUnit = ({
                             </span>
                           </section>
                           <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
+                          {/* <div className="space-y-2 w-full text-xs ">
+                              <TextField
+                                label={`${["Villas","Plots"].includes(projectDetails?.projectType?.name)? "Plot Area Sqft*" : "Super BUA" 
+                                }`}
+                                name="area"
+                                type="number"
+                              />
+                            </div> */}
+
+
+                              <div className="space-y-2 w-full text-xs ">
+                              <TextField
+                                label={`${["Villas","Plots"].includes(projectDetails?.projectType?.name)? "Plot Area Sqft*" : "Super BUA Sqft" 
+                                }`}
+                                name="area"
+                                type="number"
+                              />
+                            </div>
+
+
                             <div className=" space-y-2 w-full text-xs mt-">
                               <TextField
                                 label="Rate per Sqft *"
@@ -760,7 +1003,7 @@ const AddUnit = ({
                           </div>
                         </section>
 
-                        {/* {type === 'Villas' && ( */}
+                        {projectDetails?.projectType?.name === 'Villas' && (
                         <section className="mt-1 px-4 rounded-lg bg-white border border-gray-100 shadow">
                           <section className="flex flex-row  pt-2 ">
                             <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-cyan-200"></div>
@@ -771,31 +1014,44 @@ const AddUnit = ({
                             </span>
                           </section>
                           <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
-                            <div className=" space-y-2 w-full text-xs mt-">
+
+
+                          <div className="space-y-2 w-full text-xs mt-">
+                              <TextField
+                                label="BUA Sqft*"
+                                name="plc_per_sqft_c"
+                                type="number"
+                              />
+                            </div>
+
+                          <div className=" space-y-2 w-full text-xs mt-">
                               <TextField
                                 label="Rate per Sqft *"
                                 name="sqft_rate_c"
                                 type="number"
                               />
                             </div>
-                            <div className="space-y-2 w-full text-xs mt-">
+                          {/* <div className="space-y-2 w-full text-xs ">
                               <TextField
-                                label="PLC per sqft*"
-                                name="plc_per_sqft_c"
+                                label={`${["Villas","Plots"].includes(projectDetails?.projectType?.name)? "BUA Sqft*" : "Super BUA" 
+                                }`}
+                                name="area"
                                 type="number"
                               />
-                            </div>
+                            </div> */}
+
+   
 
                             <div className="mb-3 space-y-2 w-full text-xs mt-">
                               <TextField
-                                label="Min Rate per Sqft"
+                                label="Carpet Area Sqft"
                                 name="min_rate_per_sqft_c"
                                 type="text"
                               />
                             </div>
                           </div>
                         </section>
-                        {/* )}  */}
+                       )} 
 
 
 
