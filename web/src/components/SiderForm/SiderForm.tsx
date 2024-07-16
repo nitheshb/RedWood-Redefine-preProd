@@ -21,6 +21,7 @@ import ViewDocxFile from '../A_LegalModule/viewDocxFile'
 import AddCampaignForm from '../A_MarketingModule/AddCampaign'
 import LegalHomeList from '../A_ProjModule/LegalHomeList'
 import NotificationsSetupForm from '../A_ProjModule/NotificatoinsSetupFromHome'
+import ProjectAccessSideView from '../A_ProjModule/ProjectAccessSideView'
 import ProjectDetailsFlowBody from '../A_ProjModule/ProjectDetails'
 import ProjectsDocsListView from '../A_ProjModule/viewLegalDocument'
 import AddTaskForm from '../A_TaskMan/AddTaskForm'
@@ -44,7 +45,6 @@ import MoreDetailsPhaseForm from '../MoreDetailsPhaseForm/MoreDetailsPhaseForm'
 import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import TransactionUpdateSideView from '../transactionUpdateSideView'
 import ViewUnitDetails from '../ViewUnitDetails'
-import ProjectAccessSideView from '../A_ProjModule/ProjectAccessSideView'
 
 const SiderForm = ({
   mode,
@@ -251,7 +251,7 @@ const SiderForm = ({
                     blockDetails={blockDetails}
                   />
                 )}
-                {title === 'Edit Plot' && (
+                {title === 'Edit Unit' && (
                   <AddUnit
                     title={title}
                     data={data}
@@ -312,14 +312,13 @@ const SiderForm = ({
                 )}
                 {title === 'disp_project_access' && (
                   <>
-                   <ProjectAccessSideView
-                          title={'Project Access'}
-                          dialogOpen={'false'}
-                          data={{ phase: phaseDetails }}
-                          projectDetails={projectDetails}
-                          subView={subView}
-                        />
-
+                    <ProjectAccessSideView
+                      title={'Project Access'}
+                      dialogOpen={'false'}
+                      data={{ phase: phaseDetails }}
+                      projectDetails={projectDetails}
+                      subView={subView}
+                    />
                   </>
                 )}
                 {title === 'disp_unit_constDetails' && (

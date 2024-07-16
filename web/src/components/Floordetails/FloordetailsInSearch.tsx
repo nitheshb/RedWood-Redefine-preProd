@@ -893,35 +893,35 @@ const FloordetailsSearch = ({
                       pickedValue={filStatus}
                     /> */}
 
-                    {/* <DropCompUnitStatus
+                {/* <DropCompUnitStatus
                       type={'bedrooms'}
                       id={'bed_rooms'}
                       setStatusFun={makeFilterFun}
                       filteredUnits={unitsFeed}
                       pickedValue={filBedRooms}
                     /> */}
-                    {/* <DropCompUnitStatus
+                {/* <DropCompUnitStatus
                   type={'bathrooms'}
                   id={'bath_rooms'}
                   setStatusFun={makeFilterFun}
                   filteredUnits={filteredUnits}
                   pickedValue={filBathrooms}
                 /> */}
-                    {/* <DropCompUnitStatus
+                {/* <DropCompUnitStatus
                       type={'Size'}
                       id={'super_built_up_area'}
                       setStatusFun={makeFilterFun}
                       filteredUnits={unitsFeed}
                       pickedValue={filSuperBuildUpArea}
                     /> */}
-                    {/* <DropCompUnitStatus
+                {/* <DropCompUnitStatus
                   type={'Price'}
                   id={'rate_per_sqft'}
                   setStatusFun={makeFilterFun}
                   filteredUnits={filteredUnits}
                   pickedValue={filRatePerSqft}
                 /> */}
-                    {/* <DropCompUnitStatus
+                {/* <DropCompUnitStatus
                       type={'Type'}
                       id={'type'}
                       setStatusFun={makeFilterFun}
@@ -999,13 +999,13 @@ const FloordetailsSearch = ({
                                       setSelUnitDetails1(data)
                                       setSliderInfo({
                                         open: true,
-                                        title: 'Edit Plot',
+                                        title: 'Edit Unit',
                                         sliderData: {
                                           unitDetail: data,
                                           phaseDetail: phaseFeed,
                                           leadDetailsObj: leadDetailsObj,
                                         },
-                                        widthClass: 'max-w-4xl',
+                                        widthClass: 'max-w-2xl',
                                       })
                                     } else {
                                       console.log('customer Detailsare', data)
@@ -1120,7 +1120,7 @@ const FloordetailsSearch = ({
 
                                                       setSliderInfo({
                                                         open: true,
-                                                        title: 'Edit Plot',
+                                                        title: 'Edit Unit',
                                                         sliderData: {
                                                           unitDetail: data,
                                                           phaseDetail:
@@ -1128,7 +1128,7 @@ const FloordetailsSearch = ({
                                                           leadDetailsObj:
                                                             leadDetailsObj,
                                                         },
-                                                        widthClass: 'max-w-4xl',
+                                                        widthClass: 'max-w-2xl',
                                                       })
                                                     }}
                                                   >
@@ -1139,7 +1139,14 @@ const FloordetailsSearch = ({
                                             </div>
                                           )}
 
-                                          {['booked', 'allotment', 'agreement_pipeline', 'agreement', 'registered', 'possession'].includes(data?.status) && (
+                                          {[
+                                            'booked',
+                                            'allotment',
+                                            'agreement_pipeline',
+                                            'agreement',
+                                            'registered',
+                                            'possession',
+                                          ].includes(data?.status) && (
                                             <div className="flex flex-col items-right justify-between">
                                               <div className="flex flex-row justify-between items-right">
                                                 <h3
@@ -1268,13 +1275,13 @@ const FloordetailsSearch = ({
                                   setSelUnitDetails1(data)
                                   setSliderInfo({
                                     open: true,
-                                    title: 'Edit Plot',
+                                    title: 'Edit Unit',
                                     sliderData: {
                                       unitDetail: data,
                                       phaseDetail: phaseFeed,
                                       leadDetailsObj: leadDetailsObj,
                                     },
-                                    widthClass: 'max-w-4xl',
+                                    widthClass: 'max-w-2xl',
                                   })
                                 } else {
                                   console.log('customer Detailsare', data)
@@ -1374,14 +1381,14 @@ const FloordetailsSearch = ({
 
                                                   setSliderInfo({
                                                     open: true,
-                                                    title: 'Edit Plot',
+                                                    title: 'Edit Unit',
                                                     sliderData: {
                                                       unitDetail: data,
                                                       phaseDetail: phaseFeed,
                                                       leadDetailsObj:
                                                         leadDetailsObj,
                                                     },
-                                                    widthClass: 'max-w-4xl',
+                                                    widthClass: 'max-w-2xl',
                                                   })
                                                 }}
                                               >
@@ -1391,7 +1398,14 @@ const FloordetailsSearch = ({
                                           </div>
                                         </div>
                                       )}
-                                      {['booked', 'allotment', 'agreement_pipeline', 'agreement', 'registered', 'possession'].includes(data?.status) && (
+                                      {[
+                                        'booked',
+                                        'allotment',
+                                        'agreement_pipeline',
+                                        'agreement',
+                                        'registered',
+                                        'possession',
+                                      ].includes(data?.status) && (
                                         <div className="flex flex-col items-right justify-between">
                                           <div className="flex flex-row justify-between items-right">
                                             <h3
