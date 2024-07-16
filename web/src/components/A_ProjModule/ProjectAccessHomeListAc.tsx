@@ -11,7 +11,11 @@ import * as Yup from 'yup'
 
 import Loader from 'src/components/Loader/Loader'
 import { ProjectAccessFolder, ProjectFolders } from 'src/constants/projects'
-import { deleteProject, getPlanDiagramByPhase, updateMoreDetails } from 'src/context/dbQueryFirebase'
+import {
+  deleteProject,
+  getPlanDiagramByPhase,
+  updateMoreDetails,
+} from 'src/context/dbQueryFirebase'
 import { getAllProjects } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { TextAreaField } from 'src/util/formFields/TextAreaField'
@@ -156,11 +160,11 @@ const ProjectAccessHomeList = ({
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl ">
       {/* documents page */}
-      <div className="mx-4 my-2 p-2 rounded-md border border-[#E5EAF2] flex flex-col justify-between">
-        <div className="ml-3 mt-5 font-bold">Project Documents</div>
+      <div className="mx-4 my-2 py-2 rounded-md border border-[#E5EAF2] flex flex-col justify-between">
+        <div className="ml-3 mt-1 font-bold">Project Documents</div>
         <ul className="">
-          <li className="py-2">
-            <section className="flex flex-row mt-5 grid grid-cols-3 ">
+          <li className="">
+            <section className="flex flex-row mt- grid grid-cols-4 ">
               {ProjectFolders?.map((project, i) => (
                 // <span key={i}>{project?.projectName}</span>
                 <>
@@ -168,7 +172,7 @@ const ProjectAccessHomeList = ({
                     <>
                       <div
                         key={i}
-                        className=" cursor-pointer relative mx-auto break-words bg-white  mb-4  rounded-xl  transition duration-300 ease-in-out  "
+                        className=" cursor-pointer relative mx-auto break-words bg-white  mb-2  rounded-xl  transition duration-300 ease-in-out  "
                         onClick={() => dispDoc(project, project.category)}
                       >
                         {/* <FileCardAnim projectDetails={project} /> */}
@@ -177,14 +181,14 @@ const ProjectAccessHomeList = ({
                             borderRadius: 4,
                           }}
                           variant="outlined"
-                          className="w-[230px] m-3 p-3"
+                          className="w-[180px] m-1 p-2 flex flex-row"
                         >
                           <img
                             alt=""
-                            className="h-12 w-10 bg-white "
+                            className="h-6 w-5 bg-white "
                             src={project.img}
                           />
-                          <div className="font-semibold	">{project.name}</div>
+                          <div className="font-semibold text-[12px] ml-2 mt-[-1.5px]">{project.name}</div>
                           {/* <div className="text-xs">{project.size}</div>
                           <div className="text-xs">{project.shared}</div> */}
                         </Card>
@@ -196,11 +200,12 @@ const ProjectAccessHomeList = ({
             </section>
           </li>
         </ul>
-      </div><div className="mx-4 my-4 p-4 rounded-md border border-[#E5EAF2] flex flex-col justify-between">
-        <div className="ml-3 mt-5 font-bold">Module Access Management</div>
+      </div>
+      <div className="mx-4 my- py-2 rounded-md border border-[#E5EAF2] flex flex-col justify-between">
+        <div className="ml-3 mt-1 font-bold">Module Access Management</div>
         <ul className="">
-          <li className="py-2">
-            <section className="flex flex-row mt-3 grid grid-cols-3 ">
+          <li className="">
+            <section className="flex flex-row mt- grid grid-cols-4 ">
               {ProjectAccessFolder?.map((project, i) => (
                 // <span key={i}>{project?.projectName}</span>
                 <>
@@ -217,14 +222,14 @@ const ProjectAccessHomeList = ({
                             borderRadius: 4,
                           }}
                           variant="outlined"
-                          className="w-[230px] m-3 p-3"
+                          className="w-[180px] m-1 p-2 flex flex-row"
                         >
                           <img
                             alt=""
-                            className="h-12 w-10 bg-white "
+                            className="h-6 w-5 bg-white "
                             src={project.img}
                           />
-                          <div className="font-semibold	">{project.name}</div>
+                          <div className="font-semibold	text-[12px] ml-2 mt-[-1.5px]">{project.name}</div>
                           {/* <div className="text-xs">{project.size}</div>
                           <div className="text-xs">{project.shared}</div> */}
                         </Card>
@@ -298,7 +303,7 @@ const ProjectAccessHomeList = ({
         projectsList={projects}
         viewLegalDocData={viewDocData}
       /> */}
-       <SiderForm
+      <SiderForm
         open={isDocViewOpenSideView}
         setOpen={setIsDocViewOpenSideView}
         title={'disp_project_docs'}
@@ -314,9 +319,9 @@ const ProjectAccessHomeList = ({
         setOpen={setIsAccessSideView}
         title={'disp_project_access'}
         subView={subView}
-              //    data={{ phase: data, project: projectDetails }}
-              // dept="admin"
-              // source={source}
+        //    data={{ phase: data, project: projectDetails }}
+        // dept="admin"
+        // source={source}
         phaseDetails={data}
         projectDetails={projectDetails}
         unitsViewMode={false}
