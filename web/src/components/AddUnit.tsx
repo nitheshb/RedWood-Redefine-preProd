@@ -279,7 +279,7 @@ const AddUnit = ({
     //   bathrooms,
     //   bedRooms,
     //   buildup_area,
-    //   carpet_area,
+    //   cartpet_area_sqft,
     //   facing,
     //   sqft_rate,
     //   floor,
@@ -294,18 +294,19 @@ const AddUnit = ({
       PID_no,
       area,
       sqft_rate,
-      sqft_rate_c,
+      construct_price_sqft,
       plc_per_sqft,
-      plc_per_sqft_c,
-      UDS_D,
-      Floor_Plan_D,
-      Carpet_Area_D,
-      Dimension_D,
-      Bedrooms_D,
-      BathRooms_D,
-      Car_Parking_D,
-      tower_d,
-      block_d,
+      construct_area,
+      uds_sqft,
+      floor_plan,
+      cartpet_area_sqft,
+      dimension,
+      bedrooms_c,
+      bathrooms_c,
+      car_parkings_c,
+      tower_no,
+      block_no,
+      floor_no,
       min_rate_per_sqft,
       min_rate_per_sqft_c,
       size,
@@ -320,6 +321,8 @@ const AddUnit = ({
 
       east_sch_by,
       west_sch_by,
+      north_sch_by,
+      south_sch_by,
       status,
 
       release_status,
@@ -350,17 +353,18 @@ const AddUnit = ({
       area: area,
       sqft_rate: sqft_rate,
       plc_per_sqft: plc_per_sqft,
-      plc_per_sqft_c: plc_per_sqft_c,
-      Floor_Plan_D: Floor_Plan_D,
-      Carpet_Area_D: Carpet_Area_D,
-      UDS_D: UDS_D,
-      Dimension_D: Dimension_D,
-      Car_Parking_D: Car_Parking_D,
-      block_d: block_d,
-      tower_d: tower_d,
-      BathRooms_D: BathRooms_D,
-      Bedrooms_D: Bedrooms_D,
-      sqft_rate_c: sqft_rate_c,
+      construct_area: construct_area,
+      floor_plan: floor_plan,
+      cartpet_area_sqft: cartpet_area_sqft,
+      uds_sqft: uds_sqft,
+      dimension: dimension,
+      car_parkings_c: car_parkings_c,
+      block_no: block_no,
+      tower_no: tower_no,
+      floor_no: floor_no,
+      bathrooms_c: bathrooms_c,
+      bedrooms_c: bedrooms_c,
+      construct_price_sqft: construct_price_sqft,
       min_rate_per_sqft_c: min_rate_per_sqft_c,
       min_rate_per_sqft: min_rate_per_sqft,
       size: size,
@@ -374,6 +378,8 @@ const AddUnit = ({
       north_south_d: north_south_d,
       east_sch_by: east_sch_by,
       west_sch_by: west_sch_by,
+      north_sch_by: north_sch_by,
+      south_sch_by: south_sch_by,
       status: status,
       release_status: release_status,
       mortgage_type: mortgage_type,
@@ -407,7 +413,7 @@ const AddUnit = ({
       bed_rooms: bedRooms,
       builtup_area: buildup_area,
       builtup_area_uom: 'sqft',
-      carpet_area: carpet_area,
+      cartpet_area_sqft: cartpet_area_sqft,
       carpet_area_uom: 'sqft',
       facing: facing,
       floor: floor,
@@ -454,19 +460,20 @@ const AddUnit = ({
       area,
       sqft_rate,
       plc_per_sqft,
-      plc_per_sqft_c,
-      UDS_D,
-      Carpet_Area_D,
-      Floor_Plan_D,
-      Dimension_D,
-      Bedrooms_D,
-      BathRooms_D,
-      Car_Parking_D,
-      tower_d,
-      block_d,
+      construct_area,
+      uds_sqft,
+      cartpet_area_sqft,
+      floor_plan,
+      dimension,
+      bedrooms_c,
+      bathrooms_c,
+      car_parkings_c,
+      tower_no,
+      block_no,
+      floor_no,
       min_rate_per_sqft,
       min_rate_per_sqft_c,
-      sqft_rate_c,
+      construct_price_sqft,
       size,
       facing,
       unit_d,
@@ -479,6 +486,8 @@ const AddUnit = ({
 
       east_sch_by,
       west_sch_by,
+      north_sch_by,
+      south_sch_by,
       status,
 
       release_status,
@@ -499,17 +508,18 @@ const AddUnit = ({
       area: area,
       sqft_rate: sqft_rate,
       plc_per_sqft: plc_per_sqft,
-      plc_per_sqft_c: plc_per_sqft_c,
-      Floor_Plan_D: Floor_Plan_D,
-      Carpet_Area_D: Carpet_Area_D,
-      UDS_D: UDS_D,
-      Dimension_D: Dimension_D,
-      Car_Parking_D: Car_Parking_D,
-      block_d: block_d,
-      tower_d: tower_d,
-      BathRooms_D: BathRooms_D,
-      Bedrooms_D: Bedrooms_D,
-      sqft_rate_c: sqft_rate_c,
+      construct_area: construct_area,
+      floor_plan: floor_plan,
+      cartpet_area_sqft: cartpet_area_sqft,
+      uds_sqft: uds_sqft,
+      dimension: dimension,
+      car_parkings_c: car_parkings_c,
+      block_no: block_no,
+      tower_no: tower_no,
+      floor_no: floor_no,
+      bathrooms_c: bathrooms_c,
+      bedrooms_c: bedrooms_c,
+      construct_price_sqft: construct_price_sqft,
       min_rate_per_sqft: min_rate_per_sqft,
       min_rate_per_sqft_c: min_rate_per_sqft_c,
       size: size,
@@ -523,6 +533,8 @@ const AddUnit = ({
       north_south_d: north_south_d,
       east_sch_by: east_sch_by,
       west_sch_by: west_sch_by,
+      north_sch_by: north_sch_by,
+      south_sch_by: south_sch_by,
       status: status,
       release_status: release_status,
       mortgage_type: mortgage_type,
@@ -550,7 +562,7 @@ const AddUnit = ({
 
   const unitTypeList = [
     { label: 'Select Count', value: '' },
-    { label: '1 Bhk', value: 1 },
+    { label: '1 Bhk', value: '1' },
     { label: '2 Bhk', value: 2 },
     { label: '3 Bhk', value: 3 },
     { label: '4 Bhk', value: 4 },
@@ -559,9 +571,9 @@ const AddUnit = ({
 
   const plotTypeList = [
     { label: 'Select Count', value: '' },
-    { label: 'Rectangle', value: 'plot1' },
-    { label: 'Irregular', value: 'plot2' },
-    { label: 'Square', value: 'plot3' },
+    { label: 'Rectangle', value: 'rectangle' },
+    { label: 'Irregular', value: 'odd' },
+    { label: 'Square', value: 'even' },
   ]
 
   const bathTypeList = [
@@ -573,15 +585,15 @@ const AddUnit = ({
     { label: '5', value: 5 },
   ]
   const facingTypeList = [
-    { label: 'Select the Facing', value: '' },
-    { label: 'East', value: 'East' },
-    { label: 'West', value: 'West' },
-    { label: 'North', value: 'North' },
-    { label: 'South', value: 'South' },
-    { label: 'South-East', value: 'South-East' },
-    { label: 'South-West', value: 'South-West' },
-    { label: 'North-East', value: 'North-East' },
-    { label: 'North-West', value: 'North-West' },
+    { label: 'Select Facing', value: '' },
+    { label: 'East', value: 'east' },
+    { label: 'West', value: 'west' },
+    { label: 'North', value: 'north' },
+    { label: 'South', value: 'south' },
+    { label: 'South-East', value: 'south-east' },
+    { label: 'South-West', value: 'south-west' },
+    { label: 'North-East', value: 'north-east' },
+    { label: 'North-West', value: 'north-west' },
   ]
 
   const statusList = [
@@ -595,11 +607,11 @@ const AddUnit = ({
   const releaseStausList = [
     { label: 'Release Status', value: '' },
     { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'No' },
+    { label: 'No', value: 'no' },
   ]
   const mortgageType = [
     { label: 'Select Mortgage', value: '' },
-    { label: 'NA', value: 'NA' },
+    { label: 'NA', value: 'na' },
     { label: 'Bank', value: 'bank' },
     { label: '3rd Party Investor', value: '3rd_party_investor' },
   ]
@@ -628,7 +640,7 @@ const AddUnit = ({
   //     : Yup.number().notRequired(),
 
   // facing: Yup.string().required('facing is required'),
-  // carpet_area: Yup.number().required('Carpet Area is required'),
+  // cartpet_area_sqft: Yup.number().required('Carpet Area is required'),
   // buildup_area: Yup.number().required('Buildup Area is required'),
   // super_build_up_area: Yup.number().required('Sqft Rate is required'),
   // })
@@ -662,23 +674,24 @@ const AddUnit = ({
                 sqft_rate:
                   unitDetails?.sqft_rate || defaultCost?.sqft_cost_gst || 0,
                 plc_per_sqft: unitDetails?.plc_per_sqft || 0,
-                plc_per_sqft_c: unitDetails?.plc_per_sqft_c || 0,
-                Carpet_Area_D: unitDetails?.Carpet_Area_D || 0,
-                UDS_D: unitDetails?.UDS_D || 0,
-                Floor_Plan_D: unitDetails?.Floor_Plan_D || 0,
-                Bedrooms_D: unitDetails?.Bedrooms_D || 0,
-                BathRooms_D: unitDetails?.BathRooms_D || 0,
-                Car_Parking_D: unitDetails?.Car_Parking_D || 0,
-                tower_d: unitDetails?.tower_d || 0,
-                block_d: unitDetails?.block_d || 0,
-                Dimension_D: unitDetails?.Dimension_D || 0,
+                construct_area: unitDetails?.construct_area || 0,
+                cartpet_area_sqft: unitDetails?.cartpet_area_sqft || 0,
+                uds_sqft: unitDetails?.uds_sqft || 0,
+                floor_plan: unitDetails?.floor_plan || 0,
+                bedrooms_c: unitDetails?.bedrooms_c || 0,
+                bathrooms_c: unitDetails?.bathrooms_c || 0,
+                car_parkings_c: unitDetails?.car_parkings_c || 0,
+                tower_no: unitDetails?.tower_no || 0,
+                block_no: unitDetails?.block_no || 0,
+                floor_no: unitDetails?.floor_no || 0,
+                dimension: unitDetails?.dimension || 0,
                 min_rate_per_sqft_c: unitDetails?.min_rate_per_sqft_c || 0,
 
                 size: unitDetails?.size || '',
                 facing: unitDetails?.facing || '',
                 unit_d: unitDetails?.unit_d || '',
                 min_rate_per_sqft: unitDetails?.min_rate_per_sqft || 0,
-                sqft_rate_c: unitDetails?.sqft_rate_c || 0,
+                construct_price_sqft: unitDetails?.construct_price_sqft || 0,
                 east_d: unitDetails?.east_d || 0,
                 west_d: unitDetails?.west_d || 0,
                 north_d: unitDetails?.north_d || 0,
@@ -687,11 +700,13 @@ const AddUnit = ({
                 north_south_d: unitDetails?.north_south_d || 0,
                 east_sch_by: unitDetails?.east_sch_by || '',
                 west_sch_by: unitDetails?.west_sch_by || '',
+                south_sch_by: unitDetails?.south_sch_by || '',
+                north_sch_by: unitDetails?.north_sch_by || '',
                 status: unitDetails?.status || '',
                 release_status: unitDetails?.release_status || '',
                 mortgage_type: unitDetails?.mortgage_type || '',
                 // bathrooms: '',
-                // carpet_area: 0,
+                // cartpet_area_sqft: 0,
                 // buildup_area: 0,
                 // super_build_up_area: 0,
               }}
@@ -761,7 +776,7 @@ const AddUnit = ({
                               <div className="mb-3 space-y-2 w-full text-xs mt-2">
                                 <TextField
                                   label="Block"
-                                  name="block_d"
+                                  name="block_no"
                                   type="text"
                                 />
                               </div>
@@ -771,7 +786,7 @@ const AddUnit = ({
                               <div className="mb-3 space-y-2 w-full text-xs mt-2">
                                 <TextField
                                   label="Tower"
-                                  name="tower_d"
+                                  name="tower_no"
                                   type="text"
                                 />
                               </div>
@@ -782,7 +797,7 @@ const AddUnit = ({
                               <div className="mb-3 space-y-2 w-full text-xs mt-2">
                                 <TextField
                                   label="Floor"
-                                  name="Floor_Plan_D"
+                                  name="floor_no"
                                   type="text"
                                 />
                               </div>
@@ -824,7 +839,7 @@ const AddUnit = ({
                               <div className="mb-3 space-y-2 w-full text-xs mt-2">
                                 <TextField
                                   label="Dimension"
-                                  name="Dimension_D"
+                                  name="dimension"
                                   type="text"
                                 />
                               </div>
@@ -883,7 +898,7 @@ const AddUnit = ({
                               {/* <div className=" space-y-2 w-full text-xs mt-">
                                 <TextField
                                   label="Bedrooms"
-                                  name="Bedrooms_D"
+                                  name="bedrooms_c"
                                   type="number"
                                 />
                               </div> */}
@@ -903,7 +918,7 @@ const AddUnit = ({
                                   onChange={(value) => {
                                     formik.setFieldValue('size', value.value)
                                     formik.setFieldValue(
-                                      'Bedrooms_D',
+                                      'bedrooms_c',
                                       value.value
                                     )
                                   }}
@@ -923,7 +938,7 @@ const AddUnit = ({
                               <div className="space-y-2 w-full text-xs mt-">
                                 <TextField
                                   label="Bathrooms"
-                                  name="BathRooms_D"
+                                  name="bathrooms_c"
                                   type="number"
                                 />
                               </div>
@@ -931,7 +946,7 @@ const AddUnit = ({
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
                                 <TextField
                                   label="Car Parking"
-                                  name="Car_Parking_D"
+                                  name="car_parkings_c"
                                   type="text"
                                 />
                               </div>
@@ -950,7 +965,7 @@ const AddUnit = ({
                                 <div className="space-y-2 w-full text-xs mt-">
                                   <TextField
                                     label="Carpet Area sqft"
-                                    name="Carpet_Area_D"
+                                    name="cartpet_area_sqft"
                                     type="number"
                                   />
                                 </div>
@@ -961,7 +976,7 @@ const AddUnit = ({
                                 <div className=" space-y-2 w-full text-xs mt-">
                                   <TextField
                                     label="UDS sqft"
-                                    name="UDS_D"
+                                    name="uds_sqft"
                                     type="number"
                                   />
                                 </div>
@@ -1043,7 +1058,7 @@ const AddUnit = ({
                               <div className="space-y-2 w-full text-xs mt-">
                                 <TextField
                                   label="BUA Sqft*"
-                                  name="plc_per_sqft_c"
+                                  name="construct_area"
                                   type="number"
                                 />
                               </div>
@@ -1051,7 +1066,7 @@ const AddUnit = ({
                               <div className=" space-y-2 w-full text-xs mt-">
                                 <TextField
                                   label="Price per Sqft *"
-                                  name="sqft_rate_c"
+                                  name="construct_price_sqft"
                                   type="number"
                                 />
                               </div>
@@ -1067,7 +1082,7 @@ const AddUnit = ({
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
                                 <TextField
                                   label="Carpet Area Sqft"
-                                  name="Carpet_Area_D"
+                                  name="cartpet_area_sqft"
                                   type="text"
                                 />
                               </div>

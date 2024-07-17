@@ -1710,13 +1710,19 @@ const Floordetails = ({
                   className="cursor-pointer  z-10 flex flex-col  max-w-md p-2 my-0  mx-4 rounded-md inline-block  min-h-[50px]  min-w-[100px] border border-dotted border-black rounded-md"
                   onClick={() => {
                     setisUnitAddOpen(true)
-
+console.log('selected type is', ['Apartments', 'Apartment'].includes(
+  projectDetails?.projectType?.name
+)
+  ? 'Import Units'
+  : ['Plots'].includes(projectDetails?.projectType?.name)
+  ? 'Import Plot Units'
+  : 'Import Apartment Units',       projectDetails?.projectType?.name )
                     setAddUnitSlider({
                       open: true,
-                      title: ['Apartments', 'Apartment'].includes(
+                      title: ['Villas'].includes(
                         projectDetails?.projectType?.name
                       )
-                        ? 'Import Units'
+                        ? 'Import Villas'
                         : ['Plots'].includes(projectDetails?.projectType?.name)
                         ? 'Import Plot Units'
                         : 'Import Apartment Units',

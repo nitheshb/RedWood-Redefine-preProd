@@ -25,6 +25,7 @@ import {
   streamProjectMaster,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 
 import { gstValesPartA } from '../../../../../RedefineV2/web/src/constants/projects'
@@ -243,7 +244,6 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         const x = costConstructSqftA[0]
         setConstructionPerSqft(x?.charges)
         setConstGST(x?.gst.value)
-
       }
       setRows(fullCs)
     } else {
@@ -496,14 +496,28 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
   }
   const handleCostChange = (e) => {
     const inputValue = e.target.value
-    setRows(
-      rows.map((row) =>
-        row.component.value === 'sqft_cost_tax'
-          ? { ...row, ['charges']: inputValue }
-          : row
+
+    const rawValue = e.target.value.replace(/,/g, '')
+    const numValue = parseFloat(rawValue)
+    if (!isNaN(numValue)) {
+      setRows(
+        rows.map((row) =>
+          row.component.value === 'sqft_cost_tax'
+            ? { ...row, ['charges']: numValue }
+            : row
+        )
       )
-    )
-    setCostPerSqft(e.target.value)
+      setCostPerSqft(numValue)
+    }else{
+      setRows(
+        rows.map((row) =>
+          row.component.value === 'sqft_cost_tax'
+            ? { ...row, ['charges']: 0 }
+            : row
+        )
+      )
+      setCostPerSqft(0)
+    }
   }
   const handleConstructCostChange = (e) => {
     const inputValue = e.target.value
@@ -553,71 +567,22 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           </div>
         </div>
         <section className="flex flex-row space-x-4 mx-">
-            <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
-          <div className="mb-3 w-[140px]">
-            <label htmlFor="area" className="label  text-sm">
-              Base Cost per sqft*
-            </label>
-            <div className="flex">
-              <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-                {/* <svg
-              className="w-4 h-4 text-gray-500 "
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-            </svg> */}
-                Rs
-              </span>
-              <input
-                type="text"
-                id="website-admin"
-                className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
-                placeholder="cost/sqft"
-                value={costPerSqft}
-                onChange={handleCostChange}
-              />
-            </div>
-          </div>
-
-          <div className="ml-2 mb-3 w-[140px]">
-            <label htmlFor="area" className="label text-sm">
-              Standard Tax Rate*
-            </label>
-            <div className="flex">
-              <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-                {/* <svg
-              className="w-4 h-4 text-gray-500 "
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-            </svg> */}
-                %
-              </span>
-              <input
-                type="text"
-                id="website-admin"
-                className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
-                placeholder="GST"
-                value={gst}
-                onChange={handleCostGSTChange}
-              />
-            </div>
-          </div>
-          </section>
-          {type === 'Villas' && (
-            <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
-            <div className="mb-3 w-[220px] ">
+          <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
+            <div className="mb-3 w-[140px]">
               <label htmlFor="area" className="label  text-sm">
-                Base Construction Cost per sqft*
+                Base Price per sqft*
               </label>
-              <div className="flex w-[140px]">
+              <div className="flex">
                 <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+                  {/* <svg
+              className="w-4 h-4 text-gray-500 "
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+            </svg> */}
                   Rs
                 </span>
                 <input
@@ -625,32 +590,81 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                   id="website-admin"
                   className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
                   placeholder="cost/sqft"
-                  value={constructionPerSqft}
-                  onChange={handleConstructCostChange}
+                  value={formatIndianNumber(costPerSqft) || 0}
+                  onChange={handleCostChange}
                 />
               </div>
             </div>
-            <div className="mb-3 w-[210px]">
-            <label htmlFor="area" className="label text-sm">
-               Standard Tax Rate*
-            </label>
-            <div className="flex">
-              <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
-                %
-              </span>
-              <input
-                type="number"
-                id="website-admin"
-                className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 max-w-[120px] text-sm border-gray-300 p-2.5"
-                placeholder="GST"
-                value={constGst}
-                min="0"
-                max="100"
-                step="1"
-                onChange={handleConstCostGSTChange}
-              />
+
+            <div className="ml-2 mb-3 w-[140px]">
+              <label htmlFor="area" className="label text-sm">
+                Standard Tax Rate*
+              </label>
+              <div className="flex">
+                <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+                  {/* <svg
+              className="w-4 h-4 text-gray-500 "
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+            </svg> */}
+                  %
+                </span>
+                <input
+                  type="text"
+                  id="website-admin"
+                  className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                  placeholder="GST"
+                  value={gst}
+                  onChange={handleCostGSTChange}
+                />
+              </div>
             </div>
-          </div>
+          </section>
+          {type === 'Villas' && (
+            <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
+              <div className="mb-3 w-[220px] ">
+                <label htmlFor="area" className="label  text-sm">
+                  Base Construction Price per sqft*
+                </label>
+                <div className="flex w-[140px]">
+                  <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+                    Rs
+                  </span>
+                  <input
+                    type="text"
+                    id="website-admin"
+                    className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                    placeholder="cost/sqft"
+                    value={formatIndianNumber(constructionPerSqft) || 0}
+                    onChange={handleConstructCostChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3 w-[210px]">
+                <label htmlFor="area" className="label text-sm">
+                  Standard Tax Rate*
+                </label>
+                <div className="flex">
+                  <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+                    %
+                  </span>
+                  <input
+                    type="number"
+                    id="website-admin"
+                    className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 max-w-[120px] text-sm border-gray-300 p-2.5"
+                    placeholder="GST"
+                    value={constGst}
+                    min="0"
+                    max="100"
+                    step="1"
+                    onChange={handleConstCostGSTChange}
+                  />
+                </div>
+              </div>
             </section>
           )}
         </section>
@@ -849,16 +863,25 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
                                   <input
-                                    type="number"
-                                    value={row?.charges}
-                                    onChange={(e) =>
+                                    type="text"
+                                    value={formatIndianNumber(row?.charges)}
+                                    onChange={(e) => {
                                       // handleChange(row.id, 'unit', e.target.value)
-                                      handleChange1(
-                                        row.id,
-                                        'charges',
-                                        e.target.value
+                                      const rawValue = e.target.value.replace(
+                                        /,/g,
+                                        ''
                                       )
-                                    }
+                                      const numValue = parseFloat(rawValue)
+                                      if (!isNaN(numValue)) {
+                                        handleChange1(
+                                          row.id,
+                                          'charges',
+                                          numValue
+                                        )
+                                      } else {
+                                        handleChange1(row.id, 'charges', 0)
+                                      }
+                                    }}
                                     className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                                   />
                                 </td>

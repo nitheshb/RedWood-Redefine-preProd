@@ -1,22 +1,12 @@
+import { NumbersOutlined } from "@mui/icons-material";
+
 export const formatIndianNumber = function (num) {
-  const numStr = num.toString();
-  let formattedNum = '';
-  let count = 0;
-
-  for (let i = numStr.length - 1; i >= 0; i--) {
-    if (count === 3 && i !== 0) {
-      formattedNum = ',' + formattedNum;
-      count = 1;
-    } else if (count === 2 && formattedNum.includes(',')) {
-      formattedNum = ',' + formattedNum;
-      count = 0;
-    } else {
-      count++;
-    }
-    formattedNum = numStr[i] + formattedNum;
-  }
-
-  return formattedNum;
+  const [integerPart, decimalPart] = num.toString().split('.');
+  const lastThree = integerPart.slice(-3);
+  const otherNumbers = integerPart.slice(0, -3);
+  const formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+  const result = formattedNumber + (formattedNumber ? ',' : '') + lastThree;
+  return decimalPart ? `${result}.${decimalPart}` : result;
 }
 
 export function prettyDate(d) {

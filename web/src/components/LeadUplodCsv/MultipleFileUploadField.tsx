@@ -288,7 +288,7 @@ export function MultipleFileUploadField({
           console.log('import stuff is ', records)
           const clean1 = records.filter((row) => {
             return (
-              (row['Plot No.*'] != '' && row['Plot No.*'] != undefined) ||
+              (row['Plot No*'] != '' && row['Plot No*'] != undefined) ||
               (row['Unit No.*'] != '' && row['Unit No.*'] != undefined)
             )
           })
@@ -301,7 +301,7 @@ export function MultipleFileUploadField({
                 pId,
                 myPhase?.uid || '',
                 myBlock?.uid || '',
-                dRow['Plot No.*'] || dRow['Unit No.*']
+                dRow['Plot No*'] || dRow['Unit No.*']
               )
               // Plot Type*
               const computPlotObj = {
@@ -310,33 +310,33 @@ export function MultipleFileUploadField({
                 phaseId: dRow[''] || 1,
                 blockId: dRow[''] || 1,
                 Date: Timestamp.now().toMillis(),
-                unit_no: dRow['Plot No.*'] || dRow['Unit No.*'],
+                unit_no: dRow['Plot No*'] || dRow['Unit No.*'],
                 survey_no: dRow['Survey No'] || '',
                 BMRDA_STRR_Aproval_status:
                   dRow['BMRDA/STRR Aproval status'] || '',
                 Katha_no: dRow['Katha No'],
                 PID_no: dRow['PID No'],
-                area: Number(dRow['Plot area *(Sq.Ft)']?.replace(',', '')),
-                area_sqm: dRow['Plot Area*(Sq.m)'],
-                sqft_rate: dRow['Rate Per Sqft'],
-                plc_per_sqft: dRow['PLC Per Sqft'],
-                size: dRow['Plot Size*'],
-                facing:
-                  dRow['Plot Type*'] || dRow['Unit Type*'] || dRow['Facing'],
-                unit_d: dRow['Unit Dimension*(m)'],
+                area: Number(dRow['Land Area sqft*']?.replace(',', '')),
+                area_sqm: dRow['Land Area sqft*'],
+                sqft_rate: dRow['Price per sqft*'],
+                plc_per_sqft: dRow['PLC per sqft*'],
+                dimension: dRow['Dimension'],
+                size: dRow['Type*']?.toLowerCase(),
+                facing: dRow['Facing*'],
+                unit_d: dRow['Dimension'],
                 east_d: dRow['East Dimension*(m)'],
                 west_d: dRow['West Dimension*(m)'] || 0,
                 north_d: dRow['North Dimension*(m)'],
                 south_d: dRow['South Dimension*(m)'],
-                east_west_d: dRow[''] || 0,
-                north_south_d: dRow[''] || 0,
-                north_sch_by: dRow['North Schedule Dimension*'],
-                south_sch_by: dRow['South Schedule Dimension*'],
-                east_sch_by: dRow['East Schedule Dimension*'],
-                west_sch_by: dRow['West Schedule Dimension*'],
-                status: dRow['Status'],
-                release_status: dRow['Release Status'],
-                mortgage_type: dRow['Mortgage Type'],
+                east_west_d: dRow['East-West Dimension*(m)'] || 0,
+                north_south_d: dRow['North-South Dimension*(m)'] || 0,
+                north_sch_by: dRow['North Schedule*'],
+                south_sch_by: dRow['South Schedule*'],
+                east_sch_by: dRow['East Schedule*'],
+                west_sch_by: dRow['West Schedule*'],
+                status: dRow['Status*']?.toLowerCase() || 'available',
+                release_status: dRow['Release Status*']?.toLowerCase(),
+                mortgage_type: dRow['Mortgage Type*']?.toLowerCase(),
                 intype: 'bulk',
                 unit_type: 'plot',
                 by: user?.email,
@@ -353,7 +353,9 @@ export function MultipleFileUploadField({
           console.log('import stuff is ', records)
           const clean1 = records.filter((row) => {
             return (
-              (row['Plot No.*'] != '' && row['Plot No.*'] != undefined) ||
+              (row['Plot No*'] != '' && row['Plot No*'] != undefined) ||
+              (row['Apartment No*'] != '' &&
+                row['Apartment No*'] != undefined) ||
               (row['Unit No.*'] != '' && row['Unit No.*'] != undefined)
             )
           })
@@ -366,7 +368,10 @@ export function MultipleFileUploadField({
                 pId,
                 myPhase?.uid || '',
                 myBlock?.uid || '',
-                dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Plot No.*']
+                dRow['Unit No.*'] ||
+                  dRow['Flat No.*'] ||
+                  dRow['Plot No*'] ||
+                  dRow['Apartment No*']
               )
               // Apartment Type*
               console.log('my data value is ', dRow)
@@ -377,44 +382,56 @@ export function MultipleFileUploadField({
                 blockId: myBlock?.uid || 1,
                 Date: Timestamp.now().toMillis(),
                 unit_no:
-                  dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Plot No.*'],
+                  dRow['Unit No.*'] ||
+                  dRow['Flat No.*'] ||
+                  dRow['Plot No*'] ||
+                  dRow['Apartment No*'],
+                block_no: dRow['Block'] || '',
+                tower_no: dRow['Tower'] || '',
                 floor_no: dRow['Floor'] || '',
-                survey_no: dRow['Survey No'] || '',
-                Katha_no: dRow['Katha No'] || '',
-                PID_no: dRow['PID No'] || '',
-                area: Number(dRow['Flat area *(Sq.Ft)']?.replace(',', '')) || Number(dRow['Plot area *(Sq.Ft)']?.replace(',', ''))|| 0,
-                super_built_up_area: dRow[''] || 0,
-                area_sqm: dRow['FlatArea*(Sq.m)'] || dRow['Plot Area*(Sq.m)'] || 0,
-                uds_sqm: dRow['SQM(UDS)'] || '',
-                uds_sqft: dRow['SFT(UDS)'] || '',
-                sqft_rate: dRow['Rate Per Sqft'] || dRow['Rate Per Sqft'] || 0,
-                plc_per_sqft: dRow['PLC Per Sqft'] || 0,
-                construct_price: dRow['Construction price'] || 0,
                 size:
                   dRow['Flat Size'] ||
                   dRow['Flat Size*'] ||
                   dRow['Plot Size'] ||
-                  dRow['Plot Size*'] || '',
+                  dRow['Plot Size*'] ||
+                  dRow['Type*']?.toLowerCase() ||
+                  '',
                 share: dRow['Share'] || '',
-                facing:
-                  dRow['Flat Type*'] ||
-                  dRow['Plot Type*'] ||
-                  dRow['Unit Type*'] || '',
-                cartpet_area_uom: dRow['CARPET SFT'] || 0,
-                unit_d: dRow['Unit Dimension*(m)'] || 0,
-                east_d: dRow['East Dimension*(m)'] || 0,
+                facing: dRow['Facing*'] || '',
+                bedrooms_c: dRow['Bedrooms'] || 0,
+                bathrooms_c: dRow['Bathrooms'] || 0,
+                car_parkings_c: dRow['Car Parkings'] || 0,
+                // cartpet_area_uom: dRow['CARPET SFT'] || 0,
+                cartpet_area_sqft: dRow['Carpet Area(sqft)'] || 0,
+                uds_sqm: dRow['UDS(sqm)'] || '',
+                uds_sqft: dRow['UDS(sqft)'] || '',
+                area: Number(dRow['Unit Area(sqft)*']?.replace(',', '')) || 0,
+                area_sqm:
+                  Number(dRow['Unit Area(sqm)*']?.replace(',', '')) || 0,
+                sqft_rate:
+                  dRow['Price per sqft*'] || dRow['Price per sqft'] || 0,
+                plc_per_sqft: dRow['PLC per sqft*'] || 0,
+
+                // super_built_up_area: dRow[''] || 0,
+
+                // construct_price: dRow['Construction price'] || 0,
+
+                east_d: dRow['East Dimension*(m)'],
                 west_d: dRow['West Dimension*(m)'] || 0,
-                north_d: dRow['North Dimension*(m)'] || 0,
-                south_d: dRow['South Dimension*(m)'] || 0,
-                east_west_d: dRow[''] || 0,
-                north_south_d: dRow[''] || 0,
-                north_sch_by: dRow['North Schedule Dimension*'] || 0,
-                south_sch_by: dRow['South Schedule Dimension*'] || 0,
-                east_sch_by: dRow['East Schedule Dimension*'] || 0,
-                west_sch_by: dRow['West Schedule Dimension*'] || 0,
-                status: dRow['Status'] || 'available',
-                release_status: dRow['Release Status'] || '',
-                mortgage_type: dRow['Mortgage Type'] || '',
+                north_d: dRow['North Dimension*(m)'],
+                south_d: dRow['South Dimension*(m)'],
+                east_west_d: dRow['East-West Dimension*(m)'] || 0,
+                north_south_d: dRow['North-South Dimension*(m)'] || 0,
+                north_sch_by: dRow['North Schedule*'],
+                south_sch_by: dRow['South Schedule*'],
+                east_sch_by: dRow['East Schedule*'],
+                west_sch_by: dRow['West Schedule*'],
+                status: dRow['Status*']?.toLowerCase() || 'available',
+                release_status: dRow['Release Status*']?.toLowerCase() || '',
+                mortgage_type: dRow['Mortgage Type']?.toLowerCase() || '',
+                survey_no: dRow['Survey No'] || '',
+                Katha_no: dRow['Katha No'] || '',
+                PID_no: dRow['PID No'] || '',
                 intype: 'bulk',
                 unit_type: 'Apartment',
                 by: user?.email,
@@ -427,6 +444,94 @@ export function MultipleFileUploadField({
           // let x =   await getLedsData()
 
           await console.log('Finished: records', serialData, fileRecords)
+        } else if (['Import Villas'].includes(title)) {
+          console.log('import stuff is ', records)
+          const clean1 = records.filter((row) => {
+            return (
+              (row['Plot No*'] != '' && row['Plot No*'] != undefined) ||
+              (row['Villa No*'] != '' && row['Villa No*'] != undefined) ||
+              (row['Unit No.*'] != '' && row['Unit No.*'] != undefined)
+            )
+          })
+          // set duplicate & valid records
+          // check in db if record exists with matched phone Number & email
+          const serialData = await Promise.all(
+            clean1.map(async (dRow) => {
+              const foundLength = await checkIfUnitAlreadyExists(
+                `${orgId}_units`,
+                pId,
+                myPhase?.uid || '',
+                myBlock?.uid || '',
+                dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*']
+              )
+              // Apartment Type*
+              console.log('my data value is ', dRow)
+              const computPlotObj = {
+                mode: await makeMode(foundLength),
+                pId,
+                phaseId: dRow[''] || 1,
+                blockId: myBlock?.uid || 1,
+                Date: Timestamp.now().toMillis(),
+                unit_no:
+                  dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
+                size: dRow['Type*']?.toLowerCase() || '',
+                facing: dRow['Facing*'] || '',
+                bedrooms_c: dRow['Bedrooms'] || 0,
+                bathrooms_c: dRow['Bathrooms'] || 0,
+                car_parkings_c: dRow['Car Parkings'] || 0,
+                // cartpet_area_uom: dRow['CARPET SFT'] || 0,
+                area: Number(dRow['Land Area(sqft)*']?.replace(',', '')) || 0,
+                area_sqm:
+                  Number(dRow['Land Area(sqm)*']?.replace(',', '')) || 0,
+                sqft_rate:
+                  dRow['Price per sqft*'] || dRow['Price per sqft'] || 0,
+                plc_per_sqft: dRow['PLC per sqft*'] || 0,
+                construct_area:
+                  Number(dRow['BUA sqft*']?.replace(',', '')) ||
+                  Number(dRow['BUA (sqft)*']?.replace(',', '')) ||
+                  0,
+                construct_price_sqft:
+                  dRow['Construction Price per sqft'] ||
+                  dRow['Construction Price per sqft*'] ||
+                  0,
+                // super_built_up_area: dRow[''] || 0,
+                cartpet_area_sqft: dRow['Carpet Area(sqft)'] || 0,
+
+                // construct_price: dRow['Construction price'] || 0,
+
+                east_d: dRow['East Dimension*(m)'],
+                west_d: dRow['West Dimension*(m)'] || 0,
+                north_d: dRow['North Dimension*(m)'],
+                south_d: dRow['South Dimension*(m)'],
+                east_west_d: dRow['East-West Dimension*(m)'] || 0,
+                north_south_d: dRow['North-South Dimension*(m)'] || 0,
+                north_sch_by: dRow['North Schedule*'],
+                south_sch_by: dRow['South Schedule*'],
+                east_sch_by: dRow['East Schedule*'],
+                west_sch_by: dRow['West Schedule*'],
+                status: dRow['Status*']?.toLowerCase() || 'available',
+                release_status: dRow['Release Status*']?.toLowerCase() || '',
+                mortgage_type: dRow['Mortgage Type']?.toLowerCase() || '',
+                survey_no: dRow['Survey No'] || '',
+                Katha_no: dRow['Katha No'] || '',
+                PID_no: dRow['PID No'] || '',
+                intype: 'bulk',
+                unit_type: 'Apartment',
+                by: user?.email,
+              }
+              return await computPlotObj
+            })
+          )
+
+          await setfileRecords(serialData)
+          // let x =   await getLedsData()
+
+          await console.log(
+            'Finished: records',
+            clean1,
+            serialData,
+            fileRecords
+          )
         } else if (['ImportAssets'].includes(title)) {
           console.log('import stuff is ', records)
           const clean1 = records.filter((row) => {
@@ -444,25 +549,23 @@ export function MultipleFileUploadField({
               //   pId,
               //   myPhase?.uid || '',
               //   myBlock?.uid || '',
-              //   dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Plot No.*']
+              //   dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Plot No*']
               // )
               // Apartment Type*
               console.log('my data value is ', dRow)
-             const foundLength =0;
+              const foundLength = 0
               const computPlotObj = {
                 mode: await makeMode(foundLength),
                 pId,
                 phaseId: dRow[''] || 1,
                 blockId: myBlock?.uid || 1,
                 Date: Timestamp.now().toMillis(),
-                Assets_Type:
-                  dRow['Assets_Type'],
-                  Model: dRow['Model'] || '',
-                  Asset_Description: dRow['Asset_Description'] || '',
-                  Serial_No: dRow['Serial_No'] || '',
-                  Date_of_Allocation: dRow['Date_of_Allocation'] || '',
-                  Return_Date: dRow['Return_Date'] || '',
-
+                Assets_Type: dRow['Assets_Type'],
+                Model: dRow['Model'] || '',
+                Asset_Description: dRow['Asset_Description'] || '',
+                Serial_No: dRow['Serial_No'] || '',
+                Date_of_Allocation: dRow['Date_of_Allocation'] || '',
+                Return_Date: dRow['Return_Date'] || '',
 
                 intype: 'bulk',
                 unit_type: 'Apartment',
@@ -476,7 +579,7 @@ export function MultipleFileUploadField({
           // let x =   await getLedsData()
 
           await console.log('Finished: records', serialData, fileRecords)
-        }else if (['Plan Diagram', 'Brouchers', 'Approvals'].includes(title)) {
+        } else if (['Plan Diagram', 'Brouchers', 'Approvals'].includes(title)) {
           console.log('data os jere', records)
           // uploadFile(file)
           // upload pdf to cloud
@@ -643,9 +746,8 @@ export function MultipleFileUploadField({
               </a>
             </div>
           )}
-        
 
-{title === 'ImportAssets' && (
+          {title === 'ImportAssets' && (
             <div className="w-full flex flex-row justify-between ">
               <span></span>
               <a
