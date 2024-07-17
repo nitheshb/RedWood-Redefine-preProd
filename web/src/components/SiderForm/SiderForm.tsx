@@ -212,8 +212,8 @@ const SiderForm = ({
                     data={data}
                   />
                 )}
-                {title === 'Import Units' ||
-                  (title === 'Import Apartment Units' && (
+                {(title === 'Import Villas' ||
+                  title === 'Import Apartment Units') && (
                     <LeadsDropHomes
                       title={title}
                       dialogOpen={setOpen}
@@ -221,7 +221,8 @@ const SiderForm = ({
                       myPhase={phaseDetails}
                       myBlock={myBlock}
                     />
-                  ))}
+                  )}
+
                 {title === 'Import Plot Units' && (
                   <LeadsDropHomes
                     title={title}

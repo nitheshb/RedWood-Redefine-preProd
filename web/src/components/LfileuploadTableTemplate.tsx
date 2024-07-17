@@ -344,6 +344,8 @@ const EnhancedTableToolbar = (props) => {
       insertPlotToDb(records)
     } else if (title === 'Import Apartment Units') {
       insertPlotToDb(records)
+    }else if (title === 'Import Villas') {
+      insertPlotToDb(records)
     }
     return
     const mappedArry = await Promise.all(
@@ -453,6 +455,7 @@ const EnhancedTableToolbar = (props) => {
           'Import Units',
           'Import Apartment Units',
           'Import Plot Units',
+          'Import Villas',
         ].includes(title) ? (
         <span style={{ display: 'flex' }}>
           {sourceTab === 'validR' && !unitUploadMessage && (
@@ -526,7 +529,7 @@ const HighlighterStyle = (props) => {
       }}
       searchWords={[searchKey]}
       autoEscape
-      textToHighlight={source}
+      textToHighlight={source?.toString()}
     />
   )
 }
@@ -562,8 +565,15 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString('en-US'),
         },
         {
-          id: 'facing',
+          id: 'type',
           label: 'Plot Type*',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'facing',
+          label: 'Facing*',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toLocaleString('en-US'),
@@ -624,12 +634,12 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toFixed(2),
         },
-        {
-          id: 'unit_d',
-          label: 'Unit Dimension*(m)',
-          minWidth: 10,
-          align: 'left',
-        },
+        // {
+        //   id: 'unit_d',
+        //   label: 'Unit Dimension*(m)',
+        //   minWidth: 10,
+        //   align: 'left',
+        // },
         {
           id: 'east_d',
           label: 'East Dimension*(m)',
@@ -705,6 +715,8 @@ export default function LfileuploadTableTemplate({
     } else if (title === 'Import Apartment Units') {
       columns = [
         { id: 'unit_no', label: 'unit_no', minWidth: 80 },
+        { id: 'block_no', label: 'Block', minWidth: 80 },
+        { id: 'tower_no', label: 'Tower', minWidth: 80 },
         { id: 'floor_no', label: 'Floor', minWidth: 80 },
         {
           id: 'status',
@@ -728,6 +740,25 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString('en-US'),
         },
         {
+          id: 'bedrooms_c',
+          label: 'Bedrooms',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        }, {
+          id: 'bathrooms_c',
+          label: 'Bathrooms',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },{
+          id: 'car_parkings_c',
+          label: 'Car Parkings',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+         {
           id: 'area_sqm',
           label: 'Area sqm',
           minWidth: 10,
@@ -756,8 +787,8 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
-          id: 'super_built_up_area',
-          label: 'super_built_up_area',
+          id: 'cartpet_area_sqft',
+          label: 'Carpet Area',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
@@ -768,21 +799,14 @@ export default function LfileuploadTableTemplate({
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
-        },
-        {
-          id: 'construct_price',
-          label: 'construct_price',
+        }, {
+          id: 'plc_per_sqft',
+          label: 'PLC per sqft*',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
-        {
-          id: 'carpet_area_uom',
-          label: 'carpet_area_uom',
-          minWidth: 10,
-          align: 'left',
-          format: (value) => value.toFixed(2),
-        },
+
         {
           id: 'east_d',
           label: 'East Dimension*(m)',
@@ -855,6 +879,164 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString('en-US'),
         },
 
+      ]
+    }else if (title === 'Import Villas') {
+      columns = [
+        { id: 'unit_no', label: 'Villa No', minWidth: 80 },
+        {
+          id: 'status',
+          label: 'status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'type',
+          label: 'Plot Type*',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'facing',
+          label: 'Facing*',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'survey_no',
+          label: 'Survey No',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'Katha_no',
+          label: 'Katha No',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'PID_no',
+          label: 'PID No',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'area',
+          label: 'Plot area *(Sq.Ft)',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'area_sqm',
+          label: 'Plot Area*(Sq.m)',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'sqft_rate',
+          label: 'Rate/Sqft',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'plc_per_sqft',
+          label: 'PLC Per Sqft',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'size',
+          label: 'Plot Size*',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        // {
+        //   id: 'unit_d',
+        //   label: 'Unit Dimension*(m)',
+        //   minWidth: 10,
+        //   align: 'left',
+        // },
+        {
+          id: 'east_d',
+          label: 'East Dimension*(m)',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'west_d',
+          label: 'West Dimension*(m)',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'north_d',
+          label: 'North Dimension*(m)',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'south_d',
+          label: 'South Dimension*(m)"',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+
+        {
+          id: 'north_sch_by',
+          label: 'North Schedule Dimension*',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'south_sch_by',
+          label: 'South Schedule Dimension*',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'east_sch_by',
+          label: 'East Schedule Dimension*',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'west_sch_by',
+          label: 'West Schedule Dimension*',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'release_status',
+          label: 'Release Status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'mortgage_type',
+          label: 'Mortgage Type',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
       ]
     } else if (title === 'Import Units') {
       columns = [
@@ -1167,10 +1349,11 @@ export default function LfileuploadTableTemplate({
                             {/* {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value} */}
-                            <HighlighterStyle
+                              {value}
+                            {/* <HighlighterStyle
                               searchKey={searchKey}
                               source={value}
-                            />
+                            /> */}
                           </TableCell>
                         )
                       })}

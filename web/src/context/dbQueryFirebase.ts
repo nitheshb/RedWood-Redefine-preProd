@@ -2440,7 +2440,7 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
       : increment(0),
     // totalPlotArea: increment(area),
   }
-  console.log('yo', yo, statusVal === 'available')
+  console.log('yo', yo, statusVal === 'available', data)
 
   const x = await addDoc(collection(db, `${orgId}_units`), data)
   const y = await updateProjectComputedData(orgId, pId, yo)

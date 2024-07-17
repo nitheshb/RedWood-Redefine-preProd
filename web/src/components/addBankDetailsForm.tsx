@@ -94,7 +94,7 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
       .required('Branch Name Required'),
     bank: Yup.string().required('Bank Required'),
     preferredtype: Yup.string().required('Required'),
-    gstNo: Yup.string().required('Required'),
+    // gstNo: Yup.string().required('Required'),
   })
 
   const submitFormFun = (formik) => {
@@ -103,7 +103,7 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
 
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
-      <div className="px-4 sm:px-6  z-10">
+      <div className="px-4 sm:px-6">
         <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
           {title}
         </Dialog.Title>
