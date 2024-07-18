@@ -434,34 +434,22 @@ const CaptureUnitPayment = ({
                                                 <MultiSelectMultiLineField
                                                   label="Paid Towards Account"
                                                   name="towardsBankDocId"
+                                                  
                                                   onChange={(payload) => {
                                                     console.log(
                                                       'changed value is ',
                                                       payload
                                                     )
-                                                    const {
-                                                      value,
-                                                      id,
-                                                      accountName,
-                                                    } = payload
-                                                    formik.setFieldValue(
-                                                      'builderName',
-                                                      accountName
-                                                    )
-                                                    formik.setFieldValue(
-                                                      'landlordBankDocId',
-                                                      id
-                                                    )
+                                                    const {value,id, accountName,} = payload
+                                                    formik.setFieldValue('builderName',accountName)
+                                                    formik.setFieldValue('landlordBankDocId',id)
 
-                                                    formik.setFieldValue(
-                                                      'towardsBankDocId',
-                                                      id
-                                                    )
+                                                    formik.setFieldValue('towardsBankDocId',id)
+
+
                                                   }}
-                                                  value={
-                                                    formik.values
-                                                      .towardsBankDocId
-                                                  }
+                                                  value={formik.values.towardsBankDocId}
+
                                                   options={bankDetailsA}
                                                 />
                                               </div>
