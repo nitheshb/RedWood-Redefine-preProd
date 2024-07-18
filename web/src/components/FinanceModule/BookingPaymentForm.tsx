@@ -29,6 +29,7 @@ import {
   updateUnitAsBooked,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import { computeTotal } from 'src/util/computeCsTotals'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 import { TextField2 } from 'src/util/formFields/TextField2'
@@ -73,6 +74,7 @@ const AddPaymentDetailsForm = ({
   let T_transaction = 0
   let T_review = 0
   let T_balance = 0
+  let T_elgible_balance = 0
   const handleClick = () => {
     console.log(' projectDetails', projectDetails)
     confettiRef.current.fire()
@@ -185,6 +187,31 @@ const AddPaymentDetailsForm = ({
       leadDetailsObj2,
       phase?.paymentScheduleObj
     )
+    const { partBPayload, costSheetA } = selUnitDetails
+
+    // const partBTotal = partBPayload?.reduce(
+    //   (partialSum, obj) =>
+    //     partialSum +
+    //     Number(
+    //       computeTotal(
+    //         obj,
+    //         selUnitDetails?.super_built_up_area ||
+    //           selUnitDetails?.area?.toString()?.replace(',', '')
+    //       )
+    //     ),
+    //   0
+    // )
+    const partATotal = newPlotCostSheetA?.reduce(
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+      0
+    )
+    const partBTotal = newAdditonalChargesObj?.reduce(
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+      0
+    )
+    const T_total = partATotal + partBTotal
+    console.log('total Cost test', T_total, '==> ', newPlotCostSheetA,newAdditonalChargesObj, )
+
 
     const fullPs1 = [...newPlotPS, ...newConstructPS]
     const fullPs = fullPs1.map((d) => {
@@ -206,7 +233,8 @@ const AddPaymentDetailsForm = ({
         T_review = T_review + (amount || undefined)
       }
     })
-    T_balance = T_elgible - T_review
+    T_balance = T_total - T_review
+    T_elgible_balance = T_elgible - T_review
     console.log('newPlotPS', newPlotPS, newConstructPS, fullPs, T_elgible)
 
     const customerfbA = await createNewCustoreSupa(data, resetForm)
@@ -396,6 +424,7 @@ const AddPaymentDetailsForm = ({
       [`${uid}_T_transaction`]: T_transaction,
       [`${uid}_T_review`]: T_review,
       [`${uid}_T_balance`]: T_balance,
+      [`${uid}_T_elgible_balance`]: T_elgible_balance,
 
       //paymentScheduleObj
     })
@@ -424,6 +453,8 @@ const AddPaymentDetailsForm = ({
         [`${uid}_T_transaction`]: T_transaction,
         [`${uid}_T_review`]: T_review,
         [`${uid}_T_balance`]: T_balance,
+        [`${uid}_T_elgible_balance`]: T_elgible_balance,
+
         booked_on: data?.dated,
         ct: Timestamp.now().toMillis(),
         Date: Timestamp.now().toMillis(),
@@ -465,6 +496,8 @@ const AddPaymentDetailsForm = ({
     unitUpdate[`T_transaction`] = T_transaction
     unitUpdate[`T_review`] = T_review
     unitUpdate[`T_balance`] = T_balance
+    unitUpdate[`T_elgible_balance`] = T_elgible_balance
+
     console.log('unit space is ', uid)
     await updateUnitAsBooked(
       orgId,
