@@ -564,9 +564,11 @@ const AddUnit = ({
     { label: 'Select Count', value: '' },
     { label: '1 Bhk', value: '1' },
     { label: '2 Bhk', value: 2 },
-    { label: '3 Bhk', value: 3 },
-    { label: '4 Bhk', value: 4 },
-    { label: '5 Bhk', value: 5 },
+    { label: '2.5 Bhk', value: 3 },
+    { label: '3 Bhk', value: 4 },
+    { label: '3.5 Bhk', value: 5 },
+    { label: '4 Bhk', value: 6 },
+    { label: '5 Bhk', value: 7 },
   ]
 
   const plotTypeList = [
