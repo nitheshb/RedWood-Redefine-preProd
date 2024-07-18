@@ -508,7 +508,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         )
       )
       setCostPerSqft(numValue)
-    }else{
+    } else {
       setRows(
         rows.map((row) =>
           row.component.value === 'sqft_cost_tax'
@@ -862,28 +862,35 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                   </StyledSelect>
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
-                                  <input
-                                    type="text"
-                                    value={formatIndianNumber(row?.charges)}
-                                    onChange={(e) => {
-                                      // handleChange(row.id, 'unit', e.target.value)
-                                      const rawValue = e.target.value.replace(
-                                        /,/g,
-                                        ''
-                                      )
-                                      const numValue = parseFloat(rawValue)
-                                      if (!isNaN(numValue)) {
-                                        handleChange1(
-                                          row.id,
-                                          'charges',
-                                          numValue
+                                  <section className="flex flex-row">
+                                    <input
+                                      type="text"
+                                      value={formatIndianNumber(row?.charges)}
+                                      onChange={(e) => {
+                                        // handleChange(row.id, 'unit', e.target.value)
+                                        const rawValue = e.target.value.replace(
+                                          /,/g,
+                                          ''
                                         )
-                                      } else {
-                                        handleChange1(row.id, 'charges', 0)
-                                      }
-                                    }}
-                                    className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                                  />
+                                        const numValue = parseFloat(rawValue)
+                                        if (!isNaN(numValue)) {
+                                          handleChange1(
+                                            row.id,
+                                            'charges',
+                                            numValue
+                                          )
+                                        } else {
+                                          handleChange1(row.id, 'charges', 0)
+                                        }
+                                      }}
+                                      className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                    />
+                                    <span className="mt-1">
+                                      {row?.units?.value === 'percentage'
+                                        ? '%'
+                                        : '₹'}
+                                    </span>
+                                  </section>{' '}
                                 </td>
                                 <td className="border-b border-[#e0e0e0] text-right ">
                                   <StyledSelect

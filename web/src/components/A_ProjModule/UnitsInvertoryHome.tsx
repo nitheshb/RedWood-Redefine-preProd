@@ -91,7 +91,7 @@ const UnitsInventoryHome = ({ project }) => {
   }, [unitsFeedA,availType, selUnitType, selFacing])
 
   const filFun = ()=>{
-    console.log('selected one is', availType, selFacing)
+    console.log('selected one is',unitsFeedA,  availType, selFacing)
     const filData = unitsFeedA?.filter((da) => {
       const statusMatch =
         (availType.value === 'any')
