@@ -331,7 +331,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
 
 
         
-
+{/* 
         <Switch
         checked={isOpenSideView}
         onChange={toggleSiderForm}
@@ -344,7 +344,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
             isOpenSideView ? 'translate-x-6' : 'translate-x-1'
           } inline-block h-4 w-4 transform rounded-full bg-white transition`}
         />
-      </Switch>
+      </Switch> */}
 
       {isOpenSideView && (
         <SiderForm

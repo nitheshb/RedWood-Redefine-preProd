@@ -1266,7 +1266,7 @@ const AddApplicantDetails = ({
                                         <div className="flex flex-row justify-between">
                                           <section className="w-12/12 w-full">
                                             <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
-                                              PAN No frist{' '}
+                                              PAN No{' '}
                                             </label>
                                             <MuiTextField
                                               id="area"
@@ -1919,7 +1919,7 @@ const AddApplicantDetails = ({
                                       <div className="flex flex-row justify-between">
                                           <section className="w-6/12">
                                           <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
-                                          PAN No secound{' '}
+                                          PAN No{' '}
                                         </label>
                                         <MuiTextField
                                           id="area"
