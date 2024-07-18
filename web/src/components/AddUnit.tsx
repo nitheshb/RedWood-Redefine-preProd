@@ -562,7 +562,7 @@ const AddUnit = ({
 
   const unitTypeList = [
     { label: 'Select Count', value: '' },
-    { label: '1 Bhk', value: '1' },
+    { label: '1 Bhk', value: 1 },
     { label: '2 Bhk', value: 2 },
     { label: '2.5 Bhk', value: 3 },
     { label: '3 Bhk', value: 4 },
