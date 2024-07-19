@@ -571,6 +571,32 @@ const AddUnit = ({
     { label: '5 Bhk', value: 7 },
   ]
 
+
+  const bedRoomsList = [
+    { label: 'Select Count', value: '' },
+    { label: '1 Bedroom', value: 'bed1' },
+    { label: '2 Bedroom', value: 'bed2' },
+    { label: '3 Bedroom', value: 'bed3' },
+    { label: '4 Bedroom', value: 'bed4' },
+    { label: '5 Bedroom', value: 'bed5' },
+    // { label: '6 Bedroom', value: 'bed6' },
+    // { label: '7 Bedroom', value: 'bed7' },
+  ]
+
+
+
+  const carParkingList = [
+    { label: 'Select Count', value: '' },
+    { label: '1 Car Parking', value: 'car1' },
+    { label: '2 Car Parking', value: 'car2' },
+    { label: '3 Car Parking', value: 'car3' },
+    { label: '4 Car Parking', value: 'car4' },
+    { label: '5 Car Parking', value: 'car5' },
+  ]
+
+
+
+
   const plotTypeList = [
     { label: 'Select Count', value: '' },
     { label: 'Rectangle', value: 'rectangle' },
@@ -580,11 +606,11 @@ const AddUnit = ({
 
   const bathTypeList = [
     { label: 'Select Count', value: '' },
-    { label: '1', value: 1 },
-    { label: '2', value: 2 },
-    { label: '3', value: 3 },
-    { label: '4', value: 4 },
-    { label: '5', value: 5 },
+    { label: '1 Bathroom', value: 'bath1' },
+    { label: '2 Bathroom', value: 'bath2' },
+    { label: '3 Bathroom', value: 'bath3' },
+    { label: '4 Bathroom', value: 'bath4' },
+    { label: '5 Bathroom', value: 'bath5' },
   ]
   const facingTypeList = [
     { label: 'Select Facing', value: '' },
@@ -914,43 +940,64 @@ const AddUnit = ({
                             </div> */}
                               <div className="w-full flex flex-col mt-">
                                 <CustomSelect
-                                  name="size"
+                                  name="bedrooms_c"
                                   label="Type/BedRooms*"
                                   className="input mt-"
                                   onChange={(value) => {
-                                    formik.setFieldValue('size', value.value)
+                                    formik.setFieldValue('bedrooms_c', value.value)
                                     formik.setFieldValue(
                                       'bedrooms_c',
                                       value.value
                                     )
                                   }}
-                                  value={formik.values.size}
+                                  value={formik.values.bedrooms_c}
                                   // options={aquaticCreatures}
-                                  options={
-                                    projectDetails?.projectType?.name ===
-                                    'Plots'
-                                      ? plotTypeList
-                                      : unitTypeList
-                                  }
+                                  // options={
+                                  //   projectDetails?.projectType?.name ===
+                                  //   'Plots'
+                                  //     ? plotTypeList
+                                  //     : unitTypeList
+                                  // }
 
-                                  //options={unitTypeList}
+                                  options={bedRoomsList}
                                 />
                               </div>
 
                               <div className="space-y-2 w-full text-xs mt-">
-                                <TextField
+                                {/* <TextField
                                   label="Bathrooms"
                                   name="bathrooms_c"
                                   type="number"
-                                />
+                                /> */}
+                                <CustomSelect
+  name="bathrooms_c"
+  label="Bathrooms"
+  className="input mt-"
+  onChange={(value) => {
+    formik.setFieldValue('bathrooms_c', value.value);
+  }}
+  value={formik.values.bathrooms_c}
+  options={bathTypeList}
+/>
                               </div>
 
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
-                                <TextField
+                                {/* <TextField
                                   label="Car Parking"
                                   name="car_parkings_c"
                                   type="text"
-                                />
+                                /> */}
+
+<CustomSelect
+    name="car_parkings_c"
+    label="Car Parking"
+    className="input mt-"
+    onChange={(value) => {
+      formik.setFieldValue('car_parkings_c', value.value);
+    }}
+    value={formik.values.car_parkings_c}
+    options={carParkingList}
+  />
                               </div>
 
                               {/* <div className="space-y-2 w-full text-xs ">
