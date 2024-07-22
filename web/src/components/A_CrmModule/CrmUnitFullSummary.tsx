@@ -1282,7 +1282,7 @@ export default function UnitFullSummary({
             <div className="py-3 grid grid-cols-4 gap-4 mb-4">
 
 
-              
+            {(customerDetails?.projectType?.name === 'Villas' || customerDetails?.projectType?.name === 'Apartment') && (
             <section className="flex flex-col bg-[#F6F7FF] p-3 border  border-[#e5e7f8] rounded-md mb-2">
                 <section className="flex flow-row justify-between mb-1">
                   <div className="font-md text-xs text-gray-700 tracking-wide">
@@ -1317,6 +1317,7 @@ export default function UnitFullSummary({
                   </div>
                 </section>
               </section>
+                )}
 
 
 
