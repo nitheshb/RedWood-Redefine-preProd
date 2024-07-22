@@ -137,6 +137,8 @@ const AdditonalBookingDetails = ({
       '',
 
       referralName: '', // New field for referral name
+      annualIncome: leadDetailsObj2?.annualIncome || additionalInfo?.annualIncome || '',
+      designation: leadDetailsObj2?.designation || additionalInfo?.designation || ''
   }
   // Custom PAN card validation function
 
@@ -308,6 +310,28 @@ const AdditonalBookingDetails = ({
                                         />
                                       </div>
                                     </div>
+
+                                    <div className="w-full lg:w-12/12 px-4">
+      <div className="relative w-full mb-3">
+        <TextField2
+          label="Annual Income"
+          name="annualIncome"
+          type="text"
+        />
+      </div>
+    </div>
+    <div className="w-full lg:w-12/12 px-4">
+      <div className="relative w-full mb-3">
+        <TextField2
+          label="Designation"
+          name="designation"
+          type="text"
+        />
+      </div>
+    </div>
+
+
+
                                   </div>
                                 </section>
 

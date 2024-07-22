@@ -1115,6 +1115,7 @@ export default function UnitFullSummary({
         <>
           <div className="flex flex-col  my-10 rounded-lg bg-white border border-gray-100 px-4 m-4 mt-4">
             <div className="py-3 grid grid-cols-4 mb-4">
+
               <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
                 <section className="flex flow-row justify-between mb-1">
                   <div className="font-md text-xs text-gray-700 tracking-wide">
@@ -1152,6 +1153,10 @@ export default function UnitFullSummary({
                   </div>
                 </section>
               </section>
+
+
+
+
               <section className="flex flex-col mx-4 bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2 ">
                 <section className="flex flow-row justify-between mb-1">
                   <div className="font-md text-xs text-gray-700 tracking-wide">
@@ -1258,8 +1263,118 @@ export default function UnitFullSummary({
                   </div>
                 </section>
               </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
+
+
+            <div className="py-3 grid grid-cols-4 gap-4 mb-4">
+
+
+              
+            <section className="flex flex-col bg-[#F6F7FF] p-3 border  border-[#e5e7f8] rounded-md mb-2">
+                <section className="flex flow-row justify-between mb-1">
+                  <div className="font-md text-xs text-gray-700 tracking-wide">
+                  BedRooms
+                  </div>
+                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                    {selCustomerPayload?.Bedrooms_D}
+                  </div>
+                </section>
+                <section className="flex flow-row justify-between mb-1">
+                  <div className="font-md text-xs text-gray-500  tracking-wide">
+                  Bathrooms
+                  </div>
+                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                    {selCustomerPayload?.BathRooms_D?.toLocaleString('en-IN')}
+                  </div>
+                </section>
+                <section className="flex flow-row justify-between mb-1">
+                  <div className="font-md text-xs text-gray-500  tracking-wide">
+                  Car Parking
+                  </div>
+                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                    {selCustomerPayload?.Car_Parking_D}
+                  </div>
+                </section>
+                <section className="flex flow-row justify-between mb-1">
+                  <div className="font-md text-xs text-gray-500  tracking-wide">
+                  Carpet Area Sqft
+                  </div>
+                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                    {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
+                  </div>
+                </section>
+              </section>
+
+
+
+              <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
+                <section className="flex flow-row justify-between mb-1">
+                  <div className="font-md text-xs text-gray-700 tracking-wide">
+                  Status
+                  </div>
+                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                    {selCustomerPayload?.status}
+                  </div>
+                </section>
+                <section className="flex flow-row justify-between mb-1">
+                  <div className="font-md text-xs text-gray-500  tracking-wide">
+                  Release Status
+                  </div>
+                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                    {selCustomerPayload?.release_status?.toLocaleString('en-IN')}
+                  </div>
+                </section>
+                <section className="flex flow-row justify-between mb-1">
+                  <div className="font-md text-xs text-gray-500  tracking-wide">
+                  Mortgage Type
+                  </div>
+                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                    {selCustomerPayload?.mortgage_type}
+                  </div>
+                </section>
+                {/* <section className="flex flow-row justify-between mb-1">
+                  <div className="font-md text-xs text-gray-500  tracking-wide">
+                  Carpet Area Sqft
+                  </div>
+                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                    {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
+                  </div>
+                </section> */}
+              </section>
+              </div>
+
+
+
+
+
+ 
+
+
+
+
+
+
           </div>
+
+
+
+
+
+
+
           <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 mx-4 ">
           <div className="flex flex-row ">
                 <img
