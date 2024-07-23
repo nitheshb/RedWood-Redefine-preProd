@@ -400,7 +400,7 @@ const AdditonalBookingDetails = ({
                                                       23
                                                     ),
                                                   ]}
-                                                  dateFormat="MMMM d, yyyy"
+                                                  dateFormat="d-MMMM-yyyy"
                                                 />
                                               </span>
 

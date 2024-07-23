@@ -1128,7 +1128,7 @@ const CostBreakUpPdf = ({
                                         setHours(setMinutes(d, 5), 12),
                                         setHours(setMinutes(d, 59), 23),
                                       ]}
-                                      dateFormat="MMMM d, yyyy"
+                                      dateFormat="d-MMMM-yyyy"
                                     />
                                     {d1?.description}
                                   </td>

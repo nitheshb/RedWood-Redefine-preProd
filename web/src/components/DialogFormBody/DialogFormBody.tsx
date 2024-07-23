@@ -586,7 +586,8 @@ const DialogFormBody = ({
                                       setHours(setMinutes(d, 5), 12),
                                       setHours(setMinutes(d, 59), 23),
                                     ]}
-                                    dateFormat="MMMM d, yyyy"
+                                    // dateFormat="MMMM d, yyyy"
+                                    dateFormat="d-MMMM-yyyy"
                                   />
                                 </div>
                                 <div className="mt-2 w-full">
@@ -671,7 +672,8 @@ const DialogFormBody = ({
                                     setHours(setMinutes(new Date(), 5), 12),
                                     setHours(setMinutes(new Date(), 59), 23),
                                   ]}
-                                  dateFormat="MMMM d, yyyy"
+                                  // dateFormat="MMMM d, yyyy"
+                                  dateFormat="d-MMMM-yyyy"
                                 />
                               </div>
                               <div className="mt-2 w-full">
@@ -711,7 +713,8 @@ const DialogFormBody = ({
                                     setHours(setMinutes(d, 5), 12),
                                     setHours(setMinutes(d, 59), 23),
                                   ]}
-                                  dateFormat="MMMM d, yyyy"
+                                  // dateFormat="MMMM d, yyyy"
+                                  dateFormat="d-MMMM-yyyy"
                                 />
                               </div>
                             </div>
