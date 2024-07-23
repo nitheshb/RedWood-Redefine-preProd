@@ -222,7 +222,7 @@ const CostBreakUpPdfPreview = ({
   }, [netTotal, plotBookingAdv, csMode])
 
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
-    console.log('was this executed')
+    console.log('was this executed', newPlotPS)
     const newPs = psPayload.map((d1) => {
       const z = d1
       // if (csMode === 'plot_cs') {

@@ -215,7 +215,7 @@ export const MultiSelectMultiLineField = ({
   const defaultValue = (options, value) => {
     console.log('check it ', options, value)
     //return (options ? options.find((option) => option.value === value) : '') || ''
-    return options ? options.find((option) => option.value === value) : '';
+    return options ? options.find((option) => option?.value === value) : '';
 
   }
   return (
@@ -242,7 +242,7 @@ export const MultiSelectMultiLineField = ({
         //   console.log('Selected option is', selectedOption);
         //   onChange(selectedOption);
         // }}
-  
+
 
       />
         {/* <ErrorMessage

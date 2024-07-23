@@ -686,11 +686,13 @@ const CostBreakUpSheet = ({
                                     </div>
                                     <button
                                       className="mb-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-                                  [background:linear-gradient(180deg,rgb(156.19,195.71,255)_0%,rgb(180.07,167.87,255)_100%)]
+                                    bg-gradient-to-r from-violet-500 to-indigo-500
                                   text-black
                                   border duration-200 ease-in-out
                                   transition
-                                   px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500"
+                                   px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
+                                   "
                                       type="submit"
                                       disabled={loading}
                                       // onClick={() => submitFormFun(formik)}
@@ -704,18 +706,20 @@ const CostBreakUpSheet = ({
                                     ].includes(actionMode) && (
                                       <button
                                         className="mb-2 mr-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-                                  bg-gradient-to-r from-violet-300 to-indigo-300
+                                  bg-gradient-to-r from-violet-500 to-indigo-500
                                   text-black
 
                                   border duration-200 ease-in-out
                                   transition
-                                   px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500"
+                                   px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
+                                   "
                                         type="submit"
                                         disabled={loading}
                                         // onClick={() => submitFormFun(formik)}
                                       >
                                         {/* {loading && <Loader />} */}
-                                        <span>Save & Next</span>
+                                        <span>Save & Next m</span>
                                       </button>
                                     )}
                                   </div>

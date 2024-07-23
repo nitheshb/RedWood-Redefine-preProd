@@ -2324,12 +2324,14 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
                             <button
                               className="mb-2  md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-bg-gradient-to-r from-violet-300 to-indigo-300
+bg-gradient-to-r from-violet-600 to-indigo-600
 text-black
 
 border duration-200 ease-in-out
 transition
- px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500"
+ px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
+ "
                               type="submit"
                               disabled={loading}
                               // onClick={() => submitFormFun(formik)}
@@ -2340,12 +2342,14 @@ transition
                             {setShowApplicantEdit == undefined && (
                               <button
                                 className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-bg-gradient-to-r from-violet-300 to-indigo-300
+bg-gradient-to-r from-violet-600 to-indigo-600
 text-black
 
 border duration-200 ease-in-out
 transition
- px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500"
+ px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+ bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr-12 tracking-wider text-white  rounded-sm hover:shadow-lg
+ "
                                 type="submit"
                                 disabled={loading}
                                 // onClick={() => submitFormFun(formik)}
