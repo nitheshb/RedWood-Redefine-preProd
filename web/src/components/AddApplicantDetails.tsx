@@ -3,6 +3,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect } from 'react'
 
+
+import * as React from 'react';
+
+
 import { ArrowCircleDownIcon, PlusIcon, LinkIcon } from '@heroicons/react/solid'
 import { InputAdornment, TextField as MuiTextField } from '@mui/material'
 import { setHours, setMinutes } from 'date-fns'
@@ -32,6 +36,13 @@ import { TextField } from 'src/util/formFields/TextField'
 
 import NoBorderDropDown from './comps/noBorderDropDown'
 import { useFileUpload } from './useFileUpload'
+import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
+
+
+
+
+
+
 
 const AddApplicantDetails = ({
   source,
@@ -70,6 +81,69 @@ const AddApplicantDetails = ({
 
     // Add any other custom styles you want to apply
   };
+
+
+
+
+
+//   const [annualIncome, setAnnualIncome] = useState(0);
+
+// const handleIncomeChange = (e) => {
+//   const rawValue = e.target.value.replace(/,/g, '');
+//   const numValue = parseFloat(rawValue);
+
+//   if (!isNaN(numValue)) {
+//     setAnnualIncome(numValue);
+//   } else {
+//     setAnnualIncome(0);
+//   }
+// };
+
+// const [annualIncome, setAnnualIncome] = useState('');
+
+
+// const handleIncomeChange = (e) => {
+//   const rawValue = e.target.value.replace(/,/g, '');
+//   const numValue = parseFloat(rawValue);
+
+//   if (!isNaN(numValue)) {
+//     setAnnualIncome(rawValue); // Set the raw input value with commas
+//   } else {
+//     setAnnualIncome(''); // Clear the input if the value is not a number
+//   }
+// };
+
+
+// const [annualIncome, setAnnualIncome] = useState(null);
+
+// const handleIncomeChange = (e) => {
+//   const rawValue = e.target.value.replace(/,/g, '');
+//   const numValue = parseFloat(rawValue);
+
+//   if (!isNaN(numValue)) {
+//     setAnnualIncome(numValue);
+//   } else {
+//     setAnnualIncome(null);
+//   }
+// };
+
+
+
+
+const [income, setIncome] = useState<{ annualIncome1: number | null; annualIncome2: number | null }>({
+  annualIncome1: null,
+  annualIncome2: null,
+});
+
+const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof typeof income) => {
+  const rawValue = e.target.value.replace(/,/g, '');
+  const numValue = parseFloat(rawValue);
+
+  setIncome((prev) => ({
+    ...prev,
+    [field]: !isNaN(numValue) ? numValue : null,
+  }));
+};
 
 
 
@@ -1255,7 +1329,7 @@ const AddApplicantDetails = ({
                                                     23
                                                   ),
                                                 ]}
-                                                dateFormat="MMMM d, yyyy"
+                                                dateFormat="d-MMMM-yyyy"
                                               />
                                             </span>
                                           </div>
@@ -1460,24 +1534,6 @@ const AddApplicantDetails = ({
 
 
 
-                                        <div className="w-full flex flex-row lg:w-12/12">
-                                         <div className="w-full lg:w-12/12 px-">
-                                         {/* Country Name  */}
-                                         <div className="relative w-full mb-3 mt-2">
-                                            <TextField label="Country Name" name="countryName1" type="text" />
-                                         </div>
-                                         </div>
-                                         <div className="w-full lg:w-12/12 pl-4">
-                                         {/* Pincode*/}
-                                         <div className="relative w-full mb-3 mt-2">
-                                            <TextField label="Pincode" name="pincode1" type="text" />
-                                         </div>
-                                          </div>
-                                        </div>
-
-
-
-
                                         <div className="w-full  flex flex-row lg:w-12/12">
                                           <div className="w-full lg:w-12/12 px- ">
                                             <div className="relative w-full mb-3 mt-2">
@@ -1514,6 +1570,29 @@ const AddApplicantDetails = ({
                                             </div>
                                           </div>
                                         </div>
+
+
+
+
+                                        <div className="w-full flex flex-row lg:w-12/12">
+                                         <div className="w-full lg:w-12/12 px-">
+                                         {/* Country Name  */}
+                                         <div className="relative w-full mb-3 mt-2">
+                                            <TextField label="Country Name" name="countryName1" type="text" />
+                                         </div>
+                                         </div>
+                                         <div className="w-full lg:w-12/12 pl-4">
+                                         {/* Pincode*/}
+                                         <div className="relative w-full mb-3 mt-2">
+                                            <TextField label="Pincode" name="pincode1" type="text" />
+                                         </div>
+                                          </div>
+                                        </div>
+
+
+
+
+
 
                                         {/* <div className="w-full flex flex-row">
                                           <div className="  px-">
@@ -1589,6 +1668,12 @@ const AddApplicantDetails = ({
                                                 label="Annual Income"
                                                 name="annualIncome1"
                                                 type="text"
+                                                // value={annualIncome !== null ? formatIndianNumber(annualIncome) : ''}
+                                                // onChange={handleIncomeChange}
+                                                value={income.annualIncome1 !== null ? formatIndianNumber(income.annualIncome1) : ''}
+                                                onChange={(e) => handleIncomeChange(e, 'annualIncome1')}
+
+
                                               />
                                             </div>
                                           </div>
@@ -1906,7 +1991,7 @@ const AddApplicantDetails = ({
                                                       23
                                                     ),
                                                   ]}
-                                                  dateFormat="MMMM d, yyyy"
+                                                  dateFormat="d-MMMM-yyyy"
                                                 />
                                               </span>
                                             </div>
@@ -2102,23 +2187,10 @@ const AddApplicantDetails = ({
                                           </div>
                                         </div>
 
-                                        <div className="w-full flex flex-row lg:w-12/12 mt-4">
-  <div className="w-full lg:w-12/12 px-">
-    {/* Country Name 2 */}
-    <div className="relative w-full mb-3 mt-2">
-      <TextField label="Country Name" name="countryName2" type="text" />
-    </div>
-  </div>
-  <div className="w-full lg:w-12/12 pl-4">
-    {/* Pincode 2 */}
-    <div className="relative w-full mb-3 mt-2">
-      <TextField label="Pincode" name="pincode2" type="text" />
-    </div>
-  </div>
-</div>
+
 
                                         <div className="w-full  flex flex-row lg:w-12/12 mt-1">
-                                          <div className="w-full lg:w-5/12 px- ">
+                                          <div className="w-full lg:w-12/12 px- ">
                                             <div className="relative w-full mb-3 mt-2">
                                               <TextField
                                                 label="City"
@@ -2127,7 +2199,7 @@ const AddApplicantDetails = ({
                                               />
                                             </div>
                                           </div>
-                                          <div className="w-full lg:w-7/12 pl-4">
+                                          <div className="w-full lg:w-12/12 pl-4">
                                             <div className="relative w-full mb-3 mt-2">
                                               <div className="w-full flex flex-col mb-3">
                                                 <CustomSelect
@@ -2154,10 +2226,27 @@ const AddApplicantDetails = ({
                                           </div>
                                         </div>
 
+                                        <div className="w-full flex flex-row lg:w-12/12 mt-4">
+  <div className="w-full lg:w-12/12 px-">
+    {/* Country Name 2 */}
+    <div className="relative w-full mb-3 mt-2">
+      <TextField label="Country Name" name="countryName2" type="text" />
+    </div>
+  </div>
+  <div className="w-full lg:w-12/12 pl-4">
+    {/* Pincode 2 */}
+    <div className="relative w-full mb-3 mt-2">
+      <TextField label="Pincode" name="pincode2" type="text" />
+    </div>
+  </div>
+</div>
+
+
+
 
 
                                         <div className="w-full  flex flex-row lg:w-12/12 mt-1">
-                                          <div className="w-full lg:w-5/12 px- ">
+                                          <div className="w-full lg:w-12/12 px- ">
                                             <div className="relative w-full mb-3 mt-[10px]">
                                               <TextField
                                                 label="Occupation"
@@ -2166,12 +2255,14 @@ const AddApplicantDetails = ({
                                               />
                                             </div>
                                           </div>
-                                          <div className="w-full lg:w-7/12 pl-4">
+                                          <div className="w-full lg:w-12/12 pl-4">
                                             <div className="relative w-full mb-3 mt-2">
                                               <TextField
                                                 label="Annual Income"
                                                 name="annualIncome2"
                                                 type="text"
+                                                value={income.annualIncome2 !== null ? formatIndianNumber(income.annualIncome2) : ''}
+                                                onChange={(e) => handleIncomeChange(e, 'annualIncome2')}
                                               />
                                             </div>
                                           </div>

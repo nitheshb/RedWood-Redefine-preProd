@@ -430,7 +430,8 @@ console.log('rolws are ', filRoles)
       setHours(setMinutes(d, 5), 12),
       setHours(setMinutes(d, 59), 23),
     ]}
-    dateFormat="MMMM d, yyyy"
+    // dateFormat="MMMM d, yyyy"
+    dateFormat="d-MMMM-yyyy"
     name="dob"
   />
 </span>

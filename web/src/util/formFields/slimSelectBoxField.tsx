@@ -255,7 +255,8 @@ export const SlimDateSelectBox = ({
             selectsRange={true}
             startDate={startDate}
             endDate={endDate}
-            dateFormat="MMM d, yyyy "
+            // dateFormat="MMM d, yyyy "
+            dateFormat="d-MMMM-yyyy"
           />
           <CloseTwoToneIcon
             onClick={() => {
