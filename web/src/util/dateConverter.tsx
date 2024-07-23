@@ -31,10 +31,8 @@ export function prettyDate(d) {
   ]
 
   return (
-    months[date.getUTCMonth()] +
-    ' ' +
-    date.getUTCDate() +
-    ', ' +
+    date.getUTCDate() + '-' +
+    months[date.getUTCMonth()] + '-' +
     date.getUTCFullYear()
   )
 }
