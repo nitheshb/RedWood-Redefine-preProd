@@ -491,7 +491,7 @@ const CostBreakUpSheet = ({
                             <div className="">{statusFlowObj.label}</div>
                             {statusFlowObj.value == 'costsheet' && (
                               <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
-                                ₹{netTotal?.toLocaleString('en-IN')}
+                               {(netTotal && !isNaN(netTotal)) ? `₹${netTotal.toLocaleString('en-IN')} ` : ''}
                               </div>
                             )}
                             {statusFlowObj.value == 'customerDetails' && (
@@ -1089,12 +1089,12 @@ export const PaymentScheduleStats = ({ newPlotPS }) => {
       <div>
         <p className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
           {' '}
-          {start || 'NA'}-{end||'NA'}
+          {start || 'NA'} to {end||'NA'}
         </p>
       </div>
     )
   } else {
     // CustomerDetailsObj does not exist
-    return <p>0 of 10 Filled</p>
+    return <p></p>
   }
 }
