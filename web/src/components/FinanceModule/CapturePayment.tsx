@@ -101,28 +101,6 @@ const CaptureUnitPayment = ({
   useEffect(() => {
     getProjectFun()
 
-    // const unsubscribe = steamBankDetailsList(
-    return
-    const unsubscribe = streamProjectMaster(
-      orgId,
-      (querySnapshot) => {
-        const bankA = querySnapshot.docs.map((docSnapshot) => {
-          const x = docSnapshot.data()
-          x.id = docSnapshot.id
-          return x
-        })
-        bankA?.bankAccounts?.map((user) => {
-          user.label = user?.accountName
-          user.value = user?.accountNo
-        })
-        console.log('fetched users list is', bankA)
-        setBankDetailsA([...bankA])
-      },
-      { uid: selUnitDetails?.pId },
-      (error) => setBankDetailsA([])
-    )
-
-    return unsubscribe
   }, [])
   const getProjectFun = async () => {
     const additionalUserInfo = await getProject(orgId, selUnitDetails?.pId)
