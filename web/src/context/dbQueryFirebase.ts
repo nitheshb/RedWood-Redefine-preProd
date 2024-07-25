@@ -95,9 +95,14 @@ export const steamBankDetailsList = (orgId, snapshot, error) => {
   const itemsQuery = query(collection(db, `${orgId}_BankDetails`))
   return onSnapshot(itemsQuery, snapshot, error)
 }
+export const streamProjectDetails = (orgId, snapshot, error) => {
+  const itemsQuery = query(collection(db, `${orgId}_BankDetails`))
+  return onSnapshot(itemsQuery, snapshot, error)
+}
 // get all project master cost sheet template list
 export const streamProjectMaster = (orgId, snapshot, error) => {
-  const itemsQuery = query(collection(db, `${orgId}_projectMasters`))
+
+  const itemsQuery = query(collection(db, `${orgId}_project`))
   return onSnapshot(itemsQuery, snapshot, error)
 }
 

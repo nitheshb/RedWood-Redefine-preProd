@@ -52,7 +52,6 @@ const CostBreakUpPdf = ({
   showOnly,
   stepIndx,
   StatusListA,
-  data
 }) => {
   const d = new window.Date()
 
@@ -63,7 +62,7 @@ const CostBreakUpPdf = ({
 
   useEffect(() => {
     console.log('sel unti detials ', selUnitDetails, newPlotPS)
-  }, [])
+  }, [newPlotPS])
   const [initialValuesA, setInitialValuesA] = useState({})
 
   const [newSqftPrice, setNewSqftPrice] = useState(0)
@@ -72,6 +71,7 @@ const CostBreakUpPdf = ({
   const [partBPayload, setPartBPayload] = useState([])
   const [partCPayload, setPartCPayload] = useState([])
   const [psPayload, setPSPayload] = useState([])
+  const [psConstructPayload, setConstructPSPayload] = useState([])
   const [pdfPreview, setpdfPreview] = useState(false)
   const [showGstCol, setShowGstCol] = useState(true)
 
@@ -81,7 +81,6 @@ const CostBreakUpPdf = ({
     setNewPS(updatedRows)
   }
 
-
   // const handlePSdateChange = (index, newDate) => {
 
   //   const updatedRows = [...newPlotPS];
@@ -90,11 +89,6 @@ const CostBreakUpPdf = ({
   //   updatedRows[index].schDate = incrementedDate;
   //   setNewPS(updatedRows);
   // }
-
-
-
-
-
 
   useEffect(() => {
     console.log('gen costSheetA', costSheetA, costSheet)
@@ -155,12 +149,21 @@ const CostBreakUpPdf = ({
       (d) => d?.component.value === 'sqft_cost_tax'
     )
     const gstTaxIs =
-      gstTaxForProjA?.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+      gstTaxForProjA?.length > 0
+        ? Number(gstTaxForProjA[0]?.gst?.value) > 1
+          ? Number(gstTaxForProjA[0]?.gst?.value) * 0.01
+          : Number(gstTaxForProjA[0]?.gst?.value)
+        : 0
+
+
     const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'plc_tax'
     )
     const plcGstIs =
-      plcGstForProjA?.length > 0 ? plcGstForProjA[0]?.gst?.value : 0
+      plcGstForProjA?.length > 0 ?  Number(plcGstForProjA[0]?.gst?.value) > 1
+      ? Number(plcGstForProjA[0]?.gst?.value) * 0.01
+      : Number(plcGstForProjA[0]?.gst?.value)
+    : 0
     const plot_gstValue = Math.round(plotSaleValue) * gstTaxIs
     const plc_gstValue = Math.round(plcSaleValue * plcGstIs)
     console.log(
@@ -173,7 +176,7 @@ const CostBreakUpPdf = ({
     )
     let x = []
     // if (csMode === 'plot_cs') {
-      if ('plot_cs' === 'plot_cs') {
+    if ('plot_cs' === 'plot_cs') {
       additonalChargesObj?.map((data, inx) => {
         let total = 0
         let gstTotal = 0
@@ -182,8 +185,8 @@ const CostBreakUpPdf = ({
         //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
         const gstPercent =
           Number(data?.gst?.value) > 1
-            ? data?.gst?.value * 0.01
-            : data?.gst?.value
+            ? Number(data?.gst?.value) * 0.01
+            : Number(data?.gst?.value)
         total = isChargedPerSqft
           ? Number(
               selUnitDetails?.super_built_up_area ||
@@ -205,6 +208,7 @@ const CostBreakUpPdf = ({
       setAddiChargesObj(additonalChargesObj)
       setPSPayload(paymentScheduleObj)
       setPartCPayload(selPhaseObj?.partCTaxObj || [])
+      setConstructPSPayload(ConstructPayScheduleObj)
       x = [
         {
           myId: '1',
@@ -387,6 +391,7 @@ const CostBreakUpPdf = ({
   }, [])
   useEffect(() => {
     CreateNewPsFun(netTotal, plotBookingAdv, csMode)
+    console.log('test', newPlotPS)
   }, [netTotal, plotBookingAdv, csMode])
 
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
@@ -394,7 +399,6 @@ const CostBreakUpPdf = ({
       const z = d1
       // if (csMode === 'plot_cs') {
       if ('plot_cs' === 'plot_cs') {
-
         z.value = ['on_booking'].includes(d1?.stage?.value)
           ? Number(d1?.percentage)
           : Math.round((netTotal - plotBookingAdv) * (d1?.percentage / 100))
@@ -413,13 +417,37 @@ const CostBreakUpPdf = ({
         return z
       }
     })
+    console.log('sel unti id => ', newPs, psPayload)
     setNewPS(newPs)
+    const newPs1 = psConstructPayload?.map((d1) => {
+      console.log('d1 is', d1)
+      const z = d1
+      // if (csMode === 'plot_cs') {
+      if ('plot_cs' === 'plot_cs') {
+        z.value = ['on_booking'].includes(d1?.stage?.value)
+          ? Number(d1?.percentage)
+          : Math.round((netTotal - plotBookingAdv) * (d1?.percentage / 100))
+        if (['on_booking'].includes(d1?.stage?.value)) {
+          z.elgible = true
+          z.elgFrom = Timestamp.now().toMillis()
+          return z
+        }
+        return z
+      } else {
+        z.value = ['Total_Other_Charges_Amenities:\t'].includes(
+          d1?.stage?.value
+        )
+          ? Number(partBTotal)
+          : Math.round((netTotal - partBTotal) * (d1?.percentage / 100))
+        return z
+      }
+    })
+    console.log('sel unti id => ', newPs, psPayload)
+ setConstructPSPayload(newPs1)
   }
 
   const initialState = initialValuesA
-  const validate = Yup.object({
-
-  })
+  const validate = Yup.object({})
 
   const setTotalFun = async () => {
     const partBTotal = selPhaseObj?.additonalChargesObj?.reduce(
@@ -525,16 +553,18 @@ const CostBreakUpPdf = ({
       )
       gstTotal = Math.round(total * gstTaxIs)
     } else {
-      total = Math.round(selUnitDetails?.super_built_up_area * newValue)
-      gstTotal = Math.round(
-        Number(selUnitDetails?.super_built_up_area * newValue) * gstTaxIs
+      total = Math.round(
+        Number(selUnitDetails?.super_built_up_area || selUnitDetails?.area) *
+          newValue
       )
+      gstTotal = Math.round(total * (gstTaxIs / 100))
     }
 
     y[inx].charges = newValue
     y[inx].TotalSaleValue = total
     y[inx].gst.label = gstTaxIs
-    y[inx].gst.value = gstTotal
+    // y[inx].gst.value = gstTotal
+    y[inx].gstValue = gstTotal
     y[inx].TotalNetSaleValueGsT = total + gstTotal
     console.log('gen costSheetA', y)
     console.log(costSheetA)
@@ -558,21 +588,20 @@ const CostBreakUpPdf = ({
               style={{ boxShadow: '0 1px 12px #f2f2f2' }}
             >
               <div className="w-full  flex flex-row">
-                <section className='w-full  flex flex-row'>
-                <div className="w-[63.80px] h-[57px] bg-zinc-100 rounded-[5px]"></div>
-                <div className="w-full flex flex-col ml-3">
-                  <h6 className="w-full lg:w-12/12 text-blueGray-400 text-[13px] mt-[9px] mb- font-bold uppercase">
-                    Cost sheet
-                  </h6>
-                  <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
-                    Quotation or estimate of unit
+                <section className="w-full  flex flex-row">
+                  <div className="w-[63.80px] h-[57px] bg-zinc-100 rounded-[5px]"></div>
+                  <div className="w-full flex flex-col ml-3">
+                    <h6 className="w-full lg:w-12/12 text-blueGray-400 text-[13px] mt-[9px] mb- font-bold uppercase">
+                      Cost sheet
+                    </h6>
+                    <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
+                      Quotation or estimate of unit
+                    </div>
                   </div>
-                </div>
                 </section>
                 <section className="w-full ">
                   {' '}
-                  {stepIndx} of {StatusListA?.length}{' '}
-                  steps
+                  {stepIndx} of {StatusListA?.length} steps
                 </section>
               </div>
               <div className="mt-4">
@@ -767,7 +796,7 @@ const CostBreakUpPdf = ({
                                     {costSheetA
                                       .reduce(
                                         (partialSum, obj) =>
-                                          partialSum + Number(obj?.gst?.value),
+                                          partialSum + Number(obj?.gstValue),
                                         0
                                       )
                                       ?.toLocaleString('en-IN')}
@@ -926,7 +955,8 @@ const CostBreakUpPdf = ({
                               </th>
                             </tr>
                           </thead> */}
-                              <thead>
+                          {/* partc  */}
+                              {/* <thead>
                                 <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D] font-['Inter'] font-[600] ">
                                   <th className="min-w-[35%] px-2  text-[10px] text-left font-bold tracking-wide uppercase">
                                     Particulars
@@ -961,7 +991,6 @@ const CostBreakUpPdf = ({
                                   >
                                     <th className=" text-[12px] px-2 text-left  font-normal ">
                                       {d1?.component?.label}
-                                      {/* {d1?.units?.value === 'costpersqft' && `(${d1?.charges}% on Sale value)`} */}
                                     </th>
                                     <td className="w-[15%]  px-2 text-[12px] text-right   ">
                                       {Number(d1?.charges)?.toLocaleString(
@@ -986,7 +1015,6 @@ const CostBreakUpPdf = ({
                                       ₹{d1?.gstValue?.toLocaleString('en-IN')}
                                     </td>
                                     <td className="text-[12px] px-2 text-right   ">
-                                      {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
                                       ₹
                                       {Number(
                                         computeTotal(
@@ -1036,7 +1064,7 @@ const CostBreakUpPdf = ({
                                     ₹{partCTotal?.toLocaleString('en-IN')}
                                   </td>
                                 </tr>
-                              </tbody>
+                              </tbody> */}
                             </table>
                           </div>
 
@@ -1081,6 +1109,7 @@ const CostBreakUpPdf = ({
                         </section>
                       )}
                       {showOnly === 'payment_schedule' && (
+                        <>
                         <div className=" mt-4 border rounded-lg shadow-md overflow-hidden ">
                           <table className="w-full border-b border-dashed">
                             <thead className="">
@@ -1104,23 +1133,51 @@ const CostBreakUpPdf = ({
                                   key={inx}
                                   className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
                                 >
-                                  <th className=" px-2  text-[11px] text-left  font-normal tracking-wide uppercase ">
-                                   {d1?.stage?.label}
+                                  <th className=" px-2  text-[10px] text-left text-bold   tracking-wide uppercase text-grey-900 ">
+                                    {d1?.stage?.label}
+                                    <div className="text-[9px] text-left text-normal lowercase text-slate-600 ">
+                                      {d1?.description} ({d1?.zeroDay} days)
+                                    </div>
                                   </th>
                                   <td className="text-[11px] px-2  text-left font-normal tracking-wide uppercase ">
                                     <CustomDatePicker
                                       id="bmrdaStartDate"
                                       name="bmrdaStartDate"
-                                      className={`pl- px-1 h-8 rounded-md mt-1 min-w-[100px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] ${ d1?.schDate < newPlotPS[inx-1]?.schData ? 'border-red-600' : 'border-[#cccccc]' } px-2`}
-                                      selected={d1.schDate = d1?.schDate || d.getTime() + Number(d1?.zeroDay || 0) * 86400000}
+                                      className={`pl- px-1 h-8 rounded-md mt-1 min-w-[100px] max-w-[120px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] ${
+                                        d1?.schDate <
+                                        newPlotPS[inx - 1]?.schData
+                                          ? 'border-red-600'
+                                          : 'border-[#cccccc]'
+                                      } px-2`}
+                                      // selected={d1.schDate = d1?.schDate || d.getTime() + (newPlotPS
+                                      //   .slice(0, inx)
+                                      //   .reduce((sum, prevItem) => sum + (Number(prevItem.zeroDay) || 0), 0)+ Number(d1?.zeroDay || 0) * 86400000)}
+                                      selected={
+                                        (d1.schDate =
+                                          d1?.schDate ||
+                                          d.getTime() +
+                                            (newPlotPS
+                                              .slice(0, inx)
+                                              .reduce(
+                                                (sum, prevItem) =>
+                                                  sum +
+                                                  (Number(prevItem.zeroDay) ||
+                                                    0),
+                                                0
+                                              ) +
+                                              Number(d1?.zeroDay || 0)) *
+                                              86400000)
+                                      }
                                       onChange={(date) => {
                                         // formik.setFieldValue(
                                         //   'bmrdaStartDate',
                                         //   date.getTime()
                                         // )
-                                        console.log('data', date.getTime())
+                                        console.log(
+                                          'sel unti data',
+                                          date.getTime()
+                                        )
 
-                                      
                                         // setStartDate(date)
                                         handlePSdateChange(inx, date.getTime())
                                       }}
@@ -1132,7 +1189,6 @@ const CostBreakUpPdf = ({
                                       ]}
                                       dateFormat="d-MMMM-yyyy"
                                     />
-                                    {d1?.description}
                                   </td>
                                   <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
                                     ₹{d1?.value?.toLocaleString('en-IN')}
@@ -1152,6 +1208,102 @@ const CostBreakUpPdf = ({
                             </tbody>
                           </table>
                         </div>
+                        {/* construction payment schedule */}
+                         {/* <div className=" mt-4 border rounded-lg shadow-md overflow-hidden ">
+                          <table className="w-full border-b border-dashed">
+                            <thead className="">
+                              {' '}
+                              <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D] font-['Inter'] font-[600]  ">
+                                <th className="w-[50%] px-2   text-left  tracking-wide uppercase text-[11px]   ">
+                                  Particulars
+                                </th>
+                                <th className="w-[30%] px-2   text-left  tracking-wide uppercase text-[11px] ">
+                                  Payment Timeline of
+                                </th>
+                                <th className="w-[20%] px-2   text-right  tracking-wide uppercase  text-[11px]">
+                                  Total inc GST
+                                </th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              {psConstructPayload?.map((d1, inx) => (
+                                <tr
+                                  key={inx}
+                                  className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
+                                >
+                                  <th className=" px-2  text-[10px] text-left text-bold   tracking-wide uppercase text-grey-900 ">
+                                    {d1?.stage?.label}
+                                    <div className="text-[9px] text-left text-normal lowercase text-slate-600 ">
+                                      {d1?.description} ({d1?.zeroDay} days)
+                                    </div>
+                                  </th>
+                                  <td className="text-[11px] px-2  text-left font-normal tracking-wide uppercase ">
+                                    <DatePicker
+                                      id="bmrdaStartDate"
+                                      name="bmrdaStartDate"
+                                      className={`pl- px-1 h-8 rounded-md mt-1 min-w-[100px] max-w-[120px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] ${
+                                        d1?.schDate <
+                                        newPlotPS[inx - 1]?.schData
+                                          ? 'border-red-600'
+                                          : 'border-[#cccccc]'
+                                      } px-2`}
+
+                                      selected={
+                                        (d1.schDate =
+                                          d1?.schDate ||
+                                          d.getTime() +
+                                            (newPlotPS
+                                              .slice(0, inx)
+                                              .reduce(
+                                                (sum, prevItem) =>
+                                                  sum +
+                                                  (Number(prevItem.zeroDay) ||
+                                                    0),
+                                                0
+                                              ) +
+                                              Number(d1?.zeroDay || 0)) *
+                                              86400000)
+                                      }
+                                      onChange={(date) => {
+
+                                        console.log(
+                                          'sel unti data',
+                                          date.getTime()
+                                        )
+
+
+                                        handlePSdateChange(inx, date.getTime())
+                                      }}
+                                      timeFormat="HH:mm"
+                                      injectTimes={[
+                                        setHours(setMinutes(d, 1), 0),
+                                        setHours(setMinutes(d, 5), 12),
+                                        setHours(setMinutes(d, 59), 23),
+                                      ]}
+                                      dateFormat="d-MMMM-yyyy"
+                                    />
+                                  </td>
+                                  <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
+                                    ₹{d1?.value?.toLocaleString('en-IN')}
+                                  </td>
+                                </tr>
+                              ))}
+
+                              <tr className="h-[32px]">
+                                <th className="text-[12px] px-2  text-left text-gray-800 ">
+                                  Plot Value Total Rs.:
+                                </th>
+                                <td className="text-[12px] px-2  text-right text-gray-400 "></td>
+                                <th className="text-[12px] px-2  text-right text-gray-800 ">
+                                  ₹{netTotal?.toLocaleString('en-IN')}
+                                </th>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div> */}
+
+                        </>
                       )}
 
 

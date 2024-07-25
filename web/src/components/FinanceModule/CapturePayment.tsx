@@ -23,8 +23,10 @@ import {
   addPaymentReceivedEntrySup,
   createBookedCustomer,
   createNewCustomerS,
+  getProject,
   steamBankDetailsList,
   steamUsersProjAccessList,
+  streamProjectMaster,
   updateLeadStatus,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -67,8 +69,6 @@ const CaptureUnitPayment = ({
   const [bankDetailsA, setBankDetailsA] = useState([])
   const [creditNotersA, setCreditNoters] = useState([])
 
-
-
   // const [formattedValue, setFormattedValue] = useState('');
 
   // const handleChange = (e) => {
@@ -76,10 +76,6 @@ const CaptureUnitPayment = ({
   //   const formatted = value ? `Rs.${parseInt(value, 10).toLocaleString('en-IN')}` : '';
   //   setFormattedValue(formatted);
   // };
-
-
-
-  
 
   const [startDate, setStartDate] = useState(d)
 
@@ -104,26 +100,35 @@ const CaptureUnitPayment = ({
   }, [])
 
   useEffect(() => {
-    const unsubscribe = steamBankDetailsList(
-      orgId,
-      (querySnapshot) => {
-        const bankA = querySnapshot.docs.map((docSnapshot) => {
-          const x = docSnapshot.data()
-          x.id = docSnapshot.id
-          return x
-        })
-        bankA.map((user) => {
-          user.label = user?.accountName
-          user.value = user?.accountNo
-        })
-        console.log('fetched users list is', bankA)
-        setBankDetailsA([...bankA])
-      },
-      (error) => setBankDetailsA([])
+    getProjectFun()
+
+  }, [])
+  const getProjectFun = async () => {
+    const additionalUserInfo = await getProject(orgId, selUnitDetails?.pId)
+    const bankA = await additionalUserInfo?.bankAccounts?.map((user) => {
+      user.label = user?.accountName
+      user.value = user?.accountNo
+    })
+    await console.log(
+      'fetched users list is ==>',
+      additionalUserInfo,
+      additionalUserInfo?.bankAccounts,
+      additionalUserInfo?.bankAccounts?.map((user) => {
+        user.label = user?.accountName
+        user.value = user?.accountNo
+        return user
+      })
     )
 
-    return unsubscribe
-  }, [])
+    await setBankDetailsA(
+      additionalUserInfo?.bankAccounts?.map((user) => {
+        user.label = user?.accountName
+        user.value = user?.accountNo
+        return user
+      })
+    )
+    await console.log('selected value is xxx ', additionalUserInfo)
+  }
 
   useEffect(() => {
     const unsubscribe = steamUsersProjAccessList(
@@ -328,20 +333,21 @@ const CaptureUnitPayment = ({
   }
   const bgImgStyle = {
     backgroundImage:
-      'url("https://images.unsplash.com/photo-1605106715994-18d3fecffb98?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+      'url("httpsss://images.unsplash.com/photo-1605106715994-18d3fecffb98?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3Dtest")',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   }
   return (
     <div className="">
       <div className="flex items-center justify-center">
-        <div id="bg-img" className="flex h-[664px] w-full flex-col" style={bgImgStyle}>
-       {StatusListA?.length>0 && <section className="text-white text-right w-full mt-6 pr-5">
-                                        {' '}
-                                        {stepIndx} of {StatusListA?.length}{' '}
-                                        steps
-                                      </section> }
-          <div className="relative top-6 mx-auto max-h-[65%]  rounded-xl  px-9 pb-14 pt-5 shadow-md">
+        <div id="bg-img" className="flex  w-full flex-col" style={bgImgStyle}>
+          {StatusListA?.length > 0 && (
+            <section className="text-white text-right w-full  pr-5">
+              {' '}
+              {stepIndx} of {StatusListA?.length} steps
+            </section>
+          )}
+          <div className="relative mx-auto max-h-[65%]  rounded-xl  px-9 pb-14 shadow-md">
             {/* <div className="space-y-4 text-white">
               <h3 className="font-bold text-2xl">Confirm Booking</h3>
 
@@ -435,22 +441,34 @@ const CaptureUnitPayment = ({
                                                 <MultiSelectMultiLineField
                                                   label="Paid Towards Account"
                                                   name="towardsBankDocId"
-                                                  
                                                   onChange={(payload) => {
                                                     console.log(
                                                       'changed value is ',
                                                       payload
                                                     )
-                                                    const {value,id, accountName,} = payload
-                                                    formik.setFieldValue('builderName',accountName)
-                                                    formik.setFieldValue('landlordBankDocId',id)
+                                                    const {
+                                                      value,
+                                                      id,
+                                                      accountName,
+                                                    } = payload
+                                                    formik.setFieldValue(
+                                                      'builderName',
+                                                      accountName
+                                                    )
+                                                    formik.setFieldValue(
+                                                      'landlordBankDocId',
+                                                      id
+                                                    )
 
-                                                    formik.setFieldValue('towardsBankDocId',id)
-
-
+                                                    formik.setFieldValue(
+                                                      'towardsBankDocId',
+                                                      id
+                                                    )
                                                   }}
-                                                  value={formik.values.towardsBankDocId}
-
+                                                  value={
+                                                    formik.values
+                                                      .towardsBankDocId
+                                                  }
                                                   options={bankDetailsA}
                                                 />
                                               </div>
@@ -504,7 +522,6 @@ const CaptureUnitPayment = ({
                                                 label="Amount"
                                                 name="amount"
                                                 type="number"
-                                              
                                               />
                                             </div>
                                           </div>
