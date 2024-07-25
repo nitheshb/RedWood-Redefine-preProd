@@ -74,6 +74,7 @@ import { CustomSelectNew } from 'src/util/formFields/selectBoxFieldNew'
 
 import FileList from './FilesList'
 import FileUpload from './FileUpload'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 const people = [
   { name: 'Priority 1' },
@@ -562,7 +563,7 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                               <div className="bg-green border  pl-2 rounded flex flex-row h-[32px] ml-9 ">
                                 <CalendarIcon className="w-4  inline text-[#058527]" />
                                 <span className="inline">
-                                  <DatePicker
+                                  <CustomDatePicker
                                     className="mt-[5px] pl- px-2  inline text-sm "
                                     selected={startDate}
                                     onChange={(date) => setStartDate(date)}

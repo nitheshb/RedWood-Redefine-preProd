@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { getYear, getMonth } from 'date-fns'
 import range from 'lodash/range'
+import CustomDatePicker from './CustomDatePicker'
 
 export const DateField = ({ label, ...props }) => {
   const years = range(getYear(new Date()) - 10, getYear(new Date()) + 10, 1)
@@ -32,7 +33,7 @@ export const DateField = ({ label, ...props }) => {
       <label htmlFor={field.name} className="label font-regular text-sm">
         {label}
       </label>
-      <DatePicker
+      <CustomDatePicker
         {...field}
         {...props}
         autoComplete="off"

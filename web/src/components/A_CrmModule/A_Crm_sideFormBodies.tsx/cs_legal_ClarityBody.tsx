@@ -69,6 +69,7 @@ import {
 } from 'src/util/dateConverter'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 // import BankSelectionSwitchDrop from './BankSelectionDroopDown'
 const torrowDate = new Date(
@@ -1255,7 +1256,7 @@ export default function Crm_legal_Clarity({
                                 <div className="bg-green   pl-   flex flex-row ">
                                   {/* <CalendarIcon className="w-4  ml-1 inline text-[#058527]" /> */}
                                   <span className="inline">
-                                    <DatePicker
+                                    <CustomDatePicker
                                       className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] bg-[#F2F5F8]"
                                       selected={startDate}
                                       onChange={(date) => setStartDate(date)}

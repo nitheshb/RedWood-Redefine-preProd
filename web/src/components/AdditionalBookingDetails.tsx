@@ -44,6 +44,7 @@ import NoBorderDropDown from './comps/noBorderDropDown'
 import Loader from './Loader/Loader'
 import { useFileUpload } from './useFileUpload'
 import { sourceList } from 'src/constants/projects'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 const AdditonalBookingDetails = ({
   source,
@@ -372,7 +373,7 @@ const AdditonalBookingDetails = ({
                                                 Booked On
                                               </label>
                                               <span className="inline">
-                                                <DatePicker
+                                                <CustomDatePicker
                                                   className="h-8 outline-none border-radius rounded-md  px-2 border-[#cccccc] border-gray-500 text-sm mt-[-4px] pb-1  w-[90%] inline  w-full flex bg-grey-lighter text-grey-darker border border-gray-500 "
                                                   label="Dated"
                                                   name="bookedOn"

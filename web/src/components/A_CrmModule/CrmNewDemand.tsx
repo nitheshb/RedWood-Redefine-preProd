@@ -495,7 +495,7 @@ const AddNewDemand = ({
                                           <div className="w-full mt-3 lg:w-4/12 px-3  ">
                                             <div className="relative w-full mb-5 mt-[-1px] ">
                                               <span className="inline">
-                                                <DatePicker
+                                                <CustomDatePicker
                                                   className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-gray-500  border-solid mt-[-4px] pb-1  min-w-[125px]  inline  text-[#0091ae]   lg:w-4/12 w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] "
                                                   label="Dated"
                                                   name="dated"
