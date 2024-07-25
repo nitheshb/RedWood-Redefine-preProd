@@ -19,6 +19,7 @@ import CostBreakUpPdfPreview from './costBreakUpPdfPreview'
 import { TextFieldFlat } from './formFields/TextFieldFlatType'
 
 import '../styles/myStyles.css'
+import CustomDatePicker from './formFields/CustomDatePicker'
 
 const CostBreakUpPdf = ({
   formik,
@@ -1139,7 +1140,7 @@ const CostBreakUpPdf = ({
                                     </div>
                                   </th>
                                   <td className="text-[11px] px-2  text-left font-normal tracking-wide uppercase ">
-                                    <DatePicker
+                                    <CustomDatePicker
                                       id="bmrdaStartDate"
                                       name="bmrdaStartDate"
                                       className={`pl- px-1 h-8 rounded-md mt-1 min-w-[100px] max-w-[120px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] ${
@@ -1304,9 +1305,26 @@ const CostBreakUpPdf = ({
 
                         </>
                       )}
+
+
+
+                      
+
+
+
+
+                      
                     </div>
                   </div>
                   {/* end of paper */}
+
+
+
+
+
+
+
+
                 </div>
               </div>
             </section>

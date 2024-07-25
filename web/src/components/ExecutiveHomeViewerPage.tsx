@@ -46,6 +46,7 @@ import SiderForm from './SiderForm/SiderForm'
 // import CardItem from '../../components/leadsCard'
 // import BoardData from '../../components/board-data.json'
 import { Search } from '@material-ui/icons/Search';
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 // function createGuidId() {
 //   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -759,7 +760,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                   <label className="bg-green   pl-[2px] h-[28px]  flex flex-row cursor-pointer border border-[#ccc] rounded-[4px]">
                     <CalendarMonthTwoToneIcon className="mr-1 mt-[2px] h-4 w-4" />
                     <span className="inline">
-                      <DatePicker
+                      <CustomDatePicker
                         className="z-[11] pl- py- rounded-[4px]  inline text-xs text-[#0091ae] bg-white cursor-pointer min-w-[170px] border-l-[#cccccc]"
                         // selected={cutOffDate}
                         // onChange={(date) => setCutOffDate(date)}

@@ -65,6 +65,7 @@ import ReportSideWindow from '../../components/SiderForm/ReportSideView'
 import SiderForm from '../../components/SiderForm/SiderForm'
 
 import LeadsTransferTableBody from './leadsTransferTableBody'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -1906,7 +1907,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                     visibility: isOpened ? 'visible' : 'hidden',
                                   }}
                                 >
-                                  <DatePicker
+                                  <CustomDatePicker
                                     className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                       sourceDateRange === startDate?.getTime()
                                         ? 'font-semibold text-pink-800 bg-pink-200 '
@@ -2831,7 +2832,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                         : 'hidden',
                                     }}
                                   >
-                                    <DatePicker
+                                    <CustomDatePicker
                                       className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                         sourceDateRange === startDate?.getTime()
                                           ? 'font-semibold text-pink-800 bg-pink-200 '
@@ -3294,7 +3295,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                   visibility: isOpened ? 'visible' : 'hidden',
                                 }}
                               >
-                                <DatePicker
+                                <CustomDatePicker
                                   className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                     sourceDateRange === startDate?.getTime()
                                       ? 'font-semibold text-pink-800 bg-pink-200 '
@@ -3796,7 +3797,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                   visibility: isOpened ? 'visible' : 'hidden',
                                 }}
                               >
-                                <DatePicker
+                                <CustomDatePicker
                                   className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                     sourceDateRange === startDate?.getTime()
                                       ? 'font-semibold text-pink-800 bg-pink-200 '

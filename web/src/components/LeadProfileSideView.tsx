@@ -116,6 +116,7 @@ import '../styles/myStyles.css'
 import { Slider } from '@mui/material'
 
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 // interface iToastInfo {
 //   open: boolean
@@ -3074,7 +3075,7 @@ export default function LeadProfileSideView({
                                           <div className="bg-green   pl-   flex flex-row ">
                                             {/* <CalendarIcon className="w-4  ml-1 inline text-[#058527]" /> */}
                                             <span className="inline">
-                                              <DatePicker
+                                              <CustomDatePicker
                                                 className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] bg-[#F2F5F8]"
                                                 selected={startDate}
                                                 onChange={(date) =>

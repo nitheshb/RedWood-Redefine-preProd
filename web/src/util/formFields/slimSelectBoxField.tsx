@@ -5,6 +5,7 @@ import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
 import { setLabels } from 'react-chartjs-2/dist/utils'
 import DatePicker from 'react-datepicker'
 import Select from 'react-select'
+import CustomDatePicker from './CustomDatePicker'
 const customStyles = {
   control: (base) => ({
     ...base,
@@ -244,7 +245,7 @@ export const SlimDateSelectBox = ({
         />
       ) : (
         <div className="flex" style={{ alignItems: 'flex-end' }}>
-          <DatePicker
+          <CustomDatePicker
             className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${'font-semibold text-pink-800 bg-pink-200 '} rounded-full`}
             // onCalendarClose={() => setDatePicker(false)}
             placeholderText="&#128467;	 Custom"

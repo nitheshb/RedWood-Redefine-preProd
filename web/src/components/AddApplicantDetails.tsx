@@ -37,6 +37,7 @@ import { TextField } from 'src/util/formFields/TextField'
 import NoBorderDropDown from './comps/noBorderDropDown'
 import { useFileUpload } from './useFileUpload'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker';
 
 
 
@@ -1306,7 +1307,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                               Date Of Birth
                                             </label>
                                             <span className="inline">
-                                              <DatePicker
+                                              <CustomDatePicker
                                                 className="h-8 outline-none border-radius rounded-md  px-2 border-[#cccccc] border-gray-500 text-sm mt-[-4px] pb-1  w-[90%] inline   flex bg-grey-lighter text-grey-darker border border-gray-500 "
                                                 label="Dated"
                                                 name="dob1"
@@ -1329,6 +1330,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                                     23
                                                   ),
                                                 ]}
+                                                
                                                 dateFormat="d-MMMM-yyyy"
                                               />
                                             </span>
@@ -1961,7 +1963,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                                 Date Of Birth
                                               </label>
                                               <span className="inline">
-                                                <DatePicker
+                                                <CustomDatePicker
                                                   className="h-8 outline-none border-[#cccccc] rounded-md px-2 border-gray-500 text-sm mt-[-4px] pb-1   w-[90%]  inline   flex bg-grey-lighter text-grey-darker border border-gray-500 "
                                                   label="Dated"
                                                   name="dob2"

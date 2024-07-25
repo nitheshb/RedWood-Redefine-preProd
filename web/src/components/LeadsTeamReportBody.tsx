@@ -66,6 +66,7 @@ import { serialProjecVisitFixedData } from './LeadsTeamReport/serialProjectVisit
 import { serialMyData } from './LeadsTeamReport/SourceLeads'
 import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 //import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
 //import ProfileSummary from './A_SalesModule/Reports/profileSummary'
@@ -1598,7 +1599,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                     visibility: isOpened ? 'visible' : 'hidden',
                                   }}
                                 >
-                                  <DatePicker
+                                  <CustomDatePicker
                                     className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                       sourceDateRange === startDate?.getTime()
                                         ? 'font-semibold text-pink-800 bg-pink-200 '
@@ -2103,7 +2104,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                     visibility: isOpened ? 'visible' : 'hidden',
                                   }}
                                 >
-                                  <DatePicker
+                                  <CustomDatePicker
                                     className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                       sourceDateRange === startDate?.getTime()
                                         ? 'font-semibold text-pink-800 bg-pink-200 '
@@ -3032,7 +3033,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                         : 'hidden',
                                     }}
                                   >
-                                    <DatePicker
+                                    <CustomDatePicker
                                       className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                         sourceDateRange === startDate?.getTime()
                                           ? 'font-semibold text-pink-800 bg-pink-200 '
@@ -3496,7 +3497,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   visibility: isOpened ? 'visible' : 'hidden',
                                 }}
                               >
-                                <DatePicker
+                                <CustomDatePicker
                                   className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                     sourceDateRange === startDate?.getTime()
                                       ? 'font-semibold text-pink-800 bg-pink-200 '
@@ -3999,7 +4000,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   visibility: isOpened ? 'visible' : 'hidden',
                                 }}
                               >
-                                <DatePicker
+                                <CustomDatePicker
                                   className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                     sourceDateRange === startDate?.getTime()
                                       ? 'font-semibold text-pink-800 bg-pink-200 '

@@ -45,6 +45,7 @@ import { currentStatusDispFun } from 'src/util/leadStatusDispFun'
 
 import AssigedToDropComp from './assignedToDropComp'
 import Loader from './Loader/Loader'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
   const d = new window.Date()
@@ -555,7 +556,7 @@ Mobile No
                           </label>
 
 
-<DatePicker
+<CustomDatePicker
   className="h-8 w-[400px]  rounded-md text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
   selected={startDate}
   onChange={(date) => {

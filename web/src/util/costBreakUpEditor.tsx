@@ -25,6 +25,7 @@ import { TextFieldFlat } from './formFields/TextFieldFlatType'
 
 import '../styles/myStyles.css'
 import { getWeekMonthNo, prettyDate } from './dateConverter'
+import CustomDatePicker from './formFields/CustomDatePicker'
 
 const CostBreakUpEditor = ({
   projectDetails,
@@ -654,7 +655,7 @@ const CostBreakUpEditor = ({
                                     {d1?.stage?.label}
                                   </th>
                                   <td className="text-[12px] px-2 py-2  text-right text-gray-700 ">
-                                    <DatePicker
+                                    <CustomDatePicker
                                       id="bmrdaStartDate"
                                       name="bmrdaStartDate"
                                       className="pl- px-1 h-8 rounded-md mt-1 min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
