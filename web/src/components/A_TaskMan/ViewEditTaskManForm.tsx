@@ -1121,7 +1121,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                                 <div className="bg-green border ml-[32px] pl-2 rounded flex flex-row h-[32px] ">
                                   <CalendarIcon className="w-4  inline text-[#058527]" />
                                   <span className="inline">
-                                    <DatePicker
+                                    <CustomDatePicker
                                       className="mt-[5px] pl- px-2  inline text-sm "
                                       selected={startDate}
                                       onChange={(date) => setStartDate(date)}

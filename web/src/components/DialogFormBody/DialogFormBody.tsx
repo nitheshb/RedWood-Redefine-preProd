@@ -41,6 +41,7 @@ import { TextField } from 'src/util/formFields/TextField'
 
 import AddBankDetailsForm from '../addBankDetailsForm'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 const DialogFormBody = ({
   title,
@@ -568,7 +569,7 @@ const DialogFormBody = ({
                                   <label className="label font-regular block mb-1">
                                     Approval Date*
                                   </label>
-                                  <DatePicker
+                                  <CustomDatePicker
                                     id="authorityStartDate"
                                     name="authorityStartDate"
                                     className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"

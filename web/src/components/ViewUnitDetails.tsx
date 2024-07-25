@@ -396,11 +396,12 @@ const ViewUnitDetails = ({
                             </span>
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {data?.unitDetail?.builtup_area?.toLocaleString(
+                            {/* {data?.unitDetail?.builtup_area?.toLocaleString(
                               'en-IN'
                             )|| data?.unitDetail?.area?.toLocaleString(
                               'en-IN'
-                            ) }
+                            ) } */}
+                            {data?.unitDetail?.area?.toLocaleString('en-IN')}
                           </div>
                         </section>
                         <section className="flex flow-row justify-between mb-1">
@@ -416,11 +417,13 @@ const ViewUnitDetails = ({
                             BUA
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {data?.unitDetail?.builtup_area?.toLocaleString(
+                            {/* {data?.unitDetail?.builtup_area?.toLocaleString(
                               'en-IN'
                             )|| data?.unitDetail?.area?.toLocaleString(
                               'en-IN'
-                            ) }
+                            ) } */}
+                            {data?.unitDetail?.builtup_area?.toLocaleString('en-IN')}
+
                           </div>
                         </section>
                       </section>

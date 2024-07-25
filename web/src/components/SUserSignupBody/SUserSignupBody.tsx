@@ -21,6 +21,7 @@ import { DEPARTMENT_LIST, ROLES_LIST } from 'src/constants/userRoles'
 import { PhoneNoField } from 'src/util/formFields/phNoField'
 import DatePicker from 'react-datepicker'
 import { setHours, setMinutes } from 'date-fns'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 // import Select from 'react-select'
 // import SelectSearch from 'react-select-search'
@@ -417,7 +418,7 @@ console.log('rolws are ', filRoles)
   <label className="label font-regular block mb-1">
     Date of Birth
   </label>
-  <DatePicker
+  <CustomDatePicker
     className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
     selected={startDate}
     onChange={(date) => {
