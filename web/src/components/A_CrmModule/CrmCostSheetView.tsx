@@ -85,19 +85,19 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                   <table className="w-[100%]">
                     <thead>
                       <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
-                        <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#D9D8FF]  tracking-wide uppercase px-2">
+                        <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#D9D8FF]  tracking-wide  px-2">
                           Particulars
                         </th>
-                        <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide uppercase">
+                        <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide">
                           Plot Rate/Sqft
                         </th>
-                        <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide uppercase">
+                        <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide ">
                           Sale Value
                         </th>
-                        <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF]  tracking-wide uppercase px-2">
+                        <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF]  tracking-wide px-2">
                           GST
                         </th>
-                        <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF]  tracking-wide uppercase px-2 ">
+                        <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF]  tracking-wide px-2 ">
                           Total
                         </th>
                       </tr>
