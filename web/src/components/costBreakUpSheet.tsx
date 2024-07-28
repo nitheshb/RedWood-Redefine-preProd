@@ -229,38 +229,38 @@ const CostBreakUpSheet = ({
     } else if (actionMode === 'unitBookingMode') {
       setStatusListA([
         {
-          label: 'Customer info',
+          label: 'Customer Info',
           value: 'customerDetails',
           logo: 'FireIcon',
           color: ' bg-violet-500',
         },
         {
-          label: 'Additonal info',
+          label: 'Additonal Info',
           value: 'additonalInfo',
           logo: 'FireIcon',
           color: ' bg-violet-500',
         },
         {
-          label: 'Cost sheet',
+          label: 'Cost Sheet',
           value: 'costsheet',
           logo: 'RefreshIcon',
           color: ' bg-violet-500',
         },
 
         {
-          label: 'Payment schedule',
+          label: 'Payment Schedule',
           value: 'payment_schedule',
           logo: 'FireIcon',
           color: ' bg-violet-500',
         },
         {
-          label: 'Booking summary',
+          label: 'Booking Summary',
           value: 'booking_summary',
           logo: 'FireIcon',
           color: ' bg-violet-500',
         },
         {
-          label: 'Confirm booking',
+          label: 'Confirm Booking',
           value: 'booksheet',
           logo: 'FireIcon',
           color: ' bg-violet-500',

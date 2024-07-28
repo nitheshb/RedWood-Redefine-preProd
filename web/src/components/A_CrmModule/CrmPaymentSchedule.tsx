@@ -202,22 +202,22 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
                 <thead>
                   {' '}
                   <tr className=" h-6 border-b-[0.2px] border-gray-300 h-[51px] bg-[#D9D8FF]">
-                    <th className="w-[40%] text-[10px] px-3 text-left   tracking-wide uppercase ">
+                    <th className="w-[40%] text-[12px] px-3 text-left   tracking-wide  ">
                       Particulars
                     </th>
                     {/* <th className="w-[10%] text-[10px] text-right text-gray-400  text-[#823d00]  tracking-wide uppercase">
                       Payment Timeline
                     </th> */}
-                    <th className="w-[15%] text-[10px] text-center  tracking-wide uppercase ">
+                    <th className="w-[15%] text-[12px] text-center  tracking-wide  ">
                       Eligible
                     </th>
-                    <th className="w-[15%] text-[10px]  px-2  text-right tracking-wide uppercase ">
+                    <th className="w-[15%] text-[12px]  px-2  text-right tracking-wide ">
                       Total inc GST
                     </th>
-                    <th className="w-[15%] text-[10px]  px-2 text-right    tracking-wide uppercase ">
+                    <th className="w-[15%] text-[12px]  px-2 text-right    tracking-wide ">
                       Received
                     </th>
-                    <th className="w-[15%] text-[10px]  px-2 text-right  tracking-wide uppercase ">
+                    <th className="w-[15%] text-[12px]  px-2 text-right  tracking-wide  ">
                       Balance
                     </th>
                     {/* <th className="w-[15%] text-[10px] text-right text-gray-400 text-[#823d00]  tracking-wide uppercase ">

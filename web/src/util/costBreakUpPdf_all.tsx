@@ -524,19 +524,19 @@ const CostBreakUpPdfAll = ({
                     <table className="w-[100%]">
                       <thead>
                         <tr className=" h-6 border-b-[0.2px] border-gray-300 w-[100%]">
-                          <th className="min-w-[35%] text-[10px] text-left text-[#8993a4] font-bodyLato tracking-wide uppercase">
+                          <th className="min-w-[35%] text-[10px] text-left text-[#8993a4] font-bodyLato tracking-wide">
                             Particulars
                           </th>
-                          <th className="w-[15%] text-[10px] text-right text-[#8993a4] font-bodyLato tracking-wide uppercase">
+                          <th className="w-[15%] text-[10px] text-right text-[#8993a4] font-bodyLato tracking-wide">
                             Plot Rate/Sqft
                           </th>
-                          <th className="w-[15%] text-[10px] text-right text-[#8993a4] font-bodyLato tracking-wide uppercase">
+                          <th className="w-[15%] text-[10px] text-right text-[#8993a4] font-bodyLato tracking-wide">
                             Sale Value
                           </th>
-                          <th className="w-[15%] text-[10px] text-right text-[#8993a4] font-bodyLato tracking-wide uppercase">
+                          <th className="w-[15%] text-[10px] text-right text-[#8993a4] font-bodyLato tracking-wide ">
                             GST
                           </th>
-                          <th className="w-[15%] text-[10px] text-right text-[#8993a4] font-bodyLato tracking-wide uppercase ">
+                          <th className="w-[15%] text-[10px] text-right text-[#8993a4] font-bodyLato tracking-wide">
                             Total
                           </th>
                         </tr>

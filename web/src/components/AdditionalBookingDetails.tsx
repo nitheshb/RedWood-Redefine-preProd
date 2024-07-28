@@ -280,9 +280,11 @@ const AdditonalBookingDetails = ({
                                   className="rounded-md  p-4 mt-2 bg-[#fff]"
                                   style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                 >
-                                  <h6 className="text-blueGray-400  text-[13px] mt-3 mb-6 font-bold uppercase">
+                                  <h6 className="text-blueGray-400  text-[14px] mt-3 mb-3 font-bold">
                                     Other Information
                                   </h6>
+                                  <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+
                                   <div className="flex flex-wrap">
                                     <div className="w-full lg:w-12/12 px-4">
                                       <div className="relative w-full mb-3">
@@ -341,9 +343,11 @@ const AdditonalBookingDetails = ({
                                   className="rounded-md  p-4 mt-2 bg-[#fff]"
                                   style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                 >
-                                  <h6 className="text-blueGray-400 text-[13px] mt-3 mb-6 font-bold uppercase">
+                                  <h6 className="text-blueGray-400 text-[14px] mt-3 mb-3 font-bold ">
                                     Booked By
                                   </h6>
+                                  <div className="border-t-4 rounded-xl w-10 mt-1 mb-3 border-[#8b5cf6]"></div>
+
                                   <div className="flex flex-wrap">
                                     <div className="w-full lg:w-4/12 px-4">
                                       <div className="relative w-full mb-3">
