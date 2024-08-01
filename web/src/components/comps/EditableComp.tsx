@@ -16,6 +16,7 @@ import {
   csSections,
   gstValesA,
   unitsCancellation,
+  VillaCsSections,
 } from 'src/constants/projects'
 import {
   addCostSheetMaster,
@@ -107,6 +108,8 @@ const EditableTablex = () => {
     setRows([...rows, newRow])
   }
 
+
+
   return (
     <div className="container mx-auto p-4">
       <DragDropContext onDragEnd={onDragEnd}>
@@ -193,6 +196,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
+  const [csCategoryOptionsA, setCsCategoryOptionsA] = useState([])
   const [data, setData] = useState([
     {
       id: 1,
@@ -276,6 +280,13 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       return unsubscribe
     }
   }, [fullCs])
+  useEffect(() => {
+    if (phase?.projectType?.name === 'Villas') {
+      setCsCategoryOptionsA(VillaCsSections)
+    } else {
+      setCsCategoryOptionsA(csSections)
+    }
+  }, [phase])
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
 
   const handleChange = (id, field, value) => {
@@ -568,12 +579,14 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         </div>
         <section className="flex flex-row space-x-4 mx-">
           <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
-            <div className="mb-3 w-[140px]">
+            <div className="mb-3 w-[172px] mr-4">
               <label htmlFor="area" className="label  text-sm">
-                Base Price per sqft*
+                Base { type === 'Apartment'
+              ? 'Flat '
+              : 'Plot '}Price per sqft*
               </label>
-              <div className="flex">
-                <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
+              <div className="flex w-[140px]">
+                <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md ">
                   {/* <svg
               className="w-4 h-4 text-gray-500 "
               aria-hidden="true"
@@ -588,7 +601,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                 <input
                   type="text"
                   id="website-admin"
-                  className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                  className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 "
                   placeholder="cost/sqft"
                   value={formatIndianNumber(costPerSqft) || 0}
                   onChange={handleCostChange}
@@ -600,7 +613,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
               <label htmlFor="area" className="label text-sm">
                 Standard Tax Rate*
               </label>
-              <div className="flex">
+              <div className="flex w-[140px]">
                 <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
                   {/* <svg
               className="w-4 h-4 text-gray-500 "
@@ -628,7 +641,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
             <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
               <div className="mb-3 w-[220px] ">
                 <label htmlFor="area" className="label  text-sm">
-                  Base Construction Price per sqft*
+                  Base Const Price per sqft*
                 </label>
                 <div className="flex w-[140px]">
                   <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
@@ -644,11 +657,11 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                   />
                 </div>
               </div>
-              <div className="mb-3 w-[210px]">
+              <div className="mb-3 ">
                 <label htmlFor="area" className="label text-sm">
                   Standard Tax Rate*
                 </label>
-                <div className="flex">
+                <div className="flex w-[140px]">
                   <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0  rounded-l-md">
                     %
                   </span>
@@ -800,7 +813,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                     value={row?.section?.value}
                                     onChange={(e) => {
                                       const selectedOptionObject =
-                                        csSections.find(
+                                      csCategoryOptionsA.find(
                                           (option) =>
                                             option.value === e.target.value
                                         )
@@ -811,7 +824,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                       )
                                     }}
                                   >
-                                    {csSections.map((option) => (
+                                    {csCategoryOptionsA.map((option) => (
                                       <MenuItem
                                         key={option.value}
                                         value={option.value}
