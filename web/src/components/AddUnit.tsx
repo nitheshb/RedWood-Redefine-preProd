@@ -51,6 +51,16 @@ const AddUnit = ({
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
 
+
+  const [selectedSharingType, setSelectedSharingType] = useState(false)
+
+
+  const handleSharingTypeChange = (e) => {
+    setSelectedSharingType(e.target.value)
+  }
+  
+
+
   const [fetchedUsersList, setfetchedUsersList] = useState([])
   const [usersList, setusersList] = useState([])
   const [projectList, setprojectList] = useState([])
@@ -205,6 +215,19 @@ const AddUnit = ({
   //   { label: 'User2', value: 'User2' },
   //   { label: 'User3', value: 'User3' },
   // ]
+
+
+  const sharingTypeOptions = [
+    { value: 'Builder', label: 'Builder' },
+    { value: 'Land Owner', label: 'Land Owner' },
+    { value: 'Investor', label: 'Investor' },
+  ];
+
+
+
+
+
+
   const budgetList = [
     { label: 'Select Customer Budget', value: '' },
     { label: '5 - 10 Lacs', value: 'Bangalore,KA' },
@@ -327,6 +350,9 @@ const AddUnit = ({
 
       release_status,
       mortgage_type,
+      landOwnerName,
+      investorName,
+      sharingType,
     } = data
     // updateUserRole(uid, deptVal, myRole, email, 'nitheshreddy.email@gmail.com')
 
@@ -383,6 +409,9 @@ const AddUnit = ({
       status: status,
       release_status: release_status,
       mortgage_type: mortgage_type,
+      landOwnerName: landOwnerName,
+      investorName: investorName,
+      sharingType: sharingType,
       intype: 'Form',
       unit_type: 'plot',
       by: user?.email,
@@ -492,6 +521,9 @@ const AddUnit = ({
 
       release_status,
       mortgage_type,
+      landOwnerName,
+      investorName,
+      sharingType,
     } = data
     // updateUserRole(uid, deptVal, myRole, email, 'nitheshreddy.email@gmail.com')
 
@@ -538,6 +570,9 @@ const AddUnit = ({
       status: status,
       release_status: release_status,
       mortgage_type: mortgage_type,
+      landOwnerName: landOwnerName,
+      investorName: investorName,
+      sharingType: sharingType,
       intype: 'Form',
       unit_type: 'plot',
       by: user?.email,
@@ -643,6 +678,18 @@ const AddUnit = ({
     { label: 'Bank', value: 'bank' },
     { label: '3rd Party Investor', value: '3rd_party_investor' },
   ]
+
+
+
+
+
+
+
+
+
+
+
+
   // const validate = Yup.object({
 
   // unit_no: Yup.string()
@@ -676,6 +723,11 @@ const AddUnit = ({
     setSelected({})
     setFormMessage('')
   }
+
+  function setFieldValue(arg0: string, value: any) {
+    throw new Error('Function not implemented.')
+  }
+
   return (
     <div className="h-full flex flex-col pb-6 bg-white shadow-xl overflow-y-scroll">
       {/* <div className="border-b py-3">
@@ -733,6 +785,9 @@ const AddUnit = ({
                 status: unitDetails?.status || '',
                 release_status: unitDetails?.release_status || '',
                 mortgage_type: unitDetails?.mortgage_type || '',
+                landOwnerName: unitDetails?.landOwnerName || '',
+                investorName: unitDetails?.investorName || '',
+                sharingType: unitDetails?.sharingType || '',
                 // bathrooms: '',
                 // cartpet_area_sqft: 0,
                 // buildup_area: 0,
@@ -749,6 +804,9 @@ const AddUnit = ({
               }}
             >
               {(formik) => (
+
+
+
                 <div className="">
                   <section className=" rounded-lg bg-white  ">
                     <Form>
@@ -1290,8 +1348,8 @@ const AddUnit = ({
                               />
                             </div>
                           </div>
-                          <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-1">
-                            <div className="w-full flex flex-col mb-3 mt-1">
+                          <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2">
+                            <div className="w-full flex flex-col mb-3">
                               <CustomSelect
                                 name="mortgage_type"
                                 label="Mortgage Type*"
@@ -1306,8 +1364,75 @@ const AddUnit = ({
                                 // options={aquaticCreatures}
                                 options={mortgageType}
                               />
+
                             </div>
-                          </div>
+
+
+
+
+
+
+<div className="w-full flex flex-col mb-3">
+      <CustomSelect
+        name="sharingType"
+        label="Sharing Type"
+        options={sharingTypeOptions}
+        onChange={(value) => {
+          formik.setFieldValue('sharingType', value.value);
+          setSelectedSharingType(value.value);
+        }}
+        value={formik.values.sharingType}
+      />
+
+      {selectedSharingType === 'Land Owner' && (
+        <div className="flex flex-col mt-2 rounded-lg pt-4">
+          <div className="mb-4 mt-2">
+            <div className="inline">
+              <div className="">
+                <label className="font-semibold text-[#053219] text-sm mb-1">
+                  Land Owner Details
+                </label>
+              </div>
+              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+            </div>
+          </div>
+          <TextField
+            name="landOwnerName"
+            label="Land Owner Name"
+            type="text"
+            value={formik.values.landOwnerName}
+            onChange={formik.handleChange}
+          />
+        </div>
+      )}
+
+      {selectedSharingType === 'Investor' && (
+        <div className="flex flex-col mt-2 rounded-lg pt-4">
+          <div className="mb-4 mt-2">
+            <div className="inline">
+              <div className="">
+                <label className="font-semibold text-[#053219] text-sm mb-1">
+                  Investor Details
+                </label>
+              </div>
+              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+            </div>
+          </div>
+          <TextField
+            name="investorName"
+            label="Investor Name"
+            type="text"
+            value={formik.values.investorName}
+            onChange={formik.handleChange}
+          />
+        </div>
+      )}
+    </div>
+
+
+                        </div>
+
+
                         </section>
 
                         <section className="mt-1 px-4 rounded-lg bg-white border border-gray-100 shadow">
@@ -1400,6 +1525,7 @@ const AddUnit = ({
                     </Form>
                   </section>
                 </div>
+                
               )}
             </Formik>
           </div>

@@ -1114,9 +1114,9 @@ export default function UnitFullSummary({
       {selFeature === 'unit_information' && (
         <>
           <div className="flex flex-col  my-10 rounded-lg bg-white border border-gray-100 px-4 m-4 mt-4">
-            <div className="py-3 grid grid-cols-4 mb-4">
+            <div className="py-3 grid grid-cols-4 gap-4 mb-4">
 
-              <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
+              {/* <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
                 <section className="flex flow-row justify-between mb-1">
                   <div className="font-md text-xs text-gray-700 tracking-wide">
                     Unit No
@@ -1152,12 +1152,167 @@ export default function UnitFullSummary({
                     {selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}
                   </div>
                 </section>
-              </section>
+              </section> */}
+
+
+              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
+  
+
+  <div className="flex items-center mb-2">
+    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Units
+    </div>
+  </div>
+
+  <section className="grid grid-cols-2 ">
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.unit_no}
+      </div>
+      <div className="text-xs text-gray-500">Unit No</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.area?.toLocaleString('en-IN')}
+      </div>
+      <div className="text-xs text-gray-500">
+      Size
+                    <span className="text-[10px] text-black-500 ml-1">
+                      (sqft)
+                    </span>
+      </div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.facing}
+      </div>
+      <div className="text-xs text-gray-500">Facing</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}
+      </div>
+      <div className="text-xs text-gray-500">BUA</div>
+    </div>
+
+  </section>
+</section>
+
+
+
+              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
+  
+
+  <div className="flex items-center mb-2">
+    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Dimensions</div>
+  </div>
+
+  <section className="grid grid-cols-2 ">
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">  {selCustomerPayload?.east_d?.toLocaleString('en-IN')}</div>
+      <div className="text-xs text-gray-500"> East</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.west_d?.toLocaleString('en-IN')}</div>
+      <div className="text-xs text-gray-500">West</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.south_d?.toLocaleString('en-IN')}</div>
+      <div className="text-xs text-gray-500">South</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.north_d?.toLocaleString('en-IN')}</div>
+      <div className="text-xs text-gray-500">North</div>
+    </div>
+
+  </section>
+</section>
 
 
 
 
-              <section className="flex flex-col mx-4 bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2 ">
+
+<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
+  
+
+  <div className="flex items-center mb-2">
+    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Schedule
+    </div>
+  </div>
+
+  <section className="grid grid-cols-2 ">
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900"> {selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
+      <div className="text-xs text-gray-500"> East By</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900"> {selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
+      <div className="text-xs text-gray-500">West By</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
+      <div className="text-xs text-gray-500">South By</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}
+      </div>
+      <div className="text-xs text-gray-500">North By</div>
+    </div>
+
+  </section>
+</section>
+
+
+
+<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
+  
+
+  <div className="flex items-center mb-2">
+    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Additonal Details
+    </div>
+  </div>
+
+  <section className="grid grid-cols-2 ">
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.rate_per_sqft?.toLocaleString('en-IN')}
+      </div>
+      <div className="text-xs text-gray-500">Cost</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}
+      </div>
+      <div className="text-xs text-gray-500">PLC</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.facing}
+      </div>
+      <div className="text-xs text-gray-500">Total</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.kathaId}
+
+      </div>
+      <div className="text-xs text-gray-500">KathaId</div>
+    </div>
+
+  </section>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {/* <section className="flex flex-col mx-4 bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2 ">
                 <section className="flex flow-row justify-between mb-1">
                   <div className="font-md text-xs text-gray-700 tracking-wide">
                     East
@@ -1190,8 +1345,8 @@ export default function UnitFullSummary({
                     {selCustomerPayload?.north_d?.toLocaleString('en-IN')}
                   </div>
                 </section>
-              </section>
-              <section className="flex flex-col mx-4 bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
+              </section> */}
+              {/* <section className="flex flex-col mx-4 bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
                 <section className="flex flow-row justify-between mb-1">
                   <div className="font-md text-xs text-gray-700 tracking-wide">
                     East By
@@ -1224,17 +1379,17 @@ export default function UnitFullSummary({
                     {selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}
                   </div>
                 </section>
-              </section>
-              <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2 ">
+              </section> */}
+              {/* <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2 ">
                 <section className="flex flow-row justify-between mb-1">
                   <div className="font-md text-xs text-gray-700 tracking-wide">
                     Cost
                   </div>
                   <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {/* {(
+                    {(
                       data?.unitDetail?.builtup_area *
                       data?.unitDetail?.rate_per_sqft
-                    )?.toLocaleString('en-IN')} */}
+                    )?.toLocaleString('en-IN')}
                     {selCustomerPayload?.rate_per_sqft?.toLocaleString('en-IN')}
                   </div>
                 </section>
@@ -1262,7 +1417,7 @@ export default function UnitFullSummary({
                     {selCustomerPayload?.kathaId}
                   </div>
                 </section>
-              </section>
+              </section> */}
 
 
 
@@ -1283,45 +1438,100 @@ export default function UnitFullSummary({
 
 
             {(customerDetails?.projectType?.name === 'Villas' || customerDetails?.projectType?.name === 'Apartment') && (
-            <section className="flex flex-col bg-[#F6F7FF] p-3 border  border-[#e5e7f8] rounded-md mb-2">
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-700 tracking-wide">
-                  BedRooms
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.Bedrooms_D}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                  Bathrooms
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.BathRooms_D?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                  Car Parking
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.Car_Parking_D}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                  Carpet Area Sqft
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-              </section>
+
+              
+<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
+  
+
+  <div className="flex items-center mb-2">
+    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Details
+    </div>
+  </div>
+
+  <section className="grid grid-cols-2 ">
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.Bedrooms_D}
+
+      </div>
+      <div className="text-xs text-gray-500">BedRooms
+      </div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.BathRooms_D?.toLocaleString('en-IN')}
+
+      </div>
+      <div className="text-xs text-gray-500">Bathrooms</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.Car_Parking_D}
+
+      </div>
+      <div className="text-xs text-gray-500">Car Parking
+      </div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
+
+
+      </div>
+      <div className="text-xs text-gray-500">Carpet Area Sqft
+      </div>
+    </div>
+
+  </section>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // <section className="flex flex-col bg-[#F6F7FF] p-3 border  border-[#e5e7f8] rounded-md mb-2">
+            //     <section className="flex flow-row justify-between mb-1">
+            //       <div className="font-md text-xs text-gray-700 tracking-wide">
+            //       BedRooms
+            //       </div>
+            //       <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+            //         {selCustomerPayload?.Bedrooms_D}
+            //       </div>
+            //     </section>
+            //     <section className="flex flow-row justify-between mb-1">
+            //       <div className="font-md text-xs text-gray-500  tracking-wide">
+            //       Bathrooms
+            //       </div>
+            //       <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+            //         {selCustomerPayload?.BathRooms_D?.toLocaleString('en-IN')}
+            //       </div>
+            //     </section>
+            //     <section className="flex flow-row justify-between mb-1">
+            //       <div className="font-md text-xs text-gray-500  tracking-wide">
+            //       Car Parking
+            //       </div>
+            //       <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+            //         {selCustomerPayload?.Car_Parking_D}
+            //       </div>
+            //     </section>
+            //     <section className="flex flow-row justify-between mb-1">
+            //       <div className="font-md text-xs text-gray-500  tracking-wide">
+            //       Carpet Area Sqft
+            //       </div>
+            //       <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+            //         {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
+            //       </div>
+            //     </section>
+            //   </section>
                 )}
 
 
 
-              <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
+              {/* <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
                 <section className="flex flow-row justify-between mb-1">
                   <div className="font-md text-xs text-gray-700 tracking-wide">
                   Status
@@ -1346,15 +1556,56 @@ export default function UnitFullSummary({
                     {selCustomerPayload?.mortgage_type}
                   </div>
                 </section>
-                {/* <section className="flex flow-row justify-between mb-1">
+                <section className="flex flow-row justify-between mb-1">
                   <div className="font-md text-xs text-gray-500  tracking-wide">
                   Carpet Area Sqft
                   </div>
                   <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
                     {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
                   </div>
-                </section> */}
-              </section>
+                </section>
+              </section> */}
+
+
+
+
+
+
+
+              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
+  
+
+  <div className="flex items-center mb-2">
+    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Status
+    </div>
+  </div>
+
+  <section className="grid grid-cols-2 ">
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900"> {selCustomerPayload?.status}</div>
+      <div className="text-xs text-gray-500"> Status</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.release_status?.toLocaleString('en-IN')}
+      </div>
+      <div className="text-xs text-gray-500">Release Status</div>
+    </div>
+    <div className="text-start">
+      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.mortgage_type}
+      </div>
+      <div className="text-xs text-gray-500">Mortgage Type
+      </div>
+    </div>
+    {/* <div className="text-start">
+      <div className="text-base font-semibold text-slate-900"></div>
+      <div className="text-xs text-gray-500">North</div>
+    </div> */}
+
+  </section>
+</section>
+
+
+
               </div>
 
 

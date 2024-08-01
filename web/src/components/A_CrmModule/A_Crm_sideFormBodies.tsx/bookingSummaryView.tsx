@@ -826,27 +826,27 @@ const BookingSummaryView = ({
                                   <table className="min-w-full divide-y ">
                                     <thead>
                                       <tr className="h-8 mb-1 border-none w-[100%] bg-[#E8E6FE] text-[#0D027D] font-['Inter'] font-[600] ">
-                                        <th className="min-w-[35%] px-2  text-[10px] text-left text-[#0D027D]  tracking-wide uppercase  ">
+                                        <th className="min-w-[35%] px-2  text-[12px] text-left text-[#0D027D]  tracking-wide">
                                           Particulars
                                         </th>
-                                        <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide uppercase ">
+                                        <th className="w-[15%] px-2 text-[12px] text-right   tracking-wide">
                                           Rate/Sqft
                                         </th>
                                         <th
                                           className={`${
                                             !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 text-[10px] text-right  tracking-wide uppercase `}
+                                          } w-[15%] px-2 text-[12px] text-right  tracking-wide`}
                                         >
                                           Cost
                                         </th>
                                         <th
                                           className={`${
                                             !showGstCol ? 'hidden' : ''
-                                          }  w-[15%] px-2 text-[10px] text-right  tracking-wide uppercase `}
+                                          }  w-[15%] px-2 text-[12px] text-right  tracking-wide`}
                                         >
                                           GST
                                         </th>
-                                        <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide uppercase ">
+                                        <th className="w-[15%] px-2 text-[12px] text-right  tracking-wide ">
                                           Total
                                         </th>
                                       </tr>
@@ -955,27 +955,27 @@ const BookingSummaryView = ({
                           </thead> */}
                                     <thead>
                                       <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D] font-['Inter'] font-[600] ">
-                                        <th className="min-w-[35%] px-2  text-[10px] text-left font-bold tracking-wide uppercase">
+                                        <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
                                           Particulars
                                         </th>
-                                        <th className="w-[15%] px-2 text-[10px] text-left font-bold text-right  tracking-wide uppercase ">
+                                        <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
                                           Rate/Sqft
                                         </th>
                                         <th
                                           className={`${
                                             !showGstCol ? 'hidden' : ''
-                                          } w-[15%] px-2 text-[10px] text-left font-bold text-right  tracking-wide uppercase `}
+                                          } w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
                                         >
                                           Cost
                                         </th>
                                         <th
                                           className={`${
                                             !showGstCol ? 'hidden' : ''
-                                          }  w-[15%] px-2 text-[10px] text-left font-bold text-right  tracking-wide uppercase `}
+                                          }  w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide`}
                                         >
                                           GST
                                         </th>
-                                        <th className="w-[15%] px-2 text-[10px] text-left font-bold text-right  tracking-wide uppercase ">
+                                        <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide">
                                           Total
                                         </th>
                                       </tr>
@@ -1126,13 +1126,13 @@ const BookingSummaryView = ({
                                     <thead className="">
                                       {' '}
                                       <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D] font-['Inter'] font-[600]  ">
-                                        <th className="w-[50%] px-2   text-left  tracking-wide uppercase text-[11px]   ">
+                                        <th className="w-[50%] px-2   text-left  tracking-wide  text-[12px]   ">
                                           Particulars
                                         </th>
-                                        <th className="w-[30%] px-2   text-left  tracking-wide uppercase text-[11px] ">
+                                        <th className="w-[30%] px-2   text-left  tracking-wide  text-[12px] ">
                                           Payment Timeline
                                         </th>
-                                        <th className="w-[20%] px-2   text-right  tracking-wide uppercase  text-[11px]">
+                                        <th className="w-[20%] px-2   text-right  tracking-wide  text-[12px]">
                                           Total inc GST
                                         </th>
                                       </tr>

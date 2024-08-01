@@ -370,27 +370,27 @@ const CostBreakUpEditor = ({
                           <table className="w-[100%]">
                             <thead>
                               <tr className="h-8 mb-1 border-none w-[100%] bg-[#f3fff2] ">
-                                <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide uppercase ">
+                                <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
                                   Particulars
                                 </th>
-                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide uppercase">
+                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
                                   Rate/Sqft
                                 </th>
                                 <th
                                   className={`${
                                     !showGstCol ? 'hidden' : ''
-                                  } w-[15%] px-2 text-[10px] text-right  tracking-wide uppercase`}
+                                  } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
                                 >
                                   Sale Value
                                 </th>
                                 <th
                                   className={`${
                                     !showGstCol ? 'hidden' : ''
-                                  }  w-[15%] px-2 text-[10px] text-right  tracking-wide uppercase`}
+                                  }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
                                 >
                                   GST
                                 </th>
-                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide uppercase ">
+                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
                                   Total
                                 </th>
                               </tr>
