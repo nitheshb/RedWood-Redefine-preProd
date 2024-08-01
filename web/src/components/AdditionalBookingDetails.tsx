@@ -219,9 +219,11 @@ const AdditonalBookingDetails = ({
                                       <section className="flex flex-row" >
                                         <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px] mr-2"></div>
                                         <div className="w-full flex flex-col">
-                                          <h6 className="w-full lg:w-12/12 text-black text-[13px] mt-[9px] mb- font-bold uppercase">
-                                            More details
+                                          <h6 className="w-full lg:w-12/12 text-black text-[14px] mt-[9px] mb- font-bold">
+                                            More Details
                                           </h6>
+                                          <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+
                                           <div className="w-[455.80px] opacity-50 text-black  text-[12px] font-normal ">
                                             Optional details
                                           </div>
@@ -280,20 +282,20 @@ const AdditonalBookingDetails = ({
                                   className="rounded-md  p-4 mt-2 bg-[#fff]"
                                   style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                 >
-                                  <h6 className="text-blueGray-400  text-[14px] mt-3 mb-3 font-bold">
+                                  <h6 className="text-blueGray-400  text-[14px] mt-3 mb- font-bold">
                                     Other Information
                                   </h6>
                                   <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
 
                                   <div className="flex flex-wrap">
                                     <div className="w-full lg:w-12/12 px-4">
-                                      <div className="relative w-full mb-3">
+                                      {/* <div className="relative w-full mb-3">
                                         <TextField2
                                           label="How do you come to know about this project?"
                                           name="leadSource"
                                           type="text"
                                         />
-                                      </div>
+                                      </div> */}
                                     </div>
                                     <div className="w-full lg:w-12/12 px-4">
                                       <div className="relative w-full mb-3">
@@ -314,7 +316,7 @@ const AdditonalBookingDetails = ({
                                       </div>
                                     </div>
 
-                                    <div className="w-full lg:w-12/12 px-4">
+                                    {/* <div className="w-full lg:w-12/12 px-4">
       <div className="relative w-full mb-3">
         <TextField2
           label="Annual Income"
@@ -322,8 +324,8 @@ const AdditonalBookingDetails = ({
           type="text"
         />
       </div>
-    </div>
-    <div className="w-full lg:w-12/12 px-4">
+    </div> */}
+    {/* <div className="w-full lg:w-12/12 px-4">
       <div className="relative w-full mb-3">
         <TextField2
           label="Designation"
@@ -331,24 +333,45 @@ const AdditonalBookingDetails = ({
           type="text"
         />
       </div>
-    </div>
+    </div> */}
 
 
 
                                   </div>
-                                </section>
 
-                                {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
-                                <section
-                                  className="rounded-md  p-4 mt-2 bg-[#fff]"
-                                  style={{ boxShadow: '0 1px 12px #f2f2f2' }}
+                                  <section
+                                  className="rounded-md  p-4 mt-2 "
+                              
                                 >
-                                  <h6 className="text-blueGray-400 text-[14px] mt-3 mb-3 font-bold ">
+                                  <h6 className="text-blueGray-400 text-[14px] mt-3  font-bold ">
                                     Booked By
                                   </h6>
-                                  <div className="border-t-4 rounded-xl w-10 mt-1 mb-3 border-[#8b5cf6]"></div>
+                                  <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+
 
                                   <div className="flex flex-wrap">
+
+
+                                  <div className="w-full lg:w-4/12 px-4">
+                                      <div className="relative w-full">
+                                      <div className="w-full flex flex-col mb-3">
+                                       <CustomSelect
+                                        name="leadSource"
+                                          label="Lead Source"
+                                           className="input"
+                                         onChange={(value) => {
+                                             formik.setFieldValue('leadSource', value.value)
+                                                  }}
+                                            value={formik.values.leadSource}
+                                            options={sourceList}
+                                                  />
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+
+
                                     <div className="w-full lg:w-4/12 px-4">
                                       <div className="relative w-full mb-3">
                                         {/* <TextField2
@@ -413,22 +436,7 @@ const AdditonalBookingDetails = ({
                                     </div>
 
 
-                                    <div className="w-full lg:w-4/12 px-4">
-                                      <div className="relative w-full">
-                                      <div className="w-full flex flex-col mb-3">
-                                       <CustomSelect
-                                        name="leadSource"
-                                          label="Lead Source"
-                                           className="input"
-                                         onChange={(value) => {
-                                             formik.setFieldValue('leadSource', value.value)
-                                                  }}
-                                            value={formik.values.leadSource}
-                                            options={sourceList}
-                                                  />
-                                        </div>
-                                      </div>
-                                    </div>
+
 
 
 
@@ -451,7 +459,15 @@ const AdditonalBookingDetails = ({
                                   </div>
                                 </section>
 
-                                <hr className="mt-6 border-b-1 border-blueGray-300" />
+
+
+
+                                </section>
+
+                                {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
+
+
+                                <hr className="mt-3 border-b-1 border-blueGray-300" />
                               </section>
                             </div>
                           </div>
