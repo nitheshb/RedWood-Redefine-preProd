@@ -164,40 +164,36 @@ export const projectPlans = [
   },
 ]
 
-
 export const projectDetailFlow = [
   {
     name: 'Project Details',
     value: 'projectDetails',
     img: 'https://www.svgrepo.com/show/530258/medal.svg',
-    indx:0,
+    indx: 0,
   },
   {
     name: 'Cost Setup',
     value: 'CostDetails',
     img: 'https://www.svgrepo.com/show/530260/map.svg',
-    indx:1,
+    indx: 1,
   },
   {
     name: 'Payment Schedule',
     value: 'Payment Schedule',
     img: 'https://www.svgrepo.com/show/530140/calendar.svg',
-    indx:2,
-
+    indx: 2,
   },
   {
     name: 'Project Units',
     value: 'Blocks',
     img: 'https://www.svgrepo.com/show/530256/calculator.svg',
-    indx:3,
-
+    indx: 3,
   },
   {
     name: 'Access & Others',
     value: 'projectAccess',
     img: 'https://www.svgrepo.com/show/530263/distributed.svg',
-    indx:4,
-
+    indx: 4,
   },
 ]
 
@@ -218,7 +214,8 @@ export const sourceListItems = [
     label: 'Events',
     value: 'events',
     rep: ['Event', 'Events', 'event', 'events', 'expo', 'Expo'],
-  }, {
+  },
+  {
     label: 'Facebook Ad',
     value: 'facebookad',
     rep: ['facebookad', 'Facebook', 'facebook', 'fb'],
@@ -300,7 +297,6 @@ export const ChooseOptions = [
     name: 'No',
     img: '/apart1.svg',
   },
-
 ]
 export const chooseAuthorityApproval = [
   {
@@ -311,7 +307,6 @@ export const chooseAuthorityApproval = [
     name: 'No',
     img: '/cancel-64.png',
   },
-
 ]
 export const chooseReraApproval = [
   {
@@ -322,7 +317,6 @@ export const chooseReraApproval = [
     name: 'No',
     img: '/cancel-64.png',
   },
-
 ]
 export const paymentMode = [
   {
@@ -347,14 +341,15 @@ export const demandMode = [
   {
     value: 'civil_alter',
     label: 'Civil Upgrade',
-  },{
+  },
+  {
     value: 'Maintenance',
     label: 'Maintenance',
   },
   {
     value: 'remainder_entry',
     label: 'Remainder Entry',
-    desc: 'indicate an entry made for the purpose of future follow-up or reference.Often used for informational purposes'
+    desc: 'indicate an entry made for the purpose of future follow-up or reference.Often used for informational purposes',
   },
   {
     value: 'Upgrade',
@@ -383,7 +378,16 @@ export const areaConversions = [
     label: 'Gunta',
   },
 ]
-export const uniTypes = ['9.14X15.24','12.19X18.29','12.19X16.25','30X40','30X50','35X45','40X40', '40X60', 'ODD'
+export const uniTypes = [
+  '9.14X15.24',
+  '12.19X18.29',
+  '12.19X16.25',
+  '30X40',
+  '30X50',
+  '35X45',
+  '40X40',
+  '40X60',
+  'ODD',
 ]
 export const unitsCancellation = [
   {
@@ -408,10 +412,42 @@ export const csSections = [
     value: 'additionalCost',
     label: 'Additional Charges',
   },
+
   {
     value: 'otherCharges',
     label: 'Other Charges',
-  },  {
+  },
+  {
+    value: 'partA',
+    label: 'Part-A',
+  },
+  {
+    value: 'partB',
+    label: 'Part-B',
+  },
+  {
+    value: 'partC',
+    label: 'Part-C',
+  },
+]
+export const VillaCsSections = [
+  {
+    value: 'unitCostNew',
+    label: 'Unit charges',
+  },
+  {
+    value: 'additionalCost',
+    label: 'Additional Charges',
+  },
+  {
+    value: 'constadditionalCost',
+    label: 'Const Additional Charges',
+  },
+  {
+    value: 'otherCharges',
+    label: 'Other Charges',
+  },
+  {
     value: 'partA',
     label: 'Part-A',
   },
@@ -506,7 +542,8 @@ export const costSheetAdditionalChargesA = [
   {
     value: 'bescom_sanitary_deposits',
     label: 'BESCOM & Sanitary Deposits',
-  },  {
+  },
+  {
     value: 'carparking',
     label: 'Car Parking',
   },
@@ -545,16 +582,12 @@ export const costSheetAdditionalChargesA = [
     label: 'DG Backup ',
   },
 
-
-
   {
     value: 'legalCharges_onsale',
     label: 'Legal',
   },
-
 ]
 export const costSheetPartcChargesA = [
-
   {
     value: 'legal_incidental_charges',
     label: 'Legal & Incidental',
@@ -600,7 +633,6 @@ export const csConstruAdditionalChargesA = [
   },
 ]
 export const paymetScheduleConstruct = [
-
   {
     value: 'On_execution_of_ATB',
     label: 'On Execution of ATB',
@@ -767,8 +799,6 @@ export const apartUnitChargesMock = [
   },
 ]
 
-
-
 export const approvalAuthority = [
   // {
   //   label: 'BMRDA',
@@ -784,271 +814,210 @@ export const approvalAuthority = [
 
   // },
 
-
-
   {
     label: 'Bangalore Development Authority (BDA)',
     value: 'BangaloreDevelopmentAuthority',
-
   },
 
   {
     label: 'Bangalore Metropolitan Region Development Authority (BMRDA)',
     value: 'BangaloreMetropolitanRegionDevelopmentAuthority',
-
   },
-
 
   {
     label: 'Bruhat Bengaluru Mahanagara Palike (BBMP)',
-    value: 'BruhatBengaluruMahanagaraPalike'
-
+    value: 'BruhatBengaluruMahanagaraPalike',
   },
 
   {
     label: 'Mysore Urban Development Authority (MUDA)',
-    value: 'MysoreUrbanDevelopmentAuthority'
-
+    value: 'MysoreUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Hubli-Dharwad Urban Development Authority (HDUDA)',
-    value: 'HubliDharwadUrbanDevelopmentAuthority'
-
+    value: 'HubliDharwadUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Mangalore Urban Development Authority (MUDA)',
-    value: 'MangaloreUrbanDevelopmentAuthority'
-
+    value: 'MangaloreUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Belgaum Urban Development Authority (BUDA)',
-    value: 'BelgaumUrbanDevelopmentAuthority'
-
+    value: 'BelgaumUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Gulbarga Urban Development Authority (GUDA)',
-    value: 'GulbargaUrbanDevelopmentAuthority'
-
+    value: 'GulbargaUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Davangere Urban Development Authority (DUDA)',
-    value: 'DavangereUrbanDevelopmentAuthority'
-
+    value: 'DavangereUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Shimoga Urban Development Authority (SUDA)',
-    value: 'ShimogaUrbanDevelopmentAuthority'
-
+    value: 'ShimogaUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Tumkur Urban Development Authority (TUDA)',
-    value: 'TumkurUrbanDevelopmentAuthority'
-
+    value: 'TumkurUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Bijapur Urban Development Authority (BUDA)',
-    value: 'BijapurUrbanDevelopmentAuthority'
-
+    value: 'BijapurUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Kolar-Chikkaballapur Urban Development Authority (KCUDA)',
-    value: 'KolarChikkaballapurUrbanDevelopmentAuthority'
-
+    value: 'KolarChikkaballapurUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Hassan Urban Development Authority (HUDA)',
-    value: 'HassanUrbanDevelopmentAuthority'
-
+    value: 'HassanUrbanDevelopmentAuthority',
   },
 
   {
     label: 'Chikmagalur Urban Development Authority (CUDA)',
     value: 'ChikmagalurUrbanDevelopmentAuthority',
-
   },
-
 
   {
     label: 'Bagalkot Urban Development Authority (BUDA)',
     value: 'BagalkotUrbanDevelopmentAuthority',
-
   },
-
 
   {
     label: 'Udupi Urban Development Authority (UUDA)',
     value: 'UdupiUrbanDevelopmentAuthority',
-
   },
-
 
   {
     label: 'Karwar Urban Development Authority (KUDA)',
     value: 'KarwarUrbanDevelopmentAuthority',
-
   },
-
 
   {
     label: 'Bidar Urban Development Authority (BUDA)',
     value: 'BidarUrbanDevelopmentAuthority',
-
   },
 
   {
     label: 'Mandya Urban Development Authority (MUDA)',
     value: 'MandyaUrbanDevelopmentAuthority',
-
   },
 
   {
     label: 'Chitradurga Urban Development Authority (CUDA)',
     value: 'ChitradurgaUrbanDevelopmentAuthority',
-
   },
 
   {
     label: 'Raichur Urban Development Authority (RUDA)',
     value: 'RaichurUrbanDevelopmentAuthority',
-
   },
 
   {
     label: 'Koppal Urban Development Authority (KUDA)',
     value: 'KoppalUrbanDevelopmentAuthority',
-
   },
 
   {
     label: 'Delhi Development Authority (DDA)',
     value: 'DelhiDevelopmentAuthority',
-
   },
 
   {
     label: 'Mumbai Metropolitan Region Development Authority (MMRDA)',
     value: 'MumbaiMetropolitanRegionDevelopmentAuthority',
-
   },
 
   {
     label: 'Bangalore Development Authority (BDA)',
     value: 'BangaloreDevelopmentAuthority',
-
   },
 
   {
     label: 'Chennai Metropolitan Development Authority (CMDA)',
     value: 'ChennaiMetropolitanDevelopmentAuthority(CMDA)',
-
   },
 
   {
     label: 'Hyderabad Metropolitan Development Authority (HMDA)',
     value: 'HyderabadMetropolitanDevelopmentAuthority',
-
   },
-
 
   {
     label: 'Pune Metropolitan Region Development Authority (PMRDA)',
     value: 'PuneMetropolitanRegionDevelopmentAuthority',
-
   },
 
   {
     label: 'Kolkata Metropolitan Development Authority (KMDA)',
     value: 'KolkataMetropolitanDevelopmentAuthority',
-
   },
 
   {
     label: 'Ahmedabad Urban Development Authority (AUDA)',
     value: 'AhmedabadUrbanDevelopmentAuthority',
-
   },
 
   {
     label: 'Lucknow Development Authority (LDA)',
     value: 'LucknowDevelopmentAuthority',
-
   },
 
   {
     label: 'Jaipur Development Authority (JDA)',
     value: 'JaipurDevelopmentAuthority',
-
   },
-
 
   {
     label: 'Chandigarh Housing Board (CHB)',
     value: 'ChandigarhHousingBoard',
-
   },
 
   {
     label: 'New Town Kolkata Development Authority (NKDA)',
     value: 'NewTownKolkataDevelopmentAuthority',
-
   },
 
   {
     label: 'Noida Authority ',
     value: 'NoidaAuthority',
-
   },
 
   {
     label: 'Greater Noida Industrial Development Authority (GNIDA)',
     value: 'GreaterNoidaIndustrialDevelopmentAuthority',
-
   },
-
 
   {
     label: 'Haryana Urban Development Authority (HUDA)',
     value: 'HaryanaUrbanDevelopmentAuthority',
-
   },
 
   {
     label: 'Urban Improvement Trust (UIT)',
     value: 'UrbanImprovementTrust',
-
   },
 
   {
     label: 'Goa State Urban Development Agency (GSUDA)',
     value: 'GoaStateUrbanDevelopmentAgency',
-
   },
 
   {
     label: 'Visakhapatnam Urban Development Authority (VUDA)',
     value: 'VisakhapatnamUrbanDevelopmentAuthority',
-
   },
-
-
-
-
-
-
-
-
-
-
 ]
 
 export const LegalFolders = [
@@ -1178,7 +1147,7 @@ export const ProjectFolders = [
     type: 'folder',
     modified: '10 Aug 2023',
     files: '10',
-    shared: [ 'nithesh'],
+    shared: ['nithesh'],
     id: 2,
   },
   {
@@ -1201,7 +1170,7 @@ export const ProjectFolders = [
     size: '2.4 GB',
     type: 'folder',
     modified: '10 Aug 2023',
-    shared: [ 'nithesh'],
+    shared: ['nithesh'],
     id: 4,
     files: '10',
   },
@@ -1211,7 +1180,7 @@ export const ProjectFolders = [
     size: '2.2 MB',
     type: 'jpg',
     modified: '10 Aug 2023',
-    shared: [ 'nithesh'],
+    shared: ['nithesh'],
 
     id: 6,
   },
@@ -1221,7 +1190,7 @@ export const ProjectFolders = [
     size: '1.2 MB',
     type: 'jpg',
     modified: '10 Aug 2023',
-    shared: ['kunal',],
+    shared: ['kunal'],
     id: 7,
   },
   {
@@ -1230,7 +1199,7 @@ export const ProjectFolders = [
     size: '177 KB',
     type: 'mp3',
     modified: '10 Aug 2023',
-    shared: ['kunal', ],
+    shared: ['kunal'],
     id: 8,
   },
   {
@@ -1262,7 +1231,6 @@ export const ProjectFolders = [
   },
 ]
 export const ProjectAccessFolder = [
-
   {
     img: '/pptIcon.png',
     name: 'Sales Access',
@@ -1270,7 +1238,7 @@ export const ProjectAccessFolder = [
     size: '2.2 MB',
     type: 'ppt',
     modified: '10 Aug 2023',
-    shared: [ 'nithesh'],
+    shared: ['nithesh'],
 
     id: 6,
   },
@@ -1281,7 +1249,7 @@ export const ProjectAccessFolder = [
     size: '1.2 MB',
     type: 'ppt',
     modified: '10 Aug 2023',
-    shared: ['kunal',],
+    shared: ['kunal'],
     id: 7,
   },
   {
@@ -1291,7 +1259,7 @@ export const ProjectAccessFolder = [
     size: '177 KB',
     type: 'ppt',
     modified: '10 Aug 2023',
-    shared: ['kunal', ],
+    shared: ['kunal'],
     id: 8,
   },
   {
