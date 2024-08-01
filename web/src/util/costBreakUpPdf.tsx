@@ -594,6 +594,7 @@ const CostBreakUpPdf = ({
                     <h6 className="w-full lg:w-12/12 text-blueGray-400 text-[13px] mt-[9px] mb- font-bold uppercase">
                       Cost sheet
                     </h6>
+                    <div className="border-t-4 rounded-xl w-16 mt-1 mb-2 border-[#8b5cf6]"></div>
                     <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
                       Quotation or estimate of unit
                     </div>

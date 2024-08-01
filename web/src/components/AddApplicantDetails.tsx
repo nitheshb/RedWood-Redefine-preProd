@@ -991,11 +991,20 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                       <section className="flex flex-row">
                                         <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px] mr-2"></div>
                                         <div className="w-full flex flex-col">
-                                          <h6 className="w-full lg:w-12/12 text-black text-[13px] mt-[2px] mb- font-bold uppercase">
+                                          <div className=' flex flex-row gap-2 '>
+
+
+                                            <div>
+                                          <h6 className="w-full lg:w-12/12 text-black text-[14px] mt-[2px] mb- font-bold">
                                             Applicant
                                           </h6>
-                                          <div
-                                            className="text-[12px] cursor-pointer  bg-[#EBE7FC] rounded-full px-2 py-[2px]"
+                                          <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+                                            </div>
+
+
+                                            <div>
+                                            <div
+                                            className="text-[12px] cursor-pointer mt-1  bg-[#EBE7FC] rounded-full px-2 py-[2px]"
                                             onClick={() =>
                                               setShowLeadLink(!showLeadLink)
                                             }
@@ -1003,6 +1012,18 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                             <LinkIcon className="w-4 h-4 cursor-pointer ml-1 mb-[3px] mr-2 inline-block text-gray-400  rounded-[16px] " />
                                             Link with lead
                                           </div>
+                                            </div>
+
+
+
+
+
+
+                                          </div>
+
+
+
+
                                           {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
                                             Details of applicant is mandatory
                                           </div> */}
@@ -1697,9 +1718,11 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                     >
                                       <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px]"></div>
                                       <div className="w-full flex flex-col ml-2">
-                                        <h6 className="w-full lg:w-12/12 text-black text-[13px] mt-[9px] mb- font-bold uppercase">
-                                          Co-applicant
+                                        <h6 className="w-full lg:w-12/12 text-black text-[14px] mt-[9px] mb- font-bold">
+                                          Co-Applicant
                                         </h6>
+                                        <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+
                                         <div className="w-[455.80px] opacity-50 text-black text-[12px] font-normal ">
                                           Details of co-applicant is not a
                                           mandatory
