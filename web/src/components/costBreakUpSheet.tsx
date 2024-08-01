@@ -1070,10 +1070,15 @@ export const MyComponent = ({ data }) => {
         </p>
       </div>
     )
-  } else {
-    // CustomerDetailsObj does not exist
-    return <p>0 of 10 Filled</p>
-  }
+  } 
+
+  return null;
+
+  
+  // else {
+    
+  //   return <p>0 of 10 Filled</p>
+  // }
 }
 
 export const PaymentScheduleStats = ({ newPlotPS }) => {
