@@ -11,11 +11,38 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 
+
+// import unitTypeList from '../AddUnit';
+// import facingTypeList from '../AddUnit';
+// import bedRoomsList from '../AddUnit';
+// import bathTypeList from '../AddUnit';
+// import carParkingList from '../AddUnit';
+// import statusList from '../AddUnit';
+
+// import mortgageType from '../AddUnit'; 
+
+
+
+
+
+
+
 import {
+  approvalAuthority,
+  bathTypeList,
+  bedRoomsList,
+  carParkingList,
   costSheetAdditionalChargesA,
   csSections,
+  facingTypeList,
   gstValesA,
+  mortgageType,
+  paymentScheduleA,
+  sourceListItems,
+  statesList,
+  statusList,
   unitsCancellation,
+  unitTypeList,
 } from 'src/constants/projects'
 import {
   addCostSheetMaster,
@@ -407,24 +434,42 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
   }
 
 
+
+
   const [activeIndex, setActiveIndex] = useState(null);
   const [content, setContent] = useState('');
 
-
-
   const handleClick = (index, item) => {
     setActiveIndex(index);
-    setContent(`You clicked on ${item}`);
+    setContent(
+      <ul>
+        {dataMap[item].map((data, i) => (
+          <li key={i} className="py-1">
+            {data.label}
+          </li>
+        ))}
+      </ul>
+    );
   };
 
 
+  
+
+
+
+
+
+
+
+  
+  
   const projectItems = [
     'Planning Authority',
     'State',
     'Charges For',
     'Category',
     'Cost Type',
-    'Tax Rate	',
+    'Tax Rate',
     'Payment Stage',
     'Type',
     'Facing',
@@ -432,16 +477,31 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
     'Bathrooms',
     'Car Parking',
     'Status',
-    'Mortgage Type'
+    'Mortgage Type',
   ];
-
+  
   const crmItems = [
     'Lead Source',
-    'Booking By'
+    'Booking By',
   ];
-
-
-
+  
+  const dataMap = {
+    'Planning Authority': approvalAuthority,
+    'State': statesList,
+    'Charges For': costSheetAdditionalChargesA,
+    'Category': csSections,
+    'Cost Type': unitsCancellation,
+    'Tax Rate': gstValesA,
+    'Payment Stage': paymentScheduleA,
+    'Type': unitTypeList,
+    'Facing': facingTypeList,
+    'Type/BedRooms': bedRoomsList,
+    'Bathrooms': bathTypeList,
+    'Car Parking': carParkingList,
+    'Status': statusList,
+    'Mortgage Type': mortgageType,
+    'Lead Source': sourceListItems,
+  };
 
 
 
@@ -1076,50 +1136,10 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
 
 
 
- 
-
-
-{/* <div className="w-64 text-gray-900 bg-white p-4">
-      <div className="mb-6">
-        <h2 className="text-black font-semibold mb-2">Getting Started</h2>
-        <ul>
-          {gettingStartedItems.map((item, index) => (
-            <li key={index} className="py-1">
-              <a
-                href="#"
-                className={`hover:underline ${activeIndex === index ? 'font-bold' : 'font-normal'}`}
-                onClick={() => setActiveIndex(index)}
-              >
-                {item}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h2 className="text-black font-semibold mb-2">Components</h2>
-        <ul>
-          {componentItems.map((item, index) => (
-            <li key={index + gettingStartedItems.length} className="py-1">
-              <a
-                href="#"
-                className={`hover:underline ${activeIndex === index + gettingStartedItems.length ? 'font-bold' : 'font-normal'}`}
-                onClick={() => setActiveIndex(index + gettingStartedItems.length)}
-              >
-                {item}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div> */}
-
-
 <div className="flex">
       <div className="w-64 text-gray-900 bg-white p-4">
         <div className="mb-6">
           <h2 className="text-black font-semibold mb-2">Add Project</h2>
-
           <ul>
             {projectItems.map((item, index) => (
               <li key={index} className="py-1">
@@ -1136,8 +1156,6 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         </div>
         <div>
           <h2 className="text-black font-semibold mb-2">CRM Module</h2>
-          {/* <p className="text-black font-semibold mb-2">Book</p> */}
-
           <ul>
             {crmItems.map((item, index) => (
               <li key={index + projectItems.length} className="py-1">
@@ -1154,12 +1172,24 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
         </div>
       </div>
       <div className="flex-1 p-4">
-        {content && (
+
+
+        <div className='flex flex-row gap-6'>
+          <div>
+          {content && (
           <div className="text-black">
             <h2 className="text-xl font-semibold mb-2">Content</h2>
-            <p>{content}</p>
+            {content}
           </div>
         )}
+
+          </div>
+          <div>
+          <div className="text-black">
+            <h2 className="text-xl font-semibold mb-2">Description</h2>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
 
