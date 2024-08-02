@@ -405,6 +405,53 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }
   }
+
+
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [content, setContent] = useState('');
+
+
+
+  const handleClick = (index, item) => {
+    setActiveIndex(index);
+    setContent(`You clicked on ${item}`);
+  };
+
+
+  const projectItems = [
+    'Planning Authority',
+    'State',
+    'Charges For',
+    'Category',
+    'Cost Type',
+    'Tax Rate	',
+    'Payment Stage',
+    'Type',
+    'Facing',
+    'Type/BedRooms',
+    'Bathrooms',
+    'Car Parking',
+    'Status',
+    'Mortgage Type'
+  ];
+
+  const crmItems = [
+    'Lead Source',
+    'Booking By'
+  ];
+
+
+
+
+
+
+
+ 
+
+
+
+
+
   const [rows, setRows] = useState([
     // {
     //   id: '1',
@@ -1023,6 +1070,109 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           </div>
         </div>
       </div>
+
+
+
+
+
+
+ 
+
+
+{/* <div className="w-64 text-gray-900 bg-white p-4">
+      <div className="mb-6">
+        <h2 className="text-black font-semibold mb-2">Getting Started</h2>
+        <ul>
+          {gettingStartedItems.map((item, index) => (
+            <li key={index} className="py-1">
+              <a
+                href="#"
+                className={`hover:underline ${activeIndex === index ? 'font-bold' : 'font-normal'}`}
+                onClick={() => setActiveIndex(index)}
+              >
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 className="text-black font-semibold mb-2">Components</h2>
+        <ul>
+          {componentItems.map((item, index) => (
+            <li key={index + gettingStartedItems.length} className="py-1">
+              <a
+                href="#"
+                className={`hover:underline ${activeIndex === index + gettingStartedItems.length ? 'font-bold' : 'font-normal'}`}
+                onClick={() => setActiveIndex(index + gettingStartedItems.length)}
+              >
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div> */}
+
+
+<div className="flex">
+      <div className="w-64 text-gray-900 bg-white p-4">
+        <div className="mb-6">
+          <h2 className="text-black font-semibold mb-2">Add Project</h2>
+
+          <ul>
+            {projectItems.map((item, index) => (
+              <li key={index} className="py-1">
+                <a
+                  href="#"
+                  className={`hover:underline ${activeIndex === index ? 'font-bold' : 'font-normal'}`}
+                  onClick={() => handleClick(index, item)}
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 className="text-black font-semibold mb-2">CRM Module</h2>
+          {/* <p className="text-black font-semibold mb-2">Book</p> */}
+
+          <ul>
+            {crmItems.map((item, index) => (
+              <li key={index + projectItems.length} className="py-1">
+                <a
+                  href="#"
+                  className={`hover:underline ${activeIndex === index + projectItems.length ? 'font-bold' : 'font-normal'}`}
+                  onClick={() => handleClick(index + projectItems.length, item)}
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="flex-1 p-4">
+        {content && (
+          <div className="text-black">
+            <h2 className="text-xl font-semibold mb-2">Content</h2>
+            <p>{content}</p>
+          </div>
+        )}
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
     </>
   )
 }
