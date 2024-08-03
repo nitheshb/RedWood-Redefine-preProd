@@ -38,6 +38,7 @@ import { TextField2 } from 'src/util/formFields/TextField2'
 import Loader from '../Loader/Loader'
 import { validate_capturePayment } from '../Schemas'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import RupeeInWords from 'src/util/rupeeWords'
 
 const CaptureUnitPayment = ({
   title,
@@ -411,26 +412,48 @@ const CaptureUnitPayment = ({
                                       <section>
                                         <div className="flex flex-wrap mt-3">
                                           <div className="justify-center w-full mx-auto"></div>
-                                          <div className="w-full px-4 mb-4 mt-8">
+                                          <div className="w-full px-4 mb-4 mt-8 flex flex-row gap-x-6">
                                             {paymentMode.map((dat, i) => {
                                               return (
-                                                <span
-                                                  className={` mr-2 border rounded-xl px-2 py-2 cursor-pointer hover:bg-violet-400 hover:text-white text-sm ${
-                                                    paymentModex == dat.value
-                                                      ? 'bg-violet-400 text-white'
-                                                      : ''
-                                                  }`}
-                                                  key={i}
-                                                  onClick={() => {
-                                                    setPaymentModex(dat.value)
-                                                    formik.setFieldValue(
-                                                      'mode',
-                                                      dat.value
-                                                    )
-                                                  }}
+                                                // <span
+                                                //   className={` mr-2 border rounded-xl px-2 py-2 cursor-pointer hover:bg-violet-400 hover:text-white text-sm ${
+                                                //     paymentModex == dat.value
+                                                //       ? 'bg-violet-400 text-white'
+                                                //       : ''
+                                                //   }`}
+                                                //   key={i}
+                                                //   onClick={() => {
+                                                //     setPaymentModex(dat.value)
+                                                //     formik.setFieldValue(
+                                                //       'mode',
+                                                //       dat.value
+                                                //     )
+                                                //   }}
+                                                // >
+                                                //   {dat.label}
+                                                // </span>
+                                                <div className="flex items-center gap-x-1" key={i}       onClick={() => {
+                                                      setPaymentModex(dat.value)
+                                                     formik.setFieldValue(
+                                                   'mode',
+                                                       dat.value
+                                                  )
+                                                    }}>
+                                                <input
+                                                  id="push-everything"
+                                                  name="push-notifications"
+                                                  type="radio"
+                                                  checked={paymentModex == dat.value}
+                                                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+
+                                                />
+                                                <label
+                                                  htmlFor="push-everything"
+                                                  className="block text-sm font-medium leading-6 text-gray-900"
                                                 >
-                                                  {dat.label}
-                                                </span>
+                                                   {dat.label}
+                                                </label>
+                                              </div>
                                               )
                                             })}
                                           </div>
@@ -525,7 +548,6 @@ const CaptureUnitPayment = ({
                                               />
                                             </div>
                                           </div>
-
                                           <div className="w-full lg:w-4/12 px-3">
                                             <div className="relative w-full mb-5">
                                               <TextField2
@@ -573,6 +595,9 @@ const CaptureUnitPayment = ({
                                               </span>
                                             </div>
                                           </div>
+
+                                          <span className='text-xs px-3'> Paying  <RupeeInWords amount={formik?.values?.amount || 0} /></span>
+
                                           <div className="w-full  px-3">
                                             <div className="relative w-full mb-3">
                                               <TextField2

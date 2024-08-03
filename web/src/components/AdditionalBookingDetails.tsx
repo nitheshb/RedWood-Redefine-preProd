@@ -215,33 +215,9 @@ const AdditonalBookingDetails = ({
   }
   return (
     <>
-      <div className="font-['Inter'] p-2">
-        <div className="z-10">
-          <div
-            className="w-full  flex flex-row justify-between mb-2 p-4 bg-white rounded-t-md"
-            // style={bgImgStyle}
-          >
-            <section className="flex flex-row">
-              <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px] mr-2"></div>
-              <div className="w-full flex flex-col">
-                <h6 className="w-full lg:w-12/12 text-black text-[14px] mt-[9px] mb- font-bold">
-                  More Details
-                </h6>
-                <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
-
-                <div className="w-[455.80px] opacity-50 text-black  text-[12px] font-normal ">
-                  Optional details
-                </div>
-              </div>
-            </section>
-            <section className="text-black ">
-              {' '}
-              {stepIndx} of {StatusListA?.length} steps
-            </section>
-          </div>
-        </div>
+      <div className="font-['Inter'] ">
         <div className="grid gap-8 grid-cols-1">
-          <div className="flex flex-col rounded-lg bg-white ">
+          <div className="flex flex-col  bg-white ">
             <div className="mt-0">
               <Formik
                 enableReinitialize={true}
@@ -257,7 +233,7 @@ const AdditonalBookingDetails = ({
 
                       <section className=" bg-blueGray-50">
                         <div className="w-full mx-auto ">
-                          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-[#F9FBFB] border-0">
+                          <div className="relative flex flex-col min-w-0 break-words w-full mb-6  bg-[#F9FBFB] border-0">
                             <div className="flex-auto">
                               <section className=" lg:px-2 ">
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
@@ -282,11 +258,37 @@ const AdditonalBookingDetails = ({
                                 </section> */}
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
+
                                 <section
                                   className="rounded-md  p-4 mt-2 bg-[#fff]"
                                   style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                 >
-                                  <h6 className="text-blueGray-400  text-[14px] mt-3 mb- font-bold">
+                                  <section className="flex flex-row">
+                                    <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
+                                    <div className="w-full flex flex-col">
+                                      <div className=" flex flex-row gap-2 ">
+                                        <div>
+                                          <section className="flex flex-row">
+                                            <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
+                                              Additional Information
+                                            </h6>
+                                          </section>
+                                          <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
+                                            These details are helpful to understand customer better.
+                                          </div>
+
+                                          <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+                                        </div>
+
+                                        <div></div>
+                                      </div>
+
+                                      {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
+                                            Details of applicant is mandatory
+                                          </div> */}
+                                    </div>
+                                  </section>
+                                  <h6 className="text-blueGray-400  text-[14px] mt-3 mb- font-bold mt-8">
                                     Other Information
                                   </h6>
                                   <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
@@ -346,7 +348,7 @@ const AdditonalBookingDetails = ({
                                     </h6>
                                     <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
 
-                                    <div className="flex flex-wrap">
+                                    <div className="flex flex-wrap mt-4">
                                       <div className="w-full lg:w-4/12 px-4">
                                         <div className="relative w-full">
                                           <div className="w-full flex flex-col mb-3">

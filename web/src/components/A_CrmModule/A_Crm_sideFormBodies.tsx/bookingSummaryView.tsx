@@ -477,7 +477,7 @@ const BookingSummaryView = ({
     setTotalFun()
   }
   return (
-    <div className='font-["Inter"]'>
+    <div className='font-["Inter"] overflow-y-scroll no-scrollbar' style={{ height: `calc(100vh - 120px)` }}>
       {!pdfPreview && (
         <div>
           <Formik

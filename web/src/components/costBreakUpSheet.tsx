@@ -56,7 +56,6 @@ import Loader from './Loader/Loader'
 import PaymentScheduleSheet from './paymentScheduleSheet'
 import SiderForm from './SiderForm/SiderForm'
 import UnitTransactionForm from './UnitBillTransactionForm'
-import ApplicantDetailsForm from './A_CrmModule/applicantDetailsForm'
 
 const CostBreakUpSheet = ({
   title,
@@ -751,7 +750,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                                         // onClick={() => submitFormFun(formik)}
                                       >
                                         {/* {loading && <Loader />} */}
-                                        <span>Save & Next m</span>
+                                        <span>Save & Next</span>
                                       </button>
                                     )}
                                   </div>
