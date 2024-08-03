@@ -950,13 +950,13 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
   }
   return (
     <>
-      <div className="font-['Inter'] py-1 px-1 m-2 mt-[1px] rounded-lg border border-gray-100  overflow-y-scroll" style={{ height: `calc(100vh - 120px)` }}>
+      <div className="flex flex-col mx-0 bg-[#F8FAFC]  rounded-md overflow-y-scroll no-scrollbar" style={{ height: `calc(100vh - 120px)` }}>
         <div className="z-10">
           {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
           {title}
         </Dialog.Title> */}
         </div>
-        <div className="grid gap-8 grid-cols-1">
+        <div className="">
           <div className="flex flex-col rounded-lg bg-white ">
             <div className="mt-0">
               <Formik
@@ -981,7 +981,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                               <section className=" lg:px-2 py-2">
                                 <div className="flex flex-col gap-1">
                                   <section
-                                    className="   bg-[#fff] "
+                                    className="   bg-[#fff] rounded-md border "
                                     style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                   >
                                     <div
@@ -989,29 +989,37 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                       // style={bgImgStyle}
                                     >
                                       <section className="flex flex-row">
-                                        <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px] mr-2"></div>
+                                        <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
                                         <div className="w-full flex flex-col">
                                           <div className=' flex flex-row gap-2 '>
 
 
                                             <div>
-                                          <h6 className="w-full lg:w-12/12 text-black text-[14px] mt-[2px] mb- font-bold">
-                                            Applicant
+                                    <section className="flex flex-row">
+                                      <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
+                                            Applicant Details-I
                                           </h6>
-                                          <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
-                                            </div>
-
-
-                                            <div>
-                                            <div
-                                            className="text-[12px] cursor-pointer mt-1  bg-[#EBE7FC] rounded-full px-2 py-[2px]"
+                                          <div
+                                            className=" ml- text-[12px] cursor-pointer mt-1  rounded-full px-2  text-[#0ea5e9] underline"
                                             onClick={() =>
                                               setShowLeadLink(!showLeadLink)
                                             }
                                           >
-                                            <LinkIcon className="w-4 h-4 cursor-pointer ml-1 mb-[3px] mr-2 inline-block text-gray-400  rounded-[16px] " />
-                                            Link with lead
+                                            {/* <LinkIcon className="w-3 h-3 cursor-pointer ml-1 mb-[3px] mr-1 inline-block text-[#0ea5e9]  rounded-[16px] " /> */}
+                                            Search in leads
                                           </div>
+                                          </section>
+                                          <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
+                      These details will be used for registration.So be careful what you record.
+                    </div>
+
+                                          <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+
+                                            </div>
+
+
+                                            <div>
+
                                             </div>
 
 
@@ -1020,7 +1028,6 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
 
                                           </div>
-
 
 
 
@@ -1030,13 +1037,6 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                         </div>
                                       </section>
 
-                                      <section className="text-black flex flex-col">
-                                        <label className="text-right">
-                                          {' '}
-                                          {stepIndx} of {StatusListA?.length}{' '}
-                                          steps
-                                        </label>
-                                      </section>
                                     </div>
                                     {showLeadLink && (
                                       <div className="bg-[#DCD7FF] rounded-xl p-2 mx-2 flex-col">
@@ -1069,7 +1069,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                         </div>
                                       </div>
                                     )}
-                                    <div className="flex flex-wrap p-4 pt-2">
+                                    <div className="flex flex-wrap p-4 pt-0">
                                       <div className="w-full flex flex-row justify-between lg:w-12/12 ">
                                         <div className="relative lg:w-6/12 mb-3 mt-2">
                                           <TextField
@@ -1078,7 +1078,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                             type="text"
                                           />
                                         </div>
-                                        <div className="relative lg:w-6/12  mt-1 ml-2">
+                                        <div className="relative lg:w-6/12  mt-1 ml-4">
                                           <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
                                             Son/Daughter/Wife of{' '}
                                           </label>
@@ -1136,7 +1136,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                         </div>
                                       </div>
 
-                                      <div className="w-full  flex flex-row lg:w-12/12 ">
+                                      <div className="w-full  flex flex-row lg:w-12/12 pt-2">
                                         <div className="w-full lg:w-3/12 px- ">
                                           <div className="relative w-full mt-1">
 
@@ -1351,7 +1351,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                                     23
                                                   ),
                                                 ]}
-                                                
+
                                                 dateFormat="d-MMMM-yyyy"
                                               />
                                             </span>
@@ -1359,8 +1359,8 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                         </div>
                                       </div>
                                       {}
-                                      <div className="w-full">
-                                        <div className="flex flex-row justify-between">
+                                      <div className="w-full ">
+                                        <div className="flex flex-row justify-between pt-2">
                                           <section className="w-12/12 w-full">
                                             <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
                                               PAN No{' '}
@@ -1530,7 +1530,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
 
 
-                                        <div className="w-full lg:w-12/12">
+                                        <div className="w-full lg:w-12/12 pt-2">
                                           <div className="relative w-full">
 
                                             <TextField
@@ -1544,7 +1544,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
 
 
-                                        <div className="w-full lg:w-12/12 ">
+                                        <div className="w-full lg:w-12/12 pt-1">
                                           <div className="relative w-full mb-3 mt-2">
                                             <TextField
                                               label="Address"
@@ -1557,7 +1557,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
 
 
-                                        <div className="w-full  flex flex-row lg:w-12/12">
+                                        <div className="w-full  flex flex-row lg:w-12/12 pt-1">
                                           <div className="w-full lg:w-12/12 px- ">
                                             <div className="relative w-full mb-3 mt-2">
                                               <TextField
@@ -1597,7 +1597,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
 
 
-                                        <div className="w-full flex flex-row lg:w-12/12">
+                                        <div className="w-full flex flex-row lg:w-12/12 pt-1">
                                          <div className="w-full lg:w-12/12 px-">
                                          {/* Country Name  */}
                                          <div className="relative w-full mb-3 mt-2">

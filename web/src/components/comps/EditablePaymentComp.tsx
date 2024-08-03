@@ -437,7 +437,7 @@ const EditablePaymentTable = ({
               <table className="w-full text-sm text-left text-gray-500 ">
                 <thead className="text-xs text-gray-700">
                   <tr className="bg-gray-100 rounded-xl rounded-x-md">
-                    <th className=" p-2 pl-2 text-center   text-md">
+                    <th className=" p-2 pl-2 text-center   text-md max-w-[600px] w-[300px]">
                       Payment Stage
                     </th>
                     <th className=" p-1 pl-2 text-center">Cost Type</th>
@@ -465,7 +465,7 @@ const EditablePaymentTable = ({
                                 {...provided.dragHandleProps}
                                 className="hover:bg-gray-100 transition-colors duration-150 ease-in-out"
                               >
-                                <td className="border-b border-[#e0e0e0] px-2">
+                                <td className="border-b border-[#e0e0e0] px-2 w-[300px]">
                                   <StyledSelect
                                     disableUnderline={true}
                                     defaultValue={row?.stage?.value}

@@ -587,25 +587,47 @@ const CostBreakUpPdf = ({
               className="w-full flex flex-col  p-4 rounded-md   bg-[#fff]"
               style={{ boxShadow: '0 1px 12px #f2f2f2' }}
             >
-              <div className="w-full  flex flex-row">
-                <section className="w-full  flex flex-row">
-                  <div className="w-[63.80px] h-[57px] bg-zinc-100 rounded-[5px]"></div>
-                  <div className="w-full flex flex-col ml-3">
-                    <h6 className="w-full lg:w-12/12 text-blueGray-400 text-[13px] mt-[9px] mb- font-bold uppercase">
-                      Cost sheet
-                    </h6>
-                    <div className="border-t-4 rounded-xl w-16 mt-1 mb-2 border-[#8b5cf6]"></div>
-                    <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
-                      Quotation or estimate of unit
+                 <section className="flex flex-row">
+                                        <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
+                                        <div className="w-full flex flex-col">
+                                          <div className=' flex flex-row gap-2 '>
+
+
+                                            <div>
+                                    <section className="flex flex-row">
+                                      <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
+                                            Cost Sheet
+                                          </h6>
+
+                                          </section>
+                                          <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
+                      Quoataion,Unit Cost Calculation.
                     </div>
-                  </div>
-                </section>
-                <section className="w-full ">
-                  {' '}
-                  {stepIndx} of {StatusListA?.length} steps
-                </section>
-              </div>
-              <div className="mt-4">
+
+                                          <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+
+                                            </div>
+
+
+                                            <div>
+
+                                            </div>
+
+
+
+
+
+
+                                          </div>
+
+
+
+                                          {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
+                                            Details of applicant is mandatory
+                                          </div> */}
+                                        </div>
+                                      </section>
+              <div className="mt-6">
                 <div>
                   <div>
                     <div className="">
@@ -1309,12 +1331,12 @@ const CostBreakUpPdf = ({
 
 
 
-                      
 
 
 
 
-                      
+
+
                     </div>
                   </div>
                   {/* end of paper */}
