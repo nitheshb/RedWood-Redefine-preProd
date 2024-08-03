@@ -1221,45 +1221,45 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
         </div>
       </div>
 
-      <div className="flex-1 p-4 overflow-auto mx-2 bg-white" >
-        <div className="text-black">
-          {/* <h2 className="text-xl font-semibold mb-2">Content</h2> */}
-          {Object.keys(dataMap).map((key) => (
-            <div 
-              key={key} 
-              className="mb-4" 
-              ref={(el) => (contentRefs.current[key] = el)}
-              id={key.replace(/\s+/g, '-').toLowerCase()}
-            >
-              <h3 className="font-bold">{key}</h3>
-              <ul>
-                {dataMap[key].map((data, i) => (
-                  <li key={i} className="py-1">
-                    {data.label}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+  
+
+
+
+<div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
+  <div className="max-w-[80rem] mx-auto">
+    {Object.keys(dataMap).map((key) => (
+      <div 
+        key={key} 
+        className="mb-8" 
+        ref={(el) => (contentRefs.current[key] = el)}
+        id={key.replace(/\s+/g, '-').toLowerCase()}
+      >
+        <h3 className="text-blue-600  text-md font-bold mb-2">{key}</h3>
+        <div className="bg-[#fff] rounded-lg border border-[#e1e1e1] overflow-hidden">
+          <table className="w-full shadow-md text-left border-collapse">
+            <thead>
+              <tr className="border-b border-[#e1e1e1]">
+                <th className="py-3 px-4 text-xs font-bold  text-[#000]">Options</th>
+                <th className="py-3 px-4 text-xs font-bold  text-[#000]">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dataMap[key].map((data, i) => (
+                <tr key={i} className="border-b border-[#e1e1e1] last:border-b-0">
+                  <td className="py-2 px-4  text-sm text-[#000]">{data.label}</td>
+                  <td className="py-2 px-4  text-sm text-[#000]">NA</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
+    ))}
+  </div>
+</div>
+
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 
 
     </>
