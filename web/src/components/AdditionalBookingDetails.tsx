@@ -20,6 +20,7 @@ import * as Yup from 'yup'
 import { Label, InputField, TextAreaField, FieldError } from '@redwoodjs/forms'
 import { useRouterStateSetter } from '@redwoodjs/router/dist/router-context'
 
+import { sourceList } from 'src/constants/projects'
 import {
   addLead,
   updateLeadCustomerDetailsTo,
@@ -34,6 +35,7 @@ import {
   sendWhatAppMediaSms,
   sendWhatAppTextSms,
 } from 'src/util/axiosWhatAppApi'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { PhoneNoField } from 'src/util/formFields/phNoField'
 import { PhoneNoField2 } from 'src/util/formFields/phNoField2'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
@@ -43,8 +45,6 @@ import { TextField2 } from 'src/util/formFields/TextField2'
 import NoBorderDropDown from './comps/noBorderDropDown'
 import Loader from './Loader/Loader'
 import { useFileUpload } from './useFileUpload'
-import { sourceList } from 'src/constants/projects'
-import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 const AdditonalBookingDetails = ({
   source,
@@ -96,8 +96,6 @@ const AdditonalBookingDetails = ({
     console.log('new customer object', leadDetailsObj2)
   }, [leadDetailsObj2])
 
-
-
   const { enqueueSnackbar } = useSnackbar()
   const [loading, setLoading] = useState(false)
 
@@ -137,9 +135,11 @@ const AdditonalBookingDetails = ({
       additionalInfo?.bookedBy ||
       '',
 
-      referralName: '', // New field for referral name
-      annualIncome: leadDetailsObj2?.annualIncome || additionalInfo?.annualIncome || '',
-      designation: leadDetailsObj2?.designation || additionalInfo?.designation || ''
+    referralName: '', // New field for referral name
+    annualIncome:
+      leadDetailsObj2?.annualIncome || additionalInfo?.annualIncome || '',
+    designation:
+      leadDetailsObj2?.designation || additionalInfo?.designation || '',
   }
   // Custom PAN card validation function
 
@@ -167,7 +167,12 @@ const AdditonalBookingDetails = ({
 
     const xData = {}
     xData[`${uid}${'_source_of_pay'}`] = { self: 20, bank: 80 } // sourceOfPay
-    xData[`${uid}${'_otherInfo'}`] = { leadSource, sourceOfPay, purpose, referralName }
+    xData[`${uid}${'_otherInfo'}`] = {
+      leadSource,
+      sourceOfPay,
+      purpose,
+      referralName,
+    }
 
     const updateDoc = {
       aggrementDetailsObj,
@@ -210,31 +215,30 @@ const AdditonalBookingDetails = ({
   }
   return (
     <>
-      <div className="font-['Inter'] p-2" >
+      <div className="font-['Inter'] p-2">
         <div className="z-10">
-        <div
-                                      className="w-full  flex flex-row justify-between mb-2 p-4 bg-white rounded-t-md"
-                                      // style={bgImgStyle}
-                                    >
-                                      <section className="flex flex-row" >
-                                        <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px] mr-2"></div>
-                                        <div className="w-full flex flex-col">
-                                          <h6 className="w-full lg:w-12/12 text-black text-[14px] mt-[9px] mb- font-bold">
-                                            More Details
-                                          </h6>
-                                          <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+          <div
+            className="w-full  flex flex-row justify-between mb-2 p-4 bg-white rounded-t-md"
+            // style={bgImgStyle}
+          >
+            <section className="flex flex-row">
+              <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px] mr-2"></div>
+              <div className="w-full flex flex-col">
+                <h6 className="w-full lg:w-12/12 text-black text-[14px] mt-[9px] mb- font-bold">
+                  More Details
+                </h6>
+                <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
 
-                                          <div className="w-[455.80px] opacity-50 text-black  text-[12px] font-normal ">
-                                            Optional details
-                                          </div>
-                                        </div>
-                                      </section>
-                                      <section className="text-black ">
-                                        {' '}
-                                        {stepIndx} of {StatusListA?.length}{' '}
-                                        steps
-                                      </section>
-                                    </div>
+                <div className="w-[455.80px] opacity-50 text-black  text-[12px] font-normal ">
+                  Optional details
+                </div>
+              </div>
+            </section>
+            <section className="text-black ">
+              {' '}
+              {stepIndx} of {StatusListA?.length} steps
+            </section>
+          </div>
         </div>
         <div className="grid gap-8 grid-cols-1">
           <div className="flex flex-col rounded-lg bg-white ">
@@ -325,7 +329,7 @@ const AdditonalBookingDetails = ({
         />
       </div>
     </div> */}
-    {/* <div className="w-full lg:w-12/12 px-4">
+                                    {/* <div className="w-full lg:w-12/12 px-4">
       <div className="relative w-full mb-3">
         <TextField2
           label="Designation"
@@ -334,138 +338,106 @@ const AdditonalBookingDetails = ({
         />
       </div>
     </div> */}
-
-
-
                                   </div>
 
-                                  <section
-                                  className="rounded-md  p-4 mt-2 "
-                              
-                                >
-                                  <h6 className="text-blueGray-400 text-[14px] mt-3  font-bold ">
-                                    Booked By
-                                  </h6>
-                                  <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+                                  <section className="rounded-md  p-4 pl-0 mt-2 ">
+                                    <h6 className="text-blueGray-400 text-[14px] mt-3  font-bold ">
+                                      Booked By
+                                    </h6>
+                                    <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
 
-
-                                  <div className="flex flex-wrap">
-
-
-                                  <div className="w-full lg:w-4/12 px-4">
-                                      <div className="relative w-full">
-                                      <div className="w-full flex flex-col mb-3">
-                                       <CustomSelect
-                                        name="leadSource"
-                                          label="Lead Source"
-                                           className="input"
-                                         onChange={(value) => {
-                                             formik.setFieldValue('leadSource', value.value)
-                                                  }}
-                                            value={formik.values.leadSource}
-                                            options={sourceList}
-                                                  />
+                                    <div className="flex flex-wrap">
+                                      <div className="w-full lg:w-4/12 px-4">
+                                        <div className="relative w-full">
+                                          <div className="w-full flex flex-col mb-3">
+                                            <CustomSelect
+                                              name="leadSource"
+                                              label="Lead Source"
+                                              className="input"
+                                              onChange={(value) => {
+                                                formik.setFieldValue(
+                                                  'leadSource',
+                                                  value.value
+                                                )
+                                              }}
+                                              value={formik.values.leadSource}
+                                              options={sourceList}
+                                            />
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
 
-
-
-
-                                    <div className="w-full lg:w-4/12 px-4">
-                                      <div className="relative w-full mb-3">
-                                        {/* <TextField2
+                                      <div className="w-full lg:w-4/12 px-4">
+                                        <div className="relative w-full mb-3">
+                                          {/* <TextField2
                                           label="Booked By"
                                           name="industry"
                                           type="text"
                                         /> */}
-                                        <CustomSelect
-                                          name="bookedBy"
-                                          label="Booking By"
-                                          className="input"
-                                          onChange={(value) => {
-                                            formik.setFieldValue(
-                                              'bookedBy',
-                                              value.value
-                                            )
-                                          }}
-                                          value={formik.values.bookedBy}
-                                          options={usersList}
-                                        />
+                                          <CustomSelect
+                                            name="bookedBy"
+                                            label="Booking By"
+                                            className="input"
+                                            onChange={(value) => {
+                                              formik.setFieldValue(
+                                                'bookedBy',
+                                                value.value
+                                              )
+                                            }}
+                                            value={formik.values.bookedBy}
+                                            options={usersList}
+                                          />
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className="w-full lg:w-4/12 px-4">
-                                      <div className="relative w-full mb-3">
-                                              <label className="text-gray-500 text-[12px]">
-                                                Booked On
-                                              </label>
-                                              <span className="inline">
-                                                <CustomDatePicker
-                                                  className="h-8 outline-none border-radius rounded-md  px-2 border-[#cccccc] border-gray-500 text-sm mt-[-4px] pb-1  w-[90%] inline  w-full flex bg-grey-lighter text-grey-darker border border-gray-500 "
-                                                  label="Dated"
-                                                  name="bookedOn"
-                                                  selected={formik.values.bookedOn}
-                                                  onChange={(date) => {
-                                                    formik.setFieldValue(
-                                                      'bookedOn',
-                                                      date
-                                                    )
-                                                    // setStartDate(date)
-                                                    // console.log(startDate)
-                                                  }}
-                                                  timeFormat="HH:mm"
-                                                  injectTimes={[
-                                                    setHours(
-                                                      setMinutes(d, 1),
-                                                      0
-                                                    ),
-                                                    setHours(
-                                                      setMinutes(d, 5),
-                                                      12
-                                                    ),
-                                                    setHours(
-                                                      setMinutes(d, 59),
-                                                      23
-                                                    ),
-                                                  ]}
-                                                  dateFormat="d-MMMM-yyyy"
-                                                />
-                                              </span>
-
+                                      <div className="w-full lg:w-4/12 px-4">
+                                        <div className="relative w-full mb-3">
+                                          <label className="text-gray-500 text-[12px]">
+                                            Booked On
+                                          </label>
+                                          <span className="inline">
+                                            <CustomDatePicker
+                                              className="h-8 outline-none border-radius rounded-md  px-2 border-[#cccccc] border-gray-500 text-sm mt-[-4px] pb-1  w-[90%] inline  w-full flex bg-grey-lighter text-grey-darker border border-gray-500 "
+                                              label="Dated"
+                                              name="bookedOn"
+                                              selected={formik.values.bookedOn}
+                                              onChange={(date) => {
+                                                formik.setFieldValue(
+                                                  'bookedOn',
+                                                  date
+                                                )
+                                                // setStartDate(date)
+                                                // console.log(startDate)
+                                              }}
+                                              timeFormat="HH:mm"
+                                              injectTimes={[
+                                                setHours(setMinutes(d, 1), 0),
+                                                setHours(setMinutes(d, 5), 12),
+                                                setHours(setMinutes(d, 59), 23),
+                                              ]}
+                                              dateFormat="d-MMMM-yyyy"
+                                            />
+                                          </span>
+                                        </div>
                                       </div>
-                                    </div>
 
+                                      <div className="w-full lg:w-4/12 px-4">
+                                        <div className="relative w-full">
+                                          <div className="w-full flex flex-col mb-3">
+                                            <TextField
+                                              label="Referral Name"
+                                              name="referralName"
+                                              type="text"
 
-
-
-
-
-                                    <div className="w-full lg:w-4/12 px-4">
-                                      <div className="relative w-full">
-                                      <div className="w-full flex flex-col mb-3">
-                                      <TextField
-                                       label="Referral Name"
-                                       name="referralName"
-                                       type="text"
-
-                                      //  placeholder="Referral name"
-                                       />
+                                              //  placeholder="Referral name"
+                                            />
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-
-
-
-                                  </div>
-                                </section>
-
-
-
-
+                                  </section>
                                 </section>
 
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
-
 
                                 <hr className="mt-3 border-b-1 border-blueGray-300" />
                               </section>

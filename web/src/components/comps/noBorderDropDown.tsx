@@ -107,7 +107,7 @@ const customStyles = {
     height: '31px',
     padding: '0px',
     fontSize: '12px',
-    background: '#E5E7EB',
+    // background: '#E5E7EB',
     margin: '0px'
 
   }),
@@ -124,7 +124,7 @@ const customStyles = {
     height: '31px',
     paddingLeft: '0px',
     paddingRight: '0px',
-    background: '#E5E7EB'
+    // background: '#E5E7EB'
 
   }),
   singleValue: (provided, state) => ({

@@ -9,8 +9,8 @@ import { useState, useEffect, createRef, useRef } from 'react'
 // import './ScrollHighlightNabbar.css'
 import { Dialog } from '@headlessui/react'
 import { RadioGroup } from '@headlessui/react'
-import { ChevronRightIcon } from '@heroicons/react/solid'
-import { Checkbox } from '@mui/material'
+import { ChevronRightIcon, ClockIcon, DocumentIcon, CheckCircleIcon, MinusCircleIcon } from '@heroicons/react/solid'
+import { Checkbox, LinearProgress } from '@mui/material'
 import { Timestamp } from 'firebase/firestore'
 import { Form, Formik, Field } from 'formik'
 import jsPDF from 'jspdf'
@@ -39,7 +39,7 @@ import {
 import CostBreakUpPdf from 'src/util/costBreakUpPdf'
 import CostBreakUpPdfAll from 'src/util/costBreakUpPdf_all'
 import CostBreakUpPdfConstruct from 'src/util/costBreakUpPdf_construct'
-import { prettyDate } from 'src/util/dateConverter'
+import { prettyDate, timeConv } from 'src/util/dateConverter'
 import { PhoneNoField } from 'src/util/formFields/phNoField'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { TextField } from 'src/util/formFields/TextField'
@@ -56,6 +56,7 @@ import Loader from './Loader/Loader'
 import PaymentScheduleSheet from './paymentScheduleSheet'
 import SiderForm from './SiderForm/SiderForm'
 import UnitTransactionForm from './UnitBillTransactionForm'
+import ApplicantDetailsForm from './A_CrmModule/applicantDetailsForm'
 
 const CostBreakUpSheet = ({
   title,
@@ -233,18 +234,22 @@ const CostBreakUpSheet = ({
           value: 'customerDetails',
           logo: 'FireIcon',
           color: ' bg-violet-500',
+          text:'Applicant details, contacts, etc',
         },
         {
           label: 'Additonal Info',
           value: 'additonalInfo',
           logo: 'FireIcon',
           color: ' bg-violet-500',
+          text:'Source, Buy Purpose...',
+
         },
         {
           label: 'Cost Sheet',
           value: 'costsheet',
           logo: 'RefreshIcon',
           color: ' bg-violet-500',
+          text: 'Rate pre sqft, gst, discount..'
         },
 
         {
@@ -252,12 +257,14 @@ const CostBreakUpSheet = ({
           value: 'payment_schedule',
           logo: 'FireIcon',
           color: ' bg-violet-500',
+          text: 'Dates, start, end ...'
         },
         {
           label: 'Booking Summary',
           value: 'booking_summary',
           logo: 'FireIcon',
           color: ' bg-violet-500',
+          text: 'Overview, review, approve...'
         },
         {
           label: 'Confirm Booking',
@@ -448,14 +455,14 @@ const CostBreakUpSheet = ({
     }
 
     setOnStep('payment_schedule')
-    if(onStep=== "payment_schedule"){
-    setOnStep('booksheet')
+    if (onStep === 'payment_schedule') {
+      setOnStep('booksheet')
     }
   }
 
   const setStatusFun = async (index, newStatus) => {
     moveStep(newStatus)
-    setStepIndx(index +1)
+    setStepIndx(index + 1)
   }
   return (
     <>
@@ -466,32 +473,62 @@ const CostBreakUpSheet = ({
               <section className="flex flex-row-reverse">
                 {['unitBookingMode', 'unitBlockMode'].includes(actionMode) && (
                   <div className="flex flex-col  w-[250px] pt-4 px-2 bg-white h-screen">
-                    {stepIndx} of {StatusListA?.length} steps
-                    {StatusListA.map((statusFlowObj, i) => (
-                      <span
-                        key={i}
-                        className={`font-bodyLato text-sm font-normal px-2 py-4   mt-2 mr-1 cursor-pointer rounded-lg ${
-                          onStep === statusFlowObj.value
-                            ? 'bg-violet-500 text-white'
-                            : 'bg-violet-100'
-                        } `}
-                        onClick={() => setStatusFun(i, statusFlowObj.value)}
-                      >
-                        <section className="flex flex-row">
-                          <span
-                            className={`w-4 h-4 mt-[1px] text-[9px] mr-1 flex justify-center items-center rounded-full  border ${
-                              onStep === statusFlowObj.value
-                                ? 'bg-violet-500 text-white'
-                                : ''
-                            } `}
-                          >
-                            {i + 1}
-                          </span>
-                          <section>
-                            <div className="">{statusFlowObj.label}</div>
-                            {statusFlowObj.value == 'costsheet' && (
+                      <div className="mt-1">
+        <div className="flex flex-row align-middle justify-between  mb-1">
+          <h6 className="font-bodyLato font-semibold text-sm">
+            {'Booking'}
+          </h6>
+          <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
+          {stepIndx} of {StatusListA?.length} completed!
+          </span>
+        </div>
+        <LinearProgress
+          variant="determinate"
+          color="warning"
+          value={
+            stepIndx * 16.666
+          }
+          sx={{
+            backgroundColor: '#e5eaf2',
+            borderRadius: '6px',
+            height: '7px',
+            '& .MuiLinearProgress-bar': {
+              backgroundColor: '#8B5CF6'  // or any other color you prefer for the filled part
+            }
+          }}
+          style={{
+            backgroundColor: '#E5EAF2',
+            borderRadius: '6px',
+            height: '7px',
+          }}
+        />
+      </div>
+
+
+<ol className="relative text-gray-500 border-s border-[#DDD6FE]  mt-6 ml-3">
+{StatusListA?.map((statusFlowObj, i) => {
+                  return (    <li className={`${i+1 === StatusListA.length ? 'mb-0' :'mb-6' } ms-4 cursor-pointer`} key={i}
+                    onClick={() => setStatusFun(i, statusFlowObj.value)}
+
+                  >
+        <span className="absolute flex items-center justify-center w-7 h-7 bg-[#DDD6FE] rounded-full -start-4 ring-4 ring-white mt-[px] ">
+          <span className='text-[11px] font-bold'>{i+1}</span>
+            {/* <svg className="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+            </svg> */}
+        </span>
+        <div className='ml-1'>
+        <span className="text-[12px]  font-bold    -[2px] rounded-lg flex flex-row text-[#000] ">
+                                {statusFlowObj.label}
+                            {  onStep != statusFlowObj.value ? <MinusCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-gray-400" /> : <CheckCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-green-500" /> }
+
+        </span>
+        <p className=" text-[9px]">{statusFlowObj?.text}</p>
+        {/* {statusFlowObj.value == 'costsheet' && (
                               <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
-                               {(netTotal && !isNaN(netTotal)) ? `₹${netTotal.toLocaleString('en-IN')} ` : ''}
+                                {netTotal && !isNaN(netTotal)
+                                  ? `₹${netTotal.toLocaleString('en-IN')} `
+                                  : ''}
                               </div>
                             )}
                             {statusFlowObj.value == 'customerDetails' && (
@@ -499,21 +536,16 @@ const CostBreakUpSheet = ({
                             )}
                             {statusFlowObj.value == 'payment_schedule' && (
                               <PaymentScheduleStats newPlotPS={newPlotPS} />
-                            )}
+                            )}*/}
+        </div>
+    </li>
+                  )})}
 
-                            {/*
-                            {Object.entries(
-                              customerInfo?.customerDetailsObj
-                            ).reduce((count, [key, value]) => {
-                              if (value === '') {
-                                count++
-                              }
-                              return count
-                            }, 0)} */}
-                          </section>
-                        </section>
-                      </span>
-                    ))}
+</ol>
+
+
+
+
                     {/* <ScrollHighlightNabbar navHeader={reviewLinks} /> */}
                   </div>
                 )}
@@ -568,7 +600,7 @@ const CostBreakUpSheet = ({
                                       newConstructPS={newConstructPS}
                                     />
                                   )} */}
-                                   {csMode === 'both' && (
+                                  {csMode === 'both' && (
                                     <CostBreakUpPdf
                                       formik={formik}
                                       projectDetails={projectDetails}
@@ -743,6 +775,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                 />
               )} */}
                   {['customerDetails', 'allsheets'].includes(onStep) && (
+                    <>
                     <AddApplicantDetails
                       currentMode={actionMode}
                       leadPayload={leadPayload}
@@ -756,6 +789,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       selUnitDetails={selUnitDetails}
                       title="Booking Form"
                     />
+                    </>
                   )}
                   {['additonalInfo'].includes(onStep) && (
                     <AdditonalBookingDetails
@@ -770,7 +804,6 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       source="Booking"
                       stepIndx={stepIndx}
                       StatusListA={StatusListA}
-
                     />
                   )}
                   {['booksheet', 'allsheets'].includes(onStep) && (
@@ -793,7 +826,6 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       projectDetails={projectDetails}
                       stepIndx={stepIndx}
                       StatusListA={StatusListA}
-
                     />
                   )}
 
@@ -1070,13 +1102,12 @@ export const MyComponent = ({ data }) => {
         </p>
       </div>
     )
-  } 
+  }
 
-  return null;
+  return null
 
-  
   // else {
-    
+
   //   return <p>0 of 10 Filled</p>
   // }
 }
@@ -1085,20 +1116,19 @@ export const PaymentScheduleStats = ({ newPlotPS }) => {
   if (newPlotPS?.length > 0) {
     // CustomerDetailsObj exists
 
-    let start= 'NA'
+    let start = 'NA'
     let end = 'NA'
-    if(newPlotPS[0]['schDate']){
-    start = prettyDate(newPlotPS[0]['schDate'])
+    if (newPlotPS[0]['schDate']) {
+      start = prettyDate(newPlotPS[0]['schDate'])
     }
-    if(newPlotPS[newPlotPS.length - 1]['schDate']){
-
-    end = prettyDate(newPlotPS[newPlotPS.length - 1]['schDate'])
+    if (newPlotPS[newPlotPS.length - 1]['schDate']) {
+      end = prettyDate(newPlotPS[newPlotPS.length - 1]['schDate'])
     }
     return (
       <div>
         <p className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
           {' '}
-          {start || 'NA'} to {end||'NA'}
+          {start || 'NA'} to {end || 'NA'}
         </p>
       </div>
     )
