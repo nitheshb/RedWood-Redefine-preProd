@@ -11,11 +11,42 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 
+
+import { useRef } from 'react';
+
+
+
+// import unitTypeList from '../AddUnit';
+// import facingTypeList from '../AddUnit';
+// import bedRoomsList from '../AddUnit';
+// import bathTypeList from '../AddUnit';
+// import carParkingList from '../AddUnit';
+// import statusList from '../AddUnit';
+
+// import mortgageType from '../AddUnit';
+
+
+
+
+
+
+
 import {
+  approvalAuthority,
+  bathTypeList,
+  bedRoomsList,
+  carParkingList,
   costSheetAdditionalChargesA,
   csSections,
+  facingTypeList,
   gstValesA,
+  mortgageType,
+  paymentScheduleA,
+  sourceListItems,
+  statesList,
+  statusList,
   unitsCancellation,
+  unitTypeList,
   VillaCsSections,
 } from 'src/constants/projects'
 import {
@@ -416,6 +447,137 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
       addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }
   }
+
+
+
+
+
+
+  const projectItems = [
+    'Planning Authority',
+    'State',
+    'Charges For',
+    'Category',
+    'Cost Type',
+    'Tax Rate',
+    'Payment Stage',
+    'Type',
+    'Facing',
+    'Type/BedRooms',
+    'Bathrooms',
+    'Car Parking',
+    'Status',
+    'Mortgage Type',
+  ];
+
+  const crmItems = ['Lead Source', 'Booking By'];
+
+
+
+const dataMap: { [key: string]: { label: string }[] } = {
+  'Planning Authority': approvalAuthority,
+  'State': statesList,
+  'Charges For': costSheetAdditionalChargesA,
+  'Category': csSections,
+  'Cost Type': unitsCancellation,
+  'Tax Rate': gstValesA,
+  'Payment Stage': paymentScheduleA,
+  'Type': unitTypeList,
+  'Facing': facingTypeList,
+  'Type/BedRooms': bedRoomsList,
+  'Bathrooms': bathTypeList,
+  'Car Parking': carParkingList,
+  'Status': statusList,
+  'Mortgage Type': mortgageType,
+  'Lead Source': sourceListItems,
+  'Booking By': []
+};
+
+const [activeItem, setActiveItem] = useState<string | null>(null);
+const contentRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+
+const handleClick = (item: string) => {
+  setActiveItem(item);
+  if (contentRefs.current[item]) {
+    contentRefs.current[item]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+};
+
+useEffect(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveItem(entry.target.id.replace(/-/g, ' '));
+        }
+      });
+    },
+    {
+      rootMargin: '-50% 0px -50% 0px',
+      threshold: 0.1
+    }
+  );
+
+  Object.values(contentRefs.current).forEach(ref => {
+    if (ref) observer.observe(ref);
+  });
+
+  return () => {
+    Object.values(contentRefs.current).forEach(ref => {
+      if (ref) observer.unobserve(ref);
+    });
+  };
+}, []);
+
+
+
+
+
+const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
+  <li className={`border-l-2 ${
+    activeItem === item ? 'border-blue-600 border-l-4' : ' border-[#c1c1c1] hover:border-gray-800'
+  }`}>
+    <a
+      href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
+      className={`block pl-4 pr-4 py-2 ${
+        activeItem === item
+          ? 'text-blue-600  font-bold'
+          : 'text-gray-700  hover:text-blue-600'
+      }`}
+      onClick={(e) => {
+        e.preventDefault();
+        handleClick(item);
+      }}
+    >
+      {item}
+    </a>
+  </li>
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const [rows, setRows] = useState([
     // {
     //   id: '1',
@@ -1036,7 +1198,92 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           </div>
         </div>
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div className="flex h-screen">
+      <div className="w-64 text-gray-900 bg-white p-4 overflow-auto">
+        <div className="mb-6">
+          <h2 className="text-black font-semibold mb-2">Add Project</h2>
+          <ul>
+            {projectItems.map((item) => (
+              <SidebarItem key={item} item={item} />
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-black font-semibold mb-2">CRM Module</h2>
+          <ul>
+            {crmItems.map((item) => (
+              <SidebarItem key={item} item={item} />
+            ))}
+          </ul>
+        </div>
+      </div>
+
+
+
+
+
+<div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
+  <div className="max-w-[80rem] mx-auto">
+    {Object.keys(dataMap).map((key) => (
+      <div
+        key={key}
+        className="mb-8"
+        ref={(el) => (contentRefs.current[key] = el)}
+        id={key.replace(/\s+/g, '-').toLowerCase()}
+      >
+        <h3 className="text-blue-600  text-md font-bold mb-2">{key}</h3>
+        <div className="bg-[#fff] rounded-lg border border-[#e1e1e1] overflow-hidden">
+          <table className="w-full shadow-md text-left border-collapse">
+            <thead>
+              <tr className="border-b border-[#e1e1e1]">
+                <th className="py-3 px-4 text-xs font-bold  text-[#000]">Options</th>
+                <th className="py-3 px-4 text-xs font-bold  text-[#000]">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dataMap[key].map((data, i) => (
+                <tr key={i} className="border-b border-[#e1e1e1] last:border-b-0">
+                  <td className="py-2 px-4  text-sm text-[#000]">{data.label}</td>
+                  <td className="py-2 px-4  text-sm text-[#000]">NA</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+    </div>
+
+
+
     </>
+
+
+
+
+
+
+
+
   )
 }
 
