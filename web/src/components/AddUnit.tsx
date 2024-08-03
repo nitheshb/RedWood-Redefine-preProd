@@ -36,6 +36,11 @@ import { TextField } from 'src/util/formFields/TextField'
 import Loader from './Loader/Loader'
 import { validate_AddUnit } from './Schemas'
 
+
+import { bathTypeList, bedRoomsList, carParkingList, facingTypeList, mortgageType, plotTypeList,  releaseStausList, statusList, unitTypeList } from 'src/constants/projects'
+
+
+
 const AddUnit = ({
   title,
   dialogOpen,
@@ -595,89 +600,89 @@ const AddUnit = ({
     return
   }
 
-  const unitTypeList = [
-    { label: 'Select Count', value: '' },
-    { label: '1 Bhk', value: 1 },
-    { label: '2 Bhk', value: 2 },
-    { label: '2.5 Bhk', value: 3 },
-    { label: '3 Bhk', value: 4 },
-    { label: '3.5 Bhk', value: 5 },
-    { label: '4 Bhk', value: 6 },
-    { label: '5 Bhk', value: 7 },
-  ]
+  // const unitTypeList = [
+  //   { label: 'Select Count', value: '' },
+  //   { label: '1 Bhk', value: 1 },
+  //   { label: '2 Bhk', value: 2 },
+  //   { label: '2.5 Bhk', value: 3 },
+  //   { label: '3 Bhk', value: 4 },
+  //   { label: '3.5 Bhk', value: 5 },
+  //   { label: '4 Bhk', value: 6 },
+  //   { label: '5 Bhk', value: 7 },
+  // ]
 
 
-  const bedRoomsList = [
-    { label: 'Select Count', value: '' },
-    { label: '1 Bedroom', value: 'bed1' },
-    { label: '2 Bedroom', value: 'bed2' },
-    { label: '3 Bedroom', value: 'bed3' },
-    { label: '4 Bedroom', value: 'bed4' },
-    { label: '5 Bedroom', value: 'bed5' },
-    // { label: '6 Bedroom', value: 'bed6' },
-    // { label: '7 Bedroom', value: 'bed7' },
-  ]
-
-
-
-  const carParkingList = [
-    { label: 'Select Count', value: '' },
-    { label: '1 Car Parking', value: 'car1' },
-    { label: '2 Car Parking', value: 'car2' },
-    { label: '3 Car Parking', value: 'car3' },
-    { label: '4 Car Parking', value: 'car4' },
-    { label: '5 Car Parking', value: 'car5' },
-  ]
+  // const bedRoomsList = [
+  //   { label: 'Select Count', value: '' },
+  //   { label: '1 Bedroom', value: 'bed1' },
+  //   { label: '2 Bedroom', value: 'bed2' },
+  //   { label: '3 Bedroom', value: 'bed3' },
+  //   { label: '4 Bedroom', value: 'bed4' },
+  //   { label: '5 Bedroom', value: 'bed5' },
+  //   // { label: '6 Bedroom', value: 'bed6' },
+  //   // { label: '7 Bedroom', value: 'bed7' },
+  // ]
 
 
 
+  // const carParkingList = [
+  //   { label: 'Select Count', value: '' },
+  //   { label: '1 Car Parking', value: 'car1' },
+  //   { label: '2 Car Parking', value: 'car2' },
+  //   { label: '3 Car Parking', value: 'car3' },
+  //   { label: '4 Car Parking', value: 'car4' },
+  //   { label: '5 Car Parking', value: 'car5' },
+  // ]
 
-  const plotTypeList = [
-    { label: 'Select Count', value: '' },
-    { label: 'Rectangle', value: 'rectangle' },
-    { label: 'Irregular', value: 'odd' },
-    { label: 'Square', value: 'even' },
-  ]
 
-  const bathTypeList = [
-    { label: 'Select Count', value: '' },
-    { label: '1 Bathroom', value: 'bath1' },
-    { label: '2 Bathroom', value: 'bath2' },
-    { label: '3 Bathroom', value: 'bath3' },
-    { label: '4 Bathroom', value: 'bath4' },
-    { label: '5 Bathroom', value: 'bath5' },
-  ]
-  const facingTypeList = [
-    { label: 'Select Facing', value: '' },
-    { label: 'East', value: 'east' },
-    { label: 'West', value: 'west' },
-    { label: 'North', value: 'north' },
-    { label: 'South', value: 'south' },
-    { label: 'South-East', value: 'south-east' },
-    { label: 'South-West', value: 'south-west' },
-    { label: 'North-East', value: 'north-east' },
-    { label: 'North-West', value: 'north-west' },
-  ]
 
-  const statusList = [
-    { label: 'Select the Status', value: '' },
-    { label: 'Available', value: 'available' },
-    { label: 'Blocked by Customer', value: 'customer_blocked' },
-    { label: 'Blocked by Management', value: 'management_blocked' },
-    { label: 'Sold', value: 'sold' },
-  ]
 
-  const releaseStausList = [
-    { label: 'Release Status', value: '' },
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' },
-  ]
-  const mortgageType = [
-    { label: 'Select Mortgage', value: '' },
-    { label: 'NA', value: 'na' },
-    { label: 'Bank', value: 'bank' },
-    { label: '3rd Party Investor', value: '3rd_party_investor' },
-  ]
+  // const plotTypeList = [
+  //   { label: 'Select Count', value: '' },
+  //   { label: 'Rectangle', value: 'rectangle' },
+  //   { label: 'Irregular', value: 'odd' },
+  //   { label: 'Square', value: 'even' },
+  // ]
+
+  // const bathTypeList = [
+  //   { label: 'Select Count', value: '' },
+  //   { label: '1 Bathroom', value: 'bath1' },
+  //   { label: '2 Bathroom', value: 'bath2' },
+  //   { label: '3 Bathroom', value: 'bath3' },
+  //   { label: '4 Bathroom', value: 'bath4' },
+  //   { label: '5 Bathroom', value: 'bath5' },
+  // ]
+  // const facingTypeList = [
+  //   { label: 'Select Facing', value: '' },
+  //   { label: 'East', value: 'east' },
+  //   { label: 'West', value: 'west' },
+  //   { label: 'North', value: 'north' },
+  //   { label: 'South', value: 'south' },
+  //   { label: 'South-East', value: 'south-east' },
+  //   { label: 'South-West', value: 'south-west' },
+  //   { label: 'North-East', value: 'north-east' },
+  //   { label: 'North-West', value: 'north-west' },
+  // ]
+
+  // const statusList = [
+  //   { label: 'Select the Status', value: '' },
+  //   { label: 'Available', value: 'available' },
+  //   { label: 'Blocked by Customer', value: 'customer_blocked' },
+  //   { label: 'Blocked by Management', value: 'management_blocked' },
+  //   { label: 'Sold', value: 'sold' },
+  // ]
+
+  // const releaseStausList = [
+  //   { label: 'Release Status', value: '' },
+  //   { label: 'Yes', value: 'yes' },
+  //   { label: 'No', value: 'no' },
+  // ]
+  // const mortgageType = [
+  //   { label: 'Select Mortgage', value: '' },
+  //   { label: 'NA', value: 'na' },
+  //   { label: 'Bank', value: 'bank' },
+  //   { label: '3rd Party Investor', value: '3rd_party_investor' },
+  // ]
 
 
 

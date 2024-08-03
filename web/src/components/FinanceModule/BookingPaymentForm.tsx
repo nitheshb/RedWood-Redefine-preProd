@@ -35,6 +35,7 @@ import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLin
 import { TextField2 } from 'src/util/formFields/TextField2'
 
 import CaptureUnitPayment from './CapturePayment'
+import ApplicantDetailsForm from '../A_CrmModule/applicantDetailsForm'
 
 const AddPaymentDetailsForm = ({
   title,
@@ -567,16 +568,57 @@ const AddPaymentDetailsForm = ({
   }
 
   return (
-    <div className="">
-      <div className="">
+    <div className="overflow-y-scroll no-scrollbar" style={{ height: `calc(100vh - 120px)` }}>
+      <div className=" w-full  flex flex-row justify-between mb-0 p-4 pb-0 bg-white-100 rounded-t-md">
         {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
           {title}
         </Dialog.Title> */}
+           <section className="flex flex-row">
+                                        <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
+                                        <div className="w-full flex flex-col">
+                                          <div className=' flex flex-row gap-2 '>
+
+
+                                            <div>
+                                    <section className="flex flex-row">
+                                      <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
+                                            Booking Amount
+                                          </h6>
+
+                                          </section>
+                                          <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
+                      Unit will be blocked and will be booked on manager approval.
+                    </div>
+
+                                          <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+
+                                            </div>
+
+
+                                            <div>
+
+                                            </div>
+
+
+
+
+
+
+                                          </div>
+
+
+
+                                          {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
+                                            Details of applicant is mandatory
+                                          </div> */}
+                                        </div>
+                                      </section>
       </div>
 
-      <div className="grid gap-8 grid-cols-1">
+      <div className="grid gap- grid-cols-1">
         <div className="flex flex-col rounded-lg bg-white">
           <div className="mt-0">
+     
             <CaptureUnitPayment
               bookCompSteps={bookCompSteps}
               bookCurentStep={bookCurentStep}
