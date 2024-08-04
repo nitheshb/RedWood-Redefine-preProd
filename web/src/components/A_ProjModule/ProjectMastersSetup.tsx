@@ -22,6 +22,7 @@ import EditableTable from '../comps/EditableComp'
 import SiderForm from '../SiderForm/SiderForm'
 
 import SourceAddTemplate from './SourceAddTemplate'
+import MastersEditableTable from '../comps/MastersEditableComp'
 
 const ProjectMastersSetupHome = ({ title, pId, data }) => {
   const { user } = useAuth()
@@ -68,6 +69,8 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
           { label: 'Plot', value: 'Plots' },
           { label: 'Villa', value: 'Villas' },
           { label: 'Weekend Villas', value: 'WeekendVillas' },
+          { label: 'Masters', value: 'Masters' },
+
         ].map((data, i) => {
           return (
             <section
@@ -103,6 +106,18 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
                 {`${selCat} Cost Setup Templete`}
               </h2>
               <EditableTable type={'Apartment'} />
+            </div>
+          </section>
+        </div>
+      )}
+       {selCat === 'Masters' && (
+        <div className="w-full   flex-row">
+          <section className="m-4 inline-block">
+            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+              <h2 className="text-sm font-semibold pb-2 border-b border-grey">
+                {`${selCat} Setup`}
+              </h2>
+              <MastersEditableTable type={'Masters'} />
             </div>
           </section>
         </div>
