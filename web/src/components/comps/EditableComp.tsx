@@ -1213,7 +1213,7 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
 
 
 
-<div className="flex h-screen">
+{type === 'Masters' && (<div className="flex h-screen">
       <div className="w-64 text-gray-900 bg-white p-4 overflow-auto">
         <div className="mb-6">
           <h2 className="text-black font-semibold mb-2">Add Project</h2>
@@ -1271,7 +1271,7 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
   </div>
 </div>
 
-    </div>
+    </div>)}
 
 
 

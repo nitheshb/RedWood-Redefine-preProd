@@ -618,7 +618,7 @@ const AddPaymentDetailsForm = ({
       <div className="grid gap- grid-cols-1">
         <div className="flex flex-col rounded-lg bg-white">
           <div className="mt-0">
-     
+
             <CaptureUnitPayment
               bookCompSteps={bookCompSteps}
               bookCurentStep={bookCurentStep}
@@ -628,6 +628,7 @@ const AddPaymentDetailsForm = ({
               onSubmitFun={onSubmitFun}
               stepIndx={stepIndx}
               StatusListA={StatusListA}
+              newPlotPS={newPlotPS}
             />
           </div>
         </div>

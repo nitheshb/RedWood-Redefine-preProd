@@ -31,14 +31,14 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 import { TextField2 } from 'src/util/formFields/TextField2'
+import RupeeInWords from 'src/util/rupeeWords'
 
 import Loader from '../Loader/Loader'
 import { validate_capturePayment } from '../Schemas'
-import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
-import RupeeInWords from 'src/util/rupeeWords'
 
 const CaptureUnitPayment = ({
   title,
@@ -68,6 +68,8 @@ const CaptureUnitPayment = ({
   const [openAreaFields, setOpenAreaFields] = useState(false)
   const [bookingProgress, setBookingProgress] = useState(false)
   const [bankDetailsA, setBankDetailsA] = useState([])
+  const [paymentScheduleA, setPaymentScheduleA] = useState([])
+  const [payingForA, setPayingForA] = useState([])
   const [creditNotersA, setCreditNoters] = useState([])
 
   // const [formattedValue, setFormattedValue] = useState('');
@@ -97,13 +99,23 @@ const CaptureUnitPayment = ({
   }
 
   useEffect(() => {
-    console.log('unit details are ', selUnitDetails)
+    console.log('unit details are ', selUnitDetails, newPlotPS)
   }, [])
 
   useEffect(() => {
     getProjectFun()
-
   }, [])
+  useEffect(() => {
+    setPaymentScheduleA(
+      newPlotPS?.map((user) => {
+        user.label = user?.stage?.label
+        return user
+      })
+    )
+    if (newPlotPS?.length > 0) {
+      setPayingForA([newPlotPS[0]])
+    }
+  }, [newPlotPS])
   const getProjectFun = async () => {
     const additionalUserInfo = await getProject(orgId, selUnitDetails?.pId)
     const bankA = await additionalUserInfo?.bankAccounts?.map((user) => {
@@ -348,7 +360,7 @@ const CaptureUnitPayment = ({
               {stepIndx} of {StatusListA?.length} steps
             </section>
           )}
-          <div className="relative mx-auto max-h-[65%]  rounded-xl  px-9 pb-14 shadow-md">
+          <div className="relative mx-4 max-h-[65%]  rounded-xl  px-2 pb-14 border ">
             {/* <div className="space-y-4 text-white">
               <h3 className="font-bold text-2xl">Confirm Booking</h3>
 
@@ -375,16 +387,16 @@ const CaptureUnitPayment = ({
                           <section className=" ">
                             <div className="w-full mx-auto ">
                               <div className="relative flex flex-col min-w-0 break-words w-full mb-6  rounded-lg bg-white ">
-                                <div className=" flex flex-row px-2 py-2  overflow-y-scroll overflow-auto no-scrollbar">
-                                  <section className=" p-4 rounded-md w-[540px]">
-                                    <article className="mt-5">
+                                <div className=" flex flex-row px-0 py-2  overflow-y-scroll overflow-auto no-scrollbar">
+                                  <section className=" p- rounded-md ">
+                                    <article className="mt-3">
                                       <div className="flex flex-row justify-between">
                                         <section className="flex flex-row">
-                                          <span className="text-[42px] mt-[-16px]">
+                                          <span className="text-[38px] mt-[-16px]">
                                             🎊
                                           </span>
                                           <div className="inline">
-                                            <div className="mt-[7px]">
+                                            <div className="mt-[4px]">
                                               <label className="text-[22px] font-semibold text-[#053219]  text-sm  mb-1  ">
                                                 {title === 'capturePayment'
                                                   ? 'Capture Payment'
@@ -396,222 +408,340 @@ const CaptureUnitPayment = ({
                                           </div>
                                         </section>
                                         <section className="flex flex-row justify-between">
-                                          <div className="flex flex-col mt-">
-                                            <h6 className="text-blueGray-400 text-sm mt- ml-6 mb- font-weight-[700]  font-uppercase">
+                                          <div className="flex flex-col mr-2 mt-2">
+                                            {/* <h6 className="text-blueGray-400 text-sm mt- ml-6 mb- font-weight-[700]  font-uppercase">
                                               Payment
-                                            </h6>
+                                            </h6> */}
                                             <span className="text-center text-[13px] font-normal">
                                               {format(new Date(), 'dd-MMMM-yy')}
                                             </span>
                                           </div>
                                         </section>
                                       </div>
-                                      <hr className="mt-6 border-b-1 border-blueGray-300" />
+                                      <hr className="mt-1 border-b-1 border-blueGray-300" />
                                     </article>
                                     {!bookingProgress && (
                                       <section>
                                         <div className="flex flex-wrap mt-3">
                                           <div className="justify-center w-full mx-auto"></div>
-                                          <div className="w-full px-4 mb-4 mt-8 flex flex-row gap-x-6">
-                                            {paymentMode.map((dat, i) => {
-                                              return (
-                                                // <span
-                                                //   className={` mr-2 border rounded-xl px-2 py-2 cursor-pointer hover:bg-violet-400 hover:text-white text-sm ${
-                                                //     paymentModex == dat.value
-                                                //       ? 'bg-violet-400 text-white'
-                                                //       : ''
-                                                //   }`}
-                                                //   key={i}
-                                                //   onClick={() => {
-                                                //     setPaymentModex(dat.value)
-                                                //     formik.setFieldValue(
-                                                //       'mode',
-                                                //       dat.value
-                                                //     )
-                                                //   }}
-                                                // >
-                                                //   {dat.label}
-                                                // </span>
-                                                <div className="flex items-center gap-x-1" key={i}       onClick={() => {
-                                                      setPaymentModex(dat.value)
-                                                     formik.setFieldValue(
-                                                   'mode',
-                                                       dat.value
-                                                  )
-                                                    }}>
-                                                <input
-                                                  id="push-everything"
-                                                  name="push-notifications"
-                                                  type="radio"
-                                                  checked={paymentModex == dat.value}
-                                                  className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-
-                                                />
-                                                <label
-                                                  htmlFor="push-everything"
-                                                  className="block text-sm font-medium leading-6 text-gray-900"
-                                                >
-                                                   {dat.label}
-                                                </label>
-                                              </div>
-                                              )
-                                            })}
-                                          </div>
-
-                                          {paymentModex != 'credit_note' && (
-                                            <div className="w-full  px-4 mt-3">
-                                              <div className=" mb-4 w-full">
-                                                <MultiSelectMultiLineField
-                                                  label="Paid Towards Account"
-                                                  name="towardsBankDocId"
-                                                  onChange={(payload) => {
-                                                    console.log(
-                                                      'changed value is ',
-                                                      payload
-                                                    )
-                                                    const {
-                                                      value,
-                                                      id,
-                                                      accountName,
-                                                    } = payload
-                                                    formik.setFieldValue(
-                                                      'builderName',
-                                                      accountName
-                                                    )
-                                                    formik.setFieldValue(
-                                                      'landlordBankDocId',
-                                                      id
-                                                    )
-
-                                                    formik.setFieldValue(
-                                                      'towardsBankDocId',
-                                                      id
-                                                    )
-                                                  }}
-                                                  value={
-                                                    formik.values
-                                                      .towardsBankDocId
-                                                  }
-                                                  options={bankDetailsA}
-                                                />
-                                              </div>
-                                            </div>
-                                          )}
-
-                                          {paymentModex === 'credit_note' && (
-                                            <div className="w-full  px-4 mt-3">
-                                              <div className=" mb-4 w-full">
-                                                <MultiSelectMultiLineField
-                                                  label="Credit Note Issuer"
-                                                  name="creditNoteIssuer"
-                                                  onChange={(payload) => {
-                                                    console.log(
-                                                      'changed value is ',
-                                                      payload
-                                                    )
-                                                    const {
-                                                      value,
-                                                      id,
-                                                      name,
-                                                      uid,
-                                                      accountName,
-                                                    } = payload
-                                                    formik.setFieldValue(
-                                                      'builderName',
-                                                      name
-                                                    )
-                                                    formik.setFieldValue(
-                                                      'landlordBankDocId',
-                                                      uid
-                                                    )
-
-                                                    formik.setFieldValue(
-                                                      'towardsBankDocId',
-                                                      uid
-                                                    )
-                                                  }}
-                                                  value={
-                                                    formik.values
-                                                      .towardsBankDocId
-                                                  }
-                                                  options={creditNotersA}
-                                                />
-                                              </div>
-                                            </div>
-                                          )}
-                                          <div className="w-full lg:w-4/12 px-3">
-                                            <div className="relative w-full mb-5">
-                                              <TextField2
-                                                label="Amount"
-                                                name="amount"
-                                                type="number"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className="w-full lg:w-4/12 px-3">
-                                            <div className="relative w-full mb-5">
-                                              <TextField2
-                                                label="Cheque/Ref No"
-                                                name="bank_ref_no"
-                                                type="text"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className="w-full mt-3 lg:w-4/12 px-3  ">
-                                            <div className="relative w-full mb-5 mt-[-1px] ">
-                                              <span className="inline">
-                                                <CustomDatePicker
-                                                  className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-gray-500  border-solid mt-[-4px] pb-1  min-w-[125px]  inline  text-[#0091ae]   lg:w-4/12 w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] "
-                                                  label="Dated"
-                                                  name="dated"
-                                                  // selected={startDate}
-                                                  selected={formik.values.dated}
-                                                  onChange={(date) => {
-                                                    // setFieldValue('dated')
-                                                    formik.setFieldValue(
-                                                      'dated',
-                                                      date.getTime()
-                                                    )
-                                                    // setStartDate(date)
-                                                    console.log(startDate)
-                                                  }}
-                                                  timeFormat="HH:mm"
-                                                  injectTimes={[
-                                                    setHours(
-                                                      setMinutes(d, 1),
-                                                      0
-                                                    ),
-                                                    setHours(
-                                                      setMinutes(d, 5),
-                                                      12
-                                                    ),
-                                                    setHours(
-                                                      setMinutes(d, 59),
-                                                      23
-                                                    ),
-                                                  ]}
-                                                  dateFormat="MMM d, yyyy"
-                                                />
+                                          <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
+                                            <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
+                                              <span className="text-sm font-semibold text-gray-500">
+                                                Paying For
                                               </span>
+                                            </article>
+
+                                            {paymentModex != 'credit_note' && (
+                                              <section className="flex flex-col">
+                                              <div className="w-full  px-3 mt-3">
+                                                <div className=" mb-4 w-full">
+                                                 {payingForA?.map((paying, i) => {
+                                                 return <div className='flex flex-row border-b pb-2 justify-between' key={i}>
+                                                  <span>{paying?.stage?.label}</span> <span>{paying?.value}</span></div>
+})}
+                                                  </div>
+                                                </div>
+                                                 <div className="w-full  px-3 mt-3">
+                                                <div className=" mb-4 w-full">
+                                                  <MultiSelectMultiLineField
+                                                    label="Select Payment Schedule"
+                                                    name="towardsBankDocId"
+                                                    onChange={(payload) => {
+                                                      // console.log(
+                                                      //   'changed value is ',
+                                                      //   payload
+                                                      // )
+                                                      // const {
+                                                      //   value,
+                                                      //   id,
+                                                      //   accountName,
+                                                      // } = payload
+                                                      // formik.setFieldValue(
+                                                      //   'builderName',
+                                                      //   accountName
+                                                      // )
+                                                      // formik.setFieldValue(
+                                                      //   'landlordBankDocId',
+                                                      //   id
+                                                      // )
+
+                                                      // formik.setFieldValue(
+                                                      //   'towardsBankDocId',
+                                                      //   id
+                                                      // )
+                                                    }}
+                                                    value={
+                                                      formik.values
+                                                        .towardsBankDocId
+                                                    }
+                                                    options={paymentScheduleA}
+                                                  />
+                                                </div>
+                                              </div>
+                                              </section>
+                                            )}
+
+
+
+                                          </section>
+                                          <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
+                                            <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
+                                              <span className="text-sm font-semibold text-gray-500">
+                                                Amount
+                                              </span>
+                                            </article>
+                                            <div className="w-full lg:w-12/12 px-3">
+                                              <div className="relative w-full mb-3">
+                                                <TextField2
+                                                  label="Amount"
+                                                  name="amount"
+                                                  type="number"
+                                                />
+                                              </div>
                                             </div>
-                                          </div>
-
-                                          <span className='text-xs px-3'> Paying  <RupeeInWords amount={formik?.values?.amount || 0} /></span>
-
-                                          <div className="w-full  px-3">
-                                            <div className="relative w-full mb-3">
-                                              <TextField2
-                                                label="Payment reason"
-                                                name="payReason"
-                                                type="text"
+                                            <div className="text-xs px-3 mb-3">
+                                              {' '}
+                                              Paying{' '}
+                                              <RupeeInWords
+                                                amount={
+                                                  formik?.values?.amount || 0
+                                                }
                                               />
                                             </div>
-                                          </div>
+
+                                            <div className="w-full lg:w-12/12 px-3">
+                                              <div className="relative w-full mb-5">
+                                                {[
+                                                  50000, 100000, 150000, 200000,
+                                                  500000,
+                                                ].map((value, i) => (
+                                                  <span
+                                                    className={` mr-2 border rounded-md px-2 py-2 cursor-pointer hover:bg-violet-400 hover:text-white text-sm ${
+                                                      paymentModex === value
+                                                        ? 'bg-violet-400 text-white'
+                                                        : ''
+                                                    }`}
+                                                    key={i}
+                                                    onClick={() => {
+                                                      // setPaymentModex(dat.value)
+                                                      formik.setFieldValue(
+                                                        'amount',
+                                                        value
+                                                      )
+                                                    }}
+                                                  >
+                                                    {value}
+                                                  </span>
+                                                ))}
+                                              </div>
+                                            </div>
+                                          </section>
+                                          <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
+                                            <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
+                                              <span className="text-sm font-semibold text-gray-500">
+                                                Paid Towards
+                                              </span>
+                                            </article>
+                                            <div className="w-full px-3 mb-4 mt-8 flex flex-row gap-x-6">
+                                              {paymentMode.map((dat, i) => {
+                                                return (
+                                                  // <span
+                                                  //   className={` mr-2 border rounded-xl px-2 py-2 cursor-pointer hover:bg-violet-400 hover:text-white text-sm ${
+                                                  //     paymentModex == dat.value
+                                                  //       ? 'bg-violet-400 text-white'
+                                                  //       : ''
+                                                  //   }`}
+                                                  //   key={i}
+                                                  //   onClick={() => {
+                                                  //     setPaymentModex(dat.value)
+                                                  //     formik.setFieldValue(
+                                                  //       'mode',
+                                                  //       dat.value
+                                                  //     )
+                                                  //   }}
+                                                  // >
+                                                  //   {dat.label}
+                                                  // </span>
+                                                  <div
+                                                    className="flex items-center gap-x-1"
+                                                    key={i}
+                                                    onClick={() => {
+                                                      setPaymentModex(dat.value)
+                                                      formik.setFieldValue(
+                                                        'mode',
+                                                        dat.value
+                                                      )
+                                                    }}
+                                                  >
+                                                    <input
+                                                      id="push-everything"
+                                                      name="push-notifications"
+                                                      type="radio"
+                                                      checked={
+                                                        paymentModex ==
+                                                        dat.value
+                                                      }
+                                                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                                    />
+                                                    <label
+                                                      htmlFor="push-everything"
+                                                      className="block text-sm font-medium leading-6 text-gray-900"
+                                                    >
+                                                      {dat.label}
+                                                    </label>
+                                                  </div>
+                                                )
+                                              })}
+                                            </div>
+
+                                            {paymentModex != 'credit_note' && (
+                                              <div className="w-full  px-3 mt-3">
+                                                <div className=" mb-4 w-full">
+                                                  <MultiSelectMultiLineField
+                                                    label="Paid Towards Account"
+                                                    name="towardsBankDocId"
+                                                    onChange={(payload) => {
+                                                      console.log(
+                                                        'changed value is ',
+                                                        payload
+                                                      )
+                                                      const {
+                                                        value,
+                                                        id,
+                                                        accountName,
+                                                      } = payload
+                                                      formik.setFieldValue(
+                                                        'builderName',
+                                                        accountName
+                                                      )
+                                                      formik.setFieldValue(
+                                                        'landlordBankDocId',
+                                                        id
+                                                      )
+
+                                                      formik.setFieldValue(
+                                                        'towardsBankDocId',
+                                                        id
+                                                      )
+                                                    }}
+                                                    value={
+                                                      formik.values
+                                                        .towardsBankDocId
+                                                    }
+                                                    options={bankDetailsA}
+                                                  />
+                                                </div>
+                                              </div>
+                                            )}
+
+                                            {paymentModex === 'credit_note' && (
+                                              <div className="w-full  px-3 mt-3">
+                                                <div className=" mb-4 w-full">
+                                                  <MultiSelectMultiLineField
+                                                    label="Credit Note Issuer"
+                                                    name="creditNoteIssuer"
+                                                    onChange={(payload) => {
+                                                      console.log(
+                                                        'changed value is ',
+                                                        payload
+                                                      )
+                                                      const {
+                                                        value,
+                                                        id,
+                                                        name,
+                                                        uid,
+                                                        accountName,
+                                                      } = payload
+                                                      formik.setFieldValue(
+                                                        'builderName',
+                                                        name
+                                                      )
+                                                      formik.setFieldValue(
+                                                        'landlordBankDocId',
+                                                        uid
+                                                      )
+
+                                                      formik.setFieldValue(
+                                                        'towardsBankDocId',
+                                                        uid
+                                                      )
+                                                    }}
+                                                    value={
+                                                      formik.values
+                                                        .towardsBankDocId
+                                                    }
+                                                    options={creditNotersA}
+                                                  />
+                                                </div>
+                                              </div>
+                                            )}
+                                            <section className="flex flex-row">
+                                              <div className="w-full lg:w-10/12 px-3">
+                                                <div className="relative w-full mb-5">
+                                                  <TextField2
+                                                    label="Cheque/Ref No"
+                                                    name="bank_ref_no"
+                                                    type="text"
+                                                  />
+                                                </div>
+                                              </div>
+                                              <div className="w-full mt-3 lg:w-4/12 px-  ">
+                                                <div className="relative w-full mb-5 mt-[-1px] ">
+                                                  <span className="inline">
+                                                    <CustomDatePicker
+                                                      className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-gray-500  border-solid mt-[-4px] pb-1  min-w-[125px]  inline  text-[#0091ae]   lg:w-11/12 w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] "
+                                                      label="Dated"
+                                                      name="dated"
+                                                      // selected={startDate}
+                                                      selected={
+                                                        formik.values.dated
+                                                      }
+                                                      onChange={(date) => {
+                                                        // setFieldValue('dated')
+                                                        formik.setFieldValue(
+                                                          'dated',
+                                                          date.getTime()
+                                                        )
+                                                        // setStartDate(date)
+                                                        console.log(startDate)
+                                                      }}
+                                                      timeFormat="HH:mm"
+                                                      injectTimes={[
+                                                        setHours(
+                                                          setMinutes(d, 1),
+                                                          0
+                                                        ),
+                                                        setHours(
+                                                          setMinutes(d, 5),
+                                                          12
+                                                        ),
+                                                        setHours(
+                                                          setMinutes(d, 59),
+                                                          23
+                                                        ),
+                                                      ]}
+                                                      dateFormat="MMM d, yyyy"
+                                                    />
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            </section>
+
+                                            <div className="w-full  px-3 pb-4">
+                                              <div className="relative w-full mb-3">
+                                                <TextField2
+                                                  label="Notes"
+                                                  name="payReason"
+                                                  type="text"
+                                                />
+                                              </div>
+                                            </div>
+                                          </section>
                                         </div>
                                         <div>
                                           <label
                                             htmlFor="formFile1"
-                                            className="form-label cursor-pointer inline-block mt-2  font-regular text-xs bg-[#efef] rounded-2xl  py-1 "
+                                            className="form-label cursor-pointer inline-block mt-2  font-regular text-xs bg-gray-300 rounded-2xl  py-1 "
                                           >
                                             <AttachFile
                                               className="w-4 h-4 text-[18px]"
@@ -654,30 +784,6 @@ const CaptureUnitPayment = ({
                                             className="img-preview"
                                           />
                                         )}
-                                        <div className="flex flex-row justify-between mt-4 mx-4">
-                                          <div className="flex flex-row justify-between">
-                                            <div></div>
-                                            <div className="flex flex-col">
-                                              <h6 className="text-blueGray-400 text-sm mt- ml-6 mb- font-weight-[700]  font-uppercase">
-                                                Payment
-                                              </h6>
-                                              <span className="text-center text-[13px] font-normal">
-                                                {format(
-                                                  new Date(),
-                                                  'dd-MMMM-yy'
-                                                )}
-                                              </span>
-                                            </div>
-                                          </div>
-                                          <div>
-                                            <div className="text-md font-weight-[700] text-[13px]">
-                                              Received By
-                                            </div>
-                                            <div className="text-center font-semibold text-[13px]">
-                                              {displayName.toUpperCase()}
-                                            </div>
-                                          </div>
-                                        </div>
                                       </section>
                                     )}
                                     {title != 'capturePayment' &&
