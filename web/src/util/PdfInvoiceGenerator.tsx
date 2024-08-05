@@ -42,7 +42,6 @@ const useStyles = () =>
         },
         headFitter: {
           padding: '10px',
-
         },
         AllsmallFitter: {
           padding: '10px',
@@ -58,11 +57,13 @@ const useStyles = () =>
         col8: { width: '75%' },
         col2: { width: '13%', marginTop: '10px' },
         col6: { width: '50%' },
+        p4: { padding: '4px' },
         p10: { padding: '4px 6px' },
         p11: { padding: '0px 0px' },
         p12: { paddingTop: '4px', paddingBottom: '2px' },
         pr0: { paddingRight: '0px' },
         pr4: { paddingRight: '4px' },
+        pr8: { paddingRight: '8px' },
         mb4: { marginBottom: 4 },
         mb2: { marginBottom: 2 },
         mb8: { marginBottom: 8 },
@@ -71,6 +72,8 @@ const useStyles = () =>
         mb20: { marginBottom: 20 },
         mb10: { marginBottom: 10 },
         mb5: { marginBottom: 5 },
+        mr5: { marginRight: 10 },
+        mr15: { marginRight: 15 },
         mT0: { marginTop: 0 },
         mT1: { marginTop: 10 },
         ml1: { marginLeft: 5 },
@@ -105,7 +108,7 @@ const useStyles = () =>
           fontFamily: 'Roboto',
           backgroundColor: '#FFF8F2',
           textTransform: 'capitalize',
-          padding: '0px'
+          padding: '0px',
           // padding: '40px 24px 60px 24px',
         },
         footer: {
@@ -172,7 +175,7 @@ const useStyles = () =>
           // borderColor: '#DFE3E8',
           // backgroundColor: '#DFF6DD',
         },
-        topBoderRadius:{
+        topBoderRadius: {
           borderTopLeftRadius: '16px',
           borderTopRightRadius: '16px',
         },
@@ -502,10 +505,12 @@ const MyDocument = ({
             styles.mb10,
             styles.dashBorder,
             styles.cellBgHead,
-            styles.headFitter
+            styles.headFitter,
           ]}
         >
-          <View style={[styles.col6,styles.smallFitter, styles.pr3, styles.ml1]}>
+          <View
+            style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1]}
+          >
             <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} />
             <Text style={[styles.h4, styles.ml1]}>
               {projectDetails?.projectName}
@@ -513,13 +518,30 @@ const MyDocument = ({
             {/* <Text>{myObj} </Text> */}
           </View>
           <View style={[styles.col6]}>
-            <Text style={[styles.h4, styles.alignRight, styles.mT1, styles.pt5, styles.pr3]}>Cost Sheet</Text>
+            <Text
+              style={[
+                styles.h4,
+                styles.alignRight,
+                styles.mT1,
+                styles.pt5,
+                styles.pr3,
+              ]}
+            >
+              Cost Sheet
+            </Text>
             {/* <Text>{myObj} </Text> */}
           </View>
         </View>
 
         <View style={[styles.gridContainer, styles.mb10]}>
-          <View style={[styles.col4, styles.ml4, styles.cellBgHead, styles.AllsmallFitter]}>
+          <View
+            style={[
+              styles.col4,
+              styles.ml4,
+              styles.cellBgHead,
+              styles.AllsmallFitter,
+            ]}
+          >
             <Text style={[styles.subtitle2, styles.mb4]}>Invoice To</Text>
             <Text style={styles.body2}>{leadDetailsObj1?.Name}</Text>
             <Text style={styles.body2}>{leadDetailsObj1?.Address}</Text>
@@ -527,7 +549,7 @@ const MyDocument = ({
             <Text style={styles.body2}>{leadDetailsObj1?.Mobile}</Text>
           </View>
 
-          <View style={[styles.col4, styles.cellBgHead,styles.AllsmallFitter]}>
+          <View style={[styles.col4, styles.cellBgHead, styles.AllsmallFitter]}>
             <Text style={[styles.subtitle2, styles.mb4]}>Invoice From</Text>
             <Text style={styles.body2}>{user?.displayName || user?.name}</Text>
             {/* <Text style={styles.body2}>
@@ -555,7 +577,10 @@ const MyDocument = ({
                 Size:{' '}
                 <Text style={styles.body2}>
                   {selUnitDetails?.size}
-                  <Text style={styles.body2}>{'('}{selUnitDetails?.area}sqft{')'}</Text>
+                  <Text style={styles.body2}>
+                    {'('}
+                    {selUnitDetails?.area}sqft{')'}
+                  </Text>
                 </Text>
               </Text>
               <Text style={[styles.subtitle2, styles.mb2]}>
@@ -579,315 +604,281 @@ const MyDocument = ({
           </View>
         </View> */}
         <View style={[styles.topBoderRadius, styles.bg1]}>
-        <View style={[styles.ml4,styles.pt2, styles.mT1 ]}>
-          <Text
-            style={[
-              styles.subtitle1,
-              styles.mb5,
-              styles.col,
-              styles.smallFitter,
-              styles.ml2,
-
-            ]}
-          >
-            Cost Sheet
-          </Text>
-        </View>
-        <View style={[styles.subtitle1, styles.bg1, styles.fitter, styles.ml2,]}>
-          <View style={[styles.bg2, styles.cellBgHead, styles.p11]}>
-            <View style={[styles.tableCell_1, styles.p11]}>
-              <Text style={styles.subtitle2}></Text>
-            </View>
-
-            <View style={[styles.tableCell_35, styles.p12]}>
-              <Text style={styles.subtitle2}>PARTICULARS</Text>
-            </View>
-
-            <View
-              style={[
-                styles.tableCell_20,
-                styles.alignRight,
-                styles.p12,
-                styles.pr4,
-              ]}
-            >
-              <Text style={styles.subtitle2}>RATE/SQFT</Text>
-            </View>
-
-            <View
-              style={[
-                styles.tableCell_20,
-                styles.alignRight,
-                styles.p12,
-                styles.pr4,
-              ]}
-            >
-              <Text style={styles.subtitle2}>SALE VALUE</Text>
-            </View>
-
-            <View
-              style={[
-                styles.tableCell_20,
-                styles.alignRight,
-                styles.p12,
-                styles.pr4,
-              ]}
-            >
-              <Text style={styles.subtitle2}>TOTAL</Text>
-            </View>
-          </View>
-        </View>
-        <View style={[styles.fitter]}>
-          <View>
-            {myObj?.map((item, index) => (
-              <View style={styles.totalRow} key={item.id}>
-                <View
-                  style={[
-                    styles.tableCell_1,
-                    styles.pl2,
-                    styles.p10,
-
-                  ]}
-                >
-                  <Text>{index + 1}</Text>
-                </View>
-
-                <View style={[styles.tableCell_35, styles.p10,]}>
-                  <Text style={styles.subtitle2}>{item?.component?.label}</Text>
-                </View>
-
-                <View
-                  style={[
-                    styles.tableCell_20,
-                    styles.alignRight,
-
-                    styles.p10,
-                  ]}
-                >
-                  <Text>{item?.charges}</Text>
-                </View>
-
-                <View
-                  style={[
-                    styles.tableCell_20,
-                    styles.alignRight,
-
-                    styles.p10,
-                  ]}
-                >
-                  <Text>{fCurrency(item?.TotalSaleValue)}</Text>
-                </View>
-
-                <View
-                  style={[
-                    styles.tableCell_20,
-                    styles.alignRight,
-
-                    styles.p10,
-                  ]}
-                >
-                  <Text>{fCurrency(item?.TotalNetSaleValueGsT)}</Text>
-                </View>
-              </View>
-            ))}
-            <View style={styles.totalRowNew}>
-              <View style={[styles.tableCell_1, styles.pl2, styles.p10,]}></View>
-
-              <View style={[styles.tableCell_35, styles.p10,]}></View>
-
-              <View style={[styles.tableCell_20, styles.alignRight]}></View>
-
-              <View style={[styles.tableCell_20, styles.alignRight,styles.pr4]}>
-                <Text style={[styles.subtitle2, styles.pt2]}>Total (A)</Text>
-              </View>
-
-              <View
-                style={[
-                  styles.tableCell_20,
-                  styles.alignRight,
-
-                  styles.p10,
-                  styles.pt2,
-                ]}
-              >
-                <Text>{fCurrency(partATotal)}</Text>
-              </View>
-            </View>
-
-{/* part 2 */}
-{myAdditionalCharges?.map((item, index) => (
-              <View style={styles.tableRow} key={item.id}>
-                <View
-                  style={[
-                    styles.tableCell_1,
-                    styles.pl2,
-
-
-                  ]}
-                >
-                  <Text>{(myObj?.length || 0) + (index + 1)}</Text>
-                </View>
-
-                <View style={[styles.tableCell_35, ]}>
-                  <Text style={styles.subtitle2}>{item?.component?.label}</Text>
-                </View>
-
-                <View
-                  style={[
-                    styles.tableCell_20,
-                    styles.alignRight,
-
-
-                  ]}
-                >
-                  <Text>{item?.charges}</Text>
-                </View>
-
-                <View
-                  style={[
-                    styles.tableCell_20,
-                    styles.alignRight,
-
-
-                  ]}
-                >
-                  <Text>{fCurrency(item?.TotalSaleValue)}</Text>
-                </View>
-
-                <View
-                  style={[
-                    styles.tableCell_20,
-                    styles.alignRight,
-
-
-                  ]}
-                >
-                  <Text> {fCurrency(
-                      Number(
-                        computeTotal(item, selUnitDetails?.area?.toString()?.replace(',', ''))
-                      )?.toLocaleString('en-IN')
-                    )}</Text>
-                </View>
-              </View>
-            ))}
-            <View style={styles.totalRowNew}>
-              <View style={[styles.tableCell_1, styles.pl2, styles.p10,]}></View>
-
-              <View style={[styles.tableCell_35, styles.p10,]}></View>
-
-              <View style={[styles.tableCell_20, styles.alignRight,]}></View>
-
-              <View style={[styles.tableCell_20, styles.alignRight,styles.pr4]}>
-                <Text style={[styles.subtitle2, styles.pt2]}>Total (B)</Text>
-              </View>
-
-              <View
-                style={[
-                  styles.tableCell_20,
-                  styles.alignRight,
-
-                  styles.p10,
-                  styles.pt2,
-                ]}
-              >
-                <Text>{fCurrency(partBTotal)}</Text>
-              </View>
-            </View>
-
-
-            <View style={[styles.totalRow, styles.mb20, styles.mT0,]}>
-              <View style={styles.tableCell_1}></View>
-
-              <View style={styles.tableCell_2}>
-                <Text style={styles.subtitle2}>
-                  Total Plot Cost (A+B)
-                </Text>
-              </View>
-
-              <View style={styles.tableCell_3}>
-                <Text>{fCurrency(partATotal)}</Text>
-              </View>
-              <View style={[styles.tableCell_3, styles.alignCenter]}>
-                <Text>+</Text>
-              </View>
-
-              <View style={styles.tableCell_3}>
-                <Text>{fCurrency(partBTotal)}</Text>
-              </View>
-
-              <View style={[styles.tableCell_3, styles.alignRight, styles.pr4,]}>
-                <Text>{fCurrency(netTotal)}</Text>
-              </View>
-            </View>
+          <View style={[styles.ml4, styles.pt2, styles.mT1]}>
             <Text
               style={[
                 styles.subtitle1,
                 styles.mb5,
                 styles.col,
-
                 styles.smallFitter,
+                styles.ml2,
               ]}
             >
-              Payment Schedule
+              Cost Sheet
             </Text>
-
-            <View style={[styles.subtitle1, styles.cellBgHead]}>
-              <View style={[styles.bg2, styles.cellBgHead]}>
-                <View style={styles.tableCell_1}>
-                  <Text style={styles.subtitle2}></Text>
-                </View>
-
-                <View style={styles.tableCell_4}>
-                  <Text style={[styles.subtitle2, styles.ml1]}>
-                    Schedule
-                  </Text>
-                </View>
-                <View style={styles.tableCell_5}>
-                  <Text style={styles.subtitle2}>PAYMENT TIMELINE</Text>
-                </View>
-                <View style={[styles.tableCell_3, styles.alignRight]}>
-                  <Text style={styles.subtitle2}>TOTAL</Text>
-                </View>
-              </View>
-            </View>
-            {newPlotPS.map((item, index) => (
-              <View style={[styles.tableRow, styles.ml1]} key={item.id}>
-                <View style={[styles.tableCell_1, styles.pl2]}>
-                  <Text>{index + 1}</Text>
-                </View>
-
-                <View style={styles.tableCell_4}>
-                  <Text style={styles.subtitle2}>{item.stage?.label}</Text>
-                </View>
-
-                <View style={styles.tableCell_5}>
-                  <Text>{item.description}</Text>
-                </View>
-
-                <View style={[styles.tableCell_3, styles.alignRight]}>
-                  <Text>{fCurrency(item.value)}</Text>
-                </View>
-              </View>
-            ))}
-            <View style={[styles.totalRow, styles.cellBgHead,styles.mT0,]}>
-              <View style={styles.tableCell_1}></View>
-
-              <View style={[styles.tableCell_4, styles.ml1]}>
-                <Text style={styles.subtitle2}>
-                  Total Cost
-                </Text>
+          </View>
+          <View
+            style={[styles.subtitle1, styles.bg1, styles.fitter, styles.ml2]}
+          >
+            <View style={[styles.bg2, styles.cellBgHead, styles.p4]}>
+              <View style={[styles.tableCell_1, styles.p11]}>
+                <Text style={styles.subtitle2}></Text>
               </View>
 
-              <View style={styles.tableCell_3}></View>
+              <View style={[styles.tableCell_35, styles.p12]}>
+                <Text style={styles.subtitle2}>PARTICULARS</Text>
+              </View>
 
-              <View style={styles.tableCell_3}></View>
+              <View
+                style={[
+                  styles.tableCell_20,
+                  styles.alignRight,
+                  styles.p12,
+                  styles.pr4,
+                ]}
+              >
+                <Text style={styles.subtitle2}>RATE/SQFT</Text>
+              </View>
 
-              <View style={[styles.tableCell_3, styles.alignRight]}>
-                <Text>{fCurrency(netTotal)}</Text>
+              <View
+                style={[
+                  styles.tableCell_20,
+                  styles.alignRight,
+                  styles.p12,
+                  styles.pr4,
+                ]}
+              >
+                <Text style={styles.subtitle2}>SALE VALUE</Text>
+              </View>
+
+              <View
+                style={[
+                  styles.tableCell_20,
+                  styles.alignRight,
+                  styles.p12,
+
+                ]}
+              >
+                <Text style={styles.subtitle2}>TOTAL</Text>
               </View>
             </View>
           </View>
-        </View>
+          <View style={[styles.fitter]}>
+            <View>
+              {myObj?.map((item, index) => (
+                <View style={[styles.tableRow, styles.ml1]} key={item.id}>
+                  <View style={[styles.tableCell_1, styles.pl2]}>
+                    <Text>{index + 1}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_35]}>
+                    <Text style={styles.subtitle2}>
+                      {item?.component?.label}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.tableCell_20, styles.alignRight]}>
+                    <Text>{item?.charges}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                  >
+                    <Text>{fCurrency(item?.TotalSaleValue)}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_20, styles.alignRight, ]}
+                  >
+                    <Text>{fCurrency(item?.TotalNetSaleValueGsT)}</Text>
+                  </View>
+                </View>
+              ))}
+              <View style={[styles.tableRow]}>
+                <View
+                  style={[styles.tableCell_1, styles.pl2, styles.p10]}
+                ></View>
+
+                <View style={[styles.tableCell_35, styles.p10]}></View>
+
+                <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+                <View
+                  style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                >
+                  <Text style={[styles.subtitle2, styles.pt2]}>Total (A)</Text>
+                </View>
+
+                <View
+                  style={[
+                    styles.tableCell_20,
+                    styles.alignRight,
+
+
+                    styles.pt2,
+                  ]}
+                >
+                  <Text>{fCurrency(partATotal)}</Text>
+                </View>
+              </View>
+
+              {/* part 2 */}
+              {myAdditionalCharges?.map((item, index) => (
+                <View style={[styles.tableRow, styles.ml1]} key={item.id}>
+                  <View style={[styles.tableCell_1, styles.pl2]}>
+                    <Text>{(myObj?.length || 0) + (index + 1)}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_35]}>
+                    <Text style={styles.subtitle2}>
+                      {item?.component?.label}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.tableCell_20, styles.alignRight]}>
+                    <Text>{item?.charges}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                  >
+                    <Text>{fCurrency(item?.TotalSaleValue)}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_20, styles.alignRight, ]}
+                  >
+                    <Text>
+                      {' '}
+                      {fCurrency(
+                        Number(
+                          computeTotal(
+                            item,
+                            selUnitDetails?.area?.toString()?.replace(',', '')
+                          )
+                        )?.toLocaleString('en-IN')
+                      )}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+
+              <View style={[styles.tableRow]}>
+                <View
+                  style={[styles.tableCell_1, styles.pl2, styles.p10]}
+                ></View>
+
+                <View style={[styles.tableCell_35, styles.p10]}></View>
+
+                <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+                <View
+                  style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                >
+                  <Text style={[styles.subtitle2, styles.pt2]}>Total (B)</Text>
+                </View>
+
+                <View
+                  style={[
+                    styles.tableCell_20,
+                    styles.alignRight,
+
+
+                    styles.pt2,
+                  ]}
+                >
+                  <Text>{fCurrency(partBTotal)}</Text>
+                </View>
+              </View>
+              <View style={[styles.totalRow, styles.mb20, styles.mT1]}>
+                <View style={styles.tableCell_1}></View>
+
+                <View style={styles.tableCell_2}>
+                  <Text style={styles.subtitle2}>Total Plot Cost (A+B)</Text>
+                </View>
+
+                <View style={styles.tableCell_3}>
+                  <Text>{fCurrency(partATotal)}</Text>
+                </View>
+                <View style={[styles.tableCell_3, styles.alignCenter]}>
+                  <Text>+</Text>
+                </View>
+
+                <View style={[styles.tableCell_3,styles.alignRight,styles.pr8, styles.mr15 ]}>
+                  <Text>{fCurrency(partBTotal)}</Text>
+                </View>
+
+                <View
+                  style={[styles.tableCell_20, styles.alignRight, styles.pr4 , styles.tableCell_20]}
+                >
+                  <Text>{fCurrency(netTotal)}</Text>
+                </View>
+              </View>
+              <Text
+                style={[
+                  styles.subtitle1,
+                  styles.mb5,
+                  styles.col,
+
+                  styles.smallFitter,
+                ]}
+              >
+                Payment Schedule
+              </Text>
+
+              <View style={[styles.subtitle1, styles.cellBgHead]}>
+                <View style={[styles.bg2, styles.cellBgHead]}>
+                  <View style={styles.tableCell_1}>
+                    <Text style={styles.subtitle2}></Text>
+                  </View>
+
+                  <View style={styles.tableCell_4}>
+                    <Text style={[styles.subtitle2, styles.ml1]}>Schedule</Text>
+                  </View>
+                  <View style={styles.tableCell_5}>
+                    <Text style={styles.subtitle2}>PAYMENT TIMELINE</Text>
+                  </View>
+                  <View style={[styles.tableCell_3, styles.alignRight]}>
+                    <Text style={styles.subtitle2}>TOTAL</Text>
+                  </View>
+                </View>
+              </View>
+              {newPlotPS.map((item, index) => (
+                <View style={[styles.tableRow, styles.ml1]} key={item.id}>
+                  <View style={[styles.tableCell_1, styles.pl2]}>
+                    <Text>{index + 1}</Text>
+                  </View>
+
+                  <View style={styles.tableCell_4}>
+                    <Text style={styles.subtitle2}>{item.stage?.label}</Text>
+                  </View>
+
+                  <View style={styles.tableCell_5}>
+                    <Text>{item.description}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_3, styles.alignRight]}>
+                    <Text>{fCurrency(item.value)}</Text>
+                  </View>
+                </View>
+              ))}
+              <View style={[styles.totalRow, styles.mT0, styles.mb20]}>
+                <View style={styles.tableCell_1}></View>
+
+                <View style={[styles.tableCell_4, styles.ml1]}>
+                  <Text style={styles.subtitle2}>Total Cost</Text>
+                </View>
+
+                <View style={styles.tableCell_3}></View>
+
+                <View style={styles.tableCell_3}></View>
+
+                <View style={[styles.tableCell_3, styles.alignRight]}>
+                  <Text>{fCurrency(netTotal)}</Text>
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
 
         {/* <View style={[styles.gridContainer, styles.footer]} fixed>
