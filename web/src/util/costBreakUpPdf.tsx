@@ -573,7 +573,7 @@ const CostBreakUpPdf = ({
     setTotalFun()
   }
   return (
-    <div className='font-["Inter"]'>
+    <div className=''>
       {!pdfPreview && (
         <div>
           <PDFExport
@@ -659,7 +659,7 @@ const CostBreakUpPdf = ({
                           <div className=" border rounded-lg shadow-md overflow-hidden ">
                             <table className="min-w-full divide-y ">
                               <thead>
-                                <tr className="h-8 mb-1 border-none w-[100%] bg-[#E8E6FE] text-[#0D027D] font-['Inter'] font-[600] ">
+                                <tr className="h-8 mb-1 border-none w-[100%] bg-[#E8E6FE] text-[#0D027D]  font-[600] ">
                                   <th className="min-w-[35%] px-2  text-[12px] text-left text-[#0D027D]  tracking-wide">
                                     Particulars
                                   </th>
@@ -849,7 +849,7 @@ const CostBreakUpPdf = ({
                             </tr>
                           </thead> */}
                               <thead>
-                                <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D] font-['Inter'] font-[600] ">
+                                <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
                                   <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide ">
                                     Particulars
                                   </th>
@@ -980,7 +980,7 @@ const CostBreakUpPdf = ({
                           </thead> */}
                           {/* partc  */}
                               {/* <thead>
-                                <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D] font-['Inter'] font-[600] ">
+                                <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
                                   <th className="min-w-[35%] px-2  text-[10px] text-left font-bold tracking-wide uppercase">
                                     Particulars
                                   </th>
@@ -1137,7 +1137,7 @@ const CostBreakUpPdf = ({
                           <table className="w-full border-b border-dashed">
                             <thead className="">
                               {' '}
-                              <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D] font-['Inter'] font-[600]  ">
+                              <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D]  font-[600]  ">
                                 <th className="w-[50%] px-2   text-left  tracking-wide  text-[12px]   ">
                                   Particulars
                                 </th>
@@ -1236,7 +1236,7 @@ const CostBreakUpPdf = ({
                           <table className="w-full border-b border-dashed">
                             <thead className="">
                               {' '}
-                              <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D] font-['Inter'] font-[600]  ">
+                              <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D]  font-[600]  ">
                                 <th className="w-[50%] px-2   text-left  tracking-wide uppercase text-[11px]   ">
                                   Particulars
                                 </th>

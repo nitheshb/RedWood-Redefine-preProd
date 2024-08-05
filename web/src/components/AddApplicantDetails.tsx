@@ -976,12 +976,12 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
                       <section className=" bg-blueGray-50">
                         <div className="w-full mx-auto ">
-                          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg  bg-[#F9FBFB] border-0">
+                          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg  bg-[#F9FBFB] border-0 pb-4">
                             <div className="flex-auto">
                               <section className=" lg:px-2 py-2">
                                 <div className="flex flex-col gap-1">
                                   <section
-                                    className="   bg-[#fff] rounded-md border "
+                                    className="   bg-[#fff] rounded-md border pb-4 "
                                     style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                   >
                                     <div
@@ -1069,17 +1069,30 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                         </div>
                                       </div>
                                     )}
-                                    <div className="flex flex-wrap p-4 pt-0">
-                                      <div className="w-full flex flex-row justify-between lg:w-12/12 ">
-                                        <div className="relative lg:w-6/12 mb-3 mt-2">
-                                          <TextField
+                                        <section className="mt-1 px-4 mx-4 rounded-lg bg-white border border-gray-100 shadow">
+                            <section className="flex flex-row  pt-2 mt-1 ">
+                              <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
+                              <span className="ml-1 leading-[15px] ">
+                                <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
+                                  Personal Details
+                                  <abbr title="required"></abbr>
+                                </label>
+                              </span>
+                            </section>
+                              {/* row 1 */}
+                            <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-4 ">
+                              <div className="space-y-2 w-full text-xs mt-">
+                              <TextField
                                             label="Customer Name*"
                                             name="customerName1"
                                             type="text"
                                           />
-                                        </div>
-                                        <div className="relative lg:w-6/12  mt-1 ml-4">
-                                          <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
+
+                              </div>
+
+                              <div className=" space-y-2 w-full text-xs mt-">
+                              <div className="relative ">
+                                          <label className="label font-regular text-[12px] block mb-1 mt- text-gray-700">
                                             Son/Daughter/Wife of{' '}
                                           </label>
                                           <MuiTextField
@@ -1134,157 +1147,16 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                             onChange={formik.handleChange}
                                           />
                                         </div>
-                                      </div>
-
-                                      <div className="w-full  flex flex-row lg:w-12/12 pt-2">
-                                        <div className="w-full lg:w-3/12 px- ">
-                                          <div className="relative w-full mt-1">
-
-                                            {/* <PhoneNoField
-                                              label="Primary Phone No"
-                                              name="phoneNo1"
-                                              // type="text"
-                                              value={formik.values.phoneNo1}
-                                              onChange={(value) => {
-                                                // formik.setFieldValue('mobileNo', value.value)
-                                                console.log('value is ', value)
-                                                //
-                                                formik.setFieldValue(
-                                                  'phoneNo1',
-                                                  value.value
-                                                )
-                                                // setGivenPhNo1(value.value)
-                                              }}
-                                              // value={formik.values.mobileNo}
-                                              options={{}}
-                                              labelSize="text-[11px]"
-                                              textSize="text-[12px]"
-                                              txtPad="px-1"
-                                              className="text-[10px]"
-                                            /> */}
+                              </div>
 
 
 
-<div className="space-y-1 w-full text-xs">
-  <label htmlFor="countryCode" className="inline-block">
-  Primary Phone No
-  </label>
-
-  <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
-  <div className="inline-block">
-      <input
-        type="text"
-        id="countryCode1"
-        name="countryCode1"
-        value={formik.values.countryCode1}
-        onChange={(e) => {
-          formik.setFieldValue('countryCode1', e.target.value);
-        }}
-        onBlur={formik.handleBlur}
-        className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none rounded-l-md focus:outline-none"
-        placeholder="+91"
-      />
-      {formik.errors.countryCode1 && formik.touched.countryCode1 && (
-        <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode1}</div>
-      )}
-    </div>
-
-
-
-    <div className='border-l border-gray-400 mt-1 mb-1'></div>
-
-
-      <PhoneNoField
-        name="phoneNo1"
-        value={formik.values.phoneNo1}
-        customStyles={customPhoneNoFieldStyles}
-        onChange={(value) => {
-          console.log('value is ', value);
-          formik.setFieldValue('phoneNo1', value.value);
-        }}
-        options={{}}
-        labelSize="text-[11px]"
-        textSize="text-[12px]"
-        txtPad="px-1"
-        className="w-full h-8 !rounded-none border-none !rounded-r-md focus:outline-none my-custom-class"
-      />
-
-  </div>
-</div>
-
-
-
-
-
-
-
-
-                                          </div>
-                                        </div>
-
-
-                                      <div className="w-full lg:w-3/12 pl-4">
-                                          <div className="relative w-full mt-1">
-
-
-
-                                          <div className="space-y-1 w-full text-xs">
-                                          <label htmlFor="countryCode" className="inline-block">
-                                            Secondary Phone No
-                                          </label>
-
-                                          <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
-                                          <div className="inline-block">
-                                          <input
-                                          type="text"
-                                           id="countryCode2"
-                                           name="countryCode2"
-                                           value={formik.values.countryCode2}
-                                           onChange={(e) => formik.setFieldValue('countryCode2', e.target.value)}
-                                           onBlur={formik.handleBlur}
-                                           className="w-11 bg-grey-lighter text-grey-darker h-7 px-1 border-none rounded-l-md focus:outline-none"
-                                           placeholder="+91"
-                                             />
-                                          {formik.errors.countryCode2 && formik.touched.countryCode2 && (
-                                          <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode2}</div>
-                                            )}
-                                          </div>
-
-
-
-                                        <div className='border-l border-gray-400 mt-1 mb-1'></div>
-
-
-
-
-                                          <PhoneNoField
-
-                                           name="phoneNo3"
-                                           value={formik.values.phoneNo3}
-                                           customStyles={customPhoneNoFieldStyles}
-                                           onChange={(value) => {
-                                           formik.setFieldValue('phoneNo3', value.value);
-                                           }}
-                                           options={{}}
-                                           labelSize="text-[11px]"
-                                          textSize="text-[12px]"
-                                          txtPad="px-1"
-                                          className="w-full h-8 !rounded-none border-none !rounded-r-md focus:outline-none my-custom-class"
-                                           />
-
-
-                                         </div>
-                                            </div>
-
-
-                                          </div>
-                                        </div>
-
-
-
-                                        <div className="w-full lg:w-3/12 pl-4  ">
-                                          <section className="">
-                                            <div className="w-full flex flex-col mt-1">
+                            </div>
+                            {/* row 2 */}
+                             <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
+                              <div className="space-y-2 w-full text-xs mt-">
+                              <section className="">
+                                            <div className="w-full flex flex-col">
                                               <CustomSelect
                                                 name="MaritualStatus"
                                                 label="Status"
@@ -1321,10 +1193,12 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                               </p>
                                             </div>
                                           </section>
-                                        </div>
-                                        <div className="w-full lg:w-3/12 mt-[px] pl-4 mr-3">
-                                          <div className="relative w-full mb-3 mt-1 ">
-                                            <label className="text-gray-500 text-[10px]">
+
+                              </div>
+
+                              <div className=" space-y-2 w-full text-xs mt-">
+                              <div className="relative flex flex-col  ">
+                              <label className="text-gray-500 text-[10px] mb-2">
                                               Date Of Birth
                                             </label>
                                             <span className="inline">
@@ -1355,12 +1229,14 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                                 dateFormat="d-MMMM-yyyy"
                                               />
                                             </span>
-                                          </div>
                                         </div>
-                                      </div>
-                                      {}
-                                      <div className="w-full ">
-                                        <div className="flex flex-row justify-between pt-2">
+                              </div>
+
+
+
+                            </div>
+                             {/* row 3 */}
+                             <div className="flex flex-row justify-between pt-2 mb-2">
                                           <section className="w-12/12 w-full">
                                             <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
                                               PAN No{' '}
@@ -1527,274 +1403,20 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                             />
                                           </section>
                                         </div>
-
-
-
-                                        <div className="w-full lg:w-12/12 pt-2">
-                                          <div className="relative w-full">
-
-                                            <TextField
-                                              label="Email"
-                                              name="email1"
-                                              type="text"
-                                            />
-                                          </div>
-                                        </div>
-
-
-
-
-                                        <div className="w-full lg:w-12/12 pt-1">
-                                          <div className="relative w-full mb-3 mt-2">
-                                            <TextField
-                                              label="Address"
-                                              name="address1"
-                                              type="text"
-                                            />
-                                          </div>
-                                        </div>
-
-
-
-
-                                        <div className="w-full  flex flex-row lg:w-12/12 pt-1">
-                                          <div className="w-full lg:w-12/12 px- ">
-                                            <div className="relative w-full mb-3 mt-2">
-                                              <TextField
-                                                label="City"
-                                                name="city1"
-                                                type="text"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className="w-full lg:w-12/12 pl-4">
-                                            <div className="relative w-full mb-3 mt-2">
-                                              <div className="w-full flex flex-col mb-3">
-                                                <CustomSelect
-                                                  name="state1"
-                                                  label="State"
-                                                  className="input"
-                                                  onChange={(value) => {
-                                                    formik.setFieldValue(
-                                                      'state1',
-                                                      value.value
-                                                    )
-                                                  }}
-                                                  value={formik.values.state1}
-                                                  options={statesList}
-                                                />
-                                                <p
-                                                  className="text-sm text-red-500 hidden mt-3"
-                                                  id="error"
-                                                >
-                                                  Please fill out this field.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-
-
-
-
-                                        <div className="w-full flex flex-row lg:w-12/12 pt-1">
-                                         <div className="w-full lg:w-12/12 px-">
-                                         {/* Country Name  */}
-                                         <div className="relative w-full mb-3 mt-2">
-                                            <TextField label="Country Name" name="countryName1" type="text" />
-                                         </div>
-                                         </div>
-                                         <div className="w-full lg:w-12/12 pl-4">
-                                         {/* Pincode*/}
-                                         <div className="relative w-full mb-3 mt-2">
-                                            <TextField label="Pincode" name="pincode1" type="text" />
-                                         </div>
-                                          </div>
-                                        </div>
-
-
-
-
-
-
-                                        {/* <div className="w-full flex flex-row">
-                                          <div className="  px-">
-                                            <div className="relative w-[160px] mb-3 mt-2">
-                                              <TextField
-                                                label="PAN No"
-                                                name="panNo1"
-                                                type="text"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className=" border-b border-gray-500 mb-[12px] ">
-                                            <div className=" min-w-[140px] mt-3">
-                                              <div className="flex flex-row-reverse">
-                                                <label
-                                                  htmlFor="formFile3"
-                                                  className="form-label cursor-pointer inline-block mb-1  font-regular text-xs  rounded-2xl px-1 py-1  "
-                                                >
-                                                  {`${
-                                                    panCard1 === '' ||
-                                                    panCard1 == undefined
-                                                      ? 'Upload'
-                                                      : 'Download'
-                                                  }`}
-                                                </label>
-                                                {panCard2 != '' && (
-                                                  <button
-                                                    onClick={() =>
-                                                      downloadImage(
-                                                        panCard1,
-                                                        'pancard1.PNG'
-                                                      )
-                                                    }
-                                                  >
-                                                    {' '}
-                                                    {panCard1 === '' ||
-                                                    panCard1 == undefined ? (
-                                                      <PlusIcon className="w-4 h-4 cursor-pointer ml-1 mb-[9px] mr-2 inline-block text-gray-400 border rounded-[16px] " />
-                                                    ) : (
-                                                      <ArrowCircleDownIcon className="w-4 h-4 cursor-pointer ml-1 mb-[9px] mr-2 inline-block text-gray-400 " />
-                                                    )}
-                                                  </button>
-                                                )}
-                                                <input
-                                                  type="file"
-                                                  className="hidden"
-                                                  id="formFile3"
-                                                  onChange={async (e) => {
-                                                    await handleFileUploadFun(
-                                                      e.target.files[0],
-                                                      'panCard1'
-                                                    )
-                                                  }}
-                                                />
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div> */}
-
-                                        <div className="w-full  flex flex-row lg:w-12/12 ">
-                                          <div className="w-full lg:w-12/12 px- ">
-                                            <div className="relative w-full mb-3 mt-[10px]">
-                                              <TextField
-                                                label="Occupation"
-                                                name="occupation1"
-                                                type="text"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className="w-full lg:w-12/12 pl-4">
-                                            <div className="relative w-full mb-3 mt-2">
-                                              <TextField
-                                                label="Annual Income"
-                                                name="annualIncome1"
-                                                type="text"
-                                                // value={annualIncome !== null ? formatIndianNumber(annualIncome) : ''}
-                                                // onChange={handleIncomeChange}
-                                                value={income.annualIncome1 !== null ? formatIndianNumber(income.annualIncome1) : ''}
-                                                onChange={(e) => handleIncomeChange(e, 'annualIncome1')}
-
-
-                                              />
-                                            </div>
-                                          </div>
-                                        </div>
-
-
-                                      </div>
-                                    </div>
-                                  </section>
-                                  {/* section-2 */}
-                                  <section
-                                    // className="rounded-md   bg-[#fff] lg:w-6/12"
-                                    className="rounded-md   bg-[#fff] "
-                                    style={{ boxShadow: '0 1px 12px #f2f2f2' }}
-                                  >
-                                    <div
-                                      className="w-full  flex flex-row mb-2 p-4 bg-white rounded-t-md"
-                                      // style={bgImgStyle}
-                                    >
-                                      <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px]"></div>
-                                      <div className="w-full flex flex-col ml-2">
-                                        <h6 className="w-full lg:w-12/12 text-black text-[14px] mt-[9px] mb- font-bold">
-                                          Co-Applicant
-                                        </h6>
-                                        <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
-
-                                        <div className="w-[455.80px] opacity-50 text-black text-[12px] font-normal ">
-                                          Details of co-applicant is not a
-                                          mandatory
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="flex flex-wrap p-4 pt-2 ">
-                                      <div className="w-full flex flex-row justify-between lg:w-12/12 ">
-                                        <div className="relative lg:w-6/12 mb-3 mt-2">
-                                          <TextField
-                                            label="Co-applicant Name*"
-                                            name="customerName2"
-                                            type="text"
-                                          />
-                                        </div>
-                                        <div className="relative lg:w-6/12  mt-1 ml-2">
-                                      <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
-                                        Son/Daughter/Wife of{' '}
-                                      </label>
-                                      <MuiTextField
-                                        id="area"
-                                        className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
-                                        size="small"
-                                        InputProps={{
-                                          style: {
-                                            height: '2rem',
-                                            paddingLeft: '7px',
-                                          },
-                                          startAdornment: (
-                                            <InputAdornment
-                                              position="start"
-                                              style={{ height: '32px' }}
-                                            >
-                                              <NoBorderDropDown
-                                                name="relation2"
-                                                label=""
-                                                className="input  min-w-[85px] h-[32px]"
-                                                onChange={(value) => {
-                                                  formik.setFieldValue(
-                                                    'relation2',
-                                                    value.value
-                                                  )
-                                                }}
-                                                value={formik.values.relation2}
-                                                options={[
-                                                  {
-                                                    label: 'D/O',
-                                                    value: 'D/O',
-                                                  },
-                                                  {
-                                                    label: 'S/O',
-                                                    value: 'S/O',
-                                                  },
-                                                  {
-                                                    label: 'W/O',
-                                                    value: 'W/O',
-                                                  },
-                                                ]}
-                                              />
-                                            </InputAdornment>
-                                          ),
-                                        }}
-                                        label=""
-                                        name="co_Name2"
-                                        type="text"
-                                        value={formik.values.co_Name2}
-                                        onChange={formik.handleChange}
-                                      />
-                                      </div>
-                                      </div>
-
-                                      <div className="w-full  flex flex-row lg:w-12/12">
+                          </section>
+                          {/* section-2 */}
+                          <section className="mt-2 px-4 mx-4 rounded-lg bg-white border border-gray-100 shadow pb-2">
+                            <section className="flex flex-row  pt-2 mt-1 ">
+                              <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
+                              <span className="ml-1 leading-[15px] ">
+                                <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
+                                  Contact Details
+                                  <abbr title="required"></abbr>
+                                </label>
+                              </span>
+                            </section>
+                              {/* row 1 */}
+                              <div className="w-full  flex flex-row lg:w-12/12 mt-2">
                                         <div className="w-full lg:w-3/12 mb-2 ">
                                           <div className="relative w-full mt-2">
 
@@ -1936,37 +1558,67 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
   </div>
 
 
-                                        <div className="w-full lg:w-3/12 pl-4">
-                                            <section className="">
-                                              <div className="w-full flex flex-col mt-2">
+  <div className="w-full lg:w-6/12 pl-4">
+                                          <div className="relative w-full mt-2">
+                                            <TextField
+                                              label="Email"
+                                              name="email2"
+                                              type="text"
+                                            />
+                                          </div>
+                                        </div>
+
+                                      </div>
+
+
+
+                          </section>
+                           {/* section-3 */}
+                          <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border border-gray-100 shadow">
+                            <section className="flex flex-row  mt-1 ">
+                              <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
+                              <span className="ml-1 leading-[15px] ">
+                                <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
+                                  Address
+                                  <abbr title="required"></abbr>
+                                </label>
+                              </span>
+                            </section>
+                              {/* row 1 */}
+                              <div className="w-full lg:w-12/12 ">
+                                          <div className="relative w-full mb-3 mt-2">
+                                            <TextField
+                                              label="Address"
+                                              name="address2"
+                                              type="text"
+                                            />
+                                          </div>
+                                        </div>
+                                        <div className="w-full  flex flex-row lg:w-12/12 mt-1">
+                                          <div className="w-full lg:w-12/12 px- ">
+                                            <div className="relative w-full mb-3 mt-">
+                                              <TextField
+                                                label="City"
+                                                name="city2"
+                                                type="text"
+                                              />
+                                            </div>
+                                          </div>
+                                          <div className="w-full lg:w-12/12 pl-4">
+                                            <div className="relative w-full mb-3 mt-">
+                                              <div className="w-full flex flex-col mb-3">
                                                 <CustomSelect
-                                                  name="MaritualStatus"
-                                                  label="Status"
+                                                  name="state2"
+                                                  label="State"
                                                   className="input"
                                                   onChange={(value) => {
                                                     formik.setFieldValue(
-                                                      'marital2',
-                                                      value
+                                                      'state2',
+                                                      value.value
                                                     )
                                                   }}
-                                                  value={
-                                                    formik?.values?.marital2
-                                                      ?.value
-                                                  }
-                                                  options={[
-                                                    {
-                                                      label: 'Divorced',
-                                                      value: 'Divorced',
-                                                    },
-                                                    {
-                                                      label: 'Married',
-                                                      value: 'Married',
-                                                    },
-                                                    {
-                                                      label: 'Single',
-                                                      value: 'Single',
-                                                    },
-                                                  ]}
+                                                  value={formik.values.state2}
+                                                  options={statesList}
                                                 />
                                                 <p
                                                   className="text-sm text-red-500 hidden mt-3"
@@ -1975,53 +1627,158 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                                   Please fill out this field.
                                                 </p>
                                               </div>
-                                            </section>
-                                          </div>
-                                          <div className="w-full lg:w-3/12 mt-[px] pl-4 mr-3">
-                                            <div className="relative w-full mt-2 ">
-                                              <label
-                                                htmlFor={'dob2'}
-                                                className="text-gray-500 text-[10px]"
-                                              >
-                                                Date Of Birth
-                                              </label>
-                                              <span className="inline">
-                                                <CustomDatePicker
-                                                  className="h-8 outline-none border-[#cccccc] rounded-md px-2 border-gray-500 text-sm mt-[-4px] pb-1   w-[90%]  inline   flex bg-grey-lighter text-grey-darker border border-gray-500 "
-                                                  label="Dated"
-                                                  name="dob2"
-                                                  selected={formik.values.dob2}
-                                                  onChange={(date) => {
-                                                    if (date) {
-                                                      formik.setFieldValue(
-                                                        'dob2',
-                                                        date.getTime()
-                                                      )
-                                                    }
-                                                    // setStartDate(date)
-                                                    // console.log(startDate)
-                                                  }}
-                                                  timeFormat="HH:mm"
-                                                  injectTimes={[
-                                                    setHours(
-                                                      setMinutes(d, 1),
-                                                      0
-                                                    ),
-                                                    setHours(
-                                                      setMinutes(d, 5),
-                                                      12
-                                                    ),
-                                                    setHours(
-                                                      setMinutes(d, 59),
-                                                      23
-                                                    ),
-                                                  ]}
-                                                  dateFormat="d-MMMM-yyyy"
-                                                />
-                                              </span>
                                             </div>
                                           </div>
+                                        </div>
+
+                                        <div className="w-full flex flex-row lg:w-12/12 mt-">
+  <div className="w-full lg:w-12/12 px-">
+    {/* Country Name 2 */}
+    <div className="relative w-full mb-3 mt-2">
+      <TextField label="Country Name" name="countryName2" type="text" />
+    </div>
+  </div>
+  <div className="w-full lg:w-12/12 pl-4">
+    {/* Pincode 2 */}
+    <div className="relative w-full mb-3 mt-2">
+      <TextField label="Pincode" name="pincode2" type="text" />
+    </div>
+  </div>
+</div>
+
+
+                          </section>
+                                                     {/* section-4 */}
+                                                     <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border border-gray-100 shadow">
+                            <section className="flex flex-row  px- mt-1 ">
+                              <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
+                              <span className="ml-1 leading-[15px] ">
+                                <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
+                                  Other Details
+                                  <abbr title="required"></abbr>
+                                </label>
+                              </span>
+                            </section>
+                              {/* row 1 */}
+                              <div className="w-full  flex flex-row lg:w-12/12 ">
+                                          <div className="w-full lg:w-12/12 px- ">
+                                            <div className="relative w-full mb-3 mt-[10px]">
+                                              <TextField
+                                                label="Occupation"
+                                                name="occupation1"
+                                                type="text"
+                                              />
+                                            </div>
+                                          </div>
+                                          <div className="w-full lg:w-12/12 pl-4">
+                                            <div className="relative w-full mb-3 mt-2">
+                                              <TextField
+                                                label="Annual Income"
+                                                name="annualIncome1"
+                                                type="text"
+                                                // value={annualIncome !== null ? formatIndianNumber(annualIncome) : ''}
+                                                // onChange={handleIncomeChange}
+                                                value={income.annualIncome1 !== null ? formatIndianNumber(income.annualIncome1) : ''}
+                                                onChange={(e) => handleIncomeChange(e, 'annualIncome1')}
+
+
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+
+                          </section>
+
+                                  </section>
+                                  {/* section-2 */}
+                                  <section
+                                    // className="rounded-md   bg-[#fff] lg:w-6/12"
+                                    className="rounded-md   bg-[#fff] "
+                                    style={{ boxShadow: '0 1px 12px #f2f2f2' }}
+                                  >
+                                    <div
+                                      className="w-full  flex flex-row mb-2 p-4 bg-white rounded-t-md"
+                                      // style={bgImgStyle}
+                                    >
+                                      <div className="w-[43.80px] h-[47px] bg-zinc-100 rounded-[5px]"></div>
+                                      <div className="w-full flex flex-col ml-2">
+                                        <h6 className="w-full lg:w-12/12 text-black text-[14px] mt-[9px] mb- font-bold">
+                                          Co-Applicant
+                                        </h6>
+                                        <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+
+                                        <div className="w-[455.80px] opacity-50 text-black text-[12px] font-normal ">
+                                          Details of co-applicant is not a
+                                          mandatory
+                                        </div>
                                       </div>
+                                    </div>
+                                    <div className="flex flex-wrap p-4 pt-2 ">
+                                      <div className="w-full flex flex-row justify-between lg:w-12/12 ">
+                                        <div className="relative lg:w-6/12 mb-3 mt-2">
+                                          <TextField
+                                            label="Co-applicant Name*"
+                                            name="customerName2"
+                                            type="text"
+                                          />
+                                        </div>
+                                        <div className="relative lg:w-6/12  mt-1 ml-2">
+                                      <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
+                                        Son/Daughter/Wife of{' '}
+                                      </label>
+                                      <MuiTextField
+                                        id="area"
+                                        className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+                                        size="small"
+                                        InputProps={{
+                                          style: {
+                                            height: '2rem',
+                                            paddingLeft: '7px',
+                                          },
+                                          startAdornment: (
+                                            <InputAdornment
+                                              position="start"
+                                              style={{ height: '32px' }}
+                                            >
+                                              <NoBorderDropDown
+                                                name="relation2"
+                                                label=""
+                                                className="input  min-w-[85px] h-[32px]"
+                                                onChange={(value) => {
+                                                  formik.setFieldValue(
+                                                    'relation2',
+                                                    value.value
+                                                  )
+                                                }}
+                                                value={formik.values.relation2}
+                                                options={[
+                                                  {
+                                                    label: 'D/O',
+                                                    value: 'D/O',
+                                                  },
+                                                  {
+                                                    label: 'S/O',
+                                                    value: 'S/O',
+                                                  },
+                                                  {
+                                                    label: 'W/O',
+                                                    value: 'W/O',
+                                                  },
+                                                ]}
+                                              />
+                                            </InputAdornment>
+                                          ),
+                                        }}
+                                        label=""
+                                        name="co_Name2"
+                                        type="text"
+                                        value={formik.values.co_Name2}
+                                        onChange={formik.handleChange}
+                                      />
+                                      </div>
+                                      </div>
+
+
                                       {/* col dob etc */}
 
                                       <div className="w-full">
@@ -2202,69 +1959,11 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
 
 
-                                        <div className="w-full lg:w-12/12 ">
-                                          <div className="relative w-full mb-3 mt-2">
-                                            <TextField
-                                              label="Address"
-                                              name="address2"
-                                              type="text"
-                                            />
-                                          </div>
-                                        </div>
 
 
 
-                                        <div className="w-full  flex flex-row lg:w-12/12 mt-1">
-                                          <div className="w-full lg:w-12/12 px- ">
-                                            <div className="relative w-full mb-3 mt-2">
-                                              <TextField
-                                                label="City"
-                                                name="city2"
-                                                type="text"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className="w-full lg:w-12/12 pl-4">
-                                            <div className="relative w-full mb-3 mt-2">
-                                              <div className="w-full flex flex-col mb-3">
-                                                <CustomSelect
-                                                  name="state2"
-                                                  label="State"
-                                                  className="input"
-                                                  onChange={(value) => {
-                                                    formik.setFieldValue(
-                                                      'state2',
-                                                      value.value
-                                                    )
-                                                  }}
-                                                  value={formik.values.state2}
-                                                  options={statesList}
-                                                />
-                                                <p
-                                                  className="text-sm text-red-500 hidden mt-3"
-                                                  id="error"
-                                                >
-                                                  Please fill out this field.
-                                                </p>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
 
-                                        <div className="w-full flex flex-row lg:w-12/12 mt-4">
-  <div className="w-full lg:w-12/12 px-">
-    {/* Country Name 2 */}
-    <div className="relative w-full mb-3 mt-2">
-      <TextField label="Country Name" name="countryName2" type="text" />
-    </div>
-  </div>
-  <div className="w-full lg:w-12/12 pl-4">
-    {/* Pincode 2 */}
-    <div className="relative w-full mb-3 mt-2">
-      <TextField label="Pincode" name="pincode2" type="text" />
-    </div>
-  </div>
-</div>
+
 
 
 

@@ -465,7 +465,7 @@ const CostBreakUpSheet = ({
   }
   return (
     <>
-      <section className="  bg-black font-['Inter']">
+      <section className="  bg-black">
         <div className="max-w-5xl mx-auto py-  bg-white">
           <article className="overflow-hidden">
             <div className=" rounded-b-md">
@@ -697,7 +697,7 @@ const CostBreakUpSheet = ({
                                 <div className="flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
                                   <div className="mt-2 text-right md:space-x-3 md:block flex flex-col-reverse mb-3">
                                     <div className="inline-block">
-                                      {/* <PdfInvoiceGenerator
+                                      <PdfInvoiceGenerator
                                         user={user}
                                         selUnitDetails={selUnitDetails}
                                         myObj={newPlotCostSheetA}
@@ -713,7 +713,7 @@ const CostBreakUpSheet = ({
                                         setPartBTotal={setPartBTotal}
                                         projectDetails={projectDetails}
                                         leadDetailsObj1={leadDetailsObj1}
-                                      /> */}
+                                      />
                                     </div>
                                     <button
                                       className="mb-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]

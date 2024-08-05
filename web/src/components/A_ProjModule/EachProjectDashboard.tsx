@@ -72,7 +72,7 @@ const EachProjectDashboard = ({ project, onSliderOpen = () => {}, isEdit }) => {
                       </div>
                       <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
                         <div className="self-stretch justify-start items-start gap-[5px] inline-flex">
-                          <div className="text-white text-sm font-bold font-['Inter'] leading-[27px]">
+                          <div className="text-white text-sm font-bold  leading-[27px]">
                             {projectName}
                           </div>
                         </div>
