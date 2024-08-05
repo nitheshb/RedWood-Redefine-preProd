@@ -539,7 +539,7 @@ const CaptureUnitPayment = ({
                                           <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
                                             <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
                                               <span className="text-sm font-semibold text-gray-500">
-                                                Paid Towards
+                                                Paid Through
                                               </span>
                                             </article>
                                             <div className="w-full px-3 mb-4 mt-8 flex flex-row gap-x-6">
@@ -1010,6 +1010,14 @@ const CaptureUnitPayment = ({
                                 </div>
                               </div>
                             </div>
+                            <button
+                                className=" bg-gradient-to-r from-violet-300 to-indigo-300
+                                  text-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                onClick={handleClick}
+                                type="button"
+                              >
+                                Download
+                              </button>
                             {/* <div className=" text-right  md:block flex flex-col-reverse py-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg    w-full">
                               <button
                                 className=" bg-gradient-to-r from-violet-300 to-indigo-300

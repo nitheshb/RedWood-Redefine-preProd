@@ -287,7 +287,7 @@ const ViewUnitDetails = ({
     setFormMessage('')
   }
   return (
-    <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll font-['Inter']">
+    <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll ">
       <div className="px-3 pt-2 z-10 flex items-center justify-between ">
         <Dialog.Title className=" font-semibold text-xl mr-auto  text-[#053219] w-full">
           <div className="flex flex-row justify-between mb-1">
@@ -468,7 +468,6 @@ const ViewUnitDetails = ({
 
 
 
-                      
 
 
 
@@ -483,7 +482,8 @@ const ViewUnitDetails = ({
 
 
 
-                  
+
+
 
                       <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
                         <section className="flex flow-row justify-between mb-1">
@@ -492,7 +492,7 @@ const ViewUnitDetails = ({
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
                             {(
-                          
+
                               data?.unitDetail?.release_status
                             )}
                           </div>

@@ -96,7 +96,9 @@ const BookingSummaryView = ({
       leadDetailsObj1[`${uid}_cs`]?.newPLC || selUnitDetails?.plc_per_sqft
 
     const plotSaleValue = Number.isFinite(y)
-      ? Number(selUnitDetails?.selUnitDetails?.area?.toString()?.replace(',', '') * y)
+      ? Number(
+          selUnitDetails?.selUnitDetails?.area?.toString()?.replace(',', '') * y
+        )
       : Number(
           selUnitDetails?.area?.toString()?.replace(',', '') *
             (selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate)
@@ -141,7 +143,8 @@ const BookingSummaryView = ({
             : data?.gst?.value
         total = isChargedPerSqft
           ? Number(
-              selUnitDetails?.super_built_up_area || selUnitDetails?.area.toString()?.replace(',', '')
+              selUnitDetails?.super_built_up_area ||
+                selUnitDetails?.area.toString()?.replace(',', '')
             ) * Number(data?.charges)
           : Number(data?.charges)
 
@@ -380,7 +383,8 @@ const BookingSummaryView = ({
         Number(
           computeTotal(
             obj,
-            selUnitDetails?.super_built_up_area || selUnitDetails?.area?.toString()?.replace(',', '')
+            selUnitDetails?.super_built_up_area ||
+              selUnitDetails?.area?.toString()?.replace(',', '')
           )
         ),
       0
@@ -477,7 +481,10 @@ const BookingSummaryView = ({
     setTotalFun()
   }
   return (
-    <div className='font-["Inter"] overflow-y-scroll no-scrollbar' style={{ height: `calc(100vh - 120px)` }}>
+    <div
+      className=" overflow-y-scroll no-scrollbar"
+      style={{ height: `calc(100vh - 120px)` }}
+    >
       {!pdfPreview && (
         <div>
           <Formik
@@ -601,81 +608,78 @@ const BookingSummaryView = ({
                                 </div>
                               </div>
                               <article className="flex flex-col ml-2 w-full ">
-                              <section className="flex flex-row ml-2 justify-between w-full">
-                                <div className="flex flex-col justify-center w-full">
-
-                                  <div className="self-stretch justify-center items-center  inline-flex">
-                                    <div className="text-zinc-800 text-[10px]  font-bold font-['Lato'] tracking-wide">
-                                      {selUnitDetails?.area} sqft
+                                <section className="flex flex-row ml-2 justify-between w-full">
+                                  <div className="flex flex-col justify-center w-full">
+                                    <div className="self-stretch justify-center items-center  inline-flex">
+                                      <div className="text-zinc-800 text-[10px]  font-bold font-['Lato'] tracking-wide">
+                                        {selUnitDetails?.area} sqft
+                                      </div>
                                     </div>
+                                    <span className="  text-[12px] text-left  justify-center items-center text-[12px] font-normal font-['Lato'] flex">
+                                      Area:
+                                    </span>
                                   </div>
-                                  <span className="  text-[12px] text-left  justify-center items-center text-[12px] font-normal font-['Lato'] flex">
-                                    Area:
-                                  </span>
-                                </div>
 
-                                <div className="flex flex-col justify-center items-center w-full">
-
-                                  <div className="self-stretch justify-center items-center gap-3 inline-flex">
-                                    <div className="text-zinc-800 text-[10px]  font-bold font-['Lato'] tracking-wide">
-                                      {selUnitDetails?.facing}
+                                  <div className="flex flex-col justify-center items-center w-full">
+                                    <div className="self-stretch justify-center items-center gap-3 inline-flex">
+                                      <div className="text-zinc-800 text-[10px]  font-bold font-['Lato'] tracking-wide">
+                                        {selUnitDetails?.facing}
+                                      </div>
                                     </div>
+                                    <span className="  text-[12px] text-left  text-[12px] font-normal font-['Lato']">
+                                      Facing:
+                                    </span>
                                   </div>
-                                  <span className="  text-[12px] text-left  text-[12px] font-normal font-['Lato']">
-                                    Facing:
-                                  </span>
-                                </div>
 
-                                <div className="flex flex-col justify-center items-center w-full">
-
-                                  <div className="self-stretch justify-center items-center gap-3 inline-flex">
-                                    <div className="text-zinc-800 text-[10px] ml-1 font-bold font-['Lato'] tracking-wide">
-                                      {selUnitDetails?.size}
+                                  <div className="flex flex-col justify-center items-center w-full">
+                                    <div className="self-stretch justify-center items-center gap-3 inline-flex">
+                                      <div className="text-zinc-800 text-[10px] ml-1 font-bold font-['Lato'] tracking-wide">
+                                        {selUnitDetails?.size}
+                                      </div>
                                     </div>
+                                    <span className="  text-[12px] text-left justify-center items-center  text-[12px] font-normal font-['Lato']">
+                                      Size
+                                    </span>
                                   </div>
-                                  <span className="  text-[12px] text-left justify-center items-center  text-[12px] font-normal font-['Lato']">
-                                    Size
-                                  </span>
-                                </div>
-                              </section>
-                            {['Villas', 'Apartment'].includes(projectDetails?.projectType?.name) &&(
-                              <section className="flex flex-row ml-2 mt-2 justify-between w-full">
-                                <div className="flex flex-col justify-center w-full">
-
-                                  <div className="self-stretch justify-center items-center  inline-flex">
-                                    <div className="text-zinc-800 text-[10px]  font-bold font-['Lato'] tracking-wide">
-                                      {selUnitDetails?.construct_area} sqft
+                                </section>
+                                {['Villas', 'Apartment'].includes(
+                                  projectDetails?.projectType?.name
+                                ) && (
+                                  <section className="flex flex-row ml-2 mt-2 justify-between w-full">
+                                    <div className="flex flex-col justify-center w-full">
+                                      <div className="self-stretch justify-center items-center  inline-flex">
+                                        <div className="text-zinc-800 text-[10px]  font-bold font-['Lato'] tracking-wide">
+                                          {selUnitDetails?.construct_area} sqft
+                                        </div>
+                                      </div>
+                                      <span className="  text-[12px] text-left  justify-center items-center text-[12px] font-normal font-['Lato'] flex">
+                                        BUA
+                                      </span>
                                     </div>
-                                  </div>
-                                  <span className="  text-[12px] text-left  justify-center items-center text-[12px] font-normal font-['Lato'] flex">
-                                    BUA
-                                  </span>
-                                </div>
 
-                                <div className="flex flex-col justify-center items-center w-full">
-
-                                  <div className="self-stretch justify-center items-center gap-3 inline-flex">
-                                    <div className="text-zinc-800 text-[10px]  font-bold font-['Lato'] tracking-wide">
-                                      {selUnitDetails?.bathrooms_c}
+                                    <div className="flex flex-col justify-center items-center w-full">
+                                      <div className="self-stretch justify-center items-center gap-3 inline-flex">
+                                        <div className="text-zinc-800 text-[10px]  font-bold font-['Lato'] tracking-wide">
+                                          {selUnitDetails?.bathrooms_c}
+                                        </div>
+                                      </div>
+                                      <span className="  text-[12px] text-left  text-[12px] font-normal font-['Lato']">
+                                        Bedrooms
+                                      </span>
                                     </div>
-                                  </div>
-                                  <span className="  text-[12px] text-left  text-[12px] font-normal font-['Lato']">
-                                    Bedrooms
-                                  </span>
-                                </div>
 
-                                <div className="flex flex-col justify-center items-center w-full">
-
-                                  <div className="self-stretch justify-center items-center gap-3 inline-flex">
-                                    <div className="text-zinc-800 text-[10px] ml-1 font-bold font-['Lato'] tracking-wide">
-                                      {selUnitDetails?.bedrooms_c}
+                                    <div className="flex flex-col justify-center items-center w-full">
+                                      <div className="self-stretch justify-center items-center gap-3 inline-flex">
+                                        <div className="text-zinc-800 text-[10px] ml-1 font-bold font-['Lato'] tracking-wide">
+                                          {selUnitDetails?.bedrooms_c}
+                                        </div>
+                                      </div>
+                                      <span className="  text-[12px] text-left justify-center items-center  text-[12px] font-normal font-['Lato']">
+                                        Bathrooms
+                                      </span>
                                     </div>
-                                  </div>
-                                  <span className="  text-[12px] text-left justify-center items-center  text-[12px] font-normal font-['Lato']">
-                                    Bathrooms
-                                  </span>
-                                </div>
-                              </section>)}
+                                  </section>
+                                )}
                               </article>
                             </section>
                             <section className="flex flex-col  mt-1 mb-2">
@@ -826,7 +830,7 @@ const BookingSummaryView = ({
                                 <div className=" border rounded-lg shadow-md overflow-hidden ">
                                   <table className="min-w-full divide-y ">
                                     <thead>
-                                      <tr className="h-8 mb-1 border-none w-[100%] bg-[#E8E6FE] text-[#0D027D] font-['Inter'] font-[600] ">
+                                      <tr className="h-8 mb-1 border-none w-[100%] bg-[#E8E6FE] text-[#0D027D]  font-[600] ">
                                         <th className="min-w-[35%] px-2  text-[12px] text-left text-[#0D027D]  tracking-wide">
                                           Particulars
                                         </th>
@@ -955,7 +959,7 @@ const BookingSummaryView = ({
                             </tr>
                           </thead> */}
                                     <thead>
-                                      <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D] font-['Inter'] font-[600] ">
+                                      <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
                                         <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
                                           Particulars
                                         </th>
@@ -1023,7 +1027,9 @@ const BookingSummaryView = ({
                                             {Number(
                                               computeTotal(
                                                 d1,
-                                                selUnitDetails?.area?.toString()?.replace(',', '')
+                                                selUnitDetails?.area
+                                                  ?.toString()
+                                                  ?.replace(',', '')
                                               )
                                             )?.toLocaleString('en-IN')}
                                           </td>
@@ -1127,7 +1133,7 @@ const BookingSummaryView = ({
                                   <table className="w-full border-b border-dashed">
                                     <thead className="">
                                       {' '}
-                                      <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D] font-['Inter'] font-[600]  ">
+                                      <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D]  font-[600]  ">
                                         <th className="w-[50%] px-2   text-left  tracking-wide  text-[12px]   ">
                                           Particulars
                                         </th>

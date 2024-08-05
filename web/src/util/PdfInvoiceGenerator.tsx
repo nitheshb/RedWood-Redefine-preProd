@@ -103,7 +103,7 @@ const useStyles = () =>
           fontSize: 9,
           lineHeight: 1.6,
           fontFamily: 'Roboto',
-          backgroundColor: '#FFFFFF',
+          backgroundColor: '#FFF8F2',
           textTransform: 'capitalize',
           padding: '0px'
           // padding: '40px 24px 60px 24px',
@@ -127,6 +127,11 @@ const useStyles = () =>
           border: 0.5,
           borderStyle: 'solid',
           // borderColor: '#DFE3E8',
+        },
+        dashBorder: {
+          borderBottom: 1,
+          borderStyle: 'dashed',
+          borderColor: '#DFE3E8',
         },
         table: {
           display: 'flex',
@@ -166,6 +171,10 @@ const useStyles = () =>
           // borderStyle: 'solid',
           // borderColor: '#DFE3E8',
           // backgroundColor: '#DFF6DD',
+        },
+        topBoderRadius:{
+          borderTopLeftRadius: '16px',
+          borderTopRightRadius: '16px',
         },
         bg: {
           backgroundColor: '#F3FFF2',
@@ -233,7 +242,7 @@ const useStyles = () =>
           backgroundColor: '#f6e8c2',
         },
         cellBgHead: {
-          backgroundColor: '#fff3d2',
+          backgroundColor: '#FFF8F2',
         },
       }),
     []
@@ -490,7 +499,8 @@ const MyDocument = ({
         <View
           style={[
             styles.gridContainer,
-            styles.mb20,
+            styles.mb10,
+            styles.dashBorder,
             styles.cellBgHead,
             styles.headFitter
           ]}
@@ -508,7 +518,7 @@ const MyDocument = ({
           </View>
         </View>
 
-        <View style={[styles.gridContainer, styles.mb20]}>
+        <View style={[styles.gridContainer, styles.mb10]}>
           <View style={[styles.col4, styles.ml4, styles.cellBgHead, styles.AllsmallFitter]}>
             <Text style={[styles.subtitle2, styles.mb4]}>Invoice To</Text>
             <Text style={styles.body2}>{leadDetailsObj1?.Name}</Text>
@@ -568,7 +578,8 @@ const MyDocument = ({
             <Text style={styles.body2}>{fDate(invoiceDet[i].dueDate)}</Text>
           </View>
         </View> */}
-        <View style={styles.ml4}>
+        <View style={[styles.topBoderRadius, styles.bg1]}>
+        <View style={[styles.ml4,styles.pt2, styles.mT1 ]}>
           <Text
             style={[
               styles.subtitle1,
@@ -582,7 +593,7 @@ const MyDocument = ({
             Cost Sheet
           </Text>
         </View>
-        <View style={[styles.subtitle1, styles.bg1, styles.fitter, styles.ml2, styles.contBorder]}>
+        <View style={[styles.subtitle1, styles.bg1, styles.fitter, styles.ml2,]}>
           <View style={[styles.bg2, styles.cellBgHead, styles.p11]}>
             <View style={[styles.tableCell_1, styles.p11]}>
               <Text style={styles.subtitle2}></Text>
@@ -629,19 +640,19 @@ const MyDocument = ({
         <View style={[styles.fitter]}>
           <View>
             {myObj?.map((item, index) => (
-              <View style={styles.totalRowNew} key={item.id}>
+              <View style={styles.totalRow} key={item.id}>
                 <View
                   style={[
                     styles.tableCell_1,
                     styles.pl2,
                     styles.p10,
-                    styles.cellBg0,
+
                   ]}
                 >
                   <Text>{index + 1}</Text>
                 </View>
 
-                <View style={[styles.tableCell_35, styles.p10, styles.cellBg0]}>
+                <View style={[styles.tableCell_35, styles.p10,]}>
                   <Text style={styles.subtitle2}>{item?.component?.label}</Text>
                 </View>
 
@@ -649,7 +660,7 @@ const MyDocument = ({
                   style={[
                     styles.tableCell_20,
                     styles.alignRight,
-                    styles.cellBg1,
+
                     styles.p10,
                   ]}
                 >
@@ -660,7 +671,7 @@ const MyDocument = ({
                   style={[
                     styles.tableCell_20,
                     styles.alignRight,
-                    styles.cellBg2,
+
                     styles.p10,
                   ]}
                 >
@@ -671,7 +682,7 @@ const MyDocument = ({
                   style={[
                     styles.tableCell_20,
                     styles.alignRight,
-                    styles.cellBg3,
+
                     styles.p10,
                   ]}
                 >
@@ -680,13 +691,13 @@ const MyDocument = ({
               </View>
             ))}
             <View style={styles.totalRowNew}>
-              <View style={[styles.tableCell_1, styles.pl2, styles.p10, styles.cellBg0]}></View>
+              <View style={[styles.tableCell_1, styles.pl2, styles.p10,]}></View>
 
-              <View style={[styles.tableCell_35, styles.p10,styles.cellBg0]}></View>
+              <View style={[styles.tableCell_35, styles.p10,]}></View>
 
-              <View style={[styles.tableCell_20, styles.alignRight,styles.cellBg1,]}></View>
+              <View style={[styles.tableCell_20, styles.alignRight]}></View>
 
-              <View style={[styles.tableCell_20, styles.alignRight,styles.cellBg2,styles.pr4]}>
+              <View style={[styles.tableCell_20, styles.alignRight,styles.pr4]}>
                 <Text style={[styles.subtitle2, styles.pt2]}>Total (A)</Text>
               </View>
 
@@ -694,7 +705,7 @@ const MyDocument = ({
                 style={[
                   styles.tableCell_20,
                   styles.alignRight,
-                  styles.cellBg3,
+
                   styles.p10,
                   styles.pt2,
                 ]}
@@ -705,19 +716,19 @@ const MyDocument = ({
 
 {/* part 2 */}
 {myAdditionalCharges?.map((item, index) => (
-              <View style={styles.totalRowNew} key={item.id}>
+              <View style={styles.tableRow} key={item.id}>
                 <View
                   style={[
                     styles.tableCell_1,
                     styles.pl2,
-                    styles.p10,
-                    styles.cellBg0,
+
+
                   ]}
                 >
                   <Text>{(myObj?.length || 0) + (index + 1)}</Text>
                 </View>
 
-                <View style={[styles.tableCell_35, styles.p10, styles.cellBg0]}>
+                <View style={[styles.tableCell_35, ]}>
                   <Text style={styles.subtitle2}>{item?.component?.label}</Text>
                 </View>
 
@@ -725,8 +736,8 @@ const MyDocument = ({
                   style={[
                     styles.tableCell_20,
                     styles.alignRight,
-                    styles.cellBg1,
-                    styles.p10,
+
+
                   ]}
                 >
                   <Text>{item?.charges}</Text>
@@ -736,8 +747,8 @@ const MyDocument = ({
                   style={[
                     styles.tableCell_20,
                     styles.alignRight,
-                    styles.cellBg2,
-                    styles.p10,
+
+
                   ]}
                 >
                   <Text>{fCurrency(item?.TotalSaleValue)}</Text>
@@ -747,8 +758,8 @@ const MyDocument = ({
                   style={[
                     styles.tableCell_20,
                     styles.alignRight,
-                    styles.cellBg3,
-                    styles.p10,
+
+
                   ]}
                 >
                   <Text> {fCurrency(
@@ -760,13 +771,13 @@ const MyDocument = ({
               </View>
             ))}
             <View style={styles.totalRowNew}>
-              <View style={[styles.tableCell_1, styles.pl2, styles.p10, styles.cellBg0]}></View>
+              <View style={[styles.tableCell_1, styles.pl2, styles.p10,]}></View>
 
-              <View style={[styles.tableCell_35, styles.p10,styles.cellBg0]}></View>
+              <View style={[styles.tableCell_35, styles.p10,]}></View>
 
-              <View style={[styles.tableCell_20, styles.alignRight,styles.cellBg1,]}></View>
+              <View style={[styles.tableCell_20, styles.alignRight,]}></View>
 
-              <View style={[styles.tableCell_20, styles.alignRight, styles.cellBg2,styles.pr4]}>
+              <View style={[styles.tableCell_20, styles.alignRight,styles.pr4]}>
                 <Text style={[styles.subtitle2, styles.pt2]}>Total (B)</Text>
               </View>
 
@@ -774,7 +785,7 @@ const MyDocument = ({
                 style={[
                   styles.tableCell_20,
                   styles.alignRight,
-                  styles.cellBg3,
+
                   styles.p10,
                   styles.pt2,
                 ]}
@@ -784,7 +795,7 @@ const MyDocument = ({
             </View>
 
 
-            <View style={[styles.totalRow, styles.mb20, styles.mT0, styles.cellBgHead]}>
+            <View style={[styles.totalRow, styles.mb20, styles.mT0,]}>
               <View style={styles.tableCell_1}></View>
 
               <View style={styles.tableCell_2}>
@@ -876,6 +887,7 @@ const MyDocument = ({
               </View>
             </View>
           </View>
+        </View>
         </View>
 
         {/* <View style={[styles.gridContainer, styles.footer]} fixed>

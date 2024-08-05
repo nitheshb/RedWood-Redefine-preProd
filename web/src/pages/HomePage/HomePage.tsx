@@ -525,7 +525,7 @@ const HomePage = () => {
                                             value={projects?.length}
                                           />
                                         </div>
-                                        <div className="text-slate-400 text-lg font-medium font-['Inter'] leading-[30px] mt-8 ml-2">
+                                        <div className="text-slate-400 text-lg font-medium  leading-[30px] mt-8 ml-2">
                                           Projects
                                         </div>
                                       </section>
@@ -551,7 +551,7 @@ const HomePage = () => {
                                                   }
                                                 />
                                               </div>
-                                              <div className="text-slate-400  font-medium font-['Inter'] text-[12px] ml-[2px] mt-[10px]">
+                                              <div className="text-slate-400  font-medium  text-[12px] ml-[2px] mt-[10px]">
                                                 On Going
                                               </div>
                                             </div>
@@ -566,7 +566,7 @@ const HomePage = () => {
                                                   ).length
                                                 }
                                               </div>
-                                              <div className="text-slate-400  font-medium font-['Inter']  text-[12px] ml-[2px] mt-[10px]">
+                                              <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                                 Completed
                                               </div>
                                             </div>
@@ -580,7 +580,7 @@ const HomePage = () => {
                                                   ).length
                                                 }
                                               </div>
-                                              <div className="text-slate-400  font-medium font-['Inter']  text-[12px] ml-[2px] mt-[10px]">
+                                              <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                                 Coming Soon
                                               </div>
                                             </div>
@@ -605,7 +605,7 @@ const HomePage = () => {
                                             )}
                                           />
                                         </div>
-                                        <div className="text-slate-400 text-lg font-medium font-['Inter'] leading-[30px] mt-8 ml-2">
+                                        <div className="text-slate-400 text-lg font-medium  leading-[30px] mt-8 ml-2">
                                           Units
                                         </div>
                                       </section>
@@ -634,7 +634,7 @@ const HomePage = () => {
                                               )}
                                             />
                                             </div>
-                                            <div className="text-slate-400  font-medium font-['Inter'] text-[12px] ml-[2px] mt-[10px]">
+                                            <div className="text-slate-400  font-medium  text-[12px] ml-[2px] mt-[10px]">
                                               Plots
                                             </div>
                                           </div>
@@ -655,7 +655,7 @@ const HomePage = () => {
                                               )}
                                             />
                                             </div>
-                                            <div className="text-slate-400  font-medium font-['Inter']  text-[12px] ml-[2px] mt-[10px]">
+                                            <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Apartments
                                             </div>
                                           </div>
@@ -675,7 +675,7 @@ const HomePage = () => {
                                               )}
                                             />
                                             </div>
-                                            <div className="text-slate-400  font-medium font-['Inter']  text-[12px] ml-[2px] mt-[10px]">
+                                            <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Villas
                                             </div>
                                           </div>
@@ -699,7 +699,7 @@ const HomePage = () => {
                                             )}
                                           />
                                         </div>
-                                        <div className="text-slate-400 text-lg font-medium font-['Inter'] leading-[30px] mt-8 ml-2">
+                                        <div className="text-slate-400 text-lg font-medium  leading-[30px] mt-8 ml-2">
                                           Available
                                         </div>
                                       </section>
@@ -724,7 +724,7 @@ const HomePage = () => {
                                             )}
                                             />
                                             </div>
-                                            <div className="text-slate-400  font-medium font-['Inter'] text-[12px] ml-[2px] mt-[10px]">
+                                            <div className="text-slate-400  font-medium  text-[12px] ml-[2px] mt-[10px]">
                                               Sold
                                             </div>
                                           </div>
@@ -741,7 +741,7 @@ const HomePage = () => {
                                             )}
                                             />
                                             </div>
-                                            <div className="text-slate-400  font-medium font-['Inter']  text-[12px] ml-[2px] mt-[10px]">
+                                            <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Booked
                                             </div>
                                           </div>
@@ -757,7 +757,7 @@ const HomePage = () => {
                                             )}
                                             />
                                             </div>
-                                            <div className="text-slate-400  font-medium font-['Inter']  text-[12px] ml-[2px] mt-[10px]">
+                                            <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Blocked
                                             </div>
                                           </div>
@@ -781,7 +781,7 @@ const HomePage = () => {
                                             )}
                                           />
                                         </div>
-                                        <div className="text-slate-400 text-lg font-medium font-['Inter'] leading-[30px] mt-8 ml-2">
+                                        <div className="text-slate-400 text-lg font-medium  leading-[30px] mt-8 ml-2">
                                           Customers
                                         </div>
                                       </section>
@@ -799,7 +799,7 @@ const HomePage = () => {
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
                                               0
                                             </div>
-                                            <div className="text-slate-400  font-medium font-['Inter'] text-[12px] ml-[2px] mt-[10px]">
+                                            <div className="text-slate-400  font-medium  text-[12px] ml-[2px] mt-[10px]">
                                               Posession
                                             </div>
                                           </div>
@@ -809,7 +809,7 @@ const HomePage = () => {
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
                                               0
                                             </div>
-                                            <div className="text-slate-400  font-medium font-['Inter']  text-[12px] ml-[2px] mt-[10px]">
+                                            <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Released
                                             </div>
                                           </div>
@@ -825,7 +825,7 @@ const HomePage = () => {
                                             )}
                                           />
                                             </div>
-                                            <div className="text-slate-400  font-medium font-['Inter']  text-[12px] ml-[2px] mt-[10px]">
+                                            <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Leads
                                             </div>
                                           </div>
@@ -861,7 +861,7 @@ const HomePage = () => {
                                             )}
                                           />+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Leads
                                                   </div>
                                                 </section>
@@ -883,7 +883,7 @@ const HomePage = () => {
                                             )}
                                           />+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Active Leads
                                                   </div>
                                                 </section>
@@ -904,7 +904,7 @@ const HomePage = () => {
                                             )}
                                           />+
                                                     </div>
-                                                    <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                    <div className="text-slate-400 text-[12px] font-medium  ">
                                                       Site Visits
                                                     </div>
                                                   </section>
@@ -930,7 +930,7 @@ const HomePage = () => {
                                             )}
                                           />+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Booked
                                                   </div>
                                                 </section>
@@ -962,7 +962,7 @@ const HomePage = () => {
                                             )}
                                           />+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Not Interested
                                                   </div>
                                                 </section>
@@ -976,7 +976,7 @@ const HomePage = () => {
                                                     <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                       21
                                                     </div>
-                                                    <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                    <div className="text-slate-400 text-[12px] font-medium  ">
                                                       Sales Team
                                                     </div>
                                                   </section>
@@ -1006,7 +1006,7 @@ const HomePage = () => {
                                                   <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                     10000+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Collected
                                                   </div>
                                                 </section>
@@ -1021,7 +1021,7 @@ const HomePage = () => {
                                                   <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                     10000+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Due
                                                   </div>
                                                 </section>
@@ -1035,7 +1035,7 @@ const HomePage = () => {
                                                     <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                       10000+
                                                     </div>
-                                                    <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                    <div className="text-slate-400 text-[12px] font-medium  ">
                                                       Projection
                                                     </div>
                                                   </section>
@@ -1054,7 +1054,7 @@ const HomePage = () => {
                                                   <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                     10000+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Cancelled
                                                   </div>
                                                 </section>
@@ -1069,7 +1069,7 @@ const HomePage = () => {
                                                   <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                     10000+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Swapped
                                                   </div>
                                                 </section>
@@ -1083,7 +1083,7 @@ const HomePage = () => {
                                                     <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                       28+
                                                     </div>
-                                                    <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                    <div className="text-slate-400 text-[12px] font-medium  ">
                                                       Blocked
                                                     </div>
                                                   </section>
@@ -1113,7 +1113,7 @@ const HomePage = () => {
                                                   <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                     10000+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Leads
                                                   </div>
                                                 </section>
@@ -1128,7 +1128,7 @@ const HomePage = () => {
                                                   <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                     10000+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Active Visits
                                                   </div>
                                                 </section>
@@ -1142,7 +1142,7 @@ const HomePage = () => {
                                                     <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                       10000+
                                                     </div>
-                                                    <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                    <div className="text-slate-400 text-[12px] font-medium  ">
                                                       Site Visits
                                                     </div>
                                                   </section>
@@ -1161,7 +1161,7 @@ const HomePage = () => {
                                                   <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                     10000+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Booked
                                                   </div>
                                                 </section>
@@ -1176,7 +1176,7 @@ const HomePage = () => {
                                                   <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                     10000+
                                                   </div>
-                                                  <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                  <div className="text-slate-400 text-[12px] font-medium  ">
                                                     Not Interested
                                                   </div>
                                                 </section>
@@ -1190,7 +1190,7 @@ const HomePage = () => {
                                                     <div className="text-sky-950 text-xl font-semibold font-['Manrope'] ">
                                                       28+
                                                     </div>
-                                                    <div className="text-slate-400 text-[12px] font-medium font-['Inter'] ">
+                                                    <div className="text-slate-400 text-[12px] font-medium  ">
                                                       Sales Team
                                                     </div>
                                                   </section>

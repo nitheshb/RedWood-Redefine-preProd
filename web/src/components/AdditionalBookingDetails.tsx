@@ -215,7 +215,7 @@ const AdditonalBookingDetails = ({
   }
   return (
     <>
-      <div className="font-['Inter'] ">
+      <div className=" ">
         <div className="grid gap-8 grid-cols-1">
           <div className="flex flex-col  bg-white ">
             <div className="mt-0">
