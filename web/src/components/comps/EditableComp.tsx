@@ -536,16 +536,93 @@ useEffect(() => {
 
 
 
+// const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
+//   <li className={`border-l-2 ${
+//     activeItem === item ? 'border-blue-600 border-l-4'  : ' border-[#c1c1c1] hover:border-gray-800'
+//   }`} style={{ height: '2px' }}>
+//     <a
+//       href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
+//       className={`block pl-4 pr-4 ${
+//         activeItem === item
+//           ? 'text-blue-600  font-bold'
+//           : 'text-gray-700  hover:text-blue-600'
+//       }`}
+//       onClick={(e) => {
+//         e.preventDefault();
+//         handleClick(item);
+//       }}
+//     >
+//       {item}
+//     </a>
+//   </li>
+// );
+
+
+
+
+
+
+
+
+
+// const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
+//   <li
+//     className={`border-l-2 ${
+//       activeItem === item ? 'border-blue-600 border-l-4' : 'border-[#c1c1c1] hover:border-gray-800'
+//     }`}
+//     style={{ marginBottom: '2px', height: '2px' }}
+//   >
+//     <a
+//       href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
+//       className={`block pl-4 pr-4 ${
+//         activeItem === item ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'
+//       }`}
+//       onClick={(e) => {
+//         e.preventDefault();
+//         handleClick(item);
+//       }}
+//     >
+//       {item}
+//     </a>
+//   </li>
+// );
+
+
+
+// const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
+//   <li
+//     className={`border-l-2 ${
+//       activeItem === item ? 'border-blue-600 border-l-4' : 'border-[#c1c1c1] hover:border-gray-800'
+//     }`}
+//     style={{ marginBottom: '4px' }}
+//   >
+//     <a
+//       href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
+//       className={`block pl-4 pr-4 ${
+//         activeItem === item ? 'text-blue-600 font-bold' : 'text-gray-700 hover:text-blue-600'
+//       }`}
+//       onClick={(e) => {
+//         e.preventDefault();
+//         handleClick(item);
+//       }}
+//     >
+//       {item}
+//     </a>
+//   </li>
+// );
+
+
 const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
-  <li className={`border-l-2 ${
-    activeItem === item ? 'border-blue-600 border-l-4' : ' border-[#c1c1c1] hover:border-gray-800'
-  }`}>
+  <li
+    className={`border-l-2 ${
+      activeItem === item ? 'border-red-600' : 'border-gray-300 hover:border-gray-600'
+    }`}
+    style={{ marginBottom: '2px', borderLeftWidth: '2px', borderLeftStyle: 'solid' }}
+  >
     <a
       href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
-      className={`block pl-4 pr-4 py-2 ${
-        activeItem === item
-          ? 'text-blue-600  font-bold'
-          : 'text-gray-700  hover:text-blue-600'
+      className={`block pl-4 pr-4 ${
+        activeItem === item ? 'text-red-600 font-bold' : 'text-gray-700 hover:text-red-600'
       }`}
       onClick={(e) => {
         e.preventDefault();
@@ -556,10 +633,6 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
     </a>
   </li>
 );
-
-
-
-
 
 
 

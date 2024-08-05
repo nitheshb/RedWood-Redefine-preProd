@@ -536,16 +536,21 @@ useEffect(() => {
 
 
 
+
+
 const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
   <li className={`border-l-2 ${
-    activeItem === item ? 'border-blue-600 border-l-4' : ' border-[#c1c1c1] hover:border-gray-800'
-  }`}>
+    activeItem === item 
+      ? 'border-[#0EA5E9]' 
+      : 'border-gray-80 hover:border-gray-400'
+  }`}
+  >
     <a
       href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
-      className={`block pl-4 pr-4 py-2 ${
+      className={`block px-4 py-2 text-md ${
         activeItem === item
-          ? 'text-blue-600  font-bold'
-          : 'text-gray-700  hover:text-blue-600'
+          ? 'text-[#0EA5E9] font-bold'
+          : 'text-gray-600 font-bold hover:text-[#0EA5E9]'
       }`}
       onClick={(e) => {
         e.preventDefault();
@@ -558,6 +563,37 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
 );
 
 
+const [dynamicRows, setDynamicRows] = useState<{ [key: string]: string }[]>([]);
+const [editingCell, setEditingCell] = useState<{ key: string; rowIndex: number; column: string } | null>(null);
+const [cellValues, setCellValues] = useState<{ [key: string]: { [key: number]: string } }>({});
+
+
+
+
+
+
+const appendRow = (key: string) => {
+  setDynamicRows(prevRows => [
+    ...prevRows,
+    { [key]: '' } 
+  ]);
+};
+
+
+const handleCellEdit = (key: string, rowIndex: number, column: string) => {
+  setEditingCell({ key, rowIndex, column });
+};
+
+const handleCellChange = (e: React.ChangeEvent<HTMLInputElement>, key: string, rowIndex: number) => {
+  const newValue = e.target.value;
+  setCellValues(prev => ({
+    ...prev,
+    [key]: {
+      ...prev[key],
+      [rowIndex]: newValue
+    }
+  }));
+};
 
 
 
@@ -570,10 +606,9 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
 
 
 
-
-
-
-
+const handleCellBlur = () => {
+  setEditingCell(null);
+};
 
 
 
@@ -746,7 +781,7 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
           <div className="mb-4 ">
           <div className="inline">
             <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+              <label className="  text-md   mb-8 lg:mb-3 font-bold text-slate-900">
               Add Project<abbr title="required"></abbr>
               </label>
             </div>
@@ -765,7 +800,7 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
           <div className="mb-4 ">
           <div className="inline">
             <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+              <label className="font-bold text-[#053219]  text-md mb-1  ">
               CRM Module<abbr title="required"></abbr>
               </label>
             </div>
@@ -786,37 +821,115 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
 
 
 <div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
-  <div className="max-w-[80rem] mx-auto">
-    {Object.keys(dataMap).map((key) => (
+  
+
+
+
+
+<div className="bg-white text-white p-6">
+
+{Object.keys(dataMap).map((key) => (
       <div
         key={key}
-        className="mb-8"
+        className="mb-24"
         ref={(el) => (contentRefs.current[key] = el)}
         id={key.replace(/\s+/g, '-').toLowerCase()}
       >
-        <h3 className="text-blue-600  text-md font-bold mb-2">{key}</h3>
-        <div className="bg-[#fff] rounded-lg border border-[#e1e1e1] overflow-hidden">
-          <table className="w-full shadow-md text-left border-collapse">
-            <thead>
-              <tr className="border-b border-[#e1e1e1]">
-                <th className="py-3 px-4 text-xs font-bold  text-[#000]">Options</th>
-                <th className="py-3 px-4 text-xs font-bold  text-[#000]">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dataMap[key].map((data, i) => (
-                <tr key={i} className="border-b border-[#e1e1e1] last:border-b-0">
-                  <td className="py-2 px-4  text-sm text-[#000]">{data.label}</td>
-                  <td className="py-2 px-4  text-sm text-[#000]">NA</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    ))}
+  <h1 className="inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight  mb-2">{key}</h1>
+  <p className="mt-2 text-[24px] font-semibold text-slate-700">
+    A component for fixing an element's width to the current breakpoint.
+  </p>
+
+  <div className="bg-[#FFFFFF] rounded-lg mt-10 overflow-hidden">
+    <table className="w-full text-left">
+      <thead>
+        <tr className="border-b border-[#e5e7eb]">
+          <th className="py-3 px-4 text-lg	 font-bold text-[#334155]">Title</th>
+          <th className="py-3 px-4 text-lg	 font-bold text-[#334155]">Options</th>
+          <th className="py-3 px-4 text-lg	 font-bold text-[#334155]">Description</th>
+        </tr>
+      </thead>
+ 
+
+
+
+
+
+
+<tbody>
+  {dataMap[key].map((data, i) => (
+    <tr key={`static-${i}`}>
+      {i === 0 ? (
+        <td className="py-5 px-4 font-bold text-[#0EA5E9] text-md">{key}</td>
+      ) : (
+        <td className="py-5 px-4 text-[#0EA5E9] text-md"></td>
+      )}
+      <td className="py-5 px-4 border-b text-md text-[#728195] italic">
+        {editingCell?.key === key && editingCell.rowIndex === i && editingCell.column === 'Options' ? (
+          <input
+            type="text"
+            className='border-none w-full'
+            value={cellValues[key]?.[i] || data.label}
+            onChange={(e) => handleCellChange(e, key, i)}
+            onBlur={handleCellBlur}
+            autoFocus
+          />
+        ) : (
+          <span onClick={() => handleCellEdit(key, i, 'Options')}>{data.label}</span>
+        )}
+      </td>
+      <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
+    </tr>
+  ))}
+  {dynamicRows.map((row, i) => (
+    <tr key={`dynamic-${i}`}>
+      <td className="py-5 px-4 text-md text-[#0EA5E9]"></td>
+      <td className="py-5 px-4 border-b text-md text-[#728195] italic">
+        {editingCell?.key === key && editingCell.rowIndex === i && editingCell.column === 'Options' ? (
+          <input
+            type="text"
+            className='border-none w-full'
+            value={cellValues[key]?.[i] || row[key]}
+            onChange={(e) => handleCellChange(e, key, i)}
+            onBlur={handleCellBlur}
+            autoFocus
+          />
+        ) : (
+          <span onClick={() => handleCellEdit(key, i, 'Options')}>{row[key]}</span>
+        )}
+      </td>
+      <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
+    </tr>
+  ))}
+</tbody>
+
+
+    </table>
+
+    <button
+  onClick={() => appendRow(key)}
+  className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+>
+  Add Row
+</button>
+
+
+
   </div>
+  </div>
+))}
 </div>
+
+
+
+
+
+
+
+</div>
+
+
+
 
     </div>
         <div className="">
@@ -837,6 +950,8 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
 
         </div>
       </div>
+
+
 
 
 
