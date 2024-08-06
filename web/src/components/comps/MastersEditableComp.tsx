@@ -16,21 +16,6 @@ import { useRef } from 'react';
 
 
 
-// import unitTypeList from '../AddUnit';
-// import facingTypeList from '../AddUnit';
-// import bedRoomsList from '../AddUnit';
-// import bathTypeList from '../AddUnit';
-// import carParkingList from '../AddUnit';
-// import statusList from '../AddUnit';
-
-// import mortgageType from '../AddUnit';
-
-
-
-
-
-
-
 import {
   approvalAuthority,
   bathTypeList,
@@ -592,11 +577,6 @@ const handleCellEdit = (key, rowIndex, column) => {
 
 
 
-
-
-
-
-
 const handleCellChange = (e, key, rowIndex) => {
   const newValue = e.target.value;
   setCellValues(prev => ({
@@ -608,6 +588,26 @@ const handleCellChange = (e, key, rowIndex) => {
 const handleCellBlur = () => {
   setEditingCell(null);
 };
+
+
+
+
+
+const handleDeleteRow = (key, rowIndex) => {
+  setDynamicRows(prevRows => ({
+    ...prevRows,
+    [key]: prevRows[key].filter((_, i) => i !== rowIndex)
+  }));
+  setCellValues(prev => ({
+    ...prev,
+    [key]: prev[key].filter((_, i) => i !== rowIndex)
+  }));
+};
+
+
+
+
+
 
 
 
@@ -820,8 +820,7 @@ const handleCellBlur = () => {
 
 
 
-
-<div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
+  <div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
       <div className="bg-white text-white p-6">
         {Object.keys(dataMap).map((key) => (
           <div
@@ -841,6 +840,7 @@ const handleCellBlur = () => {
                     <th className="py-3 px-4 text-lg font-bold text-[#334155]">Title</th>
                     <th className="py-3 px-4 text-lg font-bold text-[#334155]">Options</th>
                     <th className="py-3 px-4 text-lg font-bold text-[#334155]">Description</th>
+                    <th className="py-3 px-4 text-lg font-bold text-[#334155]">Action</th>
                   </tr>
                 </thead>
 
@@ -867,6 +867,34 @@ const handleCellBlur = () => {
                         )}
                       </td>
                       <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
+
+
+
+<td className="py-5 px-4 text-md border-b text-[#6b7280]">
+  <button 
+    onClick={() => handleDeleteRow(key, i)} 
+    className="flex items-center text-[#728195]"
+    aria-label="Delete"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+        clipRule="evenodd"
+      />
+    </svg>
+    
+  </button>
+</td>
+
+
+
+
                     </tr>
                   ))}
                   {(dynamicRows[key] || []).map((row, i) => (
@@ -882,6 +910,29 @@ const handleCellBlur = () => {
                         />
                       </td>
                       <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
+                      <td className="py-5 px-4 text-md border-b text-[#6b7280]">
+  
+   <button 
+    onClick={() => handleDeleteRow(key, i)} 
+    className="flex items-center text-[#728195]"
+    aria-label="Delete"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+        clipRule="evenodd"
+      />
+    </svg>
+  
+  </button>
+</td>
+
                     </tr>
                   ))}
                 </tbody>
@@ -897,9 +948,14 @@ const handleCellBlur = () => {
           </div>
         ))}
       </div>
-    </div>
+    </div> 
 
 
+
+
+
+
+ 
 
 
     </div>
