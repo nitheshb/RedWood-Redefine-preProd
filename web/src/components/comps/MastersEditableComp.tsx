@@ -493,13 +493,14 @@ const dataMap: { [key: string]: { label: string }[] } = {
   'Booking By': []
 };
 
-const [activeItem, setActiveItem] = useState<string | null>(null);
-const contentRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
-const handleClick = (item: string) => {
+
+
+
+const handleClick = (item) => {
   setActiveItem(item);
   if (contentRefs.current[item]) {
-    contentRefs.current[item]?.scrollIntoView({
+    contentRefs.current[item].scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     });
@@ -534,10 +535,6 @@ useEffect(() => {
 
 
 
-
-
-
-
 const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
   <li className={`border-l-2 ${
     activeItem === item 
@@ -563,38 +560,34 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
 );
 
 
-const [dynamicRows, setDynamicRows] = useState<{ [key: string]: string }[]>([]);
-const [editingCell, setEditingCell] = useState<{ key: string; rowIndex: number; column: string } | null>(null);
-const [cellValues, setCellValues] = useState<{ [key: string]: { [key: number]: string } }>({});
+
+const [activeItem, setActiveItem] = useState(null);
+const contentRefs = useRef({});
+const [dynamicRows, setDynamicRows] = useState({});
+const [editingCell, setEditingCell] = useState(null);
+const [cellValues, setCellValues] = useState({});
 
 
 
 
 
 
-const appendRow = (key: string) => {
-  setDynamicRows(prevRows => [
+
+
+const appendRow = (key) => {
+  setDynamicRows(prevRows => ({
     ...prevRows,
-    { [key]: '' } 
-  ]);
-};
-
-
-const handleCellEdit = (key: string, rowIndex: number, column: string) => {
-  setEditingCell({ key, rowIndex, column });
-};
-
-const handleCellChange = (e: React.ChangeEvent<HTMLInputElement>, key: string, rowIndex: number) => {
-  const newValue = e.target.value;
+    [key]: [...(prevRows[key] || []), '']
+  }));
   setCellValues(prev => ({
     ...prev,
-    [key]: {
-      ...prev[key],
-      [rowIndex]: newValue
-    }
+    [key]: [...(prev[key] || []), '']
   }));
 };
 
+const handleCellEdit = (key, rowIndex, column) => {
+  setEditingCell({ key, rowIndex, column });
+};
 
 
 
@@ -604,12 +597,17 @@ const handleCellChange = (e: React.ChangeEvent<HTMLInputElement>, key: string, r
 
 
 
-
+const handleCellChange = (e, key, rowIndex) => {
+  const newValue = e.target.value;
+  setCellValues(prev => ({
+    ...prev,
+    [key]: prev[key].map((value, i) => i === rowIndex ? newValue : value)
+  }));
+};
 
 const handleCellBlur = () => {
   setEditingCell(null);
 };
-
 
 
 
@@ -820,113 +818,86 @@ const handleCellBlur = () => {
 
 
 
+
+
+
 <div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
-  
+      <div className="bg-white text-white p-6">
+        {Object.keys(dataMap).map((key) => (
+          <div
+            key={key}
+            className="mb-24"
+            ref={(el) => (contentRefs.current[key] = el)}
+            id={key.replace(/\s+/g, '-').toLowerCase()}
+          >
+            <h1 className="inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">{key}</h1>
+            <p className="mt-2 text-[24px] font-semibold text-slate-700">
+              A component for fixing an element's width to the current breakpoint.
+            </p>
+            <div className="bg-[#FFFFFF] rounded-lg mt-10 overflow-hidden">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-[#e5e7eb]">
+                    <th className="py-3 px-4 text-lg font-bold text-[#334155]">Title</th>
+                    <th className="py-3 px-4 text-lg font-bold text-[#334155]">Options</th>
+                    <th className="py-3 px-4 text-lg font-bold text-[#334155]">Description</th>
+                  </tr>
+                </thead>
 
+                <tbody>
+                  {dataMap[key].map((data, i) => (
+                    <tr key={`static-${i}`}>
+                      {i === 0 ? (
+                        <td className="py-5 px-4 font-bold text-[#0EA5E9] text-md">{key}</td>
+                      ) : (
+                        <td className="py-5 px-4 text-[#0EA5E9] text-md"></td>
+                      )}
+                      <td className="py-5 px-4 border-b text-md text-[#728195] italic">
+                        {editingCell?.key === key && editingCell.rowIndex === i && editingCell.column === 'Options' ? (
+                          <input
+                            type="text"
+                            className='border-none w-full'
+                            value={cellValues[key]?.[i] || data.label}
+                            onChange={(e) => handleCellChange(e, key, i)}
+                            onBlur={handleCellBlur}
+                            autoFocus
+                          />
+                        ) : (
+                          <span onClick={() => handleCellEdit(key, i, 'Options')}>{data.label}</span>
+                        )}
+                      </td>
+                      <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
+                    </tr>
+                  ))}
+                  {(dynamicRows[key] || []).map((row, i) => (
+                    <tr key={`dynamic-${i}`}>
+                      <td className="py-5 px-4 text-md text-[#0EA5E9]"></td>
+                      <td className="py-5 px-4 border-b text-md text-[#728195] italic">
+                        <input
+                          type="text"
+                          className='border-none w-full'
+                          value={cellValues[key]?.[i] || row}
+                          onChange={(e) => handleCellChange(e, key, i)}
+                          autoFocus
+                        />
+                      </td>
+                      <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
+                    </tr>
+                  ))}
+                </tbody>
 
-
-
-<div className="bg-white text-white p-6">
-
-{Object.keys(dataMap).map((key) => (
-      <div
-        key={key}
-        className="mb-24"
-        ref={(el) => (contentRefs.current[key] = el)}
-        id={key.replace(/\s+/g, '-').toLowerCase()}
-      >
-  <h1 className="inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight  mb-2">{key}</h1>
-  <p className="mt-2 text-[24px] font-semibold text-slate-700">
-    A component for fixing an element's width to the current breakpoint.
-  </p>
-
-  <div className="bg-[#FFFFFF] rounded-lg mt-10 overflow-hidden">
-    <table className="w-full text-left">
-      <thead>
-        <tr className="border-b border-[#e5e7eb]">
-          <th className="py-3 px-4 text-lg	 font-bold text-[#334155]">Title</th>
-          <th className="py-3 px-4 text-lg	 font-bold text-[#334155]">Options</th>
-          <th className="py-3 px-4 text-lg	 font-bold text-[#334155]">Description</th>
-        </tr>
-      </thead>
- 
-
-
-
-
-
-
-<tbody>
-  {dataMap[key].map((data, i) => (
-    <tr key={`static-${i}`}>
-      {i === 0 ? (
-        <td className="py-5 px-4 font-bold text-[#0EA5E9] text-md">{key}</td>
-      ) : (
-        <td className="py-5 px-4 text-[#0EA5E9] text-md"></td>
-      )}
-      <td className="py-5 px-4 border-b text-md text-[#728195] italic">
-        {editingCell?.key === key && editingCell.rowIndex === i && editingCell.column === 'Options' ? (
-          <input
-            type="text"
-            className='border-none w-full'
-            value={cellValues[key]?.[i] || data.label}
-            onChange={(e) => handleCellChange(e, key, i)}
-            onBlur={handleCellBlur}
-            autoFocus
-          />
-        ) : (
-          <span onClick={() => handleCellEdit(key, i, 'Options')}>{data.label}</span>
-        )}
-      </td>
-      <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
-    </tr>
-  ))}
-  {dynamicRows.map((row, i) => (
-    <tr key={`dynamic-${i}`}>
-      <td className="py-5 px-4 text-md text-[#0EA5E9]"></td>
-      <td className="py-5 px-4 border-b text-md text-[#728195] italic">
-        {editingCell?.key === key && editingCell.rowIndex === i && editingCell.column === 'Options' ? (
-          <input
-            type="text"
-            className='border-none w-full'
-            value={cellValues[key]?.[i] || row[key]}
-            onChange={(e) => handleCellChange(e, key, i)}
-            onBlur={handleCellBlur}
-            autoFocus
-          />
-        ) : (
-          <span onClick={() => handleCellEdit(key, i, 'Options')}>{row[key]}</span>
-        )}
-      </td>
-      <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
-    </tr>
-  ))}
-</tbody>
-
-
-    </table>
-
-    <button
-  onClick={() => appendRow(key)}
-  className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
->
-  Add Row
-</button>
-
-
-
-  </div>
-  </div>
-))}
-</div>
-
-
-
-
-
-
-
-</div>
+              </table>
+              <button
+                onClick={() => appendRow(key)}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Add Row
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
 
 
 
@@ -950,18 +921,6 @@ const handleCellBlur = () => {
 
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
