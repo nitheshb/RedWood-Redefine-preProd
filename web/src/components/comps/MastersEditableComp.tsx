@@ -480,18 +480,6 @@ const dataMap: { [key: string]: { label: string }[] } = {
 
 
 
-
-
-const handleClick = (item) => {
-  setActiveItem(item);
-  if (contentRefs.current[item]) {
-    contentRefs.current[item].scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }
-};
-
 useEffect(() => {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -551,11 +539,7 @@ const contentRefs = useRef({});
 const [dynamicRows, setDynamicRows] = useState({});
 const [editingCell, setEditingCell] = useState(null);
 const [cellValues, setCellValues] = useState({});
-
-
-
-
-
+const [currentSection, setCurrentSection] = useState(null);
 
 
 
@@ -602,6 +586,45 @@ const handleDeleteRow = (key, rowIndex) => {
     ...prev,
     [key]: prev[key].filter((_, i) => i !== rowIndex)
   }));
+};
+
+
+
+
+
+const handleClick = (item: string) => {
+  setActiveItem(item);
+  if (contentRefs.current[item]) {
+    contentRefs.current[item].scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+    setCurrentSection(item);
+  }
+};
+
+
+
+
+
+
+
+
+
+const handleSave = (sectionKey: string) => {
+
+  const formattedData = (cellValues[sectionKey] || []).map(value => {
+    const formattedValue = value.replace(/\s+/g, '_').toLowerCase();
+    return {
+      title: sectionKey.replace(/\s+/g, '_').toLowerCase(),
+      label: value,
+      value: formattedValue,
+      id: uuidv4()
+    };
+  });
+
+  console.log('Formatted Data:', formattedData);
+  
 };
 
 
@@ -938,16 +961,41 @@ const handleDeleteRow = (key, rowIndex) => {
                 </tbody>
 
               </table>
+
+
+              <div className='flex  justify-between'>
+
+
               <button
                 onClick={() => appendRow(key)}
                 className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
               >
                 Add Row
               </button>
+
+
+              <button
+               onClick={() => handleSave(key)}
+               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Save
+              </button>
+
+
+
+              </div>
+
+
+
+
+
+
             </div>
           </div>
         ))}
       </div>
+ 
+
     </div> 
 
 
