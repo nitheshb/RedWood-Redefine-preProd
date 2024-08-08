@@ -16,21 +16,6 @@ import { useRef } from 'react';
 
 
 
-// import unitTypeList from '../AddUnit';
-// import facingTypeList from '../AddUnit';
-// import bedRoomsList from '../AddUnit';
-// import bathTypeList from '../AddUnit';
-// import carParkingList from '../AddUnit';
-// import statusList from '../AddUnit';
-
-// import mortgageType from '../AddUnit';
-
-
-
-
-
-
-
 import {
   approvalAuthority,
   bathTypeList,
@@ -493,18 +478,7 @@ const dataMap: { [key: string]: { label: string }[] } = {
   'Booking By': []
 };
 
-const [activeItem, setActiveItem] = useState<string | null>(null);
-const contentRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
-const handleClick = (item: string) => {
-  setActiveItem(item);
-  if (contentRefs.current[item]) {
-    contentRefs.current[item]?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }
-};
 
 useEffect(() => {
   const observer = new IntersectionObserver(
@@ -534,10 +508,6 @@ useEffect(() => {
 
 
 
-
-
-
-
 const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
   <li className={`border-l-2 ${
     activeItem === item 
@@ -563,35 +533,58 @@ const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
 );
 
 
-const [dynamicRows, setDynamicRows] = useState<{ [key: string]: string }[]>([]);
-const [editingCell, setEditingCell] = useState<{ key: string; rowIndex: number; column: string } | null>(null);
-const [cellValues, setCellValues] = useState<{ [key: string]: { [key: number]: string } }>({});
+
+const [activeItem, setActiveItem] = useState(null);
+const contentRefs = useRef({});
+const [dynamicRows, setDynamicRows] = useState({});
+const [editingCell, setEditingCell] = useState(null);
+const [cellValues, setCellValues] = useState({});
+const [currentSection, setCurrentSection] = useState(null);
 
 
 
-
-
-
-const appendRow = (key: string) => {
-  setDynamicRows(prevRows => [
+const appendRow = (key) => {
+  setDynamicRows(prevRows => ({
     ...prevRows,
-    { [key]: '' } 
-  ]);
+    [key]: [...(prevRows[key] || []), '']
+  }));
+  setCellValues(prev => ({
+    ...prev,
+    [key]: [...(prev[key] || []), '']
+  }));
 };
 
-
-const handleCellEdit = (key: string, rowIndex: number, column: string) => {
+const handleCellEdit = (key, rowIndex, column) => {
   setEditingCell({ key, rowIndex, column });
 };
 
-const handleCellChange = (e: React.ChangeEvent<HTMLInputElement>, key: string, rowIndex: number) => {
+
+
+
+const handleCellChange = (e, key, rowIndex) => {
   const newValue = e.target.value;
   setCellValues(prev => ({
     ...prev,
-    [key]: {
-      ...prev[key],
-      [rowIndex]: newValue
-    }
+    [key]: prev[key].map((value, i) => i === rowIndex ? newValue : value)
+  }));
+};
+
+const handleCellBlur = () => {
+  setEditingCell(null);
+};
+
+
+
+
+
+const handleDeleteRow = (key, rowIndex) => {
+  setDynamicRows(prevRows => ({
+    ...prevRows,
+    [key]: prevRows[key].filter((_, i) => i !== rowIndex)
+  }));
+  setCellValues(prev => ({
+    ...prev,
+    [key]: prev[key].filter((_, i) => i !== rowIndex)
   }));
 };
 
@@ -599,16 +592,44 @@ const handleCellChange = (e: React.ChangeEvent<HTMLInputElement>, key: string, r
 
 
 
-
-
-
-
-
-
-
-const handleCellBlur = () => {
-  setEditingCell(null);
+const handleClick = (item: string) => {
+  setActiveItem(item);
+  if (contentRefs.current[item]) {
+    contentRefs.current[item].scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+    setCurrentSection(item);
+  }
 };
+
+
+
+
+
+
+
+
+
+const handleSave = (sectionKey: string) => {
+
+  const formattedData = (cellValues[sectionKey] || []).map(value => {
+    const formattedValue = value.replace(/\s+/g, '_').toLowerCase();
+    return {
+      title: sectionKey.replace(/\s+/g, '_').toLowerCase(),
+      label: value,
+      value: formattedValue,
+      id: uuidv4()
+    };
+  });
+
+  console.log('Formatted Data:', formattedData);
+  
+};
+
+
+
+
 
 
 
@@ -820,115 +841,169 @@ const handleCellBlur = () => {
 
 
 
-<div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
+
+
+  <div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
+      <div className="bg-white text-white p-6">
+        {Object.keys(dataMap).map((key) => (
+          <div
+            key={key}
+            className="mb-24"
+            ref={(el) => (contentRefs.current[key] = el)}
+            id={key.replace(/\s+/g, '-').toLowerCase()}
+          >
+            <h1 className="inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">{key}</h1>
+            <p className="mt-2 text-[24px] font-semibold text-slate-700">
+              A component for fixing an element's width to the current breakpoint.
+            </p>
+            <div className="bg-[#FFFFFF] rounded-lg mt-10 overflow-hidden">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-[#e5e7eb]">
+                    <th className="py-3 px-4 text-lg font-bold text-[#334155]">Title</th>
+                    <th className="py-3 px-4 text-lg font-bold text-[#334155]">Options</th>
+                    <th className="py-3 px-4 text-lg font-bold text-[#334155]">Description</th>
+                    <th className="py-3 px-4 text-lg font-bold text-[#334155]">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {dataMap[key].map((data, i) => (
+                    <tr key={`static-${i}`}>
+                      {i === 0 ? (
+                        <td className="py-5 px-4 font-bold text-[#0EA5E9] text-md">{key}</td>
+                      ) : (
+                        <td className="py-5 px-4 text-[#0EA5E9] text-md"></td>
+                      )}
+                      <td className="py-5 px-4 border-b text-md text-[#728195] italic">
+                        {editingCell?.key === key && editingCell.rowIndex === i && editingCell.column === 'Options' ? (
+                          <input
+                            type="text"
+                            className='border-none w-full'
+                            value={cellValues[key]?.[i] || data.label}
+                            onChange={(e) => handleCellChange(e, key, i)}
+                            onBlur={handleCellBlur}
+                            autoFocus
+                          />
+                        ) : (
+                          <span onClick={() => handleCellEdit(key, i, 'Options')}>{data.label}</span>
+                        )}
+                      </td>
+                      <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
+
+
+
+<td className="py-5 px-4 text-md border-b text-[#6b7280]">
+  <button 
+    onClick={() => handleDeleteRow(key, i)} 
+    className="flex items-center text-[#728195]"
+    aria-label="Delete"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+        clipRule="evenodd"
+      />
+    </svg>
+    
+  </button>
+</td>
+
+
+
+
+                    </tr>
+                  ))}
+                  {(dynamicRows[key] || []).map((row, i) => (
+                    <tr key={`dynamic-${i}`}>
+                      <td className="py-5 px-4 text-md text-[#0EA5E9]"></td>
+                      <td className="py-5 px-4 border-b text-md text-[#728195] italic">
+                        <input
+                          type="text"
+                          className='border-none w-full'
+                          value={cellValues[key]?.[i] || row}
+                          onChange={(e) => handleCellChange(e, key, i)}
+                          autoFocus
+                        />
+                      </td>
+                      <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
+                      <td className="py-5 px-4 text-md border-b text-[#6b7280]">
   
+   <button 
+    onClick={() => handleDeleteRow(key, i)} 
+    className="flex items-center text-[#728195]"
+    aria-label="Delete"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+        clipRule="evenodd"
+      />
+    </svg>
+  
+  </button>
+</td>
+
+                    </tr>
+                  ))}
+                </tbody>
+
+              </table>
+
+
+              <div className='flex  justify-between'>
+
+
+              <button
+                onClick={() => appendRow(key)}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Add Row
+              </button>
+
+
+              <button
+               onClick={() => handleSave(key)}
+               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Save
+              </button>
+
+
+
+              </div>
 
 
 
 
-<div className="bg-white text-white p-6">
 
-{Object.keys(dataMap).map((key) => (
-      <div
-        key={key}
-        className="mb-24"
-        ref={(el) => (contentRefs.current[key] = el)}
-        id={key.replace(/\s+/g, '-').toLowerCase()}
-      >
-  <h1 className="inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight  mb-2">{key}</h1>
-  <p className="mt-2 text-[24px] font-semibold text-slate-700">
-    A component for fixing an element's width to the current breakpoint.
-  </p>
 
-  <div className="bg-[#FFFFFF] rounded-lg mt-10 overflow-hidden">
-    <table className="w-full text-left">
-      <thead>
-        <tr className="border-b border-[#e5e7eb]">
-          <th className="py-3 px-4 text-lg	 font-bold text-[#334155]">Title</th>
-          <th className="py-3 px-4 text-lg	 font-bold text-[#334155]">Options</th>
-          <th className="py-3 px-4 text-lg	 font-bold text-[#334155]">Description</th>
-        </tr>
-      </thead>
+            </div>
+          </div>
+        ))}
+      </div>
  
 
-
-
-
-
-
-<tbody>
-  {dataMap[key].map((data, i) => (
-    <tr key={`static-${i}`}>
-      {i === 0 ? (
-        <td className="py-5 px-4 font-bold text-[#0EA5E9] text-md">{key}</td>
-      ) : (
-        <td className="py-5 px-4 text-[#0EA5E9] text-md"></td>
-      )}
-      <td className="py-5 px-4 border-b text-md text-[#728195] italic">
-        {editingCell?.key === key && editingCell.rowIndex === i && editingCell.column === 'Options' ? (
-          <input
-            type="text"
-            className='border-none w-full'
-            value={cellValues[key]?.[i] || data.label}
-            onChange={(e) => handleCellChange(e, key, i)}
-            onBlur={handleCellBlur}
-            autoFocus
-          />
-        ) : (
-          <span onClick={() => handleCellEdit(key, i, 'Options')}>{data.label}</span>
-        )}
-      </td>
-      <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
-    </tr>
-  ))}
-  {dynamicRows.map((row, i) => (
-    <tr key={`dynamic-${i}`}>
-      <td className="py-5 px-4 text-md text-[#0EA5E9]"></td>
-      <td className="py-5 px-4 border-b text-md text-[#728195] italic">
-        {editingCell?.key === key && editingCell.rowIndex === i && editingCell.column === 'Options' ? (
-          <input
-            type="text"
-            className='border-none w-full'
-            value={cellValues[key]?.[i] || row[key]}
-            onChange={(e) => handleCellChange(e, key, i)}
-            onBlur={handleCellBlur}
-            autoFocus
-          />
-        ) : (
-          <span onClick={() => handleCellEdit(key, i, 'Options')}>{row[key]}</span>
-        )}
-      </td>
-      <td className="py-5 px-4 text-md border-b text-[#4F46E5]">NA</td>
-    </tr>
-  ))}
-</tbody>
-
-
-    </table>
-
-    <button
-  onClick={() => appendRow(key)}
-  className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
->
-  Add Row
-</button>
-
-
-
-  </div>
-  </div>
-))}
-</div>
+    </div> 
 
 
 
 
 
 
-
-</div>
-
-
+ 
 
 
     </div>
@@ -950,18 +1025,6 @@ const handleCellBlur = () => {
 
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
