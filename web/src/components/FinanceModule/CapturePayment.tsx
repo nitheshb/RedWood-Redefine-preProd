@@ -39,6 +39,7 @@ import RupeeInWords from 'src/util/rupeeWords'
 
 import Loader from '../Loader/Loader'
 import { validate_capturePayment } from '../Schemas'
+import PdfReceiptGenerator from 'src/util/PdfReceiptGenerator'
 
 const CaptureUnitPayment = ({
   title,
@@ -83,6 +84,7 @@ const CaptureUnitPayment = ({
   const [startDate, setStartDate] = useState(d)
 
   const [paymentModex, setPaymentModex] = useState('cheque')
+  const [payementDetails, setPayementDetails] = useState([])
   const [files, setFiles] = useState([])
 
   const [commentAttachUrl, setCommentAttachUrl] = useState('')
@@ -204,9 +206,12 @@ const CaptureUnitPayment = ({
     let y = {}
     y = data
 
+
     await handleFileUploadFun(data?.fileUploader, 'panCard1')
     const z = await commentAttachUrl
 
+    setPayementDetails(data)
+    
     await onSubmitFun(y, resetForm)
 
     await confettiRef?.current?.fire()
@@ -530,7 +535,7 @@ const CaptureUnitPayment = ({
                                                       )
                                                     }}
                                                   >
-                                                    {value}
+                                                    ₹{value?.toLocaleString('en-IN')}
                                                   </span>
                                                 ))}
                                               </div>
@@ -977,7 +982,7 @@ const CaptureUnitPayment = ({
                                   </div>
                                 </div>
                               </div> */}
-                                    <div className="text-center space-x-4 mt-6">
+                                   {!bookingProgress &&<div className="text-center space-x-4 mt-6">
                                       <button
                                         className="bg-[#8B5CF6] translate-y-1 text-[#fff] sm:text-lg text-xs font-bold py-2.5 px-6  rounded-full inline-flex items-center"
                                         type="submit"
@@ -1003,21 +1008,34 @@ const CaptureUnitPayment = ({
                                             : 'Book Unit '}{' '}
                                         </span>
                                       </button>
-                                    </div>
+                                    </div> }
 
                                     <Confetti ref={confettiRef} />
                                   </section>
                                 </div>
                               </div>
                             </div>
-                            <button
-                                className=" bg-gradient-to-r from-violet-300 to-indigo-300
-                                  text-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                                onClick={handleClick}
-                                type="button"
-                              >
-                                Download
-                              </button>
+                          {bookingProgress &&  <div className="inline-block">
+                                      <PdfReceiptGenerator
+                                        user={user}
+                                        selUnitDetails={selUnitDetails}
+                                        myObj={newPlotCostSheetA}
+                                        newPlotPS={newPlotPS}
+                                        payementDetails={payementDetails}
+                                        // myAdditionalCharges={
+                                        //   newAdditonalChargesObj
+                                        // }
+                                        // netTotal={netTotal}
+                                        // setNetTotal={setNetTotal}
+                                        // partATotal={partATotal}
+                                        // partBTotal={partBTotal}
+                                        // setPartATotal={setPartATotal}
+                                        // setPartBTotal={setPartBTotal}
+                                        projectDetails={projectDetails}
+                                        // leadDetailsObj1={leadDetailsObj1}
+                                      />
+                                    </div>}
+
                             {/* <div className=" text-right  md:block flex flex-col-reverse py-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg    w-full">
                               <button
                                 className=" bg-gradient-to-r from-violet-300 to-indigo-300

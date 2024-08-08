@@ -601,7 +601,7 @@ const CostBreakUpPdf = ({
 
                                           </section>
                                           <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
-                      Quoataion,Unit Cost Calculation.
+                      Quotation,Unit Cost Calculation.
                     </div>
 
                                           <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
@@ -834,20 +834,7 @@ const CostBreakUpPdf = ({
 
                           <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
                             <table className="w-full">
-                              {/* <thead>
-                            {' '}
-                            <tr className=" h-6  border-b-[0.2px] border-gray-300">
-                              <th className="w-[50%] text-[12px] text-left  text-[#8993a4] tracking-wide uppercase ">
-                                Particulars
-                              </th>
-                              <th className="w-[35%] text-[12px] text-left  text-[#8993a4] tracking-wide uppercase ">
-                                Timeline
-                              </th>
-                              <th className="w-[15%] text-[12px] text-right   text-[#8993a4] tracking-wide uppercase">
-                                Total Inc GST
-                              </th>
-                            </tr>
-                          </thead> */}
+
                               <thead>
                                 <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
                                   <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide ">
