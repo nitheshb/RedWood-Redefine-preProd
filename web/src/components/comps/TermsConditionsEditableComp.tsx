@@ -813,14 +813,12 @@ const TermsConditionsEditableTable = ({
                       <thead>
                         <tr className="border-b border-[#e5e7eb]">
                           <th className="py-3 px-4 text-lg font-bold text-[#334155]">
-                            Title
+                            s.no
                           </th>
                           <th className="py-3 px-4 text-lg font-bold text-[#334155]">
-                            Options
+                            Text
                           </th>
-                          <th className="py-3 px-4 text-lg font-bold text-[#334155]">
-                            Description
-                          </th>
+
                           <th className="py-3 px-4 text-lg font-bold text-[#334155]">
                             Action
                           </th>
@@ -830,13 +828,8 @@ const TermsConditionsEditableTable = ({
                       <tbody>
                         {dataObj?.data?.map((data, i) => (
                           <tr key={`static-${i}`}>
-                            {i === 0 ? (
-                              <td className="py-5 px-4 font-bold text-[#0EA5E9] text-md">
-                                {dataObj.title}
-                              </td>
-                            ) : (
-                              <td className="py-5 px-4 text-[#0EA5E9] text-md"></td>
-                            )}
+
+                            <td className="py-5 px-4 text-[#0EA5E9] text-md border-b">{i+1}</td>
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               {/* {editingCell?.key === dataObj.title &&
                               editingCell.rowIndex === i &&
@@ -885,11 +878,9 @@ const TermsConditionsEditableTable = ({
                                 className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                               />
                             </td>
-                            <td className="py-5 px-4 text-md border-b text-[#4F46E5]">
-                              NA
-                            </td>
 
-                            <td className="py-5 px-4 text-md border-b text-[#6b7280]">
+
+                            <td className="py-5 px-4 text-md items-center align-middle border-b text-[#6b7280]">
                               <button
                                 onClick={() => handleDeleteRow(data, i)}
                                 className="flex items-center text-[#728195]"
