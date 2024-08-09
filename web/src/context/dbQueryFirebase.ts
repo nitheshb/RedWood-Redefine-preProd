@@ -100,9 +100,13 @@ export const streamProjectDetails = (orgId, snapshot, error) => {
   return onSnapshot(itemsQuery, snapshot, error)
 }
 // get all project master cost sheet template list
-export const streamProjectMaster = (orgId, snapshot, error) => {
-
+export const streamProjectCSMaster = (orgId, snapshot, error) => {
   const itemsQuery = query(collection(db, `${orgId}_project`))
+  return onSnapshot(itemsQuery, snapshot, error)
+}
+// get all project master cost sheet template list
+export const streamMasters = (orgId, snapshot, error) => {
+  const itemsQuery = query(collection(db, `${orgId}_Masters`))
   return onSnapshot(itemsQuery, snapshot, error)
 }
 
@@ -2203,7 +2207,15 @@ export const addLead = async (orgId, data, by, msg) => {
     delete data['']
     const x = await addDoc(collection(db, `${orgId}_leads`), data)
     await console.log('add Lead value is ', x, x.id, data)
-    const { intype, Name, Mobile, countryCode, assignedTo, Project, assignedToObj } = data
+    const {
+      intype,
+      Name,
+      Mobile,
+      countryCode,
+      assignedTo,
+      Project,
+      assignedToObj,
+    } = data
 
     const { data3, errorx } = await supabase.from(`${orgId}_lead_logs`).insert([
       {
@@ -2815,7 +2827,6 @@ export const streamBookedLeads = async (orgId, data, snapshot, error) => {
   return onSnapshot(q, snapshot, error)
 }
 export const streamSourceBookedLeads = async (orgId, data, snapshot, error) => {
-
   const { pId, startTime, endTime } = data
   console.log('pushed values are', pId, data)
   const q = await query(
@@ -2831,7 +2842,6 @@ export const streamSourceBookedLeads = async (orgId, data, snapshot, error) => {
 }
 
 export const streamEmpBookedLeads = async (orgId, data, snapshot, error) => {
-
   const { pId, startTime, endTime } = data
   console.log('pushed values are', pId, data)
   const q = await query(
@@ -2846,11 +2856,8 @@ export const streamEmpBookedLeads = async (orgId, data, snapshot, error) => {
   return onSnapshot(q, snapshot, error)
 }
 
-
-
 export const sourceBookedLeads = async (orgId, data, snapshot, error) => {
-
-  const { pId,SourceA, startTime, endTime } = data
+  const { pId, SourceA, startTime, endTime } = data
   console.log('pushed values are', data)
   const q = await query(
     collection(db, `${orgId}_leads`),
@@ -2863,12 +2870,6 @@ export const sourceBookedLeads = async (orgId, data, snapshot, error) => {
 
   return onSnapshot(q, snapshot, error)
 }
-
-
-
-
-
-
 
 export const getEmpCompletedTasks = async (orgId, data) => {
   const { pId, startTime, endTime } = data
@@ -3096,6 +3097,22 @@ export const addLeadNotes = async (orgId, id, data) => {
     await setDoc(doc(db, `${orgId}_leads_notes`, id), yo)
   }
 }
+export const upsertMasterOption = async (orgId, id, data, enqueueSnackbar) => {
+
+  try {
+    const washingtonRef = doc(db, `${orgId}_Masters`, id)
+
+
+    await updateDoc(washingtonRef, data)
+
+  } catch (error) {
+    await setDoc(doc(db, `${orgId}_Masters`, id), data)
+
+  }
+  enqueueSnackbar(`${data?.title} Updated successfully`, {
+    variant: 'success',
+  })
+}
 export const updateProjectComputedData = async (orgId, id, data) => {
   try {
     const washingtonRef = doc(db, `${orgId}_projects`, id)
@@ -3139,7 +3156,6 @@ export const addProjectLog = (orgId, data) => {
   data.time = Timestamp.now().toMillis()
   addDoc(collection(db, `${orgId}_project_log`), data)
 }
-
 
 export const addLeadLog = async (orgId, did, data) => {
   const xo = Timestamp.now().toMillis()
@@ -3237,7 +3253,6 @@ export const createProject = async (
   resetForm
 ) => {
   try {
-
     const uid1 = uuidv4()
     const updated = {
       ...element,
@@ -3253,10 +3268,18 @@ export const createProject = async (
       uid: uid1,
       availableCount: 0,
       projectType: element?.projectType,
-      partATaxObj: updated?.fullCsA.filter((item) => item?.section?.value == 'unitCost') || [],
-      partCTaxObj: updated?.fullCsA.filter((item) => item?.section?.value == 'otherCharges') || [],
-      additonalChargesObj: updated?.fullCsA.filter((item) => item?.section?.value == 'additionalCost') || [],
-      fullCs: updated?.fullCsA
+      partATaxObj:
+        updated?.fullCsA.filter((item) => item?.section?.value == 'unitCost') ||
+        [],
+      partCTaxObj:
+        updated?.fullCsA.filter(
+          (item) => item?.section?.value == 'otherCharges'
+        ) || [],
+      additonalChargesObj:
+        updated?.fullCsA.filter(
+          (item) => item?.section?.value == 'additionalCost'
+        ) || [],
+      fullCs: updated?.fullCsA,
     }
     const {
       builderBankDocId,
@@ -3571,7 +3594,7 @@ export const createPhaseAssets = async (
   format
 ) => {
   try {
-    console.log('docs detals are',pId,phaseId,)
+    console.log('docs detals are', pId, phaseId)
     const docRef = await addDoc(collection(db, `${orgId}_project_docs`), {
       name,
       url,
@@ -3792,7 +3815,7 @@ export const addPhasePartAtax = async (
     })
   }
 }
-export const addPhaseFullCs  = async (
+export const addPhaseFullCs = async (
   orgId,
   uid,
   fullCsA,
@@ -3801,15 +3824,33 @@ export const addPhaseFullCs  = async (
 ) => {
   const usersUpdate = {}
 
-
-
   try {
     await updateDoc(doc(db, `${orgId}_phases`, uid), {
-      partATaxObj: fullCsA?.filter((item) => ['unitCost', 'unitCostNew'].includes(item?.section?.value)) || [],
-      partCTaxObj: fullCsA?.filter((item) => item?.section?.value == 'otherCharges') || [],
-      additonalChargesObj: fullCsA?.filter((item) => item?.section?.value == 'additionalCost') || [],
-      fullCs: fullCsA
+      partATaxObj:
+        fullCsA?.filter((item) =>
+          ['unitCost', 'unitCostNew'].includes(item?.section?.value)
+        ) || [],
+      partCTaxObj:
+        fullCsA?.filter((item) => item?.section?.value == 'otherCharges') || [],
+      additonalChargesObj:
+        fullCsA?.filter((item) => item?.section?.value == 'additionalCost') ||
+        [],
+      fullCs: fullCsA,
     })
+    enqueueSnackbar('Charges added successfully', {
+      variant: 'success',
+    })
+  } catch (e) {
+    console.log(' error is here', e)
+    enqueueSnackbar(e.message, {
+      variant: 'error',
+    })
+  }
+}
+export const addMastersFull = async (orgId, uid, data, enqueueSnackbar) => {
+  // return
+  try {
+    await setDoc(doc(db, `${orgId}_Masters`, uid), data)
     enqueueSnackbar('Charges added successfully', {
       variant: 'success',
     })
@@ -4669,22 +4710,22 @@ export const updateUnitStatus = async (
       status: data?.status,
       T_elgible: data?.T_elgible_new,
       T_elgible_balance: data?.T_elgible_balance,
-      [`${data?.status}_on`]: data[`${data?.status}_on`]
+      [`${data?.status}_on`]: data[`${data?.status}_on`],
     })
     const { data: data4, error: error4 } = await supabase
-    .from(`${orgId}_unit_logs`)
-    .insert([
-      {
-        type: 'sts_change',
-        subtype: 'sts_change',
-        T: Timestamp.now().toMillis(),
-        Uuid: unitId,
-        by,
-        payload: {},
-        from: 'sts_change',
-        to: data?.status,
-      },
-    ])
+      .from(`${orgId}_unit_logs`)
+      .insert([
+        {
+          type: 'sts_change',
+          subtype: 'sts_change',
+          T: Timestamp.now().toMillis(),
+          Uuid: unitId,
+          by,
+          payload: {},
+          from: 'sts_change',
+          to: data?.status,
+        },
+      ])
     enqueueSnackbar('Unit Status Updated', {
       variant: 'success',
     })
@@ -4995,14 +5036,8 @@ export const addNewUnitDemand = async (
 ) => {
   try {
     console.log('data is===>', unitId, data)
-    const {
-      status,
-      addOnCS,
-      fullPs,
-      T_balance,
-      T_Total,
-      T_elgible_balance,
-    } = data
+    const { status, addOnCS, fullPs, T_balance, T_Total, T_elgible_balance } =
+      data
 
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       addOnCS: addOnCS,
@@ -5894,10 +5929,16 @@ export const deleteUser = async (orgId, uid, by, email, myRole) => {
     by,
   })
 }
-export const deleteProject = async (orgId, uid, by, Project,enqueueSnackbar ) => {
-  await deleteDoc(doc(db,  `${orgId}_projects`, uid))
-  const {projectName} = Project
-   await addProjectLog(orgId, {
+export const deleteProject = async (
+  orgId,
+  uid,
+  by,
+  Project,
+  enqueueSnackbar
+) => {
+  await deleteDoc(doc(db, `${orgId}_projects`, uid))
+  const { projectName } = Project
+  await addProjectLog(orgId, {
     pId: uid,
     s: 's',
     type: 'deleteProject',
@@ -6004,6 +6045,13 @@ export const deleteSchLog = async (
     [kId]: deleteField(),
   })
 }
+export const deleteMasterOption = async (orgId, docId, by, enqueueSnackbar) => {
+ console.log('docId', docId)
+  await deleteDoc(doc(db, `${orgId}_Masters`, docId))
+  enqueueSnackbar('Master Option deleted successfully', {
+    variant: 'success',
+  })
+}
 
 /// **********************************************
 // Manipulators
@@ -6087,7 +6135,12 @@ export const addAgreegatedSalesValues = async (orgId, docId, data) => {
   }
   return
 }
-export const addCostSheetMaster = async (orgId, docId, data, enqueueSnackbar) => {
+export const addCostSheetMaster = async (
+  orgId,
+  docId,
+  data,
+  enqueueSnackbar
+) => {
   try {
     const washingtonRef = doc(db, `${orgId}_projectMasters`, docId)
     await updateDoc(washingtonRef, data)

@@ -22,7 +22,7 @@ import {
   addPhasePartAtax,
   addPhaseFullCs,
   steamBankDetailsList,
-  streamProjectMaster,
+  streamProjectCSMaster,
   addPhasePaymentScheduleCharges,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -243,7 +243,7 @@ const EditablePaymentTable = ({
       console.log('data is ', dataPayload)
       setRows(dataPayload || [])
       return
-      const unsubscribe = streamProjectMaster(
+      const unsubscribe = streamProjectCSMaster(
         orgId,
         (querySnapshot) => {
           const addNewSetUp = [{ value: 'addNewOption', label: 'Add New' }]
@@ -540,7 +540,6 @@ const EditablePaymentTable = ({
                                 </td>
                                 <td className="border-b border-[#e0e0e0] mr-2 pr-4">
                                   <section className="flex flex-row">
-
                                     <input
                                       type="text"
                                       value={formatIndianNumber(
@@ -563,11 +562,16 @@ const EditablePaymentTable = ({
                                         }
                                       }}
                                       className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                                    /><span className="mt-1">{row?.units?.value ==='percentage'? '%' : '₹'}</span>
+                                    />
+                                    <span className="mt-1">
+                                      {row?.units?.value === 'percentage'
+                                        ? '%'
+                                        : '₹'}
+                                    </span>
                                   </section>
-                                </td>              <td className="border-b border-[#e0e0e0] mr-2 pr-4">
+                                </td>{' '}
+                                <td className="border-b border-[#e0e0e0] mr-2 pr-4">
                                   <section className="flex flex-row">
-
                                     <input
                                       type="text"
                                       value={formatIndianNumber(
@@ -590,7 +594,8 @@ const EditablePaymentTable = ({
                                         }
                                       }}
                                       className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                                    /><span className="mt-1">Days</span>
+                                    />
+                                    <span className="mt-1">Days</span>
                                   </section>
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">

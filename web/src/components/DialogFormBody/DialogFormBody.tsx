@@ -28,7 +28,7 @@ import {
   createProject,
   getProject,
   steamBankDetailsList,
-  streamProjectMaster,
+  streamProjectCSMaster,
   updateProject,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -178,7 +178,7 @@ const DialogFormBody = ({
       console.log('selected value is ')
       const uid = uuidv4()
       let fullCsA = []
-      const unsubscribe = await streamProjectMaster(
+      const unsubscribe = await streamProjectCSMaster(
         orgId,
         async (querySnapshot) => {
           const bankA = querySnapshot.docs.map((docSnapshot) => {
