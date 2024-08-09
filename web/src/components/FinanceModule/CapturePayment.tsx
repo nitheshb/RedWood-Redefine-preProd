@@ -26,7 +26,7 @@ import {
   getProject,
   steamBankDetailsList,
   steamUsersProjAccessList,
-  streamProjectMaster,
+  streamProjectCSMaster,
   updateLeadStatus,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -35,11 +35,11 @@ import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 import { TextField2 } from 'src/util/formFields/TextField2'
+import PdfReceiptGenerator from 'src/util/PdfReceiptGenerator'
 import RupeeInWords from 'src/util/rupeeWords'
 
 import Loader from '../Loader/Loader'
 import { validate_capturePayment } from '../Schemas'
-import PdfReceiptGenerator from 'src/util/PdfReceiptGenerator'
 
 const CaptureUnitPayment = ({
   title,
@@ -206,12 +206,11 @@ const CaptureUnitPayment = ({
     let y = {}
     y = data
 
-
     await handleFileUploadFun(data?.fileUploader, 'panCard1')
     const z = await commentAttachUrl
 
     setPayementDetails(data)
-    
+
     await onSubmitFun(y, resetForm)
 
     await confettiRef?.current?.fire()
@@ -438,56 +437,68 @@ const CaptureUnitPayment = ({
 
                                             {paymentModex != 'credit_note' && (
                                               <section className="flex flex-col">
-                                              <div className="w-full  px-3 mt-3">
-                                                <div className=" mb-4 w-full">
-                                                 {payingForA?.map((paying, i) => {
-                                                 return <div className='flex flex-row border-b pb-2 justify-between' key={i}>
-                                                  <span>{paying?.stage?.label}</span> <span>{paying?.value}</span></div>
-})}
+                                                <div className="w-full  px-3 mt-3">
+                                                  <div className=" mb-4 w-full">
+                                                    {payingForA?.map(
+                                                      (paying, i) => {
+                                                        return (
+                                                          <div
+                                                            className="flex flex-row border-b pb-2 justify-between"
+                                                            key={i}
+                                                          >
+                                                            <span>
+                                                              {
+                                                                paying?.stage
+                                                                  ?.label
+                                                              }
+                                                            </span>{' '}
+                                                            <span>
+                                                              {paying?.value}
+                                                            </span>
+                                                          </div>
+                                                        )
+                                                      }
+                                                    )}
                                                   </div>
                                                 </div>
-                                                 <div className="w-full  px-3 mt-3">
-                                                <div className=" mb-4 w-full">
-                                                  <MultiSelectMultiLineField
-                                                    label="Select Payment Schedule"
-                                                    name="towardsBankDocId"
-                                                    onChange={(payload) => {
-                                                      // console.log(
-                                                      //   'changed value is ',
-                                                      //   payload
-                                                      // )
-                                                      // const {
-                                                      //   value,
-                                                      //   id,
-                                                      //   accountName,
-                                                      // } = payload
-                                                      // formik.setFieldValue(
-                                                      //   'builderName',
-                                                      //   accountName
-                                                      // )
-                                                      // formik.setFieldValue(
-                                                      //   'landlordBankDocId',
-                                                      //   id
-                                                      // )
-
-                                                      // formik.setFieldValue(
-                                                      //   'towardsBankDocId',
-                                                      //   id
-                                                      // )
-                                                    }}
-                                                    value={
-                                                      formik.values
-                                                        .towardsBankDocId
-                                                    }
-                                                    options={paymentScheduleA}
-                                                  />
+                                                <div className="w-full  px-3 mt-3">
+                                                  <div className=" mb-4 w-full">
+                                                    <MultiSelectMultiLineField
+                                                      label="Select Payment Schedule"
+                                                      name="towardsBankDocId"
+                                                      onChange={(payload) => {
+                                                        // console.log(
+                                                        //   'changed value is ',
+                                                        //   payload
+                                                        // )
+                                                        // const {
+                                                        //   value,
+                                                        //   id,
+                                                        //   accountName,
+                                                        // } = payload
+                                                        // formik.setFieldValue(
+                                                        //   'builderName',
+                                                        //   accountName
+                                                        // )
+                                                        // formik.setFieldValue(
+                                                        //   'landlordBankDocId',
+                                                        //   id
+                                                        // )
+                                                        // formik.setFieldValue(
+                                                        //   'towardsBankDocId',
+                                                        //   id
+                                                        // )
+                                                      }}
+                                                      value={
+                                                        formik.values
+                                                          .towardsBankDocId
+                                                      }
+                                                      options={paymentScheduleA}
+                                                    />
+                                                  </div>
                                                 </div>
-                                              </div>
                                               </section>
                                             )}
-
-
-
                                           </section>
                                           <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
                                             <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
@@ -535,7 +546,10 @@ const CaptureUnitPayment = ({
                                                       )
                                                     }}
                                                   >
-                                                    ₹{value?.toLocaleString('en-IN')}
+                                                    ₹
+                                                    {value?.toLocaleString(
+                                                      'en-IN'
+                                                    )}
                                                   </span>
                                                 ))}
                                               </div>
@@ -982,59 +996,63 @@ const CaptureUnitPayment = ({
                                   </div>
                                 </div>
                               </div> */}
-                                   {!bookingProgress &&<div className="text-center space-x-4 mt-6">
-                                      <button
-                                        className="bg-[#8B5CF6] translate-y-1 text-[#fff] sm:text-lg text-xs font-bold py-2.5 px-6  rounded-full inline-flex items-center"
-                                        type="submit"
-                                        disabled={loading}
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          fill="currentColor"
-                                          className="w-6 h-6"
+                                    {!bookingProgress && (
+                                      <div className="text-center space-x-4 mt-6">
+                                        <button
+                                          className="bg-[#8B5CF6] translate-y-1 text-[#fff] sm:text-lg text-xs font-bold py-2.5 px-6  rounded-full inline-flex items-center"
+                                          type="submit"
+                                          disabled={loading}
                                         >
-                                          <path
-                                            fillRule="evenodd"
-                                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
-                                            clipRule="evenodd"
-                                          />
-                                        </svg>
-                                        &nbsp; &nbsp;
-                                        <span>
-                                          {' '}
-                                          {title === 'capturePayment'
-                                            ? 'Confirm Payment'
-                                            : 'Book Unit '}{' '}
-                                        </span>
-                                      </button>
-                                    </div> }
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                            className="w-6 h-6"
+                                          >
+                                            <path
+                                              fillRule="evenodd"
+                                              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
+                                              clipRule="evenodd"
+                                            />
+                                          </svg>
+                                          &nbsp; &nbsp;
+                                          <span>
+                                            {' '}
+                                            {title === 'capturePayment'
+                                              ? 'Confirm Payment'
+                                              : 'Book Unit '}{' '}
+                                          </span>
+                                        </button>
+                                      </div>
+                                    )}
 
                                     <Confetti ref={confettiRef} />
                                   </section>
                                 </div>
                               </div>
                             </div>
-                          {bookingProgress &&  <div className="inline-block">
-                                      <PdfReceiptGenerator
-                                        user={user}
-                                        selUnitDetails={selUnitDetails}
-                                        myObj={newPlotCostSheetA}
-                                        newPlotPS={newPlotPS}
-                                        payementDetails={payementDetails}
-                                        // myAdditionalCharges={
-                                        //   newAdditonalChargesObj
-                                        // }
-                                        // netTotal={netTotal}
-                                        // setNetTotal={setNetTotal}
-                                        // partATotal={partATotal}
-                                        // partBTotal={partBTotal}
-                                        // setPartATotal={setPartATotal}
-                                        // setPartBTotal={setPartBTotal}
-                                        projectDetails={projectDetails}
-                                        // leadDetailsObj1={leadDetailsObj1}
-                                      />
-                                    </div>}
+                            {bookingProgress && (
+                              <div className="inline-block">
+                                <PdfReceiptGenerator
+                                  user={user}
+                                  selUnitDetails={selUnitDetails}
+                                  myObj={newPlotCostSheetA}
+                                  newPlotPS={newPlotPS}
+                                  payementDetails={payementDetails}
+                                  // myAdditionalCharges={
+                                  //   newAdditonalChargesObj
+                                  // }
+                                  // netTotal={netTotal}
+                                  // setNetTotal={setNetTotal}
+                                  // partATotal={partATotal}
+                                  // partBTotal={partBTotal}
+                                  // setPartATotal={setPartATotal}
+                                  // setPartBTotal={setPartBTotal}
+                                  projectDetails={projectDetails}
+                                  // leadDetailsObj1={leadDetailsObj1}
+                                />
+                              </div>
+                            )}
 
                             {/* <div className=" text-right  md:block flex flex-col-reverse py-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg    w-full">
                               <button
