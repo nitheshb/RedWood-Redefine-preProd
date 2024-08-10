@@ -529,7 +529,8 @@ const BookingSummaryView = ({
                                   ?.customerName1 || 'NA'}
                               </h1>
                               <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                s/o{' '}
+                              {customerInfo?.customerDetailsObj
+                                    ?.relation1?.label || ''}{' '}
                                 {customerInfo?.customerDetailsObj?.co_Name1 ||
                                   'NA'}
                               </span>
@@ -563,7 +564,8 @@ const BookingSummaryView = ({
                                     ?.customerName2 || 'NA'}
                                 </h1>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                  s/o{' '}
+                                {customerInfo?.secondaryCustomerDetailsObj
+                                    ?.relation2?.label || ''}{' '}
                                   {customerInfo?.secondaryCustomerDetailsObj
                                     ?.co_Name2 || 'NA'}
                                 </span>
