@@ -648,7 +648,7 @@ const ShowCustomerDetails = ({
                 </span>
               </section>
               <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">S/O:</span>{' '}
+                <span className="text-[#99488e]"> {leadDetailsObj2?.customerDetailsObj?.relation1?.value || ''}:</span>{' '}
                 {leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
               </span>
               <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
@@ -711,7 +711,7 @@ const ShowCustomerDetails = ({
                 </span>
               </section>
               <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">S/O:</span>{' '}
+                <span className="text-[#99488e]">  {leadDetailsObj2?.secondaryCustomerDetailsObj?.relation2?.value || '?'}:</span>{' '}
                 {leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name2 || '?'}
               </span>
               <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
