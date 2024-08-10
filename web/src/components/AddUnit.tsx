@@ -23,6 +23,7 @@ import {
   getAllProjects,
   steamUsersListByRole,
   editPlotUnit,
+  streamMasters,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import {
@@ -73,6 +74,92 @@ const AddUnit = ({
   const [blockList, setblockList] = useState([])
   const [defaultCost, setDefaultCost] = useState({})
   const [unitDetails, setUnitDetails] = useState({})
+
+
+
+
+
+
+  const [unitTypeListA, setUnitTypeList] = useState([]);
+const [facingTypeListA, setFacingTypeList] = useState([]);
+const [bedRoomsListA, setBedRoomsList] = useState([]);
+const [bathTypeListA, setBathTypeList] = useState([]);
+const [carParkingListA, setCarParkingList] = useState([]);
+const [statusListA, setStatusList] = useState([]);
+const [mortgageTypeA, setMortgageType] = useState([]);
+
+
+
+
+
+
+
+useEffect(() => {
+  const unsubscribe = streamMasters(
+    orgId,
+    (querySnapshot) => {
+      const bankA = querySnapshot.docs.map((docSnapshot) => {
+        const x = docSnapshot.data()
+        return x
+      })
+
+      console.log('fetched users list is', bankA)
+      // step 3: filter and set values to each title
+      if (bankA?.length > 0) {
+        const jA = bankA.filter((item) => item.title === 'Type')
+        const kA = bankA.filter((item) => item.title === 'Facing')
+        const lA = bankA.filter((item) => item.title === 'Type/BedRooms')
+        const mA = bankA.filter((item) => item.title === 'Bathrooms')
+        const nA = bankA.filter((item) => item.title === 'Car Parking')
+        const oA = bankA.filter((item) => item.title === 'Status')
+        const pA = bankA.filter((item) => item.title === 'Mortgage Type')
+      
+
+        
+
+        
+        setUnitTypeList(jA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+        
+        setFacingTypeList(kA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+        
+        setBedRoomsList(lA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+        
+        setBathTypeList(mA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+        
+        setCarParkingList(nA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+        
+        setStatusList(oA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+        
+        setMortgageType(pA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+        
+      }
+    },
+    (error) => setRows([])
+  )
+
+  return unsubscribe
+}, [])
+
+
+
+
+
+
+
   console.log('inside it ', {
     title,
     dialogOpen,
@@ -917,7 +1004,7 @@ const AddUnit = ({
                                     projectDetails?.projectType?.name ===
                                     'Plots'
                                       ? plotTypeList
-                                      : unitTypeList
+                                      : unitTypeListA
                                   }
 
                                   //options={unitTypeList}
@@ -967,7 +1054,7 @@ const AddUnit = ({
                                 }}
                                 value={formik.values.facing}
                                 // options={aquaticCreatures}
-                                options={facingTypeList}
+                                options={facingTypeListA}
                               />
                             </div>
                           </div>
@@ -1022,7 +1109,7 @@ const AddUnit = ({
                                   //     : unitTypeList
                                   // }
 
-                                  options={bedRoomsList}
+                                  options={bedRoomsListA}
                                 />
                               </div>
 
@@ -1040,7 +1127,7 @@ const AddUnit = ({
     formik.setFieldValue('bathrooms_c', value.value);
   }}
   value={formik.values.bathrooms_c}
-  options={bathTypeList}
+  options={bathTypeListA}
 />
                               </div>
 
@@ -1059,7 +1146,7 @@ const AddUnit = ({
       formik.setFieldValue('car_parkings_c', value.value);
     }}
     value={formik.values.car_parkings_c}
-    options={carParkingList}
+    options={carParkingListA}
   />
                               </div>
 
@@ -1333,7 +1420,7 @@ const AddUnit = ({
                                 }}
                                 value={formik.values.status}
                                 // options={aquaticCreatures}
-                                options={statusList}
+                                options={statusListA}
                               />
                             </div>
                             <div className="w-full flex flex-col mb-3">
@@ -1367,7 +1454,7 @@ const AddUnit = ({
                                 }}
                                 value={formik.values.mortgage_type}
                                 // options={aquaticCreatures}
-                                options={mortgageType}
+                                options={mortgageTypeA}
                               />
 
                             </div>
@@ -1543,3 +1630,7 @@ const AddUnit = ({
 }
 
 export default AddUnit
+function setRows(arg0: undefined[]) {
+  throw new Error('Function not implemented.')
+}
+

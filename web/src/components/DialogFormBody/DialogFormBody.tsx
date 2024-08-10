@@ -30,6 +30,7 @@ import {
   createProject,
   getProject,
   steamBankDetailsList,
+  streamMasters,
   streamProjectCSMaster,
   updateProject,
 } from 'src/context/dbQueryFirebase'
@@ -162,6 +163,44 @@ const DialogFormBody = ({
   //const { statesList } = useMasterData();
 
 
+  useEffect(() => {
+    const unsubscribe = streamMasters(
+      orgId,
+      (querySnapshot) => {
+        const bankA = querySnapshot.docs.map((docSnapshot) => {
+          const x = docSnapshot.data()
+          return x
+        })
+  
+        console.log('fetched users list is', bankA)
+        // step 3: filter and set values to each title
+        if (bankA?.length > 0) {
+          const dA = bankA.filter((item) => item.title == 'State')
+          const eA = bankA.filter((item) => item.title == 'Planning Authority')
+         
+          setStatesList(dA.sort((a, b) => {
+            return a.order - b.order
+          }))
+          setapprovalAuthority(eA.sort((a, b) => {
+            return a.order - b.order
+          }))
+  
+          
+          
+         
+      
+        }
+      },
+      
+    )
+  
+    return unsubscribe
+  }, [])
+
+
+
+
+
   const onSubmit = async (data, resetForm) => {
     const updatedData = {
       ...data,
@@ -262,6 +301,8 @@ const DialogFormBody = ({
 
 
   const [statesListA, setStatesList] = useState([]);
+  const [approvalAuthorityA, setapprovalAuthority] = useState([])
+
 
 
   const initialState = {
@@ -559,7 +600,7 @@ const DialogFormBody = ({
                                   value={
                                     formik.values.PlanningApprovalAuthority
                                   }
-                                  options={approvalAuthority}
+                                  options={approvalAuthorityA}
                                 />
                               </div>
 
@@ -921,7 +962,7 @@ const DialogFormBody = ({
                                   formik.setFieldValue('state', value)
                                 }}
                                 value={formik.values.state}
-                                options={statesList}
+                                options={statesListA}
                                 
 
                               />
