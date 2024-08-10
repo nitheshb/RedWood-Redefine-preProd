@@ -1115,6 +1115,54 @@ if (title === 'Booking By') {
       newDataIs.push(...taxA)
     }
 
+    //Step-8
+
+    if (title === 'Planning Authority') {
+      newDataIs.push(...approvalAuthorityA);
+    }
+    if (title === 'State') {
+      newDataIs.push(...statesListA);
+    }
+    if (title === 'Charges For') {
+      newDataIs.push(...costSheetAdditionalChargesA);
+    }
+    if (title === 'Category') {
+      newDataIs.push(...csSectionsA);
+    }
+    if (title === 'Cost Type') {
+      newDataIs.push(...unitsCancellationA);
+    }
+    if (title === 'Payment Stage') {
+      newDataIs.push(...paymentScheduleA);
+    }
+    if (title === 'Type') {
+      newDataIs.push(...unitTypeListA);
+    }
+    if (title === 'Facing') {
+      newDataIs.push(...facingTypeListA);
+    }
+    if (title === 'Type/BedRooms') {
+      newDataIs.push(...bedRoomsListA);
+    }
+    if (title === 'Bathrooms') {
+      newDataIs.push(...bathTypeListA);
+    }
+    if (title === 'Car Parking') {
+      newDataIs.push(...carParkingListA);
+    }
+    if (title === 'Status') {
+      newDataIs.push(...statusListA);
+    }
+    if (title === 'Mortgage Type') {
+      newDataIs.push(...mortgageTypeA);
+    }
+    if (title === 'Lead Source') {
+      newDataIs.push(...sourceListItemsA);
+    }
+    if (title === 'Booking By') {
+      newDataIs.push(...bookingByA);
+    }
+
     newDataIs.map((item) => {
       upsertMasterOption(orgId, item.id, item,enqueueSnackbar)
     })

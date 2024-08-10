@@ -13,6 +13,9 @@ import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
 
+
+import 
+
 import { AreaConverter } from 'src/components/AreaConverter'
 import Loader from 'src/components/Loader/Loader'
 import {
@@ -42,6 +45,10 @@ import { TextField } from 'src/util/formFields/TextField'
 import AddBankDetailsForm from '../addBankDetailsForm'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+
+
+
+
 
 const DialogFormBody = ({
   title,
@@ -152,6 +159,10 @@ const DialogFormBody = ({
     // console.log('my eis ', e.target.value)
   }
 
+
+  //const { statesList } = useMasterData();
+
+
   const onSubmit = async (data, resetForm) => {
     const updatedData = {
       ...data,
@@ -248,6 +259,11 @@ const DialogFormBody = ({
   const closeAddNewFun = () => {
     setAddNewBankStuff(false)
   }
+
+
+
+  const [statesListA, setStatesList] = useState([]);
+
 
   const initialState = {
     projectName: project?.projectName || '',
@@ -907,6 +923,8 @@ const DialogFormBody = ({
                                 }}
                                 value={formik.values.state}
                                 options={statesList}
+                                
+
                               />
                               {/* {formik.errors.state ? (
                             <div className="error-message text-red-700 text-xs p-2">
