@@ -208,6 +208,7 @@ const CostBreakUpPdf = ({
       setAddiChargesObj(additonalChargesObj)
       setPSPayload(paymentScheduleObj)
       setPartCPayload(selPhaseObj?.partCTaxObj || [])
+      console.log('construct ps obj', ConstructPayScheduleObj)
       setConstructPSPayload(ConstructPayScheduleObj)
       x = [
         {
@@ -392,7 +393,7 @@ const CostBreakUpPdf = ({
   useEffect(() => {
     CreateNewPsFun(netTotal, plotBookingAdv, csMode)
     console.log('test', newPlotPS)
-  }, [netTotal, plotBookingAdv, csMode])
+  }, [netTotal, plotBookingAdv, csMode, ])
 
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
     const newPs = psPayload?.map((d1) => {
@@ -417,9 +418,9 @@ const CostBreakUpPdf = ({
         return z
       }
     })
-    console.log('sel unti id => ', newPs, psPayload)
+    console.log('sel unti id => ', newPs, psPayload, psConstructPayload)
     setNewPS(newPs)
-    const newPs1 = psConstructPayload?.map((d1) => {
+    const newPs1 = selPhaseObj?.ConstructPayScheduleObj?.map((d1) => {
       console.log('d1 is', d1)
       const z = d1
       // if (csMode === 'plot_cs') {
@@ -1219,7 +1220,7 @@ const CostBreakUpPdf = ({
                           </table>
                         </div>
                         {/* construction payment schedule */}
-                         {/* <div className=" mt-4 border rounded-lg shadow-md overflow-hidden ">
+                         <div className=" mt-4 border rounded-lg shadow-md overflow-hidden ">
                           <table className="w-full border-b border-dashed">
                             <thead className="">
                               {' '}
@@ -1302,7 +1303,7 @@ const CostBreakUpPdf = ({
 
                               <tr className="h-[32px]">
                                 <th className="text-[12px] px-2  text-left text-gray-800 ">
-                                  Plot Value Total Rs.:
+                                  Construction Value Total Rs.:
                                 </th>
                                 <td className="text-[12px] px-2  text-right text-gray-400 "></td>
                                 <th className="text-[12px] px-2  text-right text-gray-800 ">
@@ -1311,7 +1312,7 @@ const CostBreakUpPdf = ({
                               </tr>
                             </tbody>
                           </table>
-                        </div> */}
+                        </div>
 
                         </>
                       )}

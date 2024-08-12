@@ -331,7 +331,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
         <EditablePaymentTable
           blocksViewFeature={'Plot_Payment_Schedule'}
           title={
-            data?.projectType?.name === 'Apartment'
+            data?.projectType?.name === 'Apartment' || data?.phase?.projectType?.name === 'Apartment'
               ? 'Flat Payment Schedule'
               : 'Plot Payment Schedule'
           }
