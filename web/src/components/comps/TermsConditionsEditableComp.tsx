@@ -14,7 +14,7 @@ import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 
 import {
-  approvalAuthority,
+  unitSummaryA,
   bathTypeList,
   bedRoomsList,
   carParkingList,
@@ -25,7 +25,7 @@ import {
   mortgageType,
   paymentScheduleA,
   sourceListItems,
-  statesList,
+  costSheetEstimationA,
   statusList,
   unitsCancellation,
   unitTypeList,
@@ -207,7 +207,13 @@ const EditableTablex = () => {
   )
 }
 
-const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
+const TermsConditionsEditableTable = ({
+  phase,
+  partAData,
+  fullCs,
+  source,
+  type,
+}) => {
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
@@ -243,7 +249,6 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
   const [saveWarn, setSaveWarn] = useState(false)
   const [selcDelRow, SetSelDelRow] = useState({})
 
-
   useEffect(() => {
     if (phase?.projectType?.name === 'Villas') {
       setCsCategoryOptionsA(VillaCsSections)
@@ -253,294 +258,59 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
   }, [phase])
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
 
-  const handleChange = (id, field, value) => {
-    // if (field === 'category') {
-    //   const isDuplicate = data.some(
-    //     (item) => item.id !== id && item.category === value
-    //   )
-    //   if (isDuplicate) {
-    //     setErrors((prev) => ({
-    //       ...prev,
-    //       [id]: 'This category is already in use',
-    //     }))
-    //   } else {
-    //     setErrors((prev) => {
-    //       const newErrors = { ...prev }
-    //       delete newErrors[id]
-    //       return newErrors
-    //     })
-    //   }
-    // }
-
-    setData(
-      data.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              [field]: value,
-            }
-          : item
-      )
-    )
-  }
-
-  const WarnDeletion = (id) => {
-    setOpen(true)
-    SetSelDelRow(id)
-  }
-  const yesDelete = () => {
-    setOpen(false)
-    saveSetup()
-  }
-  const handleDelete = async () => {
-    console.log('delete operatin is', selcDelRow)
-    const id = selcDelRow?.id
-    await setRows(rows.filter((item) => item.id !== id))
-
-    setErrors((prev) => {
-      const newErrors = { ...prev }
-      delete newErrors[id]
-      return newErrors
-    })
-    await handleCostSheetSave()
-  }
-
-  const handleAdd = () => {
-    const newId = Math.max(...data.map((item) => item.id), 0) + 1
-    setData([...data, { id: newId, category: 'Food', unit: '', value: 0 }])
-  }
-
-  const onDragEnd = (result) => {
-    console.log('resulet is ', result)
-    if (!result.destination) return
-
-    const newRows = Array.from(rows)
-    const [reorderedItem] = newRows.splice(result.source.index, 1)
-    newRows.splice(result.destination.index, 0, reorderedItem)
-
-    setRows(newRows)
-  }
-
   const handleChange1 = (id, data, value) => {
     console.log('latest check', id, data, value)
     // step 6 : check title update only that value
-    if(data?.title === 'Tax Rate'){
-      const updatedArr = taxA.map(item =>
-        item.id === data.id ? {...item, label: value, value: value.toLowerCase().replace(/[^a-z0-9]+/g).replace(/%/g, '')} : item
-      );
-      setTaxA(updatedArr)
+    if (data?.title === 'Receipt') {
+      const updatedArr = receiptA.map((item) =>
+        item.id === data.id
+          ? {
+              ...item,
+              label: value,
+              value: value
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g)
+                .replace(/%/g, ''),
+            }
+          : item
+      )
+      setReceiptA(updatedArr)
+    }   if (data?.title === 'Cost Sheet Estimation') {
+      const updatedArr = costSheetEstimationA.map((item) =>
+        item.id === data.id
+          ? {
+              ...item,
+              label: value,
+              value: value
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g)
+                .replace(/%/g, ''),
+            }
+          : item
+      )
+      setCostSheetEstimationA(updatedArr)
     }
-
-    if (data?.title === 'Planning Authority') {
-      const updatedArr = approvalAuthorityA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setapprovalAuthority(updatedArr);
+     if (data?.title === 'Unit Summary') {
+      const updatedArr = unitSummaryA.map((item) =>
+        item.id === data.id
+          ? {
+              ...item,
+              label: value,
+              value: value
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g)
+                .replace(/%/g, ''),
+            }
+          : item
+      )
+      setUnitSummaryA(updatedArr)
     }
-
-    if (data?.title === 'State') {
-      const updatedArr = statesListA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setstatesList(updatedArr);
-    }
-
-    if (data?.title === 'Charges For') {
-      const updatedArr = costSheetAdditionalChargesA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setCostSheetAdditionalCharges(updatedArr);
-    }
-
-    if (data?.title === 'Category') {
-      const updatedArr = csSectionsA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setCsSections(updatedArr);
-    }
-
-    if (data?.title === 'Cost Type') {
-      const updatedArr = unitsCancellationA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setUnitsCancellation(updatedArr);
-    }
-
-    if (data?.title === 'Payment Stage') {
-      const updatedArr = paymentScheduleA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setPaymentSchedule(updatedArr);
-    }
-
-    if (data?.title === 'Type') {
-      const updatedArr = unitTypeListA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setUnitTypeList(updatedArr);
-    }
-
-    if (data?.title === 'Facing') {
-      const updatedArr = facingTypeListA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setFacingTypeList(updatedArr);
-    }
-
-    if (data?.title === 'Type/BedRooms') {
-      const updatedArr = bedRoomsListA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setBedRoomsList(updatedArr);
-    }
-
-    if (data?.title === 'Bathrooms') {
-      const updatedArr = bathTypeListA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setBathTypeList(updatedArr);
-    }
-
-    if (data?.title === 'Car Parking') {
-      const updatedArr = carParkingListA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setCarParkingList(updatedArr);
-    }
-
-    if (data?.title === 'Status') {
-      const updatedArr = statusListA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setStatusList(updatedArr);
-    }
-
-    if (data?.title === 'Mortgage Type') {
-      const updatedArr = mortgageTypeA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setMortgageType(updatedArr);
-    }
-
-    if (data?.title === 'Lead Source') {
-      const updatedArr = sourceListItemsA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setSourceListItems(updatedArr);
-    }
-
-    if (data?.title === 'Booking By') {
-      const updatedArr = bookingByA.map(item =>
-        item.id === data.id ? {
-          ...item,
-          label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
-        } : item
-      );
-      setBookingBy(updatedArr);
-    }
-
-
-
-
 
     // setRows(
     //   rows.map((row) => (row.id === id ? { ...row, [column]: value } : row))
     // )
   }
 
-  const addRow = () => {
-    // const newRow = {
-    //   id: String(rows.length + 1),
-    //   category: { label: 'Add new', value: 'addNewOption' },
-    //   col2: '',
-    //   col3: '',
-    // }
-    const uid = uuidv4()
-
-    const newRow = {
-      id: uid,
-      myId: '2c7bcd74-d334-471e-9138-5de5c96ee484',
-      section: {
-        value: 'additionalCost',
-        label: 'Additional Charges',
-      },
-      component: {
-        value: 'carparking',
-        label: 'Car Parking',
-      },
-      gst: {
-        value: '5',
-        label: '5%',
-      },
-      units: {
-        label: 'Fixed cost',
-        value: 'fixedcost',
-      },
-      description: 'Car parking',
-      charges: '200000',
-      tableData: {
-        id: rows.length + 1,
-      },
-    }
-    setRows([...rows, newRow])
-  }
   const saveSetup = () => {
     setSaveWarn(true)
   }
@@ -559,42 +329,14 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
   }
 
   const projectItems = [
-    'Planning Authority',
-    'State',
-    'Charges For',
-    'Category',
-    'Cost Type',
-    'Tax Rate',
-    'Payment Stage',
-    'Type',
-    'Facing',
-    'Type/BedRooms',
-    'Bathrooms',
-    'Car Parking',
-    'Status',
-    'Mortgage Type',
+    'Receipt',
+    'Cost Sheet Estimation',
+    'Unit Summary',
   ]
 
   const crmItems = ['Lead Source', 'Booking By']
 
-  const dataMap: { [key: string]: { label: string }[] } = {
-    'Planning Authority': approvalAuthority,
-    State: statesList,
-    'Charges For': costSheetAdditionalChargesA,
-    Category: csSections,
-    'Cost Type': unitsCancellation,
-    'Tax Rate': gstValesA,
-    'Payment Stage': paymentScheduleA,
-    Type: unitTypeList,
-    Facing: facingTypeList,
-    'Type/BedRooms': bedRoomsList,
-    Bathrooms: bathTypeList,
-    'Car Parking': carParkingList,
-    Status: statusList,
-    'Mortgage Type': mortgageType,
-    'Lead Source': sourceListItems,
-    'Booking By': [],
-  }
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -656,124 +398,49 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
   const [taxA, setTaxA] = useState([])
   const [deletedRows, setDeletedRows] = useState([])
   // step 1: declare useState for each title
+  const [receiptA, setReceiptA] = useState([])
+  const [costSheetEstimationA,  setCostSheetEstimationA] = useState([])
+  const [unitSummaryA, setUnitSummaryA] = useState([])
   const [approvalAuthorityA, setapprovalAuthority] = useState([])
   const [statesListA, setstatesList] = useState([])
-const [costSheetAdditionalChargesA, setCostSheetAdditionalCharges] = useState([]);
-const [csSectionsA, setCsSections] = useState([]);
-const [unitsCancellationA, setUnitsCancellation] = useState([]);
-const [paymentScheduleA, setPaymentSchedule] = useState([]);
-const [unitTypeListA, setUnitTypeList] = useState([]);
-const [facingTypeListA, setFacingTypeList] = useState([]);
-const [bedRoomsListA, setBedRoomsList] = useState([]);
-const [bathTypeListA, setBathTypeList] = useState([]);
-const [carParkingListA, setCarParkingList] = useState([]);
-const [statusListA, setStatusList] = useState([]);
-const [mortgageTypeA, setMortgageType] = useState([]);
-const [sourceListItemsA, setSourceListItems] = useState([]);
-const [bookingByA, setBookingBy] = useState([]);
+  const [dataMapCopy, setDataMapCopy] = useState([])
+  useEffect(() => {
+    const unsubscribe = streamMasters(
+      orgId,
+      (querySnapshot) => {
+        const bankA = querySnapshot.docs.map((docSnapshot) => {
+          const x = docSnapshot.data()
+          return x
+        })
 
+        console.log('fetched users list is', bankA)
+        // step 3: filter and set values to each title
+        if (bankA?.length > 0) {
+          const cA = bankA.filter((item) => item.title == 'Receipt')
+          const dA = bankA.filter((item) => item.title == 'Cost Sheet Estimation')
+          const eA = bankA.filter((item) => item.title == 'Unit Summary')
+          setReceiptA(
+            cA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
+          setCostSheetEstimationA(
+            dA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
+          setUnitSummaryA(
+            eA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
+        }
+      },
+      (error) => setRows([])
+    )
 
-
-const [dataMapCopy, setDataMapCopy] = useState([])
-
-
-useEffect(() => {
-  const unsubscribe = streamMasters(
-    orgId,
-    (querySnapshot) => {
-      const bankA = querySnapshot.docs.map((docSnapshot) => {
-        const x = docSnapshot.data()
-        return x
-      })
-
-      console.log('fetched users list is', bankA)
-      // step 3: filter and set values to each title
-      if (bankA?.length > 0) {
-        const cA = bankA.filter((item) => item.title == 'Tax Rate')
-        const dA = bankA.filter((item) => item.title == 'State')
-        const eA = bankA.filter((item) => item.title == 'Planning Authority')
-        const fA = bankA.filter((item) => item.title === 'Charges For')
-        const gA = bankA.filter((item) => item.title === 'Category')
-        const hA = bankA.filter((item) => item.title === 'Cost Type')
-        const iA = bankA.filter((item) => item.title === 'Payment Stage')
-        const jA = bankA.filter((item) => item.title === 'Type')
-        const kA = bankA.filter((item) => item.title === 'Facing')
-        const lA = bankA.filter((item) => item.title === 'Type/BedRooms')
-        const mA = bankA.filter((item) => item.title === 'Bathrooms')
-        const nA = bankA.filter((item) => item.title === 'Car Parking')
-        const oA = bankA.filter((item) => item.title === 'Status')
-        const pA = bankA.filter((item) => item.title === 'Mortgage Type')
-        const qA = bankA.filter((item) => item.title === 'Lead Source')
-        const rA = bankA.filter((item) => item.title === 'Booking By')
-        setTaxA(cA.sort((a, b) => {
-          return a.order - b.order
-        }))
-        setstatesList(dA.sort((a, b) => {
-          return a.order - b.order
-        }))
-        setapprovalAuthority(eA.sort((a, b) => {
-          return a.order - b.order
-        }))
-
-        setCostSheetAdditionalCharges(fA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setCsSections(gA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setUnitsCancellation(hA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setPaymentSchedule(iA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setUnitTypeList(jA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setFacingTypeList(kA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setBedRoomsList(lA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setBathTypeList(mA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setCarParkingList(nA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setStatusList(oA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setMortgageType(pA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setSourceListItems(qA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setBookingBy(rA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-      }
-    },
-    (error) => setRows([])
-  )
-
-  return unsubscribe
-}, [])
-
+    return unsubscribe
+  }, [])
 
   const appendRow = (key) => {
     setDynamicRows((prevRows) => ({
@@ -786,30 +453,17 @@ useEffect(() => {
     }))
   }
   useEffect(() => {
-    console.log('taxA', taxA)
-    // setTaxA(gstValesA)
-    // setstatesList(statesList)
-    // setapprovalAuthority(approvalAuthority)
+    console.log('receiptA', receiptA)
+    // setReceiptA(gstValesA)
+    // setCostSheetEstimationA(costSheetEstimationA)
+    // setUnitSummaryA(unitSummaryA)
     setDataMapCopy(dataMapCopy1)
   }, [])
   useEffect(() => {
-    console.log('taxA', taxA)
+    console.log('receiptA', receiptA)
     setDataMapCopy(dataMapCopy1)
     // step 2: add each title useState value
-  }, [taxA, statesListA, approvalAuthorityA,
-    costSheetAdditionalChargesA,
-    csSectionsA,
-    unitsCancellationA,
-    paymentScheduleA,
-    unitTypeListA,
-    facingTypeListA,
-    bedRoomsListA,
-    bathTypeListA,
-    carParkingListA,
-    statusListA,
-    mortgageTypeA,
-    sourceListItemsA,
-    bookingByA])
+  }, [receiptA, costSheetEstimationA, unitSummaryA])
   const addRowNew = (dataObj) => {
     const title = dataObj?.title
     const order = dataObj?.data?.length || 0
@@ -820,115 +474,41 @@ useEffect(() => {
       id: uid,
       title: title,
       myId: '2c7bcd74-d334-471e-9138-5de5c96ee484',
-      value: newValue.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, ''),
+      value: newValue
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/%/g, ''),
       label: newValue,
-      order: order + 1
+      order: order + 1,
     }
     // step 5: add new row to each title useState value
-if(title === 'Tax Rate'){
-  setTaxA([...taxA, newRow])
-}
-console.log('taxA', taxA)
-if(title === 'Planning Authority'){
-  setapprovalAuthority([...approvalAuthority, newRow])
-}
-if(title === 'State'){
-  setstatesList([...statesList, newRow])
-}
-
-
-if (title === 'Charges For') {
-  setCostSheetAdditionalCharges([...costSheetAdditionalChargesA, newRow]);
-}
-
-if (title === 'Category') {
-  setCsSections([...csSectionsA, newRow]);
-}
-
-if (title === 'Cost Type') {
-  setUnitsCancellation([...unitsCancellationA, newRow]);
-}
-
-if (title === 'Payment Stage') {
-  setPaymentSchedule([...paymentScheduleA, newRow]);
-}
-
-if (title === 'Type') {
-  setUnitTypeList([...unitTypeListA, newRow]);
-}
-
-if (title === 'Facing') {
-  setFacingTypeList([...facingTypeListA, newRow]);
-}
-
-if (title === 'Type/BedRooms') {
-  setBedRoomsList([...bedRoomsListA, newRow]);
-}
-
-if (title === 'Bathrooms') {
-  setBathTypeList([...bathTypeListA, newRow]);
-}
-
-if (title === 'Car Parking') {
-  setCarParkingList([...carParkingListA, newRow]);
-}
-
-if (title === 'Status') {
-  setStatusList([...statusListA, newRow]);
-}
-
-if (title === 'Mortgage Type') {
-  setMortgageType([...mortgageTypeA, newRow]);
-}
-
-if (title === 'Lead Source') {
-  setSourceListItems([...sourceListItemsA, newRow]);
-}
-
-if (title === 'Booking By') {
-  setBookingBy([...bookingByA, newRow]);
-}
-
-
-
-
-
-
+    if (title === 'Receipt') {
+      setReceiptA([...receiptA, newRow])
+    }
+    console.log('receiptA', receiptA)
+    if (title === 'Unit Summary') {
+      setUnitSummaryA([...unitSummaryA, newRow])
+    }
+    if (title === 'Cost Sheet Estimation') {
+      setCostSheetEstimationA([...costSheetEstimationA, newRow])
+    }
     // setDataMapCopy(dataMapCopy1)
-    console.log('taxA', newRow)
-    console.log('mortgageTypeA', newRow)
+    console.log('receiptA', newRow)
   }
   // step 4: Assign useState value w.r.t to each title
   const dataMapCopy1 = [
     {
-      title: 'Tax Rate',
-      data: taxA, // use state value here
+      title: 'Receipt',
+      data: receiptA, // use state value here
       // data: [] ,
-      desccription: 'Applicable GST tax rates list on cost values',
+      desccription: 'Terms & Conditions to display on Payment Receipt',
     },
-    {
-      title: 'Planning Authority',
-      data: approvalAuthorityA, // use state value here
-      desccription: 'NA',
+
+    { title: 'Cost Sheet Estimation', data: costSheetEstimationA,       desccription: 'Terms & Conditions to display on Estimated Cost Sheet',
     },
-    { title: 'State', data: statesListA, desccription: 'NA' },
-    {
-      title: 'Charges For',
-      data: costSheetAdditionalChargesA,
-      desccription: 'NA',
+    { title: 'Unit Summary', data: unitSummaryA,       desccription: 'Terms & Conditions to display on Unit Summary Sheet',
     },
-    { title: 'Category', data: csSectionsA, desccription: 'NA' },
-    { title: 'Cost Type', data: unitsCancellationA, desccription: 'NA' },
-    { title: 'Payment Stage', data: paymentScheduleA, desccription: 'NA' },
-    { title: 'Type', data: unitTypeListA, desccription: 'NA' },
-    { title: 'Facing', data: facingTypeListA, desccription: 'NA' },
-    { title: 'Type/BedRooms', data: bedRoomsListA, desccription: 'NA' },
-    { title: 'Bathrooms', data: bathTypeListA, desccription: 'NA' },
-    { title: 'Car Parking', data: carParkingListA, desccription: 'NA' },
-    { title: 'Status', data: statusListA, desccription: 'NA' },
-    { title: 'Mortgage Type', data: mortgageTypeA, desccription: 'NA' },
-    { title: 'Lead Source', data: sourceListItemsA, desccription: 'NA' },
-    { title: 'Booking By', data: [] },
+
   ]
   const handleCellEdit = (key, rowIndex, column) => {
     setEditingCell({ key, rowIndex, column })
@@ -955,138 +535,13 @@ if (title === 'Booking By') {
 
     setDeletedRows([...deletedRows, dataObj])
     console.log('deletedRows', deletedRows)
-    if(title === 'Tax Rate'){
-
-      const updatedArr = taxA.filter(item => item.id != dataObj.id)
-      const setOrder = updatedArr.map((item, i) =>{
-      return {...item, order: i}
-      }
-      );
-      setTaxA(setOrder)
-    }
-
-
-    if (title === 'Planning Authority') {
-      const updatedArr = approvalAuthorityA.filter(item => item.id !== dataObj.id);
+    if (title === 'Receipt') {
+      const updatedArr = receiptA.filter((item) => item.id != dataObj.id)
       const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setapprovalAuthority(setOrder);
+        return { ...item, order: i }
+      })
+      setReceiptA(setOrder)
     }
-
-    if (title === 'State') {
-      const updatedArr = statesListA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setstatesList(setOrder);
-    }
-
-    if (title === 'Charges For') {
-      const updatedArr = costSheetAdditionalChargesA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setCostSheetAdditionalCharges(setOrder);
-    }
-
-    if (title === 'Category') {
-      const updatedArr = csSectionsA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setCsSections(setOrder);
-    }
-
-    if (title === 'Cost Type') {
-      const updatedArr = unitsCancellationA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setUnitsCancellation(setOrder);
-    }
-
-    if (title === 'Payment Stage') {
-      const updatedArr = paymentScheduleA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setPaymentSchedule(setOrder);
-    }
-
-    if (title === 'Type') {
-      const updatedArr = unitTypeListA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setUnitTypeList(setOrder);
-    }
-
-    if (title === 'Facing') {
-      const updatedArr = facingTypeListA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setFacingTypeList(setOrder);
-    }
-
-    if (title === 'Type/BedRooms') {
-      const updatedArr = bedRoomsListA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setBedRoomsList(setOrder);
-    }
-
-    if (title === 'Bathrooms') {
-      const updatedArr = bathTypeListA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setBathTypeList(setOrder);
-    }
-
-    if (title === 'Car Parking') {
-      const updatedArr = carParkingListA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setCarParkingList(setOrder);
-    }
-
-    if (title === 'Status') {
-      const updatedArr = statusListA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setStatusList(setOrder);
-    }
-
-    if (title === 'Mortgage Type') {
-      const updatedArr = mortgageTypeA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setMortgageType(setOrder);
-    }
-
-    if (title === 'Lead Source') {
-      const updatedArr = sourceListItemsA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setSourceListItems(setOrder);
-    }
-
-    if (title === 'Booking By') {
-      const updatedArr = bookingByA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setBookingBy(setOrder);
-    }
-
-
   }
 
   const handleClick = (item: string) => {
@@ -1103,71 +558,27 @@ if (title === 'Booking By') {
   const handleSave = (dataObj) => {
     console.log('sectionKey', dataObj)
     const title = dataObj?.title
-    const newDataIs = [];
-    if(deletedRows.length >0){
+    const newDataIs = []
+    if (deletedRows.length > 0) {
       deletedRows.map((item) => {
         deleteMasterOption(orgId, item.id, user.email, enqueueSnackbar)
       })
       setDeletedRows([])
     }
-    if(title === 'Tax Rate'){
-      // setTaxA([...taxA, newRow])
-      newDataIs.push(...taxA)
-    }
-
-    //Step-8
-
-    if (title === 'Planning Authority') {
-      newDataIs.push(...approvalAuthorityA);
-    }
-    if (title === 'State') {
-      newDataIs.push(...statesListA);
-    }
-    if (title === 'Charges For') {
-      newDataIs.push(...costSheetAdditionalChargesA);
-    }
-    if (title === 'Category') {
-      newDataIs.push(...csSectionsA);
-    }
-    if (title === 'Cost Type') {
-      newDataIs.push(...unitsCancellationA);
-    }
-    if (title === 'Payment Stage') {
-      newDataIs.push(...paymentScheduleA);
-    }
-    if (title === 'Type') {
-      newDataIs.push(...unitTypeListA);
-    }
-    if (title === 'Facing') {
-      newDataIs.push(...facingTypeListA);
-    }
-    if (title === 'Type/BedRooms') {
-      newDataIs.push(...bedRoomsListA);
-    }
-    if (title === 'Bathrooms') {
-      newDataIs.push(...bathTypeListA);
-    }
-    if (title === 'Car Parking') {
-      newDataIs.push(...carParkingListA);
-    }
-    if (title === 'Status') {
-      newDataIs.push(...statusListA);
-    }
-    if (title === 'Mortgage Type') {
-      newDataIs.push(...mortgageTypeA);
-    }
-    if (title === 'Lead Source') {
-      newDataIs.push(...sourceListItemsA);
-    }
-    if (title === 'Booking By') {
-      newDataIs.push(...bookingByA);
+    if (title === 'Receipt') {
+      // setReceiptA([...receiptA, newRow])
+      newDataIs.push(...receiptA)
+    } if (title === 'Cost Sheet Estimation') {
+      // setReceiptA([...receiptA, newRow])
+      newDataIs.push(...costSheetEstimationA)
+    } if (title === 'Unit Summary') {
+      // setReceiptA([...receiptA, newRow])
+      newDataIs.push(...unitSummaryA)
     }
 
     newDataIs.map((item) => {
-      upsertMasterOption(orgId, item.id, item,enqueueSnackbar)
+      upsertMasterOption(orgId, item.id, item, enqueueSnackbar)
     })
-
-
   }
 
   const [rows, setRows] = useState([
@@ -1361,7 +772,7 @@ if (title === 'Booking By') {
           <div className="inline">
             <div className="">
               <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                Data Masters<abbr title="required"></abbr>
+                Terms & Conditions<abbr title="required"></abbr>
               </label>
             </div>
 
@@ -1372,38 +783,9 @@ if (title === 'Booking By') {
         <div className="flex h-screen">
           <div className="w-64 text-gray-900 bg-white p-4 overflow-auto">
             <div className="mb-6">
-              <div className="mb-4 ">
-                <div className="inline">
-                  <div className="">
-                    <label className="  text-md   mb-8 lg:mb-3 font-bold text-slate-900">
-                      Add Project<abbr title="required"></abbr>
-                    </label>
-                  </div>
 
-                  <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
-                </div>
-              </div>
               <ul>
                 {projectItems.map((item) => (
-                  <SidebarItem key={item} item={item} />
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <div className="mb-4 ">
-                <div className="inline">
-                  <div className="">
-                    <label className="font-bold text-[#053219]  text-md mb-1  ">
-                      CRM Module<abbr title="required"></abbr>
-                    </label>
-                  </div>
-
-                  <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
-                </div>
-              </div>
-              <ul>
-                {crmItems.map((item) => (
                   <SidebarItem key={item} item={item} />
                 ))}
               </ul>
@@ -1431,14 +813,12 @@ if (title === 'Booking By') {
                       <thead>
                         <tr className="border-b border-[#e5e7eb]">
                           <th className="py-3 px-4 text-lg font-bold text-[#334155]">
-                            Title
+                            s.no
                           </th>
                           <th className="py-3 px-4 text-lg font-bold text-[#334155]">
-                            Options
+                            Text
                           </th>
-                          <th className="py-3 px-4 text-lg font-bold text-[#334155]">
-                            Description
-                          </th>
+
                           <th className="py-3 px-4 text-lg font-bold text-[#334155]">
                             Action
                           </th>
@@ -1448,13 +828,8 @@ if (title === 'Booking By') {
                       <tbody>
                         {dataObj?.data?.map((data, i) => (
                           <tr key={`static-${i}`}>
-                            {i === 0 ? (
-                              <td className="py-5 px-4 font-bold text-[#0EA5E9] text-md">
-                                {dataObj.title}
-                              </td>
-                            ) : (
-                              <td className="py-5 px-4 text-[#0EA5E9] text-md"></td>
-                            )}
+
+                            <td className="py-5 px-4 text-[#0EA5E9] text-md border-b">{i+1}</td>
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               {/* {editingCell?.key === dataObj.title &&
                               editingCell.rowIndex === i &&
@@ -1485,15 +860,11 @@ if (title === 'Booking By') {
                                 value={data.label}
                                 onChange={(e) => {
                                   // handleChange(row.id, 'unit', e.target.value)
-                                  const rawValue = e.target.value;
+                                  const rawValue = e.target.value
                                   // dataObj?.title
 
                                   // const numValue = parseFloat(rawValue)
-                                  handleChange1(
-                                    dataObj?.title,
-                                    data,
-                                    rawValue
-                                  )
+                                  handleChange1(dataObj?.title, data, rawValue)
                                   // if (!isNaN(numValue)) {
                                   //   handleChange1(
                                   //     row.id,
@@ -1507,11 +878,9 @@ if (title === 'Booking By') {
                                 className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                               />
                             </td>
-                            <td className="py-5 px-4 text-md border-b text-[#4F46E5]">
-                              NA
-                            </td>
 
-                            <td className="py-5 px-4 text-md border-b text-[#6b7280]">
+
+                            <td className="py-5 px-4 text-md items-center align-middle border-b text-[#6b7280]">
                               <button
                                 onClick={() => handleDeleteRow(data, i)}
                                 className="flex items-center text-[#728195]"
@@ -1550,9 +919,7 @@ if (title === 'Booking By') {
                             </td>
                             <td className="py-5 px-4 text-md border-b text-[#6b7280]">
                               <button
-                                onClick={() =>
-                                  handleDeleteRow(dataObj, i)
-                                }
+                                onClick={() => handleDeleteRow(dataObj, i)}
                                 className="flex items-center text-[#728195]"
                                 aria-label="Delete"
                               >
@@ -1597,7 +964,7 @@ if (title === 'Booking By') {
             </div>
           </div>
         </div>
-        <div className="">
+        {/* <div className="">
           <div className="mb-4 mt-2">
             <div className="inline">
               <div className="" onClick={() => createDBFun2()}>
@@ -1606,13 +973,12 @@ if (title === 'Booking By') {
                 </label>
               </div>
 
-              {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   )
 }
 
-export default MastersEditableTable
+export default TermsConditionsEditableTable

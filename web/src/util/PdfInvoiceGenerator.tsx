@@ -1013,11 +1013,11 @@ const MyDocument = ({
 
                       ]}
                     >
-                      <Text style={styles.subtitle2}>Total</Text>
+                      <Text style={styles?.subtitle2}>Total</Text>
                     </View>
                   </View>
                 </View>
-                {newPlotPS.map((item, index) => (
+                {newPlotPS?.map((item, index) => (
                   <View
                     style={[
                       styles.tableRow,
