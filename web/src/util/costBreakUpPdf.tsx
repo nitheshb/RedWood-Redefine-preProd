@@ -1220,7 +1220,7 @@ const CostBreakUpPdf = ({
                           </table>
                         </div>
                         {/* construction payment schedule */}
-                         <div className=" mt-4 border rounded-lg shadow-md overflow-hidden ">
+                       {selPhaseObj?.projectType?.name === 'Villas' && <div className=" mt-4 border rounded-lg shadow-md overflow-hidden ">
                           <table className="w-full border-b border-dashed">
                             <thead className="">
                               {' '}
@@ -1313,7 +1313,7 @@ const CostBreakUpPdf = ({
                             </tbody>
                           </table>
                         </div>
-
+}
                         </>
                       )}
 
