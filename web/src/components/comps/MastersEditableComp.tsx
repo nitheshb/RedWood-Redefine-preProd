@@ -325,13 +325,180 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     console.log('latest check', id, data, value)
     // step 6 : check title update only that value
     if(data?.title === 'Tax Rate'){
-
-
       const updatedArr = taxA.map(item =>
         item.id === data.id ? {...item, label: value, value: value.toLowerCase().replace(/[^a-z0-9]+/g).replace(/%/g, '')} : item
       );
       setTaxA(updatedArr)
     }
+
+    if (data?.title === 'Planning Authority') {
+      const updatedArr = approvalAuthorityA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setapprovalAuthority(updatedArr);
+    }
+
+    if (data?.title === 'State') {
+      const updatedArr = statesListA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setstatesList(updatedArr);
+    }
+
+    if (data?.title === 'Charges For') {
+      const updatedArr = costSheetAdditionalChargesA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setCostSheetAdditionalCharges(updatedArr);
+    }
+
+    if (data?.title === 'Category') {
+      const updatedArr = csSectionsA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setCsSections(updatedArr);
+    }
+
+    if (data?.title === 'Cost Type') {
+      const updatedArr = unitsCancellationA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setUnitsCancellation(updatedArr);
+    }
+
+    if (data?.title === 'Payment Stage') {
+      const updatedArr = paymentScheduleA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setPaymentSchedule(updatedArr);
+    }
+
+    if (data?.title === 'Type') {
+      const updatedArr = unitTypeListA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setUnitTypeList(updatedArr);
+    }
+
+    if (data?.title === 'Facing') {
+      const updatedArr = facingTypeListA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setFacingTypeList(updatedArr);
+    }
+
+    if (data?.title === 'Type/BedRooms') {
+      const updatedArr = bedRoomsListA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setBedRoomsList(updatedArr);
+    }
+
+    if (data?.title === 'Bathrooms') {
+      const updatedArr = bathTypeListA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setBathTypeList(updatedArr);
+    }
+
+    if (data?.title === 'Car Parking') {
+      const updatedArr = carParkingListA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setCarParkingList(updatedArr);
+    }
+
+    if (data?.title === 'Status') {
+      const updatedArr = statusListA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setStatusList(updatedArr);
+    }
+
+    if (data?.title === 'Mortgage Type') {
+      const updatedArr = mortgageTypeA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setMortgageType(updatedArr);
+    }
+
+    if (data?.title === 'Lead Source') {
+      const updatedArr = sourceListItemsA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setSourceListItems(updatedArr);
+    }
+
+    if (data?.title === 'Booking By') {
+      const updatedArr = bookingByA.map(item =>
+        item.id === data.id ? {
+          ...item,
+          label: value,
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+        } : item
+      );
+      setBookingBy(updatedArr);
+    }
+
+
+
+
 
     // setRows(
     //   rows.map((row) => (row.id === id ? { ...row, [column]: value } : row))
@@ -491,7 +658,25 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
   // step 1: declare useState for each title
   const [approvalAuthorityA, setapprovalAuthority] = useState([])
   const [statesListA, setstatesList] = useState([])
-  const [dataMapCopy, setDataMapCopy] = useState([])
+const [costSheetAdditionalChargesA, setCostSheetAdditionalCharges] = useState([]);
+const [csSectionsA, setCsSections] = useState([]);
+const [unitsCancellationA, setUnitsCancellation] = useState([]);
+const [paymentScheduleA, setPaymentSchedule] = useState([]);
+const [unitTypeListA, setUnitTypeList] = useState([]);
+const [facingTypeListA, setFacingTypeList] = useState([]);
+const [bedRoomsListA, setBedRoomsList] = useState([]);
+const [bathTypeListA, setBathTypeList] = useState([]);
+const [carParkingListA, setCarParkingList] = useState([]);
+const [statusListA, setStatusList] = useState([]);
+const [mortgageTypeA, setMortgageType] = useState([]);
+const [sourceListItemsA, setSourceListItems] = useState([]);
+const [bookingByA, setBookingBy] = useState([]);
+
+
+
+const [dataMapCopy, setDataMapCopy] = useState([])
+
+
 useEffect(() => {
   const unsubscribe = streamMasters(
     orgId,
@@ -507,6 +692,19 @@ useEffect(() => {
         const cA = bankA.filter((item) => item.title == 'Tax Rate')
         const dA = bankA.filter((item) => item.title == 'State')
         const eA = bankA.filter((item) => item.title == 'Planning Authority')
+        const fA = bankA.filter((item) => item.title === 'Charges For')
+        const gA = bankA.filter((item) => item.title === 'Category')
+        const hA = bankA.filter((item) => item.title === 'Cost Type')
+        const iA = bankA.filter((item) => item.title === 'Payment Stage')
+        const jA = bankA.filter((item) => item.title === 'Type')
+        const kA = bankA.filter((item) => item.title === 'Facing')
+        const lA = bankA.filter((item) => item.title === 'Type/BedRooms')
+        const mA = bankA.filter((item) => item.title === 'Bathrooms')
+        const nA = bankA.filter((item) => item.title === 'Car Parking')
+        const oA = bankA.filter((item) => item.title === 'Status')
+        const pA = bankA.filter((item) => item.title === 'Mortgage Type')
+        const qA = bankA.filter((item) => item.title === 'Lead Source')
+        const rA = bankA.filter((item) => item.title === 'Booking By')
         setTaxA(cA.sort((a, b) => {
           return a.order - b.order
         }))
@@ -516,6 +714,58 @@ useEffect(() => {
         setapprovalAuthority(eA.sort((a, b) => {
           return a.order - b.order
         }))
+
+        setCostSheetAdditionalCharges(fA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setCsSections(gA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setUnitsCancellation(hA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setPaymentSchedule(iA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setUnitTypeList(jA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setFacingTypeList(kA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setBedRoomsList(lA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setBathTypeList(mA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setCarParkingList(nA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setStatusList(oA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setMortgageType(pA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setSourceListItems(qA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+        setBookingBy(rA.sort((a, b) => {
+          return a.order - b.order;
+        }));
       }
     },
     (error) => setRows([])
@@ -546,7 +796,20 @@ useEffect(() => {
     console.log('taxA', taxA)
     setDataMapCopy(dataMapCopy1)
     // step 2: add each title useState value
-  }, [taxA, statesListA, approvalAuthorityA,])
+  }, [taxA, statesListA, approvalAuthorityA,
+    costSheetAdditionalChargesA,
+    csSectionsA,
+    unitsCancellationA,
+    paymentScheduleA,
+    unitTypeListA,
+    facingTypeListA,
+    bedRoomsListA,
+    bathTypeListA,
+    carParkingListA,
+    statusListA,
+    mortgageTypeA,
+    sourceListItemsA,
+    bookingByA])
   const addRowNew = (dataObj) => {
     const title = dataObj?.title
     const order = dataObj?.data?.length || 0
@@ -572,8 +835,68 @@ if(title === 'Planning Authority'){
 if(title === 'State'){
   setstatesList([...statesList, newRow])
 }
+
+
+if (title === 'Charges For') {
+  setCostSheetAdditionalCharges([...costSheetAdditionalChargesA, newRow]);
+}
+
+if (title === 'Category') {
+  setCsSections([...csSectionsA, newRow]);
+}
+
+if (title === 'Cost Type') {
+  setUnitsCancellation([...unitsCancellationA, newRow]);
+}
+
+if (title === 'Payment Stage') {
+  setPaymentSchedule([...paymentScheduleA, newRow]);
+}
+
+if (title === 'Type') {
+  setUnitTypeList([...unitTypeListA, newRow]);
+}
+
+if (title === 'Facing') {
+  setFacingTypeList([...facingTypeListA, newRow]);
+}
+
+if (title === 'Type/BedRooms') {
+  setBedRoomsList([...bedRoomsListA, newRow]);
+}
+
+if (title === 'Bathrooms') {
+  setBathTypeList([...bathTypeListA, newRow]);
+}
+
+if (title === 'Car Parking') {
+  setCarParkingList([...carParkingListA, newRow]);
+}
+
+if (title === 'Status') {
+  setStatusList([...statusListA, newRow]);
+}
+
+if (title === 'Mortgage Type') {
+  setMortgageType([...mortgageTypeA, newRow]);
+}
+
+if (title === 'Lead Source') {
+  setSourceListItems([...sourceListItemsA, newRow]);
+}
+
+if (title === 'Booking By') {
+  setBookingBy([...bookingByA, newRow]);
+}
+
+
+
+
+
+
     // setDataMapCopy(dataMapCopy1)
     console.log('taxA', newRow)
+    console.log('mortgageTypeA', newRow)
   }
   // step 4: Assign useState value w.r.t to each title
   const dataMapCopy1 = [
@@ -594,17 +917,17 @@ if(title === 'State'){
       data: costSheetAdditionalChargesA,
       desccription: 'NA',
     },
-    { title: 'Category', data: csSections, desccription: 'NA' },
-    { title: 'Cost Type', data: unitsCancellation, desccription: 'NA' },
+    { title: 'Category', data: csSectionsA, desccription: 'NA' },
+    { title: 'Cost Type', data: unitsCancellationA, desccription: 'NA' },
     { title: 'Payment Stage', data: paymentScheduleA, desccription: 'NA' },
-    { title: 'Type', data: unitTypeList, desccription: 'NA' },
-    { title: 'Facing', data: facingTypeList, desccription: 'NA' },
-    { title: 'Type/BedRooms', data: bedRoomsList, desccription: 'NA' },
-    { title: 'Bathrooms', data: bathTypeList, desccription: 'NA' },
-    { title: 'Car Parking', data: carParkingList, desccription: 'NA' },
-    { title: 'Status', data: statusList, desccription: 'NA' },
-    { title: 'Mortgage Type', data: mortgageType, desccription: 'NA' },
-    { title: 'Lead Source', data: sourceListItems, desccription: 'NA' },
+    { title: 'Type', data: unitTypeListA, desccription: 'NA' },
+    { title: 'Facing', data: facingTypeListA, desccription: 'NA' },
+    { title: 'Type/BedRooms', data: bedRoomsListA, desccription: 'NA' },
+    { title: 'Bathrooms', data: bathTypeListA, desccription: 'NA' },
+    { title: 'Car Parking', data: carParkingListA, desccription: 'NA' },
+    { title: 'Status', data: statusListA, desccription: 'NA' },
+    { title: 'Mortgage Type', data: mortgageTypeA, desccription: 'NA' },
+    { title: 'Lead Source', data: sourceListItemsA, desccription: 'NA' },
     { title: 'Booking By', data: [] },
   ]
   const handleCellEdit = (key, rowIndex, column) => {
@@ -641,6 +964,129 @@ if(title === 'State'){
       );
       setTaxA(setOrder)
     }
+
+
+    if (title === 'Planning Authority') {
+      const updatedArr = approvalAuthorityA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setapprovalAuthority(setOrder);
+    }
+
+    if (title === 'State') {
+      const updatedArr = statesListA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setstatesList(setOrder);
+    }
+
+    if (title === 'Charges For') {
+      const updatedArr = costSheetAdditionalChargesA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setCostSheetAdditionalCharges(setOrder);
+    }
+
+    if (title === 'Category') {
+      const updatedArr = csSectionsA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setCsSections(setOrder);
+    }
+
+    if (title === 'Cost Type') {
+      const updatedArr = unitsCancellationA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setUnitsCancellation(setOrder);
+    }
+
+    if (title === 'Payment Stage') {
+      const updatedArr = paymentScheduleA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setPaymentSchedule(setOrder);
+    }
+
+    if (title === 'Type') {
+      const updatedArr = unitTypeListA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setUnitTypeList(setOrder);
+    }
+
+    if (title === 'Facing') {
+      const updatedArr = facingTypeListA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setFacingTypeList(setOrder);
+    }
+
+    if (title === 'Type/BedRooms') {
+      const updatedArr = bedRoomsListA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setBedRoomsList(setOrder);
+    }
+
+    if (title === 'Bathrooms') {
+      const updatedArr = bathTypeListA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setBathTypeList(setOrder);
+    }
+
+    if (title === 'Car Parking') {
+      const updatedArr = carParkingListA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setCarParkingList(setOrder);
+    }
+
+    if (title === 'Status') {
+      const updatedArr = statusListA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setStatusList(setOrder);
+    }
+
+    if (title === 'Mortgage Type') {
+      const updatedArr = mortgageTypeA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setMortgageType(setOrder);
+    }
+
+    if (title === 'Lead Source') {
+      const updatedArr = sourceListItemsA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setSourceListItems(setOrder);
+    }
+
+    if (title === 'Booking By') {
+      const updatedArr = bookingByA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setBookingBy(setOrder);
+    }
+
+
   }
 
   const handleClick = (item: string) => {
@@ -667,6 +1113,54 @@ if(title === 'State'){
     if(title === 'Tax Rate'){
       // setTaxA([...taxA, newRow])
       newDataIs.push(...taxA)
+    }
+
+    //Step-8
+
+    if (title === 'Planning Authority') {
+      newDataIs.push(...approvalAuthorityA);
+    }
+    if (title === 'State') {
+      newDataIs.push(...statesListA);
+    }
+    if (title === 'Charges For') {
+      newDataIs.push(...costSheetAdditionalChargesA);
+    }
+    if (title === 'Category') {
+      newDataIs.push(...csSectionsA);
+    }
+    if (title === 'Cost Type') {
+      newDataIs.push(...unitsCancellationA);
+    }
+    if (title === 'Payment Stage') {
+      newDataIs.push(...paymentScheduleA);
+    }
+    if (title === 'Type') {
+      newDataIs.push(...unitTypeListA);
+    }
+    if (title === 'Facing') {
+      newDataIs.push(...facingTypeListA);
+    }
+    if (title === 'Type/BedRooms') {
+      newDataIs.push(...bedRoomsListA);
+    }
+    if (title === 'Bathrooms') {
+      newDataIs.push(...bathTypeListA);
+    }
+    if (title === 'Car Parking') {
+      newDataIs.push(...carParkingListA);
+    }
+    if (title === 'Status') {
+      newDataIs.push(...statusListA);
+    }
+    if (title === 'Mortgage Type') {
+      newDataIs.push(...mortgageTypeA);
+    }
+    if (title === 'Lead Source') {
+      newDataIs.push(...sourceListItemsA);
+    }
+    if (title === 'Booking By') {
+      newDataIs.push(...bookingByA);
     }
 
     newDataIs.map((item) => {
