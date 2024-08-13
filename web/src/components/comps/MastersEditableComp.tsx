@@ -13,6 +13,8 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 
+
+//Step- 0
 import {
   approvalAuthority,
   bathTypeList,
@@ -244,13 +246,13 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
   const [selcDelRow, SetSelDelRow] = useState({})
 
 
-  useEffect(() => {
-    if (phase?.projectType?.name === 'Villas') {
-      setCsCategoryOptionsA(VillaCsSections)
-    } else {
-      setCsCategoryOptionsA(csSections)
-    }
-  }, [phase])
+  // useEffect(() => {
+  //   if (phase?.projectType?.name === 'Villas') {
+  //     setCsCategoryOptionsA(VillaCsSections)
+  //   } else {
+  //     setCsCategoryOptionsA(csSections)
+  //   }
+  // }, [phase])
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
 
   const handleChange = (id, field, value) => {
@@ -497,6 +499,9 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     }
 
 
+  
+
+
 
 
 
@@ -558,6 +563,8 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     }
   }
 
+
+  //Step-0
   const projectItems = [
     'Planning Authority',
     'State',
@@ -573,6 +580,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     'Car Parking',
     'Status',
     'Mortgage Type',
+    'Villa Type Category',
   ]
 
   const crmItems = ['Lead Source', 'Booking By']
@@ -593,6 +601,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     Status: statusList,
     'Mortgage Type': mortgageType,
     'Lead Source': sourceListItems,
+    'Villa Type Category': VillaCsSectionsA,
     'Booking By': [],
   }
 
@@ -662,6 +671,7 @@ const [costSheetAdditionalChargesA, setCostSheetAdditionalCharges] = useState([]
 const [csSectionsA, setCsSections] = useState([]);
 const [unitsCancellationA, setUnitsCancellation] = useState([]);
 const [paymentScheduleA, setPaymentSchedule] = useState([]);
+
 const [unitTypeListA, setUnitTypeList] = useState([]);
 const [facingTypeListA, setFacingTypeList] = useState([]);
 const [bedRoomsListA, setBedRoomsList] = useState([]);
@@ -671,6 +681,9 @@ const [statusListA, setStatusList] = useState([]);
 const [mortgageTypeA, setMortgageType] = useState([]);
 const [sourceListItemsA, setSourceListItems] = useState([]);
 const [bookingByA, setBookingBy] = useState([]);
+const [VillaCsSectionsA, setVillaCsSections] = useState([]);
+
+
 
 
 
@@ -705,6 +718,13 @@ useEffect(() => {
         const pA = bankA.filter((item) => item.title === 'Mortgage Type')
         const qA = bankA.filter((item) => item.title === 'Lead Source')
         const rA = bankA.filter((item) => item.title === 'Booking By')
+        const sA = bankA.filter((item) => item.title === 'Villa Type Category');
+
+    
+
+        
+
+
         setTaxA(cA.sort((a, b) => {
           return a.order - b.order
         }))
@@ -766,6 +786,18 @@ useEffect(() => {
         setBookingBy(rA.sort((a, b) => {
           return a.order - b.order;
         }));
+
+        setVillaCsSections(sA.sort((a, b) =>{
+          return a.order - b.order;
+
+        }));
+        
+
+
+
+
+
+
       }
     },
     (error) => setRows([])
@@ -794,6 +826,7 @@ useEffect(() => {
   }, [])
   useEffect(() => {
     console.log('taxA', taxA)
+    
     setDataMapCopy(dataMapCopy1)
     // step 2: add each title useState value
   }, [taxA, statesListA, approvalAuthorityA,
@@ -809,7 +842,7 @@ useEffect(() => {
     statusListA,
     mortgageTypeA,
     sourceListItemsA,
-    bookingByA])
+    bookingByA,VillaCsSectionsA])
   const addRowNew = (dataObj) => {
     const title = dataObj?.title
     const order = dataObj?.data?.length || 0
@@ -889,6 +922,11 @@ if (title === 'Booking By') {
   setBookingBy([...bookingByA, newRow]);
 }
 
+if (title === 'Villa Type Category') {
+  setVillaCsSections([...VillaCsSectionsA, newRow]);
+}
+
+
 
 
 
@@ -908,7 +946,7 @@ if (title === 'Booking By') {
     },
     {
       title: 'Planning Authority',
-      data: approvalAuthorityA, // use state value here
+      data: approvalAuthorityA,
       desccription: 'NA',
     },
     { title: 'State', data: statesListA, desccription: 'NA' },
@@ -928,8 +966,51 @@ if (title === 'Booking By') {
     { title: 'Status', data: statusListA, desccription: 'NA' },
     { title: 'Mortgage Type', data: mortgageTypeA, desccription: 'NA' },
     { title: 'Lead Source', data: sourceListItemsA, desccription: 'NA' },
+    { title: 'Villa Type Category', data: VillaCsSectionsA, desccription: 'NA' },
     { title: 'Booking By', data: [] },
   ]
+
+
+  const InitialSetup = [
+    {
+      title: 'Tax Rate',
+      data: gstValesA,
+      description: 'Applicable GST tax rates list on cost values',
+    },
+    {
+      title: 'Planning Authority',
+      data: approvalAuthority,
+      description: 'NA',
+    },
+    { title: 'State', data: statesList, description: 'NA' },
+    {
+      title: 'Charges For',
+      data: costSheetAdditionalChargesA,
+      description: 'NA',
+    },
+    { 
+      title: 'Category', 
+      data: csSections, 
+      description: 'NA' 
+    },
+    { title: 'Cost Type', data: unitsCancellation, description: 'NA' },
+    { title: 'Payment Stage', data: paymentScheduleA, description: 'NA' },
+    { title: 'Type', data: unitTypeList, description: 'NA' },
+    { title: 'Facing', data: facingTypeList, description: 'NA' },
+    { title: 'Type/BedRooms', data: bedRoomsList, description: 'NA' },
+    { title: 'Bathrooms', data: bathTypeList, description: 'NA' },
+    { title: 'Car Parking', data: carParkingList, description: 'NA' },
+    { title: 'Status', data: statusList, description: 'NA' },
+    { title: 'Mortgage Type', data: mortgageType, description: 'NA' },
+    { title: 'Lead Source', data: sourceListItems, description: 'NA' },
+    { title: 'Villa Type Category', data: VillaCsSections, description: 'NA' },
+    { title: 'Booking By', data: [] },
+  ];
+
+
+
+
+
   const handleCellEdit = (key, rowIndex, column) => {
     setEditingCell({ key, rowIndex, column })
   }
@@ -1085,6 +1166,21 @@ if (title === 'Booking By') {
       });
       setBookingBy(setOrder);
     }
+
+    if (title === 'Villa Type Category') {
+      const updatedArr = VillaCsSectionsA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => ({
+        ...item,
+        order: i + 1
+      }));
+      setVillaCsSections(setOrder);
+    }
+
+
+
+    
+
+  
   
 
   }
@@ -1162,6 +1258,7 @@ if (title === 'Booking By') {
     if (title === 'Booking By') {
       newDataIs.push(...bookingByA);
     }
+    
 
     newDataIs.map((item) => {
       upsertMasterOption(orgId, item.id, item,enqueueSnackbar)
@@ -1317,6 +1414,8 @@ if (title === 'Booking By') {
     )
     setConstGST(e.target.value)
   }
+
+
   const createDBFun = () => {
     // get all the data dataObj
     // insert data to firebase db

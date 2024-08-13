@@ -26,6 +26,7 @@ import {
   getAllProjects,
   steamUsersListByRole,
   updateUnitCustomerDetailsTo,
+  streamMasters,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
@@ -74,6 +75,50 @@ const AddApplicantDetails = ({
   const [aadhrUrl2, setAadharUrl2] = useState('')
   const [startDate, setStartDate] = useState(d)
   const [showLeadLink, setShowLeadLink] = useState(false)
+
+
+
+
+
+  const [statesListA, setStatesList] = useState([]);
+
+
+ useEffect(() => {
+    const unsubscribe = streamMasters(
+      orgId,
+      (querySnapshot) => {
+        const bankA = querySnapshot.docs.map((docSnapshot) => {
+          const x = docSnapshot.data()
+          return x
+        })
+  
+        console.log('fetched users list is', bankA)
+        // step 3: filter and set values to each title
+        if (bankA?.length > 0) {
+          const dA = bankA.filter((item) => item.title == 'State')
+        
+         
+          setStatesList(dA.sort((a, b) => {
+            return a.order - b.order
+          }))
+          
+  
+          
+          
+         
+      
+        }
+      },
+      
+    )
+  
+    return unsubscribe
+  }, [])
+
+
+
+
+
 
   const customPhoneNoFieldStyles = {
     border: 'none',
@@ -1618,7 +1663,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                                     )
                                                   }}
                                                   value={formik.values.state2}
-                                                  options={statesList}
+                                                  options={statesListA}
                                                 />
                                                 <p
                                                   className="text-sm text-red-500 hidden mt-3"
