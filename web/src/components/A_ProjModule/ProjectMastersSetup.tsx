@@ -23,6 +23,7 @@ import SiderForm from '../SiderForm/SiderForm'
 
 import SourceAddTemplate from './SourceAddTemplate'
 import MastersEditableTable from '../comps/MastersEditableComp'
+import TermsConditionsEditableTable from '../comps/TermsConditionsEditableComp'
 
 const ProjectMastersSetupHome = ({ title, pId, data }) => {
   const { user } = useAuth()
@@ -69,6 +70,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
           { label: 'Plot', value: 'Plots' },
           { label: 'Villa', value: 'Villas' },
           { label: 'Weekend Villas', value: 'WeekendVillas' },
+          { label: 'Terms & Conditions', value: 'TermsConditions' },
           { label: 'Masters', value: 'Masters' },
 
         ].map((data, i) => {
@@ -106,6 +108,18 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
                 {`${selCat} Cost Setup Templete`}
               </h2>
               <EditableTable type={'Apartment'} />
+            </div>
+          </section>
+        </div>
+      )}
+       {selCat === 'TermsConditions' && (
+        <div className="w-full   flex-row">
+          <section className="m-4 inline-block">
+            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+              <h2 className="text-sm font-semibold pb-2 border-b border-grey">
+                {`${selCat} Setup`}
+              </h2>
+              <TermsConditionsEditableTable type={'TermsConditions'} />
             </div>
           </section>
         </div>

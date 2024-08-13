@@ -446,14 +446,21 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
       selUnitDetails?.secondaryCustomerDetailsObj?.customerName2 ||
       customerInfo?.secondaryCustomerDetailsObj?.customerName2 ||
       '',
-    relation1: customerInfo?.customerDetailsObj?.relation1 || {
+    relation1: leadPayload?.customerDetailsObj?.relation1 ||
+    selUnitDetails?.customerDetailsObj?.relation1 ||
+    customerInfo?.customerDetailsObj?.relation1 || {
       label: 'S/O',
       value: 'S/O',
     },
-    relation2: customerInfo?.secondaryCustomerDetailsObj?.relation2 || {
+
+    relation2:     customerInfo?.secondaryCustomerDetailsObj?.relation2 || selUnitDetails?.secondaryCustomerDetailsObj?.relation2 ||   leadPayload?.secondaryCustomerDetailsObj?.relation2 ||
+
+ {
       label: 'S/O',
       value: 'S/O',
     },
+
+
     co_Name1:
       leadPayload?.customerDetailsObj?.co_Name1 ||
       selUnitDetails?.customerDetailsObj?.co_Name1 ||
@@ -903,6 +910,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
       designation,
       annualIncome,
     }
+    console.log('update doc is ', updateDoc)
     // local updater
     setCustomerInfo(updateDoc)
 
@@ -1161,11 +1169,11 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                                     onChange={(value) => {
                                                       formik.setFieldValue(
                                                         'relation1',
-                                                        value.value
+                                                        value
                                                       )
                                                     }}
                                                     value={
-                                                      formik.values.relation1
+                                                      formik.values.relation1.value
                                                     }
                                                     options={[
                                                       {
@@ -1476,16 +1484,16 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     <div className="inline-block">
       <input
         type="text"
-        id="countryCode3"
-        name="countryCode3"
-        value={formik.values.countryCode3}
-        onChange={(e) => formik.setFieldValue('countryCode3', e.target.value)}
+        id="countryCode1"
+        name="countryCode1"
+        value={formik.values.countryCode1}
+        onChange={(e) => formik.setFieldValue('countryCode1', e.target.value)}
         onBlur={formik.handleBlur}
         className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none rounded-l-md focus:outline-none"
         placeholder="+91"
       />
-      {formik.errors.countryCode3 && formik.touched.countryCode3 && (
-        <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode3}</div>
+      {formik.errors.countryCode1 && formik.touched.countryCode1 && (
+        <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode1}</div>
       )}
     </div>
 
@@ -1495,14 +1503,14 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
                                           <PhoneNoField
 
-                                              name="phoneNo2"
+                                              name="phoneNo1"
                                               // type="text"
-                                              value={formik.values.phoneNo2}
+                                              value={formik.values.phoneNo1}
                                               customStyles={customPhoneNoFieldStyles}
                                               onChange={(value) => {
                                                 // formik.setFieldValue('mobileNo', value.value)
                                                 formik.setFieldValue(
-                                                  'phoneNo2',
+                                                  'phoneNo1',
                                                   value.value
                                                 )
                                               }}
@@ -1559,16 +1567,16 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     <div className="inline-block">
       <input
         type="text"
-        id="countryCode4"
-        name="countryCode4"
-        value={formik.values.countryCode4}
-        onChange={(e) => formik.setFieldValue('countryCode4', e.target.value)}
+        id="countryCode3"
+        name="countryCode3"
+        value={formik.values.countryCode3}
+        onChange={(e) => formik.setFieldValue('countryCode3', e.target.value)}
         onBlur={formik.handleBlur}
         className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none rounded-l-md focus:outline-none"
         placeholder="+91"
       />
-      {formik.errors.countryCode4 && formik.touched.countryCode4 && (
-        <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode4}</div>
+      {formik.errors.countryCode3 && formik.touched.countryCode3 && (
+        <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode3}</div>
       )}
     </div>
 
@@ -1580,12 +1588,12 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
     <PhoneNoField
 
-        name="phoneNo4"
+        name="phoneNo3"
         value={formik.values.phoneNo4}
         customStyles={customPhoneNoFieldStyles}
 
         onChange={(value) => {
-          formik.setFieldValue('phoneNo4', value.value);
+          formik.setFieldValue('phoneNo3', value.value);
         }}
         options={{}}
         labelSize="text-[11px]"
@@ -1607,7 +1615,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                           <div className="relative w-full mt-2">
                                             <TextField
                                               label="Email"
-                                              name="email2"
+                                              name="email1"
                                               type="text"
                                             />
                                           </div>
@@ -1634,7 +1642,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                           <div className="relative w-full mb-3 mt-2">
                                             <TextField
                                               label="Address"
-                                              name="address2"
+                                              name="address1"
                                               type="text"
                                             />
                                           </div>
@@ -1644,7 +1652,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                             <div className="relative w-full mb-3 mt-">
                                               <TextField
                                                 label="City"
-                                                name="city2"
+                                                name="city1"
                                                 type="text"
                                               />
                                             </div>
@@ -1653,12 +1661,12 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                             <div className="relative w-full mb-3 mt-">
                                               <div className="w-full flex flex-col mb-3">
                                                 <CustomSelect
-                                                  name="state2"
+                                                  name="state1"
                                                   label="State"
                                                   className="input"
                                                   onChange={(value) => {
                                                     formik.setFieldValue(
-                                                      'state2',
+                                                      'state1',
                                                       value.value
                                                     )
                                                   }}
@@ -1680,13 +1688,13 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
   <div className="w-full lg:w-12/12 px-">
     {/* Country Name 2 */}
     <div className="relative w-full mb-3 mt-2">
-      <TextField label="Country Name" name="countryName2" type="text" />
+      <TextField label="Country Name" name="countryName1" type="text" />
     </div>
   </div>
   <div className="w-full lg:w-12/12 pl-4">
     {/* Pincode 2 */}
     <div className="relative w-full mb-3 mt-2">
-      <TextField label="Pincode" name="pincode2" type="text" />
+      <TextField label="Pincode" name="pincode1" type="text" />
     </div>
   </div>
 </div>
@@ -1790,12 +1798,13 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                                 label=""
                                                 className="input  min-w-[85px] h-[32px]"
                                                 onChange={(value) => {
+                                                  console.log('value is ', value)
                                                   formik.setFieldValue(
                                                     'relation2',
-                                                    value.value
+                                                    value
                                                   )
                                                 }}
-                                                value={formik.values.relation2}
+                                                value={formik.values.relation2.value}
                                                 options={[
                                                   {
                                                     label: 'D/O',
@@ -1990,8 +1999,147 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                         </div>
 
 
+                                        <div className="w-full  flex flex-row lg:w-12/12 mt-2">
+                                        <div className="w-full lg:w-3/12 mb-2 ">
+                                          <div className="relative w-full mt-2">
 
-                                        <div className="w-full lg:w-12/12">
+
+
+                                          <div className="space-y-1 w-full text-xs">
+  <label htmlFor="countryCode" className="inline-block">
+    Primary Phone No
+  </label>
+
+  <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
+    <div className="inline-block">
+      <input
+        type="text"
+        id="countryCode2"
+        name="countryCode2"
+        value={formik.values.countryCode2}
+        onChange={(e) => formik.setFieldValue('countryCode3', e.target.value)}
+        onBlur={formik.handleBlur}
+        className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none rounded-l-md focus:outline-none"
+        placeholder="+91"
+      />
+      {formik.errors.countryCode2 && formik.touched.countryCode2 && (
+        <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode2}</div>
+      )}
+    </div>
+
+    <div className='border-l border-gray-400 mt-1 mb-1'></div>
+
+
+
+                                          <PhoneNoField
+
+                                              name="phoneNo2"
+                                              // type="text"
+                                              value={formik.values.phoneNo2}
+                                              customStyles={customPhoneNoFieldStyles}
+                                              onChange={(value) => {
+                                                // formik.setFieldValue('mobileNo', value.value)
+                                                formik.setFieldValue(
+                                                  'phoneNo2',
+                                                  value.value
+                                                )
+                                              }}
+                                              // value={formik.values.mobileNo}
+                                              options={{}}
+                                              labelSize="text-[11px]"
+                                              textSize="text-[12px]"
+                                              txtPad="px-2"
+                                              className="text-[10px]"
+                                            />
+
+
+
+
+
+
+  </div>
+</div>
+
+
+
+                                          </div>
+                                        </div>
+
+{/*
+                                        <div className="w-full lg:w-3/12 pl-4">
+                                          <div className="relative w-full mt-2">
+                                            <TextField
+                                              label="Email"
+                                              name="email2"
+                                              type="text"
+                                            />
+                                          </div>
+                                        </div> */}
+
+
+
+
+<div className="w-full lg:w-3/12 pl-4">
+    <div className="relative w-full mt-2">
+
+
+
+
+
+
+
+    <div className="space-y-1 w-full text-xs">
+  <label htmlFor="countryCode" className="inline-block">
+  Secondary Phone No
+  </label>
+
+  <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
+    <div className="inline-block">
+      <input
+        type="text"
+        id="countryCode4"
+        name="countryCode4"
+        value={formik.values.countryCode4}
+        onChange={(e) => formik.setFieldValue('countryCode4', e.target.value)}
+        onBlur={formik.handleBlur}
+        className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none rounded-l-md focus:outline-none"
+        placeholder="+91"
+      />
+      {formik.errors.countryCode4 && formik.touched.countryCode4 && (
+        <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode4}</div>
+      )}
+    </div>
+
+    <div className='border-l border-gray-400 mt-1 mb-1'></div>
+
+
+
+
+
+    <PhoneNoField
+
+        name="phoneNo4"
+        value={formik.values.phoneNo4}
+        customStyles={customPhoneNoFieldStyles}
+
+        onChange={(value) => {
+          formik.setFieldValue('phoneNo4', value.value);
+        }}
+        options={{}}
+        labelSize="text-[11px]"
+        textSize="text-[12px]"
+        txtPad="px-1"
+        className="text-[10px]"
+      />
+
+  </div>
+</div>
+
+
+
+    </div>
+  </div>
+                                        <div className="w-full lg:w-6/12 pl-4">
                                           <div className="relative w-full mt-2">
                                             <TextField
                                               label="Email"
@@ -2000,12 +2148,71 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                             />
                                           </div>
                                         </div>
+                                        </div>
 
 
 
 
+                                        <div className="w-full lg:w-12/12 ">
+                                          <div className="relative w-full mb-3 mt-2">
+                                            <TextField
+                                              label="Address"
+                                              name="address2"
+                                              type="text"
+                                            />
+                                          </div>
+                                        </div>
+                                        <div className="w-full  flex flex-row lg:w-12/12 mt-1">
+                                          <div className="w-full lg:w-12/12 px- ">
+                                            <div className="relative w-full mb-3 mt-">
+                                              <TextField
+                                                label="City"
+                                                name="city2"
+                                                type="text"
+                                              />
+                                            </div>
+                                          </div>
+                                          <div className="w-full lg:w-12/12 pl-4">
+                                            <div className="relative w-full mb-3 mt-">
+                                              <div className="w-full flex flex-col mb-3">
+                                                <CustomSelect
+                                                  name="state2"
+                                                  label="State"
+                                                  className="input"
+                                                  onChange={(value) => {
+                                                    formik.setFieldValue(
+                                                      'state2',
+                                                      value.value
+                                                    )
+                                                  }}
+                                                  value={formik.values.state2}
+                                                  options={statesList}
+                                                />
+                                                <p
+                                                  className="text-sm text-red-500 hidden mt-3"
+                                                  id="error"
+                                                >
+                                                  Please fill out this field.
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
 
-
+                                        <div className="w-full flex flex-row lg:w-12/12 mt-">
+  <div className="w-full lg:w-12/12 px-">
+    {/* Country Name 2 */}
+    <div className="relative w-full mb-3 mt-2">
+      <TextField label="Country Name" name="countryName2" type="text" />
+    </div>
+  </div>
+  <div className="w-full lg:w-12/12 pl-4">
+    {/* Pincode 2 */}
+    <div className="relative w-full mb-3 mt-2">
+      <TextField label="Pincode" name="pincode2" type="text" />
+    </div>
+  </div>
+</div>
 
 
 
