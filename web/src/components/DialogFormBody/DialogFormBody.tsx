@@ -13,6 +13,8 @@ import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
 
+
+
 import { AreaConverter } from 'src/components/AreaConverter'
 import Loader from 'src/components/Loader/Loader'
 import {
@@ -28,6 +30,7 @@ import {
   createProject,
   getProject,
   steamBankDetailsList,
+  streamMasters,
   streamProjectCSMaster,
   updateProject,
 } from 'src/context/dbQueryFirebase'
@@ -42,6 +45,10 @@ import { TextField } from 'src/util/formFields/TextField'
 import AddBankDetailsForm from '../addBankDetailsForm'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+
+
+
+
 
 const DialogFormBody = ({
   title,
@@ -152,6 +159,48 @@ const DialogFormBody = ({
     // console.log('my eis ', e.target.value)
   }
 
+
+  //const { statesList } = useMasterData();
+
+
+  useEffect(() => {
+    const unsubscribe = streamMasters(
+      orgId,
+      (querySnapshot) => {
+        const bankA = querySnapshot.docs.map((docSnapshot) => {
+          const x = docSnapshot.data()
+          return x
+        })
+  
+        console.log('fetched users list is', bankA)
+        // step 3: filter and set values to each title
+        if (bankA?.length > 0) {
+          const dA = bankA.filter((item) => item.title == 'State')
+          const eA = bankA.filter((item) => item.title == 'Planning Authority')
+         
+          setStatesList(dA.sort((a, b) => {
+            return a.order - b.order
+          }))
+          setapprovalAuthority(eA.sort((a, b) => {
+            return a.order - b.order
+          }))
+  
+          
+          
+         
+      
+        }
+      },
+      
+    )
+  
+    return unsubscribe
+  }, [])
+
+
+
+
+
   const onSubmit = async (data, resetForm) => {
     const updatedData = {
       ...data,
@@ -248,6 +297,13 @@ const DialogFormBody = ({
   const closeAddNewFun = () => {
     setAddNewBankStuff(false)
   }
+
+
+
+  const [statesListA, setStatesList] = useState([]);
+  const [approvalAuthorityA, setapprovalAuthority] = useState([])
+
+
 
   const initialState = {
     projectName: project?.projectName || '',
@@ -544,7 +600,7 @@ const DialogFormBody = ({
                                   value={
                                     formik.values.PlanningApprovalAuthority
                                   }
-                                  options={approvalAuthority}
+                                  options={approvalAuthorityA}
                                 />
                               </div>
 
@@ -906,7 +962,9 @@ const DialogFormBody = ({
                                   formik.setFieldValue('state', value)
                                 }}
                                 value={formik.values.state}
-                                options={statesList}
+                                options={statesListA}
+                                
+
                               />
                               {/* {formik.errors.state ? (
                             <div className="error-message text-red-700 text-xs p-2">

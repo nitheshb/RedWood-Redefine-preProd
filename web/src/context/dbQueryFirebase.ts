@@ -3835,6 +3835,9 @@ export const addPhaseFullCs = async (
       additonalChargesObj:
         fullCsA?.filter((item) => item?.section?.value == 'additionalCost') ||
         [],
+      constructOtherChargesObj:
+        fullCsA?.filter((item) => item?.section?.value == 'constadditionalCost') ||
+        [],
       fullCs: fullCsA,
     })
     enqueueSnackbar('Charges added successfully', {

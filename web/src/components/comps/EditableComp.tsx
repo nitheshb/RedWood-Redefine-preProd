@@ -45,6 +45,7 @@ import {
   addPhaseFullCs,
   steamBankDetailsList,
   streamProjectCSMaster,
+  streamMasters,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
@@ -247,6 +248,77 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
   const [saveWarn, setSaveWarn] = useState(false)
   const [selcDelRow, SetSelDelRow] = useState({})
 
+
+  const [taxA, setTaxA] = useState([])
+const [costSheetAdditionalChargesA, setCostSheetAdditionalCharges] = useState([]);
+const [csSectionsA, setCsSections] = useState([]);
+const [unitsCancellationA, setUnitsCancellation] = useState([]);
+const [paymentScheduleA, setPaymentSchedule] = useState([]);
+
+
+
+
+
+
+  useEffect(() => {
+    const unsubscribe = streamMasters(
+      orgId,
+      (querySnapshot) => {
+        const bankA = querySnapshot.docs.map((docSnapshot) => {
+          const x = docSnapshot.data()
+          return x
+        })
+
+        console.log('fetched users list is', bankA)
+        // step 3: filter and set values to each title
+        if (bankA?.length > 0) {
+          const cA = bankA.filter((item) => item.title == 'Tax Rate')
+          const fA = bankA.filter((item) => item.title === 'Charges For')
+          const gA = bankA.filter((item) => item.title === 'Category')
+          const hA = bankA.filter((item) => item.title === 'Cost Type')
+          const iA = bankA.filter((item) => item.title === 'Payment Stage')
+
+          setTaxA(cA.sort((a, b) => {
+            return a.order - b.order
+          }))
+
+
+
+          setCostSheetAdditionalCharges(fA.sort((a, b) => {
+            return a.order - b.order;
+          }));
+
+          setCsSections(gA.sort((a, b) => {
+            return a.order - b.order;
+          }));
+
+          setUnitsCancellation(hA.sort((a, b) => {
+            return a.order - b.order;
+          }));
+
+          setPaymentSchedule(iA.sort((a, b) => {
+            return a.order - b.order;
+          }));
+
+        }
+      },
+      (error) => setRows([])
+    )
+
+    return unsubscribe
+  }, [])
+
+
+
+
+
+
+
+
+
+
+
+
   useEffect(() => {
     if (source === 'project') {
       console.log('hello', fullCs)
@@ -377,7 +449,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
   }
 
   const handleChange1 = (id, column, value) => {
-    console.log('latest check', value)
+    console.log('latest check',column, value)
 
     setRows(
       rows.map((row) => (row.id === id ? { ...row, [column]: value } : row))
@@ -979,7 +1051,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                     value={row?.units?.value}
                                     onChange={(e) => {
                                       const selectedOptionObject =
-                                        unitsCancellation.find(
+                                        unitsCancellationA.find(
                                           (option) =>
                                             option.value === e.target.value
                                         )
@@ -990,7 +1062,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                       )
                                     }}
                                   >
-                                    {unitsCancellation.map((option) => (
+                                    {unitsCancellationA.map((option) => (
                                       <MenuItem
                                         key={option.value}
                                         value={option.value}
@@ -1038,7 +1110,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                     value={row?.gst?.value}
                                     onChange={(e) => {
                                       const selectedOptionObject =
-                                        gstValesA.find(
+                                      taxA.find(
                                           (option) =>
                                             option.value === e.target.value
                                         )
@@ -1049,7 +1121,7 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
                                       )
                                     }}
                                   >
-                                    {gstValesA.map((option) => (
+                                    {taxA.map((option) => (
                                       <MenuItem
                                         key={option.value}
                                         value={option.value}

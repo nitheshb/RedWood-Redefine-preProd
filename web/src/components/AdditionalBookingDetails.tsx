@@ -28,6 +28,7 @@ import {
   getAllProjects,
   steamUsersListByRole,
   updateUnitCustomerDetailsTo,
+  streamMasters,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
@@ -66,6 +67,14 @@ const AdditonalBookingDetails = ({
   const { user } = useAuth()
   const { orgId } = user
   const [usersList, setusersList] = useState([])
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     console.log('yo yo ', selUnitDetails, leadDetailsObj2)
@@ -141,7 +150,57 @@ const AdditonalBookingDetails = ({
     designation:
       leadDetailsObj2?.designation || additionalInfo?.designation || '',
   }
+
+
+
+
+
+  const [sourceListItemsA, setSourceListItems] = useState([]);
+
+
+
+  useEffect(() => {
+    const unsubscribe = streamMasters(
+      orgId,
+      (querySnapshot) => {
+        const bankA = querySnapshot.docs.map((docSnapshot) => {
+          const x = docSnapshot.data()
+          return x
+        })
+  
+        console.log('fetched users list is', bankA)
+        // step 3: filter and set values to each title
+        if (bankA?.length > 0) {
+        
+ 
+          const qA = bankA.filter((item) => item.title === 'Lead Source')
+
+          
+          setSourceListItems(qA.sort((a, b) => {
+            return a.order - b.order;
+          }));
+          
+   
+        }
+      },
+      (error) => setRows([])
+    )
+  
+    return unsubscribe
+  }, [])
+
+
+
+
+
+
+
+
+
+
+
   // Custom PAN card validation function
+
 
   const onSubmit = async (data, resetForm) => {
     console.log('customer details form', data)
@@ -173,6 +232,15 @@ const AdditonalBookingDetails = ({
       purpose,
       referralName,
     }
+
+
+
+
+
+
+
+
+
 
     const updateDoc = {
       aggrementDetailsObj,
@@ -363,7 +431,7 @@ const AdditonalBookingDetails = ({
                                                 )
                                               }}
                                               value={formik.values.leadSource}
-                                              options={sourceList}
+                                              options={sourceListItemsA}
                                             />
                                           </div>
                                         </div>
@@ -510,3 +578,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
 }
 
 export default AdditonalBookingDetails
+function setRows(arg0: undefined[]) {
+  throw new Error('Function not implemented.')
+}
+
