@@ -1176,7 +1176,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                               <div className="flex flex-col bg-white shadow rounded-md my-1   py-1">
                                 <div className="flex flex-row justify-between px-1">
                                   <div
-                                    className={`w-full cursor-pointer  h-[80px] ${
+                                    className={` cursor-pointer  h-[80px] w-[100px] ${
                                       T_elgible_balance <= 0
                                         ? 'bg-[#CCC5F7]'
                                         : 'bg-[#F1F5F9] '
@@ -1209,7 +1209,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   </div>
                                   {/* section 2 */}
                                   <div
-                                    className={`w-full  cursor-pointer  h-[80px] ${
+                                    className={` cursor-pointer  h-[80px] w-[100px] ${
                                       finData?.man_cs_approval == 'approved'
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.man_cs_approval == 'rejected'
@@ -1245,7 +1245,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   </div>
                                   {/* section 3*/}
                                   <div
-                                    className={`w-full cursor-pointer  h-[80px] ${
+                                    className={` cursor-pointer  h-[80px] w-[100px] ${
                                       finData?.kyc_status == 'approved'
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.kyc_status == 'rejected'
@@ -1283,7 +1283,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   </div>
                                   {/* section 4*/}
                                   <div
-                                    className={`w-full cursor-pointer  h-[80px] ${
+                                    className={` cursor-pointer  h-[80px] w-[100px] ${
                                       true ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
@@ -1323,7 +1323,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full">
                                     <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
                                       Stage Balance
-                                      
+
                                     </div>
                                     <div className="text-zinc-800 text-[16px] font-bold font-['Lato'] tracking-wide">
                                     ₹

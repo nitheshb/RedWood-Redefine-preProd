@@ -9,7 +9,13 @@ import { useState, useEffect, createRef, useRef } from 'react'
 // import './ScrollHighlightNabbar.css'
 import { Dialog } from '@headlessui/react'
 import { RadioGroup } from '@headlessui/react'
-import { ChevronRightIcon, ClockIcon, DocumentIcon, CheckCircleIcon, MinusCircleIcon } from '@heroicons/react/solid'
+import {
+  ChevronRightIcon,
+  ClockIcon,
+  DocumentIcon,
+  CheckCircleIcon,
+  MinusCircleIcon,
+} from '@heroicons/react/solid'
 import { Checkbox, LinearProgress } from '@mui/material'
 import { Timestamp } from 'firebase/firestore'
 import { Form, Formik, Field } from 'formik'
@@ -87,12 +93,15 @@ const CostBreakUpSheet = ({
   const [showGstCol, setShowGstCol] = useState(true)
 
   const [newPlotCostSheetA, setNewPlotCostSheetA] = useState([])
+  const [newConstCostSheetA, setNewConstCostSheetA] = useState([])
   const [newPlotCsObj, setNewPlotCsObj] = useState([])
   const [newPlotPS, setNewPlotPS] = useState([])
   const [newConstructCsObj, setNewConstructCsObj] = useState([])
   const [newConstructCostSheetA, setNewConstructCostSheetA] = useState([])
   const [newConstructPS, setNewConstructPS] = useState([])
   const [newAdditonalChargesObj, setNewAdditonalChargesObj] = useState([])
+  const [newAdditonalConstChargesObj, setNewAdditonalConstChargesObj] =
+    useState([])
   const [StatusListA, setStatusListA] = useState([])
   const [reviewLinks, setReviewLinks] = useState([])
   const [leadPayload, setLeadPayload] = useState({})
@@ -101,6 +110,7 @@ const CostBreakUpSheet = ({
   const [partATotal, setPartATotal] = useState(0)
   const [partBTotal, setPartBTotal] = useState(0)
   const [partCTotal, setPartCTotal] = useState(0)
+  const [partDTotal, setPartDTotal] = useState(0)
 
   const [customerInfo, setCustomerInfo] = useState({})
   const [additionalInfo, setAdditonalInfo] = useState({})
@@ -233,22 +243,21 @@ const CostBreakUpSheet = ({
           value: 'customerDetails',
           logo: 'FireIcon',
           color: ' bg-violet-500',
-          text:'Applicant details, contacts, etc',
+          text: 'Applicant details, contacts, etc',
         },
         {
           label: 'Additonal Info',
           value: 'additonalInfo',
           logo: 'FireIcon',
           color: ' bg-violet-500',
-          text:'Source, Buy Purpose...',
-
+          text: 'Source, Buy Purpose...',
         },
         {
           label: 'Cost Sheet',
           value: 'costsheet',
           logo: 'RefreshIcon',
           color: ' bg-violet-500',
-          text: 'Rate pre sqft, gst, discount..'
+          text: 'Rate pre sqft, gst, discount..',
         },
 
         {
@@ -256,14 +265,14 @@ const CostBreakUpSheet = ({
           value: 'payment_schedule',
           logo: 'FireIcon',
           color: ' bg-violet-500',
-          text: 'Dates, start, end ...'
+          text: 'Dates, start, end ...',
         },
         {
           label: 'Booking Summary',
           value: 'booking_summary',
           logo: 'FireIcon',
           color: ' bg-violet-500',
-          text: 'Overview, review, approve...'
+          text: 'Overview, review, approve...',
         },
         {
           label: 'Confirm Booking',
@@ -472,58 +481,66 @@ const CostBreakUpSheet = ({
               <section className="flex flex-row-reverse">
                 {['unitBookingMode', 'unitBlockMode'].includes(actionMode) && (
                   <div className="flex flex-col  w-[250px] pt-4 px-2 bg-white h-screen">
-                      <div className="mt-1">
-        <div className="flex flex-row align-middle justify-between  mb-1">
-          <h6 className="font-bodyLato font-semibold text-sm">
-            {'Booking'}
-          </h6>
-          <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
-          {stepIndx} of {StatusListA?.length} completed!
-          </span>
-        </div>
-        <LinearProgress
-          variant="determinate"
-          color="warning"
-          value={
-            stepIndx * 16.666
-          }
-          sx={{
-            backgroundColor: '#e5eaf2',
-            borderRadius: '6px',
-            height: '7px',
-            '& .MuiLinearProgress-bar': {
-              backgroundColor: '#8B5CF6'  // or any other color you prefer for the filled part
-            }
-          }}
-          style={{
-            backgroundColor: '#E5EAF2',
-            borderRadius: '6px',
-            height: '7px',
-          }}
-        />
-      </div>
+                    <div className="mt-1">
+                      <div className="flex flex-row align-middle justify-between  mb-1">
+                        <h6 className="font-bodyLato font-semibold text-sm">
+                          {'Booking'}
+                        </h6>
+                        <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
+                          {stepIndx} of {StatusListA?.length} completed!
+                        </span>
+                      </div>
+                      <LinearProgress
+                        variant="determinate"
+                        color="warning"
+                        value={stepIndx * 16.666}
+                        sx={{
+                          backgroundColor: '#e5eaf2',
+                          borderRadius: '6px',
+                          height: '7px',
+                          '& .MuiLinearProgress-bar': {
+                            backgroundColor: '#8B5CF6', // or any other color you prefer for the filled part
+                          },
+                        }}
+                        style={{
+                          backgroundColor: '#E5EAF2',
+                          borderRadius: '6px',
+                          height: '7px',
+                        }}
+                      />
+                    </div>
 
-
-<ol className="relative text-gray-500 border-s border-[#DDD6FE]  mt-6 ml-3">
-{StatusListA?.map((statusFlowObj, i) => {
-                  return (    <li className={`${i+1 === StatusListA.length ? 'mb-0' :'mb-6' } ms-4 cursor-pointer`} key={i}
-                    onClick={() => setStatusFun(i, statusFlowObj.value)}
-
-                  >
-        <span className="absolute flex items-center justify-center w-7 h-7 bg-[#DDD6FE] rounded-full -start-4 ring-4 ring-white mt-[px] ">
-          <span className='text-[11px] font-bold'>{i+1}</span>
-            {/* <svg className="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                    <ol className="relative text-gray-500 border-s border-[#DDD6FE]  mt-6 ml-3">
+                      {StatusListA?.map((statusFlowObj, i) => {
+                        return (
+                          <li
+                            className={`${
+                              i + 1 === StatusListA.length ? 'mb-0' : 'mb-6'
+                            } ms-4 cursor-pointer`}
+                            key={i}
+                            onClick={() => setStatusFun(i, statusFlowObj.value)}
+                          >
+                            <span className="absolute flex items-center justify-center w-7 h-7 bg-[#DDD6FE] rounded-full -start-4 ring-4 ring-white mt-[px] ">
+                              <span className="text-[11px] font-bold">
+                                {i + 1}
+                              </span>
+                              {/* <svg className="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
             </svg> */}
-        </span>
-        <div className='ml-1'>
-        <span className="text-[12px]  font-bold    -[2px] rounded-lg flex flex-row text-[#000] ">
+                            </span>
+                            <div className="ml-1">
+                              <span className="text-[12px]  font-bold    -[2px] rounded-lg flex flex-row text-[#000] ">
                                 {statusFlowObj.label}
-                            {  onStep != statusFlowObj.value ? <MinusCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-gray-400" /> : <CheckCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-green-500" /> }
-
-        </span>
-        <p className=" text-[9px]">{statusFlowObj?.text}</p>
-        {/* {statusFlowObj.value == 'costsheet' && (
+                                {onStep != statusFlowObj.value ? (
+                                  <MinusCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-gray-400" />
+                                ) : (
+                                  <CheckCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-green-500" />
+                                )}
+                              </span>
+                              <p className=" text-[9px]">
+                                {statusFlowObj?.text}
+                              </p>
+                              {/* {statusFlowObj.value == 'costsheet' && (
                               <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
                                 {netTotal && !isNaN(netTotal)
                                   ? `₹${netTotal.toLocaleString('en-IN')} `
@@ -536,14 +553,11 @@ const CostBreakUpSheet = ({
                             {statusFlowObj.value == 'payment_schedule' && (
                               <PaymentScheduleStats newPlotPS={newPlotPS} />
                             )}*/}
-        </div>
-    </li>
-                  )})}
-
-</ol>
-
-
-
+                            </div>
+                          </li>
+                        )
+                      })}
+                    </ol>
 
                     {/* <ScrollHighlightNabbar navHeader={reviewLinks} /> */}
                   </div>
@@ -614,8 +628,18 @@ const CostBreakUpSheet = ({
                                       setNewPlotCsObj={setNewPlotCsObj}
                                       newPlotCsObj={newPlotCsObj}
                                       costSheetA={newPlotCostSheetA}
+                                      constructCostSheetA={newConstCostSheetA}
+                                      setConstructCostSheetA={
+                                        setNewConstCostSheetA
+                                      }
+                                      newAdditonalConstChargesObj={
+                                        newAdditonalConstChargesObj
+                                      }
                                       setAddiChargesObj={
                                         setNewAdditonalChargesObj
+                                      }
+                                      setNewAdditonalConstChargesObj={
+                                        setNewAdditonalConstChargesObj
                                       }
                                       setCostSheetA={setNewPlotCostSheetA}
                                       setNewPS={setNewPlotPS}
@@ -626,72 +650,15 @@ const CostBreakUpSheet = ({
                                       partATotal={partATotal}
                                       partBTotal={partBTotal}
                                       partCTotal={partCTotal}
+                                      partDTotal={partDTotal}
                                       setPartATotal={setPartATotal}
                                       setPartBTotal={setPartBTotal}
                                       setPartCTotal={setPartCTotal}
+                                      setPartDTotal={setPartDTotal}
                                       showOnly={onStep}
                                     />
                                   )}
-                                  {csMode === 'plot_cs' && (
-                                    <CostBreakUpPdf
-                                      formik={formik}
-                                      projectDetails={projectDetails}
-                                      csMode={csMode}
-                                      setCostSheet={setCostSheet}
-                                      costSheet={costSheet}
-                                      // costSheetA={costSheetA}
-                                      pdfExportComponent={pdfExportComponent}
-                                      selPhaseObj={selPhaseObj}
-                                      leadDetailsObj1={leadDetailsObj1}
-                                      selUnitDetails={selUnitDetails}
-                                      setNewPlotCsObj={setNewPlotCsObj}
-                                      newPlotCsObj={newPlotCsObj}
-                                      costSheetA={newPlotCostSheetA}
-                                      setAddiChargesObj={
-                                        setNewAdditonalChargesObj
-                                      }
-                                      setCostSheetA={setNewPlotCostSheetA}
-                                      setNewPS={setNewPlotPS}
-                                      newPlotPS={newPlotPS}
-                                      showGstCol={showGstCol}
-                                      netTotal={netTotal}
-                                      setNetTotal={setNetTotal}
-                                      partATotal={partATotal}
-                                      partBTotal={partBTotal}
-                                      partCTotal={partCTotal}
-                                      setPartATotal={setPartATotal}
-                                      setPartBTotal={setPartBTotal}
-                                      setPartCTotal={setPartCTotal}
-                                      showOnly={onStep}
-                                      stepIndx={stepIndx}
-                                      StatusListA={StatusListA}
-                                    />
-                                  )}
-                                  {csMode === 'construct_cs' && (
-                                    <CostBreakUpPdfConstruct
-                                      projectDetails={projectDetails}
-                                      csMode={csMode}
-                                      // costSheetA={costSheetA}
-                                      pdfExportComponent={
-                                        pdfExportComponentConstruct
-                                      }
-                                      selPhaseObj={selPhaseObj}
-                                      leadDetailsObj1={leadDetailsObj1}
-                                      selUnitDetails={selUnitDetails}
-                                      setNewConstructCsObj={
-                                        setNewConstructCsObj
-                                      }
-                                      newConstructCsObj={newConstructCsObj}
-                                      newConstructCostSheetA={
-                                        newConstructCostSheetA
-                                      }
-                                      setCostSheetA={setNewConstructCostSheetA}
-                                      costSheetA={newConstructCostSheetA}
-                                      setNewPS={setNewConstructPS}
-                                      setNewConstructPS={setNewConstructPS}
-                                      newConstructPS={newConstructPS}
-                                    />
-                                  )}
+
                                 </section>
 
                                 <div className="flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
@@ -775,19 +742,19 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
               )} */}
                   {['customerDetails', 'allsheets'].includes(onStep) && (
                     <>
-                    <AddApplicantDetails
-                      currentMode={actionMode}
-                      leadPayload={leadPayload}
-                      setLeadPayload={setLeadPayload}
-                      setCustomerInfo={setCustomerInfo}
-                      customerInfo={customerInfo}
-                      setOnStep={setOnStep}
-                      source="Booking"
-                      stepIndx={stepIndx}
-                      StatusListA={StatusListA}
-                      selUnitDetails={selUnitDetails}
-                      title="Booking Form"
-                    />
+                      <AddApplicantDetails
+                        currentMode={actionMode}
+                        leadPayload={leadPayload}
+                        setLeadPayload={setLeadPayload}
+                        setCustomerInfo={setCustomerInfo}
+                        customerInfo={customerInfo}
+                        setOnStep={setOnStep}
+                        source="Booking"
+                        stepIndx={stepIndx}
+                        StatusListA={StatusListA}
+                        selUnitDetails={selUnitDetails}
+                        title="Booking Form"
+                      />
                     </>
                   )}
                   {['additonalInfo'].includes(onStep) && (
