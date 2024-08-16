@@ -1437,7 +1437,7 @@ if (title === 'Villa Type Category') {
   const createDBFun2 = () => {
     // get all the data dataObj
     // insert data to firebase db
-    dataMapCopy?.map((dataObj) => {
+    InitialSetup?.map((dataObj) => {
       // console.log('dataObj', dataObj)
       const data = dataObj?.data?.map((data1, i) => {
         const uId = uuidv4()
