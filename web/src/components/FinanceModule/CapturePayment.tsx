@@ -525,35 +525,7 @@ const CaptureUnitPayment = ({
                                               />
                                             </div>
 
-                                            <div className="w-full lg:w-12/12 px-3">
-                                              <div className="relative w-full mb-5">
-                                                {[
-                                                  50000, 100000, 150000, 200000,
-                                                  500000,
-                                                ].map((value, i) => (
-                                                  <span
-                                                    className={` mr-2 border rounded-md px-2 py-2 cursor-pointer hover:bg-violet-400 hover:text-white text-sm ${
-                                                      paymentModex === value
-                                                        ? 'bg-violet-400 text-white'
-                                                        : ''
-                                                    }`}
-                                                    key={i}
-                                                    onClick={() => {
-                                                      // setPaymentModex(dat.value)
-                                                      formik.setFieldValue(
-                                                        'amount',
-                                                        value
-                                                      )
-                                                    }}
-                                                  >
-                                                    ₹
-                                                    {value?.toLocaleString(
-                                                      'en-IN'
-                                                    )}
-                                                  </span>
-                                                ))}
-                                              </div>
-                                            </div>
+
                                           </section>
                                           <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
                                             <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">

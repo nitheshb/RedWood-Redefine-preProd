@@ -336,162 +336,162 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     if (data?.title === 'Planning Authority') {
       const updatedArr = approvalAuthorityA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setapprovalAuthority(updatedArr);
     }
-  
+
     if (data?.title === 'State') {
       const updatedArr = statesListA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setstatesList(updatedArr);
     }
-  
+
     if (data?.title === 'Charges For') {
       const updatedArr = costSheetAdditionalChargesA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setCostSheetAdditionalCharges(updatedArr);
     }
-  
+
     if (data?.title === 'Category') {
       const updatedArr = csSectionsA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setCsSections(updatedArr);
     }
-  
+
     if (data?.title === 'Cost Type') {
       const updatedArr = unitsCancellationA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setUnitsCancellation(updatedArr);
     }
-  
+
     if (data?.title === 'Payment Stage') {
       const updatedArr = paymentScheduleA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setPaymentSchedule(updatedArr);
     }
-  
+
     if (data?.title === 'Type') {
       const updatedArr = unitTypeListA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setUnitTypeList(updatedArr);
     }
-  
+
     if (data?.title === 'Facing') {
       const updatedArr = facingTypeListA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setFacingTypeList(updatedArr);
     }
-  
+
     if (data?.title === 'Type/BedRooms') {
       const updatedArr = bedRoomsListA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setBedRoomsList(updatedArr);
     }
-  
+
     if (data?.title === 'Bathrooms') {
       const updatedArr = bathTypeListA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setBathTypeList(updatedArr);
     }
-  
+
     if (data?.title === 'Car Parking') {
       const updatedArr = carParkingListA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setCarParkingList(updatedArr);
     }
-  
+
     if (data?.title === 'Status') {
       const updatedArr = statusListA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setStatusList(updatedArr);
     }
-  
+
     if (data?.title === 'Mortgage Type') {
       const updatedArr = mortgageTypeA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setMortgageType(updatedArr);
     }
-  
+
     if (data?.title === 'Lead Source') {
       const updatedArr = sourceListItemsA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
       setSourceListItems(updatedArr);
     }
-  
+
     if (data?.title === 'Booking By') {
       const updatedArr = bookingByA.map(item =>
         item.id === data.id ? {
-          ...item, 
-          label: value, 
+          ...item,
+          label: value,
           value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
         } : item
       );
@@ -499,7 +499,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     }
 
 
-  
+
 
 
 
@@ -720,9 +720,9 @@ useEffect(() => {
         const rA = bankA.filter((item) => item.title === 'Booking By')
         const sA = bankA.filter((item) => item.title === 'Villa Type Category');
 
-    
 
-        
+
+
 
 
         setTaxA(cA.sort((a, b) => {
@@ -738,51 +738,51 @@ useEffect(() => {
         setCostSheetAdditionalCharges(fA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setCsSections(gA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setUnitsCancellation(hA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setPaymentSchedule(iA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setUnitTypeList(jA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setFacingTypeList(kA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setBedRoomsList(lA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setBathTypeList(mA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setCarParkingList(nA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setStatusList(oA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setMortgageType(pA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setSourceListItems(qA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setBookingBy(rA.sort((a, b) => {
           return a.order - b.order;
         }));
@@ -791,7 +791,7 @@ useEffect(() => {
           return a.order - b.order;
 
         }));
-        
+
 
 
 
@@ -826,7 +826,7 @@ useEffect(() => {
   }, [])
   useEffect(() => {
     console.log('taxA', taxA)
-    
+
     setDataMapCopy(dataMapCopy1)
     // step 2: add each title useState value
   }, [taxA, statesListA, approvalAuthorityA,
@@ -988,10 +988,10 @@ if (title === 'Villa Type Category') {
       data: costSheetAdditionalChargesA,
       description: 'NA',
     },
-    { 
-      title: 'Category', 
-      data: csSections, 
-      description: 'NA' 
+    {
+      title: 'Category',
+      data: csSections,
+      description: 'NA'
     },
     { title: 'Cost Type', data: unitsCancellation, description: 'NA' },
     { title: 'Payment Stage', data: paymentScheduleA, description: 'NA' },
@@ -1054,7 +1054,7 @@ if (title === 'Villa Type Category') {
       });
       setapprovalAuthority(setOrder);
     }
-  
+
     if (title === 'State') {
       const updatedArr = statesListA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1062,7 +1062,7 @@ if (title === 'Villa Type Category') {
       });
       setstatesList(setOrder);
     }
-  
+
     if (title === 'Charges For') {
       const updatedArr = costSheetAdditionalChargesA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1070,7 +1070,7 @@ if (title === 'Villa Type Category') {
       });
       setCostSheetAdditionalCharges(setOrder);
     }
-  
+
     if (title === 'Category') {
       const updatedArr = csSectionsA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1078,7 +1078,7 @@ if (title === 'Villa Type Category') {
       });
       setCsSections(setOrder);
     }
-  
+
     if (title === 'Cost Type') {
       const updatedArr = unitsCancellationA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1086,7 +1086,7 @@ if (title === 'Villa Type Category') {
       });
       setUnitsCancellation(setOrder);
     }
-  
+
     if (title === 'Payment Stage') {
       const updatedArr = paymentScheduleA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1094,7 +1094,7 @@ if (title === 'Villa Type Category') {
       });
       setPaymentSchedule(setOrder);
     }
-  
+
     if (title === 'Type') {
       const updatedArr = unitTypeListA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1102,7 +1102,7 @@ if (title === 'Villa Type Category') {
       });
       setUnitTypeList(setOrder);
     }
-  
+
     if (title === 'Facing') {
       const updatedArr = facingTypeListA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1110,7 +1110,7 @@ if (title === 'Villa Type Category') {
       });
       setFacingTypeList(setOrder);
     }
-  
+
     if (title === 'Type/BedRooms') {
       const updatedArr = bedRoomsListA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1118,7 +1118,7 @@ if (title === 'Villa Type Category') {
       });
       setBedRoomsList(setOrder);
     }
-  
+
     if (title === 'Bathrooms') {
       const updatedArr = bathTypeListA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1126,7 +1126,7 @@ if (title === 'Villa Type Category') {
       });
       setBathTypeList(setOrder);
     }
-  
+
     if (title === 'Car Parking') {
       const updatedArr = carParkingListA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1134,7 +1134,7 @@ if (title === 'Villa Type Category') {
       });
       setCarParkingList(setOrder);
     }
-  
+
     if (title === 'Status') {
       const updatedArr = statusListA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1142,7 +1142,7 @@ if (title === 'Villa Type Category') {
       });
       setStatusList(setOrder);
     }
-  
+
     if (title === 'Mortgage Type') {
       const updatedArr = mortgageTypeA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1150,7 +1150,7 @@ if (title === 'Villa Type Category') {
       });
       setMortgageType(setOrder);
     }
-  
+
     if (title === 'Lead Source') {
       const updatedArr = sourceListItemsA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1158,7 +1158,7 @@ if (title === 'Villa Type Category') {
       });
       setSourceListItems(setOrder);
     }
-  
+
     if (title === 'Booking By') {
       const updatedArr = bookingByA.filter(item => item.id !== dataObj.id);
       const setOrder = updatedArr.map((item, i) => {
@@ -1166,6 +1166,7 @@ if (title === 'Villa Type Category') {
       });
       setBookingBy(setOrder);
     }
+
 
     if (title === 'Villa Type Category') {
       const updatedArr = VillaCsSectionsA.filter(item => item.id !== dataObj.id);
@@ -1178,10 +1179,10 @@ if (title === 'Villa Type Category') {
 
 
 
-    
 
-  
-  
+
+
+
 
   }
 
@@ -1258,7 +1259,7 @@ if (title === 'Villa Type Category') {
     if (title === 'Booking By') {
       newDataIs.push(...bookingByA);
     }
-    
+
 
     newDataIs.map((item) => {
       upsertMasterOption(orgId, item.id, item,enqueueSnackbar)
