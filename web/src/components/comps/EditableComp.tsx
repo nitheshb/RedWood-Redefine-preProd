@@ -256,7 +256,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           const x = docSnapshot.data()
           return x
         })
-  
+
         console.log('fetched users list is', bankA)
         // step 3: filter and set values to each title
         if (bankA?.length > 0) {
@@ -269,30 +269,30 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           setTaxA(cA.sort((a, b) => {
             return a.order - b.order
           }))
-        
-      
-      
+
+
+
           setCostSheetAdditionalCharges(fA.sort((a, b) => {
             return a.order - b.order;
           }));
-          
+
           setCsSections(gA.sort((a, b) => {
             return a.order - b.order;
           }));
-          
+
           setUnitsCancellation(hA.sort((a, b) => {
             return a.order - b.order;
           }));
-          
+
           setPaymentSchedule(iA.sort((a, b) => {
             return a.order - b.order;
-          })); 
-        
+          }));
+
         }
       },
       (error) => setRows([])
     )
-  
+
     return unsubscribe
   }, [])
 
@@ -439,7 +439,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
   }
 
   const handleChange1 = (id, column, value) => {
-    console.log('latest check', value)
+    console.log('latest check',column, value)
 
     setRows(
       rows.map((row) => (row.id === id ? { ...row, [column]: value } : row))

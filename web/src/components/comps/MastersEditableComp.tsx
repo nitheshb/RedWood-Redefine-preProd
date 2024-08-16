@@ -1437,6 +1437,8 @@ if (title === 'Villa Type Category') {
   const createDBFun2 = () => {
     // get all the data dataObj
     // insert data to firebase db
+    console.log('Clicked masters', dataMapCopy)
+
     InitialSetup?.map((dataObj) => {
       // console.log('dataObj', dataObj)
       const data = dataObj?.data?.map((data1, i) => {
@@ -1697,12 +1699,12 @@ if (title === 'Villa Type Category') {
             </div>
           </div>
         </div>
-        <div className="">
+        <div className="cursor-pointer" onClick={() => createDBFun2()}>
           <div className="mb-4 mt-2">
             <div className="inline">
-              <div className="" onClick={() => createDBFun2()}>
+              <div className="cursor-pointer" >
                 <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                  Initial Setup <abbr title="required"></abbr>
+                  Initial Masters setup <abbr title="required"></abbr>
                 </label>
               </div>
 
