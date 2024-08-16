@@ -12,14 +12,6 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 
-// import unitTypeList from '../AddUnit';
-// import facingTypeList from '../AddUnit';
-// import bedRoomsList from '../AddUnit';
-// import bathTypeList from '../AddUnit';
-// import carParkingList from '../AddUnit';
-// import statusList from '../AddUnit';
-
-// import mortgageType from '../AddUnit';
 
 import {
   approvalAuthority,
@@ -52,14 +44,10 @@ import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 
 import { gstValesPartA } from '../../../../../RedefineV2/web/src/constants/projects'
-// import WarnPopUpNew from '../SiderForm/WarnPopUp'
 
 import WarningModel from './warnPopUp'
 import WarnPopUp from './warnPopUp'
-
-// import './styles.css'
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
-  // width: '170px',
   fontSize: '13px',
   '&.MuiInputBase-root': {
     width: '100%',
@@ -375,9 +363,11 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
     if (phase?.projectType?.name === 'Villas') {
       setCsCategoryOptionsA(VillaCsSections)
     } else {
-      setCsCategoryOptionsA(csSections)
+      setCsCategoryOptionsA(csSectionsA)
     }
-  }, [phase])
+    console.log('csCategoryOptionsA set to:', phase?.projectType?.name === 'Villas' ? VillaCsSections : csSectionsA)
+
+  }, [phase,csSectionsA])
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
 
   const handleChange = (id, field, value) => {
@@ -528,24 +518,24 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
 
   const crmItems = ['Lead Source', 'Booking By']
 
-  const dataMap: { [key: string]: { label: string }[] } = {
-    'Planning Authority': approvalAuthority,
-    State: statesList,
-    'Charges For': costSheetAdditionalChargesA,
-    Category: csSections,
-    'Cost Type': unitsCancellation,
-    'Tax Rate': gstValesA,
-    'Payment Stage': paymentScheduleA,
-    Type: unitTypeList,
-    Facing: facingTypeList,
-    'Type/BedRooms': bedRoomsList,
-    Bathrooms: bathTypeList,
-    'Car Parking': carParkingList,
-    Status: statusList,
-    'Mortgage Type': mortgageType,
-    'Lead Source': sourceListItems,
-    'Booking By': [],
-  }
+  // const dataMap: { [key: string]: { label: string }[] } = {
+  //   'Planning Authority': approvalAuthority,
+  //   State: statesList,
+  //   'Charges For': costSheetAdditionalChargesA,
+  //   Category: csSections,
+  //   'Cost Type': unitsCancellation,
+  //   'Tax Rate': gstValesA,
+  //   'Payment Stage': paymentScheduleA,
+  //   Type: unitTypeList,
+  //   Facing: facingTypeList,
+  //   'Type/BedRooms': bedRoomsList,
+  //   Bathrooms: bathTypeList,
+  //   'Car Parking': carParkingList,
+  //   Status: statusList,
+  //   'Mortgage Type': mortgageType,
+  //   'Lead Source': sourceListItems,
+  //   'Booking By': [],
+  // }
 
   const [activeItem, setActiveItem] = useState<string | null>(null)
   const contentRefs = useRef<{ [key: string]: HTMLElement | null }>({})
@@ -1109,6 +1099,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                                     defaultValue={row?.gst?.value}
                                     value={row?.gst?.value}
                                     onChange={(e) => {
+                                      console.log('taxA', e.target.value)
                                       const selectedOptionObject =
                                       taxA.find(
                                           (option) =>

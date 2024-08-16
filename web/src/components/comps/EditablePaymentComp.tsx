@@ -466,7 +466,23 @@ const EditablePaymentTable = ({
                                 className="hover:bg-gray-100 transition-colors duration-150 ease-in-out"
                               >
                                 <td className="border-b border-[#e0e0e0] px-2 w-[300px]">
-                                  <StyledSelect
+                                  <section className="flex flex-row">
+                                    <input
+                                      type="text"
+                                      value={row?.stage?.label}
+                                      onChange={(e) => {
+                                        const rawValue = e.target.value.replace(
+                                          /,/g,
+                                          ''
+                                        )
+                                        const chargesForDropDown = {label: rawValue, value: rawValue}
+                                        handleChange1(row.id, 'stage', chargesForDropDown)
+                                      }}
+                                      className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                    />
+                                  
+                                  </section>
+                                  {/* <StyledSelect
                                     disableUnderline={true}
                                     defaultValue={row?.stage?.value}
                                     value={row?.stage?.value}
@@ -508,7 +524,7 @@ const EditablePaymentTable = ({
                                             </MenuItem>
                                           )
                                         )}
-                                  </StyledSelect>
+                                  </StyledSelect> */}
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
                                   <StyledSelect
