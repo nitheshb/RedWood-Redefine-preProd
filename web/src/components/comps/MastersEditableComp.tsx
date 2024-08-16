@@ -328,7 +328,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     // step 6 : check title update only that value
     if(data?.title === 'Tax Rate'){
       const updatedArr = taxA.map(item =>
-        item.id === data.id ? {...item, label: value, value: value.toLowerCase().replace(/[^a-z0-9]+/g).replace(/%/g, '')} : item
+        item.id === data.id ? {...item, label: value, value: value.toLowerCase().replace("%", "")} : item
       );
       setTaxA(updatedArr)
     }
@@ -338,7 +338,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setapprovalAuthority(updatedArr);
@@ -349,7 +349,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setstatesList(updatedArr);
@@ -360,7 +360,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setCostSheetAdditionalCharges(updatedArr);
@@ -371,7 +371,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setCsSections(updatedArr);
@@ -382,7 +382,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setUnitsCancellation(updatedArr);
@@ -393,7 +393,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setPaymentSchedule(updatedArr);
@@ -404,7 +404,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setUnitTypeList(updatedArr);
@@ -415,7 +415,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setFacingTypeList(updatedArr);
@@ -426,7 +426,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setBedRoomsList(updatedArr);
@@ -437,7 +437,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setBathTypeList(updatedArr);
@@ -448,7 +448,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setCarParkingList(updatedArr);
@@ -459,7 +459,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setStatusList(updatedArr);
@@ -470,7 +470,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setMortgageType(updatedArr);
@@ -481,7 +481,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setSourceListItems(updatedArr);
@@ -492,7 +492,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         item.id === data.id ? {
           ...item,
           label: value,
-          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, '')
+          value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", "")
         } : item
       );
       setBookingBy(updatedArr);
@@ -853,7 +853,7 @@ useEffect(() => {
       id: uid,
       title: title,
       myId: '2c7bcd74-d334-471e-9138-5de5c96ee484',
-      value: newValue.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/%/g, ''),
+      value: newValue.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace("%", ""),
       label: newValue,
       order: order + 1
     }

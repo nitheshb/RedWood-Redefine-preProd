@@ -1099,6 +1099,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                                     defaultValue={row?.gst?.value}
                                     value={row?.gst?.value}
                                     onChange={(e) => {
+                                      console.log('taxA', e.target.value)
                                       const selectedOptionObject =
                                       taxA.find(
                                           (option) =>

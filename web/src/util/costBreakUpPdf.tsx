@@ -238,7 +238,7 @@ const CostBreakUpPdf = ({
       additonalChargesObj?.map((data, inx) => {
         let total = 0
         let gstTotal = 0
-        const isChargedPerSqft = ['costpersqft', 'cost_per_sqft'].includes(data?.units.value)
+        const isChargedPerSqft = ['costpersqft', 'cost_per_sqft', 'price_per_sft'].includes(data?.units.value)
         // const gstTaxIs =
         //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
         const gstPercent =
@@ -265,7 +265,7 @@ const CostBreakUpPdf = ({
 
         gstTotal = Math.round(total * gstPercent)
 
-        console.log('myvalue is ', data)
+        console.log('myvalue is ', data, gstPercent)
         data.TotalSaleValue = total
         data.gst.label = gstTaxIs
         // data.gst.value = gstTotal
@@ -276,7 +276,7 @@ const CostBreakUpPdf = ({
       constructOtherChargesObj?.map((data, inx) => {
         let total = 0
         let gstTotal = 0
-        const isChargedPerSqft = ['costpersqft', 'cost_per_sqft'].includes(data?.units.value)
+        const isChargedPerSqft = ['costpersqft', 'cost_per_sqft', 'price_per_sft'].includes(data?.units.value)
         // const gstTaxIs =
         //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
         const gstPercent =
@@ -361,7 +361,9 @@ const CostBreakUpPdf = ({
           TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
         },
       ]
+      if(selPhaseObj?.projectType?.name === 'Villas'){
       setPSPayload(ConstructPayScheduleObj)
+      }
       const constructionSqftRate = selUnitDetails?.construct_price_sqft || 0
       const constructionArea = selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0
       constructionCS = [
@@ -626,7 +628,7 @@ const CostBreakUpPdf = ({
     setPartATotal(partATotal)
     setPartCTotal(partCTotal)
     setPartDTotal(partDTotal)
-    setNetTotal(partATotal || 0 + partBTotal || 0 + partCTotal || 0 + partDTotal || 0)
+    setNetTotal((partATotal || 0) + (partBTotal || 0) + (partCTotal || 0) + (partDTotal || 0))
     selPhaseObj?.paymentScheduleObj?.map((data) => {
       if (data.stage?.value === 'on_booking') {
         setPlotBookingAdv(data?.percentage)
@@ -1661,7 +1663,7 @@ const CostBreakUpPdf = ({
 
                                 <tr className="h-[32px]">
                                   <th className="text-[12px] px-2  text-left text-gray-800 ">
-                                    Plot Value Total Rs.:
+                                   {selPhaseObj?.projectType?.name === 'Apartment' ? 'Flat Value Total Rs.:' : 'Plot Value Total'}
                                   </th>
                                   <td className="text-[12px] px-2  text-right text-gray-400 "></td>
                                   <th className="text-[12px] px-2  text-right text-gray-800 ">
