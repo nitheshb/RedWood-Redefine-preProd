@@ -643,7 +643,9 @@ const CostBreakUpSheet = ({
                                       }
                                       setCostSheetA={setNewPlotCostSheetA}
                                       setNewPS={setNewPlotPS}
+                                      setNewConstructPS={setNewConstructPS}
                                       newPlotPS={newPlotPS}
+
                                       showGstCol={showGstCol}
                                       netTotal={netTotal}
                                       setNetTotal={setNetTotal}
@@ -813,6 +815,8 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       setCostSheetA={setNewPlotCostSheetA}
                       setNewPS={setNewPlotPS}
                       newPlotPS={newPlotPS}
+                      newConstructPS={newConstructPS}
+
                       showGstCol={showGstCol}
                       netTotal={netTotal}
                       setNetTotal={setNetTotal}

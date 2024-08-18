@@ -167,25 +167,25 @@ const AdditonalBookingDetails = ({
           const x = docSnapshot.data()
           return x
         })
-  
+
         console.log('fetched users list is', bankA)
         // step 3: filter and set values to each title
         if (bankA?.length > 0) {
-        
- 
+
+
           const qA = bankA.filter((item) => item.title === 'Lead Source')
 
-          
+
           setSourceListItems(qA.sort((a, b) => {
             return a.order - b.order;
           }));
-          
-   
+
+
         }
       },
       (error) => setRows([])
     )
-  
+
     return unsubscribe
   }, [])
 
@@ -417,25 +417,7 @@ const AdditonalBookingDetails = ({
                                     <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
 
                                     <div className="flex flex-wrap mt-4">
-                                      <div className="w-full lg:w-4/12 px-4">
-                                        <div className="relative w-full">
-                                          <div className="w-full flex flex-col mb-3">
-                                            <CustomSelect
-                                              name="leadSource"
-                                              label="Lead Source"
-                                              className="input"
-                                              onChange={(value) => {
-                                                formik.setFieldValue(
-                                                  'leadSource',
-                                                  value.value
-                                                )
-                                              }}
-                                              value={formik.values.leadSource}
-                                              options={sourceListItemsA}
-                                            />
-                                          </div>
-                                        </div>
-                                      </div>
+
 
                                       <div className="w-full lg:w-4/12 px-4">
                                         <div className="relative w-full mb-3">
@@ -489,7 +471,25 @@ const AdditonalBookingDetails = ({
                                           </span>
                                         </div>
                                       </div>
-
+                                      <div className="w-full lg:w-4/12 px-4">
+                                        <div className="relative w-full">
+                                          <div className="w-full flex flex-col mb-3">
+                                            <CustomSelect
+                                              name="leadSource"
+                                              label="Lead Source"
+                                              className="input"
+                                              onChange={(value) => {
+                                                formik.setFieldValue(
+                                                  'leadSource',
+                                                  value.value
+                                                )
+                                              }}
+                                              value={formik.values.leadSource}
+                                              options={sourceListItemsA}
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
                                       <div className="w-full lg:w-4/12 px-4">
                                         <div className="relative w-full">
                                           <div className="w-full flex flex-col mb-3">

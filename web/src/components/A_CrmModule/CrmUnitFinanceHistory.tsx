@@ -17,7 +17,7 @@ const CrmUnitFinanceHistory = ({
 
 
       <div className="mt-2">
-        <section className="mr-2 flex flex-col bg-[#F6F7FF] from-green-50 to-amber-50  bg-[#e3d5c0] bg-[#6E3AB0] bg-[#ffeeea] p-3 border border-[#e5e7f8] rounded-md ">
+        <section className="mr-2 flex flex-col bg-[#F0F1FF] from-green-50 to-amber-50  bg-[#F0F1FF] bg-[#F0F1FF] bg-[#F0F1FF] p-3 border border-[#e5e7f8] rounded-md ">
           <div>
             <div className="flex flex-row ">
                 <img
@@ -87,7 +87,7 @@ const CrmUnitFinanceHistory = ({
                       </td> */}
 
                       <td className="text-[12px] text-center text-gray-800 ">
-                      <span className="bg-[#f3c69e] text-[10px] px-2 py-[2px] rounded-2xl font-bold">{d1?.status}</span>
+                      <span className="bg-[#D9D8FF] text-[10px] px-2 py-[2px] rounded-2xl font-bold">{d1?.status}</span>
                       </td>
 
 

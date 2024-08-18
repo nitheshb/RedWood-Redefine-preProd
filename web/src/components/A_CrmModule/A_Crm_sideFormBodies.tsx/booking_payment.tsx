@@ -46,6 +46,7 @@ import CrmUnitPaymentGraph from '../CrmUnitPaymentGraph'
 import PaymentDocUtility from './paymentDocUtility'
 import CrmUnitPaymentSchedule from '../CrmPaymentSchedule'
 import CrmUnitFinanceHistory from '../CrmUnitFinanceHistory'
+import SiderForm from 'src/components/SiderForm/SiderForm'
 
 // import BankSelectionSwitchDrop from './BankSelectionDroopDown'
 
@@ -60,6 +61,7 @@ export default function BookingPaymentFlow({
   const [newPayment, SetNewPayment] = useState(false)
   const [allPayment, SetAllPayment] = useState('active_payments')
   const [unitTransactionsA, setUnitTransactionsA] = useState([])
+  const [openCapturePayment, setOpenCapturePayment] = useState(false)
 
   const [postSanctionReview, SetPostSanctionReview] = useState('In-Review')
   const [S1, setS1] = useState(false)
@@ -160,6 +162,9 @@ export default function BookingPaymentFlow({
     )
     await SetAllPayment('active_payments')
   }
+  const openPaymentFun = () => {
+    setOpenCapturePayment(true)
+  }
   return (
     <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
@@ -202,43 +207,6 @@ export default function BookingPaymentFlow({
       <div className="flex flex-row">
         {/* 4 */}
         <div
-          className={`border border-gray-200 w-[154px] cursor-pointer mt-2 group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
-            allPayment === 'all_payments'
-              ? 'bg-gradient-to-r from-violet-100 to-pink-100'
-              : ''
-          }`}
-          onClick={() => {
-            SetAllPayment('all_payments')
-          }}
-        >
-          <div
-            className={`flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-gray-50 ${
-              allPayment === 'all_payments' ? 'group-hover:bg-white' : ''
-            }  `}
-          >
-            <PlusIcon
-              className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 ${
-                allPayment === 'all_payments' ? 'text-indigo-600' : ''
-              }`}
-              aria-hidden="true"
-            />
-          </div>
-          <div className="flex-auto">
-            <a
-              className={`block font-semibold text-gray-900 ${
-                allPayment === 'all_payments' ? 'text-indigo-600' : ''
-              } group-hover:text-indigo-600`}
-            >
-              {'All Payments'}
-              <span className="absolute inset-0" />
-            </a>
-            {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
-          </div>
-        </div>
-
-        <div
           className={`border border-gray-200 w-[154px] cursor-pointer mt-2 ml-2 group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
             allPayment === 'new_payments'
               ? 'bg-gradient-to-r from-violet-100 to-pink-100'
@@ -246,6 +214,9 @@ export default function BookingPaymentFlow({
           }`}
           onClick={() => {
             SetAllPayment('new_payments')
+            openPaymentFun()
+
+
           }}
         >
           <div
@@ -733,6 +704,15 @@ export default function BookingPaymentFlow({
           )}
         </section>
       </div>
+      <SiderForm
+        open={openCapturePayment}
+        setOpen={setOpenCapturePayment}
+        title={'capturePayment'}
+        unitsViewMode={false}
+        widthClass="max-w-xl"
+        selUnitDetails={selUnitPayload}
+        paymentCaptureFun={paymentCaptureFun}
+      />
     </section>
   )
 }
