@@ -33,6 +33,8 @@ const BookingSummaryView = ({
   setAddiChargesObj,
   setNewPS,
   newPlotPS,
+  newConstructPS,
+
   newPlotCostSheetA,
   setNewPlotCostSheetA,
   setNewPlotPS,
@@ -1179,6 +1181,56 @@ const BookingSummaryView = ({
                                     </tbody>
                                   </table>
                                 </div>
+                                {selPhaseObj?.projectType?.name === 'Villas' && (
+                                  <div className=" mt-4 border rounded-lg shadow-md overflow-hidden ">
+                                  <table className="w-full border-b border-dashed">
+                                    <thead className="">
+                                      {' '}
+                                      <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D]  font-[600]  ">
+                                        <th className="w-[50%] px-2   text-left  tracking-wide  text-[12px]   ">
+                                          Particulars
+                                        </th>
+                                        <th className="w-[30%] px-2   text-left  tracking-wide  text-[12px] ">
+                                          Payment Timeline
+                                        </th>
+                                        <th className="w-[20%] px-2   text-right  tracking-wide  text-[12px]">
+                                          Total inc GST
+                                        </th>
+                                      </tr>
+                                    </thead>
+
+                                    <tbody>
+                                      {newConstructPS?.map((d1, inx) => (
+                                        <tr
+                                          key={inx}
+                                          className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
+                                        >
+                                          <th className=" px-2  text-[11px] text-left  font-normal tracking-wide uppercase ">
+                                            {d1?.stage?.label}
+                                          </th>
+                                          <td className="text-[11px] px-2  text-left font-normal tracking-wide uppercase ">
+                                            {d1?.description}
+                                          </td>
+                                          <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
+                                            ₹
+                                            {d1?.value?.toLocaleString('en-IN')}
+                                          </td>
+                                        </tr>
+                                      ))}
+
+                                      <tr className="h-[32px]">
+                                        <th className="text-[12px] px-2  text-left text-gray-800 ">
+                                          Plot Value Total Rs.:
+                                        </th>
+                                        <td className="text-[12px] px-2  text-right text-gray-400 "></td>
+                                        <th className="text-[12px] px-2  text-right text-gray-800 ">
+                                          ₹{netTotal?.toLocaleString('en-IN')}
+                                        </th>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                                )}
                               </section>
                             )}
                           </div>

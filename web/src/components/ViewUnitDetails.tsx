@@ -422,7 +422,7 @@ const ViewUnitDetails = ({
                             )|| data?.unitDetail?.area?.toLocaleString(
                               'en-IN'
                             ) } */}
-                            {data?.unitDetail?.builtup_area?.toLocaleString('en-IN')}
+                            {data?.unitDetail?.builtup_area?.toLocaleString('en-IN') || data?.unitDetail?.construct_area?.toLocaleString('en-IN')}
 
                           </div>
                         </section>
