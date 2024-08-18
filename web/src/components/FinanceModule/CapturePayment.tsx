@@ -8,7 +8,7 @@ import { format } from 'date-fns'
 import { setHours, setMinutes } from 'date-fns'
 import { arrayUnion } from 'firebase/firestore'
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
-import { Form, Formik } from 'formik'
+import { Form, Formik,  ErrorMessage, useField } from 'formik'
 import { useSnackbar } from 'notistack'
 import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
@@ -53,9 +53,9 @@ const CaptureUnitPayment = ({
   newPlotCsObj,
   newPlotCostSheetA,
   newPlotPS,
+  newConstructPS,
   newConstructCsObj,
   newConstructCostSheetA,
-  newConstructPS,
   phase,
   projectDetails,
   stepIndx,
@@ -72,6 +72,9 @@ const CaptureUnitPayment = ({
   const [paymentScheduleA, setPaymentScheduleA] = useState([])
   const [payingForA, setPayingForA] = useState([])
   const [creditNotersA, setCreditNoters] = useState([])
+  const [bankAccounts, setBankAccounts] = useState([])
+
+
 
   // const [formattedValue, setFormattedValue] = useState('');
 
@@ -89,6 +92,7 @@ const CaptureUnitPayment = ({
 
   const [commentAttachUrl, setCommentAttachUrl] = useState('')
   const [cmntFileType, setCmntFileType] = useState('')
+  const [amount, setAmount] = useState(0)
 
   const { enqueueSnackbar } = useSnackbar()
   const { uid } = useParams()
@@ -108,8 +112,14 @@ const CaptureUnitPayment = ({
     getProjectFun()
   }, [])
   useEffect(() => {
+    let fullPs = []
+    if(newPlotPS){
+  fullPs = [...newPlotPS, ...newConstructPS]
+    }else {
+      fullPs = selUnitDetails?.fullPs
+    }
     setPaymentScheduleA(
-      newPlotPS?.map((user) => {
+      fullPs?.map((user) => {
         user.label = user?.stage?.label
         return user
       })
@@ -429,9 +439,18 @@ const CaptureUnitPayment = ({
                                         <div className="flex flex-wrap mt-3">
                                           <div className="justify-center w-full mx-auto"></div>
                                           <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
-                                            <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
-                                              <span className="text-sm font-semibold text-gray-500">
+                                            <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md flex flex-row justify-between">
+                                              <span className="text-sm font-semibold text-gray-500 w-2/3">
                                                 Paying For
+                                              </span>
+                                              <span className="text-sm font-semibold text-gray-500 w-1/3 text-right">
+                                                Total
+                                              </span>
+                                              <span className="text-sm font-semibold text-gray-500 w-1/3 text-right">
+                                                Balance
+                                              </span>
+                                              <span className="text-sm font-semibold text-gray-500 w-1/3 text-right">
+                                                Paying Now
                                               </span>
                                             </article>
 
@@ -446,14 +465,20 @@ const CaptureUnitPayment = ({
                                                             className="flex flex-row border-b pb-2 justify-between"
                                                             key={i}
                                                           >
-                                                            <span>
+                                                            <span className="w-2/3">
                                                               {
                                                                 paying?.stage
                                                                   ?.label
                                                               }
                                                             </span>{' '}
-                                                            <span>
-                                                              {paying?.value}
+                                                            <span className="w-1/3  text-right">
+                                                              {paying?.value?.toLocaleString('en-IN')}
+                                                            </span>
+                                                            <span className="w-1/3 text-right">
+                                                              {paying?.balance?.toLocaleString('en-IN') || paying?.value?.toLocaleString('en-IN')}
+                                                            </span>
+                                                            <span className="w-1/3 text-right">
+                                                              {paying?.balance?.toLocaleString('en-IN') || 0}
                                                             </span>
                                                           </div>
                                                         )
@@ -461,10 +486,23 @@ const CaptureUnitPayment = ({
                                                     )}
                                                   </div>
                                                 </div>
+                                                {bankAccounts.length > 0 && (
+                            <div className="flex  space-x-2 w-full text-xs">
+                              {bankAccounts.map((data, i) => (
+                                <section
+                                  key={i}
+                                  className="border px-4 py-2 rounded-lg"
+                                >
+                                  <div>{data?.label}</div>
+                                  <div>{data?.accountName}</div>
+                                </section>
+                              ))}
+                            </div>
+                          )}
                                                 <div className="w-full  px-3 mt-3">
                                                   <div className=" mb-4 w-full">
                                                     <MultiSelectMultiLineField
-                                                      label="Select Payment Schedule"
+                                                      label="Select Paying For"
                                                       name="towardsBankDocId"
                                                       onChange={(payload) => {
                                                         // console.log(
@@ -488,6 +526,21 @@ const CaptureUnitPayment = ({
                                                         //   'towardsBankDocId',
                                                         //   id
                                                         // )
+                                                        console.log('changed value is ', payload)
+                                  const { value, id, accountName } = payload
+                                  console.log('selected value is ', payload)
+                                  // formik.setFieldValue('builderName', accountName)
+                                  // formik.setFieldValue('landlordBankDocId', id)
+                                  const x = payingForA
+                                  const exists = payingForA.find(
+                                    (item) => item.id === payload.id
+                                  )
+                                  if (!exists && value != 'addNewOption') {
+                                    x.push(payload)
+                                    setPayingForA(x)
+                                  }
+
+                                  formik.setFieldValue('towardsBankDocId', '')
                                                       }}
                                                       value={
                                                         formik.values
@@ -507,14 +560,20 @@ const CaptureUnitPayment = ({
                                               </span>
                                             </article>
                                             <div className="w-full lg:w-12/12 px-3">
-                                              <div className="relative w-full mb-3">
+                                              < div className="relative w-full mb-3">
                                                 <TextField2
                                                   label="Amount"
                                                   name="amount"
                                                   type="number"
+                                                  // onChange={(e) => {
+                                                  //   setAmount(e.target.value)
+                                                  //   console.log('changed value is ', e.target.value)
+                                                  //   formik.setFieldValue('amount', e.target.value)
+                                                  // }}
                                                 />
                                               </div>
                                             </div>
+
                                             <div className="text-xs px-3 mb-3">
                                               {' '}
                                               Paying{' '}

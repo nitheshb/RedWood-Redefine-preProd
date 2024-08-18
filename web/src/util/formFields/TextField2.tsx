@@ -7,7 +7,7 @@ import { ErrorMessage, useField } from 'formik'
 
 
 
-export const TextField2 = ({ label, ...props }) => {
+export const TextField2 = ({ label,onChange, ...props }) => {
 
 
   const [field, meta] = useField(props)
@@ -23,9 +23,10 @@ export const TextField2 = ({ label, ...props }) => {
         autoComplete="off"
         {...field}
         {...props}
-       
+        onChange={onChange || field.onChange}
+
       />
-   
+
 
        <label
         htmlFor={field.name}
@@ -40,7 +41,7 @@ export const TextField2 = ({ label, ...props }) => {
           className="error-message text-red-700 text-xs p-1 mx-auto"
         />
     </div>
-  
+
   )
 }
 

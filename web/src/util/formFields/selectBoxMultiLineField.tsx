@@ -211,7 +211,7 @@ export const MultiSelectMultiLineField = ({
   onChange,
   value,
 }) => {
-  const placeholder = <span>Select Bank Account</span>
+  const placeholder = <span>{label}</span>
   const defaultValue = (options, value) => {
     console.log('check it ', options, value)
     //return (options ? options.find((option) => option.value === value) : '') || ''

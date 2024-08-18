@@ -45,6 +45,7 @@ const CostBreakUpPdf = ({
   newPlotCostSheetA,
   setNewPlotCostSheetA,
   setNewPlotPS,
+  setNewConstructPS,
   netTotal,
   setNetTotal,
   partATotal,
@@ -67,6 +68,9 @@ const CostBreakUpPdf = ({
   const ref = createRef()
 
   useEffect(() => {
+    if (newPlotPS.length>2) {
+      console.log('sel unti detials ', selUnitDetails, newPlotPS[1]['value'])
+    }
     console.log('sel unti detials ', selUnitDetails, newPlotPS)
   }, [newPlotPS])
   const [initialValuesA, setInitialValuesA] = useState({})
@@ -117,6 +121,10 @@ const CostBreakUpPdf = ({
     setNewSqftPrice(costSheet.length > 0 ? Number(costSheet[0]['charges']) : 0)
 
   }, [newSqftPrice])
+  useEffect(()=>{
+    setNewConstructPS(psConstructPayload)
+
+  }, [psConstructPayload])
   useEffect(() => {
     const costSqftA = selPhaseObj?.fullCs.filter(
       (row) => row.component.value === 'sqft_cost_tax'
@@ -361,9 +369,7 @@ const CostBreakUpPdf = ({
           TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
         },
       ]
-      if(selPhaseObj?.projectType?.name === 'Villas'){
-      setPSPayload(ConstructPayScheduleObj)
-      }
+
       const constructionSqftRate = selUnitDetails?.construct_price_sqft || 0
       const constructionArea = selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0
       constructionCS = [
@@ -399,102 +405,6 @@ const CostBreakUpPdf = ({
                 const_gstValue,
         },
 
-      ]
-    } else {
-      // setPartBPayload(ConstructOtherChargesObj)
-      setPSPayload(ConstructPayScheduleObj)
-      x = [
-        {
-          myId: '1',
-          units: {
-            value: 'fixedcost',
-            label: 'Fixed cost',
-          },
-          component: {
-            value: 'villa_construct_cost',
-            label: 'Villa Construction Cost  ',
-          },
-          others: selUnitDetails?.construct_price,
-          charges: Number.isFinite(y) ? y : selUnitDetails?.construct_price,
-          TotalSaleValue: Number.isFinite(y)
-            ? Number(selUnitDetails?.builtup_area * y)
-            : Number(
-                selUnitDetails?.builtup_area * selUnitDetails?.construct_price
-              ),
-          // charges: y,
-          gst: {
-            label: '0.05',
-            value: Number.isFinite(y)
-              ? Number(selUnitDetails?.builtup_area * y)
-              : Math.round(
-                  selUnitDetails?.builtup_area * selUnitDetails?.construct_price
-                ) * 0.05,
-          },
-          TotalNetSaleValueGsT:
-            (Number.isFinite(y)
-              ? Number(selUnitDetails?.builtup_area * y)
-              : Number(
-                  selUnitDetails?.builtup_area * selUnitDetails?.construct_price
-                )) +
-            (Number.isFinite(y)
-              ? Number(selUnitDetails?.builtup_area * y)
-              : Math.round(
-                  selUnitDetails?.builtup_area * selUnitDetails?.construct_price
-                ) * 0.05),
-        },
-        // {
-        //   myId: '2',
-        //   units: {
-        //     value: 'fixedcost',
-        //     label: 'Fixed cost',
-        //   },
-        //   component: {
-        //     value: 'Bescom_Sewage_Charges',
-        //     label: 'Bescom & Sewage Charges ',
-        //   },
-        //   others: selUnitDetails?.PLC,
-        //   charges: Number.isFinite(y) ? y : selUnitDetails?.PLC || 200,
-        //   TotalSaleValue: Math.round(
-        //     selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //   ),
-        //   gst: {
-        //     label: '0.05',
-        //     value: Math.round(
-        //       Number(
-        //         selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //       ) * 0.05
-        //     ),
-        //   },
-        //   TotalNetSaleValueGsT:
-        //     Math.round(
-        //       selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //     ) +
-        //     Math.round(
-        //       Number(
-        //         selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //       ) * 0.05
-        //     ),
-        // },
-        // {
-        //   myId: '3',
-        //   units: {
-        //     value: 'fixedcost',
-        //     label: 'Fixed cost',
-        //   },
-        //   component: {
-        //     value: 'clubhouse',
-        //     label: 'Club House ',
-        //   },
-        //   others: selUnitDetails?.PLC,
-        //   charges: 0,
-        //   TotalSaleValue: 354000,
-        //   // charges: y,
-        //   gst: {
-        //     label: '0.05',
-        //     value: Math.round(354000 * 0.0),
-        //   },
-        //   TotalNetSaleValueGsT: 354000,
-        // },
       ]
     }
     // const x = costSheetA
@@ -536,25 +446,26 @@ const CostBreakUpPdf = ({
   }, [netTotal, plotBookingAdv, csMode])
 
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
+    const flatCost = Number(partATotal + partBTotal )
+    const constCost = Number( (partCTotal || 0) + (partDTotal || 0))
+    console.log('flat fixed values ', psPayload)
+    const flatFixedCosts = psPayload.reduce((acc, item) =>
+      item.units.value === 'fixedcost' ? acc + item.value : acc, 0);
+    const constFixedCosts = selPhaseObj?.ConstructPayScheduleObj.reduce((acc, item) =>
+      item.units.value === 'fixedcost' ? acc + item.value : acc, 0);
+
     const newPs = psPayload?.map((d1) => {
       const z = d1
       // if (csMode === 'plot_cs') {
       if ('plot_cs' === 'plot_cs') {
-        z.value = ['on_booking'].includes(d1?.stage?.value)
+        z.value = ['fixedcost'].includes(d1?.units?.value)
           ? Number(d1?.percentage)
-          : Math.round((netTotal - plotBookingAdv) * (d1?.percentage / 100))
-        if (['on_booking'].includes(d1?.stage?.value)) {
+          : Number(((flatCost - flatFixedCosts) * (d1?.percentage / 100)).toFixed(2))
+        if (['fixedcost'].includes(d1?.units?.value)) {
           z.elgible = true
           z.elgFrom = Timestamp.now().toMillis()
           return z
         }
-        return z
-      } else {
-        z.value = ['Total_Other_Charges_Amenities:\t'].includes(
-          d1?.stage?.value
-        )
-          ? Number(partBTotal)
-          : Math.round((netTotal - partBTotal) * (d1?.percentage / 100))
         return z
       }
     })
@@ -565,21 +476,15 @@ const CostBreakUpPdf = ({
       const z = d1
       // if (csMode === 'plot_cs') {
       if ('plot_cs' === 'plot_cs') {
-        z.value = ['on_booking'].includes(d1?.stage?.value)
+        z.value = ['fixedcost'].includes(d1?.units?.value)
           ? Number(d1?.percentage)
-          : Math.round((netTotal - plotBookingAdv) * (d1?.percentage / 100))
-        if (['on_booking'].includes(d1?.stage?.value)) {
+          // : Math.round((constCost - constFixedCosts) * (d1?.percentage / 100))
+          : Number(((constCost - constFixedCosts) * (d1?.percentage / 100)).toFixed(2))
+        if (['fixedcost'].includes(d1?.units?.value)) {
           z.elgible = true
           z.elgFrom = Timestamp.now().toMillis()
           return z
         }
-        return z
-      } else {
-        z.value = ['Total_Other_Charges_Amenities:\t'].includes(
-          d1?.stage?.value
-        )
-          ? Number(partBTotal)
-          : Math.round((netTotal - partBTotal) * (d1?.percentage / 100))
         return z
       }
     })
@@ -1088,7 +993,7 @@ const CostBreakUpPdf = ({
                                   <thead>
                                     <tr className="h-8 mb-1 border-none w-[100%] bg-[#E8E6FE] text-[#0D027D]  font-[600] ">
                                       <th className="min-w-[35%] px-2  text-[12px] text-left text-[#0D027D]  tracking-wide">
-                                        Construction Particulars
+                                        Construction ({selUnitDetails?.construct_area?.toLocaleString('en-IN') || 0} sqft)
                                       </th>
                                       <th className="w-[15%] px-2 text-[12px] text-right  tracking-wide">
                                         Rate/Sqft
@@ -1667,7 +1572,8 @@ const CostBreakUpPdf = ({
                                   </th>
                                   <td className="text-[12px] px-2  text-right text-gray-400 "></td>
                                   <th className="text-[12px] px-2  text-right text-gray-800 ">
-                                    ₹{netTotal?.toLocaleString('en-IN')}
+                                    ₹{((partATotal|| 0) + (partBTotal||0))?.toLocaleString('en-IN')}
+
                                   </th>
                                 </tr>
                               </tbody>
@@ -1763,7 +1669,8 @@ const CostBreakUpPdf = ({
                                     </th>
                                     <td className="text-[12px] px-2  text-right text-gray-400 "></td>
                                     <th className="text-[12px] px-2  text-right text-gray-800 ">
-                                      ₹{netTotal?.toLocaleString('en-IN')}
+                                    ₹{((partCTotal|| 0) + (partDTotal||0))?.toLocaleString('en-IN')}
+
                                     </th>
                                   </tr>
                                 </tbody>
