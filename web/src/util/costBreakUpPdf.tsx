@@ -451,7 +451,7 @@ const CostBreakUpPdf = ({
     console.log('flat fixed values ', psPayload)
     const flatFixedCosts = psPayload.reduce((acc, item) =>
       item.units.value === 'fixedcost' ? acc + item.value : acc, 0);
-    const constFixedCosts = selPhaseObj?.ConstructPayScheduleObj.reduce((acc, item) =>
+    const constFixedCosts = selPhaseObj?.ConstructPayScheduleObj?.reduce((acc, item) =>
       item.units.value === 'fixedcost' ? acc + item.value : acc, 0);
 
     const newPs = psPayload?.map((d1) => {
