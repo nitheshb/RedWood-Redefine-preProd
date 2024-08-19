@@ -120,7 +120,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                             ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
                           </td>
                           <td className="w-[15%] text-[12px] text-right text-gray-700 px-2 bg-[#F0f1ff]">
-                            ₹{d1?.gst?.value?.toLocaleString('en-IN')}
+                            ₹{d1?.gstValue?.toLocaleString('en-IN')}
                           </td>
                           <td className="w-[15%] text-[12px] text-right  text-gray-800 bg-[#F0f1ff] px-2">
                             ₹{' '}
@@ -173,28 +173,36 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                           <td className="text-[12px] w-[15%] text-right text-gray-700 px-2 bg-[#F0f1ff]">
                             ₹{Number(d1?.charges)?.toLocaleString('en-IN')}
                           </td>
-                          <td className="text-[12px] w-[30%] text-right text-gray-700 bg-[#F0f1ff] ">
-                            {d1?.description}
+
+                          <td className="w-[15%] text-[12px] text-right text-gray-700 bg-[#F0f1ff] ">
+                            ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
+                          </td>
+                          <td className="w-[15%] text-[12px] text-right text-gray-700 px-2 bg-[#F0f1ff]">
+                            ₹{d1?.gstValue?.toLocaleString('en-IN')}
                           </td>
 
                           <td className="text-[12px] w-[15%] text-right text-gray-700  bg-[#F0f1ff] px-2">
                             ₹{' '}
-                            {Number(
+                            {/* {Number(
                               computeTotal(
                                 d1,
                                 selCustomerPayload?.area
                                   ?.toString()
                                   ?.replace(',', '')
                               )
-                            )?.toLocaleString('en-IN')}
+                            )?.toLocaleString('en-IN')} */}
+                            {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
+
                           </td>
                         </tr>
                       ))}
                       <tr className="border-b-[0.05px] border-gray-300 h-[32px]  ">
-                        <th className="text-[12px] text-left text-gray-700  "></th>
-                        <td className="text-[12px] text-right text-gray-400   "></td>
-                        <td className="text-[12px] text-right text-gray-800 font-bold   ">
-                          Total (B) :
+                      <th className="w-[40%] text-[10px] text-left text-gray-800 "></th>
+                        <td className="w-[15%] font-bold text-[10px] text-right text-gray-800  "></td>
+                        <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800   "></td>
+                        <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800 pr-2  ">
+                          {' '}
+                          Total (B)
                         </td>
                         <td className="text-[12px] text-right text-gray-800 font-bold  px-2">
                           ₹{partBTotal?.toLocaleString('en-IN')}

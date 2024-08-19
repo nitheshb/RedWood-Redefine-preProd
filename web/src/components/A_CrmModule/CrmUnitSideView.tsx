@@ -747,7 +747,7 @@ export default function UnitSideViewCRM({
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
-        
+
 
         updateUnitStatus(
           orgId,
@@ -1143,13 +1143,13 @@ return
                     />
                     <p className="text-md font-bold text-[23px] tracking-tight uppercase font-body  ml-2 mt-2">
                       {selCustomerPayload?.unit_no}
-                      <span className="ml-2 font-normal text-green-800 text-xs px-2 py-[2px] bg-green-300 rounded-xl">
+                      {/* <span className="ml-2 font-normal text-green-800 text-xs px-2 py-[2px] bg-green-300 rounded-xl">
                         Phase:{selCustomerPayload?.phaseId}{' '}
                         <span className="text-[23px] mb-2">.</span>
                         <span className="ml1">{selProjectIs?.value}</span>
-                      </span>
+                      </span> */}
 
-                      <span className=" ml-1 text-[12px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
+                      <span className=" ml-2 text-[12px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
                         Booked: {prettyDate(selCustomerPayload?.booked_on || 0)}
                       </span>
                     </p>
