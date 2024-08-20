@@ -373,20 +373,65 @@ const AdditonalBookingDetails = ({
                                     </div>
                                     <div className="w-full lg:w-12/12 px-4">
                                       <div className="relative w-full mb-3">
-                                        <TextField2
+                                        {/* <TextField2
                                           label="Source of payment/source"
                                           name="sourceOfPay"
                                           type="text"
-                                        />
+                                        /> */}
+
+
+<CustomSelect
+  name="sourceOfPay"
+  label="Source of payment/source"
+  className="input"
+  onChange={(value) => {
+    formik.setFieldValue('sourceOfPay', value.value);
+  }}
+  value={formik.values.sourceOfPay}
+  options={[
+    { value: 'self-funding', label: 'Self Funding' },
+    { value: 'bank-loan', label: 'Bank loan' },
+  ]}
+/>
+
                                       </div>
                                     </div>
                                     <div className="w-full lg:w-12/12 px-4">
                                       <div className="relative w-full mb-3">
-                                        <TextField2
+                                        {/* <TextField2
                                           label="Purpose of purchase"
                                           name="purpose"
                                           type="text"
-                                        />
+                                        /> */}
+
+<CustomSelect
+  name="purpose"
+  label="Purpose of purchase"
+  className="input"
+  onChange={(value) => {
+    formik.setFieldValue('purpose', value.value);
+  }}
+  value={formik.values.purpose}
+  options={[
+    { value: 'primary-residence', label: 'Primary Residence' },
+    { value: 'second-home', label: 'Second Home' },
+    { value: 'investment', label: 'Investment' },
+    { value: 'rental', label: 'Rental Property' },
+    { value: 'retirement-home', label: 'Retirement Home' },
+    { value: 'commercial-use', label: 'Commercial Use' },
+    { value: 'land-acquisition', label: 'Land Acquisition' },
+    { value: 'development', label: 'Development' },
+    { value: 'gift', label: 'Gift' },
+    { value: 'grant', label: 'Grant' },
+    { value: 'corporate-funding', label: 'Corporate Funding' },
+    { value: 'government-assistance', label: 'Government Assistance' },
+    { value: 'partnership', label: 'Partnership' },
+    { value: 'other', label: 'Other' },
+  ]}
+/>
+
+
+
                                       </div>
                                     </div>
 
