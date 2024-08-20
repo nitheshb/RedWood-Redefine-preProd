@@ -371,7 +371,7 @@ const AdditonalBookingDetails = ({
                                         />
                                       </div> */}
                                     </div>
-                                    <div className="w-full lg:w-12/12 px-4">
+                                    <div className="w-1/2 lg:w-12/12 px-4">
                                       <div className="relative w-full mb-3">
                                         {/* <TextField2
                                           label="Source of payment/source"
@@ -396,7 +396,7 @@ const AdditonalBookingDetails = ({
 
                                       </div>
                                     </div>
-                                    <div className="w-full lg:w-12/12 px-4">
+                                    <div className="w-1/2 lg:w-12/12 px-4">
                                       <div className="relative w-full mb-3">
                                         {/* <TextField2
                                           label="Purpose of purchase"

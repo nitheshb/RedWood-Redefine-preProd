@@ -1599,7 +1599,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     <PhoneNoField
 
         name="phoneNo3"
-        value={formik.values.phoneNo4}
+        value={formik.values.phoneNo3}
         customStyles={customPhoneNoFieldStyles}
 
         onChange={(value) => {
