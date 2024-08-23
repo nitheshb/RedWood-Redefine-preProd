@@ -64,7 +64,7 @@ const AddUnit = ({
   const handleSharingTypeChange = (e) => {
     setSelectedSharingType(e.target.value)
   }
-  
+
 
 
   const [fetchedUsersList, setfetchedUsersList] = useState([])
@@ -113,39 +113,39 @@ useEffect(() => {
         const nA = bankA.filter((item) => item.title === 'Car Parking')
         const oA = bankA.filter((item) => item.title === 'Status')
         const pA = bankA.filter((item) => item.title === 'Mortgage Type')
-      
 
-        
 
-        
+
+
+
         setUnitTypeList(jA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setFacingTypeList(kA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setBedRoomsList(lA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setBathTypeList(mA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setCarParkingList(nA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setStatusList(oA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
         setMortgageType(pA.sort((a, b) => {
           return a.order - b.order;
         }));
-        
+
       }
     },
     (error) => setRows([])
@@ -885,7 +885,7 @@ useEffect(() => {
                 // buildup_area: 0,
                 // super_build_up_area: 0,
               }}
-              validationSchema={validate_AddUnit}
+              // validationSchema={validate_AddUnit}
               onSubmit={(values, { resetForm }) => {
                 console.log('ami submitted', values)
                 if (title === 'Edit Unit') {
@@ -1617,7 +1617,7 @@ useEffect(() => {
                     </Form>
                   </section>
                 </div>
-                
+
               )}
             </Formik>
           </div>
