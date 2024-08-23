@@ -123,9 +123,13 @@ const AddApplicantDetails = ({
   const customPhoneNoFieldStyles = {
     border: 'none',
     borderRadius: '10px',
-    outline: 'none'
+    outline: 'none',
+    margin: '0',
+    padding: '0',
+    paddingLeft: '0.5rem',
+    
 
-    // Add any other custom styles you want to apply
+   
   };
 
 
@@ -1491,6 +1495,12 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
         onBlur={formik.handleBlur}
         className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none rounded-l-md focus:outline-none"
         placeholder="+91"
+        style={{
+          margin: '0',
+          padding: '0',
+          paddingLeft: '0.5rem', // Add padding-left
+        }}
+      
       />
       {formik.errors.countryCode1 && formik.touched.countryCode1 && (
         <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode1}</div>
@@ -1589,7 +1599,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     <PhoneNoField
 
         name="phoneNo3"
-        value={formik.values.phoneNo4}
+        value={formik.values.phoneNo3}
         customStyles={customPhoneNoFieldStyles}
 
         onChange={(value) => {
