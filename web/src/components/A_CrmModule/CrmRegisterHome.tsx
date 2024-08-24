@@ -890,9 +890,9 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     <div className="text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
                                       Paid: ₹
                                       {(
-                                        finData?.T_review ||
-                                        0 + finData?.T_approved ||
-                                        0
+                                       (finData?.T_review ||
+                                        0 )+ (finData?.T_approved ||
+                                        0)
                                       )?.toLocaleString('en-IN')}
                                     </div>
                                   </section>
@@ -1349,9 +1349,9 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     <div className="text-zinc-500 flex flex-row justify-end text-[11px] font-normal font-['Lato'] tracking-wide">
                                       Paid: ₹
                                       {(
-                                        finData?.T_review ||
-                                        0 + finData?.T_approved ||
-                                        0
+                                        (finData?.T_review ||
+                                        0) + (finData?.T_approved ||
+                                        0)
                                       )?.toLocaleString('en-IN')}
                                     </div>
                                   </section>
@@ -1472,9 +1472,9 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     <div className="text-zinc-500 flex flex-row justify-end text-[11px] font-normal font-['Lato'] tracking-wide">
                                       Paid: ₹
                                       {(
-                                        finData?.T_review ||
-                                        0 + finData?.T_approved ||
-                                        0
+                                        (finData?.T_review ||
+                                        0) + (finData?.T_approved ||
+                                        0)
                                       ).toLocaleString('en-IN') || 0}
                                     </div>
                                   </section>
