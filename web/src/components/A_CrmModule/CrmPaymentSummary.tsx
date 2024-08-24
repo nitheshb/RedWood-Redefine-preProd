@@ -26,8 +26,8 @@ const CrmPaymentSummary = ({ selCustomerPayload }) => {
               </h6> */}
 
               <h6 className="font-bodyLato font-semibold text-xs m-1 flex flex-col text-right">
-    
-              ₹{(selCustomerPayload?.T_review || 0 + selCustomerPayload?.T_approved || 0 )?.toLocaleString('en-IN')}
+
+              ₹{((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ))?.toLocaleString('en-IN')}
               <span className="text-[#637381] tracking-wide font-thin">Paid</span>
             </h6>
             </section>

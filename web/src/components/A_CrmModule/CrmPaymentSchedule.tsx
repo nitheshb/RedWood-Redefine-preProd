@@ -23,10 +23,10 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
   const [PSa, setPSa] = useState([])
 
 
-  
+
   // const [isOpenSideView, setIsOpenSideView] = useState(false);
-  // const [isSwitchOn, setIsSwitchOn] = useState(false); 
-  // const [isDialogOpen, setIsDialogOpen] = useState(false); 
+  // const [isSwitchOn, setIsSwitchOn] = useState(false);
+  // const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 
   // const toggleSiderForm = () => {
@@ -38,7 +38,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
   //   console.log('Confirm button clicked');
   //   setIsSwitchOn(true);
   //   setIsDialogOpen(false);
-  //   setIsOpenSideView(false); 
+  //   setIsOpenSideView(false);
   // };
 
 
@@ -46,7 +46,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
   //   console.log('Cancel button clicked');
   //   setIsSwitchOn(false);
   //   setIsDialogOpen(false);
-  //   setIsOpenSideView(false); 
+  //   setIsOpenSideView(false);
   // };
 
 
@@ -59,7 +59,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
   const [isOpenSideView, setIsOpenSideView] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [switchOn, setSwitchOn] = useState(false); 
+  const [switchOn, setSwitchOn] = useState(false);
 
 
   const toggleSiderForm = () => {
@@ -69,16 +69,16 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
 
   const handleConfirm = () => {
     if (selectedItem) {
-      setSwitchOn(true); 
+      setSwitchOn(true);
       triggerPaymentScheudlefun(selectedItem);
     }
     setIsDialogOpen(false);
-    setIsOpenSideView(false); 
+    setIsOpenSideView(false);
   };
 
 
   const handleCancel = () => {
-    setSwitchOn(false); 
+    setSwitchOn(false);
     setIsDialogOpen(false);
     setIsOpenSideView(false);
   };
@@ -129,8 +129,8 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
     setPartA(a)
     setPartB(b)
     setUnitTotal(a + b + c)
-    setReceivedTotal(selCustomerPayload?.T_received?.toLocaleString('en-IN'))
-    const paidAmount = selCustomerPayload?.T_received
+    setReceivedTotal(((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN'))
+    const paidAmount = (selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)
     let bal = 0
     let leftOver = paidAmount
     let newPaidAmount = paidAmount
@@ -330,8 +330,8 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
 
 
 
-        
-{/* 
+
+{/*
         <Switch
         checked={isOpenSideView}
         onChange={toggleSiderForm}

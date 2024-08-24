@@ -228,8 +228,11 @@ export default function TransactionUpdateSideView({
     }
   }
   const updateTnxStatus = (status, id) => {
-    const data = {status, id}
+    // const data = {status, id}
+    const data = transactionData
     data.Uuid = data?.unit_id
+    data.status = status
+    console.log('transactionData', transactionData)
     updateTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
   }
 

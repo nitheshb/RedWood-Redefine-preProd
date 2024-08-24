@@ -487,7 +487,7 @@ export const updateTransactionStatus = async (
   enqueueSnackbar
 ) => {
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
-  const { id, status, Uuid, projectId } = data1
+  const { id, status, Uuid, projectId, totalAmount } = data1
   // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
   const { data: lead_logs, error } = await supabase
     .from(`${orgId}_accounts`)
@@ -509,6 +509,28 @@ export const updateTransactionStatus = async (
         projectId: projectId || '',
       },
     ])
+    console.log('check it ', status, status === 'received',status === 'Failed', totalAmount, data1)
+    if(status === 'Failed'){
+    await updateDoc(doc(db, `${orgId}_units`, Uuid), {
+      T_review: increment(-totalAmount),
+      T_balance: increment(totalAmount),
+      T_elgible_balance: increment(totalAmount),
+      T_cancelled: increment(totalAmount),
+    })
+    await enqueueSnackbar('Marked as payment rejected', {
+      variant: 'success',
+    })
+  }
+    if(status === 'received'){
+      await updateDoc(doc(db, `${orgId}_units`, Uuid), {
+        T_review: increment(-totalAmount),
+        T_approved: increment(totalAmount),
+
+      })
+      await enqueueSnackbar('Marked as payment received', {
+        variant: 'success',
+      })
+    }
   console.log('check it ', data4, error4)
   if (lead_logs) {
     await enqueueSnackbar('Marked as Amount Recived', {
@@ -4462,12 +4484,12 @@ export const unitAuditDbFun = async (
     T_total: totalUnitCost,
     T_elgible: totalElgible,
     T_elgible_balance:
-      totalElgible - (InReviewAmount || 0 + totalApprovedAmount || 0),
+      totalElgible - ((InReviewAmount || 0) + (totalApprovedAmount || 0)),
     T_received: totalReceivedAmount,
     T_review: InReviewAmount,
     T_approved: totalApprovedAmount || 0,
     T_cancelled: totalCancelledAmount || 0,
-    T_balance: totalUnitCost - (InReviewAmount || 0 + totalApprovedAmount || 0),
+    T_balance: totalUnitCost - ((InReviewAmount || 0) + (totalApprovedAmount || 0)),
   })
 }
 export const capturePaymentS = async (
