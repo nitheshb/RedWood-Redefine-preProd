@@ -79,7 +79,7 @@ const AddPaymentDetailsForm = ({
   let T_elgible_balance = 0
   const handleClick = () => {
     console.log(' projectDetails', projectDetails)
-    confettiRef.current.fire()
+    confettiRef?.current?.fire()
   }
   useEffect(() => {
     console.log('leadDetailsObj2 are', leadDetailsObj2)
@@ -189,6 +189,7 @@ const AddPaymentDetailsForm = ({
       leadDetailsObj2,
       phase?.paymentScheduleObj
     )
+
     const { partBPayload, costSheetA } = selUnitDetails
 
     // const partBTotal = partBPayload?.reduce(
@@ -220,27 +221,27 @@ const AddPaymentDetailsForm = ({
       newAdditonalChargesObj
     )
 
-    const categorizedNewPlotPS = newPlotPS.map((item) => ({
+    const categorizedNewPlotPS = newPlotPS?.map((item) => ({
       ...item,
       category: 'plotPS',
     }))
-    const categorizedNewConstructPS = newConstructPS.map((item) => ({
+    const categorizedNewConstructPS = newConstructPS?.map((item) => ({
       ...item,
       category: 'constructPS',
-    }))
+    })) || []
     const fullPs1 = [...categorizedNewPlotPS, ...categorizedNewConstructPS]
-    const fullPs = fullPs1.map((d) => {
+    const fullPs = fullPs1?.map((d) => {
       const x = d
       x.schDate = d.schDate || Timestamp.now().toMillis()
       x.oldDate = d.schDate || Timestamp.now().toMillis()
 
       return x
     })
-    console.log('mysetup is', leadDetailsObj2, data, fullPs)
+    console.log('mysetup is', leadDetailsObj2, data, fullPs, fullPs1)
 
     const { amount } = data
     const { projectName } = projectDetails
-    fullPs.map((dataObj) => {
+    fullPs?.map((dataObj) => {
       if (dataObj?.elgible) {
         T_elgible = dataObj?.value + T_elgible
         stepsComp = stepsComp + 1
@@ -450,8 +451,8 @@ const AddPaymentDetailsForm = ({
       id,
       {
         leadId: id,
-        projectName: leadDetailsObj2?.Project,
-        ProjectId: leadDetailsObj2?.ProjectId,
+        projectName: leadDetailsObj2?.Project || projectDetails?.projectName,
+        ProjectId: leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
         // ...customerDetailsObj,
         Name: customerDetailsObj?.customerName1,
         Mobile: customerDetailsObj?.phoneNo1,
@@ -463,10 +464,10 @@ const AddPaymentDetailsForm = ({
         [`${uid}_unitDetails`]: selUnitDetails || {},
         [`${uid}_plotCS`]: newPlotCostSheetA,
         [`${uid}_AddChargesCS`]: newAdditonalChargesObj,
-        [`${uid}_constructCS`]: newConstructCostSheetA,
+        [`${uid}_constructCS`]: newConstructCostSheetA || [],
         [`${uid}_fullPs`]: fullPs,
         [`${uid}_newPlotPS`]: newPlotPS,
-        [`${uid}_newConstructPS`]: newConstructPS,
+        [`${uid}_newConstructPS`]: newConstructPS || [],
         [`${uid}_T_elgible`]: T_elgible,
         [`${uid}_stepsComp`]: stepsComp,
         [`${uid}_T_transaction`]: T_transaction,
@@ -508,10 +509,10 @@ const AddPaymentDetailsForm = ({
     // unitUpdate[`cs`] = leadDetailsObj2[`${uid}_cs`]
     unitUpdate[`plotCS`] = newPlotCostSheetA
     unitUpdate[`addChargesCS`] = newAdditonalChargesObj
-    unitUpdate[`constructCS`] = newConstructCostSheetA
+    unitUpdate[`constructCS`] = newConstructCostSheetA || []
     unitUpdate[`fullPs`] = fullPs
     unitUpdate[`plotPS`] = newPlotPS
-    unitUpdate[`constructPS`] = newConstructPS
+    unitUpdate[`constructPS`] = newConstructPS || []
     unitUpdate[`T_elgible`] = T_elgible
     unitUpdate[`stepsComp`] = stepsComp
     unitUpdate[`T_transaction`] = T_transaction
@@ -522,7 +523,7 @@ const AddPaymentDetailsForm = ({
     console.log('unit space is ', uid)
     await updateUnitAsBooked(
       orgId,
-      leadDetailsObj2?.ProjectId,
+      leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
       uid,
       id,
       unitUpdate,
@@ -603,7 +604,7 @@ const AddPaymentDetailsForm = ({
               <div>
                 <section className="flex flex-row">
                   <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
-                    Booking Amount {newPlotPS.length} {newConstructPS.length}
+                    Booking Amount
                   </h6>
                 </section>
                 <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">

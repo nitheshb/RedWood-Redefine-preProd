@@ -113,8 +113,10 @@ const CaptureUnitPayment = ({
   }, [])
   useEffect(() => {
     let fullPs = []
+    let newConstructPSA= newConstructPS || []
     if(newPlotPS){
-  fullPs = [...newPlotPS, ...newConstructPS]
+
+  fullPs = [...newPlotPS, ...newConstructPSA]
     }else {
       fullPs = selUnitDetails?.fullPs
     }
