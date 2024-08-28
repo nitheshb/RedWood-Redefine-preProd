@@ -675,7 +675,8 @@ const CostBreakUpEditor = ({
                                         setHours(setMinutes(d, 5), 12),
                                         setHours(setMinutes(d, 59), 23),
                                       ]}
-                                      dateFormat="MMMM d, yyyy"
+                                      //dateFormat="MMMM d, yyyy"
+                                      dateFormat="MMM dd, yyyy"
                                     />
                                     <span className="text-right">
                                       {d1?.description}

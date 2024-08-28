@@ -3094,7 +3094,8 @@ export default function LeadProfileSideView({
                                                     23
                                                   ),
                                                 ]}
-                                                dateFormat="MMMM d, yyyy h:mm aa"
+                                                dateFormat="MMM d, yyyy h:mm aa"
+                                                
                                               />
                                             </span>
                                           </div>
