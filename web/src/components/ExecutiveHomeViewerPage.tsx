@@ -778,7 +778,8 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         //   setHours(setMinutes(d, 59), 23),
                         // ]}
                         // dateFormat="MMM d, yyyy "
-                        dateFormat="d-MMMM-yyyy"
+                        //dateFormat="d-MMMM-yyyy"
+                        dateFormat="MMM dd, yyyy"
                       />
                     </span>
                   </label>
