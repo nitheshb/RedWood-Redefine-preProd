@@ -49,6 +49,7 @@ import {
   getCustomerDocs,
   updateLeadProject,
   getFinanceForUnit,
+  getCrmUnitById1,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
@@ -150,6 +151,7 @@ export default function CustomerSideViewCRM({
   // const [leadStatus, setLeadStatus] = useState([])
   const [selFeature, setFeature] = useState('summary')
   const [unitView, setUnitView] = useState(false)
+  const [unitsOverviewA, setUnitsOverviewA] = useState([])
 
   const [openCapturePayment, setOpenCapturePayment] = useState(false)
   const [selProjectIs, setSelProjectIs] = useState({
@@ -165,6 +167,27 @@ export default function CustomerSideViewCRM({
   useEffect(() => {
     console.log('first', selCustomerPayload)
   }, [selCustomerPayload])
+  useEffect(() => {
+    console.log('first', selCustomerPayload)
+
+ getUnitDetails()
+
+
+  }, [selCustomerPayload])
+
+  const getUnitDetails = async () => {
+    const unitDetails = []
+  const x =  await  Promise.all( selCustomerPayload.my_assets?.map(async (d) => {
+    const unit = await getCrmUnitById1(orgId, d)
+    console.log('unit is ', unit)
+    return await unit
+    }) || []  )
+    setUnitsOverviewA(x)
+  }
+  useEffect(() => {
+   console.log('value is ', unitsOverviewA)
+  }, [unitsOverviewA])
+
 
   return (
     <div
@@ -383,6 +406,90 @@ export default function CustomerSideViewCRM({
             /> */}
               </div>
             </div>
+
+
+            {selFeature === 'summary' && (
+              <div className="py-8 px-8 flex flex-col">
+
+                 {unitsOverviewA?.map((d, i) => (
+                  <div key={i} className=" cursor-pointer items-left">
+                       <section className="flex-row w-full px-3  py-2 justify-between border border-gray-200 rounded-lg">
+                                  <div className="flex flex-row">
+                                    <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
+                                      <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
+                                        {d?.unit_no}
+                                      </div>
+                                      <span
+                                        className={`items-center h-6   text-xs font-semibold text-gray-500  rounded-full
+                      `}
+                                      >
+                                        Unit No
+                                      </span>
+                                    </section>
+                                    <div className="flex flex-col ml-2 item-right">
+                                      <span
+                                        className={`items-center h-1 mt-[6px] mb-2  text-xs font-semibold text-green-600
+                      `}
+                                      >
+                                        {d?.customerDetailsObj?.customerName1 ||
+                                          'NA'}
+                                      </span>
+                                      <div className="font text-[12px] text-gray-500 tracking-wide overflow-ellipsis overflow-hidden ">
+                                        {d?.projName}
+                                      </div>
+                                      <section>
+                                        <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                          {d?.area?.toLocaleString(
+                                            'en-IN'
+                                          )}{' '}
+                                          sqft
+                                        </span>
+
+                                        <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                          {d?.facing}
+                                        </span>
+                                         <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                          {d?.status}
+                                        </span>
+                                        {/* <span className=" text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                        ₹{' '}
+                                        {finData?.sqft_rate?.toLocaleString(
+                                          'en-IN'
+                                        )}
+                                        /sqft
+                                      </span> */}
+                                      </section>
+                                    </div>
+                                  </div>
+                                </section>
+                     {/* <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                             <span className="text-blue-600"> No{d?.unit_no}</span>
+                             <span className="text-blue-600">{d?.unit_type}</span>
+                             <span className="text-blue-600">{d?.T_balance}</span>
+                             <span className="text-blue-600">{d?.T_review}</span>
+                  </div> */}
+
+                  </div>
+                ))}
+
+
+
+                <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                  <img
+                    className="w-[200px] h-[200px] inline"
+                    alt=""
+                    src="/all-complete.svg"
+                  />
+                </div>
+                <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+                  You are clean
+                </h3>
+                <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                  Sitback & Relax{' '}
+                  <span className="text-blue-600">Add Task</span>
+                </time>
+              </div>
+            )}
 
             {selFeature === 'tasks' && (
               <div className="py-8 px-8 flex flex-col items-center">
