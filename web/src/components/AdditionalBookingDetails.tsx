@@ -231,6 +231,7 @@ const AdditonalBookingDetails = ({
       sourceOfPay,
       purpose,
       referralName,
+      
     }
 
 
@@ -248,6 +249,10 @@ const AdditonalBookingDetails = ({
       industry,
       designation,
       annualIncome,
+      bookingSource,
+      bookedBy,
+      purchasePurpose,
+
     }
     setAdditonalInfo(data)
     const { id } = leadDetailsObj2
@@ -511,7 +516,8 @@ const AdditonalBookingDetails = ({
                                                 setHours(setMinutes(d, 5), 12),
                                                 setHours(setMinutes(d, 59), 23),
                                               ]}
-                                              dateFormat="d-MMMM-yyyy"
+                                              //dateFormat="d-MMMM-yyyy"
+                                              dateFormat="MMM dd, yyyy"
                                             />
                                           </span>
                                         </div>
@@ -583,7 +589,9 @@ transition
 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
  "
                         type="submit"
-                        disabled={loading}
+                        //disabled={loading}
+                        disabled={loading || formik.isSubmitting}
+
                         // onClick={() => submitFormFun(formik)}
                       >
                         {/* {loading && <Loader />} */}
@@ -601,7 +609,9 @@ transition
 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
  "
                           type="submit"
-                          disabled={loading}
+                          //disabled={loading}
+                          disabled={loading || formik.isSubmitting}
+
                           // onClick={() => submitFormFun(formik)}
                         >
                           {/* {loading && <Loader />} */}

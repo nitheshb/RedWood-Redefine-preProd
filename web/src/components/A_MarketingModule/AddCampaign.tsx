@@ -403,7 +403,8 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                                       setHours(setMinutes(d, 5), 12),
                                       setHours(setMinutes(d, 59), 23),
                                     ]}
-                                    dateFormat="MMMM d, yyyy"
+                                    //dateFormat="MMMM d, yyyy"
+                                    dateFormat="MMM dd, yyyy"
                                   />
                                 </span>
                               </div>
@@ -427,7 +428,8 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                                       setHours(setMinutes(d, 5), 12),
                                       setHours(setMinutes(d, 59), 23),
                                     ]}
-                                    dateFormat="MMMM d, yyyy"
+                                    //dateFormat="MMMM d, yyyy"
+                                    dateFormat="MMM dd, yyyy"
                                   />
                                 </span>
                               </div>

@@ -1626,7 +1626,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                       console.log('am i cleared')
                                     }}
                                     // dateFormat="MMM d, yyyy "
-                                    dateFormat="d-MMMM-yyyy"
+                                    //dateFormat="d-MMMM-yyyy"
+                                    dateFormat="MMM dd, yyyy"
                                   />
                                 </span>
                               }
@@ -2131,7 +2132,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                       console.log('am i cleared')
                                     }}
                                     // dateFormat="MMM d, yyyy "
-                                    dateFormat="d-MMMM-yyyy"
+                                    //dateFormat="d-MMMM-yyyy"
+                                    dateFormat="MMM dd, yyyy"
                                   />
                                 </span>
                               }
@@ -3052,7 +3054,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                         console.log('am i cleared')
                                       }}
                                       // dateFormat="MMM d, yyyy "
-                                      dateFormat="d-MMMM-yyyy"
+                                      //dateFormat="d-MMMM-yyyy"
+                                      dateFormat="MMM dd, yyyy"
                                     />
                                   </span>
                                 }
@@ -3516,7 +3519,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                     console.log('am i cleared')
                                   }}
                                   // dateFormat="MMM d, yyyy "
-                                  dateFormat="d-MMMM-yyyy"
+                                  //dateFormat="d-MMMM-yyyy"
+                                  dateFormat="MMM dd, yyyy"
                                 />
                               </span>
                             }
@@ -4024,7 +4028,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   onClear={() => {
                                     console.log('am i cleared')
                                   }}
-                                  dateFormat="MMM d, yyyy "
+                                  //dateFormat="MMM d, yyyy "
+                                  dateFormat="MMM dd, yyyy"
                                 />
                               </span>
                             }
