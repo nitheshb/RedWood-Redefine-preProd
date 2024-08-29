@@ -1267,7 +1267,8 @@ export default function Crm_legal_Clarity({
                                         setHours(setMinutes(d, 5), 12),
                                         setHours(setMinutes(d, 59), 23),
                                       ]}
-                                      dateFormat="MMMM d, yyyy h:mm aa"
+                                      dateFormat="MMM d, yyyy h:mm aa"
+                                      
                                     />
                                   </span>
                                 </div>

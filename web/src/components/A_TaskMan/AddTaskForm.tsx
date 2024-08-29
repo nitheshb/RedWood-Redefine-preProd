@@ -574,7 +574,8 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                                       setHours(setMinutes(d, 5), 12),
                                       setHours(setMinutes(d, 59), 23),
                                     ]}
-                                    dateFormat="MMMM d, yyyy h:mm aa"
+                                    dateFormat="MMM d, yyyy h:mm aa"
+                                    
                                   />
                                 </span>
                               </div>

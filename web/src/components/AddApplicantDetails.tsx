@@ -1283,7 +1283,8 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                                   ),
                                                 ]}
 
-                                                dateFormat="d-MMMM-yyyy"
+                                                //dateFormat="d-MMMM-yyyy"
+                                                dateFormat="MMM dd, yyyy"
                                               />
                                             </span>
                                         </div>
@@ -1680,7 +1681,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                                       value.value
                                                     )
                                                   }}
-                                                  value={formik.values.state2}
+                                                  value={formik.values.state1}
                                                   options={statesListA}
                                                 />
                                                 <p

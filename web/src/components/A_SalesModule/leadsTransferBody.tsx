@@ -1931,7 +1931,8 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                     onClear={() => {
                                       console.log('am i cleared')
                                     }}
-                                    dateFormat="MMM d, yyyy "
+                                    //dateFormat="MMM d, yyyy "
+                                    dateFormat="MMM dd, yyyy"
                                   />
                                 </span>
                               }
@@ -2850,7 +2851,8 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                       onClear={() => {
                                         console.log('am i cleared')
                                       }}
-                                      dateFormat="MMM d, yyyy "
+                                      //dateFormat="MMM d, yyyy "
+                                      dateFormat="MMM dd, yyyy"
                                     />
                                   </span>
                                 }
@@ -3313,7 +3315,8 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                   onClear={() => {
                                     console.log('am i cleared')
                                   }}
-                                  dateFormat="MMM d, yyyy "
+                                  //dateFormat="MMM d, yyyy "
+                                  dateFormat="MMM dd, yyyy"
                                 />
                               </span>
                             }
@@ -3821,7 +3824,8 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                   onClear={() => {
                                     console.log('am i cleared')
                                   }}
-                                  dateFormat="MMM d, yyyy "
+                                  //dateFormat="MMM d, yyyy "
+                                  dateFormat="MMM dd, yyyy"
                                 />
                               </span>
                             }

@@ -525,7 +525,8 @@ const AddNewDemand = ({
                                                       23
                                                     ),
                                                   ]}
-                                                  dateFormat="MMM d, yyyy"
+                                                  //dateFormat="MMM d, yyyy"
+                                                  dateFormat="MMM dd, yyyy"
                                                 />
                                               </span>
                                             </div>
