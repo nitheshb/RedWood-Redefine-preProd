@@ -50,6 +50,9 @@ import {
   updateLeadProject,
   getFinanceForUnit,
   getCrmUnitById1,
+  addPaymentReceivedEntrySup,
+  addPaymentReceivedEntry,
+  captureWalletPayment,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
@@ -152,6 +155,12 @@ export default function CustomerSideViewCRM({
   const [selFeature, setFeature] = useState('summary')
   const [unitView, setUnitView] = useState(false)
   const [unitsOverviewA, setUnitsOverviewA] = useState([])
+  const [isUnitDetailsOpen, setisUnitDetailsOpen] = useState(false)
+  const [selUnitDetails, setSelUnitDetails] = useState({})
+  const [transactionData, setTransactionData] = useState({})
+  const [selSubMenu, setSelSubMenu] = useState('summary')
+  const [selSubMenu1, setSelSubMenu1] = useState('summary')
+
 
   const [openCapturePayment, setOpenCapturePayment] = useState(false)
   const [selProjectIs, setSelProjectIs] = useState({
@@ -162,6 +171,7 @@ export default function CustomerSideViewCRM({
   const d = new window.Date()
 
   const openPaymentFun = () => {
+    setSelUnitDetails(selCustomerPayload)
     setOpenCapturePayment(true)
   }
   useEffect(() => {
@@ -180,7 +190,9 @@ export default function CustomerSideViewCRM({
   const x =  await  Promise.all( selCustomerPayload.my_assets?.map(async (d) => {
     const unit = await getCrmUnitById1(orgId, d)
     console.log('unit is ', unit)
-    return await unit
+    const y = await unit;
+    y.id = d
+    return y
     }) || []  )
     setUnitsOverviewA(x)
   }
@@ -188,7 +200,66 @@ export default function CustomerSideViewCRM({
    console.log('value is ', unitsOverviewA)
   }, [unitsOverviewA])
 
+  const viewTransaction = (docData, sideViewCategory, sideViewCategory1) => {
+    console.log('check it ', docData, sideViewCategory, sideViewCategory1)
+    setSelSubMenu(sideViewCategory)
+    setSelSubMenu1(sideViewCategory1)
+    setTransactionData(docData)
+    setisUnitDetailsOpen(!isUnitDetailsOpen)
+    setSelUnitDetails(docData)
+  }
+  const onSubmitFun = async (data, resetForm) => {
+    console.log('selected value is ', data)
 
+    // add entry in finance table for review
+    const y = await capturePayment(data, resetForm)
+    // add T_review under customer wallet
+
+
+
+    // 1)Make an entry to finance Table {source: ''}
+
+    // create customer
+
+    // update unit record with booked status
+
+    // update payment schedule
+    // log cost sheet
+    // capture transaction
+    // entry  payment log
+    // entry payment sheet
+
+
+    // const x1 =  addPaymentReceivedEntrySup(
+    //   orgId,
+    //   uid,
+    //   { leadId: 'id' },
+    //   data,
+    //   'leadsPage',
+    //   'nitheshreddy.email@gmail.com',
+    //   enqueueSnackbar
+    // )
+
+  }
+
+  const capturePayment = async (data, resetForm) => {
+    // enter payment log
+    // const x = await capturePaymentS(
+    //   orgId,
+    //   projectDetails?.uid,
+    //   selUnitDetails?.uid,
+    //   custNo,
+    //   leadDetailsObj2,
+    //   data,
+    //   user?.email,
+    //   enqueueSnackbar
+    // )
+
+    const paymentCB = await captureWalletPayment(orgId,selCustomerPayload?.id,data)
+
+
+    // await console.log('xo o is ', x)
+  }
   return (
     <div
       className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
@@ -296,7 +367,7 @@ export default function CustomerSideViewCRM({
                           openPaymentFun()
                         }}
                       >
-                        CAPTURE PAYMENT
+                        Add To Wallet
                       </div>
                       <div className="text-center items-center mr-2 mt-3"></div>
                     </div>
@@ -410,9 +481,9 @@ export default function CustomerSideViewCRM({
 
             {selFeature === 'summary' && (
               <div className="py-8 px-8 flex flex-col">
-
+                <span className='text-green-700 text-md font pb-3'>My Units</span>
                  {unitsOverviewA?.map((d, i) => (
-                  <div key={i} className=" cursor-pointer items-left">
+                  <div key={i} className=" cursor-pointer items-left" onClick={() => viewTransaction(d, 'unit_information', 'unit_information')}>
                        <section className="flex-row w-full px-3  py-2 justify-between border border-gray-200 rounded-lg">
                                   <div className="flex flex-row">
                                     <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
@@ -448,46 +519,23 @@ export default function CustomerSideViewCRM({
                                         <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {d?.facing}
                                         </span>
-                                         <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                        <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {d?.status}
                                         </span>
-                                        {/* <span className=" text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                        ₹{' '}
-                                        {finData?.sqft_rate?.toLocaleString(
-                                          'en-IN'
-                                        )}
-                                        /sqft
-                                      </span> */}
+                                      </section>
+                                      <section>
+                                        <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                          Total Stage Balance: {d?.T_elgible_balance?.toLocaleString('en-IN')}
+                                        </span>
+                                        <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                        Total Balance: {d?.T_balance?.toLocaleString('en-IN')}
+                                        </span>
                                       </section>
                                     </div>
                                   </div>
                                 </section>
-                     {/* <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                             <span className="text-blue-600"> No{d?.unit_no}</span>
-                             <span className="text-blue-600">{d?.unit_type}</span>
-                             <span className="text-blue-600">{d?.T_balance}</span>
-                             <span className="text-blue-600">{d?.T_review}</span>
-                  </div> */}
-
                   </div>
                 ))}
-
-
-
-                <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                  <img
-                    className="w-[200px] h-[200px] inline"
-                    alt=""
-                    src="/all-complete.svg"
-                  />
-                </div>
-                <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
-                  You are clean
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                  Sitback & Relax{' '}
-                  <span className="text-blue-600">Add Task</span>
-                </time>
               </div>
             )}
 
@@ -657,10 +705,25 @@ export default function CustomerSideViewCRM({
       <SiderForm
         open={openCapturePayment}
         setOpen={setOpenCapturePayment}
-        title={'capturePayment'}
+        title={'addWallet'}
         unitsViewMode={false}
         widthClass="max-w-md"
+        paymentCaptureFun={onSubmitFun}
         selUnitDetails={selCustomerPayload}
+      />
+
+      <SiderForm
+              open={isUnitDetailsOpen}
+              setOpen={setisUnitDetailsOpen}
+              title={'unitDetails_crm_view'}
+              customerDetails={selUnitDetails}
+              setSelUnitDetails={setSelUnitDetails}
+              widthClass="max-w-7xl"
+              transactionData={transactionData}
+              unitsViewMode={false}
+              selCustomerPayload={selUnitDetails}
+              selSubMenu={selSubMenu}
+              selSubMenu2={selSubMenu1}
       />
     </div>
   )

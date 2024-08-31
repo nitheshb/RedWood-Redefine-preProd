@@ -4492,6 +4492,18 @@ export const unitAuditDbFun = async (
     T_balance: totalUnitCost - ((InReviewAmount || 0) + (totalApprovedAmount || 0)),
   })
 }
+export const captureWalletPayment = async (
+  orgId,
+  projectId,
+  unitId,
+  custNo,
+  leadDetailsObj2,
+  payload,
+  by,
+  enqueueSnackbar
+) => {
+
+}
 export const capturePaymentS = async (
   orgId,
   projectId,

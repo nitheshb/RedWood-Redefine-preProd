@@ -434,6 +434,21 @@ export const paymentMode = [
     label: 'Credit Note',
   },
 ]
+export const walletMode = [
+  {
+    value: 'cheque',
+    label: 'Cheque',
+  },
+
+  {
+    value: 'Neft',
+    label: 'Neft/Rtgs',
+  },
+  {
+    value: 'online',
+    label: 'Imps/UPI',
+  }
+]
 export const demandMode = [
   {
     value: 'civil_alter',
