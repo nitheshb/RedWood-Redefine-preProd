@@ -50,6 +50,7 @@ import {
   getAllProjects,
   updateLeadProject,
   updateTransactionStatus,
+  updateWalletTransactionStatus,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
@@ -233,7 +234,11 @@ export default function TransactionUpdateSideView({
     data.Uuid = data?.unit_id
     data.status = status
     console.log('transactionData', transactionData)
-    updateTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
+    if(data?.unit_id === 'wallet'){
+      updateWalletTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
+    }else{
+      updateTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
+    }
   }
 
   useEffect(() => {

@@ -255,7 +255,7 @@ export default function CustomerSideViewCRM({
     //   enqueueSnackbar
     // )
 
-    const paymentCB = await captureWalletPayment(orgId,selCustomerPayload?.id,data)
+    const paymentCB = await captureWalletPayment(orgId,selCustomerPayload,data, user?.email, enqueueSnackbar)
 
 
     // await console.log('xo o is ', x)
@@ -288,17 +288,12 @@ export default function CustomerSideViewCRM({
                 {selCustomerPayload?.Name}
                 {selCustomerPayload?.projectName}
               </p>
-              <p className="text-xs tracking-tight  font-body my-[2px] ml-2">
-                Purchased: Rs {selCustomerPayload?.remaining_money}
-              </p>
-              <p className="text-xs tracking-tight  font-body my-[2px] ml-2">
-                Due: Rs {selCustomerPayload?.remaining_money}
-              </p>
+
               <p className="text-xs tracking-tight  font-body my-[2px] ml-2">
                 No of Assets: {selCustomerPayload?.my_assets?.length}
               </p>
               <p className="text-xs tracking-tight  font-body my-[2px] ml-2">
-                CRM: ['Agent1']
+                Projects: {selCustomerPayload?.projects?.length}
               </p>
 
               <div></div>
@@ -318,34 +313,27 @@ export default function CustomerSideViewCRM({
                   </section>
                   <section className="flex flow-row justify-between mb-1">
                     <div className="font-md text-xs text-gray-500  tracking-wide">
-                      Elgible
+                      Review
                     </div>
                     <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                      Rs {selCustomerPayload?.remaining_money}
+                      Rs {selCustomerPayload?.input_money}
                     </div>
                   </section>
                   <section className="flex flow-row justify-between mb-1">
                     <div className="font-md text-xs text-gray-500  tracking-wide">
-                      Paid
+                      Utilised
                     </div>
                     <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                      Rs {selCustomerPayload?.remaining_money}
+                      Rs {selCustomerPayload?.utilized_money}
                     </div>
                   </section>
-                  <section className="flex flow-row justify-between mb-1">
-                    <div className="font-md text-xs text-gray-500  tracking-wide">
-                      Due
-                    </div>
-                    <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                      Rs {selCustomerPayload?.remaining_money}
-                    </div>
-                  </section>
+
                 </section>
 
                 <section>
                   <div>
                     <div className="text-center items-center mr-2 mt-3">
-                      <div>
+                      {/* <div>
                         <Checkbox
                           color="primary"
                           // checked={salesPerson?.projAccessA?.includes(selProjId)}
@@ -360,9 +348,9 @@ export default function CustomerSideViewCRM({
                           }}
                         />
                         Assets view
-                      </div>
+                      </div> */}
                       <div
-                        className="text-center p-[10px] bg-[#318896] text-white rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
+                        className="text-center p-[10px] mt-5 bg-[#318896] text-white rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
                         onClickCapture={() => {
                           openPaymentFun()
                         }}
