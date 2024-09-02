@@ -140,68 +140,79 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     await setFinFetchedData(steamLeadLogs)
 
     return
-    if (access?.includes('manage_leads')) {
-      const unsubscribe = getFinanceTransactionsByStatus(
-        orgId,
-        async (querySnapshot) => {
-          const usersListA = querySnapshot.docs.map((docSnapshot) => {
-            const x = docSnapshot.data()
-            x.id = docSnapshot.id
-            return x
-          })
-          // setBoardData
-          console.log('my Array data is ', usersListA, finFetchedData)
-          // await serealizeData(usersListA)
-          await setFinFetchedData(usersListA)
-          await console.log('my Array data is set it', finFetchedData)
-        },
-        {
-          status: [
-            'latest',
-            'reviewing',
-            'review',
-            'cleared',
-            'rejected',
-            '',
-            // 'booked',
-          ],
-        },
-        () => setFinFetchedData([])
-      )
-      return unsubscribe
-    } else {
-      const unsubscribe = getFinanceTransactionsByStatus(
-        orgId,
-        async (querySnapshot) => {
-          const usersListA = querySnapshot.docs.map((docSnapshot) => {
-            const x = docSnapshot.data()
-            x.id = docSnapshot.id
-            return x
-          })
-          // setBoardData
-          console.log('my Array data is ', usersListA)
-          await serealizeData(usersListA)
-          await setFinFetchedData(usersListA)
-        },
-        {
-          uid: uid,
-          status: [
-            'new',
-            'reviewing',
-            'review',
-            'cleared',
-            'rejected',
-            '',
-            // 'booked',
-          ],
-        },
-        () => setFinFetchedData([])
-      )
-      return unsubscribe
-    }
+
+    
+    // if (access?.includes('manage_leads')) {
+    //   const unsubscribe = getFinanceTransactionsByStatus(
+    //     orgId,
+    //     async (querySnapshot) => {
+    //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
+    //         const x = docSnapshot.data()
+    //         x.id = docSnapshot.id
+    //         return x
+    //       })
+    //       // setBoardData
+    //       console.log('my Array data is ', usersListA, finFetchedData)
+    //       // await serealizeData(usersListA)
+    //       await setFinFetchedData(usersListA)
+    //       await console.log('my Array data is set it', finFetchedData)
+    //     },
+    //     {
+    //       status: [
+    //         'latest',
+    //         'reviewing',
+    //         'review',
+    //         'cleared',
+    //         'rejected',
+    //         '',
+    //         // 'booked',
+    //       ],
+    //     },
+    //     () => setFinFetchedData([])
+    //   )
+    //   return unsubscribe
+    // } else {
+    //   const unsubscribe = getFinanceTransactionsByStatus(
+    //     orgId,
+    //     async (querySnapshot) => {
+    //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
+    //         const x = docSnapshot.data()
+    //         x.id = docSnapshot.id
+    //         return x
+    //       })
+    //       // setBoardData
+    //       console.log('my Array data is ', usersListA)
+    //       await serealizeData(usersListA)
+    //       await setFinFetchedData(usersListA)
+    //     },
+    //     {
+    //       uid: uid,
+    //       status: [
+    //         'new',
+    //         'reviewing',
+    //         'review',
+    //         'cleared',
+    //         'rejected',
+    //         '',
+    //         // 'booked',
+    //       ],
+    //     },
+    //     () => setFinFetchedData([])
+    //   )
+    //   return unsubscribe
+    // }
 
     // await console.log('leadsData', leadsData)
   }
+
+
+
+
+  
+
+
+
+
 
   const serealizeData = (array) => {
     // let newData =
@@ -238,7 +249,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
             className="
             "
           >
-            <div className="items-center justify-between  py-2 px-2 bg-[#3cdc94] pl-[1%] ">
+            <div className="items-center justify-between  py-2 px-2  pl-[1%] ">
               {/* <div>
                 <h2 className="text-lg font-semibold text-gray-900 leading-light py-2 ">
                   Accounts Transactions Space
@@ -366,7 +377,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
             {!ready && (
               <div className="overflow-hidden  ">
-                <div className="flex flex-col app-bg-white-1   bg-[#3cdc94] pb-10">
+                <div className="flex flex-col app-bg-white-1  pt-4  bg-[#FFF] pb-10">
                   <div className="flex flex-row ">
                     <span className="text-lg font-bold app-color-black"></span>
                   </div>
@@ -547,13 +558,13 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                             <th className="text-left text-xs app-color-black py-2">
                               DETAILS
                             </th>
-                            <th className="text-right text-xs app-color-black py-2">
+                            <th className="text-left text-xs app-color-black py-2">
                               <span className="mr-10">AMOUNT</span>
                             </th>
-                            <th className="text-right text-xs app-color-black py-2">
+                            <th className="text-left text-xs app-color-black py-2">
                               <span className="mr-10">ASSIGNED TO</span>
                             </th>
-                            <th className="text-right text-xs app-color-black py-2">
+                            <th className="text-left text-xs app-color-black py-2">
                               <span className="mr-10">STATUS</span>
                             </th>
 
@@ -639,29 +650,29 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                       {finData?.txt_id}
                                     </span>
                                     <span className="font-normal text-xs app-color-gray-1">
-                                      {timeConv(finData?.txt_dated)}
+                                     {timeConv(finData?.txt_dated)} 
                                     </span>
                                   </div>
                                 </div>
                               </td>
-                              <td className="text-right">
-                                <span className="text-right font-semibold text-sm app-color-gray-1 mr-10">
+                              <td className="text-left">
+                                <span className="text-left font-semibold text-sm app-color-gray-1 mr-10">
                                   ₹ {finData?.totalAmount?.toLocaleString('en-IN')}
                                 </span>
                               </td>
-                              <td className="text-center">
-                                <span className="text-center font-semibold text-sm app-color-gray-1 mr-10">
+                              <td className="text-left">
+                                <span className="text-left font-semibold text-sm app-color-gray-1 mr-10">
                                   {finData?.assignedTo || 'NA'}
                                 </span>
                               </td>
 
                               <td>
-                                <span className="ml-3 font-normal text-md app-color-gray-1">
+                                <span className=" text-left font-normal text-md app-color-gray-1">
                                   {finData?.status}
                                 </span>
                               </td>
                               <td>
-                                <span className="font-semibold text-sm app-color-black">
+                                <span className="font-semibold text-left text-sm app-color-black">
                                   NA
                                 </span>
                               </td>
