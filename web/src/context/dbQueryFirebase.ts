@@ -480,6 +480,72 @@ export const getEmployeesTaskProgressDept = async (
     console.log('erro in emp performance Upate getemployee')
   }
 }
+export const updateWalletTransactionStatus = async (
+  orgId,
+  data1,
+  by,
+  enqueueSnackbar
+) => {
+  // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
+  const { id, status, custId, Uuid, projectId, totalAmount } = data1
+  // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
+  const { data: lead_logs, error } = await supabase
+    .from(`${orgId}_accounts`)
+    .update({ status: status })
+    .eq('id', id)
+
+  const { data: data4, error: error4 } = await supabase
+    .from(`${orgId}_customer_logs`)
+    .insert([
+      {
+        type: 'accounts',
+        subtype: data1?.subtype || 'wallet_reviewer',
+        T: Timestamp.now().toMillis(),
+        Uuid: Uuid,
+        by,
+        payload: { comments: '' },
+        from: data1?.oldStatus || 'review',
+        to: status,
+        projectId: projectId || '',
+      },
+    ])
+    console.log('check it ', status, status === 'received',status === 'Failed', totalAmount, data1)
+    if(status === 'Failed'){
+    await updateDoc(doc(db, `${orgId}_customers`, custId), {
+      input_money: increment(-totalAmount),
+
+      cancelled: increment(totalAmount),
+    })
+    await enqueueSnackbar('Marked as payment rejected', {
+      variant: 'success',
+    })
+  }
+    if(status === 'received'){
+      await updateDoc(doc(db, `${orgId}_customers`, custId), {
+        input_money: increment(-totalAmount),
+        remaining_money: increment(totalAmount),
+
+      })
+      await enqueueSnackbar('Marked as payment received', {
+        variant: 'success',
+      })
+    }
+  console.log('check it ', data4, error4)
+  if (lead_logs) {
+    await enqueueSnackbar('Marked as Amount Recived', {
+      variant: 'success',
+    })
+  }
+  if (error) {
+    await enqueueSnackbar('Transaction Updation Failed', {
+      variant: 'error',
+    })
+  }
+
+  console.log('updating error', lead_logs, error)
+  return lead_logs
+  // return onSnapshot(itemsQuery, snapshot, error)
+}
 export const updateTransactionStatus = async (
   orgId,
   data1,
@@ -1289,6 +1355,16 @@ export const getLeadsByPhoneNo = async (orgId, data) => {
 }
 // get crmCustomers list
 
+export const getCRMCustomer = (orgId, snapshot, data, error) => {
+  const { status } = data
+
+  const itemsQuery = query(
+    collection(db, `${orgId}_customers`)
+    // where('status', 'in', status)
+  )
+  console.log('hello ', status, itemsQuery)
+  return onSnapshot(itemsQuery, snapshot, error)
+}
 export const getCRMCustomerByProject = (orgId, snapshot, data, error) => {
   const { status } = data
 
@@ -2371,7 +2447,12 @@ export const addCustomer = async (
   enqueueSnackbar,
   resetForm
 ) => {
-  await addDoc(collection(db, `${orgId}_customers`), data)
+  const did = uuidv4()
+  data.id = did
+
+
+    await setDoc(doc(db, `${orgId}_customers`, did), data)
+
   enqueueSnackbar('Customer Details added successfully', {
     variant: 'success',
   })
@@ -4369,7 +4450,7 @@ export const createNewCustomerS = async (
     const { data, error } = await supabase.from(`${orgId}_customers`).insert([
       {
         Name:
-          leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.co_Name1,
+          leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1,
         // id: leadDocId,
         my_assets: [unitId],
         T: Timestamp.now().toMillis(),
@@ -4378,6 +4459,21 @@ export const createNewCustomerS = async (
         projects: [projectId],
       },
     ])
+    const customerD =     {
+      Name:
+        leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1,
+      my_assets: [unitId],
+      T: Timestamp.now().toMillis(),
+      Luid: leadDocId,
+      added_by: by,
+      projects: [projectId],
+      input_money: 0,
+      kyc_status:false,
+      remaining_money: 0,
+      utilized_money: 0
+    }
+    addCustomer(orgId, customerD, by, enqueueSnackbar, ()=>({}))
+
     await console.log('customer data is ', data, error, customerInfo, {
       Name: Name,
       // id: leadDocId,
@@ -4491,6 +4587,120 @@ export const unitAuditDbFun = async (
     T_cancelled: totalCancelledAmount || 0,
     T_balance: totalUnitCost - ((InReviewAmount || 0) + (totalApprovedAmount || 0)),
   })
+}
+
+export const captureWalletPayment = async (
+  orgId,
+  selCustomerDetails,
+  payload,
+  by,
+  enqueueSnackbar
+) => {
+  try {
+    const leadDocId = selCustomerDetails.id
+    const { Name } = selCustomerDetails
+    const {
+      amount,
+      builderName,
+      chequeno,
+      dated,
+      landloardBankDocId,
+      mode,
+      payto,
+      towardsBankDocId,
+      category,
+      bank_ref_no,
+    } = payload
+
+    console.log('unit log', payload)
+    const { data, error } = await supabase.from(`${orgId}_accounts`).insert([
+      {
+        projectId: 'wallet',
+        unit_id: 'wallet',
+        towards: builderName,
+        towards_id: towardsBankDocId,
+        mode,
+        custId: leadDocId,
+        customerName: Name || '',
+        receive_by: payload?.bookedBy,
+        txt_dated: dated, // modify this to dated time entred by user
+        status: payload?.status || 'review',
+        payReason: payload?.payReason,
+        totalAmount: amount,
+        bank_ref: bank_ref_no,
+        attchUrl: payload?.fileUploader?.url || payload?.attchUrl || '',
+      },
+    ])
+    const paymentCB = await addPaymentReceivedEntry(
+      orgId,
+      'wallet',
+      { leadId: leadDocId },
+      {
+        projectId: 'wallet',
+        unit_id: ['wallet'],
+        towards: builderName,
+        towards_id: towardsBankDocId,
+        mode,
+        custId: leadDocId,
+        customerName: Name,
+        receive_by: payload?.bookedBy,
+        txt_dated: dated, // modify this to dated time entred by user
+        status: payload?.status || 'review',
+        payReason: payload?.payReason,
+        totalAmount: amount,
+        bank_ref: bank_ref_no,
+      },
+      'leadsPage',
+      'nitheshreddy.email@gmail.com',
+      enqueueSnackbar
+    )
+    // total amount in review increment , project , phase, unit
+    // await updateDoc(doc(db, `${orgId}_projects`, projectId), {
+    //   t_collect: increment(amount),
+    // })
+    // await updateDoc(doc(db, `${orgId}_units`, unitId), {
+    //   T_received: increment(amount),
+    //   T_review: increment(amount),
+    //   T_balance: increment(-amount),
+    //   T_elgible_balance: increment(-amount),
+    // })
+
+    // if (mode === 'credit_note') {
+    //   await updateDoc(doc(db, `users`, towardsBankDocId), {
+    //     T_credit_note_review: increment(amount),
+    //     T_credit_note_units: increment(1),
+    //   })
+
+    await updateDoc(doc(db, `${orgId}_customers`, leadDocId), {
+        input_money: increment(amount),
+    })
+    const { data: lead_logs, error: error2 } = await supabase
+    .from(`${orgId}_customers`)
+    .update({ input_money: amount })
+    .eq('id', leadDocId)
+
+    const { data: data3, error: error3 } = await supabase
+      .from(`${orgId}_customer_logs`)
+      .insert([
+        {
+          type: 'pay_capture',
+          subtype: 'wallet',
+          T: Timestamp.now().toMillis(),
+          custUid: leadDocId,
+          by,
+          payload: {},
+        },
+      ])
+
+    enqueueSnackbar(`Captured Payment`, {
+      variant: 'success',
+    })
+    return data
+  } catch (e) {
+    enqueueSnackbar(e.message, {
+      variant: 'error',
+    })
+  }
 }
 export const capturePaymentS = async (
   orgId,

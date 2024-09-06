@@ -45,6 +45,7 @@ import MoreDetailsPhaseForm from '../MoreDetailsPhaseForm/MoreDetailsPhaseForm'
 import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import TransactionUpdateSideView from '../transactionUpdateSideView'
 import ViewUnitDetails from '../ViewUnitDetails'
+import AddCustomerWallet from '../FinanceModule/AddCustomerWallet'
 
 const SiderForm = ({
   mode,
@@ -371,6 +372,8 @@ const SiderForm = ({
                   <CaptureUnitPayment title={title} dialogOpen={setOpen} />
                 )}
 
+
+
                 {title === 'Edit to Push Lead' && (
                   <AddLeadForm
                     title={title}
@@ -534,6 +537,11 @@ const SiderForm = ({
                     selUnitDetails={selUnitDetails}
                     onSubmitFun={paymentCaptureFun}
                   />
+                )}
+                  {title === 'addWallet' && (
+                  <AddCustomerWallet title={title} dialogOpen={setOpen}
+                  selUnitDetails={selUnitDetails}
+                  onSubmitFun={paymentCaptureFun} />
                 )}
                 {title === 'newDemand' && (
                   <AddNewDemand
