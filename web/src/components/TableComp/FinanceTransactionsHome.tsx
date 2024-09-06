@@ -37,6 +37,7 @@ import CardItem from '../leadsCard'
 import SiderForm from '../SiderForm/SiderForm'
 
 import FinanceTableView from './financeTableView'
+import { CountUpComp } from '../comps/countUpComp'
 
 const FinanceTransactionsHome = ({ leadsTyper }) => {
   const d = new window.Date()
@@ -51,6 +52,8 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
   const [addLeadsTypes, setAddLeadsTypes] = useState('')
   const [selUserProfile, setSelUserProfile] = useState({})
   const [finFetchedData, setFinFetchedData] = useState([])
+  const [finSelData, setFinSelData] = useState([])
+
   const [serialLeadsData, setSerialLeadsData] = useState([])
   const [showSettings, setShowSettings] = useState(true)
   const [transactionData, setTransactionData] = useState({})
@@ -58,16 +61,28 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     startOfDay(d).getTime()
   )
 
-  const [value, setValue] = useState('reviewing')
+  const [value, setValue] = useState('review')
   const tabHeadFieldsA = [
     { lab: 'All Transactions', val: 'all' },
-    { lab: 'Reviewing', val: 'reviewing' },
-    { lab: 'Cleared', val: 'cleared' },
+    { lab: 'Reviewing', val: 'review' },
+    { lab: 'Received', val: 'received' },
     { lab: 'Rejected', val: 'rejected' },
   ]
   useEffect(() => {
     getLeadsDataFun()
   }, [])
+
+  useEffect(() => {
+    // getFinanceTransactionsByStatus(orgId, 'all')
+    if(value === 'all'){
+      setFinSelData(finFetchedData)
+    }else{
+
+    const x =  finFetchedData.filter((d) => d.status === value)
+    setFinSelData(x)
+
+    }
+  }, [finFetchedData,value])
 
   useEffect(() => {
     // Subscribe to real-time changes in the `${orgId}_accounts` table
@@ -125,6 +140,11 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     })
   }
 
+  const totalAmountCounter = (parent, searchKey) => {
+    return searchKey === 'all' ? finFetchedData.reduce((a, b) => a + b.totalAmount, 0) : parent?.filter((item) => item?.status?.toLowerCase() === searchKey.toLowerCase()).reduce((a, b) => a + b.totalAmount, 0)
+
+  }
+
   const getLeadsDataFun = async () => {
     console.log('login role detials', user)
     const { access, uid } = user
@@ -141,7 +161,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
     return
 
-    
+
     // if (access?.includes('manage_leads')) {
     //   const unsubscribe = getFinanceTransactionsByStatus(
     //     orgId,
@@ -160,9 +180,9 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     //     {
     //       status: [
     //         'latest',
-    //         'reviewing',
     //         'review',
-    //         'cleared',
+    //         'review',
+    //         'received',
     //         'rejected',
     //         '',
     //         // 'booked',
@@ -189,9 +209,9 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     //       uid: uid,
     //       status: [
     //         'new',
-    //         'reviewing',
     //         'review',
-    //         'cleared',
+    //         'review',
+    //         'received',
     //         'rejected',
     //         '',
     //         // 'booked',
@@ -208,7 +228,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
 
 
-  
+
 
 
 
@@ -219,7 +239,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     const x = [
       'new',
       'review',
-      'cleared',
+      'received',
       'rejected',
       '',
       // 'booked',
@@ -277,8 +297,8 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                     <section className="flex flex-row mt-2 mr-1  mb-1 leading-7 text-gray-900  rounded-lg  ">
                       {[
     { lab: 'All Payments', val: 'all' },
-    { lab: 'Reviewing', val: 'reviewing' },
-    { lab: 'Cleared', val: 'cleared' },
+    { lab: 'Reviewing', val: 'review' },
+    { lab: 'Received', val: 'received' },
     { lab: 'Rejected', val: 'rejected' },
   ].map((dat, i) => {
                         return (
@@ -290,7 +310,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                   <DocumentIcon className=" w-3 h-3" />
                                 </span>
                                 <div className="px-2 mt-[13px] flex flex-row justify-between">
-                                  <h3 className=" css-5mn5yy">₹0</h3>
+                                  <h3 className=" css-5mn5yy">₹<CountUpComp value={totalAmountCounter(finFetchedData, dat?.val)} /></h3>
                                 </div>
                                </div>
                                 <div className="flex flex-row justify-between">
@@ -547,36 +567,36 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                           <tr className="p-2">
                             <th className="w-2"></th>
                             <th className="text-left text-xs app-color-black py-2">
-                              <span className="ml-4">FROM</span>
+                              <span className="ml-4">From</span>
                             </th>
                             <th className="text-left text-xs app-color-black py-2">
-                              <span className="ml-4">DATED AS</span>
+                              <span className="ml-4">Dated as</span>
                             </th>
                             <th className="text-left text-xs app-color-black py-2">
-                              MODE
+                              Mode
                             </th>
                             <th className="text-left text-xs app-color-black py-2">
-                              DETAILS
+                              Details
+                            </th>
+                            <th className="text-right text-xs app-color-black py-2">
+                              <span className="mr-10">Amount</span>
                             </th>
                             <th className="text-left text-xs app-color-black py-2">
-                              <span className="mr-10">AMOUNT</span>
+                              <span className="mr-10">Assigned to</span>
                             </th>
                             <th className="text-left text-xs app-color-black py-2">
-                              <span className="mr-10">ASSIGNED TO</span>
-                            </th>
-                            <th className="text-left text-xs app-color-black py-2">
-                              <span className="mr-10">STATUS</span>
+                              <span className="mr-10">Status</span>
                             </th>
 
                             <th className="text-left text-xs app-color-black py-2">
-                              COMMENTS
+                              Comments
                             </th>
 
                             <th></th>
                           </tr>
                         </thead>
                         <tbody className="p-2">
-                          {finFetchedData?.map((finData, i) => (
+                          {finSelData?.map((finData, i) => (
                             <tr
                               className="app-border-1 border-y border-slate-200 "
                               key={i}
@@ -588,7 +608,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                 </div>
                                 {/* <div
                                 className={`${
-                                  finData?.status === 'cleared'
+                                  finData?.status === 'received'
                                     ? 'bg-green-700'
                                     : finData?.status === 'rejected'
                                     ? 'bg-yellow-600'
@@ -650,13 +670,13 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                       {finData?.txt_id}
                                     </span>
                                     <span className="font-normal text-xs app-color-gray-1">
-                                     {timeConv(finData?.txt_dated)} 
+                                     {timeConv(finData?.txt_dated)}
                                     </span>
                                   </div>
                                 </div>
                               </td>
-                              <td className="text-left">
-                                <span className="text-left font-semibold text-sm app-color-gray-1 mr-10">
+                              <td className="text-right">
+                                <span className="text-right font-semibold text-sm app-color-gray-1 mr-10">
                                   ₹ {finData?.totalAmount?.toLocaleString('en-IN')}
                                 </span>
                               </td>
