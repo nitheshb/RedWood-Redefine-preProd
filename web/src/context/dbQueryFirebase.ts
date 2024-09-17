@@ -4459,20 +4459,20 @@ export const createNewCustomerS = async (
         projects: [projectId],
       },
     ])
-    const customerD =     {
-      Name:
-        leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1,
-      my_assets: [unitId],
-      T: Timestamp.now().toMillis(),
-      Luid: leadDocId,
-      added_by: by,
-      projects: [projectId],
-      input_money: 0,
-      kyc_status:false,
-      remaining_money: 0,
-      utilized_money: 0
-    }
-    addCustomer(orgId, customerD, by, enqueueSnackbar, ()=>({}))
+    // const customerD =     {
+    //   Name:
+    //     leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1,
+    //   my_assets: [unitId],
+    //   T: Timestamp.now().toMillis(),
+    //   Luid: leadDocId,
+    //   added_by: by,
+    //   projects: [projectId],
+    //   input_money: 0,
+    //   kyc_status:false,
+    //   remaining_money: 0,
+    //   utilized_money: 0
+    // }
+    // addCustomer(orgId, customerD, by, enqueueSnackbar, ()=>({}))
 
     await console.log('customer data is ', data, error, customerInfo, {
       Name: Name,

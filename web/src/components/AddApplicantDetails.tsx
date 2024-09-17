@@ -39,6 +39,7 @@ import NoBorderDropDown from './comps/noBorderDropDown'
 import { useFileUpload } from './useFileUpload'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker';
+import CloneableEmailForm from './ApplicantDetailsFormReuse';
 
 
 
@@ -91,34 +92,36 @@ const AddApplicantDetails = ({
           const x = docSnapshot.data()
           return x
         })
-  
+
         console.log('fetched users list is', bankA)
         // step 3: filter and set values to each title
         if (bankA?.length > 0) {
           const dA = bankA.filter((item) => item.title == 'State')
-        
-         
+
+
           setStatesList(dA.sort((a, b) => {
             return a.order - b.order
           }))
-          
-  
-          
-          
-         
-      
+
+
+
+
+
+
         }
       },
-      
+
     )
-  
+
     return unsubscribe
   }, [])
 
 
 
 
-
+useEffect(() => {
+  console.log('selUnitDetails',selUnitDetails, customerInfo)
+}, [customerInfo,selUnitDetails])
 
   const customPhoneNoFieldStyles = {
     border: 'none',
@@ -127,9 +130,9 @@ const AddApplicantDetails = ({
     margin: '0',
     padding: '0',
     paddingLeft: '0.5rem',
-    
 
-   
+
+
   };
 
 
@@ -1013,6 +1016,8 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
           {title}
         </Dialog.Title> */}
         </div>
+<CloneableEmailForm selUnitDetails={selUnitDetails} customerInfo={customerInfo} setCustomerInfo={setCustomerInfo}  />
+
         <div className="">
           <div className="flex flex-col rounded-lg bg-white ">
             <div className="mt-0">
@@ -1501,7 +1506,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
           padding: '0',
           paddingLeft: '0.5rem', // Add padding-left
         }}
-      
+
       />
       {formik.errors.countryCode1 && formik.touched.countryCode1 && (
         <div className="text-red-500 text-xs ml-2">{formik.errors.countryCode1}</div>
