@@ -14,6 +14,7 @@ import Confetti from 'src/components/shared/confetti'
 import { paymentMode, statesList } from 'src/constants/projects'
 import {
   addAccountslogS,
+  addCustomer,
   addLead,
   addModuleScheduler,
   addPaymentReceivedEntry,
@@ -111,6 +112,43 @@ const AddPaymentDetailsForm = ({
     // enter customer details too
     const { Status } = leadDetailsObj2
 
+
+
+    //
+    const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
+
+    if (customerDetailsObj) {
+      const customerD = {
+        Name:
+          leadDetailsObj2?.Name ||
+          customerInfo?.customerDetailsObj?.customerName1,
+        my_assets: [selUnitDetails?.uid],
+        T: Timestamp.now().toMillis(),
+        Luid: leadDetailsObj2.id || '',
+        added_by: email,
+        projects: [projectDetails?.uid],
+        input_money: 0,
+        kyc_status: false,
+        remaining_money: 0,
+        utilized_money: 0,
+      }
+      addCustomer(orgId, customerD, email, enqueueSnackbar, () => ({}))
+    }
+    if (secondaryCustomerDetailsObj) {
+      const customerD = {
+        Name: customerInfo?.secondaryCustomerDetailsObj?.customerName1,
+        my_assets: [selUnitDetails?.uid],
+        T: Timestamp.now().toMillis(),
+        Luid: secondaryCustomerDetailsObj.Luid || '',
+        added_by: email,
+        projects: [projectDetails?.uid],
+        input_money: 0,
+        kyc_status: false,
+        remaining_money: 0,
+        utilized_money: 0,
+      }
+      addCustomer(orgId, customerD, email, enqueueSnackbar, () => ({}))
+    }
     return await createNewCustomerS(
       orgId,
       projectDetails?.uid,
@@ -225,10 +263,11 @@ const AddPaymentDetailsForm = ({
       ...item,
       category: 'plotPS',
     }))
-    const categorizedNewConstructPS = newConstructPS?.map((item) => ({
-      ...item,
-      category: 'constructPS',
-    })) || []
+    const categorizedNewConstructPS =
+      newConstructPS?.map((item) => ({
+        ...item,
+        category: 'constructPS',
+      })) || []
     const fullPs1 = [...categorizedNewPlotPS, ...categorizedNewConstructPS]
     const fullPs = fullPs1?.map((d) => {
       const x = d
