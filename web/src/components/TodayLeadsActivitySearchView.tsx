@@ -33,6 +33,8 @@ import { visuallyHidden } from '@mui/utils'
 import PropTypes from 'prop-types'
 import Highlighter from 'react-highlight-words'
 
+
+
 import {
   getAllProjects,
   steamUsersListByRole,
@@ -48,12 +50,15 @@ import {
 import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 
 import RecentActivity from './Charts_Graphs/RecentActivity'
+import Performance from './Charts_Graphs/Performance'
+
 import TaskProgress from './Charts_Graphs/TaskProgress'
 import Loader from './Loader/Loader'
 import LogSkelton from './shimmerLoaders/logSkelton'
 import SiderForm from './SiderForm/SiderForm'
 import TodoListView from './todoList'
 import { H1 } from './Typography'
+import BigCalendar from './BigCalendar'
 
 const headCells = [
   {
@@ -867,7 +872,7 @@ export default function TodayLeadsActivitySearchView({
             <>
               <div className=" ">
                 <div className="flex flex-wrap">
-                  <div className="w-10/12">
+                  {/* <div className="w-10/12">
                     <TodoListView
                       moduleName={moduleName}
                       taskListA={schFetCleanData}
@@ -881,7 +886,18 @@ export default function TodayLeadsActivitySearchView({
                       searchKey={searchKey}
                       setSearchKey={setSearchKey}
                     />
+                  </div> */}
+
+
+                  <div className="w-10/12">
+                  {/* <BigCalendar/> */}
+    
                   </div>
+
+
+                  
+
+
                     <div className="w-2/12 flex flex-col">
                     <section className="bg-white rounded  flex flex-col p-4 ml-1 mb-1 w-100 ">
                       <h5 className="text-sm">{greet}...!🖐</h5>
@@ -919,6 +935,10 @@ export default function TodayLeadsActivitySearchView({
                           title={'Team Activity'}
                           userTodayPerfA={userTodayPerfA}
                         />
+                      </div>
+
+                      <div className="mt-1">
+                        <Performance/>
                       </div>
                     </section>
                   </div>
