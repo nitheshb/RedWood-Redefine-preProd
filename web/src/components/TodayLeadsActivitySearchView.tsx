@@ -872,7 +872,7 @@ export default function TodayLeadsActivitySearchView({
             <>
               <div className=" ">
                 <div className="flex flex-wrap">
-                  {/* <div className="w-10/12">
+                  <div className="w-10/12">
                     <TodoListView
                       moduleName={moduleName}
                       taskListA={schFetCleanData}
@@ -886,13 +886,13 @@ export default function TodayLeadsActivitySearchView({
                       searchKey={searchKey}
                       setSearchKey={setSearchKey}
                     />
-                  </div> */}
-
-
-                  <div className="w-10/12">
-                  {/* <BigCalendar/> */}
-    
                   </div>
+
+
+                  {/* <div className="w-10/12">
+                  <BigCalendar/>
+    
+                  </div> */}
 
 
                   
@@ -922,6 +922,9 @@ export default function TodayLeadsActivitySearchView({
                    </h2> */}
                     </section>
                     <section className="ml-1">
+                    <div className=" mb-1">
+                        <Performance/>
+                      </div>
                       <TaskProgress userTodayPerfA={userTodayPerfA} />
                       <div className="mt-1">
                         <RecentActivity
@@ -937,9 +940,7 @@ export default function TodayLeadsActivitySearchView({
                         />
                       </div>
 
-                      <div className="mt-1">
-                        <Performance/>
-                      </div>
+
                     </section>
                   </div>
                 </div>
