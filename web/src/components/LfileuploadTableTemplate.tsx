@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Timestamp } from '@firebase/firestore'
 import DoneIcon from '@material-ui/icons/DoneAllTwoTone'
 import RevertIcon from '@material-ui/icons/NotInterestedOutlined'
-import { ConnectingAirportsOutlined } from '@mui/icons-material'
+import { ConnectingAirportsOutlined, X } from '@mui/icons-material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import FileUploadTwoToneIcon from '@mui/icons-material/FileUploadTwoTone'
@@ -26,6 +26,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { visuallyHidden } from '@mui/utils'
+import { useSnackbar } from 'notistack'
 import PropTypes from 'prop-types'
 import Highlighter from 'react-highlight-words'
 
@@ -33,9 +34,12 @@ import {
   addLead,
   addPlotUnit,
   addUnit,
+  createBookedCustomer,
   getLedsData1,
   getProjById1,
+  getProject,
   getProjectByUid,
+  updateUnitAsBooked,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
@@ -216,6 +220,8 @@ const EnhancedTableToolbar = (props) => {
     pId,
     myBlock,
   } = props
+  const d = new window.Date()
+  const { enqueueSnackbar } = useSnackbar()
 
   const [rowsAfterSearchKey, setRowsAfterSearchKey] = React.useState(rows)
   const [myProject, setProject] = React.useState({})
@@ -314,7 +320,7 @@ const EnhancedTableToolbar = (props) => {
     return unsubscribe
   }
   const insertPlotToDb = async (records) => {
-    console.log('check it', records.length);
+    console.log('check it', records.length)
     const mappedArry = await Promise.all(
       records.map(async (data, index) => {
         // console.log()
@@ -323,11 +329,643 @@ const EnhancedTableToolbar = (props) => {
         //   return await addUnit(orgId, newData, user?.email, 'Unit Created by csv')
 
         console.log('am inside addLeadstoDB', index + 1)
-
       })
     )
     // await setUnitUploadMessage(true)
   }
+  const insertBookedUnitToDb = async (records, projectDetails) => {
+    const {
+      fullCs,
+      additonalChargesObj,
+      constructOtherChargesObj,
+      ConstructPayScheduleObj,
+      paymentScheduleObj,
+    } = projectDetails[0]
+    const costSqftA = fullCs?.filter(
+      (row) => row.component.value === 'sqft_cost_tax'
+    )
+    const costConstructSqftA = fullCs?.filter(
+      (row) => row.component.value === 'sqft_construct_cost_tax'
+    )
+    console.log(
+      'check it',
+      records.length,
+      costSqftA,
+      costConstructSqftA,
+      projectDetails
+    )
+
+    const mappedArry = await Promise.all(
+      records.map(async (data, index) => {
+        const {
+          sqft_rate,
+          plc_per_sqft,
+          plot_cost_sqf,
+          construct_cost_sqf,
+          construct_price_sqft,
+          area,
+          construct_area,
+        } = data
+
+        // console.log()
+        // await addPlotUnit(orgId, data, user?.email, `Unit Created by bulk `)
+        // await setUploadedUnitsCount(index + 1)
+        //   return await addUnit(orgId, newData, user?.email, 'Unit Created by csv')
+
+        // cost sheet
+        // part A
+        const plotSaleValue = area * sqft_rate
+        const plcSaleValue = Math.round(area * plc_per_sqft || 0)
+        const plc_gstValue = Math.round(plcSaleValue * 0.0)
+        const plot_gstValue = Math.round(plotSaleValue * 0.0)
+        const constSaleValue =
+          Number(construct_price_sqft) * Number(construct_area)
+
+        // part A
+        const x = [
+          {
+            myId: '1',
+            units: {
+              value: 'fixedcost',
+              label: 'Fixed cost',
+            },
+            component: {
+              value: 'unit_cost_charges',
+              label: 'Unit Cost',
+            },
+            others: data?.sqft_rate,
+            charges: data?.sqft_rate,
+            TotalSaleValue: plotSaleValue,
+            gstValue: plot_gstValue,
+            gst: {
+              label: '0',
+              value: 0,
+            },
+            TotalNetSaleValueGsT: plotSaleValue + plot_gstValue,
+          },
+          {
+            myId: '2',
+            units: {
+              value: 'fixedcost',
+              label: 'Fixed cost',
+            },
+            component: {
+              value: 'plc_cost_sqft',
+              label: 'PLC',
+            },
+            others: data?.plc_per_sqft,
+            charges: data?.plc_per_sqft,
+
+            TotalSaleValue: plcSaleValue,
+            // charges: y,
+            gstValue: plc_gstValue,
+            gst: {
+              label: '0',
+              value: 0,
+            },
+            TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
+          },
+        ]
+        // part C
+        const constructionCS = [
+          {
+            myId: '3',
+            units: {
+              value: 'fixedcost',
+              label: 'Fixed cost',
+            },
+            component: {
+              value: 'villa_construct_cost',
+              label: 'Villa Construction Cost  ',
+            },
+            others: construct_cost_sqf || construct_price_sqft ,
+            charges: Number(construct_cost_sqf || construct_price_sqft),
+            TotalSaleValue: constSaleValue,
+            // charges: y,
+            gstValue: 0,
+            gst: {
+              label: '0',
+              value: 0,
+            },
+            TotalNetSaleValueGsT: Number(constSaleValue) + Number(0),
+          },
+        ]
+        // part B
+        const gstTaxIs = 0
+        const partB = additonalChargesObj?.map((data1, inx) => {
+          let total = 0
+          let gstTotal = 0
+
+          //  check if data1  component a
+          console.log('check the additonalCahrgesObj', data1)
+          const x = data1?.component?.value
+          if (x === 'garden_area_cost') {
+            console.log('found it')
+            total = data?.garden_area_cost || 0
+            gstTotal = Math.round(
+              data?.garden_area_cost * (Number(data1?.gst?.value) * 0.01)
+            )
+          }
+
+          if (x === 'legal_charges') {
+            total = Number(data?.legal_charges || 0)
+            gstTotal = Math.round(total * (Number(data1?.gst?.value) * 0.01))
+          }
+
+          const isChargedPerSqft = [
+            'costpersqft',
+            'cost_per_sqft',
+            'price_per_sft',
+          ].includes(data1?.units.value)
+
+          data1.TotalSaleValue = total
+          data1.gst.label = gstTaxIs
+          // data.gst.value = gstTotal
+          data1.gstValue = gstTotal
+          data1.TotalNetSaleValueGsT = total + gstTotal
+          return data1
+        })
+        // part D
+        const partD = constructOtherChargesObj?.map((data4, inx) => {
+          let total = 0
+          let gstTotal = 0
+          let charges = 0
+          const isChargedPerSqft = [
+            'costpersqft',
+            'cost_per_sqft',
+            'price_per_sft',
+          ].includes(data4?.units.value)
+
+          // const gstTaxIs =
+          //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+          const x = data4?.component?.value
+          if (x === 'bwssb_cost') {
+            console.log('found it')
+            total = Number(data?.bwssd_cost)
+            gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
+
+            // gstTotal = data?.garden_area_cost * 0.12
+          }
+
+          if (x === 'garden_area_cost') {
+            charges= Number(data?.garden_area_cost)
+            total = Number(data?.garden_area_cost)
+            gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
+          }
+          if (x === 'club_house') {
+            charges = Number(data?.club_house)
+            total = Number(data?.club_house)
+            gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
+          }
+          if (x === 'legal_charges') {
+            charges = Number(data?.legal_charges)
+            total = Number(data?.legal_charges)
+            gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
+          }
+
+          const gstPercent =
+            Number(data4?.gst?.value) > 1
+              ? Number(data4?.gst?.value) * 0.01
+              : Number(data4?.gst?.value)
+          // total = isChargedPerSqft
+          //   ? Number(construct_area) * Number(data4?.charges)
+          //   : Number(data4?.charges)
+
+          // gstTotal = Math.round(total * gstPercent)
+
+          console.log('myvalue is ', data4)
+          data4.charges = charges
+          data4.TotalSaleValue = total
+          data4.gst.label = gstTaxIs
+          // data.gst.value = gstTotal
+          data4.gstValue = gstTotal
+          data4.TotalNetSaleValueGsT = total + gstTotal
+          return data4
+        })
+
+        // part E
+        const partE = [
+          {
+            myId: '1',
+            units: {
+              value: 'fixedcost',
+              label: 'Fixed cost',
+            },
+            component: {
+              value: 'maintenance_cost',
+              label: 'Maintenance Cost',
+            },
+            others: 120,
+            charges: 120,
+            TotalSaleValue: Number(construct_area) * 120,
+            gstValue: Number(construct_area) * 120 * 0.18,
+            gst: {
+              label: '18',
+              value: 18,
+            },
+            TotalNetSaleValueGsT:
+              Number(construct_area) * 120 +
+              Number(construct_area) * 120 * 0.18,
+          },
+          {
+            myId: '2',
+            units: {
+              value: 'fixedcost',
+              label: 'Fixed cost',
+            },
+            component: {
+              value: 'corpus_fund',
+              label: 'Corpus Fund',
+            },
+            others: 50,
+            charges: 50,
+
+            TotalSaleValue: Number(construct_area) * 50,
+            // charges: y,
+            gstValue: 0,
+            gst: {
+              label: '0',
+              value: 0,
+            },
+            TotalNetSaleValueGsT: Number(construct_area) * 50,
+          },
+        ]
+        // if (data.status === 'booked') {
+        //   // get cost sheet
+        // }
+        const partATotal = await x.reduce(
+          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+          0
+        )
+        const partCTotal = await constructionCS.reduce(
+          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+          0
+        )
+
+        const partBTotal = await partB.reduce(
+          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+          0
+        )
+        const partDTotal = await partD.reduce(
+          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+          0
+        )
+        const partETotal = await partE.reduce(
+          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+          0
+        )
+
+        const plotTotalCost = partATotal + partBTotal
+        const constructTotalCost = partCTotal + partDTotal
+        let plotPs = []
+        let constructPs = []
+
+        plotPs = paymentScheduleObj?.map((d1, inx) => {
+          console.log('d1 is', d1)
+          const z = d1
+          z.value = ['fixedcost'].includes(d1?.units?.value)
+            ? Number(d1?.percentage)
+            : Number((plotTotalCost * (d1?.percentage / 100)).toFixed(2))
+          if (['fixedcost'].includes(d1?.units?.value)) {
+            z.elgible = true
+            z.elgFrom = Timestamp.now().toMillis()
+            return z
+          }
+          // data['unitStatus'] = d1?.units?.value
+          if (data['unitStatus'] == 'Registered') {
+            z.elgible = true
+            z.elgFrom = Timestamp.now().toMillis()
+          }
+          if (data['unitStatus'] == 'Booked') {
+            if (inx < 1) {
+              z.elgible = true
+              z.elgFrom = Timestamp.now().toMillis()
+            }
+          }
+          if (data['unitStatus'] == 'ATS') {
+            if (inx < 2) {
+              z.elgible = true
+              z.elgFrom = Timestamp.now().toMillis()
+            }
+          }
+
+          d1.schDate =
+            d1?.schDate ||
+            d.getTime() +
+              (ConstructPayScheduleObj.slice(0, inx).reduce(
+                (sum, prevItem) => sum + (Number(prevItem.zeroDay) || 0),
+                0
+              ) +
+                Number(d1?.zeroDay || 0)) *
+                86400000
+          return z
+        })
+        constructPs = ConstructPayScheduleObj?.map((d1, inx) => {
+          console.log('d1 is => ', d1, constructTotalCost)
+          const z = d1
+          const z0 = { ...d1 }
+          z0.myPercent = d1?.percentage / 100
+          z0.trueCheck = ['fixedcost'].includes(d1?.units?.value)
+          z0.check = Number(constructTotalCost * (d1?.percentage / 100))
+          z0.check1 = Number(
+            (constructTotalCost * (d1?.percentage / 100)).toFixed(2)
+          )
+          z0.value1 = z0.trueCheck
+            ? Number(d1?.percentage)
+            : Number((constructTotalCost * (d1?.percentage / 100)).toFixed(2))
+          z0.value = z0.value1
+
+          console.log(
+            'log it',
+            data['unit_no'],
+            constructionCS[0]['TotalNetSaleValueGsT'],
+            x,
+            constSaleValue,
+            Number(construct_price_sqft),
+            Number(construct_area)
+          )
+
+          console.log(
+            'log it',
+            data['unit_no'],
+            'value',
+            partCTotal,
+            z.value,
+            x,
+            z,
+            'full value',
+            d1,
+            z0
+          )
+          return z0
+        })
+
+        setTimeout(() => {
+          // putToDb(constructPs,data,pId, partATotal,partBTotal, partCTotal, partDTotal  )
+
+          const newTotal =
+            (partATotal || 0) +
+            (partBTotal || 0) +
+            (partCTotal || 0) +
+            (partDTotal || 0)
+          // constructionCS
+
+          const categorizedNewPlotPS = plotPs?.map((item) => ({
+            ...item,
+            category: 'plotPS',
+          }))
+          const categorizedNewConstructPS =
+            constructPs?.map((item) => ({
+              ...item,
+              category: 'constructPS',
+            })) || []
+          const fullPs1 = [
+            ...categorizedNewPlotPS,
+            ...categorizedNewConstructPS,
+          ]
+          let T_elgible = 0
+          const T_transaction = 0
+          const T_review = data['T_received'] || 0
+          let stepsComp = 0
+          let T_balance = 0
+          let T_elgible_balance = 0
+          const T_total = newTotal
+
+          const paidAmount = data['paidAmount']
+          fullPs1?.map((dataObj) => {
+            if (dataObj?.elgible) {
+              T_elgible = dataObj?.value + T_elgible
+              stepsComp = stepsComp + 1
+              // T_transaction = T_transaction + (paidAmount || undefined)
+              // T_review = T_review + (paidAmount || undefined)
+            }
+          })
+          T_balance = T_review
+          T_elgible_balance = T_elgible - T_review
+
+          data.plotCS = [...x]
+          data.addChargesCS = partB
+          data.constAdditionalChargesCS = partD
+          data.constructCS = [...constructionCS]
+          data.fullPs = fullPs1
+          data.plotPS = plotPs
+          data.constructPS = constructPs
+          data.possessionAdditionalCostObj = partE
+          data.T_possession = partETotal
+
+          data[`T_elgible`] = T_elgible
+          data[`stepsComp`] = stepsComp
+          data[`T_transaction`] = data['T_received']
+          data[`T_review`] = T_review
+          data[`T_balance`] = T_balance
+          data[`T_elgible_balance`] = T_elgible_balance
+          data['T_cleared'] = data['T_cleared'] || 0
+          data['T_rejected'] = data['T_rejected'] || 0
+
+          const finalUnitObj = {
+            status: data['status'],
+            unitStatus: data['unitStatus'],
+            Katha_no: data['Katha_no'] || '',
+            T_total: newTotal,
+            T_balance: T_balance,
+            T_received: data['T_received'] || 0,
+            T_elgible: T_elgible,
+            T_elgible_balance: T_elgible_balance,
+            T_approved: data['T_received'] || 0,
+            T_transaction: data['T_received'] || 0,
+
+            T_review: T_review,
+            plotCS: [...x],
+            constructCS: [...constructionCS],
+            addChargesCS: partB,
+            constAdditionalChargesCS: partD,
+            possessionAdditionalCostCS: partE,
+            plotPS: plotPs,
+            constructPS: constructPs,
+            fullPs: fullPs1,
+            PID_no: data['PID_no'] || '',
+            customerDetailsObj: {
+              phoneNo1: data['phoneNo1'] || '',
+              marital1: {
+                value: 'Single',
+                label: 'Single',
+              },
+              pincode1: '',
+              co_Name1: '',
+              city1: '',
+              address1: data['address1'],
+              phoneNo3: '',
+              aadharNo1: data['aadharNo1'],
+              email1: data['email1'],
+              annualIncome1: '',
+              panNo1: data['panNo1'],
+              state1: {
+                label: 'Karnataka',
+                value: 'KA',
+              },
+              aadharUrl1: '',
+              countryName1: 'country',
+              companyName1: '',
+              panDocUrl1: '',
+              relation1: {
+                label: 'S/O',
+                value: 'S/O',
+              },
+              dob1: data['dob1'],
+              occupation1: '',
+              countryCode1: '',
+              customerName1: data['customerName1'],
+              countryCode2: '',
+            },
+            secondaryCustomerDetailsObj: {
+              phoneNo1: data['phoneNo2'] || '',
+              marital1: {
+                value: 'Single',
+                label: 'Single',
+              },
+              pincode1: '',
+              co_Name1: '',
+              city1: '',
+              address1: data['address2'] || '',
+              phoneNo3: '',
+              aadharNo1: data['aadharNo2'] || '',
+              email1: data['email2'] || '',
+              annualIncome1: '',
+              panNo1: data['panNo2'] || '',
+              state1: {
+                label: 'Karnataka',
+                value: 'KA',
+              },
+              aadharUrl1: '',
+              countryName1: 'country',
+              companyName1: '',
+              panDocUrl1: '',
+              relation1: {
+                label: 'S/O',
+                value: 'S/O',
+              },
+              dob1: data['dob1'],
+              occupation1: '',
+              countryCode1: '',
+              customerName1: data['customerName2'],
+              countryCode2: '',
+            },
+            aggrementDetailsObj: {},
+            booked_on: data['booked_on'],
+            plc_per_sqft: data['plc_per_sqft'],
+            sqft_rate: data['sqft_rate'],
+            construct_price_sqft: data['construct_price_sqft'],
+            by: data['by'],
+            annualIncome: data['annualIncome'] || '',
+            intype: 'Bulk',
+          }
+
+          // const x2 =  createBookedCustomer(
+          //   orgId,
+          //   id,
+          //   {
+          //     leadId: id,
+          //     projectName: leadDetailsObj2?.Project || projectDetails?.projectName,
+          //     ProjectId: leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
+          //     // ...customerDetailsObj,
+          //     Name: customerDetailsObj?.customerName1,
+          //     Mobile: customerDetailsObj?.phoneNo1,
+          //     Email: customerDetailsObj?.email1,
+          //     secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
+          //     assets: arrayUnion(uid),
+
+          //     [`${uid}_unitDetails`]: selUnitDetails || {},
+          //     [`${uid}_plotCS`]: newPlotCostSheetA,
+          //     [`${uid}_AddChargesCS`]: newAdditonalChargesObj,
+          //     [`${uid}_constructCS`]: newConstructCostSheetA || [],
+          //     [`${uid}_fullPs`]: fullPs,
+          //     [`${uid}_newPlotPS`]: newPlotPS,
+          //     [`${uid}_newConstructPS`]: newConstructPS || [],
+          //     [`${uid}_T_elgible`]: T_elgible,
+          //     [`${uid}_stepsComp`]: stepsComp,
+          //     [`${uid}_T_transaction`]: T_transaction,
+          //     [`${uid}_T_review`]: T_review,
+          //     [`${uid}_T_balance`]: T_balance,
+          //     [`${uid}_T_elgible_balance`]: T_elgible_balance,
+
+          //     booked_on: data?.dated,
+          //     ct: Timestamp.now().toMillis(),
+          //     Date: Timestamp.now().toMillis(),
+
+          //     //paymentScheduleObj
+          //   },
+          //   user?.email,
+          //   enqueueSnackbar
+          // )
+
+          updateUnitAsBooked(
+            orgId,
+            pId,
+            data['unitUid'],
+            'id',
+            finalUnitObj,
+            user?.email,
+            enqueueSnackbar,
+            'resetForm'
+          )
+
+          console.log(
+            'finalUnitObj',
+            partB,
+            newTotal,
+            partATotal,
+            partBTotal,
+            partCTotal,
+            partDTotal,
+            finalUnitObj
+          )
+          console.log(
+            'payment schedule is ',
+            data,
+            'plot-total',
+            partATotal,
+            'construct-total',
+            partCTotal,
+            'unit-total',
+            newTotal,
+            'plot-ps',
+            plotPs,
+            'construct-ps',
+            constructPs,
+            'payment-schedule',
+            paymentScheduleObj
+            // 'constructOtherChargesObj',
+            // index + 1,
+            // data['unit_no'],
+            // partATotal,
+
+            // partCTotal,
+            // partBTotal + partDTotal,
+            // newTotal,
+            // partD
+            // )
+            // constructPs,
+            // ConstructPayScheduleObj,
+            // paymentScheduleObj
+          )
+          console.log(
+            'am inside addLeadstoDB==>',
+            constructOtherChargesObj,
+            index + 1,
+            data['unit_no'],
+            partATotal,
+
+            partCTotal,
+            partBTotal + partDTotal,
+            newTotal,
+            partD
+          )
+        }, 3500)
+      })
+    )
+    // await setUnitUploadMessage(true)
+  }
+
   const addUnitsToDB = async (records, pId) => {
     setUnitUploadMessage(false)
     // upload successfully
@@ -336,16 +974,21 @@ const EnhancedTableToolbar = (props) => {
     //   additonalChargesObj,
     // ConstructOtherChargesObj,
     const projPayload = await getProjById1(orgId, pId)
+    // const projPayload = await getProject(orgId, pId)
+
     // phase details of zero
     console.log('proj details is', projPayload)
-    const { ConstructOtherChargesObj, additonalChargesObj } = projPayload[0]
+    // const { ConstructOtherChargesObj, additonalChargesObj } = projPayload[0]
 
     if (title === 'Import Plot Units') {
       insertPlotToDb(records)
     } else if (title === 'Import Apartment Units') {
       insertPlotToDb(records)
-    }else if (title === 'Import Villas') {
+    } else if (title === 'Import Villas') {
       insertPlotToDb(records)
+    } else if (title === 'Import Booked Villas') {
+      console.log('hello==>', records)
+      insertBookedUnitToDb(records, projPayload)
     }
     return
     const mappedArry = await Promise.all(
@@ -456,6 +1099,7 @@ const EnhancedTableToolbar = (props) => {
           'Import Apartment Units',
           'Import Plot Units',
           'Import Villas',
+          'Import Booked Villas',
         ].includes(title) ? (
         <span style={{ display: 'flex' }}>
           {sourceTab === 'validR' && !unitUploadMessage && (
@@ -711,6 +1355,12 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toFixed(2),
         },
+        {
+          id: 'sharing',
+          label: 'sharing',
+          minWidth: 10,
+          align: 'left',
+        },
       ]
     } else if (title === 'Import Apartment Units') {
       columns = [
@@ -745,20 +1395,22 @@ export default function LfileuploadTableTemplate({
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
-        }, {
+        },
+        {
           id: 'bathrooms_c',
           label: 'Bathrooms',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
-        },{
+        },
+        {
           id: 'car_parkings_c',
           label: 'Car Parkings',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
         },
-         {
+        {
           id: 'area_sqm',
           label: 'Area sqm',
           minWidth: 10,
@@ -799,7 +1451,8 @@ export default function LfileuploadTableTemplate({
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
-        }, {
+        },
+        {
           id: 'plc_per_sqft',
           label: 'PLC per sqft*',
           minWidth: 10,
@@ -878,9 +1531,14 @@ export default function LfileuploadTableTemplate({
           align: 'center',
           format: (value) => value.toLocaleString('en-US'),
         },
-
+        {
+          id: 'sharing',
+          label: 'sharing',
+          minWidth: 10,
+          align: 'left',
+        },
       ]
-    }else if (title === 'Import Villas') {
+    } else if (title === 'Import Villas') {
       columns = [
         { id: 'unit_no', label: 'Villa No', minWidth: 80 },
         {
@@ -1037,6 +1695,12 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toFixed(2),
         },
+        {
+          id: 'sharing',
+          label: 'sharing',
+          minWidth: 10,
+          align: 'left',
+        },
       ]
     } else if (title === 'Import Units') {
       columns = [
@@ -1076,6 +1740,181 @@ export default function LfileuploadTableTemplate({
           minWidth: 10,
           align: 'left',
           format: (value) => value.toFixed(2),
+        },
+      ]
+    } else if (title === 'Import Booked Villas') {
+      columns = [
+        { id: 'unit_no', label: 'unit_no', minWidth: 80 },
+        {
+          id: 'status',
+          label: 'Available Status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'unitStatus',
+          label: 'Unit Status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'booked_on',
+          label: 'Booking Date',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'by',
+          label: 'Booked By',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'sqft_rate',
+          label: 'Plot per sqft',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'construct_price_sqft',
+          label: 'Construction per sqft',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'plc_per_sqft',
+          label: 'PLC per sqft',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'legal_charges',
+          label: 'Legal Charges',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'construct_cost',
+          label: 'Construct Cost',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'garden_area_cost',
+          label: 'Garden Area Cost',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'bwssd_cost',
+          label: 'BWSSD Cost',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'club_house',
+          label: 'Club House',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'source',
+          label: 'Source',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'sub_source',
+          label: 'Sub-Source',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+
+        {
+          id: 'customerName1',
+          label: 'Applicant Name-1',
+          minWidth: 100,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'phoneNo1',
+          label: 'Phone No-1',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'dob1',
+          label: 'DOB-1',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'address1',
+          label: 'Address-1',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'email1',
+          label: 'email-1',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'aadharNo1',
+          label: 'Aadhar-1',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'panNo1',
+          label: 'Pan No-1',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'customerName2',
+          label: 'Applicant Name-2',
+          minWidth: 100,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'phoneNo2',
+          label: 'Phone No-2',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'dob2',
+          label: 'DOB-2',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'address2',
+          label: 'Address-2',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'email2',
+          label: 'email-2',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'aadharNo2',
+          label: 'Aadhar-2',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'panNo2',
+          label: 'Pan No-2',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
         },
       ]
     } else {
@@ -1290,34 +2129,36 @@ export default function LfileuploadTableTemplate({
               {/* {stableSort(rows, getComparator(order, orderBy)).map( */}
 
               {rows
-                .filter((item) => {
+                ?.filter((item) => {
                   if (searchKey == '' || !searchKey) {
                     return item
                   } else if (
-                    item.Assignedto.toLowerCase().includes(
+                    item?.Assignedto.toLowerCase().includes(
                       searchKey.toLowerCase()
                     ) ||
-                    item.Email.toLowerCase().includes(
+                    item?.Email.toLowerCase().includes(
                       searchKey.toLowerCase()
                     ) ||
-                    item.Mobile.toLowerCase().includes(
+                    item?.Mobile.toLowerCase().includes(
                       searchKey.toLowerCase()
                     ) ||
-                    item.Name.toLowerCase().includes(searchKey.toLowerCase()) ||
-                    item.Project.toLowerCase().includes(
+                    item?.Name.toLowerCase().includes(
                       searchKey.toLowerCase()
                     ) ||
-                    item.Source.toLowerCase().includes(
+                    item?.Project.toLowerCase().includes(
                       searchKey.toLowerCase()
                     ) ||
-                    item.Status.toLowerCase().includes(searchKey.toLowerCase())
+                    item?.Source.toLowerCase().includes(
+                      searchKey.toLowerCase()
+                    ) ||
+                    item?.Status.toLowerCase().includes(searchKey.toLowerCase())
                   ) {
                     return item
                   }
                 })
-                .slice()
-                .sort(getComparator(order, orderBy))
-                .map((row, index) => {
+                ?.slice()
+                ?.sort(getComparator(order, orderBy))
+                ?.map((row, index) => {
                   const isItemSelected = isSelected(row.Name)
                   const labelId = `enhanced-table-checkbox-${index}`
 
@@ -1336,7 +2177,7 @@ export default function LfileuploadTableTemplate({
                       }}
                     >
                       <TableCell>{index + 1}</TableCell>
-                      {columns.map((column) => {
+                      {columns?.map((column) => {
                         const value =
                           column.id === 'Date'
                             ? prettyDate(row[column.id]).toLocaleString()
@@ -1349,7 +2190,7 @@ export default function LfileuploadTableTemplate({
                             {/* {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value} */}
-                              {value}
+                            {value}
                             {/* <HighlighterStyle
                               searchKey={searchKey}
                               source={value}

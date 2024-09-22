@@ -20,31 +20,39 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
       0
     )
+    // let b = selCustomerPayload?.addChargesCS?.reduce(
+    //   (partialSum, obj) =>
+    //     partialSum +
+    //     Number(
+    //       computeTotal(
+    //         obj,
+    //         selCustomerPayload?.super_built_up_area ||
+    //           selCustomerPayload?.area?.toString()?.replace(',', '')
+    //       )
+    //     ),
+    //   0
+    // )
     let b = selCustomerPayload?.addChargesCS?.reduce(
-      (partialSum, obj) =>
-        partialSum +
-        Number(
-          computeTotal(
-            obj,
-            selCustomerPayload?.super_built_up_area ||
-              selCustomerPayload?.area?.toString()?.replace(',', '')
-          )
-        ),
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
       0
     )
-    let c =
-      selCustomerPayload?.addOnCS?.reduce(
-        (partialSum, obj) =>
-          partialSum +
-          Number(
-            computeTotal(
-              obj,
-              selCustomerPayload?.super_built_up_area ||
-                selCustomerPayload?.area?.toString()?.replace(',', '')
-            )
-          ),
-        0
-      ) || 0
+    // let c =
+    //   selCustomerPayload?.addOnCS?.reduce(
+    //     (partialSum, obj) =>
+    //       partialSum +
+    //       Number(
+    //         computeTotal(
+    //           obj,
+    //           selCustomerPayload?.super_built_up_area ||
+    //             selCustomerPayload?.area?.toString()?.replace(',', '')
+    //         )
+    //       ),
+    //     0
+    //   ) || 0
+    let c = selCustomerPayload?.constAdditionalChargesCS?.reduce(
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+      0
+    )
 
     if (isNaN(a)) {
       a = 0

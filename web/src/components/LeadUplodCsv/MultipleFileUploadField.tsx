@@ -324,10 +324,10 @@ export function MultipleFileUploadField({
                 size: dRow['Type*']?.toLowerCase(),
                 facing: dRow['Facing*'],
                 unit_d: dRow['Dimension'],
-                east_d: dRow['East Dimension*(m)'],
+                east_d: dRow['East Dimension*(m)'] || 0,
                 west_d: dRow['West Dimension*(m)'] || 0,
-                north_d: dRow['North Dimension*(m)'],
-                south_d: dRow['South Dimension*(m)'],
+                north_d: dRow['North Dimension*(m)'] || 0,
+                south_d: dRow['South Dimension*(m)'] || 0,
                 east_west_d: dRow['East-West Dimension*(m)'] || 0,
                 north_south_d: dRow['North-South Dimension*(m)'] || 0,
                 north_sch_by: dRow['North Schedule*'],
@@ -337,6 +337,7 @@ export function MultipleFileUploadField({
                 status: dRow['Status*']?.toLowerCase() || 'available',
                 release_status: dRow['Release Status*']?.toLowerCase(),
                 mortgage_type: dRow['Mortgage Type*']?.toLowerCase(),
+                sharing: dRow['Sharing'] || '',
                 intype: 'bulk',
                 unit_type: 'plot',
                 by: user?.email,
@@ -418,8 +419,8 @@ export function MultipleFileUploadField({
 
                 east_d: dRow['East Dimension*(m)'],
                 west_d: dRow['West Dimension*(m)'] || 0,
-                north_d: dRow['North Dimension*(m)'],
-                south_d: dRow['South Dimension*(m)'],
+                north_d: dRow['North Dimension*(m)'] || 0,
+                south_d: dRow['South Dimension*(m)'] || 0,
                 east_west_d: dRow['East-West Dimension*(m)'] || 0,
                 north_south_d: dRow['North-South Dimension*(m)'] || 0,
                 north_sch_by: dRow['North Schedule*'],
@@ -432,6 +433,7 @@ export function MultipleFileUploadField({
                 survey_no: dRow['Survey No'] || '',
                 Katha_no: dRow['Katha No'] || '',
                 PID_no: dRow['PID No'] || '',
+                sharing: dRow['Sharing'] || '',
                 intype: 'bulk',
                 unit_type: 'Apartment',
                 by: user?.email,
@@ -499,10 +501,10 @@ export function MultipleFileUploadField({
 
                 // construct_price: dRow['Construction price'] || 0,
 
-                east_d: dRow['East Dimension*(m)'],
+                east_d: dRow['East Dimension*(m)'] || 0,
                 west_d: dRow['West Dimension*(m)'] || 0,
-                north_d: dRow['North Dimension*(m)'],
-                south_d: dRow['South Dimension*(m)'],
+                north_d: dRow['North Dimension*(m)'] || 0,
+                south_d: dRow['South Dimension*(m)'] || 0,
                 east_west_d: dRow['East-West Dimension*(m)'] || 0,
                 north_south_d: dRow['North-South Dimension*(m)'] || 0,
                 north_sch_by: dRow['North Schedule*'],
@@ -515,6 +517,7 @@ export function MultipleFileUploadField({
                 survey_no: dRow['Survey No'] || '',
                 Katha_no: dRow['Katha No'] || '',
                 PID_no: dRow['PID No'] || '',
+                sharing: dRow['Sharing'] || '',
                 intype: 'bulk',
                 unit_type: 'Apartment',
                 by: user?.email,
@@ -522,6 +525,317 @@ export function MultipleFileUploadField({
               return await computPlotObj
             })
           )
+
+          await setfileRecords(serialData)
+          // let x =   await getLedsData()
+
+          await console.log(
+            'Finished: records',
+            clean1,
+            serialData,
+            fileRecords
+          )
+        } else if (['Import Booked Villas'].includes(title)) {
+          console.log('import stuff is ', records)
+          const clean1 = records.filter((row) => {
+            return (
+              (row['Plot No*'] != '' && row['Plot No*'] != undefined) ||
+              (row['Villa No*'] != '' && row['Villa No*'] != undefined) ||
+              (row['Unit No.*'] != '' && row['Unit No.*'] != undefined)
+            )
+          })
+          // set duplicate & valid records
+          // check in db if record exists with matched phone Number & email
+
+          const serialData = await Promise.all(
+            clean1.map(async (dRow) => {
+              const currentStatus = dRow['Availability Status']
+              let newCurrentStatus = ''
+              if (currentStatus == 'Available') {
+                newCurrentStatus = 'available'
+              } else if (currentStatus == 'Sold') {
+                newCurrentStatus = 'booked'
+              } else if (currentStatus == 'Blocked_M') {
+                newCurrentStatus = 'management_blocked'
+              } else if (currentStatus == 'Blocked') {
+                newCurrentStatus = 'blocked'
+              } else {
+                newCurrentStatus = 'available'
+              }
+
+              const foundLength = await checkIfUnitAlreadyExists(
+                `${orgId}_units`,
+                pId,
+                myPhase?.uid || '',
+                myBlock?.uid || '',
+                dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*']
+              )
+              // Apartment Type*
+              console.log('my data value is ', foundLength, dRow)
+
+              let unitDetails ={}
+              if(foundLength.length>0){
+                unitDetails =   foundLength[0];
+              }
+
+              const computPlotObj = {
+                unit_no:
+                  dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
+                mode: (newCurrentStatus!= 'available') ? 'valid' : 'duplicate',
+                Katha_no: dRow['Katha No'],
+                PID_no: dRow['PID No'],
+
+                status: newCurrentStatus, //filter and send valid values
+                unitStatus: dRow['Unit Status'], //filter and send valid values
+                // booked_on: dRow['Booking Date']?.getTime(),
+                booked_on: new Date(dRow['Booking Date'])?.getTime(),
+                by: dRow['Sales Manager Name'],
+
+                legal_charges: dRow['Legal Charges'],
+                construct_cost: dRow['Construction Cost'],
+                garden_area_cost: dRow['Garden Area Cost'],
+                bwssd_cost: dRow['BWSSB Cost'],
+                club_house: dRow['Club House'],
+
+                // posession Charges
+                corpus_fund: dRow['Corpus Fund'],
+                maintenance_cost: dRow['Maintenance Cost'],
+
+                source: dRow['Source'],
+                sub_source: dRow['Sub-Source'],
+
+                customerName1: dRow['Applicant - 1 - Name'],
+                phoneNo1: dRow['Customer Number - 1'],
+                dob1: dRow['DOB-1'],
+                address1: dRow['Customer Address'],
+                email1: dRow['Customer Email ID-1'],
+                aadharNo1: dRow['Aadhaar Number-1'],
+                panNo1: dRow['PAN Number-1'],
+                // second applicant
+                customerName2: dRow['Applicant 2 Name'],
+                phoneNo2: dRow['Customer Number - 2'],
+                dob2: dRow['DOB-2'],
+                address2: dRow['Address-2'],
+                email2: dRow['Email-2'],
+                aadharNo2: dRow['Aadhaar Number-2'],
+                panNo2: dRow['PAN Number-2'],
+
+                customerDetailsObj: '',
+                // {
+                //   "relation1": {
+                //     "value": "S/O",
+                //     "label": "S/O"
+                //   },
+                //   "dob1": 1681322870000,
+                //   "occupation1": "Business",
+                //   "customerName1": "Allu Siva Rama krishna Reddy",
+                //   "state1": "KA",
+                //   "annualIncome1": "6000000",
+                //   "panNo1": "",
+                //   "phoneNo3": "9844167699",
+                //   "countryName1": "India",
+                //   "phoneNo1": "7760959579",
+                //   "city1": "Bangalore",
+                //   "email1": "allusivaram@gmail.com",
+                //   "panDocUrl1": "",
+                //   "pincode1": "560076",
+                //   "aadharUrl1": "",
+                //   "co_Name1": "Allu Nagi reddy",
+                //   "countryCode1": "+91",
+                //   "marital1": {
+                //     "value": "Married",
+                //     "label": "Married"
+                //   },
+                //   "address1": "N1103, Munivenkatappa layout, Belikhalli",
+                //   "aadharNo1": "",
+                //   "countryCode2": "+91",
+                //   "companyName1": ""
+                // }
+                secondaryCustomerDetailsObj: '',
+                // {
+                //   "panDocUrl2": "",
+                //   "annualIncome2": "6000000",
+                //   "panNo2": "",
+                //   "companyName2": "",
+                //   "city2": "Bangalore",
+                //   "countryName2": "India",
+                //   "co_Name2": "Allu Siva Rama krishna Reddy",
+                //   "phoneNo4": "",
+                //   "email2": "swethaadem@gmail.com",
+                //   "state2": "KA",
+                //   "marital2": {
+                //     "value": "Single",
+                //     "label": "Single"
+                //   },
+                //   "relation2": {
+                //     "label": "W/O",
+                //     "value": "W/O"
+                //   },
+                //   "address2": "N 1103, SNN Raj lake View Phase 1, BTM Layout 2nd Stage, Munivenkatappa Layout, Belekhalli",
+                //   "occupation2": "Business",
+                //   "pincode2": "560076",
+                //   "countryCode4": "+91",
+                //   "customerName2": "Swetha",
+                //   "countryCode3": "+91",
+                //   "dob2": 1721671670689,
+                //   "aadharUrl2": "",
+                //   "phoneNo2": "9008191110",
+                //   "aadharNo2": ""
+                // },
+
+                // addChargesCS:   [
+                //   {
+                //     "gst": {
+                //       "label": 0,
+                //       "value": "18"
+                //     },
+                //     "TotalNetSaleValueGsT": 354000,
+                //     "component": {
+                //       "value": "clubhouse_membership",
+                //       "label": "Club House Membership"
+                //     },
+                //     "TotalSaleValue": 300000,
+                //     "myId": "2c7bcd74-d334-471e-9138-5de5c96ee484",
+                //     "section": {
+                //       "label": "Additional Charges",
+                //       "value": "additionalCost"
+                //     },
+                //     "units": {
+                //       "value": "fixedcost",
+                //       "label": "Fixed cost"
+                //     },
+                //     "charges": "300000",
+                //     "tableData": {
+                //       "id": 1
+                //     },
+                //     "id": "6081067e-daf9-4144-b520-877a2275c113",
+                //     "gstValue": 54000,
+                //     "description": "Car parking"
+                //   },
+                //   {
+                //     "units": {
+                //       "value": "fixedcost",
+                //       "label": "Fixed cost"
+                //     },
+                //     "myId": "2c7bcd74-d334-471e-9138-5de5c96ee484",
+                //     "TotalNetSaleValueGsT": 59000,
+                //     "charges": "50000",
+                //     "TotalSaleValue": 50000,
+                //     "gstValue": 9000,
+                //     "description": "Car parking",
+                //     "component": {
+                //       "value": "legalcharges",
+                //       "label": "Legal"
+                //     },
+                //     "section": {
+                //       "label": "Additional Charges",
+                //       "value": "additionalCost"
+                //     },
+                //     "id": "47d12515-61f8-4dc3-b2e0-014692e6e7db",
+                //     "gst": {
+                //       "label": 0,
+                //       "value": "18"
+                //     },
+                //     "tableData": {
+                //       "id": 2
+                //     }
+                //   },
+                //   {
+                //     "gst": {
+                //       "value": "18",
+                //       "label": 0
+                //     },
+                //     "TotalSaleValue": 315000,
+                //     "id": "fd43d308-8f47-4f1f-a4fc-693fe116a07d",
+                //     "TotalNetSaleValueGsT": 371700,
+                //     "units": {
+                //       "value": "costpersqft",
+                //       "label": "Cost Per sqft"
+                //     },
+                //     "component": {
+                //       "label": "Electricity/Water Sewage",
+                //       "value": "electricity_watersewage"
+                //     },
+                //     "tableData": {
+                //       "id": 3
+                //     },
+                //     "description": "Car parking",
+                //     "charges": "200",
+                //     "section": {
+                //       "value": "additionalCost",
+                //       "label": "Additional Charges"
+                //     },
+                //     "myId": "2c7bcd74-d334-471e-9138-5de5c96ee484",
+                //     "gstValue": 56700
+                //   }
+                // ],
+                fullPs: [],
+                plotCS: [],
+                constructCS: [],
+                constructPS: [],
+                sqft_rate: Math.round(dRow['Plot rate/sqft'] || 0),
+                construct_price_sqft: Math.round(dRow['Const rate/sqft'] || 0),
+                plc_per_sqft: dRow['PLC rate/sqft'],
+                T_received: Number(dRow['Collected']?.replace(',', '') || 0),
+
+
+                // // Date: Timestamp.now().toMillis(),
+                // pId,
+                // phaseId: dRow[''] || 1,
+                // blockId: myBlock?.uid || 1,
+                // size: dRow['Type*']?.toLowerCase() || '',
+                // facing: dRow['Facing*'] || '',
+                // bedrooms_c: dRow['Bedrooms'] || 0,
+                // bathrooms_c: dRow['Bathrooms'] || 0,
+                // car_parkings_c: dRow['Car Parkings'] || 0,
+                // // cartpet_area_uom: dRow['CARPET SFT'] || 0,
+                // area: Number(dRow['Land Area(sqft)*']?.replace(',', '')) || 0,
+                // area_sqm:
+                //   Number(dRow['Land Area(sqm)*']?.replace(',', '')) || 0,
+                // sqft_rate:
+                //   dRow['Price per sqft*'] || dRow['Price per sqft'] || 0,
+                // plc_per_sqft: dRow['PLC per sqft*'] || 0,
+                // construct_area:
+                //   Number(dRow['BUA sqft*']?.replace(',', '')) ||
+                //   Number(dRow['BUA (sqft)*']?.replace(',', '')) ||
+                //   0,
+                // construct_price_sqft:
+                //   dRow['Construction Price per sqft'] ||
+                //   dRow['Construction Price per sqft*'] ||
+                //   0,
+                // // super_built_up_area: dRow[''] || 0,
+                // cartpet_area_sqft: dRow['Carpet Area(sqft)'] || 0,
+
+                // // construct_price: dRow['Construction price'] || 0,
+
+                // east_d: dRow['East Dimension*(m)'] || 0,
+                // west_d: dRow['West Dimension*(m)'] || 0,
+                // north_d: dRow['North Dimension*(m)'] || 0,
+                // south_d: dRow['South Dimension*(m)'] || 0,
+                // east_west_d: dRow['East-West Dimension*(m)'] || 0,
+                // north_south_d: dRow['North-South Dimension*(m)'] || 0,
+                // north_sch_by: dRow['North Schedule*'],
+                // south_sch_by: dRow['South Schedule*'],
+                // east_sch_by: dRow['East Schedule*'],
+                // west_sch_by: dRow['West Schedule*'],
+                // status: dRow['Status*']?.toLowerCase() || 'available',
+                // release_status: dRow['Release Status*']?.toLowerCase() || '',
+                // mortgage_type: dRow['Mortgage Type']?.toLowerCase() || '',
+                // survey_no: dRow['Survey No'] || '',
+                // Katha_no: dRow['Katha No'] || '',
+                // PID_no: dRow['PID No'] || '',
+                // sharing: dRow['Sharing'] || '',
+                // intype: 'bulk',
+                // unit_type: 'Villa',
+              }
+
+              const unitDetailsFull = {...unitDetails, ...computPlotObj}
+
+              console.log('unitDetailsFull', unitDetailsFull)
+              return await unitDetailsFull
+            })
+          )
+
 
           await setfileRecords(serialData)
           // let x =   await getLedsData()

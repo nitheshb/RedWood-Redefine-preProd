@@ -811,6 +811,10 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       setNewPlotCsObj={setNewPlotCsObj}
                       newPlotCsObj={newPlotCsObj}
                       costSheetA={newPlotCostSheetA}
+                      constructCostSheetA={newConstCostSheetA}
+                      newAdditonalChargesObj={newAdditonalChargesObj}
+                      newAdditonalConstChargesObj={newAdditonalConstChargesObj}
+                      setNewAdditonalConstChargesObj={setNewAdditonalConstChargesObj}
                       setAddiChargesObj={setNewAdditonalChargesObj}
                       setCostSheetA={setNewPlotCostSheetA}
                       setNewPS={setNewPlotPS}
@@ -822,8 +826,12 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       setNetTotal={setNetTotal}
                       partATotal={partATotal}
                       partBTotal={partBTotal}
+                      partCTotal={partCTotal}
+                      partDTotal={partDTotal}
                       setPartATotal={setPartATotal}
                       setPartBTotal={setPartBTotal}
+                      setPartCTotal={setPartCTotal}
+                      setPartDTotal={setPartDTotal}
                       showOnly={onStep}
                       section1Ref={section1Ref}
                       section2Ref={section2Ref}

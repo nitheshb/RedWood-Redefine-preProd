@@ -1864,19 +1864,21 @@ export const checkIfUnitAlreadyExists = async (
   const q = await query(
     collection(db, cName),
     where('unit_no', '==', unitId),
-    where('phaseId', '==', phaseId || 1),
-    where('blockId', '==', blockId || 1),
+    // where('phaseId', '==', phaseId || 1),
+    // where('blockId', '==', blockId || 1),
     where('pId', '==', pId)
   )
 
   const querySnapshot = await getDocs(q)
-  await console.log('foundLength @@', querySnapshot.docs.length)
+  await console.log('foundLength @@',unitId, pId,  querySnapshot.docs.length)
   // return await querySnapshot.docs.length
   const parentDocs = []
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
+    let x = doc.data()
+    x.unitUid = doc.id
     console.log('dc', doc.id, ' => ', doc.data())
-    parentDocs.push(doc.data())
+    parentDocs.push(x)
   })
 
   return parentDocs

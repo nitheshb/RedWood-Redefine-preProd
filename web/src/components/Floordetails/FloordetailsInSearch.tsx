@@ -1680,6 +1680,7 @@ const FloordetailsSearch = ({
                     </span>
                   </div>
                 </div>
+               
               </div>
             )}
           </section>

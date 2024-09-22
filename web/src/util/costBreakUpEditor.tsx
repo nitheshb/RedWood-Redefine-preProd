@@ -172,15 +172,20 @@ const CostBreakUpEditor = ({
   const setTotalFun = async (costSheetA, partBPayload) => {
     console.log('ami here', partBPayload, costSheetA, selUnitDetails)
 
+    // const partBTotal = partBPayload?.reduce(
+    //   (partialSum, obj) =>
+    //     partialSum +
+    //     Number(
+    //       computeTotal(
+    //         obj,
+    //         selUnitDetails?.super_built_up_area || selUnitDetails?.area?.toString()?.replace(',', '')
+    //       )
+    //     ),
+    //   0
+    // )
+
     const partBTotal = partBPayload?.reduce(
-      (partialSum, obj) =>
-        partialSum +
-        Number(
-          computeTotal(
-            obj,
-            selUnitDetails?.super_built_up_area || selUnitDetails?.area?.toString()?.replace(',', '')
-          )
-        ),
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
       0
     )
     const partATotal = costSheetA?.reduce(

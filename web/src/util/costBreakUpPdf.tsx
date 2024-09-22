@@ -623,6 +623,43 @@ const CostBreakUpPdf = ({
     setCostSheetA(y)
     setTotalFun()
   }
+  const changeOverallConstructCostFun = async (inx, payload, newValue) => {
+    const y = constructCostSheetA
+    let total = 0
+    let gstTotal = 0
+    const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
+      (d) => d?.component.value === 'sqft_cost_tax'
+    )
+    const gstTaxIs =
+      gstTaxForProjA?.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+    const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
+      (d) => d?.component.value === 'plc_tax'
+    )
+    if (csMode === 'plot_cs') {
+      total = Math.round(
+        selUnitDetails?.construct_area?.toString()?.replace(',', '') * newValue
+      )
+      gstTotal = Math.round(total * gstTaxIs)
+    } else {
+      total = Math.round(
+        Number(selUnitDetails?.super_built_up_area || selUnitDetails?.construct_area) *
+          newValue
+      )
+      gstTotal = Math.round(total * (gstTaxIs / 100))
+    }
+
+    y[inx].charges = newValue
+    y[inx].TotalSaleValue = total
+    y[inx].gst.label = gstTaxIs
+    // y[inx].gst.value = gstTotal
+    y[inx].gstValue = gstTotal
+    y[inx].TotalNetSaleValueGsT = total + gstTotal
+    console.log('gen costSheetA', y)
+    console.log(costSheetA)
+
+    setConstructCostSheetA(y)
+    setTotalFun()
+  }
   return (
     <div className="">
       {!pdfPreview && (
@@ -697,7 +734,7 @@ const CostBreakUpPdf = ({
                               <thead>
                                 <tr className="h-8 mb-1 border-none w-[100%] bg-[#E8E6FE] text-[#0D027D]  font-[600] ">
                                   <th className="min-w-[35%] px-2  text-[12px] text-left text-[#0D027D]  tracking-wide">
-                                    Particulars
+                                    Particulars ({selUnitDetails?.area?.toLocaleString('en-IN') || 0} sqft)
                                   </th>
                                   <th className="w-[15%] px-2 text-[12px] text-right  tracking-wide">
                                     Rate/Sqft
@@ -1034,7 +1071,8 @@ const CostBreakUpPdf = ({
                                             name="constRatePerSqft"
                                             onChange={(e) => {
                                               // setNewSqftPrice(e.target.value)
-                                              console.log('iam hre')
+                                              console.log('iam hre',  d1?.component?.value,  e.target.value)
+
                                               if (
                                                 d1?.component?.value ===
                                                 'villa_construct_cost'
@@ -1048,11 +1086,11 @@ const CostBreakUpPdf = ({
                                               setConstNewSqftPrice(
                                                 Number(e.target.value)
                                               )
-                                              // changeOverallCostFun(
-                                              //   inx,
-                                              //   d1,
-                                              //   e.target.value
-                                              // )
+                                              changeOverallConstructCostFun(
+                                                inx,
+                                                d1,
+                                                e.target.value
+                                              )
                                               // formik.setFieldValue(
                                               //   'ratePerSqft',
                                               //   e.target.value

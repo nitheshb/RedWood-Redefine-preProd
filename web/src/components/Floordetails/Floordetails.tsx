@@ -1749,6 +1749,51 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
                     </span>
                   </div>
                 </div>
+                 {/* 3 */}
+                {/* projectDetails?.projectType?.name */}
+                <div
+                  className="cursor-pointer  z-10 flex flex-col  max-w-md p-2 my-0  mx-4 rounded-md inline-block  min-h-[50px]  min-w-[100px] border border-dotted border-black rounded-md"
+                  onClick={() => {
+                    setisUnitAddOpen(true)
+console.log('selected type is', ['Apartments', 'Apartment'].includes(
+  projectDetails?.projectType?.name
+)
+  ? 'Import Units'
+  : ['Plots'].includes(projectDetails?.projectType?.name)
+  ? 'Import Plot Units'
+  : 'Import Apartment Units',       projectDetails?.projectType?.name )
+                    setAddUnitSlider({
+                      open: true,
+                      title: ['Villas'].includes(
+                        projectDetails?.projectType?.name
+                      )
+                        ? 'Import Booked Villas'
+                        : ['Plots'].includes(projectDetails?.projectType?.name)
+                        ? 'Import Booked Plots'
+                        : 'Import Booked Apartments',
+                      sliderData: {
+                        phase: {},
+                        block: {},
+                      },
+                      widthClass: 'max-w-6xl',
+                    })
+                  }}
+                >
+                  <div className="flex flex-col items-center justify-between">
+                    <PlusIcon className="h-3 w-3 mr-1" aria-hidden="true" />
+                    <h3 className="m-0  text-sm  mt-1 font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
+                      Import Booked Units
+                    </h3>
+                    {/* <IconButton onClick={handleClick}>
+          <MoreVert sx={{ fontSize: '1rem' }} />
+        </IconButton> */}
+                  </div>
+                  <div className="flex flex-row justify-between px-2">
+                    <span className="flex flex-row items-center justify-between mr-2">
+                      <span className="text-sm font-"></span>
+                    </span>
+                  </div>
+                </div>
               </div>
             )}
           </section>
