@@ -872,7 +872,7 @@ export default function TodayLeadsActivitySearchView({
             <>
               <div className=" ">
                 <div className="flex flex-wrap">
-                  <div className="w-10/12">
+                  {/* <div className="w-10/12">
                     <TodoListView
                       moduleName={moduleName}
                       taskListA={schFetCleanData}
@@ -886,13 +886,13 @@ export default function TodayLeadsActivitySearchView({
                       searchKey={searchKey}
                       setSearchKey={setSearchKey}
                     />
-                  </div>
+                  </div> */}
 
 
-                  {/* <div className="w-10/12">
+                  <div className="w-10/12">
                   <BigCalendar/>
     
-                  </div> */}
+                  </div>
 
 
                   
