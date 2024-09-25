@@ -889,7 +889,7 @@ export default function TodayLeadsActivitySearchView({
                   </div> */}
 
 
-                  <div className="w-10/12">
+                  <div className="w-10/12 ">
                   <BigCalendar/>
     
                   </div>
