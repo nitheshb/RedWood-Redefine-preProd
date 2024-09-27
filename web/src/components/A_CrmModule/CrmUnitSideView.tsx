@@ -208,7 +208,7 @@ export default function UnitSideViewCRM({
   const [selFeature, setFeature] = useState('summary')
   const [tempLeadStatus, setLeadStatus] = useState('')
   const [assignerName, setAssignerName] = useState('')
-  const [unitStatus, setUnitStatus] = useState({
+  const [unitStatusObj, setUnitStatusObj] = useState({
     label: 'Booking Review',
     value: 'booking_review',
     logo: 'FireIcon',
@@ -278,6 +278,7 @@ export default function UnitSideViewCRM({
     ProjectId,
     Source,
     status,
+    unitStatus,
     by,
     Mobile,
     Date,
@@ -636,7 +637,7 @@ export default function UnitSideViewCRM({
         selCustomerPayload?.kyc_status &&
         selCustomerPayload?.man_cs_approval
       ) {
-        setUnitStatus(newStatus)
+        setUnitStatusObj(newStatus)
         const updatedPs = fullPs.map((item) => {
           if (item.order === 2) {
             return { ...item, elgible: true }
@@ -693,7 +694,7 @@ export default function UnitSideViewCRM({
             0 + selCustomerPayload?.T_approved ||
             0)
 
-        setUnitStatus(newStatus)
+        setUnitStatusObj(newStatus)
         updateUnitStatus(
           orgId,
           selCustomerPayload?.id,
@@ -707,7 +708,7 @@ export default function UnitSideViewCRM({
         // selCustomerPayload?.T_balance <= 0
 
       ) {
-        setUnitStatus(newStatus)
+        setUnitStatusObj(newStatus)
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
@@ -725,7 +726,7 @@ export default function UnitSideViewCRM({
         // selCustomerPayload?.T_balance <= 0
 
       ) {
-        setUnitStatus(newStatus)
+        setUnitStatusObj(newStatus)
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
@@ -743,7 +744,7 @@ export default function UnitSideViewCRM({
         // selCustomerPayload?.T_balance <= 0
 
       ) {
-        setUnitStatus(newStatus)
+        setUnitStatusObj(newStatus)
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
@@ -1219,7 +1220,7 @@ return
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                         <div>
                           <AssigedToDropComp
-                            assignerName={status}
+                            assignerName={unitStatus}
                             id={id}
                             setAssigner={setStatusFun}
                             usersList={StatusListA}

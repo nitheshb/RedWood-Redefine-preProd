@@ -554,6 +554,12 @@ export const VillaCsSections = [
   {
     value: 'constadditionalCost',
     label: 'Const Additional Charges',
+  }, {
+    value: 'possessionAdditionalCost',
+    label: 'Possession Additional Charges',
+  }, {
+    value: 'otherCharges',
+    label: 'other Additional Charges',
   },
   {
     value: 'otherCharges',

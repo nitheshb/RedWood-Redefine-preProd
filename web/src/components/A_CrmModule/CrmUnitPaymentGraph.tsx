@@ -146,7 +146,7 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
               </h6> */}
 
               <h6 className="font-bodyLato font-semibold text-xs m-1">
-              <span className="text-[#637381] tracking-wide font-thin">Total Cost  :</span> ₹{unitTotal?.toLocaleString('en-IN') || 0}
+              <span className="text-[#637381] tracking-wide font-thin">Total Cost  :</span> ₹{selCustomerPayload?.T_total?.toLocaleString('en-IN') || 0}
               </h6>
             </section>
           </div>
