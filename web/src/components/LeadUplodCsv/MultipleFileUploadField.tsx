@@ -604,7 +604,7 @@ export function MultipleFileUploadField({
                 source: dRow['Source'],
                 sub_source: dRow['Sub-Source'],
 
-                customerName1: dRow['Applicant - 1 - Name'],
+                customerName1: dRow['Applicant - 1 - Name'].replace(/(Mr\.|Mr.|Miss|Mrs\.|Ms\.|Dr\.|MR\.|MISS)/gi, '')?.trim(),
                 phoneNo1: dRow['Customer Number - 1'],
                 dob1: dRow['DOB-1'],
                 address1: dRow['Customer Address'],

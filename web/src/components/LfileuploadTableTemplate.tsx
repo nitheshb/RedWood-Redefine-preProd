@@ -845,6 +845,11 @@ const EnhancedTableToolbar = (props) => {
             T_transaction: data['T_received'] || 0,
 
             T_review: 0,
+            T_A: partATotal,
+            T_B: partBTotal,
+            T_C: partCTotal,
+            T_D: partDTotal,
+            T_E: partETotal,
             plotCS: [...x],
             constructCS: [...constructionCS],
             addChargesCS: partB1,

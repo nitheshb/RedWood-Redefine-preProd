@@ -25,7 +25,9 @@ const rowsCounter = (parent, searchKey) => {
   return searchKey === 'all'
     ? parent
     : parent.filter(
-        (item) => item?.status?.toLowerCase() === searchKey.toLowerCase()
+        (item) =>
+          (item?.unitStatus?.toLowerCase() || item?.status?.toLowerCase()) ===
+          searchKey.toLowerCase()
       )
 }
 
@@ -69,7 +71,6 @@ const UnitBookingSummaryTableLayout = ({
       { value: 'registered', lab: 'Registered' },
       { value: 'construction', lab: 'Construction' },
       { value: 'possession', lab: 'Possession' },
-
     ]
 
     settabHeadFieldsA(tabHeadFieldsA1)
@@ -334,7 +335,19 @@ const UnitBookingSummaryTableLayout = ({
         return setFilLeadsA(leadsFetchedData)
       default:
         return setFilLeadsA(
-          leadsFetchedData.filter((dat) => dat?.status === value)
+          leadsFetchedData.filter((dat) => {
+            console.log(
+              'filtre value is ',
+              dat?.unitStatus,
+              value,
+              (dat?.unitStatus?.toLowerCase() || dat?.status?.toLowerCase()) ==
+                'booked'
+            )
+            return (
+              (dat?.unitStatus?.toLowerCase() || dat?.status?.toLowerCase()) ===
+              value
+            )
+          })
         )
     }
   }, [value, leadsFetchedData])
@@ -354,9 +367,7 @@ const UnitBookingSummaryTableLayout = ({
   }
   return (
     <Section pb={4}>
-      <section
-       className="bg-white"
-      >
+      <section className="bg-white">
         <Grid container>
           <Grid item xs={12}>
             <div className="border-b border-gray-200 flex flex-row justify-between ">
@@ -427,13 +438,15 @@ const UnitBookingSummaryTableLayout = ({
                   viewUnitStatusA={viewUnitStatusA}
                   pickCustomViewer={pickCustomViewer}
                 />
-                {filLeadsA.length > 0 && <Tooltip title={`Download ${filLeadsA?.length} Row`}>
+                {filLeadsA.length > 0 && (
+                  <Tooltip title={`Download ${filLeadsA?.length} Row`}>
                     <CSVDownloader
                       className="mr-6 h-[20px] w-[20px]"
                       downloadRows={leadsFetchedData}
                       style={{ height: '20px', width: '20px' }}
                     />
-                  </Tooltip>}
+                  </Tooltip>
+                )}
               </section>
             </div>
 

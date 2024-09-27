@@ -166,6 +166,7 @@ const ProjectAccessHomeList = ({
           return b?.booked_on || 0 - b?.booked_on || 0
         })
 
+        console.log('total units are ', usersListA);
         setUnitDetailsA(usersListA)
 
         setLoading(false)
@@ -187,6 +188,8 @@ const ProjectAccessHomeList = ({
       mangBlockArea: 0,
       blockedArea:0
     }
+    console.log('total units are ', unitDetailsA);
+
     await unitDetailsA.map((data) => {
       yo.totalUnitCount = yo.totalUnitCount + 1
       if (data?.status == 'available') {
@@ -221,6 +224,7 @@ const ProjectAccessHomeList = ({
       }
     })
 
+    console.log('Total Unit details are ', yo);
     await updateProjectComputedData(orgId, projectDetails?.uid, yo)
     return unsubscribe
 

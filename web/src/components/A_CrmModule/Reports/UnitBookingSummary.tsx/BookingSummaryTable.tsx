@@ -159,35 +159,53 @@ const headCells = [
     disablePadding: false,
     align: 'right',
     label: 'Land Cost',
-  },
-  {
-    id: 'infra',
+  },{
+    id: 'partB',
     numeric: false,
     disablePadding: false,
     align: 'right',
-    label: 'Infrastructure',
-  },
-  {
-    id: 'club',
+    label: 'Add Charges-I',
+  },{
+    id: 'partC',
     numeric: false,
     disablePadding: false,
     align: 'right',
-    label: 'ClubHouse Charges',
-  },
-  {
-    id: 'maintenance',
+    label: 'Construct Cost',
+  },{
+    id: 'partD',
     numeric: false,
     disablePadding: false,
     align: 'right',
-    label: 'Maintenance Charges',
+    label: 'Add Charges-II',
   },
-  {
-    id: 'legal',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Legal Charges',
-  },
+  // {
+  //   id: 'infra',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'right',
+  //   label: 'Infrastructure',
+  // },
+  // {
+  //   id: 'club',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'right',
+  //   label: 'ClubHouse Charges',
+  // },
+  // {
+  //   id: 'maintenance',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'right',
+  //   label: 'Maintenance Charges',
+  // },
+  // {
+  //   id: 'legal',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'right',
+  //   label: 'Legal Charges',
+  // },
   {
     id: 'sale',
     numeric: false,
@@ -222,6 +240,13 @@ const headCells = [
     disablePadding: false,
     align: 'right',
     label: 'Balance',
+  },
+  {
+    id: 'partE',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Possession',
   },
   {
     id: 'crm_executive',
@@ -662,7 +687,7 @@ function EnhancedTableHead(props) {
 
   const displayHeadersFun = (headCell) => {
 
-    if(['partA', 'legal', 'maintenance', 'club', 'infra'].includes(headCell)){
+    if(['partA','partB','partC','partD','partE', 'legal', 'maintenance', 'club', 'infra'].includes(headCell)){
       return viewUnitStatusA.includes('Cost Split') ? '' : 'none'
     }  else if(['avgsft', 'sv_sft', 'bmrda_strr'].includes(headCell)){
       return viewUnitStatusA.includes('Avg sqft Cost') ? '' : 'none'
@@ -1029,7 +1054,7 @@ EnhancedTableHead.propTypes = {
                         <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full bg-[#CCFBF1] text-[#115e59]">
                           <HighlighterStyle
                             searchKey={searchKey}
-                            source={row.status.toString()}
+                            source={row?.unitStatus?.toString() || row.status.toString()}
                           />
                         </span>
                         </TableCell>
@@ -1037,10 +1062,54 @@ EnhancedTableHead.propTypes = {
                         <TableCell align="center" sx={{ whiteSpace: 'nowrap', background: "#fff",  }} padding="none">
           {prettyDate(row?.booked_on)}
         </TableCell>
-        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
-          ₹{partACost?.toLocaleString('en-IN')}
+        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px', color: '#0ea5e9',    '& span': {
+      display: 'inline-block',
+      borderBottom: '2px solid transparent',
+      transition: 'border-bottom 0.3s ease',
+    },
+    '& span:hover': {
+      borderBottom: '2px solid #0ea5e9', // Apply border on hover
+    } }} padding="none">
+          <span
+
+  >
+    ₹{row?.T_A?.toLocaleString('en-IN')}
+  </span>
+        </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px', color: '#0ea5e9',    '& span': {
+      display: 'inline-block',
+      borderBottom: '2px solid transparent',
+      transition: 'border-bottom 0.3s ease',
+    },
+    '& span:hover': {
+      borderBottom: '2px solid #0ea5e9', // Apply border on hover
+    }  }} padding="none">
+
+  <span
+
+  >
+    ₹{row?.T_B?.toLocaleString('en-IN')}
+  </span>
+        </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px',color: '#0ea5e9',   '& span': {
+      display: 'inline-block',
+      borderBottom: '2px solid transparent',
+      transition: 'border-bottom 0.3s ease',
+    },
+    '& span:hover': {
+      borderBottom: '2px solid #0ea5e9', // Apply border on hover
+    } }} padding="none">
+          <span>₹{row?.T_C?.toLocaleString('en-IN')}</span>
+        </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px',color: '#0ea5e9',    '& span': {
+      display: 'inline-block',
+      borderBottom: '2px solid transparent',
+      transition: 'border-bottom 0.3s ease',
+    },
+    '& span:hover': {
+      borderBottom: '2px solid #0ea5e9', // Apply border on hover
+    } }} padding="none">
+          <span>₹{row?.T_D?.toLocaleString('en-IN')}</span>
         </TableCell>)}
-        {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
+
+        {/* {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
         ₹{infraCharges?.toLocaleString('en-IN')}
         </TableCell>)}
        {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
@@ -1051,7 +1120,7 @@ EnhancedTableHead.propTypes = {
         </TableCell>)}
         {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px'  }} padding="none">
         ₹{legalCharge?.toLocaleString('en-IN')}
-        </TableCell>)}
+        </TableCell>)} */}
        <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#c3c3f1", paddingRight: '6px' }} padding="none" >
         ₹{row?.T_total?.toLocaleString('en-IN')}
         </TableCell>
@@ -1069,6 +1138,16 @@ EnhancedTableHead.propTypes = {
       <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#f6cdca", paddingRight: '6px' }} padding="none">
         ₹{row?.T_balance?.toLocaleString('en-IN')}
         </TableCell>
+        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ whiteSpace: 'nowrap',  paddingRight: '6px',color: '#0ea5e9',   '& span': {
+      display: 'inline-block',
+      borderBottom: '2px solid transparent',
+      transition: 'border-bottom 0.3s ease',
+    },
+    '& span:hover': {
+      borderBottom: '2px solid #0ea5e9', // Apply border on hover
+    } }} padding="none">
+          ₹{row?.T_E?.toLocaleString('en-IN')}
+        </TableCell>)}
 
         {viewUnitStatusA.includes('CRM Executive') && <TableCell sx={{ whiteSpace: 'nowrap',  paddingRight: '8px' , paddingLeft: '8px', background: "#d1d1fb",  }} padding="none">{row?.assignedToObj?.email}</TableCell>}
 
