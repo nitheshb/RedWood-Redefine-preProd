@@ -453,23 +453,41 @@ const EnhancedTableToolbar = (props) => {
         // part B
         const gstTaxIs = 0
         const partB = additonalChargesObj?.map((data1, inx) => {
-          let total = 0
-          let gstTotal = 0
 
+          const dataObj = {...data1}
           //  check if data1  component a
-          console.log('check the additonalCahrgesObj', data1)
-          const x = data1?.component?.value
+          // console.log('check the additonalCahrgesObj', data1)
+          const x = dataObj?.component?.value
           if (x === 'garden_area_cost') {
-            console.log('found it')
-            total = data?.garden_area_cost || 0
-            gstTotal = Math.round(
-              data?.garden_area_cost * (Number(data1?.gst?.value) * 0.01)
-            )
+              let total = 0
+              let gstTotal = 0
+              console.log('found it',data['unit_no'], data)
+              total = data?.garden_area_cost || 0
+              gstTotal = Math.round(
+                data?.garden_area_cost * (Number(dataObj?.gst?.value) * 0.01)
+              )
+
+            dataObj.TotalSaleValue = total
+            dataObj.gst.label = gstTaxIs
+            // data.gst.value = gstTotal
+            dataObj.gstValue = gstTotal
+            dataObj.TotalNetSaleValueGsT = total + gstTotal
+            dataObj.totalSaleValued = total
           }
 
           if (x === 'legal_charges') {
+            let total = 0
+            let gstTotal = 0
             total = Number(data?.legal_charges || 0)
             gstTotal = Math.round(total * (Number(data1?.gst?.value) * 0.01))
+             console.log('found it',data['unit_no'], data1, Number(data?.legal_charges || 0), total, data1.TotalSaleValue)
+
+             dataObj.TotalSaleValue = Number(data?.legal_charges || 0)
+            dataObj.gst.label = gstTaxIs
+            // data.gst.value = gstTotal
+            dataObj.gstValue = gstTotal
+            dataObj.TotalNetSaleValueGsT = total + gstTotal
+            dataObj.totalSaleValued = Number(data?.legal_charges || 0)
           }
 
           const isChargedPerSqft = [
@@ -478,23 +496,72 @@ const EnhancedTableToolbar = (props) => {
             'price_per_sft',
           ].includes(data1?.units.value)
 
-          data1.TotalSaleValue = total
-          data1.gst.label = gstTaxIs
-          // data.gst.value = gstTotal
-          data1.gstValue = gstTotal
-          data1.TotalNetSaleValueGsT = total + gstTotal
-          return data1
+          console.log('found it ==>',data['unit_no'], data.legal_charges,  dataObj.TotalSaleValue,dataObj)
+          return dataObj
         })
+
+        const partB1 = projectDetails[0]?.additonalChargesObj?.map((data1, inx) => {
+
+
+          //  check if data1  component a
+          // console.log('check the additonalCahrgesObj', data1)
+          const dataObj = {...data1}
+          const x = data1?.component?.value
+          if (x === 'garden_area_cost') {
+              let total = 0
+              let gstTotal = 0
+              console.log('found it',data['unit_no'], data)
+              total = data?.garden_area_cost || 0
+              gstTotal = Math.round(
+                data?.garden_area_cost * (Number(data1?.gst?.value) * 0.01)
+              )
+
+              dataObj.TotalSaleValue = total
+              dataObj.gst.label = gstTaxIs
+            // data.gst.value = gstTotal
+            dataObj.gstValue = gstTotal
+            dataObj.TotalNetSaleValueGsT = total + gstTotal
+            dataObj.totalSaleValued = total
+          }
+
+          if (x === 'legal_charges') {
+            let total = 0
+            let gstTotal = 0
+            total = Number(data?.legal_charges || 0)
+            gstTotal = Math.round(total * (Number(data1?.gst?.value) * 0.01))
+             console.log('found it',data['unit_no'], data1, Number(data?.legal_charges || 0), total, data1.TotalSaleValue)
+
+             dataObj.TotalSaleValue = Number(data?.legal_charges || 0)
+             dataObj.gst.label = gstTaxIs
+            // data.gst.value = gstTotal
+            dataObj.gstValue = gstTotal
+            dataObj.TotalNetSaleValueGsT = total + gstTotal
+            dataObj.totalSaleValued = Number(data?.legal_charges || 0)
+          }
+
+          const isChargedPerSqft = [
+            'costpersqft',
+            'cost_per_sqft',
+            'price_per_sft',
+          ].includes(data1?.units.value)
+
+          console.log('found it ==>',data['unit_no'], data.legal_charges,  dataObj.TotalSaleValue,dataObj)
+          return dataObj
+        })
+
+        console.log('my additional charges',data['unite_no'],partB)
         // part D
-        const partD = constructOtherChargesObj?.map((data4, inx) => {
+        const partD = projectDetails[0]?.constructOtherChargesObj?.map((data4, inx) => {
           let total = 0
           let gstTotal = 0
           let charges = 0
+          const dataNewObj = {...data4}
           const isChargedPerSqft = [
             'costpersqft',
             'cost_per_sqft',
             'price_per_sft',
           ].includes(data4?.units.value)
+
 
           // const gstTaxIs =
           //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
@@ -534,14 +601,16 @@ const EnhancedTableToolbar = (props) => {
           // gstTotal = Math.round(total * gstPercent)
 
           console.log('myvalue is ', data4)
-          data4.charges = charges
-          data4.TotalSaleValue = total
-          data4.gst.label = gstTaxIs
+          dataNewObj.charges = charges
+          dataNewObj.TotalSaleValue = total
+          dataNewObj.gst.label = gstTaxIs
           // data.gst.value = gstTotal
-          data4.gstValue = gstTotal
-          data4.TotalNetSaleValueGsT = total + gstTotal
-          return data4
+          dataNewObj.gstValue = gstTotal
+          dataNewObj.TotalNetSaleValueGsT = total + gstTotal
+          return dataNewObj
         })
+
+
 
         // part E
         const partE = [
@@ -602,7 +671,7 @@ const EnhancedTableToolbar = (props) => {
           0
         )
 
-        const partBTotal = await partB.reduce(
+        const partBTotal = await partB1.reduce(
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )
@@ -688,6 +757,7 @@ const EnhancedTableToolbar = (props) => {
           console.log(
             'log it',
             data['unit_no'],
+            data['T_received'],
             'value',
             partCTotal,
             z.value,
@@ -740,11 +810,11 @@ const EnhancedTableToolbar = (props) => {
               // T_review = T_review + (paidAmount || undefined)
             }
           })
-          T_balance = T_review
+          T_balance = newTotal- T_review
           T_elgible_balance = T_elgible - T_review
 
           data.plotCS = [...x]
-          data.addChargesCS = partB
+          data.addChargesCS = partB1
           data.constAdditionalChargesCS = partD
           data.constructCS = [...constructionCS]
           data.fullPs = fullPs1
@@ -774,10 +844,10 @@ const EnhancedTableToolbar = (props) => {
             T_approved: data['T_received'] || 0,
             T_transaction: data['T_received'] || 0,
 
-            T_review: T_review,
+            T_review: 0,
             plotCS: [...x],
             constructCS: [...constructionCS],
-            addChargesCS: partB,
+            addChargesCS: partB1,
             constAdditionalChargesCS: partD,
             possessionAdditionalCostCS: partE,
             plotPS: plotPs,
@@ -911,7 +981,10 @@ const EnhancedTableToolbar = (props) => {
 
           console.log(
             'finalUnitObj',
-            partB,
+            // partB1,
+            data['unit_no'],
+            data['T_received'],
+
             newTotal,
             partATotal,
             partBTotal,

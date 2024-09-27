@@ -501,10 +501,10 @@ React.useEffect(() => {
   //     0
   //   ) || 0
   console.log('valure are', leadsFetchedData)
-  const totalSale = leadsFetchedData.reduce((total, row) => total + Number(row?.T_Total || 0), 0);
+  const totalSale = leadsFetchedData.reduce((total, row) => total + Number(row?.T_total || 0), 0);
   setTotalSaleValue(totalSale);
 
-  const totalReceived = leadsFetchedData.reduce((total, row) => total + Number(row.T_review || 0), 0);
+  const totalReceived = leadsFetchedData.reduce((total, row) => total + Number(row.T_approved || 0), 0);
   setTotalReceived(totalReceived);
   const totalBalance = leadsFetchedData.reduce((total, row) => total + Number(row.T_balance || 0), 0);
   setTotalBalance(totalBalance);
@@ -1053,7 +1053,7 @@ EnhancedTableHead.propTypes = {
         ₹{legalCharge?.toLocaleString('en-IN')}
         </TableCell>)}
        <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#c3c3f1", paddingRight: '6px' }} padding="none" >
-        ₹{(partACost + partBCost + partCCost)?.toLocaleString('en-IN')}
+        ₹{row?.T_total?.toLocaleString('en-IN')}
         </TableCell>
         {viewUnitStatusA.includes('Avg sqft Cost') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
         ₹{row?.sqft_rate?.toLocaleString('en-IN')}
@@ -1062,7 +1062,9 @@ EnhancedTableHead.propTypes = {
         ₹{row?.sqft_rate?.toLocaleString('en-IN')}
         </TableCell>)}
         <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#DAECE5", paddingRight: '6px' }} padding="none">
-        ₹{row?.T_review?.toLocaleString('en-IN')}
+        ₹{row?.T_approved?.toLocaleString('en-IN')}
+
+
         </TableCell>
       <TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#f6cdca", paddingRight: '6px' }} padding="none">
         ₹{row?.T_balance?.toLocaleString('en-IN')}
