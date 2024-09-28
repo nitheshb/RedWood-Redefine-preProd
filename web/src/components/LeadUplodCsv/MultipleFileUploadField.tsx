@@ -573,23 +573,34 @@ export function MultipleFileUploadField({
               // Apartment Type*
               console.log('my data value is ', foundLength, dRow)
 
-              let unitDetails ={}
-              if(foundLength.length>0){
-                unitDetails =   foundLength[0];
+              let unitDetails = {}
+              if (foundLength.length > 0) {
+                unitDetails = foundLength[0]
               }
 
               const computPlotObj = {
                 unit_no:
                   dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
-                mode: (newCurrentStatus!= 'available') ? 'valid' : 'duplicate',
+                mode: newCurrentStatus != 'available' ? 'valid' : 'duplicate',
                 Katha_no: dRow['Katha No'],
                 PID_no: dRow['PID No'],
+                survey_no: dRow['Survey No'],
+                landOwnerName: dRow['Land Owner Name'],
 
                 status: newCurrentStatus, //filter and send valid values
-                unitStatus: dRow['Unit Status'], //filter and send valid values
+                unitStatus: dRow['Unit Status'],
+                //filter and send valid values
                 // booked_on: dRow['Booking Date']?.getTime(),
                 booked_on: new Date(dRow['Booking Date'])?.getTime(),
                 by: dRow['Sales Manager Name'],
+                crm_executive: dRow['CRM Executive'],
+                // ATS Date	ATB Date	SD Date
+                ats_date: new Date(dRow['ATS Date'])?.getTime(),
+                atb_date: new Date(dRow['ATB Date'])?.getTime(),
+                sd_date: new Date(dRow['SD Date'])?.getTime(),
+                // ATS Target date	SD Target Date
+                ats_target_date: new Date(dRow['ATS Target Date'])?.getTime(),
+                sd_target_date: new Date(dRow['SD Target Date'])?.getTime(),
 
                 legal_charges: dRow['Legal Charges'],
                 construct_cost: dRow['Construction Cost'],
@@ -603,8 +614,14 @@ export function MultipleFileUploadField({
 
                 source: dRow['Source'],
                 sub_source: dRow['Sub-Source'],
+                remarks: dRow['Last remarks'],
+                fund_type: dRow['Funding Type'],
+                Bank: dRow['Bank'],
+                loanStatus: dRow['Loan Status'],
 
-                customerName1: dRow['Applicant - 1 - Name'].replace(/(Mr\.|Mr.|Miss|Mrs\.|Ms\.|Dr\.|MR\.|MISS)/gi, '')?.trim(),
+                customerName1: dRow['Applicant - 1 - Name']
+                  .replace(/(Mr\.|Mr.|Miss|Mrs\.|Ms\.|Dr\.|MR\.|MISS)/gi, '')
+                  ?.trim(),
                 phoneNo1: dRow['Customer Number - 1'],
                 dob1: dRow['DOB-1'],
                 address1: dRow['Customer Address'],
@@ -778,7 +795,6 @@ export function MultipleFileUploadField({
                 plc_per_sqft: dRow['PLC rate/sqft'],
                 T_received: Number(dRow['Collected']?.replace(/,/g, '') || 0),
 
-
                 // // Date: Timestamp.now().toMillis(),
                 // pId,
                 // phaseId: dRow[''] || 1,
@@ -829,13 +845,87 @@ export function MultipleFileUploadField({
                 // unit_type: 'Villa',
               }
 
-              const unitDetailsFull = {...unitDetails, ...computPlotObj}
+              const unitDetailsFull = { ...unitDetails, ...computPlotObj }
 
               console.log('unitDetailsFull', unitDetailsFull)
               return await unitDetailsFull
             })
           )
 
+          await setfileRecords(serialData)
+          // let x =   await getLedsData()
+
+          await console.log(
+            'Finished: records',
+            clean1,
+            serialData,
+            fileRecords
+          )
+        } else if (['Upload Mortgage'].includes(title)) {
+          console.log('import stuff is ', records)
+          const clean1 = records.filter((row) => {
+            return (
+              (row['Plot No*'] != '' && row['Plot No*'] != undefined) ||
+              (row['Villa No*'] != '' && row['Villa No*'] != undefined) ||
+              (row['Unit No.*'] != '' && row['Unit No.*'] != undefined)
+            )
+          })
+          // set duplicate & valid records
+          // check in db if record exists with matched phone Number & email
+// valid
+          const serialData = await Promise.all(
+            clean1.map(async (dRow) => {
+              const currentStatus = dRow['Availability Status']
+              let newCurrentStatus = ''
+              if (currentStatus == 'Available') {
+                newCurrentStatus = 'available'
+              } else if (currentStatus == 'Sold') {
+                newCurrentStatus = 'booked'
+              } else if (currentStatus == 'Blocked_M') {
+                newCurrentStatus = 'management_blocked'
+              } else if (currentStatus == 'Blocked') {
+                newCurrentStatus = 'blocked'
+              } else {
+                newCurrentStatus = 'available'
+              }
+
+              const foundLength = await checkIfUnitAlreadyExists(
+                `${orgId}_units`,
+                pId,
+                myPhase?.uid || '',
+                myBlock?.uid || '',
+                dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*']
+              )
+              // Apartment Type*
+              // console.log('my data value is ', foundLength, dRow)
+
+              let unitDetails = {}
+              if (foundLength.length > 0) {
+                unitDetails = foundLength[0]
+              }
+              console.log('my data value is ', foundLength,unitDetails,  dRow)
+              const computPlotObj = {
+                unit_no:
+                  dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
+                mode: foundLength.length > 0 ? 'valid' : 'duplicate',
+                unitUid: unitDetails?.unitUid,
+                pId: pId,
+                survey_no: dRow['Survey No'],
+                land_owner_name: dRow['Land Owner Name'],
+                doc_type: dRow['Doc Type'],
+                date_of_registration: dRow['Date of Registration'],
+                to_whom: dRow['To Whom'],
+                doc_no: dRow['Document No'],
+                status: dRow['Status']?.toLowerCase(),
+                remarks: dRow['Remarks'],
+              }
+
+              // const unitDetailsFull = {...unitDetails, ...computPlotObj}
+
+              // console.log('unitDetailsFull', unitDetailsFull)
+              return await computPlotObj
+            })
+          )
 
           await setfileRecords(serialData)
           // let x =   await getLedsData()
