@@ -50,6 +50,7 @@ import CrmInventorySummaryTable from './Reports/CrmSummaryTable'
 import ReportBars from './Reports/ReportBars'
 import TransactionCard from './Reports/TransactionCard'
 import UnitStatusCardReport from './Reports/UnitStatusCardReport'
+import CrmMortgageSummaryTable from './Reports/CrmMortgageSummary'
 
 const CrmAnalyticsHome = ({ project }) => {
   const theme = useTheme()
@@ -105,6 +106,7 @@ const CrmAnalyticsHome = ({ project }) => {
           },
 
           { label: 'Project Summary', value: 'proj_summary' },
+          { label: 'Mortgage Details', value: 'mortgage_details' },
           { label: 'Credit Note', value: 'creditnote_summary' },
           // { label: 'Collections', value: 'collections-summary' },
           // { label: 'Home', value: 'crm_summary' },
@@ -247,6 +249,15 @@ const CrmAnalyticsHome = ({ project }) => {
         <div className="">
           {/* <AdvancedDataTableTest /> */}
           <CrmInventorySummaryTable projects={projects} />
+
+          {projects.length === 0 && <DummyBodyLayout />}
+        </div>
+      )}
+
+      {selCat === 'mortgage_details' && (
+        <div className="">
+          {/* <AdvancedDataTableTest /> */}
+          <CrmMortgageSummaryTable projects={projects} />
 
           {projects.length === 0 && <DummyBodyLayout />}
         </div>

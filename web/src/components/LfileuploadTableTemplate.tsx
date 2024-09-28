@@ -40,6 +40,7 @@ import {
   getProject,
   getProjectByUid,
   updateUnitAsBooked,
+  upSertMortgageUnit,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
@@ -438,7 +439,7 @@ const EnhancedTableToolbar = (props) => {
               value: 'villa_construct_cost',
               label: 'Villa Construction Cost  ',
             },
-            others: construct_cost_sqf || construct_price_sqft ,
+            others: construct_cost_sqf || construct_price_sqft,
             charges: Number(construct_cost_sqf || construct_price_sqft),
             TotalSaleValue: constSaleValue,
             // charges: y,
@@ -453,19 +454,18 @@ const EnhancedTableToolbar = (props) => {
         // part B
         const gstTaxIs = 0
         const partB = additonalChargesObj?.map((data1, inx) => {
-
-          const dataObj = {...data1}
+          const dataObj = { ...data1 }
           //  check if data1  component a
           // console.log('check the additonalCahrgesObj', data1)
           const x = dataObj?.component?.value
           if (x === 'garden_area_cost') {
-              let total = 0
-              let gstTotal = 0
-              console.log('found it',data['unit_no'], data)
-              total = data?.garden_area_cost || 0
-              gstTotal = Math.round(
-                data?.garden_area_cost * (Number(dataObj?.gst?.value) * 0.01)
-              )
+            let total = 0
+            let gstTotal = 0
+            console.log('found it', data['unit_no'], data)
+            total = data?.garden_area_cost || 0
+            gstTotal = Math.round(
+              data?.garden_area_cost * (Number(dataObj?.gst?.value) * 0.01)
+            )
 
             dataObj.TotalSaleValue = total
             dataObj.gst.label = gstTaxIs
@@ -480,9 +480,16 @@ const EnhancedTableToolbar = (props) => {
             let gstTotal = 0
             total = Number(data?.legal_charges || 0)
             gstTotal = Math.round(total * (Number(data1?.gst?.value) * 0.01))
-             console.log('found it',data['unit_no'], data1, Number(data?.legal_charges || 0), total, data1.TotalSaleValue)
+            console.log(
+              'found it',
+              data['unit_no'],
+              data1,
+              Number(data?.legal_charges || 0),
+              total,
+              data1.TotalSaleValue
+            )
 
-             dataObj.TotalSaleValue = Number(data?.legal_charges || 0)
+            dataObj.TotalSaleValue = Number(data?.legal_charges || 0)
             dataObj.gst.label = gstTaxIs
             // data.gst.value = gstTotal
             dataObj.gstValue = gstTotal
@@ -496,121 +503,139 @@ const EnhancedTableToolbar = (props) => {
             'price_per_sft',
           ].includes(data1?.units.value)
 
-          console.log('found it ==>',data['unit_no'], data.legal_charges,  dataObj.TotalSaleValue,dataObj)
+          console.log(
+            'found it ==>',
+            data['unit_no'],
+            data.legal_charges,
+            dataObj.TotalSaleValue,
+            dataObj
+          )
           return dataObj
         })
 
-        const partB1 = projectDetails[0]?.additonalChargesObj?.map((data1, inx) => {
-
-
-          //  check if data1  component a
-          // console.log('check the additonalCahrgesObj', data1)
-          const dataObj = {...data1}
-          const x = data1?.component?.value
-          if (x === 'garden_area_cost') {
+        const partB1 = projectDetails[0]?.additonalChargesObj?.map(
+          (data1, inx) => {
+            //  check if data1  component a
+            // console.log('check the additonalCahrgesObj', data1)
+            const dataObj = { ...data1 }
+            const x = data1?.component?.value
+            if (x === 'garden_area_cost') {
               let total = 0
               let gstTotal = 0
-              console.log('found it',data['unit_no'], data)
-              total = data?.garden_area_cost || 0
+              console.log('found it', data['unit_no'], data)
+              total = Number(data?.garden_area_cost || 0)
               gstTotal = Math.round(
                 data?.garden_area_cost * (Number(data1?.gst?.value) * 0.01)
               )
 
               dataObj.TotalSaleValue = total
               dataObj.gst.label = gstTaxIs
-            // data.gst.value = gstTotal
-            dataObj.gstValue = gstTotal
-            dataObj.TotalNetSaleValueGsT = total + gstTotal
-            dataObj.totalSaleValued = total
-          }
+              // data.gst.value = gstTotal
+              dataObj.gstValue = gstTotal
+              dataObj.TotalNetSaleValueGsT = total + gstTotal
+              dataObj.totalSaleValued = total
+            }
 
-          if (x === 'legal_charges') {
+            if (x === 'legal_charges') {
+              let total = 0
+              let gstTotal = 0
+              total = Number(data?.legal_charges || 0)
+              gstTotal = Math.round(total * (Number(data1?.gst?.value) * 0.01))
+              console.log(
+                'found it',
+                data['unit_no'],
+                data1,
+                Number(data?.legal_charges || 0),
+                total,
+                data1.TotalSaleValue
+              )
+
+              dataObj.TotalSaleValue = Number(data?.legal_charges || 0)
+              dataObj.gst.label = gstTaxIs
+              // data.gst.value = gstTotal
+              dataObj.gstValue = gstTotal
+              dataObj.TotalNetSaleValueGsT = total + gstTotal
+              dataObj.totalSaleValued = Number(data?.legal_charges || 0)
+            }
+
+            const isChargedPerSqft = [
+              'costpersqft',
+              'cost_per_sqft',
+              'price_per_sft',
+            ].includes(data1?.units.value)
+
+            console.log(
+              'found it ==>',
+              data['unit_no'],
+              data.legal_charges,
+              dataObj.TotalSaleValue,
+              dataObj
+            )
+            return dataObj
+          }
+        )
+
+        console.log('my additional charges', data['unite_no'], partB)
+        // part D
+        const partD = projectDetails[0]?.constructOtherChargesObj?.map(
+          (data4, inx) => {
             let total = 0
             let gstTotal = 0
-            total = Number(data?.legal_charges || 0)
-            gstTotal = Math.round(total * (Number(data1?.gst?.value) * 0.01))
-             console.log('found it',data['unit_no'], data1, Number(data?.legal_charges || 0), total, data1.TotalSaleValue)
+            let charges = 0
+            const dataNewObj = { ...data4 }
+            const isChargedPerSqft = [
+              'costpersqft',
+              'cost_per_sqft',
+              'price_per_sft',
+            ].includes(data4?.units.value)
 
-             dataObj.TotalSaleValue = Number(data?.legal_charges || 0)
-             dataObj.gst.label = gstTaxIs
+            // const gstTaxIs =
+            //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+            const x = data4?.component?.value
+            if (x === 'bwssb_cost') {
+              console.log('found it')
+              total = Number(data?.bwssd_cost)
+              gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
+
+              // gstTotal = data?.garden_area_cost * 0.12
+            }
+
+            if (x === 'garden_area_cost') {
+              charges = Number(data?.garden_area_cost)
+              total = Number(data?.garden_area_cost)
+              gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
+            }
+            if (x === 'club_house') {
+              charges = Number(data?.club_house)
+              total = Number(data?.club_house)
+              gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
+            }
+            if (x === 'legal_charges') {
+              charges = Number(data?.legal_charges)
+              total = Number(data?.legal_charges)
+              gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
+            }
+
+            const gstPercent =
+              Number(data4?.gst?.value) > 1
+                ? Number(data4?.gst?.value) * 0.01
+                : Number(data4?.gst?.value)
+            // total = isChargedPerSqft
+            //   ? Number(construct_area) * Number(data4?.charges)
+            //   : Number(data4?.charges)
+
+            // gstTotal = Math.round(total * gstPercent)
+
+            console.log('myvalue is ', data4)
+            dataNewObj.charges = charges
+            dataNewObj.TotalSaleValue = total
+            dataNewObj.gst.label = gstTaxIs
             // data.gst.value = gstTotal
-            dataObj.gstValue = gstTotal
-            dataObj.TotalNetSaleValueGsT = total + gstTotal
-            dataObj.totalSaleValued = Number(data?.legal_charges || 0)
+            dataNewObj.gstValue = gstTotal
+            dataNewObj.TotalNetSaleValueGsT = total + gstTotal
+            return dataNewObj
           }
-
-          const isChargedPerSqft = [
-            'costpersqft',
-            'cost_per_sqft',
-            'price_per_sft',
-          ].includes(data1?.units.value)
-
-          console.log('found it ==>',data['unit_no'], data.legal_charges,  dataObj.TotalSaleValue,dataObj)
-          return dataObj
-        })
-
-        console.log('my additional charges',data['unite_no'],partB)
-        // part D
-        const partD = projectDetails[0]?.constructOtherChargesObj?.map((data4, inx) => {
-          let total = 0
-          let gstTotal = 0
-          let charges = 0
-          const dataNewObj = {...data4}
-          const isChargedPerSqft = [
-            'costpersqft',
-            'cost_per_sqft',
-            'price_per_sft',
-          ].includes(data4?.units.value)
-
-
-          // const gstTaxIs =
-          //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
-          const x = data4?.component?.value
-          if (x === 'bwssb_cost') {
-            console.log('found it')
-            total = Number(data?.bwssd_cost)
-            gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
-
-            // gstTotal = data?.garden_area_cost * 0.12
-          }
-
-          if (x === 'garden_area_cost') {
-            charges= Number(data?.garden_area_cost)
-            total = Number(data?.garden_area_cost)
-            gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
-          }
-          if (x === 'club_house') {
-            charges = Number(data?.club_house)
-            total = Number(data?.club_house)
-            gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
-          }
-          if (x === 'legal_charges') {
-            charges = Number(data?.legal_charges)
-            total = Number(data?.legal_charges)
-            gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
-          }
-
-          const gstPercent =
-            Number(data4?.gst?.value) > 1
-              ? Number(data4?.gst?.value) * 0.01
-              : Number(data4?.gst?.value)
-          // total = isChargedPerSqft
-          //   ? Number(construct_area) * Number(data4?.charges)
-          //   : Number(data4?.charges)
-
-          // gstTotal = Math.round(total * gstPercent)
-
-          console.log('myvalue is ', data4)
-          dataNewObj.charges = charges
-          dataNewObj.TotalSaleValue = total
-          dataNewObj.gst.label = gstTaxIs
-          // data.gst.value = gstTotal
-          dataNewObj.gstValue = gstTotal
-          dataNewObj.TotalNetSaleValueGsT = total + gstTotal
-          return dataNewObj
-        })
-
-
+        )
 
         // part E
         const partE = [
@@ -770,7 +795,7 @@ const EnhancedTableToolbar = (props) => {
           return z0
         })
 
-        setTimeout(() => {
+        setTimeout(async () => {
           // putToDb(constructPs,data,pId, partATotal,partBTotal, partCTotal, partDTotal  )
 
           const newTotal =
@@ -810,7 +835,7 @@ const EnhancedTableToolbar = (props) => {
               // T_review = T_review + (paidAmount || undefined)
             }
           })
-          T_balance = newTotal- T_review
+          T_balance = newTotal - T_review
           T_elgible_balance = T_elgible - T_review
 
           data.plotCS = [...x]
@@ -836,6 +861,8 @@ const EnhancedTableToolbar = (props) => {
             status: data['status'],
             unitStatus: data['unitStatus'],
             Katha_no: data['Katha_no'] || '',
+            survey_no: data['survey_no'] || '',
+            landOwnerName: data['landOwnerName'] || '',
             T_total: newTotal,
             T_balance: T_balance,
             T_received: data['T_received'] || 0,
@@ -931,6 +958,18 @@ const EnhancedTableToolbar = (props) => {
             sqft_rate: data['sqft_rate'],
             construct_price_sqft: data['construct_price_sqft'],
             by: data['by'],
+            crm_executive: data['crm_executive'],
+            ats_date: data['ats_date'],
+            atb_date: data['atb_date'],
+            sd_date: data['sd_date'],
+            ats_target_date: data['ats_target_date'],
+            sd_target_date: data['sd_target_date'],
+            source: data['source'],
+            sub_source: data['sub_source'],
+            remarks: data['remarks'],
+            fund_type: data['fund_type'],
+            Bank: data['Bank'],
+            loanStatus: data['loanStatus'],
             annualIncome: data['annualIncome'] || '',
             intype: 'Bulk',
           }
@@ -973,7 +1012,7 @@ const EnhancedTableToolbar = (props) => {
           //   enqueueSnackbar
           // )
 
-          updateUnitAsBooked(
+        await  updateUnitAsBooked(
             orgId,
             pId,
             data['unitUid'],
@@ -983,6 +1022,7 @@ const EnhancedTableToolbar = (props) => {
             enqueueSnackbar,
             'resetForm'
           )
+          await setUploadedUnitsCount(index + 1)
 
           console.log(
             'finalUnitObj',
@@ -1043,6 +1083,21 @@ const EnhancedTableToolbar = (props) => {
     )
     // await setUnitUploadMessage(true)
   }
+  const insertMortgageUnitToDb = async (records, projectDetails) => {
+    // return insert to mortage table
+    // we need unit Id
+
+    const { projectId } = projectDetails[0]
+    console.log('inserting mortgage unit to db', records, projectDetails)
+    const mappedArry = await Promise.all(
+      records.map(async (data, index) => {
+       await upSertMortgageUnit(orgId, data['unitUid'], data, user?.email)
+       await setUploadedUnitsCount(index + 1)
+      })
+    )
+
+    return
+  }
 
   const addUnitsToDB = async (records, pId) => {
     setUnitUploadMessage(false)
@@ -1067,6 +1122,9 @@ const EnhancedTableToolbar = (props) => {
     } else if (title === 'Import Booked Villas') {
       console.log('hello==>', records)
       insertBookedUnitToDb(records, projPayload)
+    } else if (title === 'Upload Mortgage') {
+      console.log('hello==>', records)
+      insertMortgageUnitToDb(records, projPayload)
     }
     return
     const mappedArry = await Promise.all(
@@ -1178,6 +1236,7 @@ const EnhancedTableToolbar = (props) => {
           'Import Plot Units',
           'Import Villas',
           'Import Booked Villas',
+          'Upload Mortgage',
         ].includes(title) ? (
         <span style={{ display: 'flex' }}>
           {sourceTab === 'validR' && !unitUploadMessage && (
@@ -1991,6 +2050,64 @@ export default function LfileuploadTableTemplate({
         {
           id: 'panNo2',
           label: 'Pan No-2',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+      ]
+    } else if (title === 'Upload Mortgage') {
+      columns = [
+        { id: 'unit_no', label: 'Unit_No', minWidth: 80 },
+        {
+          id: 'survey_no',
+          label: 'Survey No',
+          minWidth: 10,
+          align: 'center',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'land_owner_name',
+          label: 'Land Owner Name',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'doc_type',
+          label: 'Doc Type',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'date_of_registration',
+          label: 'Date of Registration',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'to_whom',
+          label: 'To Whom',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'doc_no',
+          label: 'Document No',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'status',
+          label: 'Status',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'remarks',
+          label: 'Remarks',
           minWidth: 80,
           format: (value) => value.toLocaleString(),
         },

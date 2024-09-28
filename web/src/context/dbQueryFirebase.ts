@@ -56,6 +56,14 @@ export const steamUsersList = (orgId, snapshot, error) => {
   console.log('orgname is ====>', orgId)
   return onSnapshot(itemsQuery, snapshot, error)
 }
+export const streamMortgageList = (orgId, snapshot, error) => {
+  const itemsQuery = query(
+    collection(db, `${orgId}_unit_mortgage`),
+    // where('pId', '==', pId),
+  )
+  console.log('orgname is ====>', orgId)
+  return onSnapshot(itemsQuery, snapshot, error)
+}
 // get users list
 export const steamUsersListByRole = (orgId, snapshot, error) => {
   const itemsQuery = query(
@@ -6152,6 +6160,18 @@ export const updateAdditionalCharges = async (
     })
   }
 }
+
+export const upSertMortgageUnit = async (orgId, unitUid, data, by) => {
+
+  try {
+    const washingtonRef = doc(db, `${orgId}_unit_mortgage`, unitUid)
+    console.log('check add LeadLog', washingtonRef)
+
+    await updateDoc(washingtonRef, data)
+  } catch (error) {
+    await setDoc(doc(db, `${orgId}_unit_mortgage`, unitUid), data)
+  }
+}
 // **********************************************
 // deleteF
 // **********************************************
@@ -6289,6 +6309,7 @@ export const deleteMasterOption = async (orgId, docId, by, enqueueSnackbar) => {
     variant: 'success',
   })
 }
+
 
 /// **********************************************
 // Manipulators
