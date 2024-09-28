@@ -1751,7 +1751,9 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
                 </div>
                  {/* 3 */}
                 {/* projectDetails?.projectType?.name */}
-                <div
+              {filteredUnits.length>0 &&
+
+              (<div
                   className="cursor-pointer  z-10 flex flex-col  max-w-md p-2 my-0  mx-4 rounded-md inline-block  min-h-[50px]  min-w-[100px] border border-dotted border-black rounded-md"
                   onClick={() => {
                     setisUnitAddOpen(true)
@@ -1793,11 +1795,11 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
                       <span className="text-sm font-"></span>
                     </span>
                   </div>
-                </div>
+                </div>)}
 
                  {/* 4 */}
                 {/* projectDetails?.projectType?.name */}
-                <div
+                {filteredUnits.length>0 &&  <div
                   className="cursor-pointer  z-10 flex flex-col  max-w-md p-2 my-0  mx-4 rounded-md inline-block  min-h-[50px]  min-w-[100px] border border-dotted border-black rounded-md"
                   onClick={() => {
                     setisUnitAddOpen(true)
@@ -1816,7 +1818,7 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
                   <div className="flex flex-col items-center justify-between">
                     <PlusIcon className="h-3 w-3 mr-1" aria-hidden="true" />
                     <h3 className="m-0  text-sm  mt-1 font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
-                      Upload Mortgage
+                      Upload Mortgage Details
                     </h3>
                     {/* <IconButton onClick={handleClick}>
           <MoreVert sx={{ fontSize: '1rem' }} />
@@ -1827,7 +1829,7 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
                       <span className="text-sm font-"></span>
                     </span>
                   </div>
-                </div>
+                </div>}
               </div>
             )}
           </section>
