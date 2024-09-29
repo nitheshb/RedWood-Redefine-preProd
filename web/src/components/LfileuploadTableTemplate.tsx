@@ -958,7 +958,7 @@ const EnhancedTableToolbar = (props) => {
             sqft_rate: data['sqft_rate'],
             construct_price_sqft: data['construct_price_sqft'],
             by: data['by'],
-            crm_executive: data['crm_executive'],
+            crm_executive: data['crm_executive'] || '',
             ats_date: data['ats_date'],
             atb_date: data['atb_date'],
             sd_date: data['sd_date'],
@@ -1900,7 +1900,7 @@ export default function LfileuploadTableTemplate({
           id: 'booked_on',
           label: 'Booking Date',
           minWidth: 80,
-          format: (value) => value.toLocaleString(),
+          format: (value) => new Date(value)?.getTime(),
         },
         {
           id: 'by',
@@ -2374,7 +2374,7 @@ export default function LfileuploadTableTemplate({
                       <TableCell>{index + 1}</TableCell>
                       {columns?.map((column) => {
                         const value =
-                          column.id === 'Date'
+                          ['Date', 'booked_on'].includes(column.id)
                             ? prettyDate(row[column.id]).toLocaleString()
                             : row[column.id]
 

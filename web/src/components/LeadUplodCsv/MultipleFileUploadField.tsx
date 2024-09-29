@@ -620,7 +620,7 @@ export function MultipleFileUploadField({
                 loanStatus: dRow['Loan Status'],
 
                 customerName1: dRow['Applicant - 1 - Name']
-                  .replace(/(Mr\.|Mr.|Miss|Mrs\.|Ms\.|Dr\.|MR\.|MISS)/gi, '')
+                  .replace(/(Mr\.|Mr.|Miss|Mrs\.|Mrs.|Ms\.|Dr\.|MR\.|MISS)/gi, '')
                   ?.trim(),
                 phoneNo1: dRow['Customer Number - 1'],
                 dob1: dRow['DOB-1'],
