@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import Tooltip from '@mui/material/Tooltip'
 import React, { useEffect, useState } from 'react'
 
 import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
 import { streamMortgageList } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import CSVDownloader from 'src/util/csvDownload'
 
 const CrmMortgageSummaryTable = ({ projects }) => {
   const { user } = useAuth()
@@ -93,6 +95,8 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                 Project Mortgage Details
               </p>
             </div>
+
+            <div>
             <select
               className="mr-2"
               value={selectedOption}
@@ -104,6 +108,21 @@ const CrmMortgageSummaryTable = ({ projects }) => {
               <option value="Unit Status">Unit Status</option>
               <option value="Unit Area">Unit Area</option> */}
             </select>
+            <Tooltip title={`Download ${fetchMortUnitsList?.length} Row`}>
+            {/* <IconButton>
+            <FileDownloadIcon />
+            <CSVDownloader />
+          </IconButton> */}
+
+            <CSVDownloader
+              className="mr-6 h-[20px] w-[20px]"
+              downloadRows={fetchMortUnitsList}
+              sourceTab="Mortgage Details"
+
+              style={{ height: '20px', width: '20px' }}
+            />
+          </Tooltip>
+            </div>
           </div>
 
           <div className="rounded my-3 overflow-x-auto">
@@ -213,7 +232,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                     <td
                       className="py-3 px-6 text-right border border-gray-300 text-blue-800 cursor-pointer font-semibold hover:underline-offset-4"
                       onClick={() => {
-                        
+
                       }}
                     >
                       {item?.doc_type}

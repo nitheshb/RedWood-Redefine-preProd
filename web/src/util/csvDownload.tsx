@@ -23,7 +23,6 @@ export default function CSVDownloader({
     })
   }
   if (sourceTab == 'leadsList') {
-
     downloadRows = downloadRows.map((item) => {
       return {
         ...item,
@@ -32,7 +31,7 @@ export default function CSVDownloader({
         leadUpT: prettyDate(item.leadUpT),
         schTime: prettyDate(item.schTime),
         stsUpT: prettyDate(item.stsUpT),
-        assignedTo: item?.assignedToObj?.name
+        assignedTo: item?.assignedToObj?.name,
       }
     })
   }
@@ -51,10 +50,43 @@ export default function CSVDownloader({
         Visit_Fixed_On: prettyDate(item?.assignT || item?.Date),
         Visit_Fixed_By: item?.visitFixedBy,
         Visited_On: item.Time,
-        Visit_Done_By:  item?.by,
-        Executive: item?.leadOwner
-
+        Visit_Done_By: item?.by,
+        Executive: item?.leadOwner,
       }
+    })
+  }
+
+  if (sourceTab == 'Booking Summary') {
+    downloadRows = downloadRows.map((item) => {
+      const x = { ...item }
+      x.booked_on = prettyDate(x.booked_on)
+      x.ats_date = prettyDate(x.ats_date)
+      x.atb_date = prettyDate(x.atb_date)
+      x.ats_target_date = prettyDate(x.ats_target_date)
+      x.atb_target_date = prettyDate(x.atb_target_date)
+      x.sd_date = prettyDate(x.sd_date)
+      x.sd_target_date = prettyDate(x.sd_target_date)
+
+      delete x.mode
+      delete x.constructCS
+      delete x.id
+      delete x.fullPs
+      delete x.constructPS
+
+      delete x.secondaryCustomerDetailsObj
+      delete x.addChargesCS
+      delete x.pId
+      delete x.customerDetailsObj
+      delete x.constAdditionalChargesCS
+      delete x.possessionAdditionalCostCS
+      delete x.plotPS
+      delete x.aggrementDetailsObj
+      delete x.Date
+      delete x.plotCS
+      delete x.blockId
+
+
+      return x
     })
   }
 
