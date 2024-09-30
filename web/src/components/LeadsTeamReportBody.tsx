@@ -67,6 +67,7 @@ import { serialMyData } from './LeadsTeamReport/SourceLeads'
 import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import Dashboard from './A_SalesModule/Reports/Dashboard'
 
 //import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
 //import ProfileSummary from './A_SalesModule/Reports/profileSummary'
@@ -1243,6 +1244,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
                 { label: 'Top Bar', value: 'bar_tasks' },
                 { label: 'Profile', value: 'profile_tasks' },
+                { label: 'Dashboard', value: 'dashboard_tasks' },
 
                 // { label: 'Table Edit', value: 'edit_table' },
 
@@ -1929,6 +1931,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           {selCat === 'marketing_Dashboard' && <MarketingAnalyticsHome />}
 
           {selCat === 'profile_tasks' && <ProfileSummary />}
+          {selCat === 'dashboard_tasks' && <Dashboard/>}
 
           {selCat === 'edit_table' && <TableEdit />}
 

@@ -1725,6 +1725,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
           {selCat === 'marketing_Dashboard' && <MarketingAnalyticsHome />}
 
           {selCat === 'profile_tasks' && <ProfileSummary />}
+          
 
           {/* Graph Bar start */}
 
