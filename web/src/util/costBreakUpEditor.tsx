@@ -61,11 +61,17 @@ const CostBreakUpEditor = ({
 
   const [newSqftPrice, setNewSqftPrice] = useState(0)
 
-
   const [partATotal, setPartATotal] = useState(0)
   const [partBTotal, setPartBTotal] = useState(0)
+  const [partCTotal, setPartCTotal] = useState(0)
+  const [partDTotal, setPartDTotal] = useState(0)
+  const [partETotal, setPartETotal] = useState(0)
+  const [plotTotal, setPlotTotal] = useState(0)
   const [plotBookingAdv, setPlotBookingAdv] = useState(0)
   const [partBPayload, setPartBPayload] = useState([])
+  const [partCPayload, setPartCPayload] = useState([])
+  const [partDPayload, setPartDPayload] = useState([])
+  const [partEPayload, setPartEPayload] = useState([])
   const [psPayload, setPSPayload] = useState([])
   const [pdfPreview, setpdfPreview] = useState(false)
   const [showGstCol, setShowGstCol] = useState(true)
@@ -73,7 +79,7 @@ const CostBreakUpEditor = ({
 
   useEffect(() => {
     boot()
-  }, [selUnitDetails])
+  }, [selUnitDetails, selPhaseObj])
 
   useEffect(() => {
     console.log('data is===> 0', selUnitDetails?.fullPs)
@@ -92,9 +98,59 @@ const CostBreakUpEditor = ({
 
   const boot = async () => {
     console.log('sel unti detials ', selUnitDetails)
-    const { addChargesCS, plotCS, fullPs } = selUnitDetails
+    const {
+      addChargesCS,
+      plotCS,
+      constructCS,
+      constAdditionalChargesCS,
+      possessionAdditionalCostCS,
+      fullPs,
+    } = selUnitDetails
+
+    const { additonalChargesObj, constructOtherChargesObj } = selPhaseObj
+    const zeroAdditionalChargesObj = additonalChargesObj?.map((item) => {
+      return { ...item, charges: 0 }
+    })
+    let constructCost = []
+
+    // let constructOtherChargesFull =
+
+    constructCost = [
+      {
+        others: 2540,
+        component: {
+          value: 'villa_construct_cost',
+          label: 'Villa Construction Cost  ',
+        },
+        charges: 2540,
+        myId: '3',
+        units: {
+          label: 'Fixed cost',
+          value: 'fixedcost',
+        },
+        gst: {
+          value: 0,
+          label: '0',
+        },
+        TotalSaleValue: 0,
+        gstValue: 0,
+        TotalNetSaleValueGsT: 0,
+      },
+    ]
+
     await setCostSheetA(plotCS)
-    await setPartBPayload(addChargesCS)
+    await setPartBPayload(
+      addChargesCS?.length > 0 ? addChargesCS || [] : additonalChargesObj || []
+    )
+    await setPartCPayload(
+      constructCS?.length > 0 ? constructCS || [] : constructCost || []
+    )
+    await setPartDPayload(
+      constAdditionalChargesCS?.length > 0
+        ? constAdditionalChargesCS || []
+        : constructOtherChargesObj || []
+    )
+    await setPartEPayload(possessionAdditionalCostCS)
     await setTotalFun(plotCS, addChargesCS)
     await setNewPS(fullPs)
     await setPSPayload(fullPs)
@@ -119,8 +175,10 @@ const CostBreakUpEditor = ({
         ? updatedRows[index]?.gst?.value * 0.01
         : updatedRows[index]?.gst?.value
     total = isChargedPerSqft
-      ? Number(selUnitDetails?.super_built_up_area?.toString()?.replace(',', '') || selUnitDetails?.area?.toString()?.replace(',', '')) *
-        Number(updatedRows[index]?.charges)
+      ? Number(
+          selUnitDetails?.super_built_up_area?.toString()?.replace(',', '') ||
+            selUnitDetails?.area?.toString()?.replace(',', '')
+        ) * Number(updatedRows[index]?.charges)
       : Number(updatedRows[index]?.charges)
 
     gstTotal = Math.round(total * gstPercent)
@@ -133,6 +191,68 @@ const CostBreakUpEditor = ({
     updatedRows[index].TotalNetSaleValueGsT = total + gstTotal
     setPartBPayload(updatedRows)
     setTotalFun(costSheetA, partBPayload)
+  }
+  const handlePriceChangePartC = (index, price) => {
+    console.log('changed price is ', price)
+    const updatedRows = [...partCPayload]
+    console.log('new value is ', partCPayload)
+    updatedRows[index].charges = price
+
+    let total = 0
+    let gstTotal = 0
+    console.log('price view is', updatedRows[index])
+    // const isChargedPerSqft = updatedRows[index]?.units.value === 'costpersqft'
+    const isChargedPerSqft = true
+
+    const gstPercent =
+      Number(updatedRows[index]?.gst?.value) > 1
+        ? updatedRows[index]?.gst?.value * 0.01
+        : updatedRows[index]?.gst?.value
+    total = isChargedPerSqft
+      ? Number(selUnitDetails?.construct_area?.toString()?.replace(',', '')) *
+        Number(updatedRows[index]?.charges)
+      : Number(updatedRows[index]?.charges)
+
+    gstTotal = Math.round(total * gstPercent)
+
+    // console.log('myvalue is ', data)
+    updatedRows[index].TotalSaleValue = total
+    // updatedRows[index].gst.label = gstTaxIs
+
+    updatedRows[index].gstValue = gstTotal
+    updatedRows[index].TotalNetSaleValueGsT = total + gstTotal
+    setPartCPayload(updatedRows)
+    setTotalFun(costSheetA, partCPayload)
+  }
+  const handlePriceChangePartD = (index, price) => {
+    console.log('changed price is ', price)
+    const updatedRows = [...partCPayload]
+    console.log('new value is ', partCPayload)
+    updatedRows[index].charges = price
+
+    let total = 0
+    let gstTotal = 0
+    const isChargedPerSqft = updatedRows[index]?.units.value === 'costpersqft'
+
+    const gstPercent =
+      Number(updatedRows[index]?.gst?.value) > 1
+        ? updatedRows[index]?.gst?.value * 0.01
+        : updatedRows[index]?.gst?.value
+    total = isChargedPerSqft
+      ? Number(selUnitDetails?.construct_area?.toString()?.replace(',', '')) *
+        Number(updatedRows[index]?.charges)
+      : Number(updatedRows[index]?.charges)
+
+    gstTotal = Math.round(total * gstPercent)
+
+    // console.log('myvalue is ', data)
+    updatedRows[index].TotalSaleValue = total
+    // updatedRows[index].gst.label = gstTaxIs
+
+    updatedRows[index].gstValue = gstTotal
+    updatedRows[index].TotalNetSaleValueGsT = total + gstTotal
+    setPartDPayload(updatedRows)
+    setTotalFun(costSheetA, partCPayload)
   }
   const handlePriceChangePartA = (inx, newValue) => {
     console.log('changed price is ', newValue)
@@ -150,7 +270,9 @@ const CostBreakUpEditor = ({
       (d) => d?.component.value === 'plc_tax'
     )
     if (csMode === 'plot_cs') {
-      total = Math.round(selUnitDetails?.area?.toString()?.replace(',', '') * newValue)
+      total = Math.round(
+        selUnitDetails?.area?.toString()?.replace(',', '') * newValue
+      )
       gstTotal = Math.round(total * gstTaxIs)
     } else {
       total = Math.round(selUnitDetails?.super_built_up_area * newValue)
@@ -169,6 +291,11 @@ const CostBreakUpEditor = ({
     setCostSheetA(y)
     setTotalFun(costSheetA, partBPayload)
   }
+
+  useEffect(() => {
+    setTotalFun(costSheetA, partBPayload)
+  }, [partBPayload, partCPayload, partDPayload])
+
   const setTotalFun = async (costSheetA, partBPayload) => {
     console.log('ami here', partBPayload, costSheetA, selUnitDetails)
 
@@ -185,18 +312,34 @@ const CostBreakUpEditor = ({
     // )
 
     const partBTotal = partBPayload?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
     )
     const partATotal = costSheetA?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
+      0
+    )
+    const partCTotal = partCPayload?.reduce(
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
+      0
+    )
+    const partDTotal = partDPayload?.reduce(
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
+      0
+    )
+    const partETotal = partEPayload?.reduce(
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
     )
     setPartBTotal(partBTotal)
+    setPartCTotal(partCTotal)
+    setPartDTotal(partDTotal)
+    setPartETotal(partBTotal)
     console.log('sel unti details =>', partBTotal)
     setPartATotal(partATotal)
     CreateNewPsFun(netTotal, plotBookingAdv, csMode)
-    setNetTotal(partATotal + partBTotal)
+    setPlotTotal(partATotal + partBTotal)
+    setNetTotal(partATotal + partBTotal + partCTotal + partDTotal)
     selUnitDetails?.fullPs?.map((data) => {
       if (data?.stage?.value === 'on_booking') {
         setPlotBookingAdv(data?.percentage)
@@ -240,8 +383,6 @@ const CostBreakUpEditor = ({
   const submitManagerApproval = (status) => {
     console.log('data max is', selUnitDetails)
 
-
-
     // project1WweeknoMmonthnoYyearno
 
     newPlotPS.map((d, i) => {
@@ -255,7 +396,7 @@ const CostBreakUpEditor = ({
         bootedPs[i]['schDate'] == d?.schDate
       )
       //
-     // this will set the previous date immutable as current date
+      // this will set the previous date immutable as current date
 
       if (d?.oldDate != d?.schDate) {
         const dataPayload = {
@@ -265,7 +406,7 @@ const CostBreakUpEditor = ({
           stageId: d?.stage.value,
           newPrice: d?.value,
           used: d?.used,
-          assignedTo: selUnitDetails?.assignedTo || 'unassigned'
+          assignedTo: selUnitDetails?.assignedTo || 'unassigned',
         }
 
         updateProjectionsAgreegations(
@@ -282,30 +423,102 @@ const CostBreakUpEditor = ({
           enqueueSnackbar
         )
       }
-
     })
-  const fullPsPayload = newPlotPS.map((d) => {
-    const newPayload = d
-    newPayload.oldDate = d?.schDate
-    return newPayload;
-  })
+    const fullPsPayload = newPlotPS.map((d) => {
+      const newPayload = d
+      newPayload.oldDate = d?.schDate
+      return newPayload
+    })
+    let T_elgible = 0
+    let T_elgible_balance = 0
+    let plotPsNew = []
+    let constructPsNew = []
+
+   plotPsNew  = newPlotPS?.map((d1, inx) => {
+      console.log('d1 is', d1)
+      const z = d1
+      z.value = ['fixedcost'].includes(d1?.units?.value)
+        ? Number(d1?.percentage)
+        : Number((plotTotal * (d1?.percentage / 100)).toFixed(2))
+      if (['fixedcost'].includes(d1?.units?.value)) {
+        z.elgible = true
+        z.elgFrom = Timestamp.now().toMillis()
+        return z
+      }
+      // data['unitStatus'] = d1?.units?.value
+      if (status == 'Registered') {
+        z.elgible = true
+        z.elgFrom = Timestamp.now().toMillis()
+      }
+      if (status == 'Booked') {
+        if (inx < 1) {
+          z.elgible = true
+          z.elgFrom = Timestamp.now().toMillis()
+        }
+      }
+      if (status == 'ATS') {
+        if (inx < 2) {
+          z.elgible = true
+          z.elgFrom = Timestamp.now().toMillis()
+        }
+      }
+
+      d1.schDate =
+        d1?.schDate ||
+        d.getTime() +
+          (newPlotPS.slice(0, inx).reduce(
+            (sum, prevItem) => sum + (Number(prevItem.zeroDay) || 0),
+            0
+          ) +
+            Number(d1?.zeroDay || 0)) *
+            86400000
+      return z
+    })
+    const T_review = selUnitDetails['T_received'] || 0
+
+    fullPsPayload?.map((dataObj) => {
+      if (dataObj?.elgible) {
+        T_elgible = dataObj?.value + T_elgible
+      }
+    })
+
+    T_elgible_balance = T_elgible - T_review
     const dataObj = {
       status: status,
-      plotCS: costSheetA,
-      fullPs: fullPsPayload,
-      addChargesCS: partBPayload,
-      T_balance:
-        netTotal -
-        (selUnitDetails?.T_review + (selUnitDetails?.T_cleared || 0)),
-      T_Total: netTotal,
-      T_review: selUnitDetails?.T_review,
-      T_cleared: selUnitDetails?.T_cleared || 0,
-      T_rejected: selUnitDetails?.T_rejected || 0,
+      // plotCS: costSheetA,
+      // fullPs: fullPsPayload,
+      // addChargesCS: partBPayload,
+      // T_balance:
+      //   netTotal -
+      //   (selUnitDetails?.T_review + (selUnitDetails?.T_cleared || 0)),
+      // T_Total: netTotal,
+      // T_review: selUnitDetails?.T_review,
+      // T_cleared: selUnitDetails?.T_cleared || 0,
+      // T_rejected: selUnitDetails?.T_rejected || 0,
       // T_elgible_balance: selUnitDetails?.T_elgible_balance || 0,
-      T_elgible_balance:
-        selUnitDetails?.T_elgible -
-        (selUnitDetails?.T_review + (selUnitDetails?.T_cleared || 0)),
+      // T_elgible_balance:
+      //   selUnitDetails?.T_elgible -
+      //   (selUnitDetails?.T_review + (selUnitDetails?.T_cleared || 0)),
       // T_elgible: selUnitDetails?.T_elgible || 0,
+
+      T_total: netTotal,
+      T_balance: netTotal - selUnitDetails?.T_review,
+      T_elgible: T_elgible,
+      T_elgible_balance: T_elgible_balance,
+
+      T_A: partATotal,
+      T_B: partBTotal,
+      T_C: partCTotal,
+      T_D: partDTotal,
+      T_E: partETotal,
+      plotCS: [...costSheetA],
+      constructCS: [...partCPayload],
+      addChargesCS: partBPayload,
+      constAdditionalChargesCS: partBPayload,
+      possessionAdditionalCostCS: partEPayload,
+      // plotPS: plotPsNew,
+      // constructPS: constructPs,
+      // fullPs: fullPsPayload,
     }
 
     updateManagerApproval(
@@ -504,6 +717,33 @@ const CostBreakUpEditor = ({
                             </tbody>
                           </table>
                           <table className="w-full mt-1">
+                          <thead>
+                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#f3fff2] ">
+                                <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
+                                  Additonal Charges
+                                </th>
+                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                  Rate/Sqft
+                                </th>
+                                <th
+                                  className={`${
+                                    !showGstCol ? 'hidden' : ''
+                                  } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                >
+                                  Sale Value
+                                </th>
+                                <th
+                                  className={`${
+                                    !showGstCol ? 'hidden' : ''
+                                  }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                >
+                                  GST
+                                </th>
+                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                  Total
+                                </th>
+                              </tr>
+                            </thead>
                             <tbody>
                               {partBPayload?.map((d1, inx) => (
                                 <tr key={inx} className="py-1 my-2 h-[32px]  ">
@@ -556,10 +796,10 @@ const CostBreakUpEditor = ({
                                     ₹{d1?.gstValue?.toLocaleString('en-IN')}
                                   </td>
                                   <td className="w-[15%] px-2 text-[12px] text-right text-slate-900 border ">
-                                    ₹
-                                    {Number(
-                                      computeTotal(d1, selUnitDetails?.area?.toString()?.replace(',', ''))
-                                    )?.toLocaleString('en-IN')}
+                                    ₹{' '}
+                                    {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                      'en-IN'
+                                    )}
                                   </td>
                                 </tr>
                               ))}
@@ -578,7 +818,7 @@ const CostBreakUpEditor = ({
                                     ?.reduce(
                                       (partialSum, obj) =>
                                         partialSum +
-                                        Number(obj?.TotalSaleValue),
+                                        Number(obj?.TotalSaleValue || 0),
                                       0
                                     )
                                     ?.toLocaleString('en-IN')}
@@ -592,7 +832,7 @@ const CostBreakUpEditor = ({
                                   {partBPayload
                                     ?.reduce(
                                       (partialSum, obj) =>
-                                        partialSum + Number(obj?.gstValue),
+                                        partialSum + Number(obj?.gstValue || 0),
                                       0
                                     )
                                     ?.toLocaleString('en-IN')}
@@ -604,9 +844,336 @@ const CostBreakUpEditor = ({
                             </tbody>
                           </table>
 
+                          {['Villas'].includes(
+                            selPhaseObj?.projectType?.name
+                          ) && (
+                            <section className="flex flex-row justify-between  bg-[#dff6dd]  h-[34px] py-[7px] mt-2 ">
+                              <h1 className="px-2 text-[12px] text-left  text-[12px] font-bold ">
+                                Total Unit Cost (A+B)
+                              </h1>
+                              <section className="flex flex-row">
+                                <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
+                                  ₹{partATotal?.toLocaleString('en-IN')}
+                                </section>
+                                <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
+                                  +
+                                </section>
+
+                                <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
+                                  ₹{partBTotal?.toLocaleString('en-IN')}
+                                </section>
+                                <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
+                                  =
+                                </section>
+                                <section className="px-2 d-md font-bold text-[16px] text-[#000000e6] leading-none">
+                                  ₹{plotTotal?.toLocaleString('en-IN')}
+                                </section>
+                              </section>
+                            </section>
+                          )}
+                          {/* Table C */}
+                          {['Villas'].includes(
+                            selPhaseObj?.projectType?.name
+                          ) && (
+                            <table className="w-full mt-1">
+                                 <thead>
+                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#f3fff2] ">
+                                <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
+                                  Construction Particulars
+                                </th>
+                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                  Rate/Sqft
+                                </th>
+                                <th
+                                  className={`${
+                                    !showGstCol ? 'hidden' : ''
+                                  } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                >
+                                  Sale Value
+                                </th>
+                                <th
+                                  className={`${
+                                    !showGstCol ? 'hidden' : ''
+                                  }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                >
+                                  GST
+                                </th>
+                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                  Total
+                                </th>
+                              </tr>
+                            </thead>
+                              <tbody>
+                                {partCPayload?.map((d1, inx) => (
+                                  <tr
+                                    key={inx}
+                                    className="py-1 my-2 h-[32px]  "
+                                  >
+                                    <th className="w-[40%] px-2 text-[11px] text-left text-gray-700   ">
+                                      {d1?.component?.label}
+                                    </th>
+                                    <td className="w-[15%]  px-2 text-[12px] text-right text-gray-700 border ">
+                                      <TextFieldFlat
+                                        label=""
+                                        className="w-[100%] text-[12px] text-right font-bold border-b  border-[#B76E00] border-dashed pr-1 py-[4px] text-[#B76E00]"
+                                        name="ratePerSqft"
+                                        onChange={(e) => {
+                                          // setNewSqftPrice(e.target.value)
+
+                                          setNewSqftPrice(
+                                            Number(e.target.value)
+                                          )
+                                          handlePriceChangePartC(
+                                            inx,
+                                            e.target.value
+                                          )
+                                          // changeOverallCostFun(
+                                          //   inx,
+                                          //   d1,
+                                          //   e.target.value
+                                          // )
+                                        }}
+                                        value={d1?.charges}
+                                      />
+                                      <TextFieldFlat
+                                        className=" hidden  "
+                                        label=""
+                                        name={d1?.component?.value}
+                                        type="number"
+                                      />
+                                    </td>
+                                    <td
+                                      className={`${
+                                        !showGstCol ? 'hidden' : ''
+                                      } w-[15%] px-2 text-[12px] text-right text-slate-500 text-sm border `}
+                                    >
+                                      ₹
+                                      {d1?.TotalSaleValue?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                    </td>
+                                    <td
+                                      className={`${
+                                        !showGstCol ? 'hidden' : ''
+                                      } w-[15%] px-2 text-[12px] text-right text-slate-500 text-sm border  `}
+                                    >
+                                      ₹{d1?.gstValue?.toLocaleString('en-IN')}
+                                    </td>
+                                    <td className="w-[15%] px-2 text-[12px] text-right text-slate-900 border ">
+                                      ₹{' '}
+                                      {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                    </td>
+                                  </tr>
+                                ))}
+                                <tr className="   h-[32px] border">
+                                  <th className="w-[40%] text-[12px] text-left text-[#118D57] pl-2 border ">
+                                    Total (C)
+                                  </th>
+                                  <td className="w-[15%] px-2 font-bold text-[12px] text-right text-gray-600 pr-3"></td>
+                                  <td
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    } w-[15%] px-2 font-bold  text-[12px] text-right text-gray-800 `}
+                                  >
+                                    ₹
+                                    {partCPayload
+                                      ?.reduce(
+                                        (partialSum, obj) =>
+                                          partialSum +
+                                          Number(obj?.TotalSaleValue || 0),
+                                        0
+                                      )
+                                      ?.toLocaleString('en-IN')}
+                                  </td>
+                                  <td
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    } w-[15%] px-2 font-bold  text-[12px] text-right text-gray-800 `}
+                                  >
+                                    ₹
+                                    {partCPayload
+                                      ?.reduce(
+                                        (partialSum, obj) =>
+                                          partialSum +
+                                          Number(obj?.gstValue || 0),
+                                        0
+                                      )
+                                      ?.toLocaleString('en-IN')}
+                                  </td>
+                                  <td className="w-[15%] px-2 font-bold  text-[12px] text-right  text-[#118D57]  ">
+                                    ₹
+                                    {partCPayload
+                                      ?.reduce(
+                                        (partialSum, obj) =>
+                                          partialSum +
+                                          Number(
+                                            obj?.TotalNetSaleValueGsT || 0
+                                          ),
+                                        0
+                                      )
+                                      ?.toLocaleString('en-IN')}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          )}
+                          {/* Table D */}
+                          {['Villas'].includes(
+                            selPhaseObj?.projectType?.name
+                          ) && (
+                            <table className="w-full mt-1">
+                                 <thead>
+                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#f3fff2] ">
+                                <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
+                                  Construction Additional Charges
+                                </th>
+                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                  Rate/Sqft
+                                </th>
+                                <th
+                                  className={`${
+                                    !showGstCol ? 'hidden' : ''
+                                  } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                >
+                                  Sale Value
+                                </th>
+                                <th
+                                  className={`${
+                                    !showGstCol ? 'hidden' : ''
+                                  }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                >
+                                  GST
+                                </th>
+                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                  Total
+                                </th>
+                              </tr>
+                            </thead>
+                              <tbody>
+                                {partDPayload?.map((d1, inx) => (
+                                  <tr
+                                    key={inx}
+                                    className="py-1 my-2 h-[32px]  "
+                                  >
+                                    <th className="w-[40%] px-2 text-[11px] text-left text-gray-700   ">
+                                      {d1?.component?.label}
+                                    </th>
+                                    <td className="w-[15%]  px-2 text-[12px] text-right text-gray-700 border ">
+                                      <TextFieldFlat
+                                        label=""
+                                        className="w-[100%] text-[12px] text-right font-bold border-b  border-[#B76E00] border-dashed pr-1 py-[4px] text-[#B76E00]"
+                                        name="ratePerSqft"
+                                        onChange={(e) => {
+                                          // setNewSqftPrice(e.target.value)
+
+                                          setNewSqftPrice(
+                                            Number(e.target.value)
+                                          )
+                                          handlePriceChangePartD(
+                                            inx,
+                                            e.target.value
+                                          )
+                                          // changeOverallCostFun(
+                                          //   inx,
+                                          //   d1,
+                                          //   e.target.value
+                                          // )
+                                        }}
+                                        value={d1?.charges}
+                                      />
+                                      <TextFieldFlat
+                                        className=" hidden  "
+                                        label=""
+                                        name={d1?.component?.value}
+                                        type="number"
+                                      />
+                                    </td>
+                                    <td
+                                      className={`${
+                                        !showGstCol ? 'hidden' : ''
+                                      } w-[15%] px-2 text-[12px] text-right text-slate-500 text-sm border `}
+                                    >
+                                      ₹
+                                      {d1?.TotalSaleValue?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                    </td>
+                                    <td
+                                      className={`${
+                                        !showGstCol ? 'hidden' : ''
+                                      } w-[15%] px-2 text-[12px] text-right text-slate-500 text-sm border  `}
+                                    >
+                                      ₹{d1?.gstValue?.toLocaleString('en-IN')}
+                                    </td>
+                                    <td className="w-[15%] px-2 text-[12px] text-right text-slate-900 border ">
+                                      ₹{' '}
+                                      {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                    </td>
+                                  </tr>
+                                ))}
+                                <tr className="   h-[32px] border">
+                                  <th className="w-[40%] text-[12px] text-left text-[#118D57] pl-2 border ">
+                                    Total (D)
+                                  </th>
+                                  <td className="w-[15%] px-2 font-bold text-[12px] text-right text-gray-600 pr-3"></td>
+                                  <td
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    } w-[15%] px-2 font-bold  text-[12px] text-right text-gray-800 `}
+                                  >
+                                    ₹
+                                    {partDPayload
+                                      ?.reduce(
+                                        (partialSum, obj) =>
+                                          partialSum +
+                                          Number(obj?.TotalSaleValue || 0),
+                                        0
+                                      )
+                                      ?.toLocaleString('en-IN')}
+                                  </td>
+                                  <td
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    } w-[15%] px-2 font-bold  text-[12px] text-right text-gray-800 `}
+                                  >
+                                    ₹
+                                    {partDPayload
+                                      ?.reduce(
+                                        (partialSum, obj) =>
+                                          partialSum +
+                                          Number(obj?.gstValue || 0),
+                                        0
+                                      )
+                                      ?.toLocaleString('en-IN')}
+                                  </td>
+                                  <td className="w-[15%] px-2 font-bold  text-[12px] text-right  text-[#118D57]  ">
+                                    ₹{' '}
+                                    {partDPayload
+                                      ?.reduce(
+                                        (partialSum, obj) =>
+                                          partialSum +
+                                          Number(
+                                            obj?.TotalNetSaleValueGsT || 0
+                                          ),
+                                        0
+                                      )
+                                      ?.toLocaleString('en-IN')}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          )}
                           <section className="flex flex-row justify-between  bg-[#dff6dd]  h-[34px] py-[7px] mt-2 ">
                             <h1 className="px-2 text-[12px] text-left  text-[12px] font-bold ">
-                              Total Unit Cost (A+B)
+                              Total Unit Cost (A+B
+                              {['Villas'].includes(
+                                selPhaseObj?.projectType?.name
+                              ) && '+C+D'}
+                              )
                             </h1>
                             <section className="flex flex-row">
                               <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
@@ -615,10 +1182,28 @@ const CostBreakUpEditor = ({
                               <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
                                 +
                               </section>
-
                               <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
                                 ₹{partBTotal?.toLocaleString('en-IN')}
                               </section>
+                              {['Villas'].includes(
+                                selPhaseObj?.projectType?.name
+                              ) && (
+                                <>
+                                  {' '}
+                                  <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
+                                    +
+                                  </section>
+                                  <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
+                                    ₹{partCTotal?.toLocaleString('en-IN')}
+                                  </section>{' '}
+                                  <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
+                                    +
+                                  </section>
+                                  <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
+                                    ₹{partDTotal?.toLocaleString('en-IN')}
+                                  </section>{' '}
+                                </>
+                              )}
                               <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
                                 =
                               </section>

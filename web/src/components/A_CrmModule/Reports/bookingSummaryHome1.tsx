@@ -123,7 +123,7 @@ const UnitBookingSummaryHomePage = ({
 
 
   const boot = async () => {
-    await getProjectsListFun()
+    // await getProjectsListFun()
     const unsubscribe = await getBookedUnitsByProject(
       orgId,
       async (querySnapshot) => {
