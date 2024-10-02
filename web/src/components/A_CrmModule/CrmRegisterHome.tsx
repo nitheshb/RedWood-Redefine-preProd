@@ -1366,15 +1366,14 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
 
                                     </div> */}
                                     <section className="flex flex-col  w-full mt-">
-                                      <div className="text-zinc-800 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Balance:
-                                        <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
-                                          ₹
-                                          {finData?.T_balance?.toLocaleString(
-                                            'en-IN'
-                                          )}
+                                    <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
+                                        Unit Cost: ₹
+                                        <div>
+                                          {(
+                                            finData?.T_total || finData?.T_Total
+                                          )?.toLocaleString('en-IN')}
                                         </div>
-                                      </div>
+                                      </p>
 
                                       <div className="text-zinc-500 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
                                         Paid: ₹
@@ -1386,14 +1385,15 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                           ).toLocaleString('en-IN') || 0}
                                         </div>
                                       </div>
-                                      <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Unit Cost: ₹
-                                        <div>
-                                          {(
-                                            finData?.T_total || finData?.T_Total
-                                          )?.toLocaleString('en-IN')}
+
+                                      <div className="text-zinc-800 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
+                                        Balance:₹
+                                        <div className="text-zinc-900 text-[11px] font-bold  tracking-wide">
+                                          {finData?.T_balance?.toLocaleString(
+                                            'en-IN'
+                                          )}
                                         </div>
-                                      </p>
+                                      </div>
                                     </section>
                                   </section>
                                 </div>
