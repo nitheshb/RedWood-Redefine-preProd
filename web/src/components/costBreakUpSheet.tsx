@@ -91,10 +91,11 @@ const CostBreakUpSheet = ({
   const [soldPrice, setSoldPrice] = useState(0)
   const [csMode, setCsMode] = useState('plot_cs')
   const [showGstCol, setShowGstCol] = useState(true)
-
+  const [myBookingPayload, setMyBookingPayload] = useState([])
   const [newPlotCostSheetA, setNewPlotCostSheetA] = useState([])
   const [newConstCostSheetA, setNewConstCostSheetA] = useState([])
   const [newPlotCsObj, setNewPlotCsObj] = useState([])
+
   const [newPlotPS, setNewPlotPS] = useState([])
   const [newConstructCsObj, setNewConstructCsObj] = useState([])
   const [newConstructCostSheetA, setNewConstructCostSheetA] = useState([])
@@ -620,6 +621,8 @@ const CostBreakUpSheet = ({
                                       csMode={csMode}
                                       setCostSheet={setCostSheet}
                                       costSheet={costSheet}
+                                      myBookingPayload={myBookingPayload}
+                                      setMyBookingPayload={setMyBookingPayload}
                                       // costSheetA={costSheetA}
                                       pdfExportComponent={pdfExportComponent}
                                       selPhaseObj={selPhaseObj}
@@ -801,6 +804,8 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                     <BookingSummaryView
                       projectDetails={projectDetails}
                       csMode={csMode}
+                      myBookingPayload={myBookingPayload}
+                      setMyBookingPayload={setMyBookingPayload}
                       // costSheetA={costSheetA}
                       pdfExportComponent={pdfExportComponent}
                       customerInfo={customerInfo}

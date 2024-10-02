@@ -20,6 +20,8 @@ import { TextFieldFlat } from 'src/util/formFields/TextFieldFlatType'
 const BookingSummaryView = ({
   projectDetails,
   csMode,
+  myBookingPayload,
+  setMyBookingPayload,
   customerInfo,
   costSheet,
   pdfExportComponent,
@@ -1210,7 +1212,7 @@ const BookingSummaryView = ({
                                           <td className="text-[12px] px-2 text-right   ">
                                             {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
                                             ₹ {((d1?.TotalSaleValue|| 0) + (d1?.gstValue))?.toLocaleString('en-IN')}
-                                          
+
                                           </td>
                                         </tr>
                                       ))}
