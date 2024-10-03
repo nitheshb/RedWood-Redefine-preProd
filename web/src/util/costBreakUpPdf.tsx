@@ -99,10 +99,21 @@ const CostBreakUpPdf = ({
   const [showGstCol, setShowGstCol] = useState(true)
   const [partETotal, setPartETotal] = useState(0)
 
-  const handlePSdateChange = (index, newDate) => {
-    const updatedRows = [...newPlotPS]
-    updatedRows[index].schDate = newDate
-    setNewPS(updatedRows)
+  const handlePSdateChange = (index, newDate, type) => {
+
+    if(type == 'constructPS'){
+      const updatedRows = [...psConstructPayload]
+      updatedRows[index].schDate = newDate
+      setConstructPSPayload(updatedRows)
+      setNewPS([...updatedRows, ...psConstructPayload])
+    }
+    if(type == 'plotPs'){
+      const updatedRows = [...newPlotPS]
+      updatedRows[index].schDate = newDate
+      setPSPayload(updatedRows)
+      setNewPS([...updatedRows, ...psConstructPayload])
+
+    }
   }
 
   // const handlePSdateChange = (index, newDate) => {
@@ -114,11 +125,11 @@ const CostBreakUpPdf = ({
   //   setNewPS(updatedRows);
   // }
   useEffect(() => {
-    let z =
+    const z =
       selPhaseObj?.fullCs?.filter(
         (d) => d?.section?.value === 'possessionAdditionalCost'
       ) || []
-   let a =  z.map((data4) => {
+    const a = z.map((data4) => {
       let total = 0
       let gstTotal = 0
       const charges = 0
@@ -174,6 +185,15 @@ const CostBreakUpPdf = ({
       setConstGST(x?.gst.value)
     }
   }, [])
+  useEffect(() => {
+
+    let x = {...myBookingPayload}
+    x.plotPS = psPayload
+    x.constructPS = psConstructPayload
+    x.fullPs = [...psPayload, ...psConstructPayload]
+    setMyBookingPayload(x)
+    console.log('values are ',x.fullPs)
+  }, [psPayload, psConstructPayload])
 
   useEffect(() => {
     const {
@@ -354,6 +374,7 @@ const CostBreakUpPdf = ({
       setPartCPayload(selPhaseObj?.partCTaxObj || [])
       console.log('construct ps obj', ConstructPayScheduleObj)
       setConstructPSPayload(ConstructPayScheduleObj)
+
       x = [
         {
           myId: '1',
@@ -538,12 +559,12 @@ const CostBreakUpPdf = ({
 
     const currentBookingPayload = {
       T_total: netValue,
-      // T_balance: T_balance,
+      T_balance: netValue,
       // T_received: data['T_received'] || 0,
       // T_elgible: T_elgible,
       // T_elgible_balance: T_elgible_balance,
       // T_approved: data['T_received'] || 0,
-      // T_transaction: data['T_received'] || 0,
+      //  T_transaction: data['T_received'] || 0,
 
       // T_review: netTotal,
       T_A: partATotal,
@@ -572,7 +593,7 @@ const CostBreakUpPdf = ({
       // ats_target_date: data['ats_target_date'],
       // sd_target_date: data['sd_target_date'],
     }
-    setMyBookingPayload(currentBookingPayload)
+    setMyBookingPayload({...myBookingPayload,...currentBookingPayload})
   }
 
   useEffect(() => {
@@ -1060,8 +1081,10 @@ const CostBreakUpPdf = ({
                                       </td>
                                       <td className="text-[12px] px-2 text-right   ">
                                         {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
-                                        ₹
-                                        ₹{d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
+                                        ₹ ₹
+                                        {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                          'en-IN'
+                                        )}
                                       </td>
                                     </tr>
                                   ))}
@@ -1670,9 +1693,10 @@ const CostBreakUpPdf = ({
                                     </td>
                                     <td className="text-[12px] px-2 text-right   ">
                                       {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
-
-                                      ₹{d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
-
+                                      ₹
+                                      {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                        'en-IN'
+                                      )}
                                     </td>
                                   </tr>
                                 ))}
@@ -1727,7 +1751,11 @@ const CostBreakUpPdf = ({
                                 {' '}
                                 <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D]  font-[600]  ">
                                   <th className="w-[50%] px-2   text-left  tracking-wide  text-[12px]   ">
-                                    Particulars
+                                    {selPhaseObj?.projectType?.name ===
+                                    'Apartment'
+                                      ? 'Flat'
+                                      : 'Plot'}{' '}
+                                    Payment Schedule
                                   </th>
                                   <th className="w-[30%] px-2   text-left  tracking-wide  text-[12px] ">
                                     Payment Timeline Of
@@ -1739,7 +1767,7 @@ const CostBreakUpPdf = ({
                               </thead>
 
                               <tbody>
-                                {newPlotPS?.map((d1, inx) => (
+                                {psPayload?.map((d1, inx) => (
                                   <tr
                                     key={inx}
                                     className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
@@ -1792,7 +1820,8 @@ const CostBreakUpPdf = ({
                                           // setStartDate(date)
                                           handlePSdateChange(
                                             inx,
-                                            date.getTime()
+                                            date.getTime(),
+                                            'plotPs'
                                           )
                                         }}
                                         timeFormat="HH:mm"
@@ -1822,7 +1851,8 @@ const CostBreakUpPdf = ({
                                   <th className="text-[12px] px-2  text-right text-gray-800 ">
                                     ₹
                                     {(
-                                      (partATotal || 0) + (partBTotal || 0)
+                                      (myBookingPayload?.T_A || 0) +
+                                      (myBookingPayload?.T_B || 0)
                                     )?.toLocaleString('en-IN')}
                                   </th>
                                 </tr>
@@ -1836,13 +1866,13 @@ const CostBreakUpPdf = ({
                                 <thead className="">
                                   {' '}
                                   <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D]  font-[600]  ">
-                                    <th className="w-[50%] px-2   text-left  tracking-wide uppercase text-[11px]   ">
-                                      Particulars
+                                    <th className="w-[50%] px-2   text-left  tracking-wide text-[11px]   ">
+                                      Construction Payment Schedule
                                     </th>
-                                    <th className="w-[30%] px-2   text-left  tracking-wide uppercase text-[11px] ">
+                                    <th className="w-[30%] px-2   text-left  tracking-wide text-[11px] ">
                                       Payment Timeline of
                                     </th>
-                                    <th className="w-[20%] px-2   text-right  tracking-wide uppercase  text-[11px]">
+                                    <th className="w-[20%] px-2   text-right  tracking-wide text-[11px]">
                                       Total inc GST
                                     </th>
                                   </tr>
@@ -1874,7 +1904,7 @@ const CostBreakUpPdf = ({
                                             (d1.schDate =
                                               d1?.schDate ||
                                               d.getTime() +
-                                                (newPlotPS
+                                                (psConstructPayload
                                                   .slice(0, inx)
                                                   .reduce(
                                                     (sum, prevItem) =>
@@ -1895,7 +1925,8 @@ const CostBreakUpPdf = ({
 
                                             handlePSdateChange(
                                               inx,
-                                              date.getTime()
+                                              date.getTime(),
+                                              'constructPS'
                                             )
                                           }}
                                           timeFormat="HH:mm"
@@ -1941,7 +1972,7 @@ const CostBreakUpPdf = ({
           </PDFExport>
         </div>
       )}
-
+      {/*
       {pdfPreview && (
         <CostBreakUpPdfPreview
           projectDetails={projectDetails}
@@ -1962,7 +1993,7 @@ const CostBreakUpPdf = ({
           partBTotal={partBTotal}
           netTotal={netTotal}
         />
-      )}
+      )} */}
     </div>
   )
 }

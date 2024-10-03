@@ -223,7 +223,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     value: 'myunits',
   })
   useEffect(() => {
-    console.log(' crm units data is ', crmCustomersDBData)
+    // console.log(' crm units data is ', crmCustomersDBData)
   }, [crmCustomersDBData])
 
   useEffect(() => {
@@ -244,12 +244,12 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
   }
 
   useEffect(() => {
-    getLeadsDataFun(projectList, 'booked')
-    getLeadsDataFun(projectList, 'agreement_pipeline')
-    getLeadsDataFun(projectList, 'agreement')
-    getLeadsDataFun(projectList, 'registered')
-    getLeadsDataFun(projectList, 'possession')
-    getLeadsDataFun(projectList, 'unassigned')
+    getLeadsDataFun(projectList, ['booked', 'Booked'])
+    getLeadsDataFun(projectList, ['agreement_pipeline'])
+    getLeadsDataFun(projectList, ['agreement', 'ATS'])
+    getLeadsDataFun(projectList, ['registered', 'Registered'])
+    getLeadsDataFun(projectList, ['possession'])
+    getLeadsDataFun(projectList, ['unassigned'])
   }, [projectList, selLeadsOf])
 
   useEffect(() => {
@@ -259,17 +259,18 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
   const filter_Leads_Projects_Users_Fun = () => {
     // setFetchLeadsLoader(true)
     // const x = leadsFetchedRawData
-    getLeadsDataFun(projectList, 'booked')
-    getLeadsDataFun(projectList, 'agreement_pipeline')
-    getLeadsDataFun(projectList, 'sd_pipeline')
-    getLeadsDataFun(projectList, 'registered')
-    getLeadsDataFun(projectList, 'unassigned')
-    console.log(
-      'my Array data is ',
-      queryResult,
-      crmCustomersDBData,
-      bookingReviewA
-    )
+    getLeadsDataFun(projectList, ['booked', 'Booked'])
+    getLeadsDataFun(projectList, ['agreement_pipeline'])
+    getLeadsDataFun(projectList, ['agreement', 'ATS'])
+    getLeadsDataFun(projectList, ['registered', 'Registered'])
+    getLeadsDataFun(projectList, ['possession', 'Possession'])
+    getLeadsDataFun(projectList, ['unassigned'])
+    // console.log(
+    //   'my Array data is ',
+    //   queryResult,
+    //   crmCustomersDBData,
+    //   bookingReviewA
+    // )
   }
 
   const getProjectsListFun = () => {
@@ -373,7 +374,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     return unsubscribe
   }
   const getLeadsDataFun = async (projectList, statusFil) => {
-    console.log('login role detials', user)
+    // console.log('login role detials', user)
     const { access, uid } = user
     const unsubscribe = getBookedUnitsByProject(
       orgId,
@@ -382,62 +383,61 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
           const x = docSnapshot.data()
           x.id = docSnapshot.id
           const y = projectList.filter((proj) => proj?.uid == x?.pId)
-          console.log(',my prject sel is  ===> ', projectList)
+          // console.log(',my prject sel is  ===> ', projectList)
           if (y.length > 0) {
-            console.log(',my prject sel is ', y)
+            // console.log(',my prject sel is ', y)
             x.projName = y[0].projectName
           }
           return x
         })
         // setBoardData
-        console.log('my Array data is ', usersListA, crmCustomersDBData)
+        // console.log('my Array data is ', usersListA, crmCustomersDBData)
         // await serealizeData(usersListA)
-        usersListA.sort((a, b) => {
-          return b?.booked_on || 0 - b?.booked_on || 0
-        })
-        await setCrmCustomerDBData(usersListA)
 
-        await console.log(
-          'my Array data is =====>',
-          usersListA.length,
-          queryResult.length,
-          crmCustomersDBData
-        )
-        if (statusFil === 'booked') {
-          await console.log(
-            'my Array data is ',
-            usersListA.length,
-            queryResult.length
-          )
+        // await setCrmCustomerDBData(usersListA)
+
+        await usersListA.sort((a, b) => {
+          return a.unit_no - b.unit_no
+        })
+
+           // usersListA.sort((a, b) => {
+        //   return b?.booked_on || 0 - b?.booked_on || 0
+        // })
+
+
+        if (statusFil.includes('booked')) {
+          // await console.log(
+          //   'my Array data is ',
+          //   usersListA.length,
+          //   queryResult.length
+          // )
           await setBookingReviewA(usersListA)
           await setBookingReviewCo(usersListA.length)
           // await setBookingReviewCo(200)
-          await usersListA.sort((a, b) => {
-            return a.unit_no - b.unit_no
-          })
+
           await setQueryResult(usersListA)
           await setFilteredDataA(usersListA)
           await setSearchKeyField('')
-        } else if (statusFil === 'agreement_pipeline') {
+        } else if (statusFil.includes('agreement_pipeline')) {
           await setAgreePipeA(usersListA)
           await setAgreePipeCo(usersListA.length)
-        } else if (statusFil === 'agreement') {
+        } else if (statusFil.includes('agreement')) {
           await setSdPipeA(usersListA)
           await setSdPipeCo(usersListA.length)
-        } else if (statusFil === 'registered') {
+        } else if (statusFil.includes('registered')) {
           await setRegisteredA(usersListA)
           await setRegisteredCo(usersListA.length)
-        } else if (statusFil === 'possession') {
+        } else if (statusFil.includes('possession')) {
           await setPosessionA(usersListA)
           await setPosessionCo(usersListA.length)
-        } else if (statusFil === 'unassigned') {
+        } else if (statusFil.includes('unassigned')) {
           await setUnAssignedA(usersListA)
           await setUnAssignedCo(usersListA.length)
         }
-        await console.log('my Array data is set it', crmCustomersDBData)
+        // await console.log('my Array data is set it', crmCustomersDBData)
       },
       {
-        status: [statusFil],
+        status: statusFil,
         projectId: selProjectIs?.uid,
         assignedTo: selLeadsOf?.value === 'myunits' ? uid : undefined,
       },
@@ -829,7 +829,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                             pId,
                             projName,
                           } = finData
-                          console.log('fin data is ', finData)
+                          // console.log('fin data is ', finData)
                           return (
                             <div
                               key={c}
@@ -1101,7 +1101,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                         pId,
                         projName,
                       } = finData
-                      console.log('fin data is ', finData)
+                      // console.log('fin data is ', finData)
                       return (
                         <section key={c} className="border border-b-0 ">
                           <section className="flex flex-row bg-gradient-to-r from-[#Fff] to-[#fff]">

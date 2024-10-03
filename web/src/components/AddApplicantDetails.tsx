@@ -41,16 +41,12 @@ import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker';
 import CloneableEmailForm from './ApplicantDetailsFormReuse';
 
-
-
-
-
-
-
 const AddApplicantDetails = ({
   source,
   customerInfo,
   setCustomerInfo,
+  myBookingPayload,
+  setMyBookingPayload,
   title,
   leadPayload,
   setLeadPayload,
@@ -1008,6 +1004,10 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   }
+  useEffect(() => {
+
+    console.log('customer info', customerInfo)
+   },[customerInfo])
   return (
     <>
       <div className="flex flex-col mx-0 bg-[#F8FAFC]  rounded-md overflow-y-scroll no-scrollbar" style={{ height: `calc(100vh - 120px)` }}>
@@ -1018,7 +1018,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
         </div>
 <CloneableEmailForm selUnitDetails={selUnitDetails} customerInfo={customerInfo} setCustomerInfo={setCustomerInfo}  />
 
-        <div className="">
+        {/* <div className="">
           <div className="flex flex-col rounded-lg bg-white ">
             <div className="mt-0">
               <Formik
@@ -1034,7 +1034,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                 {(formik) => (
                   <Form>
                     <div className="form">
-                      {/* Phase Details */}
+
 
                       <section className=" bg-blueGray-50">
                         <div className="w-full mx-auto ">
@@ -1067,7 +1067,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                               setShowLeadLink(!showLeadLink)
                                             }
                                           >
-                                            {/* <LinkIcon className="w-3 h-3 cursor-pointer ml-1 mb-[3px] mr-1 inline-block text-[#0ea5e9]  rounded-[16px] " /> */}
+
                                             Search in leads
                                           </div>
                                           </section>
@@ -1092,10 +1092,6 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                           </div>
 
 
-
-                                          {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
-                                            Details of applicant is mandatory
-                                          </div> */}
                                         </div>
                                       </section>
 
@@ -1141,7 +1137,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                 </label>
                               </span>
                             </section>
-                              {/* row 1 */}
+
                             <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-4 ">
                               <div className="space-y-2 w-full text-xs mt-">
                               <TextField
@@ -1214,7 +1210,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
 
                             </div>
-                            {/* row 2 */}
+
                              <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
                               <div className="space-y-2 w-full text-xs mt-">
                               <section className="">
@@ -1298,7 +1294,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
 
                             </div>
-                             {/* row 3 */}
+
                              <div className="flex flex-row justify-between pt-2 mb-2">
                                           <section className="w-12/12 w-full">
                                             <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
@@ -1467,7 +1463,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                           </section>
                                         </div>
                           </section>
-                          {/* section-2 */}
+
                           <section className="mt-2 px-4 mx-4 rounded-lg bg-white border border-gray-100 shadow pb-2">
                             <section className="flex flex-row  pt-2 mt-1 ">
                               <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
@@ -1478,7 +1474,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                 </label>
                               </span>
                             </section>
-                              {/* row 1 */}
+
                               <div className="w-full  flex flex-row lg:w-12/12 mt-2">
                                         <div className="w-full lg:w-3/12 mb-2 ">
                                           <div className="relative w-full mt-2">
@@ -1551,29 +1547,13 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                           </div>
                                         </div>
 
-{/*
-                                        <div className="w-full lg:w-3/12 pl-4">
-                                          <div className="relative w-full mt-2">
-                                            <TextField
-                                              label="Email"
-                                              name="email2"
-                                              type="text"
-                                            />
-                                          </div>
-                                        </div> */}
+
 
 
 
 
 <div className="w-full lg:w-3/12 pl-4">
     <div className="relative w-full mt-2">
-
-
-
-
-
-
-
     <div className="space-y-1 w-full text-xs">
   <label htmlFor="countryCode" className="inline-block">
   Secondary Phone No
@@ -1642,7 +1622,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
 
                           </section>
-                           {/* section-3 */}
+
                           <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border border-gray-100 shadow">
                             <section className="flex flex-row  mt-1 ">
                               <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
@@ -1653,7 +1633,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                 </label>
                               </span>
                             </section>
-                              {/* row 1 */}
+
                               <div className="w-full lg:w-12/12 ">
                                           <div className="relative w-full mb-3 mt-2">
                                             <TextField
@@ -1702,13 +1682,13 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
                                         <div className="w-full flex flex-row lg:w-12/12 mt-">
   <div className="w-full lg:w-12/12 px-">
-    {/* Country Name 2 */}
+
     <div className="relative w-full mb-3 mt-2">
       <TextField label="Country Name" name="countryName1" type="text" />
     </div>
   </div>
   <div className="w-full lg:w-12/12 pl-4">
-    {/* Pincode 2 */}
+
     <div className="relative w-full mb-3 mt-2">
       <TextField label="Pincode" name="pincode1" type="text" />
     </div>
@@ -1717,7 +1697,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
 
                           </section>
-                                                     {/* section-4 */}
+
                                                      <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border border-gray-100 shadow">
                             <section className="flex flex-row  px- mt-1 ">
                               <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
@@ -1728,7 +1708,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                 </label>
                               </span>
                             </section>
-                              {/* row 1 */}
+
                               <div className="w-full  flex flex-row lg:w-12/12 ">
                                           <div className="w-full lg:w-12/12 px- ">
                                             <div className="relative w-full mb-3 mt-[10px]">
@@ -1759,7 +1739,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                           </section>
 
                                   </section>
-                                  {/* section-2 */}
+
                                   <section
                                     // className="rounded-md   bg-[#fff] lg:w-6/12"
                                     className="rounded-md   bg-[#fff] "
@@ -1849,7 +1829,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                       </div>
 
 
-                                      {/* col dob etc */}
+
 
                                       <div className="w-full">
 
@@ -2081,16 +2061,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                           </div>
                                         </div>
 
-{/*
-                                        <div className="w-full lg:w-3/12 pl-4">
-                                          <div className="relative w-full mt-2">
-                                            <TextField
-                                              label="Email"
-                                              name="email2"
-                                              type="text"
-                                            />
-                                          </div>
-                                        </div> */}
+
 
 
 
@@ -2217,13 +2188,13 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
                                         <div className="w-full flex flex-row lg:w-12/12 mt-">
   <div className="w-full lg:w-12/12 px-">
-    {/* Country Name 2 */}
+
     <div className="relative w-full mb-3 mt-2">
       <TextField label="Country Name" name="countryName2" type="text" />
     </div>
   </div>
   <div className="w-full lg:w-12/12 pl-4">
-    {/* Pincode 2 */}
+
     <div className="relative w-full mb-3 mt-2">
       <TextField label="Pincode" name="pincode2" type="text" />
     </div>
@@ -2264,40 +2235,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
                                   </section>
                                 </div>
 
-                                {/* <hr className="mt-6 border-b-1 border-blueGray-300" />
 
-                                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                                  Source Of Booking
-                                </h6>
-                                <div className="flex flex-wrap">
-                                  <div className="w-full lg:w-12/12 px-4">
-                                    <div className="relative w-full mb-3">
-                                      <TextField
-                                        label="Source"
-                                        name="bookingSource"
-                                        type="text"
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="w-full lg:w-12/12 px-4">
-                                    <div className="relative w-full mb-3">
-                                      <TextField
-                                        label="Booked By"
-                                        name="bookedBy"
-                                        type="text"
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="w-full lg:w-12/12 px-4">
-                                    <div className="relative w-full mb-3">
-                                      <TextField
-                                        label="Purpose of purchase"
-                                        name="purchasePurpose"
-                                        type="text"
-                                      />
-                                    </div>
-                                  </div>
-                                </div> */}
 
                                 <hr className="mt-6 border-b-1 border-blueGray-300" />
                               </section>
@@ -2328,7 +2266,6 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                               disabled={loading}
                               // onClick={() => submitFormFun(formik)}
                             >
-                              {/* {loading && <Loader />} */}
                               <span> {'Save'}</span>
                             </button>
                             {setShowApplicantEdit == undefined && (
@@ -2346,7 +2283,6 @@ transition
                                 disabled={loading}
                                 // onClick={() => submitFormFun(formik)}
                               >
-                                {/* {loading && <Loader />} */}
                                 <span> {'Save & Next'}</span>
                               </button>
                             )}
@@ -2359,7 +2295,7 @@ transition
               </Formik>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* old form  */}

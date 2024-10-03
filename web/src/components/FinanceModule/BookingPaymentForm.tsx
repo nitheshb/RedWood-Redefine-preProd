@@ -42,6 +42,8 @@ import CaptureUnitPayment from './CapturePayment'
 const AddPaymentDetailsForm = ({
   title,
   customerInfo,
+  myBookingPayload,
+  setMyBookingPayload,
   additionalInfo,
   costSheet,
   selUnitDetails,
@@ -68,6 +70,8 @@ const AddPaymentDetailsForm = ({
   const [bookCompSteps, setBookCompSteps] = useState([])
   const [bookCurentStep, setBookCurentStep] = useState([])
 
+  const [bookingPayloadFinal, setBookingPayloadFinal] = useState({})
+
   const { enqueueSnackbar } = useSnackbar()
 
   const bankData = {}
@@ -83,7 +87,9 @@ const AddPaymentDetailsForm = ({
     confettiRef?.current?.fire()
   }
   useEffect(() => {
-    console.log('leadDetailsObj2 are', leadDetailsObj2)
+    // console.log('leadDetailsObj2 are', leadDetailsObj2)
+    setBookingPayloadFinal(myBookingPayload)
+    console.log('hello it ')
   }, [])
 
   useEffect(() => {
@@ -242,22 +248,23 @@ const AddPaymentDetailsForm = ({
     //     ),
     //   0
     // )
-    const partATotal = newPlotCostSheetA?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-      0
-    )
-    const partBTotal = newAdditonalChargesObj?.reduce(
-      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-      0
-    )
-    const T_total = partATotal + partBTotal
-    console.log(
-      'total Cost test',
-      T_total,
-      '==> ',
-      newPlotCostSheetA,
-      newAdditonalChargesObj
-    )
+    // const partATotal = newPlotCostSheetA?.reduce(
+    //   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+    //   0
+    // )
+    // const partBTotal = newAdditonalChargesObj?.reduce(
+    //   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+    //   0
+    // )
+    // const T_total = partATotal + partBTotal
+    // console.log(
+    //   'total Cost test',
+    //   T_total,
+    //   '==> ',
+    //   newPlotCostSheetA,
+    //   newAdditonalChargesObj
+    // )
+    const T_total = bookingPayloadFinal?.T_total
 
     const categorizedNewPlotPS = newPlotPS?.map((item) => ({
       ...item,
@@ -462,29 +469,7 @@ const AddPaymentDetailsForm = ({
 
     // add phaseNo , projName to selUnitDetails
     // 2)Create('')
-    console.log('submit doc is ', orgId, uid, {
-      leadId: id,
-      projectName,
-      ...customerDetailsObj,
-      secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
-      assets: arrayUnion(uid),
-      // [`${uid}_cs`]: leadDetailsObj2[`${uid}_cs`],
-      // [`${uid}_ps`]: phase?.paymentScheduleObj || {},
-      [`${uid}_unitDetails`]: selUnitDetails || {},
-      [`${uid}_plotCS`]: newPlotCostSheetA,
-      [`${uid}_constructCS`]: newConstructCostSheetA,
-      [`${uid}_fullPs`]: fullPs,
-      [`${uid}_newPlotPS`]: newPlotPS,
-      [`${uid}_newConstructPS`]: newConstructPS,
-      [`${uid}_T_elgible`]: T_elgible,
-      [`${uid}_stepsComp`]: stepsComp,
-      [`${uid}_T_transaction`]: T_transaction,
-      [`${uid}_T_review`]: T_review,
-      [`${uid}_T_balance`]: T_balance,
-      [`${uid}_T_elgible_balance`]: T_elgible_balance,
 
-      //paymentScheduleObj
-    })
     const x2 = await createBookedCustomer(
       orgId,
       id,
@@ -538,13 +523,13 @@ const AddPaymentDetailsForm = ({
     const unitUpdate = {
       leadId: id,
       status: 'booked',
-      customerDetailsObj: customerDetailsObj || {},
-      secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
+      // customerDetailsObj: customerDetailsObj || {},
+      // secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
       booked_on: data?.dated,
       ct: Timestamp.now().toMillis(),
       Date: Timestamp.now().toMillis(),
-      ...otherData,
-      T_total: newTotal,
+      // ...otherData,
+      // T_total: newTotal,
       T_balance: T_balance,
       T_received: data['T_received'] || 0,
       T_elgible: T_elgible,
@@ -553,33 +538,33 @@ const AddPaymentDetailsForm = ({
       T_transaction: data['T_received'] || 0,
 
       T_review: 0,
-      T_A: partATotal,
-      T_B: partBTotal,
-      T_C: partCTotal,
-      T_D: partDTotal,
-      T_E: partETotal,
-      plotCS: [...x],
-      constructCS: [...constructionCS],
-      addChargesCS: partB1,
-      constAdditionalChargesCS: partD,
-      possessionAdditionalCostCS: partE,
-      plotPS: plotPs,
-      constructPS: constructPs,
-      fullPs: fullPs1,
-      plc_per_sqft: data['plc_per_sqft'],
-      sqft_rate: data['sqft_rate'],
-      construct_price_sqft: data['construct_price_sqft'],
-      ats_date: data['ats_date'],
-      atb_date: data['atb_date'],
-      sd_date: data['sd_date'],
-      ats_target_date: data['ats_target_date'],
-      sd_target_date: data['sd_target_date'],
-      source: data['source'],
-      sub_source: data['sub_source'],
-      remarks: data['remarks'],
-      fund_type: data['fund_type'],
-      Bank: data['Bank'],
-      loanStatus: data['loanStatus'],
+      // T_A: partATotal,
+      // T_B: partBTotal,
+      // T_C: partCTotal,
+      // T_D: partDTotal,
+      // T_E: partETotal,
+      // plotCS: [...x],
+      // constructCS: [...constructionCS],
+      // addChargesCS: partB1,
+      // constAdditionalChargesCS: partD,
+      // possessionAdditionalCostCS: partE,
+      // plotPS: plotPs,
+      // constructPS: constructPs,
+      // fullPs: fullPs1,
+      // plc_per_sqft: data['plc_per_sqft'],
+      // sqft_rate: data['sqft_rate'],
+      // construct_price_sqft: data['construct_price_sqft'],
+      ats_date: data['ats_date'] || '',
+      atb_date: data['atb_date'] || '',
+      sd_date: data['sd_date'] || '',
+      ats_target_date: data['ats_target_date'] || '',
+      sd_target_date: data['sd_target_date'] || '',
+      source: data['source'] || '',
+      sub_source: data['sub_source'] || '',
+      remarks: data['remarks'] || '',
+      fund_type: data['fund_type'] || '',
+      Bank: data['Bank'] || '',
+      loanStatus: data['loanStatus'] || '',
       annualIncome: data['annualIncome'] || '',
       intype: 'form',
     }
@@ -597,13 +582,15 @@ const AddPaymentDetailsForm = ({
     unitUpdate[`T_balance`] = T_balance
     unitUpdate[`T_elgible_balance`] = T_elgible_balance
 
+    const uploadPayload = {...myBookingPayload, ...unitUpdate}
+
     console.log('unit space is ', uid)
     await updateUnitAsBooked(
       orgId,
       leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
       uid,
       id,
-      unitUpdate,
+      uploadPayload,
       user?.email,
       enqueueSnackbar,
       resetForm
@@ -677,7 +664,7 @@ const AddPaymentDetailsForm = ({
         <section className="flex flex-row">
           <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
           <div className="w-full flex flex-col">
-            <div className=" flex flex-row gap-2 ">
+            <div className=" flex flex-row justify-between gap-2 ">
               <div>
                 <section className="flex flex-row">
                   <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
@@ -691,7 +678,10 @@ const AddPaymentDetailsForm = ({
                 <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
               </div>
 
-              <div></div>
+              <div className="flex flex-col">
+                <div>Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}</div>
+                <div>Balance: {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}</div>
+              </div>
             </div>
 
             {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">

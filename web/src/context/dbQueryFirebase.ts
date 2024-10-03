@@ -1388,32 +1388,37 @@ export const getCRMCustomerByProject = (orgId, snapshot, data, error) => {
 
 export const getBookedUnitsByProject = (orgId, snapshot, data, error) => {
   const { status } = data
-  console.log('hello ', status, data?.projectId)
+  // console.log('hello ', status, data, data?.projectId)
   let itemsQuery = query(
     collection(db, `${orgId}_units`),
-    where('status', 'in', status)
+    where('unitStatus', 'in', status)
   )
-  if (data?.projectId) {
-    itemsQuery = query(
-      collection(db, `${orgId}_units`),
-      where('status', 'in', status),
-      where('pId', '==', data?.projectId)
-    )
-  } else if (data?.assignedTo) {
-    console.log('inside value si ', data?.assignedTo)
-    itemsQuery = query(
-      collection(db, `${orgId}_units`),
-      where('status', 'in', status),
-      where('assignedTo', '==', 'bxLExkQcFkfzOD5pXjBtf5uKKS82')
-    )
-  }
+  // if (data?.projectId) {
+  //   itemsQuery = query(
+  //     collection(db, `${orgId}_units`),
+  //     where('unitStatus', 'in', status),
+  //     where('pId', '==', data?.projectId)
+  //   )
+  // } else if (data?.assignedTo) {
+  //   console.log('inside value si ', data?.assignedTo)
+  //   itemsQuery = query(
+  //     collection(db, `${orgId}_units`),
+  //     where('status', 'in', status),
+  //     where('assignedTo', '==', 'bxLExkQcFkfzOD5pXjBtf5uKKS82')
+  //   )
+  // }
 
   let q = collection(db, `${orgId}_units`)
   const conditions = []
 
   // Append 'status' condition if it's not undefined
-  if (status !== undefined) {
-    conditions.push(where('status', 'in', status))
+  if (status !== undefined && !(status.includes('unassigned'))) {
+    conditions.push(where('unitStatus', 'in', status))
+  }
+
+  if (status !== undefined && (status.includes('unassigned'))) {
+    // conditions.push(where('crm_executive', '==', ''))
+    conditions.push(where('assignedTo', '==', ''))
   }
 
   // Append 'projectId' condition if it's not undefined
@@ -1429,9 +1434,10 @@ export const getBookedUnitsByProject = (orgId, snapshot, data, error) => {
   // If all conditions are defined, append them to the query
   if (conditions.length > 0) {
     q = query(q, ...conditions)
+
   }
 
-  console.log('hello ', status, data?.projectId, itemsQuery)
+  // console.log('hello ', status, data?.projectId, conditions)
   return onSnapshot(q, snapshot, error)
 }
 // get crmCustomers list

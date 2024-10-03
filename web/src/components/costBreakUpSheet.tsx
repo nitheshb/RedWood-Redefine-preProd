@@ -113,7 +113,7 @@ const CostBreakUpSheet = ({
   const [partCTotal, setPartCTotal] = useState(0)
   const [partDTotal, setPartDTotal] = useState(0)
 
-  const [customerInfo, setCustomerInfo] = useState({})
+  const [customerInfo, setCustomerInfo] = useState([])
   const [additionalInfo, setAdditonalInfo] = useState({})
   const [costSheet, setCostSheet] = useState({})
   const [paymentSchedule, setPaymentSchedule] = useState({})
@@ -124,6 +124,34 @@ const CostBreakUpSheet = ({
   useEffect(() => {
     console.log('payload data is ', leadPayload)
   }, [leadPayload])
+
+  useEffect(() => {
+    console.log('customer info', customerInfo)
+    const x = {}
+    customerInfo.map((item, index) => {
+      console.log('item', item)
+
+      if (index === 0) {
+        x.customerDetailsObj = item
+      }
+      if (index === 1) {
+        x.secondaryCustomerDetailsObj = item
+      }
+      if (index === 2) {
+        x.thirdCustomerDetailsObj = item
+      }
+      if (index === 3) {
+        x.fourthCustomerDetailsObj = item
+      }
+    })
+    x.applicantCount = customerInfo.length
+    setMyBookingPayload({...myBookingPayload, ...x})
+  }, [customerInfo])
+
+  useEffect(() => {
+console.log('customer info', myBookingPayload)
+
+  }, [myBookingPayload])
 
   useEffect(() => {
     console.log('new customer object x', title, leadDetailsObj1)
@@ -648,7 +676,6 @@ const CostBreakUpSheet = ({
                                       setNewPS={setNewPlotPS}
                                       setNewConstructPS={setNewConstructPS}
                                       newPlotPS={newPlotPS}
-
                                       showGstCol={showGstCol}
                                       netTotal={netTotal}
                                       setNetTotal={setNetTotal}
@@ -663,7 +690,6 @@ const CostBreakUpSheet = ({
                                       showOnly={onStep}
                                     />
                                   )}
-
                                 </section>
 
                                 <div className="flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
@@ -749,6 +775,8 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                     <>
                       <AddApplicantDetails
                         currentMode={actionMode}
+                        myBookingPayload={myBookingPayload}
+                        setMyBookingPayload={setMyBookingPayload}
                         leadPayload={leadPayload}
                         setLeadPayload={setLeadPayload}
                         setCustomerInfo={setCustomerInfo}
@@ -781,6 +809,8 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                     <AddPaymentDetailsForm
                       title={'undefined'}
                       dialogOpen={undefined}
+                      myBookingPayload={myBookingPayload}
+                      setMyBookingPayload={setMyBookingPayload}
                       customerInfo={customerInfo}
                       additionalInfo={additionalInfo}
                       costSheet={costSheet}
@@ -819,13 +849,14 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       constructCostSheetA={newConstCostSheetA}
                       newAdditonalChargesObj={newAdditonalChargesObj}
                       newAdditonalConstChargesObj={newAdditonalConstChargesObj}
-                      setNewAdditonalConstChargesObj={setNewAdditonalConstChargesObj}
+                      setNewAdditonalConstChargesObj={
+                        setNewAdditonalConstChargesObj
+                      }
                       setAddiChargesObj={setNewAdditonalChargesObj}
                       setCostSheetA={setNewPlotCostSheetA}
                       setNewPS={setNewPlotPS}
                       newPlotPS={newPlotPS}
                       newConstructPS={newConstructPS}
-
                       showGstCol={showGstCol}
                       netTotal={netTotal}
                       setNetTotal={setNetTotal}

@@ -1193,7 +1193,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo }) =
   ) => {
     setTimeout(() => {
       // alert(JSON.stringify(values, null, 2))
-      setSubmitting(false)
+      // setSubmitting(false)
       // resetForm()
       // Remove the form from saved forms if it was there
       setSavedForms((prev) => {
@@ -1203,11 +1203,29 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo }) =
     }, 400)
     const { uid } = selUnitDetails
     const x = selUnitDetails
+    const y = {}
     if (index === 0) {
 
       x.customerDetailsObj = values
     }
-    setCustomerInfo(x)
+    if (index === 1) {
+
+      x.secondaryCustomerDetailsObj = values
+    } if (index === 2) {
+
+      x.thirdCustomerDetailsObj = values
+    } if (index === 3) {
+
+      x.fourthCustomerDetailsObj = values
+    }
+
+    // add to array
+
+    console.log('customer info', values)
+    let a1 = customerInfo
+    a1[index] = values
+    console.log('customer info', a1)
+    setCustomerInfo(a1)
     updateUnitCustomerDetailsTo(
       orgId,
       selUnitDetails?.uid || selUnitDetails?.id,
