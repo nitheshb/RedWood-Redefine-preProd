@@ -16,6 +16,7 @@ import 'src/styles/myStyles.css'
 import { computeTotal } from 'src/util/computeCsTotals'
 import CostBreakUpPdfPreview from 'src/util/costBreakUpPdfPreview'
 import { TextFieldFlat } from 'src/util/formFields/TextFieldFlatType'
+import { prettyDate } from 'src/util/dateConverter'
 
 const BookingSummaryView = ({
   projectDetails,
@@ -749,7 +750,7 @@ const BookingSummaryView = ({
                                 </div>
                                 <div className="self-stretch justify-start items-center gap-3 inline-flex">
                                   <div className="text-zinc-800 text-[16px] font-bold font-['Lato'] tracking-wide">
-                                    ₹{netTotal?.toLocaleString('en-IN')}
+                                    ₹{myBookingPayload?.T_total?.toLocaleString('en-IN')}
                                   </div>
                                   <div className=" h-[19px] rounded justify-center items-center gap-2 flex">
                                     <div className="text-right">
@@ -758,7 +759,17 @@ const BookingSummaryView = ({
                                       </span>
                                       <span className="text-emerald-600 text-[9px] font-bold font-['Lato'] tracking-wide">
                                         ₹{' '}
-                                        {costSheetA[0]?.charges?.toLocaleString(
+                                        {myBookingPayload?.sqft_rate?.toLocaleString(
+                                          'en-IN'
+                                        )}
+                                        /sqft{' '}
+                                      </span>
+                                      <span className="text-emerald-600 text-xs font-medium font-['Lato'] tracking-wide">
+                                        ▴{' '}
+                                      </span>
+                                       <span className="text-emerald-600 text-[9px] font-bold font-['Lato'] tracking-wide">
+                                        ₹{' '}
+                                        {myBookingPayload?.construct_price_sqft?.toLocaleString(
                                           'en-IN'
                                         )}
                                         /sqft{' '}
@@ -797,48 +808,52 @@ const BookingSummaryView = ({
                           <div className="border rounded-lg shadow-lg w-full">
                             <section className="flex flex-row justify-between mt-2   ">
                               <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                Part(A)
+                              {selPhaseObj?.projectType?.name ===
+                                      'Apartment'
+                                        ? 'Flat'
+                                        : 'Plot'}
                               </h1>
-                              <section className="flex flex-row">
+                              <section className="flex flex-row mt-[2px]">
                                 <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                  ₹{partATotal?.toLocaleString('en-IN')}
+                                  ₹{myBookingPayload?.T_A?.toLocaleString('en-IN')}
                                 </section>
                               </section>
                             </section>
                             <section className="flex flex-row justify-between  mt-2">
                               <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                Part(B)
+                                Additonal Charges
                               </h1>
-                              <section className="flex flex-row">
+                              <section className="flex flex-row mt-[2px]">
                                 <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                  ₹{partBTotal?.toLocaleString('en-IN')}
-                                </section>
-                              </section>
-                            </section> <section className="flex flex-row justify-between  mt-2">
-                              <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                Part(C)
-                              </h1>
-                              <section className="flex flex-row">
-                                <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                  ₹{partCTotal?.toLocaleString('en-IN')}
+                                  ₹{myBookingPayload?.T_B?.toLocaleString('en-IN')}
                                 </section>
                               </section>
                             </section>
-                             <section className="flex flex-row justify-between  mt-2">
+                            {selPhaseObj?.projectType?.name === 'Villas' &&  <section className="flex flex-row justify-between  mt-2">
                               <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                Part(D)
+                                Construction
                               </h1>
-                              <section className="flex flex-row">
+                              <section className="flex flex-row mt-[2px]">
                                 <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                  ₹{partDTotal?.toLocaleString('en-IN')}
+                                  ₹{myBookingPayload?.T_C?.toLocaleString('en-IN')}
                                 </section>
                               </section>
-                            </section>
+                            </section>}
+                            {selPhaseObj?.projectType?.name === 'Villas' &&  <section className="flex flex-row justify-between  mt-2">
+                              <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                Additonal Charges-II
+                              </h1>
+                              <section className="flex flex-row mt-[2px]">
+                                <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                  ₹{myBookingPayload?.T_E?.toLocaleString('en-IN')}
+                                </section>
+                              </section>
+                            </section>}
                             <section className="flex flex-row justify-between rounded-b-lg  bg-[#E8E6FE]  mt-2 py-2   ">
                               <h1 className="px-3 text-[12px] text-left  text-[12px] font-semibold pr-8 ">
                                 Total Cost
                               </h1>
-                              <section className="flex flex-row mt-2">
+                              <section className="flex flex-row mt-[2px]">
                                 <section className="px-2 d-md font-bold text-[12px] text-[#0D027D] leading-none">
                                   ₹{netTotal?.toLocaleString('en-IN')}
                                 </section>
@@ -854,27 +869,6 @@ const BookingSummaryView = ({
                         <div>
                           <div className="">
                             <section className="flex flex-row justify-between bg-[#f3fff2] rounded-t-lg">
-                              {/* <section className="">
-                            <div className="w-full flex items-center ">
-                              <label
-                                htmlFor="area"
-                                className="label font-regular text-sm font-bodyLato"
-                              >
-                                Show Gst
-                              </label>
-                              <Field
-                                name="isGSTChecked"
-                                type="checkbox"
-                                component={() => (
-                                  <Checkbox
-                                    color="primary"
-                                    checked={showGstCol}
-                                    onClick={() => setShowGstCol(!showGstCol)}
-                                  />
-                                )}
-                              />
-                            </div>
-                          </section> */}
                             </section>
                             {'costsheet' === 'costsheet' && (
                               <section>
@@ -883,7 +877,10 @@ const BookingSummaryView = ({
                                     <thead>
                                       <tr className="h-8 mb-1 border-none w-[100%] bg-[#E8E6FE] text-[#0D027D]  font-[600] ">
                                         <th className="min-w-[35%] px-2  text-[12px] text-left text-[#0D027D]  tracking-wide">
-                                          Particulars
+                                        {selPhaseObj?.projectType?.name ===
+                                      'Apartment'
+                                        ? 'Flat'
+                                        : 'Plot'}{' '} Particulars
                                         </th>
                                         <th className="w-[15%] px-2 text-[12px] text-right   tracking-wide">
                                           Rate/Sqft
@@ -909,7 +906,7 @@ const BookingSummaryView = ({
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 ">
                                       {' '}
-                                      {costSheetA?.map((d1, inx) => (
+                                      {myBookingPayload?.plotCS?.map((d1, inx) => (
                                         <tr
                                           key={inx}
                                           className="py-1 my-2 h-[32px]  py-[24px]"
@@ -952,7 +949,10 @@ const BookingSummaryView = ({
                                       ))}
                                       <tr className=" border-[#fab56c]   h-[32px]">
                                         <th className="w-[40%] text-[11px] font-semibold text-left text-[#0D027D] pl-2 ">
-                                          Total (A)
+                                        {selPhaseObj?.projectType?.name ===
+                                      'Apartment'
+                                        ? 'Flat'
+                                        : 'Plot'} Cost
                                         </th>
                                         <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
                                         <td
@@ -986,7 +986,7 @@ const BookingSummaryView = ({
                                             ?.toLocaleString('en-IN')}
                                         </td>
                                         <td className="w-[15%] px-2  font-semibold text-[12px] text-right  text-[#0D027D] ">
-                                          ₹{partATotal?.toLocaleString('en-IN')}
+                                          ₹{myBookingPayload?.T_A?.toLocaleString('en-IN')}
                                         </td>
                                       </tr>
                                     </tbody>
@@ -995,24 +995,10 @@ const BookingSummaryView = ({
 
                                 <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
                                   <table className="w-full">
-                                    {/* <thead>
-                            {' '}
-                            <tr className=" h-6  border-b-[0.2px] border-gray-300">
-                              <th className="w-[50%] text-[12px] text-left  text-[#8993a4] tracking-wide uppercase ">
-                                Particulars
-                              </th>
-                              <th className="w-[35%] text-[12px] text-left  text-[#8993a4] tracking-wide uppercase ">
-                                Timeline
-                              </th>
-                              <th className="w-[15%] text-[12px] text-right   text-[#8993a4] tracking-wide uppercase">
-                                Total Inc GST
-                              </th>
-                            </tr>
-                          </thead> */}
                                     <thead>
                                       <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
                                         <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
-                                          Particulars
+                                          Additional Charges
                                         </th>
                                         <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
                                           Rate/Sqft
@@ -1037,7 +1023,7 @@ const BookingSummaryView = ({
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      {partBPayload?.map((d1, inx) => (
+                                      {myBookingPayload?.addChargesCS?.map((d1, inx) => (
                                         <tr
                                           key={inx}
                                           className="h-[32px] border-b border-dashed"
@@ -1075,20 +1061,13 @@ const BookingSummaryView = ({
                                           <td className="text-[12px] px-2 text-right   ">
                                             {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
                                             ₹
-                                            {Number(
-                                              computeTotal(
-                                                d1,
-                                                selUnitDetails?.area
-                                                  ?.toString()
-                                                  ?.replace(',', '')
-                                              )
-                                            )?.toLocaleString('en-IN')}
+                                            {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
                                           </td>
                                         </tr>
                                       ))}
                                       <tr className=" h-[32px] ">
                                         <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
-                                          Total (B)
+                                          Additional Charges
                                         </th>
                                         <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
                                         <td
@@ -1122,7 +1101,7 @@ const BookingSummaryView = ({
                                             ?.toLocaleString('en-IN')}
                                         </td>
                                         <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
-                                          ₹{partBTotal?.toLocaleString('en-IN')}
+                                          ₹{myBookingPayload?.T_B?.toLocaleString('en-IN')}
                                         </td>
                                       </tr>
                                     </tbody>
@@ -1130,26 +1109,13 @@ const BookingSummaryView = ({
                                 </div>
                                 {/* section- 3 */}
 
-                                    <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
+                                {selPhaseObj?.projectType?.name === 'Villas' &&  <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
                                   <table className="w-full">
-                                    {/* <thead>
-                            {' '}
-                            <tr className=" h-6  border-b-[0.2px] border-gray-300">
-                              <th className="w-[50%] text-[12px] text-left  text-[#8993a4] tracking-wide uppercase ">
-                                Particulars
-                              </th>
-                              <th className="w-[35%] text-[12px] text-left  text-[#8993a4] tracking-wide uppercase ">
-                                Timeline
-                              </th>
-                              <th className="w-[15%] text-[12px] text-right   text-[#8993a4] tracking-wide uppercase">
-                                Total Inc GST
-                              </th>
-                            </tr>
-                          </thead> */}
+
                                     <thead>
                                       <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
                                         <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
-                                          Particulars
+                                          Construction
                                         </th>
                                         <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
                                           Rate/Sqft
@@ -1174,7 +1140,7 @@ const BookingSummaryView = ({
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      {constructCostSheetA?.map((d1, inx) => (
+                                      {myBookingPayload?.constructCS?.map((d1, inx) => (
                                         <tr
                                           key={inx}
                                           className="h-[32px] border-b border-dashed"
@@ -1211,14 +1177,14 @@ const BookingSummaryView = ({
                                           </td>
                                           <td className="text-[12px] px-2 text-right   ">
                                             {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
-                                            ₹ {((d1?.TotalSaleValue|| 0) + (d1?.gstValue))?.toLocaleString('en-IN')}
+                                            ₹ {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
 
                                           </td>
                                         </tr>
                                       ))}
                                       <tr className=" h-[32px] ">
                                         <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
-                                          Total (C)
+                                          Construction Cost
                                         </th>
                                         <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
                                         <td
@@ -1252,33 +1218,21 @@ const BookingSummaryView = ({
                                             ?.toLocaleString('en-IN')}
                                         </td>
                                         <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
-                                          ₹{partCTotal?.toLocaleString('en-IN')}
+                                          ₹{myBookingPayload?.T_C?.toLocaleString('en-IN')}
                                         </td>
                                       </tr>
                                     </tbody>
                                   </table>
-                                </div>
+                                </div>}
                                 {/* section- 4 */}
+                                {selPhaseObj?.projectType?.name === 'Villas' &&
                                  <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
                                   <table className="w-full">
-                                    {/* <thead>
-                            {' '}
-                            <tr className=" h-6  border-b-[0.2px] border-gray-300">
-                              <th className="w-[50%] text-[12px] text-left  text-[#8993a4] tracking-wide uppercase ">
-                                Particulars
-                              </th>
-                              <th className="w-[35%] text-[12px] text-left  text-[#8993a4] tracking-wide uppercase ">
-                                Timeline
-                              </th>
-                              <th className="w-[15%] text-[12px] text-right   text-[#8993a4] tracking-wide uppercase">
-                                Total Inc GST
-                              </th>
-                            </tr>
-                          </thead> */}
-                                    <thead>
+
+                                  <thead>
                                       <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
                                         <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
-                                          Particulars
+                                          Additional Charges -II
                                         </th>
                                         <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
                                           Rate/Sqft
@@ -1303,7 +1257,7 @@ const BookingSummaryView = ({
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      {newAdditonalConstChargesObj?.map((d1, inx) => (
+                                      {myBookingPayload?.constAdditionalChargesCS?.map((d1, inx) => (
                                         <tr
                                           key={inx}
                                           className="h-[32px] border-b border-dashed"
@@ -1341,20 +1295,13 @@ const BookingSummaryView = ({
                                           <td className="text-[12px] px-2 text-right   ">
                                             {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
                                             ₹
-                                            {Number(
-                                              computeTotal(
-                                                d1,
-                                                selUnitDetails?.area
-                                                  ?.toString()
-                                                  ?.replace(',', '')
-                                              )
-                                            )?.toLocaleString('en-IN')}
+                                            {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
                                           </td>
                                         </tr>
                                       ))}
                                       <tr className=" h-[32px] ">
                                         <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
-                                          Total (D)
+                                          Additional Cahrges -II Cost
                                         </th>
                                         <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
                                         <td
@@ -1388,12 +1335,13 @@ const BookingSummaryView = ({
                                             ?.toLocaleString('en-IN')}
                                         </td>
                                         <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
-                                          ₹{partDTotal?.toLocaleString('en-IN')}
+                                          ₹{myBookingPayload?.T_E?.toLocaleString('en-IN')}
                                         </td>
                                       </tr>
                                     </tbody>
                                   </table>
-                                </div>
+
+                                </div>}
                               </section>
                             )}
                             {'payment_schedule' === 'payment_schedule' && (
@@ -1423,7 +1371,7 @@ const BookingSummaryView = ({
                                           <section className="flex flex-row">
                                             <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
                                               ₹
-                                              {partBTotal?.toLocaleString(
+                                              {myBookingPayload?.T_elgible?.toLocaleString(
                                                 'en-IN'
                                               )}
                                             </section>
@@ -1452,7 +1400,7 @@ const BookingSummaryView = ({
                                       {' '}
                                       <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D]  font-[600]  ">
                                         <th className="w-[50%] px-2   text-left  tracking-wide  text-[12px]   ">
-                                          Particulars
+                                          Plot Payment Schedule
                                         </th>
                                         <th className="w-[30%] px-2   text-left  tracking-wide  text-[12px] ">
                                           Payment Timeline
@@ -1464,16 +1412,22 @@ const BookingSummaryView = ({
                                     </thead>
 
                                     <tbody>
-                                      {newPlotPS?.map((d1, inx) => (
+                                      {myBookingPayload.plotPS?.map((d1, inx) => (
                                         <tr
                                           key={inx}
                                           className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
                                         >
-                                          <th className=" px-2  text-[11px] text-left  font-normal tracking-wide uppercase ">
+                                          {/* <th className=" px-2  text-[11px] text-left  font-normal tracking-wide uppercase ">
                                             {d1?.stage?.label}
-                                          </th>
+                                          </th> */}
+                                           <th className=" px-2  text-[10px] text-left text-bold   tracking-wide  text-grey-900 ">
+                                      {d1?.stage?.label}
+                                      <div className="text-[9px] text-left   text-slate-500 ">
+                                        {d1?.description} ({d1?.zeroDay} days)
+                                      </div>
+                                    </th>
                                           <td className="text-[11px] px-2  text-left font-normal tracking-wide uppercase ">
-                                            {d1?.description}
+                                          {prettyDate(d1?.schDate)}
                                           </td>
                                           <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
                                             ₹
@@ -1501,7 +1455,7 @@ const BookingSummaryView = ({
                                       {' '}
                                       <tr className=" h-8  border-none bg-[#E8E6FE] text-[#0D027D]  font-[600]  ">
                                         <th className="w-[50%] px-2   text-left  tracking-wide  text-[12px]   ">
-                                          Particulars
+                                          Construction Payment Schedule
                                         </th>
                                         <th className="w-[30%] px-2   text-left  tracking-wide  text-[12px] ">
                                           Payment Timeline
@@ -1513,16 +1467,19 @@ const BookingSummaryView = ({
                                     </thead>
 
                                     <tbody>
-                                      {newConstructPS?.map((d1, inx) => (
+                                      {myBookingPayload.constructPS?.map((d1, inx) => (
                                         <tr
                                           key={inx}
                                           className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
                                         >
-                                          <th className=" px-2  text-[11px] text-left  font-normal tracking-wide uppercase ">
-                                            {d1?.stage?.label}
-                                          </th>
+                                         <th className=" px-2  text-[10px] text-left text-bold   tracking-wide  text-grey-900 ">
+                                      {d1?.stage?.label}
+                                      <div className="text-[9px] text-left   text-slate-500 ">
+                                        {d1?.description} ({d1?.zeroDay} days)
+                                      </div>
+                                    </th>
                                           <td className="text-[11px] px-2  text-left font-normal tracking-wide uppercase ">
-                                            {d1?.description}
+                                          {prettyDate(d1?.schDate)}
                                           </td>
                                           <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
                                             ₹
