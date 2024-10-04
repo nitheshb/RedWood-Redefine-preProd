@@ -1083,7 +1083,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                       </li>
                     </ul>
                   )}
-                  {selCategory === 'booked' &&
+                  {['booked', 'agreement_pipeline', 'agreement', 'registered','construction', 'possession', 'unAssigned_crm', 'queries'].includes(selCategory) &&
                     !horizontalMode &&
                     filteredDataA.map((finData, c) => {
                       const {
@@ -1355,16 +1355,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     }
                                   />
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-[61%] ">
-                                    {/* <div className="text-zinc-300 text-sm  text-[6px] tracking-wide">
-                                      Balance
-                                    </div>
-                                    <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
-                                      ₹
-                                      {finData?.T_balance?.toLocaleString(
-                                        'en-IN'
-                                      )}
-
-                                    </div> */}
                                     <section className="flex flex-col  w-full mt-">
                                     <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
                                         Unit Cost: ₹
@@ -1399,44 +1389,13 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                 </div>
                               </div>
                             </div>
-
                             <div className="w-2/4  ">
                               <div className="flex flex-col   rounded-md  py-1 ">
                                 <div className="flex flex-row  px-1">
-                                  {/* <div
-                                    className={` cursor-pointer  h-[80px] w-[100px] ${
-                                      T_elgible_balance <= 0
-                                        ? 'bg-[#CCC5F7]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_booking_payment')
-                                    }}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            T_balance <= 0
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        Payment
-                                      </h6>
-                                    </div>
-                                  </div> */}
                                   {/* section 2 */}
-                                  <div
+                                 {['booked', 'selCategory'].includes(selCategory) &&
+                                 <section>
+                                 <div
                                     className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
                                       finData?.man_cs_approval == 'approved'
                                         ? 'bg-[#CCC5F7]'
@@ -1509,289 +1468,14 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       </h6>
                                     </div>
                                   </div>
-                                  {/* section 4*/}
-                                  {/* <div
-                                    className={` cursor-pointer  h-[80px] w-[100px] ${
-                                      true ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_show_cs')
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            1 === 1
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        CS
-                                      </h6>
-                                    </div>
-                                  </div> */}
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* <div className=" w-1/4 flex flex-col-reverse ml-3">
-                            <div className="flex flex-wrap  p-1 pl-0 pt-0 pb-0  mb-[16px] bg-[#F1F5F9]">
-                              {[
-
-                                {
-                                  item: 'Payment Schedule',
-                                  status: 'completed',
-                                },
-
-                                {
-                                  item: 'Cost Sheet',
-                                  status: 'completed',
-                                },
-
-
-
-                                {
-                                  item: 'Bank Loan',
-                                  status: 'pending',
-                                },
-                              ].map((dat, i) => (
-                                <span
-                                  key={i}
-                                  className={`pl-2 pr-1 py-[4px] mr-2  text-[#333] bg-[#${
-                                    dat.status === 'completed'
-                                      ? 'F1F5F9'
-                                      : 'F1F5F9'
-                                  }] font-bodyLato text-[10px] flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease`}
-                                >
-                                  {dat?.item}
-                                  {dat?.status === 'completed' && (
-                                    <CheckCircleIcon className="w-4 h-4 ml-1 inline text-[#3EE494]" />
-                                  )}
-                                  {dat?.status === 'pending' && (
-                                    <ShieldExclamationIcon className="w-4 h-4 ml-1 inline text-[#8e544d]" />
-                                  )}
-
-                                </span>
-                              ))}
-                            </div>
-                            <div className="flex flex-row justify-between px-2 py-1  text-black   w-[640px]">
-                              <section>
-                                <span className="font-normal text-sm text-uppercase app-color-gray-1 inline-block max-w-[100px] min-w-[100px] w-[100px] mb-[4px]">
-                                  {finData?.ownerName}
-                                </span>
-                                <span className="font-normal ml-4 text-xs app-color-gray-1 inline-block max-w-[100px] min-w-[100px] w-[100px]">
-                                  {finData?.ph}
-                                </span>
-                              </section>
-                              <section className="inline-block max-w-[100px] min-w-[100px] w-[100px]">
-                                <span className="font-normal ml-6 text-[10px] app-color-gray-1 text-[#b3b3b3]">
-                                  Bal
-                                </span>
-                                <span className="font-normal ml-2 text-xs app-color-gray-1 text-[#F59A4C]">
-                                  {finData?.pending || 0}
-                                </span>
-                              </section>
-                              <section className="inline-block max-w-[400px] min-w-[100px]">
-                                <span className="font-normal ml-6 text-[10px] app-color-gray-1 text-[#b3b3b3]">
-                                  Review
-                                </span>
-                                <span className="font-normal ml-2 text-xs app-color-gray-1">
-                                  {finData?.reviw || 0}
-                                </span>
-                              </section>
-                              <section className="inline-block max-w-[400px] min-w-[100px] text-right">
-                                <span className="font-normal ml-6 text-[10px] app-color-gray-1 text-[#b3b3b3]">
-                                  T Cost
-                                </span>
-                                <span className="font-normal ml-2 text-xs app-color-gray-1 text-right">
-                                  {finData?.Breviw || 0}
-                                </span>
-                              </section>
-                            </div>
-                          </div> */}
-                          </section>
-                        </section>
-                      )
-                    })}
-                  {selCategory === 'agreement_pipeline' &&
-                    filteredDataA.map((finData, g) => {
-                      const {
-                        uid,
-                        assets,
-                        customerDetailsObj,
-                        customerName1,
-                        phoneNo1,
-                        unit_no,
-                        T_balance,
-                        T_elgible,
-                        T_review,
-                        T_captured,
-                        pId,
-                        projName,
-                      } = finData
-                      return (
-                        <section
-                          key={g}
-                          className="border mb-1  shadow rounded-md  shadow"
-                        >
-                          <section className="flex flex-row">
-                            <div className="">
-                              <div className="flex flex-row   ">
-                                <div
-                                  className="flex flex-col bg-gradient-to-r from-[#d8daff] to-[#9ae8fd] text-black  py-1 rounded-sm w-[220px] h-[96px]"
-                                  // className="flex flex-col bg-gradient-to-r from-[#d8daff] to-[#9ae8fd] text-black p-1 rounded-sm w-[220px] h-[96px]"
-                                  onClick={() =>
-                                    viewTransaction(
-                                      finData,
-                                      'unit_information',
-                                      'unit_information'
-                                    )
-                                  }
-                                >
-                                  <section className="font-rubikF flex flex-row">
-                                    {/* <img
-                                      className="w-10 h-10 mr-2"
-                                      alt=""
-                                      src="/apart.svg"
-                                    ></img> */}
-                                    <section className="flex flex-col ml-2 mt-[3px]">
-                                      <section className="flex flex-col">
-                                        <section className="flex flex-row justify-between">
-                                          <span className=" text-[14px] text-black font-[500] ml-[2px]">
-                                            {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
-                                            Unit-{unit_no}
-                                          </span>
-                                          <span className=" text-[10px] text-black font-bodyLato font-[600] mt-[2px] ">
-                                            {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
-                                            ₹{' '}
-                                            {finData?.plotCS
-                                              ?.reduce(function (_this, val) {
-                                                return (
-                                                  _this +
-                                                  val.TotalNetSaleValueGsT
-                                                )
-                                              }, 0)
-                                              ?.toLocaleString('en-IN')}
-                                          </span>
-                                        </section>
-                                        <span className=" text-[12px] text-[#036046] font-[400] ml-[2px]">
-                                          {projName}
-                                        </span>
-                                      </section>
-                                      <section className="flex flex-col mt-1 bg-[#f0f8ff] w-[204px] rounded-lg p-[2px] px-2">
-                                        <div className=" text-[12px] text-black-900 font-[400] w-full">
-                                          {customerDetailsObj?.customerName1 ||
-                                            'NA'}
-                                        </div>
-                                        <section className="flex flex-row justify-between">
-                                          <span className=" text-[12px] text-black-500 font-[400]">
-                                            {customerDetailsObj?.phoneNo1 ||
-                                              'NA'}
-                                          </span>
-                                          <span className=" text-[10px] text-black font-[400] mt-[2px] ">
-                                            {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
-                                            12-June-2023
-                                          </span>
-                                        </section>
-                                      </section>
-                                    </section>
-                                  </section>
-                                  {/* <span className="font-normal text-xs app-color-gray-1">
-                                  {finData?.ph}
-                                </span> */}
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="w-2/4 bg-[#f2f3f8] px-1">
-                              <div className="flex flex-col bg-white shadow rounded-md my-1   py-1">
-                                <div className="flex flex-row justify-between px-1">
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      T_balance <= 0
-                                        ? 'bg-[#CCC5F7]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            T_balance <= 0
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        ATS Due
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 2 */}
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      finData?.man_cs_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.man_cs_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_legal_clarity')
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
-                                        <ChartPieIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.man_ats_approval ==
-                                            'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.man_ats_approval ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        Legal Clarity
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 3*/}
-                                  <div
-                                    className={`w-full  h-[80px] ${
+                                  </section>}
+                                   {[ 'agreement_pipeline'].includes(selCategory) &&
+                                 <section>
+                                 <div
+                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
                                       finData?.man_ats_approval == 'approved'
                                         ? 'bg-[#CCC5F7]'
-                                        : finData?.man_ats_approval ==
-                                          'rejected'
+                                        : finData?.man_ats_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
@@ -1806,529 +1490,71 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     }}
                                   >
                                     <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
+                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
+                                      <ChartPieIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.kyc_status
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
+                                            finData?.man_ats_approval ==
+                                            'approved'
+                                              ? 'bg-[#CCC5F7]'
+                                              : finData?.man_ats_approval ==
+                                                'rejected'
+                                              ? 'bg-[#ffdbdb]'
+                                              : 'bg-[#F1F5F9] '
                                           }`}
                                           aria-hidden="true"
                                         />
                                       </div>
                                       <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        ATS Draft
+                                      ATS Draft
                                       </h6>
                                     </div>
                                   </div>
-                                  {/* section 4*/}
+                                  {/* section 3*/}
                                   <div
-                                    className={`w-full  h-[80px] ${
-                                      true ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            1 === 1
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        Fund Type
-                                      </h6>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="w-2/4 bg-[#f2f3f8] px-1">
-                              {' '}
-                              <Box>
-                                <>
-                                  <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 min-w-[180px]">
-                                    <div className="flex flex-row justify-between mx-1">
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        ₹{T_review?.toLocaleString('en-IN')}
-                                      </h6>
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        ₹{T_balance?.toLocaleString('en-IN')}
-                                      </h6>
-                                    </div>
-                                    <div className="flex flex-row mx-1">
-                                      {[{ item: 'Paid', value: 6 }].map(
-                                        (data, h) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100
-                                              }%`,
-                                            }}
-                                            key={h}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#00a979',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E5EAF2',
-                                                  borderRadius: '3px',
-                                                  borderTopRightRadius: '0px',
-                                                  borderBottomRightRadius:
-                                                    '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-left mr-1  mb-1 mt-[4px] min-w-[100px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                {data.item} (
-                                                {Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100}
-                                                %)
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                      {[{ item: 'Due', value: 6 }].map(
-                                        (data, i) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 0
-                                              }%`,
-                                            }}
-                                            key={i}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#d29a80',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E87F7F',
-                                                  borderRadius: '3px',
-                                                  borderTopLeftRadius: '0px',
-                                                  borderBottomLeftRadius: '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-end mr-1  mb-1 mt-[4px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                {Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? `(${Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )})%`
-                                                  : ''}{' '}
-                                                {data.item}
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
-                                </>
-                              </Box>
-                            </div>
-                          </section>
-                        </section>
-                      )
-                    })}
-                  {selCategory === 'agreement' &&
-                    filteredDataA.map((finData, j) => {
-                      const {
-                        uid,
-                        assets,
-                        customerDetailsObj,
-                        customerName1,
-                        phoneNo1,
-                        unit_no,
-                        T_balance,
-                        T_elgible,
-                        T_review,
-                        T_captured,
-                        pId,
-                        projName,
-                      } = finData
-                      return (
-                        <section
-                          key={j}
-                          className="border mb-1  shadow rounded-md  shadow"
-                        >
-                          <section className="flex flex-row">
-                            <div className="">
-                              <div className="flex flex-row   ">
-                                <div
-                                  // className="flex flex-col bg-gradient-to-r from-emerald-300 to-cyan-400 text-black p-1 rounded-sm w-[220px] h-[96px]"
-                                  className="flex flex-col bg-gradient-to-r from-[#d8daff] to-[#9ae8fd] text-black p-1 rounded-sm w-[220px] h-[96px]"
-                                  onClick={() =>
-                                    viewTransaction(
-                                      finData,
-                                      'unit_information',
-                                      'unit_information'
-                                    )
-                                  }
-                                >
-                                  <section className="font-rubikF flex flex-row">
-                                    {/* <img
-                                      className="w-10 h-10 mr-2"
-                                      alt=""
-                                      src="/apart.svg"
-                                    ></img> */}
-                                    <section className="flex flex-col ml-2 mt-[7px]">
-                                      <span className=" text-[12px] text-[#036046] font-[400]">
-                                        {projName}
-                                      </span>
-                                      <span className=" text-[14px] text-black font-[500] ">
-                                        {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
-                                        Unit-{unit_no}
-                                      </span>
-
-                                      <span className=" text-[12px] text-black-900 font-[400]">
-                                        {customerDetailsObj?.customerName1 ||
-                                          'NA'}
-                                      </span>
-                                      <span className=" text-[12px] text-black-500 font-[400]">
-                                        {customerDetailsObj?.phoneNo1 || 'NA'}
-                                      </span>
-                                    </section>
-                                  </section>
-                                  {/* <span className="font-normal text-xs app-color-gray-1">
-                                  {finData?.ph}
-                                </span> */}
-                                </div>
-                              </div>
-                            </div>
-                            <div className="w-2/4 bg-[#f2f3f8] px-1">
-                              {' '}
-                              <Box>
-                                <>
-                                  <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 min-w-[180px]">
-                                    <div className="flex flex-row justify-between mx-1">
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        ₹{T_review?.toLocaleString('en-IN')}
-                                      </h6>
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        ₹{T_balance?.toLocaleString('en-IN')}
-                                      </h6>
-                                    </div>
-                                    <div className="flex flex-row mx-1">
-                                      {[{ item: 'Paid', value: 6 }].map(
-                                        (data, k) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100
-                                              }%`,
-                                            }}
-                                            key={k}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#00a979',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E5EAF2',
-                                                  borderRadius: '3px',
-                                                  borderTopRightRadius: '0px',
-                                                  borderBottomRightRadius:
-                                                    '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-left mr-1  mb-1 mt-[4px] min-w-[100px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                {data.item} (
-                                                {Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100}
-                                                %)
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                      {[{ item: 'Due', value: 6 }].map(
-                                        (data, l) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 0
-                                              }%`,
-                                            }}
-                                            key={l}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#d29a80',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E87F7F',
-                                                  borderRadius: '3px',
-                                                  borderTopLeftRadius: '0px',
-                                                  borderBottomLeftRadius: '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-end mr-1  mb-1 mt-[4px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                {Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? `(${Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )})%`
-                                                  : ''}{' '}
-                                                {data.item}
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
-                                </>
-                              </Box>
-                            </div>
-                            <div className="w-1/4 bg-[#f2f3f8] px-1">
-                              {' '}
-                              <Box>
-                                <>
-                                  <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 min-w-[180px]">
-                                    <div className="flex flex-row justify-between ">
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        Progress
-                                      </h6>
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        0%
-                                      </h6>
-                                    </div>
-                                    <div className="flex flex-row mx-1">
-                                      {[{ item: 'Paid', value: 6 }].map(
-                                        (data, m) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100
-                                              }%`,
-                                            }}
-                                            key={m}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#00a979',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E5EAF2',
-                                                  borderRadius: '3px',
-                                                  borderTopRightRadius: '0px',
-                                                  borderBottomRightRadius:
-                                                    '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-left mr-1  mb-1 mt-[4px] min-w-[100px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                Construction
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                      {[{ item: 'Due', value: 6 }].map(
-                                        (data, n) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 0
-                                              }%`,
-                                            }}
-                                            key={n}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#d29a80',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E87F7F',
-                                                  borderRadius: '3px',
-                                                  borderTopLeftRadius: '0px',
-                                                  borderBottomLeftRadius: '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-end mr-1  mb-1 mt-[4px]"></div>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
-                                </>
-                              </Box>
-                            </div>
-                            <div className="w-3/4 bg-[#f2f3f8] px-1">
-                              <div className="flex flex-col bg-white shadow rounded-md my-1   py-1">
-                                <div className="flex flex-row justify-between px-1">
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      T_balance <= 0
+                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                      finData?.kyc_status == 'approved'
                                         ? 'bg-[#CCC5F7]'
+                                        : finData?.kyc_status == 'rejected'
+                                        ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
                                     style={{
                                       display: 'inline-block',
                                       alignSelf: 'flex-end',
                                     }}
+                                    onClick={() => {
+                                      setSelUnitDetails(finData)
+                                      setIsSubTopicOpen(true)
+                                      setIsSubTopic('crm_KYC')
+                                    }}
                                   >
                                     <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
                                       <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                         <NewspaperIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            T_balance <= 0
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
+                                            finData?.kyc_status == 'approved'
+                                              ? 'bg-[#CCC5F7]'
+                                              : finData?.kyc_status ==
+                                                'rejected'
+                                              ? 'bg-[#ffdbdb]'
+                                              : 'bg-[#F1F5F9] '
                                           }`}
                                           aria-hidden="true"
                                         />
                                       </div>
                                       <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        SD Due
+                                        KYC
                                       </h6>
                                     </div>
                                   </div>
-                                  {/* section 2 */}
-                                  <div
-                                    className={`w-full  h-[80px] ${
+                                  </section>}
+                                   {['agreement'].includes(selCategory) &&
+                                 <section>
+                                 <div
+                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
                                       finData?.both_sd_approval == 'approved'
                                         ? 'bg-[#CCC5F7]'
-                                        : finData?.both_sd_approval ==
-                                          'rejected'
+                                        : finData?.both_sd_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
@@ -2346,53 +1572,10 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
                                         <ChartPieIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.both_sd_approval ==
+                                            finData?.both_sd_approval ===
                                             'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.both_sd_approval ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        SD Creation
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 3*/}
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      finData?.both_sd_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.both_sd_approval ==
-                                          'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_SD_Approval')
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.both_sd_approval ==
-                                            'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.both_sd_approval ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
+                                              ? 'text-green-900'
+                                              : 'text-gray-600 '
                                           }`}
                                           aria-hidden="true"
                                         />
@@ -2402,1008 +1585,136 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       </h6>
                                     </div>
                                   </div>
+                                  {/* section 3*/}
+                                  <div
+                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                      finData?.kyc_status == 'approved'
+                                        ? 'bg-[#CCC5F7]'
+                                        : finData?.kyc_status == 'rejected'
+                                        ? 'bg-[#ffdbdb]'
+                                        : 'bg-[#F1F5F9] '
+                                    }  p-3 rounded-md mx-1`}
+                                    style={{
+                                      display: 'inline-block',
+                                      alignSelf: 'flex-end',
+                                    }}
+                                    onClick={() => {
+                                      setSelUnitDetails(finData)
+                                      setIsSubTopicOpen(true)
+                                      setIsSubTopic('crm_KYC')
+                                    }}
+                                  >
+                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                        <NewspaperIcon
+                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                            finData?.kyc_status == 'approved'
+                                              ? 'bg-[#CCC5F7]'
+                                              : finData?.kyc_status ==
+                                                'rejected'
+                                              ? 'bg-[#ffdbdb]'
+                                              : 'bg-[#F1F5F9] '
+                                          }`}
+                                          aria-hidden="true"
+                                        />
+                                      </div>
+                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                        Loan
+                                      </h6>
+                                    </div>
+                                  </div>
+                                  </section>}
+                                  {[ 'registered', 'possession'].includes(selCategory) &&
+                                 <section>
+                                 <div
+                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                      finData?.both_sd_approval == 'approved'
+                                        ? 'bg-[#CCC5F7]'
+                                        : finData?.both_sd_approval == 'rejected'
+                                        ? 'bg-[#ffdbdb]'
+                                        : 'bg-[#F1F5F9] '
+                                    }  p-3 rounded-md mx-1`}
+                                    style={{
+                                      display: 'inline-block',
+                                      alignSelf: 'flex-end',
+                                    }}
+                                    onClick={() => {
+                                      setSelUnitDetails(finData)
+                                      setIsSubTopicOpen(true)
+                                      setIsSubTopic('crm_posession')
+                                    }}
+                                  >
+                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
+                                        <ChartPieIcon
+                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                            finData?.both_sd_approval ===
+                                            'approved'
+                                              ? 'text-green-900'
+                                              : 'text-gray-600 '
+                                          }`}
+                                          aria-hidden="true"
+                                        />
+                                      </div>
+                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      Posession
+                                      </h6>
+                                    </div>
+                                  </div>
+                                  {/* section 3*/}
+                                  <div
+                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                      finData?.kyc_status == 'approved'
+                                        ? 'bg-[#CCC5F7]'
+                                        : finData?.kyc_status == 'rejected'
+                                        ? 'bg-[#ffdbdb]'
+                                        : 'bg-[#F1F5F9] '
+                                    }  p-3 rounded-md mx-1`}
+                                    style={{
+                                      display: 'inline-block',
+                                      alignSelf: 'flex-end',
+                                    }}
+                                    onClick={() => {
+                                      setSelUnitDetails(finData)
+                                      setIsSubTopicOpen(true)
+                                      setIsSubTopic('crm_KYC')
+                                    }}
+                                  >
+                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                        <NewspaperIcon
+                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                            finData?.kyc_status == 'approved'
+                                              ? 'bg-[#CCC5F7]'
+                                              : finData?.kyc_status ==
+                                                'rejected'
+                                              ? 'bg-[#ffdbdb]'
+                                              : 'bg-[#F1F5F9] '
+                                          }`}
+                                          aria-hidden="true"
+                                        />
+                                      </div>
+                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                        Loan
+                                      </h6>
+                                    </div>
+                                  </div>
+                                  </section>}
                                   {/* section 4*/}
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      false ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            1 != 1
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        Loan
-                                      </h6>
-                                    </div>
-                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </section>
-                        </section>
-                      )
-                    })}
-                  {selCategory === 'registered' &&
-                    filteredDataA.map((finData, o) => {
-                      const {
-                        uid,
-                        assets,
-                        customerDetailsObj,
-                        customerName1,
-                        phoneNo1,
-                        unit_no,
-                        T_balance,
-                        T_elgible,
-                        T_review,
-                        T_captured,
-                        pId,
-                        projName,
-                      } = finData
-                      return (
-                        <section
-                          key={o}
-                          className="border mb-1  shadow rounded-md  shadow"
-                        >
-                          <section className="flex flex-row">
-                            <div className="">
-                              <div className="flex flex-row   ">
-                                <div
-                                  // className="flex flex-col bg-gradient-to-r from-emerald-300 to-cyan-400 text-black p-1 rounded-sm w-[220px] h-[96px]"
-                                  className="flex flex-col bg-gradient-to-r from-[#d8daff] to-[#9ae8fd] text-black p-1 rounded-sm w-[220px] h-[96px]"
-                                  onClick={() =>
-                                    viewTransaction(
-                                      finData,
-                                      'unit_information',
-                                      'unit_information'
-                                    )
-                                  }
-                                >
-                                  <section className="font-rubikF flex flex-row">
-                                    {/* <img
-                                      className="w-10 h-10 mr-2"
-                                      alt=""
-                                      src="/apart.svg"
-                                    ></img> */}
-                                    <section className="flex flex-col ml-2 mt-[7px]">
-                                      <span className=" text-[12px] text-[#036046] font-[400]">
-                                        {projName}
-                                      </span>
-                                      <span className=" text-[14px] text-black font-[500] ">
-                                        {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
-                                        Unit-{unit_no}
-                                      </span>
 
-                                      <span className=" text-[12px] text-black-900 font-[400]">
-                                        {customerDetailsObj?.customerName1 ||
-                                          'NA'}
-                                      </span>
-                                      <span className=" text-[12px] text-black-500 font-[400]">
-                                        {customerDetailsObj?.phoneNo1 || 'NA'}
-                                      </span>
-                                    </section>
-                                  </section>
-                                  {/* <span className="font-normal text-xs app-color-gray-1">
-                                  {finData?.ph}
-                                </span> */}
-                                </div>
-                              </div>
-                            </div>
-                            <div className="w-2/4 bg-[#f2f3f8] px-1">
-                              {' '}
-                              <Box>
-                                <>
-                                  <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 min-w-[180px]">
-                                    <div className="flex flex-row justify-between mx-1">
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        ₹{T_review?.toLocaleString('en-IN')}
-                                      </h6>
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        ₹{T_balance?.toLocaleString('en-IN')}
-                                      </h6>
-                                    </div>
-                                    <div className="flex flex-row mx-1">
-                                      {[{ item: 'Paid', value: 6 }].map(
-                                        (data, p) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100
-                                              }%`,
-                                            }}
-                                            key={p}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#00a979',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E5EAF2',
-                                                  borderRadius: '3px',
-                                                  borderTopRightRadius: '0px',
-                                                  borderBottomRightRadius:
-                                                    '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-left mr-1  mb-1 mt-[4px] min-w-[100px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                {data.item} (
-                                                {Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100}
-                                                %)
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                      {[{ item: 'Due', value: 6 }].map(
-                                        (data, q) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 0
-                                              }%`,
-                                            }}
-                                            key={q}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#d29a80',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E87F7F',
-                                                  borderRadius: '3px',
-                                                  borderTopLeftRadius: '0px',
-                                                  borderBottomLeftRadius: '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-end mr-1  mb-1 mt-[4px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                {Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? `(${Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )})%`
-                                                  : ''}{' '}
-                                                {data.item}
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
-                                </>
-                              </Box>
-                            </div>
-                            <div className="w-1/4 bg-[#f2f3f8] px-1">
-                              {' '}
-                              <Box>
-                                <>
-                                  <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 min-w-[180px]">
-                                    <div className="flex flex-row justify-between ">
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        Progress
-                                      </h6>
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        0%
-                                      </h6>
-                                    </div>
-                                    <div className="flex flex-row mx-1">
-                                      {[{ item: 'Paid', value: 6 }].map(
-                                        (data, r) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100
-                                              }%`,
-                                            }}
-                                            key={r}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#00a979',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E5EAF2',
-                                                  borderRadius: '3px',
-                                                  borderTopRightRadius: '0px',
-                                                  borderBottomRightRadius:
-                                                    '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-left mr-1  mb-1 mt-[4px] min-w-[100px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                Construction
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                      {[{ item: 'Due', value: 6 }].map(
-                                        (data, s) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 0
-                                              }%`,
-                                            }}
-                                            key={s}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#d29a80',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E87F7F',
-                                                  borderRadius: '3px',
-                                                  borderTopLeftRadius: '0px',
-                                                  borderBottomLeftRadius: '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-end mr-1  mb-1 mt-[4px]"></div>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
-                                </>
-                              </Box>
-                            </div>
-                            <div className="w-3/4 bg-[#f2f3f8] px-1">
-                              <div className="flex flex-col bg-white shadow rounded-md my-1   py-1">
-                                <div className="flex flex-row justify-between px-1">
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      T_balance <= 0
-                                        ? 'bg-[#CCC5F7]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            T_balance <= 0
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        ATS Amount
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 2 */}
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      finData?.ats_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.ats_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_ATS_Approval')
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
-                                        <ChartPieIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.ats_approval == 'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.ats_approval ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        ATS Creation
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 3*/}
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      finData?.ats_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.ats_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_ATS_Approval')
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.ats_approval == 'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.ats_approval ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        ATS Approve
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 4 */}
-                                  <div
-                                    className={`w-[120px]  h-[80px] ${
-                                      finData?.kyc_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.kyc_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_posession')
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
-                                        <ChartPieIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.kyc_approval == 'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.kyc_approval ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        Posession
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 5*/}
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      false ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            1 != 1
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        Loan
-                                      </h6>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+
                           </section>
                         </section>
                       )
                     })}
 
-                  {selCategory === 'possession' &&
-                    filteredDataA.map((finData, o) => {
-                      const {
-                        uid,
-                        assets,
-                        customerDetailsObj,
-                        customerName1,
-                        phoneNo1,
-                        unit_no,
-                        T_balance,
-                        T_elgible,
-                        T_review,
-                        T_captured,
-                        pId,
-                        projName,
-                      } = finData
-                      return (
-                        <section
-                          key={o}
-                          className="border mb-1  shadow rounded-md  shadow"
-                        >
-                          <section className="flex flex-row">
-                            <div className="">
-                              <div className="flex flex-row   ">
-                                <div
-                                  // className="flex flex-col bg-gradient-to-r from-emerald-300 to-cyan-400 text-black p-1 rounded-sm w-[220px] h-[96px]"
-                                  className="flex flex-col bg-gradient-to-r from-[#d8daff] to-[#9ae8fd] text-black p-1 rounded-sm w-[220px] h-[96px]"
-                                  onClick={() =>
-                                    viewTransaction(
-                                      finData,
-                                      'unit_information',
-                                      'unit_information'
-                                    )
-                                  }
-                                >
-                                  <section className="font-rubikF flex flex-row">
-                                    {/* <img
-                                                      className="w-10 h-10 mr-2"
-                                                      alt=""
-                                                      src="/apart.svg"
-                                                    ></img> */}
-                                    <section className="flex flex-col ml-2 mt-[7px]">
-                                      <span className=" text-[12px] text-[#036046] font-[400]">
-                                        {projName}
-                                      </span>
-                                      <span className=" text-[14px] text-black font-[500] ">
-                                        {/* {finData?.[`${assets[0]}_unitDetails`]
-                                                          ?.unit_no || ''} */}
-                                        Unit-{unit_no}
-                                      </span>
 
-                                      <span className=" text-[12px] text-black-900 font-[400]">
-                                        {customerDetailsObj?.customerName1 ||
-                                          'NA'}
-                                      </span>
-                                      <span className=" text-[12px] text-black-500 font-[400]">
-                                        {customerDetailsObj?.phoneNo1 || 'NA'}
-                                      </span>
-                                    </section>
-                                  </section>
-                                  {/* <span className="font-normal text-xs app-color-gray-1">
-                                                  {finData?.ph}
-                                                </span> */}
-                                </div>
-                              </div>
-                            </div>
-                            <div className="w-2/4 bg-[#f2f3f8] px-1">
-                              {' '}
-                              <Box>
-                                <>
-                                  <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 min-w-[180px]">
-                                    <div className="flex flex-row justify-between mx-1">
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        ₹{T_review?.toLocaleString('en-IN')}
-                                      </h6>
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        ₹{T_balance?.toLocaleString('en-IN')}
-                                      </h6>
-                                    </div>
-                                    <div className="flex flex-row mx-1">
-                                      {[{ item: 'Paid', value: 6 }].map(
-                                        (data, p) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100
-                                              }%`,
-                                            }}
-                                            key={p}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#00a979',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E5EAF2',
-                                                  borderRadius: '3px',
-                                                  borderTopRightRadius: '0px',
-                                                  borderBottomRightRadius:
-                                                    '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-left mr-1  mb-1 mt-[4px] min-w-[100px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                {data.item} (
-                                                {Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100}
-                                                %)
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                      {[{ item: 'Due', value: 6 }].map(
-                                        (data, q) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 0
-                                              }%`,
-                                            }}
-                                            key={q}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#d29a80',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E87F7F',
-                                                  borderRadius: '3px',
-                                                  borderTopLeftRadius: '0px',
-                                                  borderBottomLeftRadius: '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-end mr-1  mb-1 mt-[4px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                {Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? `(${Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )})%`
-                                                  : ''}{' '}
-                                                {data.item}
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
-                                </>
-                              </Box>
-                            </div>
-                            <div className="w-1/4 bg-[#f2f3f8] px-1">
-                              {' '}
-                              <Box>
-                                <>
-                                  <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 min-w-[180px]">
-                                    <div className="flex flex-row justify-between ">
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        Progress
-                                      </h6>
-                                      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                                        0%
-                                      </h6>
-                                    </div>
-                                    <div className="flex flex-row mx-1">
-                                      {[{ item: 'Paid', value: 6 }].map(
-                                        (data, r) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_review / T_elgible) * 100
-                                                ) <= 100
-                                                  ? Math.round(
-                                                      (T_review / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 100
-                                              }%`,
-                                            }}
-                                            key={r}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#00a979',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E5EAF2',
-                                                  borderRadius: '3px',
-                                                  borderTopRightRadius: '0px',
-                                                  borderBottomRightRadius:
-                                                    '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-left mr-1  mb-1 mt-[4px] min-w-[100px]">
-                                              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                                                Construction
-                                              </h6>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                      {[{ item: 'Due', value: 6 }].map(
-                                        (data, s) => (
-                                          <div
-                                            style={{
-                                              display: 'inline-block',
-                                              alignSelf: 'flex-end',
-                                              width: `${
-                                                Number(
-                                                  (T_balance / T_elgible) * 100
-                                                ) > 0
-                                                  ? Math.round(
-                                                      (T_balance / T_elgible) *
-                                                        100
-                                                    )
-                                                  : 0
-                                              }%`,
-                                            }}
-                                            key={s}
-                                          >
-                                            <div className="">
-                                              <LinearProgress
-                                                sx={{
-                                                  backgroundColor: 'white',
-                                                  '& .MuiLinearProgress-bar': {
-                                                    backgroundColor: '#d29a80',
-                                                  },
-                                                }}
-                                                variant="determinate"
-                                                value={100}
-                                                style={{
-                                                  backgroundColor: '#E87F7F',
-                                                  borderRadius: '3px',
-                                                  borderTopLeftRadius: '0px',
-                                                  borderBottomLeftRadius: '0px',
-                                                  height: `${data.value}px`,
-                                                  width: `100%`,
-                                                }}
-                                              />
-                                            </div>
-                                            <div className="flex  justify-end mr-1  mb-1 mt-[4px]"></div>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
-                                </>
-                              </Box>
-                            </div>
-                            <div className="w-3/4 bg-[#f2f3f8] px-1">
-                              <div className="flex flex-col bg-white shadow rounded-md my-1   py-1">
-                                <div className="flex flex-row justify-between px-1">
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      T_balance <= 0
-                                        ? 'bg-[#CCC5F7]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            T_balance <= 0
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        ATS Amount
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 2 */}
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      finData?.ats_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.ats_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_ATS_Approval')
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
-                                        <ChartPieIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.ats_approval == 'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.ats_approval ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        ATS Creation
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 3*/}
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      finData?.ats_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.ats_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_ATS_Approval')
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.ats_approval == 'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.ats_approval ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        ATS Approve
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 4 */}
-                                  <div
-                                    className={`w-[120px]  h-[80px] ${
-                                      finData?.kyc_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.kyc_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_posession')
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
-                                        <ChartPieIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.kyc_approval == 'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.kyc_approval ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        Posession
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  {/* section 5*/}
-                                  <div
-                                    className={`w-full  h-[80px] ${
-                                      false ? 'bg-[#CCC5F7]' : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
-                                  >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            1 != 1
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                                        Loan
-                                      </h6>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </section>
-                        </section>
-                      )
-                    })}
+
+
+                
 
                   {selCategory === 'unAssigned_crm' &&
                     crmCustomersDBData.map((finData, t) => {

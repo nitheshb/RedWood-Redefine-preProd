@@ -790,8 +790,8 @@ export function MultipleFileUploadField({
                 plotCS: [],
                 constructCS: [],
                 constructPS: [],
-                sqft_rate: Math.round(dRow['Plot rate/sqft'] || 0),
-                construct_price_sqft: Math.round(dRow['Const rate/sqft'] || 0),
+                sqft_rate: Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0),
+                construct_price_sqft: Number(dRow['Const rate/sqft']?.replace(/,/g, '') || 0),
                 plc_per_sqft: dRow['PLC rate/sqft'],
                 T_received: Number(dRow['Collected']?.replace(/,/g, '') || 0),
 
