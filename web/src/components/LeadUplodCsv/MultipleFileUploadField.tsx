@@ -535,7 +535,7 @@ export function MultipleFileUploadField({
             serialData,
             fileRecords
           )
-        } else if (['Import Booked Villas'].includes(title)) {
+        } else if (['Import Booked Villas','Import Booked Plots','Import Booked Apartments'].includes(title)) {
           console.log('import stuff is ', records)
           const clean1 = records.filter((row) => {
             return (

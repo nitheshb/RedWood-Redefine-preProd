@@ -233,7 +233,11 @@ const SiderForm = ({
                     myBlock={myBlock}
                   />
                 )}
-                 {title === 'Import Booked Villas' && (
+                 { [
+        'Import Booked Villas',
+        'Import Booked Plots',
+        'Import Booked Apartments',
+      ].includes(title) && (
                   <LeadsDropHomes
                     title={title}
                     dialogOpen={setOpen}

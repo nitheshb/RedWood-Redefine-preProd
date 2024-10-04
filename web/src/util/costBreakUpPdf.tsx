@@ -188,9 +188,9 @@ const CostBreakUpPdf = ({
   useEffect(() => {
 
     let x = {...myBookingPayload}
-    x.plotPS = psPayload
-    x.constructPS = psConstructPayload
-    x.fullPs = [...psPayload, ...psConstructPayload]
+    x.plotPS = psPayload || []
+    x.constructPS = psConstructPayload || []
+    x.fullPs = [...psPayload || [], ...psConstructPayload || []]
     setMyBookingPayload(x)
     console.log('values are ',x.fullPs)
   }, [psPayload, psConstructPayload])
