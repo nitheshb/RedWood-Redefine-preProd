@@ -2,24 +2,17 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState, useEffect, useRef } from 'react'
 
-import { format, parse } from 'date-fns'
 import { arrayUnion, Timestamp } from 'firebase/firestore'
-import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
 
-import { useParams } from '@redwoodjs/router'
 
-import Confetti from 'src/components/shared/confetti'
-import { paymentMode, statesList } from 'src/constants/projects'
 import {
   addAccountslogS,
   addCustomer,
   addLead,
   addModuleScheduler,
-  addPaymentReceivedEntry,
   capturePaymentS,
-  checkIfLeadAlreadyExists,
   createBookedCustomer,
   createNewCustomerS,
   insertPSS,
@@ -30,12 +23,7 @@ import {
   updateUnitAsBooked,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { computeTotal } from 'src/util/computeCsTotals'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
-import { TextField2 } from 'src/util/formFields/TextField2'
 
-import ApplicantDetailsForm from '../A_CrmModule/applicantDetailsForm'
 
 import CaptureUnitPayment from './CapturePayment'
 

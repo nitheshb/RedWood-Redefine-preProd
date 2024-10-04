@@ -692,12 +692,11 @@ console.log('customer info', myBookingPayload)
                                   )}
                                 </section>
 
-                                <div className="flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
-                                  <div className="mt-2 text-right md:space-x-3 md:block flex flex-col-reverse mb-3">
-                                    <div className="inline-block">
+                                <div className="flex mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
+                                <div className="inline-block mt-4 ml-4">
                                       <PdfInvoiceGenerator
                                         user={user}
-                                        selUnitDetails={selUnitDetails}
+                                        selUnitDetails={myBookingPayload}
                                         myObj={newPlotCostSheetA}
                                         newPlotPS={newPlotPS}
                                         myAdditionalCharges={
@@ -713,6 +712,9 @@ console.log('customer info', myBookingPayload)
                                         leadDetailsObj1={leadDetailsObj1}
                                       />
                                     </div>
+                                  <div className="mt-2 text-right md:space-x-3 md:block flex flex-row-reverse justify-between mb-3">
+
+                                    <section>
                                     <button
                                       className="mb-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
                                     bg-gradient-to-r from-violet-500 to-indigo-500
@@ -751,6 +753,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                                         <span>Save & Next</span>
                                       </button>
                                     )}
+                                    </section>
                                   </div>
                                 </div>
                               </Form>

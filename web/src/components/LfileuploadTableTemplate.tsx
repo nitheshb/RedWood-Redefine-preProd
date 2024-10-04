@@ -1012,7 +1012,7 @@ const EnhancedTableToolbar = (props) => {
           //   enqueueSnackbar
           // )
 
-        await  updateUnitAsBooked(
+          await updateUnitAsBooked(
             orgId,
             pId,
             data['unitUid'],
@@ -1091,8 +1091,8 @@ const EnhancedTableToolbar = (props) => {
     console.log('inserting mortgage unit to db', records, projectDetails)
     const mappedArry = await Promise.all(
       records.map(async (data, index) => {
-       await upSertMortgageUnit(orgId, data['unitUid'], data, user?.email)
-       await setUploadedUnitsCount(index + 1)
+        await upSertMortgageUnit(orgId, data['unitUid'], data, user?.email)
+        await setUploadedUnitsCount(index + 1)
       })
     )
 
@@ -1119,7 +1119,13 @@ const EnhancedTableToolbar = (props) => {
       insertPlotToDb(records)
     } else if (title === 'Import Villas') {
       insertPlotToDb(records)
-    } else if (title === 'Import Booked Villas') {
+    } else if (
+      [
+        'Import Booked Villas',
+        'Import Booked Plots',
+        'Import Booked Apartments',
+      ].includes(title)
+    ) {
       console.log('hello==>', records)
       insertBookedUnitToDb(records, projPayload)
     } else if (title === 'Upload Mortgage') {
@@ -1879,7 +1885,13 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
       ]
-    } else if (title === 'Import Booked Villas') {
+    } else if (
+      [
+        'Import Booked Villas',
+        'Import Booked Plots',
+        'Import Booked Apartments',
+      ].includes(title)
+    ) {
       columns = [
         { id: 'unit_no', label: 'unit_no', minWidth: 80 },
         {
@@ -2373,10 +2385,9 @@ export default function LfileuploadTableTemplate({
                     >
                       <TableCell>{index + 1}</TableCell>
                       {columns?.map((column) => {
-                        const value =
-                          ['Date', 'booked_on'].includes(column.id)
-                            ? prettyDate(row[column.id]).toLocaleString()
-                            : row[column.id]
+                        const value = ['Date', 'booked_on'].includes(column.id)
+                          ? prettyDate(row[column.id]).toLocaleString()
+                          : row[column.id]
 
                         console.log('insert date value is', row[column.id], row)
 
