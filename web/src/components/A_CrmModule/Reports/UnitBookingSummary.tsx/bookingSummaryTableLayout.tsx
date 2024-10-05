@@ -67,7 +67,7 @@ const UnitBookingSummaryTableLayout = ({
       { value: 'all', lab: 'All', val: 'all' },
       { value: 'booked', lab: 'Booked' },
       { value: 'allotment', lab: 'Allotment' },
-      { value: 'agreement', lab: 'Agreement' },
+      { value: 'ATS', lab: 'Agreement' },
       { value: 'registered', lab: 'Registered' },
       { value: 'construction', lab: 'Construction' },
       { value: 'possession', lab: 'Possession' },
@@ -345,7 +345,7 @@ const UnitBookingSummaryTableLayout = ({
             )
             return (
               (dat?.unitStatus?.toLowerCase() || dat?.status?.toLowerCase()) ===
-              value
+              value?.toLowerCase()
             )
           })
         )

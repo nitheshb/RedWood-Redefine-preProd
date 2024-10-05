@@ -120,11 +120,11 @@ const StatusListA = [
     value: 'agreement_pipeline',
     logo: 'RefreshIcon',
     color: 'bg-violet-500',
-    allowed: ['agreement_pipeline', 'sd_pipeline', 'agreement'],
+    allowed: ['agreement_pipeline', 'sd_pipeline', 'ATS'],
   },
   {
     label: 'Agreement',
-    value: 'agreement',
+    value: 'ATS',
     logo: 'FireIcon',
     color: 'bg-violet-500',
     allowed: ['registered'],
@@ -703,7 +703,7 @@ export default function UnitSideViewCRM({
           enqueueSnackbar
         )
       }else if (
-        newStatus?.value === 'agreement'
+        newStatus?.value === 'ATS'
         // &&
         // selCustomerPayload?.T_balance <= 0
 
