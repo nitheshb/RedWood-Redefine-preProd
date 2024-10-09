@@ -177,6 +177,7 @@ const AddPaymentDetailsForm = ({
     data.category = 'BookingAdvance'
     const x = await capturePaymentS(
       orgId,
+      true,
       projectDetails?.uid,
       selUnitDetails?.uid,
       custNo,

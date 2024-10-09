@@ -1074,6 +1074,7 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
 
     const x = await capturePaymentS(
       orgId,
+      true,
       projectId,
       unitId,
       8,
@@ -1100,6 +1101,7 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
 return
     const x = await capturePaymentS(
       orgId,
+      true,
       projectId,
       unitId,
       8,
