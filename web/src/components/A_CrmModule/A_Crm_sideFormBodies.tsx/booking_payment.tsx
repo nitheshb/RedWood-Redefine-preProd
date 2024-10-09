@@ -152,6 +152,7 @@ export default function BookingPaymentFlow({
     data.category = 'Payment'
     const x = await capturePaymentS(
       orgId,
+      true,
       projectId,
       unitId,
       8,

@@ -4634,7 +4634,7 @@ export const captureWalletPayment = async (
         projectId: 'wallet',
         unit_id: 'wallet',
         towards: builderName,
-        towards_id: towardsBankDocId,
+        towards_id: towardsBankDocId || '',
         mode,
         custId: leadDocId,
         customerName: Name || '',
@@ -4655,7 +4655,7 @@ export const captureWalletPayment = async (
         projectId: 'wallet',
         unit_id: ['wallet'],
         towards: builderName,
-        towards_id: towardsBankDocId,
+        towards_id: towardsBankDocId || '' ,
         mode,
         custId: leadDocId,
         customerName: Name,
@@ -4720,6 +4720,7 @@ export const captureWalletPayment = async (
 }
 export const capturePaymentS = async (
   orgId,
+  boolAgreegate,
   projectId,
   unitId,
   custNo,
@@ -4750,10 +4751,10 @@ export const capturePaymentS = async (
         projectId,
         unit_id: unitId,
         towards: builderName,
-        towards_id: towardsBankDocId,
+        towards_id: towardsBankDocId ,
         mode,
         custId: custNo,
-        customerName: Name || '',
+        customerName: Name || payload?.customerName || '',
         receive_by: payload?.bookedBy,
         txt_dated: dated, // modify this to dated time entred by user
         status: payload?.status || 'review',
@@ -4774,8 +4775,9 @@ export const capturePaymentS = async (
         towards_id: towardsBankDocId,
         mode,
         custId: custNo,
-        customerName: Name,
-        receive_by: payload?.bookedBy,
+        customerName: Name || payload?.customerName || '' ,
+        receive_by: payload?.bookedBy || payload?.receive_by,
+        date_of_entry: payload?.date_of_entry || dated,
         txt_dated: dated, // modify this to dated time entred by user
         status: payload?.status || 'review',
         payReason: payload?.payReason,
@@ -4787,6 +4789,7 @@ export const capturePaymentS = async (
       enqueueSnackbar
     )
     // total amount in review increment , project , phase, unit
+if(boolAgreegate){
     await updateDoc(doc(db, `${orgId}_projects`, projectId), {
       t_collect: increment(amount),
     })
@@ -4808,18 +4811,19 @@ export const capturePaymentS = async (
         creditNotesFromA: arrayUnion(towardsBankDocId),
       })
     }
-    const { data: data3, error: error3 } = await supabase
-      .from(`${orgId}_lead_logs`)
-      .insert([
-        {
-          type: 'pay_capture',
-          subtype: category,
-          T: Timestamp.now().toMillis(),
-          custUid: unitId,
-          by,
-          payload: {},
-        },
-      ])
+  }
+    // const { data: data3, error: error3 } = await supabase
+    //   .from(`${orgId}_lead_logs`)
+    //   .insert([
+    //     {
+    //       type: 'pay_capture',
+    //       subtype: category,
+    //       T: Timestamp.now().toMillis(),
+    //       custUid: unitId,
+    //       by,
+    //       payload: {},
+    //     },
+    //   ])
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
       .insert([
@@ -4840,6 +4844,7 @@ export const capturePaymentS = async (
     })
     return data
   } catch (e) {
+    console.log('error on transaction upload', e)
     enqueueSnackbar(e.message, {
       variant: 'error',
     })

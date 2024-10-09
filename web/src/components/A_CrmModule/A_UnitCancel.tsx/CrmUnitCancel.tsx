@@ -884,6 +884,7 @@ export default function UnitBookingCancelCRM({
 
     const x = await capturePaymentS(
       orgId,
+      true,
       projectId,
       unitId,
       8,

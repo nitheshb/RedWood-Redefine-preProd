@@ -936,6 +936,73 @@ export function MultipleFileUploadField({
             serialData,
             fileRecords
           )
+        } else if (['Upload Unit Transactions'].includes(title)) {
+          console.log('import stuff is ', records)
+          const clean1 = records.filter((row) => {
+            return (
+              (row['Plot No*'] != '' && row['Plot No*'] != undefined) ||
+              (row['Villa No*'] != '' && row['Villa No*'] != undefined) ||
+              (row['Unit No.*'] != '' && row['Unit No.*'] != undefined)
+            )
+          })
+          // set duplicate & valid records
+          // check in db if record exists with matched phone Number & email
+// valid
+          const serialData = await Promise.all(
+            clean1.map(async (dRow) => {
+
+
+              const foundLength = await checkIfUnitAlreadyExists(
+                `${orgId}_units`,
+                pId,
+                myPhase?.uid || '',
+                myBlock?.uid || '',
+                dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*']
+              )
+              // Apartment Type*
+              // console.log('my data value is ', foundLength, dRow)
+
+              let unitDetails = {}
+              if (foundLength.length > 0) {
+                unitDetails = foundLength[0]
+              }
+              console.log('my data value is ', foundLength,unitDetails,  dRow)
+              const computPlotObj = {
+                unit_no:
+                  dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
+                mode: foundLength.length > 0 ? 'valid' : 'duplicate',
+                unitUid: unitDetails?.unitUid,
+                customerName : unitDetails?.customerDetailsObj?.customerName1,
+                pId: pId,
+                date_of_entry: dRow['Date of Entry'],
+                payment_mode: dRow['Payment Mode'],
+                bank_ref_no: dRow['Transaction ID'],
+                payto: dRow['Payment Towards'],
+                builderName: dRow['Payment Against'],
+                dated: dRow['Payment Date'],
+                amount: Number(dRow['Amount']?.replace(/,/g, '') || 0),
+                status: dRow['Status'],
+                cancelledDate: dRow['Cancelled Date'] || '',
+                receive_by: dRow['Received By'],
+                remarks: dRow['Remarks'],
+              }
+
+              // const unitDetailsFull = {...unitDetails, ...computPlotObj}
+
+              // console.log('unitDetailsFull', unitDetailsFull)
+              return await computPlotObj
+            })
+          )
+
+          await setfileRecords(serialData)
+          // let x =   await getLedsData()
+
+          await console.log(
+            'Finished: records',
+            clean1,
+            serialData,
+            fileRecords
+          )
         } else if (['ImportAssets'].includes(title)) {
           console.log('import stuff is ', records)
           const clean1 = records.filter((row) => {

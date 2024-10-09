@@ -34,6 +34,7 @@ import {
   addLead,
   addPlotUnit,
   addUnit,
+  capturePaymentS,
   createBookedCustomer,
   getLedsData1,
   getProjById1,
@@ -1099,6 +1100,51 @@ const EnhancedTableToolbar = (props) => {
     return
   }
 
+  const insertTransactionUnitToDb = async (records, projectDetails) => {
+    // return insert to mortage table
+    // we need unit Id
+
+    const { projectId } = projectDetails[0]
+    console.log('inserting mortgage unit to db', records, projectDetails)
+    const mappedArry = await Promise.all(
+      records.map(async (data, index) => {
+        data.uploadType = 'bulk'
+        if (data?.status?.toLowerCase() === 'Cancelled') {
+          data.status = 'cancelled'
+          const date2 = new Date(data['cancelledDate'])
+          data.cancelledDate = data['Cancelled Date'] === '' ? '' : date2.getTime() + 21600000
+        } else {
+          data.status =
+            data.status.toLowerCase() === 'active' ? 'received' : 'review'
+        }
+        const date = new Date(data['dated']) // some mock date
+        const milliseconds = date.getTime() + 21600000
+        const date1 = new Date(data['date_of_entry']) // some mock date
+ // some mock date
+
+        data.dated = milliseconds
+        data.date_of_entry = date1.getTime() + 21600000
+        data.mode = data?.payment_mode  || ''
+
+        await capturePaymentS(
+          orgId,
+          false,
+          projectId,
+          data['unitUid'],
+          data['unitUid'],
+          {},
+          data,
+          user?.email,
+          enqueueSnackbar
+        )
+        await upSertMortgageUnit(orgId, data['unitUid'], data, user?.email)
+        await setUploadedUnitsCount(index + 1)
+      })
+    )
+
+    return
+  }
+
   const addUnitsToDB = async (records, pId) => {
     setUnitUploadMessage(false)
     // upload successfully
@@ -1131,6 +1177,9 @@ const EnhancedTableToolbar = (props) => {
     } else if (title === 'Upload Mortgage') {
       console.log('hello==>', records)
       insertMortgageUnitToDb(records, projPayload)
+    } else if (title === 'Upload Unit Transactions') {
+      console.log('hello==>', records)
+      insertTransactionUnitToDb(records, projPayload)
     }
     return
     const mappedArry = await Promise.all(
@@ -1243,6 +1292,7 @@ const EnhancedTableToolbar = (props) => {
           'Import Villas',
           'Import Booked Villas',
           'Upload Mortgage',
+          'Upload Unit Transactions'
         ].includes(title) ? (
         <span style={{ display: 'flex' }}>
           {sourceTab === 'validR' && !unitUploadMessage && (
@@ -2114,6 +2164,82 @@ export default function LfileuploadTableTemplate({
         {
           id: 'status',
           label: 'Status',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'remarks',
+          label: 'Remarks',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+      ]
+    } else if (title === 'Upload Unit Transactions') {
+      columns = [
+        { id: 'unit_no', label: 'Unit_No', minWidth: 80 },
+        {
+          id: 'date_of_entry',
+          label: 'Date of Entry',
+          minWidth: 10,
+          align: 'center',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'payment_mode',
+          label: 'Payment Mode',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'bank_ref_no',
+          label: 'Transaction ID',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'payto',
+          label: 'Payment Towards',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'builderName',
+          label: 'Payment Against',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'dated',
+          label: 'Payment Date',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'amount',
+          label: 'Amount',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'receive_by',
+          label: 'Received By',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'status',
+          label: 'Status',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'cancelDate',
+          label: 'Cancelled Date',
           minWidth: 80,
           format: (value) => value.toLocaleString(),
         },
