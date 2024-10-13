@@ -201,9 +201,9 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
               <table className="w-full mb- ">
                 <thead>
                   {' '}
-                  <tr className=" h-6 border-b-[0.2px] border-gray-300 h-[51px] bg-[#D9D8FF]">
+                  <tr className=" border-b-[0.2px] border-gray-300 h-8 bg-[#D9D8FF]">
                     <th className="w-[40%] text-[12px] px-3 text-left   tracking-wide  ">
-                      Particulars
+                    Charges
                     </th>
                     {/* <th className="w-[10%] text-[10px] text-right text-gray-400  text-[#823d00]  tracking-wide uppercase">
                       Payment Timeline
@@ -240,7 +240,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
                           !d1?.elgible ? '' : ''
                         } `}
                       >
-                        <th className=" text-[13px] text-left text-blue-500 text-[#0c272e] text-[#363ad9] text-[#272991] bg-[#F0F1FF] tracking-wide pl-3 ">
+                        <th className=" text-[10px] text-left text-gray-700  bg-[#F0F1FF] tracking-wide pl-3 ">
                           <div>
                             {d1?.stage?.label}
                             <div className="text-[9px] text-left text-[#60679f] tracking-wider ">

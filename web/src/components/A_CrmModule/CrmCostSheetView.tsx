@@ -124,7 +124,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                     <thead>
                       <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
                         <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#D9D8FF]  tracking-wide  px-2">
-                          Particulars
+                          Plot Charges
                         </th>
                         <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide">
                           Plot Rate/Sqft
@@ -161,7 +161,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                             ₹{d1?.gstValue?.toLocaleString('en-IN')}
                           </td>
                           <td className="w-[15%] text-[12px] text-right  text-gray-800 bg-[#F0f1ff] px-2">
-                            ₹{' '}
+                            ₹
                             {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
                           </td>
                         </tr>
@@ -185,7 +185,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                   <thead>
                         <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
                           <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#D9D8FF]  tracking-wide  px-2">
-                            Additional Charges Particulars
+                            Additional Charges
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide">
                             Plot Rate/Sqft
@@ -222,7 +222,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                           </td>
 
                           <td className="text-[12px] w-[15%] text-right text-gray-700  bg-[#F0f1ff] px-2">
-                            ₹{' '}
+                            ₹
                             {/* {Number(
                               computeTotal(
                                 d1,
@@ -254,7 +254,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                       <thead>
                         <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
                           <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#D9D8FF]  tracking-wide  px-2">
-                            Construction Particulars
+                            Construction Charges
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide">
                             Construct Rate/Sqft
@@ -291,7 +291,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                               ₹{d1?.gstValue?.toLocaleString('en-IN')}
                             </td>
                             <td className="w-[15%] text-[12px] text-right  text-gray-800 bg-[#F0f1ff] px-2">
-                              ₹{' '}
+                              ₹
                               {d1?.TotalNetSaleValueGsT?.toLocaleString(
                                 'en-IN'
                               )}
@@ -319,7 +319,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                       <thead>
                         <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
                           <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#D9D8FF]  tracking-wide  px-2">
-                            Additional Charges Particulars
+                          Construction Additional Charges
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide">
                             Plot Rate/Sqft
@@ -357,7 +357,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                                 ₹{d1?.gstValue?.toLocaleString('en-IN')}
                               </td>
                               <td className="w-[15%] text-[12px] text-right  text-gray-800 bg-[#F0f1ff] px-2">
-                                ₹{' '}
+                                ₹
                                 {d1?.TotalNetSaleValueGsT?.toLocaleString(
                                   'en-IN'
                                 )}
@@ -418,7 +418,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                             </td>
 
                             <td className="text-[12px] w-[15%] text-right text-gray-700 font-bold bg-[#F0f1ff] px-2">
-                              ₹{' '}
+                              ₹
                               {Number(
                                 computeTotal(
                                   d1,
@@ -486,7 +486,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                       <thead>
                         <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
                           <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#D9D8FF]  tracking-wide  px-2">
-                            Possession Charges Particulars
+                            Possession Charges
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide">
                             Plot Rate/Sqft
@@ -524,7 +524,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                                 ₹{d1?.gstValue?.toLocaleString('en-IN')}
                               </td>
                               <td className="w-[15%] text-[12px] text-right  text-gray-800 bg-[#F0f1ff] px-2">
-                                ₹{' '}
+                                ₹
                                 {d1?.TotalNetSaleValueGsT?.toLocaleString(
                                   'en-IN'
                                 )}

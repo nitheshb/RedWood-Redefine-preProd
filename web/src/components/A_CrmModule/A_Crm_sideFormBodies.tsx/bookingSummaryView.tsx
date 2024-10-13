@@ -880,7 +880,7 @@ const BookingSummaryView = ({
                                         {selPhaseObj?.projectType?.name ===
                                       'Apartment'
                                         ? 'Flat'
-                                        : 'Plot'}{' '} Particulars
+                                        : 'Plot'}{' '} Charges
                                         </th>
                                         <th className="w-[15%] px-2 text-[12px] text-right   tracking-wide">
                                           Rate/Sqft

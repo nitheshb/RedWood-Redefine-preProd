@@ -842,7 +842,7 @@ const CostBreakUpPdf = ({
                                       'Apartment'
                                         ? 'Flat'
                                         : 'Plot'}{' '}
-                                      Particulars (
+                                      Charges (
                                       {selUnitDetails?.area?.toLocaleString(
                                         'en-IN'
                                       ) || 0}{' '}
@@ -1137,7 +1137,7 @@ const CostBreakUpPdf = ({
                                     <thead>
                                       <tr className="h-8 mb-1 border-none w-[100%] bg-[#E8E6FE] text-[#0D027D]  font-[600] ">
                                         <th className="min-w-[35%] px-2  text-[12px] text-left text-[#0D027D]  tracking-wide">
-                                          Construction Particulars (
+                                          Construction Charges (
                                           {selUnitDetails?.construct_area?.toLocaleString(
                                             'en-IN'
                                           ) || 0}{' '}
