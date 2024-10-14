@@ -465,7 +465,7 @@ const CSBody = ({
                           <thead>
                             <tr className="h-8 mb-1 border-none w-[100%] bg-[#318b96] text-white ">
                               <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide  ">
-                                Particulars
+                                Charges
                               </th>
                               <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide">
                                 Rate/Sqft
@@ -659,7 +659,7 @@ const CSBody = ({
                             {' '}
                             <tr className=" h-8  border-none bg-[#318b96] text-white ">
                               <th className="w-[50%] px-2   text-left  tracking-wide uppercase d-xsm text-white ">
-                                Particulars
+                              Charges
                               </th>
                               <th className="w-[30%] px-2   text-left  tracking-wide uppercase d-xsm text-white">
                                 Payment Timeline

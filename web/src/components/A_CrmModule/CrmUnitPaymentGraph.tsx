@@ -4,6 +4,7 @@ import { LinearProgress } from '@mui/material'
 
 import { useAuth } from 'src/context/firebase-auth-context'
 import { computeTotal } from 'src/util/computeCsTotals'
+import DoughnutChartWithRoundedSegments from '../A_SalesModule/Reports/charts/piechartRounded'
 
 const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
   const { user } = useAuth()
@@ -57,100 +58,49 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
   return (
     <section className="flex flex-col  rounded-md ">
       <>
-        <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2 min-w-[260px]">
-          <div className="flex flex-row justify-between mx-">
-            <h6 className="font-bodyLato font-semibold text-xs m-1 flex flex-col">
-            <span className="tracking-wide  font-semibold text-[16px]"> ₹
-              {(selCustomerPayload?.T_balance)?.toLocaleString(
-                'en-IN'
-              ) || 0}</span><span className="text-[#637381] tracking-wide font-thin">Unit Balance</span>
+      <div className="flex flex-col border bg-white rounded-xl shadow my-1  px-2  py-3 pb-4 min-w-[140px] h-[82px]  justify-between mx-">
+                                <div className="flex flex-row justify-between mx- mb-2">
+                                  <DoughnutChartWithRoundedSegments
+                                    progress={
+                                      (selCustomerPayload?.T_approved / selCustomerPayload?.T_total) *
+                                      100
+                                    }
+                                  />
+                                  <section className="font-bodyLato font-semibold text-xs m-1 w-[61%] ">
+                                    <section className="flex flex-col  w-full mt-">
+                                    <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
+                                        Unit Cost: ₹
+                                        <div>
+                                          {(
+                                            selCustomerPayload?.T_total || selCustomerPayload?.T_Total
+                                          )?.toLocaleString('en-IN')}
+                                        </div>
+                                      </p>
 
-            </h6>
-            <h6 className="font-bodyLato font-semibold text-xs m-1 flex flex-col text-right">
-    ₹
-              {((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ))?.toLocaleString('en-IN') || 0}
-              <span className="text-[#637381] tracking-wide font-thin">Paid</span>
-            </h6>
-          </div>
-          <div className="flex flex-row mx-1 pt-">
-            {[{ item: 'Paid', value: 6 }].map((data, i) => (
-              <div
-                className=" w-3/4  "
-                style={{
-                  display: 'inline-block',
-                  alignSelf: 'flex-end',
-                }}
-                key={i}
-              >
-                <div className="">
-                  <LinearProgress
-                    sx={{
-                      backgroundColor: 'white',
-                      '& .MuiLinearProgress-bar': {
-                        backgroundColor: '#ffab00',
-                      },
-                    }}
-                    variant="determinate"
-                    value={100}
-                    style={{
-                      backgroundColor: '#E5EAF2',
-                      borderRadius: '3px',
-                      borderTopRightRadius: '0px',
-                      borderBottomRightRadius: '0px',
-                      height: `${data.value}px`,
-                      width: `100%`,
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-            {[{ item: 'Due', value: 6 }].map((data, i) => (
-              <div
-                className=" w-2/4  "
-                style={{
-                  display: 'inline-block',
-                  alignSelf: 'flex-end',
-                }}
-                key={i}
-              >
-                <div className="">
-                  <LinearProgress
-                    sx={{
-                      backgroundColor: 'white',
-                      '& .MuiLinearProgress-bar': {
-                        backgroundColor: '#ffab003d',
-                      },
-                    }}
-                    variant="determinate"
-                    value={100}
-                    style={{
-                      backgroundColor: '#ffab003d',
-                      borderRadius: '3px',
-                      borderTopLeftRadius: '0px',
-                      borderBottomLeftRadius: '0px',
-                      height: `${data.value}px`,
-                      width: `100%`,
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-row justify-between mx-">
-          <h6 className="font-bodyLato font-semibold text-xs m-1">
+                                      <div className="text-zinc-500 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
+                                        Paid: ₹
+                                        <div>
+                                          {' '}
+                                          {(
+                                            (selCustomerPayload?.T_review || 0) +
+                                            (selCustomerPayload?.T_approved || 0)
+                                          ).toLocaleString('en-IN') || 0}
+                                        </div>
+                                      </div>
 
-            </h6>
-            <section className="flex flex-row">
-              {/* <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                {selCustomerPayload?.T_elgible?.toLocaleString('en-IN')}
-              </h6> */}
+                                      <div className="text-zinc-800 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
+                                        Balance:₹
+                                        <div className="text-zinc-900 text-[11px] font-bold  tracking-wide">
+                                          {selCustomerPayload?.T_balance?.toLocaleString(
+                                            'en-IN'
+                                          )}
+                                        </div>
+                                      </div>
+                                    </section>
+                                  </section>
+                                </div>
+                              </div>
 
-              <h6 className="font-bodyLato font-semibold text-xs m-1">
-              <span className="text-[#637381] tracking-wide font-thin">Total Cost  :</span> ₹{selCustomerPayload?.T_total?.toLocaleString('en-IN') || 0}
-              </h6>
-            </section>
-          </div>
-        </div>
       </>
     </section>
   )

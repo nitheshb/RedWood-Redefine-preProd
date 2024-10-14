@@ -655,7 +655,7 @@ const MyDocument = ({
                       {projectDetails?.projectType?.name === 'Apartment'
                         ? 'Flat'
                         : 'Plot'}{' '}
-                      Particulars
+                      Charges
                     </Text>
                   </View>
 
@@ -939,7 +939,7 @@ const MyDocument = ({
                   <View style={[styles.tableCell_35, styles.p12]}>
                     <Text style={styles.subtitle2}>
 
-                     Construction Particulars
+                     Construction Charges
                     </Text>
                   </View>
 

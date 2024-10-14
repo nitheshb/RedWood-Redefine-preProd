@@ -273,7 +273,7 @@ export default function ConstructUnitsDetails({
                                       {' '}
                                       <tr className=" h-6 border-b-[0.2px] border-gray-300">
                                         <th className="w-[30%] text-[10px] text-left text-gray-400 text-[#8993a4] font-bodyLato tracking-wide uppercase ">
-                                          Particulars
+                                          Charges
                                         </th>
                                         <th className="w-[15%] text-[10px] text-right text-gray-400  text-[#8993a4] font-bodyLato tracking-wide uppercase">
                                           Status

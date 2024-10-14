@@ -46,6 +46,7 @@ import {
 import DoughnutChartWithRoundedSegments from '../A_SalesModule/Reports/charts/piechartRounded'
 import CrmSiderForm from '../SiderForm/CRM_SideForm'
 import SiderForm from '../SiderForm/SiderForm'
+import RoundedProgressBar from '../A_SalesModule/Reports/charts/horizontalProgressBar'
 
 const agreementItems = [
   {
@@ -945,7 +946,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <section className="flex flex-col mt-3">
                                     <div className=" text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
                                       Balance ₹
-                                      {finData?.T_elgible_balance?.toLocaleString(
+                                      {finData?.T_elgible_balance <0 ? 0: finData?.T_elgible_balance?.toLocaleString(
                                         'en-IN'
                                       )}
                                     </div>
@@ -1267,79 +1268,19 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     </div>
                                     <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
                                       ₹
-                                      {finData?.T_elgible_balance?.toLocaleString(
+                                      {finData?.T_elgible_balance <0 ? 0:finData?.T_elgible_balance?.toLocaleString(
                                         'en-IN'
                                       )}
                                     </div>
                                   </section>
                                 </div>
                                 <div className="flex flex-row mx-1 pt-">
-                                  {[{ item: 'Paid', value: 7 }].map(
-                                    (data, i) => (
-                                      <div
-                                        className=" w-3/4  "
-                                        style={{
-                                          display: 'inline-block',
-                                          alignSelf: 'flex-end',
-                                        }}
-                                        key={i}
-                                      >
-                                        <div className="">
-                                          <LinearProgress
-                                            sx={{
-                                              backgroundColor: 'white',
-                                              '& .MuiLinearProgress-bar': {
-                                                backgroundColor: '#e3bdff',
-                                              },
-                                            }}
-                                            variant="determinate"
-                                            value={100}
-                                            style={{
-                                              backgroundColor: '#E5EAF2',
-                                              borderRadius: '3px',
-                                              borderTopRightRadius: '0px',
-                                              borderBottomRightRadius: '0px',
-                                              height: `${data.value}px`,
-                                              width: `100%`,
-                                            }}
-                                          />
-                                        </div>
-                                      </div>
-                                    )
-                                  )}
-                                  {[{ item: 'Due', value: 7 }].map(
-                                    (data, i) => (
-                                      <div
-                                        className=" w-2/4  "
-                                        style={{
-                                          display: 'inline-block',
-                                          alignSelf: 'flex-end',
-                                        }}
-                                        key={i}
-                                      >
-                                        <div className="">
-                                          <LinearProgress
-                                            sx={{
-                                              backgroundColor: 'white',
-                                              '& .MuiLinearProgress-bar': {
-                                                backgroundColor: '#E5E7EB',
-                                              },
-                                            }}
-                                            variant="determinate"
-                                            value={100}
-                                            style={{
-                                              backgroundColor: '#E5E7EB',
-                                              borderRadius: '3px',
-                                              borderTopLeftRadius: '0px',
-                                              borderBottomLeftRadius: '0px',
-                                              height: `${data.value}px`,
-                                              width: `100%`,
-                                            }}
-                                          />
-                                        </div>
-                                      </div>
-                                    )
-                                  )}
+                                <RoundedProgressBar progress={
+                                      (((finData?.T_review || 0) +
+                                      (finData?.T_approved || 0) )/ finData?.T_elgible) *
+                                      100
+                                    }/>
+
                                 </div>
                               </div>
                             </div>
@@ -1714,7 +1655,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
 
 
 
-                
+
 
                   {selCategory === 'unAssigned_crm' &&
                     crmCustomersDBData.map((finData, t) => {

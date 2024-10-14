@@ -525,7 +525,7 @@ const CostBreakUpPdfAll = ({
                       <thead>
                         <tr className=" h-6 border-b-[0.2px] border-gray-300 w-[100%]">
                           <th className="min-w-[35%] text-[10px] text-left text-[#8993a4] font-bodyLato tracking-wide">
-                            Particulars
+                            Charges
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#8993a4] font-bodyLato tracking-wide">
                             Plot Rate/Sqft
@@ -658,7 +658,7 @@ const CostBreakUpPdfAll = ({
                         {' '}
                         <tr className=" h-6  border-b-[0.2px] border-gray-300">
                           <th className="w-[50%] text-[10px] text-left text-gray-700 text-[#8993a4] font-bodyLato tracking-wide uppercase ">
-                            Particulars
+                            Charges
                           </th>
                           <th className="w-[35%] text-[10px] text-left text-gray-700 text-[#8993a4] font-bodyLato tracking-wide uppercase ">
                             Timeline
@@ -718,7 +718,7 @@ const CostBreakUpPdfAll = ({
                         {' '}
                         <tr className=" h-6 border-b-[0.2px] border-gray-300">
                           <th className="w-[50%] text-[10px] text-left text-gray-400 text-[#8993a4] font-bodyLato tracking-wide uppercase ">
-                            Particulars
+                            Charges
                           </th>
                           <th className="w-[35%] text-[10px] text-left text-gray-400  text-[#8993a4] font-bodyLato tracking-wide uppercase">
                             Payment Timeline

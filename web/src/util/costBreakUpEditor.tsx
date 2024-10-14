@@ -589,7 +589,7 @@ const CostBreakUpEditor = ({
                             <thead>
                               <tr className="h-8 mb-1 border-none w-[100%] bg-[#f3fff2] ">
                                 <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
-                                  Particulars
+                                  Charges
                                 </th>
                                 <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
                                   Rate/Sqft
@@ -879,7 +879,7 @@ const CostBreakUpEditor = ({
                                  <thead>
                               <tr className="h-8 mb-1 border-none w-[100%] bg-[#f3fff2] ">
                                 <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
-                                  Construction Particulars
+                                  Construction Charges
                                 </th>
                                 <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
                                   Rate/Sqft
@@ -1224,7 +1224,7 @@ const CostBreakUpEditor = ({
                               {' '}
                               <tr className=" h-8  border-none bg-[#f3fff2]  ">
                                 <th className="w-[50%] px-2   text-left  tracking-wide uppercase d-xsm  ">
-                                  Particulars
+                                Charges
                                 </th>
                                 <th className="w-[30%] px-2   text-left  tracking-wide uppercase d-xsm ">
                                   Payment Timeline
