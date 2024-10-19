@@ -49,15 +49,15 @@ const CrmInventorySummaryTable = ({ projects }) => {
 
 
 
-  
+
   const styles = {
     customTopBottomShadow: {
       boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
     }
 
-        
+
   };
-  
+
 
 
 
@@ -72,7 +72,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
   }
 
   return (
-    <div className="bg-white flex justify-start rounded-lg">
+    <div className="bg-white flex justify-start ">
       <div className="overflow-x-auto mx-4">
         <div className="">
           <div className="flex justify-between mb-4 mt-2">
@@ -106,7 +106,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                     Inventory Summary Report By Project
                   </th>
                 </tr>
-                <tr className="bg-white text-gray-900   text-sm leading-normal" style={styles.customTopBottomShadow}
+                <tr className="bg-[#FFF6F0] text-gray-900   text-sm leading-normal"
                 >
                   <th className="py-3 px-3 text-left border border-gray-200">
                     Project Name
@@ -147,7 +147,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                 {projects.map((item, index) => (
                   <tr key={index} className="hover:bg-gray-100">
                     <td
-                      className="py-3 px-3 text-left border border-gray-200 text-black cursor-pointer font-semibold"
+                      className="py-3 px-3 text-left border border-gray-200 text-black cursor-pointer "
                       onClick={() => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                           'available',
@@ -161,7 +161,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                       {item.projectName}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer font-semibold"
+                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer "
                       onClick={() => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                           'available',
@@ -175,7 +175,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                       {item.totalUnitCount}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer font-semibold"
+                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer "
                       onClick={() => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                           'available',
@@ -186,7 +186,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                       {item.availableCount}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer font-semibold"
+                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer "
                       onClick={() => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
 
@@ -204,7 +204,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                       {item.soldUnitCount}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer font-semibold hover:underline-offset-4"
+                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer hover:underline-offset-4"
                       onClick={() => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
 

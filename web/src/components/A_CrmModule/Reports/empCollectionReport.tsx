@@ -46,7 +46,7 @@ const styles = {
     boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
   }
 
-      
+
 };
 
 const reportData = [
@@ -248,7 +248,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
               </>
             )}
           </tr>
-          <tr className="bg-[#fff]  text-gray-600 text-sm leading-normal"  style={styles.customTopBottomShadow}>
+          <tr className="bg-[#FFF6F0]  text-gray-600 text-sm leading-normal">
             <th className="py-3 px-3 text-left border border-gray-200">
               CRM Executive
             </th>
@@ -353,7 +353,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                 key={index}
                 className="border-b border-gray-200 hover:bg-gray-100"
               >
-                <td className="py-3 px-6 text-left whitespace-nowrap border  border-gray-200">
+                <td className="py-3 px-3 text-left whitespace-nowrap border  border-gray-200">
                   {capitalizeFirstLetter(data?.name)}
                 </td>
                 <td className="py-3 px-6 pr-10 text-right border  border-gray-200">

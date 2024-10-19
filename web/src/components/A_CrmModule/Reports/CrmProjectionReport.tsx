@@ -45,7 +45,7 @@ const styles = {
     boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
   }
 
-      
+
 };
 
 
@@ -193,7 +193,7 @@ const CrmProjectionReport = ({ projects }) => {
   };
 
   return (
-    <div className="p-4 m-1 bg-white rounded-lg">
+    <div className="p-4 bg-white ">
       <div className="flex justify-between">
         <div>
           <h2 className="mb-4 text-lg font-semibold text-black leading-light">
@@ -267,7 +267,7 @@ const CrmProjectionReport = ({ projects }) => {
               </th>
             )}
           </tr>
-          <tr className="bg-white text-gray-600 text-sm leading-normal" style={styles.customTopBottomShadow}>
+          <tr className="bg-[#FFF6F0] text-gray-600 text-sm leading-normal" >
             <th className="py-3 px-3 text-left border  border-gray-200">
               Project Name
             </th>

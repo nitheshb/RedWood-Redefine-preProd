@@ -39,13 +39,13 @@ const getDateForWeek = (weekNumber) => {
 
 
 
-  
+
 const styles = {
   customTopBottomShadow: {
     boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
   }
 
-      
+
 };
 
 
@@ -223,7 +223,7 @@ const CrmCollectionReport = ({ projects }) => {
     // get values matched to db
   }
   return (
-    <div className="p-4 m-1 bg-[#fff] rounded-lg">
+    <div className="p-4  bg-[#fff] ">
       <div className="flex overflow-x-auto ml-2 border-b pb- mb-">
         <div>
           <h2 className="mb-4 text-lg font-semibold text-black leading-light">
@@ -302,7 +302,7 @@ const CrmCollectionReport = ({ projects }) => {
             )}
 
           </tr>
-          <tr className="bg-white text-gray-600 text-sm leading-normal" style={styles.customTopBottomShadow}>
+          <tr className="bg-[#FFF6F0] text-gray-600 text-sm leading-normal" >
             <th className="py-3 px-3 text-left border  border-gray-200">
               Project Name
             </th>

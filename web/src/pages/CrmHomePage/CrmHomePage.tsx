@@ -372,7 +372,7 @@ const CrmHomePage = () => {
             /> */}
             <div className="flex-grow  items-center overflow-y-auto  h-[98%]  px-300  py-300">
               <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}  />
-              <div className="p-0 px-1">
+              <div className="p-0 ">
                 {/* {viewable === 'crmDashboard' && (
                   <CrmDashboardHome
                     project={{
