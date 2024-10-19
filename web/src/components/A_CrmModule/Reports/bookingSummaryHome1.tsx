@@ -217,7 +217,7 @@ switch (selProjectIs.value) {
 
   return (
     <>
-      <div className="bg-white rounded-xl mt-1">
+      <div className="bg-[#F0F0F0] rounded-xl mt-1">
         <div className="">
           <div
             className="

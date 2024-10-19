@@ -370,7 +370,7 @@ const UnitBookingSummaryTableLayout = ({
       <section className="bg-white">
         <Grid container>
           <Grid item xs={12}>
-            <div className="border-b border-gray-200 flex flex-row justify-between ">
+            <div className="border-b   border-gray-200 flex flex-row justify-between bg-white shadow-3xl ">
               <ul
                 className="flex flex-wrap -mb-px "
                 id="myTab"
@@ -404,7 +404,7 @@ const UnitBookingSummaryTableLayout = ({
                           }}
                         >
                           <span
-                            className={`font-PlayFair text-gray-450 ${
+                            className={`font-PlayFair font-bold text-gray-450 ${
                               value === d.value
                                 ? 'text-[#0080ff] text-gray-800 '
                                 : ''
@@ -430,7 +430,7 @@ const UnitBookingSummaryTableLayout = ({
                   )
                 })}
               </ul>
-              <section className="pt-1 mt-2 mx-3">
+              <section className="pt-1 mt-2  mx-3">
                 <DropCompUnitStatus
                   type={'Show Fields'}
                   id={'id'}
