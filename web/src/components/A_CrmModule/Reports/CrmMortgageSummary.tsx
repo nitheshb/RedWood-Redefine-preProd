@@ -46,6 +46,16 @@ const CrmMortgageSummaryTable = ({ projects }) => {
   }
 
 
+
+  const styles = {
+    customTopBottomShadow: {
+      boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
+    }
+
+
+  };
+
+
   useEffect(() => {
   // get details from db for mortgage table
 
@@ -86,7 +96,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
   }, [projects])
 
   return (
-    <div className="bg-white flex justify-start rounded-lg">
+    <div className="bg-white flex justify-start r">
       <div className="overflow-x-auto mx-4">
         <div className="">
           <div className="flex justify-between mb-4 mt-2">
@@ -128,7 +138,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
           <div className="rounded my-3 overflow-x-auto">
             <table className=" border-collapse">
               <thead>
-                <tr className="bg-[#FFEDEA] text-gray-900  text-sm leading-normal">
+                <tr className="bg-[#F5F5F7] text-gray-900  text-sm leading-normal">
                   <th
                     className="py-3 px-2 text-center border border-gray-300"
                     colSpan="10"
@@ -136,7 +146,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                     Poject Mortgage Details
                   </th>
                 </tr>
-                <tr className="bg-white text-gray-900  text-sm leading-normal">
+                <tr className="bg-[#FFF6F0] text-gray-900  text-sm leading-normal" >
                   <th className="py-3 px-3 text-left border border-gray-300">
                     Project Name
                   </th>
@@ -198,7 +208,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                 {fetchMortUnitsList.map((item, index) => (
                   <tr key={index} className="hover:bg-gray-100">
                     <td
-                      className="py-3 px-3 text-left border border-gray-300 text-blue-800 cursor-pointer font-semibold"
+                      className="py-3 px-3 text-left border border-gray-300  cursor-pointer "
                       onClick={() => {
 
                       }}
@@ -206,7 +216,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                       {item.projectName}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-gray-300 text-blue-800 cursor-pointer font-semibold"
+                      className="py-3 px-6 text-right border border-gray-300  cursor-pointer "
                       onClick={() => {
 
                       }}
@@ -214,7 +224,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                       {item.unit_no}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-gray-300 text-blue-800 cursor-pointer font-semibold"
+                      className="py-3 px-6 text-right border border-gray-300 cursor-pointer "
                       onClick={() => {
 
                       }}
@@ -222,7 +232,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                       {item.survey_no}
                     </td>
                     <td
-                      className="py-3 px-6 text-left border border-gray-300 text-blue-800 cursor-pointer font-semibold"
+                      className="py-3 px-6 text-left border border-gray-300  cursor-pointer "
                       onClick={() => {
 
                       }}
@@ -230,22 +240,22 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                       {item.land_owner_name}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-gray-300 text-blue-800 cursor-pointer font-semibold hover:underline-offset-4"
+                      className="py-3 px-6 text-right border border-gray-300  cursor-pointer  hover:underline-offset-4"
                       onClick={() => {
 
                       }}
                     >
                       {item?.doc_type}
                     </td>
-                    <td className="py-3 px-6 text-right border border-gray-300 font-semibold">
+                    <td className="py-3 px-6 text-right border border-gray-300 ">
                       {item.date_of_registration}
-                    </td>  <td className="py-3 px-6 text-right border border-gray-300 font-semibold">
+                    </td>  <td className="py-3 px-6 text-right border border-gray-300 ">
                       {item.to_whom}
-                    </td>  <td className="py-3 px-6 text-right border border-gray-300 font-semibold">
+                    </td>  <td className="py-3 px-6 text-right border border-gray-300 ">
                       {item.doc_no}
-                    </td>  <td className="py-3 px-6 text-right border border-gray-300 font-semibold">
+                    </td>  <td className="py-3 px-6 text-right border border-gray-300 ">
                       {item.status}
-                    </td><td className="py-3 px-6 text-right border border-gray-300 font-semibold">
+                    </td><td className="py-3 px-6 text-right border border-gray-300 ">
                       {item.remarks}
                     </td>
                   </tr>

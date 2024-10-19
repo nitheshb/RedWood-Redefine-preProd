@@ -86,17 +86,15 @@ const CrmAnalyticsHome = ({ project }) => {
 
   return (
     <div>
-      <div className="flex overflow-x-auto ml border-b pb-2">
-        <div className="flex items-center flex-shrink-0   border-grey maahome">
-          {/* <Link
-                className="flex items-center"
-               // to={routes.projectEdit({ uid })}
-              > */}
 
-          <span className="relative  flex items-center w-auto text-xl font-bold leading-none pl-0 mt-[18px]"></span>
-          {/* </Link> */}
-        </div>
-        {[
+<div className='flex bg-white border-b'>
+      <ul
+                className="flex flex-wrap -mb-px "
+                id="myTab"
+                data-tabs-toggle="#myTabContent"
+                role="tablist"
+              >
+                {[
           { label: 'Booking Summary', value: 'booking_summary' },
           { label: 'Collections', value: 'collection_performance' },
           { label: 'CRM Inventory Report', value: 'crm_table' },
@@ -107,40 +105,47 @@ const CrmAnalyticsHome = ({ project }) => {
 
           { label: 'Project Summary', value: 'proj_summary' },
           { label: 'Mortgage Details', value: 'mortgage_details' },
-          { label: 'Credit Note', value: 'creditnote_summary' },
-          // { label: 'Collections', value: 'collections-summary' },
-          // { label: 'Home', value: 'crm_summary' },
-          // { label: 'Source Report', value: 'source_report' },
-          // { label: 'Employee Report', value: 'emp_status_report' },
-          // { label: 'Project Leads Report', value: 'proj_leads_report' },
-          //  { label: 'Employee Leads Aging', value: 'emp_leads_report' },
-        ].map((data, i) => {
-          return (
-            <section
-              key={i}
-              className="flex  mt-[18px]"
-              onClick={() => {
-                console.log('am i clicked', data.value)
-                setSelCat(data.value)
-              }}
-            >
-              <button>
-                <span
-                  className={`flex mr-2 items-center py-3 px-3 text-xs flex flex-col  min-w-[120px] ${
-                    selCat === data.value
-                      ? 'font-normal text-green-800 bg-[#FFEDEA]'
-                      : 'font-normal text-black-100 bg-[#f0f8ff]'
-                  }  rounded`}
-                >
-                  {/* <PencilIcon className="h-3 w-3 mr-1" aria-hidden="true" /> */}
-                  <img alt="" src="/temp2.png" className="h-5 w-5 mr-1 mb-1" />
-                  {data?.label}
-                </span>
-              </button>
-            </section>
-          )
-        })}
-      </div>
+          { label: 'Credit Note', value: 'creditnote_summary' },].map((d, i) => {
+                  return (
+                    <ul
+                      value={selCat}
+                      key={i}
+                      // onChange={handleChange}
+                      textColor="secondary"
+                      indicatorColor="secondary"
+                      aria-label="secondary tabs example"
+                    >
+                      <li key={i} className="mr-2" role="presentation">
+                        <button
+                          className={`inline-block py-4 px-4 h-16 text-sm  text-center text-[#6e6e6e] rounded-t-lg border-b   hover:text-gray-600 hover:border-black hover:border-b-2 dark:text-gray-400 dark:hover:text-gray-300  ${
+                            selCat === d.value
+                              ? 'border-[#144264] text-[#144264] '
+                              : 'border-transparent'
+                          }`}
+                          type="button"
+                          role="tab"
+                          onClick={() => {
+                            setSelCat(d.value)
+                          }}
+                        >
+                          <span
+                            className={`font-bold font-semibold text-gray-450 ${
+                              selCat === d.value
+                                ? 'text-[#0080ff] text-gray-800 '
+                                : ''
+                            }`}
+                          >
+                            {' '}
+                            {`${d.label}`}
+
+                          </span>
+                        </button>
+                      </li>
+                    </ul>
+                  )
+                })}
+              </ul>
+              </div>
       {selCat === 'proj_summary' && (
         <section className=" mt-1 mr-1 py-8 mb-2 leading-7 text-gray-900 bg-white  rounded-lg  ">
           {/* <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
