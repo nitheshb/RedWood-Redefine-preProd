@@ -28,6 +28,39 @@ const CrmInventorySummaryTable = ({ projects }) => {
     }, 0)
   }
 
+
+  // const styles = {
+  //   customTopShadow: {
+  //     boxShadow: `rgba(60, 64, 67, 0.3) 0px -2px 2px 0px, rgba(60, 64, 67, 0.15) 0px -1px 5px 0px`,
+
+  //   },
+  // };
+
+  // const styles = {
+  //   customTopBottomShadow: {
+  //     boxShadow: `
+  //       rgba(60, 64, 67, 0.3) 0px -2px 2px 0px,
+  //       rgba(60, 64, 67, 0.15) 0px -1px 5px 0px,
+  //       rgba(60, 64, 67, 0.3) 0px 2px 2px 0px,
+  //       rgba(60, 64, 67, 0.15) 0px 1px 5px 0px
+  //     `,
+  //   },
+  // };
+
+
+
+
+  const styles = {
+    customTopBottomShadow: {
+      boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
+    }
+
+
+  };
+
+
+
+
   const totalUnitsSummary = calculateTotal(projects, 'totalUnitCount')
   const totalAvailableSummary = calculateTotal(projects, 'availableCount')
   const totalSoldSummary = calculateTotal(projects, 'soldUnitCount')
@@ -39,7 +72,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
   }
 
   return (
-    <div className="bg-white flex justify-start rounded-lg">
+    <div className="bg-white flex justify-start ">
       <div className="overflow-x-auto mx-4">
         <div className="">
           <div className="flex justify-between mb-4 mt-2">
@@ -48,6 +81,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                 CRM Inventory Report
               </p>
             </div>
+
             <select
               className="mr-2"
               value={selectedOption}
@@ -64,44 +98,45 @@ const CrmInventorySummaryTable = ({ projects }) => {
           <div className="rounded my-3 overflow-x-auto">
             <table className=" border-collapse">
               <thead>
-                <tr className="bg-blue-200 text-gray-900  text-sm leading-normal">
+                <tr className="bg-[#fff] text-gray-900   text-sm leading-normal">
                   <th
-                    className="py-3 px-2 text-center border border-black"
+                    className="py-3 px-2 text-center border bg-[#F5F5F7]  border-gray-200"
                     colSpan="6"
                   >
                     Inventory Summary Report By Project
                   </th>
                 </tr>
-                <tr className="bg-white text-gray-900  text-sm leading-normal">
-                  <th className="py-3 px-3 text-left border border-black">
+                <tr className="bg-[#FFF6F0] text-gray-900   text-sm leading-normal"
+                >
+                  <th className="py-3 px-3 text-left border border-gray-200">
                     Project Name
                   </th>
                   <th
-                    className="py-3 px-3 text-left border border-black"
+                    className="py-3 px-3 text-left border border-gray-200"
                     colSpan="1"
                   >
                     Total Units
                   </th>
                   <th
-                    className="py-3 px-3 text-center border border-black"
+                    className="py-3 px-3 text-center border border-gray-200"
                     colSpan="1"
                   >
                     Available
                   </th>
                   <th
-                    className="py-3 px-3 text-center border border-black"
+                    className="py-3 px-3 text-center border border-gray-200"
                     colSpan="1"
                   >
                     Sold
                   </th>
                   <th
-                    className="py-3 px-3 text-center border border-black"
+                    className="py-3 px-3 text-center border border-gray-200"
                     colSpan="1"
                   >
                     Blocked
                   </th>
                   <th
-                    className="py-3 px-3 text-center border border-black"
+                    className="py-3 px-3 text-center border border-gray-200"
                     colSpan="1"
                   >
                     Mortgaged
@@ -112,7 +147,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                 {projects.map((item, index) => (
                   <tr key={index} className="hover:bg-gray-100">
                     <td
-                      className="py-3 px-3 text-left border border-black text-blue-800 cursor-pointer font-semibold"
+                      className="py-3 px-3 text-left border border-gray-200 text-black cursor-pointer "
                       onClick={() => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                           'available',
@@ -126,7 +161,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                       {item.projectName}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-black text-blue-800 cursor-pointer font-semibold"
+                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer "
                       onClick={() => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                           'available',
@@ -140,7 +175,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                       {item.totalUnitCount}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-black text-blue-800 cursor-pointer font-semibold"
+                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer "
                       onClick={() => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                           'available',
@@ -151,7 +186,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                       {item.availableCount}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-black text-blue-800 cursor-pointer font-semibold"
+                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer "
                       onClick={() => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
 
@@ -169,7 +204,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
                       {item.soldUnitCount}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-black text-blue-800 cursor-pointer font-semibold hover:underline-offset-4"
+                      className="py-3 px-6 text-right border border-gray-200 text-black cursor-pointer hover:underline-offset-4"
                       onClick={() => {
                         showDrillDownFun(`Total ${item?.stausTitle}`, item, [
 
@@ -183,28 +218,28 @@ const CrmInventorySummaryTable = ({ projects }) => {
                         0 + item.management_blocked ||
                         0}
                     </td>
-                    <td className="py-3 px-6 text-right border border-black font-semibold">
+                    <td className="py-3 px-6 text-right border border-gray-200 font-semibold">
                       {item.mortgaged}
                     </td>
                   </tr>
                 ))}
-                <tr className="bg-blue-200 text-gray-900  text-sm leading-normal">
-                  <td className="py-3 px-6 text-left border border-black">
+                <tr className="bg-white text-gray-900  text-sm leading-normal">
+                  <td className="py-3 px-6 text-left border border-gray-200">
                     Totals:
                   </td>
-                  <td className="py-3 px-6 text-right border border-black">
+                  <td className="py-3 px-6 text-right border border-gray-200">
                     {totalUnitsSummary}
                   </td>
-                  <td className="py-3 px-6 text-right border border-black">
+                  <td className="py-3 px-6 text-right border border-gray-200">
                     {totalAvailableSummary}
                   </td>
-                  <td className="py-3 px-6 text-right border border-black">
+                  <td className="py-3 px-6 text-right border border-gray-200">
                     {totalSoldSummary}
                   </td>
-                  <td className="py-3 px-6 text-right border border-black">
+                  <td className="py-3 px-6 text-right border border-gray-200">
                     {totalBlockedSummary}
                   </td>
-                  <td className="py-3 px-6 text-right border border-black">
+                  <td className="py-3 px-6 text-right border border-gray-200">
                     {totalMortgagedSummary}
                   </td>
                 </tr>
