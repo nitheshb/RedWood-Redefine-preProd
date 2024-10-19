@@ -140,64 +140,64 @@ const CrmMortgageSummaryTable = ({ projects }) => {
               <thead>
                 <tr className="bg-[#F5F5F7] text-gray-900  text-sm leading-normal">
                   <th
-                    className="py-3 px-2 text-center border border-gray-300"
+                    className="py-1 px-2 text-center border border-gray-300"
                     colSpan="10"
                   >
                     Poject Mortgage Details
                   </th>
                 </tr>
                 <tr className="bg-[#FFF6F0] text-gray-900  text-sm leading-normal" >
-                  <th className="py-3 px-3 text-left border border-gray-300">
+                  <th className="py-1 px-3 text-left border border-gray-300">
                     Project Name
                   </th>
                   <th
-                    className="py-3 px-3 text-left border border-gray-300"
+                    className="py-1 px-3 text-left border border-gray-300"
                     colSpan="1"
                   >
                     Unti No
                   </th>
                   <th
-                    className="py-3 px-3 text-center border border-gray-300"
+                    className="py-1 px-3 text-center border border-gray-300"
                     colSpan="1"
                   >
                     SY No
                   </th>
                   <th
-                    className="py-3 px-3 text-center border border-gray-300"
+                    className="py-1 px-3 text-center border border-gray-300"
                     colSpan="1"
                   >
                     Land Owner Name
                   </th>
                   <th
-                    className="py-3 px-3 text-center border border-gray-300"
+                    className="py-1 px-3 text-center border border-gray-300"
                     colSpan="1"
                   >
                     Doc Type
                   </th>
                   <th
-                    className="py-3 px-3 text-center border border-gray-300"
+                    className="py-1 px-3 text-center border border-gray-300"
                     colSpan="1"
                   >
                     Registration Date
                   </th>
                   <th
-                    className="py-3 px-3 text-center border border-gray-300"
+                    className="py-1 px-3 text-center border border-gray-300"
                     colSpan="1"
                   >
                     Registered To
                   </th><th
-                    className="py-3 px-3 text-center border border-gray-300"
+                    className="py-1 px-3 text-center border border-gray-300"
                     colSpan="1"
                   >
                     Doc Number
                   </th><th
-                    className="py-3 px-3 text-center border border-gray-300"
+                    className="py-1 px-3 text-center border border-gray-300"
                     colSpan="1"
                   >
                     Status
                   </th>
                   <th
-                    className="py-3 px-3 text-center border border-gray-300"
+                    className="py-1 px-3 text-center border border-gray-300"
                     colSpan="1"
                   >
                     Remarks
@@ -208,7 +208,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                 {fetchMortUnitsList.map((item, index) => (
                   <tr key={index} className="hover:bg-gray-100">
                     <td
-                      className="py-3 px-3 text-left border border-gray-300  cursor-pointer "
+                      className="py- px-3 text-left border border-gray-300  cursor-pointer "
                       onClick={() => {
 
                       }}
@@ -216,7 +216,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                       {item.projectName}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-gray-300  cursor-pointer "
+                      className="py- px-6 text-right border border-gray-300  cursor-pointer "
                       onClick={() => {
 
                       }}
@@ -224,7 +224,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                       {item.unit_no}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-gray-300 cursor-pointer "
+                      className="py- px-6 text-right border border-gray-300 cursor-pointer "
                       onClick={() => {
 
                       }}
@@ -232,7 +232,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                       {item.survey_no}
                     </td>
                     <td
-                      className="py-3 px-6 text-left border border-gray-300  cursor-pointer "
+                      className="py- px-6 text-left border border-gray-300  cursor-pointer "
                       onClick={() => {
 
                       }}
@@ -240,22 +240,22 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                       {item.land_owner_name}
                     </td>
                     <td
-                      className="py-3 px-6 text-right border border-gray-300  cursor-pointer  hover:underline-offset-4"
+                      className="py- px-6 text-right border border-gray-300  cursor-pointer  hover:underline-offset-4"
                       onClick={() => {
 
                       }}
                     >
                       {item?.doc_type}
                     </td>
-                    <td className="py-3 px-6 text-right border border-gray-300 ">
+                    <td className="py- px-6 text-right border border-gray-300 ">
                       {item.date_of_registration}
-                    </td>  <td className="py-3 px-6 text-right border border-gray-300 ">
+                    </td>  <td className="py- px-6 text-right border border-gray-300 ">
                       {item.to_whom}
-                    </td>  <td className="py-3 px-6 text-right border border-gray-300 ">
+                    </td>  <td className="py- px-6 text-right border border-gray-300 ">
                       {item.doc_no}
-                    </td>  <td className="py-3 px-6 text-right border border-gray-300 ">
+                    </td>  <td className="py- px-6 text-right border border-gray-300 ">
                       {item.status}
-                    </td><td className="py-3 px-6 text-right border border-gray-300 ">
+                    </td><td className="py- px-6 text-right border border-gray-300 ">
                       {item.remarks}
                     </td>
                   </tr>
