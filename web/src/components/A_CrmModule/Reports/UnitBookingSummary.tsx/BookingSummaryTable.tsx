@@ -151,32 +151,32 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     align: 'center',
-    label: 'Booked On',
+    label: 'Booked',
   },
   {
     id: 'partA',
     numeric: false,
     disablePadding: false,
     align: 'right',
-    label: 'Land Cost',
+    label: 'Land',
   },{
     id: 'partB',
     numeric: false,
     disablePadding: false,
     align: 'right',
-    label: 'Add Charges-I',
+    label: 'Charges-I',
   },{
     id: 'partC',
     numeric: false,
     disablePadding: false,
     align: 'right',
-    label: 'Construct Cost',
+    label: 'Construction',
   },{
     id: 'partD',
     numeric: false,
     disablePadding: false,
     align: 'right',
-    label: 'Add Charges-II',
+    label: 'Charges-II',
   },
   // {
   //   id: 'infra',
@@ -507,6 +507,14 @@ export default function UnitSummaryTableBody({
 
 
 const [totalSaleValue, setTotalSaleValue] = React.useState(0);
+const [totalLandValue, setTotalLandValue] = React.useState(0);
+
+const [totalChargesIValue, setTotalChargesIValue] = React.useState(0);
+
+const [totalChargesIIValue, setTotalChargesIIValue] = React.useState(0);
+
+const [totalConstructValue, setTotalConstructValue] = React.useState(0);
+
 const [totalReceived, setTotalReceived] = React.useState(0);
 const [selTotalBalance, setTotalBalance] = React.useState(0);
 
@@ -529,6 +537,15 @@ React.useEffect(() => {
   console.log('valure are', leadsFetchedData)
   const totalSale = leadsFetchedData.reduce((total, row) => total + Number(row?.T_total || 0), 0);
   setTotalSaleValue(totalSale);
+
+  const totalLand = leadsFetchedData.reduce((total, row) => total + Number(row?.T_A || 0), 0);
+  setTotalLandValue(totalLand);
+  const totalChargesI = leadsFetchedData.reduce((total, row) => total + Number(row?.T_B || 0), 0);
+  setTotalChargesIValue(totalChargesI);
+  const totalConstruction = leadsFetchedData.reduce((total, row) => total + Number(row?.T_C || 0), 0);
+  setTotalConstructValue(totalConstruction);
+  const totalChargesII = leadsFetchedData.reduce((total, row) => total + Number(row?.T_D || 0), 0);
+  setTotalChargesIIValue(totalChargesII);
 
   const totalReceived = leadsFetchedData.reduce((total, row) => total + Number(row.T_approved || 0), 0);
   setTotalReceived(totalReceived);
@@ -792,7 +809,52 @@ function EnhancedTableHead(props) {
               </TableSortLabel>
 
 
+              {headCell.id === 'partA' && (
 
+<div style={{  }}>
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
+  <span className="text-black text-[14px] ">₹{totalLandValue.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+                 {headCell.id === 'partB' && (
+
+<div style={{  }}>
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
+  <span className="text-black text-[14px] ">₹{totalChargesIValue.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+
+{headCell.id === 'partD' && (
+
+<div style={{  }}>
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
+  <span className="text-black text-[14px] ">₹{totalChargesIIValue.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+                 {headCell.id === 'partC' && (
+
+<div style={{  }}>
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
+  <span className="text-black text-[14px] ">₹{totalConstructValue.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+         
               {headCell.id === 'sale' && (
 
 <div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
