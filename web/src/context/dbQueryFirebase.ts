@@ -1805,7 +1805,7 @@ export const getUser = async (uid: string) => {
       return docSnap.data()
     } else {
       // doc.data() will be undefined in this case
-      console.log('No such document!')
+      console.log('No such document!', uid)
       return null
     }
   } catch (error) {
@@ -6188,6 +6188,7 @@ export const upSertMortgageUnit = async (orgId, unitUid, data, by) => {
 // **********************************************
 
 export const deleteUser = async (orgId, uid, by, email, myRole) => {
+  console.log('delte user is ', uid)
   await deleteDoc(doc(db, 'users', uid))
   return await addUserLog(orgId, {
     s: 's',

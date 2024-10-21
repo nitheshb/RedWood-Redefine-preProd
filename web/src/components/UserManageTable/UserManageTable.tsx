@@ -2,12 +2,20 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useEffect, useState } from 'react'
+
 import { EyeIcon, PencilIcon } from '@heroicons/react/outline'
 import { TrashIcon } from '@heroicons/react/outline'
 import { motion } from 'framer-motion'
-import { deleteUser, steamUsersList, steaminactiveUsersList } from 'src/context/dbQueryFirebase'
+
 import StyledButton from 'src/components/RoundedButton'
+import {
+  deleteUser,
+  steamUsersList,
+  steaminactiveUsersList,
+} from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+
+import WarningModel from '../comps/warnPopUp'
 
 const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
   const { user } = useAuth()
@@ -15,6 +23,9 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
   const { orgId } = user
   const [leadsFetchedData, setLeadsFetchedData] = useState([])
   const [filterData, setFilterData] = useState([])
+  const [open, setOpen] = useState(false)
+  const [selDelUser, setSelDelUser] = useState({})
+
   const [selDept, setSelDept] = useState('')
   useEffect(() => {
     getLeadsDataFun()
@@ -37,9 +48,28 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
       )
     }
   }, [selDept, leadsFetchedData])
+  const handleDelete =  () => {
+  console.log('delte user is ')
+
+    deleteUser(orgId, selDelUser?.uid, user?.email, selDelUser?.email, selDelUser?.roles)
+    setSelDelUser({})
+  }
   const getLeadsDataFun = async () => {
-    if(showCompletedTasks) {
+    if (showCompletedTasks) {
       const unsubscribe = steaminactiveUsersList(
+        orgId,
+        (querySnapshot) => {
+          const usersListA = querySnapshot.docs.map((docSnapshot) =>
+            docSnapshot.data()
+          )
+          console.log('user list is ', usersListA)
+          setLeadsFetchedData(usersListA)
+        },
+        () => setLeadsFetchedData([])
+      )
+      return unsubscribe
+    } else {
+      const unsubscribe = steamUsersList(
         orgId,
         (querySnapshot) => {
           const usersListA = querySnapshot.docs.map((docSnapshot) =>
@@ -50,18 +80,6 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
         () => setLeadsFetchedData([])
       )
       return unsubscribe
-    }else {
-    const unsubscribe = steamUsersList(
-      orgId,
-      (querySnapshot) => {
-        const usersListA = querySnapshot.docs.map((docSnapshot) =>
-          docSnapshot.data()
-        )
-        setLeadsFetchedData(usersListA)
-      },
-      () => setLeadsFetchedData([])
-    )
-    return unsubscribe
     }
   }
 
@@ -103,6 +121,17 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
               </a>
             ))}
           </section>
+          <WarningModel
+                        type={'Danger'}
+                        open={open}
+                        setOpen={setOpen}
+                        proceedAction={handleDelete}
+                        title={'Are you sure you want to delete this user?'}
+                        subtext={
+                          'This User will be permanently removed. This action cannot be undone.'
+                        }
+                        actionBtnTxt={'Delete User'}
+                      />
           <div className="shadow overflow-hidden border-b border-gray-200  bg-white pb-4  px-2  xl:px-10">
             <table className="min-w-full divide-y divide-gray-200 ">
               <thead className="bg-gray-50">
@@ -150,9 +179,7 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                         <div className="flex-shrink-0 h-10 w-10">
                           <img
                             className="h-10 w-10 rounded-full"
-                            src={
-                              '/avatar_1.png'
-                            }
+                            src={'/avatar_1.png'}
                             alt=""
                           />
                         </div>
@@ -185,7 +212,7 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      {person?.userStatus}
+                        {person?.userStatus}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -193,17 +220,12 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                         className="w-5 h-5 ml-[6px] mb-[4px] inline cursor-pointer"
                         onClick={() => editEmployeeFun(person)}
                       />
+
                       <TrashIcon
                         className="w-5 h-5 ml-[18px] mb-[4px] inline cursor-pointer"
-                        onClick={() =>
-                          deleteUser(
-                            orgId,
-                            person?.uid,
-                            'nithe.nithesh@gmail.com',
-                            person?.email,
-                            person?.roles
-                          )
-                        }
+                        onClick={() =>{
+                          setSelDelUser(person)
+                          setOpen(true)}}
                       />
                     </td>
                   </motion.tr>

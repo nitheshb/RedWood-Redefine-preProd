@@ -1149,7 +1149,7 @@ const EmailForm = ({
             </section>
           </div>
           <div className="space-x-2">
-            <button type="submit">Submit</button>
+            <button type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save</button>
             {/* <button
               type="button"
               onClick={() => onSave(values)}
@@ -1269,7 +1269,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo }) =
           )}
         </div>
       ))}
-      <button onClick={handleClone}>Add Applicant</button>
+      <button onClick={handleClone} className="mb-4 ml-6 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4">Add New Applicant</button>
     </div>
   )
 }
