@@ -271,7 +271,7 @@ const CrmProjectionReport = ({ projects }) => {
             <th className="py-1 px-3 text-left border  border-gray-200">
               Project Name
             </th>
-            <th className="py-1 px-6 text-left border  border-gray-200">
+            <th className="py-1 px-6 text-right border  border-gray-200">
               Sold Units
             </th>
             <th className="py-1 px-6 text-right border  border-gray-200">
@@ -383,12 +383,12 @@ const CrmProjectionReport = ({ projects }) => {
             return (
               <tr
                 key={index}
-                className="border-b border-gray-200 hover:bg-gray-100"
+                className="border-b border-gray-200 hover:bg-gray-100 text-[#33393d] font-[400]"
               >
                 <td className="py- px-3 text-left whitespace-nowrap border  border-gray-200">
                   {capitalizeFirstLetter(data?.projectName)}
                 </td>
-                <td className="py- px-6 pr-10 text-right border  border-gray-200">
+                <td className="py- px-6  text-right border  border-gray-200">
                   {data?.soldUnitCount?.toLocaleString('en-IN')}
                 </td>
                 <td className="py- px-6  border text-right  border-gray-200">

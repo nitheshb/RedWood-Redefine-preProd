@@ -433,6 +433,10 @@ export const paymentMode = [
     value: 'credit_note',
     label: 'Credit Note',
   },
+  {
+    value: 'wallet',
+    label: 'Customer Wallet',
+  },
 ]
 export const walletMode = [
   {

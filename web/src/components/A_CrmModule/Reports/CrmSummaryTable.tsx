@@ -145,7 +145,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
               </thead>
               <tbody className="text-gray-900 text-sm font-light">
                 {projects.map((item, index) => (
-                  <tr key={index} className="hover:bg-gray-100">
+                  <tr key={index} className="hover:bg-gray-100 text-[#33393d] font-[400]">
                     <td
                       className="py- px-3 text-left border border-gray-200 text-black cursor-pointer "
                       onClick={() => {
@@ -223,8 +223,8 @@ const CrmInventorySummaryTable = ({ projects }) => {
                     </td>
                   </tr>
                 ))}
-                <tr className="bg-white text-gray-900  text-sm leading-normal">
-                  <td className="py- px-6 text-left border border-gray-200">
+                <tr className="bg-white text-gray-900  text-sm leading-normal text-[#33393d] font-[400]">
+                  <td className="py- px-3 text-left border border-gray-200">
                     Totals:
                   </td>
                   <td className="py- px-6 text-right border border-gray-200">

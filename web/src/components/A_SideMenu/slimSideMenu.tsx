@@ -2031,7 +2031,7 @@ const SlimSideMenuBar = (props) => {
         </>
       )}
 
-      <Link
+      {/* <Link
         className={
           'flex items-center justify-center flex-shrink-0 w-10 h-10 mt-4 mt-auto rounded hover:bg-gray-300 ' +
           (pgName === 'erpAccount' ? 'bg-gray-300' : '')
@@ -2052,7 +2052,7 @@ const SlimSideMenuBar = (props) => {
             d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-      </Link>
+      </Link> */}
     </div>
   )
 }
