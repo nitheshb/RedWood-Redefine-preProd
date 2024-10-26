@@ -766,7 +766,7 @@ function EnhancedTableHead(props) {
 
 
 
-          <TableSortLabel style={{backgroundColor: '#FFF6F0', color: '#000',fontWeight: 'bold' }}>S.No</TableSortLabel>
+          <TableSortLabel style={{backgroundColor: '#FFF6F0', color: '#000',fontWeight: '500' }}>S.No</TableSortLabel>
         </TableCell>
         {headCells.map((headCell) => (
           <>
@@ -781,7 +781,7 @@ function EnhancedTableHead(props) {
                 height: '10px',
                 maxHeight: '10px',
                 lineHeight: '7px',
-                fontWeight: 'bold',
+                fontWeight: '500',
                 paddingRight: '6px',
                 display: displayHeadersFun(headCell.id)
               }}
@@ -854,7 +854,7 @@ function EnhancedTableHead(props) {
 
 
               )}
-         
+
               {headCell.id === 'sale' && (
 
 <div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
@@ -1077,7 +1077,7 @@ EnhancedTableHead.propTypes = {
                           id={labelId}
                           scope="row"
                           padding="none"
-                          sx={{ width: '142px',whiteSpace: 'nowrap', background: '#fff',  paddingRight: '6px' , paddingLeft: '6px',   borderLeft: '1px solid #e0e0e0' , }}
+                          sx={{ width: '142px',whiteSpace: 'nowrap', background: '#fff',  paddingRight: '6px' , paddingLeft: '6px',   borderLeft: '0.5px solid #eaeced' , }}
 
                         >
                           <section>
@@ -1098,7 +1098,7 @@ EnhancedTableHead.propTypes = {
                           scope="row"
                           padding="none"
                           align="center"
-                          sx={{width: '142px',background: '#fff', paddingTop: '4px', paddingBottom:'4px',  borderLeft: '1px solid #e0e0e0' , }}
+                          sx={{width: '142px',background: '#fff', paddingTop: '4px', paddingBottom:'4px',  borderLeft: '0.5px solid #eaeced' , }}
 
                         >
                           <section>
@@ -1109,13 +1109,13 @@ EnhancedTableHead.propTypes = {
                         </TableCell>
                           <TableCell
                           align="left"
-                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',  borderLeft: '1px solid #e0e0e0' , textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',  borderLeft: '0.5px solid #eaeced' , textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>{row.projName}</span>
                         </TableCell>
-                        <TableCell align="center" sx={{width: '142px',background: "#FFFF",  borderLeft: '1px solid #e0e0e0', }} padding="none">
+                        <TableCell align="center" sx={{width: '142px',background: "#FFFF",  borderLeft: '0.5px solid #eaeced', }} padding="none">
                         <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full bg-[#CCFBF1] text-[#115e59]">
                           <HighlighterStyle
                             searchKey={searchKey}
@@ -1124,29 +1124,29 @@ EnhancedTableHead.propTypes = {
                         </span>
                         </TableCell>
 
-                        <TableCell align="center" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '1px solid #e0e0e0' , fontSize:'13px'  }} padding="none">
+                        <TableCell align="center" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.5px solid #eaeced' , fontSize:'13px'  }} padding="none">
           {prettyDate(row?.booked_on)}
         </TableCell>
-        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', borderLeft: '1px solid #e0e0e0' , fontSize: '13px', paddingRight: '6px', color: '#0ea5e9',    '& span': {
+        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', borderLeft: '0.5px solid #eaeced' , fontSize: '13px', paddingRight: '6px', color: '#0ea5e9',    '& span': {
       display: 'inline-block',
-      borderBottom: '2px solid transparent',
+      borderBottom: '1px solid transparent',
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '2px solid #0ea5e9', // Apply border on hover
+      borderBottom: '0.5px solid #eaeced', // Apply border on hover
     } }} padding="none">
           <span
 
   >
     ₹{row?.T_A?.toLocaleString('en-IN')}
   </span>
-        </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', paddingRight: '6px', color: '#0ea5e9',borderLeft: '1px solid #e0e0e0' ,borderRight: '1px solid #e0e0e0' , fontSize: '13px',   '& span': {
+        </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', paddingRight: '6px', color: '#0ea5e9',borderLeft: '0.5px solid #eaeced'  , fontSize: '13px',   '& span': {
       display: 'inline-block',
-      borderBottom: '2px solid transparent',
+      borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '2px solid #0ea5e9', // Apply border on hover
+      borderBottom: '0.5px solid #eaeced', // Apply border on hover
     }  }} padding="none">
 
   <span
@@ -1156,20 +1156,20 @@ EnhancedTableHead.propTypes = {
   </span>
         </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap',  paddingRight: '6px',color: '#0ea5e9',borderLeft: '1px solid #e0e0e0' , fontSize: '13px',  '& span': {
       display: 'inline-block',
-      borderBottom: '2px solid transparent',
+      borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '2px solid #0ea5e9', // Apply border on hover
+      borderBottom: '0.5px solid #eaeced', // Apply border on hover
     } }} padding="none">
           <span>₹{row?.T_C?.toLocaleString('en-IN')}</span>
         </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap',  paddingRight: '6px',color: '#0ea5e9',borderLeft: '1px solid #e0e0e0' ,fontSize: '13px',    '& span': {
       display: 'inline-block',
-      borderBottom: '2px solid transparent',
+      borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '2px solid #0ea5e9', // Apply border on hover
+      borderBottom: '0.5px solid #eaeced', // Apply border on hover
     } }} padding="none">
           <span>₹{row?.T_D?.toLocaleString('en-IN')}</span>
         </TableCell>)}
@@ -1186,7 +1186,7 @@ EnhancedTableHead.propTypes = {
         {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px'  }} padding="none">
         ₹{legalCharge?.toLocaleString('en-IN')}
         </TableCell>)} */}
-       <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '1px solid #e0e0e0', paddingRight: '6px', fontSize: '13px' }} padding="none" >
+       <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.5px solid #eaeced', paddingRight: '6px', fontSize: '13px' }} padding="none" >
         ₹{row?.T_total?.toLocaleString('en-IN')}
         </TableCell>
         {viewUnitStatusA.includes('Avg sqft Cost') && (<TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px', fontSize: '13px' }} padding="none">
@@ -1195,21 +1195,27 @@ EnhancedTableHead.propTypes = {
         {viewUnitStatusA.includes('Avg sqft Cost') && (<TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px', fontSize: '13px' }} padding="none">
         ₹{row?.sqft_rate?.toLocaleString('en-IN')}
         </TableCell>)}
-        <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#fff", borderLeft: '1px solid #e0e0e0', paddingRight: '6px', fontSize: '13px' }} padding="none">
+        <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.5px solid #eaeced', paddingRight: '6px', fontSize: '13px' }} padding="none">
         ₹{row?.T_approved?.toLocaleString('en-IN')}
 
 
         </TableCell>
-      <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '1px solid #e0e0e0',borderRight: '1px solid #e0e0e0' , paddingRight: '6px', fontSize: '13px' }} padding="none">
+      <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',  borderLeft: '0.5px solid #eaeced' , paddingRight: '6px', fontSize: '13px' ,'& span': {
+      display: 'inline-block',
+      borderBottom: '0.5px solid transparent',
+      transition: 'border-bottom 0.3s ease',
+    }, '& span:hover': {
+      borderBottom: '0.5px solid #eaeced', // Apply border on hover
+    } }} padding="none">
         ₹{row?.T_balance?.toLocaleString('en-IN')}
         </TableCell>
-        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',  paddingRight: '6px',color: '#0ea5e9',borderLeft: '1px solid #e0e0e0' ,fontSize: '13px',   '& span': {
+        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',  paddingRight: '6px',color: '#0ea5e9',borderLeft: '0.5px solid #eaeced', borderRight: '0.5px solid #eaeced' ,fontSize: '13px',   '& span': {
       display: 'inline-block',
-      borderBottom: '2px solid transparent',
+      borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '2px solid #0ea5e9', // Apply border on hover
+      borderBottom: '0.5px solid #eaeced', // Apply border on hover
     } }} padding="none">
           ₹{row?.T_E?.toLocaleString('en-IN')}
         </TableCell>)}
