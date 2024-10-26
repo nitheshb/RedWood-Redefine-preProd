@@ -7,7 +7,7 @@ import { logout as logoutAction } from 'src/state/actions/user'
 import ModuleSwitchDrop from '../A_SideMenu/modulesSwitchDrop'
 import { GlobalSearchBar } from './GlobalSearchBar';
 
-const HeadNavBar2 = ({selModule, setSelModule}) => {
+const HeadNavBar2 = ({selModule, setSelModule,  setViewable}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,6 +29,11 @@ const HeadNavBar2 = ({selModule, setSelModule}) => {
       await logout()
       dispatch(logoutAction())
     }
+  }
+
+  const openUserAccount = () => {
+    handleClose(null)
+    setViewable('userProfile')
   }
 
   return (
@@ -98,7 +103,7 @@ const HeadNavBar2 = ({selModule, setSelModule}) => {
           }}
         >
           <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={()=>openUserAccount()}>My account 1</MenuItem>
           <MenuItem onClick={() => handleClose('Logout')}>Logout</MenuItem>
         </Menu>
       </div>

@@ -127,6 +127,15 @@ export const steamUsersProjAccessList = (orgId, snapshot, data, error) => {
   )
   return onSnapshot(itemsQuery, snapshot, error)
 }
+export const streamCustomersList = (orgId, snapshot, data, error) => {
+  const itemsQuery = query(
+    collection(db, `${orgId}_customers`),
+    // where('orgId', '==', orgId),
+    // where('userStatus', '==', 'active'),
+    // where('creditNoteIssuersA', 'array-contains-any', data?.pId)
+  )
+  return onSnapshot(itemsQuery, snapshot, error)
+}
 export const steamUsersCreditNotesList = (orgId, snapshot, data, error) => {
   const itemsQuery = query(
     collection(db, `users`),

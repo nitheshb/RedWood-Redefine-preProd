@@ -14,6 +14,7 @@ import UserManageTable from 'src/components/UserManageTable/UserManageTable'
 import AssetsManageTable from 'src/components/A_HrModule/AssetsManagementTable'
 import HrSummaryReport from 'src/components/A_HrModule/HrSummaryReport'
 import SiderForm from 'src/components/SiderForm/SiderForm'
+import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
 
 
 const UsersAdminPage = () => {
@@ -53,13 +54,11 @@ const UsersAdminPage = () => {
 
         <div className="flex flex-col flex-grow">
           {/* <HeadNavBar /> */}
-          <HeadNavBar2 selModule={selModule} setSelModule={setSelModule} />
+          <HeadNavBar2 selModule={selModule} setSelModule={setSelModule} setViewable={setViewable} />
           <div className="flex-grow px-6 overflow-auto no-scrollbar  text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
             <div className="flex flex-row justify-between items-center flex-shrink-0 h-10 mt-2 px-0  pl-0  ">
               {/* <h1 className="text-lg font-medium">redefine.</h1> */}
-              <span className="relative  flex items-center w-auto text-xl font-bold leading-none pl-0">
-                {viewable}
-              </span>
+
 
               {viewable === 'User Management' && (
                 <div className="flex flex-row">
@@ -162,6 +161,7 @@ const UsersAdminPage = () => {
                 <UserAccessTable showCompletedTasks={showCompletedTasks} />
               </>
             )}
+              {viewable === 'userProfile' && <ProfileSummary />}
 
             {viewable === 'My Activity' && (
               <>
@@ -183,7 +183,7 @@ const UsersAdminPage = () => {
             )}
 
 
-            
+
 
 
 

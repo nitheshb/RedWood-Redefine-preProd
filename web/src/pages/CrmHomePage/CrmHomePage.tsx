@@ -25,6 +25,7 @@ import SiderForm from '../../components/SiderForm/SiderForm'
 import UnitsInventoryHome from 'src/components/A_ProjModule/UnitsInvertoryHome'
 import CrmAnalyticsHome from 'src/components/A_CrmModule/CrmAnalyticsHome'
 import CrmConstuctionModeHome from 'src/components/A_CrmModule/CrmConstructionHome'
+import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
 
 const CrmHomePage = () => {
   const { user } = useAuth()
@@ -371,7 +372,7 @@ const CrmHomePage = () => {
               viewable={viewable}
             /> */}
             <div className="flex-grow  items-center overflow-y-auto  h-[98%]  px-300  py-300">
-              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}  />
+              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}  setViewable={setViewable} />
               <div className="p-0 ">
                 {/* {viewable === 'crmDashboard' && (
                   <CrmDashboardHome
@@ -381,6 +382,7 @@ const CrmHomePage = () => {
                     isEdit={undefined}
                   />
                 )} */}
+                {viewable === 'userProfile' && <ProfileSummary />}
 
                  {viewable === 'crmAnalytics' && (
                   <CrmAnalyticsHome

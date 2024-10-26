@@ -18,6 +18,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import HeadNavBar from '../../components/HeadNavBar/HeadNavBar'
 import LegalDocsHome from '../LegalDocsHome'
 import LegalHome from 'src/components/A_LegalModule/LegalHome'
+import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
 
 const LegalHomePage = () => {
   const { user } = useAuth()
@@ -76,7 +77,9 @@ const LegalHomePage = () => {
               <HeadNavBar2
                 selModule={selModule}
                 setSelModule={setSelModule}
+                setViewable={setViewable}
               />
+{viewable === 'userProfile' && <ProfileSummary />}
 
               {viewable === 'legalDocuments' && (
                 <LegalDocsHome

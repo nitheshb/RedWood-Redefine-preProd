@@ -8,7 +8,7 @@ import { format } from 'date-fns'
 import { setHours, setMinutes } from 'date-fns'
 import { arrayUnion } from 'firebase/firestore'
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
-import { Form, Formik,  ErrorMessage, useField } from 'formik'
+import { Form, Formik, ErrorMessage, useField } from 'formik'
 import { useSnackbar } from 'notistack'
 import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
@@ -26,6 +26,7 @@ import {
   getProject,
   steamBankDetailsList,
   steamUsersProjAccessList,
+  streamCustomersList,
   streamProjectCSMaster,
   updateLeadStatus,
 } from 'src/context/dbQueryFirebase'
@@ -34,6 +35,7 @@ import { storage } from 'src/context/firebaseConfig'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
+import { MultiSelectMultiLineWallet } from 'src/util/formFields/selectBoxMultiLineWallet'
 import { TextField2 } from 'src/util/formFields/TextField2'
 import PdfReceiptGenerator from 'src/util/PdfReceiptGenerator'
 import RupeeInWords from 'src/util/rupeeWords'
@@ -72,9 +74,8 @@ const CaptureUnitPayment = ({
   const [paymentScheduleA, setPaymentScheduleA] = useState([])
   const [payingForA, setPayingForA] = useState([])
   const [creditNotersA, setCreditNoters] = useState([])
+  const [walletCustomers, setWalletCustomers] = useState([])
   const [bankAccounts, setBankAccounts] = useState([])
-
-
 
   // const [formattedValue, setFormattedValue] = useState('');
 
@@ -91,6 +92,7 @@ const CaptureUnitPayment = ({
   const [files, setFiles] = useState([])
 
   const [commentAttachUrl, setCommentAttachUrl] = useState('')
+  const [selWalletCustomer, setSelWalletCustomer] = useState({})
   const [cmntFileType, setCmntFileType] = useState('')
   const [amount, setAmount] = useState(0)
 
@@ -113,11 +115,10 @@ const CaptureUnitPayment = ({
   }, [])
   useEffect(() => {
     let fullPs = []
-    let newConstructPSA= newConstructPS || []
-    if(newPlotPS){
-
-  fullPs = [...newPlotPS, ...newConstructPSA]
-    }else {
+    const newConstructPSA = newConstructPS || []
+    if (newPlotPS) {
+      fullPs = [...newPlotPS, ...newConstructPSA]
+    } else {
       fullPs = selUnitDetails?.fullPs
     }
     setPaymentScheduleA(
@@ -175,6 +176,29 @@ const CaptureUnitPayment = ({
       },
       { pId: [selUnitDetails?.pId] },
       (error) => setCreditNoters([])
+    )
+
+    return unsubscribe
+  }, [])
+  useEffect(() => {
+    const unsubscribe = streamCustomersList(
+      orgId,
+      (querySnapshot) => {
+        const bankA = querySnapshot.docs.map((docSnapshot) => {
+          const x = docSnapshot.data()
+          x.id = docSnapshot.id
+          return x
+        })
+        bankA.map((user) => {
+          user.label = user?.Name
+          user.value = user?.id
+          user.walletAmount = user?.remaining_money
+        })
+        console.log('fetched users list is', bankA)
+        setWalletCustomers([...bankA])
+      },
+      { pId: [selUnitDetails?.pId] },
+      (error) => setWalletCustomers([])
     )
 
     return unsubscribe
@@ -341,6 +365,7 @@ const CaptureUnitPayment = ({
     bookedBy: bankData?.bookedBy || email,
     status: 'review',
     fileUploader: '',
+    selCustomerWallet: {},
   }
 
   // const validateSchema = Yup.object({
@@ -474,13 +499,22 @@ const CaptureUnitPayment = ({
                                                               }
                                                             </span>{' '}
                                                             <span className="w-1/3  text-right">
-                                                              {paying?.value?.toLocaleString('en-IN')}
+                                                              {paying?.value?.toLocaleString(
+                                                                'en-IN'
+                                                              )}
                                                             </span>
                                                             <span className="w-1/3 text-right">
-                                                              {paying?.balance?.toLocaleString('en-IN') || paying?.value?.toLocaleString('en-IN')}
+                                                              {paying?.balance?.toLocaleString(
+                                                                'en-IN'
+                                                              ) ||
+                                                                paying?.value?.toLocaleString(
+                                                                  'en-IN'
+                                                                )}
                                                             </span>
                                                             <span className="w-1/3 text-right">
-                                                              {paying?.balance?.toLocaleString('en-IN') || 0}
+                                                              {paying?.balance?.toLocaleString(
+                                                                'en-IN'
+                                                              ) || 0}
                                                             </span>
                                                           </div>
                                                         )
@@ -489,18 +523,24 @@ const CaptureUnitPayment = ({
                                                   </div>
                                                 </div>
                                                 {bankAccounts.length > 0 && (
-                            <div className="flex  space-x-2 w-full text-xs">
-                              {bankAccounts.map((data, i) => (
-                                <section
-                                  key={i}
-                                  className="border px-4 py-2 rounded-lg"
-                                >
-                                  <div>{data?.label}</div>
-                                  <div>{data?.accountName}</div>
-                                </section>
-                              ))}
-                            </div>
-                          )}
+                                                  <div className="flex  space-x-2 w-full text-xs">
+                                                    {bankAccounts.map(
+                                                      (data, i) => (
+                                                        <section
+                                                          key={i}
+                                                          className="border px-4 py-2 rounded-lg"
+                                                        >
+                                                          <div>
+                                                            {data?.label}
+                                                          </div>
+                                                          <div>
+                                                            {data?.accountName}
+                                                          </div>
+                                                        </section>
+                                                      )
+                                                    )}
+                                                  </div>
+                                                )}
                                                 <div className="w-full  px-3 mt-3">
                                                   <div className=" mb-4 w-full">
                                                     <MultiSelectMultiLineField
@@ -528,21 +568,41 @@ const CaptureUnitPayment = ({
                                                         //   'towardsBankDocId',
                                                         //   id
                                                         // )
-                                                        console.log('changed value is ', payload)
-                                  const { value, id, accountName } = payload
-                                  console.log('selected value is ', payload)
-                                  // formik.setFieldValue('builderName', accountName)
-                                  // formik.setFieldValue('landlordBankDocId', id)
-                                  const x = payingForA
-                                  const exists = payingForA.find(
-                                    (item) => item.id === payload.id
-                                  )
-                                  if (!exists && value != 'addNewOption') {
-                                    x.push(payload)
-                                    setPayingForA(x)
-                                  }
+                                                        console.log(
+                                                          'changed value is ',
+                                                          payload
+                                                        )
+                                                        const {
+                                                          value,
+                                                          id,
+                                                          accountName,
+                                                        } = payload
+                                                        console.log(
+                                                          'selected value is ',
+                                                          payload
+                                                        )
+                                                        // formik.setFieldValue('builderName', accountName)
+                                                        // formik.setFieldValue('landlordBankDocId', id)
+                                                        const x = payingForA
+                                                        const exists =
+                                                          payingForA.find(
+                                                            (item) =>
+                                                              item.id ===
+                                                              payload.id
+                                                          )
+                                                        if (
+                                                          !exists &&
+                                                          value !=
+                                                            'addNewOption'
+                                                        ) {
+                                                          x.push(payload)
+                                                          setPayingForA(x)
+                                                        }
 
-                                  formik.setFieldValue('towardsBankDocId', '')
+                                                        formik.setFieldValue(
+                                                          'towardsBankDocId',
+                                                          ''
+                                                        )
                                                       }}
                                                       value={
                                                         formik.values
@@ -555,39 +615,7 @@ const CaptureUnitPayment = ({
                                               </section>
                                             )}
                                           </section>
-                                          <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
-                                            <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
-                                              <span className="text-sm font-semibold text-gray-500">
-                                                Amount
-                                              </span>
-                                            </article>
-                                            <div className="w-full lg:w-12/12 px-3">
-                                              < div className="relative w-full mb-3">
-                                                <TextField2
-                                                  label="Amount"
-                                                  name="amount"
-                                                  type="number"
-                                                  // onChange={(e) => {
-                                                  //   setAmount(e.target.value)
-                                                  //   console.log('changed value is ', e.target.value)
-                                                  //   formik.setFieldValue('amount', e.target.value)
-                                                  // }}
-                                                />
-                                              </div>
-                                            </div>
 
-                                            <div className="text-xs px-3 mb-3">
-                                              {' '}
-                                              Paying{' '}
-                                              <RupeeInWords
-                                                amount={
-                                                  formik?.values?.amount || 0
-                                                }
-                                              />
-                                            </div>
-
-
-                                          </section>
                                           <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
                                             <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
                                               <span className="text-sm font-semibold text-gray-500">
@@ -646,7 +674,10 @@ const CaptureUnitPayment = ({
                                               })}
                                             </div>
 
-                                            {paymentModex != 'credit_note' && (
+                                            {![
+                                              'credit_note',
+                                              'wallet',
+                                            ].includes(paymentModex) && (
                                               <div className="w-full  px-3 mt-3">
                                                 <div className=" mb-4 w-full">
                                                   <MultiSelectMultiLineField
@@ -727,6 +758,126 @@ const CaptureUnitPayment = ({
                                                 </div>
                                               </div>
                                             )}
+
+                                            {paymentModex === 'wallet' && (
+                                              <div className="w-full  px-3 mt-3">
+                                                <div className=" mb-4 w-full">
+                                                  <MultiSelectMultiLineWallet
+                                                    label="Customer wallet"
+                                                    name="creditNoteIssuer"
+                                                    setSelWalletCustomer={
+                                                      setSelWalletCustomer
+                                                    }
+                                                    onChange={(payload) => {
+                                                      console.log(
+                                                        'changed value is ',
+                                                        payload
+                                                      )
+                                                      const {
+                                                        value,
+                                                        id,
+                                                        name,
+                                                        uid,
+                                                        accountName,
+                                                        walletAmount,
+                                                      } = payload
+                                                      formik.setFieldValue(
+                                                        'builderName',
+                                                        name
+                                                      )
+                                                      formik.setFieldValue(
+                                                        'landlordBankDocId',
+                                                        uid
+                                                      )
+
+                                                      formik.setFieldValue(
+                                                        'towardsBankDocId',
+                                                        uid
+                                                      )
+                                                      formik.setFieldValue(
+                                                        'selCustomerWallet',
+                                                        payload
+                                                      )
+
+                                                      formik.setFieldValue(
+                                                        'amount',
+                                                        walletAmount || 0
+                                                      )
+                                                    }}
+                                                    value={
+                                                      formik.values
+                                                        .towardsBankDocId
+                                                    }
+                                                    options={walletCustomers}
+                                                  />
+                                                </div>
+                                              </div>
+                                            )}
+                                            <section className="">
+                                              <div className="w-full lg:w-12/12 px-3">
+                                                <div className="relative w-full mb-3">
+                                                  <TextField2
+                                                    label="Amount"
+                                                    name="amount"
+                                                    type="number"
+                                                    onChange={(e) => {
+                                                      // setAmount(e.target.value)
+                                                      console.log(
+                                                        'changed value is ',
+                                                        e.target.value,  formik.values
+                                                        .selCustomerWallet
+                                                        ?.walletAmount,  (e.target.value > 0 &&
+                                                        e.target.value >
+                                                          formik.values
+                                                            .selCustomerWallet
+                                                            ?.walletAmount),
+                                                            paymentModex
+                                                      )
+                                                      if (
+                                                        paymentModex ===
+                                                        'wallet'
+                                                      ) {
+                                                        if (
+                                                          e.target.value > 0 &&
+                                                          e.target.value >
+                                                            formik.values
+                                                              .selCustomerWallet
+                                                              ?.walletAmount
+                                                        ) {
+                                                          console.log('changed value is ')
+                                                          formik.setFieldValue(
+                                                            'amount',
+                                                            formik.values
+                                                            .selCustomerWallet
+                                                            ?.walletAmount
+                                                          )
+                                                        } else {
+                                                          formik.setFieldValue(
+                                                            'amount',
+                                                            e.target.value
+                                                          )
+                                                        }
+                                                      } else {
+                                                        formik.setFieldValue(
+                                                          'amount',
+                                                          e.target.value
+                                                        )
+                                                      }
+                                                    }}
+                                                  />
+                                                </div>
+                                              </div>
+
+                                              <div className="text-xs px-3 mb-3">
+                                                {' '}
+                                                Paying{' '}
+                                                <RupeeInWords
+                                                  amount={
+                                                    formik?.values?.amount || 0
+                                                  }
+                                                />
+                                              </div>
+                                            </section>
                                             <section className="flex flex-row">
                                               <div className="w-full lg:w-10/12 px-3">
                                                 <div className="relative w-full mb-5">

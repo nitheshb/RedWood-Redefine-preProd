@@ -351,7 +351,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
             return (
               <tr
                 key={index}
-                className="border-b border-gray-200 hover:bg-gray-100"
+                className="border-b border-gray-200 hover:bg-gray-100 text-[#33393d] font-[400]"
               >
                 <td className="py- px-3 text-left whitespace-nowrap border  border-gray-200">
                   {capitalizeFirstLetter(data?.name)}

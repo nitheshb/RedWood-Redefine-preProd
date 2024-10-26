@@ -154,7 +154,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                     className="py-1 px-3 text-left border border-gray-300"
                     colSpan="1"
                   >
-                    Unti No
+                    Unit No
                   </th>
                   <th
                     className="py-1 px-3 text-center border border-gray-300"
@@ -206,7 +206,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
               </thead>
               <tbody className="text-gray-900 text-sm font-light">
                 {fetchMortUnitsList.map((item, index) => (
-                  <tr key={index} className="hover:bg-gray-100">
+                  <tr key={index} className="hover:bg-gray-100 text-[#33393d] font-[400]">
                     <td
                       className="py- px-3 text-left border border-gray-300  cursor-pointer "
                       onClick={() => {
