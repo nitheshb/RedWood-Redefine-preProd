@@ -70,7 +70,7 @@ const ProjectEditPage = ({
               viewable={viewable}
             />
             <div className="flex-grow   items-center overflow-y-auto no-scrollbar  h-[98%]  px-300  pt-300">
-              <HeadNavBar2 selModule={''} setSelModule={''} />
+              <HeadNavBar2 selModule={''} setSelModule={''}  setViewable={setViewable} />
               <div className="mx-1 mt-1">
 
                 {project?.projectName ? (

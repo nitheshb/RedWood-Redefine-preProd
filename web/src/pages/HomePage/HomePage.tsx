@@ -31,6 +31,7 @@ import HeadNavBar from '../../components/HeadNavBar/HeadNavBar'
 import HeadSideBar from '../../components/HeadSideBar/HeadSideBar'
 import ProjectsMHomeBody from '../../components/ProjectsMHomeBody/ProjectsMHomeBody'
 import SiderForm from '../../components/SiderForm/SiderForm'
+import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
 
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -392,7 +393,9 @@ const HomePage = () => {
             />
 
             <div className="flex-grow   items-center overflow-y-auto no-scrollbar  h-[98%]  px-300  pt-300">
-              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule} />
+              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}   setViewable={setViewable}/>
+            {viewable === 'userProfile' && <ProfileSummary />}
+
               {viewable === 'Setup' && (
                 <>
                 {/*Sales Executive Notifications border */}
@@ -499,7 +502,7 @@ const HomePage = () => {
                 viewable != 'unitsInventory' &&
                 viewable != 'Setup' &&
                 viewable != 'Marketing' &&
-                viewable != 'projectReports' && (
+                viewable != 'projectReports' && viewable != 'userProfile' && (
                   <>
                     <div className="">
                       <div className="flex items-center justify-between mt-1   pb-8 ">

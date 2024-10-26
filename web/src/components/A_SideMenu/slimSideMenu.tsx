@@ -1901,45 +1901,7 @@ const SlimSideMenuBar = (props) => {
               </span>
             </li>
 
-            <li className="relative mt-1">
-              <span
-                className={
-                  'flex items-center text-sm py-1  overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded  rounded-tl-[30px] rounded-bl-[30px]  hover:text-blue-600 hover:bg-[#ecdbd1] transition duration-300 ease-in-out cursor-pointer ' +
-                  (viewable === 'Bank Accounts'
-                    ? 'bg-[#ecdbd1] w-100 rounded-tl-[30px] rounded-bl-[30px] '
-                    : '')
-                }
-                onClick={() => setViewable('Bank Accounts')}
-                style={{
-                  display: 'block',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                }}
-              >
-                <span className="flex items-center flex-col pt-[8px]">
-                  <span style={{ color: '#058527' }}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
-                  </span>
-                  <span className="text-[9px] font-bold  pl-1">Bank</span>
-                </span>
-                <span className="flex ml-auto items-bottom">
-                  <span className="flex ml-auto items-bottom text-xs mt-2"></span>
-                </span>
-              </span>
-            </li>
+        
             <li className="relative mt-1">
               <span
                 className={
