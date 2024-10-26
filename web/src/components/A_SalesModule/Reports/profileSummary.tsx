@@ -17,6 +17,52 @@ export default function ProfileSummary() {
     setIsFollowing((prevState) => !prevState)
   }
 
+
+
+
+
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [error, setError] = useState("");
+
+ 
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    if (repeatPassword && e.target.value !== repeatPassword) {
+      setError("Passwords do not match");
+    } else {
+      setError("");
+    }
+  };
+
+
+  const handleRepeatPasswordChange = (e) => {
+    setRepeatPassword(e.target.value);
+    if (password && e.target.value !== password) {
+      setError("Passwords do not match");
+    } else {
+      setError("");
+    }
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (password === repeatPassword) {
+      console.log("Password matched. Form submitted successfully!");
+    } else {
+      setError("Passwords do not match");
+    }
+  };
+
+
+
+
+
+
+
+
+
   return (
     <div className="m-2">
       <div className="p-5 bg-white  border-neutral-300 rounded-lg shadow-lg p-5">
@@ -284,6 +330,59 @@ export default function ProfileSummary() {
             </ul>
           </div>
         </div>
+
+
+        <div>
+
+        <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-sm p-6 bg-white border border-gray-300 rounded-lg shadow-md"
+    >
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2">Password:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2">Repeat Password:</label>
+        <input
+          type="password"
+          value={repeatPassword}
+          onChange={handleRepeatPasswordChange}
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
+      <button
+        type="submit"
+        disabled={password !== repeatPassword || !password}
+        className={`w-full py-2 px-4 rounded text-white font-semibold ${
+          password === repeatPassword && password
+            ? "bg-green-500 hover:bg-green-600"
+            : "bg-gray-300 cursor-not-allowed"
+        }`}
+      >
+        Submit
+      </button>
+    </form>
+    
+        </div>
+
+
+
+
+
+
+
       </div>
 
       <div></div>
