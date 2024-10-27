@@ -506,11 +506,12 @@ export const updateWalletTransactionStatus = async (
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
   const { id, status, custId, Uuid, projectId, totalAmount } = data1
   // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
+  if(status != 'walletAmount'){
   const { data: lead_logs, error } = await supabase
     .from(`${orgId}_accounts`)
     .update({ status: status })
     .eq('id', id)
-
+  }
   const { data: data4, error: error4 } = await supabase
     .from(`${orgId}_customer_logs`)
     .insert([
@@ -526,6 +527,17 @@ export const updateWalletTransactionStatus = async (
         projectId: projectId || '',
       },
     ])
+    console.log('error value is', {
+      type: 'accounts',
+      subtype: data1?.subtype || 'wallet_reviewer',
+      T: Timestamp.now().toMillis(),
+      Uuid: Uuid,
+      by,
+      payload: { comments: '' },
+      from: data1?.oldStatus || 'review',
+      to: status,
+      projectId: projectId || '',
+    })
     console.log('check it ', status, status === 'received',status === 'Failed', totalAmount, data1)
     if(status === 'Failed'){
     await updateDoc(doc(db, `${orgId}_customers`, custId), {
@@ -547,6 +559,15 @@ export const updateWalletTransactionStatus = async (
         variant: 'success',
       })
     }
+    if(status === 'walletAmount'){
+      await updateDoc(doc(db, `${orgId}_customers`, custId), {
+        remaining_money: increment(-totalAmount),
+
+      })
+      await enqueueSnackbar('Marked as payment received', {
+        variant: 'success',
+      })
+    }
   console.log('check it ', data4, error4)
   if (lead_logs) {
     await enqueueSnackbar('Marked as Amount Recived', {
@@ -554,6 +575,8 @@ export const updateWalletTransactionStatus = async (
     })
   }
   if (error) {
+
+    console.log('error =>', error, data1)
     await enqueueSnackbar('Transaction Updation Failed', {
       variant: 'error',
     })
@@ -2330,6 +2353,7 @@ export const addLead = async (orgId, data, by, msg) => {
     delete data['']
     const x = await addDoc(collection(db, `${orgId}_leads`), data)
     await console.log('add Lead value is ', x, x.id, data)
+
     const {
       intype,
       Name,
@@ -4470,12 +4494,17 @@ export const createNewCustomerS = async (
     const leadDocId = leadDetailsObj2.id || ''
     const { Name } = leadDetailsObj2
 
-    console.log('wow it should be here', leadDocId, newStatus, Name)
+    console.log('wow it should be here', customerInfo, leadDocId, newStatus, Name)
+let primaryCustomerName
+    if(customerInfo?.length > 0){
+      const { customerName1 } = customerInfo[0]
+      primaryCustomerName = customerName1
+    }
 
     const { data, error } = await supabase.from(`${orgId}_customers`).insert([
       {
         Name:
-          leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1,
+          leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1 || primaryCustomerName,
         // id: leadDocId,
         my_assets: [unitId],
         T: Timestamp.now().toMillis(),
@@ -4500,7 +4529,7 @@ export const createNewCustomerS = async (
     // addCustomer(orgId, customerD, by, enqueueSnackbar, ()=>({}))
 
     await console.log('customer data is ', data, error, customerInfo, {
-      Name: Name,
+      Name: Name || primaryCustomerName,
       // id: leadDocId,
       my_assets: [unitId],
       T: Timestamp.now().toMillis(),

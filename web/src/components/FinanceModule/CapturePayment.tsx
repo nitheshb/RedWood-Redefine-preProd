@@ -763,7 +763,7 @@ const CaptureUnitPayment = ({
                                               <div className="w-full  px-3 mt-3">
                                                 <div className=" mb-4 w-full">
                                                   <MultiSelectMultiLineWallet
-                                                    label="Customer wallet"
+                                                    label="Customer Wallet"
                                                     name="creditNoteIssuer"
                                                     setSelWalletCustomer={
                                                       setSelWalletCustomer
@@ -792,8 +792,9 @@ const CaptureUnitPayment = ({
 
                                                       formik.setFieldValue(
                                                         'towardsBankDocId',
-                                                        uid
+                                                        payload?.id
                                                       )
+                                                    
                                                       formik.setFieldValue(
                                                         'selCustomerWallet',
                                                         payload

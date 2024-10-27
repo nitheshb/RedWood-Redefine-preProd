@@ -6,7 +6,6 @@ import { arrayUnion, Timestamp } from 'firebase/firestore'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
 
-
 import {
   addAccountslogS,
   addCustomer,
@@ -21,9 +20,9 @@ import {
   updateProjectCounts,
   updateProjectionsAgreegationsOnBooking,
   updateUnitAsBooked,
+  updateWalletTransactionStatus,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-
 
 import CaptureUnitPayment from './CapturePayment'
 
@@ -106,16 +105,19 @@ const AddPaymentDetailsForm = ({
     // enter customer details too
     const { Status } = leadDetailsObj2
 
-
-
     //
     const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
+    let primaryCustomerName
+    if(customerInfo?.length > 0){
+      const { customerName1 } = customerInfo[0]
+      primaryCustomerName = customerName1
+    }
 
     if (customerDetailsObj) {
       const customerD = {
         Name:
           leadDetailsObj2?.Name ||
-          customerInfo?.customerDetailsObj?.customerName1,
+          customerInfo?.customerDetailsObj?.customerName1 || primaryCustomerName,
         my_assets: [selUnitDetails?.uid],
         T: Timestamp.now().toMillis(),
         Luid: leadDetailsObj2.id || '',
@@ -294,7 +296,7 @@ const AddPaymentDetailsForm = ({
       dataObj.order = i
       updatePS(dataObj, resetForm)
     })
-
+    const { uid } = selUnitDetails
     // customerfbA
     let custNo
     if ((await customerfbA?.length) > 0) {
@@ -302,8 +304,40 @@ const AddPaymentDetailsForm = ({
     } else {
       return
     }
+
+    let primaryCustomerName
+    let phoneNo
+    if(customerInfo?.length > 0){
+      const { customerName1, phoneNo1 } = customerInfo[0]
+      primaryCustomerName = customerName1
+      phoneNo = phoneNo1
+    }
     await setBookCurentStep(['payment_captured'])
-    const y = await capturePayment(custNo, data, resetForm)
+    let y
+    // check if mode is not equal to 'wallet'
+    data.amount = Number(data?.amount)
+    data.totalAmount = Number(data?.amount)
+    if (data?.mode === 'wallet') {
+      data.status = 'walletAmount'
+
+      data.Uuid = uid
+      data.custId = data?.selCustomerWallet?.id
+
+      console.log('caputre block', data)
+
+      await updateWalletTransactionStatus(
+        orgId,
+        data,
+        user?.email,
+        enqueueSnackbar
+      )
+      y = [{ id: 'wallet' }]
+    } else {
+      // update customer wallet in db
+      y = await capturePayment(custNo, data, resetForm)
+    }
+
+
     // get paymentTxn id
     let txId
     if ((await y?.length) > 0) {
@@ -312,6 +346,8 @@ const AddPaymentDetailsForm = ({
       return
     }
     await capturePayment_log(data, txId, resetForm)
+
+    return
     const s1 = await bookCompSteps
     await s1.push('payment_captured')
     await setBookCompSteps(s1)
@@ -339,7 +375,7 @@ const AddPaymentDetailsForm = ({
       Date: Timestamp.now().toMillis(),
       Email: customerInfo?.customerDetailsObj?.email1 || '',
       Mobile: customerInfo?.customerDetailsObj?.email1 || '',
-      Name: customerInfo?.customerDetailsObj?.email1,
+      Name: customerInfo?.customerDetailsObj?.email1 || primaryCustomerName,
       Note: '',
       Project: '',
       Source: 'Booking' || '',
@@ -371,7 +407,7 @@ const AddPaymentDetailsForm = ({
     // proceed to copy
 
     const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
-    const { uid } = selUnitDetails
+
     // 1)Make an entry to finance Table {source: ''}
     console.log(
       'secondary value si s',
@@ -459,6 +495,8 @@ const AddPaymentDetailsForm = ({
     // add phaseNo , projName to selUnitDetails
     // 2)Create('')
 
+
+
     const x2 = await createBookedCustomer(
       orgId,
       id,
@@ -467,9 +505,9 @@ const AddPaymentDetailsForm = ({
         projectName: leadDetailsObj2?.Project || projectDetails?.projectName,
         ProjectId: leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
         // ...customerDetailsObj,
-        Name: customerDetailsObj?.customerName1,
-        Mobile: customerDetailsObj?.phoneNo1,
-        Email: customerDetailsObj?.email1,
+        Name: customerDetailsObj?.customerName1 || primaryCustomerName,
+        Mobile: customerDetailsObj?.phoneNo1 || phoneNo,
+        Email: customerDetailsObj?.email1 || '',
         secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
         assets: arrayUnion(uid),
         // [`${uid}_cs`]: leadDetailsObj2[`${uid}_cs`],
@@ -571,7 +609,7 @@ const AddPaymentDetailsForm = ({
     unitUpdate[`T_balance`] = T_balance
     unitUpdate[`T_elgible_balance`] = T_elgible_balance
 
-    const uploadPayload = {...myBookingPayload, ...unitUpdate}
+    const uploadPayload = { ...myBookingPayload, ...unitUpdate }
 
     console.log('unit space is ', uid)
     await updateUnitAsBooked(
@@ -668,8 +706,13 @@ const AddPaymentDetailsForm = ({
               </div>
 
               <div className="flex flex-col">
-                <div>Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}</div>
-                <div>Balance: {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}</div>
+                <div>
+                  Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}
+                </div>
+                <div>
+                  Balance:{' '}
+                  {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}
+                </div>
               </div>
             </div>
 
