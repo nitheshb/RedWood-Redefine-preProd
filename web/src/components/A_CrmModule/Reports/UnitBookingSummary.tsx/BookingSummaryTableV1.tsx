@@ -480,7 +480,7 @@ const HighlighterStyle = (props) => {
     />
   )
 }
-export default function UnitSummaryTableBody({
+export default function UnitSummaryTableBodyV1({
   fetchLeadsLoader,
   selStatus,
   rowsParent,
@@ -736,7 +736,7 @@ function EnhancedTableHead(props) {
 
   }
   return (
-    <TableHead style={{ height: '10px' }}>
+    <TableHead style={{ height: '10px', borderRadius: '2xl' }}>
       <TableRow selected={true}>
         <TableCell
           align="center"
@@ -745,7 +745,7 @@ function EnhancedTableHead(props) {
           padding="none"
           size="small"
           style={{
-            backgroundColor: '#FFF6F0',
+            backgroundColor: '#61787B',
             color: '#1a91eb',
             maxHeight: '10px',
             height: '10px',
@@ -753,6 +753,8 @@ function EnhancedTableHead(props) {
             maxWidth: '52px',
             minWidth: '25px',
             padding: '0px',
+borderRadius: '2xl',
+borderBottom: '0.2px solid #4c787d',
 
             paddingLeft: '14px',
             paddingRight: '29px',
@@ -771,7 +773,7 @@ function EnhancedTableHead(props) {
 
 
 
-          <TableSortLabel style={{backgroundColor: '#FFF6F0',borderRight: '0.2px solid #e7e5e4', color: '#000',fontWeight: '600' }}>S.No</TableSortLabel>
+          <TableSortLabel style={{backgroundColor: '#61787B',borderRight: '0.2px solid #e7e5e4', color: '#fff',fontWeight: '600' }}>S.No</TableSortLabel>
         </TableCell>
         {headCells.map((headCell) => (
           <>
@@ -781,7 +783,7 @@ function EnhancedTableHead(props) {
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
-                backgroundColor: '#FFF6F0',
+                backgroundColor: '#61787B',
                 color: '#33393d',
 
                 fontWeight: '600',
@@ -789,7 +791,9 @@ function EnhancedTableHead(props) {
                 maxHeight: '10px',
                 lineHeight: '7px',
                 padding: '8px 7px 8px 10px',
-                borderRight: '0.2px solid #e7e5e4',
+                borderRight: '0.2px solid #4c787d',
+                borderBottom: '0.2px solid #4c787d',
+
                 display: displayHeadersFun(headCell.id)
               }}
             >
@@ -798,12 +802,12 @@ function EnhancedTableHead(props) {
                 direction={orderBy === headCell.id ? order : 'asc'}
                 onClick={createSortHandler(headCell.id)}
                 style={{
-                  backgroundColor: '#FFF6F0',
+                  backgroundColor: '#61787B',
                   color: '#33393d',
                   fontFamily: 'inherit',
                 }}
               >
-                <span className="text-[#33393d] whitespace-nowrap">
+                <span className="text-[#fff] whitespace-nowrap">
                   {headCell.label}
                 </span>
                 {orderBy === headCell.id ? (
@@ -843,7 +847,7 @@ function EnhancedTableHead(props) {
           padding="none"
           size="small"
           style={{
-            backgroundColor: '#FFF6F0',
+            backgroundColor: '#61787B',
             color: '#1a91eb',
             maxHeight: '12px',
             height: '12px',
@@ -869,7 +873,7 @@ function EnhancedTableHead(props) {
 
 
 
-          <TableSortLabel style={{backgroundColor: '#FFF6F0', color: '#000',fontWeight: '500' }}></TableSortLabel>
+          <TableSortLabel style={{backgroundColor: '#61787B', color: '#000',fontWeight: '500' }}></TableSortLabel>
         </TableCell>
         {headCells.map((headCell) => (
           <>
@@ -879,7 +883,7 @@ function EnhancedTableHead(props) {
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
-                backgroundColor: ['partA','partB','partC','partD','partE', 'sale', 'received', 'balance'].includes(headCell.id) ? '#F0F0F0': '#FFF6F0',
+                backgroundColor: ['partA','partB','partC','partD','partE', 'sale', 'received', 'balance'].includes(headCell.id) ? '#61787B': '#61787B',
                 color: '#33393d',
                 height: '6px',
                 maxHeight: '10px',
@@ -887,7 +891,7 @@ function EnhancedTableHead(props) {
                 fontWeight: '500',
                 padding: '6px 1px 6px 10px',
 
-                borderRight: '0.2px solid #e7e5e4',
+                borderRight: '0.2px solid #4c787d',
 
                 display: displayHeadersFun(headCell.id)
               }}
@@ -898,8 +902,8 @@ function EnhancedTableHead(props) {
               {headCell.id === 'partA' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0]  flex items-center justify-end py-2 pr-1">
-  <span className="text-black text-[14px] ">₹{totalLandValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#61787B]  flex items-center justify-end py-2 pr-1">
+  <span className="text-[#fff] text-[14px] ">₹{totalLandValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -909,8 +913,8 @@ function EnhancedTableHead(props) {
                  {headCell.id === 'partB' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0]  flex items-center justify-end py-2 pr-1">
-  <span className="text-black text-[14px] ">₹{totalChargesIValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#61787B]  flex items-center justify-end py-2 pr-1">
+  <span className="text-[#fff] text-[14px] ">₹{totalChargesIValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -921,8 +925,8 @@ function EnhancedTableHead(props) {
                {headCell.id === 'partC' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0]  flex items-center justify-end py-2 pr-1">
-  <span className="text-black text-[14px] ">₹{totalConstructValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#61787B]  flex items-center justify-end py-2 pr-1">
+  <span className="text-[#fff] text-[14px] ">₹{totalConstructValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -933,8 +937,8 @@ function EnhancedTableHead(props) {
 {headCell.id === 'partD' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0]  flex items-center justify-end py-1 pr-1">
-  <span className="text-black text-[14px] ">₹{totalChargesIIValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#61787B]  flex items-center justify-end py-1 pr-1">
+  <span className="text-[#fff] text-[14px] ">₹{totalChargesIIValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -944,8 +948,8 @@ function EnhancedTableHead(props) {
               {headCell.id === 'partE' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0]  flex items-center justify-end py-1 pr-1">
-  <span className="text-black text-[14px] ">₹{totalPossessionValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#61787B]  flex items-center justify-end py-1 pr-1">
+  <span className="text-[#fff] text-[14px] ">₹{totalPossessionValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -956,8 +960,8 @@ function EnhancedTableHead(props) {
 
               {headCell.id === 'sale' && (
 
-<div className="bg-[#F0F0F0] flex items-center justify-end py-1 pr-1">
-  <span className="text-black text-[14px] ">₹{totalSaleValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#61787B] flex items-center justify-end py-1 pr-1">
+  <span className="text-[#fff] text-[14px] ">₹{totalSaleValue.toLocaleString('en-IN')}</span>
 </div>
 
 
@@ -968,8 +972,8 @@ function EnhancedTableHead(props) {
             {headCell.id === 'received' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0]  flex items-center justify-end py-1 pr-1">
-  <span className="text-black text-[14px] ">₹{totalReceived.toLocaleString('en-IN')}</span>
+<div className="bg-[#61787B]  flex items-center justify-end py-1 pr-1">
+  <span className="text-[#fff] text-[14px] ">₹{totalReceived.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -980,8 +984,8 @@ function EnhancedTableHead(props) {
 {headCell.id === 'balance' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0] flex items-center justify-end py-1 pr-1">
-  <span className="text-black text-[14px] ">₹{selTotalBalance.toLocaleString('en-IN')}</span>
+<div className="bg-[#61787B] flex items-center justify-end py-1 pr-1">
+  <span className="text-[#fff] text-[14px] ">₹{selTotalBalance.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -1004,194 +1008,7 @@ function EnhancedTableHead(props) {
     </TableHead>
   )
 }
-function EnhancedTotalTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-    searchKey,
-    viewUnitStatusA,
-  } = props
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property)
-  }
 
-  const displayHeadersFun = (headCell) => {
-
-    if(['partA','partB','partC','partD','partE', 'legal', 'maintenance', 'club', 'infra'].includes(headCell)){
-      return viewUnitStatusA.includes('Cost Split') ? '' : 'none'
-    }  else if(['avgsft', 'sv_sft', 'bmrda_strr'].includes(headCell)){
-      return viewUnitStatusA.includes('Avg sqft Cost') ? '' : 'none'
-    } else if(['crm_executive'].includes(headCell)){
-      return viewUnitStatusA.includes('CRM Executive') ? '' : 'none'
-    }else if(['sale_executive'].includes(headCell)){
-      return viewUnitStatusA.includes('Sales Executive') ? '' : 'none'
-    }else if(['Notes'].includes(headCell)){
-      return viewUnitStatusA.includes('Remarks') ? '' : 'none'
-    }
-    else {
-      return ''
-    }
-
-    //   if(viewUnitStatusA.includes('Assigned To') &&
-    //   headCell === 'Assigned'){
-    //   return ''
-    //   }else{
-    //     return 'none'
-    //   }
-    // }else {
-    //   return ''
-    // }
-
-
-  }
-  return (
-    <TableHead style={{ height: '10px' }}>
-      <TableRow selected={true}>
-        <TableCell
-          align="center"
-          component="th"
-          scope="row"
-          padding="none"
-          size="small"
-          style={{
-            backgroundColor: '#FFF6F0',
-            color: '#1a91eb',
-            maxHeight: '10px',
-            height: '10px',
-            lineHeight: '10px',
-            maxWidth: '52px',
-            minWidth: '25px',
-            paddingLeft: '14px',
-            paddingRight: '29px',
-            marginRight: '10px',
-          }}
-        >
-
-
-
-
-        </TableCell>
-        {headCells.map((headCell) => (
-          <>
-            <TableCell
-              key={headCell.id}
-              align={headCell?.align ||  'left'}
-              padding={headCell.disablePadding ? 'none' : 'normal'}
-              sortDirection={orderBy === headCell.id ? order : false}
-              style={{
-                backgroundColor: '#FFF6F0',
-                color: '#33393d',
-                height: '6px',
-                maxHeight: '10px',
-                lineHeight: '7px',
-                fontWeight: '500',
-                paddingRight: '6px',
-                display: displayHeadersFun(headCell.id)
-              }}
-            >
-
-
-
-              {headCell.id === 'partA' && (
-
-<div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
-  <span className="text-black text-[14px] ">₹{totalLandValue.toLocaleString('en-IN')}</span>
-</div>
-</div>
-
-
-
-              )}
-                 {headCell.id === 'partB' && (
-
-<div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
-  <span className="text-black text-[14px] ">₹{totalChargesIValue.toLocaleString('en-IN')}</span>
-</div>
-</div>
-
-
-
-              )}
-
-{headCell.id === 'partD' && (
-
-<div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
-  <span className="text-black text-[14px] ">₹{totalChargesIIValue.toLocaleString('en-IN')}</span>
-</div>
-</div>
-
-
-
-              )}
-                 {headCell.id === 'partC' && (
-
-<div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
-  <span className="text-black text-[14px] ">₹{totalConstructValue.toLocaleString('en-IN')}</span>
-</div>
-</div>
-
-
-
-              )}
-
-              {headCell.id === 'sale' && (
-
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
-  <span className="text-black text-[14px] ">₹{totalSaleValue.toLocaleString('en-IN')}</span>
-</div>
-
-
-
-  )}
-
-
-            {headCell.id === 'received' && (
-
-<div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
-  <span className="text-black text-[14px] ">₹{totalReceived.toLocaleString('en-IN')}</span>
-</div>
-</div>
-
-
-
-              )}
-
-{headCell.id === 'balance' && (
-
-<div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
-  <span className="text-black text-[14px] ">₹{selTotalBalance.toLocaleString('en-IN')}</span>
-</div>
-</div>
-
-
-
-              )}
-
-
-
-
-
-
-
-
-
-            </TableCell>
-          </>
-        ))}
-      </TableRow>
-    </TableHead>
-  )
-}
 
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
@@ -1216,7 +1033,7 @@ EnhancedTableHead.propTypes = {
 
 
   return (
-    <Section sx={{ width: '100%' }} style={{ border: 'none', radius: 0 }}>
+    <div className="border rounded-2xl  mx-2 shadow">
       {/* <EnhancedTableToolbar
         numSelected={selected.length}
         selStatus={selStatus}
@@ -1234,11 +1051,11 @@ EnhancedTableHead.propTypes = {
         searchVal={searchVal}
       /> */}
       <section
-        style={{ borderTop: '1px solid #efefef', background: '#fefafb' }}
+        style={{ borderTop: '1px solid #efefef', background: '#fefafb', borderRadius: '15px' }}
       >
-        <TableContainer sx={{ maxHeight: 640 }}>
+        <TableContainer sx={{ maxHeight: 640, borderRadius: '15px' }}>
           <Table
-            sx={{ minWidth: 750, minHeight: 260, width: 'auto' }}
+            sx={{ minWidth: 750, minHeight: 260, width: 'auto', borderRadius: '15px' }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
             stickyHeader
@@ -1631,6 +1448,6 @@ EnhancedTableHead.propTypes = {
           </Table>
         </TableContainer>
       </section>
-    </Section>
+    </div>
   )
 }

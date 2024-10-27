@@ -146,7 +146,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                     Poject Mortgage Details
                   </th>
                 </tr>
-                <tr className="bg-[#FFF6F0] text-gray-900  text-sm leading-normal" >
+                <tr className="bg-[#DDD1F5] text-gray-900  text-sm leading-normal" >
                   <th className="py-1 px-3 text-left border border-gray-300">
                     Project Name
                   </th>

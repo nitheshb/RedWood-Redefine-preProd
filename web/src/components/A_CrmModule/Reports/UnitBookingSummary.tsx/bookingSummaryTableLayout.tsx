@@ -404,9 +404,9 @@ const UnitBookingSummaryTableLayout = ({
                           }}
                         >
                           <span
-                            className={`font-PlayFair font-bold text-gray-450 ${
+                            className={`font-PlayFair  text-gray-500 ${
                               value === d.value
-                                ? 'text-[#0080ff] text-gray-800 '
+                                ? ' text-gray-800 '
                                 : ''
                             }`}
                           >
@@ -416,8 +416,8 @@ const UnitBookingSummaryTableLayout = ({
                               <span
                                 className={` font-semibold px-2 py-1 rounded-md ml-[4px] active:bg-green-800  ${
                                   activeNew === true
-                                    ? 'bg-green-400 text-black '
-                                    : 'bg-green-200 text-green-700'
+                                    ? 'bg-[#FFF6F0] text-black '
+                                    : 'bg-[#FFF6F0] text-green-700'
                                 } `}
                               >
                                 {rowsCounter(leadsFetchedData, d.value).length}

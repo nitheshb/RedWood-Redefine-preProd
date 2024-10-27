@@ -40,14 +40,12 @@ const getDateForWeek = (weekNumber) => {
   /* dummy data */
 }
 
-
 const styles = {
   customTopBottomShadow: {
-    boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
-  }
-
-
-};
+    boxShadow:
+      'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
+  },
+}
 
 const reportData = [
   {
@@ -123,7 +121,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
   const totalSoldSummary = calculateTotal(projects, 'soldUnitCount')
 
   const calMonthlyValueNew = async (projects) => {
-    console.log('crmEmployeesA', crmEmployeesA);
+    console.log('crmEmployeesA', crmEmployeesA)
     try {
       setLoaderIcon(true)
       const insideValues = []
@@ -202,31 +200,31 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
     // get values matched to db
   }
   return (
-    <div className="  bg-white rounded-lg">
-      <table className="min-w-full bg-white border border-gray-200">
+    <div className="  bg-white rounded-2xl shadow-xl mt-2 ">
+      <table className="min-w-full bg-white  rounded-2xl">
         <thead>
           <tr
             className={
               dataView === 'monthly'
-                ? 'bg-[#F5F5F7] text-gray-600 text-sm leading-normal border border-gray-200 shadow-3xl'
-                : 'bg-[#F5F5F7] text-gray-600 text-sm leading-normal border border-gray-200 shadow-3xl'
+                ? 'bg-[#D9D9D9] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
+                : 'bg-[#D9D9D9] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
             }
           >
             <th
-              className="py-1 px-6 text-center border  border-gray-200"
+              className="py-1 px-6 text-center border-0  rounded-tl-2xl"
               colSpan="1"
             ></th>
             <th
-              className="py-1 px-6 text-center border  border-gray-200"
+              className="py-1 px-6 text-center border-0  border-gray-100"
               colSpan="1"
             ></th>
             <th
-              className="py-1 px-6 text-center border  border-gray-200"
+              className="py-1 px-6 text-center border-0  border-gray-100"
               colSpan="1"
             ></th>
             {dataView === 'weekly' && (
               <th
-                className="py-1 px-6 text-center border  border-gray-200"
+                className="py-1 px-6 text-center border  border-gray-100 rounded-tr-2xl"
                 colSpan="4"
               >
                 Weekly
@@ -238,7 +236,9 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                   return (
                     <th
                       key={i}
-                      className="py-1 px-6 text-center border  border-gray-200"
+                      className={`py-1 px-6 text-center border-l   border-[#d3d1d1] ${
+                        i+1 === monthsA.length ? 'rounded-tr-2xl' : ''
+                      }`}
                       colSpan="4"
                     >
                       {month?.name}
@@ -248,12 +248,14 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
               </>
             )}
           </tr>
-          <tr className="bg-[#FFF6F0]  text-gray-600 text-sm leading-normal">
-            <th className="py-1 px-3 text-left border border-gray-200">
+          <tr className="bg-[#61787b]  text-[#fff] text-[11px] leading-normal">
+            <th className="py-1 px-3 text-left border-r border-[#4c787d]">
               CRM Executive
             </th>
-            <th className="py-1 px-6 text-left border border-gray-200">Units</th>
-            <th className="py-1 px-6 text-right border border-gray-200">
+            <th className="py-1 px-6 text-left border-r border-[#4c787d]">
+              Units
+            </th>
+            <th className="py-1 px-6 text-right border-r border-[#4c787d]">
               Total Amount
             </th>
             {dataView === 'monthly' ? (
@@ -263,7 +265,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                     return (
                       <th
                         key={i}
-                        className="py-1 px-6 text-right border border-gray-200"
+                        className="py-1 px-6 text-right border-r border-[#4c787d]"
                       >
                         {month}
                       </th>
@@ -275,18 +277,19 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                     return (
                       <th
                         key={i}
-                        className="py-1 px-6 text-right border border-gray-200"
+                        className="py-1 px-6 text-right border-r border-[#4c787d]"
                       >
                         {month}
                       </th>
                     )
                   }
-                )} {['Target', 'Collection', 'Pending', 'Other Collection'].map(
+                )}{' '}
+                {['Target', 'Collection', 'Pending', 'Other Collection'].map(
                   (month, i) => {
                     return (
                       <th
                         key={i}
-                        className="py-1 px-6 text-right border border-gray-200"
+                        className="py-1 px-6 text-right border-r border-[#4c787d]"
                       >
                         {month}
                       </th>
@@ -298,7 +301,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                     return (
                       <th
                         key={i}
-                        className="py-1 px-6 text-right border border-gray-200"
+                        className="py-1 px-6 text-right border-r border-[#4c787d]"
                       >
                         {month}
                       </th>
@@ -308,16 +311,16 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
               </>
             ) : (
               <>
-                <th className="py-1 px-6 text-right border border-gray-200">
+                <th className="py-1 px-6 text-right border border-gray-100">
                   Week 1 <br /> ({getDateForWeek(1)})
                 </th>
-                <th className="py-1 px-6 text-right border border-gray-200">
+                <th className="py-1 px-6 text-right border border-gray-100">
                   Week 2 <br /> ({getDateForWeek(2)})
                 </th>
-                <th className="py-1 px-6 text-right border border-gray-200">
+                <th className="py-1 px-6 text-right border border-gray-100">
                   Week 3 <br /> ({getDateForWeek(3)})
                 </th>
-                <th className="py-1 px-6 text-right border border-gray-200">
+                <th className="py-1 px-6 text-right border border-gray-100">
                   Week 4 <br /> ({getDateForWeek(4)})
                 </th>
               </>
@@ -351,15 +354,15 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
             return (
               <tr
                 key={index}
-                className="border-b border-gray-200 hover:bg-gray-100 text-[#33393d] font-[400]"
+                className="border-t border-gray-100 hover:bg-gray-100 text-[#33393d] font-[400]"
               >
-                <td className="py- px-3 text-left whitespace-nowrap border  border-gray-200">
+                <td className="py- px-3 text-left whitespace-nowrap border-t  border-gray-100">
                   {capitalizeFirstLetter(data?.name)}
                 </td>
-                <td className="py- px-6 pr-10 text-right border  border-gray-200">
+                <td className="py- px-6 pr-10 text-right border-t border-l  border-gray-100">
                   {data?.soldUnitCount?.toLocaleString('en-IN')}
                 </td>
-                <td className="py- px-6  border text-right  border-gray-200">
+                <td className="py- px-6  border text-right  border-t border-l border-gray-100">
                   {/* {totalAmount?.toLocaleString('en-IN')} */}
                   {data?.months
                     ?.reduce((accumulator, currentValue) => {
@@ -375,31 +378,31 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                       console.log('what is this', month)
                       return (
                         <>
-                        <td
-                          key={i}
-                          className="py- px-6 text-right border  border-gray-200"
-                        >
-                          {`${x?.receive?.toLocaleString('en-IN')}`}
-                        </td>
-                        <td
-                          key={i}
-                          className="py- px-6 text-right border  border-gray-200"
-                        >
-                          {`${x?.collected?.toLocaleString('en-IN')}`}
-                        </td>
-                        <td
-                          key={i}
-                          className="py- px-6 text-right border  border-gray-200"
-                        >
-                          {`${x?.pending?.toLocaleString('en-IN')}`}
-                        </td>
-                        <td
-                          key={i}
-                          className="py- px-6 text-right border  border-gray-200"
-                        >
-                          {`${x?.otherCollection?.toLocaleString('en-IN')}`}
-                        </td>
-</>
+                          <td
+                            key={i}
+                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                          >
+                            {`${x?.receive?.toLocaleString('en-IN')}`}
+                          </td>
+                          <td
+                            key={i}
+                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                          >
+                            {`${x?.collected?.toLocaleString('en-IN')}`}
+                          </td>
+                          <td
+                            key={i}
+                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                          >
+                            {`${x?.pending?.toLocaleString('en-IN')}`}
+                          </td>
+                          <td
+                            key={i}
+                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                          >
+                            {`${x?.otherCollection?.toLocaleString('en-IN')}`}
+                          </td>
+                        </>
                       )
                     })}
                     {/* <td className="py-3 px-6 text-right border border-black">

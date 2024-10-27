@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react'
 
 import { X } from '@mui/icons-material'
 
-import { gretProjectionSum, steamUsersListByDept } from 'src/context/dbQueryFirebase'
+import {
+  gretProjectionSum,
+  steamUsersListByDept,
+} from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { getNextThreeMonths } from 'src/util/dateConverter'
 import SkeletonLoaderPage from 'src/pages/SkeletonLoader/skeletonLoaderPage'
+import { getNextThreeMonths } from 'src/util/dateConverter'
+
 import TableSkeleton from './_mock/comps/table/table-skeleton'
 import EmpCollectionSummary from './empCollectionReport'
 
@@ -37,19 +41,12 @@ const getDateForWeek = (weekNumber) => {
   /* dummy data */
 }
 
-
-
-
 const styles = {
   customTopBottomShadow: {
-    boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
-  }
-
-
-};
-
-
-
+    boxShadow:
+      'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
+  },
+}
 
 const reportData = [
   {
@@ -107,7 +104,7 @@ const CrmCollectionReport = ({ projects }) => {
     getCRMemployees()
   }, [])
   const getCRMemployees = async () => {
-    const unsubscribe =  steamUsersListByDept(
+    const unsubscribe = steamUsersListByDept(
       orgId,
       ['crm'],
       (querySnapshot) => {
@@ -148,58 +145,58 @@ const CrmCollectionReport = ({ projects }) => {
   }
   const totalSoldSummary = calculateTotal(projects, 'soldUnitCount')
 
-
   const calMonthlyValueNew = async (projects) => {
     try {
       setLoaderIcon(true)
-      const insideValues = [];
+      const insideValues = []
 
       // Iterate over projects
       for (const projectData of projects) {
         //  const z = await projects.map((projectData) => {
-        const newProjectData = { ...projectData };
-        const projectMonthArray = [];
+        const newProjectData = { ...projectData }
+        const projectMonthArray = []
 
         // Use Promise.all to execute asynchronous operations concurrently
-        await Promise.all(monthsA.map(async (month) => {
-          const payload = {
-            pId: projectData.uid,
-            monthNo: month.count,
-            currentYear: month.currentYear,
-          };
+        await Promise.all(
+          monthsA.map(async (month) => {
+            const payload = {
+              pId: projectData.uid,
+              monthNo: month.count,
+              currentYear: month.currentYear,
+            }
 
-          // Fetch projection sum asynchronously
-          const totalReceivableValue = await gretProjectionSum(orgId, payload);
+            // Fetch projection sum asynchronously
+            const totalReceivableValue = await gretProjectionSum(orgId, payload)
 
-          // Update month object with receivable value
-          const updatedMonth = { ...month, receive: totalReceivableValue };
-          console.log(
-            'Value refreshed',
-            updatedMonth,
-            projectData?.projectName,
-            '=>',
-            updatedMonth.receive?.length
-          );
+            // Update month object with receivable value
+            const updatedMonth = { ...month, receive: totalReceivableValue }
+            console.log(
+              'Value refreshed',
+              updatedMonth,
+              projectData?.projectName,
+              '=>',
+              updatedMonth.receive?.length
+            )
 
-          projectMonthArray.push(updatedMonth);
-        }));
+            projectMonthArray.push(updatedMonth)
+          })
+        )
 
         // Update project data with month array
-        newProjectData.months = projectMonthArray;
-        insideValues.push(newProjectData);
+        newProjectData.months = projectMonthArray
+        insideValues.push(newProjectData)
       }
 
       // After processing all projects, update state with updated project data
-      setProjectWithValues(insideValues);
+      setProjectWithValues(insideValues)
     } catch (error) {
-      console.error('Error calculating monthly values:', error);
+      console.error('Error calculating monthly values:', error)
       // Handle error
-    }finally {
+    } finally {
       // Set loading state to false
-      setLoaderIcon(false);
+      setLoaderIcon(false)
     }
-  };
-
+  }
 
   const calMonthlyValue = (pId, monthNo, currentYear) => {
     const data = { pId, monthNo, currentYear }
@@ -224,28 +221,27 @@ const CrmCollectionReport = ({ projects }) => {
   }
   return (
     <div className="p-4  bg-[#fff] ">
-      <div className="flex overflow-x-auto ml-2 border-b pb- mb-">
-        <div>
-          <h2 className="mb-4 text-lg font-semibold text-black leading-light">
-             Collection Report
-          </h2>
-        </div>
+      <section className=" p-2 rounded-2xl shadow border">
+        <div className="flex overflow-x-auto ml-2 border-b pb- mb-">
+          <div>
+            <h2 className="mb-4 text-lg font-semibold text-black leading-light">
+              Collections
+            </h2>
+          </div>
 
-        {[
-          { label: 'Project Collections', value: 'project_collections' },
-          { label: 'Employee Collections', value: 'employee_collections' },
-
-        ].map((data, i) => {
-          return (
-            <section
-              key={i}
-              className="flex "
-              onClick={() => {
-                console.log('am i clicked', data.value)
-                setSelCat(data.value)
-              }}
-            >
-
+          {[
+            { label: 'Project Collections', value: 'project_collections' },
+            { label: 'Employee Collections', value: 'employee_collections' },
+          ].map((data, i) => {
+            return (
+              <section
+                key={i}
+                className="flex "
+                onClick={() => {
+                  console.log('am i clicked', data.value)
+                  setSelCat(data.value)
+                }}
+              >
                 <span
                   className={`flex ml-2 mt-1 items-center h-6 px-3 text-xs  ${
                     selCat === data.value
@@ -257,155 +253,151 @@ const CrmCollectionReport = ({ projects }) => {
                   <img alt="" src="/temp2.png" className="h-3 w-3 mr-1" />
                   {data?.label}
                 </span>
-
-            </section>
-          )
-        })}
-
-      </div>
-     {selCat === 'project_collections'  && <table className="min-w-full bg-white border  border-gray-200">
-        <thead>
-          <tr
-            className={
-              dataView === 'monthly'
-                ? 'bg-[#F5F5F7] text-gray-600 text-sm leading-normal border  border-gray-200'
-                : 'bg-[#F5F5F7] text-gray-600 text-sm leading-normal border  border-gray-200'
-            }
-          >
-            <th
-              className="py-1 px-6 text-center border  border-gray-200"
-              colSpan="1"
-            ></th>
-            <th
-              className="py-1 px-6 text-center border  border-gray-200"
-              colSpan="1"
-            ></th>
-            <th
-              className="py-1 px-6 text-center border  border-gray-200"
-              colSpan="1"
-            ></th>
-            {dataView === 'weekly' && (
-              <th
-                className="py-1 px-6 text-center border  border-gray-200"
-                colSpan="4"
+              </section>
+            )
+          })}
+        </div>
+        {selCat === 'project_collections' && (
+          <table className="min-w-full bg-white mt-2  border-gray-100 rounded-2xl shadow ">
+            <thead className="border-0">
+              <tr
+                className={
+                  dataView === 'monthly'
+                    ? 'bg-[#CBD0CD] text-gray-600 text-sm leading-normal   border-gray-100 rounded-2xl'
+                    : 'bg-[#CBD0CD] text-gray-600 text-sm leading-normal border  border-gray-100  rounded-2xl'
+                }
               >
-                Weekly
-              </th>
-            )}
-            {dataView === 'monthly' && (
-              <th
-                className="py-1 px-6 text-center border  border-gray-200"
-                colSpan="4"
-              >
-                Monthly
-              </th>
-            )}
-
-          </tr>
-          <tr className="bg-[#FFF6F0] text-gray-600 text-sm leading-normal" >
-            <th className="py-1 px-3 text-left border  border-gray-200">
-              Project Name
-            </th>
-            <th className="py-1 px-6 text-left border  border-gray-200">
-              Sold Units
-            </th>
-            <th className="py-1 px-6 text-right border  border-gray-200">
-              Total Amount
-            </th>
-            {dataView === 'monthly' ? (
-              <>
-                {monthsA.map((month, i) => {
-                  return (
-                    <th
-                      key={i}
-                      className="py-1 px-6 text-right border  border-gray-200"
-                    >
-                      {month?.name}
+                <th
+                  className="py-1 px-6 text-center  rounded-tl-2xl"
+                  colSpan="1"
+                ></th>
+                <th
+                  className="py-1 px-6 text-center "
+                  colSpan="1"
+                ></th>
+                <th
+                  className="py-1 px-6 text-center "
+                  colSpan="1"
+                ></th>
+                {dataView === 'weekly' && (
+                  <th
+                    className="py-1 px-6 text-center border-l border-[#c6cac8] rounded-tr-2xl "
+                    colSpan="4"
+                  >
+                    Weekly
+                  </th>
+                )}
+                {dataView === 'monthly' && (
+                  <th
+                    className="py-1 px-6 text-center rounded-tr-2xl"
+                    colSpan="4"
+                  >
+                    Monthly
+                  </th>
+                )}
+              </tr>
+              <tr className="bg-[#61787b] text-[#fff] text-[11px] font-bodyLato leading-normal">
+                <th className="py-2 px-3 text-left    border-[#4c787d]">
+                  Project Name
+                </th>
+                <th className="py-1 px-6 text-left  border-l  border-[#4c787d]">
+                  Sold Units
+                </th>
+                <th className="py-1 px-6 text-right border-l  border-[#4c787d]">
+                  Total Amount
+                </th>
+                {dataView === 'monthly' ? (
+                  <>
+                    {monthsA.map((month, i) => {
+                      return (
+                        <th
+                          key={i}
+                          className="py-1 px-6 text-right  border-l  border-[#4c787d]"
+                        >
+                          {month?.name}
+                        </th>
+                      )
+                    })}
+                  </>
+                ) : (
+                  <>
+                    <th className="py-1 px-6 text-right border  border-[#4c787d]">
+                      Week 1 <br /> ({getDateForWeek(1)})
                     </th>
-                  )
-                })}
-              </>
-            ) : (
-              <>
-                <th className="py-1 px-6 text-right border  border-gray-200">
-                  Week 1 <br /> ({getDateForWeek(1)})
-                </th>
-                <th className="py-1 px-6 text-right border  border-gray-200">
-                  Week 2 <br /> ({getDateForWeek(2)})
-                </th>
-                <th className="py-1 px-6 text-right border  border-gray-200">
-                  Week 3 <br /> ({getDateForWeek(3)})
-                </th>
-                <th className="py-1 px-6 text-right border  border-gray-200">
-                  Week 4 <br /> ({getDateForWeek(4)})
-                </th>
-              </>
-            )}
+                    <th className="py-1 px-6 text-right border  border-[#4c787d]">
+                      Week 2 <br /> ({getDateForWeek(2)})
+                    </th>
+                    <th className="py-1 px-6 text-right border  border-[#4c787d]">
+                      Week 3 <br /> ({getDateForWeek(3)})
+                    </th>
+                    <th className="py-1 px-6 text-right border  border-[#4c787d]">
+                      Week 4 <br /> ({getDateForWeek(4)})
+                    </th>
+                  </>
+                )}
+              </tr>
+            </thead>
 
-          </tr>
-        </thead>
+            {loader && [1, 2, 3].map((d, i) => <TableSkeleton key={i} />)}
 
-       {loader && [1,2,3].map((d,i)=>(
-        <TableSkeleton  key={i}/>
-       ))}
-
-
-
-        <tbody className="text-gray-600 text-sm font-light">
-          {/* <tr className="bg-gray-100">
+            <tbody className="text-gray-600 text-sm font-light">
+              {/* <tr className="bg-gray-100">
             <td
               colSpan={dataView === 'monthly' ? 7 : 6}
               className="border border-black"
             ></td>
           </tr> */}
-          {projectAValues?.map((data, index) => {
-            console.log('final value is', data)
-            let totalAmount = 0
-            if (dataView === 'monthly') {
-              totalAmount =
-                data?.monthly?.june + data?.monthly?.may + data?.monthly?.april
-            } else {
-              totalAmount =
-                data?.weekly?.week1 +
-                data?.weekly?.week2 +
-                data?.weekly?.week3 +
-                data?.weekly?.week4
-            }
-            const oldDue = 0
-            return (
-              <tr
-                key={index}
-                className="border-b border-gray-200 hover:bg-gray-100  text-[#33393d] font-[400]"
-              >
-                <td className="py- px-3 text-left whitespace-nowrap border  border-gray-200 font-bodyLato text-[#33393d] ">
-                  {capitalizeFirstLetter(data?.projectName)}
-                </td>
-                <td className="py- px-6 pr-10 text-right border  border-gray-200">
-                  {data?.soldUnitCount?.toLocaleString('en-IN')}
-                </td>
-                <td className="py- px-6  border text-right  border-gray-200">
-                  {/* {totalAmount?.toLocaleString('en-IN')} */}
-                  {data?.months?.reduce((accumulator, currentValue) => {
-  return accumulator + (currentValue?.receive || 0);
-}, 0)?.toLocaleString('en-IN')}
-                </td>
-                {dataView === 'monthly' ? (
-                  <>
-                    {data?.months?.map( (month, i) => {
-                      console.log('what is this', month)
-                      const x =  month
-                      console.log('what is this',  month)
-                      return (
-                        <td
-                          key={i}
-                          className="py- px-6 text-right border  border-gray-200"
-                        >
-                          {`${x?.receive?.toLocaleString('en-IN')}`}
-
-                        </td>
-                      )
-                    })}
-                    {/* <td className="py-3 px-6 text-right border border-black">
+              {projectAValues?.map((data, index) => {
+                console.log('final value is', data)
+                let totalAmount = 0
+                if (dataView === 'monthly') {
+                  totalAmount =
+                    data?.monthly?.june +
+                    data?.monthly?.may +
+                    data?.monthly?.april
+                } else {
+                  totalAmount =
+                    data?.weekly?.week1 +
+                    data?.weekly?.week2 +
+                    data?.weekly?.week3 +
+                    data?.weekly?.week4
+                }
+                const oldDue = 0
+                return (
+                  <tr
+                    key={index}
+                    className=" hover:bg-gray-100  text-[#33393d] font-[400] border-t-1 py-1"
+                  >
+                    <td className="py-1 px-3 text-left whitespace-nowrap border-t border-gray-100 font-bodyLato text-[#33393d] ">
+                      {capitalizeFirstLetter(data?.projectName)}
+                    </td>
+                    <td className="py-1 px-6 pr-10 text-right border-t border-l   border-gray-100">
+                      {data?.soldUnitCount?.toLocaleString('en-IN')}
+                    </td>
+                    <td className="py-1 px-6  border-t border-l text-right  border-gray-100">
+                      {/* {totalAmount?.toLocaleString('en-IN')} */}
+                      {data?.months
+                        ?.reduce((accumulator, currentValue) => {
+                          return accumulator + (currentValue?.receive || 0)
+                        }, 0)
+                        ?.toLocaleString('en-IN')}
+                    </td>
+                    {dataView === 'monthly' ? (
+                      <>
+                        {data?.months?.map((month, i) => {
+                          console.log('what is this', month)
+                          const x = month
+                          console.log('what is this', month)
+                          return (
+                            <td
+                              key={i}
+                              className="py- px-6 text-right border-t border-l  border-gray-100"
+                            >
+                              {`${x?.receive?.toLocaleString('en-IN')}`}
+                            </td>
+                          )
+                        })}
+                        {/* <td className="py-3 px-6 text-right border border-black">
                       {data?.monthly?.june.toLocaleString('en-IN')}
                     </td>
                     <td className="py-3 px-6 text-right border border-black">
@@ -414,31 +406,37 @@ const CrmCollectionReport = ({ projects }) => {
                     <td className="py-3 px-6 text-right border border-black">
                       {data?.monthly?.april.toLocaleString('en-IN')}
                     </td> */}
-                  </>
-                ) : (
-                  <>
-                    <td className="py- px-6 text-right border  border-gray-200">
-                      {data?.weekly?.week1.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py- px-6 text-right border  border-gray-200">
-                      {data?.weekly?.week2.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py- px-6 text-right border  border-gray-200">
-                      {data?.weekly?.week3.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py- px-6 text-right border  border-gray-200">
-                      {data?.weekly?.week4.toLocaleString('en-IN')}
-                    </td>
-                  </>
-                )}
-
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>}
-      {selCat === 'employee_collections'  &&  <EmpCollectionSummary projects={projects} crmEmployeesA={crmEmployeesA} />}
-       </div>
+                      </>
+                    ) : (
+                      <>
+                        <td className="py- px-6 text-right border-t border-l  border-gray-100">
+                          {data?.weekly?.week1.toLocaleString('en-IN')}
+                        </td>
+                        <td className="py- px-6 text-right border-t border-l  border-gray-100">
+                          {data?.weekly?.week2.toLocaleString('en-IN')}
+                        </td>
+                        <td className="py- px-6 text-right border-t border-l  border-gray-100">
+                          {data?.weekly?.week3.toLocaleString('en-IN')}
+                        </td>
+                        <td className="py- px-6 text-right border-t border-l  border-gray-100">
+                          {data?.weekly?.week4.toLocaleString('en-IN')}
+                        </td>
+                      </>
+                    )}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        )}
+        {selCat === 'employee_collections' && (
+          <EmpCollectionSummary
+            projects={projects}
+            crmEmployeesA={crmEmployeesA}
+          />
+        )}
+      </section>
+    </div>
   )
 }
 

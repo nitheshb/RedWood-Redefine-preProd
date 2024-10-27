@@ -51,6 +51,7 @@ import ReportBars from './Reports/ReportBars'
 import TransactionCard from './Reports/TransactionCard'
 import UnitStatusCardReport from './Reports/UnitStatusCardReport'
 import CrmMortgageSummaryTable from './Reports/CrmMortgageSummary'
+import UnitBookingSummaryHomePage1 from './Reports/bookingSummaryHomev1'
 
 const CrmAnalyticsHome = ({ project }) => {
   const theme = useTheme()
@@ -96,10 +97,11 @@ const CrmAnalyticsHome = ({ project }) => {
               >
                 {[
           { label: 'Booking Summary', value: 'booking_summary' },
+          { label: 'Booking Summary(v1)', value: 'booking_summary-v1' },
           { label: 'Collections', value: 'collection_performance' },
-          { label: 'CRM Inventory Report', value: 'crm_table' },
+          { label: 'CRM Inventory', value: 'crm_table' },
           {
-            label: 'Collection Projection Report',
+            label: 'Collection Projections',
             value: 'crm_projection_report',
           },
 
@@ -129,7 +131,7 @@ const CrmAnalyticsHome = ({ project }) => {
                           }}
                         >
                           <span
-                            className={`font-bold font-semibold text-gray-450 ${
+                            className={`font-bold font-semibold text-gray-500 ${
                               selCat === d.value
                                 ? 'text-[#0080ff] text-gray-800 '
                                 : ''
@@ -236,6 +238,14 @@ const CrmAnalyticsHome = ({ project }) => {
         <div className="">
           {/* <AdvancedDataTableTest /> */}
           <UnitBookingSummaryHomePage />
+
+          {projects.length === 0 && <DummyBodyLayout />}
+        </div>
+      )}
+       {selCat === 'booking_summary-v1' && (
+        <div className="">
+          {/* <AdvancedDataTableTest /> */}
+          <UnitBookingSummaryHomePage1 />
 
           {projects.length === 0 && <DummyBodyLayout />}
         </div>
