@@ -13,13 +13,27 @@ export default function ProfileSummary() {
 
   const [isFollowing, setIsFollowing] = useState<boolean>(false)
 
+
+  const [showAbout, setShowAbout] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+
+
+const handleShowAbout = () => {
+  setShowAbout((prevState) => !prevState)
+}
+
+
+const handleShowPassword = () => {
+  setShowPassword((prevState) => !prevState);
+};
+
+
+
+
+
   const handleToggle = () => {
     setIsFollowing((prevState) => !prevState)
   }
-
-
-
-
 
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -54,13 +68,6 @@ export default function ProfileSummary() {
       setError("Passwords do not match");
     }
   };
-
-
-
-
-
-
-
 
 
   return (
@@ -169,26 +176,30 @@ export default function ProfileSummary() {
           <div className="flex mt-4">
             <nav className="flex space-x-4">
               <a
+                 onClick={handleShowAbout}
+
                 href="#"
-                className="text-sm font-medium text-neutral-500 dark:text-neutral-300 hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
+                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
               >
                 My Profile
               </a>
               <a
+                      onClick={handleShowPassword}
+
                 href="#"
-                className="text-sm font-medium text-neutral-500 dark:text-neutral-300 hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
+                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
               >
-                Teams
+                Password Reset
               </a>
               <a
                 href="#"
-                className="text-sm font-medium text-neutral-500 dark:text-neutral-300 hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
+                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
               >
                 Files
               </a>
               <a
                 href="#"
-                className="text-sm font-medium text-neutral-500 dark:text-neutral-300 hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
+                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
               >
                 Connections
               </a>
@@ -229,6 +240,8 @@ export default function ProfileSummary() {
       <div>
         <div>
           <div className="absolute top-0 right-0 p-4"></div>
+          {showAbout && (
+
           <div className="p-8 space-y-6 dark:divide-neutral-700">
             <div>
               <h2 className="text-2xl font-bold text-black">About</h2>
@@ -329,8 +342,11 @@ export default function ProfileSummary() {
 
             </ul>
           </div>
+          )}
+
         </div>
 
+        {showPassword && (
 
         <div>
 
@@ -376,12 +392,7 @@ export default function ProfileSummary() {
     </form>
     
         </div>
-
-
-
-
-
-
+      )}
 
       </div>
 
