@@ -691,6 +691,14 @@ React.useEffect(() => {
   {/* today */}
 
 
+  const getRandomColor = () => {
+    const red = Math.floor(Math.random() * 156) + 100;
+    const green = Math.floor(Math.random() * 156) + 100;
+    const blue = Math.floor(Math.random() * 156) + 100;
+
+    return `#${red.toString(16).padStart(2, "0")}${green.toString(16).padStart(2, "0")}${blue.toString(16).padStart(2, "0")}`;
+  };
+
 function EnhancedTableHead(props) {
   const {
     onSelectAllClick,
@@ -745,16 +753,17 @@ function EnhancedTableHead(props) {
           padding="none"
           size="small"
           style={{
-            backgroundColor: '#61787B',
+            backgroundColor: '#DDD1F5',
             color: '#1a91eb',
             maxHeight: '10px',
             height: '10px',
             lineHeight: '10px',
             maxWidth: '52px',
             minWidth: '25px',
-            padding: '0px',
-borderRadius: '2xl',
-borderBottom: '0.2px solid #4c787d',
+            padding: '10px',
+            borderRadius: '2xl',
+            borderBottom: '0.2px solid #d3c5f1',
+            borderRight: '0.2px solid #d3c5f1',
 
             paddingLeft: '14px',
             paddingRight: '29px',
@@ -773,7 +782,7 @@ borderBottom: '0.2px solid #4c787d',
 
 
 
-          <TableSortLabel style={{backgroundColor: '#61787B',borderRight: '0.2px solid #e7e5e4', color: '#fff',fontWeight: '600' }}>S.No</TableSortLabel>
+          <TableSortLabel style={{borderRight: '0.2px solid #d3c5f1', color: '#000',fontWeight: '600' }}>S.No</TableSortLabel>
         </TableCell>
         {headCells.map((headCell) => (
           <>
@@ -783,16 +792,16 @@ borderBottom: '0.2px solid #4c787d',
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
-                backgroundColor: '#61787B',
-                color: '#33393d',
+                backgroundColor: '#DDD1F5',
+                color: '#000',
 
                 fontWeight: '600',
                 height: '10px',
                 maxHeight: '10px',
                 lineHeight: '7px',
                 padding: '8px 7px 8px 10px',
-                borderRight: '0.2px solid #4c787d',
-                borderBottom: '0.2px solid #4c787d',
+                borderRight: '0.2px solid #d3c5f1',
+                borderBottom: '0.2px solid #d3c5f1',
 
                 display: displayHeadersFun(headCell.id)
               }}
@@ -802,12 +811,12 @@ borderBottom: '0.2px solid #4c787d',
                 direction={orderBy === headCell.id ? order : 'asc'}
                 onClick={createSortHandler(headCell.id)}
                 style={{
-                  backgroundColor: '#61787B',
+                  backgroundColor: '#DDD1F5',
                   color: '#33393d',
                   fontFamily: 'inherit',
                 }}
               >
-                <span className="text-[#fff] whitespace-nowrap">
+                <span className="text-[#000] whitespace-nowrap">
                   {headCell.label}
                 </span>
                 {orderBy === headCell.id ? (
@@ -847,7 +856,7 @@ borderBottom: '0.2px solid #4c787d',
           padding="none"
           size="small"
           style={{
-            backgroundColor: '#61787B',
+            backgroundColor: '#DDD1F5',
             color: '#1a91eb',
             maxHeight: '12px',
             height: '12px',
@@ -873,7 +882,7 @@ borderBottom: '0.2px solid #4c787d',
 
 
 
-          <TableSortLabel style={{backgroundColor: '#61787B', color: '#000',fontWeight: '500' }}></TableSortLabel>
+          <TableSortLabel style={{backgroundColor: '#DDD1F5', color: '#000',fontWeight: '500' }}></TableSortLabel>
         </TableCell>
         {headCells.map((headCell) => (
           <>
@@ -883,15 +892,15 @@ borderBottom: '0.2px solid #4c787d',
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
-                backgroundColor: ['partA','partB','partC','partD','partE', 'sale', 'received', 'balance'].includes(headCell.id) ? '#61787B': '#61787B',
+                backgroundColor: ['partA','partB','partC','partD','partE', 'sale', 'received', 'balance'].includes(headCell.id) ? '#DDD1F5': '#DDD1F5',
                 color: '#33393d',
                 height: '6px',
                 maxHeight: '10px',
                 lineHeight: '7px',
-                fontWeight: '500',
+                fontWeight: '600',
                 padding: '6px 1px 6px 10px',
 
-                borderRight: '0.2px solid #4c787d',
+                borderRight: '0.2px solid #d3c5f1',
 
                 display: displayHeadersFun(headCell.id)
               }}
@@ -902,8 +911,8 @@ borderBottom: '0.2px solid #4c787d',
               {headCell.id === 'partA' && (
 
 <div style={{  }}>
-<div className="bg-[#61787B]  flex items-center justify-end py-2 pr-1">
-  <span className="text-[#fff] text-[14px] ">₹{totalLandValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#DDD1F5]  flex items-center justify-end py-2 pr-1">
+  <span className="text-[#000] text-[14px] ">₹{totalLandValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -913,8 +922,8 @@ borderBottom: '0.2px solid #4c787d',
                  {headCell.id === 'partB' && (
 
 <div style={{  }}>
-<div className="bg-[#61787B]  flex items-center justify-end py-2 pr-1">
-  <span className="text-[#fff] text-[14px] ">₹{totalChargesIValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#DDD1F5]  flex items-center justify-end py-2 pr-1">
+  <span className="text-[#000] text-[14px] ">₹{totalChargesIValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -925,8 +934,8 @@ borderBottom: '0.2px solid #4c787d',
                {headCell.id === 'partC' && (
 
 <div style={{  }}>
-<div className="bg-[#61787B]  flex items-center justify-end py-2 pr-1">
-  <span className="text-[#fff] text-[14px] ">₹{totalConstructValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#DDD1F5]  flex items-center justify-end py-2 pr-1">
+  <span className="text-[#000] text-[14px] ">₹{totalConstructValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -937,8 +946,8 @@ borderBottom: '0.2px solid #4c787d',
 {headCell.id === 'partD' && (
 
 <div style={{  }}>
-<div className="bg-[#61787B]  flex items-center justify-end py-1 pr-1">
-  <span className="text-[#fff] text-[14px] ">₹{totalChargesIIValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#DDD1F5]  flex items-center justify-end py-1 pr-1">
+  <span className="text-[#000] text-[14px] ">₹{totalChargesIIValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -948,8 +957,8 @@ borderBottom: '0.2px solid #4c787d',
               {headCell.id === 'partE' && (
 
 <div style={{  }}>
-<div className="bg-[#61787B]  flex items-center justify-end py-1 pr-1">
-  <span className="text-[#fff] text-[14px] ">₹{totalPossessionValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#DDD1F5]  flex items-center justify-end py-1 pr-1">
+  <span className="text-[#000] text-[14px] ">₹{totalPossessionValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -960,8 +969,8 @@ borderBottom: '0.2px solid #4c787d',
 
               {headCell.id === 'sale' && (
 
-<div className="bg-[#61787B] flex items-center justify-end py-1 pr-1">
-  <span className="text-[#fff] text-[14px] ">₹{totalSaleValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#DDD1F5] flex items-center justify-end py-1 pr-1">
+  <span className="text-[#000] text-[14px] ">₹{totalSaleValue.toLocaleString('en-IN')}</span>
 </div>
 
 
@@ -972,8 +981,8 @@ borderBottom: '0.2px solid #4c787d',
             {headCell.id === 'received' && (
 
 <div style={{  }}>
-<div className="bg-[#61787B]  flex items-center justify-end py-1 pr-1">
-  <span className="text-[#fff] text-[14px] ">₹{totalReceived.toLocaleString('en-IN')}</span>
+<div className="bg-[#DDD1F5]  flex items-center justify-end py-1 pr-1">
+  <span className="text-[#000] text-[14px] ">₹{totalReceived.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -984,8 +993,8 @@ borderBottom: '0.2px solid #4c787d',
 {headCell.id === 'balance' && (
 
 <div style={{  }}>
-<div className="bg-[#61787B] flex items-center justify-end py-1 pr-1">
-  <span className="text-[#fff] text-[14px] ">₹{selTotalBalance.toLocaleString('en-IN')}</span>
+<div className="bg-[#DDD1F5] flex items-center justify-end py-1 pr-1">
+  <span className="text-[#000] text-[14px] ">₹{selTotalBalance.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -1051,7 +1060,7 @@ EnhancedTableHead.propTypes = {
         searchVal={searchVal}
       /> */}
       <section
-        style={{ borderTop: '1px solid #efefef', background: '#fefafb', borderRadius: '15px' }}
+        style={{background: '#fefafb', borderRadius: '15px', }}
       >
         <TableContainer sx={{ maxHeight: 640, borderRadius: '15px' }}>
           <Table
@@ -1195,9 +1204,12 @@ EnhancedTableHead.propTypes = {
 
                         >
                           <section>
-                            <div className="font-bodyLato text-[#33393d]">
+                            <article className='flex flex-row'>
+                            <span className="bg-[#ff7647] text-[#ffffff] w-5 h-5 mr-2 text-[9px] flex items-center justify-center rounded-full flex-shrink-0 font-semibold capitalize" aria-hidden="true"     style={{ backgroundColor: getRandomColor() }} > {row?.customerDetailsObj?.customerName1?.toString()?.charAt(0)}</span>
+                            <div className="font-bodyLato text-[#33393d] font-medium">
                             {row?.customerDetailsObj?.customerName1?.toString()}
                             </div>
+                            </article>
                             {/* <div className="font-bodyLato">
                             {row?.customerDetailsObj?.email1?.toString()}
                             </div> */}
