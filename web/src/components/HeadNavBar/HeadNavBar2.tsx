@@ -102,8 +102,7 @@ const HeadNavBar2 = ({selModule, setSelModule,  setViewable}) => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={()=>openUserAccount()}>My account 1</MenuItem>
+          <MenuItem onClick={()=>openUserAccount()}>My account</MenuItem>
           <MenuItem onClick={() => handleClose('Logout')}>Logout</MenuItem>
         </Menu>
       </div>
