@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 
-import * as React from 'react'
+import {useState, useEffect} from 'react'
 import {
   Rating,
 } from '@mui/material'
@@ -38,6 +38,8 @@ import Highlighter from 'react-highlight-words'
 import CSVDownloader from 'src/util/csvDownload'
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import { computeTotal } from 'src/util/computeCsTotals'
+import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
+import { getAllProjects, getBookedUnitsByProject } from 'src/context/dbQueryFirebase'
 // import { prettyDate } from '../../util/dateConverter'
 // import DropCompUnitStatus from '../dropDownUnitStatus'
 
@@ -290,15 +292,22 @@ const EnhancedTableToolbar = (props) => {
     searchKey,
   } = props
   const d = new window.Date()
-  const [rowsAfterSearchKey, setRowsAfterSearchKey] = React.useState(rows)
-  const [downloadFormatRows, setDownloadFormatRows] = React.useState([])
-  const [cutOffDate, setCutOffDate] = React.useState(d.getTime() + 60000)
+  const [rowsAfterSearchKey, setRowsAfterSearchKey] = useState(rows)
+  const [projectList, setprojectList] = useState([])
 
-  const [isOpened, setIsOpened] = React.useState(false)
-  React.useEffect(() => {
+  const [downloadFormatRows, setDownloadFormatRows] = useState([])
+  const [cutOffDate, setCutOffDate] = useState(d.getTime() + 60000)
+
+  const [isOpened, setIsOpened] = useState(false)
+  const [selProjectIs, setSelProject] = useState({
+    label: 'All Projects',
+    value: 'allprojects',
+  })
+
+  useEffect(() => {
     setRowsAfterSearchKey(rows)
   }, [rows])
-  // React.useEffect(() => {
+  // useEffect(() => {
   //  console.log('calendar state', isOpened, startDate?.getTime())
   //  if(startDate !== null && endDate !=null){
   //   console.log('inside you1')
@@ -318,7 +327,7 @@ const EnhancedTableToolbar = (props) => {
   //  }
   // }, [startDate,endDate ])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const downRows = []
     rowsAfterSearchKey?.map((data) => {
       const row = {}
@@ -347,7 +356,7 @@ const EnhancedTableToolbar = (props) => {
 
     setDownloadFormatRows(downRows)
   }, [rowsAfterSearchKey])
-React.useEffect(()=>{
+useEffect(()=>{
   setSearchKey(searchVal)
   // searchKeyField({target:{value:searchVal}})
 },[searchVal])
@@ -481,60 +490,213 @@ const HighlighterStyle = (props) => {
   )
 }
 export default function UnitSummaryTableBodyV1({
-  fetchLeadsLoader,
+  leadsTyper,
+  // fetchLeadsLoader,
   selStatus,
   rowsParent,
   selUserProfileF,
   newArray,
-  leadsFetchedData,
-  mySelRows,
+  // leadsFetchedData,
+  // mySelRows,
   searchVal,
   viewUnitStatusA,
 
 }) {
   const { user } = useAuth()
-  const [order, setOrder] = React.useState('desc')
-  const [orderBy, setOrderBy] = React.useState('Date')
-  const [selected, setSelected] = React.useState([])
-  const [page, setPage] = React.useState(0)
-  const [dense, setDense] = React.useState(false)
-  const [rowsPerPage, setRowsPerPage] = React.useState(5)
-  const [rows, setRows] = React.useState([])
-  const [searchKey, setSearchKey] = React.useState(searchVal?searchVal:'')
-  const [dateRange, setDateRange] = React.useState([null, null])
+  const { orgId, access, projAccessA } = user
+
+  const [order, setOrder] = useState('desc')
+  const [orderBy, setOrderBy] = useState('Date')
+  const [selected, setSelected] = useState([])
+  const [page, setPage] = useState(0)
+  const [dense, setDense] = useState(false)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [rows, setRows] = useState([])
+  const [searchKey, setSearchKey] = useState(searchVal?searchVal:'')
+  const [dateRange, setDateRange] = useState([null, null])
   const [startDate, endDate] = dateRange
+  const [selProjectIs, setSelProject] = useState({
+    label: 'All Projects',
+    value: 'allprojects',
+  })
+  const [projectList, setprojectList] = useState([])
+  const [fetchLeadsLoader, setFetchLeadsLoader] = useState(true)
+  const [value, setValue] = useState('all')
+  const [mySelRows, setmySelRows] = useState([])
+  const [tableData, setTableData] = useState([])
+  const [leadsFetchedData, setLeadsFetchedData] = useState([])
+  const [filLeadsA, setFilLeadsA] = useState([])
+  const [tabHeadFieldsA, settabHeadFieldsA] = useState([])
+  const [unitsFetchData, setUnitsFetchData] = useState([])
 
 
+const [totalSaleValue, setTotalSaleValue] = useState(0);
+const [totalLandValue, setTotalLandValue] = useState(0);
 
-const [totalSaleValue, setTotalSaleValue] = React.useState(0);
-const [totalLandValue, setTotalLandValue] = React.useState(0);
+const [totalChargesIValue, setTotalChargesIValue] = useState(0);
 
-const [totalChargesIValue, setTotalChargesIValue] = React.useState(0);
+const [totalChargesIIValue, setTotalChargesIIValue] = useState(0);
+const [totalPossessionValue, setTotalPossessionValue] = useState(0);
 
-const [totalChargesIIValue, setTotalChargesIIValue] = React.useState(0);
-const [totalPossessionValue, setTotalPossessionValue] = React.useState(0);
+const [totalConstructValue, setTotalConstructValue] = useState(0);
 
-const [totalConstructValue, setTotalConstructValue] = React.useState(0);
+const [totalReceived, setTotalReceived] = useState(0);
+const [selTotalBalance, setTotalBalance] = useState(0);
 
-const [totalReceived, setTotalReceived] = React.useState(0);
-const [selTotalBalance, setTotalBalance] = React.useState(0);
+const [totalSETSaleValue, setSETTotalSaleValue] = useState(0);
+const [totalSETLandValue, setSETTotalLandValue] = useState(0);
 
-React.useEffect(() => {
+const [totalSETChargesIValue, setSETTotalChargesIValue] = useState(0);
 
-  // const partACost =
-  // row?.plotCS?.reduce(function (_this, val) {
-  //     return _this + val.TotalNetSaleValueGsT
-  //   }, 0) || 0
+const [totalSETChargesIIValue, setSETTotalChargesIIValue] = useState(0);
+const [totalSETPossessionValue, setSETTotalPossessionValue] = useState(0);
 
-  // const partBCost =
-  // row?.addChargesCS?.reduce(
-  //     (partialSum, obj) =>
-  //       partialSum +
-  //       Number(
-  //         computeTotal(obj, row?.super_built_up_area || row?.area)
-  //       ),
-  //     0
-  //   ) || 0
+const [totalSETConstructValue, setSETTotalConstructValue] = useState(0);
+
+const [totalSETReceived, setSETTotalReceived] = useState(0);
+const [selSETTotalBalance, setSETTotalBalance] = useState(0);
+const rowsCounter = (parent, searchKey) => {
+  return searchKey === 'all'
+    ? parent
+    : parent.filter(
+        (item) =>
+          (item?.unitStatus?.toLowerCase() || item?.status?.toLowerCase()) ===
+          searchKey.toLowerCase()
+      )
+}
+useEffect(() => {
+  boot()
+}, [projectList])
+useEffect(() => {
+  // axios
+  //   .get('/api/tableData1/all')
+  //   .then(({ data }) => {
+  //     setTableData(tableData1)
+  //   })
+  //   .catch((error) => {
+  //     // setTableData(tableData1)
+  //     console.log(error)
+  //   })
+
+  const tabHeadFieldsA1 = [
+    { value: 'all', lab: 'All', val: 'all' },
+    { value: 'booked', lab: 'Booked' },
+    { value: 'allotment', lab: 'Allotment' },
+    { value: 'ATS', lab: 'Agreement' },
+    { value: 'registered', lab: 'Registered' },
+    { value: 'construction', lab: 'Construction' },
+    { value: 'possession', lab: 'Possession' },
+  ]
+
+  settabHeadFieldsA(tabHeadFieldsA1)
+
+  leadsTyper === 'inProgress'
+    ? setValue('all')
+    : leadsTyper === 'archieveLeads'
+    ? setValue('archieve_all')
+    : setValue('booked')
+}, [])
+useEffect(() => {
+  setLeadsFetchedData(tableData)
+}, [tableData])
+useEffect(() => {
+  console.log('selected value is', value)
+  setFetchLeadsLoader(false)
+  switch (value) {
+    case 'all':
+      return setFilLeadsA(leadsFetchedData)
+    default:
+      return setFilLeadsA(
+        leadsFetchedData.filter((dat) => {
+          console.log(
+            'filtre value is ',
+            dat?.unitStatus,
+            value,
+            (dat?.unitStatus?.toLowerCase() || dat?.status?.toLowerCase()) ==
+              'booked'
+          )
+          return (
+            (dat?.unitStatus?.toLowerCase() || dat?.status?.toLowerCase()) ===
+            value?.toLowerCase()
+          )
+        })
+      )
+  }
+}, [value, leadsFetchedData])
+useEffect(() => {
+  // unitsFetchData
+  console.log('values are', unitsFetchData.length, selProjectIs.uid)
+  switch (selProjectIs.value) {
+    case 'allprojects':
+      return setTableData(unitsFetchData)
+    default:
+      return setTableData(
+        unitsFetchData.filter((dat) => dat?.pId === selProjectIs.uid)
+      )
+  }
+}, [unitsFetchData, selProjectIs])
+const boot = async () => {
+  // await getProjectsListFun()
+  const unsubscribe = await getBookedUnitsByProject(
+    orgId,
+    async (querySnapshot) => {
+      const usersListA = querySnapshot.docs.map((docSnapshot) => {
+        const x = docSnapshot.data()
+        x.id = docSnapshot.id
+        const y = projectList.filter((proj) => proj?.uid == x?.pId)
+        console.log(',my prject sel is  ===> ', projectList)
+        if (y.length > 0) {
+          console.log(',my prject sel is ', y)
+          x.projName = y[0].projectName
+        }
+        return x
+      })
+      // setBoardData
+      // console.log('my Array data is ', usersListA, crmCustomersDBData)
+      // await serealizeData(usersListA)
+      console.log('values are', usersListA)
+      await setUnitsFetchData(usersListA)
+    },
+    {
+      status: [
+        'booked',
+        'Booked',
+        'agreement_pipeline',
+        'ATS',
+        'sd_pipeline',
+        'Registered',
+        'agreement',
+        'registered',
+        'construction',
+        'possession',
+      ],
+    },
+    () => setTableData([])
+  )
+  return unsubscribe
+}
+const getProjectsListFun = () => {
+  const unsubscribe = getAllProjects(
+    orgId,
+    (querySnapshot) => {
+      const projectsListA = querySnapshot.docs.map((docSnapshot) =>
+        docSnapshot.data()
+      )
+      projectsListA.map((user) => {
+        user.label = user.projectName
+        user.value = user.projectName
+      })
+      console.log('fetched proejcts list is', projectsListA)
+      const z = [...projectsListA]
+      setprojectList(z)
+    },
+    (error) => setprojectList([])
+  )
+  return unsubscribe
+}
+useEffect(() => {
+
+
   console.log('valure are', leadsFetchedData)
   const totalSale = leadsFetchedData.reduce((total, row) => total + Number(row?.T_total || 0), 0);
   setTotalSaleValue(totalSale);
@@ -556,6 +718,28 @@ React.useEffect(() => {
   setTotalBalance(totalBalance);
 }, [leadsFetchedData]);
 
+useEffect(() => {
+
+  console.log('valure are', leadsFetchedData)
+  const totalSale = filLeadsA.reduce((total, row) => total + Number(row?.T_total || 0), 0);
+  setSETTotalSaleValue(totalSale);
+
+  const totalLand = filLeadsA.reduce((total, row) => total + Number(row?.T_A || 0), 0);
+  setSETTotalLandValue(totalLand);
+  const totalChargesI = filLeadsA.reduce((total, row) => total + Number(row?.T_B || 0), 0);
+  setSETTotalChargesIValue(totalChargesI);
+  const totalConstruction = filLeadsA.reduce((total, row) => total + Number(row?.T_C || 0), 0);
+  setSETTotalConstructValue(totalConstruction);
+  const totalChargesII = filLeadsA.reduce((total, row) => total + Number(row?.T_D || 0), 0);
+  setSETTotalChargesIIValue(totalChargesII);
+  const totalPossessionII = filLeadsA.reduce((total, row) => total + Number(row?.T_E || 0), 0);
+  setSETTotalPossessionValue(totalPossessionII);
+
+  const totalReceived = filLeadsA.reduce((total, row) => total + Number(row.T_approved || 0), 0);
+  setSETTotalReceived(totalReceived);
+  const totalBalance = filLeadsA.reduce((total, row) => total + Number(row.T_balance || 0), 0);
+  setSETTotalBalance(totalBalance);
+}, [filLeadsA]);
 
 
 
@@ -565,10 +749,11 @@ React.useEffect(() => {
 
 
 
-  React.useEffect(() => {
+
+  useEffect(() => {
   }, [selStatus, rowsParent])
   console.log(searchKey, "cdsvfeg", leadsFetchedData)
-  React.useEffect(() => {
+  useEffect(() => {
     filterSearchString(rows)
   }, [searchKey])
 
@@ -580,6 +765,9 @@ React.useEffect(() => {
       ? parent['all'] : selStatus === 'archieve_all' ? parent['archieve_all'] : parent[selStatus]
 
     await setRows(newArray)
+  }
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setVal(newValue)
   }
   const filterByDate = () => {
     rows.filter((item) => {
@@ -684,7 +872,7 @@ React.useEffect(() => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
 
-  const [selBlock, setSelBlock] = React.useState({})
+  const [selBlock, setSelBlock] = useState({})
 
 
 
@@ -827,24 +1015,6 @@ function EnhancedTableHead(props) {
                   </Section>
                 ) : null}
               </TableSortLabel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </TableCell>
           </>
         ))}
@@ -870,17 +1040,6 @@ function EnhancedTableHead(props) {
             marginRight: '10px',
           }}
         >
-          {/* <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          /> */}
-
-
 
           <TableSortLabel style={{backgroundColor: '#DDD1F5', color: '#000',fontWeight: '500' }}></TableSortLabel>
         </TableCell>
@@ -912,7 +1071,7 @@ function EnhancedTableHead(props) {
 
 <div style={{  }}>
 <div className="bg-[#DDD1F5]  flex items-center justify-end py-2 pr-1">
-  <span className="text-[#000] text-[14px] ">₹{totalLandValue.toLocaleString('en-IN')}</span>
+  <span className="text-[#000] text-[14px] ">₹{totalSETLandValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -923,7 +1082,7 @@ function EnhancedTableHead(props) {
 
 <div style={{  }}>
 <div className="bg-[#DDD1F5]  flex items-center justify-end py-2 pr-1">
-  <span className="text-[#000] text-[14px] ">₹{totalChargesIValue.toLocaleString('en-IN')}</span>
+  <span className="text-[#000] text-[14px] ">₹{totalSETChargesIValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -935,7 +1094,7 @@ function EnhancedTableHead(props) {
 
 <div style={{  }}>
 <div className="bg-[#DDD1F5]  flex items-center justify-end py-2 pr-1">
-  <span className="text-[#000] text-[14px] ">₹{totalConstructValue.toLocaleString('en-IN')}</span>
+  <span className="text-[#000] text-[14px] ">₹{totalSETConstructValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -947,7 +1106,7 @@ function EnhancedTableHead(props) {
 
 <div style={{  }}>
 <div className="bg-[#DDD1F5]  flex items-center justify-end py-1 pr-1">
-  <span className="text-[#000] text-[14px] ">₹{totalChargesIIValue.toLocaleString('en-IN')}</span>
+  <span className="text-[#000] text-[14px] ">₹{totalSETChargesIIValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -958,7 +1117,7 @@ function EnhancedTableHead(props) {
 
 <div style={{  }}>
 <div className="bg-[#DDD1F5]  flex items-center justify-end py-1 pr-1">
-  <span className="text-[#000] text-[14px] ">₹{totalPossessionValue.toLocaleString('en-IN')}</span>
+  <span className="text-[#000] text-[14px] ">₹{totalSETPossessionValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -970,7 +1129,7 @@ function EnhancedTableHead(props) {
               {headCell.id === 'sale' && (
 
 <div className="bg-[#DDD1F5] flex items-center justify-end py-1 pr-1">
-  <span className="text-[#000] text-[14px] ">₹{totalSaleValue.toLocaleString('en-IN')}</span>
+  <span className="text-[#000] text-[14px] ">₹{totalSETSaleValue.toLocaleString('en-IN')}</span>
 </div>
 
 
@@ -982,7 +1141,7 @@ function EnhancedTableHead(props) {
 
 <div style={{  }}>
 <div className="bg-[#DDD1F5]  flex items-center justify-end py-1 pr-1">
-  <span className="text-[#000] text-[14px] ">₹{totalReceived.toLocaleString('en-IN')}</span>
+  <span className="text-[#000] text-[14px] ">₹{totalSETReceived.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -994,7 +1153,7 @@ function EnhancedTableHead(props) {
 
 <div style={{  }}>
 <div className="bg-[#DDD1F5] flex items-center justify-end py-1 pr-1">
-  <span className="text-[#000] text-[14px] ">₹{selTotalBalance.toLocaleString('en-IN')}</span>
+  <span className="text-[#000] text-[14px] ">₹{selSETTotalBalance.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -1042,6 +1201,152 @@ EnhancedTableHead.propTypes = {
 
 
   return (
+
+    <section>
+      <div className="col-span-2 px-2">
+         <div className="border rounded-xl   border-gray-200 flex flex-row  bg-white shadow ">
+        {/* first section */}
+        <div className="bg-warm-white-100 rounded-lg p-6">
+          <dt className="text-gray-700 text-xs font-semibold leading-loose">Sale</dt>
+
+          <dd>
+            <div className="flex items-end font-semibold">
+              <div className="text-3xl font-heading leading-normal">
+                <span className="text-xl">₹</span>{totalSaleValue?.toLocaleString('en-IN')}</div>
+                </div>
+          </dd>
+         <div className="flex items-center ml-2"><svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg><div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span></div>
+
+        </div>
+        {/* second section */}
+        <div className="bg-warm-white-100 rounded-lg p-6">
+          <dt className="text-gray-700 text-xs font-semibold leading-loose">Received</dt>
+
+          <dd>
+            <div className="flex items-end font-semibold">
+              <div className="text-3xl font-heading leading-normal">
+                <span className="text-xl">₹</span>{totalReceived?.toLocaleString('en-IN')}</div>
+                </div>
+          </dd>
+         <div className="flex items-center ml-2"><svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg><div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span></div>
+
+        </div>
+        {/* third section */}
+        <div className="bg-warm-white-100 rounded-lg p-6">
+          <dt className="text-gray-700 text-xs font-semibold leading-loose">Balance</dt>
+
+          <dd>
+            <div className="flex items-end font-semibold">
+              <div className="text-3xl font-heading leading-normal">
+                <span className="text-xl">₹</span>{selTotalBalance?.toLocaleString('en-IN')}</div>
+                </div>
+          </dd>
+         <div className="flex items-center ml-2"><svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg><div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span></div>
+
+        </div>
+
+        </div>
+
+        </div>
+
+        <div className="flex justify-between my-2 items-center h-10 m-2 mt-6">
+          <h2 className="font-semibold text-lg text-gray-900">Booking Summary</h2>
+          {/* <section className="cursor-pointer leading-snug rounded border border-solid border-transparent no-underline font-sans font-semibold transition duration-200 hover:no-underline focus:no-underline focus:outline-none align-middle text-center inline-flex items-center justify-center text-sm py-2 px-4 h-10 rounded-[10px] text-gray-800 bg-transparent hover:bg-gray-900 hover:bg-opacity-[0.06] focus:outline-blue">Go to subscribers
+
+         </section> */}
+
+
+         <div className="flex">
+                <div className=" flex flex-col   w-40">
+                  <SlimSelectBox
+                    name="project"
+                    label=""
+                    className="input "
+                    onChange={(value) => {
+                      console.log('changed value is ', value.value)
+                      setSelProject(value)
+                      // formik.setFieldValue('project', value.value)
+                    }}
+                    value={selProjectIs?.value}
+                    // options={aquaticCreatures}
+                    options={[
+                      ...[{ label: 'All Projects', value: 'allprojects' }],
+                      ...projectList,
+                    ]}
+                  />
+                </div>
+              </div>
+
+         </div>
+           <div className="flex items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
+              {/* <h2 className="text-lg font-semibold text-black leading-light">
+                Booked Units Summary
+              </h2> */}
+
+              <div className="border rounded-xl   border-gray-200 flex flex-row justify-between bg-white shadow ">
+                <ul
+                  className="flex flex-wrap -mb-px "
+                  id="myTab"
+                  data-tabs-toggle="#myTabContent"
+                  role="tablist"
+                >
+                  {tabHeadFieldsA.map((d, i) => {
+                    return (
+                      <ul
+                        value={value}
+                        key={i}
+                        onChange={handleChange}
+                        textColor="secondary"
+                        indicatorColor="secondary"
+                        aria-label="secondary tabs example"
+                      >
+                        <li key={i} className="mr-2" role="presentation">
+                          <button
+                            className={`inline-block py-4 px-4 text-sm font-medium text-center text-gray-700 rounded-t-lg border-b-2   hover:text-gray-600 hover:border-black hover:border-b-2 dark:text-gray-400 dark:hover:text-gray-300  ${
+                              value === d.value
+                                ? 'border-black text-gray-900 '
+                                : 'border-transparent'
+                            }`}
+                            type="button"
+                            role="tab"
+                            onClick={() => {
+                              setFetchLeadsLoader(true)
+                              setValue(d.value)
+                              setFetchLeadsLoader(false)
+                              setmySelRows(rowsCounter(tableData, d.val))
+                            }}
+                          >
+                            <span
+                              className={`font-PlayFair  text-gray-500 ${
+                                value === d.value ? ' text-gray-800 ' : ''
+                              }`}
+                            >
+                              {' '}
+                              {`${d.lab}`}
+                              {
+                                <span
+                                  className={` font-semibold px-2 py-1 rounded-md ml-[4px] active:bg-green-800  ${
+                                    false === true
+                                      ? 'bg-[#FFF6F0] text-black '
+                                      : 'bg-[#f3f3f3] text-[#61787B]'
+                                  } `}
+                                >
+                                  {
+                                    rowsCounter(leadsFetchedData, d.value)
+                                      .length
+                                  }
+                                </span>
+                              }
+                            </span>
+                          </button>
+                        </li>
+                      </ul>
+                    )
+                  })}
+                </ul>
+              </div>
+
+            </div>
     <div className="border rounded-2xl  mx-2 shadow">
       {/* <EnhancedTableToolbar
         numSelected={selected.length}
@@ -1094,7 +1399,7 @@ EnhancedTableHead.propTypes = {
             <TableBody>
               {
 
-                leadsFetchedData
+              filLeadsA
                   ?.filter((item) => {
                     if (searchKey == '' || !searchKey) {
                       return item
@@ -1461,5 +1766,6 @@ EnhancedTableHead.propTypes = {
         </TableContainer>
       </section>
     </div>
+    </section>
   )
 }

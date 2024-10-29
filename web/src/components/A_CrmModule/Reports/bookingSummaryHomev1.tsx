@@ -327,95 +327,7 @@ const UnitBookingSummaryHomePage1 = ({
             className="
              py-2"
           >
-            <div className="flex items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
-              {/* <h2 className="text-lg font-semibold text-black leading-light">
-                Booked Units Summary
-              </h2> */}
 
-              <div className="border rounded-xl   border-gray-200 flex flex-row justify-between bg-white shadow ">
-                <ul
-                  className="flex flex-wrap -mb-px "
-                  id="myTab"
-                  data-tabs-toggle="#myTabContent"
-                  role="tablist"
-                >
-                  {tabHeadFieldsA.map((d, i) => {
-                    return (
-                      <ul
-                        value={value}
-                        key={i}
-                        onChange={handleChange}
-                        textColor="secondary"
-                        indicatorColor="secondary"
-                        aria-label="secondary tabs example"
-                      >
-                        <li key={i} className="mr-2" role="presentation">
-                          <button
-                            className={`inline-block py-4 px-4 text-sm font-medium text-center text-gray-700 rounded-t-lg border-b-2   hover:text-gray-600 hover:border-black hover:border-b-2 dark:text-gray-400 dark:hover:text-gray-300  ${
-                              value === d.value
-                                ? 'border-black text-gray-900 '
-                                : 'border-transparent'
-                            }`}
-                            type="button"
-                            role="tab"
-                            onClick={() => {
-                              setFetchLeadsLoader(true)
-                              setValue(d.value)
-                              setFetchLeadsLoader(false)
-                              setmySelRows(rowsCounter(tableData, d.val))
-                            }}
-                          >
-                            <span
-                              className={`font-PlayFair  text-gray-500 ${
-                                value === d.value ? ' text-gray-800 ' : ''
-                              }`}
-                            >
-                              {' '}
-                              {`${d.lab}`}
-                              {
-                                <span
-                                  className={` font-semibold px-2 py-1 rounded-md ml-[4px] active:bg-green-800  ${
-                                    false === true
-                                      ? 'bg-[#FFF6F0] text-black '
-                                      : 'bg-[#f3f3f3] text-[#61787B]'
-                                  } `}
-                                >
-                                  {
-                                    rowsCounter(leadsFetchedData, d.value)
-                                      .length
-                                  }
-                                </span>
-                              }
-                            </span>
-                          </button>
-                        </li>
-                      </ul>
-                    )
-                  })}
-                </ul>
-              </div>
-
-              <div className="flex">
-                <div className=" flex flex-col mr-5  w-40">
-                  <SlimSelectBox
-                    name="project"
-                    label=""
-                    className="input "
-                    onChange={(value) => {
-                      console.log('changed value is ', value.value)
-                      setSelProject(value)
-                      // formik.setFieldValue('project', value.value)
-                    }}
-                    value={selProjectIs?.value}
-                    // options={aquaticCreatures}
-                    options={[
-                      ...[{ label: 'All Projects', value: 'allprojects' }],
-                      ...projectList,
-                    ]}
-                  />
-                </div>
-              </div>
-            </div>
             {!ready && (
               <>
                     {fetchLeadsLoader &&
@@ -438,6 +350,8 @@ const UnitBookingSummaryHomePage1 = ({
             {statusSepA[0]?.[value].length != 0 && (
               <UnitSummaryTableBodyV1
                 // data={filterTable}
+                // data={filterTable}
+                leadsTyper={leadsTyper}
                 fetchLeadsLoader={fetchLeadsLoader}
                 selStatus={value}
                 rowsParent={statusSepA[0]}
