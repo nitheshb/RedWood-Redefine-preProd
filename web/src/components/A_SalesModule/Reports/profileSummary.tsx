@@ -13,9 +13,62 @@ export default function ProfileSummary() {
 
   const [isFollowing, setIsFollowing] = useState<boolean>(false)
 
+
+  const [showAbout, setShowAbout] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+
+
+const handleShowAbout = () => {
+  setShowAbout((prevState) => !prevState)
+}
+
+
+const handleShowPassword = () => {
+  setShowPassword((prevState) => !prevState);
+};
+
+
+
+
+
   const handleToggle = () => {
     setIsFollowing((prevState) => !prevState)
   }
+
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [error, setError] = useState("");
+
+ 
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    if (repeatPassword && e.target.value !== repeatPassword) {
+      setError("Passwords do not match");
+    } else {
+      setError("");
+    }
+  };
+
+
+  const handleRepeatPasswordChange = (e) => {
+    setRepeatPassword(e.target.value);
+    if (password && e.target.value !== password) {
+      setError("Passwords do not match");
+    } else {
+      setError("");
+    }
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (password === repeatPassword) {
+      console.log("Password matched. Form submitted successfully!");
+    } else {
+      setError("Passwords do not match");
+    }
+  };
+
 
   return (
     <div className="m-2">
@@ -123,26 +176,30 @@ export default function ProfileSummary() {
           <div className="flex mt-4">
             <nav className="flex space-x-4">
               <a
+                 onClick={handleShowAbout}
+
                 href="#"
-                className="text-sm font-medium text-neutral-500 dark:text-neutral-300 hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
+                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
               >
                 My Profile
               </a>
               <a
+                      onClick={handleShowPassword}
+
                 href="#"
-                className="text-sm font-medium text-neutral-500 dark:text-neutral-300 hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
+                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
               >
-                Teams
+                Password Reset
               </a>
               <a
                 href="#"
-                className="text-sm font-medium text-neutral-500 dark:text-neutral-300 hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
+                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
               >
                 Files
               </a>
               <a
                 href="#"
-                className="text-sm font-medium text-neutral-500 dark:text-neutral-300 hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
+                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
               >
                 Connections
               </a>
@@ -183,6 +240,8 @@ export default function ProfileSummary() {
       <div>
         <div>
           <div className="absolute top-0 right-0 p-4"></div>
+          {showAbout && (
+
           <div className="p-8 space-y-6 dark:divide-neutral-700">
             <div>
               <h2 className="text-2xl font-bold text-black">About</h2>
@@ -283,7 +342,58 @@ export default function ProfileSummary() {
 
             </ul>
           </div>
+          )}
+
         </div>
+
+        {showPassword && (
+
+        <div>
+
+        <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-sm p-6 bg-white border border-gray-300 rounded-lg shadow-md"
+    >
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2">Password:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2">Repeat Password:</label>
+        <input
+          type="password"
+          value={repeatPassword}
+          onChange={handleRepeatPasswordChange}
+          required
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
+      <button
+        type="submit"
+        disabled={password !== repeatPassword || !password}
+        className={`w-full py-2 px-4 rounded text-white font-semibold ${
+          password === repeatPassword && password
+            ? "bg-green-500 hover:bg-green-600"
+            : "bg-gray-300 cursor-not-allowed"
+        }`}
+      >
+        Submit
+      </button>
+    </form>
+    
+        </div>
+      )}
+
       </div>
 
       <div></div>
