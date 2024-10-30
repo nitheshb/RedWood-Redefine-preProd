@@ -1,33 +1,25 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react'
 import { useState } from 'react'
+
+import { Users } from 'lucide-react'
 
 import { useAuth } from 'src/context/firebase-auth-context'
 import { fistLetterCapital } from 'src/util/firstLetterCapital'
 
 import Chat from './chatSummary'
-import { Users } from 'lucide-react'
+import UserAvatarUpload from 'src/components/comps/userAvatarUplaod'
 
 export default function ProfileSummary() {
-  const { user } = useAuth()
+  const { login, isAuthenticated, user, forgotPassword } = useAuth()
   const { orgId } = user
 
   const [isFollowing, setIsFollowing] = useState<boolean>(false)
 
-
   const [showAbout, setShowAbout] = useState(false)
-  const [showPassword, setShowPassword] = useState(false);
-
-
-const handleShowAbout = () => {
-  setShowAbout((prevState) => !prevState)
-}
-
-
-const handleShowPassword = () => {
-  setShowPassword((prevState) => !prevState);
-};
-
-
+  const [showPassword, setShowPassword] = useState(false)
 
 
 
@@ -35,40 +27,55 @@ const handleShowPassword = () => {
     setIsFollowing((prevState) => !prevState)
   }
 
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
-  const [error, setError] = useState("");
+  // step 1:  declar json arry
+  const menuItems = [
+    { label: 'My Profile', value: 'myProfile' },
+    { label: 'Password Reset', value: 'passwordReset' },
+    { label: 'Files', value: 'files' },
+    { label: 'Connections', value: 'connections' },
+  ]
 
- 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    if (repeatPassword && e.target.value !== repeatPassword) {
-      setError("Passwords do not match");
-    } else {
-      setError("");
-    }
-  };
+  // step 2: declare select function
+  const selMenufunc = (e) => {
+    setSelMenuItem(e.value)
+  }
 
+  // step 3: declare state
+  const [selMenuItem, setSelMenuItem] = useState('myProfile')
 
-  const handleRepeatPasswordChange = (e) => {
-    setRepeatPassword(e.target.value);
-    if (password && e.target.value !== password) {
-      setError("Passwords do not match");
-    } else {
-      setError("");
-    }
-  };
+  const [password, setPassword] = useState('')
+  const [repeatPassword, setRepeatPassword] = useState('')
+  const [error, setError] = useState('')
+
 
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password === repeatPassword) {
-      console.log("Password matched. Form submitted successfully!");
-    } else {
-      setError("Passwords do not match");
-    }
-  };
+    try {
+       forgotPassword(user?.email)
 
+       setError('Please check your inbox for magic reset link...!')
+
+      return
+    } catch (error) {
+
+      console.log('password reset error ', error)
+      const { code, message, name } = error
+      if (code === 'auth/user-not-found') {
+        setError('Email Id not registered')
+      } else {
+        setError('Contact Site Admin')
+      }
+
+      return
+    }
+
+    e.preventDefault()
+    if (password === repeatPassword) {
+      console.log('Password matched. Form submitted successfully!')
+    } else {
+      setError('Passwords do not match')
+    }
+  }
 
   return (
     <div className="m-2">
@@ -117,8 +124,8 @@ const handleShowPassword = () => {
             </defs>
           </svg>
         </figure>
-
-        <div className="-mt-12 relative flex items-center justify-center">
+      <UserAvatarUpload />
+        {/* <div className="-mt-12 relative flex items-center justify-center">
           <div style={{ position: 'relative' }}>
             <img
               className="h-24 w-24 bottom-4 rounded-full border-4 border-white shadow-lg"
@@ -156,57 +163,22 @@ const handleShowPassword = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="text-center mt-2">
-          <h1 className="text-lg font-semibold text-neutral-200 text-black">
+          <h1 className="text-lg font-semibold text-black text-black">
             {fistLetterCapital(user?.displayName)}
           </h1>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          <section className='flex flex-row text-center justify-center'>
+          <p className="text-sm text-gray-500 ">
             {' '}
             {user?.roles?.length > 0
               ? user?.roles[0] === 'admin'
                 ? 'Super User'
-                : (user?.roles[0] || '')
-              : (user?.department || '')}
+                : user?.roles[0] || ''
+              : user?.department || ''}
           </p>
-        </div>
-
-        <div className="flex justify-between">
-          <div className="flex mt-4">
-            <nav className="flex space-x-4">
-              <a
-                 onClick={handleShowAbout}
-
-                href="#"
-                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
-              >
-                My Profile
-              </a>
-              <a
-                      onClick={handleShowPassword}
-
-                href="#"
-                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
-              >
-                Password Reset
-              </a>
-              <a
-                href="#"
-                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
-              >
-                Files
-              </a>
-              <a
-                href="#"
-                className="text-sm font-medium text-black  hover:text-neutral-700 dark:hover:text-neutral-200 focus:text-neutral-700 dark:focus:text-neutral-200 focus:outline-none"
-              >
-                Connections
-              </a>
-            </nav>
-          </div>
-
-          <div className="text-center flex justify-end mt-4">
+          <div className="text-center flex justify-end ml-2">
             <label
               htmlFor="toggleFollow"
               className="inline-flex items-center cursor-pointer"
@@ -219,7 +191,7 @@ const handleShowPassword = () => {
                 onChange={handleToggle}
               />
               <span
-                className={`bg-blue-500 text-white px-3 py-1 rounded-md transition duration-300 ease-in-out ${
+                className={`bg-green-200 text-green-800 px-3 rounded-full font-medium text-sm transition duration-300 ease-in-out ${
                   isFollowing ? 'hidden' : ''
                 }`}
               >
@@ -234,165 +206,177 @@ const handleShowPassword = () => {
               </span>
             </label>
           </div>
+          </section>
         </div>
+
+        <div className="flex justify-between">
+          <div className="flex mt-4">
+            <nav className="flex space-x-4">
+              {menuItems.map((item, i) => {
+                return (
+                  <div
+                    key={i}
+                    onClick={() => selMenufunc(item)}
+
+                    className={`text-sm font-medium text-black cursor-pointer ${
+                      selMenuItem === item?.value
+                        ? 'border-b-2 border-black'
+                        : ''
+                    }   `}
+                  >
+                    {item.label}
+                  </div>
+                )
+              })}
+
+            </nav>
+          </div>
+
+
+        </div>
+
+        {/* content */}
+        {selMenuItem==='myProfile' && (
+            <div className="p-8 mt-4 space-y-6  w-full max-w-sm p-6 bg-white border border-gray-300 rounded-lg shadow-md">
+              <div>
+                <h2 className="text-lg font-bold text-black">About</h2>
+              </div>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <div className="flex items-center text-black">
+                    <svg
+                      className="w-4 h-4 mr-2 text-neutral-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18ZM6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4M10 18h4" />
+                    </svg>
+                    <span>{fistLetterCapital(user?.orgName)}</span>
+                  </div>
+                </li>
+                <li>
+                  <div className="flex items-center text-black">
+                    <svg
+                      className="w-4 h-4 mr-2 text-neutral-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0ZM12 10a3 3 0 1 1 0-6a3 3 0 0 1 0 6Z" />
+                    </svg>
+                    <span>{user?.phone}</span>
+                  </div>
+                </li>
+                <li>
+                  <div className="flex items-center text-black">
+                    <svg
+                      className="w-4 h-4 mr-2 text-neutral-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span>India (Calcutta) (GMT+5.30)</span>
+                  </div>
+                </li>
+                <li>
+                  <div className="flex items-center text-black">
+                    <svg
+                      className="w-4 h-4 mr-2 text-neutral-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect width="20" height="16" x="2" y="4" rx="2" />
+                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    </svg>
+                    <span>{user?.email}</span>
+                  </div>
+                </li>
+                <li>
+                  <a
+                    className="flex items-center text-black hover:text-blue-500 focus:outline-none focus:underline  "
+                    href="#"
+                  >
+                    <svg
+                      className="w-4 h-4 mr-2 text-neutral-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                    </svg>
+                    <span>https://redefineerp.in</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )}
+
+          {/* password reset */}
+          {selMenuItem==='passwordReset' && (
+          <div>
+            <form
+              onSubmit={handleSubmit}
+              className="w-full mt-4 max-w-sm p-6 bg-white border border-gray-300 rounded-lg shadow-md"
+            >
+              <div className="mb-4">
+                <label className="block text-gray-700 text-md font-semibold mb-2">
+                  Email:
+                </label>
+                <input
+                  type="text"
+                  value={user?.email}
+                  readOnly
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+
+
+              {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
+              <button
+                type="submit"
+                className=" w-full px-6 py-3 text-white
+                  rounded shadow-lg transition ease-in-out duration-150 bg-[#0891B2]"
+              >
+                Send Password Reset Email
+              </button>
+            </form>
+          </div>
+        )}
       </div>
 
       <div>
-        <div>
-          <div className="absolute top-0 right-0 p-4"></div>
-          {showAbout && (
-
-          <div className="p-8 space-y-6 dark:divide-neutral-700">
-            <div>
-              <h2 className="text-2xl font-bold text-black">About</h2>
-            </div>
-            <ul className="space-y-2">
-              <li>
-                <div className="flex items-center text-black">
-                  <svg
-                    className="w-6 h-6 mr-2 text-neutral-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18ZM6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4M10 18h4" />
-                  </svg>
-                  <span>{fistLetterCapital(user?.orgName)}</span>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center text-black">
-                  <svg
-                    className="w-6 h-6 mr-2 text-neutral-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0ZM12 10a3 3 0 1 1 0-6a3 3 0 0 1 0 6Z" />
-                  </svg>
-                  <span>{user?.phone}</span>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center text-black">
-                  <svg
-                    className="w-6 h-6 mr-2 text-neutral-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  <span>India (Calcutta) (GMT+5.30)</span>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center text-black">
-                  <svg
-                    className="w-6 h-6 mr-2 text-neutral-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                  </svg>
-                  <span>{user?.email}</span>
-                </div>
-              </li>
-              <li>
-                <a
-                  className="flex items-center text-black hover:text-blue-500 focus:outline-none focus:underline  dark:hover:text-blue-500"
-                  href="#"
-                >
-                  <svg
-                    className="w-6 h-6 mr-2 text-neutral-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                  </svg>
-                  <span>https://redefineerp.in</span>
-                </a>
-              </li>
-
-
-            </ul>
-          </div>
-          )}
+        <div className='w-full bg-white'>
 
         </div>
 
-        {showPassword && (
-
-        <div>
-
-        <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-sm p-6 bg-white border border-gray-300 rounded-lg shadow-md"
-    >
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-          required
-          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Repeat Password:</label>
-        <input
-          type="password"
-          value={repeatPassword}
-          onChange={handleRepeatPasswordChange}
-          required
-          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-
-      <button
-        type="submit"
-        disabled={password !== repeatPassword || !password}
-        className={`w-full py-2 px-4 rounded text-white font-semibold ${
-          password === repeatPassword && password
-            ? "bg-green-500 hover:bg-green-600"
-            : "bg-gray-300 cursor-not-allowed"
-        }`}
-      >
-        Submit
-      </button>
-    </form>
-    
-        </div>
-      )}
 
       </div>
 

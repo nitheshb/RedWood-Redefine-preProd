@@ -116,6 +116,7 @@ export default function AuthContextProvider({ children }) {
         role: additionalUserInfo?.roles,
         orgId: additionalUserInfo?.orgId,
         orgName: additionalUserInfo?.orgName,
+        avatarUrl: additionalUserInfo?.avatarUrl,
         access,
         userStatus: additionalUserInfo?.userStatus,
       }
