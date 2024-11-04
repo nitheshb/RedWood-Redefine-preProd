@@ -362,7 +362,7 @@ const AddPaymentDetailsForm = ({
         user?.email,
         `lead created directly from booking`
       )
-      leadData.id = await createResp.id
+      leadData.id = await createResp?.id || ''
     }
     // const { id, purpose,  } =
     //   leadDetailsObj2
@@ -431,21 +431,21 @@ const AddPaymentDetailsForm = ({
     })
     addModuleScheduler(
       `${orgId}_fin_tasks`,
-      id,
+      uid,
       finPayload,
       x1,
       data.assignedTo
     )
     addModuleScheduler(
       `${orgId}_crm_tasks`,
-      id,
+      uid,
       crmPayload,
       x1,
       data.assignedTo
     )
     addModuleScheduler(
       `${orgId}_project_tasks`,
-      id,
+      uid,
       projectPaylaod,
       x1,
       data.assignedTo
@@ -461,9 +461,9 @@ const AddPaymentDetailsForm = ({
 
     const x2 = await createBookedCustomer(
       orgId,
-      id,
+      uid,
       {
-        leadId: id,
+        // leadId: id,
         projectName: leadDetailsObj2?.Project || projectDetails?.projectName,
         ProjectId: leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
         // ...customerDetailsObj,
@@ -510,7 +510,7 @@ const AddPaymentDetailsForm = ({
     // customerDetailsObj
     const otherData = leadDetailsObj2[`${uid}_others`]
     const unitUpdate = {
-      leadId: id,
+      leadId: id || '',
       status: 'booked',
       // customerDetailsObj: customerDetailsObj || {},
       // secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
@@ -578,7 +578,7 @@ const AddPaymentDetailsForm = ({
       orgId,
       leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
       uid,
-      id,
+
       uploadPayload,
       user?.email,
       enqueueSnackbar,
@@ -599,6 +599,7 @@ const AddPaymentDetailsForm = ({
       user?.email,
       enqueueSnackbar
     )
+    if(id){
     updateLeadStatus(
       orgId,
       leadDetailsObj2?.ProjectId || '',
@@ -608,6 +609,7 @@ const AddPaymentDetailsForm = ({
       user?.email,
       enqueueSnackbar
     )
+  }
 
     handleClick()
     const updatedData = {

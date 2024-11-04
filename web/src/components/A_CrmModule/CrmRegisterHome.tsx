@@ -375,7 +375,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     return unsubscribe
   }
   const getLeadsDataFun = async (projectList, statusFil) => {
-    // console.log('login role detials', user)
+    console.log('fetched unsits data is', selLeadsOf)
     const { access, uid } = user
     const unsubscribe = getBookedUnitsByProject(
       orgId,
@@ -383,6 +383,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
         const usersListA = querySnapshot.docs.map((docSnapshot) => {
           const x = docSnapshot.data()
           x.id = docSnapshot.id
+          console.log('fetched unsits data is ', x)
           const y = projectList.filter((proj) => proj?.uid == x?.pId)
           // console.log(',my prject sel is  ===> ', projectList)
           if (y.length > 0) {

@@ -1422,7 +1422,7 @@ export const getBookedUnitsByProject = (orgId, snapshot, data, error) => {
 
   // Append 'status' condition if it's not undefined
   if (status !== undefined && !(status.includes('unassigned'))) {
-    conditions.push(where('unitStatus', 'in', status))
+    conditions.push(where('status', 'in', status))
   }
 
   if (status !== undefined && (status.includes('unassigned'))) {
@@ -1442,11 +1442,15 @@ export const getBookedUnitsByProject = (orgId, snapshot, data, error) => {
 
   // If all conditions are defined, append them to the query
   if (conditions.length > 0) {
+    console.log('hello ', status,  conditions, data)
     q = query(q, ...conditions)
 
   }
-
+  // const itemsQuery1 = query(
+  //   collection(db, `${orgId}_units`),
+  //   where('Status', 'in', data?.currentStatus),)
   // console.log('hello ', status, data?.projectId, conditions)
+  // return onSnapshot(q, snapshot, error)
   return onSnapshot(q, snapshot, error)
 }
 // get crmCustomers list
@@ -2326,6 +2330,10 @@ export const addCampaign = async (orgId, data, by, msg) => {
   }
 }
 export const addLead = async (orgId, data, by, msg) => {
+  console.log('my values is ', data)
+  if(data?.Name){
+
+
   try {
     delete data['']
     const x = await addDoc(collection(db, `${orgId}_leads`), data)
@@ -2339,6 +2347,8 @@ export const addLead = async (orgId, data, by, msg) => {
       Project,
       assignedToObj,
     } = data
+  if(Name){
+
 
     const { data3, errorx } = await supabase.from(`${orgId}_lead_logs`).insert([
       {
@@ -2409,8 +2419,10 @@ export const addLead = async (orgId, data, by, msg) => {
 
     await addLeadScheduler(orgId, x.id, data1, x1, data.assignedTo)
     return x
+  }
   } catch (error) {
     console.log('error in uploading file with data', data, error)
+  }
   }
 }
 // This function is used to add leads for cp
@@ -4488,14 +4500,14 @@ export const createNewCustomerS = async (
 ) => {
   try {
     const leadDocId = leadDetailsObj2.id || ''
-    const { Name } = leadDetailsObj2
+    // const { Name } = leadDetailsObj2
 
-    console.log('wow it should be here', leadDocId, newStatus, Name)
+    console.log('wow it should be here', leadDocId, newStatus,)
 
     const { data, error } = await supabase.from(`${orgId}_customers`).insert([
       {
         Name:
-          leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1,
+          leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1 || '',
         // id: leadDocId,
         my_assets: [unitId],
         T: Timestamp.now().toMillis(),
@@ -4520,7 +4532,7 @@ export const createNewCustomerS = async (
     // addCustomer(orgId, customerD, by, enqueueSnackbar, ()=>({}))
 
     await console.log('customer data is ', data, error, customerInfo, {
-      Name: Name,
+      Name: customerInfo?.customerDetailsObj?.customerName1,
       // id: leadDocId,
       my_assets: [unitId],
       T: Timestamp.now().toMillis(),
@@ -4934,6 +4946,9 @@ export const updateLeadCustomerDetailsTo = async (
   resetForm
 ) => {
   try {
+    return
+
+    // remove this
     console.log('data is', leadDocId, data)
 
     await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
@@ -4943,10 +4958,10 @@ export const updateLeadCustomerDetailsTo = async (
       variant: 'success',
     })
   } catch (error) {
-    console.log('customer details updation failed', error, {
+    console.log('customer details creation failed', error, {
       ...data,
     })
-    enqueueSnackbar('Customer Details updation failed BBB', {
+    enqueueSnackbar('Customer Details creation failed BBB', {
       variant: 'error',
     })
   }
@@ -4995,7 +5010,7 @@ export const updateUnitStatus = async (
       status: data?.status,
       T_elgible: data?.T_elgible_new,
       T_elgible_balance: data?.T_elgible_balance,
-      [`${data?.status}_on`]: data[`${data?.status}_on`],
+      // [`${data?.status}_on`]: data[`${data?.status}_on`],
     })
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
@@ -5675,14 +5690,14 @@ export const updateUnitAsBooked = async (
   orgId,
   projectId,
   unitId,
-  leadDocId,
+
   data,
   by,
   enqueueSnackbar,
   resetForm
 ) => {
   try {
-    console.log('data is cost sheet', leadDocId, data, unitId)
+    console.log('data is cost sheet', data, unitId)
 
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       ...data,
