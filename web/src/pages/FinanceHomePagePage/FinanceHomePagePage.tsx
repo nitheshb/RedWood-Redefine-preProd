@@ -353,6 +353,8 @@ const FinanceHomePagePage = () => {
 
   return (
     <>
+
+
       <div className="flex w-screen h-screen text-gray-700">
         <div className="flex flex-col flex-grow">
           {/* <HeadNavBar /> */}
@@ -365,18 +367,23 @@ const FinanceHomePagePage = () => {
               viewable={viewable}
             />
 
+
             <div className="w-full flex-grow  my- border-t  items-center overflow-y-auto bg-blue h-[98%]  py-300">
+            <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}  setViewable={setViewable} />
+
               {/* <HeadNavBarAccounts
                 selModule={selModule}
                 setSelModule={setSelModule}
               />   */}
 
-              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}  setViewable={setViewable} />
+              <div>
               {viewable === 'userProfile' && <ProfileSummary />}
 
-              {(viewable === 'Today1' || viewable === 'Home') && (
-                <FinanceHome leadsTyper={undefined} />
-              )}
+{(viewable === 'Today1' || viewable === 'Home') && (
+  <FinanceHome leadsTyper={undefined} />
+)}
+              </div>
+   
 
               {/*
               {viewable === 'Dashboard' && (
@@ -817,12 +824,12 @@ const FinanceHomePagePage = () => {
               <>
                 <div className="flex-grow mx-4  my-2 items-center overflow-y-auto  h-[98%]   py-300">
                   <div className="">
-                    <div className="flex items-center justify-between py-2  ">
+                    {/* <div className="flex items-center justify-between py-2  ">
                       <span className="relative z-10 flex items-center w-auto text-2xl font-bold leading-none pl-0">
                         {viewable}
                       </span>
                       <button className="flex items-center justify-center h-10 px-4  bg-transparent ml-auto text-sm font-medium rounded hover:bg-transparent"></button>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div>

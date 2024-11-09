@@ -521,7 +521,7 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                       )}
                       <button
                         // onClick={() => fAddSchedule()}
-                        className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  text-[#535c69]  bg-[#bbed21]   hover:shadow-lg `}
+                        className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  text-[#fff]  bg-[#1C9B00]   hover:shadow-lg `}
                       >
                         <span className="ml-1 ">Add Campaign</span>
                       </button>

@@ -92,12 +92,11 @@ const AllBankDetailsView = ({ title, pId, data }) => {
     <>
       <div className="w-full  mt-10 flex flex-row">
         <div className="lg:col-span-2 mr-10">
-          <section className="justify-between">
-            <h2 className="text-sm font-semibold">{title}</h2>
-            <section className="flex flex-row justify-between">
-              <span></span>
-              <button
-                className="text-right"
+          <section className="flex flex-row justify-between items-center p-4">
+            <h2 className="text-md  text-md font-semibold ml-5 mb-4">{title}</h2>
+
+            <button
+                 className="flex items-center"
                 onClick={() => {
                   setSliderInfo({
                     open: true,
@@ -109,10 +108,10 @@ const AllBankDetailsView = ({ title, pId, data }) => {
               >
                 {bankDetialsA.length > 0 && (
                   <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                    <span className="text-blue-600">
+                    <span className="text-[#0891B2] p-4 rounded-lg hover:bg-[#E4E0E1] flex items-center">
                       {' '}
                       <PlusCircleIcon
-                        className="h-4 w-4 mr-1 mb-[2px] inline"
+                        className="h-4 w-4 mr-1  inline"
                         aria-hidden="true"
                       />
                       <span>Add New</span>
@@ -120,8 +119,17 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                   </time>
                 )}
               </button>
-            </section>
+
+
+
+            {/* <section className="flex  flex-row justify-between items-center">
+              <span></span>
+ 
+            </section> */}
           </section>
+
+
+          
           <div className="">
             {bankDetialsA.map((bankDe, i) => {
               return (

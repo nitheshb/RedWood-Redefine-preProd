@@ -64,15 +64,15 @@ const UsersAdminPage = () => {
         <div className="flex flex-col flex-grow">
           {/* <HeadNavBar /> */}
           <HeadNavBar2 selModule={selModule} setSelModule={setSelModule} setViewable={setViewable} />
-          <div className="flex-grow px-6 overflow-auto no-scrollbar  text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
-            <div className="flex flex-row justify-between items-center flex-shrink-0 h-10 mt-2 px-0  pl-0  ">
+          <div className="flex-grow  overflow-auto no-scrollbar  text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
+            <div className="flex flex-row justify-between items-center flex-shrink-0  px-0  pl-0  ">
               {/* <h1 className="text-lg font-medium">redefine.</h1> */}
 
 
               {viewable === 'User Management' && (
-                <div className="flex flex-row">
+                <div className="flex flex-row mt-3 ml-3">
                   <div className="flex flex-row mt-2 mr-2">
-                    <span className="text-[10px] mt-1 mr-1">Show InActive</span>
+                    <span className="text-[14px] font-extrabold mt-1  mr-1">Show InActive</span>
                     <Switch
                       checked={showCompletedTasks}
                       onChange={changeFun}
@@ -133,9 +133,9 @@ const UsersAdminPage = () => {
                 </div>
               )}
               {viewable === 'AssetsManagement' && (
-                <div className="flex flex-row">
+                <div className="flex flex-row mt-3 ml-3">
                   <div className="flex flex-row mt-2 mr-2">
-                    <span className="text-[10px] mt-1 mr-1">Show InActive</span>
+                    <span className="text-[14px] font-extrabold mt-1 mr-1">Show InActive</span>
                     <Switch
                       checked={showCompletedTasks}
                       onChange={changeFun}

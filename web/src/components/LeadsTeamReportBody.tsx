@@ -1488,8 +1488,9 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               <span
                                 className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                   sourceDateRange === startOfDay(d).getTime()
-                                    ? 'font-semibold text-pink-800 bg-pink-200 '
-                                    : 'text-green-800 bg-green-200 '
+                                        ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
+                    
                                 }rounded-full`}
                               >
                                 <EyeIcon
@@ -1510,8 +1511,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             <span
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange === startOfWeek(d).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+                                  ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
                               }rounded-full`}
                             >
                               <CalendarIcon
@@ -1529,8 +1530,9 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             <span
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange === startOfMonth(d).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+                                      ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
+
                               }rounded-full`}
                             >
                               <CalendarIcon
@@ -1551,8 +1553,10 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange ===
                                 subMonths(startOfMonth(d), 6).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+
+                                  ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
+  
                               }rounded-full`}
                             >
                               <CalendarIcon
@@ -1568,8 +1572,10 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                 <span
                                   className={`flex ml-1 mt-[6px] items-center h-6 px-3 text-xs ${
                                     sourceDateRange === startDate?.getTime()
-                                      ? 'font-semibold text-pink-800 bg-pink-200 '
-                                      : 'text-green-800 bg-green-200 '
+
+                                  ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
+ 
                                   } rounded-full`}
                                   onClick={() => {
                                     setIsOpened(true)
@@ -1602,7 +1608,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   <CustomDatePicker
                                     className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                       sourceDateRange === startDate?.getTime()
-                                        ? 'font-semibold text-pink-800 bg-pink-200 '
+                                        ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
                                         : 'text-green-800 bg-green-200 '
                                     } rounded-full`}
                                     onCalendarClose={() => setIsOpened(false)}
@@ -1994,8 +2000,9 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               <span
                                 className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                   sourceDateRange === startOfDay(d).getTime()
-                                    ? 'font-semibold text-pink-800 bg-pink-200 '
-                                    : 'text-green-800 bg-green-200 '
+                                   ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
+                            
                                 }rounded-full`}
                               >
                                 <EyeIcon
@@ -2016,8 +2023,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             <span
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange === startOfWeek(d).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+                                  ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
                               }rounded-full`}
                             >
                               <CalendarIcon
@@ -2035,8 +2042,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             <span
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange === startOfMonth(d).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+                                 ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
                               }rounded-full`}
                             >
                               <CalendarIcon
@@ -2057,8 +2064,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange ===
                                 subMonths(startOfMonth(d), 6).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+                                  ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
                               }rounded-full`}
                             >
                               <CalendarIcon
@@ -2108,8 +2115,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   <CustomDatePicker
                                     className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                       sourceDateRange === startDate?.getTime()
-                                        ? 'font-semibold text-pink-800 bg-pink-200 '
-                                        : 'text-green-800 bg-green-200 '
+                                       ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                       : 'text-[#020B97] bg-[#C4FECB] '
                                     } rounded-full`}
                                     onCalendarClose={() => setIsOpened(false)}
                                     placeholderText="&#128467;	 Custom"
@@ -2148,7 +2155,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                 )
                               }
                             >
-                              Save DB
+                              
                             </button>
                           )}
                         </section>

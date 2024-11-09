@@ -53,7 +53,8 @@ const LegalDocsHome = ({ project }) => {
   const columns: GridColDef[] = [
     {
       field: 'name',
-      headerName: 'Name',
+      //headerName: 'Name',
+      headerName: <span style={{ fontWeight: 'bold' }}>Name</span>,
       width: 340,
       renderCell: (params) => (
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -65,10 +66,10 @@ const LegalDocsHome = ({ project }) => {
         </div>
       ),
     },
-    { field: 'size', headerName: 'Size', width: 130 },
-    { field: 'type', headerName: 'Type', width: 130 },
-    { field: 'modified', headerName: 'Modified', width: 140 },
-    { field: 'shared', type: 'string[]', headerName: 'Shared', width: 120 },
+    { field: 'size', headerName:  <span style={{ fontWeight: 'bold' }}>Size</span>,  width: 130 , headerClassName: 'bold-header', },
+    { field: 'type', headerName:  <span style={{ fontWeight: 'bold' }}>Type</span>, width: 130 },
+    { field: 'modified', headerName: <span style={{ fontWeight: 'bold' }}>Modified</span>, width: 140 },
+    { field: 'shared', type: 'string[]', headerName: <span style={{ fontWeight: 'bold' }}>Shared</span>, width: 120 },
   ]
 
   useEffect(() => {
@@ -245,6 +246,8 @@ const LegalDocsHome = ({ project }) => {
                     height: 80,
                     border: 1,
                     borderColor: '#EDEFF1',
+                    
+
                     width: '99.5%',
                     // borderRight:1,
                     // marginRight:1,
@@ -257,6 +260,7 @@ const LegalDocsHome = ({ project }) => {
                     // border: 1,
                     width: '99.5%',
                     marginBottom: 2,
+                  
                     // borderTop: 1,
                     boxShadow: 2,
                     backgroundColor: '#F4F6F8',
@@ -265,6 +269,9 @@ const LegalDocsHome = ({ project }) => {
                   '& .MuiDataGrid-footerContainer': {
                     // border: 1
                   },
+                  // "& .MuiDataGrid-columnHeader--field-name": {
+                  //   fontWeight: "bold",
+                  // },
                   '& .MuiTablePagination-selectLabel': {
                     color: 'rgba(0, 54, 101, 0.6)',
                   },

@@ -759,12 +759,12 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
         <div className="mb-4 ">
           <div className="inline">
             <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+              <label className="font-semibold	 text-[#053219]  text-sm  mb-1  ">
                 Unit Pricing Details<abbr title="required"></abbr>
               </label>
             </div>
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
           </div>
         </div>
         <section className="flex flex-row space-x-4 mx-">
@@ -882,25 +882,25 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                 </label>
               </div>
 
-              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
             </div>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
             <DragDropContext onDragEnd={onDragEnd}>
               <table className="w-full text-sm text-left text-gray-500 ">
-                <thead className="text-sm text-gray-700">
-                  <tr className="bg-gray-100 rounded-xl rounded-x-md">
-                    <th className=" p-2 pl-2 text-center   text-md">
+                <thead className="text-sm text-gray-800">
+                  <tr className="bg-gray-100 rounded-xl   rounded-x-md">
+                    <th className=" p-2 pl-2 text-center font-semibold	 text-md">
                       Charges For
                     </th>
-                    <th className=" p-1 pl-2 text-center">Category</th>
-                    <th className=" p-1 pl-2 text-center">Cost Type</th>
-                    <th className=" p-1 pl-2 text-center">Amount</th>
-                    <th className=" p-1 pl-2 text-center">Tax Rate</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">Category</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">Cost Type</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">Amount</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">Tax Rate</th>
                     {/* <th className="border border-[#e0e0e0] p-2 text-left">
                   Description
                 </th> */}
-                    <th className=" p-1 pl-2 text-center">Action</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">Action</th>
                   </tr>
                 </thead>
                 <Droppable droppableId="table">
@@ -1212,13 +1212,13 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           <div className="flex justify-between">
             <button
               onClick={addRow}
-              className="mt-4 bg-cyan-500  text-white font-md py-1 px-2 rounded-sm focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className="mt-4 bg-[#0891B2]  text-white font-md py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
             >
               Add Charges
             </button>
             <button
               onClick={saveSetup}
-              className="mt-4 bg-cyan-500 text-white font-md py-1 px-2 rounded-sm focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className="mt-4 bg-[#0891B2] text-white font-md py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
             >
               Save
             </button>

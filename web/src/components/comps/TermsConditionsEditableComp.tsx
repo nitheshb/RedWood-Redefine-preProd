@@ -368,7 +368,7 @@ const TermsConditionsEditableTable = ({
     <li
       className={`border-l-2 ${
         activeItem === item
-          ? 'border-[#0EA5E9]'
+          ? 'border-[#0891B2]'
           : 'border-gray-80 hover:border-gray-400'
       }`}
     >
@@ -376,8 +376,8 @@ const TermsConditionsEditableTable = ({
         href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
         className={`block px-4 py-2 text-md ${
           activeItem === item
-            ? 'text-[#0EA5E9] font-bold'
-            : 'text-gray-600 font-bold hover:text-[#0EA5E9]'
+            ? 'text-[#0891B2] font-medium'
+            : 'text-gray-600 font-medium	hover:text-[#0891B2]'
         }`}
         onClick={(e) => {
           e.preventDefault()
@@ -776,7 +776,7 @@ const TermsConditionsEditableTable = ({
               </label>
             </div>
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
           </div>
         </div>
 
@@ -829,7 +829,7 @@ const TermsConditionsEditableTable = ({
                         {dataObj?.data?.map((data, i) => (
                           <tr key={`static-${i}`}>
 
-                            <td className="py-5 px-4 text-[#0EA5E9] text-md border-b">{i+1}</td>
+                            <td className="py-5 px-4 text-[#0891B2] text-md border-b">{i+1}</td>
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               {/* {editingCell?.key === dataObj.title &&
                               editingCell.rowIndex === i &&
@@ -904,7 +904,7 @@ const TermsConditionsEditableTable = ({
                         ))}
                         {(dynamicRows[dataObj['title']] || []).map((row, i) => (
                           <tr key={`dynamic-${i}`}>
-                            <td className="py-5 px-4 text-md text-[#0EA5E9]"></td>
+                            <td className="py-5 px-4 text-md text-[#0891B2]"></td>
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               <input
                                 type="text"
@@ -946,14 +946,14 @@ const TermsConditionsEditableTable = ({
                       <button
                         // onClick={() => appendRow(dataObj?.title)}
                         onClick={() => addRowNew(dataObj)}
-                        className=" mt-4 px-2 py- bg-cyan-500 text-white rounded"
+                        className=" mt-4 px-2 py- bg-[#0891B2] text-white rounded-lg"
                       >
                         Add Row
                       </button>
 
                       <button
                         onClick={() => handleSave(dataObj)}
-                        className="mt-4 px-2 py- bg-cyan-500 text-white text-sm  rounded"
+                        className="mt-4 px-2 py- bg-[#0891B2] text-white text-sm  rounded-lg"
                       >
                         Save
                       </button>
