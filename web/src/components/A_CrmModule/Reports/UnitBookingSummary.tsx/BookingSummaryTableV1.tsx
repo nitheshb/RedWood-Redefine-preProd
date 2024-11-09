@@ -1547,7 +1547,7 @@ EnhancedTableHead.propTypes = {
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>{row.projName}</span>
                         </TableCell>
                         <TableCell align="center" sx={{width: '142px',background: "#FFFF",  borderLeft: '0.2px solid #e7e5e4', }} padding="none">
-                        <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full bg-[#CCFBF1] text-[#115e59]">
+                        <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full  text-[#115e59]">
                           <HighlighterStyle
                             searchKey={searchKey}
                             source={row?.unitStatus?.toString() || row.status.toString()}
