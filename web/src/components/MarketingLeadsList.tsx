@@ -80,7 +80,7 @@ const CampaignTable = ({ campaigns }) => {
             }
           >
             <svg
-              className="h-6 w-6 mr-2 text-[#1C9B00]"
+              className="h-6 w-6 mr-2 text-[#0891B2]"
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -100,7 +100,7 @@ const CampaignTable = ({ campaigns }) => {
           style={{ width: '90%' }}
         >
           <table className="min-w-full border  border-gray-200">
-            <thead className="bg-[#1C9B00]">
+            <thead className="bg-[#0891B2]">
               <tr>
                 <th
                   className="px-3 py-3 text-left text-sm font-medium text-white   tracking-wider border  border-gray-200"

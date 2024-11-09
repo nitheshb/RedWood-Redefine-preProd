@@ -144,42 +144,42 @@ const CustomersSearchHome2 = ({ project }) => {
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider"
                     >
                       Customer Name
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider"
                     >
                       KYC
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider  text-right"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider  text-right"
                     >
                       Wallet
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider  text-right"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider  text-right"
                     >
                       Review
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider  text-right"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider  text-right"
                     >
                       Utilised
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider"
                     >
                       Units
                     </th> <th
                       scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-center text-xs font-semibold text-gray-500  tracking-wider"
                     >
                       Action
                     </th>
@@ -212,7 +212,7 @@ const CustomersSearchHome2 = ({ project }) => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full  text-green-800">
                           {person?.kyc_status ? 'Done' : 'Pending'}
                         </span>
                       </td>
@@ -232,7 +232,7 @@ const CustomersSearchHome2 = ({ project }) => {
                         {person?.utilized_money?.toLocaleString('en-IN')}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-green-800">
                           {person?.my_assets?.length}
                         </span>
                       </td>

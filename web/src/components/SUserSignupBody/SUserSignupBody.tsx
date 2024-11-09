@@ -31,6 +31,14 @@ const SUserSignupBody = ({ title, dialogOpen, empData }) => {
   const { register, user } = useAuth()
   const { orgId, orgName } = user
 
+
+
+  const customPhoneNoFieldStyles = {
+    border: 'none',
+    fontSize: '13px',
+
+  }
+
   const formMethods = useForm()
   const [formMessage, setFormMessage] = useState({
     color: 'green',
@@ -325,7 +333,8 @@ console.log('rolws are ', filRoles)
                 <PhoneNoField
                   name="offPh"
                   label="Official Phone Number*"
-                  className="input"
+                
+                  className="input "
                   value={formik.values.offPh}
                   onChange={(value) => {
                     formik.setFieldValue('offPh', value.value)

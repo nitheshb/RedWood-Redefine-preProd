@@ -441,7 +441,7 @@ React.useEffect(()=>{
             placeholder={`Search...${selStatus}`}
             onChange={searchKeyField}
             value={searchKey}
-            className="ml-6 bg-transparent text-xs focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none"
+            className="ml-6 bg-transparent w-[680px] text-xs focus:border-transparent  focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none"
           />
         </span>
         {/* <span className="max-h-[42px] mt-[2px] ml-3">
