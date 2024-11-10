@@ -42,7 +42,7 @@ const HeadNavBar2 = ({ selModule, setSelModule, setViewable }) => {
   }
 
   return (
-    <div>
+    <div className="sticky top-0 z-50">
       <div className="flex items-center flex-shrink-0 h-14 px-2  pl-0 bg-white border-b ">
         <span
           style={{ marginLeft: '10px' }}

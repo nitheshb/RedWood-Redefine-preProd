@@ -394,7 +394,7 @@ const HomePage = () => {
 
             <div className="flex-grow   items-center overflow-y-auto no-scrollbar  h-[98%]  px-300  pt-300">
               <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}   setViewable={setViewable}/>
-            {viewable === 'userProfile' && <ProfileSummary />}
+             {viewable === 'userProfile' && <ProfileSummary />}
 
               {viewable === 'Setup' && (
                 <>

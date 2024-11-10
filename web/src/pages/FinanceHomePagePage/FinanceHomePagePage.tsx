@@ -358,7 +358,8 @@ const FinanceHomePagePage = () => {
       <div className="flex w-screen h-screen text-gray-700">
         <div className="flex flex-col flex-grow">
           {/* <HeadNavBar /> */}
-          <div className="flex flex-row  text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
+
+          <div className="flex overflow-y-hidden flex-row overflow-auto h-[100vh]   text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
             <SlimSideMenuBar
               pgName={'financeModule'}
               sourceLink={'financeModule'}
@@ -366,9 +367,11 @@ const FinanceHomePagePage = () => {
               setViewable={setViewable}
               viewable={viewable}
             />
+            
 
 
-            <div className="w-full flex-grow  my- border-t  items-center overflow-y-auto bg-blue h-[98%]  py-300">
+
+            <div className=" flex-grow   items-center overflow-y-auto no-scrollbar bg-blue h-[98%]  py-300">
             <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}  setViewable={setViewable} />
 
               {/* <HeadNavBarAccounts
@@ -379,10 +382,10 @@ const FinanceHomePagePage = () => {
               <div>
               {viewable === 'userProfile' && <ProfileSummary />}
 
-{(viewable === 'Today1' || viewable === 'Home') && (
-  <FinanceHome leadsTyper={undefined} />
-)}
-              </div>
+               {(viewable === 'Today1' || viewable === 'Home') && (
+               <FinanceHome leadsTyper={undefined} />
+                )}
+              {/* </div> */}
    
 
               {/*
@@ -822,7 +825,8 @@ const FinanceHomePagePage = () => {
             {(viewable === 'Bank Accounts' ||
               viewable === 'Virtual Accounts') && (
               <>
-                <div className="flex-grow mx-4  my-2 items-center overflow-y-auto  h-[98%]   py-300">
+         
+                <div className="flex-grow mx-1  my-1 items-center overflow-y-auto    py-300">
                   <div className="">
                     {/* <div className="flex items-center justify-between py-2  ">
                       <span className="relative z-10 flex items-center w-auto text-2xl font-bold leading-none pl-0">
@@ -831,6 +835,10 @@ const FinanceHomePagePage = () => {
                       <button className="flex items-center justify-center h-10 px-4  bg-transparent ml-auto text-sm font-medium rounded hover:bg-transparent"></button>
                     </div> */}
                   </div>
+
+
+
+                  {/* today start */}
 
                   <div>
                     <section className="w-full py-8 mb-8 leading-7 text-gray-900 bg-white sm:py-12 md:py-16 lg:py-18 rounded-lg">
@@ -849,12 +857,12 @@ const FinanceHomePagePage = () => {
                             </span>
                             <section className="flex ml-auto mt-[18px]">
                               <button>
-                                <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
+                                <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-white bg-[#d26750] rounded-full">
                                   <PencilIcon
                                     className="h-3 w-3 mr-1"
                                     aria-hidden="true"
                                   />
-                                  Edit
+                                  Edit box2
                                 </span>
                               </button>
                             </section>
@@ -864,6 +872,8 @@ const FinanceHomePagePage = () => {
                       </div>
                     </section>
                   </div>
+
+                  {/* today end */}
                 </div>
               </>
             )}
@@ -1073,6 +1083,7 @@ const FinanceHomePagePage = () => {
             />
           </div>
           <MetaTags title="ExecutiveHome" description="ExecutiveHome page" />
+          </div>
         </div>
       </div>
     </>

@@ -332,9 +332,8 @@ console.log('rolws are ', filRoles)
                 /> */}
                 <PhoneNoField
                   name="offPh"
-                  label="Official Phone Number*"
-                
-                  className="input "
+                  label={<span className="text-[12px] font-regular  text-gray-700">Official Phone Number*</span>}
+                  className="input  text-[13px] placeholder-gray-700 placeholder:opacity-80 "
                   value={formik.values.offPh}
                   onChange={(value) => {
                     formik.setFieldValue('offPh', value.value)
@@ -348,8 +347,9 @@ console.log('rolws are ', filRoles)
                 /> */}
                 <PhoneNoField
                   name="perPh"
-                  label="Personal Phone Number*"
-                  className="input"
+                  //label="Personal Phone Number*"
+                  label={<span className=" font-regular  text-gray-700 text-[12px]">Personal Phone Number*</span>}
+                  className="input  text-[13px] placeholder-gray-700 placeholder:opacity-80"
                   value={formik.values.perPh}
                   onChange={(value) => {
                     formik.setFieldValue('perPh', value.value)
