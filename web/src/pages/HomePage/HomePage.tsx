@@ -472,12 +472,12 @@ const HomePage = () => {
                             </span>
                             <section className="flex ml-auto mt-[18px]">
                               <button>
-                                <span className="flex ml-2 items-center h-6 px-3 text-xs font-medium text-[#fff] bg-[#0891B2] rounded-lg">
+                                <span className="flex ml-2 items-center h-7 px-3  text-xs font-medium text-[#fff] bg-[#0891B2] rounded-full">
                                   <PencilIcon
                                     className="h-5 w-4  font-medium mr-1"
                                     aria-hidden="true"
                                   />
-                                  Edit
+                                  Edit 
                                 </span>
                               </button>
                             </section>

@@ -644,7 +644,7 @@ const MyDocument = ({
                    <Text style={{ fontSize: 8 }}>Date</Text>
                 </View>
                 <View style={{textAlign: 'right',border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0, marginTop: 10}}>
-                   <Text style={{textAlign: 'right', fontSize: 10, fontWeight: 'bold' }}> {payementDetails?.bank_ref_no}</Text>
+                   <Text style={{textAlign: 'right',  fontSize: 10, fontWeight: 'bold' }}> {payementDetails?.bank_ref_no}</Text>
                    <Text style={{ textAlign: 'right',fontSize: 8 }}>Referal Id</Text>
                 </View>
                 {/* <View>

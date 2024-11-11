@@ -323,7 +323,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                             <div className={`border-[#E5EAF2]  rounded-xl border w-60 p-2  ${value === dat?.val ? ' bg-[#ffe4c4]': 'bg-white'}`}>
                               <section>
                                 <div className='flex flex-row justify-between'>
-                                <span className="flex mt-[13px] ml-[12px] justify-center items-center w-6 h-6 rounded-full bg-[#d26750] ring-8 ring-white  ">
+                                <span className="flex mt-[13px] ml-[12px] justify-center items-center w-6 h-6 rounded-full bg-[#0ABC31] ring-8 ring-white  ">
                                   {/* <DocumentIcon className=" w-3 h-3" /> */}
 
                                   {dat.icon}
@@ -451,7 +451,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                   {' '}
                                   {`${fieldHead.lab} `}
                                 </span>
-                                <span className="border border-[#d26750] text-gray-800 px-1 py-1 rounded-full ml-[4px] text-[10px] ">
+                                <span className="border border-[#0ABC31] text-gray-800 px-1 py-1 rounded-full ml-[4px] text-[10px] ">
                                   {/* {rowsCounter(leadsFetchedData, d.val).length} */}
                                   {/* {statusSepA[0][d.val]?.length || 0} */}
                                   {
@@ -472,7 +472,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                       </ul>
                       <div className="flex flex-row mr-4">
                         <span
-                          className="flex mt-[4px] mr-[0px] justify-center items-center w-6 h-6 bg-[#d26750] rounded-full ring-8 ring-[#FFE4C4] cursor-pointer "
+                          className="flex mt-[4px] mr-[0px] justify-center items-center w-6 h-6 bg-[#0ABC31] rounded-full ring-8 ring-[#88D66C] cursor-pointer "
                           onClick={() => {
                             setShowSettings(!showSettings)
                           }}
@@ -481,7 +481,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                         </span>
                         <button
                           onClick={() => setisImportLeadsOpen(true)}
-                          className={`flex items-center ml-5 pl-2 mt-2 pr-4 py-1 max-h-[30px] mt-[2px]  text-sm font-medium text-white bg-[#d26750] rounded-[4px] hover:bg-gray-700  `}
+                          className={`flex items-center ml-5 pl-2 mt-2 pr-4 py-1 max-h-[30px] mt-[2px]  text-sm font-medium text-white bg-[#0ABC31] rounded-[4px] hover:bg-[#88D66C]  `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

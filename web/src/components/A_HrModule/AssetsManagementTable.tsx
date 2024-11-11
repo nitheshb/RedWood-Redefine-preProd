@@ -95,9 +95,9 @@ const AssetsManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                 onClick={() => showOnlyDept(dat.val)}
               >
                 <div
-                  className={`py-1 px-7 rounded-full font-semibold hover:text-indigo-700 hover:bg-indigo-100  ${
+                  className={`py-1 px-7 rounded-full font-semibold hover:text-[#0ABC31] hover:bg-indigo-100  ${
                     selDept.includes(dat.val)
-                      ? 'bg-indigo-100 text-indigo-700'
+                      ? 'bg-indigo-100 text-[#0ABC31]'
                       : 'text-gray-600'
                   }`}
                 >
@@ -187,7 +187,7 @@ const AssetsManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                       {person.roles}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full capitalize text-green-800">
+                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full capitalize text-[#0ABC31]">
                       {person?.userStatus}
                       </span>
                     </td>

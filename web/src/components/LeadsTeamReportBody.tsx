@@ -1488,13 +1488,13 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               <span
                                 className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                   sourceDateRange === startOfDay(d).getTime()
-                                        ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
-                                  : 'text-[#020B97] bg-[#C4FECB] '
+                                        ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF]  '
+                                  : 'text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  border border-[#4C0053]  bg-[#fff]  '
                     
                                 }rounded-full`}
                               >
                                 <EyeIcon
-                                  className="h-3 w-3 mr-1"
+                                  className="h-4 w-4 mr-1"
                                   aria-hidden="true"
                                 />
                                 Today
@@ -1511,12 +1511,12 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             <span
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange === startOfWeek(d).getTime()
-                                  ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
-                                  : 'text-[#020B97] bg-[#C4FECB] '
+                                  ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  border border-[#4C0053]  bg-[#fff] '
                               }rounded-full`}
                             >
                               <CalendarIcon
-                                className="h-3 w-3 mr-1"
+                                className="h-4 w-4 mr-1"
                                 aria-hidden="true"
                               />
                               This Week
@@ -1530,13 +1530,12 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             <span
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange === startOfMonth(d).getTime()
-                                      ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
-                                  : 'text-[#020B97] bg-[#C4FECB] '
-
+                                      ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF] '
+                                      : ' bg-white border border-[#4C0053] text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  rounded-full '
                               }rounded-full`}
                             >
                               <CalendarIcon
-                                className="h-3 w-3 mr-1"
+                                className="h-4 w-4 mr-1"
                                 aria-hidden="true"
                               />
                               This Month
@@ -1554,13 +1553,13 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                 sourceDateRange ===
                                 subMonths(startOfMonth(d), 6).getTime()
 
-                                  ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
-                                  : 'text-[#020B97] bg-[#C4FECB] '
+                                  ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF]  '
+                                  : ' bg-white border border-[#4C0053] text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  rounded-full '
   
                               }rounded-full`}
                             >
                               <CalendarIcon
-                                className="h-3 w-3 mr-1"
+                                className="h-4 w-4 mr-1"
                                 aria-hidden="true"
                               />
                               Last 6 Months
@@ -1573,8 +1572,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   className={`flex ml-1 mt-[6px] items-center h-6 px-3 text-xs ${
                                     sourceDateRange === startDate?.getTime()
 
-                                  ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
-                                  : 'text-[#020B97] bg-[#C4FECB] '
+                                  ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF]  '
+                                  : ' bg-white border border-[#4C0053] text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  rounded-full '
  
                                   } rounded-full`}
                                   onClick={() => {
@@ -1582,7 +1581,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   }}
                                 >
                                   <CalendarIcon
-                                    className="h-3 w-3 mr-1"
+                                    className="h-4 w-4 mr-1"
                                     aria-hidden="true"
                                   />
                                   {startDate == null ? 'Custom' : ''}

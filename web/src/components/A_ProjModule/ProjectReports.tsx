@@ -581,7 +581,7 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
             >
               <button>
                 <span
-                  className={`flex ml-2 items-center h-[30] px-3 text-sm  ${
+                  className={`flex ml-2 items-center h-[30] py-1 px-3 text-sm  ${
                     selCat === data.value
                       ? 'font-semibold text-green-800 bg-[#FFEDEA]'
                       : 'font-medium text-black-100 bg-[#f0f8ff]'
