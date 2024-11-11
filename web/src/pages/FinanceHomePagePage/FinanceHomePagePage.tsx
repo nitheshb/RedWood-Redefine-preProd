@@ -857,12 +857,12 @@ const FinanceHomePagePage = () => {
                             </span>
                             <section className="flex ml-auto mt-[18px]">
                               <button>
-                                <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-white bg-[#d26750] rounded-full">
+                                <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200  rounded-full">
                                   <PencilIcon
                                     className="h-3 w-3 mr-1"
                                     aria-hidden="true"
                                   />
-                                  Edit box2
+                                  Edit
                                 </span>
                               </button>
                             </section>
