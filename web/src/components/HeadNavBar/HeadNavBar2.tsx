@@ -59,7 +59,7 @@ const HeadNavBar2 = ({ selModule, setSelModule, setViewable }) => {
             pickedValue={selModule}
           />
         </section>
-        <GlobalSearchBar />
+        {/* <GlobalSearchBar /> */}
         <button className="flex items-center justify-center h-10 px-4 ml-auto "></button>
         <button className="flex items-center justify-center h-10 text-sm font-medium "></button>
         <Box

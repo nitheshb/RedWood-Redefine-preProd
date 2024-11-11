@@ -885,7 +885,7 @@ useEffect(() => {
                 // buildup_area: 0,
                 // super_build_up_area: 0,
               }}
-              // validationSchema={validate_AddUnit}
+              validationSchema={validate_AddUnit}
               onSubmit={(values, { resetForm }) => {
                 console.log('ami submitted', values)
                 if (title === 'Edit Unit') {
@@ -1091,7 +1091,7 @@ useEffect(() => {
                               <div className="w-full flex flex-col mt-">
                                 <CustomSelect
                                   name="bedrooms_c"
-                                  label="Type/BedRooms*"
+                                  label="Type/BedRooms"
                                   className="input mt-"
                                   onChange={(value) => {
                                     formik.setFieldValue('bedrooms_c', value.value)
@@ -1226,7 +1226,7 @@ useEffect(() => {
                             </div>
                             <div className="space-y-2 w-full text-xs mt-">
                               <TextField
-                                label="PLC per sqft*"
+                                label="PLC per sqft"
                                 name="plc_per_sqft"
                                 type="number"
                               />

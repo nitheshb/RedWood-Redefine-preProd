@@ -46,6 +46,7 @@ import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import TransactionUpdateSideView from '../transactionUpdateSideView'
 import ViewUnitDetails from '../ViewUnitDetails'
 import AddCustomerWallet from '../FinanceModule/AddCustomerWallet'
+import UnitBookingUnblockCRM from '../A_CrmModule/A_UnitUnblock/CrmUnitUnblock'
 
 const SiderForm = ({
   mode,
@@ -536,6 +537,20 @@ const SiderForm = ({
                 )}
                 {title === 'unitDetails_crm_view' && (
                   <UnitSideViewCRM
+                    openUserProfile={false}
+                    customerDetails={customerDetails}
+                    unitViewerrr={unitViewerrr}
+                    unitsViewMode={unitsViewMode}
+                    setUnitsViewMode={setUnitsViewMode}
+                    transactionData={transactionData}
+                    selCustomerPayload={selCustomerPayload}
+                    setSelUnitDetails={setSelUnitDetails}
+                    selSubMenu={selSubMenu}
+                    selSubMenu2={selSubMenu2}
+                  />
+                )}
+                {title === 'unblock_Unit' && (
+                  <UnitBookingUnblockCRM
                     openUserProfile={false}
                     customerDetails={customerDetails}
                     unitViewerrr={unitViewerrr}
