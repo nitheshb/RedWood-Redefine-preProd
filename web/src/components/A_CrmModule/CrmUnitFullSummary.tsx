@@ -78,6 +78,7 @@ import { supabase } from 'src/context/supabase'
 import ShowCustomerDetails from './CrmShowCustomerDetails'
 import CancelUnitForm from './A_UnitCancel.tsx/CancelUnitForm'
 import UnitAudit from './A_Crm_UnitAudit/UnitAudit'
+import UnblockUnitForm from './A_UnitUnblock/UnblockUnitForm'
 
 
 // interface iToastInfo {
@@ -1155,8 +1156,8 @@ export default function UnitFullSummary({
               </section> */}
 
 
-              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Units
@@ -1195,8 +1196,8 @@ export default function UnitFullSummary({
 
 
 
-              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Dimensions</div>
@@ -1227,8 +1228,8 @@ export default function UnitFullSummary({
 
 
 
-<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Schedule
@@ -1259,8 +1260,8 @@ export default function UnitFullSummary({
 
 
 
-<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Additonal Details
@@ -1439,9 +1440,9 @@ export default function UnitFullSummary({
 
             {(customerDetails?.projectType?.name === 'Villas' || customerDetails?.projectType?.name === 'Apartment') && (
 
-              
-<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+
+<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Details
@@ -1572,8 +1573,8 @@ export default function UnitFullSummary({
 
 
 
-              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Status
@@ -1612,7 +1613,7 @@ export default function UnitFullSummary({
 
 
 
- 
+
 
 
 
@@ -1856,6 +1857,10 @@ export default function UnitFullSummary({
       {selFeature === 'cancel_booking' && <>
 
       <CancelUnitForm selUnitDetails={selCustomerPayload} /> </>}
+
+      {selFeature === 'unblock_booking' && <>
+
+<UnblockUnitForm selUnitDetails={selCustomerPayload} /> </>}
 
       {selFeature === 'unit_audit' && <>
 

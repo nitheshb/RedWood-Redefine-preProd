@@ -721,15 +721,38 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
     }
   }
   const handleConstructCostChange = (e) => {
-    const inputValue = e.target.value
-    setRows(
-      rows.map((row) =>
-        row.component.value === 'sqft_construct_cost_tax'
-          ? { ...row, ['charges']: inputValue }
-          : row
+    // const inputValue = e.target.value
+    // setRows(
+    //   rows.map((row) =>
+    //     row.component.value === 'sqft_construct_cost_tax'
+    //       ? { ...row, ['charges']: inputValue }
+    //       : row
+    //   )
+    // )
+    // setConstructionPerSqft(e.target.value)
+
+
+    const rawValue = e.target.value.replace(/,/g, '')
+    const numValue = parseFloat(rawValue)
+    if (!isNaN(numValue)) {
+      setRows(
+        rows.map((row) =>
+          row.component.value === 'sqft_construct_cost_tax'
+            ? { ...row, ['charges']: numValue }
+            : row
+        )
       )
-    )
-    setConstructionPerSqft(e.target.value)
+      setConstructionPerSqft(numValue)
+    } else {
+      setRows(
+        rows.map((row) =>
+          row.component.value === 'sqft_construct_cost_tax'
+            ? { ...row, ['charges']: 0 }
+            : row
+        )
+      )
+      setConstructionPerSqft(0)
+    }
   }
   const handleCostGSTChange = (e) => {
     const inputValue = e.target.value

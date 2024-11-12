@@ -369,6 +369,22 @@ const EditablePaymentTable = ({
   }
   const saveSetup = async () => {
     console.log('setUpData is ', rows, source)
+    console.log('payment schuled value is ', rows)
+
+    // rows.map((item) => {
+    //   console.log('item is ', item)
+    //   item.percentage = item.percentage / 100
+    // })
+
+    const sum = rows.reduce((accumulator, current) => {
+      return current.units.value === 'percentage' ? accumulator + current.percentage : accumulator;
+    }, 0)
+    if(sum !== 100){
+    enqueueSnackbar('Total payment percentage should be 100%', {
+      variant: 'error',
+    })}else{
+
+
     const data = { fullCs: rows, type: type }
     const { projectId, uid } = phase || {}
     if (source === 'project') {
@@ -394,6 +410,7 @@ const EditablePaymentTable = ({
       )
       // addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }
+  }
   }
   const [rows, setRows] = useState([
     // {
@@ -480,7 +497,7 @@ const EditablePaymentTable = ({
                                       }}
                                       className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                                     />
-                                  
+
                                   </section>
                                   {/* <StyledSelect
                                     disableUnderline={true}

@@ -1203,7 +1203,22 @@ const FloordetailsSearch = ({
                                             'customer_blocked',
                                             'management_blocked',
                                           ].includes(data?.status) && (
-                                            <div className="flex flex-col items-right justify-between">
+                                            <div className="flex flex-col items-right justify-between"  onClick={() => {
+                                              setIsCancelUnit(true)
+                                              setSelSubMenu('unblock_Unit')
+                                              setSliderInfo({
+                                                open: true,
+                                                title: 'unblock_Unit',
+                                                sliderData: {
+                                                  unitDetail: data,
+                                                  phaseDetail: phaseFeed,
+                                                  leadDetailsObj:
+                                                    leadDetailsObj,
+                                                },
+
+                                                widthClass: 'max-w-4xl',
+                                              })
+                                            }}>
                                               <div className="flex flex-row justify-between items-right">
                                                 <h3 className="m-0 ml-2 mt-4 text-sm   leading-tight tracking-tight text-blue-800 border-0 border-blue-200">
                                                   Blocked Details
@@ -1680,7 +1695,7 @@ const FloordetailsSearch = ({
                     </span>
                   </div>
                 </div>
-               
+
               </div>
             )}
           </section>

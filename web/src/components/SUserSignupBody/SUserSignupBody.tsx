@@ -243,7 +243,7 @@ console.log('rolws are ', filRoles)
     //   .required('Required'),
     name: Yup.string()
       .max(15, 'Must be 15 characters or less')
-      .required('Required'),
+      .required('Name is required'),
     // lastName: Yup.string()
     //   .max(20, 'Must be 20 characters or less')
     //   .required('Required'),
@@ -254,17 +254,25 @@ console.log('rolws are ', filRoles)
     // confirmPassword: Yup.string()
     //   .oneOf([Yup.ref('password'), null], 'Password must match')
     //   .required('Confirm password is required'),
-    // offPh: Yup.string()
-    //   .matches(phoneRegExp, 'Phone number is not valid')
-    //   .min(10, 'to short')
-    //   .max(10, 'to long'),
-    // perPh: Yup.string()
-    //   .matches(phoneRegExp, 'Phone number is not valid')
-    //   .min(10, 'to short')
-    //   .max(10, 'to long'),
+    offPh: Yup.string()
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .min(10, 'Phone no is to short')
+      .max(10, 'Phone no is to long')
+      .required('Phone no is required')
+      ,
+    perPh: Yup.string()
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .min(10, 'Phone no is to short')
+      .max(10, 'Phone no is to long')
+      .required('Phone no is required'),
+
+
+    empId: Yup.string()
+    // .oneOf(['Admin', 'CRM'], 'Required Dept')
+    .required('Employee Id is required'),
     deptVal: Yup.string()
       // .oneOf(['Admin', 'CRM'], 'Required Dept')
-      .required('Req Dept'),
+      .required('Department is required'),
     myRole: Yup.string()
       //  .oneOf(['Admin', 'CRM'], 'DEPT IS REQ')
       .required('Required Role'),
@@ -313,7 +321,7 @@ console.log('rolws are ', filRoles)
                   disabled={editMode}
                 />
                 <TextField
-                  label="User Name*"
+                  label="Employee Name*"
                   name="name"
                   type="text"
                   disabled={editMode}
@@ -358,7 +366,7 @@ console.log('rolws are ', filRoles)
 
                 <CustomSelect
                   name="deptName"
-                  label="Department"
+                  label="Department*"
                   className="input mt-3"
                   onChange={(value) => {
                     changed(value)
@@ -375,7 +383,7 @@ console.log('rolws are ', filRoles)
                 ) : null}
                 <CustomSelect
                   name="roleName"
-                  label="Role"
+                  label="Role*"
                   className="input mt-3"
                   onChange={(value) =>
                     formik.setFieldValue('myRole', value.value)
