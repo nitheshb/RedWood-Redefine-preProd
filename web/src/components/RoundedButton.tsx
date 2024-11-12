@@ -10,7 +10,7 @@ const StyledRoundedButton = ({ isCategoryMatched, children, ...props }) => (
       border: `1px solid #9D01A3`,
       color: `#484848`,
       fontWeight: 600,
-      height: '1.5rem',
+      height: '1.8rem',
       fontSize: '0.75rem',
       backgroundColor: isCategoryMatched ? `#E0DDEE` : '#fff',
       margin: '0 0.25rem',
