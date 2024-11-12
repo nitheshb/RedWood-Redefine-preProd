@@ -551,7 +551,8 @@ const SiderForm = ({
                 )}
                 {title === 'unblock_Unit' && (
                   <UnitBookingUnblockCRM
-                    openUserProfile={false}
+
+                    openUserProfile={setOpen}
                     customerDetails={customerDetails}
                     unitViewerrr={unitViewerrr}
                     unitsViewMode={unitsViewMode}
@@ -565,7 +566,8 @@ const SiderForm = ({
                 )}
                 {title === 'Cancel_Unit' && (
                   <UnitBookingCancelCRM
-                    openUserProfile={false}
+
+                    openUserProfile={setOpen}
                     customerDetails={customerDetails}
                     unitViewerrr={unitViewerrr}
                     unitsViewMode={unitsViewMode}

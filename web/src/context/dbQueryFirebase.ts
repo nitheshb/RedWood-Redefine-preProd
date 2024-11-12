@@ -3975,6 +3975,32 @@ export const addPhasePartAtax = async (
     })
   }
 }
+export const addPhaseDefaultSqftCost = async (
+  orgId,
+  uid,
+  fullCsA,
+  type,
+  enqueueSnackbar
+) => {
+  const usersUpdate = {}
+
+  try {
+    await updateDoc(doc(db, `${orgId}_phases`, uid), {
+      area_cost_persqft: fullCsA?.area_cost_persqft || 0,
+      const_cost_persqft: fullCsA?.const_cost_persqft || 0,
+      area_tax:fullCsA?.area_tax || 0,
+      const_tax: fullCsA?.const_tax || 0
+    })
+    // enqueueSnackbar('Charges added successfully', {
+    //   variant: 'success',
+    // })
+  } catch (e) {
+    console.log(' error is here', e)
+    enqueueSnackbar(e.message, {
+      variant: 'error',
+    })
+  }
+}
 export const addPhaseFullCs = async (
   orgId,
   uid,
@@ -5714,14 +5740,14 @@ export const updateUnitAsBooked = async (
         to: data?.status || 'booked',
       },
     ])
-    enqueueSnackbar(`Cost Seet and Unit ${data?.status}`, {
+    enqueueSnackbar(`Unit updated as ${data?.status}`, {
       variant: 'success',
     })
   } catch (error) {
-    console.log('Filed updated Cost sheet', error, {
+    console.log('Unit Status Updation Failed', error, {
       ...data,
     })
-    enqueueSnackbar('Cost sheet  updation failed', {
+    enqueueSnackbar('Unit Status Updation Failed', {
       variant: 'error',
     })
   }
@@ -6020,6 +6046,30 @@ export const updateCancelProjectCounts = async (
 
       // t_bal: soldVal - t_collect,
       // t_refund: increment(1)
+    })
+
+    console.log('chek if ther is any erro in supa', data)
+    enqueueSnackbar(`Project Status Updated`, {
+      variant: 'success',
+    })
+  } catch (e) {
+    enqueueSnackbar(e.message, {
+      variant: 'error',
+    })
+  }
+}
+export const updateUnblockProjectCounts = async (
+  orgId,
+  pId,
+  data,
+  by,
+  enqueueSnackbar
+) => {
+  try {
+    const { soldVal, t_collect } = data
+    await updateDoc(doc(db, `${orgId}_projects`, pId), {
+      blockedUnitCount: increment(-1),
+      availableCount: increment(1),
     })
 
     console.log('chek if ther is any erro in supa', data)

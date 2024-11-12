@@ -896,7 +896,7 @@ export default function UnitBookingUnblockCRM({
   }
   return (
     <div
-      className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`bg-white   h-screen    } `}
     >
       <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F8E7E3]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
@@ -1082,20 +1082,21 @@ export default function UnitBookingUnblockCRM({
           </>
         )}
       </div>
-
+      {selFeature === 'Cancel_Unit' && <>
       <UnitFullSummary
         customerDetails={customerDetails}
         selCustomerPayload={selCustomerPayload}
         source={"cancelBooking"}
         selSubMenu={"cancel_booking"}
-      />
+      />    </>}
 
-      {selFeature === 'unblock_booking' && <>
+      {selFeature === 'unblock_Unit' && <>
         <UnitFullSummary
+        openUserProfile={openUserProfile}
         customerDetails={customerDetails}
         selCustomerPayload={selCustomerPayload}
         source={"cancelBooking"}
-        selSubMenu={"unblock_booking"}
+        selSubMenu={"unblock_Unit"}
       />
       </>}
 

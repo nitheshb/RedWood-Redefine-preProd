@@ -43,6 +43,7 @@ import {
   streamMasters,
   upsertMasterOption,
   deleteMasterOption,
+  addPhaseDefaultSqftCost,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
@@ -558,6 +559,12 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
       if (myId) setRows(rows.filter((item) => item.id !== myId))
       const newSet = rows.filter((item) => item.id !== myId)
       addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', enqueueSnackbar)
+      const defaultSqftCost= {  area_cost_persqft: costPerSqft,
+        const_cost_persqft: constructionPerSqft,
+        area_tax:gst,
+        const_tax: constGst}
+        addPhaseDefaultSqftCost(orgId, uid, defaultSqftCost, 'partATaxObj', enqueueSnackbar)
+
     } else {
       addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }

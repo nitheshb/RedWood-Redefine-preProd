@@ -756,7 +756,7 @@ export default function UnitFullSummary({
   }
   return (
     <div
-      className={`bg-[#d9d8ff]  h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`bg-[#d9d8ff]  h-screen     `}
     >
 <section className="flex flex-row">
     <div className='w-full'>
@@ -1856,11 +1856,11 @@ export default function UnitFullSummary({
       {selFeature === 'legal_info' && <></>}
       {selFeature === 'cancel_booking' && <>
 
-      <CancelUnitForm selUnitDetails={selCustomerPayload} /> </>}
+      <CancelUnitForm openUserProfile={openUserProfile} selUnitDetails={selCustomerPayload} /> </>}
 
-      {selFeature === 'unblock_booking' && <>
+      {selFeature === 'unblock_Unit' && <>
 
-<UnblockUnitForm selUnitDetails={selCustomerPayload} /> </>}
+<UnblockUnitForm openUserProfile={openUserProfile} selUnitDetails={selCustomerPayload} /> </>}
 
       {selFeature === 'unit_audit' && <>
 
