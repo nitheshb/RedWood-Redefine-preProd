@@ -706,15 +706,14 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   }
   return (
     <>
-      <div className=" bg-white pb-8  rounded-md mt-1 mx-1">
-        <div className="">
-          <div
-            className="
-           "
-          >
-            <div className="flex items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
+
+<div className="pb-10 h-[95%]">
+      <div className=" bg-white pb-8 rounded-md mt-1 mx-1 z-10">
+        <div className=" bg-white">
+          <div className="bg-white  ">
+            <div className="flex   sticky top-16  z-10 items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
               <h2 className="text-md font-semibold text-black leading-light font-Playfair">
-                Leads Management
+                Leads Management box2
               </h2>
 
               <div className="flex">
@@ -992,6 +991,8 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
             )} */}
 
             {!ready && (
+                <div className="fixed  w-[95%]">
+
               <LLeadsTableView
                 setFetchLeadsLoader={setFetchLeadsLoader}
                 fetchLeadsLoader={fetchLeadsLoader}
@@ -1001,10 +1002,14 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                 leadsTyper={leadsTyper}
                 searchVal={searchValue}
               />
+              </div>
             )}
           </div>
         </div>
       </div>
+
+      </div>
+
       <SiderForm
         open={isImportLeadsOpen}
         setOpen={setisImportLeadsOpen}
