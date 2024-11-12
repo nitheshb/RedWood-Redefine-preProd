@@ -267,11 +267,13 @@ function EnhancedTableHead(props) {
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
-                // backgroundColor: '#F7F9FB',
+                  //backgroundColor: '#F7F9FB',
                 color: '#1a91eb',
                 height: '10px',
                 maxHeight: '10px',
                 lineHeight: '7px',
+                //paddingTop: '5px',
+                //paddingBottom: '5px',
                 display: displayHeadersFun(headCell.id)
               }}
             >

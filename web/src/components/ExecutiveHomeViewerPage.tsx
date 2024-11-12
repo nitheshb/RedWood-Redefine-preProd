@@ -707,13 +707,13 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   return (
     <>
 
-<div className=" fixed w-[95%] ">
+<div className=" fixed w-[95%]  h-min	  ">
       <div className=" bg-white pb-8 rounded-md mt-1 mx-1 z-10">
         <div className=" bg-white">
           <div className="bg-white  ">
             <div className="flex   items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
               <h2 className="text-md font-semibold text-black leading-light font-Playfair">
-                Leads Management 
+                Leads Management
               </h2>
 
               <div className="flex">
@@ -991,7 +991,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
             )} */}
 
             {!ready && (
-                <div className="">
+                <div className="	">
 
               <LLeadsTableView
                 setFetchLeadsLoader={setFetchLeadsLoader}

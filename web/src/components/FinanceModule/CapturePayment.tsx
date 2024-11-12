@@ -425,13 +425,13 @@ const CaptureUnitPayment = ({
                         <div className="form">
                           {/* Phase Details */}
 
-                          <section className=" ">
-                            <div className="w-full mx-auto ">
+                          <section className="overflow-y-auto h-[60vh] sm:h-[50vh] md:h-[60vh] lg:h-[100vh]">
+                            <div className="w-full mx-auto">
                               <div className="relative flex flex-col min-w-0 break-words w-full mb-6  rounded-lg bg-white ">
-                                <div className=" flex flex-row px-0 py-2  overflow-y-scroll overflow-auto no-scrollbar">
+                                <div className=" flex flex-row px-0 py-2  overflow-auto ">
                                   <section className=" p- rounded-md ">
                                     <article className="mt-3">
-                                      <div className="flex flex-row justify-between">
+                                      <div className="flex flex-row  justify-between">
                                         <section className="flex flex-row">
                                           <span className="text-[38px] mt-[-16px]">
                                             🎊
