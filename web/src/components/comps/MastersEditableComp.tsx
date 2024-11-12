@@ -1225,6 +1225,7 @@ if (title === 'Villa Type Category') {
       newDataIs.push(...approvalAuthorityA);
     }
     if (title === 'State') {
+      console.log('statesListA', statesListA)
       newDataIs.push(...statesListA);
     }
     if (title === 'Charges For') {
@@ -1269,7 +1270,16 @@ if (title === 'Villa Type Category') {
 
 
     newDataIs.map((item) => {
-      upsertMasterOption(orgId, item.id, item,enqueueSnackbar)
+      if (item.id) {
+        upsertMasterOption(orgId, item.id, item, enqueueSnackbar)
+      }else{
+        const x = uuidv4()
+        item.id = x
+        item.title = title
+        item.myId = x
+        upsertMasterOption(orgId, item.id, item, enqueueSnackbar)
+      }
+
     })
 
 

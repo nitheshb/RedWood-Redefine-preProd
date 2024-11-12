@@ -3238,6 +3238,7 @@ export const addLeadNotes = async (orgId, id, data) => {
   }
 }
 export const upsertMasterOption = async (orgId, id, data, enqueueSnackbar) => {
+console.log('values are ',id )
 
   try {
     const washingtonRef = doc(db, `${orgId}_Masters`, id)
@@ -3246,12 +3247,18 @@ export const upsertMasterOption = async (orgId, id, data, enqueueSnackbar) => {
     await updateDoc(washingtonRef, data)
 
   } catch (error) {
-    await setDoc(doc(db, `${orgId}_Masters`, id), data)
+    try {
+      await setDoc(doc(db, `${orgId}_Masters`, id), data)
+
+    } catch (error) {
+console.log('error in master update ', error)
+    }
 
   }
   enqueueSnackbar(`${data?.title} Updated successfully`, {
     variant: 'success',
   })
+
 }
 export const updateProjectComputedData = async (orgId, id, data) => {
   try {

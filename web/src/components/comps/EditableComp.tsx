@@ -323,17 +323,17 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
         setCostPerSqft(x?.charges)
         setGST(x?.gst.value)
       }else{
-        setCostPerSqft(phase?.area_cost_persqft)
-        setGST(phase?.area_tax)
+        setCostPerSqft(phase?.area_cost_persqft || 0)
+        setGST(phase?.area_tax || 0)
       }
       if (costConstructSqftA.length > 0) {
         console.log('setUpData', costSqftA)
         const x = costConstructSqftA[0]
-        setConstructionPerSqft(x?.charges)
-        setConstGST(x?.gst.value)
+        setConstructionPerSqft(x?.charges || 0)
+        setConstGST(x?.gst.value || 0)
       }else{
-        setConstructionPerSqft(phase?.const_cost_persqft)
-        setConstGST(phase?.const_tax)
+        setConstructionPerSqft(phase?.const_cost_persqft || 0)
+        setConstGST(phase?.const_tax || 0)
       }
       setRows(fullCs)
     } else {
