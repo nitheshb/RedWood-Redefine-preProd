@@ -34,7 +34,6 @@ import {
 import {
   addCostSheetMaster,
   addPhasePartAtax,
-  addPhaseFullCs,
   steamBankDetailsList,
   streamProjectCSMaster,
   addMastersFull,
@@ -314,19 +313,7 @@ const TermsConditionsEditableTable = ({
   const saveSetup = () => {
     setSaveWarn(true)
   }
-  const handleCostSheetSave = () => {
-    console.log('setUpData is ', rows, source)
-    const data = { fullCs: rows, type: type }
-    const { projectId, uid } = phase || {}
-    if (source === 'project') {
-      const myId = selcDelRow?.id
-      if (myId) setRows(rows.filter((item) => item.id !== myId))
-      const newSet = rows.filter((item) => item.id !== myId)
-      addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', enqueueSnackbar)
-    } else {
-      addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
-    }
-  }
+
 
   const projectItems = [
     'Receipt',

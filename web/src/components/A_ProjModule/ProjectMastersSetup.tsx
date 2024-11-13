@@ -107,7 +107,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
-              <EditableTable type={'Apartment'} />
+              <EditableTable type={'Apartment'} source={'Masters'} />
             </div>
           </section>
         </div>
@@ -131,7 +131,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Setup`}
               </h2>
-              <MastersEditableTable type={'Masters'} />
+              <MastersEditableTable type={'Masters'} source={'Masters'} />
             </div>
           </section>
         </div>
@@ -143,7 +143,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
-              <EditableTable type={'Plots'} />
+              <EditableTable type={'Plots'} source={'Masters'} />
             </div>
           </section>
         </div>
@@ -155,7 +155,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
-              <EditableTable type={'Villas'} />
+              <EditableTable type={'Villas'} source={'Masters'} />
             </div>
           </section>
         </div>
@@ -167,7 +167,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
-              <EditableTable type={'WeekendVillas'} />
+              <EditableTable type={'WeekendVillas'}  source={'Masters'}/>
             </div>
           </section>
         </div>
