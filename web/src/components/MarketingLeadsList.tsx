@@ -73,20 +73,21 @@ const CampaignTable = ({ campaigns }) => {
             Marketing Campaigns
           </h2>
           <button
-            className="flex items-center bg-[#C2D7FE] text-black  py-2 px-4 rounded-full z-10"
+            className="flex items-center text-sm	 bg-[#fff] text-black border border-gray-300	 py-2 px-4 rounded-full z-10"
             onClick={() => {
               setMode('add')
               setisImportLeadsOpen1(true)}
             }
           >
             <svg
-              className="h-6 w-6 mr-2"
+              className="h-6 w-6 mr-2 text-[#0891B2]"
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
               viewBox="0 0 24 24"
               stroke="currentColor"
+              
             >
               <path d="M12 4v16m8-8H4" />
             </svg>
@@ -99,84 +100,84 @@ const CampaignTable = ({ campaigns }) => {
           style={{ width: '90%' }}
         >
           <table className="min-w-full border  border-gray-200">
-            <thead className="bg-[#C4D6FE]">
+            <thead className="bg-[#0891B2]">
               <tr>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border  border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white   tracking-wider border  border-gray-200"
                   style={{ width: '100px', height: '50px' }}
                 >
                   Campaign Name
                 </th>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border  border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white  tracking-wider border  border-gray-200"
                   style={{ width: '100px', height: '50px' }}
                 >
                   Category
                 </th>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border  border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white  tracking-wider border  border-gray-200"
                   style={{ width: '100px', height: '50px' }}
                 >
                   Owner
                 </th>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border  border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white  tracking-wider border  border-gray-200"
                   style={{ width: '100px', height: '50px' }}
                 >
                   Spent Budget
                 </th>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border  border-gray-200"
+                  className="px-3 py-3 text-left text-xs font-medium text-white  tracking-wider border  border-gray-200"
                   style={{ width: '120px', height: '50px' }}
                 >
                   Allocated Budget
                 </th>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border  border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white  tracking-wider border  border-gray-200"
                   style={{ width: '100px', height: '50px' }}
                 >
                   Start Date
                 </th>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border border-gray-200"
+                  className="px-3 py-3 text-left text-xs font-medium text-white tracking-wider border border-gray-200"
                   style={{ width: '100px', height: '50px' }}
                 >
                   End Date
                 </th>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white  tracking-wider border border-gray-200"
                   style={{ width: '100px', height: '50px' }}
                 >
                   Efficency
                 </th>
 
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border  border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white  tracking-wider border  border-gray-200"
                   style={{ width: '80px', height: '50px' }}
                 >
                   Leads
                 </th>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white  tracking-wider border border-gray-200"
                   style={{ width: '80px', height: '50px' }}
                 >
                   InProgress
                 </th>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white  tracking-wider border border-gray-200"
                   style={{ width: '80px', height: '50px' }}
                 >
                   Booked
                 </th>
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white  tracking-wider border border-gray-200"
                   style={{ width: '80px', height: '50px' }}
                 >
                   NotInterested
                 </th>
 
                 <th
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-700  tracking-wider border border-gray-200"
+                  className="px-3 py-3 text-left text-sm font-medium text-white  tracking-wider border border-gray-200"
                   style={{ width: '80px', height: '50px' }}
                 >
                   Junk

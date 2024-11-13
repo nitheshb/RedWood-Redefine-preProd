@@ -642,7 +642,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     <li
       className={`border-l-2 ${
         activeItem === item
-          ? 'border-[#0EA5E9]'
+          ? 'border-[#0891B2]'
           : 'border-gray-80 hover:border-gray-400'
       }`}
     >
@@ -650,8 +650,8 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
         className={`block px-4 py-2 text-md ${
           activeItem === item
-            ? 'text-[#0EA5E9] font-bold'
-            : 'text-gray-600 font-bold hover:text-[#0EA5E9]'
+            ? 'text-[#0891B2] font-medium'
+            : 'text-gray-600 font-medium		 hover:text-[#0891B2]'
         }`}
         onClick={(e) => {
           e.preventDefault()
@@ -1484,7 +1484,7 @@ if (title === 'Villa Type Category') {
               </label>
             </div>
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
           </div>
         </div>
 
@@ -1499,7 +1499,7 @@ if (title === 'Villa Type Category') {
                     </label>
                   </div>
 
-                  <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+                  <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
                 </div>
               </div>
               <ul>
@@ -1518,7 +1518,7 @@ if (title === 'Villa Type Category') {
                     </label>
                   </div>
 
-                  <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+                  <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
                 </div>
               </div>
               <ul>
@@ -1568,11 +1568,11 @@ if (title === 'Villa Type Category') {
                         {dataObj?.data?.map((data, i) => (
                           <tr key={`static-${i}`}>
                             {i === 0 ? (
-                              <td className="py-5 px-4 font-bold text-[#0EA5E9] text-md">
+                              <td className="py-5 px-4 font-bold text-[#0891B2] text-md">
                                 {dataObj.title}
                               </td>
                             ) : (
-                              <td className="py-5 px-4 text-[#0EA5E9] text-md"></td>
+                              <td className="py-5 px-4 text-[#0891B2] text-md"></td>
                             )}
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               {/* {editingCell?.key === dataObj.title &&
@@ -1623,7 +1623,7 @@ if (title === 'Villa Type Category') {
                                   //   handleChange1(row.id, 'charges', 0)
                                   // }
                                 }}
-                                className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                               />
                             </td>
                             <td className="py-5 px-4 text-md border-b text-[#4F46E5]">
@@ -1654,7 +1654,7 @@ if (title === 'Villa Type Category') {
                         ))}
                         {(dynamicRows[dataObj['title']] || []).map((row, i) => (
                           <tr key={`dynamic-${i}`}>
-                            <td className="py-5 px-4 text-md text-[#0EA5E9]"></td>
+                            <td className="py-5 px-4 text-md text-[#0891B2]"></td>
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               <input
                                 type="text"
@@ -1698,14 +1698,14 @@ if (title === 'Villa Type Category') {
                       <button
                         // onClick={() => appendRow(dataObj?.title)}
                         onClick={() => addRowNew(dataObj)}
-                        className=" mt-4 px-2 py- bg-cyan-500 text-white rounded"
+                        className=" mt-4 px-2 py- bg-[#0891B2] text-white rounded"
                       >
                         Add Row
                       </button>
 
                       <button
                         onClick={() => handleSave(dataObj)}
-                        className="mt-4 px-2 py- bg-cyan-500 text-white text-sm  rounded"
+                        className="mt-4 px-2 py- bg-[#0891B2] text-white text-sm  rounded"
                       >
                         Save
                       </button>
@@ -1721,7 +1721,7 @@ if (title === 'Villa Type Category') {
             <div className="inline">
               <div className="cursor-pointer" >
                 <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                  Initial Masters setup <abbr title="required"></abbr>
+                  Initial Masters setup<abbr title="required"></abbr>
                 </label>
               </div>
 

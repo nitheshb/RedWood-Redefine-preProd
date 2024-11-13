@@ -88,9 +88,9 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
   }
   return (
     <div className="flex flex-col">
-      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div className="-my-2 px-1 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <section className="flex ml-auto mt-[18px]  bg-white  border-gray-100 py-4 rounded-t-xl px-3 ">
+          <section className="flex ml-auto mt-[18px]  bg-white  border-gray-100 py-4 rounded-t-xl px-5 ">
             {[
               { label: 'All', val: 'all' },
               { label: 'Super User', val: 'admin' },
@@ -106,13 +106,13 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
             ].map((dat, index) => (
               <a
                 key={index}
-                className={`rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800 mr-4`}
+                className={`rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 ml-2 focus:ring-indigo-800 mx-1`}
                 onClick={() => showOnlyDept(dat.val)}
               >
                 <div
-                  className={`py-1 px-8 rounded-full hover:text-indigo-700 hover:bg-indigo-100  ${
+                  className={`py-1 px-8 rounded-full font-semibold	  hover:text-[#0ABC31] hover:bg-indigo-100  ${
                     selDept.includes(dat.val)
-                      ? 'bg-indigo-100 text-indigo-700'
+                      ? 'bg-indigo-100 text-[#0ABC31]'
                       : 'text-gray-600'
                   }`}
                 >
@@ -211,7 +211,7 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                       {person.roles}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                      <span className="px-2 inline-flex text-xs leading-5 capitalize  font-semibold rounded-full  text-[#0ABC31]">
                         {person?.userStatus}
                       </span>
                     </td>

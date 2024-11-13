@@ -470,7 +470,7 @@ const TodoListView = ({
                         role="tab"
                         onClick={() => setisClicked(d.val)}
                       >
-                        <section className="flex flex-row text-[15px] h-[24px]">
+                        <section className="flex flex-row text-[15px] h-[24px]  mb-0">
                           {' '}
                           {/* <img
                             className="px-1 w-5 h-4"
@@ -572,7 +572,7 @@ const TodoListView = ({
                       setShowSettings(!showSettings)
                     }}
                   >
-                    <SearchIcon className=" w-3 h-3" />
+                    <SearchIcon className=" w-4 h-4" />
                   </span>
                 </div>
               </div>

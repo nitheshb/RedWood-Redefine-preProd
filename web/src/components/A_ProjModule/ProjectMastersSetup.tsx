@@ -85,14 +85,14 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
             >
               <button>
                 <span
-                  className={`flex ml-2 items-center h-6 px-3 text-xs  ${
+                  className={`flex ml-2 items-center h-[30] py-1 px-3 text-sm   ${
                     selCat === data.value
-                      ? 'font-normal text-green-800 bg-[#FFEDEA]'
-                      : 'font-normal text-black-100 bg-[#f0f8ff]'
+                      ? 'font-semibold text-green-800 bg-[#FFEDEA]'
+                      : 'font-medium text-black-100 bg-[#f0f8ff]'
                   }  rounded-full`}
                 >
                   {/* <PencilIcon className="h-3 w-3 mr-1" aria-hidden="true" /> */}
-                  <img alt="" src="/temp2.png" className="h-3 w-3 mr-1" />
+                  <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
                   {data?.label}
                 </span>
               </button>

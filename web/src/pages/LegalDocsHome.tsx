@@ -53,7 +53,8 @@ const LegalDocsHome = ({ project }) => {
   const columns: GridColDef[] = [
     {
       field: 'name',
-      headerName: 'Name',
+      //headerName: 'Name',
+      headerName: <span style={{ fontWeight: 'bold' }}>Name</span>,
       width: 340,
       renderCell: (params) => (
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -65,10 +66,10 @@ const LegalDocsHome = ({ project }) => {
         </div>
       ),
     },
-    { field: 'size', headerName: 'Size', width: 130 },
-    { field: 'type', headerName: 'Type', width: 130 },
-    { field: 'modified', headerName: 'Modified', width: 140 },
-    { field: 'shared', type: 'string[]', headerName: 'Shared', width: 120 },
+    { field: 'size', headerName:  <span style={{ fontWeight: 'bold' }}>Size</span>,  width: 130 , headerClassName: 'bold-header', },
+    { field: 'type', headerName:  <span style={{ fontWeight: 'bold' }}>Type</span>, width: 130 },
+    { field: 'modified', headerName: <span style={{ fontWeight: 'bold' }}>Modified</span>, width: 140 },
+    { field: 'shared', type: 'string[]', headerName: <span style={{ fontWeight: 'bold' }}>Shared</span>, width: 120 },
   ]
 
   useEffect(() => {
@@ -132,24 +133,18 @@ const LegalDocsHome = ({ project }) => {
             <form className="">
               <div className="flex">
                 <div className="relative w-full ">
+
+
+                  <div className='flex'>
                   <input
                     type="search"
                     id="search-dropdown"
-                    className="block p-2.5 w-1/4 z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg rounded-l-lg border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    className="block p-2.5 w-1/4 z-20 text-sm text-gray-900 bg-gray-50  rounded-l-lg border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={` Search Documents,Categories, Agreements...`}
                     required
                   />
-                  <section className="absolute top-0 right-0  flex flex-row  w-1/4  ">
-                    <DropDownSearchBar
-                      type={'All Projects'}
-                      id={'id'}
-                      setStatusFun={{}}
-                      viewUnitStatusA={filteredUnits}
-                      pickCustomViewer={selProjctFun}
-                      selProjectIs={projectDetails}
-                      dropDownItemsA={projects}
-                    />
-                    <button
+
+                     <button
                       type="submit"
                       className="p-2.5 px-8 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
@@ -170,6 +165,21 @@ const LegalDocsHome = ({ project }) => {
                       </svg>
                       <span className="sr-only">Search</span>
                     </button>
+                  </div>
+    
+
+
+                  <section className="absolute top-0 right-0  flex flex-row   ">
+                    <DropDownSearchBar
+                      type={'All Projects'}
+                      id={'id'}
+                      setStatusFun={{}}
+                      viewUnitStatusA={filteredUnits}
+                      pickCustomViewer={selProjctFun}
+                      selProjectIs={projectDetails}
+                      dropDownItemsA={projects}
+                    />
+          
                   </section>
                 </div>
               </div>
@@ -245,6 +255,8 @@ const LegalDocsHome = ({ project }) => {
                     height: 80,
                     border: 1,
                     borderColor: '#EDEFF1',
+                    
+
                     width: '99.5%',
                     // borderRight:1,
                     // marginRight:1,
@@ -257,6 +269,7 @@ const LegalDocsHome = ({ project }) => {
                     // border: 1,
                     width: '99.5%',
                     marginBottom: 2,
+                  
                     // borderTop: 1,
                     boxShadow: 2,
                     backgroundColor: '#F4F6F8',
@@ -265,6 +278,9 @@ const LegalDocsHome = ({ project }) => {
                   '& .MuiDataGrid-footerContainer': {
                     // border: 1
                   },
+                  // "& .MuiDataGrid-columnHeader--field-name": {
+                  //   fontWeight: "bold",
+                  // },
                   '& .MuiTablePagination-selectLabel': {
                     color: 'rgba(0, 54, 101, 0.6)',
                   },

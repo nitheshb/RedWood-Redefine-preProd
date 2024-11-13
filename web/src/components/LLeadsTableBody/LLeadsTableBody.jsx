@@ -267,11 +267,13 @@ function EnhancedTableHead(props) {
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
-                // backgroundColor: '#F7F9FB',
+                  //backgroundColor: '#F7F9FB',
                 color: '#1a91eb',
                 height: '10px',
                 maxHeight: '10px',
                 lineHeight: '7px',
+                //paddingTop: '5px',
+                //paddingBottom: '5px',
                 display: displayHeadersFun(headCell.id)
               }}
             >
@@ -441,7 +443,7 @@ React.useEffect(()=>{
             placeholder={`Search...${selStatus}`}
             onChange={searchKeyField}
             value={searchKey}
-            className="ml-6 bg-transparent text-xs focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none"
+            className="ml-6 bg-transparent w-[680px] text-xs focus:border-transparent  focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none"
           />
         </span>
         {/* <span className="max-h-[42px] mt-[2px] ml-3">

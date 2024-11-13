@@ -96,6 +96,18 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
     value: 'myleads',
   })
 
+
+
+  // const customDropFieldStyles = {
+  //   control: (base) => ({
+  //     ...base,
+  //     border: 'none',
+  //     borderRadius: '10px',
+  //     outline: 'none',
+  //   }),
+  // };
+  
+
   const statusFields = [
     'new',
     'followup',
@@ -694,23 +706,24 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   }
   return (
     <>
-      <div className=" bg-white rounded-md mt-1 mx-1">
-        <div className="">
-          <div
-            className="
-           "
-          >
-            <div className="flex items-center flex-row flex-wrap justify-between py-1 pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
+
+<div className=" fixed w-[95%]  h-min	  ">
+      <div className=" bg-white pb-8 rounded-md mt-1 mx-1 z-10">
+        <div className=" bg-white">
+          <div className="bg-white  ">
+            <div className="flex   items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
               <h2 className="text-md font-semibold text-black leading-light font-Playfair">
                 Leads Management
               </h2>
 
               <div className="flex">
-                <div className=" flex flex-col mr-5  w-40">
+                <div className=" flex flex-col mr-5   w-40">
                   <VerySlimSelectBox
                     name="project"
                     label=""
+                    // customStyles={customDropFieldStyles}
                     className="input "
+                    
                     onChange={(value) => {
                       console.log('changed value is ', value.value)
                       setSelProject(value)
@@ -833,14 +846,15 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                 <>
                   <button
                     onClick={() => fSetLeadsType('Add Lead')}
-                    className={`flex items-center ml-5 pl-2 pr-4  max-h-[30px] mt-[2px] text-sm font-medium text-white bg-gray-800 rounded-[4px] hover:bg-gray-700  `}
+                    className={`flex items-center ml-5 pl-2 pr-4  max-h-[30px] mt-[2px] text-sm font-medium text-balck border-solid border-2 border-[#0891B2] bg-[#0891B2] rounded-[4px] hover:bg-transparent  group`}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
+                      className="h-4 w-4 stroke-[#fff] group-hover:stroke-black"
                       fill="none"
                       viewBox="0 0 22 22"
-                      stroke="currentColor"
+                       
+                    
                     >
                       <path
                         strokeLinecap="round"
@@ -850,19 +864,19 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                       />
                     </svg>
 
-                    <span className="ml-1">Add lead</span>
+                    <span className="ml-1 text-white group-hover:text-black">Add lead</span>
                   </button>
                   {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                     <button
                       onClick={() => fSetLeadsType('Import Leads')}
-                      className={`flex items-center ml-5 pl-2 pr-4 py-1 max-h-[30px] mt-[2px]  text-sm font-medium text-white bg-gray-800 rounded-[4px] hover:bg-gray-700  `}
+                      className={`flex items-center ml-5 pl-2 pr-4 py-1 max-h-[30px] mt-[2px] border-solid border-2 border-[#0891B2]  group text-sm font-medium text-black  rounded-[4px] hover:bg-[#0891B2]  `}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
+                        className="h-4 w-4 stroke-[#0891B2] group-hover:stroke-white"
                         fill="none"
                         viewBox="0 0 22 22"
-                        stroke="currentColor"
+                        
                       >
                         <path
                           strokeLinecap="round"
@@ -872,7 +886,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         />
                       </svg>
 
-                      <span className="ml-1">Import Lead</span>
+                      <span className="ml-1 group-hover:text-white">Import Lead</span>
                     </button>
                   )}
                   {/* {isImportLeads && (
@@ -977,6 +991,8 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
             )} */}
 
             {!ready && (
+                <div className="	">
+
               <LLeadsTableView
                 setFetchLeadsLoader={setFetchLeadsLoader}
                 fetchLeadsLoader={fetchLeadsLoader}
@@ -986,10 +1002,14 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                 leadsTyper={leadsTyper}
                 searchVal={searchValue}
               />
+              </div>
             )}
           </div>
         </div>
       </div>
+
+      </div>
+
       <SiderForm
         open={isImportLeadsOpen}
         setOpen={setisImportLeadsOpen}

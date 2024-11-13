@@ -108,8 +108,10 @@ export const VerySlimSelectBox = ({
   value,
   name,
   label,
+  customStyles,
   placeholder,
   className,
+  
 }) => {
   const defaultValue = (options, value) => {
     return (

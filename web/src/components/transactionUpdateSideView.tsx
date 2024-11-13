@@ -338,13 +338,13 @@ export default function TransactionUpdateSideView({
         </div>
         <div className="my-2  grid grid-cols-2 mt-4 border-t border-[#e5e7f8]">
           <button
-            className="mb-2 md:mb-0 mr-2 hover:scale-110 focus:outline-none              hover:bg-green-100
+            className="mb-2 md:mb-0 mr-2 hover:scale-110 focus:outline-none           hover:bg-green-100
 
 
                                   h-8
                                   border duration-200 ease-in-out
                                   border-green-700 transition
-                                   px-5  text-sm shadow-sm font-medium tracking-wider text-black rounded-sm hover:shadow-lg hover:bg-green-500"
+                                   px-5  text-sm shadow-sm font-medium tracking-wider text-black rounded hover:shadow-lg hover:bg-green-500"
             onClick={() => {
               // setActionMode('unitBookingMode')
               updateTnxStatus('Failed', transactionData?.id, user)
@@ -354,6 +354,7 @@ export default function TransactionUpdateSideView({
           >
             Reject
           </button>
+          {/* #E06349 */}
           <button
             className="mb-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-green-700
                                   bg-green-700
@@ -361,7 +362,7 @@ export default function TransactionUpdateSideView({
                                   h-8
                                   border duration-200 ease-in-out
                                   border-green-700 transition
-                                   px-5  text-sm shadow-sm font-medium tracking-wider text-white rounded-sm hover:shadow-lg hover:bg-green-500"
+                                   px-5  text-sm shadow-sm font-medium tracking-wider text-white rounded hover:shadow-lg hover:bg-green-500"
             onClick={() => {
               // setActionMode('unitBookingMode')
               // update the transaction details along with the apporver deatils and comments

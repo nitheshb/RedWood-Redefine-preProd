@@ -31,6 +31,14 @@ const SUserSignupBody = ({ title, dialogOpen, empData }) => {
   const { register, user } = useAuth()
   const { orgId, orgName } = user
 
+
+
+  const customPhoneNoFieldStyles = {
+    border: 'none',
+    fontSize: '13px',
+
+  }
+
   const formMethods = useForm()
   const [formMessage, setFormMessage] = useState({
     color: 'green',
@@ -332,8 +340,8 @@ console.log('rolws are ', filRoles)
                 /> */}
                 <PhoneNoField
                   name="offPh"
-                  label="Official Phone Number*"
-                  className="input"
+                  label={<span className="text-[12px] font-regular  text-gray-700">Official Phone Number*</span>}
+                  className="input  text-[13px] placeholder-gray-700 placeholder:opacity-80 "
                   value={formik.values.offPh}
                   onChange={(value) => {
                     formik.setFieldValue('offPh', value.value)
@@ -347,8 +355,9 @@ console.log('rolws are ', filRoles)
                 /> */}
                 <PhoneNoField
                   name="perPh"
-                  label="Personal Phone Number*"
-                  className="input"
+                  //label="Personal Phone Number*"
+                  label={<span className=" font-regular  text-gray-700 text-[12px]">Personal Phone Number*</span>}
+                  className="input  text-[13px] placeholder-gray-700 placeholder:opacity-80"
                   value={formik.values.perPh}
                   onChange={(value) => {
                     formik.setFieldValue('perPh', value.value)
@@ -466,13 +475,13 @@ console.log('rolws are ', filRoles)
                 </p>
                 <div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse">
                   <button
-                    className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+                    className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded hover:shadow-lg hover:bg-gray-100"
                     type="reset"
                   >
                     Reset
                   </button>
                   <button
-                    className="mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                    className="mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded hover:shadow-lg hover:bg-green-500"
                     type="submit"
                     disabled={loading}
                   >

@@ -380,8 +380,8 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
     mobileNo: Yup.string()
       .required('Phone number is required')
       .matches(phoneRegExp, 'Phone number is not valid')
-      .min(10, 'to short')
-      .max(10, 'to long'),
+      .min(10, 'too short')
+      .max(10, 'too long'),
 
 
   })
@@ -451,8 +451,9 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                             Client Details<abbr title="required"></abbr>
                           </label>
                         </div>
-
-                        <div className="border-t-4 rounded-xl w-16 mt-1 border-green-600"></div>
+                        {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-green-600"></div> */}
+                         
+                        <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
                       </div>
                     </div>
                     <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2">
@@ -664,7 +665,7 @@ Mobile No
                             More Details<abbr title="required">*</abbr>
                           </label>
                         </div>
-                        <div className="border-t-4 rounded-xl w-16 mt-1  border-green-600"></div>
+                        <div className="border-t-4 rounded-xl w-16 mt-1  border-[#0891B2]"></div>
                         {/* 3 */}
                         <div className="md:flex md:flex-row md:space-x-4 w-full text-xs ">
                           <div className="w-full flex flex-col mb-3 mt-2">
@@ -731,7 +732,7 @@ Mobile No
                             Advanced<abbr title="required"></abbr>
                           </label>
                         </div>
-                        <div className="border-t-4 rounded-xl w-16 mt-1 border-green-600"></div>
+                        <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
 
                         <div className="">
                           <div className=" flex flex-col  mt-4  px-1 py-1 ">
@@ -1141,8 +1142,9 @@ source={row.Source.toString()}
                                  >
                                    Reset
                                  </button>
+                                 {/* bg-green-700 */}
                                  <button
-                                   className="mb-2 md:mb-0 bg-green-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                   className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
                                    type="submit"
                                    disabled={loading}
                                  >
@@ -1150,7 +1152,7 @@ source={row.Source.toString()}
                                    Add Lead
                                  </button>
                                  <button
-                                   className="mb-2 md:mb-0 bg-green-700 px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                   className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
                                    type="submit"
                                    onClick={() => setCloseWindowMode(true)}
                                    disabled={loading}
