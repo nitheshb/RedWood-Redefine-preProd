@@ -239,7 +239,7 @@ const BookingSummaryHeader = () => {
   <div className="bg-white p-4 rounded-lg">
     <div className="flex justify-between ">
       <span className="font-medium">Stage Balance</span>
-      <span>•••</span>
+      <span className='font-semibold'>...</span>
     </div>
     <div className="relative flex justify-center items-center">
       <PieChart width={200} height={200}>
@@ -397,7 +397,7 @@ const BookingSummaryHeader = () => {
 
 
 
-      {/* Menu Section */}
+
       <div className="bg-[#E6F3FC] p-4 rounded-lg mt-5">
         <div className="space-y-4">
           {menuItems.map((item, index) => (
