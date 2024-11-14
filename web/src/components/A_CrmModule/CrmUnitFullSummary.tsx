@@ -756,9 +756,9 @@ export default function UnitFullSummary({
   }
   return (
     <div
-      className={`bg-[#d9d8ff]  h-screen     `}
+      className={`bg-[#E6F3FC]  mt-4 rounded-md h-screen     `}
     >
-<section className="flex flex-col">
+<section className="flex flex-row-reverse	">
     <div className='w-full'>
       <div className="rounded-t bg-[#F1F5F9] mb-0 px-3">
         <>
@@ -1905,7 +1905,7 @@ export default function UnitFullSummary({
 <UnitAudit selUnitDetails={selCustomerPayload} /> </>}
       </div>
 
-      <div className="w-[250px] min-w-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+      <div className="w-[250px] min-w-[250px] h-full  rounded-md overflow-auto">
             <div className="">
               {/* <div className="font-md font-medium text-xs  text-gray-800">
                           Notes
@@ -1962,7 +1962,7 @@ export default function UnitFullSummary({
 
 
 
-<div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg ">
+<div className=" border-gray-900  py-4 bg-[#E6F3FC] rounded-t-lg ">
                 <ul
                   className="flex flex-col  rounded-t-lg"
                   id="myTab"
@@ -2075,18 +2075,18 @@ export default function UnitFullSummary({
                     return (
                       <li
                         key={i}
-                        className="mr-2 ml-2 text-sm font-bodyLato"
+                        className="mr-2 ml-2  text-sm font-bodyLato"
                         role="presentation"
                       >
 
 
-                        <div className='flex items-center gap-3 text-gray-500 hover:bg-gray-50 p-2 rounded cursor-pointer w-60'>
+                        <div className='flex  items-center gap-3 text-gray-500 hover:bg-gray-50 p-2 rounded-lg cursor-pointer w-60'>
 
                         <span>{d.icon}</span>
                         <button
-                          className={`inline-block py-3 mr-3 px-1 text-sm font-medium text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
+                          className={`inline-block py-3 mr-3 px-1 text-sm font-medium text-center text-[#A6A6A6] rounded-lg border-b-2  hover:text-[#484848]    ${
                             selFeature === d.val
-                              ? 'border-black text-black'
+                              ? 'border-transparent text-[#484848]'
                               : 'border-transparent'
                           }`}
                           type="button"

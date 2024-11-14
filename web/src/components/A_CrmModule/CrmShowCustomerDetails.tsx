@@ -613,7 +613,7 @@ const ShowCustomerDetails = ({
           {title}
         </Dialog.Title> */}
         </div>
-        <div className="grid gap-2 bg-[#EBECED] px-3 pt-2 py-3">
+        <div className="grid gap-2 bg-[#E6F3FC] px-3 pt-2 py-3">
           {/* <div
             className="flex flex-col p-4 mx-2  rounded-md   mt- bg-[#fff] hover:shadow-2xl"
             style={{

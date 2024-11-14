@@ -1136,7 +1136,7 @@ return
     <div
       className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} overflow-y-scroll `}
     >
-      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#D9d8ff]">
+      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#E6F3FC]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full   ">
             {/* <div className="">
@@ -1156,8 +1156,8 @@ return
                 </div>
               </div> */}
 
-            {/* <div className="flex flex-col justify-between">
-              <section className="flex flex-row justify-between bg-[#D9d8ff] px-3 py-1 border border-[#e5e7f8] rounded-md ">
+             <div className="flex flex-col justify-between">
+              <section className="flex flex-row justify-between bg-[#E6F3FC] px-3 py-1 border border-[#e5e7f8] rounded-md ">
                 <section>
                 <section className="flex flex-row   pt-2 justify-between">
                                   <div className="flex flex-row">
@@ -1283,12 +1283,12 @@ return
                   </section>}
                 </section>
               </section>
-            </div> */}
+            </div> 
 
            
 
           {/* {today 14} */}
-            <div className="flex justify-between items-center mb-6">
+            {/* <div className="flex justify-between items-center mb-6">
   
 
   <div className="bg-[#E6F3FC] p-4 rounded-lg  flex items-center space-x-4">
@@ -1331,19 +1331,7 @@ return
       <div className="relative inline-block text-left">
         <button className="inline-flex justify-center w-full rounded-full border border-gray-300 shadow-sm px-4 py-3 bg-white text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
           CRM Owner
-          {/* <svg
-            className="ml-8 h-5 w-5"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg> */}
+   
 
           <div className="font-md ml-8 text-xs tracking-wide font-semibold text-slate-900 ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
@@ -1377,21 +1365,7 @@ return
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                         <div className=''>
 
-{/* <svg
-          className="ml-8 h-5 w-5"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
 
-          
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clipRule="evenodd"
-          />
-        </svg> */}
                           <AssigedToDropComp
                             assignerName={unitStatus}
                             id={id}
@@ -1444,7 +1418,7 @@ onClickCapture={() => {
                     NEW DEMAND</section>}
       </button>
     </div>
-        </div>
+        </div> */}
 
 
 
@@ -1597,13 +1571,13 @@ onClickCapture={() => {
       <span className='font-semibold'>...</span>
     </div>
     <div className="relative flex justify-center items-center">
-      <PieChart width={200} height={200}>
+      <PieChart width={250} height={250}>
         <Pie
           data={data}
-          cx={100}
-          cy={100}
-          innerRadius={60}
-          outerRadius={80}
+          cx={125}
+          cy={125}
+          innerRadius={70}
+          outerRadius={95}
           startAngle={90}
           endAngle={-270}
           dataKey="value"
@@ -1614,7 +1588,7 @@ onClickCapture={() => {
       </PieChart>
       {/* Centered Text */}
       <div className="absolute text-center">
-        <div className="text-xs text-gray-500">Amount Borrowed</div>
+        <div className="text-xs text-gray-500">Amount</div>
         <div className="font-bold">₹ 67,23,523</div>
       </div>
     </div>
@@ -1630,13 +1604,13 @@ onClickCapture={() => {
       <ChevronDownIcon size={16} className="ml-2" />
     </div>
     <div className="relative flex justify-center items-center">
-      <PieChart width={200} height={200}>
+      <PieChart width={250} height={250}>
         <Pie
           data={data}
-          cx={100}
-          cy={100}
-          innerRadius={60}
-          outerRadius={80}
+          cx={125}
+          cy={125}
+          innerRadius={70}
+          outerRadius={95}
           startAngle={90}
           endAngle={-270}
           dataKey="value"
@@ -1654,7 +1628,7 @@ onClickCapture={() => {
       </PieChart> */}
       {/* Centered Text */}
       <div className="absolute text-center">
-        <div className="text-xs text-gray-500">Amount Borrowed</div>
+        <div className="text-xs text-gray-500">Amount</div>
         <div className="font-bold">₹ 67,23,523</div>
       </div>
     </div>
@@ -1675,7 +1649,7 @@ onClickCapture={() => {
 </div>
 
     <div className="flex flex-col items-center mt-8">
-      <div className="text-sm text-gray-500 mb-2">Amount Borrowed</div>
+      <div className="text-sm text-gray-500 mb-2">Amount</div>
       <div className="font-bold mb-4">₹ 67,23,523</div>
       <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
         <div className="bg-cyan-400 h-7 rounded-full w-1/3"></div>
