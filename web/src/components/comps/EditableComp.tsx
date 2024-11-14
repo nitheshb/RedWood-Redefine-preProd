@@ -766,17 +766,49 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
       setConstructionPerSqft(0)
     }
   }
+
+
+  // const handleCostGSTChange = (e) => {
+  //   const inputValue = e.target.value
+
+  //   setRows(
+  //     rows.map((row) =>
+  //       row.component.value === 'sqft_cost_tax'
+  //         ? { ...row, ['gst']: { value: inputValue, label: `${inputValue}%` } }
+  //         : row
+  //     )
+  //   )
+  //   setGST(e.target.value)
+  // }
+
+
+  
+
   const handleCostGSTChange = (e) => {
-    const inputValue = e.target.value
+    let inputValue = e.target.value;
+    if (inputValue === '' || isNaN(inputValue) || inputValue < 0) {
+      setGST(''); 
+      return; 
+    }
+  
+    inputValue = Math.min(100, inputValue);
+  
     setRows(
       rows.map((row) =>
         row.component.value === 'sqft_cost_tax'
-          ? { ...row, ['gst']: { value: inputValue, label: `${inputValue}%` } }
+          ? { ...row, gst: { value: inputValue, label: `${inputValue}%` } }
           : row
       )
-    )
-    setGST(e.target.value)
-  }
+    );
+    setGST(inputValue);
+  };
+  
+  
+
+
+
+
+
   const handleConstCostGSTChange = (e) => {
     const inputValue = e.target.value
     setRows(
@@ -857,6 +889,8 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                   className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
                   placeholder="GST"
                   value={gst}
+                        min="0"      // Minimum value
+                        max="100"
                   onChange={handleCostGSTChange}
                 />
               </div>

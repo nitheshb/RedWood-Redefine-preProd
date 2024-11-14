@@ -68,6 +68,9 @@ import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
+import bookingSummaryHeader from './A_SalesModule/Reports/bookingSummaryHeader'
+import BookingSummaryHeader from './A_SalesModule/Reports/bookingSummaryHeader'
+
 //import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
 //import ProfileSummary from './A_SalesModule/Reports/profileSummary'
 //import StepperTask from './A_SalesModule/Reports/StepperTask'
@@ -1243,6 +1246,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
                 { label: 'Top Bar', value: 'bar_tasks' },
                 { label: 'Profile', value: 'profile_tasks' },
+                // { label: 'New Ui', value: 'payment_ui' },
+
 
                 // { label: 'Table Edit', value: 'edit_table' },
 
@@ -2713,6 +2718,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             </>
           )}
           {selCat === 'booking_perf' && <BookingSummaryReport />}
+          {/* {selCat === 'payment_ui' && <BookingSummaryHeader/>} */}
+
           {selCat === 'source_perf' && (
             <section>
               <section className="flex flex-row flex-wrap gap-2">
