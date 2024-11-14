@@ -18,13 +18,14 @@ import {
   streamGetAllUnitTransactions,
   updateCancelProjectCounts,
   updateTransactionStatus,
+  updateUnblockProjectCounts,
   updateUnitAsBlocked,
   updateUnitAsBooked,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { supabase } from 'src/context/supabase'
 
-const UnblockUnitForm = ({ selUnitDetails, bookCompSteps, bookCurentStep }) => {
+const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookCurentStep }) => {
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
@@ -53,6 +54,8 @@ const UnblockUnitForm = ({ selUnitDetails, bookCompSteps, bookCurentStep }) => {
     return
   }
   const onSubmitFun = async (data, resetForm) => {
+
+
     // const { uid } = selUnitDetails
     // const unitUpdate = {
     //   blocked_leadId: id || '',
@@ -81,46 +84,33 @@ const UnblockUnitForm = ({ selUnitDetails, bookCompSteps, bookCurentStep }) => {
     // step1:  check the status of unit
     console.log('status is', selUnitDetails)
 
-    if (selUnitDetails?.status === 'booked') {
-      UpdateAllTransactionsAsCancel()
-
+    if (['customer_blocked'].includes(selUnitDetails?.status)) {
+      // UpdateAllTransactionsAsCancel()
       const unitUpdate = {
-        leadId: 'id',
+        // leadId: 'id',
         status: 'available',
-        customerDetailsObj: {},
-        secondaryCustomerDetailsObj: {},
-        booked_on: data?.dated,
-        ct: Timestamp.now().toMillis(),
-        Date: Timestamp.now().toMillis(),
+        unblocked_on: Timestamp.now().toMillis(),
       }
       // unitUpdate[`cs`] = leadDetailsObj2[`${uid}_cs`]
-      unitUpdate[`plotCS`] = []
-      unitUpdate[`addChargesCS`] = []
-      unitUpdate[`constructCS`] = []
-      unitUpdate[`fullPs`] = []
-      unitUpdate[`T_elgible`] = 0
-      unitUpdate[`stepsComp`] = []
-      unitUpdate[`T_transaction`] = 0
-      unitUpdate[`T_review`] = 0
-      unitUpdate[`T_balance`] = 0
+
       unitUpdate[`oldStatus`] = selUnitDetails?.status
 
       await updateUnitAsBooked(
         orgId,
         selUnitDetails?.pId,
         selUnitDetails?.uid,
-        'leadId',
         unitUpdate,
         user?.email,
         enqueueSnackbar,
         resetForm
       )
 
-      await updateCancelProjectCounts(   orgId,
+      await updateUnblockProjectCounts(   orgId,
         selUnitDetails?.pId,selUnitDetails, user?.email, enqueueSnackbar)
+        openUserProfile(false)
     } else {
       console.log('cannot be cancelled')
-      enqueueSnackbar(`${selUnitDetails?.status} unit cannot be cancelled`, {
+      enqueueSnackbar(`${selUnitDetails?.status} unit cannot be Unblocked`, {
         variant: 'warning',
       })
     }
@@ -154,7 +144,7 @@ const UnblockUnitForm = ({ selUnitDetails, bookCompSteps, bookCurentStep }) => {
             <div className="rounded-t bg-[#F1F5F9] mb-0 px-3 py-2">
               <div className="text-center flex justify-between">
                 <p className="text-xs font-extrabold tracking-tight uppercase font-body my-1">
-                  Block Unit
+                  UnBlock Unit
                 </p>
               </div>
             </div>

@@ -896,7 +896,7 @@ export default function UnitBookingCancelCRM({
   }
   return (
     <div
-      className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`bg-white   h-screen   } `}
     >
       <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F8E7E3]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">

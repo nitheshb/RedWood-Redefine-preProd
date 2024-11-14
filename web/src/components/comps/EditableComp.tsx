@@ -38,6 +38,7 @@ import {
   steamBankDetailsList,
   streamProjectCSMaster,
   streamMasters,
+  addPhaseDefaultSqftCost,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
@@ -321,12 +322,18 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
         const x = costSqftA[0]
         setCostPerSqft(x?.charges)
         setGST(x?.gst.value)
+      }else{
+        setCostPerSqft(phase?.area_cost_persqft || 0)
+        setGST(phase?.area_tax || 0)
       }
       if (costConstructSqftA.length > 0) {
         console.log('setUpData', costSqftA)
         const x = costConstructSqftA[0]
-        setConstructionPerSqft(x?.charges)
-        setConstGST(x?.gst.value)
+        setConstructionPerSqft(x?.charges || 0)
+        setConstGST(x?.gst.value || 0)
+      }else{
+        setConstructionPerSqft(phase?.const_cost_persqft || 0)
+        setConstGST(phase?.const_tax || 0)
       }
       setRows(fullCs)
     } else {
@@ -493,7 +500,12 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
       const myId = selcDelRow?.id
       if (myId) setRows(rows.filter((item) => item.id !== myId))
       const newSet = rows.filter((item) => item.id !== myId)
+    const defaultSqftCost= {  area_cost_persqft: costPerSqft,
+      const_cost_persqft: constructionPerSqft,
+      area_tax:gst,
+      const_tax: constGst}
       addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', enqueueSnackbar)
+      addPhaseDefaultSqftCost(orgId, uid, defaultSqftCost, 'partATaxObj', enqueueSnackbar)
     } else {
       addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }
@@ -811,7 +823,9 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
   return (
     <>
       <div className=" m-2 p-4 bg-white rounded-xl">
-        <div className="mb-4 ">
+       {source != 'Masters' &&
+<>
+       <div className="mb-4 ">
           <div className="inline">
             <div className="">
               <label className="font-semibold	 text-[#053219]  text-sm  mb-1  ">
@@ -929,6 +943,8 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
         <p className="text-xs text-red-400 text-left my-3 mt-1">
           <abbr title="Required field">Note:</abbr> Set PLC value at unit level.
         </p>
+
+        </>}
 
         <div className="">
           <div className="mb-4 mt-2">
