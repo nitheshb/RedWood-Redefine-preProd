@@ -639,7 +639,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
           : 'border-gray-80 hover:border-gray-400'
       }`}
     >
-      <a
+      {/* <a
         href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
         className={`block px-4 py-2 text-md ${
           activeItem === item
@@ -652,7 +652,21 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         }}
       >
         {item}
-      </a>
+      </a> */}
+
+<a
+  className={`block px-4 py-2 text-md ${
+    activeItem === item
+      ? 'text-[#0891B2] font-medium'
+      : 'text-gray-600 font-medium hover:text-[#0891B2]'
+  }`}
+  onClick={(e) => {
+    e.preventDefault()
+    handleClick(item)
+  }}
+>
+  {item}
+</a>
     </li>
   )
 
@@ -1186,6 +1200,19 @@ if (title === 'Villa Type Category') {
 
   }
 
+  // const handleClick = (item: string) => {
+  //   setActiveItem(item)
+  //   if (contentRefs.current[item]) {
+  //     contentRefs.current[item].scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'start',
+  //     })
+  //     setCurrentSection(item)
+  //   }
+  // }
+
+
+
   const handleClick = (item: string) => {
     setActiveItem(item)
     if (contentRefs.current[item]) {
@@ -1196,6 +1223,9 @@ if (title === 'Villa Type Category') {
       setCurrentSection(item)
     }
   }
+  
+
+
 
   const handleSave = (dataObj) => {
     console.log('sectionKey', dataObj)
@@ -1515,13 +1545,22 @@ if (title === 'Villa Type Category') {
           <div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
             <div className="bg-white text-white p-6">
               {/* {Object.keys(dataMap).map((key) => ( */}
-              {dataMapCopy?.map((dataObj, key) => (
+              {dataMapCopy?.map((dataObj) => (
+                // <div
+                //    key={key}
+                
+
+                //   className="mb-24"
+                //   ref={(el) => (contentRefs.current[key] = el)}
+                //   id={key.replace(/\s+/g, '-').toLowerCase()}
+                // >
                 <div
-                  key={key}
-                  className="mb-24"
-                  ref={(el) => (contentRefs.current[key] = el)}
-                  // id={key.replace(/\s+/g, '-').toLowerCase()}
-                >
+                key={dataObj.title}
+                className="mb-24"
+                ref={(el) => (contentRefs.current[dataObj.title] = el)}
+              >
+
+                
                   <h1 className="inline-block text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">
                     {dataObj?.title}
                   </h1>

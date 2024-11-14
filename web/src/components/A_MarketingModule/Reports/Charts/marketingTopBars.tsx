@@ -1,4 +1,7 @@
 import React from 'react'
+import BookingHeader from 'src/components/A_SalesModule/Reports/BookingHeader'
+import ProfileCard from 'src/components/A_SalesModule/Reports/ProfileCard'
+import PropertyCard from 'src/components/A_SalesModule/Reports/PropertyCard'
 
 const CampaingsTopBarsComponent = () => {
   return (
@@ -183,7 +186,26 @@ const CampaingsTopBarsComponent = () => {
         Your overall performance is 98% higher than average.
       </div>
 
+
+
+      <BookingHeader/>
+
+
+
+      <div>
+        <ProfileCard data={undefined} />
+      </div>
+
       {/* line bar */}
+
+      
+
+
+
+
+
+
+
     </div>
   )
 }
