@@ -401,7 +401,7 @@ const HomePage = () => {
                 {/*Sales Executive Notifications border */}
                   <div className="mt-1 mx-1">
                     <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
-                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
+                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
                           <ProjectMastersSetupHome
                             title={'WhatsApp Message Templates'}
@@ -417,7 +417,7 @@ const HomePage = () => {
                 {/*Sales Executive Notifications border */}
                   <div className="mt-1 mx-1">
                     <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
-                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
+                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
                           <MarkeingMessagesList
                             title={'WhatsApp Message Templates'}
@@ -432,7 +432,7 @@ const HomePage = () => {
                 <>
                   <div className="mt-1 mx-1">
                     <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
-                      <div className="box-border px-2 mx-auto border-solid  max-w-full ">
+                      <div className="box-border px-2 mx-auto border-solid  max-w-7xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col   leading-7  text-gray-900 border-0 border-gray-200 ">
                           <ProjectReportsBody
                             title={'WhatsApp Message Templates'}
@@ -457,7 +457,7 @@ const HomePage = () => {
 
                   <div className='ml-1'>
                     <section className="w-full py-8 mb-8 leading-7 text-gray-900 bg-white sm:py-12 md:py-16 lg:py-18 rounded-lg">
-                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
+                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
                           <div className="flex items-center flex-shrink-0  px-0  pl-0 border-b border-grey  mb-2">
                             <span className="flex items-center">
@@ -477,7 +477,7 @@ const HomePage = () => {
                                     className="h-5 w-4  font-medium mr-1"
                                     aria-hidden="true"
                                   />
-                                  Edit 
+                                  Edit
                                 </span>
                               </button>
                             </section>

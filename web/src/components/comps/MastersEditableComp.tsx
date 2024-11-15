@@ -1262,7 +1262,7 @@ if (title === 'Villa Type Category') {
 
 
     // searchFun()
-    
+
     if(title === 'Tax Rate'){
       // setTaxA([...taxA, newRow])
       newDataIs.push(...taxA)
@@ -1561,27 +1561,17 @@ if (title === 'Villa Type Category') {
 
   return (
     <>
-      <div className=" m-2 p-4 bg-white rounded-xl">
-        <div className="mb-4 ">
-          <div className="inline">
-            <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                Data Masters<abbr title="required"></abbr>
-              </label>
-            </div>
+      <div className=" m-2 bg-white rounded-xl">
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
-          </div>
-        </div>
 
         <div className="flex h-screen">
-          <div className="w-64 text-gray-900 bg-white p-4 overflow-auto">
+          <div className="w-64 text-gray-900 bg-[#F0F0F0] p-4 overflow-auto ">
             <div className="mb-6">
               <div className="mb-4 ">
                 <div className="inline">
                   <div className="">
                     <label className="  text-md   mb-8 lg:mb-3 font-bold text-slate-900">
-                      Add Project<abbr title="required"></abbr>
+                      Project Module<abbr title="required"></abbr>
                     </label>
                   </div>
 
@@ -1644,9 +1634,9 @@ if (title === 'Villa Type Category') {
                     <table className="w-full text-left">
                       <thead>
                         <tr className="border-b border-[#e5e7eb]">
-                          <th className="py-3 px-4 text-lg font-bold text-[#334155]">
+                          {/* <th className="py-3 px-4 text-lg font-bold text-[#334155]">
                             Title
-                          </th>
+                          </th> */}
                           <th className="py-3 px-4 text-lg font-bold text-[#334155]">
                             Options
                           </th>
@@ -1662,13 +1652,13 @@ if (title === 'Villa Type Category') {
                       <tbody>
                         {dataObj?.data?.map((data, i) => (
                           <tr key={`static-${i}`}>
-                            {i === 0 ? (
+                            {/* {i === 0 ? (
                               <td className="py-5 px-4 font-bold text-[#0891B2] text-md">
                                 {dataObj.title}
                               </td>
                             ) : (
                               <td className="py-5 px-4 text-[#0891B2] text-md"></td>
-                            )}
+                            )} */}
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               {/* {editingCell?.key === dataObj.title &&
                               editingCell.rowIndex === i &&
@@ -1814,7 +1804,7 @@ if (title === 'Villa Type Category') {
             </div>
           </div>
         </div>
-        <div className="cursor-pointer" onClick={() => createDBFun2()}>
+        <div className="cursor-pointer  p-4" onClick={() => createDBFun2()}>
           <div className="mb-4 mt-2">
             <div className="inline">
               <div className="cursor-pointer flex flex-row" >
