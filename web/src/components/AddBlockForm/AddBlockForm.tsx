@@ -76,7 +76,7 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
                           type="text"
                         />
                       </div>
-                      <div className=" w-full md:space-x-3 md:block flex  mb-6 align-center mt-1 bg-green-400 hover:shadow-sm hover:bg-green-500 rounded-sm ">
+                      <div className=" flex justify-end mt-4 ">
                         {/* <button
                           onClick={() => dialogOpen(false)}
                           type="button"
@@ -86,7 +86,7 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
                           Cancel{' '}
                         </button> */}
                         <button
-                          className="mb-2 py-[9px] flex pl-[2px] md:mb-0 bg-green-400  py-2 w-[42px] text-sm shadow-sm font-medium tracking-wider text-white rounded-sm "
+                          className="flex items-center px-4 py-2 bg-green-400 text-white text-sm shadow-sm font-medium rounded-lg hover:bg-green-500 disabled:opacity-50 "
                           type="submit"
                           disabled={loading}
                         >
@@ -96,9 +96,9 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
                             {data?.block?.editMode ? (
                               'Update'
                             ) : (
-                              <section className="flex flex-row">
+                              <section className="flex  flex-row font-medium">
                                 {' '}
-                                <CheckIcon className="w-4 h-4 ml-8 mt-[1px] mr-1 inline" />
+                                <CheckIcon className="w-5 h-5   mr-2 " />
                                 <span>Save</span>
                               </section>
                             )}
