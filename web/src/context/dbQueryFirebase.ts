@@ -1863,6 +1863,26 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal) => {
 
   // db.collection(`${orgId}_leads`).add(data)
 }
+
+export const checkIfMasterAlreadyExists = async (cName, matchVal, title) => {
+  // db.collection(`${orgId}_leads`).doc().set(data)
+  // db.collection('')
+  console.log('matchVal', matchVal)
+  const q = await query(collection(db, cName), where('title', '==', title),where('value', '==', matchVal), )
+  const parentDocs = []
+  const cpDocs = []
+
+  const querySnapshot = await getDocs(q)
+  await console.log('foundLength @@', querySnapshot.docs.length)
+  // return await querySnapshot.docs.length
+
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log('dc', doc.id, ' => ', doc.data())
+    parentDocs.push(doc.data())
+  })
+  return parentDocs
+}
 export const checkIfCampaignAlreadyExists = async (orgId, unitId) => {
   const q = await query(
     collection(db, `${orgId}_campaigns`),
@@ -4047,9 +4067,9 @@ export const addMastersFull = async (orgId, uid, data, enqueueSnackbar) => {
   // return
   try {
     await setDoc(doc(db, `${orgId}_Masters`, uid), data)
-    enqueueSnackbar('Charges added successfully', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('Charges added successfully', {
+    //   variant: 'success',
+    // })
   } catch (e) {
     console.log(' error is here', e)
     enqueueSnackbar(e.message, {
