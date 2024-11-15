@@ -44,6 +44,7 @@ import {
   upsertMasterOption,
   deleteMasterOption,
   addPhaseDefaultSqftCost,
+  checkIfMasterAlreadyExists,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
@@ -111,6 +112,7 @@ const EditableTablex = () => {
   }
 
   const handleChange = (id, column, value) => {
+    console.log('aam changed', id, column, value)
     setRows(
       rows.map((row) => (row.id === id ? { ...row, [column]: value } : row))
     )
@@ -245,6 +247,8 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
   const [open, setOpen] = useState(false)
   const [saveWarn, setSaveWarn] = useState(false)
   const [selcDelRow, SetSelDelRow] = useState({})
+  const [initalSetup, SetInitalSetup] = useState('notStarted')
+
 
 
   // useEffect(() => {
@@ -1230,12 +1234,23 @@ if (title === 'Villa Type Category') {
       setCurrentSection(item)
     }
   }
-  
 
 
+  const removeDuplicates = (array, key) => {
+    const seen = new Set();
+    return array.filter((item) => {
+      const keyValue = item[key];
+      if (seen.has(keyValue)) {
+        return false; // Duplicate found, skip it
+      }
+      seen.add(keyValue);
+      return true; // First occurrence, keep it
+    });
+  };
 
   const handleSave = (dataObj) => {
     console.log('sectionKey', dataObj)
+
     const title = dataObj?.title
     const newDataIs = [];
     if(deletedRows.length >0){
@@ -1244,6 +1259,10 @@ if (title === 'Villa Type Category') {
       })
       setDeletedRows([])
     }
+
+
+    // searchFun()
+    
     if(title === 'Tax Rate'){
       // setTaxA([...taxA, newRow])
       newDataIs.push(...taxA)
@@ -1298,8 +1317,10 @@ if (title === 'Villa Type Category') {
       newDataIs.push(...bookingByA);
     }
 
+   const nonDuplicate = removeDuplicates(newDataIs, 'value')
 
-    newDataIs.map((item) => {
+   nonDuplicate.map((item) => {
+
       if (item.id) {
         upsertMasterOption(orgId, item.id, item, enqueueSnackbar)
       }else{
@@ -1481,28 +1502,63 @@ if (title === 'Villa Type Category') {
       })
     })
   }
-  const createDBFun2 = () => {
+  const searchFun = async (givenPhNo1, title) => {
+    const foundLength = await checkIfMasterAlreadyExists(
+      `${orgId}_Masters`,
+      givenPhNo1,
+      title
+    )
+    if (foundLength?.length > 0) {
+      // setLeadPayload(foundLength[0])
+    }
+    console.log('foundLength', foundLength.length)
+  }
+  const createDBFun2 = async () => {
     // get all the data dataObj
     // insert data to firebase db
-    console.log('Clicked masters', dataMapCopy)
+    console.log('Clicked masters', dataMapCopy);
 
-    InitialSetup?.map((dataObj) => {
-      // console.log('dataObj', dataObj)
-      const data = dataObj?.data?.map((data1, i) => {
-        const uId = uuidv4()
-        const data2 = {
-          title: dataObj?.title,
-          label: data1.label,
-          value: data1.value,
-          id: uId,
-          order: i,
-        }
-        console.log('data2 ==>', data2)
-        addMastersFull(orgId, uId, data2, enqueueSnackbar)
-        return data2
-      })
-    })
-  }
+    // Wait for all InitialSetup entries to be processed
+    await Promise.all(
+        InitialSetup?.map(async (dataObj) => {
+            const dataPromises = dataObj?.data?.map(async (data1, i) => {
+                const foundLength = await checkIfMasterAlreadyExists(
+                    `${orgId}_Masters`,
+                    data1.value,
+                    dataObj?.title
+                );
+
+                console.log('foundLength', foundLength.length);
+                if (foundLength?.length > 0) {
+                    console.log('duplicate');
+                    SetInitalSetup('started');
+                    return; // Skip further processing for duplicates
+                } else {
+                    SetInitalSetup('started');
+
+                    const uId = uuidv4();
+                    const data2 = {
+                        title: dataObj?.title,
+                        label: data1.label,
+                        value: data1.value,
+                        id: uId,
+                        order: i,
+                    };
+                    console.log('data2 ==>', data2);
+                    addMastersFull(orgId, uId, data2, enqueueSnackbar);
+                    return data2;
+                }
+            });
+
+            // Wait for all data entries of the current dataObj to complete
+            await Promise.all(dataPromises);
+        })
+    );
+
+    // After all data objects are processed
+    SetInitalSetup('Completed');
+};
+
   return (
     <>
       <div className=" m-2 p-4 bg-white rounded-xl">
@@ -1565,7 +1621,7 @@ if (title === 'Villa Type Category') {
               {dataMapCopy?.map((dataObj) => (
                 // <div
                 //    key={key}
-                
+
 
                 //   className="mb-24"
                 //   ref={(el) => (contentRefs.current[key] = el)}
@@ -1577,7 +1633,7 @@ if (title === 'Villa Type Category') {
                 ref={(el) => (contentRefs.current[dataObj.title] = el)}
               >
 
-                
+
                   <h1 className="inline-block text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">
                     {dataObj?.title}
                   </h1>
@@ -1647,11 +1703,14 @@ if (title === 'Villa Type Category') {
                                   // dataObj?.title
 
                                   // const numValue = parseFloat(rawValue)
+                                  let x = dataObj.data.filter((item)=>item.value === rawValue)
+                                  if(x.length===0){
                                   handleChange1(
                                     dataObj?.title,
                                     data,
                                     rawValue
                                   )
+                                  }
                                   // if (!isNaN(numValue)) {
                                   //   handleChange1(
                                   //     row.id,
@@ -1758,10 +1817,17 @@ if (title === 'Villa Type Category') {
         <div className="cursor-pointer" onClick={() => createDBFun2()}>
           <div className="mb-4 mt-2">
             <div className="inline">
-              <div className="cursor-pointer" >
-                <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+              <div className="cursor-pointer flex flex-row" >
+                <label className="font-semibold text-[#053219]  text-sm  mb-1  cursor-pointer ">
                   Initial Masters setup<abbr title="required"></abbr>
                 </label>
+
+                {initalSetup==='started' && <label className="text-[#053219]  text-sm  mb-1  ml-2 ">
+                  Setting up....<abbr title="required"></abbr>
+                </label>}
+                {initalSetup==='Completed' && <label className="text-[#053219]  text-sm  mb-1  ml-2 ">
+                  Completed...!<abbr title="required"></abbr>
+                </label>}
               </div>
 
               {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}
