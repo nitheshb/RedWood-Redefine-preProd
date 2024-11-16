@@ -368,9 +368,9 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
     project: Yup.string()
       .min(3, 'Project Selection is required')
       .required('Project is Required'),
-    assignedTo: Yup.string()
-      .min(3, 'Project Selection is required')
-      .required('Assigner is Required'),
+    assignedTo: Yup.string(),
+      // .min(3, 'Project Selection is required')
+      // .required('Assigner is Required'),
 
     email: Yup.string().email('Email is invalid'),
 
@@ -539,15 +539,11 @@ Mobile No
 </div>
 
 
-
-
-
-
-
                     </div>
                     {/* 2 */}
-                    <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-">
-                      <div className="mb-3 space-y-2 w-full text-xs">
+
+                    <div className="md:flex   flex-row    md:space-x-4    w-full   text-xs mt-">
+                      <div className="   mb-3    space-y-2    w-full text-xs">
                         <TextField label="Email" name="email" type="text" />
                       </div>
                       <div className="mb-3 space-y-2 w-full text-xs">

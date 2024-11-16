@@ -783,7 +783,7 @@ const DialogFormBody = ({
                             <div className="inline">
                               <div className="">
                                 <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                                  Add Bank Accont*<abbr title="required"></abbr>
+                                  Add Bank Account*<abbr title="required"></abbr>
                                 </label>
                               </div>
 

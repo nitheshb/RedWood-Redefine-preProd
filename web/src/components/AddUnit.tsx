@@ -926,7 +926,7 @@ useEffect(() => {
                             <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-cyan-200"></div>
                             <span className="ml-1 leading-[15px] ">
                               <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
-                                Units<abbr title="required"></abbr>
+                                Units <abbr title="required"></abbr>
                               </label>
                             </span>
                           </section>
