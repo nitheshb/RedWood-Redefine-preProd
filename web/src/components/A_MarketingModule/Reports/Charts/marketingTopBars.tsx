@@ -187,14 +187,14 @@ const CampaingsTopBarsComponent = () => {
       </div>
 
 
-
+{/* 
       <BookingHeader/>
 
 
 
       <div>
         <ProfileCard data={undefined} />
-      </div>
+      </div> */}
 
       {/* line bar */}
 
