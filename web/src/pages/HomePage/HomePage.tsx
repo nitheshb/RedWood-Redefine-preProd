@@ -434,7 +434,7 @@ const HomePage = () => {
                 <>
                   <div className="mt-1 mx-1">
                     <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
-                      <div className="box-border px-2 mx-auto border-solid  max-w-7xl mx-auto px-6 py-8 ">
+                      <div className="box-border px-2 mx-auto border-solid  max-w-full mx-auto px-6 py-8 ">
                         <div className="flex flex-col   leading-7  text-gray-900 border-0 border-gray-200 ">
                           <ProjectReportsBody
                             title={'WhatsApp Message Templates'}
