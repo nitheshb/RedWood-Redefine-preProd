@@ -809,17 +809,55 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
 
 
 
+  // const handleConstCostGSTChange = (e) => {
+  //   const inputValue = e.target.value
+  //   setRows(
+  //     rows.map((row) =>
+  //       row.component.value === 'sqft_construct_cost_tax'
+  //         ? { ...row, ['gst']: { value: inputValue, label: `${inputValue}%` } }
+  //         : row
+  //     )
+  //   )
+  //   setConstGST(e.target.value)
+  // }
+
+
+
+
+  
+
+
+
+
+
   const handleConstCostGSTChange = (e) => {
-    const inputValue = e.target.value
+    let inputValue = e.target.value;
+  
+
+    if (inputValue === '' || isNaN(inputValue) || Number(inputValue) < 0) {
+      setConstGST(''); 
+      return;
+    }
+  
+    inputValue = Math.min(100, Number(inputValue));
+ 
     setRows(
       rows.map((row) =>
         row.component.value === 'sqft_construct_cost_tax'
-          ? { ...row, ['gst']: { value: inputValue, label: `${inputValue}%` } }
+          ? { ...row, gst: { value: inputValue, label: `${inputValue}%` } }
           : row
       )
-    )
-    setConstGST(e.target.value)
-  }
+    );
+  
+    setConstGST(inputValue);
+  };
+  
+
+
+
+
+
+
   return (
     <>
       <div className=" m-2 p-4 bg-white rounded-xl">
@@ -934,6 +972,12 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                     max="100"
                     step="1"
                     onChange={handleConstCostGSTChange}
+                    onKeyDown={(e) => {
+                      if (e.key === '-' || e.key === '+' || e.key === 'e') {
+                        e.preventDefault(); // Prevent invalid characters
+                      }
+                    }}
+              
                   />
                 </div>
               </div>

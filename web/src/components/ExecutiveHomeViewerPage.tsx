@@ -707,8 +707,8 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   return (
     <>
 
-<div className=" fixed w-[95%]  h-min	  ">
-      <div className=" bg-white pb-8 rounded-md mt-1 mx-1 z-10">
+<div className=" fixed w-[95%]  h-[100%]  mb-10 ">
+      <div className=" bg-white mb-10 rounded-md mt-1 mx-1 z-10">
         <div className=" bg-white">
           <div className="bg-white  ">
             <div className="flex   items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">

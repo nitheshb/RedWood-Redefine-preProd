@@ -20,6 +20,9 @@ import TaskTable from './TaskTable';
 import ExpenseChart from './ExpenseChart';
 import ExpenseLineChart from './ExpenseLineChart';
 import { TopProducts } from './TopProducts';
+import Dashboard from './Dashboard';
+import DashboardComponent from './Dashboard';
+import AboxNew from './AboxNew';
 
 
 
@@ -345,12 +348,22 @@ const CustomTooltip = ({ active, payload }) => {
   </div>
 
 
+{/* 
+  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+    <DashboardComponent/>
+  </div> */}
+
+
+  
+  {/* <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+    <AboxNew/>
+  </div> */}
 
 
 
 
 
-
+ 
   
 <div className="bg-white rounded-lg shadow-lg ">
 <TopProducts />

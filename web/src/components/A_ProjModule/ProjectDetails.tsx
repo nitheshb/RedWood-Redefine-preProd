@@ -284,8 +284,31 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
               Save
             </button>
           )}
+
+
+
+{selFlow?.indx+1 === projectDetailFlow.length && (
+            <button
+              className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
+              type="submit"
+
+
+              onClick={
+                () => {
+                  dialogOpen(false)
+                }
+                // onClick={submitForm}
+                // onClick={submitForm}
+              }
+            >
+          
+              Close
+            </button>
+          )}
+
+         
           <button
-            className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg "
+            className={` ${selFlow?.indx+1 === projectDetailFlow.length ? 'hidden': '' }   mb-2 md:mb-0  bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg `} 
             disabled={loading}
             onClick={() => {
               if (project?.uid) {

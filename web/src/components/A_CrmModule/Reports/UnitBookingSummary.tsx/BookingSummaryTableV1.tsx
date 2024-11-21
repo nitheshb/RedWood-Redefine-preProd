@@ -40,6 +40,7 @@ import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import { computeTotal } from 'src/util/computeCsTotals'
 import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 import { getAllProjects, getBookedUnitsByProject } from 'src/context/dbQueryFirebase'
+import { ArrowDownRight, Download, Filter } from 'lucide-react'
 // import { prettyDate } from '../../util/dateConverter'
 // import DropCompUnitStatus from '../dropDownUnitStatus'
 
@@ -932,6 +933,8 @@ function EnhancedTableHead(props) {
 
   }
   return (
+
+    
     <TableHead style={{ height: '10px', borderRadius: '2xl' }}>
       <TableRow selected={true}>
         <TableCell
@@ -941,7 +944,7 @@ function EnhancedTableHead(props) {
           padding="none"
           size="small"
           style={{
-            backgroundColor: '#DDD1F5',
+            backgroundColor: '#F0F2F5',
             color: '#1a91eb',
             maxHeight: '10px',
             height: '10px',
@@ -980,7 +983,7 @@ function EnhancedTableHead(props) {
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
-                backgroundColor: '#DDD1F5',
+                backgroundColor: '#F0F2F5',
                 color: '#000',
 
                 fontWeight: '600',
@@ -999,7 +1002,7 @@ function EnhancedTableHead(props) {
                 direction={orderBy === headCell.id ? order : 'asc'}
                 onClick={createSortHandler(headCell.id)}
                 style={{
-                  backgroundColor: '#DDD1F5',
+                  backgroundColor: '#F0F2F5',
                   color: '#33393d',
                   fontFamily: 'inherit',
                 }}
@@ -1026,14 +1029,15 @@ function EnhancedTableHead(props) {
           padding="none"
           size="small"
           style={{
-            backgroundColor: '#DDD1F5',
+            backgroundColor: '#FFFFFF',
             color: '#1a91eb',
             maxHeight: '12px',
             height: '12px',
             lineHeight: '12px',
             maxWidth: '52px',
             minWidth: '25px',
-            padding: '0px',
+          
+            padding: '10px 0',
 
             paddingLeft: '14px',
             paddingRight: '29px',
@@ -1041,7 +1045,7 @@ function EnhancedTableHead(props) {
           }}
         >
 
-          <TableSortLabel style={{backgroundColor: '#DDD1F5', color: '#000',fontWeight: '500' }}></TableSortLabel>
+          <TableSortLabel style={{backgroundColor: '#FFFFFF', color: '#000',fontWeight: '500' }}></TableSortLabel>
         </TableCell>
         {headCells.map((headCell) => (
           <>
@@ -1051,13 +1055,14 @@ function EnhancedTableHead(props) {
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
-                backgroundColor: ['partA','partB','partC','partD','partE', 'sale', 'received', 'balance'].includes(headCell.id) ? '#DDD1F5': '#DDD1F5',
+                backgroundColor: ['partA','partB','partC','partD','partE', 'sale', 'received', 'balance'].includes(headCell.id) ? '#FFFFFF': '#FFFFFF',
                 color: '#33393d',
                 height: '6px',
                 maxHeight: '10px',
                 lineHeight: '7px',
                 fontWeight: '600',
                 padding: '6px 1px 6px 10px',
+                
 
                 borderRight: '0.2px solid #d3c5f1',
 
@@ -1070,7 +1075,7 @@ function EnhancedTableHead(props) {
               {headCell.id === 'partA' && (
 
 <div style={{  }}>
-<div className="bg-[#DDD1F5]  flex items-center justify-end py-2 pr-1">
+<div className="bg-[#FFFFFF]  flex items-center justify-end py-2 pr-1">
   <span className="text-[#000] text-[14px] ">₹{totalSETLandValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -1081,7 +1086,7 @@ function EnhancedTableHead(props) {
                  {headCell.id === 'partB' && (
 
 <div style={{  }}>
-<div className="bg-[#DDD1F5]  flex items-center justify-end py-2 pr-1">
+<div className="bg-[#FFFFFF]  flex items-center justify-end py-2 pr-1">
   <span className="text-[#000] text-[14px] ">₹{totalSETChargesIValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -1093,7 +1098,7 @@ function EnhancedTableHead(props) {
                {headCell.id === 'partC' && (
 
 <div style={{  }}>
-<div className="bg-[#DDD1F5]  flex items-center justify-end py-2 pr-1">
+<div className="bg-[#FFFFFF]  flex items-center justify-end py-2 pr-1">
   <span className="text-[#000] text-[14px] ">₹{totalSETConstructValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -1105,7 +1110,7 @@ function EnhancedTableHead(props) {
 {headCell.id === 'partD' && (
 
 <div style={{  }}>
-<div className="bg-[#DDD1F5]  flex items-center justify-end py-1 pr-1">
+<div className="bg-[#FFFFFF]  flex items-center justify-end py-1 pr-1">
   <span className="text-[#000] text-[14px] ">₹{totalSETChargesIIValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -1116,7 +1121,7 @@ function EnhancedTableHead(props) {
               {headCell.id === 'partE' && (
 
 <div style={{  }}>
-<div className="bg-[#DDD1F5]  flex items-center justify-end py-1 pr-1">
+<div className="bg-[#FFFFFF]  flex items-center justify-end py-1 pr-1">
   <span className="text-[#000] text-[14px] ">₹{totalSETPossessionValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -1128,7 +1133,7 @@ function EnhancedTableHead(props) {
 
               {headCell.id === 'sale' && (
 
-<div className="bg-[#DDD1F5] flex items-center justify-end py-1 pr-1">
+<div className="bg-[#FFFFFF] flex items-center justify-end py-1 pr-1">
   <span className="text-[#000] text-[14px] ">₹{totalSETSaleValue.toLocaleString('en-IN')}</span>
 </div>
 
@@ -1140,7 +1145,7 @@ function EnhancedTableHead(props) {
             {headCell.id === 'received' && (
 
 <div style={{  }}>
-<div className="bg-[#DDD1F5]  flex items-center justify-end py-1 pr-1">
+<div className="bg-[#FFFFFF]  flex items-center justify-end py-1 pr-1">
   <span className="text-[#000] text-[14px] ">₹{totalSETReceived.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -1152,7 +1157,7 @@ function EnhancedTableHead(props) {
 {headCell.id === 'balance' && (
 
 <div style={{  }}>
-<div className="bg-[#DDD1F5] flex items-center justify-end py-1 pr-1">
+<div className="bg-[#FFFFFF] flex items-center justify-end py-1 pr-1">
   <span className="text-[#000] text-[14px] ">₹{selSETTotalBalance.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -1174,6 +1179,42 @@ function EnhancedTableHead(props) {
         ))}
       </TableRow>
     </TableHead>
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   )
 }
 
@@ -1203,11 +1244,11 @@ EnhancedTableHead.propTypes = {
   return (
 
     <section>
-      <div className="col-span-2 px-2">
+      {/* <div className="col-span-2 px-2">
          <div className="border rounded-xl   border-gray-200 flex flex-row  bg-white shadow ">
-        {/* first section */}
+        
         <div className="bg-warm-white-100 rounded-lg p-6">
-          <dt className="text-gray-700 text-xs font-semibold leading-loose">Sale</dt>
+          <dt className="text-gray-700 text-xs font-semibold leading-loose">Sale box</dt>
 
           <dd>
             <div className="flex items-end font-semibold">
@@ -1215,10 +1256,13 @@ EnhancedTableHead.propTypes = {
                 <span className="text-xl">₹</span>{totalSaleValue?.toLocaleString('en-IN')}</div>
                 </div>
           </dd>
-         <div className="flex items-center ml-2"><svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg><div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span></div>
+         <div className="flex items-center ml-2">
+          <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+          <div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span>
+          </div>
 
         </div>
-        {/* second section */}
+        
         <div className="bg-warm-white-100 rounded-lg p-6">
           <dt className="text-gray-700 text-xs font-semibold leading-loose">Received</dt>
 
@@ -1228,10 +1272,12 @@ EnhancedTableHead.propTypes = {
                 <span className="text-xl">₹</span>{totalReceived?.toLocaleString('en-IN')}</div>
                 </div>
           </dd>
-         <div className="flex items-center ml-2"><svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg><div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span></div>
+         <div className="flex items-center ml-2">
+          <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+         <div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span></div>
 
         </div>
-        {/* third section */}
+      
         <div className="bg-warm-white-100 rounded-lg p-6">
           <dt className="text-gray-700 text-xs font-semibold leading-loose">Balance</dt>
 
@@ -1241,19 +1287,108 @@ EnhancedTableHead.propTypes = {
                 <span className="text-xl">₹</span>{selTotalBalance?.toLocaleString('en-IN')}</div>
                 </div>
           </dd>
-         <div className="flex items-center ml-2"><svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg><div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span></div>
+         <div className="flex items-center ml-2">
+          <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+          <div className="font-semibold text-orange-600">50%</div>
+          <span className="ml-2">{leadsFetchedData?.length}units</span></div>
 
         </div>
 
         </div>
 
+        </div> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div className='max-w-7xl mx-auto'>
+<div className="grid grid-cols-4 gap-6 mb-8">
+  <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
+    <h3 className="text-gray-600 mb-2">Sold Units</h3>
+    <p className="text-2xl font-bold mb-2">UnKnow</p>
+    <div className="flex items-center gap-2 text-red-500">
+      {/* <ArrowDownRight size={20} /> */}
+      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+      <span>50%</span>
+      <span className="text-gray-500">157 Units</span>
+    </div>
+  </div>
+  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
+    <h3 className="text-gray-600 mb-2">Sales</h3>
+    <p className="text-2xl font-bold mb-2">₹ {totalSaleValue?.toLocaleString('en-IN')}</p>
+    <div className="flex items-center gap-2 text-red-500">
+      {/* <ArrowDownRight size={20} /> */}
+      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+      <span>50%</span>
+      <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
+    </div>
+  </div>
+  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
+    <h3 className="text-gray-600 mb-2">Balance</h3>
+    <p className="text-2xl font-bold mb-2">₹ {selTotalBalance?.toLocaleString('en-IN')}</p>
+    <div className="flex items-center gap-2 text-red-500">
+      {/* <ArrowDownRight size={20} /> */}
+      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+      <span>50%</span>
+      <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
+    </div>
+  </div>
+  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
+    <h3 className="text-gray-600 mb-2">Recieved</h3>
+    <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
+    <div className="flex items-center gap-2 text-red-500">
+      {/* <ArrowDownRight size={20} /> */}
+      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+      <span>50%</span>
+      <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div className="p-6 flex justify-between items-center">
+          <h3 className="text-xl font-bold">Booking Summary</h3>
+          <div className="flex gap-4">
+            <Filter className="text-gray-500" />
+            <Download className="text-gray-500" />
+          </div>
         </div>
 
-        <div className="flex justify-between my-2 items-center h-10 m-2 mt-6">
-          <h2 className="font-semibold text-lg text-gray-900">Booking Summary</h2>
-          {/* <section className="cursor-pointer leading-snug rounded border border-solid border-transparent no-underline font-sans font-semibold transition duration-200 hover:no-underline focus:no-underline focus:outline-none align-middle text-center inline-flex items-center justify-center text-sm py-2 px-4 h-10 rounded-[10px] text-gray-800 bg-transparent hover:bg-gray-900 hover:bg-opacity-[0.06] focus:outline-blue">Go to subscribers
+        {/* <div className="flex  max-w-7xl mx-auto justify-between my-2 items-center h-10 m-2 mt-6">
+          <h3 className="text-xl font-bold">Booking Summary</h3>
+          <section className="cursor-pointer leading-snug rounded border border-solid border-transparent no-underline font-sans font-semibold transition duration-200 hover:no-underline focus:no-underline focus:outline-none align-middle text-center inline-flex items-center justify-center text-sm py-2 px-4 h-10 rounded-[10px] text-gray-800 bg-transparent hover:bg-gray-900 hover:bg-opacity-[0.06] focus:outline-blue">Go to subscribers
 
-         </section> */}
+         </section>
+
+
+
+
+
+
+
+
 
 
          <div className="flex">
@@ -1277,15 +1412,19 @@ EnhancedTableHead.propTypes = {
                 </div>
               </div>
 
-         </div>
-           <div className="flex items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
+         </div> */}
+
+
+
+
+           <div className="flex   items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
               {/* <h2 className="text-lg font-semibold text-black leading-light">
                 Booked Units Summary
               </h2> */}
 
-              <div className="border rounded-xl   border-gray-200 flex flex-row justify-between bg-white shadow ">
+              <div className="border rounded-xl  w-[100%]   border-gray-200 flex flex-row justify-between  shadow ">
                 <ul
-                  className="flex flex-wrap -mb-px "
+                  className="flex flex-wrap -mb-px  "
                   id="myTab"
                   data-tabs-toggle="#myTabContent"
                   role="tablist"
@@ -1347,7 +1486,7 @@ EnhancedTableHead.propTypes = {
               </div>
 
             </div>
-    <div className="border rounded-2xl  mx-2 shadow">
+    <div className=" max-w-7xl mx-auto rounded-2xl  ">
       {/* <EnhancedTableToolbar
         numSelected={selected.length}
         selStatus={selStatus}
@@ -1365,11 +1504,35 @@ EnhancedTableHead.propTypes = {
         searchVal={searchVal}
       /> */}
       <section
-        style={{background: '#fefafb', borderRadius: '15px', }}
+        style={{background: '#fff', borderRadius: '15px', }}
       >
-        <TableContainer sx={{ maxHeight: 640, borderRadius: '15px' }}>
+
+
+
+
+{/* scroll  */}
+
+{/* 
+className='max-h-[30px] overflow-y-auto
+  [&::-webkit-scrollbar]:w-2 
+  [&::-webkit-scrollbar-track]:rounded-full
+  [&::-webkit-scrollbar-track]:bg-gray-100
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  white:[&::-webkit-scrollbar-track]:bg-neutral-700
+  light-gray:[&::-webkit-scrollbar-thumb]:bg-neutral-500 ' */}
+
+<TableContainer sx={{ maxHeight: 640, borderRadius: '15px'  }} className='max-h-[30px] overflow-y-auto
+  [&::-webkit-scrollbar]:w-2 
+  [&::-webkit-scrollbar-track]:rounded-full
+  [&::-webkit-scrollbar-track]:bg-gray-100
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  white:[&::-webkit-scrollbar-track]:bg-neutral-700
+  light-gray:[&::-webkit-scrollbar-thumb]:bg-neutral-500 '>
+        {/* <TableContainer> */}
           <Table
-            sx={{ minWidth: 750, minHeight: 260, width: 'auto', borderRadius: '15px' }}
+            sx={{  borderRadius: '15px' }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
             stickyHeader
@@ -1491,11 +1654,13 @@ EnhancedTableHead.propTypes = {
                         <TableCell
                           align="center"
                           component="th"
+                          className='py-3'
                           id={labelId}
                           scope="row"
                           padding="none"
                           size="small"
-                          sx={{width: '60px', whiteSpace: 'nowrap', background: '#fff',   }}
+                          
+                          sx={{width: '60px', whiteSpace: 'nowrap', background: '#fff', borderLeft: '0.2px solid #fff',padding: '10px 0',  }}
                         >
                           {index + 1}
                         </TableCell>
@@ -1631,7 +1796,7 @@ EnhancedTableHead.propTypes = {
 
 
         </TableCell>
-      <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',  borderLeft: '0.2px solid #e7e5e4' ,  borderRight: '0.2px solid #e7e5e4', paddingRight: '6px', fontSize: '13px' ,'& span': {
+      <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',  borderLeft: '0.2px solid #e7e5e4', paddingRight: '6px', fontSize: '13px' ,'& span': {
       display: 'inline-block',
       borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',

@@ -263,7 +263,7 @@ export const mortgageType = [
 
 export const projectDetailFlow = [
   {
-    name: 'Complete',
+    name: 'Project Setup',
     value: 'projectDetails',
     img: 'https://www.svgrepo.com/show/530258/medal.svg',
     indx: 0,
