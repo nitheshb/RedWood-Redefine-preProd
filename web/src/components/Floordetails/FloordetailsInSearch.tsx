@@ -1602,6 +1602,7 @@ const FloordetailsSearch = ({
                       // })
                       const { uid, floorA } = selBlock
                       updateBlock_AddFloor(
+                        orgId,
                         uid,
                         floorA?.length || 0,
                         enqueueSnackbar

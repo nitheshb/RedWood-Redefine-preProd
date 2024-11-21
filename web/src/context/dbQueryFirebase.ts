@@ -2074,17 +2074,18 @@ export const getPhasesByProject = async (
 }
 
 export const getBlocksByPhase = async (
+  orgId,
   { projectId, phaseId },
   snapshot,
   error
 ) => {
   try {
     const getAllPhasesQuery = await query(
-      collection(db, 'blocks'),
+      collection(db, `${orgId}_blocks`),
       where('projectId', '==', projectId),
-      where('phaseId', '==', phaseId),
-      orderBy('created', 'asc'),
-      limit(20)
+      // where('phaseId', '==', phaseId),
+      // orderBy('created', 'asc'),
+      // limit(20)
     )
     return onSnapshot(getAllPhasesQuery, snapshot, error)
   } catch (error) {
@@ -3183,7 +3184,7 @@ export const addUnit = async (orgId, data, by, msg) => {
     1
   )
   addUnitComputedValues(
-    'blocks',
+    `blocks`,
     blockId,
     plot_Sqf || 0,
     super_built_up_area || 0,
@@ -3278,9 +3279,7 @@ console.log('error in master update ', error)
     }
 
   }
-  enqueueSnackbar(`${data?.title} Updated successfully`, {
-    variant: 'success',
-  })
+ 
 
 }
 export const updateProjectComputedData = async (orgId, id, data) => {
@@ -3523,7 +3522,7 @@ export const createPhase = async (element, enqueueSnackbar, resetForm) => {
   }
 }
 
-export const createBlock = async (element, enqueueSnackbar, resetForm) => {
+export const createBlock = async (orgId, element, enqueueSnackbar, resetForm) => {
   console.log('it is ', element)
   try {
     const uid = uuidv4()
@@ -3532,7 +3531,7 @@ export const createBlock = async (element, enqueueSnackbar, resetForm) => {
       uid,
       created: Timestamp.now().toMillis(),
     }
-    const ref = doc(db, 'blocks', uid)
+    const ref = doc(db, `${orgId}_blocks`, uid)
     await setDoc(ref, updated, { merge: true })
     enqueueSnackbar('Block added successfully', {
       variant: 'success',
@@ -4346,10 +4345,10 @@ export const updatePhase = async (uid, project, enqueueSnackbar) => {
   }
 }
 
-export const updateBlock = async (uid, project, enqueueSnackbar) => {
+export const updateBlock = async (orgId,uid, project, enqueueSnackbar) => {
   try {
     await updateDoc(
-      doc(db, 'blocks', uid),
+      doc(db, `${orgId}_blocks`, uid),
       {
         ...project,
         updated: Timestamp.now().toMillis(),
@@ -4365,9 +4364,9 @@ export const updateBlock = async (uid, project, enqueueSnackbar) => {
     })
   }
 }
-export const updateBlock_AddFloor = async (uid, floorName, enqueueSnackbar) => {
+export const updateBlock_AddFloor = async (orgId,uid, floorName, enqueueSnackbar) => {
   try {
-    await updateDoc(doc(db, 'blocks', uid), {
+    await updateDoc(doc(db, `${orgId}_blocks`, uid), {
       floorA: arrayUnion(floorName),
       updated: Timestamp.now().toMillis(),
     })

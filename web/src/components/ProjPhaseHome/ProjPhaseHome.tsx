@@ -160,14 +160,19 @@ const ProjPhaseHome = ({
 
   const getBlocks = async (phaseId) => {
     const unsubscribe = getBlocksByPhase(
-      { projectId: uid || myProjectDetails?.uid, phaseId },
+      orgId,
+      { projectId: uid || myProjectDetails?.uid, phaseId: phaseId },
       (querySnapshot) => {
         const response = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
+        response.sort((a, b) => {
+          return a.created - b.created
+        })
         setBlocks({ ...blocks, [phaseId]: response })
         console.log(
           'myblocks are',
+          response.sort((a, b) => a.blockName.localeCompare(b.blockName)),
           blocks,
           uid || myProjectDetails?.uid,
           phaseId
@@ -188,9 +193,10 @@ const ProjPhaseHome = ({
   }, [projectDetails])
 
   useEffect(() => {
-    if (phases.length > 0) {
-      getBlocks(phases[0]['uid'] || '')
-    }
+    // if (phases.length > 0) {
+    //   getBlocks(phases[0]['uid'] || '')
+    // }
+    getBlocks('phaseId')
   }, [phases, projectDetails])
 
   const selCat = (cat, subCat) => {
@@ -574,9 +580,9 @@ const ProjPhaseHome = ({
                             setPhaseFun={setPhaseFun}
                             selPhaseName={selPhaseName}
                           />
-                        ) : blocks[phase.uid]?.length ? (
+                        ) : blocks['phaseId']?.length ? (
                           <Blockdetails
-                            blocks={blocks[phase.uid]}
+                            blocks={blocks['phaseId']}
                             blockPayload={blocks}
                             phaseFeed={phases}
                             pId={uid || myProjectDetails?.uid}
@@ -588,7 +594,7 @@ const ProjPhaseHome = ({
                             setSelMode={setSelMode}
                             leadDetailsObj={leadDetailsObj}
                           />
-                        ) : !blocks[phase.uid] ? (
+                        ) : !blocks['phaseId'] ? (
                           <DummyBodyLayout />
                         ) : (
                           <div className="flex justify-center items-center font-semibold mt-3">

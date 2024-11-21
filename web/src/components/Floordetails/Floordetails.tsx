@@ -40,6 +40,7 @@ import PieChartProject from '../comps/pieChartProject'
 import DropCompUnitStatus from '../dropDownUnitStatus'
 import SiderForm from '../SiderForm/SiderForm'
 import UnitsSmallViewCard from '../unitsSmallView'
+import DropDownUnitBlocks from '../DropDownUnitBlocks'
 
 const Floordetails = ({
   block = 'A',
@@ -813,12 +814,15 @@ const Floordetails = ({
                 {['Apartment', 'Villas'].includes(
                   projectDetails?.projectType?.name
                 ) && (
-                  <DropCompUnitStatus
+                  <DropDownUnitBlocks
                     type={'blocks'}
                     id={'blocks'}
                     setStatusFun={setSelBlock}
                     filteredUnits={BlockFeed}
                     pickedValue={filBedRooms}
+                    setOpenEditBlock={setSliderInfo}
+                    selProject={projectDetails}
+
                   />
                 )}
                 <section className="text-sm  pr-2 font-blue text-[13px] italic flex flex-row ml-5 ">
@@ -1652,6 +1656,7 @@ const Floordetails = ({
                       // })
                       const { uid, floorA } = selBlock
                       updateBlock_AddFloor(
+                        orgId,
                         uid,
                         floorA?.length || 0,
                         enqueueSnackbar
@@ -1973,6 +1978,13 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
         phaseDetails={phaseDetails}
         blockDetails={selBlock}
         unitViewActionType={actionType}
+      />
+      <SiderForm
+        open={sliderInfo.open}
+        setOpen={handleSliderClose}
+        title={sliderInfo.title}
+        data={sliderInfo.sliderData}
+        widthClass="max-w-4xl"
       />
     </div>
   )
