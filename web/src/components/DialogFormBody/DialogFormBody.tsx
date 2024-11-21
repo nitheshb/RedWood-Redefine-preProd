@@ -171,29 +171,29 @@ const DialogFormBody = ({
           const x = docSnapshot.data()
           return x
         })
-  
+
         console.log('fetched users list is', bankA)
         // step 3: filter and set values to each title
         if (bankA?.length > 0) {
           const dA = bankA.filter((item) => item.title == 'State')
           const eA = bankA.filter((item) => item.title == 'Planning Authority')
-         
+
           setStatesList(dA.sort((a, b) => {
             return a.order - b.order
           }))
           setapprovalAuthority(eA.sort((a, b) => {
             return a.order - b.order
           }))
-  
-          
-          
-         
-      
+
+
+
+
+
         }
       },
-      
+
     )
-  
+
     return unsubscribe
   }, [])
 
@@ -213,7 +213,7 @@ const DialogFormBody = ({
     }
     console.log('selected value is ', project?.editMode)
     // setLoading(true)
-    if (project?.editMode) {
+    if (project?.editMode || project?.uid !=null) {
       await updateProject(
         orgId,
         project.uid,
@@ -964,7 +964,7 @@ const DialogFormBody = ({
                                 }}
                                 value={formik.values.state}
                                 options={statesListA}
-                                
+
 
                               />
                               {/* {formik.errors.state ? (

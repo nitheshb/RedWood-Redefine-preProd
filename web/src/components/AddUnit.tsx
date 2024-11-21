@@ -515,7 +515,6 @@ useEffect(() => {
       setLoading(false)
     } else {
       console.log('foundLENGTH IS empty ', foundLength)
-
       // proceed to copy
       await addPlotUnit(orgId, plotData1, user?.email, `Unit Created by form `)
 

@@ -2550,7 +2550,9 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
 
   data.status = status?.toLowerCase() || 'available'
   const statusVal = status?.toLowerCase() || ''
-  console.log('status is ==> ', status)
+  console.log('status is ==> ', status,  ['available'].includes(statusVal))
+
+
   const yo = {
     totalUnitCount: increment(1),
     bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
@@ -2563,7 +2565,8 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
     s_regisCount: ['registered_pipeline'].includes(statusVal)
       ? increment(1)
       : increment(0),
-    availableCount: statusVal === 'available' ? increment(1) : increment(0),
+
+    availableCount: ['available'].includes(statusVal) ? increment(1) : increment(0),
     custBlockCount:
       statusVal === 'customer_blocked' ? increment(1) : increment(0),
     mangBlockCount:

@@ -1136,7 +1136,7 @@ return
     <div
       className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} overflow-y-scroll `}
     >
-      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#E6F3FC]">
+      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F9F9FA]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full   ">
             {/* <div className="">
@@ -1157,7 +1157,7 @@ return
               </div> */}
 
              <div className="flex flex-col justify-between">
-              <section className="flex flex-row justify-between bg-[#E6F3FC] px-3 py-1 border border-[#e5e7f8] rounded-md ">
+              <section className="flex flex-row justify-between bg-[#F9F9FA] px-3 py-1  rounded-md ">
                 <section>
                 <section className="flex flex-row   pt-2 justify-between">
                                   <div className="flex flex-row">
@@ -1201,7 +1201,7 @@ return
                                         <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {selCustomerPayload?.facing}
                                         </span>
-            
+
                                          <span className=" ml- text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
                         Booked : {prettyDate(selCustomerPayload?.booked_on || 0)}
                       </span>
@@ -1283,15 +1283,15 @@ return
                   </section>}
                 </section>
               </section>
-            </div> 
+            </div>
 
-           
+
 
           {/* {today 14} */}
             {/* <div className="flex justify-between items-center mb-6">
-  
 
-  <div className="bg-[#E6F3FC] p-4 rounded-lg  flex items-center space-x-4">
+
+  <div className="bg-[#F9F9FA] p-4 rounded-lg  flex items-center space-x-4">
       <div className="bg-white p-4 rounded-[18px] flex flex-col items-center justify-center w-20 h-20">
         <span className="text-2xl font-bold"> {selCustomerPayload?.unit_no}</span>
         <span className="text-xs text-[#000]">Unit no</span>
@@ -1323,15 +1323,15 @@ return
         </div>
       </div>
     </div>
-          
-    
-  
-          
-    <div className="flex space-x-4 bg-[#E6F3FC] p-8 rounded-lg">
+
+
+
+
+    <div className="flex space-x-4 bg-[#F9F9FA] p-8 rounded-lg">
       <div className="relative inline-block text-left">
         <button className="inline-flex justify-center w-full rounded-full border border-gray-300 shadow-sm px-4 py-3 bg-white text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
           CRM Owner
-   
+
 
           <div className="font-md ml-8 text-xs tracking-wide font-semibold text-slate-900 ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
@@ -1354,11 +1354,11 @@ return
                     </div>
         </button>
       </div>
-  
+
       <div className="relative inline-block items-center text-left">
         <button className="flex justify-center items-center w-full rounded-full border border-gray-300 shadow-sm px-4 py-3 bg-white text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
           Status
-   
+
 
 <div className="font-md ml-8 text-xs   items-center tracking-wide font-semibold text-slate-900 ">
 
@@ -1384,8 +1384,8 @@ return
                     </div>
         </button>
       </div>
-  
-      <button 
+
+      <button
 
 onClickCapture={() => {
   openPaymentFun()
@@ -1422,7 +1422,7 @@ onClickCapture={() => {
 
 
 
-  
+
 
 
 
@@ -1562,9 +1562,9 @@ onClickCapture={() => {
       {/* {today 14} */}
 
 
-<div className='bg-[#E6F3FC] p-8  rounded-lg'>
+<div className='bg-[#F9F9FA] p-8  rounded-lg'>
 
-<div className="grid bg-[#E6F3FC]  rounded-lg grid-cols-3 gap-4 mb-3">
+<div className="grid bg-[#F9F9FA]  rounded-lg grid-cols-3 gap-4 mb-3">
   <div className="bg-white p-4 rounded-lg">
     <div className="flex justify-between ">
       <span className="font-medium">Stage Balance</span>
@@ -1660,7 +1660,7 @@ onClickCapture={() => {
   </div>
 
 
-  
+
 </div>
 
 
@@ -1668,7 +1668,7 @@ onClickCapture={() => {
 
 
 
-{/* 
+{/*
 <div className="bg-white   rounded-xl shadow-sm">
       <div className="border rounded-xl">
         <div className="p-6">
@@ -1716,7 +1716,7 @@ onClickCapture={() => {
               </button>
             </div>
           </div>
-  
+
         </div>
       </div>
     </div> */}
@@ -1729,7 +1729,7 @@ onClickCapture={() => {
 
 
 
-      {/* <div className="grid bg-[#E6F3FC]  rounded-lg grid-cols-3 gap-4 mb-3">
+      {/* <div className="grid bg-[#F9F9FA]  rounded-lg grid-cols-3 gap-4 mb-3">
   <div className="bg-white p-4 rounded-lg">
     <div className="flex justify-between ">
       <span className="font-medium">Stage Balance</span>
@@ -1814,7 +1814,7 @@ onClickCapture={() => {
   </div>
 
 
-  
+
 </div> */}
 
 
