@@ -109,7 +109,7 @@ export const streamProjectDetails = (orgId, snapshot, error) => {
 }
 // get all project master cost sheet template list
 export const streamProjectCSMaster = (orgId, snapshot, error) => {
-  const itemsQuery = query(collection(db, `${orgId}_project`))
+  const itemsQuery = query(collection(db, `${orgId}_projectMasters`))
   return onSnapshot(itemsQuery, snapshot, error)
 }
 // get all project master cost sheet template list
