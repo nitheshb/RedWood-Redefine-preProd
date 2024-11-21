@@ -211,7 +211,7 @@ const DialogFormBody = ({
       planningApproval: planningApproval,
       reraApproval: reraApproval,
     }
-    console.log('selected value is ', project?.editMode)
+    console.log('selected value is testing ', project?.editMode, project)
     // setLoading(true)
     if (project?.editMode || project?.uid !=null) {
       await updateProject(
