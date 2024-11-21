@@ -508,9 +508,11 @@ const LLeadsTableView = ({
                 </span>
               </div>
             )}
+   
             {!fetchLeadsLoader && statusSepA[0]?.[value].length != 0 && (
               <LLeadsTableBody
                 // data={filterTable}
+                leadsTyper={leadsTyper}
                 fetchLeadsLoader={fetchLeadsLoader}
                 selStatus={value}
                 rowsParent={statusSepA[0]}

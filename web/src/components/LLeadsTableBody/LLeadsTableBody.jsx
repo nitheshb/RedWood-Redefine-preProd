@@ -111,80 +111,13 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0])
 }
 
-const headCells = [
-  // {
-  //   id: 'S.No',
-  //   numeric: true,
-  //   disablePadding: false,
-  //   label: 'S.No',
-  // },
-  {
-    id: 'Date',
-    numeric: false,
-    disablePadding: true,
-    label: 'Created On',
-  },
-  {
-    id: 'AssignedOn',
-    numeric: false,
-    disablePadding: true,
-    label: 'Assigned On',
-  },
 
-  {
-    id: 'Clientdetails',
-    numeric: false,
-    disablePadding: false,
-    label: 'Client Details',
-  },
-  {
-    id: 'Project',
-    numeric: false,
-    disablePadding: false,
-    label: 'Project',
-  },
 
-  {
-    id: 'Assigned',
-    numeric: false,
-    disablePadding: false,
-    label: 'Assigned To',
-  },
-  {
-    id: 'Source',
-    numeric: false,
-    disablePadding: false,
-    label: 'Source',
-  },
-  {
-    id: 'Currentstatus',
-    numeric: false,
-    disablePadding: false,
-    label: 'Status',
-  },
-  {
-    id: 'leadUpT',
-    numeric: false,
-    disablePadding: true,
-    label: 'Last Activity',
-  },
-  {
-    id: 'schTime',
-    numeric: false,
-    disablePadding: true,
-    label: 'Next Sch',
-  },
 
-  {
-    id: 'Notes',
-    numeric: true,
-    disablePadding: false,
-    label: 'Comments',
-  },
-]
 
 function EnhancedTableHead(props) {
   const {
+    leadsTyper,
     onSelectAllClick,
     order,
     orderBy,
@@ -194,6 +127,170 @@ function EnhancedTableHead(props) {
     searchKey,
     viewUnitStatusA,
   } = props
+
+  const headCells = [
+    // {
+    //   id: 'S.No',
+    //   numeric: true,
+    //   disablePadding: false,
+    //   label: 'S.No',
+    // },
+    {
+      id: 'Date',
+      numeric: false,
+      disablePadding: true,
+      label: 'Created On',
+    },
+    {
+      id: 'AssignedOn',
+      numeric: false,
+      disablePadding: true,
+      label: 'Assigned On',
+    },
+
+    {
+      id: 'Clientdetails',
+      numeric: false,
+      disablePadding: false,
+      label: 'Client Details',
+    },
+    {
+      id: 'Project',
+      numeric: false,
+      disablePadding: false,
+      label: 'Project',
+    },
+
+
+
+    {
+      id: 'Assigned',
+      numeric: false,
+      disablePadding: false,
+      label: 'Assigned To',
+    },
+    {
+      id: 'Source',
+      numeric: false,
+      disablePadding: false,
+      label: 'Source',
+    },
+    {
+      id: 'Currentstatus',
+      numeric: false,
+      disablePadding: false,
+      label: 'Status',
+    },
+    {
+      id: 'leadUpT',
+      numeric: false,
+      disablePadding: true,
+      label: 'Last Activity',
+    },
+    {
+      id: 'schTime',
+      numeric: false,
+      disablePadding: true,
+      label: 'Next Sch',
+    },
+
+    {
+      id: 'Notes',
+      numeric: true,
+      disablePadding: false,
+      label: 'Comments',
+    },
+  ]
+
+  const bookingCells = [
+    // {
+    //   id: 'S.No',
+    //   numeric: true,
+    //   disablePadding: false,
+    //   label: 'S.No',
+    // },
+    {
+      id: 'Date',
+      numeric: false,
+      disablePadding: true,
+      label: 'Created On',
+    },
+    {
+      id: 'AssignedOn',
+      numeric: false,
+      disablePadding: true,
+      label: 'Assigned On',
+    },
+
+    {
+      id: 'Clientdetails',
+      numeric: false,
+      disablePadding: false,
+      label: 'Client Details',
+    },
+    {
+      id: 'Project',
+      numeric: false,
+      disablePadding: false,
+      label: 'Project',
+    },
+
+    {
+      id: 'UnitNo',
+      numeric: false,
+      disablePadding: false,
+      label: 'UnitNo',
+    },
+
+    {
+      id: 'Assigned',
+      numeric: false,
+      disablePadding: false,
+      label: 'Assigned To',
+    },
+    {
+      id: 'Source',
+      numeric: false,
+      disablePadding: false,
+      label: 'Source',
+    },
+    {
+      id: 'Currentstatus',
+      numeric: false,
+      disablePadding: false,
+      label: 'Status',
+    },
+    {
+      id: 'leadUpT',
+      numeric: false,
+      disablePadding: true,
+      label: 'Last Activity',
+    },
+    {
+      id: 'schTime',
+      numeric: false,
+      disablePadding: true,
+      label: 'Next Sch',
+    },
+
+    {
+      id: 'Notes',
+      numeric: true,
+      disablePadding: false,
+      label: 'Comments',
+    },
+  ]
+const [headers, setHeaders] = React.useState(headCells)
+  React.useEffect(() => {
+
+
+    if(leadsTyper === 'booked') {
+      setHeaders(bookingCells)
+    }else{
+      setHeaders(headCells)
+    }
+  }, [leadsTyper])
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property)
   }
@@ -259,9 +356,9 @@ function EnhancedTableHead(props) {
           /> */}
           <TableSortLabel>S.No</TableSortLabel>
         </TableCell>
-        {headCells.map((headCell) => (
+        {headers.map((headCell) => (
           <>
-            <TableCell
+           <TableCell
               key={headCell.id}
               align={headCell.numeric ? 'center' : 'left'}
               padding={headCell.disablePadding ? 'none' : 'normal'}
@@ -307,6 +404,7 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
+  leadsTyper: PropTypes.string.isRequired,
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
@@ -578,6 +676,7 @@ const HighlighterStyle = (props) => {
 }
 export default function LLeadsTableBody({
   fetchLeadsLoader,
+  leadsTyper,
   selStatus,
   rowsParent,
   selUserProfileF,
@@ -792,13 +891,14 @@ export default function LLeadsTableBody({
       >
         <TableContainer sx={{ maxHeight: 640 }}>
           <Table
-            sx={{ minWidth: 750, minHeight: 260 }}
+            sx={{ minWidth: 750, minHeight: 260 , marginBottom: 30}}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
             stickyHeader
             aria-label="sticky table"
           >
             <EnhancedTableHead
+            leadsTyper={leadsTyper}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -955,7 +1055,7 @@ export default function LLeadsTableBody({
                                           />
                                         </span>
 
-                                       
+
 
                                       </div>
                                     </div>
@@ -988,7 +1088,7 @@ export default function LLeadsTableBody({
                             )}
                             {viewUnitStatusA.includes('Phone No') && (
                               <div>
-                              
+
 
                               <span className="font-bodyLato">
     <HighlighterStyle
@@ -1008,13 +1108,15 @@ export default function LLeadsTableBody({
                                   />
                                 </span>
 
-                              
+
                               </div>
                             )}
                           </section>
                         </TableCell>
 
                         <TableCell align="left">{row.Project}</TableCell>
+                        { leadsTyper === 'booked' &&<TableCell align="left">{row?.UnitNo}</TableCell>}
+
                         {/* display:
                   viewUnitStatusA.includes('Assigned To') &&
                   headCell.id === 'Assigned'
