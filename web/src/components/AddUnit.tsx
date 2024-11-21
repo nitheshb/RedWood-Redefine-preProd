@@ -277,9 +277,9 @@ useEffect(() => {
     return unsubscribe
   }, [])
   useEffect(() => {
-    phaseFeed.map((user) => {
-      user.label = user.phaseName
-      user.value = user.phaseName
+    phaseFeed?.map((user) => {
+      user.label = user?.phaseName
+      user.value = user?.phaseName
     })
     console.log('fetched users list is', phaseFeed)
     setphaseList(phaseFeed)

@@ -1222,14 +1222,14 @@ const Floordetails = ({
                                                 >
                                                   Cancel
                                                 </h3>
-                                                <h3
+                                                {/* <h3
                                                   className="m-0 ml-2 mr-2 mt-4 text-sm   leading-tight tracking-tight text-blue-800 border-0 border-blue-200"
                                                   onClick={() => {
                                                     setisUnitDetailsOpen(true)
                                                   }}
                                                 >
                                                   Swap
-                                                </h3>
+                                                </h3> */}
                                               </div>
                                             </div>
                                           )}

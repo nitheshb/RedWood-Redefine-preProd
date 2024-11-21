@@ -545,7 +545,7 @@ console.log('customer info', myBookingPayload)
                           <li
                             className={`${
                               i + 1 === StatusListA.length ? 'mb-0' : 'mb-6'
-                            } ms-4 cursor-pointer`}
+                            } ms-4 flex flex-row cursor-pointer`}
                             key={i}
                             onClick={() => setStatusFun(i, statusFlowObj.value)}
                           >
@@ -557,7 +557,7 @@ console.log('customer info', myBookingPayload)
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
             </svg> */}
                             </span>
-                            <div className="ml-1">
+                            <div className="ml-1 ml-10">
                               <span className="text-[12px]  font-bold    -[2px] rounded-lg flex flex-row text-[#000] ">
                                 {statusFlowObj.label}
                                 {onStep != statusFlowObj.value ? (
