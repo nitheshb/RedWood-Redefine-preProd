@@ -321,7 +321,11 @@ const UnitBookingSummaryHomePage1 = ({
   }
   return (
     <>
-      <div className="bg-white ">
+
+    {/* <div className='bg-white w-full h-f'>
+
+    </div> */}
+      <div className="bg-white max-w-7xl mx-auto ">
         <div className="">
           <div
             className="

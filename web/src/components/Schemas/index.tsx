@@ -32,4 +32,6 @@ export const validate_AddUnit = Yup.object({
   status: Yup.string().required('Status is required field'),
   release_status: Yup.string().required('Release status is required field'),
   mortgage_type: Yup.string().required('Mortage Type is required field'),
+  construct_area: Yup.string().required('BUA Sqft Type is required field'),
+  construct_price_sqft: Yup.string().required('Price Sqft Type is required field'),
 })

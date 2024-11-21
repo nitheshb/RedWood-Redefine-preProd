@@ -86,9 +86,9 @@ const CrmAnalyticsHome = ({ project }) => {
   }
 
   return (
-    <div>
+    <div className='bg-white p-4 mx-1 mt-1'>
 
-<div className='flex bg-white border-b'>
+<div className='flex max-w-7xl mx-auto bg-white border-b border rounded-xl w-[100%] border-gray-200 flex-row justify-between shadow'>
       <ul
                 className="flex flex-wrap -mb-px "
                 id="myTab"
@@ -96,7 +96,7 @@ const CrmAnalyticsHome = ({ project }) => {
                 role="tablist"
               >
                 {[
-          { label: 'Booking Summary', value: 'booking_summary' },
+          // { label: 'Booking Summary', value: 'booking_summary' },
           { label: 'Booking Summary(v1)', value: 'booking_summary-v1' },
           { label: 'Collections', value: 'collection_performance' },
           { label: 'CRM Inventory', value: 'crm_table' },
@@ -234,14 +234,14 @@ const CrmAnalyticsHome = ({ project }) => {
           </div>
         </section>
       )}
-      {selCat === 'booking_summary' && (
+      {/* {selCat === 'booking_summary' && (
         <div className="">
-          {/* <AdvancedDataTableTest /> */}
+          
           <UnitBookingSummaryHomePage />
 
           {projects.length === 0 && <DummyBodyLayout />}
         </div>
-      )}
+      )} */}
        {selCat === 'booking_summary-v1' && (
         <div className="">
           {/* <AdvancedDataTableTest /> */}

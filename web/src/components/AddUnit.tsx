@@ -1017,7 +1017,7 @@ useEffect(() => {
                                 <TextField
                                   label="Dimension"
                                   name="dimension"
-                                  type="text"
+                                  type="number"
                                 />
                               </div>
                             )}
