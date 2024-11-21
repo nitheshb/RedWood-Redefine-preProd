@@ -174,11 +174,15 @@ const UnitsInventoryHome = ({ project }) => {
 
   const getBlocks = async (phaseId) => {
     const unsubscribe = getBlocksByPhase(
+      orgId,
       { projectId: myProjectDetails?.uid, phaseId },
       (querySnapshot) => {
         const response = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
+        response.sort((a, b) => {
+          return a.blockName - b.blockName
+        })
         setBlocks({ ...blocks, [phaseId]: response })
         console.log(
           'myblocks are',

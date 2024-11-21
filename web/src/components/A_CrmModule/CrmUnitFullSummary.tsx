@@ -756,7 +756,7 @@ export default function UnitFullSummary({
   }
   return (
     <div
-      className={`bg-[#E6F3FC]  mt-4 rounded-md h-screen     `}
+      className={`bg-[#F9F9FA]  rounded-md h-screen     `}
     >
 <section className="flex flex-row-reverse	">
     <div className='w-full'>
@@ -1674,7 +1674,7 @@ export default function UnitFullSummary({
 
 
 
-          
+
 
 
 
@@ -1684,7 +1684,7 @@ export default function UnitFullSummary({
 
 
 
-      
+
 
 
 
@@ -1695,7 +1695,7 @@ export default function UnitFullSummary({
 
       {selFeature === 'summary' && (
 
-        
+
         <div className="  mt-2 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
           <CrmUnitSummary
             selCustomerPayload={selCustomerPayload}
@@ -1712,7 +1712,7 @@ export default function UnitFullSummary({
 
 
 
-      
+
       {['finance_info', 'summary'].includes(selFeature) && (
         <>
           <div className="py-3 px-3 pb-[250px] m-4 mt-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll">
@@ -1816,7 +1816,7 @@ export default function UnitFullSummary({
 
 
 
-      
+
 
       {selFeature === 'loan_info' && <LoanApplyFlowHome />}
       {selFeature === 'agreement_info' && (
@@ -1910,7 +1910,7 @@ export default function UnitFullSummary({
               {/* <div className="font-md font-medium text-xs  text-gray-800">
                           Notes
                         </div> */}
-{/* 
+{/*
               <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg ">
                 <ul
                   className="flex flex-col  rounded-t-lg"
@@ -1927,7 +1927,7 @@ export default function UnitFullSummary({
                     { lab: 'Loan details', val: 'loan_info' },
                     { lab: 'Agreement  details', val: 'agreement_info' },
                     { lab: 'Brokerage  details', val: 'brokerage_info' },
-            
+
                     { lab: 'Tasks', val: 'tasks' },
                     { lab: 'Timeline', val: 'timeline' },
                     { lab: 'Cancel Booking', val: 'cancel_booking' },
@@ -1962,7 +1962,7 @@ export default function UnitFullSummary({
 
 
 
-<div className=" border-gray-900  py-4 bg-[#E6F3FC] rounded-t-lg ">
+<div className=" border-gray-900  py-4 bg-[#F9F9FA] rounded-t-lg ">
                 <ul
                   className="flex flex-col  rounded-t-lg"
                   id="myTab"
@@ -1978,7 +1978,7 @@ export default function UnitFullSummary({
                 <path d="M14.6465 16.5347C14.6465 14.6491 14.6465 13.7063 15.2323 13.1205C15.8181 12.5347 16.7609 12.5347 18.6465 12.5347C20.5321 12.5347 21.4749 12.5347 22.0607 13.1205C22.6465 13.7063 22.6465 14.6491 22.6465 16.5347V18.5347C22.6465 20.4203 22.6465 21.3631 22.0607 21.9489C21.4749 22.5347 20.5321 22.5347 18.6465 22.5347C16.7609 22.5347 15.8181 22.5347 15.2323 21.9489C14.6465 21.3631 14.6465 20.4203 14.6465 18.5347V16.5347Z" stroke="#484848" stroke-width="1.5"/>
                 <path d="M14.6465 5.53467C14.6465 4.60279 14.6465 4.13685 14.7987 3.7693C15.0017 3.27925 15.3911 2.8899 15.8811 2.68691C16.2487 2.53467 16.7146 2.53467 17.6465 2.53467H19.6465C20.5784 2.53467 21.0443 2.53467 21.4119 2.68691C21.9019 2.8899 22.2913 3.27925 22.4943 3.7693C22.6465 4.13685 22.6465 4.60279 22.6465 5.53467C22.6465 6.46655 22.6465 6.93249 22.4943 7.30004C22.2913 7.79009 21.9019 8.17944 21.4119 8.38243C21.0443 8.53467 20.5784 8.53467 19.6465 8.53467H17.6465C16.7146 8.53467 16.2487 8.53467 15.8811 8.38243C15.3911 8.17944 15.0017 7.79009 14.7987 7.30004C14.6465 6.93249 14.6465 6.46655 14.6465 5.53467Z" stroke="#484848" stroke-width="1.5"/>
                 </svg>
-                
+
                     ), lab: 'Summary', val: 'summary' },
                     { icon: (
                       <svg width="25" height="27" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1986,7 +1986,7 @@ export default function UnitFullSummary({
                 <path d="M8.15039 6.03467C6.59459 6.08134 5.667 6.25451 5.02516 6.89694C4.14648 7.77644 4.14648 9.19197 4.14648 12.023V18.5291C4.14648 21.3602 4.14648 22.7757 5.02516 23.6552C5.90384 24.5347 7.31806 24.5347 10.1465 24.5347H15.1465C17.9749 24.5347 19.3891 24.5347 20.2678 23.6552C21.1465 22.7757 21.1465 21.3602 21.1465 18.5291V12.023C21.1465 9.19197 21.1465 7.77644 20.2678 6.89695C19.626 6.25451 18.6984 6.08134 17.1426 6.03467" stroke="#A6A6A6" stroke-width="1.5"/>
                 <path d="M8.64453 17.868H12.6445M8.64453 12.4513H16.6445" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
-                
+
                     ), lab: 'Applicant details', val: 'applicant_info' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1996,7 +1996,7 @@ export default function UnitFullSummary({
                 <path d="M3.64648 7.92753C3.64648 7.92753 4.64648 8.57933 5.14648 9.53467C5.14648 9.53467 6.64648 5.78467 8.64648 4.53467" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M3.64648 18.9276C3.64648 18.9276 4.64648 19.5794 5.14648 20.5347C5.14648 20.5347 6.64648 16.7847 8.64648 15.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                
+
                     ), lab: 'Unit details', val: 'unit_information' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2006,7 +2006,7 @@ export default function UnitFullSummary({
                 <path d="M8.64648 10.5347H6.64648" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M13.1465 11.4097C12.3181 11.4097 11.6465 11.9973 11.6465 12.7222C11.6465 13.4471 12.3181 14.0347 13.1465 14.0347C13.9749 14.0347 14.6465 14.6223 14.6465 15.3472C14.6465 16.0721 13.9749 16.6597 13.1465 16.6597M13.1465 11.4097C13.7996 11.4097 14.3552 11.7749 14.5611 12.2847M13.1465 11.4097V10.5347M13.1465 16.6597C12.4934 16.6597 11.9378 16.2945 11.7319 15.7847M13.1465 16.6597V17.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
-                
+
                     ), lab: 'Cost & Payments', val: 'finance_info' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2016,7 +2016,7 @@ export default function UnitFullSummary({
                 <path d="M5.64648 11.5347V16.0347C5.64648 17.9203 5.64648 18.8631 6.23227 19.4489C6.81805 20.0347 7.76086 20.0347 9.64648 20.0347H18.6465C20.5321 20.0347 21.4749 20.0347 22.0607 19.4489C22.6465 18.8631 22.6465 17.9203 22.6465 16.0347V13.0347C22.6465 11.1491 22.6465 10.2062 22.0607 9.62046C21.4749 9.03467 20.5321 9.03467 18.6465 9.03467H10.1465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M15.8965 14.5347C15.8965 15.5012 15.113 16.2847 14.1465 16.2847C13.18 16.2847 12.3965 15.5012 12.3965 14.5347C12.3965 13.5682 13.18 12.7847 14.1465 12.7847C15.113 12.7847 15.8965 13.5682 15.8965 14.5347Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                
+
                     ), lab: 'Loan details', val: 'loan_info' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2024,7 +2024,7 @@ export default function UnitFullSummary({
                 <path d="M12.6465 18.5347H18.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M17.8907 3.66758C18.3378 3.18245 18.5614 2.93989 18.7989 2.79841C19.3721 2.45701 20.078 2.4464 20.6607 2.7704C20.9022 2.90468 21.1327 3.14042 21.5935 3.61188C22.0544 4.08335 22.2848 4.31908 22.4161 4.56616C22.7328 5.16234 22.7224 5.88438 22.3887 6.47078C22.2504 6.7138 22.0133 6.9425 21.5391 7.3999L15.8969 12.8422C14.4021 14.284 13.4762 14.583 11.4057 14.5288C11.0298 14.5189 10.8419 14.514 10.7327 14.3898C10.6234 14.2657 10.6383 14.074 10.6681 13.6905C10.8057 11.9228 11.1171 11.0171 12.3202 9.71173L17.8907 3.66758Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linejoin="round"/>
                 </svg>
-                
+
                     ), lab: 'Agreement  details', val: 'agreement_info' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2032,9 +2032,9 @@ export default function UnitFullSummary({
                 <path d="M7.64648 7.53467H15.6465M7.64648 11.5347H11.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
                 <path d="M15.929 19.5391C15.87 18.6504 15.7645 17.7005 15.3282 16.6264C14.956 15.7103 15.0597 13.5552 17.1465 13.5552C19.2333 13.5552 19.3129 15.7103 18.9407 16.6264C18.5043 17.7005 18.423 18.6504 18.364 19.5391M21.6465 22.5347H12.6465V21.289C12.6465 20.8425 12.9129 20.4501 13.2993 20.3275L15.5541 19.6117C15.7149 19.5606 15.8813 19.5347 16.0486 19.5347H18.2444C18.4117 19.5347 18.5781 19.5606 18.7389 19.6117L20.9937 20.3275C21.3801 20.4501 21.6465 20.8425 21.6465 21.289V22.5347Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                
+
                     ), lab: 'Brokerage  details', val: 'brokerage_info' },
-            
+
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3.14648 12.5347C3.14648 8.05633 3.14648 5.81716 4.53772 4.42591C5.92897 3.03467 8.16814 3.03467 12.6465 3.03467C17.1248 3.03467 19.364 3.03467 20.7553 4.42591C22.1465 5.81716 22.1465 8.05633 22.1465 12.5347C22.1465 17.013 22.1465 19.2522 20.7553 20.6435C19.364 22.0347 17.1248 22.0347 12.6465 22.0347C8.16814 22.0347 5.92897 22.0347 4.53772 20.6435C3.14648 19.2522 3.14648 17.013 3.14648 12.5347Z" stroke="#A6A6A6" stroke-width="1.5"/>
@@ -2045,21 +2045,21 @@ export default function UnitFullSummary({
                 <path d="M11.6465 12.5347H17.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
                 <path d="M11.6465 17.5347H17.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
-                
+
                     ), lab: 'Tasks', val: 'tasks' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.6465 22.5347C18.1693 22.5347 22.6465 18.0575 22.6465 12.5347C22.6465 7.01182 18.1693 2.53467 12.6465 2.53467C7.12364 2.53467 2.64648 7.01182 2.64648 12.5347C2.64648 18.0575 7.12364 22.5347 12.6465 22.5347Z" stroke="#A6A6A6" stroke-width="1.5"/>
                 <path d="M10.1465 10.0347L13.6464 13.5343M16.6465 8.53467L11.6465 13.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                
+
                     ), lab: 'Timeline', val: 'timeline' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15.6465 9.53467L9.64648 15.5343M15.6465 15.5347L9.64648 9.53506" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M3.14648 12.5347C3.14648 8.05633 3.14648 5.81716 4.53772 4.42591C5.92897 3.03467 8.16814 3.03467 12.6465 3.03467C17.1248 3.03467 19.364 3.03467 20.7553 4.42591C22.1465 5.81716 22.1465 8.05633 22.1465 12.5347C22.1465 17.013 22.1465 19.2522 20.7553 20.6435C19.364 22.0347 17.1248 22.0347 12.6465 22.0347C8.16814 22.0347 5.92897 22.0347 4.53772 20.6435C3.14648 19.2522 3.14648 17.013 3.14648 12.5347Z" stroke="#A6A6A6" stroke-width="1.5"/>
                 </svg>
-                
+
                     ), lab: 'Cancel Booking', val: 'cancel_booking' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2068,7 +2068,7 @@ export default function UnitFullSummary({
                 <path d="M7.14649 4.03467C5.59069 4.08134 4.6631 4.25451 4.02126 4.89694C3.14258 5.77644 3.14258 7.19197 3.14258 10.023V16.5291C3.14258 19.3602 3.14258 20.7757 4.02126 21.6552C4.89994 22.5347 6.31416 22.5347 9.14258 22.5347H11.6426M16.1387 4.03467C17.6945 4.08134 18.6221 4.25451 19.2639 4.89695C20.1426 5.77644 20.1426 7.19197 20.1426 10.023V14.0347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
                 <path d="M7.14258 4.28467C7.14258 3.31817 7.92609 2.53467 8.89258 2.53467H14.3926C15.3591 2.53467 16.1426 3.31817 16.1426 4.28467C16.1426 5.25117 15.3591 6.03467 14.3926 6.03467H8.89258C7.92609 6.03467 7.14258 5.25117 7.14258 4.28467Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linejoin="round"/>
                 </svg>
-                
+
                     ), lab: 'Unit Audit', val: 'unit_audit' },
 
                   ].map((d, i) => {
@@ -2093,7 +2093,11 @@ export default function UnitFullSummary({
                           role="tab"
                           onClick={() => setFeature(d.val)}
                         >
-                          {`${d.lab} `}
+                         <span className={`${
+                            selFeature === d.val
+                              ? 'border-transparent text-[#484848]'
+                              : 'border-transparent'
+                          }`}>{`${d.lab} `}</span>
 
                         </button>
 
@@ -2102,12 +2106,13 @@ export default function UnitFullSummary({
 
 
 
-    
+
                       </li>
                     )
                   })}
                 </ul>
-              </div> 
+                {selFeature}
+              </div>
 
 
 

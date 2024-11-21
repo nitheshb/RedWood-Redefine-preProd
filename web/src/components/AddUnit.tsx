@@ -277,9 +277,9 @@ useEffect(() => {
     return unsubscribe
   }, [])
   useEffect(() => {
-    phaseFeed.map((user) => {
-      user.label = user.phaseName
-      user.value = user.phaseName
+    phaseFeed?.map((user) => {
+      user.label = user?.phaseName
+      user.value = user?.phaseName
     })
     console.log('fetched users list is', phaseFeed)
     setphaseList(phaseFeed)
@@ -515,7 +515,6 @@ useEffect(() => {
       setLoading(false)
     } else {
       console.log('foundLENGTH IS empty ', foundLength)
-
       // proceed to copy
       await addPlotUnit(orgId, plotData1, user?.email, `Unit Created by form `)
 

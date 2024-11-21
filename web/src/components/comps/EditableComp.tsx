@@ -782,17 +782,17 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
   // }
 
 
-  
+
 
   const handleCostGSTChange = (e) => {
     let inputValue = e.target.value;
     if (inputValue === '' || isNaN(inputValue) || inputValue < 0) {
-      setGST(''); 
-      return; 
+      setGST('');
+      return;
     }
-  
+
     inputValue = Math.min(100, inputValue);
-  
+
     setRows(
       rows.map((row) =>
         row.component.value === 'sqft_cost_tax'
@@ -802,8 +802,8 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
     );
     setGST(inputValue);
   };
-  
-  
+
+
 
 
 

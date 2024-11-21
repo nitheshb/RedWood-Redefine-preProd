@@ -1318,7 +1318,7 @@ if (title === 'Villa Type Category') {
     }
 
    const nonDuplicate = removeDuplicates(newDataIs, 'value')
-
+   const mappedArry = Promise.all(
    nonDuplicate.map((item) => {
 
       if (item.id) {
@@ -1332,6 +1332,13 @@ if (title === 'Villa Type Category') {
       }
 
     })
+  ).then(function(results){
+    enqueueSnackbar(`${title} Updated successfully`, {
+      variant: 'success',
+    })
+  })
+
+
 
 
   }

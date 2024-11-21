@@ -376,10 +376,10 @@ const EditablePaymentTable = ({
     // })
 
     const sum = rows.reduce((accumulator, current) => {
-      return current.units.value === 'percentage' ? accumulator + current.percentage : accumulator;
+      return current.units.value === 'percentage' ? accumulator + parseFloat(current.percentage) : accumulator;
     }, 0)
     if(sum !== 100){
-    enqueueSnackbar('Total payment percentage should be 100%', {
+    enqueueSnackbar(`Total payment percentage should be 100% ${sum}`, {
       variant: 'error',
     })}else{
 

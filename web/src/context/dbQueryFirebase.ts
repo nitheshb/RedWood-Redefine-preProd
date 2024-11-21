@@ -109,7 +109,7 @@ export const streamProjectDetails = (orgId, snapshot, error) => {
 }
 // get all project master cost sheet template list
 export const streamProjectCSMaster = (orgId, snapshot, error) => {
-  const itemsQuery = query(collection(db, `${orgId}_project`))
+  const itemsQuery = query(collection(db, `${orgId}_projectMasters`))
   return onSnapshot(itemsQuery, snapshot, error)
 }
 // get all project master cost sheet template list
@@ -2074,17 +2074,18 @@ export const getPhasesByProject = async (
 }
 
 export const getBlocksByPhase = async (
+  orgId,
   { projectId, phaseId },
   snapshot,
   error
 ) => {
   try {
     const getAllPhasesQuery = await query(
-      collection(db, 'blocks'),
+      collection(db, `${orgId}_blocks`),
       where('projectId', '==', projectId),
-      where('phaseId', '==', phaseId),
-      orderBy('created', 'asc'),
-      limit(20)
+      // where('phaseId', '==', phaseId),
+      // orderBy('created', 'asc'),
+      // limit(20)
     )
     return onSnapshot(getAllPhasesQuery, snapshot, error)
   } catch (error) {
@@ -2550,7 +2551,9 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
 
   data.status = status?.toLowerCase() || 'available'
   const statusVal = status?.toLowerCase() || ''
-  console.log('status is ==> ', status)
+  console.log('status is ==> ', status,  ['available'].includes(statusVal))
+
+
   const yo = {
     totalUnitCount: increment(1),
     bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
@@ -2563,7 +2566,8 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
     s_regisCount: ['registered_pipeline'].includes(statusVal)
       ? increment(1)
       : increment(0),
-    availableCount: statusVal === 'available' ? increment(1) : increment(0),
+
+    availableCount: ['available'].includes(statusVal) ? increment(1) : increment(0),
     custBlockCount:
       statusVal === 'customer_blocked' ? increment(1) : increment(0),
     mangBlockCount:
@@ -3180,7 +3184,7 @@ export const addUnit = async (orgId, data, by, msg) => {
     1
   )
   addUnitComputedValues(
-    'blocks',
+    `blocks`,
     blockId,
     plot_Sqf || 0,
     super_built_up_area || 0,
@@ -3275,9 +3279,7 @@ console.log('error in master update ', error)
     }
 
   }
-  enqueueSnackbar(`${data?.title} Updated successfully`, {
-    variant: 'success',
-  })
+ 
 
 }
 export const updateProjectComputedData = async (orgId, id, data) => {
@@ -3520,7 +3522,7 @@ export const createPhase = async (element, enqueueSnackbar, resetForm) => {
   }
 }
 
-export const createBlock = async (element, enqueueSnackbar, resetForm) => {
+export const createBlock = async (orgId, element, enqueueSnackbar, resetForm) => {
   console.log('it is ', element)
   try {
     const uid = uuidv4()
@@ -3529,7 +3531,7 @@ export const createBlock = async (element, enqueueSnackbar, resetForm) => {
       uid,
       created: Timestamp.now().toMillis(),
     }
-    const ref = doc(db, 'blocks', uid)
+    const ref = doc(db, `${orgId}_blocks`, uid)
     await setDoc(ref, updated, { merge: true })
     enqueueSnackbar('Block added successfully', {
       variant: 'success',
@@ -4343,10 +4345,10 @@ export const updatePhase = async (uid, project, enqueueSnackbar) => {
   }
 }
 
-export const updateBlock = async (uid, project, enqueueSnackbar) => {
+export const updateBlock = async (orgId,uid, project, enqueueSnackbar) => {
   try {
     await updateDoc(
-      doc(db, 'blocks', uid),
+      doc(db, `${orgId}_blocks`, uid),
       {
         ...project,
         updated: Timestamp.now().toMillis(),
@@ -4362,9 +4364,9 @@ export const updateBlock = async (uid, project, enqueueSnackbar) => {
     })
   }
 }
-export const updateBlock_AddFloor = async (uid, floorName, enqueueSnackbar) => {
+export const updateBlock_AddFloor = async (orgId,uid, floorName, enqueueSnackbar) => {
   try {
-    await updateDoc(doc(db, 'blocks', uid), {
+    await updateDoc(doc(db, `${orgId}_blocks`, uid), {
       floorA: arrayUnion(floorName),
       updated: Timestamp.now().toMillis(),
     })

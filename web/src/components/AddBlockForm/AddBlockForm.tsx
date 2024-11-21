@@ -1,5 +1,5 @@
 import { Dialog } from '@headlessui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { useSnackbar } from 'notistack'
@@ -10,38 +10,50 @@ import { TextField } from 'src/util/formFields/TextField'
 import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import { createBlock, updateBlock } from 'src/context/dbQueryFirebase'
 import { CheckIcon } from '@heroicons/react/outline'
+import { use } from 'i18next'
+import { useAuth } from 'src/context/firebase-auth-context'
 
 const AddBlockForm = ({ title, dialogOpen, data }) => {
+  const { user } = useAuth()
+  const { orgId } = user
   const [loading, setLoading] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
   const { uid } = useParams()
 
+  useEffect(() => {
+    console.log('block data is ', data)
+  }, [])
   const onSubmit = async (formData, resetForm) => {
     console.log('it is ==>', data, data?.projectId)
     const updatedData = {
       ...formData,
-      projectId:  uid || data?.phase?.projectId,
-      phaseId: data?.phase?.uid,
+      projectId:  data?.phase?.projectId || data?.data?.projectId,
+      uid:  data?.uid || data?.data?.uid,
+      // phaseId: data?.phase?.uid,
       editMode: true,
     }
     setLoading(true)
-    if (data?.block?.editMode) {
-      await updateBlock(
-        data?.block?.uid,
+    if ((data?.block?.editMode || data?.data?.editMode) && title === 'Edit Block') {
+      await updateBlock(orgId,
+        data?.block?.uid || data?.data?.uid,
         {
           ...formData,
           editMode: true,
         },
         enqueueSnackbar
       )
-    } else {
-      await createBlock(updatedData, enqueueSnackbar, resetForm)
+    }  else if ( title === 'Add Block') {
+      await createBlock(orgId,updatedData, enqueueSnackbar, resetForm)
+    }else {
+      enqueueSnackbar(`Cannot Edit Block ${title} ${data?.block?.editMode || data?.data?.editMode}`, {
+        variant: 'warning',
+      })
     }
     setLoading(false)
   }
 
   const initialState = {
-    blockName: data?.block?.blockName || '',
+    blockName: data?.block?.blockName || data?.blockName ||data?.data?.blockName || '',
     floors: data?.block?.floors || 0,
     units: data?.block?.units || 0,
     totalArea: data?.block?.totalArea || 0,
