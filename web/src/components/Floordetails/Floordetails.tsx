@@ -165,6 +165,12 @@ const Floordetails = ({
     sliderData: {},
     widthClass: 'max-w-2xl',
   })
+  const [sliderBlockInfo, setSliderBlockInfo] = useState({
+    open: false,
+    title: '',
+    sliderData: {},
+    widthClass: 'max-w-2xl',
+  })
   const [addUnitSlider, setAddUnitSlider] = useState({
     open: false,
     title: '',
@@ -173,6 +179,14 @@ const Floordetails = ({
   })
   const handleSliderClose = () => {
     setSliderInfo({
+      open: false,
+      title: '',
+      sliderData: {},
+      widthClass: 'max-w-2xl',
+    })
+  }
+  const handleBlockSliderClose = () => {
+    setSliderBlockInfo({
       open: false,
       title: '',
       sliderData: {},
@@ -820,7 +834,7 @@ const Floordetails = ({
                     setStatusFun={setSelBlock}
                     filteredUnits={BlockFeed}
                     pickedValue={filBedRooms}
-                    setOpenEditBlock={setSliderInfo}
+                    setOpenEditBlock={setSliderBlockInfo}
                     selProject={projectDetails}
 
                   />
@@ -1980,10 +1994,10 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
         unitViewActionType={actionType}
       />
       <SiderForm
-        open={sliderInfo.open}
-        setOpen={handleSliderClose}
-        title={sliderInfo.title}
-        data={sliderInfo.sliderData}
+        open={sliderBlockInfo.open}
+        setOpen={handleBlockSliderClose}
+        title={sliderBlockInfo.title}
+        data={sliderBlockInfo.sliderData}
         widthClass="max-w-4xl"
       />
     </div>

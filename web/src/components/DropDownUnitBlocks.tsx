@@ -218,7 +218,7 @@ export default function DropDownUnitBlocks({
                               })
                             }
                           >
-                            <PencilIcon className="w-5 h-5 mt-[3px] text-gray-500 cursor-pointer" />
+                            <PencilIcon className="w-5 h-5 mt-[3px] text-gray-500 cursor-pointer mr-2" />
                           </div>
                         </section>
                       )}
