@@ -17,6 +17,17 @@ import { Label, InputField, TextAreaField, FieldError } from '@redwoodjs/forms'
 import { useRouterStateSetter } from '@redwoodjs/router/dist/router-context'
 
 import {
+  bathTypeList,
+  bedRoomsList,
+  carParkingList,
+  facingTypeList,
+  mortgageType,
+  plotTypeList,
+  releaseStausList,
+  statusList,
+  unitTypeList,
+} from 'src/constants/projects'
+import {
   addUnit,
   addPlotUnit,
   checkIfUnitAlreadyExists,
@@ -37,11 +48,6 @@ import { TextField } from 'src/util/formFields/TextField'
 import Loader from './Loader/Loader'
 import { validate_AddUnit } from './Schemas'
 
-
-import { bathTypeList, bedRoomsList, carParkingList, facingTypeList, mortgageType, plotTypeList,  releaseStausList, statusList, unitTypeList } from 'src/constants/projects'
-
-
-
 const AddUnit = ({
   title,
   dialogOpen,
@@ -57,15 +63,11 @@ const AddUnit = ({
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
 
-
   const [selectedSharingType, setSelectedSharingType] = useState(false)
-
 
   const handleSharingTypeChange = (e) => {
     setSelectedSharingType(e.target.value)
   }
-
-
 
   const [fetchedUsersList, setfetchedUsersList] = useState([])
   const [usersList, setusersList] = useState([])
@@ -75,90 +77,82 @@ const AddUnit = ({
   const [defaultCost, setDefaultCost] = useState({})
   const [unitDetails, setUnitDetails] = useState({})
 
+  const [unitTypeListA, setUnitTypeList] = useState([])
+  const [facingTypeListA, setFacingTypeList] = useState([])
+  const [bedRoomsListA, setBedRoomsList] = useState([])
+  const [bathTypeListA, setBathTypeList] = useState([])
+  const [carParkingListA, setCarParkingList] = useState([])
+  const [statusListA, setStatusList] = useState([])
+  const [mortgageTypeA, setMortgageType] = useState([])
 
+  useEffect(() => {
+    const unsubscribe = streamMasters(
+      orgId,
+      (querySnapshot) => {
+        const bankA = querySnapshot.docs.map((docSnapshot) => {
+          const x = docSnapshot.data()
+          return x
+        })
 
+        console.log('fetched users list is', bankA)
+        // step 3: filter and set values to each title
+        if (bankA?.length > 0) {
+          const jA = bankA.filter((item) => item.title === 'Type')
+          const kA = bankA.filter((item) => item.title === 'Facing')
+          const lA = bankA.filter((item) => item.title === 'Type/BedRooms')
+          const mA = bankA.filter((item) => item.title === 'Bathrooms')
+          const nA = bankA.filter((item) => item.title === 'Car Parking')
+          const oA = bankA.filter((item) => item.title === 'Status')
+          const pA = bankA.filter((item) => item.title === 'Mortgage Type')
 
+          setUnitTypeList(
+            jA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
 
+          setFacingTypeList(
+            kA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
 
-  const [unitTypeListA, setUnitTypeList] = useState([]);
-const [facingTypeListA, setFacingTypeList] = useState([]);
-const [bedRoomsListA, setBedRoomsList] = useState([]);
-const [bathTypeListA, setBathTypeList] = useState([]);
-const [carParkingListA, setCarParkingList] = useState([]);
-const [statusListA, setStatusList] = useState([]);
-const [mortgageTypeA, setMortgageType] = useState([]);
+          setBedRoomsList(
+            lA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
 
+          setBathTypeList(
+            mA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
 
+          setCarParkingList(
+            nA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
 
+          setStatusList(
+            oA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
 
+          setMortgageType(
+            pA.sort((a, b) => {
+              return a.order - b.order
+            })
+          )
+        }
+      },
+      (error) => setRows([])
+    )
 
-
-
-useEffect(() => {
-  const unsubscribe = streamMasters(
-    orgId,
-    (querySnapshot) => {
-      const bankA = querySnapshot.docs.map((docSnapshot) => {
-        const x = docSnapshot.data()
-        return x
-      })
-
-      console.log('fetched users list is', bankA)
-      // step 3: filter and set values to each title
-      if (bankA?.length > 0) {
-        const jA = bankA.filter((item) => item.title === 'Type')
-        const kA = bankA.filter((item) => item.title === 'Facing')
-        const lA = bankA.filter((item) => item.title === 'Type/BedRooms')
-        const mA = bankA.filter((item) => item.title === 'Bathrooms')
-        const nA = bankA.filter((item) => item.title === 'Car Parking')
-        const oA = bankA.filter((item) => item.title === 'Status')
-        const pA = bankA.filter((item) => item.title === 'Mortgage Type')
-
-
-
-
-
-        setUnitTypeList(jA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setFacingTypeList(kA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setBedRoomsList(lA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setBathTypeList(mA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setCarParkingList(nA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setStatusList(oA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-        setMortgageType(pA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
-      }
-    },
-    (error) => setRows([])
-  )
-
-  return unsubscribe
-}, [])
-
-
-
-
-
-
+    return unsubscribe
+  }, [])
 
   console.log('inside it ', {
     title,
@@ -308,17 +302,11 @@ useEffect(() => {
   //   { label: 'User3', value: 'User3' },
   // ]
 
-
   const sharingTypeOptions = [
     { value: 'Builder', label: 'Builder' },
     { value: 'Land Owner', label: 'Land Owner' },
     { value: 'Investor', label: 'Investor' },
-  ];
-
-
-
-
-
+  ]
 
   const budgetList = [
     { label: 'Select Customer Budget', value: '' },
@@ -697,7 +685,6 @@ useEffect(() => {
   //   { label: '5 Bhk', value: 7 },
   // ]
 
-
   // const bedRoomsList = [
   //   { label: 'Select Count', value: '' },
   //   { label: '1 Bedroom', value: 'bed1' },
@@ -709,8 +696,6 @@ useEffect(() => {
   //   // { label: '7 Bedroom', value: 'bed7' },
   // ]
 
-
-
   // const carParkingList = [
   //   { label: 'Select Count', value: '' },
   //   { label: '1 Car Parking', value: 'car1' },
@@ -719,9 +704,6 @@ useEffect(() => {
   //   { label: '4 Car Parking', value: 'car4' },
   //   { label: '5 Car Parking', value: 'car5' },
   // ]
-
-
-
 
   // const plotTypeList = [
   //   { label: 'Select Count', value: '' },
@@ -769,17 +751,6 @@ useEffect(() => {
   //   { label: 'Bank', value: 'bank' },
   //   { label: '3rd Party Investor', value: '3rd_party_investor' },
   // ]
-
-
-
-
-
-
-
-
-
-
-
 
   // const validate = Yup.object({
 
@@ -895,9 +866,6 @@ useEffect(() => {
               }}
             >
               {(formik) => (
-
-
-
                 <div className="">
                   <section className=" rounded-lg bg-white  ">
                     <Form>
@@ -1093,7 +1061,10 @@ useEffect(() => {
                                   label="Type/BedRooms"
                                   className="input mt-"
                                   onChange={(value) => {
-                                    formik.setFieldValue('bedrooms_c', value.value)
+                                    formik.setFieldValue(
+                                      'bedrooms_c',
+                                      value.value
+                                    )
                                     formik.setFieldValue(
                                       'bedrooms_c',
                                       value.value
@@ -1119,15 +1090,18 @@ useEffect(() => {
                                   type="number"
                                 /> */}
                                 <CustomSelect
-  name="bathrooms_c"
-  label="Bathrooms"
-  className="input mt-"
-  onChange={(value) => {
-    formik.setFieldValue('bathrooms_c', value.value);
-  }}
-  value={formik.values.bathrooms_c}
-  options={bathTypeListA}
-/>
+                                  name="bathrooms_c"
+                                  label="Bathrooms"
+                                  className="input mt-"
+                                  onChange={(value) => {
+                                    formik.setFieldValue(
+                                      'bathrooms_c',
+                                      value.value
+                                    )
+                                  }}
+                                  value={formik.values.bathrooms_c}
+                                  options={bathTypeListA}
+                                />
                               </div>
 
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
@@ -1137,16 +1111,19 @@ useEffect(() => {
                                   type="text"
                                 /> */}
 
-<CustomSelect
-    name="car_parkings_c"
-    label="Car Parking"
-    className="input mt-"
-    onChange={(value) => {
-      formik.setFieldValue('car_parkings_c', value.value);
-    }}
-    value={formik.values.car_parkings_c}
-    options={carParkingListA}
-  />
+                                <CustomSelect
+                                  name="car_parkings_c"
+                                  label="Car Parking"
+                                  className="input mt-"
+                                  onChange={(value) => {
+                                    formik.setFieldValue(
+                                      'car_parkings_c',
+                                      value.value
+                                    )
+                                  }}
+                                  value={formik.values.car_parkings_c}
+                                  options={carParkingListA}
+                                />
                               </div>
 
                               {/* <div className="space-y-2 w-full text-xs ">
@@ -1165,6 +1142,9 @@ useEffect(() => {
                                     label="Carpet Area sqft"
                                     name="cartpet_area_sqft"
                                     type="number"
+                                    onChange={(value) => {
+                                      formik.setFieldValue('cartpet_area_sqft', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                    }}
                                   />
                                 </div>
                               )}
@@ -1176,6 +1156,9 @@ useEffect(() => {
                                     label="UDS sqft"
                                     name="uds_sqft"
                                     type="number"
+                                    onChange={(value) => {
+                                      formik.setFieldValue('uds_sqft', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                    }}
                                   />
                                 </div>
                               )}
@@ -1213,7 +1196,14 @@ useEffect(() => {
                                 }`}
                                 name="area"
                                 type="number"
+
+                                onChange={(value) => {
+                                  formik.setFieldValue('area', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                }}
+                                // value={formik.values.area}
                               />
+
+
                             </div>
 
                             <div className=" space-y-2 w-full text-xs mt-">
@@ -1221,6 +1211,10 @@ useEffect(() => {
                                 label="Price per sqft *"
                                 name="sqft_rate"
                                 type="number"
+                                onChange={(value) => {
+                                  formik.setFieldValue('sqft_rate', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+
+                                }}
                               />
                             </div>
                             <div className="space-y-2 w-full text-xs mt-">
@@ -1228,6 +1222,10 @@ useEffect(() => {
                                 label="PLC per sqft"
                                 name="plc_per_sqft"
                                 type="number"
+                                onChange={(value) => {
+                                  formik.setFieldValue('plc_per_sqft', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+
+                                }}
                               />
                             </div>
 
@@ -1236,6 +1234,10 @@ useEffect(() => {
                                 label="Min Price per Sqft"
                                 name="min_rate_per_sqft"
                                 type="text"
+                                onChange={(value) => {
+                                  formik.setFieldValue('min_rate_per_sqft', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+
+                                }}
                               />
                             </div>
                           </div>
@@ -1258,6 +1260,10 @@ useEffect(() => {
                                   label="BUA Sqft*"
                                   name="construct_area"
                                   type="number"
+                                  onChange={(value) => {
+                                    formik.setFieldValue('construct_area', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+
+                                  }}
                                 />
                               </div>
 
@@ -1266,6 +1272,9 @@ useEffect(() => {
                                   label="Price per Sqft *"
                                   name="construct_price_sqft"
                                   type="number"
+                                  onChange={(value) => {
+                                    formik.setFieldValue('construct_price_sqft', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                  }}
                                 />
                               </div>
                               {/* <div className="space-y-2 w-full text-xs ">
@@ -1282,6 +1291,9 @@ useEffect(() => {
                                   label="Carpet Area Sqft"
                                   name="cartpet_area_sqft"
                                   type="text"
+                                  onChange={(value) => {
+                                    formik.setFieldValue('cartpet_area_sqft', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                  }}
                                 />
                               </div>
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
@@ -1289,6 +1301,9 @@ useEffect(() => {
                                   label="Min Price per Sqft"
                                   name="min_rate_per_sqft_c"
                                   type="text"
+                                  onChange={(value) => {
+                                    formik.setFieldValue('min_rate_per_sqft_c', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                  }}
                                 />
                               </div>
                             </div>
@@ -1455,75 +1470,68 @@ useEffect(() => {
                                 // options={aquaticCreatures}
                                 options={mortgageTypeA}
                               />
-
                             </div>
 
+                            <div className="w-full flex flex-col mb-3">
+                              <CustomSelect
+                                name="sharingType"
+                                label="Sharing Type"
+                                options={sharingTypeOptions}
+                                onChange={(value) => {
+                                  formik.setFieldValue(
+                                    'sharingType',
+                                    value.value
+                                  )
+                                  setSelectedSharingType(value.value)
+                                }}
+                                value={formik.values.sharingType}
+                              />
 
+                              {selectedSharingType === 'Land Owner' && (
+                                <div className="flex flex-col mt-2 rounded-lg pt-4">
+                                  <div className="mb-4 mt-2">
+                                    <div className="inline">
+                                      <div className="">
+                                        <label className="font-semibold text-[#053219] text-sm mb-1">
+                                          Land Owner Details
+                                        </label>
+                                      </div>
+                                      <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+                                    </div>
+                                  </div>
+                                  <TextField
+                                    name="landOwnerName"
+                                    label="Land Owner Name"
+                                    type="text"
+                                    value={formik.values.landOwnerName}
+                                    onChange={formik.handleChange}
+                                  />
+                                </div>
+                              )}
 
-
-
-
-<div className="w-full flex flex-col mb-3">
-      <CustomSelect
-        name="sharingType"
-        label="Sharing Type"
-        options={sharingTypeOptions}
-        onChange={(value) => {
-          formik.setFieldValue('sharingType', value.value);
-          setSelectedSharingType(value.value);
-        }}
-        value={formik.values.sharingType}
-      />
-
-      {selectedSharingType === 'Land Owner' && (
-        <div className="flex flex-col mt-2 rounded-lg pt-4">
-          <div className="mb-4 mt-2">
-            <div className="inline">
-              <div className="">
-                <label className="font-semibold text-[#053219] text-sm mb-1">
-                  Land Owner Details
-                </label>
-              </div>
-              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
-            </div>
-          </div>
-          <TextField
-            name="landOwnerName"
-            label="Land Owner Name"
-            type="text"
-            value={formik.values.landOwnerName}
-            onChange={formik.handleChange}
-          />
-        </div>
-      )}
-
-      {selectedSharingType === 'Investor' && (
-        <div className="flex flex-col mt-2 rounded-lg pt-4">
-          <div className="mb-4 mt-2">
-            <div className="inline">
-              <div className="">
-                <label className="font-semibold text-[#053219] text-sm mb-1">
-                  Investor Details
-                </label>
-              </div>
-              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
-            </div>
-          </div>
-          <TextField
-            name="investorName"
-            label="Investor Name"
-            type="text"
-            value={formik.values.investorName}
-            onChange={formik.handleChange}
-          />
-        </div>
-      )}
-    </div>
-
-
-                        </div>
-
-
+                              {selectedSharingType === 'Investor' && (
+                                <div className="flex flex-col mt-2 rounded-lg pt-4">
+                                  <div className="mb-4 mt-2">
+                                    <div className="inline">
+                                      <div className="">
+                                        <label className="font-semibold text-[#053219] text-sm mb-1">
+                                          Investor Details
+                                        </label>
+                                      </div>
+                                      <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+                                    </div>
+                                  </div>
+                                  <TextField
+                                    name="investorName"
+                                    label="Investor Name"
+                                    type="text"
+                                    value={formik.values.investorName}
+                                    onChange={formik.handleChange}
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          </div>
                         </section>
 
                         <section className="mt-1 px-4 rounded-lg bg-white border border-gray-100 shadow">
@@ -1616,7 +1624,6 @@ useEffect(() => {
                     </Form>
                   </section>
                 </div>
-
               )}
             </Formik>
           </div>
@@ -1632,4 +1639,3 @@ export default AddUnit
 function setRows(arg0: undefined[]) {
   throw new Error('Function not implemented.')
 }
-

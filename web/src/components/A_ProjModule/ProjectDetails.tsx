@@ -228,8 +228,10 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
             {selFlow.value === 'projectDetails' && (
               <DialogFormBody
                 ref={formikRef}
+  
                 title={'Create Project'}
                 // dialogOpen={(=>())}
+                moveNext={goToNext}
                 project={project}
                 bindSubmitForm={bindSubmitForm}
                 setSubmitter={setSub}
@@ -301,14 +303,14 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
                 // onClick={submitForm}
               }
             >
-          
+
               Close
             </button>
           )}
 
-         
+
           <button
-            className={` ${selFlow?.indx+1 === projectDetailFlow.length ? 'hidden': '' }   mb-2 md:mb-0  bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg `} 
+            className={` ${selFlow?.indx+1 === projectDetailFlow.length ? 'hidden': '' }   mb-2 md:mb-0  bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg `}
             disabled={loading}
             onClick={() => {
               if (project?.uid) {

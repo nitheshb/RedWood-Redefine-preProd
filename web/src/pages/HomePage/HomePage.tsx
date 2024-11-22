@@ -399,7 +399,7 @@ const HomePage = () => {
               {viewable === 'Setup' && (
                 <>
                 {/*Sales Executive Notifications border */}
-               
+
                   <div className="mt-1 mx-1">
                     <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
                       <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl mx-auto px-6 py-8 ">
@@ -409,7 +409,7 @@ const HomePage = () => {
                           />
                         </div>
                       </div>
-             
+
                     </section>
                   </div>
                 </>
@@ -1217,9 +1217,10 @@ const HomePage = () => {
                                             {/* {viewable} */}
                                           </span>
                                           <button
-                                            onClick={() =>
+                                            onClick={() =>{
+                                              setProject({})
                                               setIsNewProjectOpen(true)
-                                            }
+                                            }}
                                             className="flex items-center justify-center h-8 px-4  bg-gray-200 ml-auto text-sm font-medium rounded hover:bg-gray-300"
                                           >
                                             <svg
@@ -1670,6 +1671,7 @@ const HomePage = () => {
                             data={project}
                             setProject={setProject}
                             widthClass="max-w-4xl"
+                            onCloseDisabled={true}
                           />
                           <SiderForm
                             open={isEditProjectOpen}
@@ -1677,6 +1679,7 @@ const HomePage = () => {
                             title="Edit Project"
                             data={project}
                             widthClass="max-w-4xl"
+                            onCloseDisabled={true}
                           />
                         </div>
                       </div>
