@@ -19,6 +19,29 @@ import PropTypes from 'prop-types'
 
 
 
+
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  CartesianGrid,
+} from 'recharts';
+
+
+import { Calendar, ChevronRight } from 'lucide-react';
+
+
+
+
+import { ChevronDown, TrendingUp } from 'lucide-react';
+import { scaleLinear } from 'd3-scale';
+
+
+
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import { useAuth } from 'src/context/firebase-auth-context'
 import {
@@ -880,6 +903,107 @@ useEffect(() => {
   {/* today */}
 
 
+
+
+
+
+  const timeSeriesData = [
+    { time: '12', value: 5, prevValue: 5 },
+    { time: '13', value: 5, prevValue: 5 },
+    { time: '14', value: 20, prevValue: 5 },
+    { time: '15', value: 5, prevValue: 5 },
+    { time: '16', value: 5, prevValue: 5 },
+    { time: '17', value: 90, prevValue: 30 },
+    { time: '18', value: 5, prevValue: 5 },
+  ];
+
+  const channelData = [
+    { name: 'Make an offer', value1: 80, value2: 120, value3: 0 },
+    { name: 'Online store', value1: 20, value2: 0, value3: 0 },
+  ];
+
+
+
+
+  const data = [
+    { day: '7', 'Bills Payment': 110, 'Foods and Drinks': 165, 'Uncategorized': 52 },
+    { day: '8', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
+    { day: '9', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
+    { day: '10', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
+    { day: '11', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
+    { day: '12', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
+    { day: '13', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
+  ];
+
+
+
+  const customTooltipone = ({ payload, label }) => {
+    if (!payload || payload.length === 0) return null;
+
+    return (
+      <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
+        <p className="font-semibold text-gray-800">{label}</p>
+        {payload.map((entry, index) => (
+          <div key={`tooltip-item-${index}`} className="flex items-center space-x-2 mb-2">
+            <div
+              className="w-3 h-3 "
+              style={{ backgroundColor: entry.color }}
+            ></div>
+            <span className="text-gray-700">{`${entry.name}: ₹  ${entry.value}`}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+
+
+
+  
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const time = payload[0].payload.time; 
+
+    return (
+      <div className="bg-white p-3 rounded-md">
+        <p className="text-black">Time: {time}</p>
+
+        {payload.map((entry, index) => {
+          const { value, prevValue } = entry.payload; 
+          const strokeColor = entry.stroke; 
+
+      
+          return (
+            <div key={index} className="flex items-center gap-2">
+            
+              <div
+                style={{ backgroundColor: strokeColor }}
+                className="w-4 h-4 "
+              ></div>
+          
+              <p className="text-black">
+                {entry.dataKey === "value"
+                  ? `Current Value: ${value}`
+                  : entry.dataKey === "prevValue"
+                  ? `Previous Value: ${prevValue}`
+                  : null}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  return null;
+};
+ 
+
+
+
+
+
+
   const getRandomColor = () => {
     const red = Math.floor(Math.random() * 156) + 100;
     const green = Math.floor(Math.random() * 156) + 100;
@@ -1318,7 +1442,7 @@ EnhancedTableHead.propTypes = {
 <div className="grid grid-cols-4 gap-6 mb-8">
   <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
-    <p className="text-2xl font-bold mb-2">UnKnow</p>
+    <p className="text-2xl font-bold mb-2"></p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
       <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
@@ -1358,6 +1482,160 @@ EnhancedTableHead.propTypes = {
   </div>
 </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div className="grid grid-cols-2 gap-6 h-full items-end">
+      
+      <div className="flex flex-col rounded-lg py-5 h-full bg-white shadow">
+        <div className="pt-6 px-4">
+          <h2 className="text-[#000000] text-[19px] ml-4">Unit Sales</h2>
+          <div className="flex items-center gap-3 mt-4 mb-4 ml-4">
+            <span className="text-[30px] text-[#000000] font-semibold">&#8377; 387.75</span>
+            <div className="flex items-center text-[#00A236]">
+              <TrendingUp className="w-5 h-5 mx-3" />
+              <span className="text-[18px]">23%</span>
+            </div>
+          </div>
+        </div>
+        <div className="h-96 px-4">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={timeSeriesData} margin={{ top: 0, right: 30, bottom: 0, left: 0 }}>
+              <CartesianGrid vertical={false} stroke="#CCCCCC" />
+              <XAxis
+                dataKey="time"
+                axisLine={false}
+                tickLine={false}
+                stroke="#3D3D3D"
+                tick={{ dy: 10 }}
+                interval={0}
+              />
+              <YAxis
+                domain={[5, 100]}
+                ticks={[5, 25, 50, 75, 100]}
+                axisLine={false}
+                tickLine={false}
+                stroke="#3D3D3D"
+              />
+
+
+         
+              {/* <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} /> */}
+
+
+              <Tooltip content={<CustomTooltip />} />
+
+
+              <Line
+                type="monotone"
+                dataKey="prevValue"
+                stroke="#CCCCCC"
+                strokeDasharray="5 5"
+                strokeWidth={2}
+                dot={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke="#0ea5e9"
+                strokeWidth={2}
+                dot={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+    
+      <div className="flex flex-col rounded-lg py-5 h-full bg-white shadow">
+      <div className="w-full max-w-4xl p-6 bg-white ">
+  
+  <div className="mb-6">
+    <h2 className="text-[18px] text-[#6A6A6A] font-medium">Collections</h2>
+    <div className="flex items-center justify-between mt-1">
+      <div className="text-[30px] font-semibold text-[#00000]">&#8377; 708.84</div>
+      <div className="flex items-center gap-2 px-4 py-2 border rounded-lg">
+        <span className="text-gray-600">View:</span>
+        <svg className="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h2v10H7V7zm4 0h2v10h-2V7zm4 0h2v10h-2V7z" />
+        </svg>
+        <span className="text-gray-600">Bar Line Chart</span>
+      </div>
+    </div>
+    
+
+    <div className="flex items-center gap-2 mt-4 text-gray-600">
+      <Calendar className="w-5 h-5" />
+      <span>Jun 07, 2024</span>
+      <ChevronRight className="w-5 h-5" />
+      <i data-lucide="arrow-right"></i>
+      <span>Jun 13, 2024</span>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  <div className="flex gap-6 mb-6">
+    <div className="flex items-center gap-2">
+      <div className="w-3 h-3 bg-indigo-600 rounded"></div>
+      <span>Bills Payment</span>
+    </div>
+    <div className="flex items-center gap-2">
+      <div className="w-3 h-3 bg-sky-400 rounded"></div>
+      <span>Foods and Drinks</span>
+    </div>
+    <div className="flex items-center gap-2">
+      <div className="w-3 h-3 bg-gray-400 rounded"></div>
+      <span>Uncategorized</span>
+    </div>
+  </div>
+
+
+  <div className="h-80">
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+        <XAxis dataKey="day" />
+        <YAxis
+          tickFormatter={(value) => `$ ${value}`}
+          ticks={[0, 50, 100, 150, 200, 250]}
+        />
+        {/* <Tooltip 
+          formatter={(value) => [`$ ${value}`, '']}
+          contentStyle={{
+            backgroundColor: 'white',
+            border: '1px solid #e2e8f0',
+            borderRadius: '6px',
+            padding: '8px'
+          }}
+        /> */}
+
+        <Tooltip content={customTooltipone} />
+
+        <Bar dataKey="Bills Payment" fill="#6366f1" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="Foods and Drinks" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="Uncategorized" fill="#9ca3af" radius={[4, 4, 0, 0]} />
+      </BarChart>
+    </ResponsiveContainer>
+  </div>
+</div>
+      </div>
+    </div>
 
 
 

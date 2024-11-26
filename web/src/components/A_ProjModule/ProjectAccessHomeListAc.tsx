@@ -399,7 +399,7 @@ const ProjectAccessHomeList = ({
 
           <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
             <div className="mt-2 flex items-center text-sm text-gray-500">
-              This action will recalulate the counts of units and other KPI's
+              This action will recalculate the counts of units and other KPI's
             </div>
           </div>
         </section>

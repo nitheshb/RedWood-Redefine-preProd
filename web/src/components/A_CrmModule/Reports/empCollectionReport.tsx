@@ -11,6 +11,7 @@ import SkeletonLoaderPage from 'src/pages/SkeletonLoader/skeletonLoaderPage'
 import { getNextThreeMonths } from 'src/util/dateConverter'
 
 import TableSkeleton from './_mock/comps/table/table-skeleton'
+import { ChevronDown } from 'lucide-react'
 
 {
   /* frist capitalize all letters */
@@ -201,13 +202,13 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
   }
   return (
     <div className="  bg-white rounded-2xl shadow-xl mt-2 ">
-      <table className="min-w-full bg-white  rounded-2xl">
+      <table className="min-w-full p-4 w-full max-w-7xl mx-auto  bg-white  rounded-2xl">
         <thead>
           <tr
             className={
               dataView === 'monthly'
-                ? 'bg-[#D9D9D9] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
-                : 'bg-[#D9D9D9] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
+                ? 'bg-[#E0E4EB] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
+                : 'bg-[#E0E4EB] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
             }
           >
             <th
@@ -248,7 +249,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
               </>
             )}
           </tr>
-          <tr className="bg-[#61787b]  text-[#fff] text-[11px] leading-normal">
+          <tr className="bg-[#F0F2F5]  text-[#000] text-[11px] leading-normal">
             <th className="py-1 px-3 text-left border-r border-[#4c787d]">
               CRM Executive
             </th>
@@ -436,7 +437,77 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
           })}
         </tbody>
       </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   )
 }
 
