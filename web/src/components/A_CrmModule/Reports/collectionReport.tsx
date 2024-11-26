@@ -336,6 +336,52 @@ const CrmCollectionReport = ({ projects }) => {
 
     // get values matched to db
   }
+
+
+
+  //const [selCat, setSelCat] = useState("project_collections");
+  //const [dataView, setDataView] = useState("monthly");
+
+
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
+
+
+  const sortData = (data) => {
+    if (!sortConfig.key) return data;
+
+    return [...data].sort((a, b) => {
+      const aValue =
+        sortConfig.key === "projectName"
+          ? capitalizeFirstLetter(a[sortConfig.key])
+          : a[sortConfig.key];
+      const bValue =
+        sortConfig.key === "projectName"
+          ? capitalizeFirstLetter(b[sortConfig.key])
+          : b[sortConfig.key];
+
+      if (sortConfig.direction === "ascending") {
+        return aValue > bValue ? 1 : -1;
+      } else {
+        return aValue < bValue ? 1 : -1;
+      }
+    });
+  };
+
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedData = sortData(projectAValues);
+
+  
+
+
+
   return (
     <div className="p-4  bg-white ">
 
@@ -622,13 +668,19 @@ const CrmCollectionReport = ({ projects }) => {
                 )}
               </tr>
               <tr className="bg-[#F0F2F5] border-t border-b border-[#E8ECF4]">
-                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                onClick={() => requestSort("projectName")}
+                >
                   Project Name
                 </th>
-                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                 onClick={() => requestSort("soldUnitCount")}
+                >
                   Sold Units
                 </th>
-                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                 onClick={() => requestSort("totalAmount")}
+                >
                   Total Amount
                 </th>
                 {dataView === 'monthly' ? (
@@ -762,6 +814,8 @@ const CrmCollectionReport = ({ projects }) => {
           />
         )}
       </div>
+
+      
     </div>
   )
 }

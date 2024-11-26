@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
+import { useMemo } from 'react';
+
+
 import { X, Add, Remove } from '@mui/icons-material'
 
 import { gretProjectionSum } from 'src/context/dbQueryFirebase'
@@ -19,7 +22,7 @@ import {
   CartesianGrid,
   Legend,
 } from 'recharts';
-import { ChevronDown, Download, TrendingUp } from 'lucide-react';
+import { ArrowUpDown, ChevronDown, Download, MoveDown, MoveUp, TrendingUp } from 'lucide-react';
 import { scaleLinear } from 'd3-scale';
 
 
@@ -358,6 +361,62 @@ const CrmProjectionReport = ({ projects }) => {
 
 
 
+
+
+  const [sortConfig, setSortConfig] = useState({
+    key: 'projectName', // default column to sort by
+    direction: 'ascending', // default sort direction
+  });
+
+  const handleSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+
+    setSortConfig({ key, direction });
+  };
+
+  // const sortedData = [...projectAValues].sort((a, b) => {
+  //   if (a[sortConfig.key] < b[sortConfig.key]) {
+  //     return sortConfig.direction === 'ascending' ? -1 : 1;
+  //   }
+  //   if (a[sortConfig.key] > b[sortConfig.key]) {
+  //     return sortConfig.direction === 'ascending' ? 1 : -1;
+  //   }
+  //   return 0;
+  // });
+
+
+
+  const sortedData = useMemo(() => {
+    return [...projectAValues].sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === 'ascending' ? -1 : 1;
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+  }, [projectAValues, sortConfig]);
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className="bg-white ">
 
@@ -625,7 +684,7 @@ const CrmProjectionReport = ({ projects }) => {
 
 
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl font-medium text-gray-800">CRM Inventory Report box</h1>
+        <h1 className="text-xl font-medium text-gray-800">CRM Inventory Report</h1>
         {/* <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-gray-600">
           Project Name
           <ChevronDown className="w-4 h-4" />
@@ -720,14 +779,66 @@ const CrmProjectionReport = ({ projects }) => {
                 )}
               </tr>
               <tr className="bg-[#F0F2F5] border-t border-b border-[#E8ECF4]">
-                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                 onClick={() => handleSort('projectName')}
+                >
                   Project Name
+
+
+                  <span className="inline-block ml-2">
+    {sortConfig.key === 'projectName' ? (
+      sortConfig.direction === 'ascending' ? (
+        <MoveUp className="w-4 h-4 text-gray-600" />
+      ) : (
+        <MoveDown className="w-4 h-4 text-gray-600" />
+      )
+    ) : (
+      <ArrowUpDown className="w-4 h-4 text-gray-400" />
+    )}
+  </span>
+
+
+
+
                 </th>
-                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                onClick={() => handleSort('soldUnitCount')}
+
+                >
                   Sold Units
+
+                  <span className="inline-block ml-2">
+  {sortConfig.key === 'soldUnitCount' ? (
+    sortConfig.direction === 'ascending' ? (
+      <MoveUp className="w-4 h-4 text-gray-600" />
+    ) : (
+      <MoveDown className="w-4 h-4 text-gray-600" />
+    )
+  ) : (
+    <ArrowUpDown className="w-4 h-4 text-gray-400" />
+  )}
+</span>
+
+
                 </th>
-                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
-                  Total Amount
+                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                onClick={() => handleSort('totalAmount')}
+                >
+                  Total Amount 
+
+                  <span className="inline-block ml-2">
+  {sortConfig.key === 'totalAmount' ? (
+    sortConfig.direction === 'ascending' ? (
+      <MoveUp className="w-4 h-4 text-gray-600" />
+    ) : (
+      <MoveDown className="w-4 h-4 text-gray-600" />
+    )
+  ) : (
+    <ArrowUpDown className="w-4 h-4 text-gray-400" />
+  )}
+</span>
+
+ 
                 </th>
                 {dataView === 'monthly' ? (
                   <>
@@ -769,7 +880,7 @@ const CrmProjectionReport = ({ projects }) => {
           </tr> */}
 
               {loader && <TableSkeleton rows={3} columns={7} />}
-              {projectAValues?.map((data, index) => {
+              {sortedData?.map((data, index) => {
                 const monthlyData = data?.monthly
                 let totalReceived = 0
                 let totalOutstanding = 0

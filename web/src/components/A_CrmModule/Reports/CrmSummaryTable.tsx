@@ -28,7 +28,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from 'recharts';
-import { ArrowDown, ArrowUp, ChevronDown, TrendingUp } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown, ChevronDown, MoveDown, MoveUp, TrendingUp } from 'lucide-react';
 import { scaleLinear } from 'd3-scale';
 
 
@@ -241,30 +241,34 @@ const CrmInventorySummaryTable = ({ projects }) => {
 
 
 
-    const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+    // const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
-    const sortData = (data) => {
-      if (!sortConfig.key) return data;
-      return [...data].sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === "asc" ? -1 : 1;
-        }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === "asc" ? 1 : -1;
-        }
-        return 0;
-      });
-    };
+    // const sortData = (data) => {
+    //   if (!sortConfig.key) return data;
+    //   return [...data].sort((a, b) => {
+    //     if (a[sortConfig.key] < b[sortConfig.key]) {
+    //       return sortConfig.direction === "asc" ? -1 : 1;
+    //     }
+    //     if (a[sortConfig.key] > b[sortConfig.key]) {
+    //       return sortConfig.direction === "asc" ? 1 : -1;
+    //     }
+    //     return 0;
+    //   });
+    // };
     
-    const handleSort = (key) => {
-      let direction = "asc";
-      if (sortConfig.key === key && sortConfig.direction === "asc") {
-        direction = "desc";
-      }
-      setSortConfig({ key, direction });
-    };
+    // const handleSort = (key) => {
+    //   let direction = "asc";
+    //   if (sortConfig.key === key && sortConfig.direction === "asc") {
+    //     direction = "desc";
+    //   }
+    //   setSortConfig({ key, direction });
+    // };
     
-    const sortedProjects = sortData(projects);
+    // const sortedProjects = sortData(projects);
+
+
+
+
     
 
 
@@ -307,7 +311,67 @@ const CustomTooltip = ({ active, payload }) => {
 
   return null;
 };
+
+
+
+
+
+// const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+
+// const sortData = (data) => {
+//   if (!sortConfig.key) return data;
+//   return [...data].sort((a, b) => {
+//     if (a[sortConfig.key] < b[sortConfig.key]) {
+//       return sortConfig.direction === 'asc' ? -1 : 1;
+//     }
+//     if (a[sortConfig.key] > b[sortConfig.key]) {
+//       return sortConfig.direction === 'asc' ? 1 : -1;
+//     }
+//     return 0;
+//   });
+// };
+
+// const handleSort = (key) => {
+//   let direction = 'asc';
+//   if (sortConfig.key === key && sortConfig.direction === 'asc') {
+//     direction = 'desc';
+//   }
+//   setSortConfig({ key, direction });
+// };
+
+// const sortedProjects = sortData(projects);
  
+
+
+const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+
+const sortedProjects = React.useMemo(() => {
+  if (!sortConfig.key) return projects;
+
+  return [...projects].sort((a, b) => {
+    const aValue = a[sortConfig.key];
+    const bValue = b[sortConfig.key];
+
+    if (typeof aValue === 'number' && typeof bValue === 'number') {
+      return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
+    }
+
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return sortConfig.direction === 'asc'
+        ? aValue.localeCompare(bValue)
+        : bValue.localeCompare(aValue);
+    }
+
+    return 0;
+  });
+}, [projects, sortConfig]);
+
+const handleSort = (key) => {
+  setSortConfig((prev) => ({
+    key,
+    direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
+  }));
+};
 
 
 
@@ -789,7 +853,7 @@ const CustomTooltip = ({ active, payload }) => {
 </div> */}
 
 
-
+{/* 
 <div className="overflow-x-auto">
   <table className="w-full border-collapse overflow-hidden">
     <thead>
@@ -833,7 +897,68 @@ const CustomTooltip = ({ active, payload }) => {
       </tr>
     </tbody>
   </table>
-</div>
+</div> */}
+
+
+
+
+
+
+
+<div className="overflow-x-auto">
+      <table className="w-full border-collapse overflow-hidden">
+        <thead>
+          <tr className="bg-[#F0F2F5] border-t border-b border-[#E8ECF4]">
+            {['projectName', 'totalUnitCount', 'availableCount', 'soldUnitCount', 'blockedUnitCount', 'mortgaged'].map((key) => (
+              <th
+                key={key}
+                className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4] cursor-pointer relative"
+                onClick={() => handleSort(key)}
+              >
+                <span>
+                {key === 'name' ? 'Project Name' : key.charAt(0).toUpperCase() + key.slice(1)}
+
+                  {/* {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')} */}
+                </span>
+                {/* <span className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                  {sortConfig.key === key && (
+                    sortConfig.direction === 'asc' ? (
+                      <ArrowUp className="text-gray-500" />
+                    ) : (
+                      <ArrowDown className="text-gray-500" />
+                    )
+                  )}
+                </span> */}
+
+<span className="inline-block ml-2">
+                      {sortConfig.key === key ? (
+                        sortConfig.direction === 'asc' ? (
+                          <MoveUp  className="w-4 h-4 text-gray-600" />
+                        ) : (
+                          <MoveDown  className="w-4 h-4 text-gray-600" />
+                        )
+                      ) : (
+                        <ArrowUpDown  className="w-4 h-4 text-gray-400" />
+                      )}
+                    </span>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {sortedProjects.map((item, index) => (
+            <tr key={`${item.name}-${index}`} className="hover:bg-gray-50 border-b border-[#E8ECF4]">
+              <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.projectName}</td>
+              <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.totalUnitCount}</td>
+              <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.availableCount}</td>
+              <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.soldUnitCount}</td>
+              <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.blockedUnitCount || 0}</td>
+              <td className="p-4 text-gray-700">{item.mortgaged}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
 
 
 
