@@ -62,7 +62,7 @@ const SiderForm = ({
   newPlotCostSheetB,
   newPlotPS,
   open,
-  onCloseDisabled = false,
+  onCloseDisabled,
   paymentCaptureFun,
   pId,
   pdfExportComponent,
@@ -104,7 +104,7 @@ const SiderForm = ({
       <Dialog
         as="div"
         className="fixed inset-0 overflow-hidden"
-        onClose={onCloseDisabled ? () => {} : () => setOpen()}
+        onClose={onCloseDisabled || false ? () => {} : () => setOpen()}
         style={{ zIndex: '1000' }}
       >
         <div className="absolute inset-0 overflow-hidden">
@@ -198,6 +198,8 @@ const SiderForm = ({
                     title={title}
                     dialogOpen={setOpen}
                     project={data}
+                    // setProject={setProject}
+
                   />
                 )}
                 {(title === 'Add Phase' || title === 'Edit Phase') && (

@@ -52,6 +52,7 @@ import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 const DialogFormBody = ({
   title,
+  moveNext,
   setProject,
   submitter,
   setSubmitter,
@@ -211,7 +212,7 @@ const DialogFormBody = ({
       planningApproval: planningApproval,
       reraApproval: reraApproval,
     }
-    console.log('selected value is ', project?.editMode)
+    console.log('selected value is testing ', project?.editMode, project)
     // setLoading(true)
     if (project?.editMode || project?.uid !=null) {
       await updateProject(
@@ -251,6 +252,11 @@ const DialogFormBody = ({
             enqueueSnackbar,
             resetForm
           )
+          const additionalUserInfo = await getProject(orgId, uid)
+          await console.log('selected value is xxx ', additionalUserInfo)
+          await setProject(additionalUserInfo)
+         await moveNext()
+          // mo
         },
         (error) => (fullCsA = [])
       )
