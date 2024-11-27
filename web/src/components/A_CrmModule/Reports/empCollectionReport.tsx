@@ -201,8 +201,8 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
     // get values matched to db
   }
   return (
-    <div className="  bg-white rounded-2xl shadow-xl mt-2 ">
-      <table className="min-w-full p-4 w-full max-w-7xl mx-auto  bg-white  rounded-2xl">
+    <div className="bg-black max-w-7xl mx-auto rounded-2xl shadow-xl mt-2 ">
+      <table className=" p-4  max-w-7xl mx-auto  bg-white  rounded-2xl">
         <thead>
           <tr
             className={
@@ -249,7 +249,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
               </>
             )}
           </tr>
-          <tr className="bg-[#F0F2F5]  text-[#000] text-[11px] leading-normal">
+          <tr className="bg-[#F0F2F5] max-w-7xl  text-[#000] text-[11px] leading-normal">
             <th className="py-1 px-3 text-left border-r border-[#4c787d]">
               CRM Executive
             </th>

@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import Tooltip from '@mui/material/Tooltip'
-import { ChevronDown } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import { ArrowUpDown, ChevronDown, MoveDown, MoveUp } from 'lucide-react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
 import { streamMortgageList } from 'src/context/dbQueryFirebase'
@@ -95,6 +95,56 @@ const CrmMortgageSummaryTable = ({ projects }) => {
 
   return unsubscribe
   }, [projects])
+
+
+
+
+
+
+
+
+
+
+  
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  
+    const sortedData = useMemo(() => {
+      if (!sortConfig.key) return fetchMortUnitsList;
+  
+      return [...fetchMortUnitsList].sort((a, b) => {
+        const aValue = a[sortConfig.key];
+        const bValue = b[sortConfig.key];
+  
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
+        }
+  
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return sortConfig.direction === 'asc'
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        }
+  
+        return 0;
+      });
+    }, [fetchMortUnitsList, sortConfig]);
+  
+    const handleSort = (key) => {
+      setSortConfig((prev) => ({
+        key,
+        direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
+      }));
+    };
+
+
+
+
+
+
+
+
+
+
 
   return (
 
@@ -334,7 +384,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
 
 
 
-
+{/* 
           <div className=" w-full max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-medium text-gray-800">Project Mortgage Details</h1>
@@ -344,27 +394,20 @@ const CrmMortgageSummaryTable = ({ projects }) => {
 
 
         <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-gray-600">
-          {/* <ChevronDown className="w-4 h-4" /> */}
+
           <select
               className="mr-2"
               value={selectedOption}
               onChange={handleOptionChange}
             >
               <option value="All">Project Name</option>
-              {/* <option value="Unit Type">Unit Type</option>
-              <option value="Unit Facing">Unit Facing</option>
-              <option value="Unit Status">Unit Status</option>
-              <option value="Unit Area">Unit Area</option> */}
+
             </select>
 
         </button>
 
 
         <Tooltip title={`Download ${fetchMortUnitsList?.length} Row`}>
-            {/* <IconButton>
-            <FileDownloadIcon />
-            <CSVDownloader />
-          </IconButton> */}
 
             <CSVDownloader
               className="mr-6 h-[20px] w-[20px]"
@@ -382,7 +425,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
       <div className="w-full bg-white rounded-lg overflow-hidden shadow-md">
         <div className="bg-[#F8F9FC] p-4 rounded-t-lg">
           <h2 className="text-lg text-center font-medium text-[#000000]" >
-          Project Mortgage Details
+          Project Mortgage Details box
           </h2>
         </div>
         <div>
@@ -515,7 +558,138 @@ const CrmMortgageSummaryTable = ({ projects }) => {
           </div>
         </div>
       </div>
+    </div> */}
+
+
+
+
+
+
+
+    <div className="w-full max-w-7xl mx-auto">
+      {/* <div className="flex items-center justify-between mb-4">
+        <h1 className="text-xl font-medium text-gray-800">Project Mortgage Details</h1>
+      </div> */}
+
+
+<div className="flex items-center justify-between mb-4">
+        <h1 className="text-xl font-medium text-gray-800">Project Mortgage Details</h1>
+
+
+        <div className='flex gap-6'>
+
+
+        <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-gray-600">
+
+          <select
+              className="mr-2"
+              value={selectedOption}
+              onChange={handleOptionChange}
+            >
+              <option value="All">Project Name</option>
+
+            </select>
+
+        </button>
+
+
+        <Tooltip title={`Download ${fetchMortUnitsList?.length} Row`}>
+
+            <CSVDownloader
+              className="mr-6 h-[20px] w-[20px]"
+              downloadRows={fetchMortUnitsList}
+              sourceTab="Mortgage Details"
+
+              style={{ height: '20px', width: '20px' }}
+            />
+          </Tooltip>
+
+        </div>
+
+      </div>
+
+      
+
+      <div className="w-full bg-white rounded-t-[30px] overflow-hidden shadow-md">
+        <div className="bg-[#F8F9FC] p-4 rounded-t-[30px]">
+          <h2 className="text-lg text-center font-medium text-[#000000]">
+            Project Mortgage Details
+          </h2>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse rounded-[30px]">
+            <thead>
+              <tr className="bg-[#F8F9FC] border-t border-b border-[#E8ECF4]">
+                {[
+                  { label: 'Project Name', key: 'projectName' },
+                  { label: 'Unit No', key: 'unit_no' },
+                  { label: 'SY No', key: 'survey_no' },
+                  { label: 'Land Owner Name', key: 'land_owner_name' },
+                  { label: 'Doc Type', key: 'doc_type' },
+                  { label: 'Registration Date', key: 'date_of_registration' },
+                  { label: 'Registered To', key: 'to_whom' },
+                  { label: 'Doc Number', key: 'doc_no' },
+                  { label: 'Status', key: 'status' },
+                  { label: 'Remarks', key: 'remarks' },
+                ].map(({ label, key }) => (
+                  <th
+                    key={key}
+                    className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4] cursor-pointer"
+                    onClick={() => handleSort(key)}
+                  >
+                    {label}
+                    <span className="inline-block ml-2">
+                      {sortConfig.key === key ? (
+                        sortConfig.direction === 'asc' ? (
+                          <MoveUp className="w-4 h-4 text-gray-600" />
+                        ) : (
+                          <MoveDown className="w-4 h-4 text-gray-600" />
+                        )
+                      ) : (
+                        <ArrowUpDown className="w-4 h-4 text-gray-400" />
+                      )}
+                    </span>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sortedData.map((item, index) => (
+                <tr key={index} className="hover:bg-gray-50 border-b border-[#E8ECF4]">
+                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                    {item.projectName}
+                  </td>
+                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.unit_no}</td>
+                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.survey_no}</td>
+                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                    {item.land_owner_name}
+                  </td>
+                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.doc_type}</td>
+                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                    {item.date_of_registration}
+                  </td>
+                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.to_whom}</td>
+                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.doc_no}</td>
+                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.status}</td>
+                  <td className="p-4 text-gray-700">{item.remarks}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

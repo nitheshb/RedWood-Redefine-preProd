@@ -724,7 +724,7 @@ const CrmCollectionReport = ({ projects }) => {
               className="border border-black"
             ></td>
           </tr> */}
-              {projectAValues?.map((data, index) => {
+              {sortedData?.map((data, index) => {
                 console.log('final value is', data)
                 let totalAmount = 0
                 if (dataView === 'monthly') {
