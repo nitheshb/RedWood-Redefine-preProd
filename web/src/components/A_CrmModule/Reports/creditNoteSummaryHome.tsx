@@ -220,7 +220,7 @@ switch (selProjectIs?.value) {
 
 
 const [projects, setProjects] = useState([
-  { name: 'Test_1', totalUnits: 100, available: 20, sold: 60, blocked: 10, mortgaged: 10 },
+  { name: 'z', totalUnits: 100, available: 20, sold: 60, blocked: 10, mortgaged: 10 },
   { name: 'A', totalUnits: 80, available: 10, sold: 50, blocked: 15, mortgaged: 5 },
   { name: 'B', totalUnits: 90, available: 30, sold: 40, blocked: 10, mortgaged: 10 },
   { name: 'C', totalUnits: 75, available: 25, sold: 40, blocked: 5, mortgaged: 5 },
@@ -286,7 +286,7 @@ const handleSort = (key) => {
             className="
             px-3 py-6"
           >
-            <div className="flex items-center flex-row flex-wrap py-1 pb-5 justify-between">
+            {/* <div className="flex items-center flex-row flex-wrap py-1 pb-5 justify-between">
               <h2 className="text-lg font-semibold text-black leading-light font-Playfair">
                 Credit Note Summary
               </h2>
@@ -313,13 +313,38 @@ const handleSort = (key) => {
 
 
               </div>
-            </div>
+            </div> */}
 
 
 
             <div className="p-4 w-full max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-medium text-gray-800">Credit Note Summary</h1>
+
+
+
+        <div className="flex">
+                <div className=" flex flex-col mr-5  w-40">
+                  <SlimSelectBox
+                    name="project"
+                    label=""
+                    className="input "
+                    onChange={(value) => {
+                      console.log('changed value is ', value.value)
+                      setSelProject(value)
+                      // formik.setFieldValue('project', value.value)
+                    }}
+                    value={selProjectIs?.value}
+                    // options={aquaticCreatures}
+                    options={[
+                      ...[{ label: 'All Projects', value: 'allprojects' }],
+                      ...projectList,
+                    ]}
+                  />
+                </div>
+
+
+              </div>
       </div>
 
       <div className="w-full bg-white rounded-lg overflow-hidden shadow-md">

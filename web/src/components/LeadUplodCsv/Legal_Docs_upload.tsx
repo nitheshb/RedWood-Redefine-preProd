@@ -131,7 +131,7 @@ export default function LegalDocsUplaodHome({
                                   </div> */}
                                   <div className="relative w-full mb-3">
                                     <TextField2
-                                      label="Document Name"
+                                      label="No of Documents"
                                       name="amount"
                                       type="number"
                                     />
@@ -141,7 +141,8 @@ export default function LegalDocsUplaodHome({
                                 <div className="w-full lg:w-6/12 px-4">
                                   <div className="relative w-full mb-3">
                                     <TextField2
-                                      label="Upload Document"
+                                      
+                                      label="Document Name"
                                       name="chequeno"
                                       type="text"
                                     />

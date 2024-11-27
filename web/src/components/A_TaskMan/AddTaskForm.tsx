@@ -91,11 +91,11 @@ const formatOptionLabel = ({ value, label, dept }) => (
         marginLeft: '10px',
         color: '#118d57',
         background: '#22c55e29',
-        padding: '0px 8px',
-        paddingBottom: '2px',
+        padding: '0px 6px',
+        paddingBottom: '0px',
         borderRadius: '10px',
         fontSize: '10px',
-        height: '21px'
+        height: '18px'
       }}
     >
       {dept}
@@ -492,6 +492,8 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                               {'Responsible person*'}
                             </label>
 
+                          
+
                             <div className="w-full flex flex-col mt-1 ">
                               <CustomSelectNew
                                 name="assignedTo"
@@ -540,7 +542,7 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                                 value={formik?.values?.followers[0] || []}
                                 className="basic-multi-select w-full"
                                 classNamePrefix="myselect"
-                                styles={customStyles}
+                                // styles={customStyles}
                               />
 
                               <p

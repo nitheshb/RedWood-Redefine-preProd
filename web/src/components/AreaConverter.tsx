@@ -38,7 +38,7 @@ export const AreaConverter = ({ formik, hideField, fieldName,textPrimaryName, te
       <label htmlFor="area" className="label font-regular text-sm">
         Sqmt Converter
       </label>
-      <div className="flex justify-between items-baseline">
+      <div className="flex justify-between items-baseline gap-x-2">
         {/* <div className="basis-1/4 mr-2">
           <TextField label="" name="areaTextPrimary" type="text" />
         </div> */}
@@ -51,7 +51,7 @@ name={textPrimaryName}
 value={formik.values[textPrimaryName]}
 onChange={formik.handleChange}
           //id="area"
-          className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+          className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10  mt-1 p-0`}
           size="small"
           InputProps={{
             style: {

@@ -924,6 +924,10 @@ const AddUnit = ({
                                   label="Block"
                                   name="block_no"
                                   type="text"
+                                  onChange={(value) => {
+                                    formik.setFieldValue('block_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+  
+                                  }}
                                 />
                               </div>
                             )}
@@ -934,6 +938,12 @@ const AddUnit = ({
                                   label="Tower"
                                   name="tower_no"
                                   type="text"
+
+                                  onChange={(value) => {
+                                    formik.setFieldValue('tower_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+  
+                                  }}
+                                  
                                 />
                               </div>
                             )}
@@ -945,6 +955,10 @@ const AddUnit = ({
                                   label="Floor"
                                   name="floor_no"
                                   type="text"
+                                  onChange={(value) => {
+                                    formik.setFieldValue('floor_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+  
+                                  }}
                                 />
                               </div>
                             )}
@@ -1327,6 +1341,9 @@ const AddUnit = ({
                                 label="East"
                                 name="east_d"
                                 type="text"
+                                onChange={(value) => {
+                                  formik.setFieldValue('east_d', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                }}
                               />
                             </div>
                             <div className="mb-3 space-y-2 w-full text-xs">
@@ -1334,6 +1351,9 @@ const AddUnit = ({
                                 label="West"
                                 name="west_d"
                                 type="text"
+                                onChange={(value) => {
+                                  formik.setFieldValue('west_d', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                }}
                               />
                             </div>
 
@@ -1344,6 +1364,9 @@ const AddUnit = ({
                                   label="North"
                                   name="north_d"
                                   type="number"
+                                  onChange={(value) => {
+                                    formik.setFieldValue('north_d', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                  }}
                                 />
                               </div>
                             )}
@@ -1352,6 +1375,9 @@ const AddUnit = ({
                                 label="South"
                                 name="south_d"
                                 type="number"
+                                onChange={(value) => {
+                                  formik.setFieldValue('south_d', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                }}
                               />
                             </div>
                             <div className="mb-3 space-y-2 w-full text-xs mt-">
@@ -1359,6 +1385,9 @@ const AddUnit = ({
                                 label="East-West"
                                 name="east_west_d"
                                 type="number"
+                                onChange={(value) => {
+                                  formik.setFieldValue('east_west_d', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                }}
                               />
                             </div>
                             <div className="mb-3 space-y-2 w-full text-xs">
@@ -1366,6 +1395,9 @@ const AddUnit = ({
                                 label="North-South"
                                 name="north_south_d"
                                 type="number"
+                                onChange={(value) => {
+                                  formik.setFieldValue('north_south_d', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                }}
                               />
                             </div>
                           </div>

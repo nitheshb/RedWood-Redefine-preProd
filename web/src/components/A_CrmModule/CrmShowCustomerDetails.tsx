@@ -768,12 +768,17 @@ const ShowCustomerDetails = ({
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">
-              {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
+             {/* {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
                     leadDetailsObj2?.Name ||
-                    '?'}
+                    '?'} */}
+
+
+{leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
+
                 
-                </p>
-              <p className="text-gray-400 text-sm">Name</p>
+                </p> 
+                
+              <p className="text-gray-400 text-sm">S/o</p>
             </div>
             <div className="text-right">
               <p className="text-gray-900">

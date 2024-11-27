@@ -201,8 +201,14 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
     // get values matched to db
   }
   return (
-    <div className="bg-black max-w-7xl mx-auto rounded-2xl shadow-xl mt-2 ">
-      <table className=" p-4  max-w-7xl mx-auto  bg-white  rounded-2xl">
+
+
+    <div className='bg-black max-w-7xl mx-auto rounded-2xl shadow-xl mt-2'>
+
+
+
+<div className="overflow-x-auto">
+      <table className="w-full p-4 bg-white  rounded-2xl">
         <thead>
           <tr
             className={
@@ -437,41 +443,10 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
           })}
         </tbody>
       </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </div>
 
     </div>
+
 
 
 
