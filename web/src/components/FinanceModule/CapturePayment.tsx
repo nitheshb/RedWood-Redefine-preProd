@@ -39,6 +39,7 @@ import { MultiSelectMultiLineWallet } from 'src/util/formFields/selectBoxMultiLi
 import { TextField2 } from 'src/util/formFields/TextField2'
 import PdfReceiptGenerator from 'src/util/PdfReceiptGenerator'
 import RupeeInWords from 'src/util/rupeeWords'
+import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 
 import Loader from '../Loader/Loader'
 import { validate_capturePayment } from '../Schemas'
@@ -239,6 +240,9 @@ const CaptureUnitPayment = ({
   }
   const onSubmitSupabase = async (data, resetForm) => {
     console.log('inside supabase support', data)
+//  Number(formik?.values?.amount?.replace(/,/g, ''))
+    return data;
+
     let y = {}
     y = data
 
@@ -355,6 +359,7 @@ const CaptureUnitPayment = ({
   const datee = new Date().getTime()
   const initialState = {
     amount: bankData?.amount || '',
+    amount_commas: bankData?.amount || '',
     towardsBankDocId: '',
     mode: bankData?.mode || paymentModex,
     payto: bankData?.payto || '',
@@ -818,8 +823,13 @@ const CaptureUnitPayment = ({
                                                 <div className="relative w-full mb-3">
                                                   <TextField2
                                                     label="Amount"
-                                                    name="amount"
-                                                    type="number"
+                                                    name="amount_commas"
+                                                    type="text"
+                                                    value={
+                                                      formik.values.amount_commas!== null
+                                                        ? formatIndianNumber(formik.values.amount_commas)
+                                                        : ''
+                                                    }
                                                     onChange={(e) => {
                                                       // setAmount(e.target.value)
                                                       console.log(
@@ -844,23 +854,39 @@ const CaptureUnitPayment = ({
                                                               .selCustomerWallet
                                                               ?.walletAmount
                                                         ) {
-                                                          console.log('changed value is ')
+
+
                                                           formik.setFieldValue(
                                                             'amount',
-                                                            formik.values
+                                                            Number((   formik.values
+                                                              .selCustomerWallet
+                                                              ?.walletAmount || '').replace(/,/g, ''))
+                                                          )
+                                                          formik.setFieldValue(
+                                                            'amount_commas',
+                                                            (String(Number(formik.values
                                                             .selCustomerWallet
-                                                            ?.walletAmount
+                                                            ?.walletAmount)))
                                                           )
                                                         } else {
                                                           formik.setFieldValue(
                                                             'amount',
-                                                            e.target.value
+                                                            Number((e.target.value || '').replace(/,/g, ''))
+                                                          )
+                                                          formik.setFieldValue(
+                                                            'amount_commas',
+                                                            (String(Number(e.target.value.replace(/[^0-9]/g, ''))))
                                                           )
                                                         }
                                                       } else {
+                                                      
                                                         formik.setFieldValue(
                                                           'amount',
-                                                          e.target.value
+                                                          Number((e.target.value || '').replace(/,/g, ''))
+                                                        )
+                                                        formik.setFieldValue(
+                                                          'amount_commas',
+                                                          (String(Number(e.target.value.replace(/[^0-9]/g, ''))))
                                                         )
                                                       }
                                                     }}
@@ -873,7 +899,7 @@ const CaptureUnitPayment = ({
                                                 Paying{' '}
                                                 <RupeeInWords
                                                   amount={
-                                                    formik?.values?.amount || 0
+                                                    Number(formik?.values?.amount) || 0
                                                   }
                                                 />
                                               </div>

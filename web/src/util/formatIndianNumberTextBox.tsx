@@ -1,7 +1,7 @@
 import { NumbersOutlined } from "@mui/icons-material";
 
 export const formatIndianNumber = function (num) {
-  const [integerPart, decimalPart] = num.toString().split('.');
+  const [integerPart, decimalPart] = num.toString().replace(/,/g, '').split('.');
   const lastThree = integerPart.slice(-3);
   const otherNumbers = integerPart.slice(0, -3);
   const formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
