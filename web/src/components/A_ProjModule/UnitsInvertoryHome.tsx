@@ -459,7 +459,7 @@ const UnitsInventoryHome = ({ project }) => {
               // to={routes.projectEdit({ uid })}
             >
               <span className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0">
-                Inventory box
+                Inventory
               </span>
             </Link>
           </div>
@@ -520,7 +520,7 @@ const UnitsInventoryHome = ({ project }) => {
                   dropDownItemsA={FacingA}
                 />
                 <DropDownSearchBar
-                  label={'Size'}
+                  label={'Unit Size'}
                   type={'All Status'}
                   id={'id'}
                   setStatusFun={{}}
