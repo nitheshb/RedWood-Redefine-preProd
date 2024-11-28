@@ -880,6 +880,10 @@ const AddUnit = ({
                                     ? 'Add Unit'
                                     : 'Edit Unit'}
 
+
+                                    {/* {title === 'Add Unit' ? 'Add Unit' : 'Save Unit'} */}
+
+
                                   <abbr title="required"></abbr>
                                 </label>
                               </span>
@@ -1649,7 +1653,8 @@ const AddUnit = ({
                             {loading && <Loader />}
                             <span>
                               {' '}
-                              {title === 'Edit Unit' ? 'Edit Unit' : 'Add Unit'}
+                              {/* {title === 'Edit Unit' ? 'Edit Unit' : 'Add Unit'} */}
+                              {title === 'Edit Unit' ? 'Save Unit' : 'Add Unit'}
                             </span>
                           </button>
                         </div>

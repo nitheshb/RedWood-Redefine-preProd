@@ -459,7 +459,7 @@ const UnitsInventoryHome = ({ project }) => {
               // to={routes.projectEdit({ uid })}
             >
               <span className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0">
-                Inventory
+                Inventory box
               </span>
             </Link>
           </div>

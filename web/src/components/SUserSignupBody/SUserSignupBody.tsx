@@ -325,6 +325,12 @@ console.log('rolws are ', filRoles)
                   name="name"
                   type="text"
                   disabled={editMode}
+                  onChange={(e) => {
+                    const value = e.target.value;
+
+                    const validatedValue = value.replace(/[^a-zA-Z\s]/g, '');
+                    e.target.value = validatedValue;
+                  }}
                 />
                 <TextField
                   label="Email Id*"
@@ -412,14 +418,32 @@ console.log('rolws are ', filRoles)
                 />
 
                 <div className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-5">
-                  <div className="w-full flex flex-col mb-3">
+                  {/* <div className="w-full flex flex-col mb-3">
                     <TextField
                       label="Aadhar No"
                       name="aadharNo"
                       type="text"
                       disabled={editMode}
                     />
-                  </div>
+                  </div> */}
+
+
+                  <div className="w-full flex flex-col mb-3">
+  <TextField
+    label="Aadhar No"
+    name="aadharNo"
+    type="text"
+    disabled={editMode}
+    inputProps={{
+      inputMode: "numeric", // Show numeric keypad on mobile devices
+      pattern: "[0-9]*", // Allow only numeric input
+    }}
+    onInput={(e) => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Replace any non-numeric characters
+    }}
+  />
+</div>
+
                   <div className="w-full flex flex-col mb-3">
 
                          {/* <TextField

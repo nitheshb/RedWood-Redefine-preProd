@@ -88,6 +88,47 @@ const AllBankDetailsView = ({ title, pId, data }) => {
     }
   }
 
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  
+  const [accountToDelete, setAccountToDelete] = useState(null);
+
+
+  const [selectedBankDe, setSelectedBankDe] = useState<any>(null);
+
+
+  const openDeleteDialog = (bankDe: any) => {
+    setSelectedBankDe(bankDe);
+    setIsDialogOpen(true);  
+  };
+  
+
+
+  const closeDeleteDialog = () => {
+    setIsDialogOpen(false);
+    setAccountToDelete(null);
+  };
+
+  
+  const confirmDelete = () => {
+    if (accountToDelete) {
+      deleteAssetFun(
+        accountToDelete.docId,
+        accountToDelete.accountName,
+        accountToDelete.usedInA?.length || 0
+      );
+    }
+    closeDeleteDialog();
+  };
+
+
+
+  
+
+
+
+
   return (
     <>
       <div className="w-full  mt-10 flex flex-row">
@@ -122,10 +163,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
 
 
-            {/* <section className="flex  flex-row justify-between items-center">
-              <span></span>
- 
-            </section> */}
+
           </section>
 
 
@@ -142,15 +180,10 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                             {bankDe?.accountName}
                           </p>
                           <span
-                            onClick={() =>
-                              deleteAssetFun(
-                                bankDe?.docId,
-                                bankDe?.accountName,
-                                bankDe?.usedInA?.length || 0
-                              )
-                            }
+            
                           >
                             <TrashIcon
+                             onClick={() => openDeleteDialog(bankDe)}
                               className="h-4 w-4 mr-1  mt-3 inline"
                               aria-hidden="true"
                             />
@@ -164,38 +197,14 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                         <p className="text-lg  text-transparent">
                           <span>{'h'}</span>
                         </p>
-                        {/* <p className="mt-0.5  text-neutral-400 text-sm">
-                          #940590
-                        </p> */}
+             
                         <span className="text-green-600  text-sm  rounded-lg font">
                           {bankDe?.preferredtype}
                         </span>
                       </div>
                     </div>
 
-                    {/* <div className="flex items-center justify-between mt-5">
-                      <div className="flex items-center">
-                        <svg
-                          className="h-5 w-5 stroke-gray-400 mr-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="gray-400"
-                          strokeWidth="2"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                          />
-                        </svg>
-                        <span className="text-neutral-400 text-sm">
-                          Added Today
-                        </span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="text-neutral-400 text-sm">0</span>
-                      </div>
-                    </div> */}
+  
                     <div className="mt-5 space-y-4 py-4">
                       <div className="flex justify-between group duration-150 cursor-pointer">
                         <div>
@@ -256,13 +265,52 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                         </div>
                       </div>
                     </div>
-                    {/* <div className="text-center tracking-wide cursor-pointer duration-150 hover:bg-neutral-200 py-0.5 bg-[#FF919C] text-white font-semibold rounded-lg mt-3">
-                      Reports
-                    </div> */}
+        
                   </div>
                 </section>
               )
             })}
+
+{/* {isDialogOpen && ( */}
+      {isDialogOpen && selectedBankDe && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-full">
+            <h3 className="text-lg font-semibold text-neutral-800 mb-4">Are you sure you want to delete this account?</h3>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={closeDeleteDialog}
+                className="px-4 py-2 bg-gray-200 text-neutral-700 rounded-md"
+              >
+                Cancel
+              </button>
+
+
+
+
+<button
+          onClick={() => {
+            confirmDelete();  
+            deleteAssetFun(
+              selectedBankDe?.docId,
+              selectedBankDe?.accountName,
+              selectedBankDe?.usedInA?.length || 0
+            );  
+          }}
+          className="px-4 py-2 bg-red-600 text-white rounded-md"
+        >
+          Delete
+        </button>
+
+
+
+            </div>
+          </div>
+        </div>
+      )}
+
+
+        
+  
           </div>
         </div>
         {bankDetialsA.length === 0 && (

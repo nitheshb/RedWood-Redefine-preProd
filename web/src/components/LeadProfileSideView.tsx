@@ -1671,7 +1671,9 @@ export default function LeadProfileSideView({
                             // />
                             <span className="px-[3px]   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
                               {' '}
-                              Cost sheet
+                              {/* Cost sheet  */}
+                              Book Unit 
+
                             </span>
                           ))}
                       </div>
