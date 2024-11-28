@@ -718,15 +718,38 @@ const ShowCustomerDetails = ({
           </span>
         </div>
 
-        <div className="relative top-10 pt-12 flex justify-center">
+        {/* <div className="relative top-10 pt-12 flex justify-center">
           <div className="bg-[#CCEAFF] p-1 rounded-2xl shadow-md">
             <img
-              src={imagebox}
+              // src={imagebox}
               alt="Profile"
               className="w-20 h-20 rounded-full object-cover"
             />
           </div>
-        </div>
+        </div> */}
+
+
+<div className="relative top-10 pt-12 flex justify-center">
+  <div className="bg-[#E5E7EB] p-1 rounded-2xl shadow-md w-20 h-20 flex items-center justify-center">
+    {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
+    leadDetailsObj2?.Name ? (
+      <span className="text-[30px] font-bold text-gray-700">
+        {(
+          leadDetailsObj2?.customerDetailsObj?.customerName1 ||
+          leadDetailsObj2?.Name ||
+          '?'
+        ).charAt(0)}
+      </span>
+    ) : (
+      <img
+        // src={imagebox}
+        alt="Profile"
+        className="w-20 h-20 rounded-full object-cover"
+      />
+    )}
+  </div>
+</div>
+
       </div>
 
       <div className="text-center mb-6">
@@ -745,12 +768,17 @@ const ShowCustomerDetails = ({
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">
-              {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
+             {/* {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
                     leadDetailsObj2?.Name ||
-                    '?'}
+                    '?'} */}
+
+
+{leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
+
                 
-                </p>
-              <p className="text-gray-400 text-sm">Name</p>
+                </p> 
+                
+              <p className="text-gray-400 text-sm">S/o</p>
             </div>
             <div className="text-right">
               <p className="text-gray-900">

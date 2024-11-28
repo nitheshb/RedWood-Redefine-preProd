@@ -90,12 +90,12 @@ const dummyData = [
     agreement: { count: 0, status: 'Done', date: '30-10-2022' },
     registration: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     position: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     tt_amountOutStanding: {
@@ -188,12 +188,12 @@ const dummyData = [
     agreement: { count: 0, status: 'Done', date: '30-10-2022' },
     registration: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     position: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     tt_amountOutStanding: {
@@ -290,12 +290,12 @@ const dummyData = [
     agreement: { count: 0, status: 'Done', date: '30-10-2022' },
     registration: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     position: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     tt_amountOutStanding: {

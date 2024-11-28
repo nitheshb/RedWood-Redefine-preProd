@@ -22,7 +22,21 @@ import ExpenseLineChart from './ExpenseLineChart';
 import { TopProducts } from './TopProducts';
 import Dashboard from './Dashboard';
 import DashboardComponent from './Dashboard';
-import AboxNew from './AboxNew';
+
+
+import CRMInventoryReport from './CRMInventoryReport';
+
+import CollectionsDashboard from './CollectionsDashboard';
+import UnitsSoldChart from './UnitsSoldChart';
+
+
+import CustomSortableTable from './TableUi';
+import SalesDashboardone from './SalesDashboardone';
+import SalesDashboardtwo from './SalesDashboardtwo';
+import UnitsSoldDashboardthree from './UnitsSoldDashboardthree';
+import AllDashboard from './AllDashboard';
+import SoldUnitschart from './SoldUnitschart';
+import SalesDashboard from './SalesDashboard';
 
 
 
@@ -348,6 +362,15 @@ const CustomTooltip = ({ active, payload }) => {
   </div>
 
 
+
+  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+    <CustomSortableTable />
+  </div>
+
+
+
+
+
 {/* 
   <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
     <DashboardComponent/>
@@ -355,9 +378,64 @@ const CustomTooltip = ({ active, payload }) => {
 
 
   
-  {/* <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
-    <AboxNew/>
-  </div> */}
+  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+    <AllDashboard/>
+  </div>
+
+
+
+  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+  <CRMInventoryReport/>
+  </div>
+
+
+  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+  <SoldUnitschart/>
+  </div>
+
+  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+  <SalesDashboard/>
+  </div>
+
+
+
+
+
+
+
+  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+  <CollectionsDashboard/>
+  </div>
+
+
+
+
+
+  
+
+
+    
+  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+  <SalesDashboardone/>
+  </div>
+
+
+  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+  <SalesDashboardtwo/>
+  </div>
+
+
+  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
+  <UnitsSoldDashboardthree/>
+  </div>
+
+
+
+
+  
+
+
+
 
 
 
@@ -368,6 +446,26 @@ const CustomTooltip = ({ active, payload }) => {
 <div className="bg-white rounded-lg shadow-lg ">
 <TopProducts />
   </div>
+
+
+
+    
+<div className="bg-white rounded-lg shadow-lg ">
+<UnitsSoldChart />
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

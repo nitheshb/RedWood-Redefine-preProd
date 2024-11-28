@@ -19,6 +19,14 @@ import {
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
+
+
+
+
+
+
+
+
 import { Link } from '@redwoodjs/router'
 
 import SiderForm from 'src/components/SiderForm/SiderForm'
@@ -97,7 +105,7 @@ const CrmAnalyticsHome = ({ project }) => {
               >
                 {[
           // { label: 'Booking Summary', value: 'booking_summary' },
-          { label: 'Booking Summary(v1)', value: 'booking_summary-v1' },
+          { label: 'Booking Summary', value: 'booking_summary-v1' },
           { label: 'Collections', value: 'collection_performance' },
           { label: 'CRM Inventory', value: 'crm_table' },
           {

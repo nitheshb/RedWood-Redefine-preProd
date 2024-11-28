@@ -205,7 +205,7 @@ export default function LegalDocsViewHome({
                                 <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mt-3">
                                   <section className="flex flow-row items-baseline justify-between mb-1">
                                     <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                                      DocumentName
+                                      Document Name
                                     </div>
 
                                     <div>

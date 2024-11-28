@@ -591,8 +591,7 @@ const BookingSummaryView = ({
                               </section>
                               <section className="flex flex-col  mt-2 mb-2">
                                 <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                  {customerInfo?.secondaryCustomerDetailsObj
-                                    ?.customerName2 || 'NA'}
+                                  {customerInfo?.secondaryCustomerDetailsObj?.customerName2 || 'NA'}
                                 </h1>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
                                 {customerInfo?.secondaryCustomerDetailsObj
