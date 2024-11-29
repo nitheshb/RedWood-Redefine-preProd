@@ -386,15 +386,15 @@ const CostBreakUpEditor = ({
     // project1WweeknoMmonthnoYyearno
 
     newPlotPS.map((d, i) => {
-      console.log(
-        'data is===>',
-        prettyDate(newPlotPS[i]['schDate']),
-        prettyDate(d['oldDate']),
-        d?.stage.value,
-        prettyDate(bootedPs[i]['schDate']),
-        prettyDate(d?.schDate),
-        bootedPs[i]['schDate'] == d?.schDate
-      )
+      // console.log(
+      //   'data is===>',
+      //   prettyDate(newPlotPS[i]['schDate']),
+      //   prettyDate(d['oldDate']),
+      //   d?.stage.value,
+      //   prettyDate(bootedPs[i]['schDate']),
+      //   prettyDate(d?.schDate),
+      //   bootedPs[i]['schDate'] == d?.schDate
+      // )
       //
       // this will set the previous date immutable as current date
 

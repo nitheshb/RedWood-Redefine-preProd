@@ -107,6 +107,7 @@ import { PieChart,  Cell } from 'recharts';
 import { BellIcon, CreditCardIcon } from 'lucide-react';
 
 import { ChevronDownIcon } from "lucide-react";
+import { calculatePercentages } from 'src/util/areaConverter'
 
 const data = [
   { name: 'Paid', value: 10 },
@@ -1573,7 +1574,8 @@ onClickCapture={() => {
     <div className="relative flex justify-center items-center">
       <PieChart width={250} height={250}>
         <Pie
-          data={data}
+          data={[  { name: 'Paid', value:  calculatePercentages((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ), selCustomerPayload?.T_elgible).paidPercentage},
+          { name: 'Remaining', value:  calculatePercentages((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ), selCustomerPayload?.T_elgible).unpaidPercentage}]}
           cx={125}
           cy={125}
           innerRadius={70}
@@ -1588,13 +1590,13 @@ onClickCapture={() => {
       </PieChart>
       {/* Centered Text */}
       <div className="absolute text-center">
-        <div className="text-xs text-gray-500">Amount</div>
-        <div className="font-bold">₹ 67,23,523</div>
+        <div className="text-xs text-gray-500">Balance</div>
+        <div className="font-bold">            ₹{selCustomerPayload?.T_elgible_balance <0 ? 0: selCustomerPayload?.T_elgible_balance?.toLocaleString('en-IN')}</div>
       </div>
     </div>
     <div className="text-center">
       <div className="text-sm text-gray-500">Paid</div>
-      <div className="font-bold">₹ 10,198</div>
+      <div className="font-bold">              ₹{((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ))?.toLocaleString('en-IN')}</div>
     </div>
   </div>
 
@@ -1606,7 +1608,10 @@ onClickCapture={() => {
     <div className="relative flex justify-center items-center">
       <PieChart width={250} height={250}>
         <Pie
-          data={data}
+          data={[  { name: 'Paid', value:  calculatePercentages(  (selCustomerPayload?.T_review || 0) +
+          (selCustomerPayload?.T_approved || 0), selCustomerPayload?.T_total || selCustomerPayload?.T_Total).paidPercentage},
+          { name: 'Remaining', value:  calculatePercentages(  (selCustomerPayload?.T_review || 0) +
+          (selCustomerPayload?.T_approved || 0), selCustomerPayload?.T_total || selCustomerPayload?.T_Total).unpaidPercentage}]}
           cx={125}
           cy={125}
           innerRadius={70}
@@ -1628,13 +1633,16 @@ onClickCapture={() => {
       </PieChart> */}
       {/* Centered Text */}
       <div className="absolute text-center">
-        <div className="text-xs text-gray-500">Amount</div>
-        <div className="font-bold">₹ 67,23,523</div>
+        <div className="text-xs text-gray-500">Balance</div>
+        <div className="font-bold">₹ {selCustomerPayload?.T_balance?.toLocaleString(
+                                            'en-IN'
+                                          )}</div>
       </div>
     </div>
     <div className="text-center">
       <div className="text-sm text-gray-500">Paid</div>
-      <div className="font-bold">₹ 10,198</div>
+      <div className="font-bold">₹ {((selCustomerPayload?.T_review || 0) +
+                                            (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN')}</div>
     </div>
   </div>
 
@@ -1644,18 +1652,25 @@ onClickCapture={() => {
       <BellIcon size={16} />
     </div> */}
     <div className="flex justify-between items-center">
-  <span className="font-medium">Payment schedule</span>
+  <span className="font-medium">Unit Payments</span>
   <BellIcon size={16} className="ml-2" />
 </div>
 
     <div className="flex flex-col items-center mt-8">
-      <div className="text-sm text-gray-500 mb-2">Amount</div>
-      <div className="font-bold mb-4">₹ 67,23,523</div>
+      <section className='flex flex-row justify-between'>
+        <div className=''>
+      <div className="text-sm text-gray-500 mb-2">Total Paid</div>
+      <div className="font-bold mb-4">₹ {((selCustomerPayload?.T_review || 0) +
+                                            (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN')}</div>
+                                            </div>
+                                         
+      </section>
       <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
         <div className="bg-cyan-400 h-7 rounded-full w-1/3"></div>
       </div>
-      <div className="text-sm text-gray-500 mb-2">Received</div>
-      <div className="font-bold">₹ 10,198</div>
+      <div className="text-sm text-gray-500 mb-2">Total Cost</div>
+      <div className="font-bold">₹ {((selCustomerPayload?.T_total || 0)
+                                            )?.toLocaleString('en-IN')}</div>
     </div>
   </div>
 

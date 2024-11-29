@@ -126,7 +126,7 @@ const AddPaymentDetailsForm = ({
         remaining_money: 0,
         utilized_money: 0,
       }
-      addCustomer(orgId, customerD, email, enqueueSnackbar, () => ({}))
+      addCustomer(orgId, customerD, email, () => ({}), () => ({}))
     }
     if (secondaryCustomerDetailsObj) {
       const customerD = {
@@ -141,7 +141,7 @@ const AddPaymentDetailsForm = ({
         remaining_money: 0,
         utilized_money: 0,
       }
-      addCustomer(orgId, customerD, email, enqueueSnackbar, () => ({}))
+      addCustomer(orgId, customerD, email, () => ({}), () => ({}))
     }
     return await createNewCustomerS(
       orgId,
@@ -152,7 +152,7 @@ const AddPaymentDetailsForm = ({
       Status,
       'booked',
       user?.email,
-      enqueueSnackbar
+      () => ({})
     )
   }
 
@@ -168,7 +168,7 @@ const AddPaymentDetailsForm = ({
       leadDetailsObj2,
       data,
       user?.email,
-      enqueueSnackbar
+      ()=>({})
     )
   }
   const updateCS = async (data, resetForm) => {}
@@ -179,12 +179,12 @@ const AddPaymentDetailsForm = ({
       orgId,
       true,
       projectDetails?.uid,
-      selUnitDetails?.uid,
+      selUnitDetails?.uid ,
       custNo,
       leadDetailsObj2,
       data,
       user?.email,
-      enqueueSnackbar
+      () => ({})
     )
 
     return x
@@ -426,7 +426,7 @@ const AddPaymentDetailsForm = ({
         orgId,
         dataPayload,
         user.email,
-        enqueueSnackbar
+        () => ({})
       )
     })
     addModuleScheduler(
@@ -495,7 +495,7 @@ const AddPaymentDetailsForm = ({
         //paymentScheduleObj
       },
       user?.email,
-      enqueueSnackbar
+      () => ({})
     )
 
     const s2 = await bookCompSteps
@@ -597,7 +597,7 @@ const AddPaymentDetailsForm = ({
       selUnitDetails?.pId,
       { soldVal: T_elgible, t_collect: amount },
       user?.email,
-      enqueueSnackbar
+      ()=>({})
     )
     if(id){
     updateLeadStatus(

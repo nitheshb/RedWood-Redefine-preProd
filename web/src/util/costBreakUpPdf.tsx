@@ -220,11 +220,14 @@ const CostBreakUpPdf = ({
     //       )
 
     const plotSaleValue =
-      costSheetA.length > 0
-        ? Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
+      costSheetA.length > 0?
+      // 1000 : Number.isFinite(y)
+        // ? 1001
+        // : 10002
+        Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
           Number(costSheetA[0]['charges'])
         : Number.isFinite(y)
-        ? Number(selUnitDetails?.selUnitDetails?.area * y)
+        ? Number(Number(selUnitDetails?.area?.toString()?.replace(',', '')) * Number(y.toString()?.replace(',', '')))
         : Number(
             Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
               (selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate)
@@ -234,7 +237,7 @@ const CostBreakUpPdf = ({
         ? Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
           Number(costSheetA[0]['charges'])
         : Number.isFinite(y)
-        ? Number(selUnitDetails?.selUnitDetails?.area * y)
+        ? Number(selUnitDetails?.area * y)
         : Number(
             Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
               (selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate)

@@ -34,6 +34,7 @@ import { apartUnitChargesMock } from 'src/constants/projects'
 import {
   getAllProjects,
   steamUsersListByRole,
+  streamUnitById,
   updateLeadCostSheetDetailsTo,
   updateUnitsCostSheetDetailsTo,
 } from 'src/context/dbQueryFirebase'
@@ -117,9 +118,40 @@ const CostBreakUpSheet = ({
   const [additionalInfo, setAdditonalInfo] = useState({})
   const [costSheet, setCostSheet] = useState({})
   const [paymentSchedule, setPaymentSchedule] = useState({})
+  const [streamUnitDetails, setStreamUnitDetails] = useState({})
+
 
   const pdfExportComponent = useRef(null)
   const pdfExportComponentConstruct = useRef(null)
+
+
+  useEffect(() => {
+    streamUnitDataFun()
+  }, [])
+  useEffect(() => {
+    streamUnitDataFun()
+  }, [selUnitDetails])
+
+  const streamUnitDataFun = () => {
+    if(selUnitDetails?.id){
+    const { id } = selUnitDetails
+    console.log('hello', selUnitDetails)
+    const z = streamUnitById(
+      orgId,
+      (querySnapshot) => {
+        const SnapData = querySnapshot.data()
+        SnapData.id = id
+        SnapData.uid = id
+        console.log('hello', SnapData)
+        setStreamUnitDetails(SnapData)
+      },
+      { uid: id },
+      () => {
+        console.log('error')
+      }
+    )
+  }
+}
 
   useEffect(() => {
     console.log('payload data is ', leadPayload)
@@ -788,7 +820,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                         source="Booking"
                         stepIndx={stepIndx}
                         StatusListA={StatusListA}
-                        selUnitDetails={selUnitDetails}
+                        selUnitDetails={streamUnitDetails}
                         title="Booking Form"
                       />
                     </>
@@ -796,7 +828,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                   {['additonalInfo'].includes(onStep) && (
                     <AdditonalBookingDetails
                       currentMode={actionMode}
-                      selUnitDetails={selUnitDetails}
+                      selUnitDetails={streamUnitDetails}
                       additionalInfo={additionalInfo}
                       setAdditonalInfo={setAdditonalInfo}
                       leadDetailsObj2={leadPayload}
@@ -819,7 +851,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       costSheet={costSheet}
                       phase={selPhaseObj}
                       leadDetailsObj2={leadPayload}
-                      selUnitDetails={selUnitDetails}
+                      selUnitDetails={streamUnitDetails}
                       newPlotCsObj={newPlotCsObj}
                       newPlotCostSheetA={newPlotCostSheetA}
                       newConstructCsObj={newConstructCsObj}
@@ -841,11 +873,12 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       setMyBookingPayload={setMyBookingPayload}
                       // costSheetA={costSheetA}
                       pdfExportComponent={pdfExportComponent}
-                      customerInfo={customerInfo}
                       costSheet={costSheet}
                       selPhaseObj={selPhaseObj}
                       leadDetailsObj1={leadDetailsObj1}
-                      selUnitDetails={selUnitDetails}
+                      customerInfo={streamUnitDetails}
+
+                      selUnitDetails={streamUnitDetails}
                       setNewPlotCsObj={setNewPlotCsObj}
                       newPlotCsObj={newPlotCsObj}
                       costSheetA={newPlotCostSheetA}
@@ -885,7 +918,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                     <BlockingUnitForm
                       title="Blocking Form"
                       leadDetailsObj2={leadPayload}
-                      selUnitDetails={selUnitDetails}
+                      selUnitDetails={streamUnitDetails}
                       stepIndx={stepIndx}
                       StatusListA={StatusListA}
                     />
@@ -965,7 +998,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
         selPhaseObj={selPhaseObj}
         headerContent={{}}
         leadDetailsObj={leadDetailsObj1}
-        selUnitDetails={selUnitDetails}
+        selUnitDetails={streamUnitDetails}
         newPlotCsObj={newPlotCsObj}
         costSheetA={costSheetA || newPlotCostSheetA || []}
         newPlotCostSheetA={costSheetA || newPlotCostSheetA || []}

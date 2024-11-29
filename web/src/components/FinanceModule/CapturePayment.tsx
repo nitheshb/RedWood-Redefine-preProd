@@ -240,8 +240,7 @@ const CaptureUnitPayment = ({
   }
   const onSubmitSupabase = async (data, resetForm) => {
     console.log('inside supabase support', data)
-//  Number(formik?.values?.amount?.replace(/,/g, ''))
-    return data;
+
 
     let y = {}
     y = data
@@ -879,7 +878,7 @@ const CaptureUnitPayment = ({
                                                           )
                                                         }
                                                       } else {
-                                                      
+
                                                         formik.setFieldValue(
                                                           'amount',
                                                           Number((e.target.value || '').replace(/,/g, ''))

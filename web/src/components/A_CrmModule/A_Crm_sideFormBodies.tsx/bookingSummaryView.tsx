@@ -68,6 +68,7 @@ const BookingSummaryView = ({
   const { enqueueSnackbar } = useSnackbar()
   const ref = createRef()
 
+
   useEffect(() => {
     console.log('sel unti detials ', selUnitDetails)
     console.log('my imported details is  ', customerInfo)
@@ -591,30 +592,30 @@ const BookingSummaryView = ({
                               </section>
                               <section className="flex flex-col  mt-2 mb-2">
                                 <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                  {customerInfo?.secondaryCustomerDetailsObj?.customerName2 || 'NA'}
+                                  {customerInfo?.secondaryCustomerDetailsObj?.customerName1 || 'NA'}
                                 </h1>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
                                 {customerInfo?.secondaryCustomerDetailsObj
-                                    ?.relation2?.label || ''}{' '}
+                                    ?.relation1?.label || ''}{' '}
                                   {customerInfo?.secondaryCustomerDetailsObj
-                                    ?.co_Name2 || 'NA'}
+                                    ?.co_Name1 || 'NA'}
                                 </span>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
                                   {
                                     customerInfo?.secondaryCustomerDetailsObj
-                                      ?.address2
+                                      ?.address1
                                   }
                                 </span>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
                                   {
                                     customerInfo?.secondaryCustomerDetailsObj
-                                      ?.phoneNo2
+                                      ?.phoneNo1
                                   }
                                 </span>
                                 <span className="px-3 text-[12px] text-left  text-[12px] font-normal ">
                                   {
                                     customerInfo?.secondaryCustomerDetailsObj
-                                      ?.email2
+                                      ?.email1
                                   }
                                 </span>
                               </section>

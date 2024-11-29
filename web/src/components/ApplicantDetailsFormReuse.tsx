@@ -9,7 +9,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
 
-import { streamMasters, updateUnitCustomerDetailsTo } from 'src/context/dbQueryFirebase'
+import { streamMasters, streamUnitById, updateUnitCustomerDetailsTo } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
@@ -48,7 +48,7 @@ const EmailForm = ({
   const [givenPhNo2, setGivenPhNo2] = useState('')
   const [statesListA, setStatesList] = useState([])
   useEffect(() => {
-    console.log('custoemr infor is', customerInfo)
+    console.log('custoemr infor is',index,"-->", customerInfo)
   }, [customerInfo])
   useEffect(() => {
     const unsubscribe = streamMasters(
@@ -122,16 +122,16 @@ const EmailForm = ({
   const datee = new Date().getTime()
   const initialState = {
     customerName1:
-      leadPayload?.customerDetailsObj?.customerName1 ||
-      selUnitDetails?.customerDetailsObj?.customerName1 ||
+      // leadPayload?.customerDetailsObj?.customerName1 ||
+      // selUnitDetails?.customerDetailsObj?.customerName1 ||
       customerInfo?.customerName1 ||
       leadPayload?.Name ||
       '',
-    customerName2:
-      leadPayload?.secondaryCustomerDetailsObj?.customerName2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.customerName2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.customerName2 ||
-      '',
+    // customerName2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.customerName2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.customerName2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.customerName2 ||
+    //   '',
     relation1: leadPayload?.customerDetailsObj?.relation1 ||
       selUnitDetails?.customerDetailsObj?.relation1 ||
       customerInfo?.relation1 || {
@@ -139,23 +139,23 @@ const EmailForm = ({
         value: 'S/O',
       },
 
-    relation2: customerInfo?.secondaryCustomerDetailsObj?.relation2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.relation2 ||
-      leadPayload?.secondaryCustomerDetailsObj?.relation2 || {
-        label: 'S/O',
-        value: 'S/O',
-      },
+    // relation2: customerInfo?.secondaryCustomerDetailsObj?.relation2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.relation2 ||
+    //   leadPayload?.secondaryCustomerDetailsObj?.relation2 || {
+    //     label: 'S/O',
+    //     value: 'S/O',
+    //   },
 
     co_Name1:
       leadPayload?.customerDetailsObj?.co_Name1 ||
       selUnitDetails?.customerDetailsObj?.co_Name1 ||
       customerInfo?.co_Name1 ||
       '',
-    co_Name2:
-      leadPayload?.secondaryCustomerDetailsObj?.co_Name2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.co_Name2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.co_Name2 ||
-      '',
+    // co_Name2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.co_Name2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.co_Name2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.co_Name2 ||
+    //   '',
 
     phoneNo1:
       leadPayload?.customerDetailsObj?.phoneNo1 ||
@@ -169,17 +169,17 @@ const EmailForm = ({
       customerInfo?.phoneNo3 ||
       leadPayload?.Mobile ||
       '',
-    phoneNo2:
-      leadPayload?.secondaryCustomerDetailsObj?.phoneNo2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.phoneNo2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.phoneNo2 ||
-      '',
+    // phoneNo2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.phoneNo2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.phoneNo2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.phoneNo2 ||
+    //   '',
 
-    phoneNo4:
-      leadPayload?.secondaryCustomerDetailsObj?.phoneNo4 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.phoneNo4 ||
-      customerInfo?.secondaryCustomerDetailsObj?.phoneNo4 ||
-      '',
+    // phoneNo4:
+    //   leadPayload?.secondaryCustomerDetailsObj?.phoneNo4 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.phoneNo4 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.phoneNo4 ||
+    //   '',
 
     email1:
       leadPayload?.customerDetailsObj?.email1 ||
@@ -187,41 +187,41 @@ const EmailForm = ({
       customerInfo?.email1 ||
       leadPayload?.Email ||
       '',
-    email2:
-      leadPayload?.secondaryCustomerDetailsObj?.email2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.email2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.email2 ||
-      '',
+    // email2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.email2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.email2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.email2 ||
+    //   '',
     dob1: isValidDate(selUnitDetails?.customerDetailsObj?.dob1)
       ? selUnitDetails.customerDetailsObj.dob1
       : leadPayload?.customerDetailsObj?.dob1 || customerInfo?.dob1 || datee,
-    dob2:
-      leadPayload?.secondaryCustomerDetailsObj?.dob2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.dob2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.dob2 ||
-      datee,
+    // dob2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.dob2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.dob2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.dob2 ||
+    //   datee,
     marital1: leadPayload?.customerDetailsObj?.marital1 ||
       selUnitDetails?.customerDetailsObj?.marital1 ||
       customerInfo?.marital1 || {
         label: 'Single',
         value: 'Single',
       },
-    marital2: leadPayload?.secondaryCustomerDetailsObj?.marital2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.marital2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.marital2 || {
-        label: 'Single',
-        value: 'Single',
-      },
+    // marital2: leadPayload?.secondaryCustomerDetailsObj?.marital2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.marital2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.marital2 || {
+    //     label: 'Single',
+    //     value: 'Single',
+    //   },
     address1:
       leadPayload?.customerDetailsObj?.address1 ||
       selUnitDetails?.customerDetailsObj?.address1 ||
       customerInfo?.address1 ||
       '',
-    address2:
-      leadPayload?.secondaryCustomerDetailsObj?.address2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.address2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.address2 ||
-      '',
+    // address2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.address2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.address2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.address2 ||
+    //   '',
     city1:
       leadPayload?.customerDetailsObj?.city1 ||
       selUnitDetails?.customerDetailsObj?.city1 ||
@@ -246,41 +246,41 @@ const EmailForm = ({
       customerInfo?.countryCode1 ||
       '',
 
-    countryCode2:
-      leadPayload?.customerDetailsObj?.countryCode2 ||
-      selUnitDetails?.customerDetailsObj?.countryCode2 ||
-      customerInfo?.countryCode2 ||
-      '',
+    // countryCode2:
+    //   leadPayload?.customerDetailsObj?.countryCode2 ||
+    //   selUnitDetails?.customerDetailsObj?.countryCode2 ||
+    //   customerInfo?.countryCode2 ||
+    //   '',
 
-    city2:
-      leadPayload?.secondaryCustomerDetailsObj?.city2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.city2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.city2 ||
-      '',
+    // city2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.city2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.city2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.city2 ||
+    //   '',
 
-    countryName2:
-      leadPayload?.secondaryCustomerDetailsObj?.countryName2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.countryName2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.countryName2 ||
-      '',
+    // countryName2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.countryName2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.countryName2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.countryName2 ||
+    //   '',
 
-    pincode2:
-      leadPayload?.secondaryCustomerDetailsObj?.pincode2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.pincode2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.pincode2 ||
-      '',
+    // pincode2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.pincode2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.pincode2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.pincode2 ||
+    //   '',
 
-    countryCode3:
-      leadPayload?.secondaryCustomerDetailsObj?.countryCode3 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.countryCode3 ||
-      customerInfo?.secondaryCustomerDetailsObj?.countryCode3 ||
-      '',
+    // countryCode3:
+    //   leadPayload?.secondaryCustomerDetailsObj?.countryCode3 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.countryCode3 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.countryCode3 ||
+    //   '',
 
-    countryCode4:
-      leadPayload?.secondaryCustomerDetailsObj?.countryCode4 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.countryCode4 ||
-      customerInfo?.secondaryCustomerDetailsObj?.countryCode4 ||
-      '',
+    // countryCode4:
+    //   leadPayload?.secondaryCustomerDetailsObj?.countryCode4 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.countryCode4 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.countryCode4 ||
+    //   '',
 
     state1: leadPayload?.customerDetailsObj?.state1 ||
       selUnitDetails?.customerDetailsObj?.state1 ||
@@ -288,64 +288,64 @@ const EmailForm = ({
         value: 'KA',
         label: 'Karnataka',
       },
-    state2: leadPayload?.secondaryCustomerDetailsObj?.state2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.state2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.state2 || {
-        value: 'KA',
-        label: 'Karnataka',
-      },
+    // state2: leadPayload?.secondaryCustomerDetailsObj?.state2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.state2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.state2 || {
+    //     value: 'KA',
+    //     label: 'Karnataka',
+    //   },
 
     panNo1:
       leadPayload?.customerDetailsObj?.panNo1 ||
       selUnitDetails?.customerDetailsObj?.panNo1 ||
       customerInfo?.panNo1 ||
       '',
-    panNo2:
-      leadPayload?.secondaryCustomerDetailsObj?.panNo2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.panNo2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.panNo2 ||
-      '',
+    // panNo2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.panNo2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.panNo2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.panNo2 ||
+    //   '',
     panDocUrl1:
       leadPayload?.customerDetailsObj?.panDocUrl1 ||
       selUnitDetails?.customerDetailsObj?.panDocUrl1 ||
       customerInfo?.panDocUrl1 ||
       '',
 
-    panDocUrl2:
-      leadPayload?.secondaryCustomerDetailsObj?.panDocUrl2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.panDocUrl2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.panDocUrl2 ||
-      '',
+    // panDocUrl2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.panDocUrl2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.panDocUrl2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.panDocUrl2 ||
+    //   '',
     aadharNo1:
       leadPayload?.customerDetailsObj?.aadharNo1 ||
       selUnitDetails?.customerDetailsObj?.aadharNo1 ||
       customerInfo?.aadharNo1 ||
       '',
-    aadharNo2:
-      leadPayload?.secondaryCustomerDetailsObj?.aadharNo2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.aadharNo2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.aadharNo2 ||
-      '',
+    // aadharNo2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.aadharNo2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.aadharNo2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.aadharNo2 ||
+    //   '',
     aadharUrl1:
       leadPayload?.customerDetailsObj?.aadharUrl1 ||
       selUnitDetails?.customerDetailsObj?.aadharUrl1 ||
       customerInfo?.aadharUrl1 ||
       '',
-    aadharUrl2:
-      leadPayload?.secondaryCustomerDetailsObj?.aadharUrl2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.aadharUrl2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.aadharUrl2 ||
-      '',
+    // aadharUrl2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.aadharUrl2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.aadharUrl2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.aadharUrl2 ||
+    //   '',
     occupation1:
       leadPayload?.customerDetailsObj?.occupation1 ||
       selUnitDetails?.customerDetailsObj?.occupation1 ||
       customerInfo?.occupation1 ||
       '',
-    occupation2:
-      leadPayload?.secondaryCustomerDetailsObj?.occupation2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.occupation2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.occupation2 ||
-      '',
+    // occupation2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.occupation2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.occupation2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.occupation2 ||
+    //   '',
     companyName1:
       leadPayload?.customerDetailsObj?.companyName1 ||
       selUnitDetails?.customerDetailsObj?.companyName1 ||
@@ -356,27 +356,27 @@ const EmailForm = ({
       selUnitDetails?.customerDetailsObj?.designation1 ||
       customerInfo?.designation1 ||
       '',
-    designation2:
-      leadPayload?.secondaryCustomerDetailsObj?.designation2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.designation2 ||
-      customerInfo?.designation2 ||
-      '',
+    // designation2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.designation2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.designation2 ||
+    //   customerInfo?.designation2 ||
+    //   '',
     annualIncome1:
       leadPayload?.customerDetailsObj?.annualIncome1 ||
       selUnitDetails?.customerDetailsObj?.annualIncome1 ||
       customerInfo?.annualIncome1 ||
       '',
-    annualIncome2:
-      leadPayload?.secondaryCustomerDetailsObj?.annualIncome2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.annualIncome2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.annualIncome2 ||
-      '',
+    // annualIncome2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.annualIncome2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.annualIncome2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.annualIncome2 ||
+    //   '',
 
-    companyName2:
-      leadPayload?.secondaryCustomerDetailsObj?.companyName2 ||
-      selUnitDetails?.secondaryCustomerDetailsObj?.companyName2 ||
-      customerInfo?.secondaryCustomerDetailsObj?.companyName2 ||
-      '',
+    // companyName2:
+    //   leadPayload?.secondaryCustomerDetailsObj?.companyName2 ||
+    //   selUnitDetails?.secondaryCustomerDetailsObj?.companyName2 ||
+    //   customerInfo?.secondaryCustomerDetailsObj?.companyName2 ||
+    //   '',
 
     aggrementAddress:
       leadPayload?.aggrementDetailsObj?.aggrementAddress ||
@@ -555,7 +555,7 @@ const EmailForm = ({
                       <div>
                         <section className="flex flex-row">
                           <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
-                            Applicant Details-I
+                            Applicant Details-{index+1}
                           </h6>
                           <div
                             className=" ml- text-[12px] cursor-pointer mt-1  rounded-full px-2  text-[#0ea5e9] underline"
@@ -1170,21 +1170,54 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo }) =
   const [forms, setForms] = useState([{ id: 1 }])
   const [savedForms, setSavedForms] = useState({})
   const [applicantDetailsA, setApplicantDetailsA] = useState([])
+  const [streamUnitDetails, setStreamUnitDetails] = useState({})
+
+  const [applicantDetailsObj, setApplicantDetailsObj] = useState({})
+
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
 
+
   useEffect(() => {
-    console.log('selUnitDetails', selUnitDetails)
+    streamUnitDataFun()
+  }, [])
+  useEffect(() => {
+    streamUnitDataFun()
+  }, [selUnitDetails])
+
+  useEffect(() => {
+    console.log('customer info selUnitDetails', selUnitDetails)
     const custDetailsA = []
-    if (selUnitDetails?.customerDetailsObj) {
-      custDetailsA.push(selUnitDetails?.customerDetailsObj)
+    if (streamUnitDetails?.customerDetailsObj) {
+      custDetailsA.push(streamUnitDetails?.customerDetailsObj)
     }
-    if (selUnitDetails?.secondaryCustomerDetailsObj) {
-      custDetailsA.push(customerInfo?.secondaryCustomerDetailsObj)
+    if (streamUnitDetails?.secondaryCustomerDetailsObj) {
+      custDetailsA.push(streamUnitDetails?.secondaryCustomerDetailsObj)
     }
     setApplicantDetailsA(custDetailsA)
-  }, [selUnitDetails,customerInfo])
+    console.log('customer info selUnitDetails', applicantDetailsA, streamUnitDetails?.secondaryCustomerDetailsObj)
+  }, [streamUnitDetails,customerInfo])
+
+  const streamUnitDataFun = () => {
+    if(selUnitDetails?.id){
+    const { id } = selUnitDetails
+    console.log('hello', selUnitDetails)
+    const z = streamUnitById(
+      orgId,
+      (querySnapshot) => {
+        const SnapData = querySnapshot.data()
+        SnapData.id = id
+        console.log('hello', SnapData)
+        setStreamUnitDetails(SnapData)
+      },
+      { uid: id },
+      () => {
+        console.log('error')
+      }
+    )
+    }
+  }
   const handleSubmit = (
     values,
     { setSubmitting, resetForm },
@@ -1207,16 +1240,21 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo }) =
     if (index === 0) {
 
       x.customerDetailsObj = values
+      x.custObj1 = values
+
     }
     if (index === 1) {
 
       x.secondaryCustomerDetailsObj = values
+      x.custObj2 = values
     } if (index === 2) {
 
       x.thirdCustomerDetailsObj = values
+      x.custObj3 = values
     } if (index === 3) {
 
       x.fourthCustomerDetailsObj = values
+      x.custObj4 = values
     }
 
     // add to array

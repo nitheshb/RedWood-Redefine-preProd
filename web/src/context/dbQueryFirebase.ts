@@ -3279,7 +3279,7 @@ console.log('error in master update ', error)
     }
 
   }
- 
+
 
 }
 export const updateProjectComputedData = async (orgId, id, data) => {
@@ -4724,7 +4724,7 @@ export const captureWalletPayment = async (
       bank_ref_no,
     } = payload
 
-    console.log('unit log', payload)
+    console.log('unit log', payload, selCustomerDetails)
     const { data, error } = await supabase.from(`${orgId}_accounts`).insert([
       {
         projectId: 'wallet',
@@ -4733,7 +4733,7 @@ export const captureWalletPayment = async (
         towards_id: towardsBankDocId || '',
         mode,
         custId: leadDocId,
-        customerName: Name || '',
+        customerName: Name || selCustomerDetails.customerDetailsObj ?.customerName1 || '',
         receive_by: payload?.bookedBy,
         txt_dated: dated, // modify this to dated time entred by user
         status: payload?.status || 'review',
@@ -4754,7 +4754,7 @@ export const captureWalletPayment = async (
         towards_id: towardsBankDocId || '' ,
         mode,
         custId: leadDocId,
-        customerName: Name,
+        customerName: Name  || selCustomerDetails.customerDetailsObj ?.customerName1 ,
         receive_by: payload?.bookedBy,
         txt_dated: dated, // modify this to dated time entred by user
         status: payload?.status || 'review',
@@ -4841,7 +4841,7 @@ export const capturePaymentS = async (
       bank_ref_no,
     } = payload
 
-    console.log('unit log', payload)
+console.log('unit log', payload)
     const { data, error } = await supabase.from(`${orgId}_accounts`).insert([
       {
         projectId,
@@ -4934,11 +4934,11 @@ if(boolAgreegate){
           to: 'review',
         },
       ])
-    console.log('unit log', data4, error4, data, error)
+console.log('unit log', data4, error4, data, error)
     enqueueSnackbar(`Captured Payment`, {
       variant: 'success',
     })
-    return data
+return data
   } catch (e) {
     console.log('error on transaction upload', e)
     enqueueSnackbar(e.message, {
@@ -5339,20 +5339,27 @@ export const updateManagerApproval = async (
       status,
       plotCS,
       addChargesCS,
-      fullPs,
+
       T_balance,
-      T_Total,
+      T_total,
       T_elgible_balance,
     } = data
+
+    data.fullPs = [...data?.plotCS || [],...data?.addChargesCS || [], ...data?.constructCS || [], ...data?.constAdditionalChargesCS||[], ...data?.possessionAdditionalCostCS || []],
 
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       man_cs_approval: status,
       plotCS: plotCS,
       addChargesCS,
-      fullPs,
+      fullPs: data.fullPs,
       T_balance,
-      T_Total,
+      T_total,
       T_elgible_balance,
+      T_A: data.T_A,
+      T_B: data.T_B,
+      T_C: data.T_C,
+      T_D: data.T_D,
+      T_E: data.T_E,
     })
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)

@@ -62,7 +62,7 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
                                 <div className="flex flex-row justify-between mx- mb-2">
                                   <DoughnutChartWithRoundedSegments
                                     progress={
-                                      (selCustomerPayload?.T_approved / selCustomerPayload?.T_total) *
+                                      (selCustomerPayload?.T_review / selCustomerPayload?.T_total) *
                                       100
                                     }
                                   />
