@@ -100,7 +100,7 @@ const UnitsInventoryHome = ({ project }) => {
       const typeMatch =
           (selUnitType.value === 'any')
             ? true
-            : da?.size?.toLocaleLowerCase() == selUnitType.value?.toLocaleLowerCase()
+            : (String(da?.size)?.toLocaleLowerCase() || 0) == selUnitType.value?.toLocaleLowerCase()
       const facingMatch =
             (selFacing.value === 'any')
               ? true
