@@ -14,6 +14,9 @@ import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
 
+
+
+
 import { useParams } from '@redwoodjs/router'
 
 import Confetti from 'src/components/shared/confetti'
@@ -43,6 +46,7 @@ import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 
 import Loader from '../Loader/Loader'
 import { validate_capturePayment } from '../Schemas'
+
 
 const CaptureUnitPayment = ({
   title,
@@ -85,6 +89,32 @@ const CaptureUnitPayment = ({
   //   const formatted = value ? `Rs.${parseInt(value, 10).toLocaleString('en-IN')}` : '';
   //   setFormattedValue(formatted);
   // };
+
+
+
+
+
+
+
+
+  function formatIndianNumber(value) {
+    if (!value) return '';
+  
+    // Convert the value to a string (in case it's a number)
+    const numStr = value.toString();
+  
+    // Format the integer part using Indian number grouping
+    // First, handle the last 3 digits, then format the rest in groups of 2 digits
+    const formattedInteger = numStr.replace(
+      /(\d)(?=(\d{2})+(?!\d))/g, // This regex matches digits for Indian numbering
+      '$1,' // Adds a comma after every 2 digits (except at the start)
+    );
+  
+    return formattedInteger;
+  }
+
+
+  
 
   const [startDate, setStartDate] = useState(d)
 
@@ -718,6 +748,33 @@ const CaptureUnitPayment = ({
                                                     options={bankDetailsA}
                                                   />
                                                 </div>
+
+
+{/* <div className="mb-4 w-full">
+      <MultiSelectMultiLineField
+        label="Paid Towards Account box"
+        name="towardsBankDocId"
+        onChange={(payload) => {
+          console.log('Changed value is ', payload);
+          const { value, id, accountName } = payload;
+
+        
+          const formattedValue = formatIndianNumber(value);
+
+        
+          formik.setFieldValue('builderName', accountName);
+          formik.setFieldValue('landlordBankDocId', id);
+          formik.setFieldValue('towardsBankDocId', formattedValue);
+
+          console.log('Formatted value:', formattedValue); 
+        }}
+        value={formik.values.towardsBankDocId}
+        options={bankDetailsA}
+      />
+    </div> */}
+
+
+                                                
                                               </div>
                                             )}
 

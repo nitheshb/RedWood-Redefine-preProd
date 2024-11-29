@@ -13,13 +13,13 @@ import { Calendar, ChevronRight } from 'lucide-react';
 
 const ExpenseChart = () => {
   const data = [
-    { day: '7', 'Bills Payment': 110, 'Foods and Drinks': 165, 'Uncategorized': 52 },
-    { day: '8', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
-    { day: '9', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
-    { day: '10', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
-    { day: '11', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
-    { day: '12', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
-    { day: '13', 'Bills Payment': 108, 'Foods and Drinks': 165, 'Uncategorized': 52 },
+    { day: '7', 'Bills Payment': 110, 'Sales': 165, 'Uncategorized': 52 },
+    { day: '8', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
+    { day: '9', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
+    { day: '10', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
+    { day: '11', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
+    { day: '12', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
+    { day: '13', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
   ];
 
 
@@ -86,7 +86,7 @@ const ExpenseChart = () => {
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 bg-sky-400 rounded"></div>
-          <span>Foods and Drinks</span>
+          <span>Sales</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 bg-gray-400 rounded"></div>
@@ -117,7 +117,7 @@ const ExpenseChart = () => {
             <Tooltip content={customTooltip} />
 
             <Bar dataKey="Bills Payment" fill="#6366f1" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="Foods and Drinks" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="Sales" fill="#38bdf8" radius={[4, 4, 0, 0]} />
             <Bar dataKey="Uncategorized" fill="#9ca3af" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>

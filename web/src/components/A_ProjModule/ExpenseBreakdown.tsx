@@ -5,7 +5,7 @@ import { ChevronDown } from 'lucide-react';
 const ExpenseBreakdown = () => {
   const data = [
     { name: 'Bills Payment', value: 52.66, percentage: 17, color: '#4C3BCF' },
-    { name: 'Foods and Drinks', value: 635.18, percentage: 63, color: '#605EA1' }, 
+    { name: 'Sales', value: 635.18, percentage: 63, color: '#605EA1' }, 
     { name: 'Uncategorized', value: 71.00, percentage: 20, color: '#9CA3AF' }
   ];
 

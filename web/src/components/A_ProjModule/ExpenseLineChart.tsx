@@ -12,13 +12,13 @@ import { Calendar, ChevronRight, ChevronDown } from 'lucide-react';
 
 const ExpenseLineChart = () => {
   const data = [
-    { day: '7', 'Bills Payment': 115, 'Foods and Drinks': 175, 'Uncategorized': 50 },
-    { day: '8', 'Bills Payment': 100, 'Foods and Drinks': 185, 'Uncategorized': 60 },
-    { day: '9', 'Bills Payment': 85, 'Foods and Drinks': 180, 'Uncategorized': 55 },
-    { day: '10', 'Bills Payment': 110, 'Foods and Drinks': 150, 'Uncategorized': 45 },
-    { day: '11', 'Bills Payment': 100, 'Foods and Drinks': 160, 'Uncategorized': 40 },
-    { day: '12', 'Bills Payment': 130, 'Foods and Drinks': 215, 'Uncategorized': 65 },
-    { day: '13', 'Bills Payment': 100, 'Foods and Drinks': 165, 'Uncategorized': 35 },
+    { day: '7', 'Bills Payment': 115, 'Sales': 175, 'Uncategorized': 50 },
+    { day: '8', 'Bills Payment': 100, 'Sales': 185, 'Uncategorized': 60 },
+    { day: '9', 'Bills Payment': 85, 'Sales': 180, 'Uncategorized': 55 },
+    { day: '10', 'Bills Payment': 110, 'Sales': 150, 'Uncategorized': 45 },
+    { day: '11', 'Bills Payment': 100, 'Sales': 160, 'Uncategorized': 40 },
+    { day: '12', 'Bills Payment': 130, 'Sales': 215, 'Uncategorized': 65 },
+    { day: '13', 'Bills Payment': 100, 'Sales': 165, 'Uncategorized': 35 },
   ];
 
 
@@ -86,7 +86,7 @@ const ExpenseLineChart = () => {
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 bg-sky-400 rounded"></div>
-          <span>Foods and Drinks</span>
+          <span>Sales</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 bg-gray-400 rounded"></div>
@@ -131,7 +131,7 @@ const ExpenseLineChart = () => {
             />
             <Line 
               type="stepAfter"
-              dataKey="Foods and Drinks" 
+              dataKey="Sales" 
               stroke="#38bdf8" 
               strokeWidth={2}
               dot={false}

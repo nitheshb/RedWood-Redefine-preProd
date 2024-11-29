@@ -36,6 +36,7 @@ const EmailForm = ({
   leadPayload,
   selUnitDetails,
   customerInfo,
+  setShowApplicantEdit,
   index,
 }) => {
   const d = new window.Date()
@@ -1157,6 +1158,12 @@ const EmailForm = ({
             >
               Save
             </button> */}
+
+
+
+
+
+
           </div>
         </Form>
       )}

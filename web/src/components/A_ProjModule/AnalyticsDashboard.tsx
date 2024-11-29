@@ -41,6 +41,7 @@ import SalesDashboard from './SalesDashboard';
 
 
 
+
 const AnalyticsDashboard = () => {
   const timeSeriesData = [
     { time: '12', value: 5, prevValue: 5 },
@@ -453,7 +454,6 @@ const CustomTooltip = ({ active, payload }) => {
 <div className="bg-white rounded-lg shadow-lg ">
 <UnitsSoldChart />
   </div>
-
 
 
 
