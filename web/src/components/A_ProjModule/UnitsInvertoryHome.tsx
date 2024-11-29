@@ -459,7 +459,7 @@ const UnitsInventoryHome = ({ project }) => {
               // to={routes.projectEdit({ uid })}
             >
               <span className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0">
-                Inventory
+                Inventory box
               </span>
             </Link>
           </div>
@@ -471,7 +471,7 @@ const UnitsInventoryHome = ({ project }) => {
               <section className=" top-0 left-0  flex flex-row  border bg-white border-[#dddddd] rounded-full custom-shadow">
                 <DropDownSearchBar
                   label={'Projects'}
-                  type={'All Projects'}
+                  type={'Select Project'}
                   id={'id'}
                   setStatusFun={{}}
                   viewUnitStatusA={[]}
@@ -545,7 +545,7 @@ const UnitsInventoryHome = ({ project }) => {
                     placeholder={` Search Unit No, Customer name, Phone no, Dues, Review.....`}
                     required
                   /> */}
-                <button
+                {/* <button
                   onClick={() => {
                     console.log('clicked')
                   }}
@@ -567,7 +567,7 @@ const UnitsInventoryHome = ({ project }) => {
                     ></path>
                   </svg>
                   <span className="sr-only">Search</span>
-                </button>
+                </button> */}
               </section>
             </div>
           </div>

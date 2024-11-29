@@ -510,7 +510,7 @@ console.log('rolws are ', filRoles)
                     disabled={loading}
                   >
                     {loading && <Loader />}
-                    {editMode ? 'Edit Employee' : 'Add Employee'}
+                    {editMode ? 'Save' : 'Add Employee'}
                   </button>
                 </div>
               </Form>

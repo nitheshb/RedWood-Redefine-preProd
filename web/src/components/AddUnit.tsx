@@ -1639,14 +1639,14 @@ const AddUnit = ({
                         )}
                         <div className="mt-5 mt-8 text-right md:space-x-3 md:block flex flex-col-reverse">
                           <button
-                            className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-lg hover:shadow-lg hover:bg-gray-100"
+                            className="mb-4 md:mb-0 bg-white px-5 py-1 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-lg hover:shadow-lg hover:bg-gray-100"
                             type="reset"
                             onClick={() => resetter()}
                           >
                             Reset
                           </button>
                           <button
-                            className="mb-2 pb-[5px] md:mb-0 bg-gradient-to-r from-indigo-400 to-cyan-400 px-5 py-1 text-sm shadow-sm font-medium tracking-wider text-white  rounded-lg hover:shadow-lg hover:bg-green-500"
+                            className="mb-2 pb-[5px] md:mb-0 bg-gradient-to-r from-indigo-400 to-cyan-400 px-5  py-[4px] text-sm shadow-sm font-medium tracking-wider text-white  rounded-lg hover:shadow-lg hover:bg-green-500"
                             type="submit"
                             disabled={loading}
                           >
@@ -1654,7 +1654,7 @@ const AddUnit = ({
                             <span>
                               {' '}
                               {/* {title === 'Edit Unit' ? 'Edit Unit' : 'Add Unit'} */}
-                              {title === 'Edit Unit' ? 'Save Unit' : 'Add Unit'}
+                              {title === 'Edit Unit' ? 'Save' : 'Add Unit'}
                             </span>
                           </button>
                         </div>
