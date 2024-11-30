@@ -5,10 +5,7 @@
 // import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
 // import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
 import { useState, useEffect } from 'react'
-
-import { CalendarIcon, EyeIcon, DownloadIcon } from '@heroicons/react/outline'
-import { Link, routes } from '@redwoodjs/router'
-import ProjectStatsCard from './ProjectStatsCard/ProjectStatsCard'
+import { Link } from '@redwoodjs/router'
 import { getAllProjects } from 'src/context/dbQueryFirebase'
 import DummyBodyLayout from './DummyBodyLayout/DummyBodyLayout'
 import SiderForm from './SiderForm/SiderForm'

@@ -1,8 +1,5 @@
 import Lottie from 'react-lottie-player'
-
 import loaderData from './loader.json'
-
-//
 
 export default () => (
   <>

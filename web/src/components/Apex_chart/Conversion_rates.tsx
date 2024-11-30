@@ -1,7 +1,6 @@
 import { Box, Card, CardHeader } from '@mui/material'
 import React, { useState } from 'react'
 import ReactApexChart from 'react-apexcharts'
-
 const Conversion_rates = () => {
   const [state, setState] = useState({
     series: [

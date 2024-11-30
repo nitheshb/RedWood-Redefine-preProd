@@ -1,22 +1,12 @@
 import { useEffect, useState } from 'react'
-
-import { CleaningServicesRounded } from '@mui/icons-material'
-import { TabList } from '@mui/lab'
-import { Box, Card, Grid, styled } from '@mui/material'
-import { yearsToMonths } from 'date-fns'
-// import LLeadsTableBody from '../LLeadsTableBody/LLeadsTableBody'
-import { useTranslation } from 'react-i18next' // styled components
-
-// import uniqueId from '../../util/generatedId'
+import { useTranslation } from 'react-i18next'
 import {
   getCRMdocById1,
   getCRMTeamTasks,
   getLeadbyId1,
-  getTodayTodoLeadsData,
   getTodayTodoLeadsDataByUser,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import uniqueId from 'src/util/generatedId'
 
 import TodayLeadsActivitySearchView from '../TodayLeadsActivitySearchView'
 
@@ -32,8 +22,6 @@ const rowsCounter = (parent, searchKey) => {
 }
 
 const CrmHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
-  // change navbar title
-  // useTitle('Data Table V1')
   const { t } = useTranslation()
   const { user } = useAuth()
   const { orgId } = user
@@ -116,7 +104,6 @@ const CrmHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
         } catch (error) {
           setSchLoading(false)
         }
-        // await console.log('what are we', todoData)
       } else {
         console.log('git values is 1', taskType)
         setSchLoading(true)

@@ -1,6 +1,3 @@
-
-import { Check } from 'lucide-react';
-
 const DoughnutChartWithRoundedSegments = ({ progress = 0, size = 60, strokeWidth = 15 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;

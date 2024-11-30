@@ -34,16 +34,8 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import { prettyDate, prettyDateTime } from 'src/util/dateConverter'
-
 import 'react-datepicker/dist/react-datepicker.css'
-
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
-
-// import AssigedToDropComp from '../assignedToDropComp'
-// import SiderForm from '../SiderForm/SiderForm'
-
-// import UnitFullSummary from './CrmUnitFullSummary'
-
 import { supabase } from 'src/context/supabase'
 import AssigedToDropComp from 'src/components/assignedToDropComp'
 import SiderForm from 'src/components/SiderForm/SiderForm'

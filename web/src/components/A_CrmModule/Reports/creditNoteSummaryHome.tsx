@@ -2,34 +2,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 // import { Link, routes } from '@redwoodjs/router'
 import { useState, useEffect } from 'react'
-
-import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
 import { RootStateOrAny, useSelector } from 'react-redux'
-// import { XIcon } from '@heroicons/react/outline'
-
-// import { XIcon } from '@heroicons/react/outline'
-
 import { v4 as uuidv4 } from 'uuid'
-
 import { MetaTags } from '@redwoodjs/web'
-
-import LLeadsTableView from 'src/components/LLeadsTableView/LLeadsTableView'
 import SiderForm from 'src/components/SiderForm/SiderForm'
 import { USER_ROLES } from 'src/constants/userRoles'
 import {
-  addLeadSupabase,
   getAllProjects,
-  getBookedUnitsByProject,
-  getCpLeadsByAdminStatus,
-  getLeadsByAdminStatus,
-  getLeadsByStatus,
-  getLeadsByStatusUser,
-  getLeadsByUnassigned,
-  getMyProjects,
   steamUsersCreditNotesList,
-  steamUsersListByRole,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'

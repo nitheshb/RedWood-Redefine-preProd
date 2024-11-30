@@ -2,50 +2,17 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment, useEffect, useState } from 'react'
-
-
-
-import { Menu } from '@headlessui/react'
-import { Listbox, Transition } from '@headlessui/react'
-import { AdjustmentsIcon, ArrowRightIcon } from '@heroicons/react/outline'
-import CalendarIcon from '@heroicons/react/outline/CalendarIcon'
+import { useEffect, useState } from 'react'
 import {
-  BadgeCheckIcon,
-  DocumentIcon,
-  EyeIcon,
-  MailIcon,
-  DeviceMobileIcon,
-  ViewBoardsIcon,
-  ViewGridIcon,
   XIcon,
 } from '@heroicons/react/solid'
-import { CheckIcon, SelectorIcon, DownloadIcon } from '@heroicons/react/solid'
-import ClockIcon from '@heroicons/react/solid/ClockIcon'
-import PlusCircleIcon from '@heroicons/react/solid/PlusCircleIcon'
-import { VerticalAlignBottom } from '@mui/icons-material'
-import { DateTimePicker } from '@mui/lab'
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
-import TimePicker from '@mui/lab/TimePicker'
-import { LinearProgress, TextField } from '@mui/material'
-import { LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import DatePicker from 'react-datepicker'
-import { useDropzone } from 'react-dropzone'
-import toast from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
-
 import {
   addLeadScheduler,
-  addSchedulerLog,
   deleteSchLog,
   steamLeadActivityLog,
-  steamLeadPhoneLog,
   steamLeadScheduleLog,
-  steamUsersListByRole,
-  updateLeadAssigTo,
-  updateLeadStatus,
   updateSchLog,
   addLeadNotes,
   steamLeadNotes,
@@ -64,48 +31,22 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import {
-  getDifferenceInHours,
-  getDifferenceInMinutes,
   prettyDate,
   prettyDateTime,
-  timeConv,
 } from 'src/util/dateConverter'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-
-import SortComp from './sortComp'
-
 import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
-
-import Loader from './Loader/Loader'
-import AddBookingForm from './bookingForm'
-
 import { useSnackbar } from 'notistack'
-
 import SiderForm from '../SiderForm/SiderForm'
-
-import CrmUnitSummary from './A_CrmUnitSummary'
-
 import AssigedToDropComp from '../assignedToDropComp'
-
 import { USER_ROLES } from 'src/constants/userRoles'
-
-import CrmPaymentSummary from './CrmPaymentSummary'
 import UnitFullSummary from './CrmUnitFullSummary'
-
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import { supabase } from 'src/context/supabase'
-
-
-
-
 import { Pie } from 'recharts';
-
-
 import { PieChart,  Cell } from 'recharts';
-import { BellIcon, CreditCardIcon } from 'lucide-react';
-
+import { BellIcon } from 'lucide-react';
 import { ChevronDownIcon } from "lucide-react";
 import { calculatePercentages } from 'src/util/areaConverter'
 

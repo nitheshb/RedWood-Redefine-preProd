@@ -20,16 +20,9 @@ import TaskTable from './TaskTable';
 import ExpenseChart from './ExpenseChart';
 import ExpenseLineChart from './ExpenseLineChart';
 import { TopProducts } from './TopProducts';
-import Dashboard from './Dashboard';
-import DashboardComponent from './Dashboard';
-
-
 import CRMInventoryReport from './CRMInventoryReport';
-
 import CollectionsDashboard from './CollectionsDashboard';
 import UnitsSoldChart from './UnitsSoldChart';
-
-
 import CustomSortableTable from './TableUi';
 import SalesDashboardone from './SalesDashboardone';
 import SalesDashboardtwo from './SalesDashboardtwo';
@@ -37,6 +30,9 @@ import UnitsSoldDashboardthree from './UnitsSoldDashboardthree';
 import AllDashboard from './AllDashboard';
 import SoldUnitschart from './SoldUnitschart';
 import SalesDashboard from './SalesDashboard';
+import CardBox from './AcardBox';
+import WeeklyExpense from './WeeklyExpense';
+import EventBadge from './EventBadge';
 
 
 
@@ -467,9 +463,16 @@ const CustomTooltip = ({ active, payload }) => {
 
 
 
-
-
 </div>
+
+
+<CardBox/>
+
+<WeeklyExpense/>
+
+
+<EventBadge/>
+
 
     </>
   );

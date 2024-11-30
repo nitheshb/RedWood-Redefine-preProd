@@ -2,19 +2,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useEffect, useState } from 'react'
-
-import { EyeIcon, PencilIcon } from '@heroicons/react/outline'
+import { PencilIcon } from '@heroicons/react/outline'
 import { TrashIcon } from '@heroicons/react/outline'
 import { motion } from 'framer-motion'
-
-import StyledButton from 'src/components/RoundedButton'
 import {
   deleteUser,
   steamUsersList,
   steaminactiveUsersList,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-
 import WarningModel from '../comps/warnPopUp'
 
 const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {

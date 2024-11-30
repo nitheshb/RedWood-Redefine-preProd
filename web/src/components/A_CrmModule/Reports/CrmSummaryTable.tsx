@@ -1,22 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react'
-
-
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from "@mui/material";
-
-
-
-
 import {
   LineChart,
   Line,
@@ -28,16 +12,8 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from 'recharts';
-import { ArrowDown, ArrowUp, ArrowUpDown, ChevronDown, MoveDown, MoveUp, TrendingUp } from 'lucide-react';
+import { ArrowUpDown, ChevronDown, MoveDown, MoveUp, TrendingUp } from 'lucide-react';
 import { scaleLinear } from 'd3-scale';
-
-
-
-
-
-
-
-
 import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
 
 const CrmInventorySummaryTable = ({ projects }) => {
@@ -50,7 +26,6 @@ const CrmInventorySummaryTable = ({ projects }) => {
   const [selUnitStatus, seTUnitStatus] = React.useState('false')
 
   const showDrillDownFun = async (text, data, typeA) => {
-    // Display sideForm
     setReportSideForm(true)
     setDrillDownPayload(data)
     setSubTitle(text)

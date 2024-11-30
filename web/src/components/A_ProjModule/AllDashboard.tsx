@@ -1,12 +1,9 @@
 import React from 'react';
-import { Globe, ChevronRight } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { Facebook, Pinterest, Twitter } from '@mui/icons-material';
 import { ConversionChart } from './ConversionChart';
-import { SalesChart } from './SalesChart';
-import { VisitorsChart } from './VisitorsChart';
 import DashboardStats from './DashboardStats';
 
-// Dummy data
 const socialReferrals = [
   { icon: <Facebook className="w-4 h-4 text-blue-600" />, name: "Facebook", percentage: "8%", visitors: "10 visitors" },
   { icon: <Twitter className="w-4 h-4 text-blue-400" />, name: "Twitter", percentage: "0%", visitors: "0 visitors" },
@@ -53,30 +50,7 @@ function StatCard({ title, children }: { title: string; children: React.ReactNod
 function AllDashboard() {
   return (
     <div className=" bg-gray-50 p-6">
-
-
 <DashboardStats/>
-
-
-
-
-
-
-
-      
-
-
-
-
-
-
-
-
-
-
-      {/* secound Gird */}
-
-
 <div className=" bg-gray-50 p-6">
   <div className="max-w-7xl mx-auto space-y-4">
 
@@ -134,11 +108,6 @@ function AllDashboard() {
 
 
 
-
-
-
-
-
             <StatCard title="Traffic Sources">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -172,22 +141,8 @@ function AllDashboard() {
     </div>
   </div>
 </div>
-
-
-
-{/* third cards */}
-
-
-
-
-
-
-
-
-
         
 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* Social Referrals */}
         <StatCard title="Social Referrals">
           <div className="space-y-3">
             {socialReferrals.map((social, index) => (
@@ -205,7 +160,7 @@ function AllDashboard() {
           </div>
         </StatCard>
 
-        {/* Top Countries */}
+
         <StatCard title="Top Countries">
           <div className="space-y-3">
             {topCountries.map((item, index) => (
@@ -223,7 +178,6 @@ function AllDashboard() {
           </div>
         </StatCard>
 
-        {/* Top Referrers */}
         <StatCard title="Top Referrers">
           <div className="space-y-3">
             {topReferrers.map((item, index) => (

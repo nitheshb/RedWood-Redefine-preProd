@@ -1,11 +1,6 @@
-// import { useState } from 'react'
-// import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
-
 import { Box, LinearProgress } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-
 import { Link, routes } from '@redwoodjs/router'
-
 import ProjectMetrics2 from './Comps/ModularDispCard/MetricsProjectCard2'
 import ProjectMetrics3 from './Comps/ModularDispCard/MetricsProjectCard3'
 import ModularProjectMetrics from './Comps/ModularDispCard/ModularDispCard'
@@ -51,7 +46,6 @@ const EachProjectDashboard = ({ project, onSliderOpen = () => {}, isEdit }) => {
   const { t } = useTranslation()
 
   return (
-    // <div className="px-4 pb-[0.1px] flex bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700 ">
     <>
       <Link to={routes.projectEdit({ uid })}>
         <section className="flex flex-col">
@@ -60,7 +54,6 @@ const EachProjectDashboard = ({ project, onSliderOpen = () => {}, isEdit }) => {
               <section className="flex flex-row">
                 <section className="flex flex-col mt-1">
                   <div className="w-[317px] h-[210px] relative bg-indigo-600 rounded-md border border-slate-200 mx-1">
-                    {/* <div className="w-[130px] h-[130px] left-[197px] top-[31px] absolute opacity-50 bg-gradient-to-b from-white to-white rounded-full" /> */}
                     <div className="w-[220px] left-[32px] top-[31px] absolute justify-start items-center gap-3 inline-flex">
                       <div className="w-11 h-11 relative rounded-[25px] mr-1">
                         <div className="w-11 h-11 left-0 top-0 absolute bg-violet-100 rounded-[25px]" />

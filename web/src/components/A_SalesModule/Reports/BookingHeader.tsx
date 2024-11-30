@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-
 import { PieChart, Pie, Cell } from 'recharts';
-import { BellIcon, ChevronDownIcon, CreditCardIcon } from 'lucide-react';
+import { BellIcon, ChevronDownIcon } from 'lucide-react';
 
 
 const BookingSummaryHeader = () => {
@@ -26,7 +25,7 @@ const BookingSummaryHeader = () => {
 
 
 
-  const COLORS = ['#4CAF50', '#FF6347']; // Colors for Paid and Remaining
+  const COLORS = ['#4CAF50', '#FF6347'];
 
 
   const menuItems = [

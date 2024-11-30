@@ -5,23 +5,12 @@ import { Fragment } from 'react'
 
 import { Menu, Transition } from '@headlessui/react'
 import {
-  ChartPieIcon,
   OfficeBuildingIcon,
-  NewspaperIcon,
-  UserGroupIcon,
-  ScaleIcon,
-  PuzzleIcon,
 } from '@heroicons/react/outline'
 import {
   ChevronDownIcon,
-  FireIcon,
-  CurrencyRupeeIcon,
-  DotsVerticalIcon,
-  CheckIcon,
-  DocumentTextIcon,
 } from '@heroicons/react/solid'
 
-import { Link, routes } from '@redwoodjs/router'
 
 import { USER_ROLES } from 'src/constants/userRoles'
 import { useAuth } from 'src/context/firebase-auth-context'

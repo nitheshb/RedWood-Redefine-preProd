@@ -2,10 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-unused-expressions */
 import React, { useCallback, useEffect, useState, useMemo } from 'react'
-
 import { Timestamp } from '@firebase/firestore'
 import { DownloadIcon } from '@heroicons/react/solid'
-import { Grid, makeStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { useField } from 'formik'
 import { Form, Formik } from 'formik'
@@ -25,7 +24,6 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import { TextField } from 'src/util/formFields/TextField'
 
-import { LAddLeadTable } from '../LAddLeadTable'
 import LfileUploadTableHome from '../LfileUploadTableHome'
 import Loader from '../Loader/Loader'
 

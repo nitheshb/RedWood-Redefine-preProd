@@ -1,7 +1,6 @@
 import { Grid, LinearProgress } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { FileHeader } from './FileHeader'
-
 export interface SingleFileUploadWithProgressProps {
   file: File
   onDelete: (file: File) => void

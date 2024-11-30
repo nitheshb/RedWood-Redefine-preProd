@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react'
-
 import { useMemo } from 'react';
-
-
-import { X, Add, Remove } from '@mui/icons-material'
-
+import { Add, Remove } from '@mui/icons-material'
 import { gretProjectionSum } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import SkeletonLoaderPage from 'src/pages/SkeletonLoader/skeletonLoaderPage'
 
 
 import {
   LineChart,
   Line,
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   Tooltip,
@@ -22,8 +15,7 @@ import {
   CartesianGrid,
   Legend,
 } from 'recharts';
-import { ArrowUpDown, ChevronDown, Download, MoveDown, MoveUp, TrendingUp } from 'lucide-react';
-import { scaleLinear } from 'd3-scale';
+import { ArrowUpDown, Download, MoveDown, MoveUp, TrendingUp } from 'lucide-react';
 
 
 import TableSkeleton from './_mock/comps/table/table-skeleton'

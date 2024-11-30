@@ -1,14 +1,7 @@
 import { useState } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
-
-import Loader from 'src/components/Loader/Loader'
 import { updateMoreDetails } from 'src/context/dbQueryFirebase'
-import { TextAreaField } from 'src/util/formFields/TextAreaField'
-
 import CostSheetSetup from '../costSheetSetup'
 import PaymentLeadAccess from '../PaymentScheduleForm/ProjectLeadAccess'
 import PaymentScheduleSetup from '../paymentScheduleSetup'
@@ -50,10 +43,6 @@ const CRMHomeList = ({
   return (
     <div className="h-full flex flex-col  bg-[#F0F1FF] shadow-xl ">
       <div className="">
-        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
-
         <div className="flex flex-row ">
          {source=== 'projectManagement' &&  <div className="mr-4 templateList">
             <div className=" flex">

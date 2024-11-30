@@ -1,5 +1,4 @@
 import { render } from '@redwoodjs/testing/web'
-
 import UsersAdminPage from './UsersAdminPage'
 
 describe('UsersAdminPage', () => {

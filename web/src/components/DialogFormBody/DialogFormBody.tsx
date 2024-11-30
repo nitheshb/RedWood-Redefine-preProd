@@ -1,9 +1,4 @@
-import { constants } from 'os'
-
 import { useState, useEffect } from 'react'
-
-// import { Prompt } from 'react-router-dom'
-import { Dialog } from '@headlessui/react'
 import { Add, Remove } from '@mui/icons-material'
 import { InputAdornment, TextField as MuiTextField } from '@mui/material'
 import { setHours, setMinutes } from 'date-fns'
@@ -12,19 +7,13 @@ import { useSnackbar } from 'notistack'
 import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
-
-
-
 import { AreaConverter } from 'src/components/AreaConverter'
 import Loader from 'src/components/Loader/Loader'
 import {
-  ChooseOptions,
   chooseAuthorityApproval,
   developmentTypes,
   projectPlans,
-  statesList,
   chooseReraApproval,
-  approvalAuthority,
 } from 'src/constants/projects'
 import {
   createProject,

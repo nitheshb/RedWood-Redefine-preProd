@@ -9,7 +9,6 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import SkeletonLoaderPage from 'src/pages/SkeletonLoader/skeletonLoaderPage'
 import { getNextThreeMonths } from 'src/util/dateConverter'
-
 import TableSkeleton from './_mock/comps/table/table-skeleton'
 import { ChevronDown } from 'lucide-react'
 

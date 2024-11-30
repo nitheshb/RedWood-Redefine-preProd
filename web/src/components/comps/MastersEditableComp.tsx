@@ -1,31 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { useRef } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { ExclamationCircleIcon } from '@heroicons/react/outline'
-import { Select as SelectMAT, MenuItem } from '@material-ui/core'
-import { Rowing, Widgets } from '@mui/icons-material'
+import { Select as SelectMAT } from '@material-ui/core'
 import { styled } from '@mui/material/styles'
-import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid'
-import { de } from 'date-fns/locale'
 import { useSnackbar } from 'notistack'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 
-
-//Step- 0
 import {
   approvalAuthority,
   bathTypeList,
   bedRoomsList,
   carParkingList,
-  costSheetAdditionalChargesA,
   csSections,
   facingTypeList,
   gstValesA,
   mortgageType,
-  paymentScheduleA,
   sourceListItems,
   statesList,
   statusList,
@@ -35,10 +24,7 @@ import {
 } from 'src/constants/projects'
 import {
   addCostSheetMaster,
-  addPhasePartAtax,
   addPhaseFullCs,
-  steamBankDetailsList,
-  streamProjectCSMaster,
   addMastersFull,
   streamMasters,
   upsertMasterOption,
@@ -47,22 +33,12 @@ import {
   checkIfMasterAlreadyExists,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
-import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 
-import { gstValesPartA } from '../../../../../RedefineV2/web/src/constants/projects'
-// import WarnPopUpNew from '../SiderForm/WarnPopUp'
-
-import WarningModel from './warnPopUp'
-import WarnPopUp from './warnPopUp'
-
-// import './styles.css'
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
-  // width: '170px',
   fontSize: '13px',
   '&.MuiInputBase-root': {
     width: '100%',
-    fontSize: '13px', //
+    fontSize: '13px',
   },
   '&.MuiOutlinedInput-root': {
     width: '100%',

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
-import { X } from '@mui/icons-material'
 
 import {
   gretProjectionSum,
   steamUsersListByDept,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import SkeletonLoaderPage from 'src/pages/SkeletonLoader/skeletonLoaderPage'
 import { getNextThreeMonths } from 'src/util/dateConverter'
 
 import TableSkeleton from './_mock/comps/table/table-skeleton'
@@ -27,8 +25,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from 'recharts';
-import { ChevronDown, TrendingUp } from 'lucide-react';
-import { scaleLinear } from 'd3-scale';
+import { TrendingUp } from 'lucide-react';
 
 
 

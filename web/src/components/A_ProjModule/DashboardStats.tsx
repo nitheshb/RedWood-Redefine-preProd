@@ -1,6 +1,5 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
-
 const orderData = [
   { name: 'Jan', total: 28, unique: 25 },
   { name: 'Feb', total: 24, unique: 22 },
@@ -10,7 +9,6 @@ const orderData = [
   { name: 'Jun', total: 18, unique: 16 }
 
 ];
-
 const userData = [
   { name: 'Jan', total: 28, unique: 25 },
   { name: 'Feb', total: 24, unique: 22 },
@@ -22,9 +20,6 @@ const userData = [
 ];
 
 const DashboardStats = () => {
-
-
-
   const  metricsone = [
     { label: "Today", total: "1337", secondary: "1322",  highlight: true },
     { label: "Yesterday", total: "20k", secondary: "17.5k" },
@@ -32,11 +27,6 @@ const DashboardStats = () => {
     { label: "Last 30 Days", total: "565.8k", secondary: "358.9k" },
     { label: "Last 90 Days", total: "1.8m", secondary: "902.6k" }
   ];
-
-
-
-
-
   const metrics = [
     { period: 'Today', amount: '₹ 199.98', orders: 2, highlight: true },
     { period: 'Yesterday', amount: '₹ 119.97', orders: 3 },
@@ -76,11 +66,6 @@ const DashboardStats = () => {
      
               <div className="flex-1 ">
 <div className="space-y-1 ">
-
-
-
-
-
   <div className="grid grid-cols-3 pb-1">
     <div className="text-gray-600 font-medium"></div>
     <div className="text-[#6A6A6A] font-medium text-xs">Total</div>
@@ -143,7 +128,7 @@ const DashboardStats = () => {
 
 
 
-        {/* Second Panel: User Data */}
+
         <div className="bg-white rounded-lg shadow-sm">
           <div className="p-6">
 

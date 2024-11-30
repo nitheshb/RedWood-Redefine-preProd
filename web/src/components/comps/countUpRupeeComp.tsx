@@ -1,7 +1,5 @@
 import React from 'react'
-
 import CountUp from 'react-countup'
-
 export const CountUpRupeeComp = ({ value }) => {
   return (
     <CountUp
@@ -20,7 +18,6 @@ const formatIndianCurrency = (value) => {
     style: 'currency',
     currency: 'INR',
   }).format(value)
-  // Remove ".00" from the formatted value
   const trimmedValue = formattedValue.replace('.00', '')
 
   return trimmedValue

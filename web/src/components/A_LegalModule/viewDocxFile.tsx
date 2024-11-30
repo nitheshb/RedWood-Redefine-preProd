@@ -1,5 +1,3 @@
-import { useState, useContext } from 'react'
-
 import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer'
 
 const ViewDocxFile = ({ docUrl }) => {

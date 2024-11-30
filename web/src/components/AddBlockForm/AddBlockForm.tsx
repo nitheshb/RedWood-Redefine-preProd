@@ -1,16 +1,12 @@
-import { Dialog } from '@headlessui/react'
 import { useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { useSnackbar } from 'notistack'
 import { useParams } from '@redwoodjs/router'
-import { InputAdornment, TextField as MuiTextField } from '@mui/material'
 import Loader from 'src/components/Loader/Loader'
 import { TextField } from 'src/util/formFields/TextField'
-import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import { createBlock, updateBlock } from 'src/context/dbQueryFirebase'
 import { CheckIcon } from '@heroicons/react/outline'
-import { use } from 'i18next'
 import { useAuth } from 'src/context/firebase-auth-context'
 
 const AddBlockForm = ({ title, dialogOpen, data }) => {

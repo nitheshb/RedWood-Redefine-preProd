@@ -1,17 +1,4 @@
-/*
-  This example requires some changes to your config:
 
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import { CheckCircleIcon, UserCircleIcon } from '@heroicons/react/solid'
 
 export default function ApplicantDetailsForm() {

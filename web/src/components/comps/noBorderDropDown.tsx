@@ -90,16 +90,13 @@ const customStyles = {
   control: (provided, state) => ({
     ...provided,
     background: '#fff',
-    // borderColor: '#9e9e9e',
     minHeight: '32px',
     height: '32px',
     boxShadow: state.isFocused ? null : null,
     border: '0px solid #000',
     fontSize: '12px',
-
-    // borderBottom: '1px solid #718096', // Set the desired border styles here
-    borderRadius: '0', // Remove rounded corners
-    boxShadow: 'none', // Remove the box shadow
+    borderRadius: '0', 
+    boxShadow: 'none', 
   }),
 
   valueContainer: (provided, state) => ({
@@ -107,7 +104,6 @@ const customStyles = {
     height: '31px',
     padding: '0px',
     fontSize: '12px',
-    // background: '#E5E7EB',
     margin: '0px'
 
   }),

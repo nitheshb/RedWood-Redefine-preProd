@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import Tooltip from '@mui/material/Tooltip'
-import { ArrowUpDown, ChevronDown, MoveDown, MoveUp } from 'lucide-react'
+import { ArrowUpDown, MoveDown, MoveUp } from 'lucide-react'
 import React, { useEffect, useMemo, useState } from 'react'
 
 import ReportSideWindow from 'src/components/SiderForm/ReportSideView'

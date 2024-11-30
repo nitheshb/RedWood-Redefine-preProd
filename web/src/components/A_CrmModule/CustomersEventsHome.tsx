@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 import { EyeIcon } from '@heroicons/react/outline'
 import {
   Box,
@@ -13,7 +12,6 @@ import {
 } from '@mui/material'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import { useSnackbar } from 'notistack'
-
 import StyledButton from 'src/components/RoundedButton'
 import {
   getAllProjects,
@@ -23,9 +21,7 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { getPagesBasedonRoles } from 'src/util/PagesBasedOnRoles'
-
 import DropDownSearchBar from '../dropDownSearchBar'
-// import '../../styles/tablefixedheaderStyles.css'
 const StyledTableHead = styled(TableHead)(({ theme }) => ({
   backgroundColor: theme.palette.action.hover,
   borderTop: '1px solid rgba(224, 224, 224, 1)',

@@ -1,23 +1,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-// import { useState } from 'react'
-// import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
-// import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
-
 import { useEffect, useState } from 'react'
-
-import { Timestamp } from '@firebase/firestore'
 import { CalendarIcon, EyeIcon } from '@heroicons/react/outline'
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from '@heroicons/react/solid'
 import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
-import DatePicker from 'react-datepicker'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
-
-import { sourceList, sourceListItems } from 'src/constants/projects'
+import { sourceListItems } from 'src/constants/projects'
 import {
   addAgreegatedSalesValues,
   getAllProjects,
@@ -28,7 +19,6 @@ import {
   getTodayTodoLeadsData,
   getTodayTodoLeadsDataByUser,
   steamAllLeadsActivity,
-  steamLeadScheduleLog,
   steamUsersListByRole,
   streamLeadLogdWithNullProj,
   updateLeadLastUpdateTime,
@@ -41,7 +31,6 @@ import { sendWhatAppTextSms1 } from 'src/util/axiosWhatAppApi'
 import CSVDownloader from 'src/util/csvDownload'
 import { prettyDate } from 'src/util/dateConverter'
 import {
-  SlimDateSelectBox,
   SlimSelectBox,
 } from 'src/util/formFields/slimSelectBoxField'
 
@@ -49,8 +38,6 @@ import MarketingAnalyticsHome from './A_MarketingModule/MarketinAnalyticsHome'
 import StackedBarChart from './A_MarketingModule/Reports/Charts/marketingStackedBarChart'
 import CampaingsTopBarsComponent from './A_MarketingModule/Reports/Charts/marketingTopBars'
 import BookingSummaryReport from './A_SalesModule/Reports/bookingSummaryReport'
-import StackedLeadsChart from './A_SalesModule/Reports/charts/salesStackedChart'
-import Chat from './A_SalesModule/Reports/chatSummary'
 import EmpLeadsTasksSummaryTable from './A_SalesModule/Reports/empLeadsTasksSummaryTable'
 import EmpTasksReportM from './A_SalesModule/Reports/EmpTasks/empTasksReportM'
 import LeadsCoversionGraphs from './A_SalesModule/Reports/leadsConversionRatio/LeadsCoversionGraphs'
@@ -68,12 +55,8 @@ import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
-import bookingSummaryHeader from './A_SalesModule/Reports/bookingSummaryHeader'
-import BookingSummaryHeader from './A_SalesModule/Reports/bookingSummaryHeader'
 
-//import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
-//import ProfileSummary from './A_SalesModule/Reports/profileSummary'
-//import StepperTask from './A_SalesModule/Reports/StepperTask'
+
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },

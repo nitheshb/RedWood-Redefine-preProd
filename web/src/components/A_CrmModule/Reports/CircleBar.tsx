@@ -1,5 +1,4 @@
 
-import PieChartComp from "src/components/A_SalesModule/Reports/leadsConversionRatio/PieChart";
 import "./CircleBar.css";
 import PieChartCRMCore from "./PieChartCore";
 

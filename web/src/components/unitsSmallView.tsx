@@ -2,9 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable prettier/prettier */
 import { useEffect, useState } from 'react'
-
 import { MenuItem, styled } from '@mui/material'
-
 const CustomMenuItem = styled(MenuItem)(() => ({
   fontSize: '0.85rem',
 }))

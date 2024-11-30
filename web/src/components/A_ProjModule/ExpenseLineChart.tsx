@@ -53,7 +53,7 @@ const ExpenseLineChart = () => {
 
   return (
     <div className="w-full max-w-4xl p-6 bg-white ">
-      {/* Header */}
+
       <div className="mb-6">
         <h2 className="text-[18px] text-[#6A6A6A] font-medium">Total Expenses</h2>
         <div className="flex items-center justify-between mt-1">
@@ -68,7 +68,7 @@ const ExpenseLineChart = () => {
           </div>
         </div>
         
-        {/* Date Range */}
+
         <div className="flex items-center gap-2 mt-4 text-gray-600">
           <Calendar className="w-5 h-5" />
           <span>Jun 07, 2024</span>
@@ -94,7 +94,7 @@ const ExpenseLineChart = () => {
         </div>
       </div>
 
-      {/* Chart */}
+
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>

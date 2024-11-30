@@ -12,18 +12,16 @@ const CollectionsDashboard = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto p-8 bg-white rounded-3xl shadow-sm">
-      {/* Header */}
+
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-normal">Collections</h1>
         <span className="text-gray-500">Month</span>
       </div>
 
-      {/* Amount */}
       <div className="mb-6">
         <h2 className="text-4xl font-semibold">₹ 492,767.93</h2>
       </div>
 
-      {/* Progress Bar Chart */}
       <div className="h-8 mb-12">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart

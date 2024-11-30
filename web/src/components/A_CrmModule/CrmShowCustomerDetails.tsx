@@ -2,25 +2,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { RadioGroup } from '@headlessui/react'
-import { ArrowCircleDownIcon } from '@heroicons/react/solid'
-import { Box } from '@mui/material'
-import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import { Form, Formik, Field } from 'formik'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
-import NumberFormat from 'react-number-format'
-import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
-
-import { Label, InputField, TextAreaField, FieldError } from '@redwoodjs/forms'
-import { useRouterStateSetter } from '@redwoodjs/router/dist/router-context'
-
 import {
   addLead,
   updateLeadCustomerDetailsTo,
@@ -36,26 +22,8 @@ import {
   sendWhatAppTextSms,
 } from 'src/util/axiosWhatAppApi'
 import { prettyDate } from 'src/util/dateConverter'
-import { PhoneNoField } from 'src/util/formFields/phNoField'
-import { PhoneNoField2 } from 'src/util/formFields/phNoField2'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import { TextField } from 'src/util/formFields/TextField'
-import { TextField2 } from 'src/util/formFields/TextField2'
-
-import NoBorderDropDown from '../comps/noBorderDropDown'
 import { useFileUpload } from '../useFileUpload'
-
-import Loader from './Loader/Loader'
-
-
-
-
-
-
 import Profileimg from '../../../public/Profileimg.png'
-
-import imagebox from '../../../public/imagebox.png'
-
 
 
 
