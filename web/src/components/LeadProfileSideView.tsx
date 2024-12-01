@@ -1639,7 +1639,7 @@ export default function LeadProfileSideView({
                             <span className="px-[3px]   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
                               {' '}
                               {/* Cost sheet  */}
-                              Book Unit 
+                              Show Units
 
                             </span>
                           ))}
@@ -3076,7 +3076,7 @@ export default function LeadProfileSideView({
                                                   ),
                                                 ]}
                                                 dateFormat="MMM d, yyyy h:mm aa"
-                                                
+
                                               />
                                             </span>
                                           </div>
