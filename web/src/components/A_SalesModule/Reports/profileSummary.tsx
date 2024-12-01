@@ -3,13 +3,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react'
 import { useState } from 'react'
-
-import { Users } from 'lucide-react'
-
 import { useAuth } from 'src/context/firebase-auth-context'
 import { fistLetterCapital } from 'src/util/firstLetterCapital'
-
-import Chat from './chatSummary'
 import UserAvatarUpload from 'src/components/comps/userAvatarUplaod'
 
 export default function ProfileSummary() {
@@ -27,7 +22,6 @@ export default function ProfileSummary() {
     setIsFollowing((prevState) => !prevState)
   }
 
-  // step 1:  declar json arry
   const menuItems = [
     { label: 'My Profile', value: 'myProfile' },
     { label: 'Password Reset', value: 'passwordReset' },

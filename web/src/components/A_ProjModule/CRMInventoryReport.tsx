@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpDown, ChevronDown, ChevronUp, ChevronsUpDown, MoveDown, MoveUp } from 'lucide-react';
+import { ArrowUpDown, MoveDown, MoveUp } from 'lucide-react';
 
 const CRMInventoryReport = () => {
   const [projects, setProjects] = useState([

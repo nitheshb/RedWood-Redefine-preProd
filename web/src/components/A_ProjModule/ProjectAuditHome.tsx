@@ -1,19 +1,12 @@
 import { useState } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
-import * as Yup from 'yup'
-
 import Loader from 'src/components/Loader/Loader'
 import {
   editPlotStatusAuditUnit,
   getAllUnitsByProject,
-  updateMoreDetails,
   updateProjectComputedData,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { TextAreaField } from 'src/util/formFields/TextAreaField'
 
 const ProjectAuditHome = ({ title, dialogOpen, data, projectDetails }) => {
   const [loading, setLoading] = useState(false)
@@ -27,13 +20,10 @@ const ProjectAuditHome = ({ title, dialogOpen, data, projectDetails }) => {
     console.log('audit begin')
     setLoading(true)
 
-    // get the units with no data or invalid data and mark them as available
 
-    // make all invalid units as available
     await setInvalidUnitStatus()
     await setProjectComputedCounts()
-    // calculate the Unit Status
-    //  calculate the values
+
   }
 
   const setInvalidUnitStatus = async () => {

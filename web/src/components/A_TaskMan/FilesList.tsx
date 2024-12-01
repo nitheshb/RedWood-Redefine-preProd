@@ -1,15 +1,10 @@
 import React from 'react'
-
 import {
-  PlusIcon,
   TrashIcon,
   SparklesIcon,
-  DocumentIcon,
   DocumentTextIcon,
 } from '@heroicons/react/outline'
-import { getStorage, ref, deleteObject } from 'firebase/storage'
-
-import { editTaskManAttachmentsData } from 'src/context/dbQueryFirebase'
+import { ref, deleteObject } from 'firebase/storage'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 

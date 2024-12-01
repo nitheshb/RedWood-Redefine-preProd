@@ -1,5 +1,3 @@
-// import { useState } from 'react'
-
 import { CountUpRupeeComp } from 'src/components/comps/countUpRupeeComp'
 
 const TransactionCard = ({ projectDetails }) => {

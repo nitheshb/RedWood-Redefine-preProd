@@ -1,5 +1,4 @@
 import { ToWords } from 'to-words'
-
 const toWords = new ToWords({
   localeCode: 'en-IN',
 })

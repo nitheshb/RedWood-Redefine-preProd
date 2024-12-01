@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { Dialog } from '@headlessui/react'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { useSnackbar } from 'notistack'
 import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import Loader from 'src/components/Loader/Loader'
 import { updateMoreDetails } from 'src/context/dbQueryFirebase'
+
 
 const MoreDetailsPhaseForm = ({ title, dialogOpen, data }) => {
   const [loading, setLoading] = useState(false)

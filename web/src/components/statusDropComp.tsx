@@ -1,16 +1,16 @@
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import {
   ChevronDownIcon,
   FireIcon,
   CalendarIcon,
-  ArrowCircleLeftIcon,
   CurrencyRupeeIcon,
   BadgeCheckIcon,
   XCircleIcon,
   RefreshIcon,
   BanIcon,
 } from '@heroicons/react/solid'
+
 
 export default function StatusDropComp({ leadStatus, id, setStatusFun }) {
   return (

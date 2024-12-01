@@ -1,13 +1,8 @@
 import { useState, useEffect } from 'react'
-
-import { EyeIcon, PencilIcon } from '@heroicons/react/outline'
-
-import { Link, routes } from '@redwoodjs/router'
+import { PencilIcon } from '@heroicons/react/outline'
 import { MetaTags } from '@redwoodjs/web'
-
 import CrmHome from 'src/components/A_CRMcomp/CrmHome'
 import CrmTaskList from 'src/components/A_CRMcomp/CrmTaskList'
-import CrmDashboardHome from 'src/components/A_CrmModule/CrmDashboard'
 import CrmRegisterModeHome from 'src/components/A_CrmModule/CrmRegisterHome'
 import CrmRepHomePageView1 from 'src/components/A_CrmModule/CrmRepHomePageView1'
 import CustomersEventsHome from 'src/components/A_CrmModule/CustomersEventsHome'
@@ -17,10 +12,8 @@ import AllBankDetailsView from 'src/components/All_BankDetailsView'
 import HeadNavBar2 from 'src/components/HeadNavBar/HeadNavBar2'
 import ProjectsUnitInventory from 'src/components/projectUnitsInventory'
 import CrmBucketList from 'src/components/TableComp/CrmBuckets'
-import FinanceTransactionsHome from 'src/components/TableComp/FinanceTransactionsHome'
 import { getAllProjects } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-
 import SiderForm from '../../components/SiderForm/SiderForm'
 import UnitsInventoryHome from 'src/components/A_ProjModule/UnitsInvertoryHome'
 import CrmAnalyticsHome from 'src/components/A_CrmModule/CrmAnalyticsHome'

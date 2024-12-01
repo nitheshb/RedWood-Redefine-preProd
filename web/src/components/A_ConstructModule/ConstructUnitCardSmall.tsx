@@ -5,18 +5,13 @@ import { useEffect, useState } from 'react'
 
 import { Box, LinearProgress, MenuItem, styled } from '@mui/material'
 
-const CustomMenuItem = styled(MenuItem)(() => ({
-  fontSize: '0.85rem',
-}))
 
-const ConstructUnitCardSmall = ({ kind, feedData, bg,  setSelUnitDetails,
-  setShowCostSheetWindow,
-  setSelMode, }) => {
+const ConstructUnitCardSmall = ({ kind
+  , }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [selOptionIs, setSelOptionIs] = useState("")
   const [bgColor, setBgColor] = useState("")
 
-  const open = Boolean(anchorEl)
   const [sliderInfo, setSliderInfo] = useState({
     open: false,
     title: '',
@@ -32,18 +27,7 @@ const ConstructUnitCardSmall = ({ kind, feedData, bg,  setSelUnitDetails,
       setBgColor("#e9e9e9")
     }
   }, [kind])
-  const handleSliderClose = () => {
-    setSliderInfo({
-      open: false,
-      title: '',
-      sliderData: {},
-    })
-  }
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('was this from here' )
-    setAnchorEl(event.currentTarget)
-  }
 
   return (
     <div

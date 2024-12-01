@@ -7,57 +7,24 @@
 import { useState, useEffect } from 'react'
 
 import {
-  Box,
-  Card,
-  CardHeader,
-  Container,
-  Grid,
-  LinearProgress,
-  Stack,
-  Typography,
   useTheme,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-
-
-
-
-
-
-
-
-
-import { Link } from '@redwoodjs/router'
-
-import SiderForm from 'src/components/SiderForm/SiderForm'
 import {
   getAllProjects,
-  steamUsersCreditNotesList,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
 import 'flowbite'
 
 import '../../styles/myStyles.css'
-// import Chart from 'react-apexcharts'
-import ApexChart from '../Apex_chart/ApexChart'
-import Conversion_rates from '../Apex_chart/Conversion_rates'
-import PieChart from '../Apex_chart/PieChart'
-import RadarChart from '../Apex_chart/RadarChart'
 import DummyBodyLayout from '../DummyBodyLayout/DummyBodyLayout'
-
-import AdvancedDataTableTest from './Reports/bookingSummaryHome'
-import UnitBookingSummaryHomePage from './Reports/bookingSummaryHome1'
-import CircleBar from './Reports/CircleBar'
 import CrmCollectionReport from './Reports/collectionReport'
 import CreditNoteSummaryHomePage from './Reports/creditNoteSummaryHome'
 import CrmSummaryReport from './Reports/Crm_SummaryReport'
 import CrmAnalyticsUnitHome from './Reports/CrmAnalyticsUnitHome'
 import CrmProjectionReport from './Reports/CrmProjectionReport'
 import CrmInventorySummaryTable from './Reports/CrmSummaryTable'
-import ReportBars from './Reports/ReportBars'
-import TransactionCard from './Reports/TransactionCard'
-import UnitStatusCardReport from './Reports/UnitStatusCardReport'
 import CrmMortgageSummaryTable from './Reports/CrmMortgageSummary'
 import UnitBookingSummaryHomePage1 from './Reports/bookingSummaryHomev1'
 

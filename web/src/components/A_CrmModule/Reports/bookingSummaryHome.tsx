@@ -87,12 +87,10 @@ import { useState, useCallback, useEffect } from 'react'
 
 // @mui
 import { SearchIcon } from '@heroicons/react/solid'
-import { BookTwoTone } from '@mui/icons-material'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
-import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
-import Paper, { PaperProps } from '@mui/material/Paper'
+import Paper from '@mui/material/Paper'
 import { alpha } from '@mui/material/styles'
 import Tab from '@mui/material/Tab'
 import Table from '@mui/material/Table'
@@ -136,15 +134,12 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import CSVDownloader from 'src/util/csvDownload'
-import { prettyDate, prettyDateTime, timeConv } from 'src/util/dateConverter'
 import {
-  SlimDateSelectBox,
   SlimSelectBox,
 } from 'src/util/formFields/slimSelectBoxField'
 
-import { _userList, _roles, USER_STATUS_OPTIONS } from './_mock'
+import { _userList, _roles } from './_mock'
 import ConfirmDialog from './_mock/comps/confirm-dialog'
-import CustomBreadcrumbs from './_mock/comps/custom-breadcrumbs'
 import { useBoolean } from './_mock/comps/hook-form/use-boolean'
 import Iconify from './_mock/comps/iconify'
 import Label from './_mock/comps/Label'
@@ -161,14 +156,12 @@ import {
   TablePaginationCustom,
 } from './_mock/comps/table'
 import { IUserItem } from './_mock/comps/usersTable/user-quick-edit-form'
-import UserTableFiltersResult from './_mock/comps/usersTable/user-table-filters-result'
 import UserTableRow from './_mock/comps/usersTable/user-table-row'
 // import { useBoolean } from './_mock/comps/hook-form/use-boolean'
-import UserTableToolbar, {
+import {
   IUserTableFilters,
   IUserTableFilterValue,
 } from './_mock/comps/usersTable/user-table-toolbar'
-import zIndex from '@mui/material/styles/zIndex'
 
 // ----------------------------------------------------------------------
 

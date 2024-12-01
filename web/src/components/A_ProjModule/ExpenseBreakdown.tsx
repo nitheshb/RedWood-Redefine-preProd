@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { ChevronDown } from 'lucide-react';
 
 const ExpenseBreakdown = () => {
@@ -21,7 +21,6 @@ const ExpenseBreakdown = () => {
     </div>
   );
 
-  // Custom Tooltip Content
   const CustomTooltip = ({ payload, label, active }) => {
     if (active && payload && payload.length) {
       const { color, name, value } = payload[0].payload;

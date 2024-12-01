@@ -1,6 +1,4 @@
 import { useState } from 'react'
-// import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
-// import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
 import '../../styles/myStyles.css'
 const LogSkelton = () => {
   const [first, setfirst] = useState('')

@@ -11,19 +11,12 @@ import * as Yup from 'yup'
 
 import Loader from 'src/components/Loader/Loader'
 import {
-  addLead,
-  checkIfLeadAlreadyExists,
-  getAllProjects,
-  steamUsersListByRole,
   streamGetAllUnitTransactions,
-  updateCancelProjectCounts,
   updateTransactionStatus,
   updateUnblockProjectCounts,
-  updateUnitAsBlocked,
   updateUnitAsBooked,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { supabase } from 'src/context/supabase'
 
 const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookCurentStep }) => {
   const { user } = useAuth()

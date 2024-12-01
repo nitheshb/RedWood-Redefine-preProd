@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
 
 import { useAuth } from 'src/context/firebase-auth-context'
-import { prettyDate, timeConv, prettyDateTime } from 'src/util/dateConverter'
+import { prettyDate } from 'src/util/dateConverter'
 
 const CrmUnitFinanceHistory = ({
   selCustomerPayload,

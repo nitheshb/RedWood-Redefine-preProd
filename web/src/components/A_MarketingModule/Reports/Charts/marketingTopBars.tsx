@@ -1,7 +1,4 @@
 import React from 'react'
-import BookingHeader from 'src/components/A_SalesModule/Reports/BookingHeader'
-import ProfileCard from 'src/components/A_SalesModule/Reports/ProfileCard'
-import PropertyCard from 'src/components/A_SalesModule/Reports/PropertyCard'
 
 const CampaingsTopBarsComponent = () => {
   return (

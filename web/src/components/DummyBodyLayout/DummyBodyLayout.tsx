@@ -13,7 +13,6 @@ const DummyBodyLayout = () => {
         <button onClick={() => selFun()}>
           <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
             
-            {/* <span className="text-"> Add Data</span> */}
 
             <span className="flex items-center gap-4 px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-700">
   <svg

@@ -1,6 +1,4 @@
-import { MarketingModulePageType } from 'C:/Users/nithe/Documents/MyCodes/Redefine/RedefineV2/web/src/pages/MarketingModulePage/MarketingModulePage';
 import { navigate, routes } from '@redwoodjs/router'
-import { getUser } from 'src/context/dbQueryFirebase'
 import { USER_ROLES } from 'src/constants/userRoles'
 
 export const navigateBasedOnUser = async (userData) => {

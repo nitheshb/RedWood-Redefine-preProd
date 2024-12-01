@@ -10,7 +10,7 @@ import {
   Paper,
 } from '@mui/material';
 
-// Sample Data
+
 const data = [
   { id: 1, name: 'Project 1', totalUnits: 100, available: 60, sold: 30, blocked: 5, mortgaged: 5 },
   { id: 2, name: 'Project 2', totalUnits: 150, available: 80, sold: 40, blocked: 10, mortgaged: 20 },
@@ -19,17 +19,17 @@ const data = [
 ];
 
 function CustomSortableTable() {
-  const [order, setOrder] = useState('asc'); // 'asc' or 'desc'
-  const [orderBy, setOrderBy] = useState('name'); // Column to sort by
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('name'); 
 
-  // Function to handle column sorting
+
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
-  // Sorting logic for data
+
   const sortedData = useMemo(() => {
     const comparator = (a, b) => {
       if (a[orderBy] < b[orderBy]) {
@@ -58,14 +58,14 @@ function CustomSortableTable() {
         margin: '30px auto',
         borderRadius: '12px',
         boxShadow: 3,
-        backgroundColor: '#f9f9f9', // Light background
+        backgroundColor: '#f9f9f9', 
       }}
     >
       <Table aria-label="sortable table">
         <TableHead>
           <TableRow
             sx={{
-              backgroundColor: '#e5e5e5', // Light gray background for header
+              backgroundColor: '#e5e5e5', 
               color: 'black',
               fontWeight: 'bold',
             }}
@@ -85,7 +85,7 @@ function CustomSortableTable() {
                 sx={{
                   color: 'black',
                   '&:hover': {
-                    color: '#ffeb3b', // Custom hover color for sorting icon
+                    color: '#ffeb3b',
                   },
                 }}
               >
@@ -208,12 +208,12 @@ function CustomSortableTable() {
             <TableRow
               key={row.id}
               sx={{
-                backgroundColor: '#fff', // White background for rows
+                backgroundColor: '#fff',
                 '&:nth-of-type(even)': {
-                  backgroundColor: '#f7f7f7', // Light gray for even rows
+                  backgroundColor: '#f7f7f7', 
                 },
                 '&:hover': {
-                  backgroundColor: '#e5e5e5', // Hover effect for rows
+                  backgroundColor: '#e5e5e5', 
                 },
               }}
             >

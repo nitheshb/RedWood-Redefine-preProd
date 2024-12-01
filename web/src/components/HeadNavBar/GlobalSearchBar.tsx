@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react'
-
 import { useDispatch } from 'react-redux'
-import { RootStateOrAny, useSelector } from 'react-redux'
-
 import { Link, routes } from '@redwoodjs/router'
-
 import Loader from 'src/components/Loader/Loader'
 import { getLeadsByPhoneNo } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'

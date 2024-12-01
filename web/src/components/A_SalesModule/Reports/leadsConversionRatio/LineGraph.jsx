@@ -3,15 +3,7 @@ import React from 'react'
 import {
   LineChart,
   Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
 } from 'recharts'
-
-// export default class Example extends PureComponent {
-//   static demoUrl = 'https://codesandbox.io/s/simple-line-chart-kec3v';
 
 const LineGraph = () => {
   const data = [

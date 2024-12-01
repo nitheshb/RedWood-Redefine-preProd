@@ -1,23 +1,15 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-// import { useState } from 'react'
-// import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
-// import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
 
 import { useEffect, useState } from 'react'
-
-import { Timestamp } from '@firebase/firestore'
 import { CalendarIcon, EyeIcon } from '@heroicons/react/outline'
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from '@heroicons/react/solid'
 import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
-import DatePicker from 'react-datepicker'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
-
-import { sourceList, sourceListItems } from 'src/constants/projects'
+import { sourceListItems } from 'src/constants/projects'
 import {
   addAgreegatedSalesValues,
   getAllProjects,
@@ -29,7 +21,6 @@ import {
   getTodayTodoLeadsData,
   getTodayTodoLeadsDataByUser,
   steamAllLeadsActivity,
-  steamLeadScheduleLog,
   steamUsersListByRole,
   streamLeadLogdWithNullProj,
   updateLeadLastUpdateTime,
@@ -42,19 +33,15 @@ import { sendWhatAppTextSms1 } from 'src/util/axiosWhatAppApi'
 import CSVDownloader from 'src/util/csvDownload'
 import { prettyDate } from 'src/util/dateConverter'
 import {
-  SlimDateSelectBox,
   SlimSelectBox,
 } from 'src/util/formFields/slimSelectBoxField'
 
 import MarketingAnalyticsHome from '../../components/A_MarketingModule/MarketinAnalyticsHome'
 import StackedBarChart from '../../components/A_MarketingModule/Reports/Charts/marketingStackedBarChart'
 import CampaingsTopBarsComponent from '../../components/A_MarketingModule/Reports/Charts/marketingTopBars'
-import StackedLeadsChart from '../../components/A_SalesModule/Reports/charts/salesStackedChart'
 import EmpTasksReportM from '../../components/A_SalesModule/Reports/EmpTasks/empTasksReportM'
-import LeadsCoversionGraphs from '../../components/A_SalesModule/Reports/leadsConversionRatio/LeadsCoversionGraphs'
 import ProfileSummary from '../../components/A_SalesModule/Reports/profileSummary'
 import SalesSummaryReport from '../../components/A_SalesModule/Reports/salesSummaryReport'
-import SideVisitLeadsBody from '../../components/A_SalesModule/Reports/SideVisitsLeadsBody'
 import SiteVisitM from '../../components/A_SalesModule/Reports/SiteVisitM'
 import { serialEmployeeLeadData } from '../../components/LeadsTeamReport/serialEmployeeLeadData'
 import { serialEmployeeTaskLeadData } from '../../components/LeadsTeamReport/serialEmployeeTaskLeadData'

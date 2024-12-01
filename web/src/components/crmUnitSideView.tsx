@@ -2,41 +2,19 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment, useEffect, useState } from 'react'
-
-import { Menu } from '@headlessui/react'
-import { Listbox, Transition } from '@headlessui/react'
-import { ArrowRightIcon } from '@heroicons/react/outline'
+import { useEffect, useState } from 'react'
 import {
-  BadgeCheckIcon,
   DocumentIcon,
-  EyeIcon,
-  ViewBoardsIcon,
-  ViewGridIcon,
-  XIcon,
 } from '@heroicons/react/solid'
-import { CheckIcon, SelectorIcon, DownloadIcon } from '@heroicons/react/solid'
+import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
-import PlusCircleIcon from '@heroicons/react/solid/PlusCircleIcon'
-import { VerticalAlignBottom } from '@mui/icons-material'
-import { DateTimePicker } from '@mui/lab'
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
-import TimePicker from '@mui/lab/TimePicker'
-import { TextField } from '@mui/material'
-import { LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import DatePicker from 'react-datepicker'
-import { useDropzone } from 'react-dropzone'
-import toast from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 
 import {
   addLeadScheduler,
   deleteSchLog,
   steamUsersListByRole,
-  updateLeadAssigTo,
-  updateLeadStatus,
   updateSchLog,
   addLeadNotes,
   steamLeadNotes,
@@ -50,17 +28,13 @@ import { storage } from 'src/context/firebaseConfig'
 import { prettyDate, prettyDateTime, timeConv } from 'src/util/dateConverter'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 
-import SortComp from './sortComp'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 
-import StatusDropComp from './statusDropComp'
 import AssigedToDropComp from './assignedToDropComp'
-import Loader from './Loader/Loader'
 import ProjPhaseHome from './ProjPhaseHome/ProjPhaseHome'
-import { H4 } from './Typography'
 
 import { useSnackbar } from 'notistack'
 

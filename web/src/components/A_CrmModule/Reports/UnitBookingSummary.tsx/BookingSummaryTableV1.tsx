@@ -4,9 +4,6 @@
 /* eslint-disable react/prop-types */
 
 import {useState, useEffect} from 'react'
-import {
-  Rating,
-} from '@mui/material'
 import Section from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Table from '@mui/material/Table'
@@ -37,12 +34,10 @@ import { Calendar, ChevronRight } from 'lucide-react';
 
 
 
-import { ChevronDown, TrendingUp } from 'lucide-react';
-import { scaleLinear } from 'd3-scale';
+import { TrendingUp } from 'lucide-react';
 
 
 
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import { useAuth } from 'src/context/firebase-auth-context'
 import {
   prettyDate,
@@ -61,9 +56,8 @@ import Highlighter from 'react-highlight-words'
 import CSVDownloader from 'src/util/csvDownload'
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import { computeTotal } from 'src/util/computeCsTotals'
-import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 import { getAllProjects, getBookedUnitsByProject } from 'src/context/dbQueryFirebase'
-import { ArrowDownRight, Download, Filter } from 'lucide-react'
+import { Download, Filter } from 'lucide-react'
 // import { prettyDate } from '../../util/dateConverter'
 // import DropCompUnitStatus from '../dropDownUnitStatus'
 

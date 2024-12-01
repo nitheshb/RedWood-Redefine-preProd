@@ -1,12 +1,6 @@
 import React from 'react';
-
-
 import Profileimg from '../../../../public/Profileimg.png'
-
 import imagebox from '../../../../public/imagebox.png'
-
-
-
 const ProfileCard = ({ data }) => {
   const defaultData = {
     name: 'ABC',

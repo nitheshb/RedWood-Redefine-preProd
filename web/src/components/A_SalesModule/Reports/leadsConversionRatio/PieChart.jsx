@@ -1,7 +1,5 @@
 import React from 'react'
-
 import { PieChart, Pie, Cell } from 'recharts'
-
 const PieChartComp = ({ pieVal }) => {
   console.log(pieVal, 'pievallllll')
   const RADIAN = Math.PI / 200

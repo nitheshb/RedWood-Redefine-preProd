@@ -3,6 +3,8 @@ import { ArrowUpRight, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 
 
+
+
 const projectData = [
   { name: 'Project 1', units: 10 },
   { name: 'Project 2', units: 8 },
@@ -19,7 +21,6 @@ function SoldUnitschart() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-sm p-8">
         <div className="space-y-12">
-          {/* Header Section */}
           <div>
             <h1 className="text-2xl font-medium text-gray-900 mb-1">Sold Units</h1>
             <div className="flex items-center gap-2 mb-4">
@@ -55,7 +56,6 @@ function SoldUnitschart() {
             </div>
           </div>
 
-          {/* Project List Section */}
           <div className="space-y-6">
             {projectData.map((project) => (
               <div key={project.name} className="space-y-2">

@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Box, Menu, MenuItem, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { logout as logoutAction } from 'src/state/actions/user'
-import ModuleSwitchDrop from '../A_SideMenu/modulesSwitchDrop'
-import { GlobalSearchBar } from './GlobalSearchBar';
+
 
 const HeadNavBarAccounts = ({selModule, setSelModule}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)

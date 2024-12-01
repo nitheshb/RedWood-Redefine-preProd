@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { useSnackbar } from 'notistack'
 
 import { USER_ROLES } from 'src/constants/userRoles'
-import { updateManagerApproval, updateSDApproval } from 'src/context/dbQueryFirebase'
+import { updateSDApproval } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
 // import BankSelectionSwitchDrop from './BankSelectionDroopDown'

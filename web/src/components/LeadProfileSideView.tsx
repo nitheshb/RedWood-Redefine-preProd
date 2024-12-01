@@ -2,45 +2,21 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment, useEffect, useState } from 'react'
-
-import { Menu } from '@headlessui/react'
-import { Listbox, Transition } from '@headlessui/react'
+import { useEffect, useState } from 'react'
 import {
-  ArrowRightIcon,
-  PhoneIcon,
   DeviceMobileIcon,
   MailIcon,
 } from '@heroicons/react/outline'
-import CalendarIcon from '@heroicons/react/outline/CalendarIcon'
 import {
-  BadgeCheckIcon,
-  CheckIcon,
   CheckCircleIcon,
   DocumentIcon,
-  EyeIcon,
-  ViewBoardsIcon,
-  ViewGridIcon,
-  ArrowDownIcon,
-  ArrowUpIcon,
   AdjustmentsIcon,
   XIcon,
 } from '@heroicons/react/solid'
-import { SelectorIcon, DownloadIcon } from '@heroicons/react/solid'
+import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
-import PlusCircleIcon from '@heroicons/react/solid/PlusCircleIcon'
-import {
-  ArrowBackRounded,
-  ConstructionOutlined,
-  DriveEtaOutlined,
-  VerticalAlignBottom,
-} from '@mui/icons-material'
-import FileUploadIcon from '@mui/icons-material/FileUpload'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { ErrorMessage, Form, Formik, useFormik } from 'formik'
-import DatePicker from 'react-datepicker'
-import { useDropzone } from 'react-dropzone'
-import toast from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
 
@@ -58,7 +34,6 @@ import {
   steamLeadNotes,
   createAttach,
   getCustomerDocs,
-  getUser,
   getAllProjects,
   updateLeadProject,
   steamLeadById,
@@ -75,9 +50,6 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import {
-  getDifferenceInDays,
-  getDifferenceInHours,
-  getDifferenceInMinutes,
   prettyDate,
   prettyDateTime,
   timeConv,
@@ -85,19 +57,15 @@ import {
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 
 import LogSkelton from './shimmerLoaders/logSkelton'
-import SortComp from './sortComp'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 
-import StatusDropComp from './statusDropComp'
 import AssigedToDropComp from './assignedToDropComp'
-import Loader from './Loader/Loader'
 import ProjPhaseHome from './ProjPhaseHome/ProjPhaseHome'
 
 import { useSnackbar } from 'notistack'
-import { async } from '@firebase/util'
 
 import SelectDropDownComp from './comps/dropDownhead'
 import EditLeadTask from './Comp_CustomerProfileSideView/EditLeadTask'
@@ -107,7 +75,6 @@ import LeadTaskFooter from './Comp_CustomerProfileSideView/LeadTaskFooter'
 
 import { USER_ROLES } from 'src/constants/userRoles'
 import { currentStatusDispFun } from 'src/util/leadStatusDispFun'
-import { sendWhatAppTextSms1 } from 'src/util/axiosWhatAppApi'
 
 import EmailForm from './customerProfileView/emailForm'
 import Confetti from './shared/confetti'

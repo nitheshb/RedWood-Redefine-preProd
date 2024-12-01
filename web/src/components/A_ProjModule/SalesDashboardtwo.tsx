@@ -5,12 +5,9 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  ResponsiveContainer,
-  Tooltip
-} from 'recharts';
+  ResponsiveContainer} from 'recharts';
 
 const SalesDashboardtwo = () => {
-  // Sample data for the bar chart
   const salesData = [
     { step: 'Step 1', value: 31800 },
     { step: 'Step 1', value: 29500 },

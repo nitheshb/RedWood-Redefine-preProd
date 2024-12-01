@@ -1,9 +1,6 @@
 import { useState } from 'react'
 
-import { Dialog } from '@headlessui/react'
-import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
-import * as Yup from 'yup'
 
 import Loader from 'src/components/Loader/Loader'
 import {
@@ -11,11 +8,9 @@ import {
   getAllUnitsByProject,
   streamGetAllUnitTransactions,
   unitAuditDbFun,
-  updateMoreDetails,
   updateProjectComputedData,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import { computeTotal } from 'src/util/computeCsTotals'
 
 const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {

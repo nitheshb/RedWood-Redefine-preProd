@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Fragment } from 'react'
-
 import { Menu, Transition } from '@headlessui/react'
 import {
   ChevronDownIcon,
@@ -12,7 +11,6 @@ import {
   DotsVerticalIcon,
   CheckIcon,
   DocumentTextIcon,
-  EyeIcon,
 } from '@heroicons/react/solid'
 
 import { uniTypes } from 'src/constants/projects'

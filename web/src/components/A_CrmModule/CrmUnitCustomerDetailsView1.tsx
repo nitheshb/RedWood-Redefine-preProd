@@ -1,14 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
-
 import { useAuth } from 'src/context/firebase-auth-context'
-
-// This is used in CrmCustomerSummary
 const CrmUnitCustomerDetailsView1 = ({
   Name,
   Mobile,
   netTotal,
-  selCustomerPayload,
-  assets,
 }) => {
   const { user } = useAuth()
   const { orgId } = user

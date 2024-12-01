@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from 'react'
-
-import { Dialog } from '@headlessui/react'
 import { Alert, AlertTitle } from '@mui/lab'
-import { format, parse, isDate } from 'date-fns'
+import { format, isDate } from 'date-fns'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
 import Select from 'react-select'
 
-// import { Edit, DeleteOutline } from '@material-ui/icons'
-import { MaterialCRUDTable } from 'src/components/MaterialCRUDTable'
 import {
   paymentScheduleA,
   paymetScheduleConstruct,
 } from 'src/constants/projects'
 import {
-  getPaymentSchedule,
-  createPaymentSheduleComp,
-  updatePayment,
-  deletePayment,
   addPhasePaymentScheduleCharges,
   updatePaymentScheduleCharges,
 } from 'src/context/dbQueryFirebase'

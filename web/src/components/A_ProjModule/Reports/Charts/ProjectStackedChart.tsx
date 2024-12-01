@@ -1,6 +1,4 @@
 import React from 'react'
-
-import { Divider } from '@mui/material'
 import {
   AreaChart,
   Area,
@@ -110,8 +108,6 @@ const ProjectStackedChart = () => {
           stackId="1"
           stroke="#2563eb"
           fill="#b9ccf7"
-          // stroke="#22D3EE"
-          // fill="#a5f3ff"
           strokeWidth={2}
 
         />

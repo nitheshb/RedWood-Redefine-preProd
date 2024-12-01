@@ -1,22 +1,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useState, useEffect } from 'react'
-
-import { getUnits } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-
-import AdditionalChargesForm from './AdditionalChargesForm/AdditionalChargesForm'
 import PaymentScheduleForm from './PaymentScheduleForm/PaymentScheduleForm'
-
 const PaymentScheduleSetup = ({ phase, source }) => {
   const { user } = useAuth()
-
   const { orgId } = user
-
   const [blocksViewFeature, setBlocksViewFeature] = useState(
     'Plot_Payment_Schedule'
   )
-
   const [otherChargesA, setOtherChargesA] = useState([
     { lab: 'Plot Payment Schedule', val: 'Plot_Payment_Schedule' },
     {

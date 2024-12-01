@@ -1,12 +1,9 @@
 import React from 'react'
-
-import HeadSideBarDetailView from 'src/components/HeadDetailSideBar'
 import HeadNavBar from 'src/components/HeadNavBar/HeadNavBar'
 import HeadSideBar from 'src/components/HeadSideBar/HeadSideBar'
 import Account from 'src/components/profile/account'
 import CheckBox from 'src/components/profile/checkBox'
 import PersonalDetails from 'src/components/profile/personalDetails'
-
 import bg from '../../../public/Group7.png'
 const Profile = () => {
   return (

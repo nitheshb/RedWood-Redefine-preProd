@@ -108,7 +108,7 @@ const TaskTable = () => {
     }
   };
 
-  // Simple Progress Bar Component
+
   const ProgressBar = ({ progress }) => (
     <div className="h-2 w-32 bg-gray-200 rounded-full overflow-hidden">
       <div 

@@ -11,9 +11,7 @@ import { format, isDate, parse } from 'date-fns'
 import { Form, Formik, Field } from 'formik'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
-
 import { useParams } from '@redwoodjs/router'
-
 import { AreaConverter } from 'src/components/AreaConverter'
 import Loader from 'src/components/Loader/Loader'
 import { unitsCancellation } from 'src/constants/projects'
