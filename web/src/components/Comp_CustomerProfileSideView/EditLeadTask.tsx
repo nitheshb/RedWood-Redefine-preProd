@@ -13,6 +13,19 @@ export default function EditLeadTask({
   editTaskFun,
   d,
 }) {
+
+  const [pickerDate, setPickerDate] = useState(new Date(startDate))
+  useEffect(() => {
+    console.log('date issue ', startDate)
+    setPickerDate(new Date(startDate))
+  }, [])
+
+  useEffect(() => {
+    console.log('date issue ', startDate)
+    setPickerDate(new Date(startDate))
+  }, [startDate])
+
+
   const [error, setError] = useState(false)
   useEffect(() => {
     if (takTitle === 'undefined' || takTitle === '') {
@@ -58,8 +71,15 @@ export default function EditLeadTask({
               <span className="inline">
                 <DatePicker
                   className=" mt-[2px] pl- px-   min-w-[151px] inline text-xs text-[#0091ae] bg-[#F5F8FA]"
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date.getTime())}
+                  selected={pickerDate}
+                  onChange={
+
+                    (date) =>{
+                      console.log('am i coming here',date,   date.getTime())
+                      // setPickerDate(date)
+                      setStartDate(date.getTime())
+
+                    }}
                   showTimeSelect
                   timeFormat="HH:mm"
                   injectTimes={[
