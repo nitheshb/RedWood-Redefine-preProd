@@ -77,7 +77,7 @@ const LeadsManagerPage = (props) => {
               className={`${
                 showDetailedSideBar
                   ? 'flex flex-row overflow-auto w-[20vw]   overflow-auto no-scrollbar text-gray-700 '
-                  : 'flex flex-row overflow-auto overflow-auto no-scrollbar  text-gray-700 '
+                  : 'flex flex-row  no-scrollbar  text-gray-700 '
               }`}
             >
               <SlimSideMenuBar
@@ -119,12 +119,12 @@ const LeadsManagerPage = (props) => {
                />
               )}
               {viewable === 'units_inventory' && (
-                 <UnitsInventoryHome
+                 <section className="mx-1"><UnitsInventoryHome
                  project={{
                    projectName: 'Projects',
                  }}
                  isEdit={undefined}
-               />
+               /></section>
               )}
               {viewable === 'Today1' && (
                 <TodayLeadsHomePage taskType={viewable} />

@@ -60,7 +60,7 @@ const ConstructModulePage = () => {
               className={`${
                 showDetailedSideBar
                   ? 'flex flex-row overflow-auto w-[20vw]   text-gray-700 '
-                  : 'flex flex-row overflow-auto   text-gray-700 '
+                  : 'flex flex-row    text-gray-700 '
               }`}
             >
               <SlimSideMenuBar
@@ -78,7 +78,7 @@ const ConstructModulePage = () => {
               selModule ={selModule}
               setSelModule={setSelModule}
               setViewable={setViewable}
-              
+
             />
 
 {viewable === 'userProfile' && <ProfileSummary />}
