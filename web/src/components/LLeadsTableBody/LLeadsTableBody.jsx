@@ -488,12 +488,12 @@ React.useEffect(()=>{
       } else if (
         // item.Assignedto.toLowerCase().includes(searchString.toLowerCase()) ||
         // item.Date.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Email.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Mobile.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Name.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Project.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Source.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Status.toLowerCase().includes(searchString.toLowerCase())
+        item?.Email?.toLowerCase().includes(searchString?.toLowerCase()) ||
+        item?.Mobile?.toLowerCase().includes(searchString?.toLowerCase()) ||
+        item?.Name?.toLowerCase().includes(searchString?.toLowerCase()) ||
+        item?.Project?.toLowerCase().includes(searchString?.toLowerCase()) ||
+        item?.Source?.toLowerCase().includes(searchString?.toLowerCase()) ||
+        item?.Status?.toLowerCase().includes(searchString?.toLowerCase())
       ) {
         return item
       }
@@ -908,15 +908,15 @@ export default function LLeadsTableBody({
                       return item
                     }
                     else if (
-                      item.Email.toLowerCase().includes(
-                        searchKey.toLowerCase()
+                      item?.Email?.toLowerCase().includes(
+                        searchKey?.toLowerCase()
                       ) ||
-                      item.Mobile.toLowerCase().includes(
-                        searchKey.toLowerCase()
+                      item?.Mobile?.toLowerCase().includes(
+                        searchKey?.toLowerCase()
                       ) ||
-                      item.Name.toLowerCase().includes(searchKey.toLowerCase()) ||
-                      item.Source.toLowerCase().includes(
-                        searchKey.toLowerCase()
+                      item?.Name?.toLowerCase().includes(searchKey?.toLowerCase()) ||
+                      item?.Source?.toLowerCase().includes(
+                        searchKey?.toLowerCase()
                       )
                     ) {
                       return item

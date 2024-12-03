@@ -22,7 +22,10 @@ import {
   addLead,
   checkIfLeadAlreadyExists,
   getAllProjects,
+  steamLeadScheduleLog,
   steamUsersListByRole,
+  updateLeadAssigTo,
+  updateLeadData,
   updateLeadLakeStatus,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -40,8 +43,11 @@ import AssigedToDropComp from './assignedToDropComp'
 import Loader from './Loader/Loader'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
-const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
+const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => {
   const d = new window.Date()
+  const torrowDate = new Date(
+    +new Date().setHours(0, 0, 0, 0) + 86400000
+  ).getTime()
   const { user } = useAuth()
   const { enqueueSnackbar } = useSnackbar()
   const { orgId } = user
@@ -51,6 +57,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
   const [closeWindowMode, setCloseWindowMode] = useState(false)
   const [trashMode, setTrashMode] = useState(false)
   const [binReason, setBinreason] = useState('DUPLICATE_ENTRY')
+
   const customPhoneNoFieldStyles = {
     border: 'none',
     borderRadius: '10px',
@@ -64,9 +71,11 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
   useEffect(() => {
     console.log('my project data is ', customerDetails)
     loadDataFun(customerDetails, sourceList, projectList)
-  }, [customerDetails, sourceList, projectList])
-  const loadDataFun = async (customerDetails, sourceList, projectList) => {
-    if (customerDetails) {
+    getLeadScheduleLog()
+  }, [customerDetails,leadDetailsObj,  sourceList, projectList])
+  const loadDataFun = async (customerDetails,  sourceList, projectList) => {
+
+    if (title!='Edit Lead' && customerDetails) {
       const custObj = customerDetails
       const {
         responderName,
@@ -110,6 +119,22 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       custObj.value = projectListMatch[0]?.projectName || ''
       await setCustomerDetailsTuned(custObj)
       await console.log('my project data is ', customerDetailsTuned, custObj)
+    }
+     if(title==='Edit Lead'){
+      const custObj = customerDetails
+      custObj.name = leadDetailsObj?.Name
+      custObj.email = leadDetailsObj?.Email
+      custObj.phone = leadDetailsObj?.Mobile
+      custObj.countryCode = leadDetailsObj?.countryCode
+      custObj.Date = leadDetailsObj?.Date
+      custObj.source = leadDetailsObj?.Source
+      custObj.projectName = leadDetailsObj?.Project
+      custObj.projectId = leadDetailsObj?.ProjectId
+      custObj.assignedTo = leadDetailsObj?.assignedTo
+      custObj.assignedToObj = leadDetailsObj?.assignedToObj
+      custObj.value = leadDetailsObj?.project
+      console.log('my project data is ==>', leadDetailsObj)
+      setCustomerDetailsTuned(custObj)
     }
   }
   useEffect(() => {
@@ -209,6 +234,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
   const [selected, setSelected] = useState({})
   const [devType, setdevType] = useState(devTypeA[0])
   const [founDocs, setFoundDocs] = useState([])
+  const [leadSchFetchedData, setLeadsFetchedSchData] = useState([])
 
   const phoneRegExp =
     /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
@@ -225,6 +251,68 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
 
     //console.log(data)
     setLoading(true)
+    if(title==='Edit Lead'){
+
+      const leadData = {
+        Date: startDate.getTime(),
+        Email: data?.email,
+        Mobile: data?.mobileNo,
+        countryCode: data?.countryCode,
+        Name: data?.name,
+
+        Project: data?.project,
+        ProjectId: data?.projectId,
+        Source: data?.source,
+        assignedTo: data?.assignedToObj?.value || '',
+        assignedToObj: {
+          department: data?.assignedToObj?.department || [],
+          email: data?.assignedToObj?.email || '',
+          label: data?.assignedToObj?.label || '',
+          name: data?.assignedToObj?.name || '',
+          namespace: orgId,
+          roles: data?.assignedToObj?.roles || [],
+          uid: data?.assignedToObj?.value || '',
+          value: data?.assignedToObj?.value || '',
+          offPh: data?.assignedToObj?.offPh || '',
+        },
+      }
+
+      if(leadDetailsObj?.Status === 'unassigned' && data?.assignedToObj?.value != leadDetailsObj?.Status){
+        leadData.Status = 'New'
+        leadData.coveredA = [...leadDetailsObj?.coveredA || [],...['New']]
+        const todayTasksIncre = leadSchFetchedData?.filter(
+          (d) => d?.sts === 'pending' && d?.schTime < torrowDate
+        ).length
+        const txt = `A New Lead is assigned to ${leadData.assignedToObj.name} with ${todayTasksIncre} tasks`
+        updateLeadAssigTo(
+          orgId,
+          data?.projectId,
+          leadDetailsObj?.id,
+          leadData.assignedTo,
+          leadDetailsObj?.assignedTo,
+          leadData.Status,
+          leadDetailsObj,
+          todayTasksIncre,
+          txt,
+          user.email
+        )
+      }
+      // update lead data
+      await updateLeadData(
+        orgId,
+        leadDetailsObj.id,
+        leadData,
+        user?.email,
+
+      )
+      setFormMessage('Saved Successfully..!')
+      setLoading(false)
+      if (closeWindowMode) {
+        console.log('am cloded')
+        dialogOpen()
+      }
+
+    }else{
     if (user?.role?.includes(USER_ROLES.CP_AGENT)) {
       const { uid, email, displayName, department, role, orgId, phone } = user
       data.assignedTo = uid
@@ -351,7 +439,59 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       }
     }
   }
+  }
 
+ const getLeadScheduleLog = async () => {
+if(leadDetailsObj.id){
+ steamLeadScheduleLog(
+    orgId,
+    (doc) => {
+
+      const usersList = doc.data()
+      const usersListA = []
+
+      const sMapStsA = []
+      const { staA, staDA } = usersList
+      // setschStsA(staA)
+      // setschStsMA(staDA)
+
+      Object.entries(usersList).forEach((entry) => {
+        const [key, value] = entry
+        if (['staA', 'staDA'].includes(key)) {
+          if (key === 'staA') {
+            // setschStsA(value)
+          } else if (key === 'staDA') {
+            // sMapStsA = value
+          }
+        } else {
+          usersListA.push(value)
+          // console.log(
+          //   'my total fetched list is 3',
+          //   `${key}: ${JSON.stringify(value)}`
+          // )
+        }
+      })
+      // for (const key in usersList) {
+      //   if (usersList.hasOwnProperty(key)) {
+      //     console.log(`${key} : ${usersList[key]}`)
+      //     console.log(`my total fetched list is 2 ${usersList[key]}`)
+      //   }
+      // }
+
+      setLeadsFetchedSchData(
+        usersListA.sort((a, b) => {
+          return b.schTime - a.schTime
+        })
+      )
+
+    },
+    {
+      uid: leadDetailsObj?.id,
+    },
+    (error) => setLeadsFetchedSchData([])
+  )
+}
+}
 
   const validate = Yup.object({
     name: Yup.string()
@@ -409,20 +549,21 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col  my-10 rounded-lg bg-white border border-gray-100 px-4 m-4 mt-4">
           <div className="mt-0">
-          
+
 
             <Formik
               enableReinitialize={true}
               initialValues={{
                 name: customerDetailsTuned?.name || '',
                 cDate: customerDetailsTuned?.Date || '',
-                mobileNo: customerDetailsTuned?.phone || '',
+                mobileNo: customerDetailsTuned?.phone ||'',
                 countryCode: customerDetailsTuned?.countryCode || '+91',
-                email: customerDetailsTuned?.email || '',
+                email: customerDetailsTuned?.email ||'',
                 source: customerDetailsTuned?.source || '',
                 project: customerDetailsTuned?.projectName || '',
                 projectId: customerDetailsTuned?.projectId || '',
-                assignedTo: customerDetailsTuned?.name || '',
+                assignedTo: customerDetailsTuned?.assignedTo || '',
+                assignedToObj: customerDetailsTuned?.assignedToObj || {},
                 budget: '20-30L',
                 deptVal: '',
                 myRole: '',
@@ -445,7 +586,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                           </label>
                         </div>
                         {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-green-600"></div> */}
-                         
+
                         <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
                       </div>
                     </div>
@@ -458,7 +599,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails }) => {
                         />
                       </div>
 
-                      
+
                       {/* <div className="mb-1 space-y-2 w-full text-xs">
 <div className="flex">
     <div className="inline-block mt-5">
@@ -499,7 +640,7 @@ Mobile No
   <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md ">
 
     <div className="inline-block">
-      
+
       <input
         type="text"
         id="countryCode"
@@ -562,7 +703,7 @@ Mobile No
   // dateFormat="MMMM d, yyyy"
   //dateFormat="d-MMMM-yyyy"
   dateFormat="MMM dd, yyyy"
-/> 
+/>
 
                         </span>
                       </div>
@@ -671,6 +812,7 @@ Mobile No
                           </div>
 
                           <div className="w-full flex flex-col mb-3 mt-2">
+
                             <CustomSelect
                               name="project"
                               label="Select Project"
@@ -978,7 +1120,7 @@ Mobile No
                                                         assignedToObj?.label
                                                       }
                                                       id={id}
-                                                    
+
                                                       usersList={usersList}
                                                       align={undefined}
                                                     />
@@ -1113,17 +1255,17 @@ source={row.Source.toString()}
                               })}
                             </p>
                           )}
-                          
-                         
 
-                          
+
+
+
                           <div className='mr-10'>
 
 
                           <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4" >
 
-                        
-                          
+
+
                               <button
                                    className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
                                    type="reset"
@@ -1153,11 +1295,11 @@ source={row.Source.toString()}
 
                           </div>
 
-                         
 
-                        
+
+
                           </div>
-                      
+
                       </>
                     )}
                   </Form>

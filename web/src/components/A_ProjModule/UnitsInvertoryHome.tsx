@@ -2,9 +2,17 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from 'react'
+
 import { Link } from '@redwoodjs/router'
-import { getAllProjects, getBlocksByPhase, getPhasesByProject, getUnits } from 'src/context/dbQueryFirebase'
+
+import {
+  getAllProjects,
+  getBlocksByPhase,
+  getPhasesByProject,
+  getUnits,
+} from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+
 import 'flowbite'
 import DropDownSearchBar from '../dropDownSearchBar'
 import 'src/styles/myStyles.css'
@@ -25,15 +33,15 @@ const UnitsInventoryHome = ({ project }) => {
   const [selUnitDetails, setSelUnitDetails] = useState({})
 
   const [projectDetails, setProjectDetails] = useState()
-    // phases
+  // phases
 
-    const [phasesList, setPhasesList] = useState([])
-    const [phaseViewFeature, setPhaseViewFeature] = useState('Blocks')
+  const [phasesList, setPhasesList] = useState([])
+  const [phaseViewFeature, setPhaseViewFeature] = useState('Blocks')
 
-    // blocks
-    const [blocks, setBlocks] = useState({})
-    const [selPhaseIs, setSelPhaseIs] = useState('')
-    const [selPhaseObj, setSelPhaseObj] = useState({})
+  // blocks
+  const [blocks, setBlocks] = useState({})
+  const [selPhaseIs, setSelPhaseIs] = useState('')
+  const [selPhaseObj, setSelPhaseObj] = useState({})
 
   const [unitsFeedA, setUnitsFeedA] = useState([])
   const [filUnitsFeedA, setFilUnitsFeedA] = useState([])
@@ -50,7 +58,7 @@ const UnitsInventoryHome = ({ project }) => {
     value: 'any',
   })
 
-  const [selUnitType, setUnitType] = useState({
+  const [selUnitDimension, setUnitDimension] = useState({
     projectName: '',
     uid: '',
     value: 'any',
@@ -72,7 +80,6 @@ const UnitsInventoryHome = ({ project }) => {
   useEffect(() => {
     getUnitsFun()
     getPhases(projectDetails)
-
   }, [projectDetails])
   useEffect(() => {
     if (phases.length > 0) {
@@ -83,24 +90,27 @@ const UnitsInventoryHome = ({ project }) => {
     // setFilUnitsFeedA
 
     filFun()
-  }, [unitsFeedA,availType, selUnitType, selFacing])
+  }, [unitsFeedA, availType, selUnitDimension, selsize, selFacing])
 
-  const filFun = ()=>{
-    console.log('selected one is',unitsFeedA,  availType, selFacing)
+  const filFun = () => {
+    console.log('selected one is', unitsFeedA, availType, selFacing)
     const filData = unitsFeedA?.filter((da) => {
       const statusMatch =
-        (availType.value === 'any')
+        availType.value === 'any' ? true : da?.status == availType.value
+      const dimensionMatch =
+        selUnitDimension.value === 'any'
           ? true
-          : da?.status == availType.value
-      const typeMatch =
-          (selUnitType.value === 'any')
-            ? true
-            : (String(da?.size)?.toLocaleLowerCase() || 0) == selUnitType.value?.toLocaleLowerCase()
+          : (String(da?.dimension)?.toLocaleLowerCase() || 0) ==
+            selUnitDimension.value?.toLocaleLowerCase()
       const facingMatch =
-            (selFacing.value === 'any')
-              ? true
-              : da?.facing?.toLocaleLowerCase() == selFacing.value
-          return statusMatch && facingMatch && typeMatch
+        selFacing.value === 'any'
+          ? true
+          : da?.facing?.toLocaleLowerCase() == selFacing.value
+       const sizeMatch =
+       selsize.value === 'any'
+          ? true
+          : Number(da?.area) < Number(selsize.value)
+      return statusMatch && facingMatch && dimensionMatch && sizeMatch
     })
     setFilUnitsFeedA(filData)
   }
@@ -179,12 +189,7 @@ const UnitsInventoryHome = ({ project }) => {
           return a.blockName - b.blockName
         })
         setBlocks({ ...blocks, [phaseId]: response })
-        console.log(
-          'myblocks are',
-          blocks,
-         myProjectDetails?.uid,
-          phaseId
-        )
+        console.log('myblocks are', blocks, myProjectDetails?.uid, phaseId)
       },
       (e) => {
         console.log('error at getBlocks', e)
@@ -391,13 +396,18 @@ const UnitsInventoryHome = ({ project }) => {
     },
     {
       label: 'East',
-      projectName: '35,397 sqft',
-      value: '35397',
+      projectName: 'Less than 1,000 sqft',
+      value: '1000',
+    },
+    {
+      label: 'East',
+      projectName: 'Less than 1,500 sqft',
+      value: '1500',
     },
     {
       label: 'West',
-      projectName: '59,895 sqft',
-      value: '59,895 sqft',
+      projectName: 'Less than 2,000 sqft',
+      value: '2000',
     },
   ]
   useEffect(() => {
@@ -432,7 +442,7 @@ const UnitsInventoryHome = ({ project }) => {
     setAvailType(project)
   }
   const selTypeFun = (project) => {
-    setUnitType(project)
+    setUnitDimension(project)
   }
   const selFacingFun = (project) => {
     setFacing(project)
@@ -501,7 +511,7 @@ const UnitsInventoryHome = ({ project }) => {
                   setStatusFun={{}}
                   viewUnitStatusA={[]}
                   pickCustomViewer={selTypeFun}
-                  selProjectIs={selUnitType}
+                  selProjectIs={selUnitDimension}
                   dropDownItemsA={typeA}
                 />
                 <DropDownSearchBar
@@ -630,7 +640,6 @@ const UnitsInventoryHome = ({ project }) => {
           </div>
         )}
       </div>
-
     </section>
   )
 }
