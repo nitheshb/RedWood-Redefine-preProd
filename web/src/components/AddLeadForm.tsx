@@ -1260,9 +1260,30 @@ source={row.Source.toString()}
 
 
                           <div className='mr-10'>
+                          {title==='Edit Lead' && <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4" >
 
 
-                          <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4" >
+
+<button
+     className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+     type="reset"
+     onClick={() => resetter()}
+   >
+     Reset
+   </button>
+   {/* bg-green-700 */}
+   <button
+     className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+     type="submit"
+     disabled={loading}
+   >
+     {loading && <Loader />}
+     Save
+   </button>
+
+</div>}
+
+                        {title!='Edit Lead' && <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4" >
 
 
 
@@ -1291,7 +1312,7 @@ source={row.Source.toString()}
                                    {loading && <Loader />}
                                    Add Lead & Close
                                  </button>
-                              </div>
+                              </div>}
 
                           </div>
 
