@@ -1272,13 +1272,25 @@ if (title === 'Villa Type Category') {
       newDataIs.push(...facingTypeListA);
     }
     if (title === 'Type/BedRooms') {
-      newDataIs.push(...bedRoomsListA);
+     const x=  bedRoomsListA.map(item => ({
+        ...item,
+        value: item.value.replace(/\D/g, "") // Remove non-digit characters
+      }));
+      newDataIs.push(...x);
     }
     if (title === 'Bathrooms') {
-      newDataIs.push(...bathTypeListA);
+      const x=  bathTypeListA.map(item => ({
+        ...item,
+        value: item.value.replace(/\D/g, "") // Remove non-digit characters
+      }));
+      newDataIs.push(...x);
     }
     if (title === 'Car Parking') {
-      newDataIs.push(...carParkingListA);
+      const x=  carParkingListA.map(item => ({
+        ...item,
+        value: item.value.replace(/\D/g, "") // Remove non-digit characters
+      }));
+      newDataIs.push(...x);
     }
     if (title === 'Status') {
       newDataIs.push(...statusListA);

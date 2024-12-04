@@ -577,9 +577,7 @@ const MyDocument = ({
             </View>
           </View>
 
-            <Text style={{ fontSize: 12, marginBottom: 5 }}>
-              Address: {projectDetails?.address}-{projectDetails?.pincode}
-            </Text>
+
             <Text style={{ fontSize: 11, marginBottom: 5 }}>
               Owner Name: {selUnitDetails?.customerDetailsObj?.customerName1}
             </Text>
@@ -587,10 +585,8 @@ const MyDocument = ({
               Phone: {selUnitDetails?.customerDetailsObj?.countryCode1} {selUnitDetails?.customerDetailsObj?.phoneNo1}
             </Text>
             <Text style={{ fontSize: 12, marginBottom: 5 }}>
-              Email: {selUnitDetails?.customerDetailsObj?.email1}
+              Email: {selUnitDetails?.customerDetailsObj?.email1 || '-NA-'}
             </Text>
-
-
           </View>
 
           <View

@@ -2077,7 +2077,6 @@ export default function UnitFullSummary({
                     )
                   })}
                 </ul>
-                {selFeature}
               </div>
 
 

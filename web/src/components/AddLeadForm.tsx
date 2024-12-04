@@ -801,7 +801,7 @@ Mobile No
                           <div className="w-full flex flex-col mb-3 mt-2">
                             <CustomSelect
                               name="source"
-                              label="Lead Source*"
+                              label="Lead Source"
                               className="input mt-3"
                               onChange={(value) => {
                                 formik.setFieldValue('source', value.value)
@@ -815,7 +815,7 @@ Mobile No
 
                             <CustomSelect
                               name="project"
-                              label="Select Project"
+                              label="Select Project*"
                               className="input mt-3"
                               onChange={(value) => {
                                 console.log('value of project is ', value)

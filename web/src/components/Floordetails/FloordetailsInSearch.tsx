@@ -1193,12 +1193,12 @@ const FloordetailsSearch = ({
                                                     leadDetailsObj,
                                                 },
 
-                                                widthClass: 'max-w-4xl',
+                                                widthClass: 'max-w-7xl',
                                               })
                                             }}>
                                               <div className="flex flex-row justify-between items-right">
                                                 <h3 className="m-0 ml-2 mt-4 text-sm   leading-tight tracking-tight text-blue-800 border-0 border-blue-200">
-                                                  Blocked Details
+                                                  Unblock
                                                 </h3>
                                               </div>
                                             </div>
@@ -1489,7 +1489,7 @@ const FloordetailsSearch = ({
                                             }}>
                                               <div className="flex flex-row justify-between items-right">
                                                 <h3 className="m-0 ml-2 mt-4 text-sm   leading-tight tracking-tight text-blue-800 border-0 border-blue-200">
-                                                  Blocked Details
+                                                  Unblock
                                                 </h3>
                                               </div>
                                             </div>

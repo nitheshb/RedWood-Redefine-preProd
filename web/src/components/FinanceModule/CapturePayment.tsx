@@ -83,22 +83,22 @@ const CaptureUnitPayment = ({
 
   function formatIndianNumber(value) {
     if (!value) return '';
-  
+
     // Convert the value to a string (in case it's a number)
     const numStr = value.toString();
-  
+
     // Format the integer part using Indian number grouping
     // First, handle the last 3 digits, then format the rest in groups of 2 digits
     const formattedInteger = numStr.replace(
       /(\d)(?=(\d{2})+(?!\d))/g, // This regex matches digits for Indian numbering
       '$1,' // Adds a comma after every 2 digits (except at the start)
     );
-  
+
     return formattedInteger;
   }
 
 
-  
+
 
   const [startDate, setStartDate] = useState(d)
 
@@ -483,7 +483,8 @@ const CaptureUnitPayment = ({
                                       <section>
                                         <div className="flex flex-wrap mt-3">
                                           <div className="justify-center w-full mx-auto"></div>
-                                          <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
+
+                                         {false &&<section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
                                             <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md flex flex-row justify-between">
                                               <span className="text-sm font-semibold text-gray-500 w-2/3">
                                                 Paying For
@@ -632,7 +633,7 @@ const CaptureUnitPayment = ({
                                                 </div>
                                               </section>
                                             )}
-                                          </section>
+                                          </section>}
 
                                           <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
                                             <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
@@ -661,7 +662,7 @@ const CaptureUnitPayment = ({
                                                   //   {dat.label}
                                                   // </span>
                                                   <div
-                                                    className="flex items-center gap-x-1"
+                                                    className="flex flex-col items-center gap-x-1"
                                                     key={i}
                                                     onClick={() => {
                                                       setPaymentModex(dat.value)
@@ -683,7 +684,7 @@ const CaptureUnitPayment = ({
                                                     />
                                                     <label
                                                       htmlFor="push-everything"
-                                                      className="block text-sm font-medium leading-6 text-gray-900"
+                                                      className="block text-sm mt-2 font-medium leading-6 text-gray-900"
                                                     >
                                                       {dat.label}
                                                     </label>
@@ -696,7 +697,7 @@ const CaptureUnitPayment = ({
                                               'credit_note',
                                               'wallet',
                                             ].includes(paymentModex) && (
-                                              <div className="w-full  px-3 mt-3">
+                                              <div className="w-full  px-3 mt-4">
                                                 <div className=" mb-4 w-full">
                                                   <MultiSelectMultiLineField
                                                     label="Paid Towards Account"
@@ -742,15 +743,15 @@ const CaptureUnitPayment = ({
           console.log('Changed value is ', payload);
           const { value, id, accountName } = payload;
 
-        
+
           const formattedValue = formatIndianNumber(value);
 
-        
+
           formik.setFieldValue('builderName', accountName);
           formik.setFieldValue('landlordBankDocId', id);
           formik.setFieldValue('towardsBankDocId', formattedValue);
 
-          console.log('Formatted value:', formattedValue); 
+          console.log('Formatted value:', formattedValue);
         }}
         value={formik.values.towardsBankDocId}
         options={bankDetailsA}
@@ -758,7 +759,7 @@ const CaptureUnitPayment = ({
     </div> */}
 
 
-                                                
+
                                               </div>
                                             )}
 
@@ -1248,7 +1249,7 @@ const CaptureUnitPayment = ({
                                 </div>
                               </div> */}
                                     {!bookingProgress && (
-                                      <div className="text-center space-x-4 mt-6">
+                                      <div className="text-center space-x-4 mt-6 pb-10">
                                         <button
                                           className="bg-[#8B5CF6] translate-y-1 text-[#fff] sm:text-lg text-xs font-bold py-2.5 px-6  rounded-full inline-flex items-center"
                                           type="submit"

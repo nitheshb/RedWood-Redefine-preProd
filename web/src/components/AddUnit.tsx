@@ -652,83 +652,6 @@ const AddUnit = ({
     return
   }
 
-  // const unitTypeList = [
-  //   { label: 'Select Count', value: '' },
-  //   { label: '1 Bhk', value: 1 },
-  //   { label: '2 Bhk', value: 2 },
-  //   { label: '2.5 Bhk', value: 3 },
-  //   { label: '3 Bhk', value: 4 },
-  //   { label: '3.5 Bhk', value: 5 },
-  //   { label: '4 Bhk', value: 6 },
-  //   { label: '5 Bhk', value: 7 },
-  // ]
-
-  // const bedRoomsList = [
-  //   { label: 'Select Count', value: '' },
-  //   { label: '1 Bedroom', value: 'bed1' },
-  //   { label: '2 Bedroom', value: 'bed2' },
-  //   { label: '3 Bedroom', value: 'bed3' },
-  //   { label: '4 Bedroom', value: 'bed4' },
-  //   { label: '5 Bedroom', value: 'bed5' },
-  //   // { label: '6 Bedroom', value: 'bed6' },
-  //   // { label: '7 Bedroom', value: 'bed7' },
-  // ]
-
-  // const carParkingList = [
-  //   { label: 'Select Count', value: '' },
-  //   { label: '1 Car Parking', value: 'car1' },
-  //   { label: '2 Car Parking', value: 'car2' },
-  //   { label: '3 Car Parking', value: 'car3' },
-  //   { label: '4 Car Parking', value: 'car4' },
-  //   { label: '5 Car Parking', value: 'car5' },
-  // ]
-
-  // const plotTypeList = [
-  //   { label: 'Select Count', value: '' },
-  //   { label: 'Rectangle', value: 'rectangle' },
-  //   { label: 'Irregular', value: 'odd' },
-  //   { label: 'Square', value: 'even' },
-  // ]
-
-  // const bathTypeList = [
-  //   { label: 'Select Count', value: '' },
-  //   { label: '1 Bathroom', value: 'bath1' },
-  //   { label: '2 Bathroom', value: 'bath2' },
-  //   { label: '3 Bathroom', value: 'bath3' },
-  //   { label: '4 Bathroom', value: 'bath4' },
-  //   { label: '5 Bathroom', value: 'bath5' },
-  // ]
-  // const facingTypeList = [
-  //   { label: 'Select Facing', value: '' },
-  //   { label: 'East', value: 'east' },
-  //   { label: 'West', value: 'west' },
-  //   { label: 'North', value: 'north' },
-  //   { label: 'South', value: 'south' },
-  //   { label: 'South-East', value: 'south-east' },
-  //   { label: 'South-West', value: 'south-west' },
-  //   { label: 'North-East', value: 'north-east' },
-  //   { label: 'North-West', value: 'north-west' },
-  // ]
-
-  // const statusList = [
-  //   { label: 'Select the Status', value: '' },
-  //   { label: 'Available', value: 'available' },
-  //   { label: 'Blocked by Customer', value: 'customer_blocked' },
-  //   { label: 'Blocked by Management', value: 'management_blocked' },
-  //   { label: 'Sold', value: 'sold' },
-  // ]
-
-  // const releaseStausList = [
-  //   { label: 'Release Status', value: '' },
-  //   { label: 'Yes', value: 'yes' },
-  //   { label: 'No', value: 'no' },
-  // ]
-  // const mortgageType = [
-  //   { label: 'Select Mortgage', value: '' },
-  //   { label: 'NA', value: 'na' },
-  //   { label: 'Bank', value: 'bank' },
-  //   { label: '3rd Party Investor', value: '3rd_party_investor' },
-  // ]
 
   // const validate = Yup.object({
 
@@ -798,9 +721,9 @@ const AddUnit = ({
                 cartpet_area_sqft: unitDetails?.cartpet_area_sqft || 0,
                 uds_sqft: unitDetails?.uds_sqft || 0,
                 floor_plan: unitDetails?.floor_plan || 0,
-                bedrooms_c: unitDetails?.bedrooms_c || 0,
-                bathrooms_c: unitDetails?.bathrooms_c || 0,
-                car_parkings_c: unitDetails?.car_parkings_c || 0,
+                bedrooms_c: unitDetails?.bedrooms_c?.replace(/\D/g, "") || 0,
+                bathrooms_c: unitDetails?.bathrooms_c?.replace(/\D/g, "") || 0,
+                car_parkings_c: unitDetails?.car_parkings_c?.replace(/\D/g, "") || 0,
                 tower_no: unitDetails?.tower_no || 0,
                 block_no: unitDetails?.block_no || 0,
                 floor_no: unitDetails?.floor_no || 0,

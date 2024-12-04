@@ -156,19 +156,19 @@ const CostBreakUpPdf = ({
     setNewConstructPS(psConstructPayload)
   }, [psConstructPayload])
   useEffect(() => {
-    const costSqftA = selPhaseObj?.fullCs.filter(
+    const costSqftA = selPhaseObj?.fullCs?.filter(
       (row) => row.component.value === 'sqft_cost_tax'
     )
-    const costConstructSqftA = selPhaseObj?.fullCs.filter(
+    const costConstructSqftA = selPhaseObj?.fullCs?.filter(
       (row) => row.component.value === 'sqft_construct_cost_tax'
     )
-    if (costSqftA.length > 0) {
+    if (costSqftA?.length > 0) {
       console.log('setUpData', costSqftA)
       const x = costSqftA[0]
       setCostPerSqft(x?.charges)
       setGST(x?.gst.value)
     }
-    if (costConstructSqftA.length > 0) {
+    if (costConstructSqftA?.length > 0) {
       console.log('setUpData', costSqftA)
       const x = costConstructSqftA[0]
       setConstructionPerSqft(x?.charges)
@@ -186,6 +186,7 @@ const CostBreakUpPdf = ({
   }, [psPayload, psConstructPayload])
 
   useEffect(() => {
+    console.log('leadDetailsObj1', leadDetailsObj1)
     const {
       additonalChargesObj,
       // ConstructOtherChargesObj,
@@ -477,10 +478,10 @@ const CostBreakUpPdf = ({
       const x = d['component']['value']
       initformValues[`${x}`] = d?.charges
     })
-    setInitialValuesA(initformValues)
-    console.log('gen costSheetA', x)
-    setCostSheetA(x)
-    setConstructCostSheetA(constructionCS)
+    // setInitialValuesA(initformValues)
+    // console.log('gen costSheetA', x)
+    // setCostSheetA(x)
+    // setConstructCostSheetA(constructionCS)
   }, [selPhaseObj, leadDetailsObj1, csMode])
 
   useEffect(() => {
