@@ -1829,6 +1829,7 @@ export const getUser = async (uid: string) => {
 export const checkIfLeadAlreadyExists = async (cName, matchVal) => {
   // db.collection(`${orgId}_leads`).doc().set(data)
   // db.collection('')
+
   console.log('matchVal', matchVal)
   const q = await query(collection(db, cName), where('Mobile', '==', matchVal))
   const parentDocs = []
@@ -3289,6 +3290,19 @@ export const updateProjectComputedData = async (orgId, id, data) => {
     await updateDoc(washingtonRef, data)
   } catch (error) {
     console.log('error in updation', error)
+    // await setDoc(doc(db, `${orgId}_leads_notes`, id), yo)
+  }
+}
+
+export const updateLeadData = async (orgId, id, data, by) => {
+
+  try {
+    const washingtonRef = doc(db, `${orgId}_leads`, id)
+    console.log('check add LeadLog', washingtonRef)
+
+    await updateDoc(washingtonRef, data)
+  } catch (error) {
+    //
     // await setDoc(doc(db, `${orgId}_leads_notes`, id), yo)
   }
 }

@@ -3,7 +3,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react'
+
 import {
+  PencilIcon,
   DeviceMobileIcon,
   MailIcon,
 } from '@heroicons/react/outline'
@@ -15,6 +17,9 @@ import {
 } from '@heroicons/react/solid'
 import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
+import { Slider } from '@mui/material'
+import { setHours, setMinutes } from 'date-fns'
+import { Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { ErrorMessage, Form, Formik, useFormik } from 'formik'
 import { v4 as uuidv4 } from 'uuid'
@@ -49,18 +54,12 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
-import {
-  prettyDate,
-  prettyDateTime,
-  timeConv,
-} from 'src/util/dateConverter'
+import { prettyDate, prettyDateTime, timeConv } from 'src/util/dateConverter'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 
 import LogSkelton from './shimmerLoaders/logSkelton'
 
 import 'react-datepicker/dist/react-datepicker.css'
-import { setHours, setMinutes } from 'date-fns'
-import { Timestamp } from 'firebase/firestore'
 
 import AssigedToDropComp from './assignedToDropComp'
 import ProjPhaseHome from './ProjPhaseHome/ProjPhaseHome'
@@ -80,10 +79,10 @@ import EmailForm from './customerProfileView/emailForm'
 import Confetti from './shared/confetti'
 
 import '../styles/myStyles.css'
-import { Slider } from '@mui/material'
 
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import SiderForm from './SiderForm/SiderForm'
 
 // interface iToastInfo {
 //   open: boolean
@@ -318,13 +317,24 @@ export default function LeadProfileSideView({
   const [addCommentTime, setAddCommentTime] = useState(d.getTime() + 60000)
   const {
     id,
+
+
+
+
+
+    // Status,
+    by,
+    CT,
+  } = customerDetails
+
+  const {
     Name,
     Project,
     projectType,
     ProjectId,
     Source,
     // Status,
-    by,
+
     Mobile,
     Date,
     Email,
@@ -338,8 +348,9 @@ export default function LeadProfileSideView({
     notInterestedNotes,
     stsUpT,
     assignT,
-    CT,
-  } = customerDetails
+
+  } = leadDetailsObj
+
 
   const { enqueueSnackbar } = useSnackbar()
   const [hover, setHover] = useState(false)
@@ -348,6 +359,7 @@ export default function LeadProfileSideView({
   const [streamCoveredA, setStreamCoveredA] = useState([])
   const [streamCurrentStatus, setStreamCurrentStatus] = useState('new')
   const [streamfrom, setStreamFrom] = useState('')
+  const [isImportLeadsOpen, setisImportLeadsOpen] = React.useState(false)
 
   const [closePrevious, setClosePrevious] = useState(false)
 
@@ -421,6 +433,13 @@ export default function LeadProfileSideView({
     }
     setStreamCurrentStatus(Status)
     setStreamFrom(from || '')
+    const x = {
+      projectName: leadDetailsObj.Project,
+      uid: leadDetailsObj.ProjectId,
+    }
+    setSelProjectIs(x)
+    setAssignerName(leadDetailsObj?.assignedToObj?.name)
+    setAssignedTo(leadDetailsObj?.assignedTo)
   }, [leadDetailsObj])
 
   useEffect(() => {
@@ -1527,6 +1546,7 @@ export default function LeadProfileSideView({
     },
   }
   return (
+    <>
     <div
       className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
     >
@@ -1549,6 +1569,13 @@ export default function LeadProfileSideView({
                     <div className="flex flex-col ml-[6px]">
                       <div className=" flex flex-row">
                         <span className="  text-[16px] uppercase">{Name}</span>
+                        <PencilIcon
+                          className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer "
+                          onClick={() => {
+                            setisImportLeadsOpen(true)
+
+                          }}
+                        />{' '}
                         <div className=" text-sm  ml-[4px]  px-[3px] pt-[px] rounded  text-[#FF8C02] ">
                           {currentStatusDispFun(leadDetailsObj?.Status)}{' '}
                         </div>
@@ -1639,8 +1666,7 @@ export default function LeadProfileSideView({
                             <span className="px-[3px]   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
                               {' '}
                               {/* Cost sheet  */}
-                              Book Unit 
-
+                              Show Units
                             </span>
                           ))}
                       </div>
@@ -2136,20 +2162,23 @@ export default function LeadProfileSideView({
                           </h3>
                           <button onClick={() => selFun()}>
                             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                            <span className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-700">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={2}
-    stroke="currentColor"
-    className="w-5 h-5"
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-  </svg>
-  Add Notes
-</span>
-
+                              <span className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-700">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={2}
+                                  stroke="currentColor"
+                                  className="w-5 h-5"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M12 4.5v15m7.5-7.5h-15"
+                                  />
+                                </svg>
+                                Add Notes
+                              </span>
                             </time>
                           </button>
                           <Confetti />
@@ -2474,20 +2503,20 @@ export default function LeadProfileSideView({
                         <form onSubmit={docUploadHandler}>
                           <input
                             className="form-control
-    block
-    w-full
-    px-3
-    py-1.5
-    text-base
-    font-normal
-    text-gray-700
-    bg-white bg-clip-padding
-    border border-solid border-gray-300
-    rounded
-    transition
-    ease-in-out
-    m-0
-    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            block
+                            w-full
+                            px-3
+                            py-1.5
+                            text-base
+                            font-normal
+                            text-gray-700
+                            bg-white bg-clip-padding
+                            border border-solid border-gray-300
+                            rounded
+                            transition
+                            ease-in-out
+                            m-0
+                            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             type="file"
                             id="formFile"
                           />
@@ -3076,7 +3105,6 @@ export default function LeadProfileSideView({
                                                   ),
                                                 ]}
                                                 dateFormat="MMM d, yyyy h:mm aa"
-                                                
                                               />
                                             </span>
                                           </div>
@@ -3691,5 +3719,13 @@ export default function LeadProfileSideView({
         )}
       </div>
     </div>
+    <SiderForm
+        open={isImportLeadsOpen}
+        setOpen={setisImportLeadsOpen}
+        title={'Edit Lead'}
+        leadDetailsObj={customerDetails}
+        widthClass="max-w-2xl"
+      />
+    </>
   )
 }

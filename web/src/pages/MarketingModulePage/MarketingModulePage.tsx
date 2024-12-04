@@ -64,7 +64,7 @@ const MarketingModulePage = (props) => {
               className={`${
                 showDetailedSideBar
                   ? 'flex flex-row overflow-auto w-[20vw]  overflow-auto no-scrollbar text-gray-700 '
-                  : 'flex flex-row overflow-auto overflow-auto no-scrollbar  text-gray-700 '
+                  : 'flex flex-row  no-scrollbar  text-gray-700 '
               }`}
             >
               <SlimSideMenuBar

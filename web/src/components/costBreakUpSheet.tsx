@@ -695,7 +695,8 @@ console.log('customer info', myBookingPayload)
                                 <div className="inline-block mt-4 ml-4">
                                       <PdfInvoiceGenerator
                                         user={user}
-                                        selUnitDetails={myBookingPayload}
+                                        selUnitDetails={selUnitDetails}
+                                        myBookingPayload= {myBookingPayload}
                                         myObj={newPlotCostSheetA}
                                         newPlotPS={newPlotPS}
                                         myAdditionalCharges={

@@ -7,7 +7,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { Formik, Form } from 'formik'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
-import { streamMasters, streamUnitById, updateUnitCustomerDetailsTo } from 'src/context/dbQueryFirebase'
+import { checkIfLeadAlreadyExists, streamMasters, streamUnitById, updateUnitCustomerDetailsTo } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
@@ -41,9 +41,14 @@ const EmailForm = ({
   const [givenPhNo1, setGivenPhNo1] = useState('')
   const [givenPhNo2, setGivenPhNo2] = useState('')
   const [statesListA, setStatesList] = useState([])
+  const [fetchedLeadsObj, setFetchedLeadsObj] = useState({})
+
   useEffect(() => {
     console.log('custoemr infor is',index,"-->", customerInfo)
-  }, [customerInfo])
+    if(leadPayload){
+      setGivenPhNo1(leadPayload?.Mobile || '')
+    }
+  }, [customerInfo, leadPayload])
   useEffect(() => {
     const unsubscribe = streamMasters(
       orgId,
@@ -119,14 +124,15 @@ const EmailForm = ({
       // leadPayload?.customerDetailsObj?.customerName1 ||
       // selUnitDetails?.customerDetailsObj?.customerName1 ||
       customerInfo?.customerName1 ||
-      leadPayload?.Name ||
+      // leadPayload?.Name ||
       '',
     // customerName2:
     //   leadPayload?.secondaryCustomerDetailsObj?.customerName2 ||
     //   selUnitDetails?.secondaryCustomerDetailsObj?.customerName2 ||
     //   customerInfo?.secondaryCustomerDetailsObj?.customerName2 ||
     //   '',
-    relation1: leadPayload?.customerDetailsObj?.relation1 ||
+    relation1:
+    //  leadPayload?.customerDetailsObj?.relation1 ||
       selUnitDetails?.customerDetailsObj?.relation1 ||
       customerInfo?.relation1 || {
         label: 'S/O',
@@ -141,7 +147,7 @@ const EmailForm = ({
     //   },
 
     co_Name1:
-      leadPayload?.customerDetailsObj?.co_Name1 ||
+      // leadPayload?.customerDetailsObj?.co_Name1 ||
       selUnitDetails?.customerDetailsObj?.co_Name1 ||
       customerInfo?.co_Name1 ||
       '',
@@ -150,18 +156,20 @@ const EmailForm = ({
     //   selUnitDetails?.secondaryCustomerDetailsObj?.co_Name2 ||
     //   customerInfo?.secondaryCustomerDetailsObj?.co_Name2 ||
     //   '',
-
+    leadPhNo:
+leadPayload?.Mobile ||
+      '',
     phoneNo1:
-      leadPayload?.customerDetailsObj?.phoneNo1 ||
+      // leadPayload?.customerDetailsObj?.phoneNo1 ||
       selUnitDetails?.customerDetailsObj?.phoneNo1 ||
       customerInfo?.phoneNo1 ||
-      leadPayload?.Mobile ||
+      // leadPayload?.Mobile ||
       '',
     phoneNo3:
-      leadPayload?.customerDetailsObj?.phoneNo3 ||
+      // leadPayload?.customerDetailsObj?.phoneNo3 ||
       selUnitDetails?.customerDetailsObj?.phoneNo3 ||
       customerInfo?.phoneNo3 ||
-      leadPayload?.Mobile ||
+      // leadPayload?.Mobile ||
       '',
     // phoneNo2:
     //   leadPayload?.secondaryCustomerDetailsObj?.phoneNo2 ||
@@ -176,10 +184,10 @@ const EmailForm = ({
     //   '',
 
     email1:
-      leadPayload?.customerDetailsObj?.email1 ||
+      // leadPayload?.customerDetailsObj?.email1 ||
       selUnitDetails?.customerDetailsObj?.email1 ||
       customerInfo?.email1 ||
-      leadPayload?.Email ||
+      // leadPayload?.Email ||
       '',
     // email2:
     //   leadPayload?.secondaryCustomerDetailsObj?.email2 ||
@@ -194,7 +202,8 @@ const EmailForm = ({
     //   selUnitDetails?.secondaryCustomerDetailsObj?.dob2 ||
     //   customerInfo?.secondaryCustomerDetailsObj?.dob2 ||
     //   datee,
-    marital1: leadPayload?.customerDetailsObj?.marital1 ||
+    marital1:
+    // leadPayload?.customerDetailsObj?.marital1 ||
       selUnitDetails?.customerDetailsObj?.marital1 ||
       customerInfo?.marital1 || {
         label: 'Single',
@@ -207,7 +216,7 @@ const EmailForm = ({
     //     value: 'Single',
     //   },
     address1:
-      leadPayload?.customerDetailsObj?.address1 ||
+      // leadPayload?.customerDetailsObj?.address1 ||
       selUnitDetails?.customerDetailsObj?.address1 ||
       customerInfo?.address1 ||
       '',
@@ -217,25 +226,25 @@ const EmailForm = ({
     //   customerInfo?.secondaryCustomerDetailsObj?.address2 ||
     //   '',
     city1:
-      leadPayload?.customerDetailsObj?.city1 ||
+      // leadPayload?.customerDetailsObj?.city1 ||
       selUnitDetails?.customerDetailsObj?.city1 ||
       customerInfo?.city1 ||
       '',
 
     countryName1:
-      leadPayload?.customerDetailsObj?.countryName1 ||
+      // leadPayload?.customerDetailsObj?.countryName1 ||
       selUnitDetails?.customerDetailsObj?.countryName1 ||
       customerInfo?.countryName1 ||
       '',
 
     pincode1:
-      leadPayload?.customerDetailsObj?.pincode1 ||
+      // leadPayload?.customerDetailsObj?.pincode1 ||
       selUnitDetails?.customerDetailsObj?.pincode1 ||
       customerInfo?.pincode1 ||
       '',
 
     countryCode1:
-      leadPayload?.customerDetailsObj?.countryCode1 ||
+      // leadPayload?.customerDetailsObj?.countryCode1 ||
       selUnitDetails?.customerDetailsObj?.countryCode1 ||
       customerInfo?.countryCode1 ||
       '',
@@ -276,7 +285,8 @@ const EmailForm = ({
     //   customerInfo?.secondaryCustomerDetailsObj?.countryCode4 ||
     //   '',
 
-    state1: leadPayload?.customerDetailsObj?.state1 ||
+    state1:
+    // leadPayload?.customerDetailsObj?.state1 ||
       selUnitDetails?.customerDetailsObj?.state1 ||
       customerInfo?.state1 || {
         value: 'KA',
@@ -290,7 +300,7 @@ const EmailForm = ({
     //   },
 
     panNo1:
-      leadPayload?.customerDetailsObj?.panNo1 ||
+      // leadPayload?.customerDetailsObj?.panNo1 ||
       selUnitDetails?.customerDetailsObj?.panNo1 ||
       customerInfo?.panNo1 ||
       '',
@@ -300,7 +310,7 @@ const EmailForm = ({
     //   customerInfo?.secondaryCustomerDetailsObj?.panNo2 ||
     //   '',
     panDocUrl1:
-      leadPayload?.customerDetailsObj?.panDocUrl1 ||
+      // leadPayload?.customerDetailsObj?.panDocUrl1 ||
       selUnitDetails?.customerDetailsObj?.panDocUrl1 ||
       customerInfo?.panDocUrl1 ||
       '',
@@ -311,7 +321,7 @@ const EmailForm = ({
     //   customerInfo?.secondaryCustomerDetailsObj?.panDocUrl2 ||
     //   '',
     aadharNo1:
-      leadPayload?.customerDetailsObj?.aadharNo1 ||
+      // leadPayload?.customerDetailsObj?.aadharNo1 ||
       selUnitDetails?.customerDetailsObj?.aadharNo1 ||
       customerInfo?.aadharNo1 ||
       '',
@@ -321,7 +331,7 @@ const EmailForm = ({
     //   customerInfo?.secondaryCustomerDetailsObj?.aadharNo2 ||
     //   '',
     aadharUrl1:
-      leadPayload?.customerDetailsObj?.aadharUrl1 ||
+      // leadPayload?.customerDetailsObj?.aadharUrl1 ||
       selUnitDetails?.customerDetailsObj?.aadharUrl1 ||
       customerInfo?.aadharUrl1 ||
       '',
@@ -331,7 +341,7 @@ const EmailForm = ({
     //   customerInfo?.secondaryCustomerDetailsObj?.aadharUrl2 ||
     //   '',
     occupation1:
-      leadPayload?.customerDetailsObj?.occupation1 ||
+      // leadPayload?.customerDetailsObj?.occupation1 ||
       selUnitDetails?.customerDetailsObj?.occupation1 ||
       customerInfo?.occupation1 ||
       '',
@@ -341,12 +351,12 @@ const EmailForm = ({
     //   customerInfo?.secondaryCustomerDetailsObj?.occupation2 ||
     //   '',
     companyName1:
-      leadPayload?.customerDetailsObj?.companyName1 ||
+      // leadPayload?.customerDetailsObj?.companyName1 ||
       selUnitDetails?.customerDetailsObj?.companyName1 ||
       customerInfo?.companyName1 ||
       '',
     designation1:
-      leadPayload?.customerDetailsObj?.designation1 ||
+      // leadPayload?.customerDetailsObj?.designation1 ||
       selUnitDetails?.customerDetailsObj?.designation1 ||
       customerInfo?.designation1 ||
       '',
@@ -356,7 +366,7 @@ const EmailForm = ({
     //   customerInfo?.designation2 ||
     //   '',
     annualIncome1:
-      leadPayload?.customerDetailsObj?.annualIncome1 ||
+      // leadPayload?.customerDetailsObj?.annualIncome1 ||
       selUnitDetails?.customerDetailsObj?.annualIncome1 ||
       customerInfo?.annualIncome1 ||
       '',
@@ -508,8 +518,35 @@ const EmailForm = ({
   }
  const  searchPhoneNoFun= (givenPhNo1) => {
     console.log('givenPhNo1 is ', givenPhNo1)
-     // setGivenPhNo2(givenPhNo1)
+    setGivenPhNo1(givenPhNo1)
 
+  }
+  const searchFun = async (formik) => {
+    const foundLength = await checkIfLeadAlreadyExists(
+      `${orgId}_leads`,
+      givenPhNo1
+    )
+    if (foundLength?.length > 0) {
+      setFetchedLeadsObj(foundLength[0])
+      const x = foundLength[0]
+      formik.setFieldValue('customerName1', x?.Name)
+      console.log('customerName1', foundLength)
+      // formik.setFieldValue('co_Name1', x?.Name)
+      formik.setFieldValue('phoneNo1', x?.Mobile)
+      // formik.setFieldValue('email1', x?.Email)
+      // formik.setFieldValue('address1', x?.Address)
+      // formik.setFieldValue('city1', x?.City)
+      // formik.setFieldValue('state1', x?.State)
+      // formik.setFieldValue('countryName1', x?.Country)
+      // formik.setFieldValue('pincode1', x?.Pincode)
+      // formik.setFieldValue('countryCode1', x?.CountryCode)
+    }
+    // formik.setFieldValue('customerName1', 'New1')
+
+    }
+
+  const replaceFormData = async (formik) => {
+    searchFun(formik)
   }
   return (
     <Formik
@@ -549,15 +586,9 @@ const EmailForm = ({
                       <div>
                         <section className="flex flex-row">
                           <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
-                            Applicant Details-{index+1}
+                            {index=== 0 ?'Primary Applicant' : `Applicant Details-${index+1}`}
                           </h6>
-                          <div
-                            className=" ml- text-[12px] cursor-pointer mt-1  rounded-full px-2  text-[#0ea5e9] underline"
-                            onClick={() => setShowLeadLink(!showLeadLink)}
-                          >
-                            {/* <LinkIcon className="w-3 h-3 cursor-pointer ml-1 mb-[3px] mr-1 inline-block text-[#0ea5e9]  rounded-[16px] " /> */}
-                            Search in leads
-                          </div>
+
                         </section>
                         <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
                           These details will be used for registration.So be
@@ -576,21 +607,41 @@ const EmailForm = ({
                   </div>
                 </section>
               </div>
-              {showLeadLink && (
-                <div className="bg-[#DCD7FF] rounded-xl p-2 mx-2 flex-col">
-                  <label>Search Lead Phone no</label>
-                  <div className="w-full lg:w-3/12 px- ">
+
+              <section className="mt-1 px-4 mx-4 rounded-lg bg-white border border-gray-100 shadow">
+                <section className="flex flex-row  pt-2 mt-1 ">
+                  <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
+                  <span className="ml-1 leading-[15px] flex flex-row ">
+                    <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
+                      Personal Details
+                      <abbr title="required"></abbr>
+                    </label>
+                    <div
+                            className=" ml- text-[13px] cursor-pointer  rounded-full px-2  text-[#0ea5e9] underline"
+                            onClick={() => setShowLeadLink(!showLeadLink)}
+                          >
+                            {/* <LinkIcon className="w-3 h-3 cursor-pointer ml-1 mb-[3px] mr-1 inline-block text-[#0ea5e9]  rounded-[16px] " /> */}
+                            Auto fill from lead
+                          </div>
+                  </span>
+                </section>
+{/* auto fill section */}
+                {showLeadLink && (
+                <div className="bg-[#DCD7FF] rounded-xl p-2 mt-2 flex-col">
+                  <label className='text-[14px] '>Auto fill from matched Leads </label>
+                  <section className='flex flex-row '>
+                  <div className="w-full flex flex-row lg:w-3/12 px- mt-2">
                     <div className="relative w-full ">
                       <PhoneNoField
-                        label="Phone No1"
-                        name="phoneNo1"
+                        label="Lead Phone No"
+                        name="leadPhNo"
                         // type="text"
-                        value={formik.values.phoneNo1}
+                        value={formik.values.leadPhNo}
                         onChange={(value) => {
                           // formik.setFieldValue('mobileNo', value.value)
                           console.log('value is ', value.value)
                           //
-                          formik.setFieldValue('phoneNo1', value.value)
+                          formik.setFieldValue('leadPhNo', value.value)
                           searchPhoneNoFun(value.value)
                         }}
                         // value={formik.values.mobileNo}
@@ -601,19 +652,14 @@ const EmailForm = ({
                         className="text-[10px]"
                       />
                     </div>
+
                   </div>
+                  {givenPhNo1.length ===10 &&<button className='ml-2 mt-5 text-[12px]' onClick={()=> {
+                    replaceFormData(formik)
+                    }}>Replace existing details</button>}
+                  </section>
                 </div>
               )}
-              <section className="mt-1 px-4 mx-4 rounded-lg bg-white border border-gray-100 shadow">
-                <section className="flex flex-row  pt-2 mt-1 ">
-                  <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
-                  <span className="ml-1 leading-[15px] ">
-                    <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
-                      Personal Details
-                      <abbr title="required"></abbr>
-                    </label>
-                  </span>
-                </section>
                 {/* row 1 */}
                 <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-4 ">
                   <div className="space-y-2 w-full text-xs mt-">
@@ -1166,13 +1212,12 @@ const EmailForm = ({
 
 // export default EmailForm
 
-const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo }) => {
+const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, leadPayload, }) => {
   const [forms, setForms] = useState([{ id: 1 }])
   const [savedForms, setSavedForms] = useState({})
   const [applicantDetailsA, setApplicantDetailsA] = useState([])
   const [streamUnitDetails, setStreamUnitDetails] = useState({})
 
-  const [applicantDetailsObj, setApplicantDetailsObj] = useState({})
 
   const { user } = useAuth()
   const { orgId } = user
@@ -1185,9 +1230,11 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo }) =
   useEffect(() => {
     streamUnitDataFun()
   }, [selUnitDetails])
-
   useEffect(() => {
-    console.log('customer info selUnitDetails', selUnitDetails)
+    console.log('leads payload is ', leadPayload)
+  },[])
+  useEffect(() => {
+    console.log('customer info selUnitDetails', selUnitDetails, leadPayload)
     const custDetailsA = []
     if (streamUnitDetails?.customerDetailsObj) {
       custDetailsA.push(streamUnitDetails?.customerDetailsObj)
@@ -1297,6 +1344,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo }) =
             }
             onSave={(values) => handleSave(values, form.id)}
             customerInfo={applicantDetailsA[i]}
+            leadPayload={leadPayload}
             index={i}
             // customerInfo={}
           />

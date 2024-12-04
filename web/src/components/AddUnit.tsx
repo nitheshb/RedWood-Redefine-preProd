@@ -907,7 +907,7 @@ const AddUnit = ({
                                   type="text"
                                   onChange={(value) => {
                                     formik.setFieldValue('block_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
-  
+
                                   }}
                                 />
                               </div>
@@ -922,9 +922,9 @@ const AddUnit = ({
 
                                   onChange={(value) => {
                                     formik.setFieldValue('tower_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
-  
+
                                   }}
-                                  
+
                                 />
                               </div>
                             )}
@@ -938,7 +938,7 @@ const AddUnit = ({
                                   type="text"
                                   onChange={(value) => {
                                     formik.setFieldValue('floor_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
-  
+
                                   }}
                                 />
                               </div>
@@ -982,6 +982,10 @@ const AddUnit = ({
                                   label="Dimension"
                                   name="dimension"
                                   type="text"
+                                  onChange={(value) => {
+                                    formik.setFieldValue('dimension', value.target.value.replace(/^0+/, ''))
+
+                                  }}
                                   onChange={(value) => {
                                     formik.setFieldValue('dimension', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
   

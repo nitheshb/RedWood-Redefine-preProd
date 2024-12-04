@@ -339,7 +339,7 @@ function result(format: string, key = '.00', currencySymbol: string) {
     : currencySymbol + format
 }
 export function fCurrency(number: InputValue) {
-  const format = number ? numeral(number).format('0,0.00') : ''
+  const format = number ? numeral(number).format('0,0.00') : '0'
 
   // Format the currency symbol using Intl.NumberFormat
   const currencyFormatter = new Intl.NumberFormat('en-IN', {
@@ -482,6 +482,7 @@ const invoiceDet: IInvoice[] = [
 const MyDocument = ({
   user,
   selUnitDetails,
+  myBookingPayload,
   myObj,
   newPlotPS,
   myAdditionalCharges,
@@ -970,7 +971,7 @@ const MyDocument = ({
                 </View>
               </View>
               <View>
-                {selUnitDetails?.constructCS?.map((item, index) => (
+                {myBookingPayload?.constructCS?.map((item, index) => (
                   <View
                     style={[
                       styles.tableRow,
@@ -1041,7 +1042,7 @@ const MyDocument = ({
               <View
                 style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
               >
-                <Text>{fCurrency(selUnitDetails?.T_C)}</Text>
+                <Text>{fCurrency(myBookingPayload?.T_C)}</Text>
               </View>
             </View>
           </View>}
@@ -1106,7 +1107,7 @@ const MyDocument = ({
                   </View>
                 </View>
               </View>
-              {selUnitDetails?.constAdditionalChargesCS?.map((item, index) => (
+              {myBookingPayload?.constAdditionalChargesCS?.map((item, index) => (
                 <View
                   style={[
                     styles.tableRow,
@@ -1183,13 +1184,13 @@ const MyDocument = ({
                 </View>
 
                 <View style={[styles.tableCell_20, styles.alignRight]}>
-                  <Text>{fCurrency(selUnitDetails?.T_D)}</Text>
+                  <Text>{fCurrency(myBookingPayload?.T_D)}</Text>
                 </View>
               </View>
             </View>
           </View>}
           {/* part -5 */}
-          {selUnitDetails?.possessionAdditionalCostCS?.length >0 &&
+          {myBookingPayload?.possessionAdditionalCostCS?.length >0 &&
            <View style={[styles.fitter, { marginTop: '10px' }]}>
             <View style={[{ border: '1 solid #e5e7eb ', borderRadius: 8 }]}>
               <View
@@ -1249,7 +1250,7 @@ const MyDocument = ({
                   </View>
                 </View>
               </View>
-              {selUnitDetails?.constAdditionalChargesCS?.map((item, index) => (
+              {myBookingPayload?.constAdditionalChargesCS?.map((item, index) => (
                 <View
                   style={[
                     styles.tableRow,
@@ -1326,7 +1327,7 @@ const MyDocument = ({
                 </View>
 
                 <View style={[styles.tableCell_20, styles.alignRight]}>
-                  <Text>{fCurrency(selUnitDetails?.T_E)}</Text>
+                  <Text>{fCurrency(myBookingPayload?.T_E)}</Text>
                 </View>
               </View>
 
@@ -1351,7 +1352,7 @@ const MyDocument = ({
                   {[
                     { label: `${projectDetails?.projectType?.name === 'Apartment'
                       ? 'Flat'
-                      : 'Plot'} cost`, value: selUnitDetails?.T_A },
+                      : 'Plot'} cost`, value: myBookingPayload?.T_A },
                     { label: 'Additional Charges', value: partBTotal },
                   ].map((item, index) => (
                     <View
@@ -1375,8 +1376,8 @@ const MyDocument = ({
                   {/* part c and D */}
                   {projectDetails?.projectType?.name === 'Villas' &&
                         [
-                    { label: `Construction cost`, value: selUnitDetails?.T_C },
-                    { label: 'Construction additional Charges', value: selUnitDetails?.T_D },
+                    { label: `Construction cost`, value: myBookingPayload?.T_C },
+                    { label: 'Construction additional Charges', value: myBookingPayload?.T_D },
                   ].map((item, index) => (
                     <View
                       key={index}
@@ -1486,7 +1487,7 @@ const MyDocument = ({
                     </View>
                   </View>
                 </View>
-                {selUnitDetails?.plotPS?.map((item, index) => (
+                {myBookingPayload?.plotPS?.map((item, index) => (
                   <View
                     style={[
                       styles.tableRow,
@@ -1530,7 +1531,7 @@ const MyDocument = ({
                   <View style={styles.tableCell_3}></View>
 
                   <View style={[styles.tableCell_3, styles.alignRight]}>
-                    <Text>{fCurrency(selUnitDetails?.T_A + selUnitDetails?.T_B)}</Text>
+                    <Text>{fCurrency(myBookingPayload?.T_A + myBookingPayload?.T_B)}</Text>
                   </View>
                 </View>
               </View>
@@ -1579,7 +1580,7 @@ const MyDocument = ({
                     </View>
                   </View>
                 </View>
-                {selUnitDetails?.constructPS?.map((item, index) => (
+                {myBookingPayload?.constructPS?.map((item, index) => (
                   <View
                     style={[
                       styles.tableRow,
@@ -1623,7 +1624,7 @@ const MyDocument = ({
                   <View style={styles.tableCell_3}></View>
 
                   <View style={[styles.tableCell_3, styles.alignRight]}>
-                    <Text>{fCurrency(selUnitDetails?.T_C + selUnitDetails?.T_D)}</Text>
+                    <Text>{fCurrency(myBookingPayload?.T_C + myBookingPayload?.T_D)}</Text>
                   </View>
                 </View>
               </View> }
@@ -1650,6 +1651,7 @@ const MyDocument = ({
 const PdfInvoiceGenerator = ({
   user,
   selUnitDetails,
+  myBookingPayload,
   myObj,
   newPlotPS,
   myAdditionalCharges,
@@ -1662,7 +1664,7 @@ const PdfInvoiceGenerator = ({
   projectDetails,
   leadDetailsObj1,
 }) => {
-  console.log('overall cost sheet is ', newPlotPS)
+  console.log('overall cost sheet is ', newPlotPS, selUnitDetails)
   return (
     <div>
       {' '}
@@ -1671,6 +1673,7 @@ const PdfInvoiceGenerator = ({
           <MyDocument
             user={user}
             selUnitDetails={selUnitDetails}
+            myBookingPayload={myBookingPayload}
             myObj={myObj}
             newPlotPS={newPlotPS}
             myAdditionalCharges={myAdditionalCharges}

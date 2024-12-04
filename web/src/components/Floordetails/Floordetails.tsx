@@ -979,7 +979,7 @@ const Floordetails = ({
                 </section>
               </section>
             </section>
-            {['Apartment', 'Villas'].includes(
+            {['Apartment1', 'Villas1'].includes(
               projectDetails?.projectType?.name
             ) && (
               <ul className="">
@@ -1045,7 +1045,10 @@ const Floordetails = ({
                                         >
                                           {data?.status === 'available' && (
                                             <div className="flex flex-col items-right justify-between">
-                                              <div className="flex flex-row justify-between items-right">
+                                              {![
+                                            'projectManagement',
+                                            'projectOnboard',
+                                          ].includes(source) && (<div className="flex flex-row justify-between items-right">
                                                 <h3
                                                   className="m-0 ml-2 text-sm   leading-tight tracking-tight text-blue-800 border-0 border-blue-200 h-[16px] hover:border-b hover:border-blue-800"
                                                   onClick={() => {
@@ -1094,7 +1097,7 @@ const Floordetails = ({
                                                 >
                                                   Quotee
                                                 </h3>
-                                              </div>
+                                              </div>)}
 
                                               <div className="flex flex-row justify-between items-right">
                                                 <h3
@@ -1121,8 +1124,10 @@ const Floordetails = ({
                                                 >
                                                   Block
                                                 </h3>
-                                                {source ===
-                                                  'projectManagement' && (
+                                                {[
+                                            'projectManagement',
+                                            'projectOnboard',
+                                          ].includes(source) && (
                                                   <h3
                                                     className="m-0 mr-2 mt-2 mr-[21px] text-sm  leading-tight tracking-tight text-blue-800 border-0 border-blue-800 h-[16px]  hover:border-b hover:border-blue-800"
                                                     onClick={() => {
@@ -1280,7 +1285,7 @@ const Floordetails = ({
                 })}
               </ul>
             )}
-            {['Plots'].includes(projectDetails?.projectType?.name) && (
+          
               <ul className="">
                 <li className="py-2">
                   <section>
@@ -1563,7 +1568,7 @@ const Floordetails = ({
                   </section>
                 </li>
               </ul>
-            )}
+
             {!['Apartment', 'Plots', 'Villas'].includes(
               projectDetails?.projectType?.name
             ) && (

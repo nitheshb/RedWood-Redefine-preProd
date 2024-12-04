@@ -41,7 +41,16 @@ export default function AddLeadTaskComment({
   const [clicked, setClicked] = useState(false)
   const [intialSchTime, setIntialSchTime] = useState(0)
 
+  const [pickerDate, setPickerDate] = useState(new Date(addCommentTime))
+  useEffect(() => {
+    console.log('date issue ', addCommentTime)
+    setPickerDate(new Date(addCommentTime))
+  }, [])
 
+  useEffect(() => {
+    console.log('date issue ', addCommentTime)
+    setPickerDate(new Date(addCommentTime))
+  }, [addCommentTime])
 
   const [hoverId, setHoverID] = useState(1000)
   const [hoverTasId, setHoverTasId] = useState(2000)
@@ -209,7 +218,7 @@ export default function AddLeadTaskComment({
               <span className="inline mt-[4px] pl-2">
                     <DatePicker
                       className=" pl- px- min-w-[151px] inline text-xs text-[#0091ae] bg-white cursor-pointer"
-                      selected={addCommentTime}
+                      selected={pickerDate}
                       onChange={(date) =>{
                         console.log('am i coming here', addCommentTime, addCommentTime<torrowDate, date.getTime()< torrowDate,date.getTime()> torrowDate, date.getTime())
 
@@ -392,7 +401,7 @@ export default function AddLeadTaskComment({
                   <span className="inline">
                     <DatePicker
                       className=" pl- px- min-w-[151px] inline text-xs text-[#0091ae] bg-white cursor-pointer"
-                      selected={addCommentTime}
+                      selected={pickerDate}
                       onChange={(date) => setAddCommentTime(date)}
                       showTimeSelect
                       timeFormat="HH:mm"

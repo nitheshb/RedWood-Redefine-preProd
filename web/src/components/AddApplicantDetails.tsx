@@ -288,20 +288,23 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
   const [selRef2, setRefDataFun2] = useState({ label: 'S/O', value: 'S/O' })
   const [moveNext, setMoveNext] = useState(false)
   const [givenPhNo1, setGivenPhNo1] = useState()
+  // useEffect(() => {
+  //   if (givenPhNo1?.length == 10) {
+  //     searchFun()
+  //   }
+  // }, [givenPhNo1])
   useEffect(() => {
-    if (givenPhNo1?.length == 10) {
-      searchFun()
-    }
-  }, [givenPhNo1])
-  const searchFun = async () => {
-    const foundLength = await checkIfLeadAlreadyExists(
-      `${orgId}_leads`,
-      givenPhNo1
-    )
-    if (foundLength?.length > 0) {
-      setLeadPayload(foundLength[0])
-    }
-  }
+    console.log('leads payload is ', leadPayload)
+  },[])
+  // const searchFun = async () => {
+  //   const foundLength = await checkIfLeadAlreadyExists(
+  //     `${orgId}_leads`,
+  //     givenPhNo1
+  //   )
+  //   if (foundLength?.length > 0) {
+  //     setLeadPayload(foundLength[0])
+  //   }
+  // }
 
   const onSubmitFun = async (data, updateDoc, resetForm) => {
     console.log(data)
@@ -999,7 +1002,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
           {title}
         </Dialog.Title> */}
         </div>
-<CloneableEmailForm selUnitDetails={selUnitDetails} customerInfo={customerInfo} setCustomerInfo={setCustomerInfo}  />
+<CloneableEmailForm selUnitDetails={selUnitDetails} customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} leadPayload={leadPayload} />
 
         {/* <div className="">
           <div className="flex flex-col rounded-lg bg-white ">

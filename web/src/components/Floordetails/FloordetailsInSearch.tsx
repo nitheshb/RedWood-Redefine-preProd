@@ -191,6 +191,7 @@ const FloordetailsSearch = ({
       const typeMatch = !filType.includes('any')
         ? filType.includes(da?.size?.toLocaleLowerCase())
         : true
+        // dimension
 
       return facingMatch && typeMatch
     })
