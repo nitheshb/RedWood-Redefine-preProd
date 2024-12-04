@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from 'recharts';
-import { ArrowUpDown, ChevronDown, MoveDown, MoveUp, TrendingUp } from 'lucide-react';
+import { ArrowUpDown, Calendar, ChevronDown, ChevronRight, MoveDown, MoveUp, TrendingUp } from 'lucide-react';
 import { scaleLinear } from 'd3-scale';
 import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
 
@@ -365,8 +365,8 @@ const handleSort = (key) => {
 
 
   return (
-    <div className="bg-white   ">
-      {/* <div className="overflow-x-auto m-4 border shadow-xl rounded-2xlborder shadow-xl rounded-2xl">
+    <div className="bg-[#F1F1F1] ">
+       {/* <div className="overflow-x-auto m-4 border shadow-xl rounded-2xlborder shadow-xl rounded-2xl">
         <div className="">
           <div className="flex justify-between mb-4 mt-2">
             <div>
@@ -553,7 +553,7 @@ const handleSort = (key) => {
 <div className="grid grid-cols-4 gap-6 mb-8">
   <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
-    <p className="text-2xl font-bold mb-2"></p>
+    <p className="text-2xl font-bold mb-2">0</p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
       <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
@@ -615,7 +615,7 @@ const handleSort = (key) => {
 
         <div className="grid grid-cols-2 gap-6 h-full items-end">
       
-          <div className="flex flex-col rounded-lg py-5 h-full bg-white shadow">
+          <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
             <div className="pt-6 px-4">
               <h2 className="text-[#000000] text-[19px] ml-4">Booking Trend</h2>
               <div className="flex items-center gap-3 mt-4 mb-4 ml-4">
@@ -626,6 +626,45 @@ const handleSort = (key) => {
                 </div>
               </div>
             </div>
+
+            <div className="flex ml-8  py-2 mb-4 gap-2 text-gray-600">
+      <Calendar className="w-5 h-5" />
+      <span>Jun 07, 2024</span>
+      <ChevronRight className="w-5 h-5" />
+      <i data-lucide="arrow-right"></i>
+      <span>Jun 13, 2024</span>
+    </div>
+
+
+
+    
+    <div className="flex ml-7 gap-4 mb-6 flex-row">
+
+
+<button className="flex items-center px-6 py-2 rounded-lg bg-gray-100 text-sm text-gray-600 relative">
+          <div className="flex items-center pl-3">
+            <div className="w-7 h-[2px] bg-[#29AAE3] mr-2"></div>
+            Nov 18, 2024
+          </div>
+        </button>
+        <button className="flex items-center px-6 py-2 rounded-lg bg-gray-100 text-sm text-gray-600 relative">
+          <div className="flex items-center pl-3">
+            <div className="w-7 h-[2px] border-t-4 font-medium border-[#CCCCCC] border-dotted mr-2"></div>
+            Nov 17, 2024
+          </div>
+        </button>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
             <div className="h-96 px-4">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={timeSeriesData} margin={{ top: 0, right: 30, bottom: 0, left: 0 }}>
@@ -675,7 +714,7 @@ const handleSort = (key) => {
           </div>
 
         
-          <div className="flex flex-col rounded-lg py-5 h-full bg-white shadow">
+          <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
             <div className="pt-6 px-4 flex flex-col h-full">
               <h2 className="text-[#000000] mb-4 ml-5">Top 5 Channels</h2>
               <div className="h-72 mt-auto">
@@ -745,15 +784,15 @@ const handleSort = (key) => {
 
 
 
-<div className="bg-white p-4 w-full max-w-7xl mx-auto shadow-md rounded-md">
+<div className="bg-white mt-6 p-4 w-full max-w-7xl mx-auto shadow-md rounded-[30px]">
 
 
 
   
-<div className="p-4 w-full max-w-7xl mx-auto">
+<div className="w-full max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-medium text-gray-800">CRM Inventory Report</h1>
-        <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-gray-600">
+        <button className="flex pl-3 items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-gray-600">
           Project Name
           <ChevronDown className="w-4 h-4" />
         </button>
@@ -762,7 +801,7 @@ const handleSort = (key) => {
       <div className="w-full bg-white rounded-t-[30px] overflow-hidden">
         <div className="bg-[#E0E4EB] p-4 rounded-t-[30px]">
           <h2 className="text-lg text-center font-medium text-[#000000]" >
-            Inventory Summary Report By Project
+            
           </h2>
         </div>
         <div>
@@ -883,11 +922,11 @@ const handleSort = (key) => {
 <div className="overflow-x-auto">
       <table className="w-full border-collapse overflow-hidden">
         <thead>
-          <tr className="bg-[#F0F2F5] border-t border-b border-[#E8ECF4]">
-            {['projectName', 'totalUnitCount', 'availableCount', 'soldUnitCount', 'blockedUnitCount', 'mortgaged'].map((key) => (
+          <tr className="bg-[#F0F2F5]  border-t border-b border-[#E8ECF4]">
+            {['project Name', 'total Unit', 'available', 'sold Unit', 'blockedUnit', 'mortgaged'].map((key) => (
               <th
                 key={key}
-                className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4] cursor-pointer relative"
+                className="text-left pl-3 p-1 py-2 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4] cursor-pointer relative"
                 onClick={() => handleSort(key)}
               >
                 <span>
@@ -923,12 +962,76 @@ const handleSort = (key) => {
         <tbody>
           {sortedProjects.map((item, index) => (
             <tr key={`${item.name}-${index}`} className="hover:bg-gray-50 border-b border-[#E8ECF4]">
-              <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.projectName}</td>
-              <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.totalUnitCount}</td>
-              <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.availableCount}</td>
-              <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.soldUnitCount}</td>
-              <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.blockedUnitCount || 0}</td>
-              <td className="p-4 text-gray-700">{item.mortgaged}</td>
+              <td className="p-2 text-gray-700 border-r border-[#E8ECF4]"
+                                    onClick={() => {
+                                      showDrillDownFun(`Total ${item?.stausTitle}`, item, [
+                                        'available',
+                                        'booked',
+                                        'blockedUnitCount',
+                                        'blocked',
+                                        'management_blocked',
+                                      ])
+                                    }}
+              
+              >{item.projectName}</td>
+              <td className="p-2 text-gray-700 border-r text-right border-[#E8ECF4]"
+                                    onClick={() => {
+                                      showDrillDownFun(`Total ${item?.stausTitle}`, item, [
+                                        'available',
+                                        'booked',
+                                        'blockedUnitCount',
+                                        'blocked',
+                                        'management_blocked',
+                                      ])
+                                    }}
+              >{item.totalUnitCount}</td>
+              <td className="p-2 text-gray-700 border-r text-right border-[#E8ECF4]"
+                                    onClick={() => {
+                                      showDrillDownFun(`Total ${item?.stausTitle}`, item, [
+                                        'available',
+                                        'booked',
+                                        'blockedUnitCount',
+                                        'blocked',
+                                        'management_blocked',
+                                      ])
+                                    }}
+              
+              >{item.availableCount}</td>
+              <td className="p-2 text-gray-700 border-r text-right border-[#E8ECF4]"
+                                    onClick={() => {
+                                      showDrillDownFun(`Total ${item?.stausTitle}`, item, [
+                                        'available',
+                                        'booked',
+                                        'blockedUnitCount',
+                                        'blocked',
+                                        'management_blocked',
+                                      ])
+                                    }}
+              >{item.soldUnitCount}</td>
+              <td className="p-2 text-gray-700 border-r text-right border-[#E8ECF4]"
+                                    onClick={() => {
+                                      showDrillDownFun(`Total ${item?.stausTitle}`, item, [
+                                        'available',
+                                        'booked',
+                                        'blockedUnitCount',
+                                        'blocked',
+                                        'management_blocked',
+                                      ])
+                                    }}
+              
+              >{item.blockedUnitCount || 0}</td>
+              <td className="p-2 text-right text-gray-700"
+                                    onClick={() => {
+                                      showDrillDownFun(`Total ${item?.stausTitle}`, item, [
+                                        'available',
+                                        'booked',
+                                        'blockedUnitCount',
+                                        'blocked',
+                                        'management_blocked',
+                                      ])
+                                    }}
+              
+              >{item.mortgaged}</td>
             </tr>
           ))}
         </tbody>

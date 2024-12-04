@@ -1432,7 +1432,7 @@ EnhancedTableHead.propTypes = {
 
 
 
-<div className='max-w-7xl mx-auto'>
+<div className='max-w-7xl  mt-4 mx-auto'>
 <div className="grid grid-cols-4 gap-6 mb-8">
   <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
@@ -1490,10 +1490,10 @@ EnhancedTableHead.propTypes = {
 
 <div className="grid grid-cols-2 gap-6 h-full items-end">
       
-      <div className="flex flex-col rounded-lg py-5 h-full bg-white shadow">
+      <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
         <div className="pt-6 px-4">
-          <h2 className="text-[#000000] text-[19px] ml-4">Unit Sales</h2>
-          <div className="flex items-center gap-3 mt-4 mb-4 ml-4">
+          <h2 className="text-[#6A6A6A] text-[19px] ml-4">Unit Sales</h2>
+          <div className="flex items-center gap-3 mt-1 mb-2 ml-4">
             <span className="text-[30px] text-[#000000] font-semibold">&#8377; 387.75</span>
             <div className="flex items-center text-[#00A236]">
               <TrendingUp className="w-5 h-5 mx-3" />
@@ -1501,7 +1501,38 @@ EnhancedTableHead.propTypes = {
             </div>
           </div>
         </div>
-        <div className="h-96 px-4">
+
+        
+    <div className="flex ml-8  py-2 mb-4 gap-2 text-gray-600">
+      <Calendar className="w-5 h-5" />
+      <span>Jun 07, 2024</span>
+      <ChevronRight className="w-5 h-5" />
+      <i data-lucide="arrow-right"></i>
+      <span>Jun 13, 2024</span>
+    </div>
+
+
+
+    
+    <div className="flex ml-7 gap-4 mb-6 flex-row">
+
+
+<button className="flex items-center px-6 py-2 rounded-lg bg-gray-100 text-sm text-gray-600 relative">
+          <div className="flex items-center pl-3">
+            <div className="w-7 h-[2px] bg-[#29AAE3] mr-2"></div>
+            Nov 18, 2024
+          </div>
+        </button>
+        <button className="flex items-center px-6 py-2 rounded-lg bg-gray-100 text-sm text-gray-600 relative">
+          <div className="flex items-center pl-3">
+            <div className="w-7 h-[2px] border-t-4 font-medium border-[#CCCCCC] border-dotted mr-2"></div>
+            Nov 17, 2024
+          </div>
+        </button>
+      </div>
+
+
+        <div className="h-80 px-4">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={timeSeriesData} margin={{ top: 0, right: 30, bottom: 0, left: 0 }}>
               <CartesianGrid vertical={false} stroke="#CCCCCC" />
@@ -1547,23 +1578,23 @@ EnhancedTableHead.propTypes = {
             </LineChart>
           </ResponsiveContainer>
         </div>
+
+
+
+
+
+
       </div>
 
     
-      <div className="flex flex-col rounded-lg py-5 h-full bg-white shadow">
+      {/* <div className="flex flex-col  rounded-[30px] py-5 h-full bg-white shadow">
       <div className="w-full max-w-4xl p-6 bg-white ">
   
   <div className="mb-6">
     <h2 className="text-[18px] text-[#6A6A6A] font-medium">Collections</h2>
     <div className="flex items-center justify-between mt-1">
       <div className="text-[30px] font-semibold text-[#00000]">&#8377; 708.84</div>
-      <div className="flex items-center gap-2 px-4 py-2 border rounded-lg">
-        <span className="text-gray-600">View:</span>
-        <svg className="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h2v10H7V7zm4 0h2v10h-2V7zm4 0h2v10h-2V7z" />
-        </svg>
-        <span className="text-gray-600">Bar Line Chart</span>
-      </div>
+
     </div>
     
 
@@ -1600,7 +1631,7 @@ EnhancedTableHead.propTypes = {
   </div>
 
 
-  <div className="h-80">
+  <div className="h-80  ">
     <ResponsiveContainer width="100%" height="100%">
       <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -1609,7 +1640,7 @@ EnhancedTableHead.propTypes = {
           tickFormatter={(value) => `$ ${value}`}
           ticks={[0, 50, 100, 150, 200, 250]}
         />
-        {/* <Tooltip 
+         <Tooltip 
           formatter={(value) => [`$ ${value}`, '']}
           contentStyle={{
             backgroundColor: 'white',
@@ -1617,7 +1648,7 @@ EnhancedTableHead.propTypes = {
             borderRadius: '6px',
             padding: '8px'
           }}
-        /> */}
+        /> 
 
         <Tooltip content={customTooltipone} />
 
@@ -1628,7 +1659,68 @@ EnhancedTableHead.propTypes = {
     </ResponsiveContainer>
   </div>
 </div>
+      </div> */}
+
+
+<div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
+  <div className="w-full max-w-4xl p-6 bg-white flex flex-col justify-between h-full">
+    <div className="mb-6">
+      <h2 className="text-[18px] text-[#6A6A6A] font-medium">Collections</h2>
+      <div className="flex items-center justify-between mt-1">
+        <div className="text-[30px] font-semibold text-[#00000]">&#8377; 708.84</div>
+        {/* <div className="flex items-center gap-2 px-4 py-2 border rounded-lg">
+          <span className="text-gray-600">View:</span>
+          <svg className="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h2v10H7V7zm4 0h2v10h-2V7zm4 0h2v10h-2V7z" />
+          </svg>
+          <span className="text-gray-600">Bar Line Chart</span>
+        </div> */}
       </div>
+
+      <div className="flex items-center gap-2 mt-4 text-gray-600">
+        <Calendar className="w-5 h-5" />
+        <span>Jun 07, 2024</span>
+        <ChevronRight className="w-5 h-5" />
+        <i data-lucide="arrow-right"></i>
+        <span>Jun 13, 2024</span>
+      </div>
+    </div>
+
+    <div className="flex gap-6 mb-6">
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-indigo-600 rounded"></div>
+        <span>Bills Payment</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-sky-400 rounded"></div>
+        <span>Sales</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-gray-400 rounded"></div>
+        <span>Uncategorized</span>
+      </div>
+    </div>
+
+    {/* Graph Section */}
+    <div className="mt-auto h-80">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          <XAxis dataKey="day" />
+          <YAxis tickFormatter={(value) => `$ ${value}`} ticks={[0, 50, 100, 150, 200, 250]} />
+          <Tooltip content={customTooltipone} />
+          <Bar dataKey="Bills Payment" fill="#6366f1" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="Sales" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="Uncategorized" fill="#9ca3af" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+</div>
+
+
+
+
     </div>
 
 
@@ -1640,7 +1732,7 @@ EnhancedTableHead.propTypes = {
 
 
 
-<div className="p-6 flex justify-between items-center">
+<div className="p-6 mt-6 rounded-t-[30px] bg-white flex justify-between items-center">
           <h3 className="text-xl font-bold">Booking Summary</h3>
           <div className="flex gap-4">
             <Filter className="text-gray-500" />
@@ -1689,7 +1781,7 @@ EnhancedTableHead.propTypes = {
 
 
 
-           <div className="flex   items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
+           <div className="flex  bg-white  items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
               {/* <h2 className="text-lg font-semibold text-black leading-light">
                 Booked Units Summary
               </h2> */}

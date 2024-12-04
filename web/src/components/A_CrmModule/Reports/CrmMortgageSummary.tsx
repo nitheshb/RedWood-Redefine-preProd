@@ -137,19 +137,10 @@ const CrmMortgageSummaryTable = ({ projects }) => {
     };
 
 
-
-
-
-
-
-
-
-
-
   return (
 
 
-    <div className='bg-white'>
+    <div className='bg-[#F1F1F1]'>
 
 
 
@@ -211,7 +202,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
 
 
 
-          <div className=" w-full max-w-7xl mx-auto">
+          <div className=" bg-white  rounded-[30px] w-full max-w-7xl mx-auto">
       <div className="">
         <div className="">
           {/* <div className="flex items-center justify-between mb-4">
@@ -425,7 +416,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
       <div className="w-full bg-white rounded-lg overflow-hidden shadow-md">
         <div className="bg-[#F8F9FC] p-4 rounded-t-lg">
           <h2 className="text-lg text-center font-medium text-[#000000]" >
-          Project Mortgage Details box
+          Project Mortgage Details 
           </h2>
         </div>
         <div>
@@ -566,13 +557,13 @@ const CrmMortgageSummaryTable = ({ projects }) => {
 
 
 
-    <div className="w-full max-w-7xl mx-auto">
+    <div className="w-full  max-w-7xl mx-auto bg-white rounded-[30px] ">
       {/* <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-medium text-gray-800">Project Mortgage Details</h1>
       </div> */}
 
 
-<div className="flex items-center justify-between mb-4">
+<div className="flex p-5  items-center justify-between mb-4">
         <h1 className="text-xl font-medium text-gray-800">Project Mortgage Details</h1>
 
 
@@ -582,9 +573,10 @@ const CrmMortgageSummaryTable = ({ projects }) => {
         <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-gray-600">
 
           <select
-              className="mr-2"
+              className="mr-2 bg-gray-100"
               value={selectedOption}
               onChange={handleOptionChange}
+              
             >
               <option value="All">Project Name</option>
 
@@ -634,7 +626,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                 ].map(({ label, key }) => (
                   <th
                     key={key}
-                    className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4] cursor-pointer"
+                    className="text-left p-1 py-2 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4] cursor-pointer"
                     onClick={() => handleSort(key)}
                   >
                     {label}
@@ -654,7 +646,8 @@ const CrmMortgageSummaryTable = ({ projects }) => {
               </tr>
             </thead>
             <tbody>
-              {sortedData.map((item, index) => (
+            {sortedData.length > 0 ? (
+              sortedData.map((item, index) => (
                 <tr key={index} className="hover:bg-gray-50 border-b border-[#E8ECF4]">
                   <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
                     {item.projectName}
@@ -673,7 +666,17 @@ const CrmMortgageSummaryTable = ({ projects }) => {
                   <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{item.status}</td>
                   <td className="p-4 text-gray-700">{item.remarks}</td>
                 </tr>
-              ))}
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={10}
+                  className="text-center text-[20px]  py-10 text-gray-500 h-[250px] w-[100%]"
+                >
+                  No data
+                </td>
+              </tr>
+            )}
             </tbody>
           </table>
         </div>

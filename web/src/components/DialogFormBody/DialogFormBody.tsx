@@ -34,6 +34,8 @@ import { TextField } from 'src/util/formFields/TextField'
 import AddBankDetailsForm from '../addBankDetailsForm'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import UserAvatarUpload from '../comps/userAvatarUplaod'
+import ImageUploader from '../comps/ImageUploader'
 
 
 
@@ -337,6 +339,8 @@ const DialogFormBody = ({
     extentTextSecondary: project?.extentTextSecondary || '',
     extentDropDownPrimary: project?.extentDropDownPrimary || 'acre',
     extentDropdownSecondary: project?.extentDropdownSecondary || 'gunta',
+    projectWebsiteurl: project?.projectWebsiteurl || '',
+    marketedby: project?.marketedby || '',
   }
 
   const createProjectSchema = Yup.object({
@@ -353,6 +357,8 @@ const DialogFormBody = ({
       .length(6, 'Must be 6 digits'),
     city: Yup.string().required('Required'),
     state: Yup.string().required('Required'),
+    // marketedby: Yup.string().required('Required'),
+    // projectWebsiteurl: Yup.string().required('Required'),
     // landlordShare:
     //   devType.name === 'Joint'
     //     ? Yup.number().required('Required')
@@ -410,163 +416,212 @@ const DialogFormBody = ({
                               <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
                             </div>
                           </div>
-                          <p className="text-sm text-gray-800 ">
-                            Project Name*
-                          </p>
-                          <TextField label="" name="projectName" type="text" />
-                          <section className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-2">
-                            <div className="mb-3 w-[50%]">
-                              <label
-                                htmlFor="extent"
-                                className="label  text-sm"
-                              >
-                                Project Extent*{' '}
-                                <span className="text-[11px] ">
-                                  (
-                                  {sqftConverter(
-                                    formik?.values?.extent,
-                                    'square-meter'
-                                  )?.toLocaleString('en-IN')}{' '}
-                                  sqft)
-                                </span>
-                              </label>
-                              <MuiTextField
-                                id="extent"
-                                className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
-                                size="small"
-                                InputProps={{
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      Sqmt
-                                    </InputAdornment>
-                                  ),
-                                  endAdornment: (
-                                    <InputAdornment position="end">
-                                      <button
-                                        type="button"
-                                        style={{ marginRight: '-13px' }}
-                                        onClick={onExtendClick}
-                                        className="border  font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
-                                      >
-                                        {openExtendFields ? (
-                                          <Remove />
-                                        ) : (
-                                          <Add />
-                                        )}
-                                      </button>
-                                    </InputAdornment>
-                                  ),
-                                }}
-                                label=""
-                                name="extent"
-                                type="text"
-                                value={formatIndianNumber(formik.values.extent||0)}
-                                onChange={(e) => {
-                                  const rawValue = e.target.value.replace(
-                                    /,/g,
-                                    ''
-                                  )
-                                  const numValue = parseFloat(rawValue)
-                                  if (!isNaN(numValue)) {
-                                   formik.setFieldValue('extent', numValue)
-                                  } else {
-                                    formik.setFieldValue('extent', 0)
 
-                                  }
-                                }}
-                              />
-                              {formik.errors.extent ? (
-                                <div className="error-message text-red-700 text-xs p-2">
-                                  {formik.errors.extent}
-                                  {formik.values.extent}
-                                </div>
-                              ) : null}
-                              {openExtendFields && (
-                                <AreaConverter
-                                  formik={formik}
-                                  hideField={setOpenExtendFields}
-                                  fieldName="extent"
-                                  textPrimaryName="extentTextPrimary"
-                                  textSecondaryName="extentTextSecondary"
-                                  dropDownPrimaryName="extentDropDownPrimary"
-                                  dropdownSecondaryName="extentDropdownSecondary"
-                                />
-                              )}
+
+                          <div className='grid grid-cols-4 gap-2 w-full'>
+
+
+                            <div className='col-span-1'>
+                            <ImageUploader/>
                             </div>
-                            <div className="mb-3 w-[50%]">
-                              <label htmlFor="area" className="label  text-sm">
-                                Saleable Area*{' '}
-                                <span className="text-[11px] ">
-                                  (
-                                  {sqftConverter(
-                                    formik?.values?.area,
-                                    'square-meter'
-                                  )?.toLocaleString('en-IN')}{' '}
-                                  sqft)
-                                </span>
-                              </label>
-                              <MuiTextField
-                                id="area"
-                                className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
-                                size="small"
-                                InputProps={{
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      Sqmt
-                                    </InputAdornment>
-                                  ),
-                                  endAdornment: (
-                                    <InputAdornment position="end">
-                                      <button
-                                        type="button"
-                                        style={{ marginRight: '-13px' }}
-                                        onClick={onAreaClick}
-                                        className="border bg-[#57c0d0] font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
-                                      >
-                                        {openAreaFields ? <Remove /> : <Add />}
-                                      </button>
-                                    </InputAdornment>
-                                  ),
-                                }}
-                                label=""
-                                name="area"
-                                type="text"
-                                value={formatIndianNumber(formik.values.area||0)}
-                                onChange={(e) => {
-                                  const rawValue = e.target.value.replace(
-                                    /,/g,
-                                    ''
-                                  )
-                                  const numValue = parseFloat(rawValue)
-                                  if (!isNaN(numValue)) {
-                                   formik.setFieldValue('area', numValue)
-                                  } else {
-                                    formik.setFieldValue('area', 0)
 
-                                  }
-                                }}
-                              />
-                              {formik.errors.area ? (
-                                <div className="error-message text-red-700 text-xs p-2">
-                                  {formik.errors.area}
-                                  {formik.values.area}
-                                </div>
-                              ) : null}
 
-                              {openAreaFields && (
-                                <AreaConverter
-                                  formik={formik}
-                                  hideField={setOpenAreaFields}
-                                  fieldName="area"
-                                  textPrimaryName="areaTextPrimary"
-                                  textSecondaryName="areaTextSecondary"
-                                  dropDownPrimaryName="areaDropDownPrimary"
-                                  dropdownSecondaryName="areaDropdownSecondary"
-                                />
-                              )}
-                            </div>
-                          </section>
+
+
+
+
+                            
+                          <div className='col-span-3 items-start'>          
+{/* <p className="text-sm text-gray-800 ">
+  Project Name*
+</p> */}
+<TextField label="Project Name*" name="projectName" type="text" />
+<section className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-2">
+  <div className="mb-3 w-[50%]">
+    <label
+      htmlFor="extent"
+      className="label  text-xs text-[#374151] mb-1"
+    >
+      Project Extent*{' '}
+      <span className="text-[11px] ">
+        (
+        {sqftConverter(
+          formik?.values?.extent,
+          'square-meter'
+        )?.toLocaleString('en-IN')}{' '}
+        sqft)
+      </span>
+    </label>
+    <MuiTextField
+      id="extent"
+      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+      size="small"
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            Sqmt
+          </InputAdornment>
+        ),
+        endAdornment: (
+          <InputAdornment position="end">
+            <button
+              type="button"
+              style={{ marginRight: '-13px' }}
+              onClick={onExtendClick}
+              className="border  font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
+            >
+              {openExtendFields ? (
+                <Remove />
+              ) : (
+                <Add />
+              )}
+            </button>
+          </InputAdornment>
+        ),
+      }}
+      label=""
+      name="extent"
+      type="text"
+      value={formatIndianNumber(formik.values.extent||0)}
+      onChange={(e) => {
+        const rawValue = e.target.value.replace(
+          /,/g,
+          ''
+        )
+        const numValue = parseFloat(rawValue)
+        if (!isNaN(numValue)) {
+         formik.setFieldValue('extent', numValue)
+        } else {
+          formik.setFieldValue('extent', 0)
+
+        }
+      }}
+    />
+    {formik.errors.extent ? (
+      <div className="error-message text-red-700 text-xs p-2">
+        {formik.errors.extent}
+        {formik.values.extent}
+      </div>
+    ) : null}
+    {openExtendFields && (
+      <AreaConverter
+        formik={formik}
+        hideField={setOpenExtendFields}
+        fieldName="extent"
+        textPrimaryName="extentTextPrimary"
+        textSecondaryName="extentTextSecondary"
+        dropDownPrimaryName="extentDropDownPrimary"
+        dropdownSecondaryName="extentDropdownSecondary"
+      />
+    )}
+  </div>
+  <div className="mb-3 w-[50%]">
+    <label htmlFor="area" className="label  text-xs text-[#374151] ">
+      Saleable Area*{' '}
+      <span className="text-[11px] ">
+        (
+        {sqftConverter(
+          formik?.values?.area,
+          'square-meter'
+        )?.toLocaleString('en-IN')}{' '}
+        sqft)
+      </span>
+    </label>
+    <MuiTextField
+      id="area"
+      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+      size="small"
+      
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            Sqmt
+          </InputAdornment>
+        ),
+        endAdornment: (
+          <InputAdornment position="end">
+            <button
+              type="button"
+              style={{ marginRight: '-13px' }}
+              onClick={onAreaClick}
+              className="border bg-[#57c0d0] font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
+            >
+              {openAreaFields ? <Remove /> : <Add />}
+            </button>
+          </InputAdornment>
+        ),
+      }}
+      label=""
+      name="area"
+      type="text"
+      value={formatIndianNumber(formik.values.area||0)}
+      onChange={(e) => {
+        const rawValue = e.target.value.replace(
+          /,/g,
+          ''
+        )
+        const numValue = parseFloat(rawValue)
+        if (!isNaN(numValue)) {
+         formik.setFieldValue('area', numValue)
+        } else {
+          formik.setFieldValue('area', 0)
+
+        }
+      }}
+    />
+    {formik.errors.area ? (
+      <div className="error-message text-red-700 text-xs p-2">
+        {formik.errors.area}
+        {formik.values.area}
+      </div>
+    ) : null}
+
+    {openAreaFields && (
+      <AreaConverter
+        formik={formik}
+        hideField={setOpenAreaFields}
+        fieldName="area"
+        textPrimaryName="areaTextPrimary"
+        textSecondaryName="areaTextSecondary"
+        dropDownPrimaryName="areaDropDownPrimary"
+        dropdownSecondaryName="areaDropdownSecondary"
+      />
+    )}
+  </div>
+
+
+
+</section>
+
+
+
+<div className="grid grid-cols-2 gap-4 w-full">
+<div>
+{/* <p className="text-sm text-gray-800">
+Project Website URL*
+</p> */}
+<TextField label="Project Website URL" name="projectWebsiteurl" type="text" />
+</div>
+<div>
+{/* <p className="text-sm text-gray-800">
+Marketed By*
+</p> */}
+<TextField label="Marketed By" name="marketedby" type="text" />
+</div>
+</div>
+
+
+</div>
+                          </div>
+
                         </div>
+
+
+                        <div className='grid grid-cols-2 gap-4' >
+
+
+
+                          
                         <div className="flex flex-col mt-2  pt-2 ">
                           <CustomRadioGroup
                             label="Planning Authority Approval"
@@ -643,7 +698,7 @@ const DialogFormBody = ({
                                     dateFormat="MMM dd, yyyy"
                                   />
                                 </div>
-                                <div className="mt-2 w-full">
+                                {/* <div className="mt-2 w-full"> */}
                                   {/*<TextField
                             label="End Date*"
                             name="bmrdaEndDate"
@@ -673,13 +728,13 @@ const DialogFormBody = ({
                                   ]}
                                   dateFormat="MMMM d, yyyy"
                                 /> */}
-                                </div>
+                                {/* </div> */}
                               </div>
                             </>
                           )}
                         </div>
 
-                        <div className="flex flex-col mt-2  pt-4 ">
+                        <div className="flex flex-col mt-2 pt-2 ">
                           <CustomRadioGroup
                             label="Rera Approval"
                             value={reraApproval}
@@ -687,7 +742,7 @@ const DialogFormBody = ({
                             onChange={setReraApproval}
                           />
                           {reraApproval?.name === 'Yes' && (
-                            <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                            <div className="md:flex md:flex-col flex-col md:space-x-1 w-full text-xs">
                               <div className="mt-2 w-full">
                                 <TextField
                                   label="RERA No*"
@@ -695,6 +750,10 @@ const DialogFormBody = ({
                                   type="text"
                                 />
                               </div>
+
+
+                              <div className='flex gap-2 mt-1 w-full '>
+
                               <div className="mt-2 w-full">
                                 {/*<TextField
                             label="Start Date*"
@@ -770,9 +829,20 @@ const DialogFormBody = ({
                                   dateFormat="d-MMMM-yyyy"
                                 />
                               </div>
+
+                              </div>
+
                             </div>
                           )}
                         </div>
+
+                          
+                        </div>
+
+
+
+
+
                         <div className="flex flex-col mt-2 rounded-lg  pt-4 ">
                           <div className="mb-4 mt-2">
                             <div className="inline">

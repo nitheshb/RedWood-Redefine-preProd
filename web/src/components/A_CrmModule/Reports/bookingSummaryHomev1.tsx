@@ -307,7 +307,7 @@ const UnitBookingSummaryHomePage1 = ({
         <div className="">
           <div
             className="
-             py-2"
+             py-2 bg-[#F1F1F1]"
           >
 
             {!ready && (

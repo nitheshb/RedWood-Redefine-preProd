@@ -36,7 +36,7 @@ const CrmAnalyticsHome = ({ project }) => {
 
   const { orgId } = user
   const [projects, setProjects] = useState([])
-  const [selCat, setSelCat] = useState('booking_summary')
+  const [selCat, setSelCat] = useState('booking_summary-v1')
 
   useEffect(() => {
     getProjects()
@@ -61,7 +61,7 @@ const CrmAnalyticsHome = ({ project }) => {
   }
 
   return (
-    <div className='bg-white p-4 mx-1 mt-1'>
+    <div className='bg-[#F1F1F1] rounded-md border-[40px] border-white p-4 mx-1 mt-1'>
 
 <div className='flex max-w-7xl mx-auto bg-white border-b border rounded-xl w-[100%] border-gray-200 flex-row justify-between shadow'>
       <ul
@@ -92,9 +92,9 @@ const CrmAnalyticsHome = ({ project }) => {
                       indicatorColor="secondary"
                       aria-label="secondary tabs example"
                     >
-                      <li key={i} className="mr-2" role="presentation">
+                      <li key={i} className="mr-3 ml-3" role="presentation">
                         <button
-                          className={`inline-block py-4 px-4 h-16 text-sm  text-center text-[#6e6e6e] rounded-t-lg border-b   hover:text-gray-600 hover:border-black hover:border-b-2 dark:text-gray-400 dark:hover:text-gray-300  ${
+                          className={`inline-block py-4 px-4 h-16 text-sm  text-center text-[#6e6e6e] rounded-t-lg border-b-4  hover:text-gray-600 hover:border-black hover:border-b-4 dark:text-gray-400 dark:hover:text-gray-300  ${
                             selCat === d.value
                               ? 'border-[#144264] text-[#144264] '
                               : 'border-transparent'
@@ -124,7 +124,7 @@ const CrmAnalyticsHome = ({ project }) => {
               </ul>
               </div>
       {selCat === 'proj_summary' && (
-        <section className=" mt-1 mr-1 py-8 mb-2 leading-7 text-gray-900 bg-white  rounded-lg  ">
+        <section className=" mt-1 mr-1 py-8 mb-2 leading-7 text-gray-900 bg-[#F1F1F1]  rounded-lg  ">
           {/* <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
           <section className="flex flex-row justify-between">
             <div className="">
@@ -262,7 +262,7 @@ const CrmAnalyticsHome = ({ project }) => {
         </div>
       )}
       {selCat === 'collection_performance' && (
-        <div className="">
+        <div className=" bg-[#F1F1F1]">
           {/* <AdvancedDataTableTest /> */}
           <CrmCollectionReport projects={projects} />
 

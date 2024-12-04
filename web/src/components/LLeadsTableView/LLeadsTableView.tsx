@@ -403,7 +403,7 @@ const LLeadsTableView = ({
                             {' '}
                             {`${d.lab} `}
                             <span
-                              className={`  text-zinc-900 border border-[#0891B2]  text-[9px] px-[4px] py-[3px] rounded-full ml-[4px]  ${
+                              className={`  text-zinc-900 border border-gray-400  text-[9px] px-[4px] py-[3px] rounded-full ml-[4px]  ${
                                 activeNeg === true
                                   ? 'bg-gray-950  font-semibold '
                                   : 'bg-gray-100 font-normal '
