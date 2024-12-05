@@ -71,13 +71,13 @@ const ImageUploader = () => {
         <div className="relative">
 
 
-          <div className=' text-[#374151] text-xs'>
+          <div className=' text-[#374151] mb-1 text-xs'>
             <p>Logo</p>
           </div>
 
   <div 
     onClick={handleUploadClick} 
-    className="h-[175px] w-[175px] bg-gray-200 flex items-center justify-center rounded-[25px] border border-gray-300 cursor-pointer"
+    className="h-[171px] w-[171px] bg-gray-200 flex items-center justify-center rounded-[25px] border border-gray-300 cursor-pointer"
   >
     {imageUrl ? (
       <img

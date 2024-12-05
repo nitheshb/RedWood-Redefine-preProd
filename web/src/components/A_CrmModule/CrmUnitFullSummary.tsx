@@ -1928,7 +1928,7 @@ export default function UnitFullSummary({
 
 
 
-<div className=" border-gray-900  py-4 bg-[#F9F9FA] rounded-t-lg ">
+<div className=" border-gray-900  py-4 bg-[#F0F1FF] rounded-t-lg ">
                 <ul
                   className="flex flex-col  rounded-t-lg"
                   id="myTab"
@@ -2077,7 +2077,7 @@ export default function UnitFullSummary({
                     )
                   })}
                 </ul>
-                {selFeature}
+                {/* {selFeature} */}
               </div>
 
 

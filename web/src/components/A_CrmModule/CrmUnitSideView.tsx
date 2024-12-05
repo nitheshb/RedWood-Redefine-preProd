@@ -1525,7 +1525,7 @@ onClickCapture={() => {
           endAngle={-270}
           dataKey="value"
         >
-          <Cell fill="#00D4FF" />
+          <Cell fill="#E3BDFF" />
           <Cell fill="#E5E7EB" />
         </Pie>
       </PieChart>
@@ -1561,7 +1561,7 @@ onClickCapture={() => {
           endAngle={-270}
           dataKey="value"
         >
-          <Cell fill="#00D4FF" />
+          <Cell fill="#E3BDFF" />
           <Cell fill="#E5E7EB" />
         </Pie>
       </PieChart>
@@ -1607,7 +1607,7 @@ onClickCapture={() => {
                                          
       </section>
       <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
-        <div className="bg-cyan-400 h-7 rounded-full w-1/3"></div>
+        <div className="bg-[#E3BDFF] h-7 rounded-full w-1/3"></div>
       </div>
       <div className="text-sm text-gray-500 mb-2">Total Cost</div>
       <div className="font-bold">₹ {((selCustomerPayload?.T_total || 0)

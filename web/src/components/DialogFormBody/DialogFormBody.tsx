@@ -435,12 +435,12 @@ const DialogFormBody = ({
 {/* <p className="text-sm text-gray-800 ">
   Project Name*
 </p> */}
-<TextField label="Project Name*" name="projectName" type="text" />
-<section className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-2">
+<TextField label="Project Name*"  name="projectName" type="text" />
+<section className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-[14px]">
   <div className="mb-3 w-[50%]">
     <label
       htmlFor="extent"
-      className="label  text-xs text-[#374151] mb-1"
+      className="label  text-xs text-[#374151] mb-2"
     >
       Project Extent*{' '}
       <span className="text-[11px] ">
@@ -516,7 +516,7 @@ const DialogFormBody = ({
     )}
   </div>
   <div className="mb-3 w-[50%]">
-    <label htmlFor="area" className="label  text-xs text-[#374151] ">
+    <label htmlFor="area" className="label  text-xs text-[#374151] mb-2 pb-2 ">
       Saleable Area*{' '}
       <span className="text-[11px] ">
         (
@@ -529,7 +529,7 @@ const DialogFormBody = ({
     </label>
     <MuiTextField
       id="area"
-      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10  p-0`}
       size="small"
       
       InputProps={{
@@ -742,7 +742,7 @@ Marketed By*
                             onChange={setReraApproval}
                           />
                           {reraApproval?.name === 'Yes' && (
-                            <div className="md:flex md:flex-col flex-col md:space-x-1 w-full text-xs">
+                            <div className="md:flex md:flex-col pt-[10px] flex-col md:space-x-1 w-full text-xs">
                               <div className="mt-2 w-full">
                                 <TextField
                                   label="RERA No*"
@@ -752,7 +752,7 @@ Marketed By*
                               </div>
 
 
-                              <div className='flex gap-2 mt-1 w-full '>
+                              <div className='flex gap-2  w-full '>
 
                               <div className="mt-2 w-full">
                                 {/*<TextField
@@ -1044,6 +1044,7 @@ Marketed By*
                             <TextAreaField
                               label="Address"
                               name="address"
+                              ClassName="text-sm text-gray-800"
                               type="text"
                             />
                           </div>

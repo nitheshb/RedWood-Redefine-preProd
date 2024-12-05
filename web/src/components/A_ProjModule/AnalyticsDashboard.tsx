@@ -31,6 +31,7 @@ import AllDashboard from './AllDashboard';
 import SoldUnitschart from './SoldUnitschart';
 import SalesDashboard from './SalesDashboard';
 import CardBox from './AcardBox';
+import AppBox from './Adelete';
 
 
 
@@ -472,7 +473,7 @@ const CustomTooltip = ({ active, payload }) => {
 
 
 
-
+<AppBox/>
 
 
     </>

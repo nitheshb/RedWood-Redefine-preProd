@@ -17,6 +17,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import LogSkelton from 'src/components/shimmerLoaders/logSkelton'
 import UnitSummaryTableBodyV1 from './UnitBookingSummary.tsx/BookingSummaryTableV1'
 
+
 const UnitBookingSummaryHomePage1 = ({
   leadsTyper,
   isClicked,
