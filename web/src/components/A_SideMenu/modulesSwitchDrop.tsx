@@ -35,7 +35,7 @@ export default function ModuleSwitchDrop({
     <div className="text-right inline-block ml-2 mt-[px] ">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center w-[168px]  text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-slate-400/10 dark:highlight-white/5 flex font-semibold hover:bg-slate-400/20 items-center leading-5  rounded-full space-x-2 text-xs px-3 py-3">
+          <Menu.Button className="inline-flex justify-center w-[168px]  text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-slate-400/10 dark:highlight-white/5 flex font-semibold hover:bg-slate-400/20 items-center leading-5  rounded-full space-x-2 text-xs px-3 py-2">
             <span className=" w-[130px]  text-[12px] leading-[10px] tracking-wide text-[#0091ae]  ">
               <span className="flex flex-row w-[25px]">
                 <span>{`${type} `} </span>{' '}

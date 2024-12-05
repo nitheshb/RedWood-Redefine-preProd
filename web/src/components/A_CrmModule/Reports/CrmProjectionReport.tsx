@@ -410,7 +410,7 @@ const CrmProjectionReport = ({ projects }) => {
 
 
   return (
-    <div className="bg-white ">
+    <div className="bg-[#F1F1F1]">
 
 
 
@@ -422,7 +422,7 @@ const CrmProjectionReport = ({ projects }) => {
 <div className="grid grid-cols-4 gap-6 mb-8">
   <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
-    <p className="text-2xl font-bold mb-2"></p>
+    <p className="text-2xl font-bold mb-2">0</p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
       <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
@@ -475,7 +475,7 @@ const CrmProjectionReport = ({ projects }) => {
 
         <div className="grid grid-cols-2 gap-6 h-full items-end">
       
-          <div className="flex flex-col rounded-lg py-5 h-full bg-white shadow">
+          <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
             <div className="pt-6 px-4">
               <h2 className="text-[#000000] text-[19px] ml-4">Booking Trend</h2>
               <div className="flex items-center gap-3 mt-4 mb-4 ml-4">
@@ -535,7 +535,7 @@ const CrmProjectionReport = ({ projects }) => {
           </div>
 
         
-          <div className="flex flex-col rounded-lg py-5 h-full bg-white shadow">
+          <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
 
           <div className="w-full max-w-4xl p-6 relative">
       <div className="flex justify-between items-start mb-6">
@@ -672,7 +672,7 @@ const CrmProjectionReport = ({ projects }) => {
 
 
 
-      <section className="p-4 w-full max-w-7xl mx-auto">
+      <section className="p-4 w-full rounded-[30px] bg-white mt-6 max-w-7xl mx-auto">
 
 
       <div className="flex items-center justify-between mb-4">
@@ -771,7 +771,7 @@ const CrmProjectionReport = ({ projects }) => {
                 )}
               </tr>
               <tr className="bg-[#F0F2F5] border-t border-b border-[#E8ECF4]">
-                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                <th className="text-left p-1 pl-3 py-2 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
                  onClick={() => handleSort('projectName')}
                 >
                   Project Name
@@ -793,7 +793,7 @@ const CrmProjectionReport = ({ projects }) => {
 
 
                 </th>
-                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
                 onClick={() => handleSort('soldUnitCount')}
 
                 >
@@ -813,7 +813,7 @@ const CrmProjectionReport = ({ projects }) => {
 
 
                 </th>
-                <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
                 onClick={() => handleSort('totalAmount')}
                 >
                   Total Amount 
@@ -838,7 +838,7 @@ const CrmProjectionReport = ({ projects }) => {
                       return (
                         <th
                           key={i}
-                          className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                          className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
                         >
                           {month?.name}
                         </th>
@@ -847,16 +847,16 @@ const CrmProjectionReport = ({ projects }) => {
                   </>
                 ) : (
                   <>
-                    <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
                       Week 1 <br /> ({getDateForWeek(1)})
                     </th>
-                    <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
                       Week 2 <br /> ({getDateForWeek(2)})
                     </th>
-                    <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
                       Week 3 <br /> ({getDateForWeek(3)})
                     </th>
-                    <th className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
                       Week 4 <br /> ({getDateForWeek(4)})
                     </th>
                   </>
@@ -914,7 +914,7 @@ const CrmProjectionReport = ({ projects }) => {
                           return (
                             <td
                               key={i}
-                              className="p-4 text-gray-700 border-r border-[#E8ECF4]"
+                              className="p-2 text-right text-gray-700 border-r border-[#E8ECF4]"
                             >
                               {`${month?.receive?.toLocaleString('en-IN')}`}
                             </td>
@@ -925,16 +925,16 @@ const CrmProjectionReport = ({ projects }) => {
                   } else {
                     return (
                       <>
-                        <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                        <td className="p-2 text-right text-gray-700 border-r border-[#E8ECF4]">
                           {data?.weekly?.week1.toLocaleString('en-IN')}
                         </td>
-                        <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                        <td className="p-2 text-right text-gray-700 border-r border-[#E8ECF4]">
                           {data?.weekly?.week2.toLocaleString('en-IN')}
                         </td>
-                        <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                        <td className="p-2 text-right text-gray-700 border-r border-[#E8ECF4]">
                           {data?.weekly?.week3.toLocaleString('en-IN')}
                         </td>
-                        <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                        <td className="p-2 text-right text-gray-700 border-r border-[#E8ECF4]">
                           {data?.weekly?.week4.toLocaleString('en-IN')}
                         </td>
                       </>
@@ -950,10 +950,10 @@ const CrmProjectionReport = ({ projects }) => {
                     <td className="py-1 px-3 text-left whitespace-nowrap border  font-medium   p-4 text-gray-700 border-r border-[#E8ECF4]">
                       {capitalizeFirstLetter(data?.projectName)}
                     </td>
-                    <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                    <td className="p-2 text-right text-gray-700 border-r border-[#E8ECF4]">
                       {data?.soldUnitCount?.toLocaleString('en-IN')}
                     </td>
-                    <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                    <td className="p-2 text-right text-gray-700 border-r border-[#E8ECF4]">
                       {data?.months
                         ?.reduce((accumulator, currentValue) => {
                           return accumulator + (currentValue?.receive || 0)

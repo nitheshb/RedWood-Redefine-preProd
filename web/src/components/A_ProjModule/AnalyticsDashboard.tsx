@@ -31,8 +31,8 @@ import AllDashboard from './AllDashboard';
 import SoldUnitschart from './SoldUnitschart';
 import SalesDashboard from './SalesDashboard';
 import CardBox from './AcardBox';
-import WeeklyExpense from './WeeklyExpense';
-import EventBadge from './EventBadge';
+
+
 
 
 
@@ -468,10 +468,11 @@ const CustomTooltip = ({ active, payload }) => {
 
 <CardBox/>
 
-<WeeklyExpense/>
 
 
-<EventBadge/>
+
+
+
 
 
     </>

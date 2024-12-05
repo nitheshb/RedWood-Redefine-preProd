@@ -909,6 +909,10 @@ const AddUnit = ({
                                     formik.setFieldValue('dimension', value.target.value.replace(/^0+/, ''))
 
                                   }}
+                                  onChange={(value) => {
+                                    formik.setFieldValue('dimension', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+  
+                                  }}
                                 />
                               </div>
                             )}

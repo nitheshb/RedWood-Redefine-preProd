@@ -3881,6 +3881,25 @@ avatarUrl: avatarUrl
     by,
   })
 }
+
+export const updateProjectLogo = async (
+
+  orgId,
+  uid,
+ avatarUrl,
+  by
+) => {
+  await updateDoc(doc(db, `${orgId}_projects`, uid), {
+projectLogoUrl: avatarUrl
+  })
+  // return await addUserLog(orgId, {
+  //   s: 's',
+  //   type: 'updateAvatar',
+  //   subtype: 'updateAvatar',
+  //   txt: `${email} is updated with avatar`,
+  //   by,
+  // })
+}
 export const updateUserAccessProject = async (
   orgId,
   uid,

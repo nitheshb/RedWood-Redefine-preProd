@@ -45,7 +45,7 @@ const HeadNavBar2 = ({ selModule, setSelModule, setViewable }) => {
         >
           REDEFINE ERP .
         </span>
-        <section className="mt-1">
+        <section className="">
           <ModuleSwitchDrop
             type={selModule}
             id={'Status'}
