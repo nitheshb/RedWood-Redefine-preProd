@@ -473,7 +473,7 @@ const CustomTooltip = ({ active, payload }) => {
 
 
 
-<AppBox/>
+
 
 
     </>
