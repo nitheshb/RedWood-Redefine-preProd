@@ -35,7 +35,7 @@ import AddBankDetailsForm from '../addBankDetailsForm'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import UserAvatarUpload from '../comps/userAvatarUplaod'
-import ImageUploader from '../comps/ImageUploader'
+import ProjectLogoUploader from '../comps/projectLogoUploader'
 
 
 
@@ -422,7 +422,7 @@ const DialogFormBody = ({
 
 
                             <div className='col-span-1'>
-                            <ImageUploader/>
+                            <ProjectLogoUploader projectId={project?.uid} projectLogoURL={project?.projectLogoUrl}/>
                             </div>
 
 
@@ -430,8 +430,8 @@ const DialogFormBody = ({
 
 
 
-                            
-                          <div className='col-span-3 items-start'>          
+
+                          <div className='col-span-3 items-start'>
 {/* <p className="text-sm text-gray-800 ">
   Project Name*
 </p> */}
@@ -531,7 +531,7 @@ const DialogFormBody = ({
       id="area"
       className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10  p-0`}
       size="small"
-      
+
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
@@ -621,7 +621,7 @@ Marketed By*
 
 
 
-                          
+
                         <div className="flex flex-col mt-2  pt-2 ">
                           <CustomRadioGroup
                             label="Planning Authority Approval"
@@ -836,7 +836,7 @@ Marketed By*
                           )}
                         </div>
 
-                          
+
                         </div>
 
 

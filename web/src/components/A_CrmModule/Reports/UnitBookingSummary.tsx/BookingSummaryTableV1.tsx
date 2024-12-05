@@ -570,6 +570,18 @@ const [totalSETChargesIIValue, setSETTotalChargesIIValue] = useState(0);
 const [totalSETPossessionValue, setSETTotalPossessionValue] = useState(0);
 
 const [totalSETConstructValue, setSETTotalConstructValue] = useState(0);
+const [projectBookingsData, setProjectBookingsData] = useState([
+  { time: 'Jan', value: 0, prevValue: 7 },
+  { time: 'Feb', value: 0, prevValue: 7 },
+  { time: 'Mar', value: 0, prevValue: 7 },
+  { time: 'Apr', value: 0, prevValue: 7 },
+  { time: 'Jun', value: 0, prevValue: 7 },
+  { time: 'July', value: 0, prevValue: 5 },
+  { time: 'Aug', value: 0, prevValue: 5 },
+  { time: 'Sep', value: 0, prevValue: 7 },
+  { time: 'Oct', value: 0, prevValue: 7 },
+  { time: 'Nov', value: 0, prevValue: 7 },
+  { time: 'Dec', value: 0, prevValue: 7 },]);
 
 const [totalSETReceived, setSETTotalReceived] = useState(0);
 const [selSETTotalBalance, setSETTotalBalance] = useState(0);
@@ -672,8 +684,10 @@ const boot = async () => {
       // setBoardData
       // console.log('my Array data is ', usersListA, crmCustomersDBData)
       // await serealizeData(usersListA)
-      console.log('values are', usersListA)
+      console.log('booking details values are', usersListA)
       await setUnitsFetchData(usersListA)
+      await updateBookingData(usersListA)
+
     },
     {
       status: [
@@ -692,6 +706,30 @@ const boot = async () => {
     () => setTableData([])
   )
   return unsubscribe
+}
+
+
+function updateBookingData(myDbDataIs) {
+  // Month mapping for easy lookup
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  myDbDataIs.forEach(record => {
+    // Convert the timestamp to a Date object
+    const date = new Date(record.Date);
+    // Get the month name
+    const month = monthNames[date.getUTCMonth()];
+    // Find the corresponding month in projectBookingsData
+    const booking = projectBookingsData.find(entry => entry.time === month);
+    if (booking) {
+      booking.value += 1; // Increment the value
+    }
+  });
+  setProjectBookingsData(projectBookingsData)
+  console.log('booking details values are',projectBookingsData )
+  return projectBookingsData;
 }
 const getProjectsListFun = () => {
   const unsubscribe = getAllProjects(
@@ -901,15 +939,7 @@ useEffect(() => {
 
 
 
-  const timeSeriesData = [
-    { time: '12', value: 5, prevValue: 5 },
-    { time: '13', value: 5, prevValue: 5 },
-    { time: '14', value: 20, prevValue: 5 },
-    { time: '15', value: 5, prevValue: 5 },
-    { time: '16', value: 5, prevValue: 5 },
-    { time: '17', value: 90, prevValue: 30 },
-    { time: '18', value: 5, prevValue: 5 },
-  ];
+
 
   const channelData = [
     { name: 'Make an offer', value1: 80, value2: 120, value3: 0 },
@@ -953,28 +983,28 @@ useEffect(() => {
 
 
 
-  
+
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
-    const time = payload[0].payload.time; 
+    const time = payload[0].payload.time;
 
     return (
       <div className="bg-white p-3 rounded-md">
         <p className="text-black">Time: {time}</p>
 
         {payload.map((entry, index) => {
-          const { value, prevValue } = entry.payload; 
-          const strokeColor = entry.stroke; 
+          const { value, prevValue } = entry.payload;
+          const strokeColor = entry.stroke;
 
-      
+
           return (
             <div key={index} className="flex items-center gap-2">
-            
+
               <div
                 style={{ backgroundColor: strokeColor }}
                 className="w-4 h-4 "
               ></div>
-          
+
               <p className="text-black">
                 {entry.dataKey === "value"
                   ? `Current Value: ${value}`
@@ -991,7 +1021,7 @@ const CustomTooltip = ({ active, payload }) => {
 
   return null;
 };
- 
+
 
 
 
@@ -1052,7 +1082,7 @@ function EnhancedTableHead(props) {
   }
   return (
 
-    
+
     <TableHead style={{ height: '10px', borderRadius: '2xl' }}>
       <TableRow selected={true}>
         <TableCell
@@ -1154,7 +1184,7 @@ function EnhancedTableHead(props) {
             lineHeight: '12px',
             maxWidth: '52px',
             minWidth: '25px',
-          
+
             padding: '10px 0',
 
             paddingLeft: '14px',
@@ -1180,7 +1210,7 @@ function EnhancedTableHead(props) {
                 lineHeight: '7px',
                 fontWeight: '600',
                 padding: '6px 1px 6px 10px',
-                
+
 
                 borderRight: '0.2px solid #d3c5f1',
 
@@ -1302,9 +1332,9 @@ function EnhancedTableHead(props) {
 
 
 
-    
 
-    
+
+
 
 
 
@@ -1364,7 +1394,7 @@ EnhancedTableHead.propTypes = {
     <section>
       {/* <div className="col-span-2 px-2">
          <div className="border rounded-xl   border-gray-200 flex flex-row  bg-white shadow ">
-        
+
         <div className="bg-warm-white-100 rounded-lg p-6">
           <dt className="text-gray-700 text-xs font-semibold leading-loose">Sale box</dt>
 
@@ -1380,7 +1410,7 @@ EnhancedTableHead.propTypes = {
           </div>
 
         </div>
-        
+
         <div className="bg-warm-white-100 rounded-lg p-6">
           <dt className="text-gray-700 text-xs font-semibold leading-loose">Received</dt>
 
@@ -1395,7 +1425,7 @@ EnhancedTableHead.propTypes = {
          <div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span></div>
 
         </div>
-      
+
         <div className="bg-warm-white-100 rounded-lg p-6">
           <dt className="text-gray-700 text-xs font-semibold leading-loose">Balance</dt>
 
@@ -1489,12 +1519,12 @@ EnhancedTableHead.propTypes = {
 
 
 <div className="grid grid-cols-2 gap-6 h-full items-end">
-      
+
       <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
         <div className="pt-6 px-4">
           <h2 className="text-[#6A6A6A] text-[19px] ml-4">Unit Sales</h2>
           <div className="flex items-center gap-3 mt-1 mb-2 ml-4">
-            <span className="text-[30px] text-[#000000] font-semibold">&#8377; 387.75</span>
+            <span className="text-[30px] text-[#000000] font-semibold"> {unitsFetchData?.length?.toLocaleString('en-IN')}</span>
             <div className="flex items-center text-[#00A236]">
               <TrendingUp className="w-5 h-5 mx-3" />
               <span className="text-[18px]">23%</span>
@@ -1502,7 +1532,7 @@ EnhancedTableHead.propTypes = {
           </div>
         </div>
 
-        
+
     <div className="flex ml-8  py-2 mb-4 gap-2 text-gray-600">
       <Calendar className="w-5 h-5" />
       <span>Jun 07, 2024</span>
@@ -1513,7 +1543,7 @@ EnhancedTableHead.propTypes = {
 
 
 
-    
+
     <div className="flex ml-7 gap-4 mb-6 flex-row">
 
 
@@ -1534,7 +1564,7 @@ EnhancedTableHead.propTypes = {
 
         <div className="h-80 px-4">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={timeSeriesData} margin={{ top: 0, right: 30, bottom: 0, left: 0 }}>
+            <LineChart data={projectBookingsData} margin={{ top: 0, right: 30, bottom: 0, left: 0 }}>
               <CartesianGrid vertical={false} stroke="#CCCCCC" />
               <XAxis
                 dataKey="time"
@@ -1545,19 +1575,19 @@ EnhancedTableHead.propTypes = {
                 interval={0}
               />
               <YAxis
-                domain={[5, 100]}
-                ticks={[5, 25, 50, 75, 100]}
+                // domain={[5, 100]}
+                // ticks={[5, 25, 50, 75, 100]}
                 axisLine={false}
                 tickLine={false}
                 stroke="#3D3D3D"
               />
 
 
-         
-              {/* <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} /> */}
+
+              <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} />
 
 
-              <Tooltip content={<CustomTooltip />} />
+              {/* <Tooltip content={<CustomTooltip />} /> */}
 
 
               <Line
@@ -1586,17 +1616,17 @@ EnhancedTableHead.propTypes = {
 
       </div>
 
-    
+
       {/* <div className="flex flex-col  rounded-[30px] py-5 h-full bg-white shadow">
       <div className="w-full max-w-4xl p-6 bg-white ">
-  
+
   <div className="mb-6">
     <h2 className="text-[18px] text-[#6A6A6A] font-medium">Collections</h2>
     <div className="flex items-center justify-between mt-1">
       <div className="text-[30px] font-semibold text-[#00000]">&#8377; 708.84</div>
 
     </div>
-    
+
 
     <div className="flex items-center gap-2 mt-4 text-gray-600">
       <Calendar className="w-5 h-5" />
@@ -1640,7 +1670,7 @@ EnhancedTableHead.propTypes = {
           tickFormatter={(value) => `$ ${value}`}
           ticks={[0, 50, 100, 150, 200, 250]}
         />
-         <Tooltip 
+         <Tooltip
           formatter={(value) => [`$ ${value}`, '']}
           contentStyle={{
             backgroundColor: 'white',
@@ -1648,7 +1678,7 @@ EnhancedTableHead.propTypes = {
             borderRadius: '6px',
             padding: '8px'
           }}
-        /> 
+        />
 
         <Tooltip content={customTooltipone} />
 
@@ -1876,9 +1906,9 @@ EnhancedTableHead.propTypes = {
 
 {/* scroll  */}
 
-{/* 
+{/*
 className='max-h-[30px] overflow-y-auto
-  [&::-webkit-scrollbar]:w-2 
+  [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-gray-100
   [&::-webkit-scrollbar-thumb]:rounded-full
@@ -1887,7 +1917,7 @@ className='max-h-[30px] overflow-y-auto
   light-gray:[&::-webkit-scrollbar-thumb]:bg-neutral-500 ' */}
 
 <TableContainer sx={{ maxHeight: 640, borderRadius: '15px'  }} className='max-h-[30px] overflow-y-auto
-  [&::-webkit-scrollbar]:w-2 
+  [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-gray-100
   [&::-webkit-scrollbar-thumb]:rounded-full
@@ -2023,7 +2053,7 @@ className='max-h-[30px] overflow-y-auto
                           scope="row"
                           padding="none"
                           size="small"
-                          
+
                           sx={{width: '60px', whiteSpace: 'nowrap', background: '#fff', borderLeft: '0.2px solid #fff',padding: '10px 0',  }}
                         >
                           {index + 1}

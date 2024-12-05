@@ -182,11 +182,11 @@ export const unitTypeList = [
 
 export const bedRoomsList = [
   { label: 'Select Count', value: '' },
-  { label: '1 Bedroom', value: 'bed1' },
-  { label: '2 Bedroom', value: 'bed2' },
-  { label: '3 Bedroom', value: 'bed3' },
-  { label: '4 Bedroom', value: 'bed4' },
-  { label: '5 Bedroom', value: 'bed5' },
+  { label: '1 Bedroom', value: '1' },
+  { label: '2 Bedroom', value: '2' },
+  { label: '3 Bedroom', value: '3' },
+  { label: '4 Bedroom', value: '4' },
+  { label: '5 Bedroom', value: '5' },
   // { label: '6 Bedroom', value: 'bed6' },
   // { label: '7 Bedroom', value: 'bed7' },
 ]

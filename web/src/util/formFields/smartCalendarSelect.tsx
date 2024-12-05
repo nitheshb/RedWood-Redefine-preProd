@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from 'react'
+import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 
 import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone'
-import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
+import {
+  startOfWeek,
+  startOfDay,
+  endOfDay,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  subMonths,
+} from 'date-fns'
 import { setLabels } from 'react-chartjs-2/dist/utils'
 import DatePicker from 'react-datepicker'
 import Select from 'react-select'
+
 import CustomDatePicker from './CustomDatePicker'
 const customStyles = {
   control: (base) => ({
     ...base,
-    height: 36,
-    minHeight: 34,
+    height: 31,
+    minHeight: 30,
     padding: 0,
   }),
   valueContainer: (base) => ({
@@ -80,7 +90,7 @@ export const SlimSelectBox = ({
         <label className="label font-regular text-sm ">{label}</label>
       )}
       <Select
-        maxMenuHeight={150}
+        minMenuHeight={150}
         name={name}
         value={defaultValue(options, value)}
         placeholder={placeholder || label || 'All Projects'}
@@ -111,7 +121,6 @@ export const VerySlimSelectBox = ({
   customStyles,
   placeholder,
   className,
-
 }) => {
   const defaultValue = (options, value) => {
     return (
@@ -154,7 +163,7 @@ export const VerySlimSelectBox = ({
   )
 }
 
-export const SlimDateSelectBox = ({
+export const SmartCalendarSelect = ({
   onChange,
   // options,
   // value,
@@ -177,30 +186,35 @@ export const SlimDateSelectBox = ({
   const d = new window.Date()
   const [options, setOptions] = useState([
     {
+      label: 'All Dates',
+      value: [null, null],
+    },
+    {
       label: 'Today',
-      value: startOfDay(d).getTime(),
+      value: [startOfDay(d), endOfDay(d)],
     },
     {
       label: 'This Week',
-      value: startOfWeek(d).getTime(),
+      value: [startOfWeek(d), endOfWeek(d)],
     },
     {
       label: 'This Month',
-      value: startOfMonth(d).getTime(),
+      value: [startOfMonth(d), endOfMonth(d)],
     },
     {
       label: 'Last 6 months',
-      value: subMonths(startOfMonth(d), 6).getTime(),
+      value: [subMonths(startOfMonth(d), 6), endOfDay(d)],
     },
     {
       label: 'Custome Range',
-      value: `${startDate} - ${endDate}`,
+      value: [startDate, endDate],
     },
   ])
   useEffect(() => {
     if (dateRange[0] != null) {
       const [startDate, endDate] = dateRange
-      onChange(startDate?.getTime())
+      // onChange(startDate?.getTime())
+      onChange([startDate, endDate])
     }
   }, [dateRange])
 
@@ -221,13 +235,15 @@ export const SlimDateSelectBox = ({
 
   console.log(value, 'value')
   return (
-    <div style={{ width: '200px' }}>
+    <div style={{ width: '200px'}} className="ml-4">
       {/* {label != '' && label != 'Assign To' && (
         <label className="label font-regular text-sm ">{label}</label>
       )} */}
+                      {/* <CalendarMonthTwoToneIcon className="mr-1 mt-[2px] h-4 w-4" /> */}
+
       {!isDatePicker ? (
         <Select
-          minMenuHeight={150}
+          maxMenuHeight={150}
           name={name}
           value={value}
           placeholder={value}
@@ -240,15 +256,15 @@ export const SlimDateSelectBox = ({
           }}
           options={options}
           className={`text-sm  ${
-            label != '' ? 'mt-1' : ''
-          } border-transparent p-0`}
+            label != '' ? 'mt-0' : ''
+          } border-transparent  border-0 p-0`}
           classNamePrefix="react-select"
           styles={customStyles}
         />
       ) : (
         <div className="flex" style={{ alignItems: 'flex-end' }}>
           <CustomDatePicker
-            className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${'font-semibold text-pink-800 bg-pink-200 '} rounded-full`}
+            className={`z-10 pl- py-[6px] px-3 inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${'font-semibold  '} border border-[#cccccc] rounded-[4px]`}
             // onCalendarClose={() => setDatePicker(false)}
             placeholderText="&#128467;	 Custom"
             onChange={(update) => {
@@ -258,6 +274,7 @@ export const SlimDateSelectBox = ({
             selectsRange={true}
             startDate={startDate}
             endDate={endDate}
+            isClearable={false}
             // dateFormat="MMM d, yyyy "
             //dateFormat="d-MMMM-yyyy"
             dateFormat="MMM dd, yyyy"
@@ -266,7 +283,7 @@ export const SlimDateSelectBox = ({
             onClick={() => {
               setDatePicker(false)
               setValue('Today')
-              onChange(startOfDay(d).getTime())
+              onChange([startOfDay(d), endOfDay(d)])
             }}
           />
         </div>

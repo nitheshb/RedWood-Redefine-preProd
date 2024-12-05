@@ -1,11 +1,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useState, useEffect } from 'react'
+
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
-import { RootStateOrAny, useSelector } from 'react-redux'
+import { startOfMonth } from 'date-fns'
 import { useSnackbar } from 'notistack'
+import { RootStateOrAny, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
+
 import { MetaTags } from '@redwoodjs/web'
+
 import LLeadsTableView from 'src/components/LLeadsTableView/LLeadsTableView'
 import { USER_ROLES } from 'src/constants/userRoles'
 import {
@@ -19,9 +23,14 @@ import {
   steamUsersListByRole,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { VerySlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
-import SiderForm from './SiderForm/SiderForm'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import {
+  SlimDateSelectBox,
+  VerySlimSelectBox,
+} from 'src/util/formFields/slimSelectBoxField'
+import { SmartCalendarSelect } from 'src/util/formFields/smartCalendarSelect'
+
+import SiderForm from './SiderForm/SiderForm'
 
 // function createGuidId() {
 //   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -50,6 +59,13 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   const [isOpened, setIsOpened] = React.useState(false)
   const [dateRange, setDateRange] = React.useState([null, null])
   const [startDate, endDate] = dateRange
+  // const [shortDateRange, setShortDateRange] = useState(
+  //   startOfMonth(new Date()).getTime()
+  // )
+  const [shortDateRange, setShortDateRange] = useState(
+    [null, null]
+  )
+
   const [usersList, setusersList] = useState([])
   const [openUserProfile, setopenUserProfile] = useState(false)
   const [addLeadsTypes, setAddLeadsTypes] = useState('')
@@ -71,8 +87,6 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
     value: 'myleads',
   })
 
-
-
   // const customDropFieldStyles = {
   //   control: (base) => ({
   //     ...base,
@@ -81,7 +95,6 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   //     outline: 'none',
   //   }),
   // };
-  
 
   const statusFields = [
     'new',
@@ -94,6 +107,14 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
     'booked',
   ]
   const searchVal = useSelector((state: RootStateOrAny) => state.search)
+
+  useEffect(() => {
+    // setDateRange
+    console.log('muy selected value is', shortDateRange)
+    // if (shortDateRange.includes(null)) return
+    setDateRange(shortDateRange)
+  }, [shortDateRange])
+
   useEffect(() => {
     setSearchValue(searchVal)
   }, [searchVal])
@@ -245,7 +266,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           //   y.coveredA = { a: data.coveredA }
           //   addLeadSupabase(data)
           // })
-          console.log('my valus are ', usersListA )
+          console.log('my valus are ', usersListA)
           await setLeadsFetchedRawData(usersListA)
           await serealizeData(usersListA)
         },
@@ -461,7 +482,6 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
       )
     }
   }
-
 
   const getUnassignedLeads = (otherData) => {
     const unsubscribe1 = getLeadsByUnassigned(
@@ -681,98 +701,106 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   }
   return (
     <>
+      <div className=" fixed w-[95%]  h-[100%]  mb-10 ">
+        <div className=" bg-white mb-10 rounded-md mt-1 mx-1 z-10">
+          <div className=" bg-white">
+            <div className="bg-white  ">
+              <div className="flex   items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
+                <h2 className="text-md font-semibold text-black leading-light font-Playfair">
+                  Leads Management
+                </h2>
 
-<div className=" fixed w-[95%]  h-[100%]  mb-10 ">
-      <div className=" bg-white mb-10 rounded-md mt-1 mx-1 z-10">
-        <div className=" bg-white">
-          <div className="bg-white  ">
-            <div className="flex   items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
-              <h2 className="text-md font-semibold text-black leading-light font-Playfair">
-                Leads Management
-              </h2> 
-
-              <div className="flex">
-                <div className=" flex flex-col mr-5   w-40">
-                  <VerySlimSelectBox
-                    name="project"
-                    label=""
-                    // customStyles={customDropFieldStyles}
-                    className="input "
-                    
-                    onChange={(value) => {
-                      console.log('changed value is ', value.value)
-                      setSelProject(value)
-                      // formik.setFieldValue('project', value.value)
-                    }}
-                    value={selProjectIs?.value}
-                    // options={aquaticCreatures}
-                    options={[
-                      ...[{ label: 'All Projects', value: 'allprojects' }],
-                      ...projectList,
-                    ]}
-                  />
-                </div>
-                {access?.includes('manage_leads') && (
-                  <div className=" flex flex-col   w-40">
+                <div className="flex">
+                  <div className=" flex flex-col mr-5   w-40">
                     <VerySlimSelectBox
                       name="project"
                       label=""
-                      placeholder="My Leads"
+                      // customStyles={customDropFieldStyles}
                       className="input "
                       onChange={(value) => {
                         console.log('changed value is ', value.value)
-                        setSelLeadsOf(value)
+                        setSelProject(value)
                         // formik.setFieldValue('project', value.value)
                       }}
-                      value={selLeadsOf?.value}
+                      value={selProjectIs?.value}
                       // options={aquaticCreatures}
                       options={[
-                        ...[
-                          { label: 'Team Leads', value: 'teamleads' },
-                          { label: 'My Leads', value: 'myleads' },
-                          { label: 'Cp Leads', value: 'cpleads' },
-                        ],
-                        ...usersList,
+                        ...[{ label: 'All Projects', value: 'allprojects' }],
+                        ...projectList,
                       ]}
                     />
                   </div>
-                )}
-                <span className="max-h-[42px] mt-[2px] ml-3 bg-white pl-[2px] rounded-[4px] h-[19px] ">
-                  {/* <span className="text-xs font-bodyLato text-[#516f90] cursor-none">
+                  {access?.includes('manage_leads') && (
+                    <div className=" flex flex-col   w-40">
+                      <VerySlimSelectBox
+                        name="project"
+                        label=""
+                        placeholder="My Leads"
+                        className="input "
+                        onChange={(value) => {
+                          console.log('changed value is ', value.value)
+                          setSelLeadsOf(value)
+                          // formik.setFieldValue('project', value.value)
+                        }}
+                        value={selLeadsOf?.value}
+                        // options={aquaticCreatures}
+                        options={[
+                          ...[
+                            { label: 'Team Leads', value: 'teamleads' },
+                            { label: 'My Leads', value: 'myleads' },
+                            { label: 'Cp Leads', value: 'cpleads' },
+                          ],
+                          ...usersList,
+                        ]}
+                      />
+                    </div>
+                  )}
+                  <SmartCalendarSelect
+                    onChange={async (value) => {
+                      console.log(value, 'ksdvnlfkjv')
+                      setShortDateRange(value)
+                    }}
+                    label="All Dates"
+                  />
+                  <span className="hidden max-h-[42px] mt-[2px] ml-3 bg-white pl-[2px] rounded-[4px] h-[19px] ">
+                    {/* <span className="text-xs font-bodyLato text-[#516f90] cursor-none">
                   Set Due Date
                 </span> */}
-                  {/* {border-radius: 4px;
+                    {/* {border-radius: 4px;
     border-color: hsl(0, 0%, 80%);
     min-height: 31px;} */}
-                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                  <label className="bg-green   pl-[2px] h-[28px]  flex flex-row cursor-pointer border border-[#ccc] rounded-[4px]">
-                    <CalendarMonthTwoToneIcon className="mr-1 mt-[2px] h-4 w-4" />
-                    <span className="inline">
-                      <CustomDatePicker
-                        className="z-[11] pl- py- rounded-[4px]  inline text-xs text-[#0091ae] bg-white cursor-pointer min-w-[170px] border-l-[#cccccc]"
-                        // selected={cutOffDate}
-                        // onChange={(date) => setCutOffDate(date)}
-                        // calendarContainer={MyContainer(setIsOpened)}
-                        onCalendarOpen={() => setIsOpened(true)}
-                        onCalendarClose={() => setIsOpened(false)}
-                        onChange={(update) => setDateRange(update)}
-                        selectsRange={true}
-                        startDate={startDate}
-                        endDate={endDate}
-                        isClearable={true}
-                        // injectTimes={[
-                        //   setHours(setMinutes(d, 1), 0),
-                        //   setHours(setMinutes(d, 5), 12),
-                        //   setHours(setMinutes(d, 59), 23),
-                        // ]}
-                        // dateFormat="MMM d, yyyy "
-                        //dateFormat="d-MMMM-yyyy"
-                        dateFormat="MMM dd, yyyy"
-                      />
-                    </span>
-                  </label>
-                </span>
-                {/* {leadsTyper == 'inProgress' && (
+                    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                    <label className="bg-green   pl-[2px] h-[28px]  flex flex-row cursor-pointer border border-[#ccc] rounded-[4px]">
+                      <CalendarMonthTwoToneIcon className="mr-1 mt-[2px] h-4 w-4" />
+                      <span className="inline">
+                        <CustomDatePicker
+                          className="z-[11] pl- py- rounded-[4px]  inline text-xs text-[#0091ae] bg-white cursor-pointer min-w-[170px] border-l-[#cccccc]"
+                          // selected={cutOffDate}
+                          // onChange={(date) => setCutOffDate(date)}
+                          // calendarContainer={MyContainer(setIsOpened)}
+                          onCalendarOpen={() => setIsOpened(true)}
+                          onCalendarClose={() => setIsOpened(false)}
+                          onChange={(update) => {
+                            console.log('muy selected value is 1', update)
+                            setDateRange(update)
+                          }}
+                          selectsRange={true}
+                          startDate={startDate}
+                          endDate={endDate}
+                          isClearable={true}
+                          // injectTimes={[
+                          //   setHours(setMinutes(d, 1), 0),
+                          //   setHours(setMinutes(d, 5), 12),
+                          //   setHours(setMinutes(d, 59), 23),
+                          // ]}
+                          // dateFormat="MMM d, yyyy "
+                          //dateFormat="d-MMMM-yyyy"
+                          dateFormat="MMM dd, yyyy"
+                        />
+                      </span>
+                    </label>
+                  </span>
+                  {/* {leadsTyper == 'inProgress' && (
                   <span className="inline-flex p-1 border bg-gray-200 rounded-md">
                     <button
                       className={`px-2 py-1  rounded ${
@@ -818,40 +846,16 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                     </button>
                   </span>
                 )} */}
-                <>
-                  <button
-                    onClick={() => fSetLeadsType('Add Lead')}
-                    className={`flex items-center ml-5 pl-2 pr-4  max-h-[30px] mt-[2px] text-sm font-medium text-balck border-solid border-2 border-[#0891B2] bg-[#0891B2] rounded-[4px] hover:bg-transparent  group`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 stroke-[#fff] group-hover:stroke-black"
-                      fill="none"
-                      viewBox="0 0 22 22"
-                       
-                    
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      />
-                    </svg>
-
-                    <span className="ml-1 text-white group-hover:text-black">Add lead</span>
-                  </button>
-                  {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                  <>
                     <button
-                      onClick={() => fSetLeadsType('Import Leads')}
-                      className={`flex items-center ml-5 pl-2 pr-4 py-1 max-h-[30px] mt-[2px] border-solid border-2 border-[#0891B2]  group text-sm font-medium text-black  rounded-[4px] hover:bg-[#0891B2]  `}
+                      onClick={() => fSetLeadsType('Add Lead')}
+                      className={`flex items-center ml-5 pl-2 pr-4  max-h-[30px] mt-[2px] text-sm font-medium text-balck border-solid border-2 border-[#0891B2] bg-[#0891B2] rounded-[4px] hover:bg-transparent  group`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 stroke-[#0891B2] group-hover:stroke-white"
+                        className="h-4 w-4 stroke-[#fff] group-hover:stroke-black"
                         fill="none"
                         viewBox="0 0 22 22"
-                        
                       >
                         <path
                           strokeLinecap="round"
@@ -861,10 +865,35 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         />
                       </svg>
 
-                      <span className="ml-1 group-hover:text-white">Import Lead</span>
+                      <span className="ml-1 text-white group-hover:text-black">
+                        Add lead
+                      </span>
                     </button>
-                  )}
-                  {/* {isImportLeads && (
+                    {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                      <button
+                        onClick={() => fSetLeadsType('Import Leads')}
+                        className={`flex items-center ml-5 pl-2 pr-4 py-1 max-h-[30px] mt-[2px] border-solid border-2 border-[#0891B2]  group text-sm font-medium text-black  rounded-[4px] hover:bg-[#0891B2]  `}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 stroke-[#0891B2] group-hover:stroke-white"
+                          fill="none"
+                          viewBox="0 0 22 22"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                          />
+                        </svg>
+
+                        <span className="ml-1 group-hover:text-white">
+                          Import Lead
+                        </span>
+                      </button>
+                    )}
+                    {/* {isImportLeads && (
                     <button
                       onClick={() => fSetLeadsType('Import Leads')}
                       className={`flex items-center ml-5 pl-2 pr-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-md hover:bg-gray-700  `}
@@ -887,13 +916,16 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                       <span className="ml-1">Import Lead</span>
                     </button>
                   )} */}
-                </>
+                  </>
+                </div>
               </div>
-            </div>
 
-            <MetaTags title="ExecutiveHome" description="ExecutiveHome page" />
+              <MetaTags
+                title="ExecutiveHome"
+                description="ExecutiveHome page"
+              />
 
-            {/* {ready && (
+              {/* {ready && (
               <div className="flex flex-row ">
                 <main className="mt-3 flex flex-row overflow-auto max-h-[60%] rounded ">
                   <div className="flex">
@@ -965,24 +997,22 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
               </div>
             )} */}
 
-            {!ready && (
+              {!ready && (
                 <div className="	">
-
-              <LLeadsTableView
-                setFetchLeadsLoader={setFetchLeadsLoader}
-                fetchLeadsLoader={fetchLeadsLoader}
-                leadsFetchedData={leadsFetchedData}
-                setisImportLeadsOpen={setisImportLeadsOpen}
-                selUserProfileF={selUserProfileF}
-                leadsTyper={leadsTyper}
-                searchVal={searchValue}
-              />
-              </div>
-            )}
+                  <LLeadsTableView
+                    setFetchLeadsLoader={setFetchLeadsLoader}
+                    fetchLeadsLoader={fetchLeadsLoader}
+                    leadsFetchedData={leadsFetchedData}
+                    setisImportLeadsOpen={setisImportLeadsOpen}
+                    selUserProfileF={selUserProfileF}
+                    leadsTyper={leadsTyper}
+                    searchVal={searchValue}
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-
       </div>
 
       <SiderForm
@@ -994,7 +1024,6 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
         unitsViewMode={unitsViewMode}
         setUnitsViewMode={setUnitsViewMode}
         setIsClicked={setIsClicked}
-
       />
     </>
   )

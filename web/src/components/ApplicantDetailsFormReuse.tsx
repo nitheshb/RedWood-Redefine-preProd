@@ -29,6 +29,7 @@ const EmailForm = ({
   leadPayload,
   selUnitDetails,
   customerInfo,
+  handleClone,
   setShowApplicantEdit,
   index,
 }) => {
@@ -97,24 +98,24 @@ const EmailForm = ({
   const validateSchema = Yup.object({
     customerName1: Yup.string().required('Required'),
     // co_Name1: Yup.string().required('Required'),
-    panNo1: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
-    panNo2: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
+    // panNo1: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
+    // panNo2: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
     // panDocUrl1: Yup.string().required('Required'),
     // aadharNo1: Yup.string().test(
     //   'aadhar',
     //   'Invalid Aadhar card number',
     //   isValidAadhar
     // ),
-    aadharNo2: Yup.string().test(
-      'aadhar',
-      'Invalid Aadhar card number',
-      isValidAadhar
-    ),
+    // aadharNo2: Yup.string().test(
+    //   'aadhar',
+    //   'Invalid Aadhar card number',
+    //   isValidAadhar
+    // ),
     // aadharUrl1: Yup.string().required('Required'),
     // occupation1: Yup.string().required('Required'),
     // phoneNo1: Yup.string().required('Required'),
-    email1: Yup.string().email('Email is invalid'),
-    email2: Yup.string().email('Email is invalid'),
+    // email1: Yup.string().email('Email is invalid'),
+    // email2: Yup.string().email('Email is invalid'),
     // aggrementAddress: Yup.string().required('Required'),
   })
   const uid = selUnitDetails?.uid || selUnitDetails?.id
@@ -552,7 +553,7 @@ leadPayload?.Mobile ||
     <Formik
       enableReinitialize={true}
       initialValues={initialState}
-      // validationSchema={validateSchema}
+      validationSchema={validateSchema}
       onSubmit={(values, { resetForm }) => {
         console.log('submitted', values)
 
@@ -628,7 +629,7 @@ leadPayload?.Mobile ||
 {/* auto fill section */}
                 {showLeadLink && (
                 <div className="bg-[#DCD7FF] rounded-xl p-2 mt-2 flex-col">
-                  <label className='text-[14px] '>Auto fill from matched Leads </label>
+                  <label className='text-[14px] '>Auto fill from matched Leads Phone No </label>
                   <section className='flex flex-row '>
                   <div className="w-full flex flex-row lg:w-3/12 px- mt-2">
                     <div className="relative w-full ">
@@ -654,7 +655,7 @@ leadPayload?.Mobile ||
                     </div>
 
                   </div>
-                  {givenPhNo1.length ===10 &&<button className='ml-2 mt-5 text-[12px]' onClick={()=> {
+                  {givenPhNo1.length ===10 &&<button className='ml-2 mt-5 text-[12px] underline' onClick={()=> {
                     replaceFormData(formik)
                     }}>Replace existing details</button>}
                   </section>
@@ -1188,8 +1189,11 @@ leadPayload?.Mobile ||
               </section>
             </section>
           </div>
-          <div className="space-x-2">
+          <div className=" flex flex-row-reverse">
             <button type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save</button>
+
+      <button onClick={handleClone} className="mb-4 ml-6 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Save & Add New Applicant</button>
+
             {/* <button
               type="button"
               onClick={() => onSave(values)}
@@ -1345,6 +1349,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
             onSave={(values) => handleSave(values, form.id)}
             customerInfo={applicantDetailsA[i]}
             leadPayload={leadPayload}
+            handleClone={handleClone}
             index={i}
             // customerInfo={}
           />
@@ -1355,7 +1360,6 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
           )}
         </div>
       ))}
-      <button onClick={handleClone} className="mb-4 ml-6 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4">Add New Applicant</button>
     </div>
   )
 }
