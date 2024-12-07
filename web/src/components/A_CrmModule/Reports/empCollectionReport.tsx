@@ -255,13 +255,13 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
             )}
           </tr>
           <tr className="bg-[#F0F2F5] border-t border-b border-[#E8ECF4]">
-            <th className="text-left pl-3 p-1 py-2 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+            <th className="text-left pl-3 p-1 py-2 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]">
               CRM Executive
             </th>
-            <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+            <th className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]">
               Units
             </th>
-            <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+            <th className="text-right p-1 px-4  font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]">
               Total Amount
             </th>
             {dataView === 'monthly' ? (
@@ -271,7 +271,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                     return (
                       <th
                         key={i}
-                        className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                        className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
                       >
                         {month}
                       </th>
@@ -283,7 +283,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                     return (
                       <th
                         key={i}
-                        className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                        className="text-right p-1  px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
                       >
                         {month}
                       </th>
@@ -295,7 +295,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                     return (
                       <th
                         key={i}
-                        className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                        className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
                       >
                         {month}
                       </th>
@@ -307,7 +307,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                     return (
                       <th
                         key={i}
-                        className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                        className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
                       >
                         {month}
                       </th>
@@ -333,7 +333,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
                {[1, 2, 3, 4].map((week) => (
               <th
                 key={week}
-                className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
               >
                 Week {week} <br /> ({getDateForWeek(week)})
               </th>

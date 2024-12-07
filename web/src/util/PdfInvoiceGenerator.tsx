@@ -17,6 +17,7 @@ import { Timestamp } from 'firebase/firestore'
 import numeral from 'numeral'
 import { computeTotal } from './computeCsTotals'
 import { prettyDate } from './dateConverter'
+import { Bold } from 'lucide-react'
 
 Font.register({
   family: 'Roboto',
@@ -104,7 +105,7 @@ const useStyles = () =>
           fontSize: 9,
           lineHeight: 1.6,
           fontFamily: 'Roboto',
-          backgroundColor: '#E8E6FE',
+          backgroundColor: '#EDEDED',
           textTransform: 'capitalize',
           padding: '0px',
           // padding: '40px 24px 60px 24px',
@@ -146,6 +147,7 @@ const useStyles = () =>
           // borderBottomWidth: 0.5,
           // borderStyle: 'solid',
           // borderColor: '#DFE3E8',
+          
         },
         borderbottom: {
           borderBottomWidth: 1,
@@ -177,12 +179,19 @@ const useStyles = () =>
           borderTopLeftRadius: '16px',
           borderTopRightRadius: '16px',
         },
+
+        bottomBorderRadius: {
+          borderBottomLeftRadius: '16px',
+          borderBottomRightRadius: '16px',
+        },
+        
+
+
         tableHeader: {
           padding: '8px 0',
           flexDirection: 'row',
-          borderBottomWidth: 1.5,
-          borderStyle: 'solid',
-          borderColor: '#DFE3E8',
+
+      
         },
         bg: {
           backgroundColor: '#F3FFF2',
@@ -250,8 +259,18 @@ const useStyles = () =>
           backgroundColor: '#f6e8c2',
         },
         cellBgHead: {
-          backgroundColor: '#E8E6FE',
+          backgroundColor: '#EDEDED',
         },
+        textcolor:{
+          color: '#6A6A6A',
+        },
+        textcolorhead:{
+          color: '#3D3D3D',
+        },
+
+        blockborder:{
+          border: '1px solid 6A6A6A'
+        }
       }),
     []
   )
@@ -533,7 +552,7 @@ const MyDocument = ({
                 styles.pr3,
               ]}
             >
-              Cost Sheet
+              Cost Sheet 
             </Text>
             {/* <Text>{myObj} </Text> */}
           </View>
@@ -609,8 +628,38 @@ const MyDocument = ({
             <Text style={styles.body2}>{fDate(invoiceDet[i].dueDate)}</Text>
           </View>
         </View> */}
-        <View style={[styles.topBoderRadius, styles.bg1]}>
-          <View style={[styles.ml4, styles.pt2, styles.mT1]}>
+        <View style={[styles.topBoderRadius, styles.bottomBorderRadius,  styles.bg1 ,{paddingBottom:"20px"}]}>
+          <View style={[styles.ml2, styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                // styles.subtitle1,
+                // styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+                { fontWeight: 'bold' , fontSize: 13}
+              ]}
+            >
+              Cost Sheet
+            </Text>
+            <Text
+              style={[
+                // styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+                {color: '#6A6A6A'}
+              ]}
+            >
+              Know your charges
+            </Text>
+         
+          </View>
+{/* part-1 */}
+
+
+<View style={[styles.ml2, styles.pt2, styles.mT1 ]}>
             <Text
               style={[
                 styles.subtitle1,
@@ -620,28 +669,29 @@ const MyDocument = ({
                 styles.ml2,
               ]}
             >
-              Cost Sheet
+              I. Plot charges
             </Text>
           </View>
-{/* part-1 */}
           <View style={[styles.fitter]}>
-            <View style={[{ border: '1 solid #e5e7eb ', borderRadius: 8 }]}>
+            <View style={[{ borderRadius: 8 }]}>
               <View
                 style={[
                   styles.subtitle1,
                   styles.bg1,
                   {
-                    backgroundColor: '#E8E6FE',
+                    backgroundColor: '#EDEDED',
                     borderTopLeftRadius: 6,
                     borderTopRightRadius: 6,
+                    border: '1 solid #e5e7eb ',
                   },
                 ]}
               >
                 <View
                   style={[
                     styles.tableHeader,
-                    styles.p4,
-                    { paddingBottom: '2px' },
+                    // styles.p4,
+                    styles.textcolorhead,
+                    {   paddingBottom: '2px' },
                   ]}
                 >
                   <View style={[styles.tableCell_1, styles.p11]}>
@@ -662,7 +712,7 @@ const MyDocument = ({
                       styles.tableCell_20,
                       styles.alignRight,
                       styles.p12,
-                      styles.pr4,
+                      // styles.pr4,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
@@ -685,19 +735,22 @@ const MyDocument = ({
                     <Text style={styles.subtitle2}>Total Inc GST</Text>
                   </View>
                 </View>
+
+                
               </View>
               <View>
                 {myObj?.map((item, index) => (
                   <View
                     style={[
                       styles.tableRow,
+                      styles.textcolor,
                       index + 1 != myObj.length ? styles.borderbottom : null,
 
                       // {
                       //   backgroundColor:
                       //     index % 2 === 0 ? '#ffffff' : '#ffffff',
                       // },
-                      { marginTop: '2px', paddingTop: '4px' },
+                      {  borderBottom: '1px solid #e5e7eb',  borderBottom: '10px', marginTop: '2px', paddingTop: '4px' },
                     ]}
                     key={item.id}
                   >
@@ -737,11 +790,10 @@ const MyDocument = ({
                   </View>
                 ))}
 
-                {/* part 2 */}
-              </View>
-            </View>
-            <View
-              style={[styles.tableRow, { marginTop: '2px', paddingTop: '4px' }]}
+
+
+<View
+              style={[styles.tableRow, styles.textcolor, {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px'  }]}
             >
               <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
 
@@ -763,16 +815,36 @@ const MyDocument = ({
                 <Text>{fCurrency(partATotal)}</Text>
               </View>
             </View>
+
+                {/* part 2 */}
+              </View>
+            </View>
+  
           </View>
           {/* part -2 */}
-          <View style={[styles.fitter, { marginTop: '10px' }]}>
-            <View style={[{ border: '1 solid #e5e7eb ', borderRadius: 8 }]}>
+
+          <View style={[styles.ml2, styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+              ]}
+            >
+              II. Additional charges
+            </Text>
+          </View>
+
+          <View style={[styles.fitter, { marginTop: '5px', marginBottom:'10px' }]}>
+            <View style={[{  borderRadius: 8 }]}>
               <View
                 style={[
                   styles.subtitle1,
                   styles.bg1,
                   {
-                    backgroundColor: '#E8E6FE',
+                    backgroundColor: '#EDEDED',
                     borderTopLeftRadius: 6,
                     borderTopRightRadius: 6,
                   },
@@ -781,7 +853,8 @@ const MyDocument = ({
                 <View
                   style={[
                     styles.tableHeader,
-                    styles.p4,
+                    // styles.p4,
+                    styles.textcolorhead,
                     { paddingBottom: '2px' },
                   ]}
                 >
@@ -800,7 +873,7 @@ const MyDocument = ({
                       styles.tableCell_20,
                       styles.alignRight,
                       styles.p12,
-                      styles.pr4,
+                      // styles.pr4,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
@@ -824,16 +897,21 @@ const MyDocument = ({
                   </View>
                 </View>
               </View>
+
+
+              {/* box1 */}
               {myAdditionalCharges?.map((item, index) => (
                 <View
                   style={[
                     styles.tableRow,
-                    styles.ml1,
+                    styles.textcolor,
+                    // styles.ml1,
                     index + 1 != myAdditionalCharges.length
                       ? styles.borderbottom
                       : null,
 
-                    { marginTop: '2px', paddingTop: '4px' },
+                    {   borderBottom: '1px solid #e5e7eb',
+                      marginTop: '2px', paddingTop: '4px' },
                   ]}
                   key={item.id}
                 >
@@ -854,7 +932,7 @@ const MyDocument = ({
                   </View>
 
                   <View style={[styles.tableCell_20, styles.alignRight]}>
-                    <Text>{fCurrency(item?.charges)}</Text>
+                    <Text style={[styles.alignRight]}>{fCurrency(item?.charges)}</Text>
                   </View>
 
                   <View
@@ -878,12 +956,12 @@ const MyDocument = ({
                   </View>
                 </View>
               ))}
-            </View>
-            <View>
-              <View
+
+<View
                 style={[
                   styles.tableRow,
-                  { marginTop: '2px', paddingTop: '8px' },
+                  styles.textcolor,
+                  {     borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px'  },
                 ]}
               >
                 <View
@@ -902,22 +980,53 @@ const MyDocument = ({
 
                 <View style={[styles.tableCell_20, styles.alignRight]}>
                   <Text>{fCurrency(partBTotal)}</Text>
+                  
                 </View>
               </View>
+
+
+
+            </View>
+            <View>
+
+              
+       
 
 
             </View>
           </View>
           {/* part-3 */}
+
+
+
+          <View style={[styles.ml2, styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+              ]}
+            >
+              III. Construction charges
+            </Text>
+          </View>
+
+
+
+
+
           {projectDetails?.projectType?.name === 'Villas' &&
           <View style={[styles.fitter]}>
-            <View style={[{ border: '1 solid #e5e7eb ', borderRadius: 8 }]}>
+            <View style={[{ borderRadius: 8 }]}>
               <View
                 style={[
                   styles.subtitle1,
                   styles.bg1,
+                  styles.textcolorhead,
                   {
-                    backgroundColor: '#E8E6FE',
+                    backgroundColor: '#EDEDED',
                     borderTopLeftRadius: 6,
                     borderTopRightRadius: 6,
                   },
@@ -926,7 +1035,7 @@ const MyDocument = ({
                 <View
                   style={[
                     styles.tableHeader,
-                    styles.p4,
+                    // styles.p4,
                     { paddingBottom: '2px' },
                   ]}
                 >
@@ -946,7 +1055,7 @@ const MyDocument = ({
                       styles.tableCell_20,
                       styles.alignRight,
                       styles.p12,
-                      styles.pr4,
+                      // styles.pr4,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
@@ -975,13 +1084,15 @@ const MyDocument = ({
                   <View
                     style={[
                       styles.tableRow,
+                      styles.textcolor,
                       index + 1 != myObj.length ? styles.borderbottom : null,
 
                       // {
                       //   backgroundColor:
                       //     index % 2 === 0 ? '#ffffff' : '#ffffff',
                       // },
-                      { marginTop: '2px', paddingTop: '4px' },
+                      {     borderBottom: '1px solid #e5e7eb',
+                        marginTop: '2px', paddingTop: '4px' },
                     ]}
                     key={item.id}
                   >
@@ -1021,11 +1132,12 @@ const MyDocument = ({
                   </View>
                 ))}
 
-                {/* part 2 */}
-              </View>
-            </View>
-            <View
-              style={[styles.tableRow, { marginTop: '2px', paddingTop: '4px' }]}
+
+
+
+
+<View
+              style={[styles.tableRow,  styles.textcolor, {   borderBottom: '1px solid #e5e7eb',    marginTop: '2px', paddingTop: '4px' }]}
             >
               <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
 
@@ -1045,26 +1157,49 @@ const MyDocument = ({
                 <Text>{fCurrency(myBookingPayload?.T_C)}</Text>
               </View>
             </View>
+
+                {/* part 2 */}
+              </View>
+            </View>
+ 
           </View>}
           {/* part -4 */}
+
+
+          <View style={[styles.ml2, styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                // styles.mb5,
+                styles.col8,
+                styles.smallFitter,
+                styles.ml2,
+              ]}
+            >
+              IV. Construction Additional charges
+            </Text>
+          </View>
           {projectDetails?.projectType?.name === 'Villas' &&
-           <View style={[styles.fitter, { marginTop: '10px' }]}>
-            <View style={[{ border: '1 solid #e5e7eb ', borderRadius: 8 }]}>
+           <View style={[styles.fitter, { marginTop: '5px' }]}>
+            <View style={[{    borderRadius: 8 }]}>
               <View
                 style={[
                   styles.subtitle1,
                   styles.bg1,
+                  styles.textcolorhead,
                   {
-                    backgroundColor: '#E8E6FE',
+                    backgroundColor: '#EDEDED',
                     borderTopLeftRadius: 6,
                     borderTopRightRadius: 6,
+                   
+                  
                   },
                 ]}
               >
                 <View
                   style={[
                     styles.tableHeader,
-                    styles.p4,
+                    // styles.p4,
                     { paddingBottom: '2px' },
                   ]}
                 >
@@ -1083,7 +1218,7 @@ const MyDocument = ({
                       styles.tableCell_20,
                       styles.alignRight,
                       styles.p12,
-                      styles.pr4,
+                      // styles.pr4,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
@@ -1111,12 +1246,14 @@ const MyDocument = ({
                 <View
                   style={[
                     styles.tableRow,
-                    styles.ml1,
+                    styles.textcolor,
+                    // styles.ml1,
                     index + 1 != myAdditionalCharges.length
                       ? styles.borderbottom
                       : null,
 
-                    { marginTop: '2px', paddingTop: '4px' },
+                    {   borderBottom: '1px solid #e5e7eb',
+                      marginTop: '2px', paddingTop: '4px' },
                   ]}
                   key={item.id}
                 >
@@ -1161,12 +1298,13 @@ const MyDocument = ({
                   </View>
                 </View>
               ))}
-            </View>
-            <View>
+
+<View>
               <View
                 style={[
                   styles.tableRow,
-                  { marginTop: '2px', paddingTop: '8px' },
+                  styles.textcolor,
+                  {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px' },
                 ]}
               >
                 <View
@@ -1188,8 +1326,17 @@ const MyDocument = ({
                 </View>
               </View>
             </View>
+
+
+
+
+            </View>
+ 
+
           </View>}
           {/* part -5 */}
+
+
           {myBookingPayload?.possessionAdditionalCostCS?.length >0 &&
            <View style={[styles.fitter, { marginTop: '10px' }]}>
             <View style={[{ border: '1 solid #e5e7eb ', borderRadius: 8 }]}>
@@ -1197,8 +1344,9 @@ const MyDocument = ({
                 style={[
                   styles.subtitle1,
                   styles.bg1,
+                  styles.textcolorhead,
                   {
-                    backgroundColor: '#E8E6FE',
+                    backgroundColor: '#EDEDED',
                     borderTopLeftRadius: 6,
                     borderTopRightRadius: 6,
                   },
@@ -1207,7 +1355,7 @@ const MyDocument = ({
                 <View
                   style={[
                     styles.tableHeader,
-                    styles.p4,
+                    // styles.p4,
                     { paddingBottom: '2px' },
                   ]}
                 >
@@ -1226,7 +1374,7 @@ const MyDocument = ({
                       styles.tableCell_20,
                       styles.alignRight,
                       styles.p12,
-                      styles.pr4,
+                      // styles.pr4,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
@@ -1309,6 +1457,7 @@ const MyDocument = ({
               <View
                 style={[
                   styles.tableRow,
+                  styles.textcolor,
                   { marginTop: '2px', paddingTop: '8px' },
                 ]}
               >
@@ -1381,12 +1530,14 @@ const MyDocument = ({
                   ].map((item, index) => (
                     <View
                       key={index}
+                      
                       style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         marginBottom: 10,
                         paddingLeft: 10,
                         paddingRight: 10,
+                        
                       }}
                     >
                       <Text style={{ fontSize: 9, fontWeight: 'normal' }}>
@@ -1398,13 +1549,16 @@ const MyDocument = ({
                     </View>
                   ))}
                   <View
+                   style={[styles.textcolor]}
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
-                      backgroundColor: '#E8E6FE',
+                      backgroundColor: '#EDEDED',
                       padding: 8,
                       borderBottomLeftRadius: 6,
                       borderBottomRightRadius: 6,
+                     
+                      
                     }}
                   >
                     <Text style={{ fontSize: 9, fontWeight: 'medium' }}>
@@ -1427,209 +1581,296 @@ const MyDocument = ({
             </View>
           </View>}
 
-             {/*Payment Schedule  */}
+             {/*Payment Schedule box  */}
 
-             <View style={[styles.ml4, styles.pt2, styles.mT1]}>
+
+               
+
+
+ 
+
+           
+ 
+  
+
+
+
+              {/* payment end */}
+
+
+
+        </View>
+
+
+
+
+        <View style={[styles.topBoderRadius, styles.bottomBorderRadius, {  backgroundColor: '#fff', marginTop: '10px', paddingTop: '4px'  }]} >
+
+
+
+
+        <View style={[styles.ml2, styles.pt2, styles.mT1]}>
             <Text
               style={[
-                styles.subtitle1,
-                styles.mb5,
+                // styles.subtitle1,
+                // styles.mb5,
                 styles.col,
                 styles.smallFitter,
                 styles.ml2,
+                { fontWeight: 'bold' , fontSize: 13}
               ]}
             >
               Payment Schedule
             </Text>
+            <Text
+              style={[
+                // styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+                {color: '#6A6A6A'}
+              ]}
+            >
+              When to pay & what to pay
+            </Text>
+         
           </View>
-          <View style={[styles.fitter]}>
-              <View
-                style={[
-                  { border: '1 solid #e5e7eb ', borderRadius: 8 },
-                  styles.mb20,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.subtitle1,
-                    {
-                      backgroundColor: '#E8E6FE',
-                      borderTopLeftRadius: 6,
-                      borderTopRightRadius: 6,
-                    },
-                  ]}
-                >
-                  <View
-                    style={[
-                      styles.tableHeader,
-                      styles.p4,
-                      { paddingBottom: '2px' },
-                    ]}
-                  >
-                    <View style={[styles.tableCell_1, styles.p11]}>
-                      <Text style={styles.subtitle2}></Text>
-                    </View>
 
-                    <View style={[styles.tableCell_4, styles.p12]}>
-                      <Text style={[styles.subtitle2]}>Schedule</Text>
-                    </View>
-                    <View style={[styles.tableCell_5, styles.p12]}>
-                      <Text style={styles.subtitle2}>Payment Timeline</Text>
-                    </View>
-                    <View
-                      style={[
-                        styles.tableCell_3,
-                        styles.alignRight,
-                        styles.p12,
-                      ]}
-                    >
-                      <Text style={styles?.subtitle2}>Total</Text>
-                    </View>
-                  </View>
-                </View>
-                {myBookingPayload?.plotPS?.map((item, index) => (
-                  <View
-                    style={[
-                      styles.tableRow,
-                      styles.borderbottom,
-                      { marginTop: '2px', paddingTop: '4px' },
-                    ]}
-                    key={item.id}
-                  >
-                    <View
-                      style={[
-                        styles.tableCell_1,
-                        styles.pl2,
-                        { marginTop: '-1px' },
-                      ]}
-                    >
-                      <Text>{index + 1}</Text>
-                    </View>
 
-                    <View style={styles.tableCell_4}>
-                      <Text style={styles.subtitle2}>{item.stage?.label}</Text>
-                    </View>
 
-                    <View style={styles.tableCell_5}>
-                      <Text>{item.description}</Text>
-                    </View>
+<View style={[styles.ml2, styles.pt2, styles.mT1]}>
+<Text
+style={[
+ styles.subtitle1,
+ styles.mb5,
+ styles.col,
+ styles.smallFitter,
+ styles.ml2,
+]}
+>
+I. Payment Schedule
+</Text>
+</View>
+<View style={[styles.fitter]}>
+<View
+ style={[
+   {   borderTopLeftRadius: 8,
+     borderTopRightRadius: 8,  borderBottom: '1 solid #e5e7eb '  },
+   styles.mb20,
+ ]}
+>
+ <View
+   style={[
+     styles.subtitle1,
+     {
+       backgroundColor: '#EDEDED',
+       borderTopLeftRadius: 6,
+       borderTopRightRadius: 6,
+     },
+   ]}
+ >
+   <View
+     style={[
+       styles.tableHeader,
+      //  styles.p4,
+       styles.textcolorhead,
+       { paddingBottom: '2px' },
+     ]}
+   >
+     <View style={[styles.tableCell_1, styles.p11]}>
+       <Text style={styles.subtitle2}></Text>
+     </View>
 
-                    <View style={[styles.tableCell_3, styles.alignRight]}>
-                      <Text>{fCurrency(item.value)}</Text>
-                    </View>
-                  </View>
-                ))}
-                <View style={[styles.totalRow, styles.mT0]}>
-                  <View style={styles.tableCell_1}></View>
+     <View style={[styles.tableCell_4, styles.p12]}>
+       <Text style={[styles.subtitle2]}>Schedule</Text>
+     </View>
+     <View style={[styles.tableCell_5, styles.p12]}>
+       <Text style={styles.subtitle2}>Payment Timeline</Text>
+     </View>
+     <View
+       style={[
+         styles.tableCell_3,
+         styles.alignRight,
+         styles.p12,
+       ]}
+     >
+       <Text style={styles?.subtitle2}>Total</Text>
+     </View>
+   </View>
+ </View>
+ {myBookingPayload?.plotPS?.map((item, index) => (
+   <View
+     style={[
+       styles.tableRow,
+       styles.borderbottom,
+       styles.textcolor,
+       {  
+         marginTop: '2px', paddingTop: '4px' },
+     ]}
+     key={item.id}
+   >
+     <View
+       style={[
+         styles.tableCell_1,
+         styles.pl2,
+         { marginTop: '-1px' },
+       ]}
+     >
+       <Text>{index + 1}</Text>
+     </View>
 
-                  <View style={[styles.tableCell_4]}>
-                    <Text style={styles.subtitle2}>Total Cost</Text>
-                  </View>
+     <View style={styles.tableCell_4}>
+       <Text style={styles.subtitle2}>{item.stage?.label}</Text>
+     </View>
 
-                  <View style={styles.tableCell_3}></View>
+     <View style={styles.tableCell_5}>
+       <Text>{item.description}</Text>
+     </View>
 
-                  <View style={styles.tableCell_3}></View>
+     <View style={[styles.tableCell_3, styles.alignRight]}>
+       <Text>{fCurrency(item.value)}</Text>
+     </View>
+   </View>
+ ))}
+ <View style={[styles.totalRow, styles.mT0 ,  styles.textcolor, ]}>
+   <View style={styles.tableCell_1}></View>
 
-                  <View style={[styles.tableCell_3, styles.alignRight]}>
-                    <Text>{fCurrency(myBookingPayload?.T_A + myBookingPayload?.T_B)}</Text>
-                  </View>
-                </View>
-              </View>
+   <View style={[styles.tableCell_4]}>
+     <Text style={styles.subtitle2}>Total Cost</Text>
+   </View>
 
-              {projectDetails?.projectType?.name === 'Villas' &&  <View
-                style={[
-                  { border: '1 solid #e5e7eb ', borderRadius: 8 },
-                  styles.mb20,
-                ]}
-              >
-                <View
-                  style={[
-                    styles.subtitle1,
-                    {
-                      backgroundColor: '#E8E6FE',
-                      borderTopLeftRadius: 6,
-                      borderTopRightRadius: 6,
-                    },
-                  ]}
-                >
-                  <View
-                    style={[
-                      styles.tableHeader,
-                      styles.p4,
-                      { paddingBottom: '2px' },
-                    ]}
-                  >
-                    <View style={[styles.tableCell_1, styles.p11]}>
-                      <Text style={styles.subtitle2}></Text>
-                    </View>
+   <View style={styles.tableCell_3}></View>
 
-                    <View style={[styles.tableCell_4, styles.p12]}>
-                      <Text style={[styles.subtitle2]}>Construction Schedule</Text>
-                    </View>
-                    <View style={[styles.tableCell_5, styles.p12]}>
-                      <Text style={styles.subtitle2}>Payment Timeline</Text>
-                    </View>
-                    <View
-                      style={[
-                        styles.tableCell_3,
-                        styles.alignRight,
-                        styles.p12,
-                      ]}
-                    >
-                      <Text style={styles?.subtitle2}>Total</Text>
-                    </View>
-                  </View>
-                </View>
-                {myBookingPayload?.constructPS?.map((item, index) => (
-                  <View
-                    style={[
-                      styles.tableRow,
-                      styles.borderbottom,
-                      { marginTop: '2px', paddingTop: '4px' },
-                    ]}
-                    key={item.id}
-                  >
-                    <View
-                      style={[
-                        styles.tableCell_1,
-                        styles.pl2,
-                        { marginTop: '-1px' },
-                      ]}
-                    >
-                      <Text>{index + 1}</Text>
-                    </View>
+   <View style={styles.tableCell_3}></View>
 
-                    <View style={styles.tableCell_4}>
-                      <Text style={styles.subtitle2}>{item.stage?.label}</Text>
-                    </View>
+   <View style={[styles.tableCell_3, styles.alignRight]}>
+     <Text>{fCurrency(myBookingPayload?.T_A + myBookingPayload?.T_B)}</Text>
+   </View>
+ </View>
+</View>
 
-                    <View style={styles.tableCell_5}>
-                      <Text>{item.description}</Text>
-                    </View>
 
-                    <View style={[styles.tableCell_3, styles.alignRight]}>
-                      <Text>{fCurrency(item.value)}</Text>
-                    </View>
-                  </View>
-                ))}
-                <View style={[styles.totalRow, styles.mT0]}>
-                  <View style={styles.tableCell_1}></View>
 
-                  <View style={[styles.tableCell_4]}>
-                    <Text style={styles.subtitle2}>Total Cost</Text>
-                  </View>
 
-                  <View style={styles.tableCell_3}></View>
 
-                  <View style={styles.tableCell_3}></View>
+<View style={[ styles.pt2, styles.mT1]}>
+<Text
+style={[
+ styles.subtitle1,
+ styles.mb5,
+ // styles.col,
+ // styles.smallFitter,
+ // styles.ml2,
+]}
+>
+II. Construction Schedule
+</Text>
+</View>
 
-                  <View style={[styles.tableCell_3, styles.alignRight]}>
-                    <Text>{fCurrency(myBookingPayload?.T_C + myBookingPayload?.T_D)}</Text>
-                  </View>
-                </View>
-              </View> }
-              </View>
-        </View>
+
+
+
+{projectDetails?.projectType?.name === 'Villas' &&  <View
+ style={[
+   {   borderTopLeftRadius: 8,
+     borderTopRightRadius: 8,  borderBottom: '1 solid #e5e7eb ' },
+   styles.mb20,
+ ]}
+>
+ <View
+   style={[
+     styles.subtitle1,
+     {
+       backgroundColor: '#EDEDED',
+       borderTopLeftRadius: 6,
+       borderTopRightRadius: 6,
+     },
+   ]}
+ >
+   <View
+     style={[
+       styles.tableHeader,
+      //  styles.p4,
+       styles.textcolorhead,
+       { paddingBottom: '2px' },
+     ]}
+   >
+     <View style={[styles.tableCell_1, styles.p11]}>
+       <Text style={styles.subtitle2}></Text>
+     </View>
+
+     <View style={[styles.tableCell_4, styles.p12]}>
+       <Text style={[styles.subtitle2]}>Construction Schedule</Text>
+     </View>
+     <View style={[styles.tableCell_5, styles.p12]}>
+       <Text style={styles.subtitle2}>Payment Timeline</Text>
+     </View>
+     <View
+       style={[
+         styles.tableCell_3,
+         styles.alignRight,
+         styles.p12,
+       ]}
+     >
+       <Text style={styles?.subtitle2}>Total</Text>
+     </View>
+   </View>
+ </View>
+ {myBookingPayload?.constructPS?.map((item, index) => (
+   <View
+     style={[
+       styles.tableRow,
+       styles.borderbottom,
+       styles.textcolor,
+       {   marginTop: '2px', paddingTop: '4px' },
+     ]}
+     key={item.id}
+   >
+     <View
+       style={[
+         styles.tableCell_1,
+         styles.pl2,
+         styles.textcolor,
+         { marginTop: '-1px' },
+       ]}
+     >
+       <Text>{index + 1}</Text>
+     </View>
+
+     <View style={styles.tableCell_4}>
+       <Text style={styles.subtitle2}>{item.stage?.label}</Text>
+     </View>
+
+     <View style={styles.tableCell_5}>
+       <Text>{item.description}</Text>
+     </View>
+
+     <View style={[styles.tableCell_3, styles.alignRight]}>
+       <Text>{fCurrency(item.value)}</Text>
+     </View>
+   </View>
+ ))}
+ <View style={[styles.totalRow, styles.mT0,   styles.textcolor,  ]}>
+   <View style={styles.tableCell_1}></View>
+
+   <View style={[styles.tableCell_4]}>
+     <Text style={styles.subtitle2}>Total Cost box</Text>
+   </View>
+
+   <View style={styles.tableCell_3}></View>
+
+   <View style={styles.tableCell_3}></View>
+
+   <View style={[styles.tableCell_3, styles.alignRight]}>
+     <Text>{fCurrency(myBookingPayload?.T_C + myBookingPayload?.T_D)}</Text>
+   </View>
+ </View>
+</View> }
+</View>
+
+
+</View>
 
         {/* <View style={[styles.gridContainer, styles.footer]} fixed>
           <View style={styles.col8}>
