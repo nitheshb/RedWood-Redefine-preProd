@@ -1285,7 +1285,7 @@ const Floordetails = ({
                 })}
               </ul>
             )}
-          
+
               <ul className="">
                 <li className="py-2">
                   <section>
@@ -1569,66 +1569,6 @@ const Floordetails = ({
                 </li>
               </ul>
 
-            {!['Apartment', 'Plots', 'Villas'].includes(
-              projectDetails?.projectType?.name
-            ) && (
-              <ul className="">
-                <li className="py-2">
-                  <section>
-                    {/* <section className="px-8 bg-red-100 w-[130px] rounded-r-2xl">
-                      Fl-{floorDat}
-                    </section> */}
-                    <div className=" px-4 mt-">
-                      {filteredUnits
-                        // ?.filter((da) => da?.floor == i)
-                        .map((data, index) => {
-                          return unitShrink ? (
-                            <div
-                              className=" mb-1  mx-1 inline-block"
-                              key={index}
-                              // onClick={() => handleDetailView_Close(data)}
-                              onClick={() => {
-                                console.log('check is ', leadDetailsObj)
-                                setSliderInfo({
-                                  open: true,
-                                  title: 'View Unit',
-                                  sliderData: {
-                                    unitDetail: data,
-                                    phaseDetail: phaseFeed,
-                                    leadDetailsObj: leadDetailsObj,
-                                  },
-                                  widthClass: 'max-w-4xl',
-                                })
-                              }}
-                            >
-                              <UnitsSmallViewCard
-                                kind={data}
-                                feedData={unitFeedData}
-                                bg="#CCFBF1"
-                                setShowCostSheetWindow={setShowCostSheetWindow}
-                                setSelUnitDetails={setSelUnitDetails}
-                                setSelMode={setSelMode}
-                              />
-                            </div>
-                          ) : (
-                            <div
-                              className="p-2 mb-1  mx-1 inline-block cursor-pointer"
-                              key={index}
-                              onClick={() => handleDetailView_Close(data)}
-                            >
-                              <UnitsStatsCard
-                                kind={data}
-                                feedData={unitFeedData}
-                                bg="#fef7f7"
-                              />
-                            </div>
-                          )
-                        })}
-                    </div>
-                  </section>
-                </li>
-              </ul>
-            )}
             {/* 1 */}
             {['projectManagement', 'projectOnboard'].includes(source) && (
               <div className=" z-10 flex flex-row my-[30px] ml-5">

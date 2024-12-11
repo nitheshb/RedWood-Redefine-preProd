@@ -274,7 +274,7 @@ console.log('customer info', myBookingPayload)
           text: 'Applicant details, contacts, etc',
         },
         {
-          label: 'Additonal Info',
+          label: 'Additional Info',
           value: 'additonalInfo',
           logo: 'FireIcon',
           color: ' bg-violet-500',
@@ -338,13 +338,13 @@ console.log('customer info', myBookingPayload)
   useEffect(() => {
     console.log('macho is ', projectDetails)
     const { projectType } = projectDetails
-    if (projectType.name === 'Plots') {
+    if (projectType?.name === 'Plots') {
       setCsMode('plot_cs')
     } else {
       setCsMode('both')
     }
     // projectDetails
-  }, [])
+  }, [projectDetails])
 
   useEffect(() => {
     console.log('phase details are ', selPhaseObj)
@@ -412,6 +412,7 @@ console.log('customer info', myBookingPayload)
 
   const [loading, setLoading] = useState(false)
   const [isImportLeadsOpen, setisImportLeadsOpen] = useState(false)
+  const [isMover, setIsMover] = useState(false)
 
   const initialState = initialValuesA
   const validate = Yup.object({
@@ -490,10 +491,12 @@ console.log('customer info', myBookingPayload)
       )
     }
 
+    if(isMover){
     setOnStep('payment_schedule')
     if (onStep === 'payment_schedule') {
       setOnStep('booksheet')
     }
+  }
   }
 
   const setStatusFun = async (index, newStatus) => {
@@ -726,6 +729,9 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                                    "
                                       type="submit"
                                       disabled={loading}
+                                      onClick={()=>{
+                                        setIsMover(false)
+                                      }}
                                       // onClick={() => submitFormFun(formik)}
                                     >
                                       {/* {loading && <Loader />} */}
@@ -747,6 +753,9 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                                    "
                                         type="submit"
                                         disabled={loading}
+                                        onClick={()=>{
+                                          setIsMover(true)
+                                        }}
                                         // onClick={() => submitFormFun(formik)}
                                       >
                                         {/* {loading && <Loader />} */}

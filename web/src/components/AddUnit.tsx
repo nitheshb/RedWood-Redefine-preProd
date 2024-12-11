@@ -721,9 +721,9 @@ const AddUnit = ({
                 cartpet_area_sqft: unitDetails?.cartpet_area_sqft || 0,
                 uds_sqft: unitDetails?.uds_sqft || 0,
                 floor_plan: unitDetails?.floor_plan || 0,
-                bedrooms_c: unitDetails?.bedrooms_c?.replace(/\D/g, "") || 0,
-                bathrooms_c: unitDetails?.bathrooms_c?.replace(/\D/g, "") || 0,
-                car_parkings_c: unitDetails?.car_parkings_c?.replace(/\D/g, "") || 0,
+                bedrooms_c: Number(unitDetails?.bedrooms_c?.toString()?.replace(/\D/g, "")) || 0,
+                bathrooms_c: Number(unitDetails?.bathrooms_c?.toString()?.replace(/\D/g, "")) || 0,
+                car_parkings_c: Number(unitDetails?.car_parkings_c?.toString()?.replace(/\D/g, "")) || 0,
                 tower_no: unitDetails?.tower_no || 0,
                 block_no: unitDetails?.block_no || 0,
                 floor_no: unitDetails?.floor_no || 0,
@@ -911,7 +911,7 @@ const AddUnit = ({
                                   }}
                                   onChange={(value) => {
                                     formik.setFieldValue('dimension', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
-  
+
                                   }}
                                 />
                               </div>

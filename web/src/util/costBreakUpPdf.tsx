@@ -223,16 +223,20 @@ const CostBreakUpPdf = ({
             Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
               (selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate)
           )
-    const constSaleValue =
-      costSheetA.length > 0
-        ? Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
-          Number(costSheetA[0]['charges'])
-        : Number.isFinite(y)
-        ? Number(selUnitDetails?.area * y)
-        : Number(
-            Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
-              (selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate)
-          )
+    // const constSaleValue =
+    //   costSheetA.length > 0
+    //     ? Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
+    //       Number(costSheetA[0]['charges'])
+    //     : Number.isFinite(y)
+    //     ? Number(selUnitDetails?.area * y)
+    //     : Number(
+    //         Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
+    //           (selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate)
+    //       )
+
+    const constSaleValue =Number.isFinite(y)
+    ? Number( (selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0 )* y)
+    : Number((selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0) * selUnitDetails?.construct_price_sqft || 0)
     const plcSaleValue =
       costSheetA.length > 1
         ? selUnitDetails?.area?.toString()?.replace(',', '') *
@@ -273,7 +277,7 @@ const CostBreakUpPdf = ({
         : 0
     const plot_gstValue = Math.round(plotSaleValue) * gstTaxIs
     const plc_gstValue = Math.round(plcSaleValue * plcGstIs)
-    const const_gstValue = Math.round(constSaleValue * gstConstTaxIs)
+    const const_gstValue = Math.round(constSaleValue * gstConstTaxIs )
     console.log(
       'gen costSheetA values are ',
       Number.isFinite(y),
@@ -478,10 +482,10 @@ const CostBreakUpPdf = ({
       const x = d['component']['value']
       initformValues[`${x}`] = d?.charges
     })
-    // setInitialValuesA(initformValues)
-    // console.log('gen costSheetA', x)
-    // setCostSheetA(x)
-    // setConstructCostSheetA(constructionCS)
+    setInitialValuesA(initformValues)
+    console.log('gen costSheetA', x)
+    setCostSheetA(x)
+    setConstructCostSheetA(constructionCS)
   }, [selPhaseObj, leadDetailsObj1, csMode])
 
   useEffect(() => {

@@ -802,7 +802,7 @@ const BookingSummaryView = ({
                         </div>
                       </div>
                       <div>
-                        <section className="flex flex-row justify-between w-52">
+                        <section className="flex flex-row justify-between w-[230px]">
                           <div></div>
 
                           <div className="border rounded-lg shadow-lg w-full">
@@ -841,11 +841,11 @@ const BookingSummaryView = ({
                             </section>}
                             {selPhaseObj?.projectType?.name === 'Villas' &&  <section className="flex flex-row justify-between  mt-2">
                               <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                Additonal Charges-II
+                              Construction Additional Charges
                               </h1>
                               <section className="flex flex-row mt-[2px]">
                                 <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                  ₹{myBookingPayload?.T_E?.toLocaleString('en-IN')}
+                                  ₹{myBookingPayload?.T_D?.toLocaleString('en-IN')}
                                 </section>
                               </section>
                             </section>}
@@ -1232,7 +1232,7 @@ const BookingSummaryView = ({
                                   <thead>
                                       <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
                                         <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide">
-                                          Additional Charges -II
+                                        Construction Additonal Charges
                                         </th>
                                         <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
                                           Rate/Sqft
@@ -1301,7 +1301,7 @@ const BookingSummaryView = ({
                                       ))}
                                       <tr className=" h-[32px] ">
                                         <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
-                                          Additional Cahrges -II Cost
+                                          Construction Additonal Charges
                                         </th>
                                         <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
                                         <td
@@ -1335,7 +1335,7 @@ const BookingSummaryView = ({
                                             ?.toLocaleString('en-IN')}
                                         </td>
                                         <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
-                                          ₹{myBookingPayload?.T_E?.toLocaleString('en-IN')}
+                                          ₹{myBookingPayload?.T_D?.toLocaleString('en-IN')}
                                         </td>
                                       </tr>
                                     </tbody>
@@ -1373,7 +1373,7 @@ const BookingSummaryView = ({
                                               ₹
                                               {myBookingPayload?.T_elgible?.toLocaleString(
                                                 'en-IN'
-                                              )}
+                                              ) || 0}
                                             </section>
                                           </section>
                                         </section>
@@ -1438,11 +1438,17 @@ const BookingSummaryView = ({
 
                                       <tr className="h-[32px]">
                                         <th className="text-[12px] px-2  text-left text-gray-800 ">
-                                          Plot Value Total Rs.:
+                                        {selPhaseObj?.projectType?.name ===
+                                    'Apartment'
+                                      ? 'Flat Value Total Rs.:'
+                                      : 'Plot Value Total'}
                                         </th>
                                         <td className="text-[12px] px-2  text-right text-gray-400 "></td>
                                         <th className="text-[12px] px-2  text-right text-gray-800 ">
-                                          ₹{netTotal?.toLocaleString('en-IN')}
+                                          ₹  {(
+                                      (myBookingPayload?.T_A || 0) +
+                                      (myBookingPayload?.T_B || 0)
+                                    )?.toLocaleString('en-IN')}
                                         </th>
                                       </tr>
                                     </tbody>
@@ -1490,11 +1496,13 @@ const BookingSummaryView = ({
 
                                       <tr className="h-[32px]">
                                         <th className="text-[12px] px-2  text-left text-gray-800 ">
-                                          Plot Value Total Rs.:
+                                        Construction Value Total:
                                         </th>
                                         <td className="text-[12px] px-2  text-right text-gray-400 "></td>
                                         <th className="text-[12px] px-2  text-right text-gray-800 ">
-                                          ₹{netTotal?.toLocaleString('en-IN')}
+                                          ₹  {(
+                                        (partCTotal || 0) + (partDTotal || 0)
+                                      )?.toLocaleString('en-IN')}
                                         </th>
                                       </tr>
                                     </tbody>
