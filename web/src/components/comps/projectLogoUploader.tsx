@@ -95,7 +95,7 @@ const ProjectLogoUploader = ({projectId, projectLogoURL}) => {
 
         <div
           onClick={handleUploadClick}
-          className="h-[175px] w-[175px] bg-gray-200 flex items-center justify-center rounded-[25px] border border-gray-300 cursor-pointer"
+          className="h-[175px] w-[165px] bg-gray-200 flex items-center justify-center rounded-[25px] border border-gray-300 cursor-pointer"
         >
           {imageUrl ? (
             <img
@@ -123,13 +123,13 @@ const ProjectLogoUploader = ({projectId, projectLogoURL}) => {
 
         <button
           onClick={handleUploadClick}
-          className="absolute bottom-0 right-0 bg-white p-2 rounded-full text-white shadow-lg hover:bg-gray-600"
+          className="absolute bottom-0 right-0 bg-white p-1 rounded-full text-white shadow-lg hover:bg-gray-600"
           disabled={isUploading}
         >
           <svg
-            width="31"
-            height="30"
-            viewBox="0 0 31 30"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
