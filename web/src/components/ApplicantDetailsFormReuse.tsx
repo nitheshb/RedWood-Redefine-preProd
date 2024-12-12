@@ -195,9 +195,9 @@ leadPayload?.Mobile ||
     //   selUnitDetails?.secondaryCustomerDetailsObj?.email2 ||
     //   customerInfo?.secondaryCustomerDetailsObj?.email2 ||
     //   '',
-    dob1: isValidDate(selUnitDetails?.customerDetailsObj?.dob1)
-      ? selUnitDetails.customerDetailsObj.dob1
-      : leadPayload?.customerDetailsObj?.dob1 || customerInfo?.dob1 || datee,
+    dob1: isValidDate(customerInfo?.dob1 )
+      ? customerInfo?.dob1
+      : isValidDate(leadPayload?.customerDetailsObj?.dob1) ? leadPayload?.customerDetailsObj?.dob1 : datee,
     // dob2:
     //   leadPayload?.secondaryCustomerDetailsObj?.dob2 ||
     //   selUnitDetails?.secondaryCustomerDetailsObj?.dob2 ||
