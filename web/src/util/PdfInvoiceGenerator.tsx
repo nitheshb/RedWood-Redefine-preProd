@@ -1059,7 +1059,7 @@ const MyDocument = ({
                       {projectDetails?.projectType?.name === 'Apartment'
                         ? 'Flat'
                         : 'Plot'}{' '}
-                      Charges box mini
+                      Charges
                     </Text>
                   </View>
 
