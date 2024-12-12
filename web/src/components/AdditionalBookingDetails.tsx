@@ -37,6 +37,8 @@ const AdditonalBookingDetails = ({
   const { user } = useAuth()
   const { orgId } = user
   const [usersList, setusersList] = useState([])
+  const [isMover, setIsMover] = useState(false)
+
 
 
 
@@ -201,7 +203,7 @@ const AdditonalBookingDetails = ({
       sourceOfPay,
       purpose,
       referralName,
-      
+
     }
 
 
@@ -247,8 +249,9 @@ const AdditonalBookingDetails = ({
         resetForm
       )
     }
-
+    if(isMover){
     setOnStep('costsheet')
+    }
   }
   const bgImgStyle = {
     backgroundImage:
@@ -561,7 +564,9 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                         type="submit"
                         //disabled={loading}
                         disabled={loading || formik.isSubmitting}
-
+                        onClick={()=>{
+                          setIsMover(false)
+                        }}
                         // onClick={() => submitFormFun(formik)}
                       >
                         {/* {loading && <Loader />} */}
@@ -581,7 +586,9 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                           type="submit"
                           //disabled={loading}
                           disabled={loading || formik.isSubmitting}
-
+                          onClick={()=>{
+                            setIsMover(true)
+                          }}
                           // onClick={() => submitFormFun(formik)}
                         >
                           {/* {loading && <Loader />} */}
