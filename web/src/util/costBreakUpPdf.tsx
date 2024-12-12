@@ -1075,7 +1075,7 @@ const CostBreakUpPdf = ({
                                       </td>
                                       <td className="text-[12px] px-2 text-right   ">
                                         {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
-                                        ₹ ₹
+                                        ₹ 
                                         {d1?.TotalNetSaleValueGsT?.toLocaleString(
                                           'en-IN'
                                         )}
