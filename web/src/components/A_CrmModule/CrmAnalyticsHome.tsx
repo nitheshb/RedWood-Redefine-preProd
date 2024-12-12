@@ -94,7 +94,7 @@ const CrmAnalyticsHome = ({ project }) => {
                     >
                       <li key={i} className="mr-3 ml-3" role="presentation">
                         <button
-                          className={`inline-block py-4 px-4 h-16 text-sm  text-center text-[#6e6e6e] rounded-t-lg border-b-4  hover:text-gray-600 hover:border-black hover:border-b-4 dark:text-gray-400 dark:hover:text-gray-300  ${
+                          className={`inline-block py-4 px-4 h-16 text-sm  text-center text-[#6e6e6e] rounded-t-lg border-b-[3px]  hover:text-gray-600 hover:border-black hover:border-b-[3px] dark:text-gray-400 dark:hover:text-gray-300  ${
                             selCat === d.value
                               ? 'border-[#144264] text-[#144264] '
                               : 'border-transparent'

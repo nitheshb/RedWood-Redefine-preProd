@@ -842,6 +842,8 @@ const AddUnit = ({
                                   label="Tower"
                                   name="tower_no"
                                   type="text"
+                                  // value={formik.values.block_no} // Ensure formik's initial value is set
+
 
                                   onChange={(value) => {
                                     formik.setFieldValue('tower_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))

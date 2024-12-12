@@ -31,6 +31,8 @@ import AllDashboard from './AllDashboard';
 import SoldUnitschart from './SoldUnitschart';
 import SalesDashboard from './SalesDashboard';
 import CardBox from './AcardBox';
+import AppBox from './Adelete';
+import PdfHome from './PbfHome';
 
 
 
@@ -469,9 +471,11 @@ const CustomTooltip = ({ active, payload }) => {
 <CardBox/>
 
 
+<div className="mt-8">
 
+</div>
 
-
+<PdfHome/>
 
 
 
