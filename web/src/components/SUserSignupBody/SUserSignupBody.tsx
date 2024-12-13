@@ -327,6 +327,8 @@ console.log('rolws are ', filRoles)
 
                     const validatedValue = value.replace(/[^a-zA-Z\s]/g, '');
                     e.target.value = validatedValue;
+                    formik.setFieldValue('name', validatedValue)
+
                   }}
                 />
                 <TextField

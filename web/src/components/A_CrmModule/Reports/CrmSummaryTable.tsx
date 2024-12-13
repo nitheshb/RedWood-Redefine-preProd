@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   LineChart,
   Line,
@@ -15,15 +15,37 @@ import {
 import { ArrowUpDown, Calendar, ChevronDown, ChevronRight, MoveDown, MoveUp, TrendingUp } from 'lucide-react';
 import { scaleLinear } from 'd3-scale';
 import ReportSideWindow from 'src/components/SiderForm/ReportSideView'
+import { getAllProjects, getBookedUnitsByProject } from 'src/context/dbQueryFirebase';
+import { useAuth } from 'src/context/firebase-auth-context';
 
 const CrmInventorySummaryTable = ({ projects }) => {
+  const { user } = useAuth()
+  const { orgId, access, projAccessA } = user
   const [selectedOption, setSelectedOption] = useState('All')
   const [isOpenSideForm, setReportSideForm] = React.useState(false)
   const [isImportLeadsOpen, setisImportLeadsOpen] = React.useState(false)
   const [customerDetails, setCustomerDetails] = React.useState({})
   const [drillDownPayload, setDrillDownPayload] = React.useState([])
   const [subTitle, setSubTitle] = React.useState('false')
+  const [projectList, setprojectList] = useState([])
+  const [unitsFetchData, setUnitsFetchData] = useState([])
+  const [leadsFetchedData, setLeadsFetchedData] = useState([])
+
   const [selUnitStatus, seTUnitStatus] = React.useState('false')
+  const [tableData, setTableData] = useState([])
+
+  const [projectBookingsData, setProjectBookingsData] = useState([
+    { time: 'Jan', value: 0, prevValue: 7 },
+    { time: 'Feb', value: 0, prevValue: 7 },
+    { time: 'Mar', value: 0, prevValue: 7 },
+    { time: 'Apr', value: 0, prevValue: 7 },
+    { time: 'Jun', value: 0, prevValue: 7 },
+    { time: 'July', value: 0, prevValue: 5 },
+    { time: 'Aug', value: 0, prevValue: 5 },
+    { time: 'Sep', value: 0, prevValue: 7 },
+    { time: 'Oct', value: 0, prevValue: 7 },
+    { time: 'Nov', value: 0, prevValue: 7 },
+    { time: 'Dec', value: 0, prevValue: 7 },]);
 
   const showDrillDownFun = async (text, data, typeA) => {
     setReportSideForm(true)
@@ -31,15 +53,104 @@ const CrmInventorySummaryTable = ({ projects }) => {
     setSubTitle(text)
     seTUnitStatus(typeA)
   }
+  useEffect(() => {
+    getProjectsListFun()
+  }, [])
 
-
+  useEffect(() => {
+    boot()
+  }, [projectList])
+  const getProjectsListFun = () => {
+    const unsubscribe = getAllProjects(
+      orgId,
+      (querySnapshot) => {
+        const projectsListA = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        projectsListA.map((user) => {
+          user.label = user.projectName
+          user.value = user.projectName
+        })
+        console.log('fetched proejcts list is', projectsListA)
+        const z = [...projectsListA]
+        setprojectList(z)
+      },
+      (error) => setprojectList([])
+    )
+    return unsubscribe
+  }
+  useEffect(() => {
+    setLeadsFetchedData(tableData)
+  }, [tableData])
   const calculateTotal = (data, key) => {
     return data.reduce((acc, item) => {
       return acc + (item[key] || 0)
     }, 0)
   }
+  const boot = async () => {
+    // await getProjectsListFun()
+    const unsubscribe = await getBookedUnitsByProject(
+      orgId,
+      async (querySnapshot) => {
+        const usersListA = querySnapshot.docs.map((docSnapshot) => {
+          const x = docSnapshot.data()
+          x.id = docSnapshot.id
+          const y = projectList.filter((proj) => proj?.uid == x?.pId)
+          console.log(',my prject sel is  ===> ', projectList)
+          if (y.length > 0) {
+            console.log(',my prject sel is ', y)
+            x.projName = y[0].projectName
+          }
+          return x
+        })
+        // setBoardData
+        // console.log('my Array data is ', usersListA, crmCustomersDBData)
+        // await serealizeData(usersListA)
+        console.log('booking details values are', usersListA)
+        await setUnitsFetchData(usersListA)
+        await updateBookingData(usersListA)
 
+      },
+      {
+        status: [
+          'booked',
+          'Booked',
+          'agreement_pipeline',
+          'ATS',
+          'sd_pipeline',
+          'Registered',
+          'agreement',
+          'registered',
+          'construction',
+          'possession',
+        ],
+      },
+      () => setTableData([])
+    )
+    return unsubscribe
+  }
+  function updateBookingData(myDbDataIs) {
+    // Month mapping for easy lookup
+    const monthNames = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
 
+    myDbDataIs.forEach(record => {
+      // Convert the timestamp to a Date object
+      const date = new Date(record.Date);
+      // Get the month name
+      const month = monthNames[date.getUTCMonth()];
+      // Find the corresponding month in projectBookingsData
+      const booking = projectBookingsData.find(entry => entry.time === month);
+      if (booking) {
+        booking.value += 1; // Increment the value
+      }
+    });
+    setProjectBookingsData(projectBookingsData)
+    console.log('booking details values are',projectBookingsData )
+    return projectBookingsData;
+  }
   // const styles = {
   //   customTopShadow: {
   //     boxShadow: `rgba(60, 64, 67, 0.3) 0px -2px 2px 0px, rgba(60, 64, 67, 0.15) 0px -1px 5px 0px`,
@@ -85,10 +196,10 @@ const CrmInventorySummaryTable = ({ projects }) => {
     const { x, y, width, value, index } = props;
     const item = data[index];
     return (
-      <text 
-        x={x + width + 10} 
-        y={y + 15} 
-        fill="#000000" 
+      <text
+        x={x + width + 10}
+        y={y + 15}
+        fill="#000000"
         fontSize={14}
         dominantBaseline="middle"
       >
@@ -112,8 +223,8 @@ const CrmInventorySummaryTable = ({ projects }) => {
 
 
 
-  
-  
+
+
     // const CustomTooltip = ({ active, payload }) => {
     //   if (active && payload && payload.length) {
     //     return (
@@ -142,7 +253,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
 
 
 
-  
+
 
 
   const timeSeriesData = [
@@ -166,20 +277,20 @@ const CrmInventorySummaryTable = ({ projects }) => {
 
     const [isOpen, setIsOpen] = useState(false);
    // const [selectedOption, setSelectedOption] = useState("");
-  
+
     const options = [
       { label: "Option 1", value: "option1" },
       { label: "Option 2", value: "option2" },
       { label: "Option 3", value: "option3" },
     ];
-  
+
     const toggleDropdown = () => {
       setIsOpen(!isOpen);
     };
-  
+
     const handleOptionClick = (option) => {
-      setSelectedOption(option.label); 
-      setIsOpen(false); 
+      setSelectedOption(option.label);
+      setIsOpen(false);
     };
 
 
@@ -201,7 +312,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
     //     return 0;
     //   });
     // };
-  
+
     // const handleSort = (key) => {
     //   let direction = "asc";
     //   if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -209,9 +320,9 @@ const CrmInventorySummaryTable = ({ projects }) => {
     //   }
     //   setSortConfig({ key, direction });
     // };
-  
+
     // const sortedProjects = sortData(projects);
-  
+
 
 
 
@@ -230,7 +341,7 @@ const CrmInventorySummaryTable = ({ projects }) => {
     //     return 0;
     //   });
     // };
-    
+
     // const handleSort = (key) => {
     //   let direction = "asc";
     //   if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -238,38 +349,38 @@ const CrmInventorySummaryTable = ({ projects }) => {
     //   }
     //   setSortConfig({ key, direction });
     // };
-    
+
     // const sortedProjects = sortData(projects);
 
 
 
 
-    
 
 
 
-  
+
+
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
-    const time = payload[0].payload.time; 
+    const time = payload[0].payload.time;
 
     return (
       <div className="bg-white p-3 rounded-md">
         <p className="text-black">Time: {time}</p>
 
         {payload.map((entry, index) => {
-          const { value, prevValue } = entry.payload; 
-          const strokeColor = entry.stroke; 
+          const { value, prevValue } = entry.payload;
+          const strokeColor = entry.stroke;
 
-      
+
           return (
             <div key={index} className="flex items-center gap-2">
-            
+
               <div
                 style={{ backgroundColor: strokeColor }}
                 className="w-4 h-4 "
               ></div>
-          
+
               <p className="text-black">
                 {entry.dataKey === "value"
                   ? `Current Value: ${value}`
@@ -315,7 +426,7 @@ const CustomTooltip = ({ active, payload }) => {
 // };
 
 // const sortedProjects = sortData(projects);
- 
+
 
 
 const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
@@ -548,7 +659,7 @@ const handleSort = (key) => {
 
 
 
-      
+
 <div className='max-w-7xl mx-auto mt-6'>
 <div className="grid grid-cols-4 gap-6 mb-8">
   <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
@@ -614,12 +725,12 @@ const handleSort = (key) => {
 
 
         <div className="grid grid-cols-2 gap-6 h-full items-end">
-      
+
           <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
             <div className="pt-6 px-4">
-              <h2 className="text-[#000000] text-[19px] ml-4">Booking Trend</h2>
+              <h2 className="text-[#000000] text-[19px] ml-4">Bookings Trend</h2>
               <div className="flex items-center gap-3 mt-4 mb-4 ml-4">
-                <span className="text-[30px] text-[#000000] font-semibold">&#8377; 387.75</span>
+                <span className="text-[30px] text-[#000000] font-semibold">{unitsFetchData?.length?.toLocaleString('en-IN')}</span>
                 <div className="flex items-center text-[#00A236]">
                   <TrendingUp className="w-5 h-5 mx-3" />
                   <span className="text-[18px]">23%</span>
@@ -637,7 +748,7 @@ const handleSort = (key) => {
 
 
 
-    
+
     <div className="flex ml-7 gap-4 mb-6 flex-row">
 
 
@@ -665,55 +776,55 @@ const handleSort = (key) => {
 
 
 
-            <div className="h-96 px-4">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={timeSeriesData} margin={{ top: 0, right: 30, bottom: 0, left: 0 }}>
-                  <CartesianGrid vertical={false} stroke="#CCCCCC" />
-                  <XAxis
-                    dataKey="time"
-                    axisLine={false}
-                    tickLine={false}
-                    stroke="#3D3D3D"
-                    tick={{ dy: 10 }}
-                    interval={0}
-                  />
-                  <YAxis
-                    domain={[5, 100]}
-                    ticks={[5, 25, 50, 75, 100]}
-                    axisLine={false}
-                    tickLine={false}
-                    stroke="#3D3D3D"
-                  />
+      <div className="h-80 px-4">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={projectBookingsData} margin={{ top: 0, right: 30, bottom: 0, left: 0 }}>
+              <CartesianGrid vertical={false} stroke="#CCCCCC" />
+              <XAxis
+                dataKey="time"
+                axisLine={false}
+                tickLine={false}
+                stroke="#3D3D3D"
+                tick={{ dy: 10 }}
+                interval={0}
+              />
+              <YAxis
+                // domain={[5, 100]}
+                // ticks={[5, 25, 50, 75, 100]}
+                axisLine={false}
+                tickLine={false}
+                stroke="#3D3D3D"
+              />
 
 
-             
-                  {/* <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} /> */}
+
+              <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} />
 
 
-                  <Tooltip content={<CustomTooltip />} />
+              {/* <Tooltip content={<CustomTooltip />} /> */}
 
 
-                  <Line
-                    type="monotone"
-                    dataKey="prevValue"
-                    stroke="#CCCCCC"
-                    strokeDasharray="5 5"
-                    strokeWidth={2}
-                    dot={false}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="value"
-                    stroke="#0ea5e9"
-                    strokeWidth={2}
-                    dot={false}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+              <Line
+                type="monotone"
+                dataKey="prevValue"
+                stroke="#CCCCCC"
+                strokeDasharray="5 5"
+                strokeWidth={2}
+                dot={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke="#0ea5e9"
+                strokeWidth={2}
+                dot={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
           </div>
 
-        
+
           <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
             <div className="pt-6 px-4 flex flex-col h-full">
               <h2 className="text-[#000000] mb-4 ml-5">Top 5 Channels</h2>
@@ -788,7 +899,7 @@ const handleSort = (key) => {
 
 
 
-  
+
 <div className="w-full max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-medium text-gray-800">CRM Inventory Report</h1>
@@ -801,7 +912,7 @@ const handleSort = (key) => {
       <div className="w-full bg-white rounded-t-[30px] overflow-hidden">
         <div className="bg-[#E0E4EB] p-4 rounded-t-[30px]">
           <h2 className="text-lg text-center font-medium text-[#000000]" >
-            
+
           </h2>
         </div>
         <div>
@@ -826,15 +937,15 @@ const handleSort = (key) => {
             key={key}
             className="text-left p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4] cursor-pointer"
             onClick={() => handleSort(key)}
-            style={{ minWidth: "150px" }} 
+            style={{ minWidth: "150px" }}
           >
             <div className="flex items-center justify-between">
               <span>{key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}</span>
-            
+
               <span className="ml-2">
                 {sortConfig.key === key && (
-                  sortConfig.direction === "asc" ? 
-                    <ArrowUp className="text-blue-500" /> : 
+                  sortConfig.direction === "asc" ?
+                    <ArrowUp className="text-blue-500" /> :
                     <ArrowDown className="text-blue-500" />
                 )}
               </span>
@@ -867,7 +978,7 @@ const handleSort = (key) => {
 </div> */}
 
 
-{/* 
+{/*
 <div className="overflow-x-auto">
   <table className="w-full border-collapse overflow-hidden">
     <thead>
@@ -881,8 +992,8 @@ const handleSort = (key) => {
             <span>{key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}</span>
             <span className="absolute right-2 top-1/2 transform -translate-y-1/2">
               {sortConfig.key === key && (
-                sortConfig.direction === "asc" ? 
-                  <ArrowUp className="text-gray-500" /> : 
+                sortConfig.direction === "asc" ?
+                  <ArrowUp className="text-gray-500" /> :
                   <ArrowDown className="text-gray-500" />
               )}
             </span>
@@ -972,7 +1083,7 @@ const handleSort = (key) => {
                                         'management_blocked',
                                       ])
                                     }}
-              
+
               >{item.projectName}</td>
               <td className="p-2 text-gray-700 border-r text-right border-[#E8ECF4]"
                                     onClick={() => {
@@ -995,7 +1106,7 @@ const handleSort = (key) => {
                                         'management_blocked',
                                       ])
                                     }}
-              
+
               >{item.availableCount}</td>
               <td className="p-2 text-gray-700 border-r text-right border-[#E8ECF4]"
                                     onClick={() => {
@@ -1018,7 +1129,7 @@ const handleSort = (key) => {
                                         'management_blocked',
                                       ])
                                     }}
-              
+
               >{item.blockedUnitCount || 0}</td>
               <td className="p-2 text-right text-gray-700"
                                     onClick={() => {
@@ -1030,7 +1141,7 @@ const handleSort = (key) => {
                                         'management_blocked',
                                       ])
                                     }}
-              
+
               >{item.mortgaged}</td>
             </tr>
           ))}
@@ -1047,7 +1158,7 @@ const handleSort = (key) => {
 
 
 
-{/* 
+{/*
 <TableContainer component={Paper} className="overflow-x-auto">
       <Table className="w-full border-collapse overflow-hidden">
         <TableHead>

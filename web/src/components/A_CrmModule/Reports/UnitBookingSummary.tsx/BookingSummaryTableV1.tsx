@@ -56,7 +56,7 @@ import Highlighter from 'react-highlight-words'
 import CSVDownloader from 'src/util/csvDownload'
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import { computeTotal } from 'src/util/computeCsTotals'
-import { getAllProjects, getBookedUnitsByProject } from 'src/context/dbQueryFirebase'
+import { getAllProjects, getBookedUnitsByProject, getUnitsAgreeByProject } from 'src/context/dbQueryFirebase'
 import { Download, Filter } from 'lucide-react'
 // import { prettyDate } from '../../util/dateConverter'
 // import DropCompUnitStatus from '../dropDownUnitStatus'
@@ -546,6 +546,7 @@ export default function UnitSummaryTableBodyV1({
   const [filLeadsA, setFilLeadsA] = useState([])
   const [tabHeadFieldsA, settabHeadFieldsA] = useState([])
   const [unitsFetchData, setUnitsFetchData] = useState([])
+  const [projectsPayload, setProjectsPayload] = useState([])
 
 
 const [totalSaleValue, setTotalSaleValue] = useState(0);
@@ -582,6 +583,22 @@ const [projectBookingsData, setProjectBookingsData] = useState([
   { time: 'Oct', value: 0, prevValue: 7 },
   { time: 'Nov', value: 0, prevValue: 7 },
   { time: 'Dec', value: 0, prevValue: 7 },]);
+const [inventoryPayload, setInventoryPayload] = useState([
+  { day: 'Available', count: 0 },
+  { day: 'Booked', count: 0 },
+  { day: 'Blocked', count: 0 },
+  // { day: '8', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+  // { day: '9', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+  // { day: '10', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+  // { day: '11', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+  // { day: '12', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+  // { day: '13', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+]);
+
+const [unitStatusPayload, setUnitStatusPayload] = useState([
+  { day: 'Booked', count: 10 },
+  { day: 'Allotment', count: 10 },
+  { day: 'ATS', count: 10 },])
 
 const [totalSETReceived, setSETTotalReceived] = useState(0);
 const [selSETTotalBalance, setSETTotalBalance] = useState(0);
@@ -705,6 +722,27 @@ const boot = async () => {
     },
     () => setTableData([])
   )
+
+  const unsubscribe1 = await getUnitsAgreeByProject(
+    orgId,
+    async (querySnapshot) => {
+      const usersListA = querySnapshot.docs.map((docSnapshot) => {
+        const x = docSnapshot.data()
+        x.id = docSnapshot.id
+
+        return x
+      })
+      console.log('projects details values are', usersListA)
+      await setProjectsPayload(usersListA)
+      await updateInventoryData(usersListA)
+    },
+    {
+      status: [
+
+      ],
+    },
+    () => setProjectsPayload([])
+  )
   return unsubscribe
 }
 
@@ -728,6 +766,41 @@ function updateBookingData(myDbDataIs) {
     }
   });
   setProjectBookingsData(projectBookingsData)
+  console.log('booking details values are',projectBookingsData )
+  return projectBookingsData;
+}
+function updateInventoryData(myDbDataIs) {
+  // Month mapping for easy lookup
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+let x = []
+let y = {available: 0, booked: 0, blocked: 0}
+  myDbDataIs.map((record, i) => {
+    // Convert the timestamp to a Date object
+    // const date = new Date(record.Date);
+    // // Get the month name
+    // const month = monthNames[date.getUTCMonth()];
+    // // Find the corresponding month in projectBookingsData
+    // const booking = projectBookingsData.find(entry => entry.time === month);
+    // if (booking) {
+    //   booking.value += 1; // Increment the value
+    // }
+    console.log('project details are', record)
+
+    // y.day = record?.projectName;
+    // y.Available= record?.availableCount || 0;
+    // y.Sold= record?.bookUnitCount || 0;
+    // y.Blocked= record?.blockedUnitCount || 0;
+
+    y.available += record?.availableCount || 0;
+    y.booked += record?.bookUnitCount || 0;
+    y.blocked += record?.blockedUnitCount || 0;
+
+    // x.push(y)
+  });
+  setInventoryPayload([{day: 'Available', count: y.available}, {day: 'Booked', count: y.booked}, {day: 'Blocked', count: y.blocked}])
   console.log('booking details values are',projectBookingsData )
   return projectBookingsData;
 }
@@ -772,6 +845,17 @@ useEffect(() => {
   setTotalReceived(totalReceived);
   const totalBalance = leadsFetchedData.reduce((total, row) => total + Number(row.T_balance || 0), 0);
   setTotalBalance(totalBalance);
+
+  const bookedCount = rowsCounter(leadsFetchedData, 'booked').length
+  const allotment = rowsCounter(leadsFetchedData, 'allotment').length
+  const ATS = rowsCounter(leadsFetchedData, 'ATS').length
+  const registered = rowsCounter(leadsFetchedData, 'registered').length
+  const construction = rowsCounter(leadsFetchedData, 'construction').length
+  const possession = rowsCounter(leadsFetchedData, 'possession').length
+
+  const x = [{day:'Booked', count:bookedCount}, {day:'Allotment', count:allotment}, {day:'Agreement', count:ATS}, {day:'Registered', count:registered}, {day:'Construction', count:construction}, {day:'Possession', count:possession}]
+
+  setUnitStatusPayload(x)
 }, [leadsFetchedData]);
 
 useEffect(() => {
@@ -950,13 +1034,13 @@ useEffect(() => {
 
 
   const data = [
-    { day: '7', 'Bills Payment': 110, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '8', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '9', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '10', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '11', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '12', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '13', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
+    { day: '7', 'Available': 110, 'Sales': 165, 'Blocked': 52 },
+    { day: '8', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
+    { day: '9', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
+    { day: '10', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
+    { day: '11', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
+    { day: '12', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
+    { day: '13', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
   ];
 
 
@@ -1522,7 +1606,7 @@ EnhancedTableHead.propTypes = {
 
       <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
         <div className="pt-6 px-4">
-          <h2 className="text-[#6A6A6A] text-[19px] ml-4">Unit Sales</h2>
+          <h2 className="text-[#6A6A6A] text-[19px] ml-4">Sales Trend</h2>
           <div className="flex items-center gap-3 mt-1 mb-2 ml-4">
             <span className="text-[30px] text-[#000000] font-semibold"> {unitsFetchData?.length?.toLocaleString('en-IN')}</span>
             <div className="flex items-center text-[#00A236]">
@@ -1648,7 +1732,7 @@ EnhancedTableHead.propTypes = {
   <div className="flex gap-6 mb-6">
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 bg-indigo-600 rounded"></div>
-      <span>Bills Payment</span>
+      <span>Available</span>
     </div>
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 bg-sky-400 rounded"></div>
@@ -1656,7 +1740,7 @@ EnhancedTableHead.propTypes = {
     </div>
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 bg-gray-400 rounded"></div>
-      <span>Uncategorized</span>
+      <span>Blocked</span>
     </div>
   </div>
 
@@ -1682,9 +1766,9 @@ EnhancedTableHead.propTypes = {
 
         <Tooltip content={customTooltipone} />
 
-        <Bar dataKey="Bills Payment" fill="#6366f1" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="Available" fill="#6366f1" radius={[4, 4, 0, 0]} />
         <Bar dataKey="Sales" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-        <Bar dataKey="Uncategorized" fill="#9ca3af" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="Blocked" fill="#9ca3af" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   </div>
@@ -1695,9 +1779,9 @@ EnhancedTableHead.propTypes = {
 <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
   <div className="w-full max-w-4xl p-6 bg-white flex flex-col justify-between h-full">
     <div className="mb-6">
-      <h2 className="text-[18px] text-[#6A6A6A] font-medium">Collections</h2>
+      <h2 className="text-[18px] text-[#6A6A6A] font-medium">Units</h2>
       <div className="flex items-center justify-between mt-1">
-        <div className="text-[30px] font-semibold text-[#00000]">&#8377; 708.84</div>
+        <div className="text-[30px] font-semibold text-[#00000]">{inventoryPayload.reduce((acc, curr) => acc + curr.count, 0)?.toLocaleString('en-IN')}</div>
         {/* <div className="flex items-center gap-2 px-4 py-2 border rounded-lg">
           <span className="text-gray-600">View:</span>
           <svg className="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
@@ -1719,7 +1803,7 @@ EnhancedTableHead.propTypes = {
     <div className="flex gap-6 mb-6">
       <div className="flex items-center gap-2">
         <div className="w-3 h-3 bg-indigo-600 rounded"></div>
-        <span>Bills Payment</span>
+        <span>Available</span>
       </div>
       <div className="flex items-center gap-2">
         <div className="w-3 h-3 bg-sky-400 rounded"></div>
@@ -1727,21 +1811,23 @@ EnhancedTableHead.propTypes = {
       </div>
       <div className="flex items-center gap-2">
         <div className="w-3 h-3 bg-gray-400 rounded"></div>
-        <span>Uncategorized</span>
+        <span>Blocked</span>
       </div>
     </div>
 
     {/* Graph Section */}
     <div className="mt-auto h-80">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+        <BarChart data={inventoryPayload} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="day" />
-          <YAxis tickFormatter={(value) => `$ ${value}`} ticks={[0, 50, 100, 150, 200, 250]} />
+          <YAxis tickFormatter={(value) => `Units ${value}`}
+          // ticks={[0, 50, 100, 150, 200, 250]}
+           />
           <Tooltip content={customTooltipone} />
-          <Bar dataKey="Bills Payment" fill="#6366f1" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="Sales" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="Uncategorized" fill="#9ca3af" radius={[4, 4, 0, 0]} />
+          {/* <Bar dataKey="count" fill="#6366f1" radius={[4, 4, 0, 0]} /> */}
+<Bar dataKey="count" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+          {/* <Bar dataKey="Blocked" fill="#9ca3af" radius={[4, 4, 0, 0]} /> */}
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -1760,7 +1846,69 @@ EnhancedTableHead.propTypes = {
 
 
 
+    <div className="flex flex-col rounded-[30px] mt-6 py-5 h-full bg-white shadow">
+  <div className="w-full max-w-4xl p-6 bg-white flex flex-col justify-between h-full">
+    <div className="mb-6">
+      <h2 className="text-[18px] text-[#6A6A6A] font-medium">Units</h2>
+      <div className="flex items-center justify-between mt-1">
+        <div className="text-[30px] font-semibold text-[#00000]">{inventoryPayload.reduce((acc, curr) => acc + curr.count, 0)?.toLocaleString('en-IN')}</div>
+        {/* <div className="flex items-center gap-2 px-4 py-2 border rounded-lg">
+          <span className="text-gray-600">View:</span>
+          <svg className="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h2v10H7V7zm4 0h2v10h-2V7zm4 0h2v10h-2V7z" />
+          </svg>
+          <span className="text-gray-600">Bar Line Chart</span>
+        </div> */}
+      </div>
 
+
+    </div>
+
+    <div className="flex gap-6 mb-6">
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-indigo-600 rounded"></div>
+        <span>Booked</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-sky-400 rounded"></div>
+        <span>Allotment</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-gray-400 rounded"></div>
+        <span>Agreement</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-gray-400 rounded"></div>
+        <span>Registered</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-gray-400 rounded"></div>
+        <span>Construction</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-gray-400 rounded"></div>
+        <span>Possession</span>
+      </div>
+    </div>
+
+    {/* Graph Section */}
+    <div className="mt-auto h-80">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={unitStatusPayload} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          <XAxis dataKey="day" />
+          <YAxis tickFormatter={(value) => `${value}`}
+          // ticks={[0, 50, 100, 150, 200, 250]}
+           />
+          <Tooltip content={customTooltipone} />
+          {/* <Bar dataKey="count" fill="#6366f1" radius={[4, 4, 0, 0]} /> */}
+<Bar dataKey="count" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+          {/* <Bar dataKey="Blocked" fill="#9ca3af" radius={[4, 4, 0, 0]} /> */}
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+</div>
 
 <div className="p-6 mt-6 rounded-t-[30px] bg-white flex justify-between items-center">
           <h3 className="text-xl font-bold">Booking Summary</h3>
