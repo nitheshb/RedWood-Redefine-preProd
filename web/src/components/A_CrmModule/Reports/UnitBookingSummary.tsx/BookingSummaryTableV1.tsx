@@ -569,7 +569,7 @@ const [totalSETChargesIValue, setSETTotalChargesIValue] = useState(0);
 
 const [totalSETChargesIIValue, setSETTotalChargesIIValue] = useState(0);
 const [totalSETPossessionValue, setSETTotalPossessionValue] = useState(0);
-
+const [timeLine, setTimeLine] = useState('W');
 const [totalSETConstructValue, setSETTotalConstructValue] = useState(0);
 const [projectBookingsData, setProjectBookingsData] = useState([
   { time: 'Jan', value: 0, prevValue: 7 },
@@ -1568,9 +1568,10 @@ EnhancedTableHead.propTypes = {
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
+
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
-    <h3 className="text-gray-600 mb-2">Balance</h3>
-    <p className="text-2xl font-bold mb-2">₹ {selTotalBalance?.toLocaleString('en-IN')}</p>
+    <h3 className="text-gray-600 mb-2">Recieved</h3>
+    <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
       <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
@@ -1578,9 +1579,10 @@ EnhancedTableHead.propTypes = {
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
+
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
-    <h3 className="text-gray-600 mb-2">Recieved</h3>
-    <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
+    <h3 className="text-gray-600 mb-2">Balance</h3>
+    <p className="text-2xl font-bold mb-2">₹ {selTotalBalance?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
       <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
@@ -1616,6 +1618,14 @@ EnhancedTableHead.propTypes = {
           </div>
         </div>
 
+        <span className=" ml-8 py-1 px-1 mb-4 gap-2 text-gray-600 bg-[#f1f1f1] rounded-full  w-[240px] flex items-center justify-between">
+      <span className={`px-4  rounded-full cursor-pointer text-sm ${timeLine === 'W' ? 'bg-blue-100' : '}'}`} onClick={() => setTimeLine('W')}>Week</span>
+      <span className={`px-4  rounded-full cursor-pointer text-sm ${timeLine === 'M' ? 'bg-blue-100' : 'bg-[#f1f1f1]'}`} onClick={() => setTimeLine('M')}>Month</span>
+      <span className={`px-4  rounded-full cursor-pointer text-sm ${timeLine === 'Y' ? 'bg-blue-100' : 'bg-[#f1f1f1]'}`} onClick={() => setTimeLine('Y')}>Year</span>
+
+
+
+    </span>
 
     <div className="flex ml-8  py-2 mb-4 gap-2 text-gray-600">
       <Calendar className="w-5 h-5" />
