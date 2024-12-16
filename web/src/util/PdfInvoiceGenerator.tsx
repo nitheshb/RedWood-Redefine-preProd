@@ -577,6 +577,9 @@ const MyDocument = ({
   partATotal,
   partBTotal,
   leadDetailsObj1,
+  custObj1,
+  customerDetailsObj,
+  customerInfo,
 
   setPartATotal,
   setPartBTotal,
@@ -714,8 +717,10 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Applicant Name:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {user?.displayName || user?.name}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>  {selUnitDetails?.custObj1?.customerName1}</Text>
   </View>
+
+  
 
 
   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
@@ -724,7 +729,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Customer ID:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {leadDetailsObj1?.Address}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {selUnitDetails?.custObj1?.id}</Text>
   </View>
 
 
@@ -734,7 +739,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Phone number:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {user?.phone}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {selUnitDetails?.custObj1?.phoneNo1}</Text>
   </View>
 
   
@@ -744,7 +749,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Email address:
     </Text>
-    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{leadDetailsObj1?.Mobile}</Text>
+    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{selUnitDetails?.custObj1?.email1}</Text>
   </View>
 </View>
 
@@ -910,7 +915,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Unit Cost:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>₹1,20,000</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> ₹{partATotal?.toLocaleString('en-IN')}</Text>
   </View>
 
 
@@ -920,7 +925,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Current Status:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>Under Review</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selUnitDetails?.status}</Text>
   </View>
 
 
@@ -930,7 +935,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Booked Date:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>2024-12-01</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selUnitDetails?.custObj1?.dob1}</Text>
   </View>
 
   
@@ -940,7 +945,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Booked By:
     </Text>
-    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>John Doe</Text>
+    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{selUnitDetails?.custObj1?.bookedBy}</Text>
   </View>
 </View>
 
@@ -1108,7 +1113,7 @@ const MyDocument = ({
                       //   backgroundColor:
                       //     index % 2 === 0 ? '#ffffff' : '#ffffff',
                       // },
-                      {  borderBottom: '1px solid #e5e7eb',  borderBottom: '10px', marginTop: '2px', paddingTop: '4px' },
+                      {  borderBottom: '1px solid #e5e7eb',   marginTop: '2px', paddingTop: '4px' },
                     ]}
                     key={item.id}
                   >
@@ -2292,6 +2297,8 @@ const PdfInvoiceGenerator = ({
   setPartBTotal,
   projectDetails,
   leadDetailsObj1,
+  custObj1,
+
 }) => {
   console.log('overall cost sheet is ', newPlotPS, selUnitDetails)
   return (
@@ -2314,6 +2321,9 @@ const PdfInvoiceGenerator = ({
             setPartBTotal={setPartBTotal}
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
+            custObj1={custObj1}
+        
+
           />
         }
         fileName="sample.pdf"

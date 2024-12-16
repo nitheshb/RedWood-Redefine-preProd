@@ -46,6 +46,8 @@ const EmailForm = ({
 
   useEffect(() => {
     console.log('custoemr infor is',index,"-->", customerInfo)
+    console.log('Customer Name:', customerInfo?.customerName1);
+
     if(leadPayload){
       setGivenPhNo1(leadPayload?.Mobile || '')
     }
