@@ -1008,7 +1008,7 @@ Marketed By*
                             <TextField
                               label="Pincode*"
                               name="pincode"
-                              type="text"
+                              type="number"
                             />
                           </div>
                           <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">

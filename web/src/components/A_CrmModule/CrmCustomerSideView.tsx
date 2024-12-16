@@ -160,6 +160,8 @@ export default function CustomerSideViewCRM({
   const [transactionData, setTransactionData] = useState({})
   const [selSubMenu, setSelSubMenu] = useState('summary')
   const [selSubMenu1, setSelSubMenu1] = useState('summary')
+  const [filterData, setFilterData] = useState([])
+
 
 
   const [openCapturePayment, setOpenCapturePayment] = useState(false)
@@ -548,7 +550,7 @@ export default function CustomerSideViewCRM({
 
             {selFeature === 'timeline' && (
               <div className="py-8 px-8  border bg-[#F6F7FF]">
-                {filterData.length == 0 && (
+                {filterData?.length == 0 && (
                   <div className="py-8 px-8 flex flex-col items-center">
                     <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
                       <img
@@ -569,7 +571,7 @@ export default function CustomerSideViewCRM({
                   Timelines
                 </div>
                 <ol className="relative border-l border-gray-200 ">
-                  {filterData.map((data, i) => (
+                  {filterData?.map((data, i) => (
                     <section key={i} className="">
                       <a
                         href="#"
