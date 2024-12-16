@@ -1064,7 +1064,7 @@ const MyDocument = ({
                       {projectDetails?.projectType?.name === 'Apartment'
                         ? 'Flat'
                         : 'Plot'}{' '}
-                      Charges box mini
+                      Charges
                     </Text>
                   </View>
 
@@ -1074,7 +1074,7 @@ const MyDocument = ({
                       styles.alignRight,
                       styles.p12,
                       styles.pr4,
-                      styles.ml5,
+                      styles.ml1,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
@@ -1093,7 +1093,7 @@ const MyDocument = ({
                   </View>
 
                   <View
-                    style={[styles.tableCell_20, styles.alignRight, styles.p12, styles.pr8, ]}
+                    style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr8, ]}
                   >
                     <Text style={styles.subtitle2}>Total Inc GST</Text>
                   </View>
@@ -1113,7 +1113,7 @@ const MyDocument = ({
                       //   backgroundColor:
                       //     index % 2 === 0 ? '#ffffff' : '#ffffff',
                       // },
-                      {  borderBottom: '1px solid #e5e7eb',   marginTop: '2px', paddingTop: '4px' },
+                      {  borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px' },
                     ]}
                     key={item.id}
                   >

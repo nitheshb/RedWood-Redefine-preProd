@@ -17,6 +17,7 @@ import PropTypes from 'prop-types'
 
 
 
+
 import {
   LineChart,
   Line,
@@ -26,6 +27,7 @@ import {
   YAxis,
   ResponsiveContainer,
   CartesianGrid,
+  Tooltip
 } from 'recharts';
 
 
@@ -48,7 +50,7 @@ import {
 
 import 'react-datepicker/dist/react-datepicker.css'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import Tooltip from '@mui/material/Tooltip'
+// import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { visuallyHidden } from '@mui/utils'
 import Highlighter from 'react-highlight-words'
@@ -583,6 +585,16 @@ const [projectBookingsData, setProjectBookingsData] = useState([
   { time: 'Nov', value: 0, prevValue: 7 },
   { time: 'Dec', value: 0, prevValue: 7 },]);
 
+
+
+
+
+ 
+  
+  // // In LineChart
+  // <Tooltip content={<CustomTooltip />} />
+  
+
 const [totalSETReceived, setSETTotalReceived] = useState(0);
 const [selSETTotalBalance, setSETTotalBalance] = useState(0);
 const rowsCounter = (parent, searchKey) => {
@@ -961,9 +973,11 @@ useEffect(() => {
 
 
 
-  const customTooltipone = ({ payload, label }) => {
-    if (!payload || payload.length === 0) return null;
 
+  const customTooltipone = ({ payload, label }) => {
+    console.log(payload); // Add this line to see if payload is populated correctly
+    if (!payload || payload.length === 0) return null;
+  
     return (
       <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
         <p className="font-semibold text-gray-800">{label}</p>
@@ -979,48 +993,69 @@ useEffect(() => {
       </div>
     );
   };
+  
+
+
+  // const customTooltipone = ({ payload, label }) => {
+  //   if (!payload || payload.length === 0) return null;
+
+  //   return (
+  //     <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
+  //       <p className="font-semibold text-gray-800">{label}</p>
+  //       {payload.map((entry, index) => (
+  //         <div key={`tooltip-item-${index}`} className="flex items-center space-x-2 mb-2">
+  //           <div
+  //             className="w-3 h-3 "
+  //             style={{ backgroundColor: entry.color }}
+  //           ></div>
+  //           <span className="text-gray-700">{`${entry.name}: ₹  ${entry.value}`}</span>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
 
 
 
 
-const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    const time = payload[0].payload.time;
+// const CustomTooltip = ({ active, payload }) => {
+//   if (active && payload && payload.length) {
+//     const time = payload[0].payload.time;
 
-    return (
-      <div className="bg-white p-3 rounded-md">
-        <p className="text-black">Time: {time}</p>
+//     return (
+//       <div className="bg-white p-3 rounded-md">
+//         <p className="text-black">Time: {time}</p>
 
-        {payload.map((entry, index) => {
-          const { value, prevValue } = entry.payload;
-          const strokeColor = entry.stroke;
+//         {payload.map((entry, index) => {
+//           const { value, prevValue } = entry.payload;
+//           const strokeColor = entry.stroke;
 
 
-          return (
-            <div key={index} className="flex items-center gap-2">
+//           return (
+//             <div key={index} className="flex items-center gap-2">
 
-              <div
-                style={{ backgroundColor: strokeColor }}
-                className="w-4 h-4 "
-              ></div>
+//               <div
+//                 style={{ backgroundColor: strokeColor }}
+//                 className="w-4 h-4 "
+//               ></div>
 
-              <p className="text-black">
-                {entry.dataKey === "value"
-                  ? `Current Value: ${value}`
-                  : entry.dataKey === "prevValue"
-                  ? `Previous Value: ${prevValue}`
-                  : null}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
+//               <p className="text-black">
+//                 {entry.dataKey === "value"
+//                   ? `Current Value: ${value}`
+//                   : entry.dataKey === "prevValue"
+//                   ? `Previous Value: ${prevValue}`
+//                   : null}
+//               </p>
+//             </div>
+//           );
+//         })}
+//       </div>
+//     );
+//   }
 
-  return null;
-};
+//   return null;
+// };
 
 
 
@@ -1050,6 +1085,11 @@ function EnhancedTableHead(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property)
   }
+
+
+
+
+  
 
   const displayHeadersFun = (headCell) => {
 
@@ -1383,7 +1423,24 @@ EnhancedTableHead.propTypes = {
 
 
 
+const customTooltip = ({ payload, label }) => {
+  if (!payload || payload.length === 0) return null;
 
+  return (
+    <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
+      <p className="font-semibold text-gray-800">{label}</p>
+      {payload.map((entry, index) => (
+        <div key={`tooltip-item-${index}`} className="flex items-center space-x-2 mb-2">
+          <div
+            className="w-3 h-3 "
+            style={{ backgroundColor: entry.color }}
+          ></div>
+          <span className="text-gray-700">{`${entry.name}: ₹  ${entry.value}`}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 
 
@@ -1583,11 +1640,29 @@ EnhancedTableHead.propTypes = {
               />
 
 
+{/* 
+<Tooltip content={<customTooltipone />} /> */}
 
-              <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} />
+
+<Tooltip
+          content={({ payload, label }) => {
+            if (!payload || payload.length === 0) return null;
+            return (
+              <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
+                <p className="font-semibold text-gray-800">{label}</p>
+                {payload.map((entry, index) => (
+                  <div key={`tooltip-item-${index}`} className="flex items-center space-x-2 mb-2">
+                    <div className="w-3 h-3" style={{ backgroundColor: entry.color }}></div>
+                    <span className="text-gray-700">{`${entry.name}: ₹ ${entry.value}`}</span>
+                  </div>
+                ))}
+              </div>
+            );
+          }}
+        />
 
 
-              {/* <Tooltip content={<CustomTooltip />} /> */}
+
 
 
               <Line
@@ -1615,6 +1690,12 @@ EnhancedTableHead.propTypes = {
 
 
       </div>
+
+
+
+
+
+
 
 
       {/* <div className="flex flex-col  rounded-[30px] py-5 h-full bg-white shadow">
@@ -1733,7 +1814,7 @@ EnhancedTableHead.propTypes = {
 
     {/* Graph Section */}
     <div className="mt-auto h-80">
-      <ResponsiveContainer width="100%" height="100%">
+      {/* <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="day" />
@@ -1743,7 +1824,33 @@ EnhancedTableHead.propTypes = {
           <Bar dataKey="Sales" fill="#38bdf8" radius={[4, 4, 0, 0]} />
           <Bar dataKey="Uncategorized" fill="#9ca3af" radius={[4, 4, 0, 0]} />
         </BarChart>
-      </ResponsiveContainer>
+      </ResponsiveContainer> */}
+
+          <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="day" />
+                  <YAxis
+                    tickFormatter={(value) => `$ ${value}`}
+                    ticks={[0, 50, 100, 150, 200, 250]}
+                  />
+                  {/* <Tooltip 
+                    formatter={(value) => [`$ ${value}`, '']}
+                    contentStyle={{
+                      backgroundColor: 'white',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '6px',
+                      padding: '8px'
+                    }}
+                  /> */}
+      
+                  <Tooltip content={customTooltip} />
+      
+                  <Bar dataKey="Bills Payment" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="Sales" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="Uncategorized" fill="#9ca3af" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
     </div>
   </div>
 </div>
@@ -1763,7 +1870,7 @@ EnhancedTableHead.propTypes = {
 
 
 <div className="p-6 mt-6 rounded-t-[30px] bg-white flex justify-between items-center">
-          <h3 className="text-xl font-bold">Booking Summary</h3>
+          <h3 className="text-xl font-bold">Booking Summary box</h3>
           <div className="flex gap-4">
             <Filter className="text-gray-500" />
             <Download className="text-gray-500" />
