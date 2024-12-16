@@ -25,6 +25,7 @@ const Floordetails = ({
   projectDetails,
   phaseFeed,
   BlockFeed,
+  floorFeed,
   selBlock,
   setSelBlock,
   source,
@@ -807,6 +808,20 @@ const Floordetails = ({
                   <DropDownUnitBlocks
                     type={'blocks'}
                     id={'blocks'}
+                    setStatusFun={setSelBlock}
+                    filteredUnits={BlockFeed}
+                    pickedValue={filBedRooms}
+                    setOpenEditBlock={setSliderBlockInfo}
+                    selProject={projectDetails}
+
+                  />
+                )}
+                  {['Apartment'].includes(
+                  projectDetails?.projectType?.name
+                ) && (
+                  <DropDownUnitBlocks
+                    type={'floors'}
+                    id={'floors'}
                     setStatusFun={setSelBlock}
                     filteredUnits={BlockFeed}
                     pickedValue={filBedRooms}
