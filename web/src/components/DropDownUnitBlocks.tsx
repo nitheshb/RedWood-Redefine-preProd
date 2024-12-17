@@ -213,12 +213,7 @@ export default function DropDownUnitBlocks({
                             //   formik.setFieldValue('block_no', viewData.blockName);
                             // }}
 
-                            // onClick={() => {
-                            //   setSelectedBlock(viewData.blockName) // Set selected block
-                            //   navigate('/page2', {
-                            //     state: { blockName: viewData.blockName },
-                            //   }) // Pass value to Page 2
-                            // }}
+             
                             onClick={() => handleSaveBlock(viewData.blockName)}
 
                             
