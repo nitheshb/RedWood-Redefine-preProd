@@ -1545,6 +1545,9 @@ const AddUnit = ({
                                 label="Survey No"
                                 name="survey_no"
                                 type="text"
+                                onInput={(e) => {
+                                  e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                                }}
                               />
                             </div>
                             <div className=" space-y-2 w-full text-xs ">
@@ -1552,6 +1555,9 @@ const AddUnit = ({
                                 label="Katha No"
                                 name="Katha_no"
                                 type="text"
+                                onInput={(e) => {
+                                  e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                                }}
                               />
                             </div>
                             <div className=" space-y-2 w-full text-xs ">
@@ -1559,6 +1565,9 @@ const AddUnit = ({
                                 label="PID No"
                                 name="PID_no"
                                 type="text"
+                                onInput={(e) => {
+                                  e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                                }}
                               />
                             </div>
                           </div>

@@ -1016,6 +1016,12 @@ Marketed By*
                               label="Pincode*"
                               name="pincode"
                               type="number"
+                              inputProps={{ maxLength: 6 }}
+                              onInput={(e) => {
+                                if (e.target.value.length > 6) {
+                                  e.target.value = e.target.value.slice(0, 6);
+                                }
+                              }}
                             />
                           </div>
                           <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
@@ -1024,6 +1030,9 @@ Marketed By*
                                 label="City*"
                                 name="city"
                                 type="text"
+                                onInput={(e) => {
+                                  e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
                               />
                             </div>
                             <div className="w-full">

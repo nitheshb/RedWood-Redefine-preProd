@@ -18,6 +18,10 @@ import ProjectsMHomeBody from '../../components/ProjectsMHomeBody/ProjectsMHomeB
 import SiderForm from '../../components/SiderForm/SiderForm'
 import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
 
+
+
+
+
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { user } = useAuth()

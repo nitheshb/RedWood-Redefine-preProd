@@ -1058,7 +1058,7 @@ const Floordetails = ({
                                   <div className="maincontainer">
                                       <div className="back">
                                         <div
-                                          className={` min-w-[125px] min-h-[64px] max-h-[68px] z-10 flex flex-col  max-w-md p-1 mx-auto my-0 rounded-sm cursor-pointer border  rounded-2xl`}
+                                          className={` min-w-[125px] min-h-[64px] max-h-[68px] z-10 flex flex-col  max-w-md p-1 mx-auto my-0 rounded-lg cursor-pointer border`}
                                         >
                                           {data?.status === 'available' && (
                                             <div className="flex flex-col items-right justify-between">

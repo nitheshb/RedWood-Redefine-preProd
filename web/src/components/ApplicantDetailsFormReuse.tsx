@@ -468,6 +468,7 @@ leadPayload?.Mobile ||
       [field]: !isNaN(numValue) ? numValue : null,
     }))
   }
+
   const handleFileUploadFun = async (file, type, formik) => {
     if (!file) return
     try {
@@ -551,6 +552,13 @@ leadPayload?.Mobile ||
   const replaceFormData = async (formik) => {
     searchFun(formik)
   }
+
+
+
+
+
+
+
   return (
     <Formik
       enableReinitialize={true}
@@ -930,11 +938,23 @@ leadPayload?.Mobile ||
                           </InputAdornment>
                         ),
                       }}
+                      inputProps={{
+                        inputMode: 'numeric',
+                        pattern: '[0-9]*', 
+                        maxLength: 12, 
+                      }}
                       label=""
                       name="aadharNo1"
                       type="text"
                       value={formik.values.aadharNo1}
-                      onChange={formik.handleChange}
+                      // onChange={formik.handleChange}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/[^0-9]/g, '');
+                        if (value.length <= 12) {
+                          formik.setFieldValue('aadharNo1', value);
+                        }
+                      }}
+                      
                     />
                   </section>
                 </div>
@@ -1137,6 +1157,10 @@ leadPayload?.Mobile ||
                         label="Country Name"
                         name="countryName1"
                         type="text"
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                          formik.setFieldValue('countryName1', value);
+                        }}
                       />
                     </div>
                   </div>

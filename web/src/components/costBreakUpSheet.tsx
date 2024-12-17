@@ -734,7 +734,7 @@ console.log('customer info', myBookingPayload)
                                     </div>
                                   <div className="mt-2 text-right md:space-x-3 md:block flex flex-row-reverse justify-between mb-3">
 
-                                    <section>
+                                    <section className='flex gap-2'>
                                     <button
                                       className="mb-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
                                     bg-gradient-to-r from-violet-500 to-indigo-500
