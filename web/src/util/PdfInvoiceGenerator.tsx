@@ -967,7 +967,16 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Booked Date:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selUnitDetails?.custObj1?.dob1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>
+
+    {selUnitDetails?.custObj1?.dob1
+    ? new Date(selUnitDetails.custObj1.dob1).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      })
+    : 'N/A'}
+    </Text>
   </View>
 
   
