@@ -5,6 +5,11 @@ import { useState, useEffect } from 'react'
 import { Timestamp } from 'firebase/firestore'
 import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
+
+
+import { useLocation } from '@redwoodjs/router'
+
+
 import {
   plotTypeList,
   releaseStausList,
@@ -34,6 +39,7 @@ const AddUnit = ({
   phaseDetails,
   blockDetails,
   data,
+  formik,
   type,
 }) => {
   const { user } = useAuth()
@@ -691,6 +697,34 @@ const AddUnit = ({
     throw new Error('Function not implemented.')
   }
 
+
+  const [blockName, setBlockName] = useState('')
+
+  useEffect(() => {
+    const fetchBlockName = async () => {
+      
+      const savedBlock = localStorage.getItem('selectedBlock')
+      if (savedBlock) {
+        setBlockName(savedBlock)
+        formik.setFieldValue('block_no', savedBlock)
+      }
+    }
+
+    fetchBlockName()
+  }, [formik])
+
+
+  // const location = useLocation()
+  // const blockName = location.state?.blockName || '' 
+
+
+
+  // useEffect(() => {
+  //   if (blockName) {
+  //     formik.setFieldValue('block_no', blockName)
+  //   }
+  // }, [blockName, formik])
+
   return (
     <div className="h-full flex flex-col pb-6 bg-white shadow-xl overflow-y-scroll">
       {/* <div className="border-b py-3">
@@ -828,10 +862,17 @@ const AddUnit = ({
                                   label="Block"
                                   name="block_no"
                                   type="text"
-                                  onChange={(value) => {
-                                    formik.setFieldValue('block_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                  // onChange={(value) => {
+                                  //   formik.setFieldValue('block_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
 
-                                  }}
+                                  // }}
+
+                                  value={formik.values.block_no || blockName}
+                                  onChange={(e) =>
+                                    formik.setFieldValue('block_no', e.target.value.replace(/[^0-9]/g, ''))
+                                  }
+
+   
                                 />
                               </div>
                             )}
@@ -842,13 +883,20 @@ const AddUnit = ({
                                   label="Tower"
                                   name="tower_no"
                                   type="text"
-                                  // value={formik.values.block_no} // Ensure formik's initial value is set
+           
 
 
                                   onChange={(value) => {
                                     formik.setFieldValue('tower_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
 
                                   }}
+
+                                  // onChange={(value) => {
+                                  //   formik.setFieldValue(
+                                  //     'block_no',
+                                  //     String(Number(value.target.value.replace(/[^0-9]/g, '')))
+                                  //   )
+                                  // }}
 
                                 />
                               </div>

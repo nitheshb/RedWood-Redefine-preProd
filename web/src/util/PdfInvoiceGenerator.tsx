@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useMemo, useEffect } from 'react'
 import DownloadTwoToneIcon from '@mui/icons-material/DownloadTwoTone'
 
@@ -564,6 +564,10 @@ const invoiceDet: IInvoice[] = [
     },
   },
 ]
+
+
+
+
 const MyDocument = ({
   user,
   selUnitDetails,
@@ -589,6 +593,34 @@ const MyDocument = ({
   useEffect(() => {
     console.log('myObj', myObj, myAdditionalCharges)
   }, [myObj])
+
+
+
+
+
+
+  const [sectionDimensions, setSectionDimensions] = useState([]);
+  const [tableDimensions, setTableDimensions] = useState([]);
+
+  // This function handles the section rendering
+  const handleSectionRender = (e, sectionIndex) => {
+    const { width, height } = e.source;
+    setSectionDimensions((prev) => [
+      ...prev,
+      { sectionIndex, width, height },
+    ]);
+    console.log(`Section ${sectionIndex} rendered with dimensions:`, width, height);
+  };
+
+  // This function handles the table rendering
+  const handleTableRender = (e, tableIndex) => {
+    const { width, height } = e.source;
+    setTableDimensions((prev) => [
+      ...prev,
+      { tableIndex, width, height },
+    ]);
+    console.log(`Table ${tableIndex} rendered with dimensions:`, width, height);
+  };
 
   return (
     <Document>
@@ -979,7 +1011,9 @@ const MyDocument = ({
         </View> */}
 
 
-    <View style={[styles.bgb,]}>
+    <View style={[styles.bgb,]} 
+    onRender={(e) => handleTableRender(e, 1)}
+    >
 
     <View style={[styles.topBoderRadius, styles.bottomBorderRadius, {border:'1px solid #CCCCCC',}]}>
           <View style={[ styles.topBoderRadiusnew,   { backgroundColor:'#EDEDED' }]}>
@@ -1987,7 +2021,9 @@ const MyDocument = ({
     
 
 
-      <View style={[styles.bgb, ]} >
+      <View style={[styles.bgb, ]}
+        // break={index === myBookingPayload.plotPS.length - 1 ? 'after' : null} 
+      >
 
 
       <View style={[styles.topBoderRadius, styles.bottomBorderRadius, { border:'1px solid #CCCCCC', backgroundColor: '#fff', marginTop: '10px' }]} >
@@ -2006,6 +2042,9 @@ const MyDocument = ({
         styles.mT1,
         { color:'#3D3D3D', fontWeight: 450 , fontSize: 10,}
       ]}
+
+
+      onRender={(e) => handleSectionRender(e, 2)}
     >
       Payment Schedule
     </Text>
@@ -2096,6 +2135,7 @@ styles.textcolor,
  marginTop: '2px', paddingTop: '4px' },
 ]}
 key={item.id}
+break={index === myBookingPayload.plotPS.length - 1 ? 'after' : null} 
 >
 <View
 style={[
