@@ -501,7 +501,9 @@ console.log('customer info', myBookingPayload)
 
   const setStatusFun = async (index, newStatus) => {
     if(newStatus === 'booksheet'){
-      if(selUnitDetails.custObj && (selUnitDetails.custObj.name != "")){
+      // if(selUnitDetails.custObj && (selUnitDetails.custObj.name != "")){
+      if(selUnitDetails.customerDetailsObj && (selUnitDetails.customerDetailsObj
+        ?.customerName1 != "")){
         moveStep(newStatus)
         setStepIndx(index + 1)
       }else{
