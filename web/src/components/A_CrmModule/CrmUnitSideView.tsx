@@ -161,6 +161,7 @@ export default function UnitSideViewCRM({
   selSubMenu2,
 }) {
   const { user } = useAuth()
+  console.log('my user is ', user)
   const { enqueueSnackbar } = useSnackbar()
 
   const { orgId } = user
@@ -1207,14 +1208,14 @@ return
                       )}
                     </div>
                   </section>
-                  <section
+                { (user?.role.includes('crm-manager') || user?.role.includes('crm-executive') || user?.role.includes('admin'))&&  <section
                     className="text-center px-[10px] py-[2px] pt-[3px] h-[24px] bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
                     onClickCapture={() => {
                       openPaymentFun()
                     }}
                   >
                     CAPTURE PAYMENT
-                  </section>
+                  </section>}
                   {customerDetails?.man_cs_approval==="approved" &&<section
                     className="text-center px-[10px] py-[2px]  pt-[3px] h-[24px] ml-2 bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
                     onClickCapture={() => {
@@ -1604,7 +1605,7 @@ onClickCapture={() => {
       <div className="font-bold mb-4">₹ {((selCustomerPayload?.T_review || 0) +
                                             (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN')}</div>
                                             </div>
-                                         
+
       </section>
       <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
         <div className="bg-[#E3BDFF] h-7 rounded-full w-1/3"></div>
