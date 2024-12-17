@@ -16,6 +16,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import PieChartProject from '../comps/pieChartProject'
 import SiderForm from '../SiderForm/SiderForm'
 import UnitsSmallViewCard from '../unitsSmallView'
+import DropDownUnitBlocks from '../DropDownUnitBlocks'
 
 const FloordetailsSearch = ({
   block = 'A',
@@ -27,6 +28,9 @@ const FloordetailsSearch = ({
   unitsFeedA,
   filUnitsFeedA,
   selBlock,
+  setSelBlock,
+  selFloor,
+  setSelFloor,
   source,
   setSelUnitDetails,
   setShowCostSheetWindow,
@@ -807,6 +811,34 @@ const FloordetailsSearch = ({
                 units
               </section>
               <section className="flex flex-row">
+              {['Apartment', 'Villas'].includes(
+                  projectDetails?.projectType?.name
+                ) && (
+                  <DropDownUnitBlocks
+                    type={'blocks'}
+                    id={'blocks'}
+                    setStatusFun={setSelBlock}
+                    filteredUnits={BlockFeed}
+                    pickedValue={selBlock}
+                    setOpenEditBlock={()=>{}}
+                    selProject={projectDetails}
+
+                  />
+                )}
+                  {['Apartment'].includes(
+                  projectDetails?.projectType?.name
+                ) && (
+                  <DropDownUnitBlocks
+                    type={'floors'}
+                    id={'floors'}
+                    setStatusFun={setSelFloor}
+                    filteredUnits={selBlock?.floorA}
+                    pickedValue={selFloor}
+                    setOpenEditBlock={()=>{}}
+                    selProject={projectDetails}
+
+                  />
+                )}
                 {/* <section className="text-sm mt-[2px]  rounded flex flex-row border">
                   <section
                     className={`flex flex-row pr-2 ${

@@ -42,9 +42,12 @@ const UnitsInventoryHome = ({ project }) => {
   const [blocks, setBlocks] = useState({})
   const [selPhaseIs, setSelPhaseIs] = useState('')
   const [selPhaseObj, setSelPhaseObj] = useState({})
+  const [selBlock, setSelBlock] = useState({})
+  const [selFloor, setSelFloor] = useState('All')
 
   const [unitsFeedA, setUnitsFeedA] = useState([])
   const [filUnitsFeedA, setFilUnitsFeedA] = useState([])
+
 
   const [phaseDetails, setPhaseDetails] = useState({
     projectName: '',

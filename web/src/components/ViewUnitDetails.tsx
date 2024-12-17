@@ -11,6 +11,7 @@ import {
   checkIfUnitAlreadyExists,
   getAllProjects,
   steamUsersListByRole,
+  streamUnitById,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import CostBreakUpSheet from './costBreakUpSheet'
@@ -141,6 +142,7 @@ const ViewUnitDetails = ({
     label: 'Cost sheet',
     value: 'costSheetMode',
   })
+  const [streamUnitDetails, setStreamUnitDetails] = useState({})
 
   const phoneRegExp =
     /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
@@ -153,6 +155,39 @@ const ViewUnitDetails = ({
   const devTypeSel = async (sel) => {
     await setdevType(sel)
   }
+
+  useEffect(() => {
+    streamUnitDataFun()
+  }, [])
+  useEffect(() => {
+    streamUnitDataFun()
+  }, [data])
+
+
+  useEffect(() => {
+    console.log('stream details', streamUnitDetails)
+  },[streamUnitDetails])
+  const streamUnitDataFun = () => {
+    console.log('hello==>', data)
+    if(data.unitDetail?.id){
+    const { uid } = data.unitDetail
+    console.log('hello', data)
+    const z = streamUnitById(
+      orgId,
+      (querySnapshot) => {
+        const SnapData = querySnapshot.data()
+        // SnapData.id = id
+        // SnapData.uid = id
+        console.log('hello', SnapData)
+        setStreamUnitDetails(SnapData)
+      },
+      { uid: uid },
+      () => {
+        console.log('error')
+      }
+    )
+  }
+}
   const onSubmitFun = async (data, resetForm) => {
     console.log(data)
 
@@ -306,7 +341,7 @@ const ViewUnitDetails = ({
                   className={`items-center h-1 mt-[10px] mb-2  text-xs font-semibold text-green-600
                       `}
                 >
-                  {data?.unitDetail?.status?.toUpperCase()}
+                  {streamUnitDetails?.status?.toUpperCase()}
                 </span>
               <div className="font text-[12px] text-gray-500 tracking-wide overflow-ellipsis overflow-hidden ">
                 {projectDetails?.projectName}

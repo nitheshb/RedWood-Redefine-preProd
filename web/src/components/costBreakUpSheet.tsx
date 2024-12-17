@@ -119,7 +119,31 @@ const CostBreakUpSheet = ({
     )
   }
 }
+useEffect(() => {
+  if(onStep === 'customerDetails'){
+   setStepIndx(1)
+  }
+  if(onStep === 'additonalInfo'){
+   setStepIndx(2)
+  }
 
+  if(onStep === 'costsheet'){
+   setStepIndx(3)
+  }
+
+  if(onStep === 'payment_schedule'){
+   setStepIndx(4)
+  }
+   if(onStep === 'booking_summary'){
+   setStepIndx(5)
+  }
+  if(onStep === 'booksheet'){
+   setStepIndx(6)
+  } if(onStep === 'blocksheet'){
+   setStepIndx(6)
+  }
+
+ }, [onStep])
   useEffect(() => {
     console.log('payload data is ', leadPayload)
   }, [leadPayload])
@@ -494,7 +518,7 @@ console.log('customer info', myBookingPayload)
     if(isMover){
     setOnStep('payment_schedule')
     if (onStep === 'payment_schedule') {
-      setOnStep('booksheet')
+      setOnStep('booking_summary')
     }
   }
   }
@@ -502,19 +526,24 @@ console.log('customer info', myBookingPayload)
   const setStatusFun = async (index, newStatus) => {
     if(newStatus === 'booksheet'){
       // if(selUnitDetails.custObj && (selUnitDetails.custObj.name != "")){
+      if(streamUnitDetails?.status=='available'){
       if(selUnitDetails.customerDetailsObj && (selUnitDetails.customerDetailsObj
         ?.customerName1 != "")){
         moveStep(newStatus)
-        setStepIndx(index + 1)
+        // setStepIndx(index + 1)
       }else{
           enqueueSnackbar('Please fill customer details', {
             variant: 'error',
           })
+      }}else{
+        enqueueSnackbar('Unit already booked', {
+          variant: 'error',
+        })
       }
       console.log('confirm booking')
     }else{
       moveStep(newStatus)
-      setStepIndx(index + 1)
+      // setStepIndx(index + 1)
     }
 
   }
@@ -707,6 +736,8 @@ console.log('customer info', myBookingPayload)
                                       setPartCTotal={setPartCTotal}
                                       setPartDTotal={setPartDTotal}
                                       showOnly={onStep}
+
+
                                     />
                                   )}
                                 </section>
@@ -831,6 +862,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       setOnStep={setOnStep}
                       source="Booking"
                       stepIndx={stepIndx}
+                      setStepIndx={setStepIndx}
                       StatusListA={StatusListA}
                     />
                   )}

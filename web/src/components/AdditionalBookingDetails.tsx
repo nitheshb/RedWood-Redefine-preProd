@@ -31,6 +31,7 @@ const AdditonalBookingDetails = ({
   setOnStep,
   currentMode,
   stepIndx,
+  setStepIndx,
   StatusListA,
 }) => {
   const d = new window.Date()
@@ -251,7 +252,7 @@ const AdditonalBookingDetails = ({
     }
     if(isMover){
     setOnStep('costsheet')
-    }
+   }
   }
   const bgImgStyle = {
     backgroundImage:

@@ -193,7 +193,7 @@ export default function DropDownUnitBlocks({
               )}
               {type === 'blocks' && (
                 <>
-                  {filteredUnits.sort((a, b) => a.blockName - b.blockName).map((viewData, i) => (
+                  {filteredUnits?.sort((a, b) => a.blockName - b.blockName).map((viewData, i) => (
                     <Menu.Item key={i}>
                       {({ active }) => (
                         <section className="flex flex-row justify-between">
