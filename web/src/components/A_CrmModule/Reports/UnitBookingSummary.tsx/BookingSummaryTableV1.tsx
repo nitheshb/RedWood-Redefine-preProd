@@ -58,7 +58,7 @@ import Highlighter from 'react-highlight-words'
 import CSVDownloader from 'src/util/csvDownload'
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import { computeTotal } from 'src/util/computeCsTotals'
-import { getAllProjects, getBookedUnitsByProject } from 'src/context/dbQueryFirebase'
+import { getAllProjects, getBookedUnitsByProject, getUnitsAgreeByProject } from 'src/context/dbQueryFirebase'
 import { Download, Filter } from 'lucide-react'
 // import { prettyDate } from '../../util/dateConverter'
 // import DropCompUnitStatus from '../dropDownUnitStatus'
@@ -548,6 +548,7 @@ export default function UnitSummaryTableBodyV1({
   const [filLeadsA, setFilLeadsA] = useState([])
   const [tabHeadFieldsA, settabHeadFieldsA] = useState([])
   const [unitsFetchData, setUnitsFetchData] = useState([])
+  const [projectsPayload, setProjectsPayload] = useState([])
 
 
 const [totalSaleValue, setTotalSaleValue] = useState(0);
@@ -570,7 +571,7 @@ const [totalSETChargesIValue, setSETTotalChargesIValue] = useState(0);
 
 const [totalSETChargesIIValue, setSETTotalChargesIIValue] = useState(0);
 const [totalSETPossessionValue, setSETTotalPossessionValue] = useState(0);
-
+const [timeLine, setTimeLine] = useState('W');
 const [totalSETConstructValue, setSETTotalConstructValue] = useState(0);
 const [projectBookingsData, setProjectBookingsData] = useState([
   { time: 'Jan', value: 0, prevValue: 7 },
@@ -584,16 +585,22 @@ const [projectBookingsData, setProjectBookingsData] = useState([
   { time: 'Oct', value: 0, prevValue: 7 },
   { time: 'Nov', value: 0, prevValue: 7 },
   { time: 'Dec', value: 0, prevValue: 7 },]);
+const [inventoryPayload, setInventoryPayload] = useState([
+  { day: 'Available', count: 0 },
+  { day: 'Booked', count: 0 },
+  { day: 'Blocked', count: 0 },
+  // { day: '8', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+  // { day: '9', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+  // { day: '10', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+  // { day: '11', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+  // { day: '12', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+  // { day: '13', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+]);
 
-
-
-
-
- 
-  
-  // // In LineChart
-  // <Tooltip content={<CustomTooltip />} />
-  
+const [unitStatusPayload, setUnitStatusPayload] = useState([
+  { day: 'Booked', count: 10 },
+  { day: 'Allotment', count: 10 },
+  { day: 'ATS', count: 10 },])
 
 const [totalSETReceived, setSETTotalReceived] = useState(0);
 const [selSETTotalBalance, setSETTotalBalance] = useState(0);
@@ -717,6 +724,27 @@ const boot = async () => {
     },
     () => setTableData([])
   )
+
+  const unsubscribe1 = await getUnitsAgreeByProject(
+    orgId,
+    async (querySnapshot) => {
+      const usersListA = querySnapshot.docs.map((docSnapshot) => {
+        const x = docSnapshot.data()
+        x.id = docSnapshot.id
+
+        return x
+      })
+      console.log('projects details values are', usersListA)
+      await setProjectsPayload(usersListA)
+      await updateInventoryData(usersListA)
+    },
+    {
+      status: [
+
+      ],
+    },
+    () => setProjectsPayload([])
+  )
   return unsubscribe
 }
 
@@ -740,6 +768,41 @@ function updateBookingData(myDbDataIs) {
     }
   });
   setProjectBookingsData(projectBookingsData)
+  console.log('booking details values are',projectBookingsData )
+  return projectBookingsData;
+}
+function updateInventoryData(myDbDataIs) {
+  // Month mapping for easy lookup
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+let x = []
+let y = {available: 0, booked: 0, blocked: 0}
+  myDbDataIs.map((record, i) => {
+    // Convert the timestamp to a Date object
+    // const date = new Date(record.Date);
+    // // Get the month name
+    // const month = monthNames[date.getUTCMonth()];
+    // // Find the corresponding month in projectBookingsData
+    // const booking = projectBookingsData.find(entry => entry.time === month);
+    // if (booking) {
+    //   booking.value += 1; // Increment the value
+    // }
+    console.log('project details are', record)
+
+    // y.day = record?.projectName;
+    // y.Available= record?.availableCount || 0;
+    // y.Sold= record?.bookUnitCount || 0;
+    // y.Blocked= record?.blockedUnitCount || 0;
+
+    y.available += record?.availableCount || 0;
+    y.booked += record?.bookUnitCount || 0;
+    y.blocked += record?.blockedUnitCount || 0;
+
+    // x.push(y)
+  });
+  setInventoryPayload([{day: 'Available', count: y.available}, {day: 'Booked', count: y.booked}, {day: 'Blocked', count: y.blocked}])
   console.log('booking details values are',projectBookingsData )
   return projectBookingsData;
 }
@@ -784,6 +847,17 @@ useEffect(() => {
   setTotalReceived(totalReceived);
   const totalBalance = leadsFetchedData.reduce((total, row) => total + Number(row.T_balance || 0), 0);
   setTotalBalance(totalBalance);
+
+  const bookedCount = rowsCounter(leadsFetchedData, 'booked').length
+  const allotment = rowsCounter(leadsFetchedData, 'allotment').length
+  const ATS = rowsCounter(leadsFetchedData, 'ATS').length
+  const registered = rowsCounter(leadsFetchedData, 'registered').length
+  const construction = rowsCounter(leadsFetchedData, 'construction').length
+  const possession = rowsCounter(leadsFetchedData, 'possession').length
+
+  const x = [{day:'Booked', count:bookedCount}, {day:'Allotment', count:allotment}, {day:'Agreement', count:ATS}, {day:'Registered', count:registered}, {day:'Construction', count:construction}, {day:'Possession', count:possession}]
+
+  setUnitStatusPayload(x)
 }, [leadsFetchedData]);
 
 useEffect(() => {
@@ -962,13 +1036,13 @@ useEffect(() => {
 
 
   const data = [
-    { day: '7', 'Bills Payment': 110, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '8', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '9', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '10', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '11', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '12', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
-    { day: '13', 'Bills Payment': 108, 'Sales': 165, 'Uncategorized': 52 },
+    { day: '7', 'Available': 110, 'Sales': 165, 'Blocked': 52 },
+    { day: '8', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
+    { day: '9', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
+    { day: '10', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
+    { day: '11', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
+    { day: '12', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
+    { day: '13', 'Available': 108, 'Sales': 165, 'Blocked': 52 },
   ];
 
 
@@ -1541,9 +1615,10 @@ const customTooltip = ({ payload, label }) => {
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
+
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
-    <h3 className="text-gray-600 mb-2">Balance</h3>
-    <p className="text-2xl font-bold mb-2">₹ {selTotalBalance?.toLocaleString('en-IN')}</p>
+    <h3 className="text-gray-600 mb-2">Recieved</h3>
+    <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
       <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
@@ -1551,9 +1626,10 @@ const customTooltip = ({ payload, label }) => {
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
+
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
-    <h3 className="text-gray-600 mb-2">Recieved</h3>
-    <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
+    <h3 className="text-gray-600 mb-2">Balance</h3>
+    <p className="text-2xl font-bold mb-2">₹ {selTotalBalance?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
       <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
@@ -1579,7 +1655,7 @@ const customTooltip = ({ payload, label }) => {
 
       <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
         <div className="pt-6 px-4">
-          <h2 className="text-[#6A6A6A] text-[19px] ml-4">Unit Sales</h2>
+          <h2 className="text-[#6A6A6A] text-[19px] ml-4">Sales Trend</h2>
           <div className="flex items-center gap-3 mt-1 mb-2 ml-4">
             <span className="text-[30px] text-[#000000] font-semibold"> {unitsFetchData?.length?.toLocaleString('en-IN')}</span>
             <div className="flex items-center text-[#00A236]">
@@ -1589,6 +1665,14 @@ const customTooltip = ({ payload, label }) => {
           </div>
         </div>
 
+        <span className=" ml-8 py-1 px-1 mb-4 gap-2 text-gray-600 bg-[#f1f1f1] rounded-full  w-[240px] flex items-center justify-between">
+      <span className={`px-4  rounded-full cursor-pointer text-sm ${timeLine === 'W' ? 'bg-blue-100' : '}'}`} onClick={() => setTimeLine('W')}>Week</span>
+      <span className={`px-4  rounded-full cursor-pointer text-sm ${timeLine === 'M' ? 'bg-blue-100' : 'bg-[#f1f1f1]'}`} onClick={() => setTimeLine('M')}>Month</span>
+      <span className={`px-4  rounded-full cursor-pointer text-sm ${timeLine === 'Y' ? 'bg-blue-100' : 'bg-[#f1f1f1]'}`} onClick={() => setTimeLine('Y')}>Year</span>
+
+
+
+    </span>
 
     <div className="flex ml-8  py-2 mb-4 gap-2 text-gray-600">
       <Calendar className="w-5 h-5" />
@@ -1729,7 +1813,7 @@ const customTooltip = ({ payload, label }) => {
   <div className="flex gap-6 mb-6">
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 bg-indigo-600 rounded"></div>
-      <span>Bills Payment</span>
+      <span>Available</span>
     </div>
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 bg-sky-400 rounded"></div>
@@ -1737,7 +1821,7 @@ const customTooltip = ({ payload, label }) => {
     </div>
     <div className="flex items-center gap-2">
       <div className="w-3 h-3 bg-gray-400 rounded"></div>
-      <span>Uncategorized</span>
+      <span>Blocked</span>
     </div>
   </div>
 
@@ -1763,9 +1847,9 @@ const customTooltip = ({ payload, label }) => {
 
         <Tooltip content={customTooltipone} />
 
-        <Bar dataKey="Bills Payment" fill="#6366f1" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="Available" fill="#6366f1" radius={[4, 4, 0, 0]} />
         <Bar dataKey="Sales" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-        <Bar dataKey="Uncategorized" fill="#9ca3af" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="Blocked" fill="#9ca3af" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   </div>
@@ -1776,9 +1860,9 @@ const customTooltip = ({ payload, label }) => {
 <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
   <div className="w-full max-w-4xl p-6 bg-white flex flex-col justify-between h-full">
     <div className="mb-6">
-      <h2 className="text-[18px] text-[#6A6A6A] font-medium">Collections</h2>
+      <h2 className="text-[18px] text-[#6A6A6A] font-medium">Units</h2>
       <div className="flex items-center justify-between mt-1">
-        <div className="text-[30px] font-semibold text-[#00000]">&#8377; 708.84</div>
+        <div className="text-[30px] font-semibold text-[#00000]">{inventoryPayload.reduce((acc, curr) => acc + curr.count, 0)?.toLocaleString('en-IN')}</div>
         {/* <div className="flex items-center gap-2 px-4 py-2 border rounded-lg">
           <span className="text-gray-600">View:</span>
           <svg className="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
@@ -1800,7 +1884,7 @@ const customTooltip = ({ payload, label }) => {
     <div className="flex gap-6 mb-6">
       <div className="flex items-center gap-2">
         <div className="w-3 h-3 bg-indigo-600 rounded"></div>
-        <span>Bills Payment</span>
+        <span>Available</span>
       </div>
       <div className="flex items-center gap-2">
         <div className="w-3 h-3 bg-sky-400 rounded"></div>
@@ -1808,49 +1892,25 @@ const customTooltip = ({ payload, label }) => {
       </div>
       <div className="flex items-center gap-2">
         <div className="w-3 h-3 bg-gray-400 rounded"></div>
-        <span>Uncategorized</span>
+        <span>Blocked</span>
       </div>
     </div>
 
     {/* Graph Section */}
     <div className="mt-auto h-80">
-      {/* <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={inventoryPayload} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="day" />
-          <YAxis tickFormatter={(value) => `$ ${value}`} ticks={[0, 50, 100, 150, 200, 250]} />
+          <YAxis tickFormatter={(value) => `Units ${value}`}
+          // ticks={[0, 50, 100, 150, 200, 250]}
+           />
           <Tooltip content={customTooltipone} />
-          <Bar dataKey="Bills Payment" fill="#6366f1" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="Sales" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="Uncategorized" fill="#9ca3af" radius={[4, 4, 0, 0]} />
+          {/* <Bar dataKey="count" fill="#6366f1" radius={[4, 4, 0, 0]} /> */}
+<Bar dataKey="count" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+          {/* <Bar dataKey="Blocked" fill="#9ca3af" radius={[4, 4, 0, 0]} /> */}
         </BarChart>
-      </ResponsiveContainer> */}
-
-          <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="day" />
-                  <YAxis
-                    tickFormatter={(value) => `$ ${value}`}
-                    ticks={[0, 50, 100, 150, 200, 250]}
-                  />
-                  {/* <Tooltip 
-                    formatter={(value) => [`$ ${value}`, '']}
-                    contentStyle={{
-                      backgroundColor: 'white',
-                      border: '1px solid #e2e8f0',
-                      borderRadius: '6px',
-                      padding: '8px'
-                    }}
-                  /> */}
-      
-                  <Tooltip content={customTooltip} />
-      
-                  <Bar dataKey="Bills Payment" fill="#6366f1" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="Sales" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="Uncategorized" fill="#9ca3af" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+      </ResponsiveContainer>
     </div>
   </div>
 </div>
@@ -1867,7 +1927,69 @@ const customTooltip = ({ payload, label }) => {
 
 
 
+    <div className="flex flex-col rounded-[30px] mt-6 py-5 h-full bg-white shadow">
+  <div className="w-full max-w-4xl p-6 bg-white flex flex-col justify-between h-full">
+    <div className="mb-6">
+      <h2 className="text-[18px] text-[#6A6A6A] font-medium">Units</h2>
+      <div className="flex items-center justify-between mt-1">
+        <div className="text-[30px] font-semibold text-[#00000]">{inventoryPayload.reduce((acc, curr) => acc + curr.count, 0)?.toLocaleString('en-IN')}</div>
+        {/* <div className="flex items-center gap-2 px-4 py-2 border rounded-lg">
+          <span className="text-gray-600">View:</span>
+          <svg className="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h2v10H7V7zm4 0h2v10h-2V7zm4 0h2v10h-2V7z" />
+          </svg>
+          <span className="text-gray-600">Bar Line Chart</span>
+        </div> */}
+      </div>
 
+
+    </div>
+
+    <div className="flex gap-6 mb-6">
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-indigo-600 rounded"></div>
+        <span>Booked</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-sky-400 rounded"></div>
+        <span>Allotment</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-gray-400 rounded"></div>
+        <span>Agreement</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-gray-400 rounded"></div>
+        <span>Registered</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-gray-400 rounded"></div>
+        <span>Construction</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="w-3 h-3 bg-gray-400 rounded"></div>
+        <span>Possession</span>
+      </div>
+    </div>
+
+    {/* Graph Section */}
+    <div className="mt-auto h-80">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={unitStatusPayload} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          <XAxis dataKey="day" />
+          <YAxis tickFormatter={(value) => `${value}`}
+          // ticks={[0, 50, 100, 150, 200, 250]}
+           />
+          <Tooltip content={customTooltipone} />
+          {/* <Bar dataKey="count" fill="#6366f1" radius={[4, 4, 0, 0]} /> */}
+<Bar dataKey="count" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+          {/* <Bar dataKey="Blocked" fill="#9ca3af" radius={[4, 4, 0, 0]} /> */}
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+</div>
 
 <div className="p-6 mt-6 rounded-t-[30px] bg-white flex justify-between items-center">
           <h3 className="text-xl font-bold">Booking Summary box</h3>

@@ -658,13 +658,15 @@ const AddPaymentDetailsForm = ({
                   </h6>
                 </section>
                 <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
-                  Unit will be blocked and will be booked on manager approval.
+                  Unit will be allocated on manager approval.
                 </div>
 
                 <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
               </div>
 
               <div className="flex flex-col">
+                <div>{selUnitDetails.customerDetailsObj
+        ?.customerName1 }</div>
                 <div>Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}</div>
                 <div>Balance: {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}</div>
               </div>

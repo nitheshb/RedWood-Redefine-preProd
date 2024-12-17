@@ -1394,7 +1394,12 @@ export const getCRMCustomerByProject = (orgId, snapshot, data, error) => {
 }
 
 // get crmCustomers list
+export const getUnitsAgreeByProject = (orgId, snapshot, data, error) => {
 
+  let q = collection(db, `${orgId}_projects`)
+
+  return onSnapshot(q, snapshot, error)
+}
 export const getBookedUnitsByProject = (orgId, snapshot, data, error) => {
   const { status } = data
   // console.log('hello ', status, data, data?.projectId)

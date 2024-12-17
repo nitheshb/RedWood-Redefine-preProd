@@ -25,8 +25,11 @@ const Floordetails = ({
   projectDetails,
   phaseFeed,
   BlockFeed,
+  floorFeed,
   selBlock,
   setSelBlock,
+  selFloor,
+  setSelFloor,
   source,
   setSelUnitDetails,
   setShowCostSheetWindow,
@@ -809,7 +812,21 @@ const Floordetails = ({
                     id={'blocks'}
                     setStatusFun={setSelBlock}
                     filteredUnits={BlockFeed}
-                    pickedValue={filBedRooms}
+                    pickedValue={selBlock}
+                    setOpenEditBlock={setSliderBlockInfo}
+                    selProject={projectDetails}
+
+                  />
+                )}
+                  {['Apartment'].includes(
+                  projectDetails?.projectType?.name
+                ) && (
+                  <DropDownUnitBlocks
+                    type={'floors'}
+                    id={'floors'}
+                    setStatusFun={setSelFloor}
+                    filteredUnits={selBlock?.floorA}
+                    pickedValue={selFloor}
                     setOpenEditBlock={setSliderBlockInfo}
                     selProject={projectDetails}
 
@@ -979,21 +996,21 @@ const Floordetails = ({
                 </section>
               </section>
             </section>
-            {['Apartment1', 'Villas1'].includes(
+            {['Apartment' ].includes(
               projectDetails?.projectType?.name
             ) && (
               <ul className="">
-                {/* {selBlock?.floorA?.map((floorDat, i) => { */}
-                {[1].map((floorDat, i) => {
+                {selBlock?.floorA?.map((floorDat, i) => {
+                // {[1].map((floorDat, i) => {
                   return (
                     <li className="" key={i}>
                       <section>
-                        {/* <section className="px-8 bg-red-100 w-[130px] rounded-r-2xl">
-                          Fl-{floorDat}
-                        </section> */}
+                        <section className="px-8 bg-red-100 w-[130px] rounded-r-2xl">
+                          Floor-{floorDat}
+                        </section>
                         <div className=" px-5 mt-6">
                           {filteredUnits
-                            ?.filter((da) => da?.floor != i)
+                            ?.filter((da) => da?.floor_no == floorDat)
                             .map((data, index) => {
                               return unitShrink ? (
                                 <div
@@ -1286,7 +1303,8 @@ const Floordetails = ({
               </ul>
             )}
 
-              <ul className="">
+{!['Apartment'].includes(  projectDetails?.projectType?.name
+            ) && (   <ul className="">
                 <li className="py-2">
                   <section>
                     {/* <section className="px-8 bg-red-100 w-[130px] rounded-r-2xl">
@@ -1567,7 +1585,7 @@ const Floordetails = ({
                     </div>
                   </section>
                 </li>
-              </ul>
+              </ul>)}
 
             {/* 1 */}
             {['projectManagement', 'projectOnboard'].includes(source) && (

@@ -95,6 +95,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
 
   useEffect(() => {
     if (category === 'all') {
+      console.log('filters are', settings)
       setFilterData(settings)
     } else {
       const updatedData = settings.map((item) => {
@@ -105,6 +106,8 @@ const UserAccessTable = ({showCompletedTasks}) => {
           ),
         }
       })
+      console.log('filters are', updatedData)
+
       setFilterData(updatedData)
     }
   }, [category, settings])
@@ -217,7 +220,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
                   <StyledTableCell>Type</StyledTableCell>
                 </StickyHeaderCell>
               )}
-              {filterData?.[0]?.access?.map(({ name, key }) => (
+              {filterData?.[4]?.access?.map(({ name, key }) => (
                 <StyledTableCell key={key}>{name}</StyledTableCell>
               ))}
             </StyledTableRow>
