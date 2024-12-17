@@ -21,6 +21,7 @@ const Blockdetails = ({
 }) => {
   console.log('piddd is ', pId, blocks, phaseFeed)
   const [selBlock, setSelBlock] = useState({})
+  const [selFloor, setSelFloor] = useState('All')
   const [openAddBlock, setOpenAddBlock] = useState(false)
 
   const [viewUnitStatusA, setViewUnitStatusA] = useState([
@@ -154,6 +155,8 @@ BlockFeed */}
         BlockFeed={blocks}
         selBlock={selBlock}
         setSelBlock={setSelBlock}
+        selFloor={selFloor}
+        setSelFloor={setSelFloor}
         projectDetails={projectDetails}
         phaseDetails={phaseDetails}
         source={source}

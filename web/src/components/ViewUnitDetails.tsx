@@ -347,7 +347,7 @@ const ViewUnitDetails = ({
       </div>
 
       <div className="grid  gap-8 grid-cols-1">
-        <div className="flex flex-col  mb-2  bg-white border border-gray-100">
+        <div className="flex flex-col  mb-2  bg-[#f1f1f1] border border-gray-100">
           <div className="mt-0">
             {/* new one */}
 

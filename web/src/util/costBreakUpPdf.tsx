@@ -500,7 +500,7 @@ const CostBreakUpPdf = ({
     const flatCost = Number(partATotal + partBTotal)
     const constCost = Number((partCTotal || 0) + (partDTotal || 0))
     console.log('flat fixed values ', psPayload)
-    const flatFixedCosts = psPayload.reduce(
+    const flatFixedCosts = psPayload?.reduce(
       (acc, item) =>
         item.units.value === 'fixedcost' ? acc + item.value : acc,
       0
@@ -1079,7 +1079,7 @@ const CostBreakUpPdf = ({
                                       </td>
                                       <td className="text-[12px] px-2 text-right   ">
                                         {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
-                                        ₹ 
+                                        ₹
                                         {d1?.TotalNetSaleValueGsT?.toLocaleString(
                                           'en-IN'
                                         )}

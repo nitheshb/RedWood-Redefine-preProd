@@ -500,8 +500,21 @@ console.log('customer info', myBookingPayload)
   }
 
   const setStatusFun = async (index, newStatus) => {
-    moveStep(newStatus)
-    setStepIndx(index + 1)
+    if(newStatus === 'booksheet'){
+      if(selUnitDetails.custObj && (selUnitDetails.custObj.name != "")){
+        moveStep(newStatus)
+        setStepIndx(index + 1)
+      }else{
+          enqueueSnackbar('Please fill customer details', {
+            variant: 'error',
+          })
+      }
+      console.log('confirm booking')
+    }else{
+      moveStep(newStatus)
+      setStepIndx(index + 1)
+    }
+
   }
   return (
     <>
@@ -511,7 +524,8 @@ console.log('customer info', myBookingPayload)
             <div className=" rounded-b-md">
               <section className="flex flex-row-reverse">
                 {['unitBookingMode', 'unitBlockMode'].includes(actionMode) && (
-                  <div className="flex flex-col  w-[250px] pt-4 px-2 bg-white h-screen">
+                  <div className="flex flex-col  w-[250px] pt-4 mx-2 px-2  h-screen">
+                   <section className="bg-white">
                     <div className="mt-1">
                       <div className="flex flex-row align-middle justify-between  mb-1">
                         <h6 className="font-bodyLato font-semibold text-sm">
@@ -569,7 +583,7 @@ console.log('customer info', myBookingPayload)
                                 )}
                               </span>
                               <p className=" text-[9px]">
-                                {statusFlowObj?.text}
+                               {statusFlowObj?.text}
                               </p>
                               {/* {statusFlowObj.value == 'costsheet' && (
                               <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
@@ -591,6 +605,7 @@ console.log('customer info', myBookingPayload)
                     </ol>
 
                     {/* <ScrollHighlightNabbar navHeader={reviewLinks} /> */}
+                    </section>
                   </div>
                 )}
                 <div className="w-full">

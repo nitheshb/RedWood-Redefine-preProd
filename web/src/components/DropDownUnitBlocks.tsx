@@ -41,7 +41,23 @@ export default function DropDownUnitBlocks({
                 <ChevronDownIcon className="w-5 h-5 mr-3 mt-[1px] inline text-white" />
               </>
             )}
-            {type != 'unitMode' && type != 'View' && (
+             {type == 'blocks' && (
+              <>
+                <span className=" text-[11px] tracking-wide text-[#0091ae] mt-[5px]">
+                  {pickedValue?.blockName || type?.toLocaleUpperCase()}
+                </span>
+                <ChevronDownIcon className="w-5 h-5 mr- ml-1 mt-[5px] inline text-[#058527]" />
+              </>
+            )}
+             {type == 'floors' && (
+              <>
+                <span className=" text-[11px] tracking-wide text-[#0091ae] mt-[5px]">
+                  Floor-{pickedValue||'All'}
+                </span>
+                <ChevronDownIcon className="w-5 h-5 mr- ml-1 mt-[5px] inline text-[#058527]" />
+              </>
+            )}
+            {type != 'unitMode' && type != 'View' && type != 'blocks' && type != 'floors' && (
               <>
                 <span className=" text-[11px] tracking-wide text-[#0091ae] mt-[5px]">
                   {type?.toLocaleUpperCase()}
@@ -49,6 +65,7 @@ export default function DropDownUnitBlocks({
                 <ChevronDownIcon className="w-5 h-5 mr- ml-1 mt-[5px] inline text-[#058527]" />
               </>
             )}
+
             {type === 'unitMode' && (
               <>
                 <DotsVerticalIcon className="w-3 h-3  mt-[1px] inline " />
@@ -262,7 +279,7 @@ export default function DropDownUnitBlocks({
               )}
               {type === 'floors' && (
                 <>
-                  {filteredUnits.sort((a, b) => a.blockName - b.blockName).map((viewData, i) => (
+                  {filteredUnits?.map((viewData, i) => (
                     <Menu.Item key={i}>
                       {({ active }) => (
                         <section className="flex flex-row justify-between">
@@ -290,7 +307,7 @@ export default function DropDownUnitBlocks({
                                 aria-hidden="true"
                               />
                             )}
-                            {viewData?.blockName}
+                            {viewData}
                           </button>
                           <div
                             className={`${
