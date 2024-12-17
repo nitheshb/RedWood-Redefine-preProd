@@ -436,7 +436,7 @@ const DialogFormBody = ({
   Project Name*
 </p> */}
 <TextField label="Project Name*"  name="projectName" type="text" />
-<section className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-[14px]">
+<section className="flex flex-row space-x-4 w-full text-xs mt-[14px]">
   <div className="mb-3 w-[50%]">
     <label
       htmlFor="extent"
@@ -622,7 +622,7 @@ Marketed By*
 
 
 
-                        <div className="flex flex-col mt-2  pt-2 ">
+                        <div className="flex flex-col mt-2   pt-2 ">
                           <CustomRadioGroup
                             label="Planning Authority Approval"
                             value={planningApproval}
@@ -632,7 +632,8 @@ Marketed By*
 
                           {planningApproval?.name === 'Yes' && (
                             <>
-                              <div className="py-2">
+                            <div className=' bg-white shadow-md  mt-2 p-2 rounded-md '>
+                            <div className=" ">
                                 <CustomSelect
                                   name="Planning Approval Authority"
                                   label={
@@ -730,6 +731,7 @@ Marketed By*
                                 /> */}
                                 {/* </div> */}
                               </div>
+                            </div>
                             </>
                           )}
                         </div>
@@ -743,6 +745,9 @@ Marketed By*
                           />
                           {reraApproval?.name === 'Yes' && (
                             <div className="md:flex md:flex-col pt-[10px] flex-col md:space-x-1 w-full text-xs">
+
+<div className=' bg-white shadow-md  p-2 rounded-md '>
+
                               <div className="mt-2 w-full">
                                 <TextField
                                   label="RERA No*"
@@ -752,9 +757,9 @@ Marketed By*
                               </div>
 
 
-                              <div className='flex gap-2  w-full '>
+                              <div className='flex flex-row gap-2 w-full  '>
 
-                              <div className="mt-2 w-full">
+                              <div className="mt-1 mb-[6px] w-1/2 min-w-0">
                                 {/*<TextField
                             label="Start Date*"
                             name="hdmaStartDate"
@@ -767,7 +772,7 @@ Marketed By*
                                 <DatePicker
                                   id="hdmaStartDate"
                                   name="hdmaStartDate"
-                                  className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
+                                  className="px-2 h-8 rounded-md w-full text-[#0091ae] bg-grey-lighter text-grey-darker border border-[#cccccc]"
                                   selected={startDate}
                                   onChange={(date) => {
                                     if (date.getTime() < endDate) {
@@ -788,7 +793,7 @@ Marketed By*
                                   dateFormat="d-MMMM-yyyy"
                                 />
                               </div>
-                              <div className="mt-2 w-full">
+                              <div className="mt-1 mb-[6px] w-1/2 min-w-0">
                                 {/*  <TextField
                             label="End Date*"
                             name="hdmaEndDate"
@@ -801,7 +806,7 @@ Marketed By*
                                 <DatePicker
                                   id="hdmaEndDate"
                                   name="hdmaEndDate"
-                                  className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
+                                  className="px-2 h-8 rounded-md w-full text-[#0091ae] bg-grey-lighter text-grey-darker border border-[#cccccc]"
                                   selected={endDate}
                                   onChange={(date) => {
                                     console.log(
@@ -828,6 +833,8 @@ Marketed By*
                                   // dateFormat="MMMM d, yyyy"
                                   dateFormat="d-MMMM-yyyy"
                                 />
+                              </div>
+
                               </div>
 
                               </div>
