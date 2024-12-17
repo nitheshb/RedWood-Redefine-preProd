@@ -1134,6 +1134,18 @@ return
                                       {selCustomerPayload?.projName}
                                       </div>
                                       <section>
+                                       {selCustomerPayload?.block_no!= undefined &&  <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                          Block:{selCustomerPayload?.block_no?.toLocaleString(
+                                            'en-IN'
+                                          )}{' '}
+
+                                        </span>}
+                                        {selCustomerPayload?.floor_no!= undefined && <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                          floor:{selCustomerPayload?.floor_no?.toLocaleString(
+                                            'en-IN'
+                                          )}{' '}
+
+                                        </span>}
                                         <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {selCustomerPayload?.area?.toLocaleString(
                                             'en-IN'

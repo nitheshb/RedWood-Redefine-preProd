@@ -39,7 +39,7 @@ const UnitsInventoryHome = ({ project }) => {
   const [phaseViewFeature, setPhaseViewFeature] = useState('Blocks')
 
   // blocks
-  const [blocks, setBlocks] = useState({})
+  const [blocks, setBlocks] = useState([])
   const [selPhaseIs, setSelPhaseIs] = useState('')
   const [selPhaseObj, setSelPhaseObj] = useState({})
   const [selBlock, setSelBlock] = useState({})
@@ -179,7 +179,11 @@ const UnitsInventoryHome = ({ project }) => {
       console.log('error at getting phases', error)
     }
   }
-
+  useEffect(() => {
+    if (blocks.length > 0) {
+      setSelBlock(blocks[0])
+    }
+  }, [blocks])
   const getBlocks = async (phaseId) => {
     const unsubscribe = getBlocksByPhase(
       orgId,
@@ -191,12 +195,13 @@ const UnitsInventoryHome = ({ project }) => {
         response.sort((a, b) => {
           return a.blockName - b.blockName
         })
-        setBlocks({ ...blocks, [phaseId]: response })
-        console.log('myblocks are', blocks, myProjectDetails?.uid, phaseId)
+        setBlocks(response )
+        console.log('myblocks are',response, blocks, myProjectDetails?.uid, phaseId)
       },
       (e) => {
         console.log('error at getBlocks', e)
-        setBlocks({ ...blocks, [phaseId]: [] })
+        // setBlocks({ ...blocks, [phaseId]: [] })
+        setBlocks([])
       }
     )
     return unsubscribe
@@ -613,25 +618,9 @@ const UnitsInventoryHome = ({ project }) => {
               phaseFeed={phases}
               unitsFeedA={unitsFeedA}
               filUnitsFeedA={filUnitsFeedA}
-              selBlock={{
-                totalValue: 0,
-                soldValue: 0,
-                availValue: 0,
-                bookValue: 0,
-                blockValue: 0,
-                holdValue: 0,
-                totalArea: 0,
-                soldArea: 0,
-                availArea: 0,
-                bookArea: 0,
-                blockArea: 0,
-                holdArea: 0,
-                totalUnitCount: 0,
-                soldUnitCount: 0,
-                availableCount: 0,
-                bookUnitCount: 0,
-                blockUnitCount: 0,
-              }}
+              BlockFeed={blocks}
+              selBlock={selBlock}
+              setSelBlock={setSelBlock}
               source={undefined}
               setShowCostSheetWindow={setShowCostSheetWindow}
               setSelUnitDetails={setSelUnitDetails}
@@ -639,6 +628,7 @@ const UnitsInventoryHome = ({ project }) => {
               leadDetailsObj={{}}
               setPhaseFun={setPhaseFun}
               selPhaseName={selPhaseName}
+
             />
           </div>
         )}
