@@ -132,6 +132,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
       custObj.projectId = leadDetailsObj?.ProjectId
       custObj.assignedTo = leadDetailsObj?.assignedTo
       custObj.assignedToObj = leadDetailsObj?.assignedToObj
+      custObj.budget = leadDetailsObj?.budget
       custObj.value = leadDetailsObj?.project
       console.log('my project data is ==>', leadDetailsObj)
       setCustomerDetailsTuned(custObj)
@@ -259,7 +260,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
         Mobile: data?.mobileNo,
         countryCode: data?.countryCode,
         Name: data?.name,
-
+        budget: data?.budget,
         Project: data?.project,
         ProjectId: data?.projectId,
         Source: data?.source,
@@ -361,6 +362,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
       Date: startDate.getTime(),
       Email: email,
       Mobile: mobileNo,
+      //budget: budget,
       countryCode: countryCode,
       Name: name,
       Note: '',
@@ -369,6 +371,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
       Source: source,
       Status: assignedTo === '' ? 'unassigned' : 'new',
       intype: 'Form',
+      budget: data.budget,
       assignedTo: assignedToObj?.value || '',
       assignedToObj: {
         department: assignedToObj?.department || [],
@@ -564,7 +567,7 @@ if(leadDetailsObj.id){
                 projectId: customerDetailsTuned?.projectId || '',
                 assignedTo: customerDetailsTuned?.assignedTo || '',
                 assignedToObj: customerDetailsTuned?.assignedToObj || {},
-                budget: '20-30L',
+                budget: customerDetailsTuned?.budget || {},
                 deptVal: '',
                 myRole: '',
               }}
@@ -815,7 +818,7 @@ Mobile No
 
                             <CustomSelect
                               name="project"
-                              label="Select Project*"
+                              label="Select Project"
                               className="input mt-3"
                               onChange={(value) => {
                                 console.log('value of project is ', value)

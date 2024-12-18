@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useMemo, useEffect } from 'react'
 import DownloadTwoToneIcon from '@mui/icons-material/DownloadTwoTone'
 
@@ -564,6 +564,10 @@ const invoiceDet: IInvoice[] = [
     },
   },
 ]
+
+
+
+
 const MyDocument = ({
   user,
   selUnitDetails,
@@ -577,6 +581,9 @@ const MyDocument = ({
   partATotal,
   partBTotal,
   leadDetailsObj1,
+  custObj1,
+  customerDetailsObj,
+  customerInfo,
 
   setPartATotal,
   setPartBTotal,
@@ -586,6 +593,34 @@ const MyDocument = ({
   useEffect(() => {
     console.log('myObj', myObj, myAdditionalCharges)
   }, [myObj])
+
+
+
+
+
+
+  const [sectionDimensions, setSectionDimensions] = useState([]);
+  const [tableDimensions, setTableDimensions] = useState([]);
+
+  // This function handles the section rendering
+  const handleSectionRender = (e, sectionIndex) => {
+    const { width, height } = e.source;
+    setSectionDimensions((prev) => [
+      ...prev,
+      { sectionIndex, width, height },
+    ]);
+    console.log(`Section ${sectionIndex} rendered with dimensions:`, width, height);
+  };
+
+  // This function handles the table rendering
+  const handleTableRender = (e, tableIndex) => {
+    const { width, height } = e.source;
+    setTableDimensions((prev) => [
+      ...prev,
+      { tableIndex, width, height },
+    ]);
+    console.log(`Table ${tableIndex} rendered with dimensions:`, width, height);
+  };
 
   return (
     <Document>
@@ -714,8 +749,10 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Applicant Name:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {user?.displayName || user?.name}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>  {selUnitDetails?.custObj1?.customerName1}</Text>
   </View>
+
+  
 
 
   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
@@ -724,7 +761,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Customer ID:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {leadDetailsObj1?.Address}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {selUnitDetails?.custObj1?.id}</Text>
   </View>
 
 
@@ -734,7 +771,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Phone number:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {user?.phone}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {selUnitDetails?.custObj1?.phoneNo1}</Text>
   </View>
 
   
@@ -744,7 +781,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Email address:
     </Text>
-    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{leadDetailsObj1?.Mobile}</Text>
+    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{selUnitDetails?.custObj1?.email1}</Text>
   </View>
 </View>
 
@@ -910,7 +947,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Unit Cost:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>₹1,20,000</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> ₹{partATotal?.toLocaleString('en-IN')}</Text>
   </View>
 
 
@@ -920,7 +957,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Current Status:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>Under Review</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selUnitDetails?.status}</Text>
   </View>
 
 
@@ -930,7 +967,16 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Booked Date:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>2024-12-01</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>
+
+    {selUnitDetails?.custObj1?.dob1
+    ? new Date(selUnitDetails.custObj1.dob1).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      })
+    : 'N/A'}
+    </Text>
   </View>
 
   
@@ -940,7 +986,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Booked By:
     </Text>
-    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>John Doe</Text>
+    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{selUnitDetails?.custObj1?.bookedBy}</Text>
   </View>
 </View>
 
@@ -974,7 +1020,9 @@ const MyDocument = ({
         </View> */}
 
 
-    <View style={[styles.bgb,]}>
+    <View style={[styles.bgb,]} 
+    onRender={(e) => handleTableRender(e, 1)}
+    >
 
     <View style={[styles.topBoderRadius, styles.bottomBorderRadius, {border:'1px solid #CCCCCC',}]}>
           <View style={[ styles.topBoderRadiusnew,   { backgroundColor:'#EDEDED' }]}>
@@ -1059,7 +1107,7 @@ const MyDocument = ({
                       {projectDetails?.projectType?.name === 'Apartment'
                         ? 'Flat'
                         : 'Plot'}{' '}
-                      Charges box mini
+                      Charges
                     </Text>
                   </View>
 
@@ -1069,7 +1117,7 @@ const MyDocument = ({
                       styles.alignRight,
                       styles.p12,
                       styles.pr4,
-                      styles.ml5,
+                      styles.ml1,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
@@ -1088,7 +1136,7 @@ const MyDocument = ({
                   </View>
 
                   <View
-                    style={[styles.tableCell_20, styles.alignRight, styles.p12, styles.pr8, ]}
+                    style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr8, ]}
                   >
                     <Text style={styles.subtitle2}>Total Inc GST</Text>
                   </View>
@@ -1108,7 +1156,7 @@ const MyDocument = ({
                       //   backgroundColor:
                       //     index % 2 === 0 ? '#ffffff' : '#ffffff',
                       // },
-                      {  borderBottom: '1px solid #e5e7eb',  borderBottom: '10px', marginTop: '2px', paddingTop: '4px' },
+                      {  borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px' },
                     ]}
                     key={item.id}
                   >
@@ -1982,7 +2030,9 @@ const MyDocument = ({
     
 
 
-      <View style={[styles.bgb, ]} >
+      <View style={[styles.bgb, ]}
+        // break={index === myBookingPayload.plotPS.length - 1 ? 'after' : null} 
+      >
 
 
       <View style={[styles.topBoderRadius, styles.bottomBorderRadius, { border:'1px solid #CCCCCC', backgroundColor: '#fff', marginTop: '10px' }]} >
@@ -2001,6 +2051,9 @@ const MyDocument = ({
         styles.mT1,
         { color:'#3D3D3D', fontWeight: 450 , fontSize: 10,}
       ]}
+
+
+      onRender={(e) => handleSectionRender(e, 2)}
     >
       Payment Schedule
     </Text>
@@ -2091,6 +2144,7 @@ styles.textcolor,
  marginTop: '2px', paddingTop: '4px' },
 ]}
 key={item.id}
+break={index === myBookingPayload.plotPS.length - 1 ? 'after' : null} 
 >
 <View
 style={[
@@ -2292,6 +2346,8 @@ const PdfInvoiceGenerator = ({
   setPartBTotal,
   projectDetails,
   leadDetailsObj1,
+  custObj1,
+
 }) => {
   console.log('overall cost sheet is ', newPlotPS, selUnitDetails)
   return (
@@ -2314,6 +2370,9 @@ const PdfInvoiceGenerator = ({
             setPartBTotal={setPartBTotal}
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
+            custObj1={custObj1}
+        
+
           />
         }
         fileName="sample.pdf"

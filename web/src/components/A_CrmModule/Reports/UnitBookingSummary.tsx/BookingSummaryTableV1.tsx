@@ -17,6 +17,7 @@ import PropTypes from 'prop-types'
 
 
 
+
 import {
   LineChart,
   Line,
@@ -26,6 +27,7 @@ import {
   YAxis,
   ResponsiveContainer,
   CartesianGrid,
+  Tooltip
 } from 'recharts';
 
 
@@ -48,7 +50,7 @@ import {
 
 import 'react-datepicker/dist/react-datepicker.css'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import Tooltip from '@mui/material/Tooltip'
+// import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { visuallyHidden } from '@mui/utils'
 import Highlighter from 'react-highlight-words'
@@ -1045,9 +1047,11 @@ useEffect(() => {
 
 
 
-  const customTooltipone = ({ payload, label }) => {
-    if (!payload || payload.length === 0) return null;
 
+  const customTooltipone = ({ payload, label }) => {
+    console.log(payload); // Add this line to see if payload is populated correctly
+    if (!payload || payload.length === 0) return null;
+  
     return (
       <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
         <p className="font-semibold text-gray-800">{label}</p>
@@ -1063,48 +1067,69 @@ useEffect(() => {
       </div>
     );
   };
+  
+
+
+  // const customTooltipone = ({ payload, label }) => {
+  //   if (!payload || payload.length === 0) return null;
+
+  //   return (
+  //     <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
+  //       <p className="font-semibold text-gray-800">{label}</p>
+  //       {payload.map((entry, index) => (
+  //         <div key={`tooltip-item-${index}`} className="flex items-center space-x-2 mb-2">
+  //           <div
+  //             className="w-3 h-3 "
+  //             style={{ backgroundColor: entry.color }}
+  //           ></div>
+  //           <span className="text-gray-700">{`${entry.name}: ₹  ${entry.value}`}</span>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
 
 
 
 
-const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    const time = payload[0].payload.time;
+// const CustomTooltip = ({ active, payload }) => {
+//   if (active && payload && payload.length) {
+//     const time = payload[0].payload.time;
 
-    return (
-      <div className="bg-white p-3 rounded-md">
-        <p className="text-black">Time: {time}</p>
+//     return (
+//       <div className="bg-white p-3 rounded-md">
+//         <p className="text-black">Time: {time}</p>
 
-        {payload.map((entry, index) => {
-          const { value, prevValue } = entry.payload;
-          const strokeColor = entry.stroke;
+//         {payload.map((entry, index) => {
+//           const { value, prevValue } = entry.payload;
+//           const strokeColor = entry.stroke;
 
 
-          return (
-            <div key={index} className="flex items-center gap-2">
+//           return (
+//             <div key={index} className="flex items-center gap-2">
 
-              <div
-                style={{ backgroundColor: strokeColor }}
-                className="w-4 h-4 "
-              ></div>
+//               <div
+//                 style={{ backgroundColor: strokeColor }}
+//                 className="w-4 h-4 "
+//               ></div>
 
-              <p className="text-black">
-                {entry.dataKey === "value"
-                  ? `Current Value: ${value}`
-                  : entry.dataKey === "prevValue"
-                  ? `Previous Value: ${prevValue}`
-                  : null}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
+//               <p className="text-black">
+//                 {entry.dataKey === "value"
+//                   ? `Current Value: ${value}`
+//                   : entry.dataKey === "prevValue"
+//                   ? `Previous Value: ${prevValue}`
+//                   : null}
+//               </p>
+//             </div>
+//           );
+//         })}
+//       </div>
+//     );
+//   }
 
-  return null;
-};
+//   return null;
+// };
 
 
 
@@ -1134,6 +1159,11 @@ function EnhancedTableHead(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property)
   }
+
+
+
+
+  
 
   const displayHeadersFun = (headCell) => {
 
@@ -1467,7 +1497,24 @@ EnhancedTableHead.propTypes = {
 
 
 
+const customTooltip = ({ payload, label }) => {
+  if (!payload || payload.length === 0) return null;
 
+  return (
+    <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
+      <p className="font-semibold text-gray-800">{label}</p>
+      {payload.map((entry, index) => (
+        <div key={`tooltip-item-${index}`} className="flex items-center space-x-2 mb-2">
+          <div
+            className="w-3 h-3 "
+            style={{ backgroundColor: entry.color }}
+          ></div>
+          <span className="text-gray-700">{`${entry.name}: ₹  ${entry.value}`}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 
 
@@ -1677,11 +1724,29 @@ EnhancedTableHead.propTypes = {
               />
 
 
+{/* 
+<Tooltip content={<customTooltipone />} /> */}
 
-              <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} />
+
+<Tooltip
+          content={({ payload, label }) => {
+            if (!payload || payload.length === 0) return null;
+            return (
+              <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
+                <p className="font-semibold text-gray-800">{label}</p>
+                {payload.map((entry, index) => (
+                  <div key={`tooltip-item-${index}`} className="flex items-center space-x-2 mb-2">
+                    <div className="w-3 h-3" style={{ backgroundColor: entry.color }}></div>
+                    <span className="text-gray-700">{`${entry.name}: ₹ ${entry.value}`}</span>
+                  </div>
+                ))}
+              </div>
+            );
+          }}
+        />
 
 
-              {/* <Tooltip content={<CustomTooltip />} /> */}
+
 
 
               <Line
@@ -1709,6 +1774,12 @@ EnhancedTableHead.propTypes = {
 
 
       </div>
+
+
+
+
+
+
 
 
       {/* <div className="flex flex-col  rounded-[30px] py-5 h-full bg-white shadow">
