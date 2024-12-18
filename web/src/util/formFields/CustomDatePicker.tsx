@@ -5,7 +5,7 @@ import range from 'lodash/range';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const CustomDatePicker = ({ selected, onChange, ...props }) => {
-  const years = range(1990, getYear(new Date()) + 1, 1);
+  const years = range(1850, getYear(new Date()) + 1, 1);
   const months = [
     "January",
     "February",

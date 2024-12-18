@@ -113,7 +113,7 @@ const CostBreakUpSheet = ({
         const SnapData = querySnapshot.data()
         SnapData.id = id
         SnapData.uid = id
-        console.log('hello', SnapData)
+        console.log('hello stream setup is ==>', SnapData)
         setStreamUnitDetails(SnapData)
       },
       { uid: id },
@@ -531,7 +531,7 @@ console.log('customer info', myBookingPayload)
     if(newStatus === 'booksheet'){
       // if(selUnitDetails.custObj && (selUnitDetails.custObj.name != "")){
       if(streamUnitDetails?.status=='available'){
-      if(selUnitDetails.customerDetailsObj && (selUnitDetails.customerDetailsObj
+      if(streamUnitDetails.customerDetailsObj && (streamUnitDetails.customerDetailsObj
         ?.customerName1 != "")){
         moveStep(newStatus)
         // setStepIndx(index + 1)
@@ -618,7 +618,8 @@ console.log('customer info', myBookingPayload)
                                 )}
                               </span>
                               <p className=" text-[9px]">
-                               {statusFlowObj?.text}
+                               {statusFlowObj?.text}{i==5 && `${streamUnitDetails.customerDetailsObj
+        ?.customerName1 }` }
                               </p>
 
                             </div>

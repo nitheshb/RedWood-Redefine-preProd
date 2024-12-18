@@ -98,14 +98,14 @@ const EmailForm = ({
   const validateSchema = Yup.object({
     customerName1: Yup.string().required('Required'),
     // co_Name1: Yup.string().required('Required'),
-    // panNo1: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
+    panNo1: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
     // panNo2: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
     // panDocUrl1: Yup.string().required('Required'),
-    // aadharNo1: Yup.string().test(
-    //   'aadhar',
-    //   'Invalid Aadhar card number',
-    //   isValidAadhar
-    // ),
+    aadharNo1: Yup.string().test(
+      'aadhar',
+      'Invalid Aadhar card number',
+      isValidAadhar
+    ),
     // aadharNo2: Yup.string().test(
     //   'aadhar',
     //   'Invalid Aadhar card number',
@@ -530,11 +530,16 @@ leadPayload?.Mobile ||
     if (foundLength?.length > 0) {
       setFetchedLeadsObj(foundLength[0])
       const x = foundLength[0]
+      if(x?.Name){
       formik.setFieldValue('customerName1', x?.Name)
+      }
       console.log('customerName1', foundLength)
       // formik.setFieldValue('co_Name1', x?.Name)
-      formik.setFieldValue('phoneNo1', x?.Mobile)
-      // formik.setFieldValue('email1', x?.Email)
+      if(x?.Mobile){
+      formik.setFieldValue('phoneNo1', x?.Mobile)}
+      if(x?.Email){
+      formik.setFieldValue('email1', x?.Email)
+      }
       // formik.setFieldValue('address1', x?.Address)
       // formik.setFieldValue('city1', x?.City)
       // formik.setFieldValue('state1', x?.State)
@@ -862,6 +867,9 @@ leadPayload?.Mobile ||
                       value={formik.values.panNo1}
                       onChange={formik.handleChange}
                     />
+                                  {formik.errors.panNo1 && formik.touched.panNo1 && (
+        <div className="text-red-500 text-xs ml-2">{formik.errors.panNo1}</div>
+      )}
                   </section>
                   <section className="w-full ml-4">
                     <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
@@ -934,6 +942,9 @@ leadPayload?.Mobile ||
                       value={formik.values.aadharNo1}
                       onChange={formik.handleChange}
                     />
+                      {formik.errors.aadharNo1 && formik.touched.aadharNo1 && (
+        <div className="text-red-500 text-xs ml-2">{formik.errors.aadharNo1}</div>
+      )}
                   </section>
                 </div>
               </section>
@@ -1025,7 +1036,7 @@ leadPayload?.Mobile ||
                     <div className="relative w-full mt-2">
                       <div className="space-y-1 w-full text-xs">
                         <label htmlFor="countryCode" className="inline-block">
-                          Secondary Phone No
+                          Alternate Phone No
                         </label>
 
                         <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
