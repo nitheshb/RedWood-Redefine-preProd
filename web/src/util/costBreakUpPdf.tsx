@@ -52,6 +52,8 @@ const CostBreakUpPdf = ({
   showOnly,
   stepIndx,
   StatusListA,
+  setStepIndx
+
 }) => {
   const d = new window.Date()
 

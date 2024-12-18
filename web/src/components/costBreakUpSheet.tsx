@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-constant-condition */
 /* eslint-disable new-cap */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -8,6 +9,8 @@ import { useState, useEffect, createRef, useRef } from 'react'
 import {
   CheckCircleIcon,
   MinusCircleIcon,
+  EyeIcon,
+  SparklesIcon,
 } from '@heroicons/react/solid'
 import { LinearProgress } from '@mui/material'
 import { Form, Formik } from 'formik'
@@ -30,6 +33,7 @@ import BlockingUnitForm from './BlockingUnitForm'
 import AddPaymentDetailsForm from './FinanceModule/BookingPaymentForm'
 import SiderForm from './SiderForm/SiderForm'
 import UnitTransactionForm from './UnitBillTransactionForm'
+import { Dialog } from '@headlessui/react'
 
 const CostBreakUpSheet = ({
   title,
@@ -109,7 +113,7 @@ const CostBreakUpSheet = ({
         const SnapData = querySnapshot.data()
         SnapData.id = id
         SnapData.uid = id
-        console.log('hello', SnapData)
+        console.log('hello stream setup is ==>', SnapData)
         setStreamUnitDetails(SnapData)
       },
       { uid: id },
@@ -119,7 +123,31 @@ const CostBreakUpSheet = ({
     )
   }
 }
+useEffect(() => {
+  if(onStep === 'customerDetails'){
+   setStepIndx(1)
+  }
+  if(onStep === 'additonalInfo'){
+   setStepIndx(2)
+  }
 
+  if(onStep === 'costsheet'){
+   setStepIndx(3)
+  }
+
+  if(onStep === 'payment_schedule'){
+   setStepIndx(4)
+  }
+   if(onStep === 'booking_summary'){
+   setStepIndx(5)
+  }
+  if(onStep === 'booksheet'){
+   setStepIndx(6)
+  } if(onStep === 'blocksheet'){
+   setStepIndx(6)
+  }
+
+ }, [onStep])
   useEffect(() => {
     console.log('payload data is ', leadPayload)
   }, [leadPayload])
@@ -271,7 +299,7 @@ console.log('customer info', myBookingPayload)
           value: 'customerDetails',
           logo: 'FireIcon',
           color: ' bg-violet-500',
-          text: 'Applicant details, contacts, etc',
+          text: 'Applicant details',
         },
         {
           label: 'Additional Info',
@@ -285,7 +313,7 @@ console.log('customer info', myBookingPayload)
           value: 'costsheet',
           logo: 'RefreshIcon',
           color: ' bg-violet-500',
-          text: 'Rate pre sqft, gst, discount..',
+          text: 'Rate pre sqft, gst..',
         },
 
         {
@@ -296,14 +324,14 @@ console.log('customer info', myBookingPayload)
           text: 'Dates, start, end ...',
         },
         {
-          label: 'Booking Summary',
+          label: 'Preview',
           value: 'booking_summary',
           logo: 'FireIcon',
           color: ' bg-violet-500',
-          text: 'Overview, review, approve...',
+          text: '',
         },
         {
-          label: 'Confirm Booking',
+          label: 'Book Unit',
           value: 'booksheet',
           logo: 'FireIcon',
           color: ' bg-violet-500',
@@ -494,7 +522,7 @@ console.log('customer info', myBookingPayload)
     if(isMover){
     setOnStep('payment_schedule')
     if (onStep === 'payment_schedule') {
-      setOnStep('booksheet')
+      setOnStep('booking_summary')
     }
   }
   }
@@ -502,19 +530,24 @@ console.log('customer info', myBookingPayload)
   const setStatusFun = async (index, newStatus) => {
     if(newStatus === 'booksheet'){
       // if(selUnitDetails.custObj && (selUnitDetails.custObj.name != "")){
-      if(selUnitDetails.customerDetailsObj && (selUnitDetails.customerDetailsObj
+      if(streamUnitDetails?.status=='available'){
+      if(streamUnitDetails.customerDetailsObj && (streamUnitDetails.customerDetailsObj
         ?.customerName1 != "")){
         moveStep(newStatus)
-        setStepIndx(index + 1)
+        // setStepIndx(index + 1)
       }else{
           enqueueSnackbar('Please fill customer details', {
             variant: 'error',
           })
+      }}else{
+        enqueueSnackbar('Unit already booked', {
+          variant: 'error',
+        })
       }
       console.log('confirm booking')
     }else{
       moveStep(newStatus)
-      setStepIndx(index + 1)
+      // setStepIndx(index + 1)
     }
 
   }
@@ -526,15 +559,17 @@ console.log('customer info', myBookingPayload)
             <div className=" rounded-b-md">
               <section className="flex flex-row-reverse">
                 {['unitBookingMode', 'unitBlockMode'].includes(actionMode) && (
-                  <div className="flex flex-col  w-[250px] pt-4 mx-2 px-2  h-screen">
-                   <section className="bg-white">
+                  <div className="flex flex-col  w-[350px]  h-screen">
+                    <img className='rounded-[0px] h-[100px]' src="https://cdn.shopify.com/shopifycloud/shopify/assets/admin/home/onboarding/guides/pg_SetupGuide-56362e0c1a71e80bd572f85c30f0e202203a42a2e79ed40e0ea3906cc0aedce8.png"></img>
+
+                   <section className="bg-white pt-4 mx-2 px-2 ">
                     <div className="mt-1">
                       <div className="flex flex-row align-middle justify-between  mb-1">
                         <h6 className="font-bodyLato font-semibold text-sm">
-                          {'Booking'}
+                          {'Unit Booking'}
                         </h6>
                         <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
-                          {stepIndx} of {StatusListA?.length} completed!
+                        preview
                         </span>
                       </div>
                       <LinearProgress
@@ -555,62 +590,111 @@ console.log('customer info', myBookingPayload)
                           height: '7px',
                         }}
                       />
+                         <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
+                          {stepIndx} of {StatusListA?.length} completed!
+                        </span>
                     </div>
+                    <section className='flex flex-col mt-4'>
+                    {StatusListA?.map((statusFlowObj, i) => {
+                        return (<section key={i} className={`flex flex-row mt-2 cursor-pointer bg-[#F3F3F3] p-2 py-3 rounded-md border ${onStep != statusFlowObj.value ?' border-white': 'border-violet-300'}`}
+                          onClick={() => setStatusFun(i, statusFlowObj.value)}
+                        >
 
-                    <ol className="relative text-gray-500 border-s border-[#DDD6FE]  mt-6 ml-3">
-                      {StatusListA?.map((statusFlowObj, i) => {
-                        return (
-                          <li
-                            className={`${
-                              i + 1 === StatusListA.length ? 'mb-0' : 'mb-6'
-                            } ms-4 flex flex-row cursor-pointer`}
-                            key={i}
-                            onClick={() => setStatusFun(i, statusFlowObj.value)}
-                          >
-                            <span className="absolute flex items-center justify-center w-7 h-7 bg-[#DDD6FE] rounded-full -start-4 ring-4 ring-white mt-[px] ">
+<span className=" flex items-center justify-center w-7 h-7 bg-[#DDD6FE] rounded-full  mt-[px] ">
                               <span className="text-[11px] font-bold">
-                                {i + 1}
+                                {i==4 ?  <EyeIcon className=" w-3 h-3  text-gray-500" />: (i + 1)}
+
                               </span>
-                              {/* <svg className="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
-            </svg> */}
+
                             </span>
-                            <div className="ml-1 ml-10">
-                              <span className="text-[12px]  font-bold    -[2px] rounded-lg flex flex-row text-[#000] ">
+
+                            <div className="ml-2 w-full ">
+                              <span className="text-[12px]  font-bold    -[2px] rounded-lg flex flex-row text-[#000] justify-between ">
                                 {statusFlowObj.label}
-                                {onStep != statusFlowObj.value ? (
-                                  <MinusCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-gray-400" />
-                                ) : (
+                                {(onStep != statusFlowObj.value) ?
+                                 i==5 ? <SparklesIcon className=" w-4 h-4 mt-[2px] ml-2 text-gray-400" />: <MinusCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-gray-400" />
+                                 : (
                                   <CheckCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-green-500" />
                                 )}
                               </span>
                               <p className=" text-[9px]">
-                               {statusFlowObj?.text}
+                               {statusFlowObj?.text}{i==5 && `${streamUnitDetails.customerDetailsObj
+        ?.customerName1 }` }
                               </p>
-                              {/* {statusFlowObj.value == 'costsheet' && (
-                              <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
-                                {netTotal && !isNaN(netTotal)
-                                  ? `₹${netTotal.toLocaleString('en-IN')} `
-                                  : ''}
-                              </div>
-                            )}
-                            {statusFlowObj.value == 'customerDetails' && (
-                              <MyComponent data={customerInfo} />
-                            )}
-                            {statusFlowObj.value == 'payment_schedule' && (
-                              <PaymentScheduleStats newPlotPS={newPlotPS} />
-                            )}*/}
+
                             </div>
-                          </li>
-                        )
-                      })}
-                    </ol>
+
+                        </section>)})}
+                    </section>
+
+
 
                     {/* <ScrollHighlightNabbar navHeader={reviewLinks} /> */}
                     </section>
                   </div>
                 )}
                 <div className="w-full">
+                <div className="px-3 pt-2 z-10 flex items-center justify-between ">
+        <Dialog.Title className=" font-semibold text-xl mr-auto  text-[#053219] w-full">
+          <div className="flex flex-row justify-between mb-1">
+<section  className="flex flex-row">
+            <div className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
+            <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
+                {streamUnitDetails.unit_no}
+
+
+              </div>
+              <span
+                  className={`items-center h-6   text-xs font-semibold text-gray-500  rounded-full
+                      `}
+                >
+                  Unit No
+                </span>
+            </div>
+            <div className="flex flex-col ml-2 item-right">
+            <span
+                  className={`items-center h-1 mt-[10px] mb-2  text-xs font-semibold text-green-600
+                      `}
+                >
+                  {streamUnitDetails?.status?.toUpperCase()}
+                </span>
+              <div className="font text-[12px] text-gray-500 tracking-wide overflow-ellipsis overflow-hidden ">
+                {projectDetails?.projectName}
+              </div>
+            </div>
+            </section>
+
+            {/* 2 */}
+            <div className=" flex flex-row mt-2">
+              <span
+                className={`items-center cursor-pointer h-6 px-3 py-1  mt-1 text-xs font-semibold text-blue-600  mr-2 `}
+                onClick={() => {
+                  // setShowUnitDetials(!showUnitDetails)
+                }}
+              >
+                {/* {showUnitDetails ? 'Hide unit details' : 'View unit details'} */}
+              </span>
+
+              {selUnitDetails?.unitDetail?.status === 'available' && (    <div className=" flex flex-col mt-1">
+
+
+                {/* <ButtonDropDown
+                  type={'All Projects'}
+                  pickCustomViewer={setActionMode}
+                  selProjectIs={actionMode}
+                  dropDownItemsA={[
+                    ...[
+                      { label: 'Cost sheet', value: 'costSheetMode' },
+                      { label: 'Block Unit', value: 'unitBlockMode' },
+                      { label: 'Book Unit', value: 'unitBookingMode' },
+                    ],
+                  ]}
+                /> */}
+              </div>)}
+            </div>
+          </div>
+        </Dialog.Title>
+      </div>
                   {['costsheet', 'allsheets', 'payment_schedule'].includes(
                     onStep
                   ) && (
@@ -707,6 +791,8 @@ console.log('customer info', myBookingPayload)
                                       setPartCTotal={setPartCTotal}
                                       setPartDTotal={setPartDTotal}
                                       showOnly={onStep}
+
+
                                     />
                                   )}
                                 </section>
@@ -736,14 +822,14 @@ console.log('customer info', myBookingPayload)
 
                                     <section className='flex gap-2'>
                                     <button
-                                      className="mb-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-                                    bg-gradient-to-r from-violet-500 to-indigo-500
-                                  text-black
-                                  border duration-200 ease-in-out
-                                  transition
-                                   px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
-px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
-                                   "
+                                      className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
+bg-gradient-to-r from-violet-600 to-indigo-600
+text-black
+
+ duration-200 ease-in-out
+transition
+ px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+ bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-2 tracking-wider text-white  rounded-md hover:shadow-lg "
                                       type="submit"
                                       disabled={loading}
                                       onClick={()=>{
@@ -759,14 +845,14 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                                       'unitBlockMode',
                                     ].includes(actionMode) && (
                                       <button
-                                        className="mb-2 mr-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-                                  bg-gradient-to-r from-violet-500 to-indigo-500
-                                  text-black
+                                        className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
+bg-gradient-to-r from-violet-600 to-indigo-600
+text-black
 
-                                  border duration-200 ease-in-out
-                                  transition
-                                   px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
-px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
+ duration-200 ease-in-out
+transition
+ px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+ bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-3 tracking-wider text-white  rounded-md hover:shadow-lg
                                    "
                                         type="submit"
                                         disabled={loading}
@@ -831,6 +917,7 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       setOnStep={setOnStep}
                       source="Booking"
                       stepIndx={stepIndx}
+                      setStepIndx={setStepIndx}
                       StatusListA={StatusListA}
                     />
                   )}

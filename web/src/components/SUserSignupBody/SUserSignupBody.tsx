@@ -21,10 +21,13 @@ import { DEPARTMENT_LIST, ROLES_LIST } from 'src/constants/userRoles'
 import { PhoneNoField } from 'src/util/formFields/phNoField'
 import { setHours, setMinutes } from 'date-fns'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import { useSnackbar } from 'notistack'
 
 
 const SUserSignupBody = ({ title, dialogOpen, empData }) => {
   const d = new window.Date()
+  const { enqueueSnackbar } = useSnackbar()
+
   const { register, user } = useAuth()
   const { orgId, orgName } = user
 
@@ -131,7 +134,9 @@ console.log('rolws are ', filRoles)
         txt: `${email} as ${myRole}`,
         by: user?.email,
       })
-
+      enqueueSnackbar('Add Employee Successfully', {
+        variant: 'success',
+      })
       setFormMessage({
         color: 'green',
         message: `User updated Successfully`,

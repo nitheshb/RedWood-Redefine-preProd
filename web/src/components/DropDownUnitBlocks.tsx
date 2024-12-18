@@ -25,6 +25,7 @@ import { uniTypes } from 'src/constants/projects'
 export default function DropDownUnitBlocks({
   type,
   id,
+  source,
   setStatusFun,
   viewUnitStatusA,
   pickCustomViewer,
@@ -214,7 +215,7 @@ export default function DropDownUnitBlocks({
               )}
               {type === 'blocks' && (
                 <>
-                  {filteredUnits.sort((a, b) => a.blockName - b.blockName).map((viewData, i) => (
+                  {filteredUnits?.sort((a, b) => a.blockName - b.blockName).map((viewData, i) => (
                     <Menu.Item key={i}>
                       {({ active }) => (
                         <section className="flex flex-row justify-between">
@@ -248,7 +249,7 @@ export default function DropDownUnitBlocks({
                             )}
                             {viewData?.blockName}
                           </button>
-                          <div
+                         {source === 'projectManagement' &&  <div
                             className={`${
                               active ? ' text-white' : 'text-gray-900'
                             } group flex rounded-md items-center px- py-2 text-sm`}
@@ -264,12 +265,12 @@ export default function DropDownUnitBlocks({
                             }
                           >
                             <PencilIcon className="w-5 h-5 mt-[3px] text-gray-500 cursor-pointer mr-2" />
-                          </div>
+                          </div>}
                         </section>
                       )}
                     </Menu.Item>
                   ))}
-                  <Menu.Item>
+                 {source === 'projectManagement' && ( <Menu.Item>
                     {({ active }) => (
                       <section className="flex flex-row ">
                         <button
@@ -299,7 +300,7 @@ export default function DropDownUnitBlocks({
                         </button>
                       </section>
                     )}
-                  </Menu.Item>
+                  </Menu.Item>)}
                 </>
               )}
               {type === 'floors' && (
@@ -415,8 +416,8 @@ export default function DropDownUnitBlocks({
                           {viewData} Bathroom
                           <div className="absolute right-0 pr-4">
                             {viewData === 'Any'
-                              ? filteredUnits.length
-                              : filteredUnits.filter(
+                              ? filteredUnits?.length
+                              : filteredUnits?.filter(
                                   (dat) => dat['bath_rooms'] === viewData
                                 ).length}
                           </div>
@@ -465,8 +466,8 @@ export default function DropDownUnitBlocks({
                             {viewData}{' '}
                             <div className="absolute right-0 pr-4">
                               {viewData === 'Any'
-                                ? filteredUnits.length
-                                : filteredUnits.filter(
+                                ? filteredUnits?.length
+                                : filteredUnits?.filter(
                                     (dat) =>
                                       dat['Status'] ===
                                       viewData?.toLocaleLowerCase()
@@ -635,8 +636,8 @@ export default function DropDownUnitBlocks({
                           {viewData}
                           <div className="absolute right-0 pr-4">
                             {viewData === 'Any'
-                              ? filteredUnits.length
-                              : filteredUnits.filter(
+                              ? filteredUnits?.length
+                              : filteredUnits?.filter(
                                   (dat) =>
                                     dat['facing']?.toLocaleLowerCase() ===
                                     viewData?.toLocaleLowerCase()
@@ -695,8 +696,8 @@ export default function DropDownUnitBlocks({
                           {viewData}
                           <div className="absolute right-0 pr-4">
                             {viewData === 'Any'
-                              ? filteredUnits.length
-                              : filteredUnits.filter(
+                              ? filteredUnits?.length
+                              : filteredUnits?.filter(
                                   (dat) =>
                                     dat['size']?.toLocaleLowerCase() ===
                                     viewData?.toLocaleLowerCase()
