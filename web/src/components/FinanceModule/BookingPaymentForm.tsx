@@ -648,7 +648,7 @@ const AddPaymentDetailsForm = ({
           {title}
         </Dialog.Title> */}
         <section className="flex flex-row">
-          <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
+          {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
           <div className="w-full flex flex-col">
             <div className=" flex flex-row justify-between gap-2 ">
               <div>
@@ -661,7 +661,7 @@ const AddPaymentDetailsForm = ({
                   Unit will be allocated on manager approval.
                 </div>
 
-                <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+                {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
               </div>
 
               <div className="flex flex-col">

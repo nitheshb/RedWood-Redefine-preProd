@@ -280,9 +280,9 @@ const AdditonalBookingDetails = ({
 
                       <section className=" bg-blueGray-50">
                         <div className="w-full mx-auto ">
-                          <div className="relative flex flex-col min-w-0 break-words w-full mb-6  bg-[#F9FBFB] border-0">
+                          <div className="relative flex flex-col min-w-0 break-words w-full mb-6  bg-[#F9FBFB] border rounded-[12px]">
                             <div className="flex-auto">
-                              <section className=" lg:px-2 ">
+                              <section className=" ">
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
                                 {/* <section
                                   className="rounded-md  p-4 mt-2 bg-[#fff]"
@@ -306,12 +306,16 @@ const AdditonalBookingDetails = ({
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
 
+                                <div>
+
+                                </div>
+
                                 <section
-                                  className="rounded-md  p-4 mt-2 bg-[#fff]"
+                                  className=" m-4 rounded-[20px]  bg-[#fff]"
                                   style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                 >
-                                  <section className="flex flex-row">
-                                    <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
+                                  <section className="flex bg-[#EDEDED] p-4 mt-1 rounded-t-[20px] flex-row">
+                                    {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
                                     <div className="w-full flex flex-col">
                                       <div className=" flex flex-row gap-2 ">
                                         <div>
@@ -324,7 +328,7 @@ const AdditonalBookingDetails = ({
                                             These details are helpful to understand customer better.
                                           </div>
 
-                                          <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+                                          {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
                                         </div>
 
                                         <div></div>
@@ -335,6 +339,9 @@ const AdditonalBookingDetails = ({
                                           </div> */}
                                     </div>
                                   </section>
+
+                                  <div className='p-4'>
+
                                   <h6 className="text-blueGray-400  text-[14px] mt-3 mb- font-bold mt-8">
                                     Other Information
                                   </h6>
@@ -350,7 +357,7 @@ const AdditonalBookingDetails = ({
                                         />
                                       </div> */}
                                     </div>
-                                    <div className="w-1/2 lg:w-12/12 px-4">
+                                    <div className="w-1/2 lg:w-12/12 ">
                                       <div className="relative w-full mb-3">
                                         {/* <TextField2
                                           label="Source of payment/source"
@@ -434,7 +441,11 @@ const AdditonalBookingDetails = ({
     </div> */}
                                   </div>
 
+                                  </div>
+
+
                                   <section className="rounded-md  p-4 pl-0 mt-2 ">
+                                    <div className='p-4'>
                                     <h6 className="text-blueGray-400 text-[14px] mt-3  font-bold ">
                                       Booked By
                                     </h6>
@@ -443,7 +454,7 @@ const AdditonalBookingDetails = ({
                                     <div className="flex flex-wrap mt-4">
 
 
-                                      <div className="w-full lg:w-4/12 px-4">
+                                      <div className="w-full lg:w-4/12 ">
                                         <div className="relative w-full mb-3">
                                           {/* <TextField2
                                           label="Booked By"
@@ -515,7 +526,7 @@ const AdditonalBookingDetails = ({
                                           </div>
                                         </div>
                                       </div>
-                                      <div className="w-full lg:w-4/12 px-4">
+                                      <div className="w-full lg:w-4/12 ">
                                         <div className="relative w-full">
                                           <div className="w-full flex flex-col mb-3">
                                             <TextField
@@ -528,6 +539,7 @@ const AdditonalBookingDetails = ({
                                           </div>
                                         </div>
                                       </div>
+                                    </div>
                                     </div>
                                   </section>
                                 </section>

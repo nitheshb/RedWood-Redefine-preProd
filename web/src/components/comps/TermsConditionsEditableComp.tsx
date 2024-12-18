@@ -317,6 +317,33 @@ const TermsConditionsEditableTable = ({
     }
   }, [])
 
+  // const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
+  //   <li
+  //     className={`border-l-2 ${
+  //       activeItem === item
+  //         ? 'border-[#0891B2]'
+  //         : 'border-gray-80 hover:border-gray-400'
+  //     }`}
+  //   >
+  //     <a
+  //       href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
+  //       className={`block px-4 py-2 text-md ${
+  //         activeItem === item
+  //           ? 'text-[#0891B2] font-medium'
+  //           : 'text-gray-600 font-medium	hover:text-[#0891B2]'
+  //       }`}
+  //       onClick={(e) => {
+  //         e.preventDefault()
+  //         handleClick(item)
+  //       }}
+  //     >
+  //       {item}
+  //     </a>
+  //   </li>
+  // )
+
+
+
   const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
     <li
       className={`border-l-2 ${
@@ -330,17 +357,24 @@ const TermsConditionsEditableTable = ({
         className={`block px-4 py-2 text-md ${
           activeItem === item
             ? 'text-[#0891B2] font-medium'
-            : 'text-gray-600 font-medium	hover:text-[#0891B2]'
+            : 'text-gray-600 font-medium hover:text-[#0891B2]'
         }`}
         onClick={(e) => {
-          e.preventDefault()
-          handleClick(item)
+          e.preventDefault();
+          handleClick(item); // This updates activeItem and scrolls
         }}
       >
         {item}
       </a>
     </li>
-  )
+  );
+  
+
+
+//   const contentRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+// const [activeItem, setActiveItem] = useState<string>("");
+
+
 
   const [activeItem, setActiveItem] = useState(null)
   const contentRefs = useRef({})
@@ -497,16 +531,34 @@ const TermsConditionsEditableTable = ({
     }
   }
 
+  // const handleClick = (item: string) => {
+  //   setActiveItem(item)
+  //   if (contentRefs.current[item]) {
+  //     contentRefs.current[item].scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'start',
+  //     })
+  //     setCurrentSection(item)
+  //   }
+  // }
+
+
+
+
+
   const handleClick = (item: string) => {
-    setActiveItem(item)
+    setActiveItem(item); // Update the active item in state
     if (contentRefs.current[item]) {
-      contentRefs.current[item].scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-      setCurrentSection(item)
+      contentRefs.current[item]?.scrollIntoView({
+        behavior: 'smooth', // Smooth scrolling
+        block: 'start', // Align to top
+      });
     }
-  }
+    setCurrentSection(item); // Update current section if needed
+  };
+  
+
+
 
   const handleSave = (dataObj) => {
     console.log('sectionKey', dataObj)
@@ -752,7 +804,8 @@ const TermsConditionsEditableTable = ({
                 <div
                   key={key}
                   className="mb-24"
-                  ref={(el) => (contentRefs.current[key] = el)}
+                  ref={(el) => (contentRefs.current[dataObj?.title] = el)}
+                  // ref={(el) => (contentRefs.current[key] = el)}
                   // id={key.replace(/\s+/g, '-').toLowerCase()}
                 >
                   <h1 className="inline-block text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">

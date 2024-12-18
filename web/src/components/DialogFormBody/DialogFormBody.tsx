@@ -623,6 +623,7 @@ Marketed By*
 
 
                         <div className="flex flex-col mt-2   pt-2 ">
+                          
                           <CustomRadioGroup
                             label="Planning Authority Approval"
                             value={planningApproval}

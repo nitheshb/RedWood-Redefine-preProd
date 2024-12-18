@@ -588,17 +588,17 @@ leadPayload?.Mobile ||
             {/* <TextField label="Customer Name*" name="email" type="text" />
             <ErrorMessage name="email" className="text-red-500" /> */}
             <section
-              className="   bg-[#fff] rounded-md border pb-4 "
+              className="   bg-[#fff] rounded-[20px] border pb-4 "
               style={{ boxShadow: '0 1px 12px #f2f2f2' }}
             >
               <div
-                className="w-full  flex flex-row justify-between mb-2 p-4 bg-white-100 rounded-t-md"
+                className="w-full bg-[#EDEDED] flex flex-row justify-between mb-2 p-4 bg-white-100 rounded-t-[20px]"
                 // style={bgImgStyle}
               >
                 <section className="flex flex-row">
-                  <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
+                  {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
                   <div className="w-full flex flex-col">
-                    <div className=" flex flex-row gap-2 ">
+                    <div className="  flex flex-row gap-2 ">
                       <div>
                         <section className="flex flex-row">
                           <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
@@ -611,7 +611,7 @@ leadPayload?.Mobile ||
                           careful what you record.
                         </div>
 
-                        <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+                        {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
                       </div>
 
                       <div></div>

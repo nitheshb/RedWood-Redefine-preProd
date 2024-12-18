@@ -766,20 +766,18 @@ const CostBreakUpPdf = ({
   return (
     <div className="">
       {!pdfPreview && (
-        <div>
+        <div >
           <PDFExport
+            
             paperSize="A4"
             margin="0.5cm"
             fileName={`${selUnitDetails?.unit_no}_${leadDetailsObj1?.Name}_Nirvana`}
             ref={pdfExportComponent}
           >
             {' '}
-            <section
-              className="w-full flex flex-col  p-4 rounded-md   bg-[#fff]"
-              style={{ boxShadow: '0 1px 12px #f2f2f2' }}
-            >
-              <section className="flex flex-row">
-                <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
+
+            <section className="flex bg-[#EDEDED] p-4 rounded-t-[20px] flex-row">
+                {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
                 <div className="w-full flex flex-col">
                   <div className=" flex flex-row gap-2 ">
                     <div>
@@ -792,7 +790,7 @@ const CostBreakUpPdf = ({
                         Quotation,Unit Cost Calculation.
                       </div>
 
-                      <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+                      {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
                     </div>
 
                     <div></div>
@@ -803,6 +801,11 @@ const CostBreakUpPdf = ({
                                           </div> */}
                 </div>
               </section>
+            <section
+              className="w-full flex flex-col px-4   rounded-t-[20px]"
+              style={{ boxShadow: '0 1px 12px #f2f2f2' }}
+            >
+ 
               <div className="mt-6">
                 <div>
                   <div>
