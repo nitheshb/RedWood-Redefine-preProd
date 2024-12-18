@@ -541,7 +541,7 @@ const AdditonalBookingDetails = ({
                         </div>
                       </section>
                     </div>
-                    <div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
+                    <div className="mt-5 text-right  md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
                       {setShowApplicantEdit != undefined && (
                         <button
                           className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
@@ -553,15 +553,14 @@ const AdditonalBookingDetails = ({
                       )}
 
                       <button
-                        className="mb-2  md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-bg-gradient-to-r from-violet-500 to-indigo-500
+                        className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
+bg-gradient-to-r from-violet-600 to-indigo-600
 text-black
 
-border duration-200 ease-in-out
+ duration-200 ease-in-out
 transition
- px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
-px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
- "
+ px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+ bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-2 tracking-wider text-white  rounded-md hover:shadow-lg"
                         type="submit"
                         //disabled={loading}
                         disabled={loading || formik.isSubmitting}
@@ -576,14 +575,13 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       {setShowApplicantEdit == undefined && (
                         <button
                           className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-bg-gradient-to-r from-violet-500 to-indigo-500
+bg-gradient-to-r from-violet-600 to-indigo-600
 text-black
 
-border duration-200 ease-in-out
+ duration-200 ease-in-out
 transition
- px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
-px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
- "
+ px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+ bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-3 tracking-wider text-white  rounded-md hover:shadow-lg"
                           type="submit"
                           //disabled={loading}
                           disabled={loading || formik.isSubmitting}

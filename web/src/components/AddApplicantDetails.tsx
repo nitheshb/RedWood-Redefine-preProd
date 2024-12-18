@@ -926,12 +926,17 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
         resetForm
       )
     }
+    moveNextStep()
 
+  }
+
+  const moveNextStep =  () => {
     if (currentMode == 'unitBookingMode') {
       setOnStep('additonalInfo')
     } else if (currentMode == 'unitBlockMode') {
       setOnStep('blocksheet')
     }
+
   }
   const handleFileUploadFun = async (file, type, formik) => {
     if (!file) return
@@ -1003,7 +1008,30 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
         </Dialog.Title> */}
         </div>
 <CloneableEmailForm selUnitDetails={selUnitDetails} customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} leadPayload={leadPayload} />
+<div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full w-[680px]">
 
+
+
+
+                              <button
+                                className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
+bg-gradient-to-r from-violet-600 to-indigo-600
+text-black
+
+ duration-200 ease-in-out
+transition
+ px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+ bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-3 tracking-wider text-white  rounded-md hover:shadow-lg
+ "
+
+                                disabled={loading}
+                                onClick={() => moveNextStep()}
+                                // onClick={() => submitFormFun(formik)}
+                              >
+                                <span> {' Next'}</span>
+                              </button>
+
+                          </div>
         {/* <div className="">
           <div className="flex flex-col rounded-lg bg-white ">
             <div className="mt-0">
