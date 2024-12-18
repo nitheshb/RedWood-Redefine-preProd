@@ -1063,7 +1063,7 @@ const FloordetailsSearch = ({
                                                         leadDetailsObj:
                                                           leadDetailsObj,
                                                       },
-                                                      widthClass: 'max-w-4xl',
+                                                      widthClass: 'max-w-5xl',
                                                     })
                                                   }}
                                                 >
@@ -1289,7 +1289,7 @@ const FloordetailsSearch = ({
                         </section>
                         <div className=" px-8 mt-6">
                           {filteredUnits
-                            ?.filter((da) => !selBlock?.floorA?.includes(da?.floor_no))
+                            ?.filter((da) => !selBlock?.floorA?.includes(Number(da?.floor_no)))
                             .map((data, index) => {
                               return unitShrink ? (
                                 <div

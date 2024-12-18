@@ -319,67 +319,7 @@ const ViewUnitDetails = ({
   }
   return (
     <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll ">
-      <div className="px-3 pt-2 z-10 flex items-center justify-between ">
-        <Dialog.Title className=" font-semibold text-xl mr-auto  text-[#053219] w-full">
-          <div className="flex flex-row justify-between mb-1">
-<section  className="flex flex-row">
-            <div className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
-            <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
-                {data?.unitDetail?.unit_no}
-
-
-              </div>
-              <span
-                  className={`items-center h-6   text-xs font-semibold text-gray-500  rounded-full
-                      `}
-                >
-                  Unit No
-                </span>
-            </div>
-            <div className="flex flex-col ml-2 item-right">
-            <span
-                  className={`items-center h-1 mt-[10px] mb-2  text-xs font-semibold text-green-600
-                      `}
-                >
-                  {streamUnitDetails?.status?.toUpperCase()}
-                </span>
-              <div className="font text-[12px] text-gray-500 tracking-wide overflow-ellipsis overflow-hidden ">
-                {projectDetails?.projectName}
-              </div>
-            </div>
-            </section>
-
-            {/* 2 */}
-            <div className=" flex flex-row mt-2">
-              <span
-                className={`items-center cursor-pointer h-6 px-3 py-1  mt-1 text-xs font-semibold text-blue-600  mr-2 `}
-                onClick={() => {
-                  setShowUnitDetials(!showUnitDetails)
-                }}
-              >
-                {showUnitDetails ? 'Hide unit details' : 'View unit details'}
-              </span>
-
-              {data?.unitDetail?.status === 'available' && (    <div className=" flex flex-col mt-1">
-
-
-                {/* <ButtonDropDown
-                  type={'All Projects'}
-                  pickCustomViewer={setActionMode}
-                  selProjectIs={actionMode}
-                  dropDownItemsA={[
-                    ...[
-                      { label: 'Cost sheet', value: 'costSheetMode' },
-                      { label: 'Block Unit', value: 'unitBlockMode' },
-                      { label: 'Book Unit', value: 'unitBookingMode' },
-                    ],
-                  ]}
-                /> */}
-              </div>)}
-            </div>
-          </div>
-        </Dialog.Title>
-      </div>
+      
 
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col  mb-2  bg-[#f1f1f1] border border-gray-100">
