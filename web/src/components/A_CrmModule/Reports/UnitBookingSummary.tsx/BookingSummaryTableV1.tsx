@@ -1992,7 +1992,7 @@ const customTooltip = ({ payload, label }) => {
 </div>
 
 <div className="p-6 mt-6 rounded-t-[30px] bg-white flex justify-between items-center">
-          <h3 className="text-xl font-bold">Booking Summary box</h3>
+          <h3 className="text-xl font-bold">Booking Summary</h3>
           <div className="flex gap-4">
             <Filter className="text-gray-500" />
             <Download className="text-gray-500" />
