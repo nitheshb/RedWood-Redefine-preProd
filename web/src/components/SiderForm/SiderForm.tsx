@@ -394,9 +394,9 @@ const SiderForm = ({
                 {title === 'Add Lead' && (
                   <AddLeadForm title={title} dialogOpen={setOpen} />
                 )}
-                {title === 'New Transaction' && (
+                {/* {title === 'New Transaction' && (
                   <CaptureUnitPayment title={title} dialogOpen={setOpen} />
-                )}
+                )} */}
 
 
 

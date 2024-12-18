@@ -53,7 +53,7 @@ const App = () => (
       <ReduxProvider store={store}>
         <SnackbarProvider
           anchorOrigin={{
-            vertical: 'bottom',
+            vertical: 'top',
             horizontal: 'right',
           }}
           autoHideDuration={3000}

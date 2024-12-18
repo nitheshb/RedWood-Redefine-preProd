@@ -174,7 +174,7 @@ const CostBreakUpPdf = ({
       console.log('setUpData', costSqftA)
       const x = costConstructSqftA[0]
       setConstructionPerSqft(x?.charges)
-      setConstGST(x?.gst.value)
+      setConstGST(x?.gst?.value)
     }
   }, [])
   useEffect(() => {
@@ -184,7 +184,7 @@ const CostBreakUpPdf = ({
     x.constructPS = psConstructPayload || []
     x.fullPs = [...psPayload || [], ...psConstructPayload || []]
     setMyBookingPayload(x)
-    console.log('values are ',x.fullPs)
+    console.log('values are ',x?.fullPs)
   }, [psPayload, psConstructPayload])
 
   useEffect(() => {
@@ -197,10 +197,15 @@ const CostBreakUpPdf = ({
       paymentScheduleObj,
     } = selPhaseObj
     const { uid } = selUnitDetails
-    const y =
-      leadDetailsObj1[`${uid}_cs`]?.newSqftPrice || selUnitDetails?.sqft_rate
-    const z =
-      leadDetailsObj1[`${uid}_cs`]?.newPLC || selUnitDetails?.plc_per_sqft
+    let y = selUnitDetails?.sqft_rate
+    let z = selUnitDetails?.plc_per_sqft
+
+    if(leadDetailsObj1 && leadDetailsObj1[`${uid}_cs`]) {
+      y= leadDetailsObj1[`${uid}_cs`]?.newSqftPrice || selUnitDetails?.sqft_rate
+      z = leadDetailsObj1[`${uid}_cs`]?.newPLC || selUnitDetails?.plc_per_sqft
+
+    }
+
 
     // const plotSaleValue =
     //   costSheetA.length > 0

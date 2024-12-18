@@ -248,7 +248,7 @@ const AddUnit = ({
     return unsubscribe
   }, [])
   useEffect(() => {
-    phaseFeed.map((user) => {
+    phaseFeed?.map((user) => {
       user.label = user.phaseName
       user.value = user.phaseName
     })

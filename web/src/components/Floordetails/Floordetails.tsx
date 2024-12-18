@@ -1024,28 +1024,28 @@ const Floordetails = ({
                                   // onClick={() => handleDetailView_Close(data)}
                                   onClick={() => {
                                     console.log('check is ', leadDetailsObj)
-                                    if (
-                                      [
-                                        'projectManagement',
-                                        'projectOnboard',
-                                      ].includes(source)
-                                    ) {
-                                      setSelUnitDetails1(data)
-                                      setSliderInfo({
-                                        open: true,
-                                        title: 'Edit Unit',
-                                        sliderData: {
-                                          unitDetail: data,
-                                          phaseDetail: phaseFeed,
-                                          leadDetailsObj: leadDetailsObj,
-                                        },
-                                        widthClass: 'max-w-2xl',
-                                      })
-                                    } else {
-                                      console.log('customer Detailsare', data)
-                                      setSelUnitDetails1(data)
+                                    // if (
+                                    //   [
+                                    //     'projectManagement',
+                                    //     'projectOnboard',
+                                    //   ].includes(source)
+                                    // ) {
+                                    //   setSelUnitDetails1(data)
+                                    //   setSliderInfo({
+                                    //     open: true,
+                                    //     title: 'Edit Unit',
+                                    //     sliderData: {
+                                    //       unitDetail: data,
+                                    //       phaseDetail: phaseFeed,
+                                    //       leadDetailsObj: leadDetailsObj,
+                                    //     },
+                                    //     widthClass: 'max-w-2xl',
+                                    //   })
+                                    // } else {
+                                    //   console.log('customer Detailsare', data)
+                                    //   setSelUnitDetails1(data)
 
-                                      return
+                                    //   return
                                       // setSliderInfo({
                                       //   open: true,
                                       //   title: 'unit_view',
@@ -1056,7 +1056,7 @@ const Floordetails = ({
                                       //   },
                                       //   widthClass: 'max-w-7xl',
                                       // })
-                                    }
+                                    // }
                                   }}
                                 >
                                   <div>
@@ -1242,8 +1242,11 @@ const Floordetails = ({
                                             'customer_blocked',
                                             'management_blocked',
                                           ].includes(data?.status) && (
-                                            <div className="flex flex-col items-right justify-between"  onClick={() => {
+                                            <div className="flex flex-col items-right justify-between cursor"  onClick={() => {
+
+                                              console.log('title inside clicked')
                                               setIsCancelUnit(true)
+                                              // setisUnitDetailsOpen(true)
                                               setSelSubMenu('unblock_Unit')
                                               setSliderInfo({
                                                 open: true,
@@ -1252,10 +1255,10 @@ const Floordetails = ({
                                                   unitDetail: data,
                                                   phaseDetail: phaseFeed,
                                                   leadDetailsObj:
-                                                    leadDetailsObj,
+                                                    leadDetailsObj ||{},
                                                 },
 
-                                                widthClass: 'max-w-4xl',
+                                                widthClass: 'max-w-6xl',
                                               })
                                             }}>
                                               <div className="flex flex-row justify-between items-right">

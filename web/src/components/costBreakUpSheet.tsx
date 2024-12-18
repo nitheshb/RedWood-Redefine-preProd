@@ -441,6 +441,8 @@ console.log('customer info', myBookingPayload)
   const [loading, setLoading] = useState(false)
   const [isImportLeadsOpen, setisImportLeadsOpen] = useState(false)
   const [isMover, setIsMover] = useState(false)
+  const [showUnitDetails, setShowUnitDetials] = useState(false)
+
 
   const initialState = initialValuesA
   const validate = Yup.object({
@@ -669,10 +671,10 @@ console.log('customer info', myBookingPayload)
               <span
                 className={`items-center cursor-pointer h-6 px-3 py-1  mt-1 text-xs font-semibold text-blue-600  mr-2 `}
                 onClick={() => {
-                  // setShowUnitDetials(!showUnitDetails)
+                  setShowUnitDetials(!showUnitDetails)
                 }}
               >
-                {/* {showUnitDetails ? 'Hide unit details' : 'View unit details'} */}
+                {showUnitDetails ? 'Hide unit details' : 'View unit details'}
               </span>
 
               {selUnitDetails?.unitDetail?.status === 'available' && (    <div className=" flex flex-col mt-1">
@@ -695,6 +697,154 @@ console.log('customer info', myBookingPayload)
           </div>
         </Dialog.Title>
       </div>
+      {showUnitDetails && (
+                    <div className="py-3 grid grid-cols-3 mb-2">
+                      <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md">
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-700 tracking-wide">
+                            Unit No
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {streamUnitDetails?.unit_no}
+                          </div>
+                        </section>
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-500  tracking-wide">
+                            Size
+                            <span className="text-[10px] text-black-500 ml-1">
+                              (sqft)
+                            </span>
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {/* {streamUnitDetails?.builtup_area?.toLocaleString(
+                              'en-IN'
+                            )|| streamUnitDetails?.area?.toLocaleString(
+                              'en-IN'
+                            ) } */}
+                            {streamUnitDetails?.area?.toLocaleString('en-IN')}
+                          </div>
+                        </section>
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-500  tracking-wide">
+                            Facing
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {streamUnitDetails?.facing}
+                          </div>
+                        </section>
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-500  tracking-wide">
+                            BUA
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {/* {streamUnitDetails?.builtup_area?.toLocaleString(
+                              'en-IN'
+                            )|| streamUnitDetails?.area?.toLocaleString(
+                              'en-IN'
+                            ) } */}
+                            {streamUnitDetails?.builtup_area?.toLocaleString('en-IN') || streamUnitDetails?.construct_area?.toLocaleString('en-IN')}
+
+                          </div>
+                        </section>
+                      </section>
+                      <section className="flex flex-col mx-4 bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-700 tracking-wide">
+                            East
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {streamUnitDetails?.east_d?.toLocaleString('en-IN')}
+                          </div>
+                        </section>
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-500  tracking-wide">
+                            West
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {streamUnitDetails?.west_d?.toLocaleString('en-IN')}
+                          </div>
+                        </section>
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-500  tracking-wide">
+                            South
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {streamUnitDetails?.south_d?.toLocaleString('en-IN')}
+                          </div>
+                        </section>
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-500  tracking-wide">
+                            North
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {streamUnitDetails?.north_d?.toLocaleString('en-IN')}
+                          </div>
+                        </section>
+                      </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-700 tracking-wide">
+                          Release Status
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {(
+
+                              streamUnitDetails?.release_status
+                            )}
+                          </div>
+                        </section>
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-500  tracking-wide">
+                          Survey No
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {streamUnitDetails?.survey_no
+                            }
+                          </div>
+                        </section>
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-500  tracking-wide">
+                            Type
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {streamUnitDetails?.size}
+                          </div>
+                        </section>
+                        <section className="flex flow-row justify-between mb-1">
+                          <div className="font-md text-xs text-gray-500  tracking-wide">
+                            KathaId
+                          </div>
+                          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                            {streamUnitDetails?.kathaId}
+                          </div>
+                        </section>
+                      </section>
+                    </div>
+                  )}
                   {['costsheet', 'allsheets', 'payment_schedule'].includes(
                     onStep
                   ) && (

@@ -93,18 +93,16 @@ const AdditonalBookingDetails = ({
     industry: leadDetailsObj2?.industry || additionalInfo?.industry || '',
 
     leadSource:
-      leadDetailsObj2?.Status === 'booked'
-        ? leadDetailsObj2[`${uid}_otherInfo`]?.leadSource
-        : additionalInfo?.leadSource || '',
+      leadDetailsObj2?.Source || selUnitDetails?.leadSource || '',
     sourceOfPay:
       leadDetailsObj2?.Status === 'booked'
         ? leadDetailsObj2[`${uid}_otherInfo`]?.sourceOfPay
-        : additionalInfo?.sourceOfPay || '',
+        : additionalInfo?.sourceOfPay || selUnitDetails?.sourceOfPay || '',
     purpose:
       leadDetailsObj2?.Status === 'booked'
         ? leadDetailsObj2[`${uid}_otherInfo`]?.purpose
-        : additionalInfo?.purpose || '',
-    bookedOn: additionalInfo?.bookedOn || d,
+        : additionalInfo?.purpose || selUnitDetails?.purpose || '',
+    bookedOn: additionalInfo?.bookedOn ||selUnitDetails?.bookedOn || d,
 
     purchasePurpose: leadDetailsObj2?.purchasePurpose || '',
     // leadSource: "",
@@ -114,7 +112,7 @@ const AdditonalBookingDetails = ({
     bookedBy:
       leadDetailsObj2?.bookedBy ||
       leadDetailsObj2?.assignedToObj?.label ||
-      additionalInfo?.bookedBy ||
+      additionalInfo?.bookedBy || selUnitDetails?.bookedBy ||
       '',
 
     referralName: '', // New field for referral name
@@ -218,13 +216,17 @@ const AdditonalBookingDetails = ({
 
     const updateDoc = {
       aggrementDetailsObj,
-      ...xData,
+      // ...xData,
       industry,
       designation,
       annualIncome,
       bookingSource,
       bookedBy,
       purchasePurpose,
+      leadSource,
+      sourceOfPay,
+      purpose,
+      referralName,
 
     }
     setAdditonalInfo(data)
@@ -234,7 +236,7 @@ const AdditonalBookingDetails = ({
     if (source === 'fromBookedUnit') {
       updateUnitCustomerDetailsTo(
         orgId,
-        id,
+        selUnitDetails?.uid,
         updateDoc,
         'nitheshreddy.email@gmail.com',
         enqueueSnackbar,
@@ -244,6 +246,14 @@ const AdditonalBookingDetails = ({
       updateLeadCustomerDetailsTo(
         orgId,
         id,
+        updateDoc,
+        'nitheshreddy.email@gmail.com',
+        enqueueSnackbar,
+        resetForm
+      )
+      updateUnitCustomerDetailsTo(
+        orgId,
+        selUnitDetails?.uid,
         updateDoc,
         'nitheshreddy.email@gmail.com',
         enqueueSnackbar,
@@ -270,6 +280,7 @@ const AdditonalBookingDetails = ({
                 enableReinitialize={true}
                 initialValues={initialState}
                 onSubmit={(values, { resetForm }) => {
+                  console.log('formik submitted',source, values, resetForm)
                   onSubmit(values, resetForm)
                 }}
               >
@@ -563,7 +574,7 @@ transition
  bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-2 tracking-wider text-white  rounded-md hover:shadow-lg"
                         type="submit"
                         //disabled={loading}
-                        disabled={loading || formik.isSubmitting}
+                        disabled={loading}
                         onClick={()=>{
                           setIsMover(false)
                         }}
@@ -584,7 +595,7 @@ transition
  bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-3 tracking-wider text-white  rounded-md hover:shadow-lg"
                           type="submit"
                           //disabled={loading}
-                          disabled={loading || formik.isSubmitting}
+                          disabled={loading}
                           onClick={()=>{
                             setIsMover(true)
                           }}
