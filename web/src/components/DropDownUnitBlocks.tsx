@@ -2,6 +2,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
+
+import { useNavigate } from 'react-router-dom'
+
+
+import { useState } from 'react'
+// import { useNavigate } from '@redwoodjs/router'
+
 import {
   ChevronDownIcon,
   FireIcon,
@@ -27,7 +34,21 @@ export default function DropDownUnitBlocks({
   totalunits: totalUnits,
   filteredUnits,
   pickedValue,
+
 }) {
+
+
+
+  const handleSaveBlock = async (blockName) => {
+     localStorage.setItem('selectedBlock', blockName)
+   
+  }
+
+
+
+  // const [selectedBlock, setSelectedBlock] = useState(null)
+  // const navigate = useNavigate()
+
   return (
     <div className="text-right inline-block ml-7 mt-[-5px] bg-white rounded px-2">
       <Menu as="div" className="relative inline-block text-left">
@@ -204,12 +225,16 @@ export default function DropDownUnitBlocks({
                                 ? 'bg-violet-500 text-white'
                                 : 'text-gray-900'
                             } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                            onClick={() => setStatusFun(viewData)}
+                            // onClick={() => setStatusFun(viewData)}
                             // onClick={() => {
                             //   setStatusFun(viewData);
                             //   formik.setFieldValue('block_no', viewData.blockName);
                             // }}
 
+             
+                            onClick={() => handleSaveBlock(viewData.blockName)}
+
+                            
                           >
                             {active ? (
                               <DuplicateActiveIcon

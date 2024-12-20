@@ -49,6 +49,8 @@ const EmailForm = ({
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   useEffect(() => {
     console.log('custoemr infor is',index,"-->", customerInfo)
+    console.log('Customer Name:', customerInfo?.customerName1);
+
     if(leadPayload){
       setGivenPhNo1(leadPayload?.Mobile || '')
     }
@@ -469,6 +471,7 @@ leadPayload?.Mobile ||
       [field]: !isNaN(numValue) ? numValue : null,
     }))
   }
+
   const handleFileUploadFun = async (file, type, formik) => {
     if (!file) return
     try {
@@ -557,6 +560,13 @@ leadPayload?.Mobile ||
   const replaceFormData = async (formik) => {
     searchFun(formik)
   }
+
+
+
+
+
+
+
   return (
     <>
     <Formik
@@ -582,17 +592,17 @@ leadPayload?.Mobile ||
             {/* <TextField label="Customer Name*" name="email" type="text" />
             <ErrorMessage name="email" className="text-red-500" /> */}
             <section
-              className="   bg-[#fff] rounded-md border pb-4 "
+              className="   bg-[#fff] rounded-[20px] border pb-4 "
               style={{ boxShadow: '0 1px 12px #f2f2f2' }}
             >
               <div
-                className="w-full  flex flex-row justify-between mb-2 p-4 bg-white-100 rounded-t-md"
+                className="w-full bg-[#EDEDED] flex flex-row justify-between mb-2 p-4 bg-white-100 rounded-t-[20px]"
                 // style={bgImgStyle}
               >
                 <section className="flex flex-row">
-                  <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
+                  {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
                   <div className="w-full flex flex-col">
-                    <div className=" flex flex-row gap-2 ">
+                    <div className="  flex flex-row gap-2 ">
                       <div>
                         <section className="flex flex-row">
                           <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
@@ -605,7 +615,7 @@ leadPayload?.Mobile ||
                           careful what you record.
                         </div>
 
-                        <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+                        {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
                       </div>
 
                       <div></div>
@@ -940,11 +950,23 @@ leadPayload?.Mobile ||
                           </InputAdornment>
                         ),
                       }}
+                      inputProps={{
+                        inputMode: 'numeric',
+                        pattern: '[0-9]*', 
+                        maxLength: 12, 
+                      }}
                       label=""
                       name="aadharNo1"
                       type="text"
                       value={formik.values.aadharNo1}
-                      onChange={formik.handleChange}
+                      // onChange={formik.handleChange}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/[^0-9]/g, '');
+                        if (value.length <= 12) {
+                          formik.setFieldValue('aadharNo1', value);
+                        }
+                      }}
+                      
                     />
                       {formik.errors.aadharNo1 && formik.touched.aadharNo1 && (
         <div className="text-red-500 text-xs ml-2">{formik.errors.aadharNo1}</div>
@@ -1177,6 +1199,10 @@ leadPayload?.Mobile ||
                         label="Country Name"
                         name="countryName1"
                         type="text"
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                          formik.setFieldValue('countryName1', value);
+                        }}
                       />
                     </div>
                   </div>

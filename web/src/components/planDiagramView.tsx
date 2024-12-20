@@ -130,7 +130,7 @@ const PlanDiagramView = ({
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-row px-4">
+      <div className="w-full flex flex-col px-4">
         <div className="w-full">
           <section className="justify-between">
             <section className="flex flex-row justify-between">
@@ -356,8 +356,9 @@ const PlanDiagramView = ({
             >
               <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
                 Better always attach a string
+                <br/>
                 {editOpitionsObj && (
-                  <span className="text-blue-600"> Add {title}</span>
+                  <span className="text-blue-600 inline-block pt-2"> Add {title}</span>
                 )}
               </time>
             </button>

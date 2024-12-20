@@ -849,7 +849,7 @@ console.log('customer info', myBookingPayload)
                     onStep
                   ) && (
                     <div className="">
-                      <div className="flex flex-col mx-0 bg-[#F8FAFC] ">
+                      <div className="flex flex-col p-2 border mx-0 bg-[#F8FAFC] ">
                         <div className="">
                           <Formik
                             enableReinitialize={true}
@@ -863,7 +863,7 @@ console.log('customer info', myBookingPayload)
                             {(formik) => (
                               <Form ref={ref} className="">
                                 <section
-                                  className="bg-[#fff] rounded-md border m-2"
+                                  className="bg-[#fff]  rounded-[20px] border m-2"
                                   style={{
                                     boxShadow: '0 1px 12px #f2f2f2',
                                   }}
@@ -969,7 +969,7 @@ console.log('customer info', myBookingPayload)
                                     </div>
                                   <div className="mt-2 text-right md:space-x-3 md:block flex flex-row-reverse justify-between mb-3">
 
-                                    <section>
+                                    <section className='flex gap-2'>
                                     <button
                                       className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
 bg-gradient-to-r from-violet-600 to-indigo-600
