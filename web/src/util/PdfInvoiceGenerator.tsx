@@ -780,7 +780,7 @@ const MyDocument = ({
   <Image src={pdfimg5} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
 
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
-    Email address:
+    Email:
     </Text>
     <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{streamUnitDetails?.custObj1?.email1}</Text>
   </View>
@@ -2327,7 +2327,7 @@ style={[
     </Document>
   )
 }
-const PdfInvoiceGenerator = ({
+export default PdfInvoiceGenerator = ({
   user,
   selUnitDetails,
   streamUnitDetails,
@@ -2368,6 +2368,7 @@ const PdfInvoiceGenerator = ({
             setPartBTotal={setPartBTotal}
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
-            custObj1={custObj1}
+            custObj1={custObj1} />
+        } /></div>)}
 
 
