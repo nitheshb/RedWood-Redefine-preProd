@@ -2327,7 +2327,7 @@ style={[
     </Document>
   )
 }
-export default PdfInvoiceGenerator = ({
+const PdfInvoiceGenerator = ({
   user,
   selUnitDetails,
   streamUnitDetails,
@@ -2372,3 +2372,4 @@ export default PdfInvoiceGenerator = ({
         } /></div>)}
 
 
+export default PdfInvoiceGenerator
