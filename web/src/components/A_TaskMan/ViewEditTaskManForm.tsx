@@ -85,6 +85,7 @@ import {
 import Confetti from '../shared/confetti'
 
 import { CustomSelectNew } from 'src/util/formFields/selectBoxFieldNew'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 const people = [
   { name: 'Priority 1' },
   { name: 'Priority 2' },

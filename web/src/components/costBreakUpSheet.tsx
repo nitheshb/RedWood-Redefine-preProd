@@ -941,8 +941,6 @@ console.log('customer info', myBookingPayload)
                                       setPartCTotal={setPartCTotal}
                                       setPartDTotal={setPartDTotal}
                                       showOnly={onStep}
-
-
                                     />
                                   )}
                                 </section>
@@ -952,6 +950,7 @@ console.log('customer info', myBookingPayload)
                                       <PdfInvoiceGenerator
                                         user={user}
                                         selUnitDetails={selUnitDetails}
+                                        streamUnitDetails={streamUnitDetails}
                                         myBookingPayload= {myBookingPayload}
                                         myObj={newPlotCostSheetA}
                                         newPlotPS={newPlotPS}

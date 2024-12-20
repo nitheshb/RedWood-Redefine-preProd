@@ -17,6 +17,8 @@ import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { TextField } from 'src/util/formFields/TextField'
 import NoBorderDropDown from './comps/noBorderDropDown'
 import { useSnackbar } from 'notistack'
+import CrmConfirmationDialog from './A_CrmModule/CrmConfirmationDialog'
+import WarningModel from './comps/warnPopUp'
 
 
 const EmailSchema = Yup.object().shape({
@@ -30,6 +32,7 @@ const EmailForm = ({
   selUnitDetails,
   customerInfo,
   handleClone,
+  handleDelete,
   setShowApplicantEdit,
   index,
 }) => {
@@ -43,7 +46,7 @@ const EmailForm = ({
   const [givenPhNo2, setGivenPhNo2] = useState('')
   const [statesListA, setStatesList] = useState([])
   const [fetchedLeadsObj, setFetchedLeadsObj] = useState({})
-
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   useEffect(() => {
     console.log('custoemr infor is',index,"-->", customerInfo)
     if(leadPayload){
@@ -555,6 +558,7 @@ leadPayload?.Mobile ||
     searchFun(formik)
   }
   return (
+    <>
     <Formik
       enableReinitialize={true}
       initialValues={initialState}
@@ -1109,19 +1113,49 @@ leadPayload?.Mobile ||
                   </div>
                 </div>
                 <div className="w-full  flex flex-row lg:w-12/12 mt-1">
-                  <div className="w-full lg:w-12/12 px- ">
+                <div className="w-full lg:w-12/12 ">
+                    {/* Pincode 2 */}
+                    <div className="relative w-full mb-3 ">
+                      <TextField label="Pincodes" name="pincode1" type="text"
+                      onChange={(e)=>{
+                        formik.setFieldValue('pincode1', e.target.value)
+                        if(e.target.value.length == 6){
+
+                          fetch(
+                            `https://api.postalpincode.in/pincode/${e.target.value}`)
+                          .then(res => res.json())
+                          .then(data => {
+                            console.log('data is', data)
+                            if(data.length > 0){
+                              formik.setFieldValue('city1', data[0]?.PostOffice[0]?.Block)
+                              if(data[0]?.PostOffice[0]?.State){
+                                let fil=  statesListA.filter((d)=> d.label == data[0]?.PostOffice[0]?.State)
+                                formik.setFieldValue('state1', fil[0].value)}
+                              formik.setFieldValue('countryName1', data[0]?.PostOffice[0]?.Country)
+                            }
+                          })
+                        }
+      }}/>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-12/12 px- pl-4">
                     <div className="relative w-full mb-3 mt-">
                       <TextField label="City" name="city1" type="text" />
                     </div>
                   </div>
-                  <div className="w-full lg:w-12/12 pl-4">
+
+                </div>
+
+                <div className="w-full flex flex-row lg:w-12/12 mt-">
+                <div className="w-full lg:w-12/12 ">
                     <div className="relative w-full mb-3 mt-">
-                      <div className="w-full flex flex-col mb-3">
+                      <div className="w-full flex flex-col mb-3 mt-2">
                         <CustomSelect
                           name="state1"
                           label="State"
                           className="input"
                           onChange={(value) => {
+                            console.log('value is ', value.value)
                             formik.setFieldValue('state1', value.value)
                           }}
                           value={formik.values.state1}
@@ -1136,10 +1170,7 @@ leadPayload?.Mobile ||
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="w-full flex flex-row lg:w-12/12 mt-">
-                  <div className="w-full lg:w-12/12 px-">
+                  <div className="w-full lg:w-12/12  pl-4">
                     {/* Country Name 2 */}
                     <div className="relative w-full mb-3 mt-2">
                       <TextField
@@ -1149,12 +1180,7 @@ leadPayload?.Mobile ||
                       />
                     </div>
                   </div>
-                  <div className="w-full lg:w-12/12 pl-4">
-                    {/* Pincode 2 */}
-                    <div className="relative w-full mb-3 mt-2">
-                      <TextField label="Pincode" name="pincode1" type="text" />
-                    </div>
-                  </div>
+
                 </div>
               </section>
               {/* section-4 */}
@@ -1196,6 +1222,17 @@ leadPayload?.Mobile ||
                       />
                     </div>
                   </div>
+                  <WarningModel
+            type={'Danger'}
+            open={isDialogOpen}
+            setOpen={setIsDialogOpen}
+            proceedAction={handleDelete}
+            title={'Are you sure you want to delete this user?'}
+            subtext={
+              '   Selected data will be permanently removed. This action cannot be undone.'
+            }
+            actionBtnTxt={'Delete'}
+          />
                 </div>
               </section>
             </section>
@@ -1203,7 +1240,8 @@ leadPayload?.Mobile ||
           <div className=" flex flex-row-reverse">
             <button type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save</button>
 
-      <button onClick={handleClone} className="mb-4 ml-6 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Save & Add New Applicant</button>
+      <button onClick={handleClone} className="mb-4  md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Save & Add New Applicant</button>
+      {index !=0 && <button onClick={()=>setIsDialogOpen(true)} className="mb-4  md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Delete</button>}
 
             {/* <button
               type="button"
@@ -1222,7 +1260,15 @@ leadPayload?.Mobile ||
         </Form>
       )}
     </Formik>
+      {isDialogOpen && (
+        <CrmConfirmationDialog
+          onConfirm={handleDelete}
+          onCancel={()=>setIsDialogOpen(false)}
+        />
+      )}
+      </>
   )
+
 }
 
 // export default EmailForm
@@ -1348,6 +1394,10 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
     setForms((prev) => [...prev, { id: Date.now() }])
   }
 
+  const handleDelete = (formId)=>{
+    setForms(forms.filter(form=>form.id!==formId))
+  }
+
   return (
     <div className="space-y-8">
       {forms.map((form, i) => (
@@ -1361,6 +1411,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
             customerInfo={applicantDetailsA[i]}
             leadPayload={leadPayload}
             handleClone={handleClone}
+            handleDelete={()=>handleDelete(form.id)}
             index={i}
             // customerInfo={}
           />
