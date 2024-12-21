@@ -214,8 +214,8 @@ const CostBreakUpEditor = ({
   }
   const handlePriceChangePartD = (index, price) => {
     console.log('changed price is ', price)
-    const updatedRows = [...partCPayload]
-    console.log('new value is ', partCPayload)
+    const updatedRows = [...partDPayload]
+    console.log('new value is ', partDPayload)
     updatedRows[index].charges = price
 
     let total = 0
@@ -1308,7 +1308,7 @@ const CostBreakUpEditor = ({
                 submitManagerApproval('approved')
               }}
             >
-              {'Approvee'}
+              {'Approve'}
             </button>
           </div>
         </div>

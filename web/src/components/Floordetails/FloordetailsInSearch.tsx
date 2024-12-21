@@ -790,7 +790,7 @@ const FloordetailsSearch = ({
 
             <section className="flex flex-row px-6 py-1 pl-0 justify-between">
             <section className="flex flex-row">
-              {['Apartment', 'Villas'].includes(
+              {['Apartment', 'Villas' , 'WeekendVillas'].includes(
                   projectDetails?.projectType?.name
                 ) && (
                   <DropDownUnitBlocks
@@ -1861,7 +1861,7 @@ const FloordetailsSearch = ({
                 </li>
               </ul>
             )}
-            {!['Apartment', 'Plots', 'Villas'].includes(
+            {!['Apartment', 'Plots', 'Villas', 'WeekendVillas'].includes(
               projectDetails?.projectType?.name
             ) && (
               <ul className="">

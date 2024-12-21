@@ -63,7 +63,7 @@ const CostBreakUpPdf = ({
   const ref = createRef()
 
   useEffect(() => {
-    if (newPlotPS.length > 2) {
+    if (newPlotPS?.length > 2) {
       console.log('sel unti detials ', selUnitDetails, newPlotPS[1]['value'])
     }
     console.log('sel unti detials ', selUnitDetails, newPlotPS)
@@ -773,7 +773,7 @@ const CostBreakUpPdf = ({
       {!pdfPreview && (
         <div >
           <PDFExport
-            
+
             paperSize="A4"
             margin="0.5cm"
             fileName={`${selUnitDetails?.unit_no}_${leadDetailsObj1?.Name}_Nirvana`}
@@ -810,7 +810,7 @@ const CostBreakUpPdf = ({
               className="w-full flex flex-col px-4   rounded-t-[20px]"
               style={{ boxShadow: '0 1px 12px #f2f2f2' }}
             >
- 
+
               <div className="mt-6">
                 <div>
                   <div>

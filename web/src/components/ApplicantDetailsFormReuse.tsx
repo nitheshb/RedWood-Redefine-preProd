@@ -374,7 +374,7 @@ leadPayload?.Mobile ||
     annualIncome1:
       // leadPayload?.customerDetailsObj?.annualIncome1 ||
       selUnitDetails?.customerDetailsObj?.annualIncome1 ||
-      customerInfo?.annualIncome1 ||
+      customerInfo?.annualIncome1  ||
       '',
     // annualIncome2:
     //   leadPayload?.secondaryCustomerDetailsObj?.annualIncome2 ||
@@ -452,25 +452,8 @@ leadPayload?.Mobile ||
         console.error('Error downloading image:', error)
       })
   }
-  const [income, setIncome] = useState<{
-    annualIncome1: number | null
-    annualIncome2: number | null
-  }>({
-    annualIncome1: null,
-    annualIncome2: null,
-  })
-  const handleIncomeChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: keyof typeof income
-  ) => {
-    const rawValue = e.target.value.replace(/,/g, '')
-    const numValue = parseFloat(rawValue)
+  const [income, setIncome] = useState(0)
 
-    setIncome((prev) => ({
-      ...prev,
-      [field]: !isNaN(numValue) ? numValue : null,
-    }))
-  }
 
   const handleFileUploadFun = async (file, type, formik) => {
     if (!file) return
@@ -574,7 +557,9 @@ leadPayload?.Mobile ||
       initialValues={initialState}
       validationSchema={validateSchema}
       onSubmit={(values, { resetForm }) => {
-        console.log('submitted', values)
+        console.log('submitted ==>', income)
+
+         values.annualIncome1 = Number(values.annualIncome1.replace(/,/g, ''))
 
         onSubmit(values, resetForm)
       }}
@@ -952,8 +937,8 @@ leadPayload?.Mobile ||
                       }}
                       inputProps={{
                         inputMode: 'numeric',
-                        pattern: '[0-9]*', 
-                        maxLength: 12, 
+                        pattern: '[0-9]*',
+                        maxLength: 12,
                       }}
                       label=""
                       name="aadharNo1"
@@ -966,7 +951,7 @@ leadPayload?.Mobile ||
                           formik.setFieldValue('aadharNo1', value);
                         }
                       }}
-                      
+
                     />
                       {formik.errors.aadharNo1 && formik.touched.aadharNo1 && (
         <div className="text-red-500 text-xs ml-2">{formik.errors.aadharNo1}</div>
@@ -1237,14 +1222,17 @@ leadPayload?.Mobile ||
                         label="Annual Income"
                         name="annualIncome1"
                         type="text"
-                        // value={annualIncome !== null ? formatIndianNumber(annualIncome) : ''}
-                        // onChange={handleIncomeChange}
                         value={
-                          income.annualIncome1 !== null
-                            ? formatIndianNumber(income.annualIncome1)
-                            : ''
+                        formik.values.annualIncome1.toLocaleString('en-IN')
                         }
-                        onChange={(e) => handleIncomeChange(e, 'annualIncome1')}
+                        onChange={(e) =>{
+                          const rawValue = Number(e.target.value.replace(/,/g, ''))?.toLocaleString('en-IN')
+
+
+                          formik.setFieldValue('annualIncome1', rawValue)
+                          // handleIncomeChange(rawValue)
+                        }
+                        }
                       />
                     </div>
                   </div>

@@ -1030,7 +1030,7 @@ const Floordetails = ({
                                     //     'projectOnboard',
                                     //   ].includes(source)
                                     // ) {
-                                    //   setSelUnitDetails1(data)
+                                      setSelUnitDetails1(data)
                                     //   setSliderInfo({
                                     //     open: true,
                                     //     title: 'Edit Unit',
@@ -1320,7 +1320,7 @@ const Floordetails = ({
                         </section>
                         <div className=" px-5 mt-6">
                           {filteredUnits
-                            ?.filter((da) => !selBlock?.floorA.includes(Number(da?.floor_no)))
+                            ?.filter((da) => !selBlock?.floorA?.includes(Number(da?.floor_no)))
                             .map((data, index) => {
                               return unitShrink ? (
                                 <div

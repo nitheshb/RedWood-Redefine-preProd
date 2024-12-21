@@ -81,20 +81,15 @@ const CaptureUnitPayment = ({
 
 
 
-  function formatIndianNumber(value) {
-    if (!value) return '';
 
-    // Convert the value to a string (in case it's a number)
-    const numStr = value.toString();
 
-    // Format the integer part using Indian number grouping
-    // First, handle the last 3 digits, then format the rest in groups of 2 digits
-    const formattedInteger = numStr.replace(
-      /(\d)(?=(\d{2})+(?!\d))/g, // This regex matches digits for Indian numbering
-      '$1,' // Adds a comma after every 2 digits (except at the start)
-    );
-
-    return formattedInteger;
+   const formatIndianNumber = function (num) {
+    const [integerPart, decimalPart] = num.toString().replace(/,/g, '').split('.');
+    const lastThree = integerPart.slice(-3);
+    const otherNumbers = integerPart.slice(0, -3);
+    const formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+    const result = formattedNumber + (formattedNumber ? ',' : '') + lastThree;
+    return decimalPart ? `${result}.${decimalPart}` : result;
   }
 
 
@@ -447,7 +442,7 @@ const CaptureUnitPayment = ({
                             <div className="w-full mx-auto">
                               <div className="relative flex flex-col min-w-0 break-words w-full mb-6  rounded-lg bg-white ">
                                 <div className=" flex flex-row px-0 py-2  overflow-auto ">
-                                  <section className=" p- rounded-md ">
+                                  <section className=" p- rounded-md w-full ">
                                     <article className="mt-3">
                                       <div className="flex flex-row  justify-between">
                                         <section className="flex flex-row">
@@ -665,7 +660,7 @@ const CaptureUnitPayment = ({
                                                     className="flex flex-col items-center gap-x-1"
                                                     key={i}
                                                     onClick={() => {
-                                                      setPaymentModex(dat.value)
+                                                      // setPaymentModex(dat.value)
                                                       formik.setFieldValue(
                                                         'mode',
                                                         dat.value

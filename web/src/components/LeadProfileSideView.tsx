@@ -415,6 +415,8 @@ export default function LeadProfileSideView({
       (querySnapshot) => {
         const SnapData = querySnapshot.data()
         SnapData.id = id
+    console.log('lead changed', SnapData)
+
         setLeadDetailsObj(SnapData)
       },
       { uid: id },
@@ -3723,7 +3725,7 @@ export default function LeadProfileSideView({
         open={isImportLeadsOpen}
         setOpen={setisImportLeadsOpen}
         title={'Edit Lead'}
-        leadDetailsObj={customerDetails}
+        leadDetailsObj={leadDetailsObj}
         widthClass="max-w-2xl"
       />
     </>
