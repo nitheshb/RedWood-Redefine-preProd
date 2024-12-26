@@ -5413,9 +5413,14 @@ export const updateManagerApproval = async (
           to: status,
         },
       ])
-    enqueueSnackbar('CS Approved..!', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('CS Approved..!', {
+    //   variant: 'success',
+    // })
+    enqueueSnackbar(
+      `CS ${status === 'approved' ? 'Approved' : 'Rejected'}..!`,
+      { variant: status === 'approved' ? 'success' : 'error' }
+    );
+    
   } catch (error) {
     console.log('CS Approved Updation Failed', error, {
       ...data,
@@ -5600,9 +5605,17 @@ export const updateKycApproval = async (
           to: status,
         },
       ])
-    enqueueSnackbar('KYC Approved..!', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('KYC Approved..!', {
+    //   variant: 'success',
+    // })
+
+    enqueueSnackbar(
+      `KYC ${status === 'approved' ? 'Approved' : 'Rejected'}..!`,
+      { variant: status === 'approved' ? 'success' : 'error' }
+    );
+    
+ 
+    
   } catch (error) {
     console.log('KYC Approved Updation Failed', error, {
       ...data,
@@ -5613,6 +5626,9 @@ export const updateKycApproval = async (
   }
   return
 }
+
+
+
 export const updatePosessionApproval = async (
   orgId,
   unitId,

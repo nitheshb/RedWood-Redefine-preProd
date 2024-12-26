@@ -45,6 +45,21 @@ import ShowCustomerDetails from './CrmShowCustomerDetails'
 import CancelUnitForm from './A_UnitCancel.tsx/CancelUnitForm'
 import UnitAudit from './A_Crm_UnitAudit/UnitAudit'
 import UnblockUnitForm from './A_UnitUnblock/UnblockUnitForm'
+import { Bed, Building2, Calendar, Compass, DollarSign, Home, Ruler, Square } from 'lucide-react'
+
+
+
+import units1 from '../../../public/units1.png'
+import units2 from '../../../public/units2.png'
+import units3 from '../../../public/units3.png'
+import units4 from '../../../public/units4.png'
+
+
+
+import Dimensions from '../../../public/Dimensions.png'
+
+
+
 
 
 // interface iToastInfo {
@@ -1080,8 +1095,8 @@ export default function UnitFullSummary({
       )}
       {selFeature === 'unit_information' && (
         <>
-          <div className="flex flex-col  my-10 rounded-lg bg-white border border-gray-100 px-4 m-4 mt-4">
-            <div className="py-3 grid grid-cols-4 gap-4 mb-4">
+          <div className="">
+            <div className="">
 
               {/* <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
                 <section className="flex flow-row justify-between mb-1">
@@ -1122,7 +1137,7 @@ export default function UnitFullSummary({
               </section> */}
 
 
-              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+              {/* <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
 
 
   <div className="flex items-center mb-2">
@@ -1158,10 +1173,25 @@ export default function UnitFullSummary({
     </div>
 
   </section>
-</section>
 
 
 
+  
+
+
+
+
+
+
+</section> */}
+
+
+
+
+
+
+
+{/* 
               <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
 
 
@@ -1188,13 +1218,13 @@ export default function UnitFullSummary({
     </div>
 
   </section>
-</section>
+</section> */}
 
 
 
 
 
-<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+{/* <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
 
 
   <div className="flex items-center mb-2">
@@ -1222,10 +1252,10 @@ export default function UnitFullSummary({
     </div>
 
   </section>
-</section>
+</section> */}
 
 
-
+{/* 
 <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
 
 
@@ -1258,7 +1288,11 @@ export default function UnitFullSummary({
     </div>
 
   </section>
-</section>
+</section> */}
+
+
+
+
 
 
 
@@ -1401,7 +1435,7 @@ export default function UnitFullSummary({
             </div>
 
 
-            <div className="py-3 grid grid-cols-4 gap-4 mb-4">
+            <div className="">
 
 
             {(customerDetails?.projectType?.name === 'Villas' || customerDetails?.projectType?.name === 'Apartment') && (
@@ -1539,7 +1573,7 @@ export default function UnitFullSummary({
 
 
 
-              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+              {/* <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
 
 
   <div className="flex items-center mb-2">
@@ -1563,13 +1597,10 @@ export default function UnitFullSummary({
       <div className="text-xs text-gray-500">Mortgage Type
       </div>
     </div>
-    {/* <div className="text-start">
-      <div className="text-base font-semibold text-slate-900"></div>
-      <div className="text-xs text-gray-500">North</div>
-    </div> */}
+
 
   </section>
-</section>
+</section> */}
 
 
 
@@ -1587,6 +1618,369 @@ export default function UnitFullSummary({
 
 
           </div>
+
+          
+
+
+
+          <div className="h-[65%]  mx-4 bg-[#f0f1ff] grid grid-cols-3 gap-2 rounded-lg border border-gray-100 p-4">
+
+
+            {/* box1 */}
+           
+
+        
+          <div className="w-full max-w-[400px]   h-[200px] shadow-md  rounded-[10px]   bg-white  pt-4  ">
+        <h2 className="text-[18px] font-semibold ml-10 text-[#3D3D3D]  ">
+          Units
+        </h2>
+        <div className='border-b-2 my-4 border-[#484848]'></div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6  mx-8 items-center">
+          
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={units1}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.unit_no}</div>
+              <div className="text-xs  font-medium text-[#949494]">Unit No</div>
+            </div>
+          </div>
+
+        
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={units2}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.area?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Size (sqft)</div>
+            </div>
+          </div>
+
+        
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={units3}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.facing}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Facing</div>
+            </div>
+          </div>
+
+        
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={units4}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium   text-[#949494]">BUA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+         
+
+   
+
+       {/* box2 */}
+
+      <div className="w-full max-w-[400px] h-[200px] shadow-md rounded-[10px]  bg-white pt-4   ">
+        <h2 className="text-[18px] font-semibold ml-10 text-[#3D3D3D]  ">
+        Dimensions
+        </h2>
+        <div className='border-b-2 my-4 border-[#484848]'></div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 ml-8 ">
+ 
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <img src={Dimensions} className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+
+
+
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate"> {selCustomerPayload?.east_d?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium   text-[#949494]">East</div>
+            </div>
+          </div>
+
+ 
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={Dimensions} className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transform rotate-180" /> 
+
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.west_d?.toLocaleString('en-IN')}</div>
+              <div className="text-xs   font-medium  text-[#949494]">West</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={Dimensions} className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transform rotate-90" /> 
+
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.south_d?.toLocaleString('en-IN')}</div>
+              <div className="text-xs   font-medium  text-[#949494]">South</div>
+            </div>
+          </div>
+
+     
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img 
+  src={Dimensions} 
+  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transform rotate-220" 
+/>
+
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.north_d?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium   text-[#949494]">North</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      
+      {/* <div className="w-full max-w-[400px] shadow-md rounded-lg px-4 sm:px-6 py-4 sm:py-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#3D3D3D]  ">
+        Schedule
+        </h2>
+        <div className='border-b-2 my-4 border-[#949494]'></div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
+              <div className="text-xs sm:text-sm text-[#949494]">East By</div>
+            </div>
+          </div>
+
+          
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
+              <div className="text-xs sm:text-sm text-[#949494]">West By</div>
+            </div>
+          </div>
+
+      
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
+              <div className="text-xs sm:text-sm text-[#949494]">South By</div>
+            </div>
+          </div>
+
+        
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}</div>
+              <div className="text-xs sm:text-sm text-[#949494]">North By</div>
+            </div>
+          </div>
+        </div>
+      </div> */}
+
+
+<div className="w-full max-w-[400px] h-[200px] shadow-md rounded-[10px]  bg-white   pt-4 ">
+  <h2 className="text-[18px] font-semibold ml-10 text-[#3D3D3D]">Schedule</h2>
+  <div className="border-b-2 my-4 border-[#484848]"></div>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 mx-8 gap-6">
+
+    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+        <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-xs  text-[#949494]">East By</div>
+      </div>
+    </div>
+
+  
+    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+        <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-xs  text-[#949494]">West By</div>
+      </div>
+    </div>
+
+ 
+    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+        <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-xs  text-[#949494]">South By</div>
+      </div>
+    </div>
+
+
+    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+        <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-xs  text-[#949494]">North By</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+     
+
+     {/* box4 */}
+      <div className="w-full max-w-[400px]  h-[200px] shadow-md rounded-[10px]   bg-white  pt-4 ">
+        <h2 className="text-[18px] ml-10 font-semibold text-[#3D3D3D]  ">
+        Additonal Details
+        </h2>
+        <div className='border-b-2 my-4 border-[#484848]'></div>
+
+        <div className="grid grid-cols-1 mx-8 sm:grid-cols-2 gap-6 ">
+       
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.rate_per_sqft?.toLocaleString('en-IN')}</div>
+              <div className="text-xs   font-medium  text-[#949494]">Cost</div>
+            </div>
+          </div>
+
+     
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium   text-[#949494]">PLC</div>
+            </div>
+          </div>
+
+       
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.facing}</div>
+              <div className="text-xs   font-medium  text-[#949494]">Total</div>
+            </div>
+          </div>
+
+     
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.kathaId}</div>
+              <div className="text-xs   font-medium  text-[#949494]">KathaId</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {/* box 5 */}
+
+      <div className="w-full max-w-[400px] shadow-md  h-[200px]   bg-white  rounded-[10px]  pt-4 ">
+        <h2 className="text-[18px] font-semibold ml-10 text-[#3D3D3D]  ">
+        Status
+        </h2>
+        <div className='border-b-2 my-4 border-[#484848]'></div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 mx-8 gap-4">
+        
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.status}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Status</div>
+            </div>
+          </div>
+
+      
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.release_status?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Release Status</div>
+            </div>
+          </div>
+
+        
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.mortgage_type}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Mortgage Type</div>
+            </div>
+          </div>
+
+          
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+    
+
+
+
+
+
+
+
 
 
 

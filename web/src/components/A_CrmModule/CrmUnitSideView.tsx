@@ -578,6 +578,7 @@ export default function UnitSideViewCRM({
   }
 
   const setStatusFun = async (leadDocId, newStatus) => {
+    console.log('New Statusiiiiiiiii: ', newStatus); 
     const x = StatusListA.filter((d) => d.value === status)
     let allowedList = [{ allowed: [] }]
     if (x.length > 0) {
@@ -1146,18 +1147,18 @@ return
                                           )}{' '}
 
                                         </span>}
-                                        <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                        <span className="  text-[10px] h-[20px]  text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {selCustomerPayload?.area?.toLocaleString(
                                             'en-IN'
                                           )}{' '}
                                           sqft
                                         </span>
 
-                                        <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                        <span className="  text-[10px] h-[20px] text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {selCustomerPayload?.facing}
                                         </span>
 
-                                         <span className=" ml- text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                         <span className=" text-[10px]  text-[#824605] font-bodyLato font-[600] mt-[2px] bg-[#fff0c7] px-[14px] py-[8px] rounded-xl mr-1 ">
                         Booked : {prettyDate(selCustomerPayload?.booked_on || 0)}
                       </span>
                                       </section>
@@ -1172,7 +1173,7 @@ return
                   <section
                     style={{ padding: '12px 16px' }}
 
-                   className="flex flow-row justify-between bg-white   mb-1 mr-2   text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
+                   className="flex flow-row justify-between bg-white  py-[15px]  mr-2   text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
                     <div className="font-md text-xs  text-gray-700 tracking-wide mr-1">
                       CRM Owner
                     </div>
@@ -1196,15 +1197,16 @@ return
                       )}
                     </div>
                   </section>
-                  <section className="flex flow-row justify-between mb-1 mr-2 py-[0px] px-[10px] bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
+                  <section className="flex flow-row justify-between  py-[15px] mr-2    px-[15px] bg-white text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
                     <div className="font-md text-xs text-gray-700 tracking-wide mr-1">
                       Status
                     </div>
                     <div className="font-md  ml-8  text-xs tracking-wide font-semibold text-slate-900 ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div className='mb-1.5'>
+                        <div className='mb-2'>
                           <AssigedToDropComp
-                            assignerName={unitStatus}
+                           assignerName={unitStatus}
+                          
                             id={id}
                             setAssigner={setStatusFun}
                             usersList={StatusListA}
@@ -1220,22 +1222,24 @@ return
                       )}
                     </div>
                   </section>
-                { (user?.role.includes('crm-manager') || user?.role.includes('crm-executive') || user?.role.includes('admin'))&&  <section
-                    className="text-center px-[10px] py-[2px] pt-[3px] h-[24px] bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
+                { (user?.role.includes('crm-manager') || user?.role.includes('crm-executive') || user?.role.includes('admin'))&&  <button
+                    className="text-[10px]  rounded-2xl ml-2 bg-[#E3BDFF] px-5 border    border-[#E3BDFF] text-white"
                     onClickCapture={() => {
                       openPaymentFun()
                     }}
                   >
                     CAPTURE PAYMENT
-                  </section>}
-                  {customerDetails?.man_cs_approval==="approved" &&<section
-                    className="text-center px-[10px] py-[2px]  pt-[3px] h-[24px] ml-2 bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
+                  </button>}
+
+                  {customerDetails?.man_cs_approval==="approved" &&<button
+                    className=" text-[10px]  rounded-2xl ml-2 bg-white px-5 border  border-[#E3BDFF]"
                     onClickCapture={() => {
                       openDemandFun()
                     }}
                   >
                     NEW DEMAND
-                  </section>}
+                  </button>}
+
                 </section>
               </section>
             </div>
