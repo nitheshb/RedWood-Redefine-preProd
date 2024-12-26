@@ -361,7 +361,7 @@ const BookingSummaryView = ({
   }, [netTotal, plotBookingAdv, csMode])
 
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
-    const newPs = psPayload.map((d1) => {
+    const newPs = psPayload?.map((d1) => {
       const z = d1
       // if (csMode === 'plot_cs') {
       if ('plot_cs' === 'plot_cs') {
@@ -429,7 +429,7 @@ const BookingSummaryView = ({
     setPartCTotal(partCTotal)
     setPartDTotal(partDTotal)
     setNetTotal(partATotal + partBTotal +partCTotal + partDTotal)
-    selPhaseObj?.paymentScheduleObj.map((data) => {
+    selPhaseObj?.paymentScheduleObj?.map((data) => {
       if (data.stage?.value === 'on_booking') {
         setPlotBookingAdv(data?.percentage)
       }

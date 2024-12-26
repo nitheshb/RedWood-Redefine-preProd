@@ -267,7 +267,7 @@ export default function UnitSideViewCRM({
 
   const streamUnitDataFun = () => {
     const { id } = customerDetails
-    console.log('hello', customerDetails)
+    console.log('hello ==>', customerDetails, unitPayload)
     const z = streamUnitById(
       orgId,
       (querySnapshot) => {

@@ -2370,6 +2370,14 @@ export default function UnitFullSummary({
                     ), lab: 'Cost & Payments', val: 'finance_info' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.64648 11.5347H6.64648C3.33715 11.5347 2.64648 12.2254 2.64648 15.5347V18.5347C2.64648 21.844 3.33715 22.5347 6.64648 22.5347H18.6465C21.9558 22.5347 22.6465 21.844 22.6465 18.5347V15.5347C22.6465 13.3236 22.3382 12.2815 21.1465 11.8334" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12.6465 18.5347H18.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17.8907 3.66758C18.3378 3.18245 18.5614 2.93989 18.7989 2.79841C19.3721 2.45701 20.078 2.4464 20.6607 2.7704C20.9022 2.90468 21.1327 3.14042 21.5935 3.61188C22.0544 4.08335 22.2848 4.31908 22.4161 4.56616C22.7328 5.16234 22.7224 5.88438 22.3887 6.47078C22.2504 6.7138 22.0133 6.9425 21.5391 7.3999L15.8969 12.8422C14.4021 14.284 13.4762 14.583 11.4057 14.5288C11.0298 14.5189 10.8419 14.514 10.7327 14.3898C10.6234 14.2657 10.6383 14.074 10.6681 13.6905C10.8057 11.9228 11.1171 11.0171 12.3202 9.71173L17.8907 3.66758Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+
+                    ), lab: 'Documents', val: 'agreement_info' },
+                    { icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.64648 5.03467H9.40384C10.1995 5.03467 10.9626 5.35074 11.5252 5.91335L14.6465 9.03467" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M5.64648 14.0347H2.64648" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M9.14648 8.03467L11.1465 10.0347C11.6988 10.587 11.6988 11.4824 11.1465 12.0347C10.5942 12.587 9.69877 12.587 9.14648 12.0347L7.64648 10.5347C6.78579 11.3954 5.42319 11.4922 4.44942 10.7619L4.14648 10.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2378,14 +2386,7 @@ export default function UnitFullSummary({
                 </svg>
 
                     ), lab: 'Loan details', val: 'loan_info' },
-                    { icon: (
-                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7.64648 11.5347H6.64648C3.33715 11.5347 2.64648 12.2254 2.64648 15.5347V18.5347C2.64648 21.844 3.33715 22.5347 6.64648 22.5347H18.6465C21.9558 22.5347 22.6465 21.844 22.6465 18.5347V15.5347C22.6465 13.3236 22.3382 12.2815 21.1465 11.8334" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12.6465 18.5347H18.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M17.8907 3.66758C18.3378 3.18245 18.5614 2.93989 18.7989 2.79841C19.3721 2.45701 20.078 2.4464 20.6607 2.7704C20.9022 2.90468 21.1327 3.14042 21.5935 3.61188C22.0544 4.08335 22.2848 4.31908 22.4161 4.56616C22.7328 5.16234 22.7224 5.88438 22.3887 6.47078C22.2504 6.7138 22.0133 6.9425 21.5391 7.3999L15.8969 12.8422C14.4021 14.284 13.4762 14.583 11.4057 14.5288C11.0298 14.5189 10.8419 14.514 10.7327 14.3898C10.6234 14.2657 10.6383 14.074 10.6681 13.6905C10.8057 11.9228 11.1171 11.0171 12.3202 9.71173L17.8907 3.66758Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linejoin="round"/>
-                </svg>
 
-                    ), lab: 'Agreement  details', val: 'agreement_info' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M19.6465 11.0347V10.5347C19.6465 6.76343 19.6465 4.87782 18.4749 3.70624C17.3034 2.53467 15.4177 2.53467 11.6465 2.53467C7.87524 2.53467 5.98963 2.53467 4.81805 3.70624C3.64648 4.87782 3.64648 6.76343 3.64648 10.5347V16.5347C3.64648 18.3985 3.64648 19.3303 3.95096 20.0654C4.35694 21.0455 5.13563 21.8242 6.11575 22.2302C6.85083 22.5347 7.78271 22.5347 9.64648 22.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2426,7 +2427,7 @@ export default function UnitFullSummary({
                 <path d="M14.1465 20.5347C14.1465 20.5347 15.1465 20.5347 16.1465 22.5347C16.1465 22.5347 19.323 17.5347 22.1465 16.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M7.64648 16.5347H11.6465M7.64648 11.5347H15.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
                 <path d="M7.14649 4.03467C5.59069 4.08134 4.6631 4.25451 4.02126 4.89694C3.14258 5.77644 3.14258 7.19197 3.14258 10.023V16.5291C3.14258 19.3602 3.14258 20.7757 4.02126 21.6552C4.89994 22.5347 6.31416 22.5347 9.14258 22.5347H11.6426M16.1387 4.03467C17.6945 4.08134 18.6221 4.25451 19.2639 4.89695C20.1426 5.77644 20.1426 7.19197 20.1426 10.023V14.0347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M7.14258 4.28467C7.14258 3.31817 7.92609 2.53467 8.89258 2.53467H14.3926C15.3591 2.53467 16.1426 3.31817 16.1426 4.28467C16.1426 5.25117 15.3591 6.03467 14.3926 6.03467H8.89258C7.92609 6.03467 7.14258 5.25117 7.14258 4.28467Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M7.14258 4.28467C7.14258 3.31817 7.92609 2.53467 8.89258 2.53467H14.3926C15.3591 2.53467 16.1426 3.31817 16.1426 4.28467C16.1426 5.25117 15.3591 6.03467 14.3926 6.03467H8.89258C7.92609 6.03467 7.14258 5.25117 7.14258 4.28467Z"  stroke-width="1.5" stroke-linejoin="round"/>
                 </svg>
 
                     ), lab: 'Unit Audit', val: 'unit_audit' },
@@ -2442,20 +2443,24 @@ export default function UnitFullSummary({
 
                         <div className='flex  items-center gap-3 text-gray-500 hover:bg-gray-50 p-2 rounded-lg cursor-pointer w-60'>
 
-                        <span 
-                        
+                        <span  className={`hover:text-[#484848] border-transparent   ${
+                            selFeature === d.val
+                              ? 'text-[#484848]'
+                              : ''
+                          }`}
+
                         >{d.icon}</span>
                         <button
-                          className={`inline-block py-3 mr-3 px-1 text-sm font-medium text-center text-[#A6A6A6] rounded-lg border-b-2  hover:text-[#484848]    ${
+                          className={`inline-block py-3 mr-3 px-1 text-sm font-medium text-center text-[#A6A6A6] rounded-lg border-b-2  hover:text-[#484848]  border-transparent  ${
                             selFeature === d.val
-                              ? 'border-transparent text-[#484848]'
-                              : 'border-transparent'
+                              ? ' text-[#484848]'
+                              : ''
                           }`}
                           type="button"
                           role="tab"
                           onClick={() => setFeature(d.val)}
                         >
-                         <span className={`${
+                         <span className={`mt-[3px] ${
                             selFeature === d.val
                               ? 'border-transparent text-[#484848]'
                               : 'border-transparent'
@@ -2464,7 +2469,7 @@ export default function UnitFullSummary({
 
 
 
-                 
+
 
                         </button>
 

@@ -75,7 +75,7 @@ const useStyles = () =>
           marginLeft: '20px',
           marginRight: '20px',
           marginTop: '20px',
-        
+
         },
 
 
@@ -195,7 +195,7 @@ const useStyles = () =>
           // borderBottomWidth: 0.5,
           // borderStyle: 'solid',
           // borderColor: '#DFE3E8',
-          
+
         },
         borderbottom: {
           borderBottomWidth: 1,
@@ -237,7 +237,7 @@ const useStyles = () =>
           borderBottomLeftRadius: '16px',
           borderBottomRightRadius: '16px',
         },
-        
+
 
 
         tableHeader: {
@@ -245,7 +245,7 @@ const useStyles = () =>
           flexDirection: 'row',
           alignItems:'flex-end'
 
-      
+
         },
         bg: {
           backgroundColor: '#F3FFF2',
@@ -288,7 +288,7 @@ const useStyles = () =>
         tableCell_200: {
           width: '20%',
           paddingRight: 3,
-          
+
         },
 
         tableCell_20: {
@@ -571,6 +571,7 @@ const invoiceDet: IInvoice[] = [
 const MyDocument = ({
   user,
   selUnitDetails,
+  streamUnitDetails,
   myBookingPayload,
   myObj,
   newPlotPS,
@@ -625,7 +626,7 @@ const MyDocument = ({
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-  
+
 
         <View style={[ styles.fitternew, ]}>
 
@@ -652,19 +653,19 @@ const MyDocument = ({
             {/* <Text>{myObj} </Text> */}
           </View>
 
-        
+
 
 <View
   style={[
     styles.col6,
-  
+
     // styles.fitternew,
     {
       flexDirection: 'column',
       justifyContent: 'flex-end',
-      alignItems: 'flex-end',    
+      alignItems: 'flex-end',
       height: '100%',
-                  
+
     },
   ]}
 >
@@ -687,7 +688,7 @@ const MyDocument = ({
 
 
 
-                 
+
 
         </View>
 
@@ -699,7 +700,7 @@ const MyDocument = ({
     styles.ml3,
     styles.cellBgHead,
     styles.AllsmallFitter,
-   
+
     // styles.mb10,
   ]}
 >
@@ -742,17 +743,17 @@ const MyDocument = ({
 
 
   <View>
-  
+
   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
   <Image src={pdfimg1} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
 
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Applicant Name:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>  {selUnitDetails?.custObj1?.customerName1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.customerName1}</Text>
   </View>
 
-  
+
 
 
   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
@@ -761,7 +762,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Customer ID:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {selUnitDetails?.custObj1?.id}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.address1}</Text>
   </View>
 
 
@@ -771,17 +772,17 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Phone number:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {selUnitDetails?.custObj1?.phoneNo1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.phoneNo1}</Text>
   </View>
 
-  
+
   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
   <Image src={pdfimg5} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
 
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
-    Email address:
+    Email:
     </Text>
-    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{selUnitDetails?.custObj1?.email1}</Text>
+    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{streamUnitDetails?.custObj1?.email1}</Text>
   </View>
 </View>
 
@@ -792,10 +793,10 @@ const MyDocument = ({
 
 
 
-  
 
 
-   
+
+
 
 
 
@@ -818,11 +819,11 @@ const MyDocument = ({
               <Text  style={[styles.subtitle2, { fontWeight: 'bold' }]}>
                 Unit No:{' '}     </Text>
                 <Text style={[ { marginLeft: 15 }]}>{selUnitDetails?.unit_no}</Text>
-         
+
               </View>
 
 
-              
+
               <View style={{ flexDirection: 'row' }}>
 
               <Text  style={[styles.subtitle2, { fontWeight: 'bold' }]}>
@@ -834,7 +835,7 @@ const MyDocument = ({
                     {selUnitDetails?.area}sqft{')'}
                   </Text>
                 </Text>
-             
+
 
               </View>
 
@@ -844,7 +845,7 @@ const MyDocument = ({
               <Text style={[styles.subtitle2, { fontWeight: 'bold' }]}>
                 Facing:{' '} </Text>
                 <Text style={[ { marginLeft: 15 }]}>{selUnitDetails?.facing}</Text>
-             
+
               </View>
 
 
@@ -853,7 +854,7 @@ const MyDocument = ({
       <Text style={[ { marginLeft: 15 }]}>
         {leadDetailsObj1?.Mobile}
       </Text>
-    </View> 
+    </View>
 
 
 
@@ -882,7 +883,7 @@ const MyDocument = ({
     <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selUnitDetails?.unit_no}</Text>
   </View>
 
-  
+
   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
   <Image src={pdfimg6} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
@@ -914,8 +915,12 @@ const MyDocument = ({
     </Text>
     <Text style={{ flex: 1,  color:'#6A6A6A' }}>
       {projectDetails?.projectType?.name === 'Apartment'
-        ? projectDetails?.projectType?.displayName || 'Flat'
-        : projectDetails?.projectType?.displayName || 'Plot'}
+        ? 'Flat'
+        :projectDetails?.projectType?.name === 'Plots'
+        ? 'Plot'
+        : projectDetails?.projectType?.name === 'Villas'
+        ? 'Villa'
+        : ''}
     </Text>
   </View>
 </View>
@@ -923,7 +928,7 @@ const MyDocument = ({
 
 
 
-            
+
           </View>
 
 
@@ -934,20 +939,20 @@ const MyDocument = ({
             {/* <Text style={styles.subtitle2}>Unit Cost:</Text>
             <Text style={styles.body2}>
               {user?.role[0]}
-            </Text> 
+            </Text>
             <Text style={styles.subtitle2}>Current status:</Text>
             <Text style={styles.subtitle2}>Booked date:</Text>
             <Text style={styles.subtitle2}>Booked by</Text> */}
 
 <View>
-  
+
   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
   <Image src={pdfimg9} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
 
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Unit Cost:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> ₹{partATotal?.toLocaleString('en-IN')}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> ₹{netTotal?.toLocaleString('en-IN')}</Text>
   </View>
 
 
@@ -957,7 +962,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Current Status:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selUnitDetails?.status}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{streamUnitDetails?.status}</Text>
   </View>
 
 
@@ -965,29 +970,20 @@ const MyDocument = ({
   <Image src={pdfimg11} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
 
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
-      Booked Date:
+      Issued Date:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>
-
-    {selUnitDetails?.custObj1?.dob1
-    ? new Date(selUnitDetails.custObj1.dob1).toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-      })
-    : 'N/A'}
-    </Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{prettyDate(Timestamp.now().toMillis())}</Text>
   </View>
 
-  
+{/*
   <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
   <Image src={pdfimg12} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
 
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Booked By:
     </Text>
-    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{selUnitDetails?.custObj1?.bookedBy}</Text>
-  </View>
+    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{streamUnitDetails?.bookedBy}</Text>
+  </View> */}
 </View>
 
 
@@ -995,16 +991,16 @@ const MyDocument = ({
 
 
 
-   
 
-          
-        </View>
 
 
         </View>
-       
 
- 
+
+        </View>
+
+
+
 
         {/* <View style={[styles.gridContainer, styles.mb40]}>
           <View style={styles.col6}>
@@ -1020,7 +1016,7 @@ const MyDocument = ({
         </View> */}
 
 
-    <View style={[styles.bgb,]} 
+    <View style={[styles.bgb,]}
     onRender={(e) => handleTableRender(e, 1)}
     >
 
@@ -1033,7 +1029,7 @@ const MyDocument = ({
                 styles.col,
                 styles.smallFitter,
                 // styles.pt2,
-                styles.mT1, 
+                styles.mT1,
                 styles.ml2,
                 { color:'#3D3D3D', fontWeight: 450 , fontSize: 10,}
               ]}
@@ -1052,10 +1048,10 @@ const MyDocument = ({
             >
               Know your charges
             </Text>
-         
+
           </View>
 
-             
+
 {/* part-1 */}
 
 
@@ -1069,8 +1065,8 @@ const MyDocument = ({
                 styles.mb5,
                 styles.col,
                 styles.smallFitter,
-                styles.ml2, 
-               
+                styles.ml2,
+
               ]}
             >
               I. Plot charges
@@ -1142,7 +1138,7 @@ const MyDocument = ({
                   </View>
                 </View>
 
-                
+
               </View>
               <View>
                 {myObj?.map((item, index) => (
@@ -1225,7 +1221,7 @@ const MyDocument = ({
                 {/* part 2 */}
               </View>
             </View>
-  
+
           </View>
           {/* part -2 */}
 
@@ -1301,7 +1297,7 @@ const MyDocument = ({
                   </View>
 
                   <View
-                    style={[styles.tableCell_20, styles.alignRight, styles.p12,      
+                    style={[styles.tableCell_20, styles.alignRight, styles.p12,
                       styles.pr8,
                      { paddingLeft:'0px',}]}
                   >
@@ -1392,7 +1388,7 @@ const MyDocument = ({
 
                 <View style={[styles.tableCell_20, styles.alignRight]}>
                   <Text>{fCurrency(partBTotal)}</Text>
-                  
+
                 </View>
               </View>
 
@@ -1401,8 +1397,8 @@ const MyDocument = ({
             </View>
             <View>
 
-              
-       
+
+
 
 
             </View>
@@ -1575,7 +1571,7 @@ const MyDocument = ({
                 {/* part 2 */}
               </View>
             </View>
- 
+
           </View>}
           {/* part -4 */}
 
@@ -1605,8 +1601,8 @@ const MyDocument = ({
                     backgroundColor: '#EDEDED',
                     borderTopLeftRadius: 6,
                     borderTopRightRadius: 6,
-                   
-                  
+
+
                   },
                 ]}
               >
@@ -1615,7 +1611,7 @@ const MyDocument = ({
                     styles.tableHeader,
                     styles.p4,
                     styles.ml1,
-                    
+
                     { paddingBottom: '2px' },
                   ]}
                 >
@@ -1749,7 +1745,7 @@ const MyDocument = ({
 
 
             </View>
- 
+
 
           </View>}
           {/* part -5 */}
@@ -1948,14 +1944,14 @@ const MyDocument = ({
                   ].map((item, index) => (
                     <View
                       key={index}
-                      
+
                       style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         marginBottom: 10,
                         paddingLeft: 10,
                         paddingRight: 10,
-                        
+
                       }}
                     >
                       <Text style={{ fontSize: 9, fontWeight: 'normal' }}>
@@ -1975,8 +1971,8 @@ const MyDocument = ({
                       padding: 8,
                       borderBottomLeftRadius: 6,
                       borderBottomRightRadius: 6,
-                     
-                      
+
+
                     }}
                   >
                     <Text style={{ fontSize: 9, fontWeight: 'medium' }}>
@@ -1998,23 +1994,23 @@ const MyDocument = ({
 
             </View>
           </View>}
-         
+
 
           {/* </View> */}
 
-          </View>  
+          </View>
 
              {/*Payment Schedule box  */}
 
 
-               
 
 
- 
 
-           
- 
-  
+
+
+
+
+
 
 
 
@@ -2022,16 +2018,16 @@ const MyDocument = ({
 
 
 
-       
+
 
     </View>
 
 
-    
+
 
 
       <View style={[styles.bgb, ]}
-        // break={index === myBookingPayload.plotPS.length - 1 ? 'after' : null} 
+        // break={index === myBookingPayload.plotPS.length - 1 ? 'after' : null}
       >
 
 
@@ -2069,7 +2065,7 @@ const MyDocument = ({
     >
       When to pay & what to pay
     </Text>
- 
+
   </View>
 
 
@@ -2140,11 +2136,11 @@ style={[
 styles.tableRow,
 styles.borderbottom,
 styles.textcolor,
-{  
+{
  marginTop: '2px', paddingTop: '4px' },
 ]}
 key={item.id}
-break={index === myBookingPayload.plotPS.length - 1 ? 'after' : null} 
+break={index === myBookingPayload.plotPS.length - 1 ? 'after' : null}
 >
 <View
 style={[
@@ -2334,6 +2330,7 @@ style={[
 const PdfInvoiceGenerator = ({
   user,
   selUnitDetails,
+  streamUnitDetails,
   myBookingPayload,
   myObj,
   newPlotPS,
@@ -2358,6 +2355,7 @@ const PdfInvoiceGenerator = ({
           <MyDocument
             user={user}
             selUnitDetails={selUnitDetails}
+            streamUnitDetails={streamUnitDetails}
             myBookingPayload={myBookingPayload}
             myObj={myObj}
             newPlotPS={newPlotPS}
@@ -2370,33 +2368,8 @@ const PdfInvoiceGenerator = ({
             setPartBTotal={setPartBTotal}
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
-            custObj1={custObj1}
-        
+            custObj1={custObj1} />
+        } /></div>)}
 
-          />
-        }
-        fileName="sample.pdf"
-      >
-        {({ blob, url, loading, error }) =>
-          loading ? (
-            <button>Loading document...</button>
-          ) : (
-            <span
-              className="mb-4 md:mb-0 underline hover:scale-110 focus:outline-none bg-white px-1 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider rounded-sm hover:shadow-lg hover:bg-gray-100         hover:bg-teal-200
-
-            text-blue-700
-
-             duration-200 ease-in-out
-             transition"
-            >
-          <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
-          Download Cost Sheet
-            </span>
-          )
-        }
-      </PDFDownloadLink>
-    </div>
-  )
-}
 
 export default PdfInvoiceGenerator

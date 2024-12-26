@@ -570,7 +570,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     'Villa Type Category',
   ]
 
-  const crmItems = ['Lead Source', 'Booking By']
+  const crmItems = ['Lead Source',]
 
   const dataMap: { [key: string]: { label: string }[] } = {
     'Planning Authority': approvalAuthority,
@@ -589,7 +589,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     'Mortgage Type': mortgageType,
     'Lead Source': sourceListItems,
     'Villa Type Category': VillaCsSectionsA,
-    'Booking By': [],
+    // 'Booking By': [],
   }
 
   useEffect(() => {
@@ -718,7 +718,7 @@ useEffect(() => {
         const oA = bankA.filter((item) => item.title === 'Status')
         const pA = bankA.filter((item) => item.title === 'Mortgage Type')
         const qA = bankA.filter((item) => item.title === 'Lead Source')
-        const rA = bankA.filter((item) => item.title === 'Booking By')
+        // const rA = bankA.filter((item) => item.title === 'Booking By')
         const sA = bankA.filter((item) => item.title === 'Villa Type Category');
 
 

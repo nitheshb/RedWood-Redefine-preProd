@@ -42,6 +42,7 @@ import { currentStatusDispFun } from 'src/util/leadStatusDispFun'
 import AssigedToDropComp from './assignedToDropComp'
 import Loader from './Loader/Loader'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import { use } from 'i18next'
 
 const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => {
   const d = new window.Date()
@@ -73,6 +74,15 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
     loadDataFun(customerDetails, sourceList, projectList)
     getLeadScheduleLog()
   }, [customerDetails,leadDetailsObj,  sourceList, projectList])
+
+  useEffect(() => {
+  //  if(leadDetailsObj?.id){
+
+  //  }
+
+
+  }, [])
+
   const loadDataFun = async (customerDetails,  sourceList, projectList) => {
 
     if (title!='Edit Lead' && customerDetails) {
@@ -248,6 +258,13 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
   const devTypeSel = async (sel) => {
     await setdevType(sel)
   }
+
+  useEffect(() => {
+   if(leadDetailsObj?.preferredType){
+    setSelected(leadDetailsObj?.preferredType)
+   }
+  }, [leadDetailsObj])
+
   const onSubmitFun = async (data, resetForm) => {
 
     //console.log(data)
@@ -276,6 +293,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
           value: data?.assignedToObj?.value || '',
           offPh: data?.assignedToObj?.offPh || '',
         },
+        preferredType: selected || {},
       }
 
       if(leadDetailsObj?.Status === 'unassigned' && data?.assignedToObj?.value != leadDetailsObj?.Status){
@@ -384,6 +402,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
         value: assignedToObj?.value || '',
         offPh: assignedToObj?.offPh || '',
       },
+      preferredType: selected || {},
       by: user?.email,
     }
 

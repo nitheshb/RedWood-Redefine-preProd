@@ -151,7 +151,7 @@ const CrmUnitSummary = ({
       0
     )
 
-    const partATotal = selUnitPayload?.plotCS.reduce(
+    const partATotal = selUnitPayload?.plotCS?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
       0
     )

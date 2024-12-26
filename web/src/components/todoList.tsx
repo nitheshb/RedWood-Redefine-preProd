@@ -255,10 +255,16 @@ const TodoListView = ({
       setParticipantsData_D(ParticipantsData_D)
       bootBusinessFun(ParticipantsData_D)
     }
+
+    if(selPriority != '' || searchText != ''){
+      console.log('is clicked ==>');
+      setShowSettings(false)
+    }
   }, [
     businessData_F,
     ParticipantsData_D,
     subSection,
+    isClicked,
     sortType,
     searchText,
     selPriority,
@@ -386,6 +392,7 @@ const TodoListView = ({
   }
 
   useEffect(() => {
+    console.log('is clicked', isClicked, selPriority)
     if (isClicked === 'personal_tasks') {
       const x = personalData_F.filter(
         (d) =>
@@ -396,8 +403,13 @@ const TodoListView = ({
       )
       setPersonalData_D(x)
       sortPersonalDataFun(x)
+      if(selPriority != '' || searchText != ''){
+        console.log('is clicked ==>');
+        setShowSettings(false)
+      }
     } else if (isClicked === 'dept_tasks') {
       setShowSettings(true)
+
     }
   }, [isClicked, searchText, sortType, selPriority, personalData_F])
 

@@ -3303,7 +3303,7 @@ export const updateLeadData = async (orgId, id, data, by) => {
 
   try {
     const washingtonRef = doc(db, `${orgId}_leads`, id)
-    console.log('check add LeadLog', washingtonRef)
+    console.log('check add LeadLog', washingtonRef,'passed data', data)
 
     await updateDoc(washingtonRef, data)
   } catch (error) {
