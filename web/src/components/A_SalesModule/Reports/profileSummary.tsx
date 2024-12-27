@@ -75,8 +75,8 @@ export default function ProfileSummary() {
 
   return (
     <div className="m-2">
-      <div className="bg-white">
-        {/* <figure>
+      <div className="bg-white  border-neutral-300 rounded-lg shadow-lg p-5">
+        <figure>
           <svg
             className="w-full"
             preserveAspectRatio="none"
@@ -119,11 +119,11 @@ export default function ProfileSummary() {
               </clipPath>
             </defs>
           </svg>
-        </figure> */}
+        </figure>
 
-<div className="w-full h-64">
+{/* <div className="w-full h-64">
   <img src={profilecover} className="w-full h-full object-cover !rounded-none" alt="" />
-</div>
+</div> */}
 
 
       <UserAvatarUpload />
