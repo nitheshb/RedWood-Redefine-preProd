@@ -75,7 +75,7 @@ export default function ProfileSummary() {
 
   return (
     <div className="m-2">
-      <div className=" bg-white">
+      <div className="bg-white">
         {/* <figure>
           <svg
             className="w-full"
@@ -122,8 +122,9 @@ export default function ProfileSummary() {
         </figure> */}
 
 <div className="w-full h-64">
-  <img src={profilecover} className="w-full h-full" alt="" />
+  <img src={profilecover} className="w-full h-full object-cover !rounded-none" alt="" />
 </div>
+
 
       <UserAvatarUpload />
         {/* <div className="-mt-12 relative flex items-center justify-center">
