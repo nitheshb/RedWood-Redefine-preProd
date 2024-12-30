@@ -632,8 +632,14 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
 
 
 
+
+
 <div className=''>
 <div className="p-4 mt-6 rounded-[30px] bg-white w-full max-w-7xl mx-auto">
+
+<div className='border-2 rounded-[30px] border-[#f1f1f1] p-4'>
+
+
         <div className="flex items-center  mb-4">
           <div>
             <h2 className="text-xl font-medium text-gray-800">
@@ -671,7 +677,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
         </div>
         {selCat === 'project_collections' && (
                   <section className=" w-full max-w-7xl mx-auto mt-6"> 
-          <table className="rounded-[30px] w-full max-w-7xl mx-auto shadow-lg my-3 overflow-hidden border border-gray-200">
+          <table className="rounded-[30px] w-full max-w-7xl mx-auto  my-3 overflow-hidden ">
             <thead className="">
               <tr
                 className={
@@ -710,17 +716,17 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
                 )}
               </tr>
               <tr className="bg-[#F0F2F5] border-t border-b border-[#E8ECF4]">
-                <th className="text-left pl-3 p-1 py-2 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                <th className="text-left pl-3 p-1 py-2 font-medium text-[#000000] whitespace-nowrap "
                 onClick={() => requestSort("projectName")}
                 >
                   Project Name
                 </th>
-                <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap "
                  onClick={() => requestSort("soldUnitCount")}
                 >
                   Sold Units
                 </th>
-                <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap "
                  onClick={() => requestSort("totalAmount")}
                 >
                   Total Amount
@@ -731,7 +737,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
                       return (
                         <th
                           key={i}
-                          className="text-right p-1 pr-3 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                          className="text-right p-1 pr-3 font-medium text-[#000000] whitespace-nowrap "
                         >
                           {month?.name}
                         </th>
@@ -740,16 +746,16 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
                   </>
                 ) : (
                   <>
-                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap ">
                       Week 1 <br /> ({getDateForWeek(1)})
                     </th>
-                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap">
                       Week 2 <br /> ({getDateForWeek(2)})
                     </th>
-                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap ">
                       Week 3 <br /> ({getDateForWeek(3)})
                     </th>
-                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
+                    <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap ">
                       Week 4 <br /> ({getDateForWeek(4)})
                     </th>
                   </>
@@ -787,13 +793,13 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
                     key={index}
                     className="border-b border-gray-100 hover:bg-gray-100 text-gray-700 font-[400]"
                   >
-                    <td className="p-2 text-gray-700 border-r border-[#E8ECF4] ">
+                    <td className="p-2 text-gray-700  ">
                       {capitalizeFirstLetter(data?.projectName)}
                     </td>
-                    <td className="p-2 text-gray-700  text-right border-r border-[#E8ECF4]">
+                    <td className="p-2 text-gray-700  text-right ">
                       {data?.soldUnitCount?.toLocaleString('en-IN')}
                     </td>
-                    <td className="p-2 text-gray-700  text-right border-r border-[#E8ECF4]">
+                    <td className="p-2 text-gray-700  text-right ">
                       {/* {totalAmount?.toLocaleString('en-IN')} */}
                       {data?.months
                         ?.reduce((accumulator, currentValue) => {
@@ -828,16 +834,16 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
                       </>
                     ) : (
                       <>
-                        <td className="p-2 text-gray-700 border-r border-[#E8ECF4]">
+                        <td className="p-2 text-gray-700 ">
                           {data?.weekly?.week1.toLocaleString('en-IN')}
                         </td>
-                        <td className="p-2 text-gray-700 border-r border-[#E8ECF4]">
+                        <td className="p-2 text-gray-700  ">
                           {data?.weekly?.week2.toLocaleString('en-IN')}
                         </td>
-                        <td className="p-2 text-gray-700 border-r border-[#E8ECF4]">
+                        <td className="p-2 text-gray-700  ">
                           {data?.weekly?.week3.toLocaleString('en-IN')}
                         </td>
-                        <td className="p-2 text-gray-700 border-r border-[#E8ECF4]">
+                        <td className="p-2 text-gray-700 ">
                           {data?.weekly?.week4.toLocaleString('en-IN')}
                         </td>
                       </>
@@ -855,8 +861,14 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
             crmEmployeesA={crmEmployeesA}
           />
         )}
+
+        </div>
+
+
       </div>
 </div>
+
+
 
       
     </div>
