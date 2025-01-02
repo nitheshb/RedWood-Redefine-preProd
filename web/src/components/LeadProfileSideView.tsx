@@ -710,7 +710,7 @@ export default function LeadProfileSideView({
     setLoader(true)
     setClosePrevious(true)
     if (newStatus == 'visitdone') {
-      enqueueSnackbar(`Mark VISIT-DONE  from VISIT-FIXED Task`, {
+      enqueueSnackbar(`Create VISIT-FIXED Task`, {
         variant: 'error',
       })
 

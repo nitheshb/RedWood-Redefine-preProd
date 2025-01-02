@@ -27,9 +27,7 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
 
   const { user } = useAuth()
 
-  if (!user?.role?.includes(USER_ROLES.ADMIN)) {
-    return null
-  }
+
   return (
     <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">

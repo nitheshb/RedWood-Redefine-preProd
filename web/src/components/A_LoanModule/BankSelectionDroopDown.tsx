@@ -18,9 +18,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 export default function BankSelectionSwitchDrop({ type, setStatusFun }) {
   const { user } = useAuth()
 
-  if (!user?.role?.includes(USER_ROLES.ADMIN)) {
-    return null
-  }
+
   return (
     <div className="text-right inline-block  mt-[px]">
       <Menu as="div" className="relative inline-block text-left">

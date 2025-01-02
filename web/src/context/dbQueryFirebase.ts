@@ -29,6 +29,7 @@ import { getWeekMonthNo, prettyDateTime } from 'src/util/dateConverter'
 
 import { db } from './firebaseConfig'
 import { supabase } from './supabase'
+import LeadTaskFooter from 'src/components/Comp_CustomerProfileSideView/LeadTaskFooter'
 
 // import { userAccessRoles } from 'src/constants/userAccess'
 
@@ -5383,21 +5384,30 @@ export const updateManagerApproval = async (
       T_elgible_balance,
     } = data
 
-    data.fullPs = [...data?.plotCS || [],...data?.addChargesCS || [], ...data?.constructCS || [], ...data?.constAdditionalChargesCS||[], ...data?.possessionAdditionalCostCS || []],
+    data.fullCs = [...data?.plotCS || [],...data?.addChargesCS || [], ...data?.constructCS || [], ...data?.constAdditionalChargesCS||[], ...data?.possessionAdditionalCostCS || []]
+
+let rejectBody = {
+  man_cs_approval: status
+}
+let approveBody = {
+  man_cs_approval: status,
+  plotCS: plotCS,
+  addChargesCS,
+  fullCs: data.fullCs,
+  T_balance,
+  T_total,
+  T_elgible_balance,
+  T_A: data.T_A,
+  T_B: data.T_B,
+  T_C: data.T_C,
+  T_D: data.T_D,
+  T_E: data.T_E,
+}
+
+let payload= status==='approved'? approveBody: rejectBody
 
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
-      man_cs_approval: status,
-      plotCS: plotCS,
-      addChargesCS,
-      fullPs: data.fullPs,
-      T_balance,
-      T_total,
-      T_elgible_balance,
-      T_A: data.T_A,
-      T_B: data.T_B,
-      T_C: data.T_C,
-      T_D: data.T_D,
-      T_E: data.T_E,
+  ...payload
     })
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
@@ -5431,6 +5441,8 @@ export const updateManagerApproval = async (
   }
   return
 }
+
+
 
 export const updateUnitDocs = async (
   orgId,

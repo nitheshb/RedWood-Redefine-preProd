@@ -138,10 +138,74 @@ const CostBreakUpEditor = ({
         ? constAdditionalChargesCS || []
         : constructOtherChargesObj || []
     )
-    await setPartEPayload(possessionAdditionalCostCS)
+    await setPartEPayload(possessionAdditionalCostCS || [])
     await setTotalFun(plotCS, addChargesCS)
+
+
+// resetting values
+let projectPs = selPhaseObj?.paymentScheduleObj || []
+
+      projectPs.map((data, i) => {
+     let x =  {
+  "value": newPlotPS[i]?.value || 0,
+  "preCheck": newPlotPS[i]?.preCheck || 0,
+  "elgFrom": newPlotPS[i]?.elgFrom || 0,
+  "schDate": newPlotPS[i]?.schDate || 0,
+  "zeroDay": newPlotPS[i]?.zeroDay || 0,
+  "oldDate": newPlotPS[i]?.oldDate || 0,
+
+  "category": "plotPS",
+  "description": "",
+  "order": 0,
+  "stage": data?.stage,
+  "percentage": data?.percentage,
+
+  "units": data?.units,
+  "tableData": {
+    "id": i +1
+  },
+  "myId": data?.id,
+  "elgible": i==0 ? true : false,
+
+  "id": data?.id,
+  "label": data?.stage?.label,
+
+}
+return x
+      })
+
+// {
+//   "value": 100,
+//   "schDate": 1734416831448,
+//   "category": "plotPS",
+//   "description": "",
+//   "order": 0,
+//   "stage": {
+//     "value": "on_booking",
+//     "label": "On Booking"
+//   },
+//   "percentage": 100,
+//   "zeroDay": "0",
+//   "oldDate": 1734416831448,
+//   "units": {
+//     "value": "fixedcost",
+//     "label": "Fixed cost"
+//   },
+//   "tableData": {
+//     "id": 1
+//   },
+//   "myId": "8ace002f-2b86-40b7-be9d-95049e6383d0",
+//   "elgible": true,
+//   "elgFrom": 1735842603603,
+//   "id": "8ace002f-2b86-40b7-be9d-95049e6383d0",
+//   "label": "On Booking",
+//   "preCheck": 826879
+// }
+
     await setNewPS(fullPs)
     await setPSPayload(fullPs)
+
+
     await fullPs?.map((data) => {
       if (data.stage?.value === 'on_booking') {
         setPlotBookingAdv(data?.percentage)
@@ -302,27 +366,27 @@ const CostBreakUpEditor = ({
     const partBTotal = partBPayload?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
-    )
+    ) || 0
     const partATotal = costSheetA?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
-    )
+    ) || 0
     const partCTotal = partCPayload?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
-    )
+    ) || 0
     const partDTotal = partDPayload?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
-    )
+    ) || 0
     const partETotal = partEPayload?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
-    )
+    ) || 0
     setPartBTotal(partBTotal)
     setPartCTotal(partCTotal)
     setPartDTotal(partDTotal)
-    setPartETotal(partBTotal)
+    setPartETotal(partETotal)
     console.log('sel unti details =>', partBTotal)
     setPartATotal(partATotal)
     CreateNewPsFun(netTotal, plotBookingAdv, csMode)
@@ -370,46 +434,31 @@ const CostBreakUpEditor = ({
   }
   const submitManagerApproval = (status) => {
     console.log('data max is', selUnitDetails)
-
-    // project1WweeknoMmonthnoYyearno
-
     newPlotPS.map((d, i) => {
-      // console.log(
-      //   'data is===>',
-      //   prettyDate(newPlotPS[i]['schDate']),
-      //   prettyDate(d['oldDate']),
-      //   d?.stage.value,
-      //   prettyDate(bootedPs[i]['schDate']),
-      //   prettyDate(d?.schDate),
-      //   bootedPs[i]['schDate'] == d?.schDate
-      // )
-      //
-      // this will set the previous date immutable as current date
-
       if (d?.oldDate != d?.schDate) {
         const dataPayload = {
           pId: selUnitDetails?.pId,
           oldDate: d?.oldDate,
           schDate: d?.schDate,
-          stageId: d?.stage.value,
+          stageId: d?.stage?.value,
           newPrice: d?.value,
           used: d?.used,
           assignedTo: selUnitDetails?.assignedTo || 'unassigned',
         }
 
-        updateProjectionsAgreegations(
-          orgId,
-          dataPayload,
-          user.email,
-          enqueueSnackbar
-        )
+        // updateProjectionsAgreegations(
+        //   orgId,
+        //   dataPayload,
+        //   user.email,
+        //   enqueueSnackbar
+        // )
 
-        updateCrmExecutiveAgreegations(
-          orgId,
-          dataPayload,
-          user.email,
-          enqueueSnackbar
-        )
+        // updateCrmExecutiveAgreegations(
+        //   orgId,
+        //   dataPayload,
+        //   user.email,
+        //   enqueueSnackbar
+        // )
       }
     })
     const fullPsPayload = newPlotPS.map((d) => {
@@ -473,22 +522,6 @@ const CostBreakUpEditor = ({
     T_elgible_balance = T_elgible - T_review
     const dataObj = {
       status: status,
-      // plotCS: costSheetA,
-      // fullPs: fullPsPayload,
-      // addChargesCS: partBPayload,
-      // T_balance:
-      //   netTotal -
-      //   (selUnitDetails?.T_review + (selUnitDetails?.T_cleared || 0)),
-      // T_Total: netTotal,
-      // T_review: selUnitDetails?.T_review,
-      // T_cleared: selUnitDetails?.T_cleared || 0,
-      // T_rejected: selUnitDetails?.T_rejected || 0,
-      // T_elgible_balance: selUnitDetails?.T_elgible_balance || 0,
-      // T_elgible_balance:
-      //   selUnitDetails?.T_elgible -
-      //   (selUnitDetails?.T_review + (selUnitDetails?.T_cleared || 0)),
-      // T_elgible: selUnitDetails?.T_elgible || 0,
-
       T_total: netTotal,
       T_balance: netTotal - selUnitDetails?.T_review,
       T_elgible: T_elgible,
@@ -504,10 +537,9 @@ const CostBreakUpEditor = ({
       addChargesCS: partBPayload,
       constAdditionalChargesCS: partBPayload,
       possessionAdditionalCostCS: partEPayload,
-      // plotPS: plotPsNew,
-      // constructPS: constructPs,
-      // fullPs: fullPsPayload,
+      fullPsPayload: fullPsPayload
     }
+console.log('saved data is===>', dataObj)
 
     updateManagerApproval(
       orgId,
@@ -516,6 +548,8 @@ const CostBreakUpEditor = ({
       user.email,
       enqueueSnackbar
     )
+
+
   }
   const handlePSdateChange = (index, newDate) => {
     const updatedRows = [...newPlotPS]
@@ -1202,10 +1236,31 @@ const CostBreakUpEditor = ({
                           </section>
                         </div>
                         <div className=" mt-4 ">
-                          <section className="flex p-2">
-                            <h1 className="text-bodyLato text-center text-gray-800 font-bold text-[14px] border-b ">
+                          <section className="flex p-2 flex-row justify-between">
+                            <h1 className="text-bodyLato mt-[11px] text-center text-gray-800 font-bold text-[14px] border-b ">
                               PAYMENT SCHEDULE
                             </h1>
+                            <section className="">
+                            <div className="w-full flex items-center ">
+                              <label
+                                htmlFor="area"
+                                className="label font-regular text-sm font-bodyLato"
+                              >
+                                Copy from Project
+                              </label>
+                              <Field
+                                name="isGSTChecked"
+                                type="checkbox"
+                                component={() => (
+                                  <Checkbox
+                                    color="primary"
+                                    checked={showGstCol}
+                                    onClick={() => setShowGstCol(!showGstCol)}
+                                  />
+                                )}
+                              />
+                            </div>
+                          </section>
                           </section>
                           <table className="w-full border-b border-dashed">
                             <thead className="">

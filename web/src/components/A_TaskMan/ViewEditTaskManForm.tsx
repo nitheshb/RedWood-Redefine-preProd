@@ -1189,7 +1189,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                           // onClick={() => fAddSchedule()}
                           className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  text-[#535c69]  bg-[#bbed21]   hover:shadow-lg `}
                         >
-                          <span className="ml-1 ">Edit Task</span>
+                          <span className="ml-1 ">Save Task</span>
                         </button>
                         {/* <button
                         // onClick={() => fAddSchedule()}

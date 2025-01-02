@@ -19,9 +19,7 @@ export default function Crm_Unit_Posession({
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
 
-  if (!user?.role?.includes(USER_ROLES.ADMIN)) {
-    return null
-  }
+ 
   useEffect(() => {
     console.log('yo yo ', selUnitPayload)
   }, [])

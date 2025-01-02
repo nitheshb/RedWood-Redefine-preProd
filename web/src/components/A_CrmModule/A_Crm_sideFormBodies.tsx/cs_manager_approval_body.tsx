@@ -45,9 +45,7 @@ export default function CSManagerApprovalBody({
   const [bootedPs, setBootedPs] = useState([])
 
   const [netTotal, setNetTotal] = useState(0)
-  if (!user?.role?.includes(USER_ROLES.ADMIN)) {
-    return null
-  }
+ 
   useEffect(() => {
     console.log('unit details', selUnitPayload)
     setBootedPs(selUnitPayload?.fullPs)

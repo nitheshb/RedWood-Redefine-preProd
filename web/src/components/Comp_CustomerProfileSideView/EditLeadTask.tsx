@@ -109,7 +109,7 @@ export default function EditLeadTask({
             }}
             className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-[#054861] bg-[#5cebdf]  hover:bg-[#9ff9e1]  `}
           >
-            <span className="ml-1 ">Edit Task</span>
+            <span className="ml-1 ">Save Task</span>
           </button>
           <button
             // onClick={() => fSetLeadsType('Add Lead')}

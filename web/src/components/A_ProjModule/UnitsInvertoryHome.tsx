@@ -96,15 +96,17 @@ const UnitsInventoryHome = ({ project }) => {
   }, [unitsFeedA, availType, selUnitDimension, selsize, selFacing])
 
   const filFun = () => {
-    console.log('selected one is', unitsFeedA, availType, selFacing)
+
     const filData = unitsFeedA?.filter((da) => {
       const statusMatch =
         availType.value === 'any' ? true : da?.status == availType.value
       const dimensionMatch =
         selUnitDimension.value === 'any'
           ? true
-          : (String(da?.dimension)?.toLocaleLowerCase() || 0) ==
+          : projectDetails?.projectType?.name ==='Apartment'? (String(da?.bedrooms_c)?.toLocaleLowerCase() || 0) ==
+          selUnitDimension.value?.toLocaleLowerCase() : (String(da?.dimension)?.toLocaleLowerCase() || 0) ==
             selUnitDimension.value?.toLocaleLowerCase()
+
       const facingMatch =
         selFacing.value === 'any'
           ? true
@@ -396,6 +398,39 @@ const UnitsInventoryHome = ({ project }) => {
       value: 'ODD',
     },
   ]
+  const typeB = [
+    {
+      label: 'East',
+      projectName: 'All',
+      value: 'any',
+    },
+    {
+      label: 'East',
+      projectName: '1BHK',
+      value: '1',
+    },
+    {
+      label: 'West',
+      projectName: '2BHK',
+      value: '2',
+    },
+    {
+      label: 'South',
+      projectName: '3BHK',
+      value: '3',
+    },
+    {
+      label: 'West',
+      projectName: '4BHK',
+      value: '4',
+    },
+    {
+      label: 'South',
+      projectName: '5BHK',
+      value: '5',
+    },
+
+  ]
   const sizeA = [
     {
       label: 'East',
@@ -441,7 +476,14 @@ const UnitsInventoryHome = ({ project }) => {
   }
   const selProjctFun = (project) => {
     setIsOpenSideView(!isOpenSideView)
+    console.log('sel project is', project)
     setProjectDetails(project)
+    setUnitDimension({
+      projectName: '',
+      uid: '',
+      value: 'any',
+    })
+
   }
   const selPhaseFun = (project) => {
     setPhaseDetails(project)
@@ -520,7 +562,7 @@ const UnitsInventoryHome = ({ project }) => {
                   viewUnitStatusA={[]}
                   pickCustomViewer={selTypeFun}
                   selProjectIs={selUnitDimension}
-                  dropDownItemsA={typeA}
+                  dropDownItemsA={projectDetails?.projectType?.name ==='Apartment'? typeB: typeA}
                 />
                 <DropDownSearchBar
                   label={'Facing'}
