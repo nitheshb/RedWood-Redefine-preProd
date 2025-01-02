@@ -23,6 +23,10 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import { TextField2 } from 'src/util/formFields/TextField2'
+import { EyeIcon } from 'lucide-react'
+
+import { FaTools, FaHammer, FaRegFileAlt, FaArrowUp } from 'react-icons/fa';
+
 
 
 const AddNewDemand = ({
@@ -405,45 +409,59 @@ const AddNewDemand = ({
                                     <article className="mt-5">
                                       <div className="flex flex-row justify-between">
                                         <section className="flex flex-row">
-                                          <span className="text-[42px] mt-[-16px]">
+                                          {/* <span className="text-[42px] mt-[-16px]">
                                             🎊
-                                          </span>
+                                          </span> */}
                                           <div className="inline">
                                             <div className="mt-[7px]">
-                                              <label className="text-[22px] font-semibold text-[#053219]  text-sm  mb-1  ">
+                                              <label className="text-[20px] font-medium text-[#000000]    mb-1  ">
                                                 {title === 'capturePayment'
                                                   ? 'Capture Payment'
                                                   : 'New Demand'}
                                                 <abbr title="required"></abbr>
                                               </label>
                                             </div>
+
+                                         
+
+                                            <div>
+                                            <p className='text-[#6A6A6A] font-normal  mt-2 text-[12px]'>Created demand will be added to existing payment schedule of this unit.</p>
+                                          </div>
                                             {/* <div className="border-t-4 rounded-xs w-100 border-[#8B5CF6]"></div> */}
                                           </div>
+
+                                     
                                         </section>
                                         <section className="flex flex-row justify-between">
-                                          <div className="flex flex-col mt-">
+                                          {/* <div className="flex flex-col mt-">
                                             <h6 className="text-blueGray-400 text-sm mt- ml-6 mb- font-weight-[700]  font-uppercase">
                                               Payment
                                             </h6>
                                             <span className="text-center text-[13px] font-normal">
                                               {format(new Date(), 'dd-MMMM-yy')}
                                             </span>
-                                          </div>
+                                          </div> */}
                                         </section>
                                       </div>
-                                      <hr className="mt-6 border-b-1 border-blueGray-300" />
+                                      {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
                                     </article>
                                     {!bookingProgress && (
                                       <section>
+
+                                  
+
                                         <div className="flex flex-wrap mt-3">
-                                          <div className="justify-center w-full mx-auto"></div>
-                                          <div className="w-full px-2 mb-8 mt-8">
+                                          <div className="justify-center w-full mx-auto">
+                                          <p className='text-[#6A6A6A] text-[12px]'> Demand Type</p>
+                                          </div>
+                                          {/* <div className="w-full  mb-8 mt-[12px]">
+                                            
                                             {demandMode.map((dat, i) => {
                                               return (
                                                 <span
-                                                  className={` mr-2 border rounded-xl px-2 py-2 cursor-pointer hover:bg-violet-400 hover:text-white text-sm ${
+                                                  className={` mr-2 border rounded-xl px-2 py-2 cursor-pointer hover:bg-[#F2F2F2] hover:text-[#484848] text-[10px] ${
                                                     paymentModex == dat.value
-                                                      ? 'bg-violet-400 text-white'
+                                                      ? 'bg-[#F2F2F2] text-[#484848]'
                                                       : ''
                                                   }`}
                                                   key={i}
@@ -455,13 +473,42 @@ const AddNewDemand = ({
                                                     )
                                                   }}
                                                 >
+                                                <img src={dat.icon} alt={dat.label} className="h-4 w-4 mr-2" />
                                                   {dat.label}
                                                 </span>
                                               )
                                             })}
-                                          </div>
+                                          </div> */}
 
-                                          <div className="w-full lg:w-4/12 px-3">
+
+
+
+<div className="w-full mb-8 mt-[12px] flex flex-wrap gap-x-4 gap-y-4">
+  {demandMode.map((dat, i) => {
+    return (
+      <span
+        className={`border rounded-xl p-2 px-[10px] cursor-pointer hover:bg-[#F2F2F2] hover:text-[#484848] text-[10px] flex flex-col items-center ${
+          paymentModex === dat.value ? 'bg-[#F2F2F2] text-[#484848]' : ''
+        }`}
+        key={i}
+        onClick={() => {
+          setPaymentModex(dat.value);
+          formik.setFieldValue('mode', dat.value);
+        }}
+      >
+        <img src={dat.icon} alt={dat.label} className="h-4 w-4 mb-1" />
+        {dat.label}
+      </span>
+    );
+  })}
+</div>
+
+
+
+
+
+
+                                          <div className="w-full lg:w-4/12 pr-3">
                                             <div className="relative w-full mb-5">
                                               <TextField2
                                                 label="Amount"
@@ -472,7 +519,7 @@ const AddNewDemand = ({
                                           </div>
 
                                           <div className="w-full lg:w-4/12 px-3">
-                                            <div className="relative w-full mb-5">
+                                            <div className="relative w-full mb-5  border-[green]">
                                               <TextField2
                                                 label="GST %"
                                                 name="gst"
@@ -480,11 +527,11 @@ const AddNewDemand = ({
                                               />
                                             </div>
                                           </div>
-                                          <div className="w-full mt-3 lg:w-4/12 px-3  ">
+                                          <div className="w-full mt-3 lg:w-4/12 pl-3 ">
                                             <div className="relative w-full mb-5 mt-[-1px] ">
                                               <span className="inline">
                                                 <CustomDatePicker
-                                                  className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-gray-500  border-solid mt-[-4px] pb-1  min-w-[125px]  inline  text-[#0091ae]   lg:w-4/12 w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] "
+                                                  className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-[#cccccc]  border-solid mt-[-4px]   min-w-[125px]  inline  text-[#0091ae]   lg:w-4/12 w-full flex bg-grey-lighter text-grey-darker border  "
                                                   label="Dated"
                                                   name="dated"
                                                   // selected={startDate}
@@ -519,7 +566,7 @@ const AddNewDemand = ({
                                               </span>
                                             </div>
                                           </div>
-                                          <div className="w-full  px-3">
+                                          <div className="w-full  ">
                                             <div className="relative w-full mb-3">
                                               <TextField2
                                                 label="Reason"
@@ -532,12 +579,16 @@ const AddNewDemand = ({
                                         <div>
                                           <label
                                             htmlFor="formFile1"
-                                            className="form-label cursor-pointer inline-block mt-2  font-regular text-xs bg-[#efef] rounded-2xl  py-1 "
+                                            className="form-label cursor-pointer inline-block mt-2  font-regular text-xs  rounded-2xl  py-1 "
                                           >
                                             <AttachFile
-                                              className="w-4 h-4 text-[18px]"
-                                              style={{ fontSize: '18px' }}
+                                              className="w-[12px] h-[6px]  text-[#17B9FF]"
+                                              style={{ fontSize: '14px' }}
                                             />
+
+                                            <span className="text-[#17B9FF] border-b border-[#17B9FF]">Add document</span>
+
+
                                           </label>
                                           <input
                                             type="file"
@@ -561,26 +612,26 @@ const AddNewDemand = ({
                                             className="img-preview"
                                           />
                                         )}
-                                        <div className="flex flex-row justify-between mt-4 mx-4">
+                                        <div className="flex flex-row justify-between mt-4 ">
                                           <div className="flex flex-row justify-between">
                                             <div></div>
                                             <div className="flex flex-col">
-                                              <h6 className="text-blueGray-400 text-sm mt- ml-6 mb- font-weight-[700]  font-uppercase">
-                                                Payment
+                                              <h6 className=" text-[12px] text-[#6A6A6A]  font-medium  font-uppercase">
+                                              Payment done on
                                               </h6>
-                                              <span className="text-center text-[13px] font-normal">
+                                              <span className="text-center mt-2 text-[13px] font-normal">
                                                 {format(
                                                   new Date(),
-                                                  'dd-MMMM-yy'
+                                                  'dd-MMMM-yyyy'
                                                 )}
                                               </span>
                                             </div>
                                           </div>
                                           <div>
-                                            <div className="text-md font-weight-[700] text-[13px]">
-                                              Received By
+                                            <div className="text-[12px] text-[#6A6A6A]  font-medium">
+                                            Recieved by
                                             </div>
-                                            <div className="text-center font-semibold text-[13px]">
+                                            <div className="text-center font-normal mt-2 text-[13px]">
                                               {displayName.toUpperCase()}
                                             </div>
                                           </div>
@@ -590,7 +641,7 @@ const AddNewDemand = ({
 
                                     <div className="text-center space-x-4 mt-6">
                                       <button
-                                        className="bg-[#8B5CF6] translate-y-1 text-[#fff] sm:text-lg text-xs font-bold py-2.5 px-6  rounded-full inline-flex items-center"
+                                        className="bg-[#00ADB4] translate-y-1 text-[#fff]  text-[12px]  py-2.5 px-6  font-medium  rounded-full inline-flex items-center"
                                         type="submit"
                                         disabled={loading}
                                       >
@@ -598,7 +649,7 @@ const AddNewDemand = ({
                                           xmlns="http://www.w3.org/2000/svg"
                                           viewBox="0 0 24 24"
                                           fill="currentColor"
-                                          className="w-6 h-6"
+                                          className="w-5 h-5"
                                         >
                                           <path
                                             fillRule="evenodd"
