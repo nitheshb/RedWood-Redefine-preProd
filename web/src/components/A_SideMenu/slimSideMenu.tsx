@@ -26,7 +26,7 @@ const SlimSideMenuBar = (props) => {
         'legalModule',
       ].includes(sourceLink) && (
         <a
-          className="flex items-center justify-center flex-shrink-0 w-full py-[9px] mr-4  border-b mt-[4px] pt-[10px]"
+          className="flex items-center justify-center flex-shrink-0 w-full py-[9px]   border-b mt-[4px] pt-[10px]"
           href="#"
         >
           {/* bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200 */}
