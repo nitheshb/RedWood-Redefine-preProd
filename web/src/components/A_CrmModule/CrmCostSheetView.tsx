@@ -468,7 +468,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                   alt=""
                 />
                 <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
-                 Possession Charges box
+                 Possession Charges
                 </h1>
               </div>
               <div className="grid  grid-row-2  gap-x-2  px-3 ">
