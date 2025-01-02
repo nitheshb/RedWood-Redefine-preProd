@@ -1008,7 +1008,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
         </Dialog.Title> */}
         </div>
 <CloneableEmailForm selUnitDetails={selUnitDetails} customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} leadPayload={leadPayload} />
-<div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full w-[680px]">
+{source != "fromBookedUnit" &&<div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full w-[680px]">
 
 
 
@@ -1031,7 +1031,7 @@ transition
                                 <span> {' Next'}</span>
                               </button>
 
-                          </div>
+                          </div>}
         {/* <div className="">
           <div className="flex flex-col rounded-lg bg-white ">
             <div className="mt-0">

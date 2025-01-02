@@ -70,7 +70,7 @@ const CostBreakUpEditor = ({
   }, [selUnitDetails, selPhaseObj])
 
   useEffect(() => {
-    console.log('data is===> 0', selUnitDetails?.fullPs)
+    console.log('data is===> 1000', selUnitDetails?.fullPs, newPlotPS)
     newPlotPS.map((d) => {
       console.log('data max is', d)
       const newObj = d

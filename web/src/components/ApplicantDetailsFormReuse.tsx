@@ -423,7 +423,33 @@ leadPayload?.Mobile ||
     paddingLeft: '0.5rem',
   }
   const downloadImage = (imageUrl, filename) => {
-    console.error('Error downloading image:', imageUrl)
+    console.error('downloading image:', imageUrl)
+    fetch(imageUrl)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        // Create a Blob URL
+        const blobUrl = URL.createObjectURL(blob);
+
+        // Create a temporary link element
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = filename || 'download';
+
+        // Trigger the download
+        link.click();
+
+        // Clean up by revoking the Blob URL
+        URL.revokeObjectURL(blobUrl);
+    })
+    .catch(error => {
+        console.error('Download failed:', error);
+    });
+    return;
     fetch(imageUrl)
       .then((response) => response.blob())
       .then((blob) => {
@@ -436,7 +462,7 @@ leadPayload?.Mobile ||
         // const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
 
         // Set the download attribute and filename
-        link.setAttribute('download', filename)
+        link.setAttribute('download', 'filename.pdf')
         document.body.appendChild(link)
         console.log('fetcher url ', filename)
         // Simulate a click on the anchor element to start the download
@@ -446,7 +472,7 @@ leadPayload?.Mobile ||
         link.parentNode.removeChild(link)
 
         // Set the downloaded image URL to display on the page
-        setImageUrl(url)
+        // setImageUrl(url)
       })
       .catch((error) => {
         console.error('Error downloading image:', error)
@@ -559,7 +585,7 @@ leadPayload?.Mobile ||
       onSubmit={(values, { resetForm }) => {
         console.log('submitted ==>', income)
 
-         values.annualIncome1 = Number(values.annualIncome1.replace(/,/g, ''))
+        //  values.annualIncome1 = Number(values.annualIncome1.replace(/,/g, ''))
 
         onSubmit(values, resetForm)
       }}
@@ -828,10 +854,11 @@ leadPayload?.Mobile ||
                               </label>
                               {formik.values.panDocUrl1 != '' && (
                                 <button
+                                type="button"
                                   onClick={() =>
                                     downloadImage(
                                       formik.values.panDocUrl1,
-                                      'pancard1.PNG'
+                                      'pancard1'
                                     )
                                   }
                                 >
@@ -905,7 +932,7 @@ leadPayload?.Mobile ||
                                   onClick={() =>
                                     downloadImage(
                                       formik.values.aadharUrl1,
-                                      'Aadhar1.PNG'
+                                      'Aadhar1'
                                     )
                                   }
                                 >
@@ -1381,11 +1408,11 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
 
     // add to array
 
-    console.log('customer info', values)
-    let a1 = customerInfo
-    a1[index] = values
-    console.log('customer info', a1)
-    setCustomerInfo(a1)
+    // console.log('customer info', values)
+    // let a1 = customerInfo
+    // a1[index] = values
+    // console.log('customer info', a1)
+    // setCustomerInfo(a1)
     updateUnitCustomerDetailsTo(
       orgId,
       selUnitDetails?.uid || selUnitDetails?.id,

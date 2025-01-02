@@ -4973,9 +4973,9 @@ if(boolAgreegate){
         },
       ])
 console.log('unit log', data4, error4, data, error)
-    enqueueSnackbar(`Captured Payment`, {
-      variant: 'success',
-    })
+    // enqueueSnackbar(`Captured Payment...`, {
+    //   variant: 'success',
+    // })
 return data
   } catch (e) {
     console.log('error on transaction upload', e)
@@ -5413,14 +5413,61 @@ export const updateManagerApproval = async (
           to: status,
         },
       ])
-    enqueueSnackbar('CS Approved..!', {
+      if(status==="approved"){
+      enqueueSnackbar('Cost Sheet Approved..!', {
       variant: 'success',
-    })
+    })}else{
+      enqueueSnackbar('Cost Sheet Rejected..!', {
+        variant: 'error',
+      })
+    }
   } catch (error) {
     console.log('CS Approved Updation Failed', error, {
       ...data,
     })
     enqueueSnackbar('CS Approved Updation Failed .', {
+      variant: 'error',
+    })
+  }
+  return
+}
+
+export const updateUnitDocs = async (
+  orgId,
+  unitId,
+  data,
+  by,
+  msg,
+  color,
+  enqueueSnackbar
+) => {
+  try {
+    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+    ...data
+    })
+    const { data: data4, error: error4 } = await supabase
+      .from(`${orgId}_unit_logs`)
+      .insert([
+        {
+          type: 'document',
+          subtype: 'uploaded',
+          T: Timestamp.now().toMillis(),
+          Uuid: unitId,
+          by,
+          payload: {},
+          from: 'docUploaded',
+          to: status,
+        },
+      ])
+      enqueueSnackbar(msg, {
+        variant: color,
+      })
+
+  } catch (error) {
+    console.log('Doc Uplaod failed', error, {
+      ...data,
+    })
+    enqueueSnackbar('Doc Upload Failed.', {
       variant: 'error',
     })
   }
