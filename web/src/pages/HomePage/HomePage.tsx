@@ -17,6 +17,7 @@ import DummyBodyLayout from '../../components/DummyBodyLayout/DummyBodyLayout'
 import ProjectsMHomeBody from '../../components/ProjectsMHomeBody/ProjectsMHomeBody'
 import SiderForm from '../../components/SiderForm/SiderForm'
 import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
+import ProjectFilterDropdown from './ProjectFilterDropdown'
 
 
 
@@ -36,6 +37,9 @@ const HomePage = () => {
   const [viewable, setViewable] = useState('ongoing_projects')
   const { loading } = usePageLoadingContext()
   const [selModule, setSelModule] = useState('Projects')
+
+
+  const [selectedFilter, setSelectedFilter] = useState('All');
 
   const getProjects = async () => {
     const unsubscribe = getAllProjects(
@@ -1205,6 +1209,14 @@ const HomePage = () => {
                                           ONGOING PROJECTS
                                             {/* {viewable} */}
                                           </span>
+
+
+                                          <div className='flex'>
+
+                                          <ProjectFilterDropdown 
+                                           selectedFilter={selectedFilter}
+                                           setSelectedFilter={setSelectedFilter}
+                                           />
                                           <button
                                             onClick={() =>{
                                               setProject({})
@@ -1230,10 +1242,20 @@ const HomePage = () => {
                                               Add Project
                                             </span>
                                           </button>
+
+                                          </div>
+
+
                                         </div>
                                       </div>
                                       <section className="mx-2 rounded-xl bg-white shadow p-2">
-                                        {projects.map((project) => (
+                                        {projects
+                                            .filter(project => 
+                                              selectedFilter === 'All' 
+                                              ? true 
+                                              : project?.projectType?.name === selectedFilter
+                                            )
+                                        .map((project) => (
                                           <ProjectsMHomeBody
                                             key={project.uid}
                                             project={project}
@@ -1246,6 +1268,8 @@ const HomePage = () => {
                                           />
                                         ))}
                                       </section>
+
+
                                     </section>
                                   ) : (
                                     <span onClick={() => setIsNewProjectOpen(true)}>
