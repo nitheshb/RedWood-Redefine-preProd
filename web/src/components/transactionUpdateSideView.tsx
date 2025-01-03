@@ -178,7 +178,17 @@ export default function TransactionUpdateSideView({
     const data = transactionData
     data.Uuid = data?.unit_id
     data.status = status
-    console.log('transactionData', transactionData)
+    console.log('transactionData', transactionData);
+
+
+    if (status === 'Rejected') {
+      enqueueSnackbar('Transaction status updated to Rejected', { variant: 'error' });
+    }
+
+
+
+
+
     if(data?.unit_id === 'wallet'){
       updateWalletTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
     }else{

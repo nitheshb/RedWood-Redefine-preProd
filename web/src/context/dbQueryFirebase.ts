@@ -550,7 +550,7 @@ export const updateWalletTransactionStatus = async (
     }
   console.log('check it ', data4, error4)
   if (lead_logs) {
-    await enqueueSnackbar('Marked as Amount Recived', {
+    await enqueueSnackbar('Marked as Amount2 Recived', {
       variant: 'success',
     })
   }
@@ -601,9 +601,9 @@ export const updateTransactionStatus = async (
       T_elgible_balance: increment(totalAmount),
       T_cancelled: increment(totalAmount),
     })
-    await enqueueSnackbar('Marked as payment rejected', {
-      variant: 'success',
-    })
+    // await enqueueSnackbar('Marked as payment rejected', {
+    //   variant: 'success',
+    // })
   }
     if(status === 'received'){
       await updateDoc(doc(db, `${orgId}_units`, Uuid), {
@@ -611,21 +611,42 @@ export const updateTransactionStatus = async (
         T_approved: increment(totalAmount),
 
       })
-      await enqueueSnackbar('Marked as payment received', {
-        variant: 'success',
-      })
+      // await enqueueSnackbar('Marked as payment received', {
+      //   variant: 'success',
+      // })
     }
   console.log('check it ', data4, error4)
   if (lead_logs) {
     await enqueueSnackbar('Marked as Amount Recived', {
       variant: 'success',
-    })
+    });
+  }
+  else if (status === 'Failed') {
+    await enqueueSnackbar('Marked as Payment Rejected', {
+      variant: 'error',
+    });
   }
   if (error) {
     await enqueueSnackbar('Transaction Updation Failed', {
       variant: 'error',
     })
   }
+
+  if (status === 'Rejected') {
+  
+    await enqueueSnackbar('Marked as Payment Rejected', {
+      variant: 'error',
+    });
+  } else if (status === 'Failed') {
+    await enqueueSnackbar('Marked as Payment Failed', {
+      variant: 'error',
+    });
+  } 
+  
+
+  
+  
+
 
   console.log('updating error', lead_logs, error)
   return lead_logs
