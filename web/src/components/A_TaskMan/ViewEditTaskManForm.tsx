@@ -725,7 +725,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                               <div className="flex flex-col space-y-1 text-xs max-w-xs mx-2 order-2 items-start">
                                 <div>
                                   <span
-                                    className={`px-4 py-2 rounded-lg inline-block rounded-bl-none ${
+                                    className={`px-4 py-2 w-[300px] max-w-full overflow-hidden rounded-lg inline-block rounded-bl-none ${
                                       user.displayName == commentObj?.by
                                         ? ' bg-[#c8fad6] text-[#212b36]'
                                         : 'bg-gray-300 text-gray-600'

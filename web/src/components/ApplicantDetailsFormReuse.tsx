@@ -865,7 +865,7 @@ leadPayload?.Mobile ||
                                   {' '}
                                   {formik.values.panDocUrl1 === '' ||
                                   formik.values.panDocUrl1 == undefined ? (
-                                    <PlusIcon className="w-4 h-4 cursor-pointer ml-1 mb-[3px] mr-2 inline-block text-gray-400 border rounded-[16px] " />
+                                    <PlusIcon className="w-4 h-4 cursor-pointer ml-1  mb-[3px] mr-2 inline-block text-gray-400 border rounded-[16px] " />
                                   ) : (
                                     <ArrowCircleDownIcon className="w-4 h-4 cursor-pointer ml-1 mb-[3px] mr-2 inline-block text-gray-400 " />
                                   )}
@@ -891,7 +891,33 @@ leadPayload?.Mobile ||
                       name="panNo1"
                       type="text"
                       value={formik.values.panNo1}
-                      onChange={formik.handleChange}
+                      // onChange={formik.handleChange}
+
+                      onChange={(e) => {
+                        let value = e.target.value;
+                        value = value.toUpperCase();
+                        value = value.replace(/[^A-Z0-9]/g, '');
+                      
+                 
+                        const part1 = value.slice(0, 5); 
+                        const part2 = value.slice(5, 9); 
+                        const part3 = value.slice(9, 10); 
+                      
+                    
+                        value = part1 + part2 + part3;
+                        formik.setFieldValue('panNo1', value); 
+                        const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+                        if (value && !panRegex.test(value)) {
+                          formik.setFieldError('panNo1', 'PAN must be in the format: XXXXX1234X');
+                        } else {
+                          formik.setFieldError('panNo1', '');
+                        }
+                      }}
+                      
+
+               
+                      
+
                     />
                                   {formik.errors.panNo1 && formik.touched.panNo1 && (
         <div className="text-red-500 text-xs ml-2">{formik.errors.panNo1}</div>

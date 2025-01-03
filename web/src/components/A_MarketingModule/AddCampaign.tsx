@@ -310,14 +310,15 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                           className="error-message text-red-700 text-xs mt-[1px]  "
                         />
                         <div className="flex flex-row border-b border-gray border-b pb-1 border-[#edeef0]">
+                          {/* taskdesc */}
                           <textarea
-                            name="taskdesc"
+                            name="campaignDesc"
                             type="text"
                             value={formik?.values?.campaignDesc}
                             onChange={(value) => {
                               console.log('vaue is ', value.target.value)
                               formik.setFieldValue(
-                                'taskdesc',
+                                'campaignDesc',
                                 value.target.value
                               )
                             }}
@@ -416,6 +417,11 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                                   label="Campaign Budget"
                                   name="budget"
                                   type="text"
+                                  value={formik.values.budget}
+                                  onChange={(e) => {
+                                    const value = e.target.value.replace(/^0+/, '');
+                                    formik.setFieldValue('budget', value);
+                                  }}
                                 />
                               </div>
                             </div>
