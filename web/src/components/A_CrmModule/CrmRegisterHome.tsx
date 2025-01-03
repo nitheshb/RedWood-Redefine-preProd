@@ -550,7 +550,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                     ]}
                   />
                 </div>
-                {access?.includes('manage_leads') && (
+                {(
                   <div className=" flex flex-col   w-40">
                     <VerySlimSelectBox
                       name="project"

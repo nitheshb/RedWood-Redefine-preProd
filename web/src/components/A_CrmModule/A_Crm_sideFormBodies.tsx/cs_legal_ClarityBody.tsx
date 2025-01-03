@@ -211,9 +211,7 @@ export default function Crm_legal_Clarity({
   const [unitFetchedActivityData, setUnitFetchedActivityData] = useState([])
 
   const [closePrevious, setClosePrevious] = useState(false)
-  if (!user?.role?.includes(USER_ROLES.ADMIN)) {
-    return null
-  }
+ 
   useEffect(() => {
     console.log('yo yo ', selUnitPayload)
   }, [])
@@ -1248,7 +1246,7 @@ export default function Crm_legal_Clarity({
                                         setHours(setMinutes(d, 59), 23),
                                       ]}
                                       dateFormat="MMM d, yyyy h:mm aa"
-                                      
+
                                     />
                                   </span>
                                 </div>

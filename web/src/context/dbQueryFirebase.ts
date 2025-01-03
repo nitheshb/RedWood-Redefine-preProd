@@ -29,6 +29,7 @@ import { getWeekMonthNo, prettyDateTime } from 'src/util/dateConverter'
 
 import { db } from './firebaseConfig'
 import { supabase } from './supabase'
+import LeadTaskFooter from 'src/components/Comp_CustomerProfileSideView/LeadTaskFooter'
 
 // import { userAccessRoles } from 'src/constants/userAccess'
 
@@ -4973,9 +4974,9 @@ if(boolAgreegate){
         },
       ])
 console.log('unit log', data4, error4, data, error)
-    enqueueSnackbar(`Captured Payment`, {
-      variant: 'success',
-    })
+    // enqueueSnackbar(`Captured Payment...`, {
+    //   variant: 'success',
+    // })
 return data
   } catch (e) {
     console.log('error on transaction upload', e)
@@ -5383,21 +5384,30 @@ export const updateManagerApproval = async (
       T_elgible_balance,
     } = data
 
-    data.fullPs = [...data?.plotCS || [],...data?.addChargesCS || [], ...data?.constructCS || [], ...data?.constAdditionalChargesCS||[], ...data?.possessionAdditionalCostCS || []],
+    data.fullCs = [...data?.plotCS || [],...data?.addChargesCS || [], ...data?.constructCS || [], ...data?.constAdditionalChargesCS||[], ...data?.possessionAdditionalCostCS || []]
+
+let rejectBody = {
+  man_cs_approval: status
+}
+let approveBody = {
+  man_cs_approval: status,
+  plotCS: plotCS,
+  addChargesCS,
+  fullCs: data.fullCs,
+  T_balance,
+  T_total,
+  T_elgible_balance,
+  T_A: data.T_A,
+  T_B: data.T_B,
+  T_C: data.T_C,
+  T_D: data.T_D,
+  T_E: data.T_E,
+}
+
+let payload= status==='approved'? approveBody: rejectBody
 
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
-      man_cs_approval: status,
-      plotCS: plotCS,
-      addChargesCS,
-      fullPs: data.fullPs,
-      T_balance,
-      T_total,
-      T_elgible_balance,
-      T_A: data.T_A,
-      T_B: data.T_B,
-      T_C: data.T_C,
-      T_D: data.T_D,
-      T_E: data.T_E,
+  ...payload
     })
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
@@ -5413,19 +5423,63 @@ export const updateManagerApproval = async (
           to: status,
         },
       ])
-    // enqueueSnackbar('CS Approved..!', {
-    //   variant: 'success',
-    // })
-    enqueueSnackbar(
-      `CS ${status === 'approved' ? 'Approved' : 'Rejected'}..!`,
-      { variant: status === 'approved' ? 'success' : 'error' }
-    );
-    
+      if(status==="approved"){
+      enqueueSnackbar('Cost Sheet Approved..!', {
+      variant: 'success',
+    })}else{
+      enqueueSnackbar('Cost Sheet Rejected..!', {
+        variant: 'error',
+      })
+    }
   } catch (error) {
     console.log('CS Approved Updation Failed', error, {
       ...data,
     })
     enqueueSnackbar('CS Approved Updation Failed .', {
+      variant: 'error',
+    })
+  }
+  return
+}
+
+
+
+export const updateUnitDocs = async (
+  orgId,
+  unitId,
+  data,
+  by,
+  msg,
+  color,
+  enqueueSnackbar
+) => {
+  try {
+    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+    ...data
+    })
+    const { data: data4, error: error4 } = await supabase
+      .from(`${orgId}_unit_logs`)
+      .insert([
+        {
+          type: 'document',
+          subtype: 'uploaded',
+          T: Timestamp.now().toMillis(),
+          Uuid: unitId,
+          by,
+          payload: {},
+          from: 'docUploaded',
+          to: status,
+        },
+      ])
+      enqueueSnackbar(msg, {
+        variant: color,
+      })
+
+  } catch (error) {
+    console.log('Doc Uplaod failed', error, {
+      ...data,
+    })
+    enqueueSnackbar('Doc Upload Failed.', {
       variant: 'error',
     })
   }

@@ -2221,31 +2221,33 @@ export default function UnitFullSummary({
             ''
           )}
           {[
-            { id: 1234, name: 'EC', time: '22-Nov-2022' },
+            { id: 1234, name: 'EC',type: 'ec',time: customerDetails?.ecDocUpDate, url: customerDetails?.ecDocUrl , filName: customerDetails?.ecFilName },
             {
               id: 1235,
               name: 'Agreement',
-              time: '24-Nov-2022',
+              type: 'agree',
+              time: customerDetails?.agreeDocUpDate, url: customerDetails?.agreeDocUrl , filName: customerDetails?.agreeFilName,
             },
             {
               id: 1236,
               name: 'Register Doc',
-              time: '2-Dec-2022',
+              type: 'reg',
+              time: customerDetails?.regDocUpDate, url: customerDetails?.regDocUrl , filName: customerDetails?.regFilName,
             },
           ]?.map((doc, i) => (
             <section
               key={i}
               onClick={() => {
                 // show sidebar and display the worddoc
-                setSliderInfo({
-                  open: true,
-                  title: 'viewDocx',
-                  sliderData: {},
-                  widthClass: 'max-w-xl',
-                })
+                // setSliderInfo({
+                //   open: true,
+                //   title: 'viewDocx',
+                //   sliderData: {},
+                //   widthClass: 'max-w-xl',
+                // })
               }}
             >
-              <DocRow id={doc?.id} fileName={doc?.name} date={doc?.time} />
+              <DocRow id={customerDetails?.id} fileName={doc?.name} date={doc?.time} data={doc} />
             </section>
           ))}
         </section>

@@ -725,6 +725,7 @@ Mobile No
   // dateFormat="MMMM d, yyyy"
   //dateFormat="d-MMMM-yyyy"
   dateFormat="MMM dd, yyyy"
+  maxDate={new Date()}
 />
 
                         </span>

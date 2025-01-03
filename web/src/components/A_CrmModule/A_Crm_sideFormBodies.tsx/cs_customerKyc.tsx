@@ -15,9 +15,6 @@ export default function Cs_customerKyc({ selUnitPayload }) {
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
 
-  if (!user?.role?.includes(USER_ROLES.ADMIN)) {
-    return null
-  }
   useEffect(() => {
     console.log('yo yo ', selUnitPayload)
   }, [])
@@ -54,6 +51,8 @@ export default function Cs_customerKyc({ selUnitPayload }) {
         title="Booking Form"
         selUnitDetails={selUnitPayload}
         leadDetailsObj2={selUnitPayload}
+        customerInfo={selUnitPayload?.custObj1}
+
       />
       <div className="mt-5 left-0 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
         <button

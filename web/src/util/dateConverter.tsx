@@ -11,7 +11,7 @@
 //     timeZone: 'Asia/Kolkata', // Set the time zone to India
 //   }
 
-  
+
 
 //   return d.toLocaleString('en-IN', options)
 // }
@@ -42,6 +42,7 @@ export const timeConv = function (str: string): string {
 
 
 export function prettyDate(d) {
+  if(d){
   const date = new Date(d)
   const months = [
     'Jan',
@@ -63,6 +64,9 @@ export function prettyDate(d) {
     date.getUTCDate() + '-' +
     date.getUTCFullYear()
   )
+  }else{
+    'NA'
+  }
 }
 
 export function prettyDateTime(d) {
