@@ -591,6 +591,9 @@ const AddCustomerWallet = ({
                                               className="w-4 h-4 text-[18px]"
                                               style={{ fontSize: '18px' }}
                                             />
+
+
+                                            {/* Add Receipt  */}
                                           </label>
                                           {/* {panCard1 != '' && (
                         <button

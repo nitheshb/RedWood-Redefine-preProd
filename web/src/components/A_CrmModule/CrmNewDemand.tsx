@@ -26,6 +26,7 @@ import { TextField2 } from 'src/util/formFields/TextField2'
 import { EyeIcon } from 'lucide-react'
 
 import { FaTools, FaHammer, FaRegFileAlt, FaArrowUp } from 'react-icons/fa';
+import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 
 
 
@@ -331,6 +332,21 @@ const AddNewDemand = ({
     // updateLeadStatus(leadDocId, newStatus)
   }
 
+  // const [value, setValue] = useState('');
+
+  // const handleChange = (e) => {
+  //   const rawValue = e.target.value.replace(/,/g, ''); 
+  //   if (!isNaN(rawValue)) {
+  //     const formattedValue = new Intl.NumberFormat().format(rawValue);
+  //     setValue(formattedValue);
+  //   }
+  // };
+
+
+
+  
+
+
   const datee = new Date().getTime()
   const initialState = {
     amount: bankData?.amount || '',
@@ -513,7 +529,19 @@ const AddNewDemand = ({
                                               <TextField2
                                                 label="Amount"
                                                 name="amount"
-                                                type="number"
+                                                type="text"
+                                                value={
+                                                  formik.values.amount.toLocaleString('en-IN')
+                                                  }
+                                                  onChange={(e) =>{
+                                                    const rawValue = Number(e.target.value.replace(/,/g, ''))?.toLocaleString('en-IN')
+                          
+                          
+                                                    formik.setFieldValue('amount', rawValue)
+                                              
+                                                  }}
+                 
+                                             
                                               />
                                             </div>
                                           </div>
@@ -524,6 +552,19 @@ const AddNewDemand = ({
                                                 label="GST %"
                                                 name="gst"
                                                 type="text"
+
+                                                onChange={(e) => {
+                                                  let value = e.target.value
+                                                    .replace(/[^0-9.]/g, '') 
+                                                    .replace(/(\..*?)\..*/g, '$1'); 
+                                            
+                                                  
+                                                  if (value === '0' || /^0\d/.test(value)) {
+                                                    value = value.replace(/^0+/, '');
+                                                  }
+                                            
+                                                  formik.setFieldValue('gst', value);
+                                                }}
                                               />
                                             </div>
                                           </div>

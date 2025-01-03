@@ -1007,12 +1007,13 @@ const CaptureUnitPayment = ({
                                         <div>
                                           <label
                                             htmlFor="formFile1"
-                                            className="form-label cursor-pointer inline-block mt-2  font-regular text-xs bg-gray-300 rounded-2xl  py-1 "
+                                            className="form-label cursor-pointer inline-block mt-2 ml-2 text-[#00ADB4]  font-regular text-xs  rounded-2xl  py-1 "
                                           >
                                             <AttachFile
-                                              className="w-4 h-4 text-[18px]"
-                                              style={{ fontSize: '18px' }}
+                                              className="w-4 h-4 text-[14px]"
+                                              style={{ fontSize: '14px' }}
                                             />
+                                          Add Receipt 
                                           </label>
                                           {/* {panCard1 != '' && (
                         <button

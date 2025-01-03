@@ -5227,9 +5227,9 @@ export const updateProjectionsAgreegations = async (
         ...data,
       })
 
-      enqueueSnackbar('Projection old now found', {
-        variant: 'error',
-      })
+      // enqueueSnackbar('Projection old now found', {
+      //   variant: 'error',
+      // })
     }
   } else {
     return
@@ -5279,9 +5279,9 @@ export const updateCrmExecutiveAgreegations = async (
       console.log('Emp Projection Removal failed', error, {
         ...data,
       })
-      enqueueSnackbar('Emp Projection Removal failed', {
-        variant: 'error',
-      })
+      // enqueueSnackbar('Emp Projection Removal failed', {
+      //   variant: 'error',
+      // })
     }
     try {
       await updateDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
