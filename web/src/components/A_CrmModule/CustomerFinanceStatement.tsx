@@ -61,7 +61,7 @@ const CrmUnitPsHome = ({
         </ul>
 
         <section className="flex flex-row bg-[#F6F7FE]">
-          <div className="flex flex-row w-full  mr-2 mt-3">
+          {/* <div className="flex flex-row w-full  mr-2 mt-3">
             <div
               className="flex flex-row  items-center align-middle text-blue-500 text-xs cursor-pointer hover:underline"
               onClickCapture={async () => {
@@ -96,8 +96,8 @@ const CrmUnitPsHome = ({
                 </span>
               </>
             </div>
-          </div>
-          <div className="flex flex-row w-full  mr-2 mt-3">
+          </div> */}
+          {/* <div className="flex flex-row w-full  mr-2 mt-3">
             <div
               className="flex flex-row  items-center align-middle text-blue-500 text-xs cursor-pointer hover:underline"
               onClickCapture={async () => {
@@ -129,7 +129,7 @@ const CrmUnitPsHome = ({
                 <span className="text-[11px]">TRANSACTIONS</span>
               </>
             </div>
-          </div>
+          </div> */}
 
           <div className="w-full flex items-center mt-3 mr-3 ">
             <label

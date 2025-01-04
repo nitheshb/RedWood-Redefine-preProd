@@ -688,11 +688,11 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                     <input
                       type="text"
                       id="globalSearch"
-                      placeholder="Search Unit No, Customer name, Phone no, Dues..."
+                      placeholder="Search Unit No, Customer name"
                       onChange={(e) => setSearchKeyField(e.target.value)}
                       autoComplete="off"
                       value={searchKeyField}
-                      className="w-52 bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900 w-4/5 relative"
+                      className=" bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900 w-4/5 relative"
                     />
                   </span>
                   {/* <div className=" mr-2">
