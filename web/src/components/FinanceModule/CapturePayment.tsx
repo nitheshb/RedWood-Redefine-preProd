@@ -660,6 +660,10 @@ const CaptureUnitPayment = ({
                                                     className="flex flex-col items-center gap-x-1"
                                                     key={i}
                                                     onClick={() => {
+                                                      // setPaymentModex(dat.value)
+
+
+                                                      
                                                       setPaymentModex(dat.value)
                                                       formik.setFieldValue(
                                                         'mode',
