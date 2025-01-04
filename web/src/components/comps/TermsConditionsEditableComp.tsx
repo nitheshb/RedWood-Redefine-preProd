@@ -514,22 +514,24 @@ const TermsConditionsEditableTable = ({
     setEditingCell(null)
   }
 
-  const handleDeleteRow = (dataObj) => {
-    // step : 7
-    const title = dataObj?.title
-    // const data = dataObj?.data?.find((item) => item.id === selcDelRow?.id)
-    // console.log('data is', data)
+  // const handleDeleteRow = (dataObj) => {
+  //   // step : 7
+  
+  //   const title = dataObj?.title;
+  //   const id = dataObj?.id;
+  //   // const data = dataObj?.data?.find((item) => item.id === selcDelRow?.id)
+  //   // console.log('data is', data)
 
-    setDeletedRows([...deletedRows, dataObj])
-    console.log('deletedRows', deletedRows)
-    if (title === 'Receipt') {
-      const updatedArr = receiptA.filter((item) => item.id != dataObj.id)
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i }
-      })
-      setReceiptA(setOrder)
-    }
-  }
+  //   setDeletedRows([...deletedRows, dataObj])
+  //   console.log('deletedRows', deletedRows)
+  //   if (title === 'Receipt') {
+  //     const updatedArr = receiptA.filter((item) => item.id != dataObj.id)
+  //     const setOrder = updatedArr.map((item, i) => {
+  //       return { ...item, order: i }
+  //     })
+  //     setReceiptA(setOrder)
+  //   }
+  // }
 
   // const handleClick = (item: string) => {
   //   setActiveItem(item)
@@ -542,6 +544,58 @@ const TermsConditionsEditableTable = ({
   //   }
   // }
 
+
+
+
+  const handleDeleteRow = (dataObj) => {
+    const title = dataObj?.title;
+    const id = dataObj?.id;
+
+
+    setDeletedRows(prev => [...prev, dataObj]);
+
+  
+    switch (title) {
+      case 'Receipt':
+        setReceiptA(prevReceipts => {
+          const updatedReceipts = prevReceipts
+            .filter(item => item.id !== id)
+            .map((item, index) => ({
+              ...item,
+              order: index
+            }));
+          return updatedReceipts;
+        });
+        break;
+
+      case 'Cost Sheet Estimation':
+        setCostSheetEstimationA(prevEstimations => {
+          const updatedEstimations = prevEstimations
+            .filter(item => item.id !== id)
+            .map((item, index) => ({
+              ...item,
+              order: index
+            }));
+          return updatedEstimations;
+        });
+        break;
+
+      case 'Unit Summary':
+        setUnitSummaryA(prevSummaries => {
+          const updatedSummaries = prevSummaries
+            .filter(item => item.id !== id)
+            .map((item, index) => ({
+              ...item,
+              order: index
+            }));
+          return updatedSummaries;
+        });
+        break;
+
+      default:
+        break;
+    }
+  };
 
 
 
@@ -888,7 +942,8 @@ const TermsConditionsEditableTable = ({
 
                             <td className="py-5 px-4 text-md items-center align-middle border-b text-[#6b7280]">
                               <button
-                                onClick={() => handleDeleteRow(data, i)}
+                                // onClick={() => handleDeleteRow(data, i)}
+                                onClick={() => handleDeleteRow(data)}
                                 className="flex items-center text-[#728195]"
                                 aria-label="Delete"
                               >

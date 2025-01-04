@@ -550,7 +550,7 @@ export const updateWalletTransactionStatus = async (
     }
   console.log('check it ', data4, error4)
   if (lead_logs) {
-    await enqueueSnackbar('Marked as Amount Recived', {
+    await enqueueSnackbar('Marked as Amount2 Recived', {
       variant: 'success',
     })
   }
@@ -601,9 +601,9 @@ export const updateTransactionStatus = async (
       T_elgible_balance: increment(totalAmount),
       T_cancelled: increment(totalAmount),
     })
-    await enqueueSnackbar('Marked as payment rejected', {
-      variant: 'success',
-    })
+    // await enqueueSnackbar('Marked as payment rejected', {
+    //   variant: 'success',
+    // })
   }
     if(status === 'received'){
       await updateDoc(doc(db, `${orgId}_units`, Uuid), {
@@ -611,21 +611,42 @@ export const updateTransactionStatus = async (
         T_approved: increment(totalAmount),
 
       })
-      await enqueueSnackbar('Marked as payment received', {
-        variant: 'success',
-      })
+      // await enqueueSnackbar('Marked as payment received', {
+      //   variant: 'success',
+      // })
     }
   console.log('check it ', data4, error4)
   if (lead_logs) {
     await enqueueSnackbar('Marked as Amount Recived', {
       variant: 'success',
-    })
+    });
+  }
+  else if (status === 'Failed') {
+    await enqueueSnackbar('Marked as Payment Rejected', {
+      variant: 'error',
+    });
   }
   if (error) {
     await enqueueSnackbar('Transaction Updation Failed', {
       variant: 'error',
     })
   }
+
+  if (status === 'Rejected') {
+  
+    await enqueueSnackbar('Marked as Payment Rejected', {
+      variant: 'error',
+    });
+  } else if (status === 'Failed') {
+    await enqueueSnackbar('Marked as Payment Failed', {
+      variant: 'error',
+    });
+  } 
+  
+
+  
+  
+
 
   console.log('updating error', lead_logs, error)
   return lead_logs
@@ -5227,9 +5248,9 @@ export const updateProjectionsAgreegations = async (
         ...data,
       })
 
-      enqueueSnackbar('Projection old now found', {
-        variant: 'error',
-      })
+      // enqueueSnackbar('Projection old now found', {
+      //   variant: 'error',
+      // })
     }
   } else {
     return
@@ -5279,9 +5300,9 @@ export const updateCrmExecutiveAgreegations = async (
       console.log('Emp Projection Removal failed', error, {
         ...data,
       })
-      enqueueSnackbar('Emp Projection Removal failed', {
-        variant: 'error',
-      })
+      // enqueueSnackbar('Emp Projection Removal failed', {
+      //   variant: 'error',
+      // })
     }
     try {
       await updateDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
@@ -5659,9 +5680,17 @@ export const updateKycApproval = async (
           to: status,
         },
       ])
-    enqueueSnackbar('KYC Approved..!', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('KYC Approved..!', {
+    //   variant: 'success',
+    // })
+
+    enqueueSnackbar(
+      `KYC ${status === 'approved' ? 'Approved' : 'Rejected'}..!`,
+      { variant: status === 'approved' ? 'success' : 'error' }
+    );
+    
+ 
+    
   } catch (error) {
     console.log('KYC Approved Updation Failed', error, {
       ...data,
@@ -5672,6 +5701,9 @@ export const updateKycApproval = async (
   }
   return
 }
+
+
+
 export const updatePosessionApproval = async (
   orgId,
   unitId,

@@ -203,6 +203,8 @@ const CrmMortgageSummaryTable = ({ projects }) => {
 
 
           <div className=" bg-white  rounded-[30px] w-full max-w-7xl mx-auto">
+
+            
       <div className="">
         <div className="">
           {/* <div className="flex items-center justify-between mb-4">
@@ -563,6 +565,10 @@ const CrmMortgageSummaryTable = ({ projects }) => {
       </div> */}
 
 
+<div className='border-2 rounded-[30px] border-[#f1f1f1] p-4'>
+
+
+
 <div className="flex p-5  items-center justify-between mb-4">
         <h1 className="text-xl font-medium text-gray-800">Project Mortgage Details</h1>
 
@@ -681,6 +687,11 @@ const CrmMortgageSummaryTable = ({ projects }) => {
           </table>
         </div>
       </div>
+
+
+
+    </div>
+
     </div>
 
 

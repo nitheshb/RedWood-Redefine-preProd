@@ -1216,7 +1216,7 @@ function EnhancedTableHead(props) {
             padding: '10px',
             borderRadius: '2xl',
             borderBottom: '0.2px solid #d3c5f1',
-            borderRight: '0.2px solid #d3c5f1',
+           
 
             paddingLeft: '14px',
             paddingRight: '29px',
@@ -1235,7 +1235,7 @@ function EnhancedTableHead(props) {
 
 
 
-          <TableSortLabel style={{borderRight: '0.2px solid #d3c5f1', color: '#000',fontWeight: '600' }}>S.No</TableSortLabel>
+          <TableSortLabel style={{ color: '#000',fontWeight: '600' }}>S.No</TableSortLabel>
         </TableCell>
         {headCells.map((headCell) => (
           <>
@@ -1253,7 +1253,7 @@ function EnhancedTableHead(props) {
                 maxHeight: '10px',
                 lineHeight: '7px',
                 padding: '8px 7px 8px 10px',
-                borderRight: '0.2px solid #d3c5f1',
+                
                 borderBottom: '0.2px solid #d3c5f1',
 
                 display: displayHeadersFun(headCell.id)
@@ -1326,7 +1326,7 @@ function EnhancedTableHead(props) {
                 padding: '6px 1px 6px 10px',
 
 
-                borderRight: '0.2px solid #d3c5f1',
+                
 
                 display: displayHeadersFun(headCell.id)
               }}
@@ -1501,7 +1501,7 @@ const customTooltip = ({ payload, label }) => {
   if (!payload || payload.length === 0) return null;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
+    <div className="bg-white  rounded-lg p-4 shadow-lg text-sm">
       <p className="font-semibold text-gray-800">{label}</p>
       {payload.map((entry, index) => (
         <div key={`tooltip-item-${index}`} className="flex items-center space-x-2 mb-2">
@@ -1991,13 +1991,19 @@ const customTooltip = ({ payload, label }) => {
   </div>
 </div>
 
+
+
+
+
+
+{/* 
 <div className="p-6 mt-6 rounded-t-[30px] bg-white flex justify-between items-center">
-          <h3 className="text-xl font-bold">Booking Summary</h3>
+          <h3 className="text-xl font-bold">Booking Summary calc</h3>
           <div className="flex gap-4">
             <Filter className="text-gray-500" />
             <Download className="text-gray-500" />
           </div>
-        </div>
+        </div> */}
 
         {/* <div className="flex  max-w-7xl mx-auto justify-between my-2 items-center h-10 m-2 mt-6">
           <h3 className="text-xl font-bold">Booking Summary</h3>
@@ -2039,8 +2045,22 @@ const customTooltip = ({ payload, label }) => {
 
 
 
+<div className='p-4 mt-6 rounded-t-[30px] bg-white  rounded-[30px]'>
+<div className='border-2 rounded-[30px] border-[#f1f1f1] p-4'>
 
-           <div className="flex  bg-white  items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
+
+
+  
+<div className=" px-4 py-2 rounded-t-[30px] bg-white flex justify-between items-center">
+          <h3 className="text-xl font-bold">Booking Summary</h3>
+          <div className="flex gap-4">
+            <Filter className="text-gray-500" />
+            <Download className="text-gray-500" />
+          </div>
+        </div>
+
+
+<div className="flex  bg-white  items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
               {/* <h2 className="text-lg font-semibold text-black leading-light">
                 Booked Units Summary
               </h2> */}
@@ -2293,7 +2313,7 @@ className='max-h-[30px] overflow-y-auto
                           id={labelId}
                           scope="row"
                           padding="none"
-                          sx={{ width: '142px',whiteSpace: 'nowrap', background: '#fff',  paddingRight: '6px' , paddingLeft: '6px',   borderLeft: '0.2px solid #e7e5e4' , }}
+                          sx={{ width: '142px',whiteSpace: 'nowrap', background: '#fff',  paddingRight: '6px' , paddingLeft: '6px',   }}
 
                         >
                           <section>
@@ -2317,7 +2337,7 @@ className='max-h-[30px] overflow-y-auto
                           scope="row"
                           padding="none"
                           align="center"
-                          sx={{width: '142px',background: '#fff', paddingTop: '4px', paddingBottom:'4px',  borderLeft: '0.2px solid #e7e5e4' , }}
+                          sx={{width: '142px',background: '#fff', paddingTop: '4px', paddingBottom:'4px',  }}
 
                         >
                           <section>
@@ -2328,13 +2348,13 @@ className='max-h-[30px] overflow-y-auto
                         </TableCell>
                           <TableCell
                           align="left"
-                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',  borderLeft: '0.2px solid #e7e5e4' , textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>{row.projName}</span>
                         </TableCell>
-                        <TableCell align="center" sx={{width: '142px',background: "#FFFF",  borderLeft: '0.2px solid #e7e5e4', }} padding="none">
+                        <TableCell align="center" sx={{width: '142px',background: "#FFFF",  }} padding="none">
                         <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full  text-[#115e59]">
                           <HighlighterStyle
                             searchKey={searchKey}
@@ -2343,10 +2363,10 @@ className='max-h-[30px] overflow-y-auto
                         </span>
                         </TableCell>
 
-                        <TableCell align="center" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.2px solid #e7e5e4' , fontSize:'13px'  }} padding="none">
+                        <TableCell align="center" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff",  fontSize:'13px'  }} padding="none">
           {prettyDate(row?.booked_on)}
         </TableCell>
-        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', borderLeft: '0.2px solid #e7e5e4' , fontSize: '13px', paddingRight: '6px', color: '#0ea5e9',    '& span': {
+        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap',  fontSize: '13px', paddingRight: '6px', color: '#0ea5e9',    '& span': {
       display: 'inline-block',
       borderBottom: '1px solid transparent',
       transition: 'border-bottom 0.3s ease',
@@ -2405,7 +2425,7 @@ className='max-h-[30px] overflow-y-auto
         {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px'  }} padding="none">
         ₹{legalCharge?.toLocaleString('en-IN')}
         </TableCell>)} */}
-       <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.2px solid #e7e5e4', paddingRight: '6px', fontSize: '13px' }} padding="none" >
+       <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff",  paddingRight: '6px', fontSize: '13px' }} padding="none" >
         ₹{row?.T_total?.toLocaleString('en-IN')}
         </TableCell>
         {viewUnitStatusA.includes('Avg sqft Cost') && (<TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px', fontSize: '13px' }} padding="none">
@@ -2414,12 +2434,12 @@ className='max-h-[30px] overflow-y-auto
         {viewUnitStatusA.includes('Avg sqft Cost') && (<TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px', fontSize: '13px' }} padding="none">
         ₹{row?.sqft_rate?.toLocaleString('en-IN')}
         </TableCell>)}
-        <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.2px solid #e7e5e4', paddingRight: '6px', fontSize: '13px' }} padding="none">
+        <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#fff",  paddingRight: '6px', fontSize: '13px' }} padding="none">
         ₹{row?.T_approved?.toLocaleString('en-IN')}
 
 
         </TableCell>
-      <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',  borderLeft: '0.2px solid #e7e5e4', paddingRight: '6px', fontSize: '13px' ,'& span': {
+      <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',   paddingRight: '6px', fontSize: '13px' ,'& span': {
       display: 'inline-block',
       borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
@@ -2554,6 +2574,15 @@ className='max-h-[30px] overflow-y-auto
         </TableContainer>
       </section>
     </div>
+
+
+
+
+</div>
+</div>
+
+
+
     </section>
   )
 }

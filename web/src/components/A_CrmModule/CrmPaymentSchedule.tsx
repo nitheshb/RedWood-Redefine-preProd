@@ -184,7 +184,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
       <div className="mt-2">
         <section className="flex flex-col  ">
           <div>
-            <div className="  from-green-50 to-amber-50 border bg-[#F0F1FF] rounded-md p-3 pb-4">
+            <div className="border border-[#e5e7f8] bg-[#fff] rounded-md p-3 pb-4">
               <div className="flex flex-row ">
                 <img
                   src="https://static.ambitionbox.com/static/benefits/JobTraining.svg"
@@ -197,23 +197,23 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
               <table className="w-full mb- ">
                 <thead>
                   {' '}
-                  <tr className=" border-b-[0.2px] border-gray-300 h-8 bg-[#D9D8FF]">
-                    <th className="w-[40%] text-[12px] px-3 text-left   tracking-wide  ">
+                  <tr className="  h-8 ">
+                    <th className="w-[40%] text-[12px] px-3 text-left   tracking-wide   text-[#3D3D3D]   rounded-tl-[10px]  bg-[#EDEDED] ">
                     Charges
                     </th>
                     {/* <th className="w-[10%] text-[10px] text-right text-gray-400  text-[#823d00]  tracking-wide uppercase">
                       Payment Timeline
                     </th> */}
-                    <th className="w-[15%] text-[12px] text-center  tracking-wide  ">
+                    <th className="w-[15%] text-[12px] text-center  tracking-wide   text-[#3D3D3D]     bg-[#EDEDED] ">
                       Eligible
                     </th>
-                    <th className="w-[15%] text-[12px]  px-2  text-right tracking-wide ">
+                    <th className="w-[15%] text-[12px]  px-2  text-right tracking-wide    text-[#3D3D3D]     bg-[#EDEDED] ">
                       Total inc GST
                     </th>
-                    <th className="w-[15%] text-[12px]  px-2 text-right    tracking-wide ">
+                    <th className="w-[15%] text-[12px]  px-2 text-right    tracking-wide    text-[#3D3D3D]     bg-[#EDEDED] ">
                       Received
                     </th>
-                    <th className="w-[15%] text-[12px]  px-2 text-right  tracking-wide  ">
+                    <th className="w-[15%] text-[12px]  px-2 text-right  tracking-wide    text-[#3D3D3D] rounded-tr-[10px]     bg-[#EDEDED]  ">
                       Balance
                     </th>
                     {/* <th className="w-[15%] text-[10px] text-right text-gray-400 text-[#823d00]  tracking-wide uppercase ">
@@ -236,17 +236,17 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
                           !d1?.elgible ? '' : ''
                         } `}
                       >
-                        <th className=" text-[10px] text-left text-gray-700  bg-[#F0F1FF] tracking-wide pl-3 ">
+                        <th className=" text-[12px] text-left text-[#6A6A6A] bg-[#fff] tracking-wide pl-3 ">
                           <div>
                             {d1?.stage?.label}
-                            <div className="text-[9px] text-left text-[#60679f] tracking-wider ">
+                            <div className="text-[9px] text-left text-[#6A6A6A] bg-[#fff] tracking-wider ">
                               {' '}
                               {d1?.description}-{prettyDate(d1?.schDate)}
                             </div>
                           </div>
                         </th>
 
-                        <td className="text-[10px] text-center text-gray-800 font-bold bg-[#F0F1FF]">
+                        <td className="text-[10px] text-center  font-bold text-[#6A6A6A] bg-[#fff]">
                           <span
                           // className={`text-[10px] px-2 py-[2px] rounded-2xl  ${
                           //   !d1?.elgible ? '' : 'bg-[#98ebc9]  '
@@ -272,18 +272,18 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
                             </div>
                           </span>
                         </td>
-                        <td className="text-[12px] text-right text-gray-800 bg-[#F0F1FF] px-2 ">
+                        <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
                           ₹{d1?.value?.toLocaleString('en-IN')}
                         </td>
 
-                        <td className="text-[12px] text-right text-green-600 bg-[#F0F1FF] px-2 font-bold">
+                        <td className="text-[12px] text-right text-green-600 bg-[#fff] px-2 font-bold">
                           {/* {totalIs > d1?.value?.toLocaleString('en-IN')
                           ? d1?.value?.toLocaleString('en-IN')
                           : 0} */}
                           {/* ₹{d1?.elgible ? totalIs?.toLocaleString('en-IN') : 0} */}
                           ₹{d1?.amt?.toLocaleString('en-IN')}
                         </td>
-                        <td className="text-[12px] text-right  bg-[#F0F1FF] px-2 ">
+                        <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
                           {/* ₹{d1?.leftOver?.toLocaleString('en-IN')} */}₹
                           {d1?.outStanding?.toLocaleString('en-IN')}
                         </td>
@@ -291,24 +291,24 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
                     )
                   })}
 
-                  <tr className="border-b-[0.05px] border-gray-300 py-3 h-[51px] ">
-                    <td className="text-[10px] text-right text-gray-400  bg-[#D9D8FF]"></td>
+                  <tr className=" py-3 h-[51px] ">
+                    <td className="text-[10px] text-right text-gray-400  bg-[#fff]"></td>
                     {/* <td className="text-[10px] text-right text-gray-400 "></td> */}
-                    <th className="text-[14px] text-left text-gray-800 bg-[#D9D8FF] ">
+                    <th className="text-[12px] text-left font-semibold text-[#6A6A6A]  ">
                       Total Value:
                     </th>
-                    <th className="text-[10px] text-right text-gray-800 bg-[#D9D8FF] ">
-                      <section className="py-1 d-md font-bold text-[14px] text-[#000000e6] leading-none px-2 ">
+                    <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
+                      <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px]leading-none px-2 ">
                         ₹{unitTotal?.toLocaleString('en-IN')}
                       </section>
                     </th>
-                    <th className="text-[10px] text-right text-gray-800 bg-[#D9D8FF] ">
-                      <section className="py-1 d-md font-bold text-[14px] text-[#000000e6] leading-none px-2 ">
+                    <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
+                      <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px] leading-none px-2 ">
                         ₹{unitReceivedTotal?.toLocaleString('en-IN')}
                       </section>
                     </th>
-                    <th className="text-[10px] text-right text-gray-800 bg-[#D9D8FF] ">
-                      <section className="py-1 d-md font-bold text-[14px] text-[#000000e6] leading-none px-2 ">
+                    <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
+                      <section className="py-1 d-md font-semibold text-[#6A6A6A] text-[12px] leading-none px-2 ">
                         {/* ₹{unitReceivedTotal?.toLocaleString('en-IN')} */}
                       </section>
                     </th>

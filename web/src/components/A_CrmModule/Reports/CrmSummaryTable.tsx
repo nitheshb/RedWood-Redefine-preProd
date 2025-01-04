@@ -899,8 +899,12 @@ const handleSort = (key) => {
 
 
 
+   <div className='border-2 rounded-[30px] border-[#f1f1f1] p-4'>
+
 
 <div className="w-full max-w-7xl mx-auto">
+
+
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-medium text-gray-800">CRM Inventory Report</h1>
         <button className="flex pl-3 items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-gray-600">
@@ -1031,13 +1035,15 @@ const handleSort = (key) => {
 
 
 <div className="overflow-x-auto">
-      <table className="w-full border-collapse overflow-hidden">
+      <table className="w-full overflow-hidden">
         <thead>
-          <tr className="bg-[#F0F2F5]  border-t border-b border-[#E8ECF4]">
-            {['project Name', 'total Unit', 'available', 'sold Unit', 'blockedUnit', 'mortgaged'].map((key) => (
+          <tr className="bg-[#F0F2F5] text-right  border-t border-b border-[#E8ECF4]">
+            {['project Name', 'total Unit', 'available', 'sold Unit', 'blocked Unit', 'mortgaged'].map((key) => (
               <th
                 key={key}
-                className="text-left pl-3 p-1 py-2 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4] cursor-pointer relative"
+                className={`${
+                  key === 'project Name' ? 'text-left' : 'text-right'
+                } pl-3 p-1 py-2 font-medium text-[#000000] whitespace-nowrap cursor-pointer relative`}
                 onClick={() => handleSort(key)}
               >
                 <span>
@@ -1073,7 +1079,7 @@ const handleSort = (key) => {
         <tbody>
           {sortedProjects.map((item, index) => (
             <tr key={`${item.name}-${index}`} className="hover:bg-gray-50 border-b border-[#E8ECF4]">
-              <td className="p-2 text-gray-700 border-r border-[#E8ECF4]"
+              <td className="p-2 text-gray-700 "
                                     onClick={() => {
                                       showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                                         'available',
@@ -1085,7 +1091,7 @@ const handleSort = (key) => {
                                     }}
 
               >{item.projectName}</td>
-              <td className="p-2 text-gray-700 border-r text-right border-[#E8ECF4]"
+              <td className="p-2 text-gray-700  text-right"
                                     onClick={() => {
                                       showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                                         'available',
@@ -1096,7 +1102,7 @@ const handleSort = (key) => {
                                       ])
                                     }}
               >{item.totalUnitCount}</td>
-              <td className="p-2 text-gray-700 border-r text-right border-[#E8ECF4]"
+              <td className="p-2 text-gray-700  text-right "
                                     onClick={() => {
                                       showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                                         'available',
@@ -1108,7 +1114,7 @@ const handleSort = (key) => {
                                     }}
 
               >{item.availableCount}</td>
-              <td className="p-2 text-gray-700 border-r text-right border-[#E8ECF4]"
+              <td className="p-2 text-gray-700  text-right"
                                     onClick={() => {
                                       showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                                         'available',
@@ -1119,7 +1125,7 @@ const handleSort = (key) => {
                                       ])
                                     }}
               >{item.soldUnitCount}</td>
-              <td className="p-2 text-gray-700 border-r text-right border-[#E8ECF4]"
+              <td className="p-2 text-gray-700 text-right "
                                     onClick={() => {
                                       showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                                         'available',
@@ -1131,7 +1137,7 @@ const handleSort = (key) => {
                                     }}
 
               >{item.blockedUnitCount || 0}</td>
-              <td className="p-2 text-right text-gray-700"
+              <td className="p-2 m text-right text-gray-700"
                                     onClick={() => {
                                       showDrillDownFun(`Total ${item?.stausTitle}`, item, [
                                         'available',
@@ -1241,8 +1247,10 @@ const handleSort = (key) => {
 
         </div>
       </div>
-    </div>
+</div>
 
+
+    </div>
 
 </div>
 

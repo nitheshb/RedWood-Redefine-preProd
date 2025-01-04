@@ -7,6 +7,8 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { fistLetterCapital } from 'src/util/firstLetterCapital'
 import UserAvatarUpload from 'src/components/comps/userAvatarUplaod'
 
+import profilecover from '../../../../public/profilecover.png'
+
 export default function ProfileSummary() {
   const { login, isAuthenticated, user, forgotPassword } = useAuth()
   const { orgId } = user
@@ -73,7 +75,7 @@ export default function ProfileSummary() {
 
   return (
     <div className="m-2">
-      <div className="p-5 bg-white  border-neutral-300 rounded-lg shadow-lg p-5">
+      <div className="bg-white  border-neutral-300 rounded-lg shadow-lg p-5">
         <figure>
           <svg
             className="w-full"
@@ -118,6 +120,12 @@ export default function ProfileSummary() {
             </defs>
           </svg>
         </figure>
+
+{/* <div className="w-full h-64">
+  <img src={profilecover} className="w-full h-full object-cover !rounded-none" alt="" />
+</div> */}
+
+
       <UserAvatarUpload />
         {/* <div className="-mt-12 relative flex items-center justify-center">
           <div style={{ position: 'relative' }}>
@@ -159,7 +167,7 @@ export default function ProfileSummary() {
           </div>
         </div> */}
 
-        <div className="text-center mt-2">
+        <div className="text-center mt-2 p-4">
           <h1 className="text-lg font-semibold text-black text-black">
             {fistLetterCapital(user?.displayName)}
           </h1>
@@ -203,7 +211,7 @@ export default function ProfileSummary() {
           </section>
         </div>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between p-4">
           <div className="flex mt-4">
             <nav className="flex space-x-4">
               {menuItems.map((item, i) => {
@@ -231,7 +239,7 @@ export default function ProfileSummary() {
 
         {/* content */}
         {selMenuItem==='myProfile' && (
-            <div className="p-8 mt-4 space-y-6  w-full max-w-sm p-6 bg-white border border-gray-300 rounded-lg shadow-md">
+            <div className=" mt-4 space-y-6 mb-4  w-full max-w-sm p-6 mx-4 bg-white border border-gray-300 rounded-lg shadow-md">
               <div>
                 <h2 className="text-lg font-bold text-black">About</h2>
               </div>
@@ -336,7 +344,7 @@ export default function ProfileSummary() {
           <div>
             <form
               onSubmit={handleSubmit}
-              className="w-full mt-4 max-w-sm p-6 bg-white border border-gray-300 rounded-lg shadow-md"
+              className="w-full mt-4 max-w-sm p-6  bg-white border mx-4 border-gray-300 rounded-lg shadow-md"
             >
               <div className="mb-4">
                 <label className="block text-gray-700 text-md font-semibold mb-2">

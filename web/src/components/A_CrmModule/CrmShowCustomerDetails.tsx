@@ -822,6 +822,55 @@ const ShowCustomerDetails = ({
 
 
 
+      {/* <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
+        <div className="flex items-center space-x-4 mb-6">
+          <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center">
+            <span className="text-3xl font-bold text-white">T</span>
+          </div>
+          <div>
+            <h1 className="text-xl font-bold">Test_1</h1>
+            <p className="text-gray-500">S/O xyz</p>
+            <p className="text-gray-500">123123123</p>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-6">
+          <div>
+            <p className="text-lg font-semibold">Single</p>
+            <p className="text-gray-500 text-sm">Marital Status</p>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">Jan-01-2024</p>
+            <p className="text-gray-500 text-sm">D.O.B</p>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">xyzxyzxyz</p>
+            <p className="text-gray-500 text-sm">Pan Card</p>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">123123123</p>
+            <p className="text-gray-500 text-sm">Aadhar Card</p>
+          </div>
+        </div>
+      </div> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {/* 
           <div
             className="flex flex-col p-4 mx-2  rounded-md   mt- bg-[#fff] hover:shadow-2xl"

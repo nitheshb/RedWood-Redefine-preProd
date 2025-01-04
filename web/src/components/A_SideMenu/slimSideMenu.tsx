@@ -26,7 +26,7 @@ const SlimSideMenuBar = (props) => {
         'legalModule',
       ].includes(sourceLink) && (
         <a
-          className="flex items-center justify-center flex-shrink-0 w-full py-[9px] mr-4  border-b mt-[4px] pt-[10px]"
+          className="flex items-center justify-center flex-shrink-0 w-full py-[9px]   border-b mt-[4px] pt-[10px]"
           href="#"
         >
           {/* bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200 */}
@@ -46,7 +46,7 @@ const SlimSideMenuBar = (props) => {
           />
         </svg> */}
 
-          <svg
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             width="78"
             height="24"
@@ -79,7 +79,17 @@ const SlimSideMenuBar = (props) => {
               d="M4.66391 13V9.4973L11.8592 5.17391V1L1.58105 7.03243V18.9676L11.8573 13V8.71892L4.66391 13Z"
               fill="#7A77FF"
             ></path>
-          </svg>
+          </svg> */}
+
+
+<svg width="78" height="24" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.01362 0H7.0091L2.0002 10H0.0126953L5.01362 0Z" fill="#FFBB7B"/>
+<path d="M8.00203 0H11.0239L5.98267 10H2.99512L8.00203 0Z" fill="#FF9736"/>
+<path d="M11.9927 0H16.9971L11.9927 10H6.99707L11.9927 0Z" fill="#FF6E01"/>
+</svg>
+
+
+
         </a>
       )}
       <section className="mb-4"></section>
