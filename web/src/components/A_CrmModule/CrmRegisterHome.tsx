@@ -269,7 +269,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
           user.label = user.projectName
           user.value = user.projectName
         })
-        console.log('fetched proejcts list is', projectsListA)
         setprojectList(projectsListA)
       },
       (error) => setprojectList([])
@@ -312,36 +311,29 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
       if (searchKey === 'all') {
         return item
       } else if (item.status.toLowerCase() === searchKey.toLowerCase()) {
-        console.log('All1', item)
         return item
       }
     })
   }
   const getCustomerDataFun = async (projectList) => {
-    console.log('login role detials', user)
     const { access, uid } = user
 
     const unsubscribe = getUnassignedCRMunits(
       orgId,
       async (querySnapshot) => {
-        console.log('hello is ', querySnapshot.docs.length)
         const usersListA = querySnapshot.docs.map((docSnapshot) => {
           const x = docSnapshot.data()
           x.id = docSnapshot.id
           const y = projectList.filter((proj) => proj?.uid == x?.pId)
-          console.log(',my prject sel is  ===> ', projectList)
           if (y.length > 0) {
-            console.log(',my prject sel is ', y)
             x.projName = y[0].projectName
           }
           return x
         })
         // setBoardData
-        console.log('my Array data is ', usersListA, crmCustomersDBData)
         // await serealizeData(usersListA)
 
         // await setCrmCustomerDBData(usersListA)
-        await console.log('my Array data is set it', crmCustomersDBData)
       },
       {
         status: [
@@ -359,7 +351,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     return unsubscribe
   }
   const getLeadsDataFun = async (projectList, statusFil) => {
-    console.log('fetched unsits data is', selLeadsOf)
     const { access, uid } = user
     const unsubscribe = getBookedUnitsByProject(
       orgId,
@@ -367,7 +358,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
         const usersListA = querySnapshot.docs.map((docSnapshot) => {
           const x = docSnapshot.data()
           x.id = docSnapshot.id
-          console.log('fetched unsits data is ', x)
           const y = projectList.filter((proj) => proj?.uid == x?.pId)
           // console.log(',my prject sel is  ===> ', projectList)
           if (y.length > 0) {
@@ -463,7 +453,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     // await usersListA.sort((a, b) => {
     //   return a.unit_no - b.unit_no
     // })
-    console.log('iam in searchKey', searchKey, !searchKey)
     if(selCategory === 'booked'){
       searchLogic(searchKey, queryResult)
     }
@@ -511,7 +500,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
   }
 
   const viewTransaction = (docData, sideViewCategory, sideViewCategory1) => {
-    console.log('check it ', docData, sideViewCategory, sideViewCategory1)
     setSelSubMenu(sideViewCategory)
     setSelSubMenu1(sideViewCategory1)
     setTransactionData(docData)
@@ -538,7 +526,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                     label=""
                     className="input "
                     onChange={(value) => {
-                      console.log('changed value is ', value.value)
                       setSelProject(value)
                       // formik.setFieldValue('project', value.value)
                     }}
@@ -558,7 +545,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                       placeholder="My Leads"
                       className="input "
                       onChange={(value) => {
-                        console.log('changed value is ', value.value)
                         setSelLeadsOf(value)
                         // formik.setFieldValue('project', value.value)
                       }}
@@ -647,7 +633,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                   <span
                     className="flex mt-[4px] mr-[8px] justify-center items-center w-6 h-6 bg-gradient-to-r from-violet-200 to-pink-200 rounded-full  cursor-pointer "
                     onClick={() => {
-                      console.log('chek it', horizontalMode)
                       setHorizontalMode(!horizontalMode)
                     }}
                   >

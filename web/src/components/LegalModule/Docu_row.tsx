@@ -21,7 +21,7 @@ import { updateUnitDocs } from 'src/context/dbQueryFirebase'
 import { Timestamp } from 'firebase/firestore'
 import { Loader } from 'lucide-react'
 
-const DowRow = ({ id, fileName, date, amount, status,data, key }) => {
+const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
   const { user } = useAuth()
   const { orgId } = user
   const [showModel, setShoModel] = useState(false)
@@ -34,22 +34,17 @@ const DowRow = ({ id, fileName, date, amount, status,data, key }) => {
   const [uploading, setUplaoding] = useState(false)
 
 
+
+
+
+
   const [progress, setProgress] = useState(0)
 
   // const { user } = useContext(AuthContext)
-  const deleteDocument = async (id) => {
-    // console.log(id);
-    // try {
-    //   const docRef = doc(firestore, 'userDocs', `${user?.uid}`, 'docs', id)
-    //   console.log(docRef)
-    //   if (docRef) {
-    //     deleteDoc(docRef)
-    //     setShoModel(false)
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    // }
-  }
+
+
+
+
   useEffect(() => {
     if (date) {
       setDate(prettyDate(date))
@@ -59,7 +54,8 @@ const DowRow = ({ id, fileName, date, amount, status,data, key }) => {
   }, [date])
 
   const handleFileUploadFun = async (file, type) => {
-    console.log('am i inside handle FileUpload')
+
+
     setUplaoding(true)
     if (!file) return
     try {
@@ -91,10 +87,11 @@ const DowRow = ({ id, fileName, date, amount, status,data, key }) => {
             // add this to db and update it in unit record
 
             // updateUnitDocs(orgId, id, file.url, file.name, by)
-            let x = {[`${data?.type}DocUrl`] : url, [`${data?.type}FilName`]: file.name,[`${data?.type}DocUpDate`]: Timestamp.now().toMillis()}
-
-            updateUnitDocs(orgId,id,x,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
-            setCommentAttachUrl(url)
+            console.log('data is ===>', file)
+            let x1 = {[`${type}DocUrl`] : url, [`${type}FilName`]: file.name,[`${type}DocUpDate`]: Timestamp.now().toMillis()}
+            console.log('data is ===> @@@', data?.type, type, x1)
+            updateUnitDocs(orgId,id,x1,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
+            // setCommentAttachUrl(url)
             setUplaoding(false)
             return url
             //  save this doc as a new file in spark_leads_doc
@@ -150,12 +147,13 @@ const DowRow = ({ id, fileName, date, amount, status,data, key }) => {
         <p className="flex-grow pl-2 pr-10">{fileName}</p>
         <p className="pr-3 text-xs truncate text-green-800">{data?.filName}</p>
         <p className="mr-3 px-2 py-1 rounded-2xl text-xs truncate bg-green-200 text-green-900">{status}</p>
-        {uploading && <Loader />}
+        {uploading && <Loader className="w-4 h-4 mr-2" />}
 
         <p className="pr-3 text-xs truncate">{prettyDate(data?.time) || 'NA'}</p>
+        {data?.type}
         <div>
                       <label
-                        htmlFor="formFile1"
+                        htmlFor={data.id}
                         className="form-label cursor-pointer inline-block mt-  font-regular text-xs rounded-2xl  py-1 "
                       >
                         <AttachFile
@@ -166,9 +164,9 @@ const DowRow = ({ id, fileName, date, amount, status,data, key }) => {
                       <input
                         type="file"
                         className="hidden"
-                        id="formFile1"
+                        id={data.id}
                         onChange={(e) => {
-                          handleFileUploadFun(e.target.files[0], 'panCard1')
+                          handleFileUploadFun(e.target.files[0],  data.type)
                         }}
                       />
                     </div>
@@ -224,4 +222,4 @@ const DowRow = ({ id, fileName, date, amount, status,data, key }) => {
   )
 }
 
-export default DowRow
+export default DocRow

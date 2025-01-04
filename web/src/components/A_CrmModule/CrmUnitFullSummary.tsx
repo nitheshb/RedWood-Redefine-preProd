@@ -2237,17 +2237,9 @@ export default function UnitFullSummary({
           ]?.map((doc, i) => (
             <section
               key={i}
-              onClick={() => {
-                // show sidebar and display the worddoc
-                // setSliderInfo({
-                //   open: true,
-                //   title: 'viewDocx',
-                //   sliderData: {},
-                //   widthClass: 'max-w-xl',
-                // })
-              }}
+
             >
-              <DocRow id={customerDetails?.id} fileName={doc?.name} date={doc?.time} data={doc} />
+              <DocRow  key={i} data={doc} id={customerDetails?.id} fileName={doc?.name} date={doc?.time}  />
             </section>
           ))}
         </section>
