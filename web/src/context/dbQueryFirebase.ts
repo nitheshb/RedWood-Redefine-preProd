@@ -633,7 +633,7 @@ export const updateTransactionStatus = async (
   }
 
   if (status === 'Rejected') {
-  
+
     await enqueueSnackbar('Marked as Payment Rejected', {
       variant: 'error',
     });
@@ -641,11 +641,11 @@ export const updateTransactionStatus = async (
     await enqueueSnackbar('Marked as Payment Failed', {
       variant: 'error',
     });
-  } 
-  
+  }
 
-  
-  
+
+
+
 
 
   console.log('updating error', lead_logs, error)
@@ -5489,17 +5489,60 @@ export const updateUnitDocs = async (
           by,
           payload: {},
           from: 'docUploaded',
-          to: status,
+          to: '',
         },
       ])
       enqueueSnackbar(msg, {
         variant: color,
       })
-
+console.log('data is ===> @@@', data)
   } catch (error) {
-    console.log('Doc Uplaod failed', error, {
+    console.log('Doc Uplaod failed', error,unitId, {
       ...data,
     })
+    console.log('data is ===> @@@', unitId)
+    enqueueSnackbar('Doc Upload Failed.', {
+      variant: 'error',
+    })
+  }
+  return
+}
+export const updateBankLoanApprovals = async (
+  orgId,
+  unitId,
+  data,
+  by,
+  msg,
+  color,
+  enqueueSnackbar
+) => {
+  try {
+    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+    ...data
+    })
+    const { data: data4, error: error4 } = await supabase
+      .from(`${orgId}_unit_logs`)
+      .insert([
+        {
+          type: 'document',
+          subtype: 'uploaded',
+          T: Timestamp.now().toMillis(),
+          Uuid: unitId,
+          by,
+          payload: {},
+          from: 'docUploaded',
+          to: '',
+        },
+      ])
+      enqueueSnackbar(msg, {
+        variant: color,
+      })
+console.log('data is ===> @@@', data)
+  } catch (error) {
+    console.log('Doc Uplaod failed', error,unitId, {
+      ...data,
+    })
+    console.log('data is ===> @@@', unitId)
     enqueueSnackbar('Doc Upload Failed.', {
       variant: 'error',
     })
@@ -5688,9 +5731,9 @@ export const updateKycApproval = async (
       `KYC ${status === 'approved' ? 'Approved' : 'Rejected'}..!`,
       { variant: status === 'approved' ? 'success' : 'error' }
     );
-    
- 
-    
+
+
+
   } catch (error) {
     console.log('KYC Approved Updation Failed', error, {
       ...data,
