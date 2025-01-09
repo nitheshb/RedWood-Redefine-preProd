@@ -5187,9 +5187,9 @@ export const updateProjectionsAgreegationsOnBooking = async (
       ...data,
     })
     await setDoc(doc(db, `${orgId}_payment_projections`, docId_d), payload)
-    enqueueSnackbar('Projection updation failed BBB', {
-      variant: 'error',
-    })
+    // enqueueSnackbar('Projection updation failed BBB', {
+    //   variant: 'error',
+    // })
   }
 
   return
@@ -5234,9 +5234,9 @@ export const updateProjectionsAgreegations = async (
         ...data,
       })
       await setDoc(doc(db, `${orgId}_payment_projections`, docId_d), payload)
-      enqueueSnackbar('Projection updation failed BBB', {
-        variant: 'error',
-      })
+      // enqueueSnackbar('Projection updation failed BBB', {
+      //   variant: 'error',
+      // })
     }
     try {
       await updateDoc(
@@ -5311,9 +5311,9 @@ export const updateCrmExecutiveAgreegations = async (
         ...data,
       })
       await setDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
-      enqueueSnackbar('Emp Projections updation', {
-        variant: 'error',
-      })
+      // enqueueSnackbar('Emp Projections updation', {
+      //   variant: 'error',
+      // })
     }
   } else {
     return

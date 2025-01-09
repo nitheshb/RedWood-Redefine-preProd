@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
 import { setHours, setMinutes } from 'date-fns'
-import { Timestamp } from 'firebase/firestore'
+import { doc, Timestamp, updateDoc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
 import {
@@ -26,7 +26,7 @@ import {
   streamGetAllUnitTransactions,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { storage } from 'src/context/firebaseConfig'
+import { db, storage } from 'src/context/firebaseConfig'
 import {
   prettyDate,
   timeConv,
@@ -126,7 +126,8 @@ export default function UnitFullSummary({
   selCustomerPayload,
   selSubMenu,
   selSubMenu2,
-  source
+  source,
+  
 }) {
   const { user } = useAuth()
   const { enqueueSnackbar } = useSnackbar()
@@ -735,6 +736,86 @@ export default function UnitFullSummary({
       console.log('upload error is ', error)
     }
   }
+
+
+
+
+
+  const [editableEvent, setEditableEvent] = useState(null);
+  const [editedDate, setEditedDate] = useState('');
+
+  const events = [
+    { event: 'Booked', key: 'booked_on' },
+    { event: 'Allotment', key: 'agreement_pipeline' },
+    { event: 'Agreement', key: 'agreement_on' },
+    { event: 'Registered', key: 'registered_on' },
+    { event: 'Possession', key: 'possession_on' },
+  ];
+
+  // const handleEdit = (key) => {
+  //   setEditableEvent(key);
+  //   setEditedDate(customerDetails[key] || '');
+  // };
+
+  const handleEdit = (key) => {
+    setEditableEvent(key)
+    setEditedDate(customerDetails[key] || '')
+  }
+
+  // const handleSave = (key) => {
+  //   customerDetails[key] = editedDate;
+  //   setEditableEvent(null); 
+  // };
+
+
+
+
+  
+  const handleSave = async (key) => {
+    try {
+      const dateTimestamp = new Date(editedDate).getTime()
+
+      const updatedDetails = {
+        ...customerDetails,
+        [key]: dateTimestamp
+      }
+
+
+      const unitDocRef = doc(db, `${orgId}_units`, customerDetails.id)
+      await updateDoc(unitDocRef, {
+        [key]: dateTimestamp,
+        [`${key}_updated_by`]: user.email,
+        [`${key}_updated_at`]: new Date().getTime()
+      })
+
+    
+      customerDetails[key] = dateTimestamp
+
+      setEditableEvent(null)
+      
+    
+      enqueueSnackbar('Date updated successfully', {
+        variant: 'success'
+      })
+    } catch (error) {
+      console.error('Error updating date:', error)
+      enqueueSnackbar('Error updating date', {
+        variant: 'error'
+      })
+    }
+  }
+
+
+  const handleCancel = () => {
+    setEditableEvent(null); 
+    setEditedDate('');
+  };
+
+
+
+
+
+
   return (
     <div
       className={`bg-[#F9F9FA]  rounded-md h-screen     `}
@@ -1987,7 +2068,7 @@ export default function UnitFullSummary({
 
 
 
-
+{/* 
           <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 mx-4 ">
           <div className="flex flex-row ">
                 <img
@@ -2018,7 +2099,6 @@ export default function UnitFullSummary({
         <div className="mt-3 sm:pe-8 bg-white p-3 rounded-lg mr-2">
             <h4 className="text-lg font-semibold text-gray-900 text-[12px] ">{d?.event}</h4>
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">On: {timeConv(Number(customerDetails[d?.key])).toLocaleString()}</time>
-            {/* <p className="text-base font-normal text-gray-500 ">Get started with dozens of web components and interactive elements.</p> */}
         </div>
     </li>)}
 
@@ -2027,7 +2107,122 @@ export default function UnitFullSummary({
 
 
             </div>
-          </div>
+          </div> */}
+
+
+<div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 mx-4">
+      <div className="flex flex-row">
+        <img
+          src="https://static.ambitionbox.com/static/benefits/WFH.svg"
+          alt=""
+        />
+        <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
+          Dates
+        </h1>
+      </div>
+
+      <div className="relative col-span-12 pl-6 space-y-2 sm:col-span-9 mt-1">
+        <ol className="items-center sm:flex">
+          {events.map((d, i) => (
+            <li key={i} className="relative mb-6 sm:mb-0">
+              <div className="flex items-center">
+                <div className="z-10 flex items-center justify-center w-6 h-6 bg-[#E5E7EB] rounded-full ring-0 ring-[#DDD6FE] sm:ring-8 shrink-0">
+                  <svg
+                    className="w-2.5 h-2.5 text-blue-800"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                  </svg>
+                </div>
+                <div className="hidden sm:flex w-full bg-[#E5E7EB] h-0.5"></div>
+              </div>
+
+              <div className="mt-3 sm:pe-8 bg-white p-3 rounded-lg mr-2">
+                <h4 className="text-lg font-semibold text-gray-900 text-[12px]">
+                  {d.event}
+                </h4>
+
+                {/* {editableEvent === d.key ? (
+                  <div>
+                    <input
+                      type="date"
+                      className="border border-gray-300 rounded-md p-1 text-sm"
+                      value={editedDate}
+                      onChange={(e) => setEditedDate(e.target.value)}
+                    />
+                    <div className="flex space-x-2 mt-2">
+                      <button
+                        onClick={() => handleSave(d.key)}
+                        className="px-3 py-1 text-sm text-white bg-blue-500 rounded"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={handleCancel}
+                        className="px-3 py-1 text-sm text-gray-500 bg-gray-100 rounded"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+                    On: {customerDetails[d.key]
+                      ? timeConv(Number(customerDetails[d.key])).toLocaleString()
+                      : 'Not Available'}
+                  </time>
+                )} */}
+
+
+{editableEvent === d.key ? (
+      <div>
+        <input
+          type="date"
+          className="border border-gray-300 rounded-md p-1 text-sm"
+          value={editedDate}
+          onChange={(e) => setEditedDate(e.target.value)}
+        />
+        <div className="flex space-x-2 mt-2">
+          <button
+            onClick={() => handleSave(d.key)}
+            className="px-3 py-1 text-sm text-white bg-blue-500 rounded"
+          >
+            Save
+          </button>
+          <button
+            onClick={handleCancel}
+            className="px-3 py-1 text-sm text-gray-500 bg-gray-100 rounded"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    ) : (
+      <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+        On: {customerDetails[d.key]
+          ? timeConv(Number(customerDetails[d.key])).toLocaleString()
+          : 'Not Available'}
+      </time>
+    )}
+
+
+
+
+                <button
+                  onClick={() => handleEdit(d.key)}
+                  className="text-blue-500 text-sm mt-1"
+                >
+                  Edit
+                </button>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
 
 
 
@@ -2073,7 +2268,7 @@ export default function UnitFullSummary({
 
 
 
-      {['finance_info', 'summary'].includes(selFeature) && (
+      {['finance_info'].includes(selFeature) && (
         <>
           <div className="py-3 px-3 pb-[250px] m-4 mt-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll">
             <CrmUnitPsHome
@@ -2085,7 +2280,7 @@ export default function UnitFullSummary({
               unitTransactionsA={unitTransactionsA}
             />
           </div>
-          {selFeature === 'summary' && (
+          {/* {selFeature === 'summary' && (
             <div className="py-3 px-3 m-4 mt-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll">
               <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
                 <section className="flex flow-row justify-between mb-1">
@@ -2169,7 +2364,7 @@ export default function UnitFullSummary({
                 </section>
               </div>
             </div>
-          )}
+          )} */}
         </>
       )}
 

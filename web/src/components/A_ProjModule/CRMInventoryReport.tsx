@@ -55,7 +55,7 @@ const CRMInventoryReport = () => {
         <div className="bg-[#F8F9FC] p-4 rounded-t-lg">
           <h2 className="text-lg text-center font-medium text-[#000000]">
             Inventory Summary Report By Project
-          </h2>
+           </h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full table-fixed border-collapse rounded-lg">
