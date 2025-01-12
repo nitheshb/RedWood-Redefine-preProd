@@ -7,8 +7,9 @@ import { computeTotal } from 'src/util/computeCsTotals'
 import { prettyDate } from 'src/util/dateConverter'
 import SiderForm from '../SiderForm/SiderForm'
 import CrmConfirmationDialog from './CrmConfirmationDialog'
+import PdfPaymentScheduleGenerator from 'src/util/PdfPaymentScheduleGenerator'
 
-const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
+const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
@@ -181,6 +182,21 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
 
   return (
     <>
+
+      
+
+      
+      <PdfPaymentScheduleGenerator
+      user={user}
+      PSa={PSa}
+      selCustomerPayload={selCustomerPayload}
+
+
+      
+       />     
+
+
+
       <div className="mt-2">
         <section className="flex flex-col  ">
           <div>
@@ -191,7 +207,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload, assets, totalIs }) => {
                   alt=""
                 />
                 <h1 className=" text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-1 ml-1">
-                  Payment Schedule
+                  Payment Schedule box
                 </h1>
               </div>
               <table className="w-full mb- ">

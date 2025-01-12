@@ -20,8 +20,6 @@ import { computeTotal } from './computeCsTotals'
 import { prettyDate } from './dateConverter'
 import { Bold } from 'lucide-react'
 
-
-
 import pdfimg1 from '../../public/pdfimg1.png'
 import pdfimg2 from '../../public/pdfimg2.png'
 import pdfimg3 from '../../public/pdfimg3.png'
@@ -34,11 +32,6 @@ import pdfimg9 from '../../public/pdfimg9.png'
 import pdfimg10 from '../../public/pdfimg10.png'
 import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
-
-
-
-
-
 
 
 Font.register({
@@ -561,11 +554,15 @@ const MyDocument = ({
   selUnitDetails,
   streamUnitDetails,
   myBookingPayload,
+  selCustomerPayload,
+  totalIs,
   myObj,
   newPlotPS,
   myAdditionalCharges,
+  unitTransactionsA,
   netTotal,
   projectDetails,
+  PSa,
   setNetTotal,
   partATotal,
   partBTotal,
@@ -1091,7 +1088,7 @@ const MyDocument = ({
                       {projectDetails?.projectType?.name === 'Apartment'
                         ? 'Flat'
                         : 'Plot'}{' '}
-                      Charges
+                      
                     </Text>
                   </View>
 
@@ -1104,7 +1101,21 @@ const MyDocument = ({
                       styles.ml1,
                     ]}
                   >
-                    <Text style={styles.subtitle2}>Rate/Sqft</Text>
+                    <Text style={styles.subtitle2}>Plot Rate/Sqft</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Sale Value</Text>
                   </View>
 
                   <View
@@ -1116,25 +1127,28 @@ const MyDocument = ({
                       styles.ml2,
                     ]}
                   >
-                    <Text style={styles.subtitle2}>Cost</Text>
+                    <Text style={styles.subtitle2}>GST</Text>
                   </View>
 
                   <View
                     style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr8, ]}
                   >
-                    <Text style={styles.subtitle2}>Total Inc GST</Text>
+                    <Text style={styles.subtitle2}>Total</Text>
                   </View>
                 </View>
 
 
               </View>
+
+
               <View>
-                {myObj?.map((item, index) => (
+                {/* {myObj?.map((item, index) => ( */}
+                {selCustomerPayload?.plotCS?.map((d1, inx) => (
                   <View
                     style={[
                       styles.tableRow,
                       styles.textcolor,
-                      index + 1 != myObj.length ? styles.borderbottom : null,
+                      inx + 1 != selCustomerPayload.length ? styles.borderbottom : null,
 
                       // {
                       //   backgroundColor:
@@ -1142,7 +1156,7 @@ const MyDocument = ({
                       // },
                       {  borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px' },
                     ]}
-                    key={item.id}
+                    key={d1.id}
                   >
                     <View
                       style={[
@@ -1151,17 +1165,17 @@ const MyDocument = ({
                         { marginTop: '-1px' },
                       ]}
                     >
-                      <Text>{index + 1}</Text>
+                      <Text>{inx + 1}</Text>
                     </View>
 
                     <View style={[styles.tableCell_35]}>
                       <Text style={styles.subtitle2}>
-                        {item?.component?.label}
+                      {d1?.component?.label}
                       </Text>
                     </View>
 
                     <View style={[styles.tableCell_20, styles.alignRight]}>
-                      <Text>{item?.charges}</Text>
+                      <Text> ₹{d1?.charges?.toLocaleString('en-IN')}</Text>
                     </View>
 
                     <View
@@ -1171,12 +1185,22 @@ const MyDocument = ({
                         styles.pr4,
                       ]}
                     >
-                      <Text>{fCurrency(item?.TotalSaleValue)}</Text>
+                      <Text>₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}</Text>
                     </View>
 
                     <View style={[styles.tableCell_20, styles.alignRight]}>
-                      <Text>{fCurrency(item?.TotalNetSaleValueGsT)}</Text>
+                      <Text>₹{d1?.gstValue?.toLocaleString('en-IN')}</Text>
                     </View>
+
+
+                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                      <Text>
+                      ₹
+                      {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
+                      </Text>
+                    </View>
+
+
                   </View>
                 ))}
 
@@ -1206,11 +1230,22 @@ const MyDocument = ({
               </View>
             </View>
 
-                {/* part 2 */}
+                
               </View>
+
+
             </View>
 
           </View>
+
+
+
+
+
+
+
+
+
           {/* part -2 */}
 
           <View style={[styles.ml2, styles.pt2, styles.mT1]}>
@@ -1268,7 +1303,7 @@ const MyDocument = ({
                       // { backgroundColor:'#FCC737'}
                     ]}
                   >
-                    <Text style={styles.subtitle2}>Rate/Sqft</Text>
+                    <Text style={styles.subtitle2}>Plot Rate/Sqft</Text>
                   </View>
 
                   <View
@@ -1281,7 +1316,20 @@ const MyDocument = ({
                       // { backgroundColor:'#A7D477'}
                     ]}
                   >
-                    <Text style={[styles.subtitle2 ]}>Cost</Text>
+                    <Text style={[styles.subtitle2 ]}>Sale Value</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                      // { backgroundColor:'#A7D477'}
+                    ]}
+                  >
+                    <Text style={[styles.subtitle2 ]}>GST</Text>
                   </View>
 
                   <View
@@ -1289,27 +1337,29 @@ const MyDocument = ({
                       styles.pr8,
                      { paddingLeft:'0px',}]}
                   >
-                    <Text style={styles.subtitle2}>Total Inc GST</Text>
+                    <Text style={styles.subtitle2}>Total</Text>
                   </View>
                 </View>
               </View>
 
 
               {/* box1 */}
-              {myAdditionalCharges?.map((item, index) => (
+              {/* {myAdditionalCharges?.map((item, index) => ( */}
+              {selCustomerPayload?.addChargesCS?.map((d1, inx) => (
+
                 <View
                   style={[
                     styles.tableRow,
                     styles.textcolor,
                     // styles.ml1,
-                    index + 1 != myAdditionalCharges.length
+                    inx + 1 != selCustomerPayload.length
                       ? styles.borderbottom
                       : null,
 
                     {   borderBottom: '1px solid #e5e7eb',
                       marginTop: '2px', paddingTop: '4px' },
                   ]}
-                  key={item.id}
+                  key={d1.id}
                 >
                   <View
                     style={[
@@ -1318,36 +1368,41 @@ const MyDocument = ({
                       { marginTop: '-1px' },
                     ]}
                   >
-                    <Text>{index + 1}</Text>
+                    <Text>{inx + 1}</Text>
                   </View>
 
                   <View style={[styles.tableCell_35]}>
                     <Text style={styles.subtitle2}>
-                      {item?.component?.label}
+                    {d1?.component?.label}
+
                     </Text>
                   </View>
 
                   <View style={[styles.tableCell_200, styles.alignRight, ]}>
-                    <Text style={[styles.alignRight]}>{fCurrency(item?.charges)}</Text>
+                    <Text style={[styles.alignRight]}>                            ₹{Number(d1?.charges)?.toLocaleString('en-IN')}
+                    </Text>
                   </View>
 
                   <View
                     style={[styles.tableCell_20, styles.alignRight, styles.pr4 ,]}
                   >
-                    <Text>{fCurrency(item?.TotalSaleValue)}</Text>
+                    <Text>                            ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
+                    </Text>
                   </View>
 
                   <View style={[styles.tableCell_20, styles.alignRight]}>
                     <Text>
                       {' '}
-                      {fCurrency(
+                      {/* {fCurrency(
                         Number(
                           computeTotal(
                             item,
                             selUnitDetails?.area?.toString()?.replace(',', '')
                           )
                         )?.toLocaleString('en-IN')
-                      )}
+                      )} */}
+                                                  ₹{d1?.gstValue?.toLocaleString('en-IN')}
+
                     </Text>
                   </View>
                 </View>
@@ -1379,6 +1434,39 @@ const MyDocument = ({
 
                 </View>
               </View>
+
+
+              
+<View
+                style={[
+                  styles.tableRow,
+                  styles.textcolor,
+                  {     borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px'  },
+                ]}
+              >
+                <View
+                  style={[styles.tableCell_1, styles.pl2, styles.p10]}
+                ></View>
+
+                <View style={[styles.tableCell_35, styles.p10]}></View>
+
+                <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+                <View
+                  style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                >
+                  <Text style={[styles.subtitle2]}>  Total unit sale value:</Text>
+                </View>
+
+                <View style={[styles.tableCell_20, styles.alignRight]}>
+                  <Text>
+                  ₹{netTotal?.toLocaleString('en-IN')}
+
+                  </Text>
+
+                </View>
+              </View>
+
 
 
 
@@ -2101,11 +2189,11 @@ styles.textcolorhead,
 <Text style={styles.subtitle2}></Text>
 </View>
 
-<View style={[styles.tableCell_4, styles.p12]}>
-<Text style={[styles.subtitle2]}>Schedule</Text>
+<View style={[styles.tableCell_20, styles.p12]}>
+<Text style={[styles.subtitle2]}>Charges</Text>
 </View>
-<View style={[styles.tableCell_5, styles.p12]}>
-<Text style={styles.subtitle2}>Payment Timeline</Text>
+<View style={[styles.tableCell_20, styles.p12]}>
+<Text style={styles.subtitle2}>Eligible</Text>
 </View>
 <View
 style={[
@@ -2114,46 +2202,145 @@ style={[
  styles.p12,
 ]}
 >
-<Text style={styles?.subtitle2}>Total</Text>
-</View>
-</View>
+<Text style={styles?.subtitle2}>Total inc GST</Text>
 </View>
 
 
-{myBookingPayload?.plotPS?.map((item, index) => (
+
 <View
 style={[
-styles.tableRow,
-styles.borderbottom,
-styles.textcolor,
-{
- marginTop: '2px', paddingTop: '4px' },
+ styles.tableCell_3,
+ styles.alignRight,
+ styles.p12,
 ]}
-key={item.id}
-break={index === myBookingPayload.plotPS.length - 1 ? 'after' : null}
 >
+<Text style={styles?.subtitle2}>Received</Text>
+</View>
+
+
+
 <View
 style={[
- styles.tableCell_1,
- styles.pl2,
- { marginTop: '-1px' },
+ styles.tableCell_3,
+ styles.alignRight,
+ styles.p12,
 ]}
 >
-<Text>{index + 1}</Text>
+<Text style={styles?.subtitle2}>Balance</Text>
 </View>
 
-<View style={styles.tableCell_4}>
-<Text style={styles.subtitle2}>{item.stage?.label}</Text>
+
+</View>
 </View>
 
-<View style={styles.tableCell_5}>
-<Text>{item.description}</Text>
-</View>
+{/* {PSa?.map((d1, inx) => {
+  totalIs = selCustomerPayload?.T_review; // Move outside if not dynamic per iteration
 
-<View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(item.value)}</Text>
-</View>
-</View>
+  return (
+    <View
+      style={[
+        styles.tableRow,
+        styles.borderbottom,
+        styles.textcolor,
+        { marginTop: '2px', paddingTop: '4px' },
+      ]}
+      key={d1.id}
+    >
+      <View
+        style={[
+          styles.tableCell_1,
+          styles.pl2,
+          { marginTop: '-1px' },
+        ]}
+      >
+        <Text>{inx + 1}</Text>
+      </View>
+
+      <View style={styles.tableCell_4}>
+        <Text style={styles.subtitle2}>
+        {d1?.stage?.label}
+          {' '}
+        {d1?.description}-{prettyDate(d1?.schDate)}
+        </Text>
+      </View>
+
+      <View style={styles.tableCell_5}>
+        <Text>{d1.description}</Text>
+      </View>
+
+      <View style={[styles.tableCell_3, styles.alignRight]}>
+        <Text>{fCurrency(d1?.value?.toLocaleString('en-IN'))}</Text>
+      </View>
+
+
+      <View style={[styles.tableCell_3, styles.alignRight]}>
+        <Text>{fCurrency(d1?.amt?.toLocaleString('en-IN'))}</Text>
+      </View>
+
+
+      <View style={[styles.tableCell_3, styles.alignRight]}>
+        <Text>{fCurrency(d1?.outStanding?.toLocaleString('en-IN'))}</Text>
+      </View>
+
+
+      <View style={[styles.tableCell_3, styles.alignRight]}>
+        <Text>{fCurrency(d1?.value?.toLocaleString('en-IN'))}</Text>
+      </View>
+
+
+
+
+
+    </View>
+  );
+})} */}
+
+
+              {PSa?.map((d1, inx) => (
+  <View
+    style={[
+      styles.tableRow,
+      styles.textcolor,
+      inx + 1 !== selCustomerPayload.length ? styles.borderbottom : null,
+      { borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px' },
+    ]}
+    key={d1.id}
+  >
+    <View style={[styles.tableCell_1, styles.pl2, { marginTop: '-1px' }]}>
+      <Text>{inx + 1}</Text>
+    </View>
+
+    <View style={[styles.tableCell_35]}>
+      <Text style={styles.subtitle2}>
+      <div>
+                            {d1?.stage?.label}
+                            <div className="text-[9px] text-left text-[#6A6A6A] bg-[#fff] tracking-wider ">
+                              {' '}
+                              {d1?.description}-{prettyDate(d1?.schDate)}
+                            </div>
+                            </div>
+      </Text>
+    </View>
+
+    <View style={[styles.tableCell_20, styles.alignRight]}>
+      <Text>                          ₹{d1?.value?.toLocaleString('en-IN')}
+      </Text>
+    </View>
+
+    <View style={[styles.tableCell_20, styles.alignRight, styles.pr4]}>
+      <Text></Text>
+    </View>
+
+    <View style={[styles.tableCell_20, styles.alignRight]}>
+      <Text>                          ₹{d1?.amt?.toLocaleString('en-IN')}
+      </Text>
+    </View>
+
+    <View style={[styles.tableCell_20, styles.alignRight]}>
+      <Text>                          {d1?.outStanding?.toLocaleString('en-IN')}
+      </Text>
+    </View>
+  </View>
 ))}
 
 
@@ -2300,8 +2487,6 @@ style={[
 
       </View>
 
-
-
         {/* <View style={[styles.gridContainer, styles.footer]} fixed>
           <View style={styles.col8}>
             <Text style={styles.subtitle2}>NOTES</Text>
@@ -2319,14 +2504,20 @@ style={[
     </Document>
   )
 }
-const PdfInvoiceGenerator = ({
+
+
+
+
+
+const PdfSummaryGenerator = ({
   user,
   selUnitDetails,
-  streamUnitDetails,
-  myBookingPayload,
   myObj,
+  selCustomerPayload,
   newPlotPS,
   myAdditionalCharges,
+  streamUnitDetails,
+  myBookingPayload,
   netTotal,
   setNetTotal,
   partATotal,
@@ -2335,85 +2526,64 @@ const PdfInvoiceGenerator = ({
   setPartBTotal,
   projectDetails,
   leadDetailsObj1,
+  unitTransactionsA,
+  PSa,
+  totalIs,
   custObj1,
-
+  customerDetails,
 }) => {
-  console.log('overall cost sheet is ', newPlotPS, selUnitDetails)
+  console.log('overall cost sheet is ', newPlotPS)
   return (
-    // <div>
-    //   {' '}
-    //   <PDFDownloadLink
-    //     document={
-    //       <MyDocument
-    //         user={user}
-    //         selUnitDetails={selUnitDetails}
-    //         streamUnitDetails={streamUnitDetails}
-    //         myBookingPayload={myBookingPayload}
-    //         myObj={myObj}
-    //         newPlotPS={newPlotPS}
-    //         myAdditionalCharges={myAdditionalCharges}
-    //         netTotal={netTotal}
-    //         setNetTotal={setNetTotal}
-    //         partATotal={partATotal}
-    //         partBTotal={partBTotal}
-    //         setPartATotal={setPartATotal}
-    //         setPartBTotal={setPartBTotal}
-    //         projectDetails={projectDetails}
-    //         leadDetailsObj1={leadDetailsObj1}
-    //         custObj1={custObj1} 
-    //         />
-    //     } />
-        
-    //     </div>
-
-
-
     <div>
-    {' '}
-    <PDFDownloadLink
-      document={
-        <MyDocument
-        user={user}
-        selUnitDetails={selUnitDetails}
-        streamUnitDetails={streamUnitDetails}
-        myBookingPayload={myBookingPayload}
-        myObj={myObj}
-        newPlotPS={newPlotPS}
-        myAdditionalCharges={myAdditionalCharges}
-        netTotal={netTotal}
-        setNetTotal={setNetTotal}
-        partATotal={partATotal}
-        partBTotal={partBTotal}
-        setPartATotal={setPartATotal}
-        setPartBTotal={setPartBTotal}
-        projectDetails={projectDetails}
-        leadDetailsObj1={leadDetailsObj1}
-        custObj1={custObj1} 
-        />
-      }
-      fileName="sample.pdf"
-    >
-      {({ blob, url, loading, error }) =>
-        loading ? (
-          <button>Loading document...</button>
-        ) : (
-          <span
-            className="mb-4 md:mb-0 underline hover:scale-110 focus:outline-none bg-white px-1 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider rounded-sm hover:shadow-lg hover:bg-gray-100         hover:bg-teal-200
+      {' '}
+      <PDFDownloadLink
+        document={
+          <MyDocument
 
-          text-blue-700
+            user={user}
+            selUnitDetails={selUnitDetails}
+            streamUnitDetails={streamUnitDetails}
+            myBookingPayload={myBookingPayload}
+            myObj={myObj}
+            selCustomerPayload={selCustomerPayload}
+            unitTransactionsA={unitTransactionsA}
+            newPlotPS={newPlotPS}
+            myAdditionalCharges={myAdditionalCharges}
+            netTotal={netTotal}
+            setNetTotal={setNetTotal}
+            partATotal={partATotal}
+            partBTotal={partBTotal}
+            setPartATotal={setPartATotal}
+            setPartBTotal={setPartBTotal}
+            projectDetails={projectDetails}
+            leadDetailsObj1={leadDetailsObj1}
+            custObj1={custObj1} 
+            totalIs={totalIs}
+            PSa={PSa}
+          />
+        }
+        fileName="sample.pdf"
+      >
+        {({ blob, url, loading, error }) =>
+          loading ? (
+            <button>Loading document...</button>
+          ) : (
+            <span
+              className="mb-4 md:mb-0 underline hover:scale-110 focus:outline-none bg-white px-1 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider rounded-sm hover:shadow-lg hover:bg-gray-100         hover:bg-teal-200
 
-           duration-200 ease-in-out
-           transition"
-          >
-        <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
-        Download CostSheet
-          </span>
-        )
-      }
-    </PDFDownloadLink>
-  </div>
-        )
-      }
+            text-blue-700
 
+             duration-200 ease-in-out
+             transition"
+            >
+          <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
+          Download Payments Summary
+            </span>
+          )
+        }
+      </PDFDownloadLink>
+    </div>
+  )
+}
 
-export default PdfInvoiceGenerator
+export default PdfSummaryGenerator

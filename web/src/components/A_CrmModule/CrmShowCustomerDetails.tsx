@@ -814,13 +814,17 @@ const ShowCustomerDetails = ({
             />
           </svg>
         </button>
+
+
+
+        
       </div>
+
+
+
+
+
     </div>
-
-
-
-
-
 
       {/* <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
         <div className="flex items-center space-x-4 mb-6">
@@ -948,7 +952,14 @@ const ShowCustomerDetails = ({
             </div>
           </div> */}
         </div>
+
+
       </div>
+
+
+
+      
+
 
       {/* old form  */}
     </>
