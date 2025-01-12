@@ -1294,10 +1294,6 @@ console.log('saved data is===>', dataObj)
                                       className="pl- px-1 h-8 rounded-md mt-1 min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
                                       selected={d1?.schDate}
                                       onChange={(date) => {
-                                        // formik.setFieldValue(
-                                        //   'bmrdaStartDate',
-                                        //   date.getTime()
-                                        // )
                                         console.log('data', date.getTime())
                                         setStartDate(date)
                                         handlePSdateChange(inx, date.getTime())
@@ -1308,8 +1304,8 @@ console.log('saved data is===>', dataObj)
                                         setHours(setMinutes(d, 5), 12),
                                         setHours(setMinutes(d, 59), 23),
                                       ]}
-                                      //dateFormat="MMMM d, yyyy"
                                       dateFormat="MMM dd, yyyy"
+                                      leadTime={10}
                                     />
                                     <span className="text-right">
                                       {d1?.description}

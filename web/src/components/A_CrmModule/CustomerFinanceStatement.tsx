@@ -8,6 +8,7 @@ import CrmPaymentSummary from './CrmPaymentSummary'
 import CrmUnitCustomerDetailsView1 from './CrmUnitCustomerDetailsView1'
 import CrmUnitFinanceHistory from './CrmUnitFinanceHistory'
 import CrmUnitHeader from './CrmUnitHeader'
+import CrmUnitCostSheetView from './CrmCostSheetView'
 
 const CrmUnitPsHome = ({
   financeMode,
@@ -33,11 +34,14 @@ const CrmUnitPsHome = ({
           role="tablist"
         >
           {[
+               {
+                lab: 'Transactions',
+                val: 'transactions',
+              },
             { lab: 'Payment Schedule', val: 'schedule' },
-            {
-              lab: 'Transactions',
-              val: 'transactions',
-            },
+
+            { lab: 'Cost Sheet', val: 'cost_sheet' },
+
           ].map((d, i) => {
             return (
               <li key={i} className="mr-2 font-bodyLato" role="presentation">
@@ -158,15 +162,26 @@ const CrmUnitPsHome = ({
                 />
               </>
             )}
-            <CrmPaymentSummary
+            {/* <CrmPaymentSummary
               selCustomerPayload={selCustomerPayload}
               assets={assets}
-            />
+            /> */}
             <CrmUnitPaymentSchedule
               selCustomerPayload={selCustomerPayload}
               assets={assets}
               totalIs={totalIs}
             />
+          </PDFExport>
+        </>
+      )}
+      {financeMode === 'cost_sheet' && (
+        <>
+          <PDFExport paperSize="A4" margin="1cm" ref={pdfPaymentScheduleComp}>
+            <CrmUnitCostSheetView
+                selCustomerPayload={selCustomerPayload}
+                assets={assets}
+                totalIs={totalIs}
+              />
           </PDFExport>
         </>
       )}
@@ -186,10 +201,10 @@ const CrmUnitPsHome = ({
                 />
               </>
             )}
-            <CrmPaymentSummary
+            {/* <CrmPaymentSummary
               selCustomerPayload={selCustomerPayload}
               assets={assets}
-            />
+            /> */}
             <CrmUnitFinanceHistory
               selCustomerPayload={selCustomerPayload}
               assets={assets}

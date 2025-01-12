@@ -73,18 +73,7 @@ const people = [
   { name: 'Priority 3' },
   { name: 'Priority 4' },
 ]
-const statuslist = [
-  { label: 'Select the Status', value: '' },
-  { label: 'New', value: 'new' },
-  // { label: 'Follow Up', value: 'followup' },
-  { label: 'Visit Fixed', value: 'visitfixed' },
-  { label: 'Visit Done', value: 'visitdone' },
-  { label: 'Negotiation', value: 'Negotiation' },
-  // { label: 'RNR', value: 'rnr' },
-  { label: 'Booked', value: 'booked' },
-  { label: 'Not Interested', value: 'notinterested' },
-  // { label: 'Dead', value: 'Dead' },
-]
+
 
 const attachTypes = [
   { label: 'Select Document', value: '' },
@@ -176,7 +165,7 @@ export default function UnitFullSummary({
   const [attach, setAttach] = useState(false)
   const [loader, setLoader] = useState(false)
   const [projectList, setprojectList] = useState([])
-  const [financeMode, setFinanceMode] = useState('schedule')
+  const [financeMode, setFinanceMode] = useState('transactions')
 
   const [selProjectIs, setSelProjectIs] = useState({
     projectName: '',
@@ -1631,12 +1620,12 @@ export default function UnitFullSummary({
 
 
           <div className="w-full max-w-[400px]   h-[200px] shadow-md  rounded-[10px]   bg-white  pt-4  ">
-        <h2 className="text-[18px] font-semibold ml-10 text-[#3D3D3D]  ">
+        <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
           Units
         </h2>
-        <div className='border-b-2 my-4 border-[#484848]'></div>
+        <div className='border-b-2 my-4 border-[#f1f1f1]'></div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6  mx-8 items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 mx-8 items-center">
 
           <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
@@ -1670,7 +1659,6 @@ export default function UnitFullSummary({
             </div>
           </div>
 
-
           <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
             <img src={units4}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
@@ -1694,10 +1682,10 @@ export default function UnitFullSummary({
        {/* box2 */}
 
       <div className="w-full max-w-[400px] h-[200px] shadow-md rounded-[10px]  bg-white pt-4   ">
-        <h2 className="text-[18px] font-semibold ml-10 text-[#3D3D3D]  ">
+        <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
         Dimensions
         </h2>
-        <div className='border-b-2 my-4 border-[#484848]'></div>
+        <div className='border-b-2 my-4 border-[#f1f1f1]'></div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 ml-8 ">
 
@@ -1813,8 +1801,8 @@ export default function UnitFullSummary({
 
 
 <div className="w-full max-w-[400px] h-[200px] shadow-md rounded-[10px]  bg-white   pt-4 ">
-  <h2 className="text-[18px] font-semibold ml-10 text-[#3D3D3D]">Schedule</h2>
-  <div className="border-b-2 my-4 border-[#484848]"></div>
+  <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]">Schedule</h2>
+  <div className="border-b-2 my-4 border-[#f1f1f1]"></div>
 
   <div className="grid grid-cols-1 md:grid-cols-2 mx-8 gap-6">
 
@@ -1869,10 +1857,10 @@ export default function UnitFullSummary({
 
      {/* box4 */}
       <div className="w-full max-w-[400px]  h-[200px] shadow-md rounded-[10px]   bg-white  pt-4 ">
-        <h2 className="text-[18px] ml-10 font-semibold text-[#3D3D3D]  ">
+        <h2 className="text-[13px] ml-10 font-semibold text-[#3D3D3D]  ">
         Additonal Details
         </h2>
-        <div className='border-b-2 my-4 border-[#484848]'></div>
+        <div className='border-b-2 my-4 border-[#f1f1f1]'></div>
 
         <div className="grid grid-cols-1 mx-8 sm:grid-cols-2 gap-6 ">
 
@@ -1925,10 +1913,10 @@ export default function UnitFullSummary({
       {/* box 5 */}
 
       <div className="w-full max-w-[400px] shadow-md  h-[200px]   bg-white  rounded-[10px]  pt-4 ">
-        <h2 className="text-[18px] font-semibold ml-10 text-[#3D3D3D]  ">
+        <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
         Status
         </h2>
-        <div className='border-b-2 my-4 border-[#484848]'></div>
+        <div className='border-b-2 my-4 border-[#f1f1f1]'></div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 mx-8 gap-4">
 
@@ -2435,7 +2423,7 @@ export default function UnitFullSummary({
                       >
 
 
-                        <div className='flex  items-center gap-3 text-gray-500 hover:bg-gray-50 p-2 rounded-lg cursor-pointer w-60'>
+                 <div className='flex  items-center gap-3 text-gray-500 hover:bg-gray-50 p-2 rounded-lg cursor-pointer w-60'>
 
                         <span  className={`hover:text-[#484848] border-transparent   ${
                             selFeature === d.val

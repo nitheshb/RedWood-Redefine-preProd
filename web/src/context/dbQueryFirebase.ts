@@ -616,13 +616,13 @@ export const updateTransactionStatus = async (
       // })
     }
   console.log('check it ', data4, error4)
-  if (lead_logs) {
-    await enqueueSnackbar('Marked as Amount Recived', {
+  if (status === 'received') {
+    await enqueueSnackbar(`Transaction is marked as Received ${status}`, {
       variant: 'success',
     });
   }
   else if (status === 'Failed') {
-    await enqueueSnackbar('Marked as Payment Rejected', {
+    await enqueueSnackbar('Transaction is marked as Rejected', {
       variant: 'error',
     });
   }
@@ -5468,6 +5468,8 @@ let payload= status==='approved'? approveBody: rejectBody
 export const updateUnitDocs = async (
   orgId,
   unitId,
+  action,
+  docName,
   data,
   by,
   msg,
@@ -5478,18 +5480,19 @@ export const updateUnitDocs = async (
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
     ...data
     })
+
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
       .insert([
         {
           type: 'document',
-          subtype: 'uploaded',
+          subtype: action,
           T: Timestamp.now().toMillis(),
           Uuid: unitId,
           by,
           payload: {},
           from: 'docUploaded',
-          to: '',
+          to: docName,
         },
       ])
       enqueueSnackbar(msg, {
@@ -5792,6 +5795,7 @@ export const updateSDApproval = async (
   unitId,
   data,
   by,
+  msg,
   enqueueSnackbar
 ) => {
   try {
@@ -5814,8 +5818,8 @@ export const updateSDApproval = async (
           to: status,
         },
       ])
-    enqueueSnackbar('Sale Deed Approved..!', {
-      variant: 'success',
+    enqueueSnackbar(msg, {
+      variant: status == 'approved' ? 'success' : 'error',
     })
   } catch (error) {
     console.log('SD Approved Updation Failed', error, {
