@@ -8,6 +8,8 @@ import CrmPaymentSummary from './CrmPaymentSummary'
 import CrmUnitCustomerDetailsView1 from './CrmUnitCustomerDetailsView1'
 import CrmUnitFinanceHistory from './CrmUnitFinanceHistory'
 import CrmUnitHeader from './CrmUnitHeader'
+import PdfTransactionsGenerator from 'src/util/PdfTransactionsGenerator'
+import PdfPaymentScheduleGenerator from 'src/util/PdfPaymentScheduleGenerator'
 
 const CrmUnitPsHome = ({
   financeMode,
@@ -15,6 +17,7 @@ const CrmUnitPsHome = ({
   selCustomerPayload,
   assets,
   totalIs,
+  PSa,
   unitTransactionsA,
 }) => {
   const { user } = useAuth()
@@ -130,6 +133,38 @@ const CrmUnitPsHome = ({
               </>
             </div>
           </div> */}
+
+
+
+{/* <PdfPaymentScheduleGenerator
+            user={user}
+            PSa={PSa}
+            selCustomerPayload={selCustomerPayload} selUnitDetails={undefined} myObj={undefined} newPlotPS={undefined} myAdditionalCharges={undefined} streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}
+
+      
+       />     */}
+
+
+
+{/* <PdfTransactionsGenerator
+  user={user} 
+  selUnitDetails={undefined} 
+  myObj={undefined} 
+  selCustomerPayload={undefined} 
+  newPlotPS={undefined} 
+  myAdditionalCharges={undefined} 
+  streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} PSa={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}                                        // selUnitDetails={selUnitDetails}
+/> */}
+
+
+
+
+
+                      
+
+
+
+
 
           <div className="w-full flex items-center mt-3 mr-3 ">
             <label

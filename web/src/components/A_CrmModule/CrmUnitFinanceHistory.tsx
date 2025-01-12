@@ -1,6 +1,7 @@
 
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
+import PdfTransactionsGenerator from 'src/util/PdfTransactionsGenerator'
 
 const CrmUnitFinanceHistory = ({
   selCustomerPayload,
@@ -13,6 +14,15 @@ const CrmUnitFinanceHistory = ({
 
   return (
     <>
+       
+
+
+       <PdfTransactionsGenerator
+  user={user} 
+  unitTransactionsA={unitTransactionsA}
+  selCustomerPayload={selCustomerPayload}
+  selUnitDetails={undefined} myObj={undefined} newPlotPS={undefined} myAdditionalCharges={undefined} streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} PSa={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}                                        // selUnitDetails={selUnitDetails}
+/>
 
 
       <div className="mt-2">
@@ -24,7 +34,7 @@ const CrmUnitFinanceHistory = ({
                   alt=""
                 />
                 <h1 className=" text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-1 ml-1">
-                Payment History
+                Payment History box
                 </h1>
               </div>
             <table className="w-full mb-10 mt-2">
