@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useSnackbar } from 'notistack'
 
@@ -20,6 +20,13 @@ export default function Crm_Unit_Posession({
   const { enqueueSnackbar } = useSnackbar()
 
  
+
+  
+const [status, setStatus] = useState('') 
+const [remarks, setRemarks] = useState('') 
+
+
+
   useEffect(() => {
     console.log('yo yo ', selUnitPayload)
   }, [])
@@ -52,6 +59,29 @@ export default function Crm_Unit_Posession({
           </div>
         </div>
       </div>
+
+
+
+      <div className="my-4">
+  <label htmlFor="remarks" className="block text-sm font-medium text-gray-700">
+    Remarks
+  </label>
+  <textarea
+    id="remarks"
+    value={remarks}
+    onChange={(e) => setRemarks(e.target.value)}
+    className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+    rows="3"
+  />
+</div>
+
+
+
+
+
+
+
+
       <div className="mt-5 left-0 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
         <button
           className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"

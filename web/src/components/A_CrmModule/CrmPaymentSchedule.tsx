@@ -207,7 +207,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
                   alt=""
                 />
                 <h1 className=" text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-1 ml-1">
-                  Payment Schedule box
+                  Payment Schedule
                 </h1>
               </div>
               <table className="w-full mb- ">

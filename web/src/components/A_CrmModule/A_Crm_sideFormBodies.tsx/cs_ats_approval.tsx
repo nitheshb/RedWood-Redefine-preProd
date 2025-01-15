@@ -38,6 +38,8 @@ export default function Crm_ATS_approval({
       user.email,
       enqueueSnackbar
     )
+ 
+
   }
   return (
     <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">

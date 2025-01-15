@@ -526,7 +526,7 @@ const AddNewDemand = ({
 
                                           <div className="w-full lg:w-4/12 pr-3">
                                             <div className="relative w-full mb-5">
-                                              <TextField2
+                                              {/* <TextField2
                                                 label="Amount"
                                                 name="amount"
                                                 type="text"
@@ -542,7 +542,24 @@ const AddNewDemand = ({
                                                   }}
                  
                                              
-                                              />
+                                              /> */}
+
+
+
+<TextField2
+  label="Amount"
+  name="formattedAmount"
+  type="text"
+  value={formik.values.formattedAmount}
+  onChange={(e) => {
+    const input = e.target.value.replace(/,/g, '');
+    const rawValue = input ? Number(input) : '';
+    formik.setFieldValue('formattedAmount', rawValue.toLocaleString('en-IN'));
+    formik.setFieldValue('amount', rawValue);
+  }}
+/>
+
+
                                             </div>
                                           </div>
 
