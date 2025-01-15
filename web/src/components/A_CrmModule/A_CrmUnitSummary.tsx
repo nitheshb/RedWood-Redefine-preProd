@@ -10,6 +10,7 @@ import CrmUnitCostSheetView from './CrmCostSheetView'
 import CrmUnitPaymentSchedule from './CrmPaymentSchedule'
 import CrmPaymentSummary from './CrmPaymentSummary'
 import CrmUnitPaymentGraph from './CrmUnitPaymentGraph'
+import { crmActivieLogNamer } from 'src/util/CrmActivityLogHelper'
 
 const CrmUnitSummary = ({
   selCustomerPayload: selUnitPayload,
@@ -111,30 +112,7 @@ const CrmUnitSummary = ({
       supabase.removeSubscription(subscription)
     }
   }, [])
-  const activieLogNamer = (dat) => {
-    const { type, subtype, from, to, by } = dat
-    let tex = type
 
-    switch (subtype) {
-      case 'cs_approval':
-        return (tex = 'Cost Sheet')
-      case 'kyc_approval':
-          return (tex = 'KYC')
-      case 'sd_approval':
-            return (tex = 'Sale deed')
-      case 'ats_approval':
-            return (tex = 'ATS')
-      case 'legal_approval':
-              return (tex = 'Legal')
-      case 'pay_capture':
-        return (tex = `Payment`)
-      case 'assign_change':
-        return (tex = `Lead Assigned To`)
-      default:
-        return (tex = subtype)
-    }
-    return tex
-  }
   const boot = async () => {
     const unsubscribe = steamUnitActivityLog(orgId, {
       uid: selUnitPayload?.id,
@@ -296,7 +274,7 @@ const CrmUnitSummary = ({
                     >
                       <section>
                       <span className="text-[11px]  font-bold    py-[2px] rounded-lg   ">
-                      {activieLogNamer(data)}:
+                      {crmActivieLogNamer(data)}:
                         </span>
                       <span className="text-[10px] ml-1 text-[#398A58] font-bold  bg-[#D9d8ff] px-[6px] py-[2px] rounded-lg   ">
                      {data?.to} {'  '}

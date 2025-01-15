@@ -8,6 +8,7 @@ import { useSnackbar } from 'notistack'
 import { USER_ROLES } from 'src/constants/userRoles'
 import { updateATSApproval } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import CrmActivityLog from '../CrmActivityLog'
 
 export default function Crm_ATS_approval({
   type,
@@ -40,6 +41,7 @@ export default function Crm_ATS_approval({
     )
   }
   return (
+    <div className='flex flex-row bg-white '>
     <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         <div className="mt-1">
@@ -75,5 +77,8 @@ export default function Crm_ATS_approval({
         </button>
       </div>
     </section>
+    <CrmActivityLog selUnitPayload={selUnitPayload} title="ATS Approval Activity" type={['ats_approval']}/>
+
+    </div>
   )
 }

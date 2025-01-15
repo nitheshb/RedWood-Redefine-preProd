@@ -15,6 +15,7 @@ import DocRow from '../LegalModule/Docu_row'
 import BankSelectionSwitchDrop from './BankSelectionDroopDown'
 import { updateBankLoanApprovals, updateUnitDocs } from 'src/context/dbQueryFirebase'
 import { useSnackbar } from 'notistack'
+import CrmActivityLog from '../A_CrmModule/CrmActivityLog'
 
 
 export default function LoanApplyFlowHome({ type, setStatusFun , customerDetails}) {
@@ -88,6 +89,7 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
 
 
   return (
+    <div className='flex flex-row bg-white '>
     <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         {/* <div className="flex p-4 items-center justify-between">
@@ -796,5 +798,8 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
         </div>
       )}
     </section>
+    <CrmActivityLog selUnitPayload={customerDetails} title="Loan Activity" type={['loan_approval']}/>
+
+</div>
   )
 }

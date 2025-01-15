@@ -1160,6 +1160,19 @@ export const steamUnitActivityLog = async (orgId, data) => {
   return lead_logs
 }
 //  get lead activity list
+export const steamUnitSubTypeActivityLog = async (orgId, data) => {
+  // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
+  const { uid, subtype } = data
+  console.log('is uid g', data, uid)
+  const { data: lead_logs, error1 } = await supabase
+    .from(`${orgId}_unit_logs`)
+    .select('*')
+    .eq('Uuid', uid)
+    .in('subtype', subtype)
+    .order('T', { ascending: false })
+  return lead_logs
+}
+//  get lead activity list
 export const steamUnitTasks = async (orgId, data) => {
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
   const { uid } = data
