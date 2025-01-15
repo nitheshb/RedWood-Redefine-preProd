@@ -228,6 +228,9 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     await getProjectsListFun()
   }
 
+
+
+
   useEffect(() => {
     getLeadsDataFun(projectList, ['booked', 'Booked'])
     getLeadsDataFun(projectList, ['agreement_pipeline'])
@@ -375,6 +378,13 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
         await usersListA.sort((a, b) => {
           return a.unit_no - b.unit_no
         })
+
+
+        await usersListA.sort((a, b) => {
+          const dateA = new Date(a.booked_on || a.ct || 0);
+          const dateB = new Date(b.booked_on || b.ct || 0);
+          return dateB - dateA;
+        });
 
            // usersListA.sort((a, b) => {
         //   return b?.booked_on || 0 - b?.booked_on || 0
@@ -1543,7 +1553,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.both_sd_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
+                                        : 'bg-[#F1F5F9]'
                                     }  p-3 rounded-md mx-1`}
                                     style={{
                                       display: 'inline-block',

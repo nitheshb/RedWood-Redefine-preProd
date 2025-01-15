@@ -784,7 +784,10 @@ const PdfReceiptGenerator = ({
             payementDetails={payementDetails}
           />
         }
-        fileName="sample.pdf"
+        // fileName="sample.pdf"
+        fileName={`unit_${selUnitDetails?.unit_no || 'unit_no'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_PaymentReceipt.pdf`}
+
+
       >
         {({ blob, url, loading, error }) =>
           loading ? (

@@ -5703,9 +5703,14 @@ export const updateATSApproval = async (
           to: status,
         },
       ])
-    enqueueSnackbar('ATS Approved..!', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('ATS Approved..!', {
+    //   variant: 'success',
+    // })
+    enqueueSnackbar(
+      status === 'approved' ? 'ATS Approved..!' : 'ATS Rejected..!', 
+      { variant: status === 'approved' ? 'success' : 'error' }
+    );
+    
   } catch (error) {
     console.log('ATS Approved Updation Failed', error, {
       ...data,
@@ -5794,9 +5799,13 @@ export const updatePosessionApproval = async (
           to: 'posession',
         },
       ])
-    enqueueSnackbar('Posession Approved..!', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('Posession Approved..!', {
+    //   variant: 'success',
+    // })
+    enqueueSnackbar(
+      status === 'approved' ? 'Posession Approved..!' : 'Posession Rejected..!', 
+      { variant: status === 'approved' ? 'success' : 'error' }
+    )
   } catch (error) {
     console.log('Posession Approved Updation Failed', error, {
       ...data,

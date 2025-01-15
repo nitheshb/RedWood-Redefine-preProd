@@ -46,6 +46,42 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     startOfDay(d).getTime()
   )
 
+
+
+
+
+
+
+  const sortTransactionsByDate = (transactions) => {
+    return [...transactions].sort((a, b) => {
+      const dateA = new Date(a.txt_dated)
+      const dateB = new Date(b.txt_dated)
+      return dateB - dateA 
+    })
+  }
+
+
+
+
+
+
+
+
+  useEffect(() => {
+    if(value === 'all') {
+      const sortedData = sortTransactionsByDate(finFetchedData)
+      setFinSelData(sortedData)
+    } else {
+      const filteredData = finFetchedData.filter((d) => d.status === value)
+      const sortedFilteredData = sortTransactionsByDate(filteredData)
+      setFinSelData(sortedFilteredData)
+    }
+  }, [finFetchedData, value])
+
+
+
+
+
   const [value, setValue] = useState('review')
   const tabHeadFieldsA = [
     { lab: 'All Transactions', val: 'all' },
@@ -56,6 +92,13 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
   useEffect(() => {
     getLeadsDataFun()
   }, [])
+
+
+
+
+
+  
+
 
   useEffect(() => {
     // getFinanceTransactionsByStatus(orgId, 'all')
@@ -130,10 +173,92 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
   }
 
-  const getLeadsDataFun = async () => {
-    console.log('login role detials', user)
-    const { access, uid } = user
+  // const getLeadsDataFun = async () => {
+  //   console.log('login role detials', user)
+  //   const { access, uid } = user
 
+  //   const steamLeadLogs = await streamGetAllTransactions(
+  //     orgId,
+  //     'snap',
+  //     {
+  //       uid,
+  //     },
+  //     (error) => []
+
+      
+  //   )
+  //   await setFinFetchedData(steamLeadLogs)
+
+  //   return
+
+
+  //   // if (access?.includes('manage_leads')) {
+  //   //   const unsubscribe = getFinanceTransactionsByStatus(
+  //   //     orgId,
+  //   //     async (querySnapshot) => {
+  //   //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
+  //   //         const x = docSnapshot.data()
+  //   //         x.id = docSnapshot.id
+  //   //         return x
+  //   //       })
+  //   //       // setBoardData
+  //   //       console.log('my Array data is ', usersListA, finFetchedData)
+  //   //       // await serealizeData(usersListA)
+  //   //       await setFinFetchedData(usersListA)
+  //   //       await console.log('my Array data is set it', finFetchedData)
+  //   //     },
+  //   //     {
+  //   //       status: [
+  //   //         'latest',
+  //   //         'review',
+  //   //         'review',
+  //   //         'received',
+  //   //         'rejected',
+  //   //         '',
+  //   //         // 'booked',
+  //   //       ],
+  //   //     },
+  //   //     () => setFinFetchedData([])
+  //   //   )
+  //   //   return unsubscribe
+  //   // } else {
+  //   //   const unsubscribe = getFinanceTransactionsByStatus(
+  //   //     orgId,
+  //   //     async (querySnapshot) => {
+  //   //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
+  //   //         const x = docSnapshot.data()
+  //   //         x.id = docSnapshot.id
+  //   //         return x
+  //   //       })
+  //   //       // setBoardData
+  //   //       console.log('my Array data is ', usersListA)
+  //   //       await serealizeData(usersListA)
+  //   //       await setFinFetchedData(usersListA)
+  //   //     },
+  //   //     {
+  //   //       uid: uid,
+  //   //       status: [
+  //   //         'new',
+  //   //         'review',
+  //   //         'review',
+  //   //         'received',
+  //   //         'rejected',
+  //   //         '',
+  //   //         // 'booked',
+  //   //       ],
+  //   //     },
+  //   //     () => setFinFetchedData([])
+  //   //   )
+  //   //   return unsubscribe
+  //   // }
+
+  //   // await console.log('leadsData', leadsData)
+  // }
+
+
+
+  const getLeadsDataFun = async () => {
+    const { access, uid } = user
     const steamLeadLogs = await streamGetAllTransactions(
       orgId,
       'snap',
@@ -142,81 +267,9 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
       },
       (error) => []
     )
-    await setFinFetchedData(steamLeadLogs)
-
-    return
-
-
-    // if (access?.includes('manage_leads')) {
-    //   const unsubscribe = getFinanceTransactionsByStatus(
-    //     orgId,
-    //     async (querySnapshot) => {
-    //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
-    //         const x = docSnapshot.data()
-    //         x.id = docSnapshot.id
-    //         return x
-    //       })
-    //       // setBoardData
-    //       console.log('my Array data is ', usersListA, finFetchedData)
-    //       // await serealizeData(usersListA)
-    //       await setFinFetchedData(usersListA)
-    //       await console.log('my Array data is set it', finFetchedData)
-    //     },
-    //     {
-    //       status: [
-    //         'latest',
-    //         'review',
-    //         'review',
-    //         'received',
-    //         'rejected',
-    //         '',
-    //         // 'booked',
-    //       ],
-    //     },
-    //     () => setFinFetchedData([])
-    //   )
-    //   return unsubscribe
-    // } else {
-    //   const unsubscribe = getFinanceTransactionsByStatus(
-    //     orgId,
-    //     async (querySnapshot) => {
-    //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
-    //         const x = docSnapshot.data()
-    //         x.id = docSnapshot.id
-    //         return x
-    //       })
-    //       // setBoardData
-    //       console.log('my Array data is ', usersListA)
-    //       await serealizeData(usersListA)
-    //       await setFinFetchedData(usersListA)
-    //     },
-    //     {
-    //       uid: uid,
-    //       status: [
-    //         'new',
-    //         'review',
-    //         'review',
-    //         'received',
-    //         'rejected',
-    //         '',
-    //         // 'booked',
-    //       ],
-    //     },
-    //     () => setFinFetchedData([])
-    //   )
-    //   return unsubscribe
-    // }
-
-    // await console.log('leadsData', leadsData)
+    const sortedData = sortTransactionsByDate(steamLeadLogs) 
+    setFinFetchedData(sortedData)
   }
-
-
-
-
-
-
-
-
 
 
   const serealizeData = (array) => {
@@ -566,7 +619,9 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                   </div>
                   <div className="flex flex-row bg-white px-[4px] py-2 relative">
                     <div className="flex w-full  ">
-                      <table className="w-full pt-[1px]">
+                    <div className="w-full max-h-[600px] overflow-y-auto">
+
+                    <table className="w-full pt-[1px]">
                         <thead className="">
                           <tr className="p-2">
                             <th className="w-2"></th>
@@ -704,6 +759,8 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                           ))}
                         </tbody>
                       </table>
+</div>
+               
                     </div>
                   </div>
                 </div>

@@ -78,7 +78,7 @@ export default function Crm_Unit_Posession({
         </button>
       </div>
     </section>
-    <CrmActivityLog selUnitPayload={selUnitPayload} title="Possession Activity" type={['kyc_approval']}/>
+    <CrmActivityLog selUnitPayload={selUnitPayload} title="KYC Activity" type={['kyc_approval']}/>
 
 </div>
   )
