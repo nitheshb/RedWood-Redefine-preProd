@@ -344,7 +344,7 @@ export default function LegalDocsViewHome({
                                     <h2 className="font-medium flex-grow">
                                       Unit Document
                                     </h2>
-                                    <span
+                                    {/* <span
                                       className=" ml-2 text-blue-500 hover:underline"
                                       onClick={() => {
                                         setSliderInfo({
@@ -356,7 +356,7 @@ export default function LegalDocsViewHome({
                                       }}
                                     >
                                       Add Doc
-                                    </span>
+                                    </span> */}
                                   </div>
                                   <p className="mr4">Date Created</p>
                                   {/* <Icon name="folder" size="3xl" color="gray" /> */}

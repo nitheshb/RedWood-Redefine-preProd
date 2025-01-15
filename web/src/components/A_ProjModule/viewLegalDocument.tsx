@@ -345,19 +345,8 @@ export default function ProjectsDocsListView({
                                     <h2 className="font-medium flex-grow">
                                       Unit Document
                                     </h2>
-                                    <span
-                                      className=" ml-2 text-blue-500 hover:underline"
-                                      onClick={() => {
-                                        setSliderInfo({
-                                          open: true,
-                                          title: 'legal_doc_upload',
-                                          sliderData: {},
-                                          widthClass: 'max-w-xl',
-                                        })
-                                      }}
-                                    >
-                                      Add Doc
-                                    </span>
+                                    1000
+
                                   </div>
                                   <p className="mr4">Date Created</p>
                                   {/* <Icon name="folder" size="3xl" color="gray" /> */}
