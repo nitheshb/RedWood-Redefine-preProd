@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from 'src/context/firebase-auth-context'
+import CombinedPdfGenerator from 'src/util/CombinedPdfGenerator'
 import { computeTotal } from 'src/util/computeCsTotals'
+import PdfSummaryGenerator from 'src/util/PdfSummaryGenerator'
 
-const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
+const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransactionsA, PSa, leadDetailsObj1, streamUnitDetails, newAdditonalChargesObj, myBookingPayload, assets, totalIs,selUnitDetails,newPlotCostSheetA, newPlotPS }) => {
   const { user } = useAuth()
   const { orgId } = user
   const [partATotal, setPartA] = useState(0)
@@ -13,6 +15,14 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
   const [addOnTotal, setPartAddOn] = useState(0)
   const [unitTotal, setUnitTotal] = useState(0)
   const [grossUnitTotal, setGrossTotal] = useState(0)
+
+  const [StatusListA, setStatusListA] = useState([])
+  const [reviewLinks, setReviewLinks] = useState([])
+  const [leadPayload, setLeadPayload] = useState({})
+
+  const [netTotal, setNetTotal] = useState(0)
+  const [partCTotal, setPartCTotal] = useState(0)
+  const [partDTotal, setPartDTotal] = useState(0)
 
   console.log('payload is ', selCustomerPayload)
   useEffect(() => {
@@ -98,6 +108,47 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
 
   return (
     <>
+
+    <div>
+      
+      <PdfSummaryGenerator
+          user={user}
+          selUnitDetails={selUnitDetails}
+          streamUnitDetails={streamUnitDetails}
+          myBookingPayload={myBookingPayload}
+          myObj={newPlotCostSheetA}
+          selCustomerPayload={selCustomerPayload}
+          newPlotPS={newPlotPS}
+          myAdditionalCharges={newAdditonalChargesObj}
+          unitTransactionsA={unitTransactionsA}
+          netTotal={netTotal}
+          totalIs={totalIs}
+          PSa={PSa}
+          setNetTotal={setNetTotal}
+          partATotal={partATotal}
+          partBTotal={partBTotal}
+          // setPartATotal={setPartATotal}
+          // setPartBTotal={setPartBTotal}
+          projectDetails={projectDetails}
+          leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined} customerDetails={undefined}
+          // user={user}
+          // selUnitDetails={selUnitDetails}
+          // myObj={newPlotCostSheetA}
+          // newPlotPS={newPlotPS}
+          // netTotal={unitTotal}
+          // setNetTotal={setUnitTotal}
+          // partATotal={partATotal}
+          
+          // partBTotal={0}
+          // setPartATotal={partATotal}
+          // projectDetails={{}} myAdditionalCharges={undefined} setPartBTotal={undefined} leadDetailsObj1={undefined} customerDetails={undefined}    
+          />
+    </div>
+
+
+
+
+
       <div className="mt-2  ">
         <section className="mr- flex flex-row  ">
           <div className="w-full">
@@ -630,6 +681,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, assets, totalIs }) => {
                   </section>
                 </div>
               </section>
+              
             </div>
           </div>
         </section>

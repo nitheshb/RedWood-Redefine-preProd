@@ -14,6 +14,7 @@ import Crm_ATS_Draft from '../A_CrmModule/A_Crm_sideFormBodies.tsx/cs_ats_draft'
 import Crm_Sd_approval from '../A_CrmModule/A_Crm_sideFormBodies.tsx/cs_sd_approval'
 import Crm_ATS_approval from '../A_CrmModule/A_Crm_sideFormBodies.tsx/cs_ats_approval'
 import Crm_Unit_Posession from '../A_CrmModule/A_Crm_sideFormBodies.tsx/cs_posession'
+import LoanApplyFlowHome from '../A_LoanModule/LoanApplyFlowHome'
 
 const CrmSiderForm = ({
   BlockFeed,
@@ -136,6 +137,9 @@ const CrmSiderForm = ({
 
                 {title === 'crm_KYC' && (
                   <Cs_customerKyc title={title} dialogOpen={setOpen} selUnitPayload={customerDetails} />
+                )}
+                {title === 'crm_loan' && (
+                  <LoanApplyFlowHome customerDetails={customerDetails} />
                 )}
                 {title === 'crm_legal_clarity' && (
                   <Crm_legal_Clarity title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />

@@ -37,6 +37,7 @@ export default function Crm_Sd_approval({
       selUnitPayload?.id,
       dataObj,
       user.email,
+      `Sale deed is ${status}`,
       enqueueSnackbar
     )
   }

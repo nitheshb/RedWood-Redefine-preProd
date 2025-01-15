@@ -81,7 +81,7 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
     const updatePostSancationFun = (status)=> {
       SetPostSanctionReview(status)
       const x1 ={'LpostStatus': status || '' }
-      updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${status} Saved..!`,'success',enqueueSnackbar )
+      updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`Banker Sanction ${status} Saved..!`,'success',enqueueSnackbar )
     }
 
 
@@ -110,7 +110,7 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Loan Approval</h2>
             <p className="text-md text-[10px] flex-grow text-right">
-              Waiting for banker sanction{' '}
+              Banker sanction is {postSanctionReview}
             </p>
           </div>
         </div>
@@ -308,6 +308,7 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
                   }`}
                   onClick={() => {
                     updatePerSancationFun('In-Review')
+                    updatePostSancationFun('In-Review')
 
                   }}
                 >
@@ -394,6 +395,7 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
                   }`}
                   onClick={() => {
                     updatePerSancationFun('Rejected')
+                    updatePostSancationFun('Rejected')
 
                   }}
                 >
@@ -433,7 +435,7 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
               {preSanctionReview === 'In-Review' && (
                 <div className="mt-2">
                   <div className="p-4 bg-gray-200 rounded-md">
-                    Under Bank review from last 32 days
+                    Ideal Bank review time is 32 working days
                   </div>
                 </div>
               )}
@@ -744,7 +746,7 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
                 {postSanctionReview === 'In-Review' && (
                   <div className="mt-4">
                     <div className="p-4 bg-gray-200 rounded-md">
-                      Under Bank review from last 32 days
+                      Ideal Bank review time is 32 working days
                     </div>
                   </div>
                 )}

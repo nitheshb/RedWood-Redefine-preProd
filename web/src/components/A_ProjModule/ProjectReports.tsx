@@ -559,7 +559,7 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
           { label: 'Project Finance', value: 'CRM_status' },
           { label: 'Sale Projections', value: 'Legal_status' },
           { label: 'Home', value: 'project_home' },
-          { label: 'Graph', value: 'graph_home' },
+          // { label: 'Graph', value: 'graph_home' },
         ].map((data, i) => {
           return (
             <section
@@ -1030,9 +1030,9 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
 
 
 
-{selCat === 'graph_home' && (
+{/* {selCat === 'graph_home' && (
             <AnalyticsDashboard/>
-          )}
+          )} */}
 
 
 

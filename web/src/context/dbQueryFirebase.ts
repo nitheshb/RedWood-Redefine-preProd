@@ -616,13 +616,13 @@ export const updateTransactionStatus = async (
       // })
     }
   console.log('check it ', data4, error4)
-  if (lead_logs) {
-    await enqueueSnackbar('Marked as Amount Recived', {
+  if (status === 'received') {
+    await enqueueSnackbar(`Transaction is marked as Received ${status}`, {
       variant: 'success',
     });
   }
   else if (status === 'Failed') {
-    await enqueueSnackbar('Marked as Payment Rejected', {
+    await enqueueSnackbar('Transaction is marked as Rejected', {
       variant: 'error',
     });
   }
@@ -5187,9 +5187,9 @@ export const updateProjectionsAgreegationsOnBooking = async (
       ...data,
     })
     await setDoc(doc(db, `${orgId}_payment_projections`, docId_d), payload)
-    enqueueSnackbar('Projection updation failed BBB', {
-      variant: 'error',
-    })
+    // enqueueSnackbar('Projection updation failed BBB', {
+    //   variant: 'error',
+    // })
   }
 
   return
@@ -5234,9 +5234,9 @@ export const updateProjectionsAgreegations = async (
         ...data,
       })
       await setDoc(doc(db, `${orgId}_payment_projections`, docId_d), payload)
-      enqueueSnackbar('Projection updation failed BBB', {
-        variant: 'error',
-      })
+      // enqueueSnackbar('Projection updation failed BBB', {
+      //   variant: 'error',
+      // })
     }
     try {
       await updateDoc(
@@ -5311,9 +5311,9 @@ export const updateCrmExecutiveAgreegations = async (
         ...data,
       })
       await setDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
-      enqueueSnackbar('Emp Projections updation', {
-        variant: 'error',
-      })
+      // enqueueSnackbar('Emp Projections updation', {
+      //   variant: 'error',
+      // })
     }
   } else {
     return
@@ -5397,6 +5397,7 @@ export const updateManagerApproval = async (
     console.log('data is===>', unitId, data)
     const {
       status,
+      rejectionReason,
       plotCS,
       addChargesCS,
 
@@ -5408,10 +5409,13 @@ export const updateManagerApproval = async (
     data.fullCs = [...data?.plotCS || [],...data?.addChargesCS || [], ...data?.constructCS || [], ...data?.constAdditionalChargesCS||[], ...data?.possessionAdditionalCostCS || []]
 
 let rejectBody = {
-  man_cs_approval: status
+  man_cs_approval: status,
+  man_cs_rej_reason: rejectionReason,
+
 }
 let approveBody = {
   man_cs_approval: status,
+  man_cs_rej_reason: rejectionReason,
   plotCS: plotCS,
   addChargesCS,
   fullCs: data.fullCs,
@@ -5468,6 +5472,8 @@ let payload= status==='approved'? approveBody: rejectBody
 export const updateUnitDocs = async (
   orgId,
   unitId,
+  action,
+  docName,
   data,
   by,
   msg,
@@ -5478,18 +5484,19 @@ export const updateUnitDocs = async (
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
     ...data
     })
+
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
       .insert([
         {
           type: 'document',
-          subtype: 'uploaded',
+          subtype: action,
           T: Timestamp.now().toMillis(),
           Uuid: unitId,
           by,
           payload: {},
           from: 'docUploaded',
-          to: '',
+          to: docName,
         },
       ])
       enqueueSnackbar(msg, {
@@ -5792,6 +5799,7 @@ export const updateSDApproval = async (
   unitId,
   data,
   by,
+  msg,
   enqueueSnackbar
 ) => {
   try {
@@ -5814,8 +5822,8 @@ export const updateSDApproval = async (
           to: status,
         },
       ])
-    enqueueSnackbar('Sale Deed Approved..!', {
-      variant: 'success',
+    enqueueSnackbar(msg, {
+      variant: status == 'approved' ? 'success' : 'error',
     })
   } catch (error) {
     console.log('SD Approved Updation Failed', error, {

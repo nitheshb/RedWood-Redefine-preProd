@@ -88,9 +88,9 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
 
             // updateUnitDocs(orgId, id, file.url, file.name, by)
             console.log('data is ===>', file)
-            let x1 = {[`${type}DocUrl`] : url, [`${type}FilName`]: file.name,[`${type}DocUpDate`]: Timestamp.now().toMillis()}
+            const x1 = {[`${type}DocUrl`] : url, [`${type}FilName`]: file.name,[`${type}DocUpDate`]: Timestamp.now().toMillis()}
             console.log('data is ===> @@@', data?.type, type, x1)
-            updateUnitDocs(orgId,id,x1,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
+            updateUnitDocs(orgId,id,'Uploaded',fileName,x1,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
             // setCommentAttachUrl(url)
             setUplaoding(false)
             return url
@@ -137,8 +137,8 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
 
   const deleteDoc = () => {
     console.log('delete')
-    let x= {[`${data?.type}DocUrl`] : '', [`${data?.type}FilName`]: '',[`${data?.type}DocUpDate`]: 0}
-        updateUnitDocs(orgId,id,x,user.email,'Doc Deleted Successfully','error',enqueueSnackbar)
+    const x= {[`${data?.type}DocUrl`] : '', [`${data?.type}FilName`]: '',[`${data?.type}DocUpDate`]: 0}
+        updateUnitDocs(orgId,id,'Deleted doc',fileName, x,user.email,'Doc Deleted Successfully','error',enqueueSnackbar)
    }
   return (
     <>
@@ -153,7 +153,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
         {data?.type}
         <div>
                       <label
-                        htmlFor={data.id}
+                        htmlFor={data?.id}
                         className="form-label cursor-pointer inline-block mt-  font-regular text-xs rounded-2xl  py-1 "
                       >
                         <AttachFile
@@ -164,7 +164,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
                       <input
                         type="file"
                         className="hidden"
-                        id={data.id}
+                        id={data?.id}
                         onChange={(e) => {
                           handleFileUploadFun(e.target.files[0],  data.type)
                         }}

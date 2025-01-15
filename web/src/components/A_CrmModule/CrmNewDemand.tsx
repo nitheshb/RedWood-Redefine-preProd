@@ -167,7 +167,8 @@ const AddNewDemand = ({
 
     // await handleFileUploadFun(data?.fileUploader, 'panCard1')
     // const z = await commentAttachUrl
-    const { amount, mode, payReason,dated, gst } = data
+    const { mode, payReason,dated, gst } = data
+    const amount = data?.amount.replace(/,/g, '')
     const gstV = gst / 100
     const totalWithGst = Number(amount) + Number(amount) * Number(gstV)
     const x = {
@@ -214,6 +215,8 @@ const AddNewDemand = ({
       T_Total: selUnitDetails?.T_Total + totalWithGst,
       T_elgible_balance: selUnitDetails?.T_elgible_balance + totalWithGst
     }
+    console.log('value is', amount,totalWithGst )
+
 
     addNewUnitDemand(
       orgId,
@@ -335,7 +338,7 @@ const AddNewDemand = ({
   // const [value, setValue] = useState('');
 
   // const handleChange = (e) => {
-  //   const rawValue = e.target.value.replace(/,/g, ''); 
+  //   const rawValue = e.target.value.replace(/,/g, '');
   //   if (!isNaN(rawValue)) {
   //     const formattedValue = new Intl.NumberFormat().format(rawValue);
   //     setValue(formattedValue);
@@ -344,7 +347,7 @@ const AddNewDemand = ({
 
 
 
-  
+
 
 
   const datee = new Date().getTime()
@@ -376,6 +379,10 @@ const AddNewDemand = ({
     formik.handleSubmit()
   }
 
+  const setValueFun = (value) => {
+    setPaymentModex(value);
+  }
+
   const setDateFun = (date) => {
     setStartDate(date)
   }
@@ -403,7 +410,7 @@ const AddNewDemand = ({
               <div className="flex flex-col ">
                 <div className="mt-0">
                   <Formik
-                    enableReinitialize={true}
+                    enableReinitialize={false}
                     initialValues={initialState}
                     // validationSchema={validate_capturePayment}
                     onSubmit={(values, { resetForm }) => {
@@ -438,7 +445,7 @@ const AddNewDemand = ({
                                               </label>
                                             </div>
 
-                                         
+
 
                                             <div>
                                             <p className='text-[#6A6A6A] font-normal  mt-2 text-[12px]'>Created demand will be added to existing payment schedule of this unit.</p>
@@ -446,7 +453,7 @@ const AddNewDemand = ({
                                             {/* <div className="border-t-4 rounded-xs w-100 border-[#8B5CF6]"></div> */}
                                           </div>
 
-                                     
+
                                         </section>
                                         <section className="flex flex-row justify-between">
                                           {/* <div className="flex flex-col mt-">
@@ -464,14 +471,14 @@ const AddNewDemand = ({
                                     {!bookingProgress && (
                                       <section>
 
-                                  
+
 
                                         <div className="flex flex-wrap mt-3">
                                           <div className="justify-center w-full mx-auto">
                                           <p className='text-[#6A6A6A] text-[12px]'> Demand Type</p>
                                           </div>
                                           {/* <div className="w-full  mb-8 mt-[12px]">
-                                            
+
                                             {demandMode.map((dat, i) => {
                                               return (
                                                 <span
@@ -502,19 +509,21 @@ const AddNewDemand = ({
 <div className="w-full mb-8 mt-[12px] flex flex-wrap gap-x-4 gap-y-4">
   {demandMode.map((dat, i) => {
     return (
-      <span
+      <button
+        type="button"
         className={`border rounded-xl p-2 px-[10px] cursor-pointer hover:bg-[#F2F2F2] hover:text-[#484848] text-[10px] flex flex-col items-center ${
           paymentModex === dat.value ? 'bg-[#F2F2F2] text-[#484848]' : ''
         }`}
         key={i}
         onClick={() => {
-          setPaymentModex(dat.value);
+          // setPaymentModex(dat.value);
+          setValueFun(dat.value)
           formik.setFieldValue('mode', dat.value);
         }}
       >
         <img src={dat.icon} alt={dat.label} className="h-4 w-4 mb-1" />
         {dat.label}
-      </span>
+      </button>
     );
   })}
 </div>
@@ -535,13 +544,13 @@ const AddNewDemand = ({
                                                   }
                                                   onChange={(e) =>{
                                                     const rawValue = Number(e.target.value.replace(/,/g, ''))?.toLocaleString('en-IN')
-                          
-                          
+
+
                                                     formik.setFieldValue('amount', rawValue)
-                                              
+
                                                   }}
-                 
-                                             
+
+
                                               />
                                             </div>
                                           </div>
@@ -555,14 +564,14 @@ const AddNewDemand = ({
 
                                                 onChange={(e) => {
                                                   let value = e.target.value
-                                                    .replace(/[^0-9.]/g, '') 
-                                                    .replace(/(\..*?)\..*/g, '$1'); 
-                                            
-                                                  
+                                                    .replace(/[^0-9.]/g, '')
+                                                    .replace(/(\..*?)\..*/g, '$1');
+
+
                                                   if (value === '0' || /^0\d/.test(value)) {
                                                     value = value.replace(/^0+/, '');
                                                   }
-                                            
+
                                                   formik.setFieldValue('gst', value);
                                                 }}
                                               />

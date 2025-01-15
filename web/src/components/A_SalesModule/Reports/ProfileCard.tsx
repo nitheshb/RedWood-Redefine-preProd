@@ -74,7 +74,7 @@ const ProfileCard = ({ data }) => {
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">{mergedData.maritalStatus}</p>
-              <p className="text-gray-400 text-sm">Marital Status</p>
+              <p className="text-gray-400 text-sm">Marital Status </p>
             </div>
             <div className="text-right">
               <p className="text-gray-900">{mergedData.phoneNo}</p>

@@ -34,6 +34,7 @@ import AddPaymentDetailsForm from './FinanceModule/BookingPaymentForm'
 import SiderForm from './SiderForm/SiderForm'
 import UnitTransactionForm from './UnitBillTransactionForm'
 import { Dialog } from '@headlessui/react'
+import PdfSummaryGenerator from 'src/util/PdfSummaryGenerator'
 
 const CostBreakUpSheet = ({
   title,
@@ -966,6 +967,8 @@ console.log('customer info', myBookingPayload)
                                         projectDetails={projectDetails}
                                         leadDetailsObj1={leadDetailsObj1}
                                       />
+
+
                                     </div>
                                   <div className="mt-2 text-right md:space-x-3 md:block flex flex-row-reverse justify-between mb-3">
 
