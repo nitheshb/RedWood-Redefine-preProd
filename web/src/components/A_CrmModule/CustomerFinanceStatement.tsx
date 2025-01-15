@@ -10,6 +10,7 @@ import CrmUnitFinanceHistory from './CrmUnitFinanceHistory'
 import CrmUnitHeader from './CrmUnitHeader'
 import PdfTransactionsGenerator from 'src/util/PdfTransactionsGenerator'
 import PdfPaymentScheduleGenerator from 'src/util/PdfPaymentScheduleGenerator'
+import CrmUnitCostSheetView from './CrmCostSheetView'
 
 const CrmUnitPsHome = ({
   financeMode,
@@ -36,11 +37,14 @@ const CrmUnitPsHome = ({
           role="tablist"
         >
           {[
+               {
+                lab: 'Transactions',
+                val: 'transactions',
+              },
             { lab: 'Payment Schedule', val: 'schedule' },
-            {
-              lab: 'Transactions',
-              val: 'transactions',
-            },
+
+            { lab: 'Cost Sheet', val: 'cost_sheet' },
+
           ].map((d, i) => {
             return (
               <li key={i} className="mr-2 font-bodyLato" role="presentation">
@@ -141,18 +145,18 @@ const CrmUnitPsHome = ({
             PSa={PSa}
             selCustomerPayload={selCustomerPayload} selUnitDetails={undefined} myObj={undefined} newPlotPS={undefined} myAdditionalCharges={undefined} streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}
 
-      
+
        />     */}
 
 
 
 {/* <PdfTransactionsGenerator
-  user={user} 
-  selUnitDetails={undefined} 
-  myObj={undefined} 
-  selCustomerPayload={undefined} 
-  newPlotPS={undefined} 
-  myAdditionalCharges={undefined} 
+  user={user}
+  selUnitDetails={undefined}
+  myObj={undefined}
+  selCustomerPayload={undefined}
+  newPlotPS={undefined}
+  myAdditionalCharges={undefined}
   streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} PSa={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}                                        // selUnitDetails={selUnitDetails}
 /> */}
 
@@ -160,7 +164,7 @@ const CrmUnitPsHome = ({
 
 
 
-                      
+
 
 
 
@@ -193,15 +197,26 @@ const CrmUnitPsHome = ({
                 />
               </>
             )}
-            <CrmPaymentSummary
+            {/* <CrmPaymentSummary
               selCustomerPayload={selCustomerPayload}
               assets={assets}
-            />
+            /> */}
             <CrmUnitPaymentSchedule
               selCustomerPayload={selCustomerPayload}
               assets={assets}
               totalIs={totalIs}
             />
+          </PDFExport>
+        </>
+      )}
+      {financeMode === 'cost_sheet' && (
+        <>
+          <PDFExport paperSize="A4" margin="1cm" ref={pdfPaymentScheduleComp}>
+            <CrmUnitCostSheetView
+                selCustomerPayload={selCustomerPayload}
+                assets={assets}
+                totalIs={totalIs}
+              />
           </PDFExport>
         </>
       )}
@@ -221,10 +236,10 @@ const CrmUnitPsHome = ({
                 />
               </>
             )}
-            <CrmPaymentSummary
+            {/* <CrmPaymentSummary
               selCustomerPayload={selCustomerPayload}
               assets={assets}
-            />
+            /> */}
             <CrmUnitFinanceHistory
               selCustomerPayload={selCustomerPayload}
               assets={assets}

@@ -1425,7 +1425,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1 text-center">
                                       ATS Draft
                                       </h6>
                                     </div>
@@ -1501,7 +1501,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1 text-center">
                                         SD Approval
                                       </h6>
                                     </div>
@@ -1509,9 +1509,9 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   {/* section 3*/}
                                   <div
                                     className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
-                                      finData?.kyc_status == 'approved'
+                                      finData?.LpostStatus == 'Approved'
                                         ? 'bg-[#CCC5F7]'
-                                        : finData?.kyc_status == 'rejected'
+                                        : finData?.LpostStatus == 'Rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
@@ -1522,7 +1522,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_KYC')
+                                      setIsSubTopic('crm_loan')
                                     }}
                                   >
                                     <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">

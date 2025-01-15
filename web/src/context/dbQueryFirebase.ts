@@ -616,13 +616,13 @@ export const updateTransactionStatus = async (
       // })
     }
   console.log('check it ', data4, error4)
-  if (lead_logs) {
-    await enqueueSnackbar('Marked as Amount Recived', {
+  if (status === 'received') {
+    await enqueueSnackbar(`Transaction is marked as Received ${status}`, {
       variant: 'success',
     });
   }
   else if (status === 'Failed') {
-    await enqueueSnackbar('Marked as Payment Rejected', {
+    await enqueueSnackbar('Transaction is marked as Rejected', {
       variant: 'error',
     });
   }
@@ -633,7 +633,7 @@ export const updateTransactionStatus = async (
   }
 
   if (status === 'Rejected') {
-  
+
     await enqueueSnackbar('Marked as Payment Rejected', {
       variant: 'error',
     });
@@ -641,11 +641,11 @@ export const updateTransactionStatus = async (
     await enqueueSnackbar('Marked as Payment Failed', {
       variant: 'error',
     });
-  } 
-  
+  }
 
-  
-  
+
+
+
 
 
   console.log('updating error', lead_logs, error)
@@ -5468,6 +5468,51 @@ let payload= status==='approved'? approveBody: rejectBody
 export const updateUnitDocs = async (
   orgId,
   unitId,
+  action,
+  docName,
+  data,
+  by,
+  msg,
+  color,
+  enqueueSnackbar
+) => {
+  try {
+    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+    ...data
+    })
+
+    const { data: data4, error: error4 } = await supabase
+      .from(`${orgId}_unit_logs`)
+      .insert([
+        {
+          type: 'document',
+          subtype: action,
+          T: Timestamp.now().toMillis(),
+          Uuid: unitId,
+          by,
+          payload: {},
+          from: 'docUploaded',
+          to: docName,
+        },
+      ])
+      enqueueSnackbar(msg, {
+        variant: color,
+      })
+console.log('data is ===> @@@', data)
+  } catch (error) {
+    console.log('Doc Uplaod failed', error,unitId, {
+      ...data,
+    })
+    console.log('data is ===> @@@', unitId)
+    enqueueSnackbar('Doc Upload Failed.', {
+      variant: 'error',
+    })
+  }
+  return
+}
+export const updateBankLoanApprovals = async (
+  orgId,
+  unitId,
   data,
   by,
   msg,
@@ -5489,17 +5534,18 @@ export const updateUnitDocs = async (
           by,
           payload: {},
           from: 'docUploaded',
-          to: status,
+          to: '',
         },
       ])
       enqueueSnackbar(msg, {
         variant: color,
       })
-
+console.log('data is ===> @@@', data)
   } catch (error) {
-    console.log('Doc Uplaod failed', error, {
+    console.log('Doc Uplaod failed', error,unitId, {
       ...data,
     })
+    console.log('data is ===> @@@', unitId)
     enqueueSnackbar('Doc Upload Failed.', {
       variant: 'error',
     })
@@ -5693,9 +5739,9 @@ export const updateKycApproval = async (
       `KYC ${status === 'approved' ? 'Approved' : 'Rejected'}..!`,
       { variant: status === 'approved' ? 'success' : 'error' }
     );
-    
- 
-    
+
+
+
   } catch (error) {
     console.log('KYC Approved Updation Failed', error, {
       ...data,
@@ -5758,6 +5804,7 @@ export const updateSDApproval = async (
   unitId,
   data,
   by,
+  msg,
   enqueueSnackbar
 ) => {
   try {
@@ -5780,8 +5827,8 @@ export const updateSDApproval = async (
           to: status,
         },
       ])
-    enqueueSnackbar('Sale Deed Approved..!', {
-      variant: 'success',
+    enqueueSnackbar(msg, {
+      variant: status == 'approved' ? 'success' : 'error',
     })
   } catch (error) {
     console.log('SD Approved Updation Failed', error, {
