@@ -530,9 +530,6 @@ const AddNewDemand = ({
 
 
 
-
-
-
                                           <div className="w-full lg:w-4/12 pr-3">
                                             <div className="relative w-full mb-5">
                                               <TextField2
@@ -549,9 +546,10 @@ const AddNewDemand = ({
                                                     formik.setFieldValue('amount', rawValue)
 
                                                   }}
-
-
+                 
+                                             
                                               />
+
                                             </div>
                                           </div>
 

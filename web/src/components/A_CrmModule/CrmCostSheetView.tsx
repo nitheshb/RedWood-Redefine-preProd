@@ -448,7 +448,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
                         </th>
                       </tr>
                     </thead> */}
-                      <tbody>
+                      {/* <tbody>
                         {selCustomerPayload?.addOnCS?.map((d1, inx) => (
                           <tr
                             key={inx}
@@ -487,7 +487,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
                             ₹{addOnTotal?.toLocaleString('en-IN')}
                           </td>
                         </tr>
-                      </tbody>
+                      </tbody> */}
                     </table>
                   )}
                 </div>
@@ -519,7 +519,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
                   alt=""
                 />
                 <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
-                 Possession Charges
+                 Possession Charges box2
                 </h1>
               </div>
               <div className="grid  grid-row-2  gap-x-2  px-3 ">
@@ -533,7 +533,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
                       <thead>
                         <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
                           <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#D9D8FF]  tracking-wide  px-2">
-                            Possession Charges
+                            Possession Charges box1
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide">
                             Plot Rate/Sqft

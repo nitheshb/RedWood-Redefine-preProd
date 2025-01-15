@@ -34,7 +34,7 @@ const CrmUnitFinanceHistory = ({
                   alt=""
                 />
                 <h1 className=" text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-1 ml-1">
-                Payment History box
+                Payment History
                 </h1>
               </div>
             <table className="w-full mb-10 mt-2">
