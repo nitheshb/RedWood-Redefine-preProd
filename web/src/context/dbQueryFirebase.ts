@@ -5397,6 +5397,7 @@ export const updateManagerApproval = async (
     console.log('data is===>', unitId, data)
     const {
       status,
+      rejectionReason,
       plotCS,
       addChargesCS,
 
@@ -5408,10 +5409,13 @@ export const updateManagerApproval = async (
     data.fullCs = [...data?.plotCS || [],...data?.addChargesCS || [], ...data?.constructCS || [], ...data?.constAdditionalChargesCS||[], ...data?.possessionAdditionalCostCS || []]
 
 let rejectBody = {
-  man_cs_approval: status
+  man_cs_approval: status,
+  man_cs_rej_reason: rejectionReason,
+
 }
 let approveBody = {
   man_cs_approval: status,
+  man_cs_rej_reason: rejectionReason,
   plotCS: plotCS,
   addChargesCS,
   fullCs: data.fullCs,
