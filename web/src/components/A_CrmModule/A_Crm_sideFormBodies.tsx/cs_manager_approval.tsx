@@ -54,7 +54,7 @@ export default function CsMangerApprovalFlow({ type, setStatusFun , selUnitPaylo
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Cost Sheet Approval</h2>
             <p className="text-md text-[10px] flex-grow text-right">
-              Waiting for banker sanction{' '}
+              {selUnitPayload?.man_cs_rej_reason}
             </p>
           </div>
         </div>
