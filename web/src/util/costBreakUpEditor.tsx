@@ -1372,7 +1372,7 @@ console.log('saved data is===>', dataObj)
                         /> }
                         <button
                           type="submit"
-                          className="bg-[#FFCD3E]  text-gray-700 font-semibold px-6 py-2 rounded-xl text-md"
+                          className={`${rejectionReason.length>0 ? 'bg-[#ff9f87]' : 'bg-[#f9eeeb]'  }  text-gray-700 font-semibold px-6 py-2 rounded-xl text-md`}
                           onClick={() =>{
                             if(rejectionReason!==''){
                               showFillError(false)
@@ -1389,7 +1389,7 @@ console.log('saved data is===>', dataObj)
                       </div>
                     </div>}
                     <button
-              className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+              className=" text-black active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded  border  border-[#E3BDFF] shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
               type="submit"
               onClick={() => {
                 setRejection(!rejection)
@@ -1400,7 +1400,7 @@ console.log('saved data is===>', dataObj)
               {'Reject'}
             </button>
                     <button
-              className="bg-green-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+              className="bg-[#e3bdff] text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
               type="submit"
               // disabled={loading}
               onClick={() => {
