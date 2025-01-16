@@ -1,3 +1,4 @@
+import { Download } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useAuth } from 'src/context/firebase-auth-context'
 import CombinedPdfGenerator from 'src/util/CombinedPdfGenerator'
@@ -519,7 +520,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
                   alt=""
                 />
                 <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
-                 Possession Charges box2
+                 Possession Charges
                 </h1>
               </div>
               <div className="grid  grid-row-2  gap-x-2  px-3 ">
@@ -533,7 +534,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
                       <thead>
                         <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
                           <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#D9D8FF]  tracking-wide  px-2">
-                            Possession Charges box1
+                            Possession Charges
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#D9D8FF] tracking-wide">
                             Plot Rate/Sqft
@@ -639,6 +640,10 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
                                     ?.replace(',', '')
                                 )
                               )?.toLocaleString('en-IN')}
+                            </td>
+
+                            <td className="text-[12px] w-[15%] text-right text-gray-700 font-bold bg-[#fff] px-2">
+                            <Download />
                             </td>
                           </tr>
                         ))}

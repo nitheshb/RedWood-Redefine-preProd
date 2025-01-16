@@ -1598,7 +1598,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_KYC')
+                                      setIsSubTopic('crm_loan')
                                     }}
                                   >
                                     <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">

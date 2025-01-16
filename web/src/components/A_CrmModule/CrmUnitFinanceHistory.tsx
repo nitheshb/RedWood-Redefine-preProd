@@ -1,4 +1,5 @@
 
+import { Download } from 'lucide-react'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
 import PdfTransactionsGenerator from 'src/util/PdfTransactionsGenerator'
@@ -70,6 +71,10 @@ const CrmUnitFinanceHistory = ({
                   <th className="w-[15%] text-[10px] text-center text-gray-400 text-[#823d00] font-bodyLato tracking-wide uppercase ">
                     Reviewer
                   </th>
+
+                  <th className="w-[15%] text-[10px] text-center text-gray-400 text-[#823d00] font-bodyLato tracking-wide uppercase ">
+                    Download
+                  </th>
                 </tr>
               </thead>
 
@@ -111,6 +116,11 @@ const CrmUnitFinanceHistory = ({
                       <td className="text-[12px] text-center text-gray-800 ">
                         {d1?.Reviewer || "NA"}
                       </td>
+
+                      <td className="text-[12px] text-center text-gray-800 flex justify-center items-center">
+  <Download className="text-center" />
+</td>
+
                     </tr>
                   )
                 })}
