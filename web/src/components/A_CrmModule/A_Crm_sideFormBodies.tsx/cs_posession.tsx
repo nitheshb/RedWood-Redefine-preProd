@@ -32,6 +32,7 @@ const [fillError, showFillError] = useState(false)
   const submitManagerApproval = (status) => {
     const dataObj = {
       status: status,
+      rejectionReason: rejection ? rejectionReason : null
       // plotCS: costSheetA,
       // fullPs: newPlotPS,
       // addChargesCS: partBPayload,
@@ -54,7 +55,8 @@ const [fillError, showFillError] = useState(false)
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Unit Posession</h2>
             <p className="text-md text-[10px] flex-grow text-right">
-              Waiting for banker sanction{' '}
+              {/* Waiting for banker sanction{' '} */}
+              {selUnitPayload?.posession_rejection_reason || 'Posession Rejection'}{' '}
             </p>
           </div>
         </div>
@@ -123,7 +125,8 @@ const [fillError, showFillError] = useState(false)
         </button>
       </div>
     </section>
-    <CrmActivityLog selUnitPayload={selUnitPayload} title="KYC Activity" type={['kyc_approval']}/>
+    {/* <CrmActivityLog selUnitPayload={selUnitPayload} title="KYC Activity" type={['kyc_approval']}/> */}
+    <CrmActivityLog selUnitPayload={selUnitPayload} title="Possession Activity" type={['possession']}/>
 
 </div>
   )

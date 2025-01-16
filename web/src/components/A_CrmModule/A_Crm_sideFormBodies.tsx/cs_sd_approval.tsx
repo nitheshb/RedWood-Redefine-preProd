@@ -32,6 +32,8 @@ export default function Crm_Sd_approval({
   const submitManagerApproval = (status) => {
     const dataObj = {
       status: status,
+      rejectionReason: rejection ? rejectionReason : null
+
       // plotCS: costSheetA,
       // fullPs: newPlotPS,
       // addChargesCS: partBPayload,
@@ -56,7 +58,8 @@ export default function Crm_Sd_approval({
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Unit SD</h2>
             <p className="text-md text-[10px] flex-grow text-right">
-              Waiting for banker sanction{' '}
+              {/* Waiting for banker sanction{' '} */}
+              {selUnitPayload?.sd_rejection_reason || 'Sd Rejection'}{' '}
             </p>
           </div>
         </div>

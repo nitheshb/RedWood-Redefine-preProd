@@ -22,12 +22,24 @@ export default function Cs_customerKyc({ selUnitPayload }) {
   const [fillError, showFillError] = useState(false)
 
 
+  // useEffect(() => {
+  //   console.log('yo yo ', selUnitPayload)
+  // }, [])
+
+
+  
+
+
   useEffect(() => {
-    console.log('yo yo ', selUnitPayload)
-  }, [])
+    console.log('selUnitPayload:', selUnitPayload)
+    console.log('rejection reason:', selUnitPayload?.kyc_rejection_reason)
+  }, [selUnitPayload])
+
+
   const submitManagerApproval = (status) => {
     const dataObj = {
       status: status,
+      rejectionReason: rejection ? rejectionReason : null
       // plotCS: costSheetA,
       // fullPs: newPlotPS,
       // addChargesCS: partBPayload,
@@ -51,7 +63,8 @@ export default function Cs_customerKyc({ selUnitPayload }) {
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Customer Kyc</h2>
             <p className="text-md text-[10px] flex-grow text-right">
-              Waiting for banker sanction{' '}
+              {/* Waiting for banker sanction{' '} */}
+              {selUnitPayload?.kyc_rejection_reason}
             </p>
           </div>
         </div>
