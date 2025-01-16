@@ -88,6 +88,17 @@ export default function TransactionUpdateSideView({
   const [loader, setLoader] = useState(false)
   const [viewDetails, setViewDetails] = useState(false)
 
+
+
+
+
+  const [rejection, setRejection] = useState(false)
+  const [rejectionReason, setRejectionReason] = useState('')
+  const [fillError, showFillError] = useState(false)
+
+
+
+
   const [projectList, setprojectList] = useState([])
 
   const [selProjectIs, setSelProjectIs] = useState({
@@ -182,18 +193,30 @@ export default function TransactionUpdateSideView({
 
 
     if (status === 'Rejected') {
-      enqueueSnackbar('Transaction status updated to Rejected', { variant: 'error' });
+      // enqueueSnackbar('Transaction status updated to Rejected', { variant: 'error' });
+
+      if (rejectionReason !== '') {
+        data.rejectionReason = rejectionReason
+        enqueueSnackbar('Transaction status updated to Rejected', { variant: 'error' })
+        if(data?.unit_id === 'wallet'){
+          updateWalletTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
+        } else {
+          updateTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
+        }
+      } else {
+        showFillError(true)
+      }
     }
 
 
 
 
 
-    if(data?.unit_id === 'wallet'){
-      updateWalletTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
-    }else{
-      updateTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
-    }
+    // if(data?.unit_id === 'wallet'){
+    //   updateWalletTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
+    // }else{
+    //   updateTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
+    // }
   }
 
   useEffect(() => {
@@ -292,6 +315,29 @@ export default function TransactionUpdateSideView({
           </section>
         </div>
         <div className="my-2  grid grid-cols-2 mt-4 border-t border-[#e5e7f8]">
+
+        {rejection && (
+          <div className="col-span-2 mt-4 mb-4">
+            <div className="flex justify-center border-2 py-2 px-6 rounded-xl">
+              <input
+                type="text"
+                name="rejectionReason"
+                placeholder="Write Rejection Comments"
+                className="w-full outline-none text-gray-700 text-sm"
+                onChange={(e) => setRejectionReason(e.target.value)}
+              />
+              {fillError && (
+                <div className="error-message text-red-700 text-xs p-1 mx-auto">
+                  Please enter rejection reason
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+
+
+
           <button
             className="mb-2 md:mb-0 mr-2 hover:scale-110 focus:outline-none           hover:bg-green-100
 
@@ -302,7 +348,12 @@ export default function TransactionUpdateSideView({
                                    px-5  text-sm shadow-sm font-medium tracking-wider text-black rounded hover:shadow-lg hover:bg-green-500"
             onClick={() => {
               // setActionMode('unitBookingMode')
-              updateTnxStatus('Failed', transactionData?.id, user)
+              // updateTnxStatus('Failed', transactionData?.id, user)
+
+              setRejection(!rejection)
+              if (rejection && rejectionReason !== '') {
+                updateTnxStatus('Rejected', transactionData?.id, user)
+              }
 
             }}
             // disabled={loading}

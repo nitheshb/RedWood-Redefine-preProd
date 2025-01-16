@@ -29,6 +29,13 @@ export default function LoanApplyFlowHome({ type, setStatusFun , customerDetails
   const [S5, setS5] = useState(true)
   const [S6, setS6] = useState(true)
 
+
+  const [rejectionReason, setRejectionReason] = useState('')
+const [rejection, setRejection] = useState(false)
+const [fillError, showFillError] = useState(false)
+const [submittedReason, setSubmittedReason] = useState('')
+
+
   const { user } = useAuth()
   const { orgId } = user
     const { enqueueSnackbar } = useSnackbar()
@@ -68,7 +75,14 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
       if(selLoanBank?.value){
 
     const x1 ={'loanBank': selLoanBank?.value || '' }
-    updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${selLoanBank?.value}Saved..!`,'success',enqueueSnackbar )
+
+    updateBankLoanApprovals(orgId, customerDetails?.id, x1, user.email, `${status} Saved..!`, 'success', enqueueSnackbar)
+    if (status === 'Rejected') {
+      setSubmittedReason(rejectionReason)
+      setRejectionReason('')
+      setRejection(false)
+    }
+    // updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${selLoanBank?.value}Saved..!`,'success',enqueueSnackbar )
 }}
     }, [selLoanBank])
 
@@ -84,6 +98,23 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
       const x1 ={'LpostStatus': status || '' }
       updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`Banker Sanction ${status} Saved..!`,'success',enqueueSnackbar )
     }
+
+
+
+
+    // const updatePerSancationFun = (status) => {
+    //   SetPreSanctionReview(status)
+    //   const x1 = {
+    //     'LpreStatus': status || '',
+    //     'rejectionReason': status === 'Rejected' ? rejectionReason : ''
+    //   }
+    //   updateBankLoanApprovals(orgId, customerDetails?.id, x1, user.email, `${status} Saved..!`, 'success', enqueueSnackbar)
+    //   if (status === 'Rejected') {
+    //     setSubmittedReason(rejectionReason)
+    //     setRejectionReason('')
+    //     setRejection(false)
+    //   }
+    // }
 
 
 
@@ -418,6 +449,14 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
                     />
                   </div>
                   <div className="flex-auto">
+
+
+
+                    
+
+
+
+
                     <a
                       className={`block font-semibold text-gray-900 ${
                         preSanctionReview === 'Rejected'
@@ -464,13 +503,48 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
                 </div>
               )}
 
-              {preSanctionReview === 'Rejected' && (
+              {/* {preSanctionReview === 'Rejected' && (
                 <div className="mt-2">
                   <div className="p-4 bg-gray-200 rounded-md">
                     Enter Rejected Reason
                   </div>
                 </div>
-              )}
+              )} */}
+
+{preSanctionReview === 'Rejected' && (
+    <div className="mt-2">
+      <div className="mt-">
+        <div className="flex justify-center border-2 py-2 px-6 px-10 mb-2 rounded-xl">
+          <input
+            type="text"
+            name="blockReason"
+            placeholder="Write Rejection Comments"
+            className="w-full outline-none text-gray-700 text-lg"
+            onChange={(e) => {
+              setRejectionReason(e.target.value)
+            }}
+          />
+          {fillError && (
+            <div className="error-message text-red-700 text-xs p-1 mx-auto" />
+          )}
+          <button
+            type="submit"
+            className={`${rejectionReason.length>0 ? 'bg-[#ff9f87]' : 'bg-[#f9eeeb]'} text-gray-700 font-semibold px-6 py-2 rounded-xl text-md`}
+            onClick={() => {
+              if(rejectionReason !== '') {
+                showFillError(false)
+                updatePerSancationFun('Rejected')
+              } else {
+                showFillError(true)
+              }
+            }}
+          >
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
             </section>
           )}
         </section>
