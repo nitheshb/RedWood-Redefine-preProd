@@ -578,7 +578,7 @@ export default function UnitSideViewCRM({
   }
 
   const setStatusFun = async (leadDocId, newStatus) => {
-    console.log('New Statusiiiiiiiii: ', newStatus); 
+    console.log('New Statusiiiiiiiii: ', newStatus);
     const x = StatusListA.filter((d) => d.value === status)
     let allowedList = [{ allowed: [] }]
     if (x.length > 0) {
@@ -1179,7 +1179,7 @@ return
                     </div>
                     <div className="font-md ml-8 text-xs tracking-wide font-semibold text-slate-900 ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div className='mb-1.5'>
+                        <div className='mb-1.5 mt-[6px]'>
                           <AssigedToDropComp
                             assignerName={assignerName}
                             id={id}
@@ -1203,10 +1203,10 @@ return
                     </div>
                     <div className="font-md  ml-8  text-xs tracking-wide font-semibold text-slate-900 ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div className='mb-2'>
+                        <div className=' mt-[2px]'>
                           <AssigedToDropComp
-                           assignerName={unitStatus}
-                          
+                           assignerName={status}
+
                             id={id}
                             setAssigner={setStatusFun}
                             usersList={StatusListA}
@@ -1214,6 +1214,7 @@ return
                           />
                         </div>
                       )}
+
                       {user?.role?.includes(USER_ROLES.CP_AGENT) && (
                         <span className="text-left text-sm">
                           {' '}
@@ -1223,7 +1224,7 @@ return
                     </div>
                   </section>
                 { (user?.role.includes('crm-manager') || user?.role.includes('crm-executive') || user?.role.includes('admin'))&&  <button
-                    className="text-[10px]  rounded-2xl ml-2 bg-[#E3BDFF] px-5 border    border-[#E3BDFF] text-white"
+                    className="text-[10px]  rounded-2xl ml-2 bg-[#E3BDFF] px-5 border    border-[#E3BDFF] text-gray-800"
                     onClickCapture={() => {
                       openPaymentFun()
                     }}

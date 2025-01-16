@@ -8,6 +8,7 @@ import AddApplicantDetails from 'src/components/AddApplicantDetails'
 import { USER_ROLES } from 'src/constants/userRoles'
 import { updateKycApproval } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import CrmActivityLog from '../CrmActivityLog'
 
 
 export default function Cs_customerKyc({ selUnitPayload }) {
@@ -36,7 +37,9 @@ export default function Cs_customerKyc({ selUnitPayload }) {
     )
   }
   return (
-    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+    <div className='flex flex-row bg-white '>
+
+    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll" style={{ height: `calc(100vh - 60px)` }}>
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         <div className="mt-1">
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
@@ -78,5 +81,8 @@ export default function Cs_customerKyc({ selUnitPayload }) {
         </button>
       </div>
     </section>
+    <CrmActivityLog selUnitPayload={selUnitPayload} title="KYC Activity" type={['kyc_approval']}/>
+
+    </div>
   )
 }

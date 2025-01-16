@@ -1928,7 +1928,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
         setOpen={setIsSubTopicOpen}
         title={isSubTopic}
         customerDetails={selUnitDetails}
-        widthClass="max-w-3xl"
+        widthClass="max-w-6xl"
         transactionData={transactionData}
         unitsViewMode={false}
         selUnitPayload={selUnitDetails}

@@ -1,13 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { useSnackbar } from 'notistack'
 
 import { USER_ROLES } from 'src/constants/userRoles'
 import { updatePosessionApproval } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import CrmActivityLog from '../CrmActivityLog'
 
 
 export default function Crm_Unit_Posession({
@@ -18,13 +19,6 @@ export default function Crm_Unit_Posession({
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
-
- 
-
-  
-const [status, setStatus] = useState('') 
-const [remarks, setRemarks] = useState('') 
-
 
 
   useEffect(() => {
@@ -48,7 +42,8 @@ const [remarks, setRemarks] = useState('')
     )
   }
   return (
-    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+    <div className='flex flex-row bg-white '>
+    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll" style={{ height: `calc(100vh - 60px)` }}>
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         <div className="mt-1">
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
@@ -59,29 +54,6 @@ const [remarks, setRemarks] = useState('')
           </div>
         </div>
       </div>
-
-
-
-      <div className="my-4">
-  <label htmlFor="remarks" className="block text-sm font-medium text-gray-700">
-    Remarks
-  </label>
-  <textarea
-    id="remarks"
-    value={remarks}
-    onChange={(e) => setRemarks(e.target.value)}
-    className="w-full mt-1 p-2 border border-gray-300 rounded-md"
-    rows="3"
-  />
-</div>
-
-
-
-
-
-
-
-
       <div className="mt-5 left-0 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
         <button
           className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
@@ -106,5 +78,8 @@ const [remarks, setRemarks] = useState('')
         </button>
       </div>
     </section>
+    <CrmActivityLog selUnitPayload={selUnitPayload} title="KYC Activity" type={['kyc_approval']}/>
+
+</div>
   )
 }

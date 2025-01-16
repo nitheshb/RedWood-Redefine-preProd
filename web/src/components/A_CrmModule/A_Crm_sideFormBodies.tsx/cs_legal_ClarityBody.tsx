@@ -50,6 +50,7 @@ import {
 } from 'src/util/dateConverter'
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import CrmActivityLog from '../CrmActivityLog'
 
 // import BankSelectionSwitchDrop from './BankSelectionDroopDown'
 const torrowDate = new Date(
@@ -211,7 +212,7 @@ export default function Crm_legal_Clarity({
   const [unitFetchedActivityData, setUnitFetchedActivityData] = useState([])
 
   const [closePrevious, setClosePrevious] = useState(false)
- 
+
   useEffect(() => {
     console.log('yo yo ', selUnitPayload)
   }, [])
@@ -954,7 +955,8 @@ export default function Crm_legal_Clarity({
     },
   }
   return (
-    <section className="bg-[#EFF8F1] w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+    <div className='flex flex-row bg-white '>
+    <section className="bg-[#EFF8F1] w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll" style={{ height: `calc(100vh - 60px)` }}>
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         <div className="mt-1">
           <div className="py-2 rounded-md flex flex-row justify-between">
@@ -1627,5 +1629,8 @@ export default function Crm_legal_Clarity({
         </button>
       </div>
     </section>
+    <CrmActivityLog selUnitPayload={selUnitPayload} title="Legal Activity" type={['legal_approval']}/>
+
+</div>
   )
 }

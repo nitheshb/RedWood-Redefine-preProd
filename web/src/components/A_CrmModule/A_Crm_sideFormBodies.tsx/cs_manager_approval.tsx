@@ -16,6 +16,7 @@ import DocRow from 'src/components/LegalModule/Docu_row'
 import { USER_ROLES } from 'src/constants/userRoles'
 import { useAuth } from 'src/context/firebase-auth-context'
 import CSManagerApprovalBody from './cs_manager_approval_body'
+import CrmActivityLog from '../CrmActivityLog'
 
 export default function CsMangerApprovalFlow({ type, setStatusFun , selUnitPayload}) {
   const [selLoanBank, setLoanBank] = useState({})
@@ -32,7 +33,8 @@ export default function CsMangerApprovalFlow({ type, setStatusFun , selUnitPaylo
 
 
   return (
-    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+    <div className='flex flex-row bg-white '>
+    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%]  overflow-y-scroll" style={{ height: `calc(100vh - 60px)` }}>
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         {/* <div className="flex p-4 items-center justify-between">
           <div className="flex flex-row">
@@ -110,5 +112,7 @@ export default function CsMangerApprovalFlow({ type, setStatusFun , selUnitPaylo
       </div>
 
     </section>
+    <CrmActivityLog selUnitPayload={selUnitPayload} title="Cost Sheet Activity" type={['cs_approval']}/>
+ </div>
   )
 }
