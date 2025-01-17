@@ -5685,9 +5685,10 @@ export const updateATSApproval = async (
 ) => {
   try {
     console.log('data is===>', unitId, data)
-    const { status } = data
+    const { status,rejectionReason } = data
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       man_ats_approval: status,
+      ...(status === 'rejected' && { ats_rejection_reason: rejectionReason }),
     })
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
@@ -5698,7 +5699,10 @@ export const updateATSApproval = async (
           T: Timestamp.now().toMillis(),
           Uuid: unitId,
           by,
-          payload: {},
+          // payload: {},
+          payload: {
+            rejectionReason: status !== 'approved' ? rejectionReason : null,
+          },
           from: 'ats_review',
           to: status,
         },
@@ -5721,6 +5725,8 @@ export const updateATSApproval = async (
   }
   return
 }
+
+
 export const updateKycApproval = async (
   orgId,
   unitId,
@@ -5730,10 +5736,19 @@ export const updateKycApproval = async (
 ) => {
   try {
     console.log('data is===>', unitId, data)
-    const { status } = data
+    const {
+       status,
+       rejectionReason,          
+     } = data
+    // await updateDoc(doc(db, `${orgId}_units`, unitId), {
+    //   kyc_status: status,
+    // })
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       kyc_status: status,
-    })
+      ...(status === 'rejected' && { kyc_rejection_reason: rejectionReason }),
+    });
+    
+    
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
       .insert([
@@ -5743,7 +5758,10 @@ export const updateKycApproval = async (
           T: Timestamp.now().toMillis(),
           Uuid: unitId,
           by,
-          payload: {},
+          // payload: {},
+          payload: {
+            rejectionReason: status !== 'approved' ? rejectionReason : null,
+          },
           from: 'kyc_review',
           to: status,
         },
@@ -5781,9 +5799,11 @@ export const updatePosessionApproval = async (
 ) => {
   try {
     console.log('data is===>', unitId, data)
-    const { status } = data
+    const { status,rejectionReason } = data
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       posession_status: status,
+      ...(status === 'rejected' && { posession_rejection_reason: rejectionReason }),
+
     })
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
@@ -5794,7 +5814,10 @@ export const updatePosessionApproval = async (
           T: Timestamp.now().toMillis(),
           Uuid: unitId,
           by,
-          payload: {},
+          // payload: {},
+          payload: {
+            rejectionReason: status !== 'approved' ? rejectionReason : null,
+          },
           from: 'cs_review',
           to: 'posession',
         },
@@ -5826,9 +5849,10 @@ export const updateSDApproval = async (
 ) => {
   try {
     console.log('data is===>', unitId, data)
-    const { status } = data
+    const { status, rejectionReason } = data
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       both_sd_approval: status,
+      ...(status === 'rejected' && { sd_rejection_reason: rejectionReason }),
     })
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
@@ -5839,7 +5863,10 @@ export const updateSDApproval = async (
           T: Timestamp.now().toMillis(),
           Uuid: unitId,
           by,
-          payload: {},
+          // payload: {},
+          payload: {
+            rejectionReason: status !== 'approved' ? rejectionReason : null,
+          },
           from: 'sd_review',
           to: status,
         },

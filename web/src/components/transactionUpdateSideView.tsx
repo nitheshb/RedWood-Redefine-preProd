@@ -242,10 +242,21 @@ export default function TransactionUpdateSideView({
                       `}
               >
                 {'In-Review'}
+
+ 
               </span>
             </div>
           </section>
         </div>
+      </div>
+      <div>
+      {transactionData?.rejectionReason && (
+          <p className="text-md text-[15px] mr-2 ml-4 mt-1">
+            
+            <span>Rejected Reason: </span>
+            {transactionData?.rejectionReason}
+          </p>
+        )}
       </div>
       <div className="py-3 px-3 m-4 mt-2 rounded-lg border border-gray-100 h-screen overflow-y-auto overflow-auto no-scrollbar">
         <div className="mt-2  grid grid-cols-2 ">

@@ -36,6 +36,12 @@ const [fillError, showFillError] = useState(false)
 const [submittedReason, setSubmittedReason] = useState('')
 
 
+
+
+
+
+
+
   const { user } = useAuth()
   const { orgId } = user
     const { enqueueSnackbar } = useSnackbar()
@@ -66,6 +72,8 @@ const [submittedReason, setSubmittedReason] = useState('')
 SetPreSanctionReview(customerDetails?.LpreStatus)
 
 SetPostSanctionReview(customerDetails?.LpostStatus)
+setRejectionReason(customerDetails?.loan_rejection_reason || '')
+
   }, [customerDetails])
 
 
@@ -89,7 +97,9 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
 
     const updatePerSancationFun = (status)=> {
       SetPreSanctionReview(status)
-      const x1 ={'LpreStatus': status || '' }
+      const x1 ={'LpreStatus': status || '',
+        'loan_rejection_reason': status === 'Rejected' ? rejectionReason : null
+       }
       updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${status} Saved..!`,'success',enqueueSnackbar )
     }
 
@@ -143,7 +153,9 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Loan Approval</h2>
             <p className="text-md text-[10px] flex-grow text-right">
-              Banker sanction is {postSanctionReview}
+              {/* Banker sanction is {postSanctionReview} */}
+              {customerDetails?.loan_rejection_reason || `Banker sanction is ${postSanctionReview}`}
+
             </p>
           </div>
         </div>
@@ -511,7 +523,9 @@ SetPostSanctionReview(customerDetails?.LpostStatus)
                 </div>
               )} */}
 
+{/* {preSanctionReview === 'Rejected' && ( */}
 {preSanctionReview === 'Rejected' && (
+
     <div className="mt-2">
       <div className="mt-">
         <div className="flex justify-center border-2 py-2 px-6 px-10 mb-2 rounded-xl">

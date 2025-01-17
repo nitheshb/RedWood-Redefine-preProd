@@ -785,7 +785,7 @@ const PdfReceiptGenerator = ({
           />
         }
         // fileName="sample.pdf"
-        fileName={`unit_${selUnitDetails?.unit_no || 'unit_no'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_PaymentReceipt.pdf`}
+        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selUnitDetails?.unit_no || 'unit_no'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_PaymentReceipt.pdf`}
 
 
       >
