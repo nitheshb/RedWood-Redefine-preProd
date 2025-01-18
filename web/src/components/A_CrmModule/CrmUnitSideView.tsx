@@ -27,6 +27,7 @@ import {
   updateUnitCrmOwner,
   streamUnitById,
   updateCrmExecutiveReAssignAgreegations,
+  getProjectByUid,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
@@ -156,7 +157,9 @@ export default function UnitSideViewCRM({
   transactionData,
   customerDetails,
   selCustomerPayload,
+  selUnitDetails,
   setSelUnitDetails,
+  
   selSubMenu,
   selSubMenu2,
 }) {
@@ -219,6 +222,14 @@ export default function UnitSideViewCRM({
   const [statusValidError, setStatusValidError] = useState(false)
   const [newStatusErrorList, setNewStatusErrorList] = useState('')
   const [unitPayload, setUnitPayload] = useState({})
+
+
+
+
+
+  
+
+
 
   const [selProjectIs, setSelProjectIs] = useState({
     projectName: '',

@@ -2391,7 +2391,10 @@ const PdfInvoiceGenerator = ({
         custObj1={custObj1} 
         />
       }
-      fileName="sample.pdf"
+      // fileName="sample.pdf"
+
+      fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selUnitDetails?.unit_no || 'unit_no'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_CostSheet.pdf`}
+
     >
       {({ blob, url, loading, error }) =>
         loading ? (

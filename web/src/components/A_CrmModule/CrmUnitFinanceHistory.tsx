@@ -1,5 +1,7 @@
 
 import { Download } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { getProjectByUid } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
 import PdfTransactionsGenerator from 'src/util/PdfTransactionsGenerator'
@@ -8,10 +10,41 @@ const CrmUnitFinanceHistory = ({
   selCustomerPayload,
   assets,
   totalIs,
+  
   unitTransactionsA,
 }) => {
   const { user } = useAuth()
   const { orgId } = user
+
+
+
+
+  const [projectDetails, setProject] = useState({})
+  const getProjectDetails = async (id) => {
+    const unsubscribe = await getProjectByUid(
+      orgId,
+      id,
+      (querySnapshot) => {
+        const projects = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        setProject(projects[0])
+      },
+      () =>
+        setProject({
+          projectName: '',
+        })
+    )
+    return unsubscribe
+  }
+  useEffect(() => {
+    getProjectDetails(selCustomerPayload?.pId)
+  }, [selCustomerPayload])
+
+
+
+
+
 
   return (
     <>
@@ -22,7 +55,8 @@ const CrmUnitFinanceHistory = ({
   user={user}
   unitTransactionsA={unitTransactionsA}
   selCustomerPayload={selCustomerPayload}
-  selUnitDetails={undefined} myObj={undefined} newPlotPS={undefined} myAdditionalCharges={undefined} streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} PSa={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}                                        // selUnitDetails={selUnitDetails}
+  projectDetails={projectDetails}
+  selUnitDetails={undefined} myObj={undefined} newPlotPS={undefined} myAdditionalCharges={undefined} streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined}  leadDetailsObj1={undefined} PSa={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}                                        // selUnitDetails={selUnitDetails}
 />
 
 
