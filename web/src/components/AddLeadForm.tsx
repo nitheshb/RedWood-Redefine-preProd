@@ -604,7 +604,7 @@ if(leadDetailsObj.id){
                       <div className="inline">
                         <div className="">
                           <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                            Client Details box<abbr title="required"></abbr>
+                            Client Details<abbr title="required"></abbr>
                           </label>
                         </div>
                         {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-green-600"></div> */}
