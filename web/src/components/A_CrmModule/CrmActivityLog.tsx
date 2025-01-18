@@ -80,7 +80,7 @@ console.log('account records', selUnitPayload?.id, orgId)
                 }
               } else {
                 console.log('New record added!')
-                return [...prevLogs, payload.new]
+                return [payload.new,...prevLogs]
               }
             })
           } else {
@@ -104,7 +104,7 @@ console.log('account records', selUnitPayload?.id, orgId)
                   }
                 } else {
                   console.log('New record added!')
-                  return [...prevLogs, payload.new]
+                  return [payload.new,...prevLogs, ]
                 }
               })
             }

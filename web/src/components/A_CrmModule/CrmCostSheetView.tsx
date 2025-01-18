@@ -111,7 +111,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
     <>
 
     <div>
-      
+
       <PdfSummaryGenerator
           user={user}
           selUnitDetails={selUnitDetails}
@@ -139,10 +139,10 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
           // netTotal={unitTotal}
           // setNetTotal={setUnitTotal}
           // partATotal={partATotal}
-          
+
           // partBTotal={0}
           // setPartATotal={partATotal}
-          // projectDetails={{}} myAdditionalCharges={undefined} setPartBTotal={undefined} leadDetailsObj1={undefined} customerDetails={undefined}    
+          // projectDetails={{}} myAdditionalCharges={undefined} setPartBTotal={undefined} leadDetailsObj1={undefined} customerDetails={undefined}
           />
     </div>
 
@@ -172,7 +172,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
                     <thead className='  '>
                       <tr className=" h-8 border-b-[0.2px] bg-[#EDEDED]  rounded-lg w-[100%]">
                         <th className="min-w-[35%] text-[12px] text-left text-[#3D3D3D]   rounded-tl-[10px]  bg-[#EDEDED]  tracking-wide  px-2">
-                          Plot 
+                          Plot
                         </th>
                         <th className="w-[15%] text-[12px] text-right  text-[#3D3D3D] bg-[#EDEDED] tracking-wide">
                           Plot Rate/Sqft
@@ -643,7 +643,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
                             </td>
 
                             <td className="text-[12px] w-[15%] text-right text-gray-700 font-bold bg-[#fff] px-2">
-                            <Download />
+                            <Download className="text-center w-[13px] h-6 " />
                             </td>
                           </tr>
                         ))}
@@ -686,7 +686,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,projectDetails, unitTransacti
                   </section>
                 </div>
               </section>
-              
+
             </div>
           </div>
         </section>

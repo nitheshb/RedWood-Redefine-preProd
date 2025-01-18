@@ -624,6 +624,7 @@ export default function UnitSideViewCRM({
           (selCustomerPayload?.T_review ||
             0 + selCustomerPayload?.T_approved ||
             0)
+            dataObj.eventKey= 'alloted_on'
         updateUnitStatus(
           orgId,
           selCustomerPayload?.id,
@@ -677,6 +678,7 @@ export default function UnitSideViewCRM({
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
+        dataObj.eventKey= 'agreement_on'
 
         updateUnitStatus(
           orgId,
@@ -695,6 +697,7 @@ export default function UnitSideViewCRM({
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
+        dataObj.eventKey= 'registered_on'
 
         updateUnitStatus(
           orgId,
@@ -713,6 +716,7 @@ export default function UnitSideViewCRM({
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
+        dataObj.eventKey= 'possession_on'
 
 
         updateUnitStatus(

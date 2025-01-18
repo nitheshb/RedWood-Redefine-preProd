@@ -17,6 +17,7 @@ import {
   addPaymentReceivedEntrySup,
   createNewCustomerS,
   getProject,
+  getProjectByUid,
   steamUsersProjAccessList,
   streamCustomersList,
 } from 'src/context/dbQueryFirebase'
@@ -48,7 +49,6 @@ const CaptureUnitPayment = ({
   newConstructCsObj,
   newConstructCostSheetA,
   phase,
-  projectDetails,
   stepIndx,
   StatusListA,
 }) => {
@@ -65,6 +65,30 @@ const CaptureUnitPayment = ({
   const [creditNotersA, setCreditNoters] = useState([])
   const [walletCustomers, setWalletCustomers] = useState([])
   const [bankAccounts, setBankAccounts] = useState([])
+  const [projectDetails, setProject] = useState({})
+
+
+
+    const getProjectDetails = async (id) => {
+      const unsubscribe = await getProjectByUid(
+        orgId,
+        id,
+        (querySnapshot) => {
+          const projects = querySnapshot.docs.map((docSnapshot) =>
+            docSnapshot.data()
+          )
+          setProject(projects[0])
+        },
+        () =>
+          setProject({
+            projectName: '',
+          })
+      )
+      return unsubscribe
+    }
+    useEffect(() => {
+      getProjectDetails(selUnitDetails?.pId)
+    }, [selUnitDetails])
 
   // const [formattedValue, setFormattedValue] = useState('');
 
@@ -663,7 +687,7 @@ const CaptureUnitPayment = ({
                                                       // setPaymentModex(dat.value)
 
 
-                                                      
+
                                                       setPaymentModex(dat.value)
                                                       formik.setFieldValue(
                                                         'mode',
@@ -1017,7 +1041,7 @@ const CaptureUnitPayment = ({
                                               className="w-4 h-4 text-[14px]"
                                               style={{ fontSize: '14px' }}
                                             />
-                                          Add Receipt 
+                                          Add Receipt
                                           </label>
                                           {/* {panCard1 != '' && (
                         <button

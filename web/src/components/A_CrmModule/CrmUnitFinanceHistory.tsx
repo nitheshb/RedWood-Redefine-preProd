@@ -15,11 +15,11 @@ const CrmUnitFinanceHistory = ({
 
   return (
     <>
-       
+
 
 
        <PdfTransactionsGenerator
-  user={user} 
+  user={user}
   unitTransactionsA={unitTransactionsA}
   selCustomerPayload={selCustomerPayload}
   selUnitDetails={undefined} myObj={undefined} newPlotPS={undefined} myAdditionalCharges={undefined} streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} PSa={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}                                        // selUnitDetails={selUnitDetails}
@@ -118,7 +118,7 @@ const CrmUnitFinanceHistory = ({
                       </td>
 
                       <td className="text-[12px] text-center text-gray-800 flex justify-center items-center">
-  <Download className="text-center" />
+  <Download className="text-center w-[13px] h-6 mt-[8px]" />
 </td>
 
                     </tr>

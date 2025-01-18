@@ -5136,6 +5136,7 @@ export const updateUnitStatus = async (
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       fullPs: data?.fullPs,
       status: data?.status,
+      [data?.eventKey]: Timestamp.now().toMillis(),
       T_elgible: data?.T_elgible_new,
       T_elgible_balance: data?.T_elgible_balance,
       // [`${data?.status}_on`]: data[`${data?.status}_on`],
@@ -5152,6 +5153,47 @@ export const updateUnitStatus = async (
           payload: {},
           from: 'sts_change',
           to: data?.status,
+        },
+      ])
+    enqueueSnackbar('Unit Status Updated', {
+      variant: 'success',
+    })
+  } catch (error) {
+    console.log('Unit Status  updation failed', error, {
+      ...data,
+    })
+    enqueueSnackbar('Unit Status updation failed BBB', {
+      variant: 'error',
+    })
+  }
+  return
+}
+
+export const updateUnitStatusDates = async (
+  orgId,
+  unitId,
+  data,
+  by,
+  enqueueSnackbar
+) => {
+  try {
+    console.log('data is===>', unitId, data)
+
+    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+      [data?.key]: data?.time,
+    })
+    const { data: data4, error: error4 } = await supabase
+      .from(`${orgId}_unit_logs`)
+      .insert([
+        {
+          type: 'sts_date',
+          subtype: 'sts_date',
+          T: Timestamp.now().toMillis(),
+          Uuid: unitId,
+          by,
+          payload: {},
+          from: data?.oldDate,
+          to: data?.time,
         },
       ])
     enqueueSnackbar('Unit Status Updated', {
@@ -5711,10 +5753,10 @@ export const updateATSApproval = async (
     //   variant: 'success',
     // })
     enqueueSnackbar(
-      status === 'approved' ? 'ATS Approved..!' : 'ATS Rejected..!', 
+      status === 'approved' ? 'ATS Approved..!' : 'ATS Rejected..!',
       { variant: status === 'approved' ? 'success' : 'error' }
     );
-    
+
   } catch (error) {
     console.log('ATS Approved Updation Failed', error, {
       ...data,
@@ -5738,7 +5780,7 @@ export const updateKycApproval = async (
     console.log('data is===>', unitId, data)
     const {
        status,
-       rejectionReason,          
+       rejectionReason,
      } = data
     // await updateDoc(doc(db, `${orgId}_units`, unitId), {
     //   kyc_status: status,
@@ -5747,8 +5789,8 @@ export const updateKycApproval = async (
       kyc_status: status,
       ...(status === 'rejected' && { kyc_rejection_reason: rejectionReason }),
     });
-    
-    
+
+
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
       .insert([
@@ -5826,7 +5868,7 @@ export const updatePosessionApproval = async (
     //   variant: 'success',
     // })
     enqueueSnackbar(
-      status === 'approved' ? 'Posession Approved..!' : 'Posession Rejected..!', 
+      status === 'approved' ? 'Posession Approved..!' : 'Posession Rejected..!',
       { variant: status === 'approved' ? 'success' : 'error' }
     )
   } catch (error) {

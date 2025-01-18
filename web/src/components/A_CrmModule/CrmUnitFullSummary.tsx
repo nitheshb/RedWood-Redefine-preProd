@@ -24,6 +24,8 @@ import {
   updateLeadProject,
   getFinanceForUnit,
   streamGetAllUnitTransactions,
+  updateUnitStatus,
+  updateUnitStatusDates,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { db, storage } from 'src/context/firebaseConfig'
@@ -116,7 +118,7 @@ export default function UnitFullSummary({
   selSubMenu,
   selSubMenu2,
   source,
-  
+
 }) {
   const { user } = useAuth()
   const { enqueueSnackbar } = useSnackbar()
@@ -183,7 +185,7 @@ export default function UnitFullSummary({
     Status,
     by,
     Mobile,
-    Date,
+
     Email,
     Assigned,
     AssignedBy,
@@ -735,7 +737,7 @@ export default function UnitFullSummary({
 
   const events = [
     { event: 'Booked', key: 'booked_on' },
-    { event: 'Allotment', key: 'agreement_pipeline' },
+    { event: 'Allotment', key: 'alloted_on' },
     { event: 'Agreement', key: 'agreement_on' },
     { event: 'Registered', key: 'registered_on' },
     { event: 'Possession', key: 'possession_on' },
@@ -753,23 +755,38 @@ export default function UnitFullSummary({
 
   // const handleSave = (key) => {
   //   customerDetails[key] = editedDate;
-  //   setEditableEvent(null); 
+  //   setEditableEvent(null);
   // };
 
 
 
 
-  
+
   const handleSave = async (key) => {
     try {
+      console.log('date is',editedDate )
       const dateTimestamp = new Date(editedDate).getTime()
 
       const updatedDetails = {
         ...customerDetails,
         [key]: dateTimestamp
       }
+      updateUnitStatusDates(
+          orgId,
+          selCustomerPayload?.id,
+          {key, time: dateTimestamp, oldDate:customerDetails[key] || 0 },
+          user.email,
+          enqueueSnackbar
+        )
+        customerDetails[key] = dateTimestamp
+
+        setEditableEvent(null)
 
 
+        enqueueSnackbar('Date updated successfully', {
+          variant: 'success'
+        })
+        return;
       const unitDocRef = doc(db, `${orgId}_units`, customerDetails.id)
       await updateDoc(unitDocRef, {
         [key]: dateTimestamp,
@@ -777,12 +794,12 @@ export default function UnitFullSummary({
         [`${key}_updated_at`]: new Date().getTime()
       })
 
-    
+
       customerDetails[key] = dateTimestamp
 
       setEditableEvent(null)
-      
-    
+
+
       enqueueSnackbar('Date updated successfully', {
         variant: 'success'
       })
@@ -796,7 +813,7 @@ export default function UnitFullSummary({
 
 
   const handleCancel = () => {
-    setEditableEvent(null); 
+    setEditableEvent(null);
     setEditedDate('');
   };
 
@@ -1704,7 +1721,7 @@ export default function UnitFullSummary({
         <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
           Units
         </h2>
-        <div className='border-b-2 my-4 border-[#f1f1f1]'></div>
+        <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 mx-8 items-center">
 
@@ -1766,7 +1783,7 @@ export default function UnitFullSummary({
         <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
         Dimensions
         </h2>
-        <div className='border-b-2 my-4 border-[#f1f1f1]'></div>
+        <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 ml-8 ">
 
@@ -1831,7 +1848,7 @@ export default function UnitFullSummary({
         <h2 className="text-xl sm:text-2xl font-bold text-[#3D3D3D]  ">
         Schedule
         </h2>
-        <div className='border-b-2 my-4 border-[#949494]'></div>
+        <div className='border-b my-4 mt-2 border-[#949494]'></div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
 
@@ -1883,7 +1900,7 @@ export default function UnitFullSummary({
 
 <div className="w-full max-w-[400px] h-[200px] shadow-md rounded-[10px]  bg-white   pt-4 ">
   <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]">Schedule</h2>
-  <div className="border-b-2 my-4 border-[#f1f1f1]"></div>
+  <div className="border-b my-4 mt-2 border-[#f1f1f1]"></div>
 
   <div className="grid grid-cols-1 md:grid-cols-2 mx-8 gap-6">
 
@@ -1941,7 +1958,7 @@ export default function UnitFullSummary({
         <h2 className="text-[13px] ml-10 font-semibold text-[#3D3D3D]  ">
         Additonal Details
         </h2>
-        <div className='border-b-2 my-4 border-[#f1f1f1]'></div>
+        <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
 
         <div className="grid grid-cols-1 mx-8 sm:grid-cols-2 gap-6 ">
 
@@ -1997,7 +2014,7 @@ export default function UnitFullSummary({
         <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
         Status
         </h2>
-        <div className='border-b-2 my-4 border-[#f1f1f1]'></div>
+        <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 mx-8 gap-4">
 
@@ -2056,7 +2073,7 @@ export default function UnitFullSummary({
 
 
 
-{/* 
+{/*
           <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 mx-4 ">
           <div className="flex flex-row ">
                 <img
@@ -2129,7 +2146,7 @@ export default function UnitFullSummary({
               </div>
 
               <div className="mt-3 sm:pe-8 bg-white p-3 rounded-lg mr-2">
-                <h4 className="text-lg font-semibold text-gray-900 text-[12px]">
+                <h4 className="text-gray-900 text-[13px]">
                   {d.event}
                 </h4>
 
@@ -2189,9 +2206,9 @@ export default function UnitFullSummary({
         </div>
       </div>
     ) : (
-      <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+      <time className="block mb-2 text-[10px] font-normal leading-none text-gray-500 mt-1">
         On: {customerDetails[d.key]
-          ? timeConv(Number(customerDetails[d.key])).toLocaleString()
+          ? prettyDate(Number(customerDetails[d.key])).toLocaleString()
           : 'Not Available'}
       </time>
     )}
@@ -2199,12 +2216,13 @@ export default function UnitFullSummary({
 
 
 
-                <button
+             { !(editableEvent === d.key) &&  <button
                   onClick={() => handleEdit(d.key)}
                   className="text-blue-500 text-sm mt-1"
                 >
                   Edit
                 </button>
+}
               </div>
             </li>
           ))}

@@ -7,8 +7,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 const CustomDatePicker = ({ selected, onChange, ...props }) => {
   let leadYear = 1;
-  if(props?.leadTime){
-    leadYear = props?.leadTime
+  if(props?.leadYears){
+    leadYear = props?.leadYears
   }
   const years = range(1850, getYear(new Date()) + leadYear, 1)
   const months = [
