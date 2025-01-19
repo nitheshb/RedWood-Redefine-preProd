@@ -2557,12 +2557,15 @@ const PdfSummaryGenerator = ({
             setPartBTotal={setPartBTotal}
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
+         
             custObj1={custObj1} 
             totalIs={totalIs}
             PSa={PSa}
           />
         }
-        fileName="sample.pdf"
+        // fileName="sample.pdf"
+        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payments_Summary.pdf`}
+
       >
         {({ blob, url, loading, error }) =>
           loading ? (

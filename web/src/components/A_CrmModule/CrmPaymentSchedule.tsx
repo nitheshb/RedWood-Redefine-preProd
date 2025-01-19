@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Switch } from '@headlessui/react'
 import { useSnackbar } from 'notistack'
-import { updateUnitStatus } from 'src/context/dbQueryFirebase'
+import { getProjectByUid, updateUnitStatus } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { computeTotal } from 'src/util/computeCsTotals'
 import { prettyDate } from 'src/util/dateConverter'
@@ -45,6 +45,31 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
   //   setIsDialogOpen(false);
   //   setIsOpenSideView(false);
   // };
+
+
+
+
+  const [projectDetails, setProject] = useState({})
+  const getProjectDetails = async (id) => {
+    const unsubscribe = await getProjectByUid(
+      orgId,
+      id,
+      (querySnapshot) => {
+        const projects = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        setProject(projects[0])
+      },
+      () =>
+        setProject({
+          projectName: '',
+        })
+    )
+    return unsubscribe
+  }
+  useEffect(() => {
+    getProjectDetails(selCustomerPayload?.pId)
+  }, [selCustomerPayload])
 
 
 
@@ -190,6 +215,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
       user={user}
       PSa={PSa}
       selCustomerPayload={selCustomerPayload}
+      projectDetails={projectDetails}
 
 
       

@@ -84,13 +84,13 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
 
     const x1 ={'loanBank': selLoanBank?.value || '' }
 
-    updateBankLoanApprovals(orgId, customerDetails?.id, x1, user.email, `${status} Saved..!`, 'success', enqueueSnackbar)
-    if (status === 'Rejected') {
-      setSubmittedReason(rejectionReason)
-      setRejectionReason('')
-      setRejection(false)
-    }
-    // updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${selLoanBank?.value}Saved..!`,'success',enqueueSnackbar )
+    // updateBankLoanApprovals(orgId, customerDetails?.id, x1, user.email, `${status} Saved..!`, 'success', enqueueSnackbar)
+    // if (status === 'Rejected') {
+    //   setSubmittedReason(rejectionReason)
+    //   setRejectionReason('')
+    //   setRejection(false)
+    // }
+    updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${selLoanBank?.value}Saved..!`,'success',enqueueSnackbar )
 }}
     }, [selLoanBank])
 
@@ -98,7 +98,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
     const updatePerSancationFun = (status)=> {
       SetPreSanctionReview(status)
       const x1 ={'LpreStatus': status || '',
-        'loan_rejection_reason': status === 'Rejected' ? rejectionReason : null
+        // 'loan_rejection_reason': status === 'Rejected' ? rejectionReason : null
        }
       updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${status} Saved..!`,'success',enqueueSnackbar )
     }
@@ -130,8 +130,8 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
 
 
   return (
-    <div className='flex flex-row bg-white '>
-    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+    <div className='flex flex-row bg-white'>
+    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px]  h-[100vh]   overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         {/* <div className="flex p-4 items-center justify-between">
           <div className="flex flex-row">
@@ -150,7 +150,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
 
         </div> */}
         <div className="mt-1">
-          <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
+          <div className="p-2  bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Loan Approval</h2>
             <p className="text-md text-[10px] flex-grow text-right">
               {/* Banker sanction is {postSanctionReview} */}

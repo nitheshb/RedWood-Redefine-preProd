@@ -1208,7 +1208,12 @@ const PdfPaymentScheduleGenerator = ({
             PSa={PSa}
           />
         }
-        fileName="sample.pdf"
+
+        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payment_Schedule.pdf`}
+
+        // fileName="sample.pdf"
+        // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selUnitDetails?.unit_no || 'unit_no'}_${streamUnitDetails?.custObj1?.customerName1 || 'customer_Name'}_CostSheet.pdf`}
+
       >
         {({ blob, url, loading, error }) =>
           loading ? (
