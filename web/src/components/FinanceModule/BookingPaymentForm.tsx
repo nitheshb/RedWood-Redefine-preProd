@@ -4,10 +4,6 @@ import { useState, useEffect, useRef } from 'react'
 import { arrayUnion, Timestamp } from 'firebase/firestore'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 import {
   addAccountslogS,
   addCustomer,
@@ -107,30 +103,16 @@ const AddPaymentDetailsForm = ({
     // enter customer details too
     const { Status } = leadDetailsObj2
 
-<<<<<<< HEAD
-    //
-    const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
-    let primaryCustomerName
-    if(customerInfo?.length > 0){
-      const { customerName1 } = customerInfo[0]
-      primaryCustomerName = customerName1
-    }
-=======
 
 console.log('customer details are', customerInfo, selUnitDetails)
     //
     const { custObj1, custObj2 } = selUnitDetails
->>>>>>> main
 
     if (custObj1) {
       const customerD = {
         Name:
           leadDetailsObj2?.Name ||
-<<<<<<< HEAD
-          customerInfo?.customerDetailsObj?.customerName1 || primaryCustomerName,
-=======
           custObj1?.customerName1,
->>>>>>> main
         my_assets: [selUnitDetails?.uid],
         T: Timestamp.now().toMillis(),
         Luid: leadDetailsObj2.id || '',
@@ -720,20 +702,10 @@ console.log('customer details are', customerInfo, selUnitDetails)
               </div>
 
               <div className="flex flex-col">
-<<<<<<< HEAD
-                <div>
-                  Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}
-                </div>
-                <div>
-                  Balance:{' '}
-                  {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}
-                </div>
-=======
                 <div>{selUnitDetails.customerDetailsObj
         ?.customerName1 }</div>
                 <div>Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}</div>
                 <div>Balance: {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}</div>
->>>>>>> main
               </div>
             </div>
 
