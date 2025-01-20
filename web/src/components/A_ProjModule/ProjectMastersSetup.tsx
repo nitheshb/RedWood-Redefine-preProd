@@ -2,26 +2,11 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { useEffect, useState } from 'react'
-
-import { PlusCircleIcon, TrashIcon } from '@heroicons/react/outline'
-import PencilIcon from '@heroicons/react/solid/PencilIcon'
-import SendTwoToneIcon from '@mui/icons-material/SendTwoTone'
+import { useState } from 'react'
 import { useSnackbar } from 'notistack'
-
-import { sourceListItems } from 'src/constants/projects'
-import {
-  deleteBankAccount,
-  steamBankDetailsList,
-  steamVirtualAccountsList,
-} from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { sendWhatAppTextSms1 } from 'src/util/axiosWhatAppApi'
-
 import EditableTable from '../comps/EditableComp'
 import SiderForm from '../SiderForm/SiderForm'
-
-import SourceAddTemplate from './SourceAddTemplate'
 import MastersEditableTable from '../comps/MastersEditableComp'
 import TermsConditionsEditableTable from '../comps/TermsConditionsEditableComp'
 
@@ -63,43 +48,49 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
 
   return (
     <>
-      <div className="flex overflow-x-auto ml-2  border-b pb-2">
-        <section className="mt-4">Templates</section>
-        {[
-          { label: 'Apartment', value: 'Apartment' },
-          { label: 'Plot', value: 'Plots' },
-          { label: 'Villa', value: 'Villas' },
-          { label: 'Weekend Villas', value: 'WeekendVillas' },
-          { label: 'Terms & Conditions', value: 'TermsConditions' },
-          { label: 'Masters', value: 'Masters' },
+       <div className="flex justify-between items-center mb-6">
+          <div>
+            <h1 className="text-2xl font-semibold mb-2">Masters Setup</h1>
+            <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p>
+          </div>
 
-        ].map((data, i) => {
-          return (
-            <section
+        </div>
+
+
+      <div className="flex items-center space-x-1 mb-6 border-b">
+          {[
+           { label: 'Apartment', value: 'Apartment' },
+           { label: 'Plot', value: 'Plots' },
+           { label: 'Villa', value: 'Villas' },
+           { label: 'Weekend Villas', value: 'WeekendVillas' },
+           { label: 'Terms & Conditions', value: 'TermsConditions' },
+           { label: 'Masters', value: 'Masters' },
+
+
+        ].map((data, i) => (
+            <button
               key={i}
-              className="flex  mt-[18px]"
-              onClick={() => {
-                console.log('am i clicked', data.value)
-                setSelCat(data.value)
-              }}
+              onClick={() =>     setSelCat(data.value)}
+              className={`px-4 py-2 ${
+                selCat === data.value
+                  ? 'border-b-2 border-black text-black'
+                  : 'text-gray-500 hover:text-black'
+              }`}
             >
-              <button>
-                <span
-                  className={`flex ml-2 items-center h-6 px-3 text-xs  ${
+               <span
+                  className={`flex items-center   text-sm   ${
                     selCat === data.value
-                      ? 'font-normal text-green-800 bg-[#FFEDEA]'
-                      : 'font-normal text-black-100 bg-[#f0f8ff]'
+                      ? 'font-semibold text-green-800 '
+                      : 'font-medium text-black-100 '
                   }  rounded-full`}
                 >
                   {/* <PencilIcon className="h-3 w-3 mr-1" aria-hidden="true" /> */}
-                  <img alt="" src="/temp2.png" className="h-3 w-3 mr-1" />
+                  <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
                   {data?.label}
                 </span>
-              </button>
-            </section>
-          )
-        })}
-      </div>
+            </button>
+          ))}
+        </div>
       {selCat === 'Apartment' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
@@ -107,7 +98,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
-              <EditableTable type={'Apartment'} />
+              <EditableTable type={'Apartment'} source={'Masters'} />
             </div>
           </section>
         </div>
@@ -131,7 +122,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Setup`}
               </h2>
-              <MastersEditableTable type={'Masters'} />
+              <MastersEditableTable type={'Masters'} source={'Masters'} />
             </div>
           </section>
         </div>
@@ -143,7 +134,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
-              <EditableTable type={'Plots'} />
+              <EditableTable type={'Plots'} source={'Masters'} />
             </div>
           </section>
         </div>
@@ -155,7 +146,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
-              <EditableTable type={'Villas'} />
+              <EditableTable type={'Villas'} source={'Masters'} />
             </div>
           </section>
         </div>
@@ -167,7 +158,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
-              <EditableTable type={'WeekendVillas'} />
+              <EditableTable type={'WeekendVillas'}  source={'Masters'}/>
             </div>
           </section>
         </div>

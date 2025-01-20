@@ -1,25 +1,17 @@
 import { useEffect, useState } from 'react'
 
-import { Tabs } from '@material-ui/core'
-import { Tab } from '@material-ui/core'
-import DeleteIcon from '@mui/icons-material/Delete'
-import { TabList } from '@mui/lab'
 import {
   Box as Section,
   Card,
   Grid,
-  styled,
   Tooltip,
-  IconButton,
 } from '@mui/material'
-import { useTranslation } from 'react-i18next' // styled components
+import { useTranslation } from 'react-i18next'
 
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import LogSkelton from 'src/components/shimmerLoaders/logSkelton'
 import CSVDownloader from 'src/util/csvDownload'
-import { prettyDate } from 'src/util/dateConverter'
 
-import UnitSummaryTableBody from './BookingSummaryTable'
 import CreditNoteSummaryTableBody from './CreditNoteSummaryTable'
 
 const rowsCounter = (parent, searchKey) => {

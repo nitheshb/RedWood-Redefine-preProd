@@ -3,25 +3,16 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useEffect, useState } from 'react'
-
 import {
   PaperClipIcon,
-  PlusCircleIcon,
-  TrashIcon,
   UsersIcon,
 } from '@heroicons/react/outline'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
-import PencilIcon from '@heroicons/react/solid/PencilIcon'
-import SendTwoToneIcon from '@mui/icons-material/SendTwoTone'
 import { startOfDay } from 'date-fns'
 import { useSnackbar } from 'notistack'
 
-import { sourceListItems } from 'src/constants/projects'
 import {
-  deleteBankAccount,
-  steamBankDetailsList,
   steamUsersList,
-  steamVirtualAccountsList,
   streamGetAllParticipantTasks,
   streamGetAllTaskManTasks,
 } from 'src/context/dbQueryFirebase'
@@ -35,15 +26,14 @@ import {
   prettyDateTime,
 } from 'src/util/dateConverter'
 import {
-  SlimSelectBox,
   VerySlimSelectBox,
 } from 'src/util/formFields/slimSelectBoxField'
 
 import SiderForm from '../SiderForm/SiderForm'
 
-import SourceAddTemplate from './SourceAddTemplate'
 
 import ProjectSummaryReport from './ProjectSummaryReport'
+import AnalyticsDashboard from './AnalyticsDashboard'
 
 
 const ProjectReportsBody = ({ title, pId, data }) => {
@@ -569,6 +559,7 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
           { label: 'Project Finance', value: 'CRM_status' },
           { label: 'Sale Projections', value: 'Legal_status' },
           { label: 'Home', value: 'project_home' },
+          // { label: 'Graph', value: 'graph_home' },
         ].map((data, i) => {
           return (
             <section
@@ -581,14 +572,14 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
             >
               <button>
                 <span
-                  className={`flex ml-2 items-center h-6 px-3 text-xs  ${
+                  className={`flex ml-2 items-center h-[30] py-1 px-3 text-sm  ${
                     selCat === data.value
-                      ? 'font-normal text-green-800 bg-[#FFEDEA]'
-                      : 'font-normal text-black-100 bg-[#f0f8ff]'
+                      ? 'font-semibold text-green-800 bg-[#FFEDEA]'
+                      : 'font-medium text-black-100 bg-[#f0f8ff]'
                   }  rounded-full`}
                 >
                   {/* <PencilIcon className="h-3 w-3 mr-1" aria-hidden="true" /> */}
-                  <img alt="" src="/temp2.png" className="h-3 w-3 mr-1" />
+                  <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
                   {data?.label}
                 </span>
               </button>
@@ -1035,6 +1026,13 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
 {selCat === 'project_home' && (
             <ProjectSummaryReport/>
           )}
+
+
+
+
+{/* {selCat === 'graph_home' && (
+            <AnalyticsDashboard/>
+          )} */}
 
 
 

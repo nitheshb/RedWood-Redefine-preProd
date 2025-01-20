@@ -1,14 +1,9 @@
 import { useState, useEffect } from 'react'
 
 import {
-  PencilIcon,
-  EyeIcon,
-  EyeOffIcon,
   PlusIcon,
 } from '@heroicons/react/outline'
-
 import { useParams } from '@redwoodjs/router'
-
 import Blockdetails from 'src/components/Blockdetails/Blockdetails'
 import DummyBodyLayout from 'src/components/DummyBodyLayout/DummyBodyLayout'
 import SiderForm from 'src/components/SiderForm/SiderForm'
@@ -17,29 +12,21 @@ import {
   getBlocksByPhase,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-
 import ConstructHomeList from '../A_ProjModule/ConstructHomeList'
 import CRMHomeList from '../A_ProjModule/CRMHomeList'
-import FinanceHomeList from '../A_ProjModule/FinanceHomeList'
 import LegalHomeList from '../A_ProjModule/LegalHomeList'
 import MarketingHomeList from '../A_ProjModule/MarketingHomeList'
 import ProjectAccessHomeList from '../A_ProjModule/ProjectAccessHomeListAc'
 import ProjectAuditHome from '../A_ProjModule/ProjectAuditHome'
-import SalesHomeList from '../A_ProjModule/SalesHomeList'
 import TemplatesHomeList from '../A_ProjModule/TemplatesHomeList'
-import AdditionalChargesForm from '../AdditionalChargesForm/AdditionalChargesForm'
-import AssigedToDropComp from '../assignedToDropComp'
-import BlockingUnitForm from '../BlockingUnitForm'
 import CostBreakUpSheet from '../costBreakUpSheet'
 import CostSheetSetup from '../costSheetSetup'
-import DropCompUnitStatus from '../dropDownUnitStatus'
 import Floordetails from '../Floordetails/Floordetails'
 import MoreDetailsPhaseForm from '../MoreDetailsPhaseForm/MoreDetailsPhaseForm'
 import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import PaymentLeadAccess from '../PaymentScheduleForm/ProjectLeadAccess'
 import PaymentScheduleSetup from '../paymentScheduleSetup'
 import PlanDiagramView from '../planDiagramView'
-import DialogFormBody from '../DialogFormBody/DialogFormBody'
 
 const ProjPhaseHome = ({
   ref,
@@ -160,14 +147,19 @@ const ProjPhaseHome = ({
 
   const getBlocks = async (phaseId) => {
     const unsubscribe = getBlocksByPhase(
-      { projectId: uid || myProjectDetails?.uid, phaseId },
+      orgId,
+      { projectId: uid || myProjectDetails?.uid, phaseId: phaseId },
       (querySnapshot) => {
         const response = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
+        response.sort((a, b) => {
+          return a.created - b.created
+        })
         setBlocks({ ...blocks, [phaseId]: response })
         console.log(
           'myblocks are',
+          response.sort((a, b) => a.blockName.localeCompare(b.blockName)),
           blocks,
           uid || myProjectDetails?.uid,
           phaseId
@@ -188,9 +180,10 @@ const ProjPhaseHome = ({
   }, [projectDetails])
 
   useEffect(() => {
-    if (phases.length > 0) {
-      getBlocks(phases[0]['uid'] || '')
-    }
+    // if (phases.length > 0) {
+    //   getBlocks(phases[0]['uid'] || '')
+    // }
+    getBlocks('phaseId')
   }, [phases, projectDetails])
 
   const selCat = (cat, subCat) => {
@@ -574,9 +567,9 @@ const ProjPhaseHome = ({
                             setPhaseFun={setPhaseFun}
                             selPhaseName={selPhaseName}
                           />
-                        ) : blocks[phase.uid]?.length ? (
+                        ) : blocks['phaseId']?.length ? (
                           <Blockdetails
-                            blocks={blocks[phase.uid]}
+                            blocks={blocks['phaseId']}
                             blockPayload={blocks}
                             phaseFeed={phases}
                             pId={uid || myProjectDetails?.uid}
@@ -588,7 +581,7 @@ const ProjPhaseHome = ({
                             setSelMode={setSelMode}
                             leadDetailsObj={leadDetailsObj}
                           />
-                        ) : !blocks[phase.uid] ? (
+                        ) : !blocks['phaseId'] ? (
                           <DummyBodyLayout />
                         ) : (
                           <div className="flex justify-center items-center font-semibold mt-3">

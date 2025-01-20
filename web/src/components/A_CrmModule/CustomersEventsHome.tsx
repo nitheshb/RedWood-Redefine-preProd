@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 import { EyeIcon } from '@heroicons/react/outline'
 import {
   Box,
@@ -13,7 +12,6 @@ import {
 } from '@mui/material'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import { useSnackbar } from 'notistack'
-
 import StyledButton from 'src/components/RoundedButton'
 import {
   getAllProjects,
@@ -23,9 +21,7 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { getPagesBasedonRoles } from 'src/util/PagesBasedOnRoles'
-
 import DropDownSearchBar from '../dropDownSearchBar'
-// import '../../styles/tablefixedheaderStyles.css'
 const StyledTableHead = styled(TableHead)(({ theme }) => ({
   backgroundColor: theme.palette.action.hover,
   borderTop: '1px solid rgba(224, 224, 224, 1)',
@@ -90,12 +86,12 @@ const dummyData = [
     agreement: { count: 0, status: 'Done', date: '30-10-2022' },
     registration: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     position: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     tt_amountOutStanding: {
@@ -188,12 +184,12 @@ const dummyData = [
     agreement: { count: 0, status: 'Done', date: '30-10-2022' },
     registration: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     position: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     tt_amountOutStanding: {
@@ -290,12 +286,12 @@ const dummyData = [
     agreement: { count: 0, status: 'Done', date: '30-10-2022' },
     registration: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     position: {
       amount: '1,00,000',
-      status: 'Waiting for payement',
+      status: 'Waiting for payment',
       date: '30-10-2022',
     },
     tt_amountOutStanding: {
@@ -638,7 +634,7 @@ const CustomersEventsHome = () => {
               <input
                 type="search"
                 id="search-dropdown"
-                className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg rounded-l-lg border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                className="block p-5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg rounded-l-lg border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                 placeholder={` Search Unit No, Customer name, Phone no, Dues, Review...`}
                 required
               />

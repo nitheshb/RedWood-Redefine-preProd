@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Box, Menu, MenuItem, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { useAuth } from 'src/context/firebase-auth-context'
+import { auth } from 'src/context/firebaseConfig'
 import { logout as logoutAction } from 'src/state/actions/user'
 import ModuleSwitchDrop from '../A_SideMenu/modulesSwitchDrop'
-import { GlobalSearchBar } from './GlobalSearchBar';
 
-const HeadNavBar2 = ({selModule, setSelModule,  setViewable}) => {
+const HeadNavBar2 = ({ selModule, setSelModule, setViewable }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,22 +37,24 @@ const HeadNavBar2 = ({selModule, setSelModule,  setViewable}) => {
   }
 
   return (
-    <div>
+    <div className="sticky top-0 z-50">
       <div className="flex items-center flex-shrink-0 h-14 px-2  pl-0 bg-white border-b ">
         <span
           style={{ marginLeft: '10px' }}
           className="relative z-10 flex items-center text-md font-extrabold leading-none text-black select-none pl-0 ml-4"
-        >REDEFINE ERP .</span>
-            <section className="mt-1">
-            <ModuleSwitchDrop
-              type={selModule}
-              id={'Status'}
-              setStatusFun={makeFilterFun}
-              filteredUnits={filteredUnits}
-              pickedValue={selModule}
-            />
-          </section>
-          <GlobalSearchBar />
+        >
+          REDEFINE ERP .
+        </span>
+        <section className="">
+          <ModuleSwitchDrop
+            type={selModule}
+            id={'Status'}
+            setStatusFun={makeFilterFun}
+            filteredUnits={filteredUnits}
+            pickedValue={selModule}
+          />
+        </section>
+        {/* <GlobalSearchBar /> */}
         <button className="flex items-center justify-center h-10 px-4 ml-auto "></button>
         <button className="flex items-center justify-center h-10 text-sm font-medium "></button>
         <Box
@@ -75,21 +77,25 @@ const HeadNavBar2 = ({selModule, setSelModule,  setViewable}) => {
               >
                 <path d="M1523 1339q-22-155-87.5-257.5t-184.5-118.5q-67 74-159.5 115.5t-195.5 41.5-195.5-41.5-159.5-115.5q-119 16-184.5 118.5t-87.5 257.5q106 150 271 237.5t356 87.5 356-87.5 271-237.5zm-243-699q0-159-112.5-271.5t-271.5-112.5-271.5 112.5-112.5 271.5 112.5 271.5 271.5 112.5 271.5-112.5 112.5-271.5zm512 256q0 182-71 347.5t-190.5 286-285.5 191.5-349 71q-182 0-348-71t-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z"></path>
               </svg> */}
-              <img src="/avatar_1.png" alt="" className='mr-2'/>
+              <img
+                src={auth?.currentUser?.photoURL || '/avatar_1.png'}
+                alt=""
+                className=" bottom-0 rounded-full border-2 border-white w-[40px] h-[40px]"
+              />
             </div>
           </button>
           <Box display="flex" flexDirection="column" mr={2}>
             <Typography variant="body2">{user?.displayName}</Typography>
             <Typography variant="caption" className="text-gray-500">
-           {user?.roles?.length > 0
-                  ? user?.roles[0] == 'admin'
-                    ? 'Super User'
-                    : user?.roles[0]
-                  : user?.role?.length > 0
-                  ? user?.role[0] == 'admin'
-                    ? 'Super User'
-                    : user?.role[0]
-                  : user?.department}
+              {user?.roles?.length > 0
+                ? user?.roles[0] == 'admin'
+                  ? 'Super User'
+                  : user?.roles[0]
+                : user?.role?.length > 0
+                ? user?.role[0] == 'admin'
+                  ? 'Super User'
+                  : user?.role[0]
+                : user?.department}
             </Typography>
           </Box>
         </Box>
@@ -102,8 +108,7 @@ const HeadNavBar2 = ({selModule, setSelModule,  setViewable}) => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={()=>openUserAccount()}>My account 1</MenuItem>
+          <MenuItem onClick={() => openUserAccount()}>My account</MenuItem>
           <MenuItem onClick={() => handleClose('Logout')}>Logout</MenuItem>
         </Menu>
       </div>

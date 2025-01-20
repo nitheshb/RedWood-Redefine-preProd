@@ -1,7 +1,3 @@
-import { useState, useEffect, useRef } from 'react'
-
-import { LinearProgress } from '@mui/material'
-
 import { useAuth } from 'src/context/firebase-auth-context'
 import RoundedProgressBar from '../A_SalesModule/Reports/charts/horizontalProgressBar'
 

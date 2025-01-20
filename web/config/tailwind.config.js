@@ -17,3 +17,5 @@ module.exports = {
 }
 
 
+// default font of website then add font in file index.css
+

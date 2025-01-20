@@ -1,7 +1,6 @@
 import React from 'react';
 
 const RoundedProgressBar = ({ progress, width = 100, height = 8, backgroundColor = '#E5E7EB', fillColor = '#E3BDFF' }) => {
-  // Ensure progress is between 0 and 100
   const clampedProgress = Math.min(100, Math.max(0, progress));
 
   return (

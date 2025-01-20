@@ -1,64 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { useRef } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { ExclamationCircleIcon } from '@heroicons/react/outline'
-import { Select as SelectMAT, MenuItem } from '@material-ui/core'
-import { Rowing, Widgets } from '@mui/icons-material'
+import { Select as SelectMAT } from '@material-ui/core'
 import { styled } from '@mui/material/styles'
-import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid'
-import { de } from 'date-fns/locale'
 import { useSnackbar } from 'notistack'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 
 import {
-  unitSummaryA,
-  bathTypeList,
-  bedRoomsList,
-  carParkingList,
-  costSheetAdditionalChargesA,
   csSections,
-  facingTypeList,
-  gstValesA,
-  mortgageType,
-  paymentScheduleA,
-  sourceListItems,
-  costSheetEstimationA,
-  statusList,
-  unitsCancellation,
-  unitTypeList,
   VillaCsSections,
 } from 'src/constants/projects'
 import {
-  addCostSheetMaster,
-  addPhasePartAtax,
-  addPhaseFullCs,
-  steamBankDetailsList,
-  streamProjectCSMaster,
   addMastersFull,
   streamMasters,
   upsertMasterOption,
   deleteMasterOption,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
-import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 
-import { gstValesPartA } from '../../../../../RedefineV2/web/src/constants/projects'
-// import WarnPopUpNew from '../SiderForm/WarnPopUp'
-
-import WarningModel from './warnPopUp'
-import WarnPopUp from './warnPopUp'
-
-// import './styles.css'
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
-  // width: '170px',
+
   fontSize: '13px',
   '&.MuiInputBase-root': {
     width: '100%',
-    fontSize: '13px', //
+    fontSize: '13px', 
   },
   '&.MuiOutlinedInput-root': {
     width: '100%',
@@ -314,19 +279,7 @@ const TermsConditionsEditableTable = ({
   const saveSetup = () => {
     setSaveWarn(true)
   }
-  const handleCostSheetSave = () => {
-    console.log('setUpData is ', rows, source)
-    const data = { fullCs: rows, type: type }
-    const { projectId, uid } = phase || {}
-    if (source === 'project') {
-      const myId = selcDelRow?.id
-      if (myId) setRows(rows.filter((item) => item.id !== myId))
-      const newSet = rows.filter((item) => item.id !== myId)
-      addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', enqueueSnackbar)
-    } else {
-      addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
-    }
-  }
+
 
   const projectItems = [
     'Receipt',
@@ -364,11 +317,38 @@ const TermsConditionsEditableTable = ({
     }
   }, [])
 
+  // const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
+  //   <li
+  //     className={`border-l-2 ${
+  //       activeItem === item
+  //         ? 'border-[#0891B2]'
+  //         : 'border-gray-80 hover:border-gray-400'
+  //     }`}
+  //   >
+  //     <a
+  //       href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
+  //       className={`block px-4 py-2 text-md ${
+  //         activeItem === item
+  //           ? 'text-[#0891B2] font-medium'
+  //           : 'text-gray-600 font-medium	hover:text-[#0891B2]'
+  //       }`}
+  //       onClick={(e) => {
+  //         e.preventDefault()
+  //         handleClick(item)
+  //       }}
+  //     >
+  //       {item}
+  //     </a>
+  //   </li>
+  // )
+
+
+
   const SidebarItem: React.FC<{ item: string }> = ({ item }) => (
     <li
       className={`border-l-2 ${
         activeItem === item
-          ? 'border-[#0EA5E9]'
+          ? 'border-[#0891B2]'
           : 'border-gray-80 hover:border-gray-400'
       }`}
     >
@@ -376,18 +356,25 @@ const TermsConditionsEditableTable = ({
         href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
         className={`block px-4 py-2 text-md ${
           activeItem === item
-            ? 'text-[#0EA5E9] font-bold'
-            : 'text-gray-600 font-bold hover:text-[#0EA5E9]'
+            ? 'text-[#0891B2] font-medium'
+            : 'text-gray-600 font-medium hover:text-[#0891B2]'
         }`}
         onClick={(e) => {
-          e.preventDefault()
-          handleClick(item)
+          e.preventDefault();
+          handleClick(item); // This updates activeItem and scrolls
         }}
       >
         {item}
       </a>
     </li>
-  )
+  );
+  
+
+
+//   const contentRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+// const [activeItem, setActiveItem] = useState<string>("");
+
+
 
   const [activeItem, setActiveItem] = useState(null)
   const contentRefs = useRef({})
@@ -527,33 +514,105 @@ const TermsConditionsEditableTable = ({
     setEditingCell(null)
   }
 
-  const handleDeleteRow = (dataObj) => {
-    // step : 7
-    const title = dataObj?.title
-    // const data = dataObj?.data?.find((item) => item.id === selcDelRow?.id)
-    // console.log('data is', data)
+  // const handleDeleteRow = (dataObj) => {
+  //   // step : 7
+  
+  //   const title = dataObj?.title;
+  //   const id = dataObj?.id;
+  //   // const data = dataObj?.data?.find((item) => item.id === selcDelRow?.id)
+  //   // console.log('data is', data)
 
-    setDeletedRows([...deletedRows, dataObj])
-    console.log('deletedRows', deletedRows)
-    if (title === 'Receipt') {
-      const updatedArr = receiptA.filter((item) => item.id != dataObj.id)
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i }
-      })
-      setReceiptA(setOrder)
+  //   setDeletedRows([...deletedRows, dataObj])
+  //   console.log('deletedRows', deletedRows)
+  //   if (title === 'Receipt') {
+  //     const updatedArr = receiptA.filter((item) => item.id != dataObj.id)
+  //     const setOrder = updatedArr.map((item, i) => {
+  //       return { ...item, order: i }
+  //     })
+  //     setReceiptA(setOrder)
+  //   }
+  // }
+
+  // const handleClick = (item: string) => {
+  //   setActiveItem(item)
+  //   if (contentRefs.current[item]) {
+  //     contentRefs.current[item].scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'start',
+  //     })
+  //     setCurrentSection(item)
+  //   }
+  // }
+
+
+
+
+  const handleDeleteRow = (dataObj) => {
+    const title = dataObj?.title;
+    const id = dataObj?.id;
+
+
+    setDeletedRows(prev => [...prev, dataObj]);
+
+  
+    switch (title) {
+      case 'Receipt':
+        setReceiptA(prevReceipts => {
+          const updatedReceipts = prevReceipts
+            .filter(item => item.id !== id)
+            .map((item, index) => ({
+              ...item,
+              order: index
+            }));
+          return updatedReceipts;
+        });
+        break;
+
+      case 'Cost Sheet Estimation':
+        setCostSheetEstimationA(prevEstimations => {
+          const updatedEstimations = prevEstimations
+            .filter(item => item.id !== id)
+            .map((item, index) => ({
+              ...item,
+              order: index
+            }));
+          return updatedEstimations;
+        });
+        break;
+
+      case 'Unit Summary':
+        setUnitSummaryA(prevSummaries => {
+          const updatedSummaries = prevSummaries
+            .filter(item => item.id !== id)
+            .map((item, index) => ({
+              ...item,
+              order: index
+            }));
+          return updatedSummaries;
+        });
+        break;
+
+      default:
+        break;
     }
-  }
+  };
+
+
+
 
   const handleClick = (item: string) => {
-    setActiveItem(item)
+    setActiveItem(item); // Update the active item in state
     if (contentRefs.current[item]) {
-      contentRefs.current[item].scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-      setCurrentSection(item)
+      contentRefs.current[item]?.scrollIntoView({
+        behavior: 'smooth', // Smooth scrolling
+        block: 'start', // Align to top
+      });
     }
-  }
+    setCurrentSection(item); // Update current section if needed
+  };
+  
+
+
 
   const handleSave = (dataObj) => {
     console.log('sectionKey', dataObj)
@@ -776,7 +835,7 @@ const TermsConditionsEditableTable = ({
               </label>
             </div>
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
           </div>
         </div>
 
@@ -799,7 +858,8 @@ const TermsConditionsEditableTable = ({
                 <div
                   key={key}
                   className="mb-24"
-                  ref={(el) => (contentRefs.current[key] = el)}
+                  ref={(el) => (contentRefs.current[dataObj?.title] = el)}
+                  // ref={(el) => (contentRefs.current[key] = el)}
                   // id={key.replace(/\s+/g, '-').toLowerCase()}
                 >
                   <h1 className="inline-block text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">
@@ -829,7 +889,7 @@ const TermsConditionsEditableTable = ({
                         {dataObj?.data?.map((data, i) => (
                           <tr key={`static-${i}`}>
 
-                            <td className="py-5 px-4 text-[#0EA5E9] text-md border-b">{i+1}</td>
+                            <td className="py-5 px-4 text-[#0891B2] text-md border-b">{i+1}</td>
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               {/* {editingCell?.key === dataObj.title &&
                               editingCell.rowIndex === i &&
@@ -882,7 +942,8 @@ const TermsConditionsEditableTable = ({
 
                             <td className="py-5 px-4 text-md items-center align-middle border-b text-[#6b7280]">
                               <button
-                                onClick={() => handleDeleteRow(data, i)}
+                                // onClick={() => handleDeleteRow(data, i)}
+                                onClick={() => handleDeleteRow(data)}
                                 className="flex items-center text-[#728195]"
                                 aria-label="Delete"
                               >
@@ -904,7 +965,7 @@ const TermsConditionsEditableTable = ({
                         ))}
                         {(dynamicRows[dataObj['title']] || []).map((row, i) => (
                           <tr key={`dynamic-${i}`}>
-                            <td className="py-5 px-4 text-md text-[#0EA5E9]"></td>
+                            <td className="py-5 px-4 text-md text-[#0891B2]"></td>
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               <input
                                 type="text"
@@ -946,14 +1007,14 @@ const TermsConditionsEditableTable = ({
                       <button
                         // onClick={() => appendRow(dataObj?.title)}
                         onClick={() => addRowNew(dataObj)}
-                        className=" mt-4 px-2 py- bg-cyan-500 text-white rounded"
+                        className=" mt-4 px-2 py- bg-[#0891B2] text-white rounded-lg"
                       >
                         Add Row
                       </button>
 
                       <button
                         onClick={() => handleSave(dataObj)}
-                        className="mt-4 px-2 py- bg-cyan-500 text-white text-sm  rounded"
+                        className="mt-4 px-2 py- bg-[#0891B2] text-white text-sm  rounded-lg"
                       >
                         Save
                       </button>

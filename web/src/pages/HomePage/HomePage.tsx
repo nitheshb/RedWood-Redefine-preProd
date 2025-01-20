@@ -1,16 +1,7 @@
 import { useState, useEffect } from 'react'
-
-// import { ResponsiveBar } from '@nivo/bar'
-import { EyeIcon, PencilIcon } from '@heroicons/react/outline'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
-import CountUp from 'react-countup'
-import NumberFormat from 'react-number-format'
-
+import { PencilIcon } from '@heroicons/react/outline'
 import { usePageLoadingContext } from '@redwoodjs/router'
-import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-
 import MarkeingMessagesList from 'src/components/A_ProjModule/MarketingMessagesList'
 import ProjectMastersSetupHome from 'src/components/A_ProjModule/ProjectMastersSetup'
 import ProjectReportsBody from 'src/components/A_ProjModule/ProjectReports'
@@ -18,20 +9,19 @@ import ProjectsTaskHome from 'src/components/A_ProjModule/ProjTaskHome'
 import SlimSideMenuBar from 'src/components/A_SideMenu/slimSideMenu'
 import AllBankDetailsView from 'src/components/All_BankDetailsView'
 import { CountUpComp } from 'src/components/comps/countUpComp'
-import { IndianCurrencyCounter } from 'src/components/comps/countUpRupeeComp'
-import HeadSideBarDetailView from 'src/components/HeadDetailSideBar'
-import HeadSideBarDetailView2 from 'src/components/HeadDetailSideBar2'
 import HeadNavBar2 from 'src/components/HeadNavBar/HeadNavBar2'
 import ProjectsUnitInventory from 'src/components/projectUnitsInventory'
 import { getAllProjects, getSalesReportsData } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-
 import DummyBodyLayout from '../../components/DummyBodyLayout/DummyBodyLayout'
-import HeadNavBar from '../../components/HeadNavBar/HeadNavBar'
-import HeadSideBar from '../../components/HeadSideBar/HeadSideBar'
 import ProjectsMHomeBody from '../../components/ProjectsMHomeBody/ProjectsMHomeBody'
 import SiderForm from '../../components/SiderForm/SiderForm'
 import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
+import ProjectFilterDropdown from './ProjectFilterDropdown'
+
+
+
+
 
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -47,6 +37,9 @@ const HomePage = () => {
   const [viewable, setViewable] = useState('ongoing_projects')
   const { loading } = usePageLoadingContext()
   const [selModule, setSelModule] = useState('Projects')
+
+
+  const [selectedFilter, setSelectedFilter] = useState('All');
 
   const getProjects = async () => {
     const unsubscribe = getAllProjects(
@@ -394,20 +387,22 @@ const HomePage = () => {
 
             <div className="flex-grow   items-center overflow-y-auto no-scrollbar  h-[98%]  px-300  pt-300">
               <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}   setViewable={setViewable}/>
-            {viewable === 'userProfile' && <ProfileSummary />}
+             {viewable === 'userProfile' && <ProfileSummary />}
 
               {viewable === 'Setup' && (
                 <>
                 {/*Sales Executive Notifications border */}
+
                   <div className="mt-1 mx-1">
                     <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
-                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
+                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
                           <ProjectMastersSetupHome
                             title={'WhatsApp Message Templates'}
                           />
                         </div>
                       </div>
+
                     </section>
                   </div>
                 </>
@@ -417,7 +412,7 @@ const HomePage = () => {
                 {/*Sales Executive Notifications border */}
                   <div className="mt-1 mx-1">
                     <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
-                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
+                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
                           <MarkeingMessagesList
                             title={'WhatsApp Message Templates'}
@@ -432,7 +427,7 @@ const HomePage = () => {
                 <>
                   <div className="mt-1 mx-1">
                     <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
-                      <div className="box-border px-2 mx-auto border-solid  max-w-full ">
+                      <div className="box-border px-2 mx-auto border-solid  max-w-full mx-auto px-6 py-8 ">
                         <div className="flex flex-col   leading-7  text-gray-900 border-0 border-gray-200 ">
                           <ProjectReportsBody
                             title={'WhatsApp Message Templates'}
@@ -446,18 +441,18 @@ const HomePage = () => {
               {(viewable === 'Bank Accounts' ||
                 viewable === 'Virtual Accounts') && (
                 <>
-                  <div className="">
-                    <div className="flex items-center justify-between py-2  ">
+                  <div className="mt-1">
+                    {/* <div className="flex items-center justify-between py-2  ">
                       <span className="relative z-10 flex items-center w-auto text-2xl font-bold leading-none pl-0">
                         {viewable}
                       </span>
                       <button className="flex items-center justify-center h-10 px-4  bg-transparent ml-auto text-sm font-medium rounded hover:bg-transparent"></button>
-                    </div>
+                    </div> */}
                   </div>
 
-                  <div>
+                  <div className='ml-1'>
                     <section className="w-full py-8 mb-8 leading-7 text-gray-900 bg-white sm:py-12 md:py-16 lg:py-18 rounded-lg">
-                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
+                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
                           <div className="flex items-center flex-shrink-0  px-0  pl-0 border-b border-grey  mb-2">
                             <span className="flex items-center">
@@ -472,9 +467,9 @@ const HomePage = () => {
                             </span>
                             <section className="flex ml-auto mt-[18px]">
                               <button>
-                                <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
+                                <span className="flex ml-2 items-center h-7 px-3  text-xs font-medium text-[#fff] bg-[#0891B2] rounded-full">
                                   <PencilIcon
-                                    className="h-3 w-3 mr-1"
+                                    className="h-5 w-4  font-medium mr-1"
                                     aria-hidden="true"
                                   />
                                   Edit
@@ -482,7 +477,7 @@ const HomePage = () => {
                               </button>
                             </section>
                           </div>
-                          <AllBankDetailsView title={'Bank Accounts'} />
+                          <AllBankDetailsView  title={'Bank Accounts'} />
                         </div>
                       </div>
                     </section>
@@ -688,7 +683,7 @@ const HomePage = () => {
                                             {/* Assets */}
                                             <section className="mx-3 w-[25%]">
                                       <span className="text-slate-600 text-lg font-medium ">
-                                        Units
+                                      Inventory
                                       </span>
                                       <div className="w-[299.02px] h-[0px] border border-stone-300 mt-2"></div>
                                       <section className="flex flex-row">
@@ -1214,10 +1209,19 @@ const HomePage = () => {
                                           ONGOING PROJECTS
                                             {/* {viewable} */}
                                           </span>
+
+
+                                          <div className='flex'>
+
+                                          <ProjectFilterDropdown 
+                                           selectedFilter={selectedFilter}
+                                           setSelectedFilter={setSelectedFilter}
+                                           />
                                           <button
-                                            onClick={() =>
+                                            onClick={() =>{
+                                              setProject({})
                                               setIsNewProjectOpen(true)
-                                            }
+                                            }}
                                             className="flex items-center justify-center h-8 px-4  bg-gray-200 ml-auto text-sm font-medium rounded hover:bg-gray-300"
                                           >
                                             <svg
@@ -1238,10 +1242,20 @@ const HomePage = () => {
                                               Add Project
                                             </span>
                                           </button>
+
+                                          </div>
+
+
                                         </div>
                                       </div>
                                       <section className="mx-2 rounded-xl bg-white shadow p-2">
-                                        {projects.map((project) => (
+                                        {projects
+                                            .filter(project => 
+                                              selectedFilter === 'All' 
+                                              ? true 
+                                              : project?.projectType?.name === selectedFilter
+                                            )
+                                        .map((project) => (
                                           <ProjectsMHomeBody
                                             key={project.uid}
                                             project={project}
@@ -1254,6 +1268,8 @@ const HomePage = () => {
                                           />
                                         ))}
                                       </section>
+
+
                                     </section>
                                   ) : (
                                     <span onClick={() => setIsNewProjectOpen(true)}>
@@ -1668,6 +1684,7 @@ const HomePage = () => {
                             data={project}
                             setProject={setProject}
                             widthClass="max-w-4xl"
+                            onCloseDisabled={true}
                           />
                           <SiderForm
                             open={isEditProjectOpen}
@@ -1675,6 +1692,7 @@ const HomePage = () => {
                             title="Edit Project"
                             data={project}
                             widthClass="max-w-4xl"
+                            onCloseDisabled={true}
                           />
                         </div>
                       </div>

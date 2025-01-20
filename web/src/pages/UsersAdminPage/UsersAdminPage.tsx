@@ -1,9 +1,6 @@
 import { useState } from 'react'
-
 import { Switch } from '@headlessui/react'
-
 import { MetaTags } from '@redwoodjs/web'
-
 import HrModuleHome from 'src/components/A_HrModule/HrModuleHome'
 import SlimSideMenuBar from 'src/components/A_SideMenu/slimSideMenu'
 import HeadNavBar2 from 'src/components/HeadNavBar/HeadNavBar2'
@@ -15,10 +12,15 @@ import AssetsManageTable from 'src/components/A_HrModule/AssetsManagementTable'
 import HrSummaryReport from 'src/components/A_HrModule/HrSummaryReport'
 import SiderForm from 'src/components/SiderForm/SiderForm'
 import ProfileSummary from 'src/components/A_SalesModule/Reports/profileSummary'
+import { useAuth } from 'src/context/firebase-auth-context'
+import CompanySignup from 'src/components/SCompanySignup/SCompanySignup'
+
 
 
 const UsersAdminPage = () => {
+  const { user } = useAuth()
   const [isEmpDetailsOpen, setIsEmpDetailsOpen] = useState(false)
+  const [isCompanyDetailsOpen, setIsCompanyDetailsOpen] = useState(false)
   const [isAssetViewer, setAssetViewerOpen] = useState(false)
   const handleEmployeeOnClose = () => setIsEmpDetailsOpen(false)
   const handleAssetOnClose = () => setAssetViewerOpen(false)
@@ -34,6 +36,11 @@ const UsersAdminPage = () => {
   const editEmployeeFun = (empData) => {
     setEmpData(empData)
     setIsEmpDetailsOpen(true)
+  }
+
+  const addCompanyFun = (empData) => {
+    setEmpData(empData)
+    setIsCompanyDetailsOpen(true)
   }
   const addEditAsset = (assetPayload) => {
     setAssetData(assetPayload)
@@ -55,15 +62,15 @@ const UsersAdminPage = () => {
         <div className="flex flex-col flex-grow">
           {/* <HeadNavBar /> */}
           <HeadNavBar2 selModule={selModule} setSelModule={setSelModule} setViewable={setViewable} />
-          <div className="flex-grow px-6 overflow-auto no-scrollbar  text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
-            <div className="flex flex-row justify-between items-center flex-shrink-0 h-10 mt-2 px-0  pl-0  ">
+          <div className="flex-grow  overflow-auto no-scrollbar  text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
+            <div className="flex flex-row justify-between items-center flex-shrink-0  px-0  pl-0  ">
               {/* <h1 className="text-lg font-medium">redefine.</h1> */}
 
 
               {viewable === 'User Management' && (
-                <div className="flex flex-row">
+                <div className="flex flex-row mt-3 ml-3">
                   <div className="flex flex-row mt-2 mr-2">
-                    <span className="text-[10px] mt-1 mr-1">Show InActive</span>
+                    <span className="text-[14px] font-extrabold mt-1  mr-1">Show InActive</span>
                     <Switch
                       checked={showCompletedTasks}
                       onChange={changeFun}
@@ -99,12 +106,34 @@ const UsersAdminPage = () => {
                     </svg>
                     <span className="ml-1 leading-none">Add Employee</span>
                   </button>
+                  { ['nithe.nithesh@gmail.com'].includes(user?.email) &&
+                  <button
+                    onClick={() => addCompanyFun({})}
+                    className=" flex items-center justify-center h-10 px-4  bg-gray-200  text-sm font-medium rounded hover:bg-gray-300 ml-2"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+                    <span className="ml-1 leading-none">Add Company</span>
+                  </button>
+}
                 </div>
               )}
               {viewable === 'AssetsManagement' && (
-                <div className="flex flex-row">
+                <div className="flex flex-row mt-3 ml-3">
                   <div className="flex flex-row mt-2 mr-2">
-                    <span className="text-[10px] mt-1 mr-1">Show InActive</span>
+                    <span className="text-[14px] font-extrabold mt-1 mr-1">Show InActive</span>
                     <Switch
                       checked={showCompletedTasks}
                       onChange={changeFun}
@@ -190,6 +219,13 @@ const UsersAdminPage = () => {
             <SUserSignup
               open={isEmpDetailsOpen}
               setOpen={handleEmployeeOnClose}
+              title="User"
+              empData={empData}
+            />
+
+            <CompanySignup
+              open={isCompanyDetailsOpen}
+              setOpen={setIsCompanyDetailsOpen}
               title="User"
               empData={empData}
             />

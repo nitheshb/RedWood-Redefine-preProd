@@ -14,3 +14,32 @@ export const sqftConverter = (value: number, unit: string) => {
       return 0
   }
 }
+
+export function calculatePercentages(paid, total) {
+
+
+  if (total <= 0) {
+      return {
+          paidPercentage: 0,
+          unpaidPercentage: 0,
+          error: "Total amount must be greater than zero."
+      };
+  }
+
+  let paidPercentage = (paid / total) * 100;
+
+  // Cap paid percentage at 100%
+  if (paidPercentage > 100) {
+      paidPercentage = 100;
+  }
+
+  const unpaidPercentage = 100 - paidPercentage;
+  console.log('paid is', paid, total, {
+    paidPercentage: Number(paidPercentage.toFixed(2)), // Rounded to 2 decimal places
+    unpaidPercentage: Number(unpaidPercentage.toFixed(2)), // Rounded to 2 decimal places
+})
+  return {
+      paidPercentage: Number(paidPercentage.toFixed(2)), // Rounded to 2 decimal places
+      unpaidPercentage: Number(unpaidPercentage.toFixed(2)) // Rounded to 2 decimal places
+  };
+}

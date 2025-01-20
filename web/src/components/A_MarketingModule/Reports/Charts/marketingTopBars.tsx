@@ -183,7 +183,26 @@ const CampaingsTopBarsComponent = () => {
         Your overall performance is 98% higher than average.
       </div>
 
+
+{/* 
+      <BookingHeader/>
+
+
+
+      <div>
+        <ProfileCard data={undefined} />
+      </div> */}
+
       {/* line bar */}
+
+      
+
+
+
+
+
+
+
     </div>
   )
 }

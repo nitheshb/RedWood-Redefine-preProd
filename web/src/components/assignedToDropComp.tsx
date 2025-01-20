@@ -1,5 +1,5 @@
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
 export default function AssigedToDropComp({
@@ -24,9 +24,9 @@ export default function AssigedToDropComp({
               </span>
             )}
             {id === 'id' ? (
-              <ChevronDownIcon className="w-5 h-5 mr-3 mt-[2px] inline text-[#058527]" />
+              <ChevronDownIcon className="w-5 h-5 mr-3 mt-[0px] inline text-[#058527]" />
             ) : (
-              <ChevronDownIcon className="w-5 h-5 mr-3 mt-[1px] inline text-[#058527]" />
+              <ChevronDownIcon className="w-5 h-5 mr-3 mt-[0px] inline text-[#058527]" />
             )}
           </Menu.Button>
         </div>

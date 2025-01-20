@@ -20,6 +20,7 @@
 @import "tailwindcss/utilities";
 
 
+
 @layer utilities {
   @variants responsive {
     /* Hide scrollbar for Chrome, Safari and Opera */
@@ -35,7 +36,9 @@
   }
 }
 
-
+body{
+  font-family: 'Inter', sans-serif;
+}
 
 
 /**

@@ -1,26 +1,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-// import { useState } from 'react'
-// import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
-// import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
 import { useState, useEffect } from 'react'
-
-import { Link } from '@redwoodjs/router'
-
-import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
-import DummyBodyLayout from 'src/components/DummyBodyLayout/DummyBodyLayout'
 import SiderForm from 'src/components/SiderForm/SiderForm'
 import { getAllProjects, getPhasesByProject } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import 'flowbite'
 import DropDownSearchBar from 'src/components/dropDownSearchBar'
-
 import { PlusIcon } from '@heroicons/react/outline'
-
-import Floordetails from '../Floordetails/Floordetails'
 import ProjPhaseHome from '../ProjPhaseHome/ProjPhaseHome'
-
 import ConstructProjectUnitsDisplay from './Const_ProjectUnitsDisplay'
 const ConstructUnitsHome = ({ project }) => {
   const { projectName } = project

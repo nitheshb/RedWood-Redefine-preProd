@@ -1,7 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
-
-import { LinearProgress } from '@mui/material'
-
+import { useState, useEffect } from 'react'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { computeTotal } from 'src/util/computeCsTotals'
 import DoughnutChartWithRoundedSegments from '../A_SalesModule/Reports/charts/piechartRounded'
@@ -62,7 +59,7 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
                                 <div className="flex flex-row justify-between mx- mb-2">
                                   <DoughnutChartWithRoundedSegments
                                     progress={
-                                      (selCustomerPayload?.T_approved / selCustomerPayload?.T_total) *
+                                      (selCustomerPayload?.T_review / selCustomerPayload?.T_total) *
                                       100
                                     }
                                   />

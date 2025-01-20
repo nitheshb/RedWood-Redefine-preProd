@@ -1,22 +1,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useEffect, useState } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { Button, Card, CardContent, Grid } from '@material-ui/core'
-import csv from 'csvtojson'
+import React, { useState } from 'react'
 import { Form, Formik } from 'formik'
-import { parse } from 'papaparse'
 import * as Yup from 'yup'
-
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import { TextField2 } from 'src/util/formFields/TextField2'
-
-import { MultipleFileUploadField } from '../LeadUplodCsv/MultipleFileUploadField'
 import SiderForm from '../SiderForm/SiderForm'
-
 import DocRow from './Docu_row'
-
 export default function LegalDocsViewHome({
   title,
   pId,
@@ -205,7 +193,7 @@ export default function LegalDocsViewHome({
                                 <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mt-3">
                                   <section className="flex flow-row items-baseline justify-between mb-1">
                                     <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                                      DocumentName
+                                      Document Name
                                     </div>
 
                                     <div>
@@ -356,7 +344,7 @@ export default function LegalDocsViewHome({
                                     <h2 className="font-medium flex-grow">
                                       Unit Document
                                     </h2>
-                                    <span
+                                    {/* <span
                                       className=" ml-2 text-blue-500 hover:underline"
                                       onClick={() => {
                                         setSliderInfo({
@@ -368,7 +356,7 @@ export default function LegalDocsViewHome({
                                       }}
                                     >
                                       Add Doc
-                                    </span>
+                                    </span> */}
                                   </div>
                                   <p className="mr4">Date Created</p>
                                   {/* <Icon name="folder" size="3xl" color="gray" /> */}

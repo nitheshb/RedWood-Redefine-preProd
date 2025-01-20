@@ -1,47 +1,55 @@
-import { Dialog } from '@headlessui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { useSnackbar } from 'notistack'
 import { useParams } from '@redwoodjs/router'
-import { InputAdornment, TextField as MuiTextField } from '@mui/material'
 import Loader from 'src/components/Loader/Loader'
 import { TextField } from 'src/util/formFields/TextField'
-import { TextAreaField } from 'src/util/formFields/TextAreaField'
 import { createBlock, updateBlock } from 'src/context/dbQueryFirebase'
 import { CheckIcon } from '@heroicons/react/outline'
+import { useAuth } from 'src/context/firebase-auth-context'
 
 const AddBlockForm = ({ title, dialogOpen, data }) => {
+  const { user } = useAuth()
+  const { orgId } = user
   const [loading, setLoading] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
   const { uid } = useParams()
 
+  useEffect(() => {
+    console.log('block data is ', data)
+  }, [])
   const onSubmit = async (formData, resetForm) => {
     console.log('it is ==>', data, data?.projectId)
     const updatedData = {
       ...formData,
-      projectId:  uid || data?.phase?.projectId,
-      phaseId: data?.phase?.uid,
+      projectId:  data?.phase?.projectId || data?.data?.projectId,
+      uid:  data?.uid || data?.data?.uid,
+      // phaseId: data?.phase?.uid,
       editMode: true,
     }
     setLoading(true)
-    if (data?.block?.editMode) {
-      await updateBlock(
-        data?.block?.uid,
+    if ((data?.block?.editMode || data?.data?.editMode) && title === 'Edit Block') {
+      await updateBlock(orgId,
+        data?.block?.uid || data?.data?.uid,
         {
           ...formData,
           editMode: true,
         },
         enqueueSnackbar
       )
-    } else {
-      await createBlock(updatedData, enqueueSnackbar, resetForm)
+    }  else if ( title === 'Add Block') {
+      await createBlock(orgId,updatedData, enqueueSnackbar, resetForm)
+    }else {
+      enqueueSnackbar(`Cannot Edit Block ${title} ${data?.block?.editMode || data?.data?.editMode}`, {
+        variant: 'warning',
+      })
     }
     setLoading(false)
   }
 
   const initialState = {
-    blockName: data?.block?.blockName || '',
+    blockName: data?.block?.blockName || data?.blockName ||data?.data?.blockName || '',
     floors: data?.block?.floors || 0,
     units: data?.block?.units || 0,
     totalArea: data?.block?.totalArea || 0,
@@ -76,7 +84,7 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
                           type="text"
                         />
                       </div>
-                      <div className=" w-full md:space-x-3 md:block flex  mb-6 align-center mt-1 bg-green-400 hover:shadow-sm hover:bg-green-500 rounded-sm ">
+                      <div className=" flex justify-end mt-4 ">
                         {/* <button
                           onClick={() => dialogOpen(false)}
                           type="button"
@@ -86,7 +94,7 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
                           Cancel{' '}
                         </button> */}
                         <button
-                          className="mb-2 py-[9px] flex pl-[2px] md:mb-0 bg-green-400  py-2 w-[42px] text-sm shadow-sm font-medium tracking-wider text-white rounded-sm "
+                          className="flex items-center px-4 py-2 bg-green-400 text-white text-sm shadow-sm font-medium rounded-lg hover:bg-green-500 disabled:opacity-50 "
                           type="submit"
                           disabled={loading}
                         >
@@ -96,9 +104,9 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
                             {data?.block?.editMode ? (
                               'Update'
                             ) : (
-                              <section className="flex flex-row">
+                              <section className="flex  flex-row font-medium">
                                 {' '}
-                                <CheckIcon className="w-4 h-4 ml-8 mt-[1px] mr-1 inline" />
+                                <CheckIcon className="w-5 h-5   mr-2 " />
                                 <span>Save</span>
                               </section>
                             )}

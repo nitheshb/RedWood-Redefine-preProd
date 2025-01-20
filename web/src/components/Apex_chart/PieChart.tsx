@@ -1,8 +1,6 @@
 import { Box, Card, CardHeader } from '@mui/material';
 import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-
-
 const PieChart = () => {
   const [state, setState] = useState({
     series: [44, 55, 13, 43, 22],

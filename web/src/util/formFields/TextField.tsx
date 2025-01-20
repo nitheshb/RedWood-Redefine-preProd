@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { ErrorMessage, useField } from 'formik'
 // import { InputField, Label } from '@redwoodjs/forms'
 
@@ -25,6 +26,9 @@ export const TextField = ({ label, ...props }) => {
         {...field}
         {...props}
         autoComplete="off"
+        // onChange={(e) => {
+        //  console.log('error is', e.target.value, props)
+        // }}
       />
       <ErrorMessage
         component="div"

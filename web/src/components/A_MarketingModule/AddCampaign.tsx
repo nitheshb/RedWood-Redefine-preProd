@@ -1,54 +1,28 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState, useEffect, Fragment } from 'react'
-
-import { Dialog, Listbox, Transition } from '@headlessui/react'
-import { RadioGroup } from '@headlessui/react'
+import { useState, useEffect } from 'react'
 import { CalendarIcon } from '@heroicons/react/outline'
-import { CheckIcon, SelectorIcon, FireIcon } from '@heroicons/react/solid'
-import Checkbox from '@mui/material/Checkbox'
+import { FireIcon } from '@heroicons/react/solid'
 import { setHours, setMinutes } from 'date-fns'
-import { Timestamp } from 'firebase/firestore'
 import { Form, Formik, Field, ErrorMessage } from 'formik'
-import DatePicker from 'react-datepicker'
-import NumberFormat from 'react-number-format'
-import Select from 'react-select'
 import * as Yup from 'yup'
 import { useSnackbar } from 'notistack'
 
-import { Label, InputField, TextAreaField, FieldError } from '@redwoodjs/forms'
-import { useRouterStateSetter } from '@redwoodjs/router/dist/router-context'
-
 import {
-  leadBinReasonList,
   sourceList,
-  sourceListItems,
 } from 'src/constants/projects'
 import {
   addCampaign,
-  addLead,
-  addTaskBusiness,
   checkIfCampaignAlreadyExists,
-  checkIfLeadAlreadyExists,
   getAllProjects,
   steamUsersList,
-  steamUsersListByRole,
   updateCampaign,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import {
-  sendWhatAppMediaSms,
-  sendWhatAppTextSms,
-} from 'src/util/axiosWhatAppApi'
-import { PhoneNoField } from 'src/util/formFields/phNoField'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { CustomSelectNew } from 'src/util/formFields/selectBoxFieldNew'
-import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 import { TextField } from 'src/util/formFields/TextField'
-import { TextField2 } from 'src/util/formFields/TextField2'
-
-import Loader from '../Loader/Loader'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 const people = [
@@ -336,14 +310,15 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                           className="error-message text-red-700 text-xs mt-[1px]  "
                         />
                         <div className="flex flex-row border-b border-gray border-b pb-1 border-[#edeef0]">
+                          {/* taskdesc */}
                           <textarea
-                            name="taskdesc"
+                            name="campaignDesc"
                             type="text"
                             value={formik?.values?.campaignDesc}
                             onChange={(value) => {
                               console.log('vaue is ', value.target.value)
                               formik.setFieldValue(
-                                'taskdesc',
+                                'campaignDesc',
                                 value.target.value
                               )
                             }}
@@ -442,6 +417,11 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                                   label="Campaign Budget"
                                   name="budget"
                                   type="text"
+                                  value={formik.values.budget}
+                                  onChange={(e) => {
+                                    const value = e.target.value.replace(/^0+/, '');
+                                    formik.setFieldValue('budget', value);
+                                  }}
                                 />
                               </div>
                             </div>
@@ -521,7 +501,7 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                       )}
                       <button
                         // onClick={() => fAddSchedule()}
-                        className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  text-[#535c69]  bg-[#bbed21]   hover:shadow-lg `}
+                        className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  text-[#fff]  bg-[#0891B2]   hover:shadow-lg `}
                       >
                         <span className="ml-1 ">Add Campaign</span>
                       </button>

@@ -4,14 +4,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useEffect, useState } from 'react'
 
-import FireIcon from '@heroicons/react/outline/FireIcon'
 import { CheckCircleIcon } from '@heroicons/react/solid'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { ErrorMessage, Form, Formik, useFormik } from 'formik'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
 
@@ -20,32 +18,20 @@ import EditLeadTask from 'src/components/Comp_CustomerProfileSideView/EditLeadTa
 import LeadTaskDisplayHead from 'src/components/Comp_CustomerProfileSideView/LeadTaskDisplayHead'
 import LeadTaskFooter from 'src/components/Comp_CustomerProfileSideView/LeadTaskFooter'
 import SelectDropDownComp from 'src/components/comps/dropDownhead'
-import LogSkelton from 'src/components/shimmerLoaders/logSkelton'
 import { USER_ROLES } from 'src/constants/userRoles'
 import {
   addLegalClarificationTicket,
   steamUnitTasks,
   updateLegalClarityApproval,
-  updateManagerApproval,
 } from 'src/context/dbQueryFirebase'
 import {
   addLeadScheduler,
   updateSch,
   deleteSchLog,
-  steamLeadActivityLog,
-  steamLeadScheduleLog,
-  steamUsersListByRole,
-  updateLeadAssigTo,
   updateLeadStatus,
   updateSchLog,
   addLeadNotes,
-  steamLeadNotes,
   createAttach,
-  getCustomerDocs,
-  getUser,
-  getAllProjects,
-  updateLeadProject,
-  steamLeadById,
   updateLeadRemarks_NotIntrested,
   updateLeadRemarks_VisitDone,
   undoSchLog,
@@ -60,16 +46,11 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import { supabase } from 'src/context/supabase'
 import {
-  getDifferenceInDays,
-  getDifferenceInHours,
-  getDifferenceInMinutes,
-  prettyDate,
   prettyDateTime,
-  timeConv,
 } from 'src/util/dateConverter'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import CrmActivityLog from '../CrmActivityLog'
 
 // import BankSelectionSwitchDrop from './BankSelectionDroopDown'
 const torrowDate = new Date(
@@ -231,9 +212,7 @@ export default function Crm_legal_Clarity({
   const [unitFetchedActivityData, setUnitFetchedActivityData] = useState([])
 
   const [closePrevious, setClosePrevious] = useState(false)
-  if (!user?.role?.includes(USER_ROLES.ADMIN)) {
-    return null
-  }
+
   useEffect(() => {
     console.log('yo yo ', selUnitPayload)
   }, [])
@@ -976,7 +955,8 @@ export default function Crm_legal_Clarity({
     },
   }
   return (
-    <section className="bg-[#EFF8F1] w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+    <div className='flex flex-row bg-white '>
+    <section className="bg-[#EFF8F1] w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll" style={{ height: `calc(100vh - 60px)` }}>
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         <div className="mt-1">
           <div className="py-2 rounded-md flex flex-row justify-between">
@@ -1268,7 +1248,7 @@ export default function Crm_legal_Clarity({
                                         setHours(setMinutes(d, 59), 23),
                                       ]}
                                       dateFormat="MMM d, yyyy h:mm aa"
-                                      
+
                                     />
                                   </span>
                                 </div>
@@ -1649,5 +1629,8 @@ export default function Crm_legal_Clarity({
         </button>
       </div>
     </section>
+    <CrmActivityLog selUnitPayload={selUnitPayload} title="Legal Activity" type={['legal_approval']}/>
+
+</div>
   )
 }

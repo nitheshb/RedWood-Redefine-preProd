@@ -1,23 +1,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import * as React from 'react'
-
 import '../../styles/myStyles.css'
 import {
-  LinearProgress,
   Rating,
 } from '@mui/material'
 import Section from '@mui/material/Box'
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import IconButton from '@mui/material/IconButton'
-import Paper from '@mui/material/Paper'
-import { alpha } from '@mui/material/styles'
-import Switch from '@mui/material/Switch'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import PropTypes from 'prop-types'
-import DatePicker from 'react-datepicker'
 
 import { useAuth } from 'src/context/firebase-auth-context'
 import {
@@ -27,30 +19,21 @@ import {
 } from 'src/util/dateConverter'
 
 import 'react-datepicker/dist/react-datepicker.css'
-import { setHours, setMinutes } from 'date-fns'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
-import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import { visuallyHidden } from '@mui/utils'
 import Highlighter from 'react-highlight-words'
 
 import CSVDownloader from '../../util/csvDownload'
-import { timeConv, prettyDate } from '../../util/dateConverter'
+import { prettyDate } from '../../util/dateConverter'
 import DropCompUnitStatus from '../dropDownUnitStatus'
 
-import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
-import EventNoteTwoToneIcon from '@mui/icons-material/EventNoteTwoTone'
-import { ConnectingAirportsOutlined } from '@mui/icons-material'
 
-import LogSkelton from '../shimmerLoaders/logSkelton'
 
 // function createData(
 //   Date,
@@ -111,80 +94,13 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0])
 }
 
-const headCells = [
-  // {
-  //   id: 'S.No',
-  //   numeric: true,
-  //   disablePadding: false,
-  //   label: 'S.No',
-  // },
-  {
-    id: 'Date',
-    numeric: false,
-    disablePadding: true,
-    label: 'Created On',
-  },
-  {
-    id: 'AssignedOn',
-    numeric: false,
-    disablePadding: true,
-    label: 'Assigned On',
-  },
 
-  {
-    id: 'Clientdetails',
-    numeric: false,
-    disablePadding: false,
-    label: 'Client Details',
-  },
-  {
-    id: 'Project',
-    numeric: false,
-    disablePadding: false,
-    label: 'Project',
-  },
 
-  {
-    id: 'Assigned',
-    numeric: false,
-    disablePadding: false,
-    label: 'Assigned To',
-  },
-  {
-    id: 'Source',
-    numeric: false,
-    disablePadding: false,
-    label: 'Source',
-  },
-  {
-    id: 'Currentstatus',
-    numeric: false,
-    disablePadding: false,
-    label: 'Status',
-  },
-  {
-    id: 'leadUpT',
-    numeric: false,
-    disablePadding: true,
-    label: 'Last Activity',
-  },
-  {
-    id: 'schTime',
-    numeric: false,
-    disablePadding: true,
-    label: 'Next Sch',
-  },
 
-  {
-    id: 'Notes',
-    numeric: true,
-    disablePadding: false,
-    label: 'Comments',
-  },
-]
 
 function EnhancedTableHead(props) {
   const {
+    leadsTyper,
     onSelectAllClick,
     order,
     orderBy,
@@ -194,6 +110,170 @@ function EnhancedTableHead(props) {
     searchKey,
     viewUnitStatusA,
   } = props
+
+  const headCells = [
+    // {
+    //   id: 'S.No',
+    //   numeric: true,
+    //   disablePadding: false,
+    //   label: 'S.No',
+    // },
+    {
+      id: 'Date',
+      numeric: false,
+      disablePadding: true,
+      label: 'Created On',
+    },
+    {
+      id: 'AssignedOn',
+      numeric: false,
+      disablePadding: true,
+      label: 'Assigned On',
+    },
+
+    {
+      id: 'Clientdetails',
+      numeric: false,
+      disablePadding: false,
+      label: 'Client Details',
+    },
+    {
+      id: 'Project',
+      numeric: false,
+      disablePadding: false,
+      label: 'Project',
+    },
+
+
+
+    {
+      id: 'Assigned',
+      numeric: false,
+      disablePadding: false,
+      label: 'Assigned To',
+    },
+    {
+      id: 'Source',
+      numeric: false,
+      disablePadding: false,
+      label: 'Source',
+    },
+    {
+      id: 'Currentstatus',
+      numeric: false,
+      disablePadding: false,
+      label: 'Status',
+    },
+    {
+      id: 'leadUpT',
+      numeric: false,
+      disablePadding: true,
+      label: 'Last Activity',
+    },
+    {
+      id: 'schTime',
+      numeric: false,
+      disablePadding: true,
+      label: 'Next Sch',
+    },
+
+    {
+      id: 'Notes',
+      numeric: true,
+      disablePadding: false,
+      label: 'Comments',
+    },
+  ]
+
+  const bookingCells = [
+    // {
+    //   id: 'S.No',
+    //   numeric: true,
+    //   disablePadding: false,
+    //   label: 'S.No',
+    // },
+    {
+      id: 'Date',
+      numeric: false,
+      disablePadding: true,
+      label: 'Created On',
+    },
+    {
+      id: 'AssignedOn',
+      numeric: false,
+      disablePadding: true,
+      label: 'Assigned On',
+    },
+
+    {
+      id: 'Clientdetails',
+      numeric: false,
+      disablePadding: false,
+      label: 'Client Details',
+    },
+    {
+      id: 'Project',
+      numeric: false,
+      disablePadding: false,
+      label: 'Project',
+    },
+
+    {
+      id: 'UnitNo',
+      numeric: false,
+      disablePadding: false,
+      label: 'UnitNo',
+    },
+
+    {
+      id: 'Assigned',
+      numeric: false,
+      disablePadding: false,
+      label: 'Assigned To',
+    },
+    {
+      id: 'Source',
+      numeric: false,
+      disablePadding: false,
+      label: 'Source',
+    },
+    {
+      id: 'Currentstatus',
+      numeric: false,
+      disablePadding: false,
+      label: 'Status',
+    },
+    {
+      id: 'leadUpT',
+      numeric: false,
+      disablePadding: true,
+      label: 'Last Activity',
+    },
+    {
+      id: 'schTime',
+      numeric: false,
+      disablePadding: true,
+      label: 'Next Sch',
+    },
+
+    {
+      id: 'Notes',
+      numeric: true,
+      disablePadding: false,
+      label: 'Comments',
+    },
+  ]
+const [headers, setHeaders] = React.useState(headCells)
+  React.useEffect(() => {
+
+
+    if(leadsTyper === 'booked') {
+      setHeaders(bookingCells)
+    }else{
+      setHeaders(headCells)
+    }
+  }, [leadsTyper])
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property)
   }
@@ -259,19 +339,21 @@ function EnhancedTableHead(props) {
           /> */}
           <TableSortLabel>S.No</TableSortLabel>
         </TableCell>
-        {headCells.map((headCell) => (
+        {headers.map((headCell) => (
           <>
-            <TableCell
+           <TableCell
               key={headCell.id}
               align={headCell.numeric ? 'center' : 'left'}
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
               style={{
-                // backgroundColor: '#F7F9FB',
+                  //backgroundColor: '#F7F9FB',
                 color: '#1a91eb',
                 height: '10px',
                 maxHeight: '10px',
                 lineHeight: '7px',
+                //paddingTop: '5px',
+                //paddingBottom: '5px',
                 display: displayHeadersFun(headCell.id)
               }}
             >
@@ -305,6 +387,7 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
+  leadsTyper: PropTypes.string.isRequired,
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
@@ -405,12 +488,12 @@ React.useEffect(()=>{
       } else if (
         // item.Assignedto.toLowerCase().includes(searchString.toLowerCase()) ||
         // item.Date.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Email.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Mobile.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Name.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Project.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Source.toLowerCase().includes(searchString.toLowerCase()) ||
-        item.Status.toLowerCase().includes(searchString.toLowerCase())
+        item?.Email?.toLowerCase().includes(searchString?.toLowerCase()) ||
+        item?.Mobile?.toLowerCase().includes(searchString?.toLowerCase()) ||
+        item?.Name?.toLowerCase().includes(searchString?.toLowerCase()) ||
+        item?.Project?.toLowerCase().includes(searchString?.toLowerCase()) ||
+        item?.Source?.toLowerCase().includes(searchString?.toLowerCase()) ||
+        item?.Status?.toLowerCase().includes(searchString?.toLowerCase())
       ) {
         return item
       }
@@ -441,7 +524,7 @@ React.useEffect(()=>{
             placeholder={`Search...${selStatus}`}
             onChange={searchKeyField}
             value={searchKey}
-            className="ml-6 bg-transparent text-xs focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none"
+            className="ml-6 bg-transparent w-[680px] text-xs focus:border-transparent  focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none"
           />
         </span>
         {/* <span className="max-h-[42px] mt-[2px] ml-3">
@@ -576,6 +659,7 @@ const HighlighterStyle = (props) => {
 }
 export default function LLeadsTableBody({
   fetchLeadsLoader,
+  leadsTyper,
   selStatus,
   rowsParent,
   selUserProfileF,
@@ -790,13 +874,14 @@ export default function LLeadsTableBody({
       >
         <TableContainer sx={{ maxHeight: 640 }}>
           <Table
-            sx={{ minWidth: 750, minHeight: 260 }}
+            sx={{ minWidth: 750, minHeight: 260 , marginBottom: 30}}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
             stickyHeader
             aria-label="sticky table"
           >
             <EnhancedTableHead
+            leadsTyper={leadsTyper}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -823,15 +908,15 @@ export default function LLeadsTableBody({
                       return item
                     }
                     else if (
-                      item.Email.toLowerCase().includes(
-                        searchKey.toLowerCase()
+                      item?.Email?.toLowerCase().includes(
+                        searchKey?.toLowerCase()
                       ) ||
-                      item.Mobile.toLowerCase().includes(
-                        searchKey.toLowerCase()
+                      item?.Mobile?.toLowerCase().includes(
+                        searchKey?.toLowerCase()
                       ) ||
-                      item.Name.toLowerCase().includes(searchKey.toLowerCase()) ||
-                      item.Source.toLowerCase().includes(
-                        searchKey.toLowerCase()
+                      item?.Name?.toLowerCase().includes(searchKey?.toLowerCase()) ||
+                      item?.Source?.toLowerCase().includes(
+                        searchKey?.toLowerCase()
                       )
                     ) {
                       return item
@@ -953,7 +1038,7 @@ export default function LLeadsTableBody({
                                           />
                                         </span>
 
-                                       
+
 
                                       </div>
                                     </div>
@@ -986,7 +1071,7 @@ export default function LLeadsTableBody({
                             )}
                             {viewUnitStatusA.includes('Phone No') && (
                               <div>
-                              
+
 
                               <span className="font-bodyLato">
     <HighlighterStyle
@@ -1006,13 +1091,15 @@ export default function LLeadsTableBody({
                                   />
                                 </span>
 
-                              
+
                               </div>
                             )}
                           </section>
                         </TableCell>
 
                         <TableCell align="left">{row.Project}</TableCell>
+                        { leadsTyper === 'booked' &&<TableCell align="left">{row?.UnitNo}</TableCell>}
+
                         {/* display:
                   viewUnitStatusA.includes('Assigned To') &&
                   headCell.id === 'Assigned'

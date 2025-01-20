@@ -2,32 +2,19 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from 'react'
-
-import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
-import DatePicker from 'react-datepicker'
-
+import { startOfDay } from 'date-fns'
 import { Link } from '@redwoodjs/router'
-
 import { USER_ROLES } from 'src/constants/userRoles'
 import {
   getAllProjects,
-  getLeadsByDate,
   getLeadsByStatusUser,
   steamUsersListByDeptWithInactive,
   steamUsersListByRole,
   updateLeadAssigTo,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-
 import 'flowbite'
 import { VerySlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
-
-import DropDownSearchBar from '../dropDownSearchBar'
-import LLeadsTableView from '../LLeadsTableView/LLeadsTableView'
-import ProjPhaseHome from '../ProjPhaseHome/ProjPhaseHome'
-
-import { Button, Checkbox } from '@mui/material'
-
 import LeadsTransferBody from './leadsTransferBody'
 
 const LeadsTransferHome = ({ project }) => {
@@ -491,8 +478,9 @@ const LeadsTransferHome = ({ project }) => {
                       ]}
                     />
                     </section>
+                    
                     <section
-                        className="bg-transparent  text-blue-700 font-bold py- px-4 rounded mt-7 mr-2 bg-gradient-to-r from-violet-200 to-pink-200 scale-105  font-normal rounded-full"
+                        className="bg-transparent  text-[#000] font-bold py- px-4 rounded mt-7 mr-2 bg-gradient-to-r from-violet-200 to-pink-200 scale-105  font-normal rounded-full"
                         onClick={() => tranferLeads()}
                       >
                         Apply Lead Transfer

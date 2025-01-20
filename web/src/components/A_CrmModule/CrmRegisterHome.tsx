@@ -1,34 +1,21 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-
-import { Fragment, useState, useEffect } from 'react'
-
-import DatePicker from 'react-datepicker'
+import { useState, useEffect } from 'react'
 import {
-  PhoneIcon,
   PuzzleIcon,
-  ShieldExclamationIcon,
 } from '@heroicons/react/outline'
 import {
-  AdjustmentsIcon,
   ChartPieIcon,
   SearchIcon,
-  OfficeBuildingIcon,
   NewspaperIcon,
-  UserGroupIcon,
-  ScaleIcon,
   InformationCircleIcon,
 } from '@heroicons/react/solid'
-import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 import {} from '@heroicons/react/solid'
-import { Box, LinearProgress, useTheme } from '@mui/material'
+import { Box, LinearProgress } from '@mui/material'
 import { startOfDay } from 'date-fns'
 import { useTranslation } from 'react-i18next'
-
 import { MetaTags } from '@redwoodjs/web'
-
 import {
-  getCRMCustomerByProject,
   getBookedUnitsByProject,
   getAllProjects,
   getUnassignedCRMunits,
@@ -36,13 +23,10 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { computeTotal } from 'src/util/computeCsTotals'
 import CSVDownloader from 'src/util/csvDownload'
-import { prettyDate, prettyDateTime, timeConv } from 'src/util/dateConverter'
+import { prettyDate } from 'src/util/dateConverter'
 import {
-  SlimDateSelectBox,
-  SlimSelectBox,
   VerySlimSelectBox,
 } from 'src/util/formFields/slimSelectBoxField'
-
 import DoughnutChartWithRoundedSegments from '../A_SalesModule/Reports/charts/piechartRounded'
 import CrmSiderForm from '../SiderForm/CRM_SideForm'
 import SiderForm from '../SiderForm/SiderForm'
@@ -244,6 +228,9 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     await getProjectsListFun()
   }
 
+
+
+
   useEffect(() => {
     getLeadsDataFun(projectList, ['booked', 'Booked'])
     getLeadsDataFun(projectList, ['agreement_pipeline'])
@@ -285,7 +272,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
           user.label = user.projectName
           user.value = user.projectName
         })
-        console.log('fetched proejcts list is', projectsListA)
         setprojectList(projectsListA)
       },
       (error) => setprojectList([])
@@ -328,36 +314,29 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
       if (searchKey === 'all') {
         return item
       } else if (item.status.toLowerCase() === searchKey.toLowerCase()) {
-        console.log('All1', item)
         return item
       }
     })
   }
   const getCustomerDataFun = async (projectList) => {
-    console.log('login role detials', user)
     const { access, uid } = user
 
     const unsubscribe = getUnassignedCRMunits(
       orgId,
       async (querySnapshot) => {
-        console.log('hello is ', querySnapshot.docs.length)
         const usersListA = querySnapshot.docs.map((docSnapshot) => {
           const x = docSnapshot.data()
           x.id = docSnapshot.id
           const y = projectList.filter((proj) => proj?.uid == x?.pId)
-          console.log(',my prject sel is  ===> ', projectList)
           if (y.length > 0) {
-            console.log(',my prject sel is ', y)
             x.projName = y[0].projectName
           }
           return x
         })
         // setBoardData
-        console.log('my Array data is ', usersListA, crmCustomersDBData)
         // await serealizeData(usersListA)
 
         // await setCrmCustomerDBData(usersListA)
-        await console.log('my Array data is set it', crmCustomersDBData)
       },
       {
         status: [
@@ -375,7 +354,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     return unsubscribe
   }
   const getLeadsDataFun = async (projectList, statusFil) => {
-    // console.log('login role detials', user)
     const { access, uid } = user
     const unsubscribe = getBookedUnitsByProject(
       orgId,
@@ -400,6 +378,13 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
         await usersListA.sort((a, b) => {
           return a.unit_no - b.unit_no
         })
+
+
+        await usersListA.sort((a, b) => {
+          const dateA = new Date(a.booked_on || a.ct || 0);
+          const dateB = new Date(b.booked_on || b.ct || 0);
+          return dateB - dateA;
+        });
 
            // usersListA.sort((a, b) => {
         //   return b?.booked_on || 0 - b?.booked_on || 0
@@ -478,7 +463,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     // await usersListA.sort((a, b) => {
     //   return a.unit_no - b.unit_no
     // })
-    console.log('iam in searchKey', searchKey, !searchKey)
     if(selCategory === 'booked'){
       searchLogic(searchKey, queryResult)
     }
@@ -526,7 +510,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
   }
 
   const viewTransaction = (docData, sideViewCategory, sideViewCategory1) => {
-    console.log('check it ', docData, sideViewCategory, sideViewCategory1)
     setSelSubMenu(sideViewCategory)
     setSelSubMenu1(sideViewCategory1)
     setTransactionData(docData)
@@ -535,8 +518,8 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
   }
   return (
     <>
-      <div className=" font-rubikF mt-2 bg-white rounded-t-lg ">
-        <div className="">
+      <div className=" font-rubikF mt-2 py-2 bg-white rounded-t-lg ">
+        <div className=" max-w-7xl mx-auto">
           <div
             className="
             "
@@ -553,7 +536,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                     label=""
                     className="input "
                     onChange={(value) => {
-                      console.log('changed value is ', value.value)
                       setSelProject(value)
                       // formik.setFieldValue('project', value.value)
                     }}
@@ -565,7 +547,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                     ]}
                   />
                 </div>
-                {access?.includes('manage_leads') && (
+                {(
                   <div className=" flex flex-col   w-40">
                     <VerySlimSelectBox
                       name="project"
@@ -573,7 +555,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                       placeholder="My Leads"
                       className="input "
                       onChange={(value) => {
-                        console.log('changed value is ', value.value)
                         setSelLeadsOf(value)
                         // formik.setFieldValue('project', value.value)
                       }}
@@ -662,7 +643,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                   <span
                     className="flex mt-[4px] mr-[8px] justify-center items-center w-6 h-6 bg-gradient-to-r from-violet-200 to-pink-200 rounded-full  cursor-pointer "
                     onClick={() => {
-                      console.log('chek it', horizontalMode)
                       setHorizontalMode(!horizontalMode)
                     }}
                   >
@@ -703,11 +683,11 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                     <input
                       type="text"
                       id="globalSearch"
-                      placeholder="Search Unit No, Customer name, Phone no, Dues..."
+                      placeholder="Search Unit No, Customer name"
                       onChange={(e) => setSearchKeyField(e.target.value)}
                       autoComplete="off"
                       value={searchKeyField}
-                      className="w-52 bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900 w-4/5 relative"
+                      className=" bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900 w-4/5 relative"
                     />
                   </span>
                   {/* <div className=" mr-2">
@@ -1445,7 +1425,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1 text-center">
                                       ATS Draft
                                       </h6>
                                     </div>
@@ -1521,7 +1501,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1 text-center">
                                         SD Approval
                                       </h6>
                                     </div>
@@ -1529,9 +1509,9 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   {/* section 3*/}
                                   <div
                                     className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
-                                      finData?.kyc_status == 'approved'
+                                      finData?.LpostStatus == 'Approved'
                                         ? 'bg-[#CCC5F7]'
-                                        : finData?.kyc_status == 'rejected'
+                                        : finData?.LpostStatus == 'Rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
                                     }  p-3 rounded-md mx-1`}
@@ -1542,7 +1522,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_KYC')
+                                      setIsSubTopic('crm_loan')
                                     }}
                                   >
                                     <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
@@ -1573,7 +1553,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.both_sd_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
+                                        : 'bg-[#F1F5F9]'
                                     }  p-3 rounded-md mx-1`}
                                     style={{
                                       display: 'inline-block',
@@ -1618,7 +1598,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_KYC')
+                                      setIsSubTopic('crm_loan')
                                     }}
                                   >
                                     <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
@@ -1948,7 +1928,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
         setOpen={setIsSubTopicOpen}
         title={isSubTopic}
         customerDetails={selUnitDetails}
-        widthClass="max-w-3xl"
+        widthClass="max-w-6xl"
         transactionData={transactionData}
         unitsViewMode={false}
         selUnitPayload={selUnitDetails}

@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-
 import { Menu, Transition } from '@headlessui/react'
 import {
   ChartPieIcon,
@@ -11,11 +10,6 @@ import {
 } from '@heroicons/react/outline'
 import {
   ChevronDownIcon,
-  FireIcon,
-  CurrencyRupeeIcon,
-  DotsVerticalIcon,
-  CheckIcon,
-  DocumentTextIcon,
 } from '@heroicons/react/solid'
 
 import { Link, routes } from '@redwoodjs/router'
@@ -41,7 +35,7 @@ export default function ModuleSwitchDrop({
     <div className="text-right inline-block ml-2 mt-[px] ">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center w-[148px] px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-slate-400/10 dark:highlight-white/5 flex font-semibold hover:bg-slate-400/20 items-center leading-5 px-3 py-1 rounded-full space-x-2 text-xs px-2.5 py-1.5">
+          <Menu.Button className="inline-flex justify-center w-[168px]  text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-slate-400/10 dark:highlight-white/5 flex font-semibold hover:bg-slate-400/20 items-center leading-5  rounded-full space-x-2 text-xs px-3 py-2">
             <span className=" w-[130px]  text-[12px] leading-[10px] tracking-wide text-[#0091ae]  ">
               <span className="flex flex-row w-[25px]">
                 <span>{`${type} `} </span>{' '}
@@ -91,7 +85,7 @@ export default function ModuleSwitchDrop({
                                 <span className="absolute inset-0" />
                               </a>
                               <p className="mt- pb-3 text-gray-600">
-                                Project Setup, Insights, Access...
+                                Project Setup,Access,Insights
                               </p>
                             </div>
                           </div>
@@ -123,7 +117,7 @@ export default function ModuleSwitchDrop({
                                 <span className="absolute inset-0" />
                               </a>
                               <p className="mt- pb-3  text-gray-600">
-                                Campaign, Branding & Insights
+                                Campaign,Branding,Insights
                               </p>
                             </div>
                           </div>

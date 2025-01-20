@@ -2,69 +2,42 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState, useEffect, useRef, Fragment } from 'react'
-
-import { Dialog, Listbox, Transition } from '@headlessui/react'
-import { RadioGroup } from '@headlessui/react'
+import { useState, useEffect, useRef } from 'react'
 import {
   CalendarIcon,
   CheckCircleIcon,
-  PencilIcon,
-  ClockIcon,
 } from '@heroicons/react/outline'
-import { XIcon, FireIcon, PaperClipIcon } from '@heroicons/react/solid'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import { UsersIcon, ArrowCircleDownIcon } from '@heroicons/react/solid'
+import { FireIcon } from '@heroicons/react/solid'
+import { ArrowCircleDownIcon } from '@heroicons/react/solid'
 import { AttachFile } from '@mui/icons-material'
-import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone'
-import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone'
-import ScheduleSendTwoToneIcon from '@mui/icons-material/ScheduleSendTwoTone'
 import SendTwoToneIcon from '@mui/icons-material/SendTwoTone'
-import axios from 'axios'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 import {
-  getStorage,
   ref,
   getDownloadURL,
   uploadBytesResumable,
 } from 'firebase/storage'
 import { Form, Formik, Field, ErrorMessage } from 'formik'
-import DatePicker from 'react-datepicker'
-import NumberFormat from 'react-number-format'
 import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
 
-import { Label, InputField, TextAreaField, FieldError } from '@redwoodjs/forms'
-import { useRouterStateSetter } from '@redwoodjs/router/dist/router-context'
 
 import {
   AddCommentTaskManData,
   CompleteTaskManData,
   ReOpenTaskManData,
-  addLead,
   addTaskBusiness,
-  checkIfLeadAlreadyExists,
   editTaskManData,
   getAllProjects,
-  steamUsersListByRole,
   steamUsersList,
   editTaskManAttachmentsData,
   deleteTaskManData,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
-import {
-  sendWhatAppMediaSms,
-  sendWhatAppTextSms,
-} from 'src/util/axiosWhatAppApi'
-import { PhoneNoField } from 'src/util/formFields/phNoField'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
-import { TextField } from 'src/util/formFields/TextField'
-import { TextField2 } from 'src/util/formFields/TextField2'
 
 import FileList from './FilesList'
 import FileUpload from './FileUpload'
@@ -99,7 +72,6 @@ const customStyles = {
   }),
   menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999 }),
 }
-import Loader from '../Loader/Loader'
 
 import {
   getDifferenceInDays,
@@ -108,13 +80,12 @@ import {
   prettyDateTime,
 } from 'src/util/dateConverter'
 
-import { formatFileSize } from 'react-papaparse'
 
-import { domainToASCII } from 'url'
 
 import Confetti from '../shared/confetti'
 
 import { CustomSelectNew } from 'src/util/formFields/selectBoxFieldNew'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 const people = [
   { name: 'Priority 1' },
   { name: 'Priority 2' },
@@ -754,7 +725,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                               <div className="flex flex-col space-y-1 text-xs max-w-xs mx-2 order-2 items-start">
                                 <div>
                                   <span
-                                    className={`px-4 py-2 rounded-lg inline-block rounded-bl-none ${
+                                    className={`px-4 py-2 w-[300px] max-w-full overflow-hidden rounded-lg inline-block rounded-bl-none ${
                                       user.displayName == commentObj?.by
                                         ? ' bg-[#c8fad6] text-[#212b36]'
                                         : 'bg-gray-300 text-gray-600'
@@ -1218,7 +1189,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                           // onClick={() => fAddSchedule()}
                           className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  text-[#535c69]  bg-[#bbed21]   hover:shadow-lg `}
                         >
-                          <span className="ml-1 ">Edit Task</span>
+                          <span className="ml-1 ">Save Task</span>
                         </button>
                         {/* <button
                         // onClick={() => fAddSchedule()}

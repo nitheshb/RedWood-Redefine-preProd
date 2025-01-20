@@ -1,44 +1,29 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useState, useEffect, useRef } from 'react'
-
-import { ExclamationCircleIcon, CheckCircleIcon } from '@heroicons/react/solid'
 import { AttachFile } from '@mui/icons-material'
 import { format } from 'date-fns'
 import { setHours, setMinutes } from 'date-fns'
-import { arrayUnion } from 'firebase/firestore'
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
-import { Form, Formik,  ErrorMessage, useField } from 'formik'
+import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
-import * as Yup from 'yup'
-
 import { useParams } from '@redwoodjs/router'
-
 import Confetti from 'src/components/shared/confetti'
-import { paymentMode, statesList, walletMode } from 'src/constants/projects'
+import { walletMode } from 'src/constants/projects'
 import {
-  addPaymentReceivedEntry,
   addPaymentReceivedEntrySup,
-  createBookedCustomer,
   createNewCustomerS,
-  getProject,
   steamBankDetailsList,
-  steamUsersProjAccessList,
-  streamProjectCSMaster,
-  updateLeadStatus,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 import { TextField2 } from 'src/util/formFields/TextField2'
 import PdfReceiptGenerator from 'src/util/PdfReceiptGenerator'
 import RupeeInWords from 'src/util/rupeeWords'
 
-import Loader from '../Loader/Loader'
 import { validate_capturePayment } from '../Schemas'
 
 const AddCustomerWallet = ({
@@ -108,9 +93,6 @@ const AddCustomerWallet = ({
     getProjectFun()
     console.log('unit details are ', selUnitDetails, newPlotPS)
   }, [])
-
-
-
 
   const handleFileUploadFun = async (file, type) => {
     console.log('am i inside handle FileUpload')
@@ -223,43 +205,7 @@ const AddCustomerWallet = ({
     // updateLeadStatus(leadDocId, newStatus)
   }
 
-  const onSubmit = async (data, resetForm) => {
-    // get booking details, leadId, unitDetails,
-    //  from existing object send values of
-    //  booking
-    // copy unit data as it is
-    // copy lead data as it is
-    //  unit details
 
-    // 1)Make an entry to finance Table {source: ''}
-    // 2)Create new record in Customer Table
-    // 3)Update unit record with customer record and mark it as booked
-    // 4)update lead status to book
-
-    //   const x = await addDoc(collection(db, 'spark_leads'), data)
-    // await console.log('x value is', x, x.id)
-
-    const { uid } = selUnitDetails
-    // 1)Make an entry to finance Table {source: ''}
-
-    const x1 = await addPaymentReceivedEntry(
-      orgId,
-      uid,
-      { leadId: 'id' },
-      data,
-      'leadsPage',
-      'nitheshreddy.email@gmail.com',
-      enqueueSnackbar
-    )
-
-    // add phaseNo , projName to selUnitDetails
-    // 2)Create('')
-
-    // 3)Update unit record with customer record and mark it as booked
-
-    // 4)update lead status to book
-    // updateLeadStatus(leadDocId, newStatus)
-  }
 
   const datee = new Date().getTime()
   const initialState = {
@@ -608,6 +554,9 @@ const AddCustomerWallet = ({
                                               className="w-4 h-4 text-[18px]"
                                               style={{ fontSize: '18px' }}
                                             />
+
+
+                                            {/* Add Receipt  */}
                                           </label>
                                           {/* {panCard1 != '' && (
                         <button
@@ -663,7 +612,7 @@ const AddCustomerWallet = ({
 
                                           </div>
 
-                                     
+
                                         </section>
                                       )}
                                     {formik?.file?.fileUploader}

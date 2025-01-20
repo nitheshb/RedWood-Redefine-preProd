@@ -1,5 +1,4 @@
 import { Button } from '@mui/material'
-import { pink } from '@mui/material/colors'
 
 // py-2 px-8
 const StyledRoundedButton = ({ isCategoryMatched, children, ...props }) => (
@@ -7,16 +6,16 @@ const StyledRoundedButton = ({ isCategoryMatched, children, ...props }) => (
     sx={{
       borderRadius: '1rem',
       padding: '0.5rem 2rem',
-      border: `1px solid ${pink[400]}`,
-      color: `${pink[500]}`,
+      border: `1px solid #9D01A3`,
+      color: `#484848`,
       fontWeight: 600,
-      height: '1.5rem',
+      height: '1.8rem',
       fontSize: '0.75rem',
-      backgroundColor: isCategoryMatched ? `${pink[100]}` : '#fff',
+      backgroundColor: isCategoryMatched ? `#E0DDEE` : '#fff',
       margin: '0 0.25rem',
       '&:hover': {
-        backgroundColor: `${pink[100]}`,
-        border: `1px solid ${pink[400]}`,
+        backgroundColor: `#E0DDEE`,
+        border: `1px solid #9D01A3`,
       },
     }}
     {...props}

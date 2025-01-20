@@ -1,16 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useEffect } from 'react'
-import { useCallback } from 'react'
-
-import { Diversity1 } from '@mui/icons-material'
-import { Box, Menu, MenuItem, Typography } from '@mui/material'
-import debounce from 'lodash.debounce'
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
-
+import { useState } from 'react'
+import { Box, Menu, MenuItem } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import { Link, routes } from '@redwoodjs/router'
-
-// import { useDispatch } from 'react-redux'
-import ExecutiveHomeViewerPage from 'src/components/ExecutiveHomeViewerPage'
 import Loader from 'src/components/Loader/Loader'
 import { getLeadsByPhoneNo } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -19,7 +11,6 @@ import {
   searchData as searchResponse,
 } from 'src/state/actions/search'
 import { logout as logoutAction } from 'src/state/actions/user'
-
 import ModuleSwitchDrop from '../A_SideMenu/modulesSwitchDrop'
 
 const HeadNavBar = (props) => {

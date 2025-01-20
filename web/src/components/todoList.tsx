@@ -2,18 +2,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useEffect, useState } from 'react'
-
 import { Switch } from '@headlessui/react'
 import { SearchIcon } from '@heroicons/react/outline'
-import { ArrowNarrowRightIcon, PlusIcon } from '@heroicons/react/solid'
+import { PlusIcon } from '@heroicons/react/solid'
 import { PaperClipIcon, UsersIcon } from '@heroicons/react/solid'
-import { TabList } from '@mui/lab'
-import { Box, Card, Grid, styled } from '@mui/material'
+import { Box } from '@mui/material'
 import { Checkbox } from '@mui/material'
 import { startOfDay } from 'date-fns'
-import { Field, Form, Formik } from 'formik'
-import { useTranslation } from 'react-i18next' // styled components
-
+import { useTranslation } from 'react-i18next'
 import {
   streamGetAllTaskManTasks,
   streamGetAllParticipantTasks,
@@ -22,20 +18,14 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { supabase } from 'src/context/supabase'
 import CSVDownloader from 'src/util/csvDownload'
 import {
-  formatToPhone,
   getDifferenceInDays,
   getDifferenceInHours,
   getDifferenceInMinutes,
   prettyDateTime,
 } from 'src/util/dateConverter'
 import {
-  SlimDateSelectBox,
   SlimSelectBox,
 } from 'src/util/formFields/slimSelectBoxField'
-import uniqueId from 'src/util/generatedId'
-
-import LLeadsTableBody from '../LLeadsTableBody/LLeadsTableBody'
-
 import SiderForm from './SiderForm/SiderForm'
 
 const torrowDate = new Date(
@@ -265,10 +255,16 @@ const TodoListView = ({
       setParticipantsData_D(ParticipantsData_D)
       bootBusinessFun(ParticipantsData_D)
     }
+
+    if(selPriority != '' || searchText != ''){
+      console.log('is clicked ==>');
+      setShowSettings(false)
+    }
   }, [
     businessData_F,
     ParticipantsData_D,
     subSection,
+    isClicked,
     sortType,
     searchText,
     selPriority,
@@ -396,6 +392,7 @@ const TodoListView = ({
   }
 
   useEffect(() => {
+    console.log('is clicked', isClicked, selPriority)
     if (isClicked === 'personal_tasks') {
       const x = personalData_F.filter(
         (d) =>
@@ -406,8 +403,13 @@ const TodoListView = ({
       )
       setPersonalData_D(x)
       sortPersonalDataFun(x)
+      if(selPriority != '' || searchText != ''){
+        console.log('is clicked ==>');
+        setShowSettings(false)
+      }
     } else if (isClicked === 'dept_tasks') {
       setShowSettings(true)
+
     }
   }, [isClicked, searchText, sortType, selPriority, personalData_F])
 
@@ -470,7 +472,7 @@ const TodoListView = ({
                         role="tab"
                         onClick={() => setisClicked(d.val)}
                       >
-                        <section className="flex flex-row text-[15px] h-[24px]">
+                        <section className="flex flex-row text-[15px] h-[24px]  mb-0">
                           {' '}
                           {/* <img
                             className="px-1 w-5 h-4"
@@ -572,7 +574,7 @@ const TodoListView = ({
                       setShowSettings(!showSettings)
                     }}
                   >
-                    <SearchIcon className=" w-3 h-3" />
+                    <SearchIcon className=" w-4 h-4" />
                   </span>
                 </div>
               </div>

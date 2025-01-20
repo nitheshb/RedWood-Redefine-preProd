@@ -2,44 +2,21 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect, useRef } from 'react'
-
 import { Dialog } from '@headlessui/react'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline'
-import { Add, Remove } from '@mui/icons-material'
-import { InputAdornment, TextField as MuiTextField } from '@mui/material'
-import { setHours, setMinutes } from 'date-fns'
-import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
-import * as Yup from 'yup'
-
-import { AreaConverter } from 'src/components/AreaConverter'
 import Loader from 'src/components/Loader/Loader'
 import {
-  ChooseOptions,
-  developmentTypes,
-  projectPlans,
-  statesList,
-  approvalAuthority,
   projectDetailFlow,
 } from 'src/constants/projects'
 import {
-  createProject,
   steamBankDetailsList,
-  updateProject,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { CustomRadioGroup } from 'src/util/formFields/CustomRadioGroup'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
-import { TextAreaField } from 'src/util/formFields/TextAreaField'
-import { TextField } from 'src/util/formFields/TextField'
 
-import AddBankDetailsForm from '../addBankDetailsForm'
 import DialogFormBody from '../DialogFormBody/DialogFormBody'
 import ProjPhaseHome from '../ProjPhaseHome/ProjPhaseHome'
 
-import CRMHomeList from './CRMHomeList'
 
 const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
   const formikRef = useRef()
@@ -228,8 +205,10 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
             {selFlow.value === 'projectDetails' && (
               <DialogFormBody
                 ref={formikRef}
+  
                 title={'Create Project'}
                 // dialogOpen={(=>())}
+                moveNext={goToNext}
                 project={project}
                 bindSubmitForm={bindSubmitForm}
                 setSubmitter={setSub}
@@ -284,8 +263,31 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
               Save
             </button>
           )}
+
+
+
+{selFlow?.indx+1 === projectDetailFlow.length && (
+            <button
+              className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
+              type="submit"
+
+
+              onClick={
+                () => {
+                  dialogOpen(false)
+                }
+                // onClick={submitForm}
+                // onClick={submitForm}
+              }
+            >
+
+              Close
+            </button>
+          )}
+
+
           <button
-            className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg "
+            className={` ${selFlow?.indx+1 === projectDetailFlow.length ? 'hidden': '' }   mb-2 md:mb-0  bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg `}
             disabled={loading}
             onClick={() => {
               if (project?.uid) {

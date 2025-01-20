@@ -7,50 +7,26 @@
 import { useState, useEffect } from 'react'
 
 import {
-  Box,
-  Card,
-  CardHeader,
-  Container,
-  Grid,
-  LinearProgress,
-  Stack,
-  Typography,
   useTheme,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-
-import { Link } from '@redwoodjs/router'
-
-import SiderForm from 'src/components/SiderForm/SiderForm'
 import {
   getAllProjects,
-  steamUsersCreditNotesList,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
 import 'flowbite'
 
 import '../../styles/myStyles.css'
-// import Chart from 'react-apexcharts'
-import ApexChart from '../Apex_chart/ApexChart'
-import Conversion_rates from '../Apex_chart/Conversion_rates'
-import PieChart from '../Apex_chart/PieChart'
-import RadarChart from '../Apex_chart/RadarChart'
 import DummyBodyLayout from '../DummyBodyLayout/DummyBodyLayout'
-
-import AdvancedDataTableTest from './Reports/bookingSummaryHome'
-import UnitBookingSummaryHomePage from './Reports/bookingSummaryHome1'
-import CircleBar from './Reports/CircleBar'
 import CrmCollectionReport from './Reports/collectionReport'
 import CreditNoteSummaryHomePage from './Reports/creditNoteSummaryHome'
 import CrmSummaryReport from './Reports/Crm_SummaryReport'
 import CrmAnalyticsUnitHome from './Reports/CrmAnalyticsUnitHome'
 import CrmProjectionReport from './Reports/CrmProjectionReport'
 import CrmInventorySummaryTable from './Reports/CrmSummaryTable'
-import ReportBars from './Reports/ReportBars'
-import TransactionCard from './Reports/TransactionCard'
-import UnitStatusCardReport from './Reports/UnitStatusCardReport'
 import CrmMortgageSummaryTable from './Reports/CrmMortgageSummary'
+import UnitBookingSummaryHomePage1 from './Reports/bookingSummaryHomev1'
 
 const CrmAnalyticsHome = ({ project }) => {
   const theme = useTheme()
@@ -60,7 +36,7 @@ const CrmAnalyticsHome = ({ project }) => {
 
   const { orgId } = user
   const [projects, setProjects] = useState([])
-  const [selCat, setSelCat] = useState('booking_summary')
+  const [selCat, setSelCat] = useState('booking_summary-v1')
 
   useEffect(() => {
     getProjects()
@@ -85,9 +61,9 @@ const CrmAnalyticsHome = ({ project }) => {
   }
 
   return (
-    <div>
+    <div className='bg-[#F1F1F1] rounded-md border-[40px] border-white p-4 mx-1 mt-1'>
 
-<div className='flex bg-white border-b'>
+<div className='flex max-w-7xl mx-auto bg-white border-b border rounded-xl w-[100%] border-gray-200 flex-row justify-between shadow'>
       <ul
                 className="flex flex-wrap -mb-px "
                 id="myTab"
@@ -95,11 +71,12 @@ const CrmAnalyticsHome = ({ project }) => {
                 role="tablist"
               >
                 {[
-          { label: 'Booking Summary', value: 'booking_summary' },
+          // { label: 'Booking Summary', value: 'booking_summary' },
+          { label: 'Booking Summary', value: 'booking_summary-v1' },
           { label: 'Collections', value: 'collection_performance' },
-          { label: 'CRM Inventory Report', value: 'crm_table' },
+          { label: 'CRM Inventory', value: 'crm_table' },
           {
-            label: 'Collection Projection Report',
+            label: 'Collection Projections',
             value: 'crm_projection_report',
           },
 
@@ -115,9 +92,9 @@ const CrmAnalyticsHome = ({ project }) => {
                       indicatorColor="secondary"
                       aria-label="secondary tabs example"
                     >
-                      <li key={i} className="mr-2" role="presentation">
+                      <li key={i} className="mr-3 ml-3" role="presentation">
                         <button
-                          className={`inline-block py-4 px-4 h-16 text-sm  text-center text-[#6e6e6e] rounded-t-lg border-b   hover:text-gray-600 hover:border-black hover:border-b-2 dark:text-gray-400 dark:hover:text-gray-300  ${
+                          className={`inline-block py-4 px-4 h-16 text-sm  text-center text-[#6e6e6e] rounded-t-lg border-b-[3px]  hover:text-gray-600 hover:border-black hover:border-b-[3px] dark:text-gray-400 dark:hover:text-gray-300  ${
                             selCat === d.value
                               ? 'border-[#144264] text-[#144264] '
                               : 'border-transparent'
@@ -129,7 +106,7 @@ const CrmAnalyticsHome = ({ project }) => {
                           }}
                         >
                           <span
-                            className={`font-bold font-semibold text-gray-450 ${
+                            className={`font-bold font-semibold text-gray-500 ${
                               selCat === d.value
                                 ? 'text-[#0080ff] text-gray-800 '
                                 : ''
@@ -147,7 +124,7 @@ const CrmAnalyticsHome = ({ project }) => {
               </ul>
               </div>
       {selCat === 'proj_summary' && (
-        <section className=" mt-1 mr-1 py-8 mb-2 leading-7 text-gray-900 bg-white  rounded-lg  ">
+        <section className=" mt-1 mr-1 py-8 mb-2 leading-7 text-gray-900 bg-[#F1F1F1]  rounded-lg  ">
           {/* <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
           <section className="flex flex-row justify-between">
             <div className="">
@@ -232,10 +209,18 @@ const CrmAnalyticsHome = ({ project }) => {
           </div>
         </section>
       )}
-      {selCat === 'booking_summary' && (
+      {/* {selCat === 'booking_summary' && (
+        <div className="">
+          
+          <UnitBookingSummaryHomePage />
+
+          {projects.length === 0 && <DummyBodyLayout />}
+        </div>
+      )} */}
+       {selCat === 'booking_summary-v1' && (
         <div className="">
           {/* <AdvancedDataTableTest /> */}
-          <UnitBookingSummaryHomePage />
+          <UnitBookingSummaryHomePage1 />
 
           {projects.length === 0 && <DummyBodyLayout />}
         </div>
@@ -277,7 +262,7 @@ const CrmAnalyticsHome = ({ project }) => {
         </div>
       )}
       {selCat === 'collection_performance' && (
-        <div className="">
+        <div className=" bg-[#F1F1F1]">
           {/* <AdvancedDataTableTest /> */}
           <CrmCollectionReport projects={projects} />
 

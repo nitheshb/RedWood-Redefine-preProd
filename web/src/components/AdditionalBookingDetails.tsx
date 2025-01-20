@@ -2,50 +2,20 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { RadioGroup } from '@headlessui/react'
-import { ArrowCircleDownIcon, PlusIcon } from '@heroicons/react/solid'
 import { setHours, setMinutes } from 'date-fns'
-import { Timestamp } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import { Form, Formik, Field } from 'formik'
+import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
-import NumberFormat from 'react-number-format'
-import Select from 'react-select'
-import { v4 as uuidv4 } from 'uuid'
-import * as Yup from 'yup'
-
-import { Label, InputField, TextAreaField, FieldError } from '@redwoodjs/forms'
-import { useRouterStateSetter } from '@redwoodjs/router/dist/router-context'
-
-import { sourceList } from 'src/constants/projects'
 import {
-  addLead,
   updateLeadCustomerDetailsTo,
-  checkIfLeadAlreadyExists,
-  getAllProjects,
   steamUsersListByRole,
   updateUnitCustomerDetailsTo,
   streamMasters,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { storage } from 'src/context/firebaseConfig'
-import {
-  sendWhatAppMediaSms,
-  sendWhatAppTextSms,
-} from 'src/util/axiosWhatAppApi'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
-import { PhoneNoField } from 'src/util/formFields/phNoField'
-import { PhoneNoField2 } from 'src/util/formFields/phNoField2'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { TextField } from 'src/util/formFields/TextField'
-import { TextField2 } from 'src/util/formFields/TextField2'
 
-import NoBorderDropDown from './comps/noBorderDropDown'
-import Loader from './Loader/Loader'
-import { useFileUpload } from './useFileUpload'
 
 const AdditonalBookingDetails = ({
   source,
@@ -61,12 +31,15 @@ const AdditonalBookingDetails = ({
   setOnStep,
   currentMode,
   stepIndx,
+  setStepIndx,
   StatusListA,
 }) => {
   const d = new window.Date()
   const { user } = useAuth()
   const { orgId } = user
   const [usersList, setusersList] = useState([])
+  const [isMover, setIsMover] = useState(false)
+
 
 
 
@@ -120,18 +93,16 @@ const AdditonalBookingDetails = ({
     industry: leadDetailsObj2?.industry || additionalInfo?.industry || '',
 
     leadSource:
-      leadDetailsObj2?.Status === 'booked'
-        ? leadDetailsObj2[`${uid}_otherInfo`]?.leadSource
-        : additionalInfo?.leadSource || '',
+      leadDetailsObj2?.Source || selUnitDetails?.leadSource || '',
     sourceOfPay:
       leadDetailsObj2?.Status === 'booked'
         ? leadDetailsObj2[`${uid}_otherInfo`]?.sourceOfPay
-        : additionalInfo?.sourceOfPay || '',
+        : additionalInfo?.sourceOfPay || selUnitDetails?.sourceOfPay || '',
     purpose:
       leadDetailsObj2?.Status === 'booked'
         ? leadDetailsObj2[`${uid}_otherInfo`]?.purpose
-        : additionalInfo?.purpose || '',
-    bookedOn: additionalInfo?.bookedOn || d,
+        : additionalInfo?.purpose || selUnitDetails?.purpose || '',
+    bookedOn: additionalInfo?.bookedOn ||selUnitDetails?.bookedOn || d,
 
     purchasePurpose: leadDetailsObj2?.purchasePurpose || '',
     // leadSource: "",
@@ -141,7 +112,7 @@ const AdditonalBookingDetails = ({
     bookedBy:
       leadDetailsObj2?.bookedBy ||
       leadDetailsObj2?.assignedToObj?.label ||
-      additionalInfo?.bookedBy ||
+      additionalInfo?.bookedBy || selUnitDetails?.bookedBy ||
       '',
 
     referralName: '', // New field for referral name
@@ -231,7 +202,7 @@ const AdditonalBookingDetails = ({
       sourceOfPay,
       purpose,
       referralName,
-      
+
     }
 
 
@@ -245,13 +216,17 @@ const AdditonalBookingDetails = ({
 
     const updateDoc = {
       aggrementDetailsObj,
-      ...xData,
+      // ...xData,
       industry,
       designation,
       annualIncome,
       bookingSource,
       bookedBy,
       purchasePurpose,
+      leadSource,
+      sourceOfPay,
+      purpose,
+      referralName,
 
     }
     setAdditonalInfo(data)
@@ -261,7 +236,7 @@ const AdditonalBookingDetails = ({
     if (source === 'fromBookedUnit') {
       updateUnitCustomerDetailsTo(
         orgId,
-        id,
+        selUnitDetails?.uid,
         updateDoc,
         'nitheshreddy.email@gmail.com',
         enqueueSnackbar,
@@ -276,9 +251,18 @@ const AdditonalBookingDetails = ({
         enqueueSnackbar,
         resetForm
       )
+      updateUnitCustomerDetailsTo(
+        orgId,
+        selUnitDetails?.uid,
+        updateDoc,
+        'nitheshreddy.email@gmail.com',
+        enqueueSnackbar,
+        resetForm
+      )
     }
-
+    if(isMover){
     setOnStep('costsheet')
+   }
   }
   const bgImgStyle = {
     backgroundImage:
@@ -296,6 +280,7 @@ const AdditonalBookingDetails = ({
                 enableReinitialize={true}
                 initialValues={initialState}
                 onSubmit={(values, { resetForm }) => {
+                  console.log('formik submitted',source, values, resetForm)
                   onSubmit(values, resetForm)
                 }}
               >
@@ -306,9 +291,9 @@ const AdditonalBookingDetails = ({
 
                       <section className=" bg-blueGray-50">
                         <div className="w-full mx-auto ">
-                          <div className="relative flex flex-col min-w-0 break-words w-full mb-6  bg-[#F9FBFB] border-0">
+                          <div className="relative flex flex-col min-w-0 break-words w-full mb-6  bg-[#F9FBFB] border rounded-[12px]">
                             <div className="flex-auto">
-                              <section className=" lg:px-2 ">
+                              <section className=" ">
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
                                 {/* <section
                                   className="rounded-md  p-4 mt-2 bg-[#fff]"
@@ -332,12 +317,16 @@ const AdditonalBookingDetails = ({
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
                                 {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
 
+                                <div>
+
+                                </div>
+
                                 <section
-                                  className="rounded-md  p-4 mt-2 bg-[#fff]"
+                                  className=" m-4 rounded-[20px]  bg-[#fff]"
                                   style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                 >
-                                  <section className="flex flex-row">
-                                    <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
+                                  <section className="flex bg-[#EDEDED] p-4 mt-1 rounded-t-[20px] flex-row">
+                                    {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
                                     <div className="w-full flex flex-col">
                                       <div className=" flex flex-row gap-2 ">
                                         <div>
@@ -350,7 +339,7 @@ const AdditonalBookingDetails = ({
                                             These details are helpful to understand customer better.
                                           </div>
 
-                                          <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+                                          {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
                                         </div>
 
                                         <div></div>
@@ -361,6 +350,9 @@ const AdditonalBookingDetails = ({
                                           </div> */}
                                     </div>
                                   </section>
+
+                                  <div className='p-4'>
+
                                   <h6 className="text-blueGray-400  text-[14px] mt-3 mb- font-bold mt-8">
                                     Other Information
                                   </h6>
@@ -376,7 +368,7 @@ const AdditonalBookingDetails = ({
                                         />
                                       </div> */}
                                     </div>
-                                    <div className="w-1/2 lg:w-12/12 px-4">
+                                    <div className="w-1/2 lg:w-12/12 ">
                                       <div className="relative w-full mb-3">
                                         {/* <TextField2
                                           label="Source of payment/source"
@@ -460,7 +452,11 @@ const AdditonalBookingDetails = ({
     </div> */}
                                   </div>
 
+                                  </div>
+
+
                                   <section className="rounded-md  p-4 pl-0 mt-2 ">
+                                    <div className='p-4'>
                                     <h6 className="text-blueGray-400 text-[14px] mt-3  font-bold ">
                                       Booked By
                                     </h6>
@@ -469,7 +465,7 @@ const AdditonalBookingDetails = ({
                                     <div className="flex flex-wrap mt-4">
 
 
-                                      <div className="w-full lg:w-4/12 px-4">
+                                      <div className="w-full lg:w-4/12 ">
                                         <div className="relative w-full mb-3">
                                           {/* <TextField2
                                           label="Booked By"
@@ -541,7 +537,7 @@ const AdditonalBookingDetails = ({
                                           </div>
                                         </div>
                                       </div>
-                                      <div className="w-full lg:w-4/12 px-4">
+                                      <div className="w-full lg:w-4/12 ">
                                         <div className="relative w-full">
                                           <div className="w-full flex flex-col mb-3">
                                             <TextField
@@ -555,6 +551,7 @@ const AdditonalBookingDetails = ({
                                         </div>
                                       </div>
                                     </div>
+                                    </div>
                                   </section>
                                 </section>
 
@@ -567,7 +564,7 @@ const AdditonalBookingDetails = ({
                         </div>
                       </section>
                     </div>
-                    <div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
+                    <div className="mt-5 text-right  md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
                       {setShowApplicantEdit != undefined && (
                         <button
                           className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
@@ -579,19 +576,20 @@ const AdditonalBookingDetails = ({
                       )}
 
                       <button
-                        className="mb-2  md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-bg-gradient-to-r from-violet-500 to-indigo-500
+                        className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
+bg-gradient-to-r from-violet-600 to-indigo-600
 text-black
 
-border duration-200 ease-in-out
+ duration-200 ease-in-out
 transition
- px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
-px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
- "
+ px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+ bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-2 tracking-wider text-white  rounded-md hover:shadow-lg"
                         type="submit"
                         //disabled={loading}
-                        disabled={loading || formik.isSubmitting}
-
+                        disabled={loading}
+                        onClick={()=>{
+                          setIsMover(false)
+                        }}
                         // onClick={() => submitFormFun(formik)}
                       >
                         {/* {loading && <Loader />} */}
@@ -600,18 +598,19 @@ px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm h
                       {setShowApplicantEdit == undefined && (
                         <button
                           className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-bg-gradient-to-r from-violet-500 to-indigo-500
+bg-gradient-to-r from-violet-600 to-indigo-600
 text-black
 
-border duration-200 ease-in-out
+ duration-200 ease-in-out
 transition
- px-5 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
-px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg
- "
+ px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+ bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-3 tracking-wider text-white  rounded-md hover:shadow-lg"
                           type="submit"
                           //disabled={loading}
-                          disabled={loading || formik.isSubmitting}
-
+                          disabled={loading}
+                          onClick={()=>{
+                            setIsMover(true)
+                          }}
                           // onClick={() => submitFormFun(formik)}
                         >
                           {/* {loading && <Loader />} */}

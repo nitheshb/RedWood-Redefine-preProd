@@ -1,14 +1,10 @@
 import React, { useState } from 'react'
-
 import './Card.css'
-
 import 'react-circular-progressbar/dist/styles.css'
 import { UilTimes } from '@iconscout/react-unicons'
 import { motion, AnimateSharedLayout } from 'framer-motion'
 import Chart from 'react-apexcharts'
 import { CircularProgressbar } from 'react-circular-progressbar'
-
-// parent Card
 
 const Card2 = (props) => {
   const { count, title } = props
@@ -24,7 +20,6 @@ const Card2 = (props) => {
   )
 }
 
-// Compact Card
 function CompactCard({ param, setExpanded }) {
   const Png = param.png
   const { count, title, area, amount } = param

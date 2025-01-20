@@ -1,23 +1,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-// import { useState } from 'react'
-// import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
-// import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
-
 import { useEffect, useState } from 'react'
-
-import { Timestamp } from '@firebase/firestore'
 import { CalendarIcon, EyeIcon } from '@heroicons/react/outline'
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from '@heroicons/react/solid'
 import { startOfWeek, startOfDay, startOfMonth, subMonths } from 'date-fns'
-import DatePicker from 'react-datepicker'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts'
-
-import { sourceList, sourceListItems } from 'src/constants/projects'
+import { sourceListItems } from 'src/constants/projects'
 import {
   addAgreegatedSalesValues,
   getAllProjects,
@@ -28,7 +19,6 @@ import {
   getTodayTodoLeadsData,
   getTodayTodoLeadsDataByUser,
   steamAllLeadsActivity,
-  steamLeadScheduleLog,
   steamUsersListByRole,
   streamLeadLogdWithNullProj,
   updateLeadLastUpdateTime,
@@ -41,7 +31,6 @@ import { sendWhatAppTextSms1 } from 'src/util/axiosWhatAppApi'
 import CSVDownloader from 'src/util/csvDownload'
 import { prettyDate } from 'src/util/dateConverter'
 import {
-  SlimDateSelectBox,
   SlimSelectBox,
 } from 'src/util/formFields/slimSelectBoxField'
 
@@ -49,8 +38,6 @@ import MarketingAnalyticsHome from './A_MarketingModule/MarketinAnalyticsHome'
 import StackedBarChart from './A_MarketingModule/Reports/Charts/marketingStackedBarChart'
 import CampaingsTopBarsComponent from './A_MarketingModule/Reports/Charts/marketingTopBars'
 import BookingSummaryReport from './A_SalesModule/Reports/bookingSummaryReport'
-import StackedLeadsChart from './A_SalesModule/Reports/charts/salesStackedChart'
-import Chat from './A_SalesModule/Reports/chatSummary'
 import EmpLeadsTasksSummaryTable from './A_SalesModule/Reports/empLeadsTasksSummaryTable'
 import EmpTasksReportM from './A_SalesModule/Reports/EmpTasks/empTasksReportM'
 import LeadsCoversionGraphs from './A_SalesModule/Reports/leadsConversionRatio/LeadsCoversionGraphs'
@@ -68,9 +55,8 @@ import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
-//import SalesSummaryReport from './A_SalesModule/Reports/salesSummaryReport'
-//import ProfileSummary from './A_SalesModule/Reports/profileSummary'
-//import StepperTask from './A_SalesModule/Reports/StepperTask'
+
+
 
 const valueFeedData = [
   { k: 'Total', v: 300, pic: '' },
@@ -1217,20 +1203,54 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   }
   return (
     <div>
+
+
+
+      
+
+
+
       <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900 bg-white ">
+        
+
+        
+        
         <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
+          
+          
+          
+          
           <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
+            
+
+          <div className="flex justify-between items-center mb-6">
+          <div>
+            <h1 className="text-2xl mt-2 font-semibold mb-2">Sales Reports</h1>
+            <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p>
+          </div>
+
+        </div>
+{/*             
             <div className="flex overflow-x-auto ml-2 border-b pb-2">
+              
+              
+              
+              
+              
               <div className="flex items-center flex-shrink-0   border-grey maahome">
-                {/* <Link
-                className="flex items-center"
-               // to={routes.projectEdit({ uid })}
-              > */}
+     
+
+
+
+
+                
+
+
 
                 <span className="relative  flex items-center w-auto text-xl font-bold leading-none pl-0 mt-[18px]">
                   Sales Reports
                 </span>
-                {/* </Link> */}
+      
               </div>
               {[
                 { label: 'Booking Performance', value: 'booking_perf' },
@@ -1243,13 +1263,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
                 { label: 'Top Bar', value: 'bar_tasks' },
                 { label: 'Profile', value: 'profile_tasks' },
-
-                // { label: 'Table Edit', value: 'edit_table' },
-
-                // { label: 'Source Report', value: 'source_report' },
-                // { label: 'Employee Report', value: 'emp_status_report' },
-                // { label: 'Project Leads Report', value: 'proj_leads_report' },
-                //  { label: 'Employee Leads Aging', value: 'emp_leads_report' },
+            
               ].map((data, i) => {
                 return !(
                   [
@@ -1275,7 +1289,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             : 'font-normal text-black-100 bg-[#f0f8ff]'
                         }  rounded`}
                       >
-                        {/* <PencilIcon className="h-3 w-3 mr-1" aria-hidden="true" /> */}
                         <img
                           alt=""
                           src="/temp2.png"
@@ -1287,7 +1300,51 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                   </section>
                 ) : null
               })}
-            </div>
+            </div> */}
+
+
+
+
+            <div className="flex items-center space-x-1 mb-6 border-b">
+          {[
+
+{ label: 'Booking Performance', value: 'booking_perf' },
+{ label: 'Leads Performance', value: 'lead_perf' },
+{ label: 'Source Performance', value: 'source_perf' },
+{ label: 'Site Visits', value: 'site_visits' },
+{ label: 'Employee Performance', value: 'emp_tasks' },
+{ label: 'Home', value: 'sale_report_home' },
+{ label: 'Marketing', value: 'marketing_Dashboard' },
+
+{ label: 'Top Bar', value: 'bar_tasks' },
+{ label: 'Profile', value: 'profile_tasks' },
+
+
+
+        ].map((data, i) => (
+            <button
+              key={i}
+              onClick={() =>     setSelCat(data.value)}
+              className={`px-4 py-2 ${
+                selCat === data.value
+                  ? 'border-b-2 border-black text-black'
+                  : 'text-gray-500 hover:text-black'
+              }`}
+            >
+               <span
+                  className={`flex items-center   text-sm   ${
+                    selCat === data.value
+                      ? 'font-semibold text-green-800 '
+                      : 'font-medium text-black-100 '
+                  }  rounded-full`}
+                >
+                  {/* <PencilIcon className="h-3 w-3 mr-1" aria-hidden="true" /> */}
+                  <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
+                  {data?.label}
+                </span>
+            </button>
+          ))}
+        </div>
             {/* <div className=" mt-10 grid grid-cols-1 gap-7">
               <span className="min-w-100 ">
                 <span>
@@ -1488,12 +1545,13 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               <span
                                 className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                   sourceDateRange === startOfDay(d).getTime()
-                                    ? 'font-semibold text-pink-800 bg-pink-200 '
-                                    : 'text-green-800 bg-green-200 '
+                                        ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF]  '
+                                  : 'text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  border border-[#4C0053]  bg-[#fff]  '
+                    
                                 }rounded-full`}
                               >
                                 <EyeIcon
-                                  className="h-3 w-3 mr-1"
+                                  className="h-4 w-4 mr-1"
                                   aria-hidden="true"
                                 />
                                 Today
@@ -1510,12 +1568,12 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             <span
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange === startOfWeek(d).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+                                  ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  border border-[#4C0053]  bg-[#fff] '
                               }rounded-full`}
                             >
                               <CalendarIcon
-                                className="h-3 w-3 mr-1"
+                                className="h-4 w-4 mr-1"
                                 aria-hidden="true"
                               />
                               This Week
@@ -1529,12 +1587,12 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             <span
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange === startOfMonth(d).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+                                      ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF] '
+                                      : ' bg-white border border-[#4C0053] text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  rounded-full '
                               }rounded-full`}
                             >
                               <CalendarIcon
-                                className="h-3 w-3 mr-1"
+                                className="h-4 w-4 mr-1"
                                 aria-hidden="true"
                               />
                               This Month
@@ -1551,12 +1609,14 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange ===
                                 subMonths(startOfMonth(d), 6).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+
+                                  ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF]  '
+                                  : ' bg-white border border-[#4C0053] text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  rounded-full '
+  
                               }rounded-full`}
                             >
                               <CalendarIcon
-                                className="h-3 w-3 mr-1"
+                                className="h-4 w-4 mr-1"
                                 aria-hidden="true"
                               />
                               Last 6 Months
@@ -1568,15 +1628,17 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                 <span
                                   className={`flex ml-1 mt-[6px] items-center h-6 px-3 text-xs ${
                                     sourceDateRange === startDate?.getTime()
-                                      ? 'font-semibold text-pink-800 bg-pink-200 '
-                                      : 'text-green-800 bg-green-200 '
+
+                                  ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF]  '
+                                  : ' bg-white border border-[#4C0053] text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  rounded-full '
+ 
                                   } rounded-full`}
                                   onClick={() => {
                                     setIsOpened(true)
                                   }}
                                 >
                                   <CalendarIcon
-                                    className="h-3 w-3 mr-1"
+                                    className="h-4 w-4 mr-1"
                                     aria-hidden="true"
                                   />
                                   {startDate == null ? 'Custom' : ''}
@@ -1602,7 +1664,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   <CustomDatePicker
                                     className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                       sourceDateRange === startDate?.getTime()
-                                        ? 'font-semibold text-pink-800 bg-pink-200 '
+                                        ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
                                         : 'text-green-800 bg-green-200 '
                                     } rounded-full`}
                                     onCalendarClose={() => setIsOpened(false)}
@@ -1994,8 +2056,9 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               <span
                                 className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                   sourceDateRange === startOfDay(d).getTime()
-                                    ? 'font-semibold text-pink-800 bg-pink-200 '
-                                    : 'text-green-800 bg-green-200 '
+                                   ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
+                            
                                 }rounded-full`}
                               >
                                 <EyeIcon
@@ -2016,8 +2079,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             <span
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange === startOfWeek(d).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+                                  ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
                               }rounded-full`}
                             >
                               <CalendarIcon
@@ -2035,8 +2098,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             <span
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange === startOfMonth(d).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+                                 ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
                               }rounded-full`}
                             >
                               <CalendarIcon
@@ -2057,8 +2120,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               className={`flex ml-2 mt-[5px] items-center h-6 px-3 text-xs ${
                                 sourceDateRange ===
                                 subMonths(startOfMonth(d), 6).getTime()
-                                  ? 'font-semibold text-pink-800 bg-pink-200 '
-                                  : 'text-green-800 bg-green-200 '
+                                  ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                  : 'text-[#020B97] bg-[#C4FECB] '
                               }rounded-full`}
                             >
                               <CalendarIcon
@@ -2108,8 +2171,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   <CustomDatePicker
                                     className={`z-10 pl- py-1 px-3 mt-[7px] inline text-xs text-[#0091ae] placeholder-green-800 cursor-pointer  max-w-fit   ${
                                       sourceDateRange === startDate?.getTime()
-                                        ? 'font-semibold text-pink-800 bg-pink-200 '
-                                        : 'text-green-800 bg-green-200 '
+                                       ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
+                                       : 'text-[#020B97] bg-[#C4FECB] '
                                     } rounded-full`}
                                     onCalendarClose={() => setIsOpened(false)}
                                     placeholderText="&#128467;	 Custom"
@@ -2148,7 +2211,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                 )
                               }
                             >
-                              Save DB
+                              
                             </button>
                           )}
                         </section>
@@ -2707,6 +2770,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             </>
           )}
           {selCat === 'booking_perf' && <BookingSummaryReport />}
+          {/* {selCat === 'payment_ui' && <BookingSummaryHeader/>} */}
+
           {selCat === 'source_perf' && (
             <section>
               <section className="flex flex-row flex-wrap gap-2">

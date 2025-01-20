@@ -1,9 +1,7 @@
 import Button from '@mui/material/Button'
 import { useDispatch } from 'react-redux'
-
 import { useAuth } from 'src/context/firebase-auth-context'
 import { logout as logoutAction } from 'src/state/actions/user'
-
 export default () => {
   const { logout } = useAuth()
   const dispatch = useDispatch()

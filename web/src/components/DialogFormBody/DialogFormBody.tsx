@@ -1,9 +1,4 @@
-import { constants } from 'os'
-
 import { useState, useEffect } from 'react'
-
-// import { Prompt } from 'react-router-dom'
-import { Dialog } from '@headlessui/react'
 import { Add, Remove } from '@mui/icons-material'
 import { InputAdornment, TextField as MuiTextField } from '@mui/material'
 import { setHours, setMinutes } from 'date-fns'
@@ -12,19 +7,13 @@ import { useSnackbar } from 'notistack'
 import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
-
-
-
 import { AreaConverter } from 'src/components/AreaConverter'
 import Loader from 'src/components/Loader/Loader'
 import {
-  ChooseOptions,
   chooseAuthorityApproval,
   developmentTypes,
   projectPlans,
-  statesList,
   chooseReraApproval,
-  approvalAuthority,
 } from 'src/constants/projects'
 import {
   createProject,
@@ -45,6 +34,8 @@ import { TextField } from 'src/util/formFields/TextField'
 import AddBankDetailsForm from '../addBankDetailsForm'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import UserAvatarUpload from '../comps/userAvatarUplaod'
+import ProjectLogoUploader from '../comps/projectLogoUploader'
 
 
 
@@ -52,6 +43,7 @@ import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 const DialogFormBody = ({
   title,
+  moveNext,
   setProject,
   submitter,
   setSubmitter,
@@ -171,29 +163,29 @@ const DialogFormBody = ({
           const x = docSnapshot.data()
           return x
         })
-  
+
         console.log('fetched users list is', bankA)
         // step 3: filter and set values to each title
         if (bankA?.length > 0) {
           const dA = bankA.filter((item) => item.title == 'State')
           const eA = bankA.filter((item) => item.title == 'Planning Authority')
-         
+
           setStatesList(dA.sort((a, b) => {
             return a.order - b.order
           }))
           setapprovalAuthority(eA.sort((a, b) => {
             return a.order - b.order
           }))
-  
-          
-          
-         
-      
+
+
+
+
+
         }
       },
-      
+
     )
-  
+
     return unsubscribe
   }, [])
 
@@ -211,9 +203,9 @@ const DialogFormBody = ({
       planningApproval: planningApproval,
       reraApproval: reraApproval,
     }
-    console.log('selected value is ', project?.editMode)
+    console.log('selected value is testing ', project?.editMode, project)
     // setLoading(true)
-    if (project?.editMode) {
+    if (project?.editMode || project?.uid !=null) {
       await updateProject(
         orgId,
         project.uid,
@@ -251,6 +243,11 @@ const DialogFormBody = ({
             enqueueSnackbar,
             resetForm
           )
+          const additionalUserInfo = await getProject(orgId, uid)
+          await console.log('selected value is xxx ', additionalUserInfo)
+          await setProject(additionalUserInfo)
+         await moveNext()
+          // mo
         },
         (error) => (fullCsA = [])
       )
@@ -342,6 +339,8 @@ const DialogFormBody = ({
     extentTextSecondary: project?.extentTextSecondary || '',
     extentDropDownPrimary: project?.extentDropDownPrimary || 'acre',
     extentDropdownSecondary: project?.extentDropdownSecondary || 'gunta',
+    projectWebsiteurl: project?.projectWebsiteurl || '',
+    marketedby: project?.marketedby || '',
   }
 
   const createProjectSchema = Yup.object({
@@ -358,6 +357,8 @@ const DialogFormBody = ({
       .length(6, 'Must be 6 digits'),
     city: Yup.string().required('Required'),
     state: Yup.string().required('Required'),
+    // marketedby: Yup.string().required('Required'),
+    // projectWebsiteurl: Yup.string().required('Required'),
     // landlordShare:
     //   devType.name === 'Joint'
     //     ? Yup.number().required('Required')
@@ -415,164 +416,214 @@ const DialogFormBody = ({
                               <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
                             </div>
                           </div>
-                          <p className="text-sm text-gray-800 ">
-                            Project Name*
-                          </p>
-                          <TextField label="" name="projectName" type="text" />
-                          <section className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-2">
-                            <div className="mb-3 w-[50%]">
-                              <label
-                                htmlFor="extent"
-                                className="label  text-sm"
-                              >
-                                Project Extent*{' '}
-                                <span className="text-[11px] ">
-                                  (
-                                  {sqftConverter(
-                                    formik?.values?.extent,
-                                    'square-meter'
-                                  )?.toLocaleString('en-IN')}{' '}
-                                  sqft)
-                                </span>
-                              </label>
-                              <MuiTextField
-                                id="extent"
-                                className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
-                                size="small"
-                                InputProps={{
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      Sqmt
-                                    </InputAdornment>
-                                  ),
-                                  endAdornment: (
-                                    <InputAdornment position="end">
-                                      <button
-                                        type="button"
-                                        style={{ marginRight: '-13px' }}
-                                        onClick={onExtendClick}
-                                        className="border  font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
-                                      >
-                                        {openExtendFields ? (
-                                          <Remove />
-                                        ) : (
-                                          <Add />
-                                        )}
-                                      </button>
-                                    </InputAdornment>
-                                  ),
-                                }}
-                                label=""
-                                name="extent"
-                                type="text"
-                                value={formatIndianNumber(formik.values.extent||0)}
-                                onChange={(e) => {
-                                  const rawValue = e.target.value.replace(
-                                    /,/g,
-                                    ''
-                                  )
-                                  const numValue = parseFloat(rawValue)
-                                  if (!isNaN(numValue)) {
-                                   formik.setFieldValue('extent', numValue)
-                                  } else {
-                                    formik.setFieldValue('extent', 0)
 
-                                  }
-                                }}
-                              />
-                              {formik.errors.extent ? (
-                                <div className="error-message text-red-700 text-xs p-2">
-                                  {formik.errors.extent}
-                                  {formik.values.extent}
-                                </div>
-                              ) : null}
-                              {openExtendFields && (
-                                <AreaConverter
-                                  formik={formik}
-                                  hideField={setOpenExtendFields}
-                                  fieldName="extent"
-                                  textPrimaryName="extentTextPrimary"
-                                  textSecondaryName="extentTextSecondary"
-                                  dropDownPrimaryName="extentDropDownPrimary"
-                                  dropdownSecondaryName="extentDropdownSecondary"
-                                />
-                              )}
+
+                          <div className='grid grid-cols-4 gap-2 w-full'>
+
+
+                            <div className='col-span-1'>
+                            <ProjectLogoUploader projectId={project?.uid} projectLogoURL={project?.projectLogoUrl}/>
                             </div>
-                            <div className="mb-3 w-[50%]">
-                              <label htmlFor="area" className="label  text-sm">
-                                Saleable Area*{' '}
-                                <span className="text-[11px] ">
-                                  (
-                                  {sqftConverter(
-                                    formik?.values?.area,
-                                    'square-meter'
-                                  )?.toLocaleString('en-IN')}{' '}
-                                  sqft)
-                                </span>
-                              </label>
-                              <MuiTextField
-                                id="area"
-                                className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
-                                size="small"
-                                InputProps={{
-                                  startAdornment: (
-                                    <InputAdornment position="start">
-                                      Sqmt
-                                    </InputAdornment>
-                                  ),
-                                  endAdornment: (
-                                    <InputAdornment position="end">
-                                      <button
-                                        type="button"
-                                        style={{ marginRight: '-13px' }}
-                                        onClick={onAreaClick}
-                                        className="border bg-[#57c0d0] font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
-                                      >
-                                        {openAreaFields ? <Remove /> : <Add />}
-                                      </button>
-                                    </InputAdornment>
-                                  ),
-                                }}
-                                label=""
-                                name="area"
-                                type="text"
-                                value={formatIndianNumber(formik.values.area||0)}
-                                onChange={(e) => {
-                                  const rawValue = e.target.value.replace(
-                                    /,/g,
-                                    ''
-                                  )
-                                  const numValue = parseFloat(rawValue)
-                                  if (!isNaN(numValue)) {
-                                   formik.setFieldValue('area', numValue)
-                                  } else {
-                                    formik.setFieldValue('area', 0)
 
-                                  }
-                                }}
-                              />
-                              {formik.errors.area ? (
-                                <div className="error-message text-red-700 text-xs p-2">
-                                  {formik.errors.area}
-                                  {formik.values.area}
-                                </div>
-                              ) : null}
 
-                              {openAreaFields && (
-                                <AreaConverter
-                                  formik={formik}
-                                  hideField={setOpenAreaFields}
-                                  fieldName="area"
-                                  textPrimaryName="areaTextPrimary"
-                                  textSecondaryName="areaTextSecondary"
-                                  dropDownPrimaryName="areaDropDownPrimary"
-                                  dropdownSecondaryName="areaDropdownSecondary"
-                                />
-                              )}
-                            </div>
-                          </section>
+
+
+
+
+
+                          <div className='col-span-3 items-start'>
+{/* <p className="text-sm text-gray-800 ">
+  Project Name*
+</p> */}
+<TextField label="Project Name*"  name="projectName" type="text" />
+<section className="flex flex-row space-x-4 w-full text-xs mt-[14px]">
+  <div className="mb-3 w-[50%]">
+    <label
+      htmlFor="extent"
+      className="label  text-xs text-[#374151] mb-2"
+    >
+      Project Extent*{' '}
+      <span className="text-[11px] ">
+        (
+        {sqftConverter(
+          formik?.values?.extent,
+          'square-meter'
+        )?.toLocaleString('en-IN')}{' '}
+        sqft)
+      </span>
+    </label>
+    <MuiTextField
+      id="extent"
+      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+      size="small"
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            Sqmt
+          </InputAdornment>
+        ),
+        endAdornment: (
+          <InputAdornment position="end">
+            <button
+              type="button"
+              style={{ marginRight: '-13px' }}
+              onClick={onExtendClick}
+              className="border  font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
+            >
+              {openExtendFields ? (
+                <Remove />
+              ) : (
+                <Add />
+              )}
+            </button>
+          </InputAdornment>
+        ),
+      }}
+      label=""
+      name="extent"
+      type="text"
+      value={formatIndianNumber(formik.values.extent||0)}
+      onChange={(e) => {
+        const rawValue = e.target.value.replace(
+          /,/g,
+          ''
+        )
+        const numValue = parseFloat(rawValue)
+        if (!isNaN(numValue)) {
+         formik.setFieldValue('extent', numValue)
+        } else {
+          formik.setFieldValue('extent', 0)
+
+        }
+      }}
+    />
+    {formik.errors.extent ? (
+      <div className="error-message text-red-700 text-xs p-2">
+        {formik.errors.extent}
+        {formik.values.extent}
+      </div>
+    ) : null}
+    {openExtendFields && (
+      <AreaConverter
+        formik={formik}
+        hideField={setOpenExtendFields}
+        fieldName="extent"
+        textPrimaryName="extentTextPrimary"
+        textSecondaryName="extentTextSecondary"
+        dropDownPrimaryName="extentDropDownPrimary"
+        dropdownSecondaryName="extentDropdownSecondary"
+      />
+    )}
+  </div>
+  <div className="mb-3 w-[50%]">
+    <label htmlFor="area" className="label  text-xs text-[#374151] mb-2 pb-2 ">
+      Saleable Area*{' '}
+      <span className="text-[11px] ">
+        (
+        {sqftConverter(
+          formik?.values?.area,
+          'square-meter'
+        )?.toLocaleString('en-IN')}{' '}
+        sqft)
+      </span>
+    </label>
+    <MuiTextField
+      id="area"
+      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10  p-0`}
+      size="small"
+
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            Sqmt
+          </InputAdornment>
+        ),
+        endAdornment: (
+          <InputAdornment position="end">
+            <button
+              type="button"
+              style={{ marginRight: '-13px' }}
+              onClick={onAreaClick}
+              className="border bg-[#57c0d0] font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
+            >
+              {openAreaFields ? <Remove /> : <Add />}
+            </button>
+          </InputAdornment>
+        ),
+      }}
+      label=""
+      name="area"
+      type="text"
+      value={formatIndianNumber(formik.values.area||0)}
+      onChange={(e) => {
+        const rawValue = e.target.value.replace(
+          /,/g,
+          ''
+        )
+        const numValue = parseFloat(rawValue)
+        if (!isNaN(numValue)) {
+         formik.setFieldValue('area', numValue)
+        } else {
+          formik.setFieldValue('area', 0)
+
+        }
+      }}
+    />
+    {formik.errors.area ? (
+      <div className="error-message text-red-700 text-xs p-2">
+        {formik.errors.area}
+        {formik.values.area}
+      </div>
+    ) : null}
+
+    {openAreaFields && (
+      <AreaConverter
+        formik={formik}
+        hideField={setOpenAreaFields}
+        fieldName="area"
+        textPrimaryName="areaTextPrimary"
+        textSecondaryName="areaTextSecondary"
+        dropDownPrimaryName="areaDropDownPrimary"
+        dropdownSecondaryName="areaDropdownSecondary"
+      />
+    )}
+  </div>
+
+
+
+</section>
+
+
+
+<div className="grid grid-cols-2 gap-4 w-full">
+<div>
+{/* <p className="text-sm text-gray-800">
+Project Website URL*
+</p> */}
+<TextField label="Project Website URL" name="projectWebsiteurl" type="text" />
+</div>
+<div>
+{/* <p className="text-sm text-gray-800">
+Marketed By*
+</p> */}
+<TextField label="Marketed By" name="marketedby" type="text" />
+</div>
+</div>
+
+
+</div>
+                          </div>
+
                         </div>
-                        <div className="flex flex-col mt-2  pt-2 ">
+
+
+                        <div className='grid grid-cols-2 gap-4' >
+
+
+
+
+                        <div className="flex flex-col mt-2   pt-2 ">
+                          
                           <CustomRadioGroup
                             label="Planning Authority Approval"
                             value={planningApproval}
@@ -582,7 +633,8 @@ const DialogFormBody = ({
 
                           {planningApproval?.name === 'Yes' && (
                             <>
-                              <div className="py-2">
+                            <div className=' bg-white shadow-md  mt-2 p-2 rounded-md '>
+                            <div className=" ">
                                 <CustomSelect
                                   name="Planning Approval Authority"
                                   label={
@@ -648,7 +700,7 @@ const DialogFormBody = ({
                                     dateFormat="MMM dd, yyyy"
                                   />
                                 </div>
-                                <div className="mt-2 w-full">
+                                {/* <div className="mt-2 w-full"> */}
                                   {/*<TextField
                             label="End Date*"
                             name="bmrdaEndDate"
@@ -678,13 +730,14 @@ const DialogFormBody = ({
                                   ]}
                                   dateFormat="MMMM d, yyyy"
                                 /> */}
-                                </div>
+                                {/* </div> */}
                               </div>
+                            </div>
                             </>
                           )}
                         </div>
 
-                        <div className="flex flex-col mt-2  pt-4 ">
+                        <div className="flex flex-col mt-2 pt-2 ">
                           <CustomRadioGroup
                             label="Rera Approval"
                             value={reraApproval}
@@ -692,7 +745,10 @@ const DialogFormBody = ({
                             onChange={setReraApproval}
                           />
                           {reraApproval?.name === 'Yes' && (
-                            <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                            <div className="md:flex md:flex-col pt-[10px] flex-col md:space-x-1 w-full text-xs">
+
+<div className=' bg-white shadow-md  p-2 rounded-md '>
+
                               <div className="mt-2 w-full">
                                 <TextField
                                   label="RERA No*"
@@ -700,7 +756,11 @@ const DialogFormBody = ({
                                   type="text"
                                 />
                               </div>
-                              <div className="mt-2 w-full">
+
+
+                              <div className='flex flex-row gap-2 w-full  '>
+
+                              <div className="mt-1 mb-[6px] w-1/2 min-w-0">
                                 {/*<TextField
                             label="Start Date*"
                             name="hdmaStartDate"
@@ -713,7 +773,7 @@ const DialogFormBody = ({
                                 <DatePicker
                                   id="hdmaStartDate"
                                   name="hdmaStartDate"
-                                  className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
+                                  className="px-2 h-8 rounded-md w-full text-[#0091ae] bg-grey-lighter text-grey-darker border border-[#cccccc]"
                                   selected={startDate}
                                   onChange={(date) => {
                                     if (date.getTime() < endDate) {
@@ -734,7 +794,7 @@ const DialogFormBody = ({
                                   dateFormat="d-MMMM-yyyy"
                                 />
                               </div>
-                              <div className="mt-2 w-full">
+                              <div className="mt-1 mb-[6px] w-1/2 min-w-0">
                                 {/*  <TextField
                             label="End Date*"
                             name="hdmaEndDate"
@@ -747,7 +807,7 @@ const DialogFormBody = ({
                                 <DatePicker
                                   id="hdmaEndDate"
                                   name="hdmaEndDate"
-                                  className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
+                                  className="px-2 h-8 rounded-md w-full text-[#0091ae] bg-grey-lighter text-grey-darker border border-[#cccccc]"
                                   selected={endDate}
                                   onChange={(date) => {
                                     console.log(
@@ -775,15 +835,28 @@ const DialogFormBody = ({
                                   dateFormat="d-MMMM-yyyy"
                                 />
                               </div>
+
+                              </div>
+
+                              </div>
+
                             </div>
                           )}
                         </div>
+
+
+                        </div>
+
+
+
+
+
                         <div className="flex flex-col mt-2 rounded-lg  pt-4 ">
                           <div className="mb-4 mt-2">
                             <div className="inline">
                               <div className="">
                                 <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                                  Add Bank Accont*<abbr title="required"></abbr>
+                                  Add Bank Account*<abbr title="required"></abbr>
                                 </label>
                               </div>
 
@@ -943,7 +1016,13 @@ const DialogFormBody = ({
                             <TextField
                               label="Pincode*"
                               name="pincode"
-                              type="text"
+                              type="number"
+                              inputProps={{ maxLength: 6 }}
+                              onInput={(e) => {
+                                if (e.target.value.length > 6) {
+                                  e.target.value = e.target.value.slice(0, 6);
+                                }
+                              }}
                             />
                           </div>
                           <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
@@ -952,6 +1031,9 @@ const DialogFormBody = ({
                                 label="City*"
                                 name="city"
                                 type="text"
+                                onInput={(e) => {
+                                  e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                                }}
                               />
                             </div>
                             <div className="w-full">
@@ -964,7 +1046,7 @@ const DialogFormBody = ({
                                 }}
                                 value={formik.values.state}
                                 options={statesListA}
-                                
+
 
                               />
                               {/* {formik.errors.state ? (
@@ -979,6 +1061,7 @@ const DialogFormBody = ({
                             <TextAreaField
                               label="Address"
                               name="address"
+                              ClassName="text-sm text-gray-800"
                               type="text"
                             />
                           </div>

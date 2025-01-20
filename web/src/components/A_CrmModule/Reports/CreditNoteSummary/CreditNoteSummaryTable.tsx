@@ -34,8 +34,6 @@ import Highlighter from 'react-highlight-words'
 import CSVDownloader from 'src/util/csvDownload'
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import { computeTotal } from 'src/util/computeCsTotals'
-// import { prettyDate } from '../../util/dateConverter'
-// import DropCompUnitStatus from '../dropDownUnitStatus'
 
 
 

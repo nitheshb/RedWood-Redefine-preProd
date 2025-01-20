@@ -1,43 +1,25 @@
 import React, { useState, useEffect } from 'react'
-
 import { Select as SelectMAT, MenuItem } from '@material-ui/core'
-import { Rowing, Widgets } from '@mui/icons-material'
 import { styled } from '@mui/material/styles'
-import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid'
 import { useSnackbar } from 'notistack'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 
 import {
-  costSheetAdditionalChargesA,
-  csSections,
-  gstValesA,
-  paymentScheduleA,
-  paymetScheduleConstruct,
   unitsCancellation,
 } from 'src/constants/projects'
 import {
-  addCostSheetMaster,
-  addPhasePartAtax,
-  addPhaseFullCs,
-  steamBankDetailsList,
   streamProjectCSMaster,
   addPhasePaymentScheduleCharges,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
-import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 
-import { gstValesPartA } from '../../../../../RedefineV2/web/src/constants/projects'
-
-// import './styles.css'
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
-  // width: '170px',
   fontSize: '13px',
   '&.MuiInputBase-root': {
     width: '100%',
-    fontSize: '13px', //
+    fontSize: '13px', 
   },
   '&.MuiOutlinedInput-root': {
     width: '100%',
@@ -369,6 +351,22 @@ const EditablePaymentTable = ({
   }
   const saveSetup = async () => {
     console.log('setUpData is ', rows, source)
+    console.log('payment schuled value is ', rows)
+
+    // rows.map((item) => {
+    //   console.log('item is ', item)
+    //   item.percentage = item.percentage / 100
+    // })
+
+    const sum = rows.reduce((accumulator, current) => {
+      return current.units.value === 'percentage' ? accumulator + parseFloat(current.percentage) : accumulator;
+    }, 0)
+    if(sum !== 100){
+    enqueueSnackbar(`Total payment percentage should be 100% ${sum}`, {
+      variant: 'error',
+    })}else{
+
+
     const data = { fullCs: rows, type: type }
     const { projectId, uid } = phase || {}
     if (source === 'project') {
@@ -394,6 +392,7 @@ const EditablePaymentTable = ({
       )
       // addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }
+  }
   }
   const [rows, setRows] = useState([
     // {
@@ -480,7 +479,7 @@ const EditablePaymentTable = ({
                                       }}
                                       className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                                     />
-                                  
+
                                   </section>
                                   {/* <StyledSelect
                                     disableUnderline={true}

@@ -1,23 +1,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState, useEffect, Fragment } from 'react'
-
-import { Dialog, Listbox, Transition } from '@headlessui/react'
-import { RadioGroup } from '@headlessui/react'
+import { useState, useEffect } from 'react'
 import { CalendarIcon } from '@heroicons/react/outline'
-import { CheckIcon, SelectorIcon, FireIcon } from '@heroicons/react/solid'
-import Checkbox from '@mui/material/Checkbox'
+import { FireIcon } from '@heroicons/react/solid'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 import { Form, Formik, Field, ErrorMessage } from 'formik'
-import DatePicker from 'react-datepicker'
-import NumberFormat from 'react-number-format'
 import Select from 'react-select'
 import * as Yup from 'yup'
-
-import { Label, InputField, TextAreaField, FieldError } from '@redwoodjs/forms'
-import { useRouterStateSetter } from '@redwoodjs/router/dist/router-context'
 
 import {
   addLead,
@@ -25,18 +16,12 @@ import {
   checkIfLeadAlreadyExists,
   getAllProjects,
   steamUsersList,
-  steamUsersListByRole,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import {
   sendWhatAppMediaSms,
   sendWhatAppTextSms,
 } from 'src/util/axiosWhatAppApi'
-import { PhoneNoField } from 'src/util/formFields/phNoField'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
-import { TextField } from 'src/util/formFields/TextField'
-import { TextField2 } from 'src/util/formFields/TextField2'
 
 const customStyles = {
   control: (base) => ({
@@ -68,7 +53,6 @@ const customStyles = {
   }),
   menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999 }),
 }
-import Loader from '../Loader/Loader'
 
 import { CustomSelectNew } from 'src/util/formFields/selectBoxFieldNew'
 
@@ -91,11 +75,11 @@ const formatOptionLabel = ({ value, label, dept }) => (
         marginLeft: '10px',
         color: '#118d57',
         background: '#22c55e29',
-        padding: '0px 8px',
-        paddingBottom: '2px',
+        padding: '0px 6px',
+        paddingBottom: '0px',
         borderRadius: '10px',
         fontSize: '10px',
-        height: '21px'
+        height: '18px'
       }}
     >
       {dept}
@@ -492,6 +476,8 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                               {'Responsible person*'}
                             </label>
 
+                          
+
                             <div className="w-full flex flex-col mt-1 ">
                               <CustomSelectNew
                                 name="assignedTo"
@@ -540,7 +526,7 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                                 value={formik?.values?.followers[0] || []}
                                 className="basic-multi-select w-full"
                                 classNamePrefix="myselect"
-                                styles={customStyles}
+                                // styles={customStyles}
                               />
 
                               <p
@@ -638,7 +624,7 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                       )}
                       <button
                         // onClick={() => fAddSchedule()}
-                        className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  text-[#535c69]  bg-[#bbed21]   hover:shadow-lg `}
+                        className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  text-[#fff]  bg-[#0891B2]   hover:shadow-lg `}
                       >
                         <span className="ml-1 ">Add Task</span>
                       </button>

@@ -1,41 +1,27 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { Fragment, useEffect, useState } from 'react'
-
-import { Menu, Transition } from '@headlessui/react'
+import { useState,useEffect } from 'react'
 import {
-  ChartPieIcon,
   OfficeBuildingIcon,
-  NewspaperIcon,
-  UserGroupIcon,
-  ScaleIcon,
-  PuzzleIcon,
 } from '@heroicons/react/outline'
 import {
-  ChevronDownIcon,
-  FireIcon,
-  CurrencyRupeeIcon,
-  DotsVerticalIcon,
-  CheckIcon,
-  DocumentTextIcon,
   ArrowDownIcon,
   ArrowUpIcon,
 } from '@heroicons/react/solid'
-
-import { Link, routes } from '@redwoodjs/router'
-
 import { USER_ROLES } from 'src/constants/userRoles'
 import { useAuth } from 'src/context/firebase-auth-context'
-
 import DocRow from '../LegalModule/Docu_row'
-
 import BankSelectionSwitchDrop from './BankSelectionDroopDown'
+import { updateBankLoanApprovals, updateUnitDocs } from 'src/context/dbQueryFirebase'
+import { useSnackbar } from 'notistack'
+import CrmActivityLog from '../A_CrmModule/CrmActivityLog'
 
-export default function LoanApplyFlowHome({ type, setStatusFun }) {
+
+export default function LoanApplyFlowHome({ type, setStatusFun , customerDetails}) {
   const [selLoanBank, setLoanBank] = useState({})
-  const [preSanctionReview, SetPreSanctionReview] = useState('In-Review')
-  const [postSanctionReview, SetPostSanctionReview] = useState('In-Review')
+  const [preSanctionReview, SetPreSanctionReview] = useState('')
+  const [postSanctionReview, SetPostSanctionReview] = useState('')
   const [S1, setS1] = useState(true)
   const [S2, setS2] = useState(true)
   const [S3, setS3] = useState(true)
@@ -43,13 +29,109 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
   const [S5, setS5] = useState(true)
   const [S6, setS6] = useState(true)
 
-  const { user } = useAuth()
 
-  if (!user?.role?.includes(USER_ROLES.ADMIN)) {
-    return null
-  }
+  const [rejectionReason, setRejectionReason] = useState('')
+const [rejection, setRejection] = useState(false)
+const [fillError, showFillError] = useState(false)
+const [submittedReason, setSubmittedReason] = useState('')
+
+
+
+
+
+
+
+
+  const { user } = useAuth()
+  const { orgId } = user
+    const { enqueueSnackbar } = useSnackbar()
+
+
+  useEffect(() => {
+  //  save to db :
+
+// write on change and save it to db:
+
+[
+  {
+    bName: 'State Bank Of India',
+    value: 'sbi',
+  },
+  {
+    bName: 'ICICI',
+    value: 'icici',
+  },
+  {
+    bName: 'HDFC',
+    value: 'hdfc',
+  },
+].filter((d)=>d.value==customerDetails?.loanBank).map((d1)=>{
+
+  setLoanBank(d1)
+})
+SetPreSanctionReview(customerDetails?.LpreStatus)
+
+SetPostSanctionReview(customerDetails?.LpostStatus)
+setRejectionReason(customerDetails?.loan_rejection_reason || '')
+
+  }, [customerDetails])
+
+
+  useEffect(() => {
+    if(customerDetails?.loanBank != selLoanBank?.value ){
+
+      if(selLoanBank?.value){
+
+    const x1 ={'loanBank': selLoanBank?.value || '' }
+
+    // updateBankLoanApprovals(orgId, customerDetails?.id, x1, user.email, `${status} Saved..!`, 'success', enqueueSnackbar)
+    // if (status === 'Rejected') {
+    //   setSubmittedReason(rejectionReason)
+    //   setRejectionReason('')
+    //   setRejection(false)
+    // }
+    updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${selLoanBank?.value}Saved..!`,'success',enqueueSnackbar )
+}}
+    }, [selLoanBank])
+
+
+    const updatePerSancationFun = (status)=> {
+      SetPreSanctionReview(status)
+      const x1 ={'LpreStatus': status || '',
+        // 'loan_rejection_reason': status === 'Rejected' ? rejectionReason : null
+       }
+      updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${status} Saved..!`,'success',enqueueSnackbar )
+    }
+
+    const updatePostSancationFun = (status)=> {
+      SetPostSanctionReview(status)
+      const x1 ={'LpostStatus': status || '' }
+      updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`Banker Sanction ${status} Saved..!`,'success',enqueueSnackbar )
+    }
+
+
+
+
+    // const updatePerSancationFun = (status) => {
+    //   SetPreSanctionReview(status)
+    //   const x1 = {
+    //     'LpreStatus': status || '',
+    //     'rejectionReason': status === 'Rejected' ? rejectionReason : ''
+    //   }
+    //   updateBankLoanApprovals(orgId, customerDetails?.id, x1, user.email, `${status} Saved..!`, 'success', enqueueSnackbar)
+    //   if (status === 'Rejected') {
+    //     setSubmittedReason(rejectionReason)
+    //     setRejectionReason('')
+    //     setRejection(false)
+    //   }
+    // }
+
+
+
+
   return (
-    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+    <div className='flex flex-row bg-white'>
+    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px]  h-[100vh]   overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         {/* <div className="flex p-4 items-center justify-between">
           <div className="flex flex-row">
@@ -68,10 +150,12 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
 
         </div> */}
         <div className="mt-1">
-          <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
+          <div className="p-2  bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Loan Approval</h2>
             <p className="text-md text-[10px] flex-grow text-right">
-              Waiting for banker sanction{' '}
+              {/* Banker sanction is {postSanctionReview} */}
+              {customerDetails?.loan_rejection_reason || `Banker sanction is ${postSanctionReview}`}
+
             </p>
           </div>
         </div>
@@ -155,14 +239,14 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
           {S2 && (
             <section className="mt-1 ml-5 container">
               {[
-                { id: 1234, name: 'EC', time: '22-Nov-2022' },
+                { id: 1234764, name: 'EC', time: '22-Nov-2022' },
                 {
-                  id: 1235,
+                  id: 12350,
                   name: 'Agreement',
                   time: '24-Nov-2022',
                 },
                 {
-                  id: 1236,
+                  id: 123678,
                   name: 'Register Doc',
                   time: '2-Dec-2022',
                 },
@@ -172,26 +256,31 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                 ''
               )}
               {[
-                { id: 1234, name: 'Payslips', time: '22-Nov-2022' },
+                { id: 1234432, name: 'Payslips',type: 'pslips',
+                  time: customerDetails?.pslipsDocUpDate, url: customerDetails?.pslipsDocUrl , filName: customerDetails?.pslipsFilName  },
                 {
-                  id: 1235,
+                  id: 1235789,
                   name: 'Bank Statement',
-                  time: '24-Nov-2022',
+                  type: 'bankstmt',
+                  time: customerDetails?.bankstmtDocUpDate, url: customerDetails?.bankstmtDocUrl , filName: customerDetails?.bankstmtFilName
                 },
                 {
-                  id: 1236,
+                  id: 1236777,
                   name: 'ITR/Form-16',
-                  time: '2-Dec-2022',
+                  type: 'form_16',
+                  time: customerDetails?.form_16DocUpDate, url: customerDetails?.form_16DocUrl , filName: customerDetails?.form_16FilName
                 },
                 {
-                  id: 1236,
+                  id: 1236666,
                   name: 'Present Address Proof',
-                  time: '2-Dec-2022',
+                  type: 'addproof',
+                  time: customerDetails?.addproofDocUpDate, url: customerDetails?.addproofDocUrl , filName: customerDetails?.addproofFilName
                 },
                 {
-                  id: 1236,
+                  id: 1236999,
                   name: 'Appointment letter from HR',
-                  time: '2-Dec-2022',
+                  type: 'hrletter',
+                  time: customerDetails?.hrletterDocUpDate, url: customerDetails?.hrletterDocUrl , filName: customerDetails?.hrletterFilName
                 },
               ]?.map((doc, i) => (
                 <section
@@ -207,9 +296,10 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                   }}
                 >
                   <DocRow
-                    id={doc?.id}
+                   id={customerDetails?.id}
                     fileName={doc?.name}
                     date={doc?.time}
+                    data={doc}
                   />
                 </section>
               ))}
@@ -262,7 +352,9 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                       : ''
                   }`}
                   onClick={() => {
-                    SetPreSanctionReview('In-Review')
+                    updatePerSancationFun('In-Review')
+                    updatePostSancationFun('In-Review')
+
                   }}
                 >
                   <div
@@ -305,7 +397,7 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                       : ''
                   }`}
                   onClick={() => {
-                    SetPreSanctionReview('Approved')
+                    updatePerSancationFun('Approved')
                   }}
                 >
                   <div
@@ -347,7 +439,9 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                       : ''
                   }`}
                   onClick={() => {
-                    SetPreSanctionReview('Rejected')
+                    updatePerSancationFun('Rejected')
+                    updatePostSancationFun('Rejected')
+
                   }}
                 >
                   <div
@@ -367,6 +461,14 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                     />
                   </div>
                   <div className="flex-auto">
+
+
+
+                    
+
+
+
+
                     <a
                       className={`block font-semibold text-gray-900 ${
                         preSanctionReview === 'Rejected'
@@ -386,14 +488,15 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
               {preSanctionReview === 'In-Review' && (
                 <div className="mt-2">
                   <div className="p-4 bg-gray-200 rounded-md">
-                    Under Bank review from last 32 days
+                    Ideal Bank review time is 32 working days
                   </div>
                 </div>
               )}
               {preSanctionReview === 'Approved' && (
                 <div className="mt-2">
                   {[
-                    { id: 1234, name: 'Sanction Letter', time: '22-Nov-2022' },
+                    { id: 1234562, name: 'Sanction Letter', type: 'sancletter',  time: customerDetails?.sancletterDocUpDate, url: customerDetails?.sancletterDocUrl , filName: customerDetails?.sancletterFilName
+                    },
                   ]?.map((doc, i) => (
                     <section
                       key={i}
@@ -402,22 +505,60 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                       }}
                     >
                       <DocRow
-                        id={doc?.id}
-                        fileName={doc?.name}
-                        date={doc?.time}
-                      />
+                   id={customerDetails?.id}
+                    fileName={doc?.name}
+                    date={doc?.time}
+                    data={doc}
+                  />
                     </section>
                   ))}
                 </div>
               )}
 
-              {preSanctionReview === 'Rejected' && (
+              {/* {preSanctionReview === 'Rejected' && (
                 <div className="mt-2">
                   <div className="p-4 bg-gray-200 rounded-md">
                     Enter Rejected Reason
                   </div>
                 </div>
-              )}
+              )} */}
+
+{/* {preSanctionReview === 'Rejected' && ( */}
+{preSanctionReview === 'Rejected' && (
+
+    <div className="mt-2">
+      <div className="mt-">
+        <div className="flex justify-center border-2 py-2 px-6 px-10 mb-2 rounded-xl">
+          <input
+            type="text"
+            name="blockReason"
+            placeholder="Write Rejection Comments"
+            className="w-full outline-none text-gray-700 text-lg"
+            onChange={(e) => {
+              setRejectionReason(e.target.value)
+            }}
+          />
+          {fillError && (
+            <div className="error-message text-red-700 text-xs p-1 mx-auto" />
+          )}
+          <button
+            type="submit"
+            className={`${rejectionReason.length>0 ? 'bg-[#ff9f87]' : 'bg-[#f9eeeb]'} text-gray-700 font-semibold px-6 py-2 rounded-xl text-md`}
+            onClick={() => {
+              if(rejectionReason !== '') {
+                showFillError(false)
+                updatePerSancationFun('Rejected')
+              } else {
+                showFillError(true)
+              }
+            }}
+          >
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
             </section>
           )}
         </section>
@@ -462,38 +603,39 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                   {
                     id: 1235,
                     name: 'ATS',
-                    time: '24-Nov-2022',
+                    type: 'agree',
+                    time: customerDetails?.agreeDocUpDate, url: customerDetails?.agreeDocUrl , filName: customerDetails?.agreeFilName,
                   },
 
                   {
-                    id: 1236,
+                    id: 12367,
                     name: 'Cost break-up',
-                    time: '2-Dec-2022',
+                    type: 'cs',  time: customerDetails?.csDocUpDate, url: customerDetails?.csDocUrl , filName: customerDetails?.csFilName
                   },
                   {
-                    id: 1236,
+                    id: 2,
                     name: 'Demand Letter',
-                    time: '2-Dec-2022',
+                    type: 'demandLet',  time: customerDetails?.demandLetDocUpDate, url: customerDetails?.demandLetDocUrl , filName: customerDetails?.demandLetFilName
                   },
+                  // {
+                  //   id: 1236,
+                  //   name: 'Payment Receipts',
+                  //   type: 'receipts',  time: customerDetails?.sancletterDocUpDate, url: customerDetails?.sancletterDocUrl , filName: customerDetails?.sancletterFilName
+                  // },
                   {
-                    id: 1236,
-                    name: 'Payment Receipts',
-                    time: '2-Dec-2022',
-                  },
-                  {
-                    id: 1236,
+                    id: 3,
                     name: 'Builder Noc',
-                    time: '2-Dec-2022',
+                    type: 'bilderNoc',  time: customerDetails?.bilderNocDocUpDate, url: customerDetails?.bilderNocDocUrl , filName: customerDetails?.bilderNocFilName
                   },
                   {
-                    id: 1236,
+                    id: 4,
                     name: 'ATB',
-                    time: '2-Dec-2022',
+                    type: 'atb',  time: customerDetails?.atbDocUpDate, url: customerDetails?.atbDocUrl , filName: customerDetails?.atbFilName
                   },
                   {
-                    id: 1236,
+                    id: 5,
                     name: 'TPA',
-                    time: '2-Dec-2022',
+                    type: 'TPA',  time: customerDetails?.TPADocUpDate, url: customerDetails?.TPADocUrl , filName: customerDetails?.TPAFilName
                   },
                 ]?.map((doc, i) => (
                   <section
@@ -509,9 +651,11 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                     }}
                   >
                     <DocRow
-                      id={doc?.id}
+                      id={customerDetails?.id}
                       fileName={doc?.name}
                       date={doc?.time}
+                      data={doc}
+
                     />
                   </section>
                 ))}
@@ -568,7 +712,7 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                         : ''
                     }`}
                     onClick={() => {
-                      SetPostSanctionReview('In-Review')
+                      updatePostSancationFun('In-Review')
                     }}
                   >
                     <div
@@ -611,7 +755,7 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                         : ''
                     }`}
                     onClick={() => {
-                      SetPostSanctionReview('Approved')
+                      updatePostSancationFun('Approved')
                     }}
                   >
                     <div
@@ -653,7 +797,7 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                         : ''
                     }`}
                     onClick={() => {
-                      SetPostSanctionReview('Rejected')
+                      updatePostSancationFun('Rejected')
                     }}
                   >
                     <div
@@ -692,7 +836,7 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                 {postSanctionReview === 'In-Review' && (
                   <div className="mt-4">
                     <div className="p-4 bg-gray-200 rounded-md">
-                      Under Bank review from last 32 days
+                      Ideal Bank review time is 32 working days
                     </div>
                   </div>
                 )}
@@ -701,9 +845,9 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                     <div className="mt-4">
                       {[
                         {
-                          id: 1234,
+                          id: 123466677,
                           name: 'Loan Approval',
-                          time: '22-Nov-2022',
+                          type: 'lApp',  time: customerDetails?.lAppDocUpDate, url: customerDetails?.lAppDocUrl , filName: customerDetails?.lAppFilName
                         },
                       ]?.map((doc, i) => (
                         <section
@@ -713,9 +857,10 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
                           }}
                         >
                           <DocRow
-                            id={doc?.id}
+                            id={customerDetails?.id}
                             fileName={doc?.name}
                             date={doc?.time}
+                            data={doc}
                           />
                         </section>
                       ))}
@@ -741,5 +886,8 @@ export default function LoanApplyFlowHome({ type, setStatusFun }) {
         </div>
       )}
     </section>
+    <CrmActivityLog selUnitPayload={customerDetails} title="Loan Activity" type={['loan_approval']}/>
+
+</div>
   )
 }

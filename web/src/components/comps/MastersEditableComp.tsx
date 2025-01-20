@@ -1,31 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { useRef } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { ExclamationCircleIcon } from '@heroicons/react/outline'
-import { Select as SelectMAT, MenuItem } from '@material-ui/core'
-import { Rowing, Widgets } from '@mui/icons-material'
+import { Select as SelectMAT } from '@material-ui/core'
 import { styled } from '@mui/material/styles'
-import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid'
-import { de } from 'date-fns/locale'
 import { useSnackbar } from 'notistack'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 
-
-//Step- 0
 import {
   approvalAuthority,
   bathTypeList,
   bedRoomsList,
   carParkingList,
-  costSheetAdditionalChargesA,
   csSections,
   facingTypeList,
   gstValesA,
   mortgageType,
-  paymentScheduleA,
   sourceListItems,
   statesList,
   statusList,
@@ -35,32 +24,21 @@ import {
 } from 'src/constants/projects'
 import {
   addCostSheetMaster,
-  addPhasePartAtax,
   addPhaseFullCs,
-  steamBankDetailsList,
-  streamProjectCSMaster,
   addMastersFull,
   streamMasters,
   upsertMasterOption,
   deleteMasterOption,
+  addPhaseDefaultSqftCost,
+  checkIfMasterAlreadyExists,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
-import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 
-import { gstValesPartA } from '../../../../../RedefineV2/web/src/constants/projects'
-// import WarnPopUpNew from '../SiderForm/WarnPopUp'
-
-import WarningModel from './warnPopUp'
-import WarnPopUp from './warnPopUp'
-
-// import './styles.css'
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
-  // width: '170px',
   fontSize: '13px',
   '&.MuiInputBase-root': {
     width: '100%',
-    fontSize: '13px', //
+    fontSize: '13px',
   },
   '&.MuiOutlinedInput-root': {
     width: '100%',
@@ -110,6 +88,7 @@ const EditableTablex = () => {
   }
 
   const handleChange = (id, column, value) => {
+    console.log('aam changed', id, column, value)
     setRows(
       rows.map((row) => (row.id === id ? { ...row, [column]: value } : row))
     )
@@ -244,6 +223,8 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
   const [open, setOpen] = useState(false)
   const [saveWarn, setSaveWarn] = useState(false)
   const [selcDelRow, SetSelDelRow] = useState({})
+  const [initalSetup, SetInitalSetup] = useState('notStarted')
+
 
 
   // useEffect(() => {
@@ -558,6 +539,12 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
       if (myId) setRows(rows.filter((item) => item.id !== myId))
       const newSet = rows.filter((item) => item.id !== myId)
       addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', enqueueSnackbar)
+      const defaultSqftCost= {  area_cost_persqft: costPerSqft,
+        const_cost_persqft: constructionPerSqft,
+        area_tax:gst,
+        const_tax: constGst}
+        addPhaseDefaultSqftCost(orgId, uid, defaultSqftCost, 'partATaxObj', enqueueSnackbar)
+
     } else {
       addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }
@@ -583,7 +570,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     'Villa Type Category',
   ]
 
-  const crmItems = ['Lead Source', 'Booking By']
+  const crmItems = ['Lead Source',]
 
   const dataMap: { [key: string]: { label: string }[] } = {
     'Planning Authority': approvalAuthority,
@@ -602,7 +589,7 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     'Mortgage Type': mortgageType,
     'Lead Source': sourceListItems,
     'Villa Type Category': VillaCsSectionsA,
-    'Booking By': [],
+    // 'Booking By': [],
   }
 
   useEffect(() => {
@@ -635,16 +622,16 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
     <li
       className={`border-l-2 ${
         activeItem === item
-          ? 'border-[#0EA5E9]'
+          ? 'border-[#0891B2]'
           : 'border-gray-80 hover:border-gray-400'
       }`}
     >
-      <a
+      {/* <a
         href={`#${item.replace(/\s+/g, '-').toLowerCase()}`}
         className={`block px-4 py-2 text-md ${
           activeItem === item
-            ? 'text-[#0EA5E9] font-bold'
-            : 'text-gray-600 font-bold hover:text-[#0EA5E9]'
+            ? 'text-[#0891B2] font-medium'
+            : 'text-gray-600 font-medium		 hover:text-[#0891B2]'
         }`}
         onClick={(e) => {
           e.preventDefault()
@@ -652,7 +639,21 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
         }}
       >
         {item}
-      </a>
+      </a> */}
+
+<a
+  className={`block px-4 py-2 text-md ${
+    activeItem === item
+      ? 'text-[#0891B2] font-medium'
+      : 'text-gray-600 font-medium hover:text-[#0891B2]'
+  }`}
+  onClick={(e) => {
+    e.preventDefault()
+    handleClick(item)
+  }}
+>
+  {item}
+</a>
     </li>
   )
 
@@ -717,7 +718,7 @@ useEffect(() => {
         const oA = bankA.filter((item) => item.title === 'Status')
         const pA = bankA.filter((item) => item.title === 'Mortgage Type')
         const qA = bankA.filter((item) => item.title === 'Lead Source')
-        const rA = bankA.filter((item) => item.title === 'Booking By')
+        // const rA = bankA.filter((item) => item.title === 'Booking By')
         const sA = bankA.filter((item) => item.title === 'Villa Type Category');
 
 
@@ -1186,6 +1187,19 @@ if (title === 'Villa Type Category') {
 
   }
 
+  // const handleClick = (item: string) => {
+  //   setActiveItem(item)
+  //   if (contentRefs.current[item]) {
+  //     contentRefs.current[item].scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'start',
+  //     })
+  //     setCurrentSection(item)
+  //   }
+  // }
+
+
+
   const handleClick = (item: string) => {
     setActiveItem(item)
     if (contentRefs.current[item]) {
@@ -1197,8 +1211,22 @@ if (title === 'Villa Type Category') {
     }
   }
 
+
+  const removeDuplicates = (array, key) => {
+    const seen = new Set();
+    return array.filter((item) => {
+      const keyValue = item[key];
+      if (seen.has(keyValue)) {
+        return false; // Duplicate found, skip it
+      }
+      seen.add(keyValue);
+      return true; // First occurrence, keep it
+    });
+  };
+
   const handleSave = (dataObj) => {
     console.log('sectionKey', dataObj)
+
     const title = dataObj?.title
     const newDataIs = [];
     if(deletedRows.length >0){
@@ -1207,6 +1235,10 @@ if (title === 'Villa Type Category') {
       })
       setDeletedRows([])
     }
+
+
+    // searchFun()
+
     if(title === 'Tax Rate'){
       // setTaxA([...taxA, newRow])
       newDataIs.push(...taxA)
@@ -1218,6 +1250,7 @@ if (title === 'Villa Type Category') {
       newDataIs.push(...approvalAuthorityA);
     }
     if (title === 'State') {
+      console.log('statesListA', statesListA)
       newDataIs.push(...statesListA);
     }
     if (title === 'Charges For') {
@@ -1239,13 +1272,25 @@ if (title === 'Villa Type Category') {
       newDataIs.push(...facingTypeListA);
     }
     if (title === 'Type/BedRooms') {
-      newDataIs.push(...bedRoomsListA);
+     const x=  bedRoomsListA.map(item => ({
+        ...item,
+        value: item.value.replace(/\D/g, "") // Remove non-digit characters
+      }));
+      newDataIs.push(...x);
     }
     if (title === 'Bathrooms') {
-      newDataIs.push(...bathTypeListA);
+      const x=  bathTypeListA.map(item => ({
+        ...item,
+        value: item.value.replace(/\D/g, "") // Remove non-digit characters
+      }));
+      newDataIs.push(...x);
     }
     if (title === 'Car Parking') {
-      newDataIs.push(...carParkingListA);
+      const x=  carParkingListA.map(item => ({
+        ...item,
+        value: item.value.replace(/\D/g, "") // Remove non-digit characters
+      }));
+      newDataIs.push(...x);
     }
     if (title === 'Status') {
       newDataIs.push(...statusListA);
@@ -1260,10 +1305,28 @@ if (title === 'Villa Type Category') {
       newDataIs.push(...bookingByA);
     }
 
+   const nonDuplicate = removeDuplicates(newDataIs, 'value')
+   const mappedArry = Promise.all(
+   nonDuplicate.map((item) => {
 
-    newDataIs.map((item) => {
-      upsertMasterOption(orgId, item.id, item,enqueueSnackbar)
+      if (item.id) {
+        upsertMasterOption(orgId, item.id, item, enqueueSnackbar)
+      }else{
+        const x = uuidv4()
+        item.id = x
+        item.title = title
+        item.myId = x
+        upsertMasterOption(orgId, item.id, item, enqueueSnackbar)
+      }
+
     })
+  ).then(function(results){
+    enqueueSnackbar(`${title} Updated successfully`, {
+      variant: 'success',
+    })
+  })
+
+
 
 
   }
@@ -1434,55 +1497,80 @@ if (title === 'Villa Type Category') {
       })
     })
   }
-  const createDBFun2 = () => {
+  const searchFun = async (givenPhNo1, title) => {
+    const foundLength = await checkIfMasterAlreadyExists(
+      `${orgId}_Masters`,
+      givenPhNo1,
+      title
+    )
+    if (foundLength?.length > 0) {
+      // setLeadPayload(foundLength[0])
+    }
+    console.log('foundLength', foundLength.length)
+  }
+  const createDBFun2 = async () => {
     // get all the data dataObj
     // insert data to firebase db
-    console.log('Clicked masters', dataMapCopy)
+    console.log('Clicked masters', dataMapCopy);
 
-    InitialSetup?.map((dataObj) => {
-      // console.log('dataObj', dataObj)
-      const data = dataObj?.data?.map((data1, i) => {
-        const uId = uuidv4()
-        const data2 = {
-          title: dataObj?.title,
-          label: data1.label,
-          value: data1.value,
-          id: uId,
-          order: i,
-        }
-        console.log('data2 ==>', data2)
-        addMastersFull(orgId, uId, data2, enqueueSnackbar)
-        return data2
-      })
-    })
-  }
+    // Wait for all InitialSetup entries to be processed
+    await Promise.all(
+        InitialSetup?.map(async (dataObj) => {
+            const dataPromises = dataObj?.data?.map(async (data1, i) => {
+                const foundLength = await checkIfMasterAlreadyExists(
+                    `${orgId}_Masters`,
+                    data1.value,
+                    dataObj?.title
+                );
+
+                console.log('foundLength', foundLength.length);
+                if (foundLength?.length > 0) {
+                    console.log('duplicate');
+                    SetInitalSetup('started');
+                    return; // Skip further processing for duplicates
+                } else {
+                    SetInitalSetup('started');
+
+                    const uId = uuidv4();
+                    const data2 = {
+                        title: dataObj?.title,
+                        label: data1.label,
+                        value: data1.value,
+                        id: uId,
+                        order: i,
+                    };
+                    console.log('data2 ==>', data2);
+                    addMastersFull(orgId, uId, data2, enqueueSnackbar);
+                    return data2;
+                }
+            });
+
+            // Wait for all data entries of the current dataObj to complete
+            await Promise.all(dataPromises);
+        })
+    );
+
+    // After all data objects are processed
+    SetInitalSetup('Completed');
+};
+
   return (
     <>
-      <div className=" m-2 p-4 bg-white rounded-xl">
-        <div className="mb-4 ">
-          <div className="inline">
-            <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                Data Masters<abbr title="required"></abbr>
-              </label>
-            </div>
+      <div className=" m-2 bg-white rounded-xl">
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
-          </div>
-        </div>
 
         <div className="flex h-screen">
-          <div className="w-64 text-gray-900 bg-white p-4 overflow-auto">
+          <div className="w-64 text-gray-900 bg-[#F0F0F0] p-4 overflow-auto ">
             <div className="mb-6">
               <div className="mb-4 ">
                 <div className="inline">
                   <div className="">
                     <label className="  text-md   mb-8 lg:mb-3 font-bold text-slate-900">
-                      Add Project<abbr title="required"></abbr>
+                      Project Module<abbr title="required"></abbr>
                     </label>
                   </div>
 
-                  <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+                  <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
                 </div>
               </div>
               <ul>
@@ -1501,7 +1589,7 @@ if (title === 'Villa Type Category') {
                     </label>
                   </div>
 
-                  <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+                  <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
                 </div>
               </div>
               <ul>
@@ -1515,13 +1603,22 @@ if (title === 'Villa Type Category') {
           <div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
             <div className="bg-white text-white p-6">
               {/* {Object.keys(dataMap).map((key) => ( */}
-              {dataMapCopy?.map((dataObj, key) => (
+              {dataMapCopy?.map((dataObj) => (
+                // <div
+                //    key={key}
+
+
+                //   className="mb-24"
+                //   ref={(el) => (contentRefs.current[key] = el)}
+                //   id={key.replace(/\s+/g, '-').toLowerCase()}
+                // >
                 <div
-                  key={key}
-                  className="mb-24"
-                  ref={(el) => (contentRefs.current[key] = el)}
-                  // id={key.replace(/\s+/g, '-').toLowerCase()}
-                >
+                key={dataObj.title}
+                className="mb-24"
+                ref={(el) => (contentRefs.current[dataObj.title] = el)}
+              >
+
+
                   <h1 className="inline-block text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">
                     {dataObj?.title}
                   </h1>
@@ -1532,9 +1629,9 @@ if (title === 'Villa Type Category') {
                     <table className="w-full text-left">
                       <thead>
                         <tr className="border-b border-[#e5e7eb]">
-                          <th className="py-3 px-4 text-lg font-bold text-[#334155]">
+                          {/* <th className="py-3 px-4 text-lg font-bold text-[#334155]">
                             Title
-                          </th>
+                          </th> */}
                           <th className="py-3 px-4 text-lg font-bold text-[#334155]">
                             Options
                           </th>
@@ -1550,13 +1647,13 @@ if (title === 'Villa Type Category') {
                       <tbody>
                         {dataObj?.data?.map((data, i) => (
                           <tr key={`static-${i}`}>
-                            {i === 0 ? (
-                              <td className="py-5 px-4 font-bold text-[#0EA5E9] text-md">
+                            {/* {i === 0 ? (
+                              <td className="py-5 px-4 font-bold text-[#0891B2] text-md">
                                 {dataObj.title}
                               </td>
                             ) : (
-                              <td className="py-5 px-4 text-[#0EA5E9] text-md"></td>
-                            )}
+                              <td className="py-5 px-4 text-[#0891B2] text-md"></td>
+                            )} */}
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               {/* {editingCell?.key === dataObj.title &&
                               editingCell.rowIndex === i &&
@@ -1591,11 +1688,14 @@ if (title === 'Villa Type Category') {
                                   // dataObj?.title
 
                                   // const numValue = parseFloat(rawValue)
+                                  let x = dataObj.data.filter((item)=>item.value === rawValue)
+                                  if(x.length===0){
                                   handleChange1(
                                     dataObj?.title,
                                     data,
                                     rawValue
                                   )
+                                  }
                                   // if (!isNaN(numValue)) {
                                   //   handleChange1(
                                   //     row.id,
@@ -1606,7 +1706,7 @@ if (title === 'Villa Type Category') {
                                   //   handleChange1(row.id, 'charges', 0)
                                   // }
                                 }}
-                                className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                               />
                             </td>
                             <td className="py-5 px-4 text-md border-b text-[#4F46E5]">
@@ -1637,7 +1737,7 @@ if (title === 'Villa Type Category') {
                         ))}
                         {(dynamicRows[dataObj['title']] || []).map((row, i) => (
                           <tr key={`dynamic-${i}`}>
-                            <td className="py-5 px-4 text-md text-[#0EA5E9]"></td>
+                            <td className="py-5 px-4 text-md text-[#0891B2]"></td>
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
                               <input
                                 type="text"
@@ -1681,14 +1781,14 @@ if (title === 'Villa Type Category') {
                       <button
                         // onClick={() => appendRow(dataObj?.title)}
                         onClick={() => addRowNew(dataObj)}
-                        className=" mt-4 px-2 py- bg-cyan-500 text-white rounded"
+                        className=" mt-4 px-2 py- bg-[#0891B2] text-white rounded"
                       >
                         Add Row
                       </button>
 
                       <button
                         onClick={() => handleSave(dataObj)}
-                        className="mt-4 px-2 py- bg-cyan-500 text-white text-sm  rounded"
+                        className="mt-4 px-2 py- bg-[#0891B2] text-white text-sm  rounded"
                       >
                         Save
                       </button>
@@ -1699,13 +1799,20 @@ if (title === 'Villa Type Category') {
             </div>
           </div>
         </div>
-        <div className="cursor-pointer" onClick={() => createDBFun2()}>
+        <div className="cursor-pointer  p-4" onClick={() => createDBFun2()}>
           <div className="mb-4 mt-2">
             <div className="inline">
-              <div className="cursor-pointer" >
-                <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                  Initial Masters setup <abbr title="required"></abbr>
+              <div className="cursor-pointer flex flex-row" >
+                <label className="font-semibold text-[#053219]  text-sm  mb-1  cursor-pointer ">
+                  Initial Masters setup<abbr title="required"></abbr>
                 </label>
+
+                {initalSetup==='started' && <label className="text-[#053219]  text-sm  mb-1  ml-2 ">
+                  Setting up....<abbr title="required"></abbr>
+                </label>}
+                {initalSetup==='Completed' && <label className="text-[#053219]  text-sm  mb-1  ml-2 ">
+                  Completed...!<abbr title="required"></abbr>
+                </label>}
               </div>
 
               {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}

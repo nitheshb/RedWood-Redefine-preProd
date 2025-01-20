@@ -1,15 +1,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useState, useEffect } from 'react'
-
-import { Dialog } from '@headlessui/react'
 import { TrashIcon } from '@heroicons/react/solid'
-import { Card, Grid } from '@mui/material'
-import { Form, Formik } from 'formik'
+import { Card } from '@mui/material'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
-
-import Loader from 'src/components/Loader/Loader'
 import { ProjectAccessFolder, ProjectFolders } from 'src/constants/projects'
 import {
   deleteProject,
@@ -21,15 +16,9 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { getAllProjects } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { TextAreaField } from 'src/util/formFields/TextAreaField'
-
 import WarningModel from '../comps/warnPopUp'
-import CostSheetSetup from '../costSheetSetup'
-import PaymentLeadAccess from '../PaymentScheduleForm/ProjectLeadAccess'
-import PaymentScheduleSetup from '../paymentScheduleSetup'
 import SiderForm from '../SiderForm/SiderForm'
 
-import LegalHomeList from './LegalHomeList'
 
 const ProjectAccessHomeList = ({
   title,
@@ -89,14 +78,8 @@ const ProjectAccessHomeList = ({
   const auditFun = async () => {
     console.log('audit begin')
     setLoading(true)
-
-    // get the units with no data or invalid data and mark them as available
-
-    // make all invalid units as available
     await setInvalidUnitStatus()
     await setProjectComputedCounts()
-    // calculate the Unit Status
-    //  calculate the values
   }
 
   const setInvalidUnitStatus = async () => {
@@ -399,7 +382,7 @@ const ProjectAccessHomeList = ({
 
           <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
             <div className="mt-2 flex items-center text-sm text-gray-500">
-              This action will recalulate the counts of units and other KPI's
+              This action will recalculate the counts of units and other KPI's
             </div>
           </div>
         </section>

@@ -6,10 +6,9 @@ import { useEffect } from 'react'
 import { useSnackbar } from 'notistack'
 
 import { USER_ROLES } from 'src/constants/userRoles'
-import { updateATSApproval, updateManagerApproval } from 'src/context/dbQueryFirebase'
+import { updateATSApproval } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-
-// import BankSelectionSwitchDrop from './BankSelectionDroopDown'
+import CrmActivityLog from '../CrmActivityLog'
 
 export default function Crm_ATS_approval({
   type,
@@ -20,9 +19,7 @@ export default function Crm_ATS_approval({
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
 
-  if (!user?.role?.includes(USER_ROLES.ADMIN)) {
-    return null
-  }
+
   useEffect(() => {
     console.log('yo yo ', selUnitPayload)
   }, [])
@@ -42,8 +39,11 @@ export default function Crm_ATS_approval({
       user.email,
       enqueueSnackbar
     )
+ 
+
   }
   return (
+    <div className='flex flex-row bg-white '>
     <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
         <div className="mt-1">
@@ -79,5 +79,8 @@ export default function Crm_ATS_approval({
         </button>
       </div>
     </section>
+    <CrmActivityLog selUnitPayload={selUnitPayload} title="ATS Approval Activity" type={['ats_approval']}/>
+
+    </div>
   )
 }

@@ -1,14 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
-
 import { PDFExport } from '@progress/kendo-react-pdf'
 
-import { useAuth } from 'src/context/firebase-auth-context'
 
+import { useAuth } from 'src/context/firebase-auth-context'
 import CrmUnitPaymentSchedule from './CrmPaymentSchedule'
 import CrmPaymentSummary from './CrmPaymentSummary'
 import CrmUnitCustomerDetailsView1 from './CrmUnitCustomerDetailsView1'
 import CrmUnitFinanceHistory from './CrmUnitFinanceHistory'
 import CrmUnitHeader from './CrmUnitHeader'
+import PdfTransactionsGenerator from 'src/util/PdfTransactionsGenerator'
+import PdfPaymentScheduleGenerator from 'src/util/PdfPaymentScheduleGenerator'
+import CrmUnitCostSheetView from './CrmCostSheetView'
 
 const CrmUnitPsHome = ({
   financeMode,
@@ -16,6 +18,7 @@ const CrmUnitPsHome = ({
   selCustomerPayload,
   assets,
   totalIs,
+  PSa,
   unitTransactionsA,
 }) => {
   const { user } = useAuth()
@@ -34,11 +37,14 @@ const CrmUnitPsHome = ({
           role="tablist"
         >
           {[
+               {
+                lab: 'Transactions',
+                val: 'transactions',
+              },
             { lab: 'Payment Schedule', val: 'schedule' },
-            {
-              lab: 'Transactions',
-              val: 'transactions',
-            },
+
+            { lab: 'Cost Sheet', val: 'cost_sheet' },
+
           ].map((d, i) => {
             return (
               <li key={i} className="mr-2 font-bodyLato" role="presentation">
@@ -62,7 +68,7 @@ const CrmUnitPsHome = ({
         </ul>
 
         <section className="flex flex-row bg-[#F6F7FE]">
-          <div className="flex flex-row w-full  mr-2 mt-3">
+          {/* <div className="flex flex-row w-full  mr-2 mt-3">
             <div
               className="flex flex-row  items-center align-middle text-blue-500 text-xs cursor-pointer hover:underline"
               onClickCapture={async () => {
@@ -97,8 +103,8 @@ const CrmUnitPsHome = ({
                 </span>
               </>
             </div>
-          </div>
-          <div className="flex flex-row w-full  mr-2 mt-3">
+          </div> */}
+          {/* <div className="flex flex-row w-full  mr-2 mt-3">
             <div
               className="flex flex-row  items-center align-middle text-blue-500 text-xs cursor-pointer hover:underline"
               onClickCapture={async () => {
@@ -130,7 +136,39 @@ const CrmUnitPsHome = ({
                 <span className="text-[11px]">TRANSACTIONS</span>
               </>
             </div>
-          </div>
+          </div> */}
+
+
+
+{/* <PdfPaymentScheduleGenerator
+            user={user}
+            PSa={PSa}
+            selCustomerPayload={selCustomerPayload} selUnitDetails={undefined} myObj={undefined} newPlotPS={undefined} myAdditionalCharges={undefined} streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}
+
+
+       />     */}
+
+
+
+{/* <PdfTransactionsGenerator
+  user={user}
+  selUnitDetails={undefined}
+  myObj={undefined}
+  selCustomerPayload={undefined}
+  newPlotPS={undefined}
+  myAdditionalCharges={undefined}
+  streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} PSa={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}                                        // selUnitDetails={selUnitDetails}
+/> */}
+
+
+
+
+
+
+
+
+
+
 
           <div className="w-full flex items-center mt-3 mr-3 ">
             <label
@@ -159,15 +197,26 @@ const CrmUnitPsHome = ({
                 />
               </>
             )}
-            <CrmPaymentSummary
+            {/* <CrmPaymentSummary
               selCustomerPayload={selCustomerPayload}
               assets={assets}
-            />
+            /> */}
             <CrmUnitPaymentSchedule
               selCustomerPayload={selCustomerPayload}
               assets={assets}
               totalIs={totalIs}
             />
+          </PDFExport>
+        </>
+      )}
+      {financeMode === 'cost_sheet' && (
+        <>
+          <PDFExport paperSize="A4" margin="1cm" ref={pdfPaymentScheduleComp}>
+            <CrmUnitCostSheetView
+                selCustomerPayload={selCustomerPayload}
+                assets={assets}
+                totalIs={totalIs}
+              />
           </PDFExport>
         </>
       )}
@@ -187,10 +236,10 @@ const CrmUnitPsHome = ({
                 />
               </>
             )}
-            <CrmPaymentSummary
+            {/* <CrmPaymentSummary
               selCustomerPayload={selCustomerPayload}
               assets={assets}
-            />
+            /> */}
             <CrmUnitFinanceHistory
               selCustomerPayload={selCustomerPayload}
               assets={assets}

@@ -5,23 +5,12 @@ import { Fragment } from 'react'
 
 import { Menu, Transition } from '@headlessui/react'
 import {
-  ChartPieIcon,
   OfficeBuildingIcon,
-  NewspaperIcon,
-  UserGroupIcon,
-  ScaleIcon,
-  PuzzleIcon,
 } from '@heroicons/react/outline'
 import {
   ChevronDownIcon,
-  FireIcon,
-  CurrencyRupeeIcon,
-  DotsVerticalIcon,
-  CheckIcon,
-  DocumentTextIcon,
 } from '@heroicons/react/solid'
 
-import { Link, routes } from '@redwoodjs/router'
 
 import { USER_ROLES } from 'src/constants/userRoles'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -29,9 +18,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 export default function BankSelectionSwitchDrop({ type, setStatusFun }) {
   const { user } = useAuth()
 
-  if (!user?.role?.includes(USER_ROLES.ADMIN)) {
-    return null
-  }
+
   return (
     <div className="text-right inline-block  mt-[px]">
       <Menu as="div" className="relative inline-block text-left">

@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-
 import { Menu, Transition } from '@headlessui/react'
 import {
   ChevronDownIcon,
@@ -8,9 +7,7 @@ import {
   DotsVerticalIcon,
   CheckIcon,
   DocumentTextIcon,
-  EyeIcon,
 } from '@heroicons/react/solid'
-
 import { uniTypes } from 'src/constants/projects'
 
 export default function DropCompUnitStatus({
@@ -65,7 +62,7 @@ export default function DropCompUnitStatus({
             className={`${
               ['Facing', 'show'].includes(type) ? 'right-0' : 'left-0'
             }  absolute  w-52 mt-2 origin-top-left bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[9000]`}
-            style={{ 'z-index': '9' }}
+            style={{ 'z-index': '12' }}
           >
             <div className="px-1 py-1 ">
               {type === 'Price' && (

@@ -1,18 +1,12 @@
-import { pid } from 'process'
-
-import { Fragment, useState } from 'react'
-
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { useDispatch } from 'react-redux'
-
 import {
   searchValue as searchedVal,
   searchData as searchResponse,
 } from 'src/state/actions/search'
 import CostBreakUpPdfPreview from 'src/util/costBreakUpPdfPreview'
-
-import CrmCustomerSummary from '../A_CrmModule/A_CrmCustomerSummary'
 import UnitBookingCancelCRM from '../A_CrmModule/A_UnitCancel.tsx/CrmUnitCancel'
 import CustomerSideViewCRM from '../A_CrmModule/CrmCustomerSideView'
 import AddNewDemand from '../A_CrmModule/CrmNewDemand'
@@ -23,7 +17,6 @@ import LegalHomeList from '../A_ProjModule/LegalHomeList'
 import NotificationsSetupForm from '../A_ProjModule/NotificatoinsSetupFromHome'
 import ProjectAccessSideView from '../A_ProjModule/ProjectAccessSideView'
 import ProjectDetailsFlowBody from '../A_ProjModule/ProjectDetails'
-import ProjectsDocsListView from '../A_ProjModule/viewLegalDocument'
 import AddTaskForm from '../A_TaskMan/AddTaskForm'
 import ViewEditTaskManForm from '../A_TaskMan/ViewEditTaskManForm'
 import AddBankDetailsForm from '../addBankDetailsForm'
@@ -34,7 +27,6 @@ import AddPhaseForm from '../AddPhaseForm/AddPhaseForm'
 import AddUnit from '../AddUnit'
 import ConstructUnitsDetails from '../ConstructModule/ConstructUnitsDetails'
 import CrmUnitSideView from '../crmUnitSideView'
-import DialogFormBody from '../DialogFormBody/DialogFormBody'
 import InventoryViewSideForm from '../DialogFormBody/InventoryViewSideView'
 import CaptureUnitPayment from '../FinanceModule/CapturePayment'
 import LeadProfileSideView from '../LeadProfileSideView'
@@ -46,6 +38,7 @@ import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
 import TransactionUpdateSideView from '../transactionUpdateSideView'
 import ViewUnitDetails from '../ViewUnitDetails'
 import AddCustomerWallet from '../FinanceModule/AddCustomerWallet'
+import UnitBookingUnblockCRM from '../A_CrmModule/A_UnitUnblock/CrmUnitUnblock'
 
 const SiderForm = ({
   mode,
@@ -61,7 +54,7 @@ const SiderForm = ({
   newPlotCostSheetB,
   newPlotPS,
   open,
-  onCloseDisabled = false,
+  onCloseDisabled,
   paymentCaptureFun,
   pId,
   pdfExportComponent,
@@ -103,7 +96,7 @@ const SiderForm = ({
       <Dialog
         as="div"
         className="fixed inset-0 overflow-hidden"
-        onClose={onCloseDisabled ? () => {} : () => setOpen()}
+        onClose={onCloseDisabled || false ? () => {} : () => setOpen()}
         style={{ zIndex: '1000' }}
       >
         <div className="absolute inset-0 overflow-hidden">
@@ -197,6 +190,8 @@ const SiderForm = ({
                     title={title}
                     dialogOpen={setOpen}
                     project={data}
+                    // setProject={setProject}
+
                   />
                 )}
                 {(title === 'Add Phase' || title === 'Edit Phase') && (
@@ -399,9 +394,7 @@ const SiderForm = ({
                 {title === 'Add Lead' && (
                   <AddLeadForm title={title} dialogOpen={setOpen} />
                 )}
-                {title === 'New Transaction' && (
-                  <CaptureUnitPayment title={title} dialogOpen={setOpen} />
-                )}
+
 
 
 
@@ -410,6 +403,15 @@ const SiderForm = ({
                     title={title}
                     dialogOpen={setOpen}
                     customerDetails={customerDetails}
+                    leadDetailsObj={leadDetailsObj}
+                  />
+                )}
+                     {title === 'Edit Lead' && (
+                  <AddLeadForm
+                    title={title}
+                    dialogOpen={setOpen}
+                    customerDetails={customerDetails}
+                    leadDetailsObj={leadDetailsObj}
                   />
                 )}
                 {title === 'User Profile' && (
@@ -548,9 +550,25 @@ const SiderForm = ({
                     selSubMenu2={selSubMenu2}
                   />
                 )}
+                {title === 'unblock_Unit' && (
+                  <UnitBookingUnblockCRM
+
+                    openUserProfile={setOpen}
+                    customerDetails={customerDetails}
+                    unitViewerrr={unitViewerrr}
+                    unitsViewMode={unitsViewMode}
+                    setUnitsViewMode={setUnitsViewMode}
+                    transactionData={transactionData}
+                    selCustomerPayload={selCustomerPayload}
+                    setSelUnitDetails={setSelUnitDetails}
+                    selSubMenu={selSubMenu}
+                    selSubMenu2={selSubMenu2}
+                  />
+                )}
                 {title === 'Cancel_Unit' && (
                   <UnitBookingCancelCRM
-                    openUserProfile={false}
+
+                    openUserProfile={setOpen}
                     customerDetails={customerDetails}
                     unitViewerrr={unitViewerrr}
                     unitsViewMode={unitsViewMode}

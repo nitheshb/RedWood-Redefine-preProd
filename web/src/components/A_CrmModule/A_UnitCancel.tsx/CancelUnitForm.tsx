@@ -11,20 +11,14 @@ import * as Yup from 'yup'
 
 import Loader from 'src/components/Loader/Loader'
 import {
-  addLead,
-  checkIfLeadAlreadyExists,
-  getAllProjects,
-  steamUsersListByRole,
   streamGetAllUnitTransactions,
   updateCancelProjectCounts,
   updateTransactionStatus,
-  updateUnitAsBlocked,
   updateUnitAsBooked,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { supabase } from 'src/context/supabase'
 
-const CancelUnitForm = ({ selUnitDetails, bookCompSteps, bookCurentStep }) => {
+const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCurentStep }) => {
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
@@ -109,7 +103,6 @@ const CancelUnitForm = ({ selUnitDetails, bookCompSteps, bookCurentStep }) => {
         orgId,
         selUnitDetails?.pId,
         selUnitDetails?.uid,
-        'leadId',
         unitUpdate,
         user?.email,
         enqueueSnackbar,
@@ -118,6 +111,7 @@ const CancelUnitForm = ({ selUnitDetails, bookCompSteps, bookCurentStep }) => {
 
       await updateCancelProjectCounts(   orgId,
         selUnitDetails?.pId,selUnitDetails, user?.email, enqueueSnackbar)
+        openUserProfile=false
     } else {
       console.log('cannot be cancelled')
       enqueueSnackbar(`${selUnitDetails?.status} unit cannot be cancelled`, {

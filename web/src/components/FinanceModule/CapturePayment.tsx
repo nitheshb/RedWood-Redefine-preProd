@@ -1,47 +1,36 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useState, useEffect, useRef } from 'react'
-
 import { ExclamationCircleIcon, CheckCircleIcon } from '@heroicons/react/solid'
 import { AttachFile } from '@mui/icons-material'
 import { format } from 'date-fns'
 import { setHours, setMinutes } from 'date-fns'
-import { arrayUnion } from 'firebase/firestore'
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
-import { Form, Formik, ErrorMessage, useField } from 'formik'
+import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
-import * as Yup from 'yup'
-
 import { useParams } from '@redwoodjs/router'
-
 import Confetti from 'src/components/shared/confetti'
-import { paymentMode, statesList } from 'src/constants/projects'
+import { paymentMode } from 'src/constants/projects'
 import {
-  addPaymentReceivedEntry,
   addPaymentReceivedEntrySup,
-  createBookedCustomer,
   createNewCustomerS,
   getProject,
-  steamBankDetailsList,
+  getProjectByUid,
   steamUsersProjAccessList,
   streamCustomersList,
-  streamProjectCSMaster,
-  updateLeadStatus,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 import { MultiSelectMultiLineWallet } from 'src/util/formFields/selectBoxMultiLineWallet'
 import { TextField2 } from 'src/util/formFields/TextField2'
 import PdfReceiptGenerator from 'src/util/PdfReceiptGenerator'
 import RupeeInWords from 'src/util/rupeeWords'
-
 import Loader from '../Loader/Loader'
-import { validate_capturePayment } from '../Schemas'
+import { validate_capturePayment, validate_captureWalletPayment } from '../Schemas'
+
 
 const CaptureUnitPayment = ({
   title,
@@ -59,9 +48,9 @@ const CaptureUnitPayment = ({
   newConstructCsObj,
   newConstructCostSheetA,
   phase,
-  projectDetails,
   stepIndx,
   StatusListA,
+  myBookingPayload,
 }) => {
   const d = new window.Date()
 
@@ -76,6 +65,32 @@ const CaptureUnitPayment = ({
   const [creditNotersA, setCreditNoters] = useState([])
   const [walletCustomers, setWalletCustomers] = useState([])
   const [bankAccounts, setBankAccounts] = useState([])
+  const [projectDetails, setProject] = useState({})
+  const [limitError, setLimitError] = useState(false)
+
+
+
+
+    const getProjectDetails = async (id) => {
+      const unsubscribe = await getProjectByUid(
+        orgId,
+        id,
+        (querySnapshot) => {
+          const projects = querySnapshot.docs.map((docSnapshot) =>
+            docSnapshot.data()
+          )
+          setProject(projects[0])
+        },
+        () =>
+          setProject({
+            projectName: '',
+          })
+      )
+      return unsubscribe
+    }
+    useEffect(() => {
+      getProjectDetails(selUnitDetails?.pId)
+    }, [selUnitDetails])
 
   // const [formattedValue, setFormattedValue] = useState('');
 
@@ -85,13 +100,34 @@ const CaptureUnitPayment = ({
   //   setFormattedValue(formatted);
   // };
 
+
+
+
+
+
+
+
+
+
+   const formatIndianNumber = function (num) {
+    const [integerPart, decimalPart] = num.toString().replace(/,/g, '').split('.');
+    const lastThree = integerPart.slice(-3);
+    const otherNumbers = integerPart.slice(0, -3);
+    const formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+    const result = formattedNumber + (formattedNumber ? ',' : '') + lastThree;
+    return decimalPart ? `${result}.${decimalPart}` : result;
+  }
+
+
+
+
   const [startDate, setStartDate] = useState(d)
 
   const [paymentModex, setPaymentModex] = useState('cheque')
   const [payementDetails, setPayementDetails] = useState([])
   const [files, setFiles] = useState([])
 
-  const [commentAttachUrl, setCommentAttachUrl] = useState('')
+  const [commentAttachUrl, setCommentAttachUrl] = useState({})
   const [selWalletCustomer, setSelWalletCustomer] = useState({})
   const [cmntFileType, setCmntFileType] = useState('')
   const [amount, setAmount] = useState(0)
@@ -187,15 +223,18 @@ const CaptureUnitPayment = ({
         const bankA = querySnapshot.docs.map((docSnapshot) => {
           const x = docSnapshot.data()
           x.id = docSnapshot.id
+
           return x
         })
-        bankA.map((user) => {
+      console.log('fetched users list is',selUnitDetails?.custObj1?.customerName1)
+      let x = bankA.filter((u)=> u?.Name === (selUnitDetails?.custObj1?.customerName1 || selUnitDetails?.customerDetailsObj?.customerName1 || selUnitDetails?.secondaryCustomerDetailsObj?.customerName1  ))
+x.map((user) => {
           user.label = user?.Name
           user.value = user?.id
           user.walletAmount = user?.remaining_money
         })
         console.log('fetched users list is', bankA)
-        setWalletCustomers([...bankA])
+        setWalletCustomers([...x])
       },
       { pId: [selUnitDetails?.pId] },
       (error) => setWalletCustomers([])
@@ -203,49 +242,59 @@ const CaptureUnitPayment = ({
 
     return unsubscribe
   }, [])
-  const handleFileUploadFun = async (file, type) => {
-    console.log('am i inside handle FileUpload')
-    if (!file) return
-    try {
-      const uid = uuidv4()
-      const storageRef = ref(storage, `/spark_files/${'taskFiles'}_${uid}`)
-      const uploadTask = uploadBytesResumable(storageRef, file)
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const prog =
-            Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  const handleFileUploadFun = (file, type) => {
+    return new Promise((resolve, reject) => {
+      console.log('am i inside handle FileUpload')
+      if (!file) return reject('No file provided')
 
-          // setProgress(prog)
-          file.isUploading = false
-        },
-        (err) => console.log(err),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            // createAttach(orgId, url, by, file.name, id, attachType)
-            file.url = url
-            // setCmntFileType(file.name.split('.').pop())
-            // setFiles([...files, file])
+      try {
+        const uid = uuidv4()
+        const storageRef = ref(storage, `/spark_files/${'taskFiles'}_${uid}`)
+        const uploadTask = uploadBytesResumable(storageRef, file)
 
-            setCommentAttachUrl(url)
-            return url
-            //  save this doc as a new file in spark_leads_doc
-          })
-        }
-      )
-    } catch (error) {
-      console.log('upload error is ', error)
-    }
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+            // setProgress(prog)
+            file.isUploading = false
+          },
+          (err) => reject(err), // Reject the promise if there's an error during upload
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              file.url = url
+              console.log('url is ', url)
+
+              let x1 = { url: url, fileName: file.name }
+              setCommentAttachUrl(x1)
+
+              // Resolve the promise with the URL once the upload is successful
+              resolve(x1)
+            }).catch((err) => {
+              reject(err) // Reject if getDownloadURL fails
+            })
+          }
+        )
+      } catch (error) {
+        console.log('upload error is ', error)
+        reject(error) // Reject the promise in case of any other errors
+      }
+    })
   }
+
   const onSubmitSupabase = async (data, resetForm) => {
     console.log('inside supabase support', data)
+   let x =  await handleFileUploadFun(data?.fileUploader, 'panCard1')
+    const z = await commentAttachUrl
+    data.attchUrl = x
     let y = {}
     y = data
 
-    await handleFileUploadFun(data?.fileUploader, 'panCard1')
-    const z = await commentAttachUrl
 
-    setPayementDetails(data)
+   await console.log('data is ',x,commentAttachUrl, data,data?.fileUploader,data?.fileUploader[0],data?.fileUploader.File, data?.fileUploader.url, commentAttachUrl)
+
+   await setPayementDetails(data)
+
 
     await onSubmitFun(y, resetForm)
 
@@ -314,47 +363,12 @@ const CaptureUnitPayment = ({
     // updateLeadStatus(leadDocId, newStatus)
   }
 
-  const onSubmit = async (data, resetForm) => {
-    // get booking details, leadId, unitDetails,
-    //  from existing object send values of
-    //  booking
-    // copy unit data as it is
-    // copy lead data as it is
-    //  unit details
 
-    // 1)Make an entry to finance Table {source: ''}
-    // 2)Create new record in Customer Table
-    // 3)Update unit record with customer record and mark it as booked
-    // 4)update lead status to book
-
-    //   const x = await addDoc(collection(db, 'spark_leads'), data)
-    // await console.log('x value is', x, x.id)
-
-    const { uid } = selUnitDetails
-    // 1)Make an entry to finance Table {source: ''}
-
-    const x1 = await addPaymentReceivedEntry(
-      orgId,
-      uid,
-      { leadId: 'id' },
-      data,
-      'leadsPage',
-      'nitheshreddy.email@gmail.com',
-      enqueueSnackbar
-    )
-
-    // add phaseNo , projName to selUnitDetails
-    // 2)Create('')
-
-    // 3)Update unit record with customer record and mark it as booked
-
-    // 4)update lead status to book
-    // updateLeadStatus(leadDocId, newStatus)
-  }
 
   const datee = new Date().getTime()
   const initialState = {
     amount: bankData?.amount || '',
+    amount_commas: bankData?.amount || '',
     towardsBankDocId: '',
     mode: bankData?.mode || paymentModex,
     payto: bankData?.payto || '',
@@ -413,8 +427,9 @@ const CaptureUnitPayment = ({
                   <Formik
                     enableReinitialize={true}
                     initialValues={initialState}
-                    validationSchema={validate_capturePayment}
+                    validationSchema={paymentModex === 'wallet' ? validate_captureWalletPayment : validate_capturePayment }
                     onSubmit={(values, { resetForm }) => {
+                      console.log(values)
                       setBookingProgress(true)
                       onSubmitSupabase(values, resetForm)
                       console.log(values)
@@ -425,13 +440,13 @@ const CaptureUnitPayment = ({
                         <div className="form">
                           {/* Phase Details */}
 
-                          <section className=" ">
-                            <div className="w-full mx-auto ">
+                          <section className="overflow-y-auto h-[60vh] sm:h-[50vh] md:h-[60vh] lg:h-[100vh]">
+                            <div className="w-full mx-auto">
                               <div className="relative flex flex-col min-w-0 break-words w-full mb-6  rounded-lg bg-white ">
-                                <div className=" flex flex-row px-0 py-2  overflow-y-scroll overflow-auto no-scrollbar">
-                                  <section className=" p- rounded-md ">
+                                <div className=" flex flex-row px-0 py-2  overflow-auto ">
+                                  <section className=" p- rounded-md w-full ">
                                     <article className="mt-3">
-                                      <div className="flex flex-row justify-between">
+                                      <div className="flex flex-row  justify-between">
                                         <section className="flex flex-row">
                                           <span className="text-[38px] mt-[-16px]">
                                             🎊
@@ -453,8 +468,11 @@ const CaptureUnitPayment = ({
                                             {/* <h6 className="text-blueGray-400 text-sm mt- ml-6 mb- font-weight-[700]  font-uppercase">
                                               Payment
                                             </h6> */}
-                                            <span className="text-center text-[13px] font-normal">
+                                            <span className="text-right text-[13px] font-normal">
                                               {format(new Date(), 'dd-MMMM-yy')}
+                                            </span>
+                                            <span className="text-right text-[13px] font-normal">
+                                              Unit Balance: {selUnitDetails?.T_balance?.toLocaleString('en-IN')|| myBookingPayload?.T_balance?.toLocaleString('en-IN')}
                                             </span>
                                           </div>
                                         </section>
@@ -465,7 +483,8 @@ const CaptureUnitPayment = ({
                                       <section>
                                         <div className="flex flex-wrap mt-3">
                                           <div className="justify-center w-full mx-auto"></div>
-                                          <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
+
+                                         {false &&<section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
                                             <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md flex flex-row justify-between">
                                               <span className="text-sm font-semibold text-gray-500 w-2/3">
                                                 Paying For
@@ -614,7 +633,7 @@ const CaptureUnitPayment = ({
                                                 </div>
                                               </section>
                                             )}
-                                          </section>
+                                          </section>}
 
                                           <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
                                             <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
@@ -643,9 +662,13 @@ const CaptureUnitPayment = ({
                                                   //   {dat.label}
                                                   // </span>
                                                   <div
-                                                    className="flex items-center gap-x-1"
+                                                    className="flex flex-col items-center gap-x-1"
                                                     key={i}
                                                     onClick={() => {
+                                                      // setPaymentModex(dat.value)
+
+
+
                                                       setPaymentModex(dat.value)
                                                       formik.setFieldValue(
                                                         'mode',
@@ -665,7 +688,7 @@ const CaptureUnitPayment = ({
                                                     />
                                                     <label
                                                       htmlFor="push-everything"
-                                                      className="block text-sm font-medium leading-6 text-gray-900"
+                                                      className="block text-sm mt-2 font-medium leading-6 text-gray-900"
                                                     >
                                                       {dat.label}
                                                     </label>
@@ -678,7 +701,7 @@ const CaptureUnitPayment = ({
                                               'credit_note',
                                               'wallet',
                                             ].includes(paymentModex) && (
-                                              <div className="w-full  px-3 mt-3">
+                                              <div className="w-full  px-3 mt-4">
                                                 <div className=" mb-4 w-full">
                                                   <MultiSelectMultiLineField
                                                     label="Paid Towards Account"
@@ -714,6 +737,33 @@ const CaptureUnitPayment = ({
                                                     options={bankDetailsA}
                                                   />
                                                 </div>
+
+
+{/* <div className="mb-4 w-full">
+      <MultiSelectMultiLineField
+        label="Paid Towards Account box"
+        name="towardsBankDocId"
+        onChange={(payload) => {
+          console.log('Changed value is ', payload);
+          const { value, id, accountName } = payload;
+
+
+          const formattedValue = formatIndianNumber(value);
+
+
+          formik.setFieldValue('builderName', accountName);
+          formik.setFieldValue('landlordBankDocId', id);
+          formik.setFieldValue('towardsBankDocId', formattedValue);
+
+          console.log('Formatted value:', formattedValue);
+        }}
+        value={formik.values.towardsBankDocId}
+        options={bankDetailsA}
+      />
+    </div> */}
+
+
+
                                               </div>
                                             )}
 
@@ -773,6 +823,7 @@ const CaptureUnitPayment = ({
                                                         'changed value is ',
                                                         payload
                                                       )
+
                                                       const {
                                                         value,
                                                         id,
@@ -819,8 +870,13 @@ const CaptureUnitPayment = ({
                                                 <div className="relative w-full mb-3">
                                                   <TextField2
                                                     label="Amount"
-                                                    name="amount"
-                                                    type="number"
+                                                    name="amount_commas"
+                                                    type="text"
+                                                    value={
+                                                      formik.values.amount_commas!== null
+                                                        ? formatIndianNumber(formik.values.amount_commas)
+                                                        : 0
+                                                    }
                                                     onChange={(e) => {
                                                       // setAmount(e.target.value)
                                                       console.log(
@@ -845,41 +901,86 @@ const CaptureUnitPayment = ({
                                                               .selCustomerWallet
                                                               ?.walletAmount
                                                         ) {
-                                                          console.log('changed value is ')
+
+
                                                           formik.setFieldValue(
                                                             'amount',
-                                                            formik.values
+                                                            Number((   formik.values
+                                                              .selCustomerWallet
+                                                              ?.walletAmount || '').replace(/,/g, ''))
+                                                          )
+                                                          formik.setFieldValue(
+                                                            'amount_commas',
+                                                            (String(Number(formik.values
                                                             .selCustomerWallet
-                                                            ?.walletAmount
+                                                            ?.walletAmount)))
                                                           )
                                                         } else {
                                                           formik.setFieldValue(
                                                             'amount',
-                                                            e.target.value
+                                                            Number((e.target.value || '').replace(/,/g, ''))
+                                                          )
+                                                          formik.setFieldValue(
+                                                            'amount_commas',
+                                                            (String(Number(e.target.value.replace(/[^0-9]/g, ''))))
                                                           )
                                                         }
                                                       } else {
+
+                                                        let x =  Number((e.target.value || '').replace(/,/g, ''))
+                                                        console.log(
+                                                          'changed value is ',
+                                                          e.target.value,x )
+                                                        if (
+                                                          x > 0 &&
+                                                          (x <= selUnitDetails?.T_balance || x <= myBookingPayload?.T_balance)
+
+                                                        ){
                                                         formik.setFieldValue(
                                                           'amount',
-                                                          e.target.value
+                                                          Number((e.target.value || '').replace(/,/g, ''))
                                                         )
+                                                        formik.setFieldValue(
+                                                          'amount_commas',
+                                                          (String(Number(e.target.value.replace(/[^0-9]/g, ''))))
+                                                        )
+                                                        setLimitError(false)
+                                                      }
+                                                      else if(x > 0){
+
+                                                        setLimitError(true)
+
+                                                      }else{
+                                                        formik.setFieldValue(
+                                                          'amount',
+                                                          Number((e.target.value || '').replace(/,/g, ''))
+                                                        )
+                                                        formik.setFieldValue(
+                                                          'amount_commas',
+                                                          (String(Number(e.target.value.replace(/[^0-9]/g, ''))))
+                                                        )
+                                                      }
                                                       }
                                                     }}
                                                   />
                                                 </div>
                                               </div>
 
-                                              <div className="text-xs px-3 mb-3">
+                                              <div className="text-xs px-3 ">
                                                 {' '}
                                                 Paying{' '}
                                                 <RupeeInWords
                                                   amount={
-                                                    formik?.values?.amount || 0
+                                                    Number(formik?.values?.amount) || 0
                                                   }
                                                 />
                                               </div>
+                                             {limitError && <div className="text-xs px-3  text-red-700">
+                                                {' '}
+                                                Amount cannot be greater than Unit Balance {' '}
+                                              </div>}
                                             </section>
-                                            <section className="flex flex-row">
+                                            <section className="flex flex-row mt-3">
                                               <div className="w-full lg:w-10/12 px-3">
                                                 <div className="relative w-full mb-5">
                                                   <TextField2
@@ -946,12 +1047,13 @@ const CaptureUnitPayment = ({
                                         <div>
                                           <label
                                             htmlFor="formFile1"
-                                            className="form-label cursor-pointer inline-block mt-2  font-regular text-xs bg-gray-300 rounded-2xl  py-1 "
+                                            className="form-label cursor-pointer inline-block mt-2 ml-2 text-[#00ADB4]  font-regular text-xs  rounded-2xl  py-1 "
                                           >
                                             <AttachFile
-                                              className="w-4 h-4 text-[18px]"
-                                              style={{ fontSize: '18px' }}
+                                              className="w-4 h-4 text-[14px]"
+                                              style={{ fontSize: '14px' }}
                                             />
+                                          Add Receipt
                                           </label>
                                           {/* {panCard1 != '' && (
                         <button
@@ -973,10 +1075,7 @@ const CaptureUnitPayment = ({
                                                 'fileUploader',
                                                 e.target.files[0]
                                               )
-                                              // handleFileUploadFun(
-                                              //   e.target.files[0],
-                                              //   'panCard1'
-                                              // )
+
                                             }}
                                           />
                                         </div>
@@ -1183,7 +1282,7 @@ const CaptureUnitPayment = ({
                                 </div>
                               </div> */}
                                     {!bookingProgress && (
-                                      <div className="text-center space-x-4 mt-6">
+                                      <div className="text-center space-x-4 mt-6 pb-10">
                                         <button
                                           className="bg-[#8B5CF6] translate-y-1 text-[#fff] sm:text-lg text-xs font-bold py-2.5 px-6  rounded-full inline-flex items-center"
                                           type="submit"

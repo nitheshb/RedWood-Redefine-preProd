@@ -1,19 +1,64 @@
-import { useState, useEffect, useRef } from 'react'
 
+import { Download } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { getProjectByUid } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { prettyDate, timeConv, prettyDateTime } from 'src/util/dateConverter'
+import { prettyDate } from 'src/util/dateConverter'
+import { downloadImage } from 'src/util/imageDownlaod'
+import PdfTransactionsGenerator from 'src/util/PdfTransactionsGenerator'
 
 const CrmUnitFinanceHistory = ({
   selCustomerPayload,
   assets,
   totalIs,
+
   unitTransactionsA,
 }) => {
   const { user } = useAuth()
   const { orgId } = user
 
+
+
+
+  const [projectDetails, setProject] = useState({})
+  const getProjectDetails = async (id) => {
+    const unsubscribe = await getProjectByUid(
+      orgId,
+      id,
+      (querySnapshot) => {
+        const projects = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        )
+        setProject(projects[0])
+      },
+      () =>
+        setProject({
+          projectName: '',
+        })
+    )
+    return unsubscribe
+  }
+  useEffect(() => {
+    getProjectDetails(selCustomerPayload?.pId)
+  }, [selCustomerPayload])
+
+
+
+
+
+
   return (
     <>
+
+
+
+       <PdfTransactionsGenerator
+  user={user}
+  unitTransactionsA={unitTransactionsA}
+  selCustomerPayload={selCustomerPayload}
+  projectDetails={projectDetails}
+  selUnitDetails={undefined} myObj={undefined} newPlotPS={undefined} myAdditionalCharges={undefined} streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined}  leadDetailsObj1={undefined} PSa={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}                                        // selUnitDetails={selUnitDetails}
+/>
 
 
       <div className="mt-2">
@@ -61,6 +106,10 @@ const CrmUnitFinanceHistory = ({
                   <th className="w-[15%] text-[10px] text-center text-gray-400 text-[#823d00] font-bodyLato tracking-wide uppercase ">
                     Reviewer
                   </th>
+
+                  <th className="w-[15%] text-[10px] text-center text-gray-400 text-[#823d00] font-bodyLato tracking-wide uppercase ">
+                    Download
+                  </th>
                 </tr>
               </thead>
 
@@ -102,6 +151,21 @@ const CrmUnitFinanceHistory = ({
                       <td className="text-[12px] text-center text-gray-800 ">
                         {d1?.Reviewer || "NA"}
                       </td>
+
+                      <td className={` text-[12px] text-center flex justify-center items-center`}>
+                      <button
+          color="gray"
+          className="border-0 block rounded ml-2"
+          onClick={() => { downloadImage(
+            JSON.parse(d1?.attchUrl)?.url,
+            `${JSON.parse(d1?.attchUrl)?.fileName}`
+          )}}
+        >
+  <Download className={`text-center w-[13px] h-6 mt-[8px]  ${d1?.attchUrl.length>1 ? 'text-gray-800 ' : 'text-gray-400 ' }`} />
+  </button>
+
+</td>
+
                     </tr>
                   )
                 })}

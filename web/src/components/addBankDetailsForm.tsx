@@ -1,30 +1,19 @@
 import { Dialog } from '@headlessui/react'
 import { useState } from 'react'
-import { Form, Formik, Field } from 'formik'
+import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { useSnackbar } from 'notistack'
 import { useParams } from '@redwoodjs/router'
-import {
-  InputAdornment,
-  TextField as MuiTextField,
-  Checkbox,
-} from '@mui/material'
-import { Add, Remove } from '@mui/icons-material'
 import Loader from 'src/components/Loader/Loader'
 import { TextField } from 'src/util/formFields/TextField'
-import { DateField } from 'src/util/formFields/DateField'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import {
   bankPreferredType,
   banksList,
-  unitsCancellation,
 } from 'src/constants/projects'
-import { AreaConverter } from 'src/components/AreaConverter'
 import {
   addBankAccount,
   addVirtualAccount,
-  createPhase,
-  updatePhase,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
@@ -223,7 +212,7 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
                                 Cancel{' '}
                               </button>
                               <button
-                                className="mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500"
+                                className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500"
                                 type="button"
                                 disabled={loading}
                                 onClick={() => submitFormFun(formik)}

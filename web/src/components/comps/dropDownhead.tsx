@@ -1,9 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-
-
-
 export default function SelectDropDownComp({
   onChange,
   options,
@@ -17,7 +14,6 @@ export default function SelectDropDownComp({
     setSelected(value)
     onChange(value)
   }
-
   return (
     <div className="w-100">
       <label className="label font-regular text-sm mb-2">{label}</label>

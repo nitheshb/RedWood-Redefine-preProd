@@ -2,29 +2,19 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment, useEffect, useState } from 'react'
-
-import { Menu } from '@headlessui/react'
-import { Listbox, Transition } from '@headlessui/react'
-import { ArrowRightIcon } from '@heroicons/react/outline'
-import CalendarIcon from '@heroicons/react/outline/CalendarIcon'
+import { useEffect, useState } from 'react'
 import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
 import { setHours, setMinutes } from 'date-fns'
-import { Timestamp } from 'firebase/firestore'
+import { doc, Timestamp, updateDoc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
-
 import {
   addLeadScheduler,
-  addSchedulerLog,
   deleteSchLog,
   steamLeadActivityLog,
-  steamLeadPhoneLog,
   steamLeadScheduleLog,
   steamUsersListByRole,
-  updateLeadAssigTo,
-  updateLeadStatus,
   updateSchLog,
   addLeadNotes,
   steamLeadNotes,
@@ -33,51 +23,45 @@ import {
   getAllProjects,
   updateLeadProject,
   getFinanceForUnit,
-  streamGetAllTransactions,
   streamGetAllUnitTransactions,
+  updateUnitStatus,
+  updateUnitStatusDates,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { storage } from 'src/context/firebaseConfig'
+import { db, storage } from 'src/context/firebaseConfig'
 import {
-  getDifferenceInHours,
-  getDifferenceInMinutes,
   prettyDate,
-  prettyDateTime,
   timeConv,
 } from 'src/util/dateConverter'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
-
 import DocRow from '../LegalModule/Docu_row'
-
-import SortComp from './sortComp'
-
 import 'react-datepicker/dist/react-datepicker.css'
-
-import Loader from './Loader/Loader'
-import AddBookingForm from './bookingForm'
-
 import { useSnackbar } from 'notistack'
-
 import SiderForm from '../SiderForm/SiderForm'
-
 import CrmUnitSummary from './A_CrmUnitSummary'
 import CrmUnitPsHome from './CustomerFinanceStatement'
-
-import AssigedToDropComp from '../assignedToDropComp'
-
-import { USER_ROLES } from 'src/constants/userRoles'
-
-import CrmPaymentSummary from './CrmPaymentSummary'
-
 import AddApplicantDetails from '../AddApplicantDetails'
-import BankSelectionSwitchDrop from '../A_LoanModule/BankSelectionDroopDown'
 import LoanApplyFlowHome from '../A_LoanModule/LoanApplyFlowHome'
-
 import { supabase } from 'src/context/supabase'
-
 import ShowCustomerDetails from './CrmShowCustomerDetails'
 import CancelUnitForm from './A_UnitCancel.tsx/CancelUnitForm'
 import UnitAudit from './A_Crm_UnitAudit/UnitAudit'
+import UnblockUnitForm from './A_UnitUnblock/UnblockUnitForm'
+import { Bed, Building2, Calendar, Compass, DollarSign, Home, Ruler, Square } from 'lucide-react'
+
+
+
+import units1 from '../../../public/units1.png'
+import units2 from '../../../public/units2.png'
+import units3 from '../../../public/units3.png'
+import units4 from '../../../public/units4.png'
+
+
+
+import Dimensions from '../../../public/Dimensions.png'
+
+
+
 
 
 // interface iToastInfo {
@@ -91,18 +75,7 @@ const people = [
   { name: 'Priority 3' },
   { name: 'Priority 4' },
 ]
-const statuslist = [
-  { label: 'Select the Status', value: '' },
-  { label: 'New', value: 'new' },
-  // { label: 'Follow Up', value: 'followup' },
-  { label: 'Visit Fixed', value: 'visitfixed' },
-  { label: 'Visit Done', value: 'visitdone' },
-  { label: 'Negotiation', value: 'Negotiation' },
-  // { label: 'RNR', value: 'rnr' },
-  { label: 'Booked', value: 'booked' },
-  { label: 'Not Interested', value: 'notinterested' },
-  // { label: 'Dead', value: 'Dead' },
-]
+
 
 const attachTypes = [
   { label: 'Select Document', value: '' },
@@ -144,7 +117,8 @@ export default function UnitFullSummary({
   selCustomerPayload,
   selSubMenu,
   selSubMenu2,
-  source
+  source,
+
 }) {
   const { user } = useAuth()
   const { enqueueSnackbar } = useSnackbar()
@@ -194,7 +168,7 @@ export default function UnitFullSummary({
   const [attach, setAttach] = useState(false)
   const [loader, setLoader] = useState(false)
   const [projectList, setprojectList] = useState([])
-  const [financeMode, setFinanceMode] = useState('schedule')
+  const [financeMode, setFinanceMode] = useState('transactions')
 
   const [selProjectIs, setSelProjectIs] = useState({
     projectName: '',
@@ -211,7 +185,7 @@ export default function UnitFullSummary({
     Status,
     by,
     Mobile,
-    Date,
+
     Email,
     Assigned,
     AssignedBy,
@@ -753,11 +727,106 @@ export default function UnitFullSummary({
       console.log('upload error is ', error)
     }
   }
+
+
+
+
+
+  const [editableEvent, setEditableEvent] = useState(null);
+  const [editedDate, setEditedDate] = useState('');
+
+  const events = [
+    { event: 'Booked', key: 'booked_on' },
+    { event: 'Allotment', key: 'alloted_on' },
+    { event: 'Agreement', key: 'agreement_on' },
+    { event: 'Registered', key: 'registered_on' },
+    { event: 'Possession', key: 'possession_on' },
+  ];
+
+  // const handleEdit = (key) => {
+  //   setEditableEvent(key);
+  //   setEditedDate(customerDetails[key] || '');
+  // };
+
+  const handleEdit = (key) => {
+    setEditableEvent(key)
+    setEditedDate(customerDetails[key] || '')
+  }
+
+  // const handleSave = (key) => {
+  //   customerDetails[key] = editedDate;
+  //   setEditableEvent(null);
+  // };
+
+
+
+
+
+  const handleSave = async (key) => {
+    try {
+      console.log('date is',editedDate )
+      const dateTimestamp = new Date(editedDate).getTime()
+
+      const updatedDetails = {
+        ...customerDetails,
+        [key]: dateTimestamp
+      }
+      updateUnitStatusDates(
+          orgId,
+          selCustomerPayload?.id,
+          {key, time: dateTimestamp, oldDate:customerDetails[key] || 0 },
+          user.email,
+          enqueueSnackbar
+        )
+        customerDetails[key] = dateTimestamp
+
+        setEditableEvent(null)
+
+
+        enqueueSnackbar('Date updated successfully', {
+          variant: 'success'
+        })
+        return;
+      const unitDocRef = doc(db, `${orgId}_units`, customerDetails.id)
+      await updateDoc(unitDocRef, {
+        [key]: dateTimestamp,
+        [`${key}_updated_by`]: user.email,
+        [`${key}_updated_at`]: new Date().getTime()
+      })
+
+
+      customerDetails[key] = dateTimestamp
+
+      setEditableEvent(null)
+
+
+      enqueueSnackbar('Date updated successfully', {
+        variant: 'success'
+      })
+    } catch (error) {
+      console.error('Error updating date:', error)
+      enqueueSnackbar('Error updating date', {
+        variant: 'error'
+      })
+    }
+  }
+
+
+  const handleCancel = () => {
+    setEditableEvent(null);
+    setEditedDate('');
+  };
+
+
+
+
+
+
   return (
     <div
-      className={`bg-[#d9d8ff]  h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`bg-[#F9F9FA]  rounded-md h-screen     `}
     >
-<section className="flex flex-row">
+<section className="flex flex-row-reverse	">
     <div className='w-full'>
       <div className="rounded-t bg-[#F1F5F9] mb-0 px-3">
         <>
@@ -1113,8 +1182,8 @@ export default function UnitFullSummary({
       )}
       {selFeature === 'unit_information' && (
         <>
-          <div className="flex flex-col  my-10 rounded-lg bg-white border border-gray-100 px-4 m-4 mt-4">
-            <div className="py-3 grid grid-cols-4 gap-4 mb-4">
+          <div className="">
+            <div className="">
 
               {/* <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
                 <section className="flex flow-row justify-between mb-1">
@@ -1155,8 +1224,8 @@ export default function UnitFullSummary({
               </section> */}
 
 
-              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+              {/* <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Units
@@ -1191,12 +1260,27 @@ export default function UnitFullSummary({
     </div>
 
   </section>
-</section>
 
 
 
-              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+
+
+
+
+
+
+
+</section> */}
+
+
+
+
+
+
+
+{/*
+              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Dimensions</div>
@@ -1221,14 +1305,14 @@ export default function UnitFullSummary({
     </div>
 
   </section>
-</section>
+</section> */}
 
 
 
 
 
-<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+{/* <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Schedule
@@ -1255,12 +1339,12 @@ export default function UnitFullSummary({
     </div>
 
   </section>
-</section>
+</section> */}
 
 
+{/*
+<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
 
-<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Additonal Details
@@ -1291,7 +1375,11 @@ export default function UnitFullSummary({
     </div>
 
   </section>
-</section>
+</section> */}
+
+
+
+
 
 
 
@@ -1434,14 +1522,14 @@ export default function UnitFullSummary({
             </div>
 
 
-            <div className="py-3 grid grid-cols-4 gap-4 mb-4">
+            <div className="">
 
 
             {(customerDetails?.projectType?.name === 'Villas' || customerDetails?.projectType?.name === 'Apartment') && (
 
-              
-<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+
+<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Details
@@ -1572,8 +1660,8 @@ export default function UnitFullSummary({
 
 
 
-              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md "> 
-  
+              {/* <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
+
 
   <div className="flex items-center mb-2">
     <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Status
@@ -1596,13 +1684,10 @@ export default function UnitFullSummary({
       <div className="text-xs text-gray-500">Mortgage Type
       </div>
     </div>
-    {/* <div className="text-start">
-      <div className="text-base font-semibold text-slate-900"></div>
-      <div className="text-xs text-gray-500">North</div>
-    </div> */}
+
 
   </section>
-</section>
+</section> */}
 
 
 
@@ -1612,7 +1697,7 @@ export default function UnitFullSummary({
 
 
 
- 
+
 
 
 
@@ -1625,8 +1710,370 @@ export default function UnitFullSummary({
 
 
 
+          <div className="h-[65%]  mx-4 bg-[#f0f1ff] grid grid-cols-3 gap-2 rounded-lg border border-gray-100 p-4">
 
 
+            {/* box1 */}
+
+
+
+          <div className="w-full max-w-[400px]   h-[200px] shadow-md  rounded-[10px]   bg-white  pt-4  ">
+        <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
+          Units
+        </h2>
+        <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 mx-8 items-center">
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={units1}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.unit_no}</div>
+              <div className="text-xs  font-medium text-[#949494]">Unit No</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={units2}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.area?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Size (sqft)</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={units3}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.facing}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Facing</div>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={units4}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium   text-[#949494]">BUA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+       {/* box2 */}
+
+      <div className="w-full max-w-[400px] h-[200px] shadow-md rounded-[10px]  bg-white pt-4   ">
+        <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
+        Dimensions
+        </h2>
+        <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 ml-8 ">
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <img src={Dimensions} className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+
+
+
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate"> {selCustomerPayload?.east_d?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium   text-[#949494]">East</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={Dimensions} className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transform rotate-180" />
+
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.west_d?.toLocaleString('en-IN')}</div>
+              <div className="text-xs   font-medium  text-[#949494]">West</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img src={Dimensions} className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transform rotate-90" />
+
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.south_d?.toLocaleString('en-IN')}</div>
+              <div className="text-xs   font-medium  text-[#949494]">South</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+            <img
+  src={Dimensions}
+  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transform rotate-220"
+/>
+
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.north_d?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium   text-[#949494]">North</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      {/* <div className="w-full max-w-[400px] shadow-md rounded-lg px-4 sm:px-6 py-4 sm:py-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#3D3D3D]  ">
+        Schedule
+        </h2>
+        <div className='border-b my-4 mt-2 border-[#949494]'></div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
+              <div className="text-xs sm:text-sm text-[#949494]">East By</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
+              <div className="text-xs sm:text-sm text-[#949494]">West By</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
+              <div className="text-xs sm:text-sm text-[#949494]">South By</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}</div>
+              <div className="text-xs sm:text-sm text-[#949494]">North By</div>
+            </div>
+          </div>
+        </div>
+      </div> */}
+
+
+<div className="w-full max-w-[400px] h-[200px] shadow-md rounded-[10px]  bg-white   pt-4 ">
+  <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]">Schedule</h2>
+  <div className="border-b my-4 mt-2 border-[#f1f1f1]"></div>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 mx-8 gap-6">
+
+    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+        <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-xs  text-[#949494]">East By</div>
+      </div>
+    </div>
+
+
+    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+        <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-xs  text-[#949494]">West By</div>
+      </div>
+    </div>
+
+
+    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+        <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-xs  text-[#949494]">South By</div>
+      </div>
+    </div>
+
+
+    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+        <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-xs  text-[#949494]">North By</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+     {/* box4 */}
+      <div className="w-full max-w-[400px]  h-[200px] shadow-md rounded-[10px]   bg-white  pt-4 ">
+        <h2 className="text-[13px] ml-10 font-semibold text-[#3D3D3D]  ">
+        Additonal Details
+        </h2>
+        <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
+
+        <div className="grid grid-cols-1 mx-8 sm:grid-cols-2 gap-6 ">
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.rate_per_sqft?.toLocaleString('en-IN')}</div>
+              <div className="text-xs   font-medium  text-[#949494]">Cost</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium   text-[#949494]">PLC</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.facing}</div>
+              <div className="text-xs   font-medium  text-[#949494]">Total</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.kathaId}</div>
+              <div className="text-xs   font-medium  text-[#949494]">KathaId</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {/* box 5 */}
+
+      <div className="w-full max-w-[400px] shadow-md  h-[200px]   bg-white  rounded-[10px]  pt-4 ">
+        <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
+        Status
+        </h2>
+        <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 mx-8 gap-4">
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.status}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Status</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.release_status?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Release Status</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.mortgage_type}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Mortgage Type</div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/*
           <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 mx-4 ">
           <div className="flex flex-row ">
                 <img
@@ -1657,7 +2104,6 @@ export default function UnitFullSummary({
         <div className="mt-3 sm:pe-8 bg-white p-3 rounded-lg mr-2">
             <h4 className="text-lg font-semibold text-gray-900 text-[12px] ">{d?.event}</h4>
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">On: {timeConv(Number(customerDetails[d?.key])).toLocaleString()}</time>
-            {/* <p className="text-base font-normal text-gray-500 ">Get started with dozens of web components and interactive elements.</p> */}
         </div>
     </li>)}
 
@@ -1666,10 +2112,151 @@ export default function UnitFullSummary({
 
 
             </div>
-          </div>
+          </div> */}
+
+
+<div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 mx-4">
+      <div className="flex flex-row">
+        <img
+          src="https://static.ambitionbox.com/static/benefits/WFH.svg"
+          alt=""
+        />
+        <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
+          Dates
+        </h1>
+      </div>
+
+      <div className="relative col-span-12 pl-6 space-y-2 sm:col-span-9 mt-1">
+        <ol className="items-center sm:flex">
+          {events.map((d, i) => (
+            <li key={i} className="relative mb-6 sm:mb-0">
+              <div className="flex items-center">
+                <div className="z-10 flex items-center justify-center w-6 h-6 bg-[#E5E7EB] rounded-full ring-0 ring-[#DDD6FE] sm:ring-8 shrink-0">
+                  <svg
+                    className="w-2.5 h-2.5 text-blue-800"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                  </svg>
+                </div>
+                <div className="hidden sm:flex w-full bg-[#E5E7EB] h-0.5"></div>
+              </div>
+
+              <div className="mt-3 sm:pe-8 bg-white p-3 rounded-lg mr-2">
+                <h4 className="text-gray-900 text-[13px]">
+                  {d.event}
+                </h4>
+
+                {/* {editableEvent === d.key ? (
+                  <div>
+                    <input
+                      type="date"
+                      className="border border-gray-300 rounded-md p-1 text-sm"
+                      value={editedDate}
+                      onChange={(e) => setEditedDate(e.target.value)}
+                    />
+                    <div className="flex space-x-2 mt-2">
+                      <button
+                        onClick={() => handleSave(d.key)}
+                        className="px-3 py-1 text-sm text-white bg-blue-500 rounded"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={handleCancel}
+                        className="px-3 py-1 text-sm text-gray-500 bg-gray-100 rounded"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
+                    On: {customerDetails[d.key]
+                      ? timeConv(Number(customerDetails[d.key])).toLocaleString()
+                      : 'Not Available'}
+                  </time>
+                )} */}
+
+
+{editableEvent === d.key ? (
+      <div>
+        <input
+          type="date"
+          className="border border-gray-300 rounded-md p-1 text-sm"
+          value={editedDate}
+          onChange={(e) => setEditedDate(e.target.value)}
+        />
+        <div className="flex space-x-2 mt-2">
+          <button
+            onClick={() => handleSave(d.key)}
+            className="px-3 py-1 text-sm text-white bg-blue-500 rounded"
+          >
+            Save
+          </button>
+          <button
+            onClick={handleCancel}
+            className="px-3 py-1 text-sm text-gray-500 bg-gray-100 rounded"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    ) : (
+      <time className="block mb-2 text-[10px] font-normal leading-none text-gray-500 mt-1">
+        On: {customerDetails[d.key]
+          ? prettyDate(Number(customerDetails[d.key])).toLocaleString()
+          : 'Not Available'}
+      </time>
+    )}
+
+
+
+
+             { !(editableEvent === d.key) &&  <button
+                  onClick={() => handleEdit(d.key)}
+                  className="text-blue-500 text-sm mt-1"
+                >
+                  Edit
+                </button>
+}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
         </>
       )}
+
+
+
+
+
+
+
+
+
+
+
+
       {selFeature === 'summary' && (
+
+
         <div className="  mt-2 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
           <CrmUnitSummary
             selCustomerPayload={selCustomerPayload}
@@ -1679,7 +2266,15 @@ export default function UnitFullSummary({
           />
         </div>
       )}
-      {['finance_info', 'summary'].includes(selFeature) && (
+
+
+
+
+
+
+
+
+      {['finance_info'].includes(selFeature) && (
         <>
           <div className="py-3 px-3 pb-[250px] m-4 mt-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll">
             <CrmUnitPsHome
@@ -1691,7 +2286,7 @@ export default function UnitFullSummary({
               unitTransactionsA={unitTransactionsA}
             />
           </div>
-          {selFeature === 'summary' && (
+          {/* {selFeature === 'summary' && (
             <div className="py-3 px-3 m-4 mt-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll">
               <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
                 <section className="flex flow-row justify-between mb-1">
@@ -1775,11 +2370,16 @@ export default function UnitFullSummary({
                 </section>
               </div>
             </div>
-          )}
+          )} */}
         </>
       )}
 
-      {selFeature === 'loan_info' && <LoanApplyFlowHome />}
+
+
+
+
+
+      {selFeature === 'loan_info' && <LoanApplyFlowHome customerDetails={customerDetails} />}
       {selFeature === 'agreement_info' && (
         <section className="bg-white w-full md:px-10 md:mb-20">
           <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
@@ -1797,7 +2397,7 @@ export default function UnitFullSummary({
                     })
                   }}
                 >
-                  Add Doc
+                  {/* Add Doc */}
                 </span>
               </div>
               <p className="mr4">Date Created</p>
@@ -1822,31 +2422,25 @@ export default function UnitFullSummary({
             ''
           )}
           {[
-            { id: 1234, name: 'EC', time: '22-Nov-2022' },
+            { id: 1234, name: 'EC',type: 'ec',time: customerDetails?.ecDocUpDate, url: customerDetails?.ecDocUrl , filName: customerDetails?.ecFilName },
             {
               id: 1235,
               name: 'Agreement',
-              time: '24-Nov-2022',
+              type: 'agree',
+              time: customerDetails?.agreeDocUpDate, url: customerDetails?.agreeDocUrl , filName: customerDetails?.agreeFilName,
             },
             {
               id: 1236,
               name: 'Register Doc',
-              time: '2-Dec-2022',
+              type: 'reg',
+              time: customerDetails?.regDocUpDate, url: customerDetails?.regDocUrl , filName: customerDetails?.regFilName,
             },
           ]?.map((doc, i) => (
             <section
               key={i}
-              onClick={() => {
-                // show sidebar and display the worddoc
-                setSliderInfo({
-                  open: true,
-                  title: 'viewDocx',
-                  sliderData: {},
-                  widthClass: 'max-w-xl',
-                })
-              }}
+
             >
-              <DocRow id={doc?.id} fileName={doc?.name} date={doc?.time} />
+              <DocRow  key={i} data={doc} id={customerDetails?.id} fileName={doc?.name} date={doc?.time}  />
             </section>
           ))}
         </section>
@@ -1855,19 +2449,23 @@ export default function UnitFullSummary({
       {selFeature === 'legal_info' && <></>}
       {selFeature === 'cancel_booking' && <>
 
-      <CancelUnitForm selUnitDetails={selCustomerPayload} /> </>}
+      <CancelUnitForm openUserProfile={openUserProfile} selUnitDetails={selCustomerPayload} /> </>}
+
+      {selFeature === 'unblock_Unit' && <>
+
+<UnblockUnitForm openUserProfile={openUserProfile} selUnitDetails={selCustomerPayload} /> </>}
 
       {selFeature === 'unit_audit' && <>
 
 <UnitAudit selUnitDetails={selCustomerPayload} /> </>}
       </div>
 
-      <div className="w-[250px] min-w-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+      <div className="w-[250px] min-w-[250px] h-full  rounded-r-md overflow-auto">
             <div className="">
               {/* <div className="font-md font-medium text-xs  text-gray-800">
                           Notes
                         </div> */}
-
+{/*
               <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg ">
                 <ul
                   className="flex flex-col  rounded-t-lg"
@@ -1884,7 +2482,7 @@ export default function UnitFullSummary({
                     { lab: 'Loan details', val: 'loan_info' },
                     { lab: 'Agreement  details', val: 'agreement_info' },
                     { lab: 'Brokerage  details', val: 'brokerage_info' },
-                    // { lab: 'Docs', val: 'docs_info' },
+
                     { lab: 'Tasks', val: 'tasks' },
                     { lab: 'Timeline', val: 'timeline' },
                     { lab: 'Cancel Booking', val: 'cancel_booking' },
@@ -1908,14 +2506,188 @@ export default function UnitFullSummary({
                           onClick={() => setFeature(d.val)}
                         >
                           {`${d.lab} `}
-                          {/* <span className="bg-gray-100 px-2 py-1 rounded-full">
-                          {/* {rowsCounter(leadsFetchedData, d.val).length} */}
+
                         </button>
                       </li>
                     )
                   })}
                 </ul>
+              </div>  */}
+
+
+
+
+<div className=" border-gray-900  py-4 bg-[#F9F9FA]  bg-gradient-r to-[#EDEDED] from-[#EDEDED] ">
+                <ul
+                  className="flex flex-col  "
+                  id="myTab"
+                  data-tabs-toggle="#myTabContent"
+                  role="tablist"
+                >
+                  {[
+
+                     {  icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.64648 6.53467C2.64648 4.64905 2.64648 3.70624 3.23227 3.12046C3.81805 2.53467 4.76086 2.53467 6.64648 2.53467C8.5321 2.53467 9.47491 2.53467 10.0607 3.12046C10.6465 3.70624 10.6465 4.64905 10.6465 6.53467V8.53467C10.6465 10.4203 10.6465 11.3631 10.0607 11.9489C9.47491 12.5347 8.5321 12.5347 6.64648 12.5347C4.76086 12.5347 3.81805 12.5347 3.23227 11.9489C2.64648 11.3631 2.64648 10.4203 2.64648 8.53467V6.53467Z" stroke="#A6A6A6" stroke-width="1.5"/>
+                <path d="M2.64648 19.5347C2.64648 18.6028 2.64648 18.1369 2.79872 17.7693C3.00171 17.2793 3.39106 16.8899 3.88111 16.6869C4.24866 16.5347 4.7146 16.5347 5.64648 16.5347H7.64648C8.57836 16.5347 9.0443 16.5347 9.41185 16.6869C9.9019 16.8899 10.2913 17.2793 10.4942 17.7693C10.6465 18.1369 10.6465 18.6028 10.6465 19.5347C10.6465 20.4666 10.6465 20.9325 10.4942 21.3001C10.2913 21.7901 9.9019 22.1795 9.41185 22.3825C9.0443 22.5347 8.57836 22.5347 7.64648 22.5347H5.64648C4.7146 22.5347 4.24866 22.5347 3.88111 22.3825C3.39106 22.1795 3.00171 21.7901 2.79872 21.3001C2.64648 20.9325 2.64648 20.4666 2.64648 19.5347Z" stroke="#A6A6A6" stroke-width="1.5"/>
+                <path d="M14.6465 16.5347C14.6465 14.6491 14.6465 13.7063 15.2323 13.1205C15.8181 12.5347 16.7609 12.5347 18.6465 12.5347C20.5321 12.5347 21.4749 12.5347 22.0607 13.1205C22.6465 13.7063 22.6465 14.6491 22.6465 16.5347V18.5347C22.6465 20.4203 22.6465 21.3631 22.0607 21.9489C21.4749 22.5347 20.5321 22.5347 18.6465 22.5347C16.7609 22.5347 15.8181 22.5347 15.2323 21.9489C14.6465 21.3631 14.6465 20.4203 14.6465 18.5347V16.5347Z" stroke="#A6A6A6" stroke-width="1.5"/>
+                <path d="M14.6465 5.53467C14.6465 4.60279 14.6465 4.13685 14.7987 3.7693C15.0017 3.27925 15.3911 2.8899 15.8811 2.68691C16.2487 2.53467 16.7146 2.53467 17.6465 2.53467H19.6465C20.5784 2.53467 21.0443 2.53467 21.4119 2.68691C21.9019 2.8899 22.2913 3.27925 22.4943 3.7693C22.6465 4.13685 22.6465 4.60279 22.6465 5.53467C22.6465 6.46655 22.6465 6.93249 22.4943 7.30004C22.2913 7.79009 21.9019 8.17944 21.4119 8.38243C21.0443 8.53467 20.5784 8.53467 19.6465 8.53467H17.6465C16.7146 8.53467 16.2487 8.53467 15.8811 8.38243C15.3911 8.17944 15.0017 7.79009 14.7987 7.30004C14.6465 6.93249 14.6465 6.46655 14.6465 5.53467Z" stroke="#A6A6A6" stroke-width="1.5"/>
+                </svg>
+
+                    ), lab: 'Summary', val: 'summary' },
+                    { icon: (
+                      <svg width="25" height="27" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.14648 4.28467C8.14648 3.31817 8.92999 2.53467 9.89648 2.53467H15.3965C16.363 2.53467 17.1465 3.31817 17.1465 4.28467C17.1465 5.25117 16.363 6.03467 15.3965 6.03467H9.89648C8.92999 6.03467 8.14648 5.25117 8.14648 4.28467Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M8.15039 6.03467C6.59459 6.08134 5.667 6.25451 5.02516 6.89694C4.14648 7.77644 4.14648 9.19197 4.14648 12.023V18.5291C4.14648 21.3602 4.14648 22.7757 5.02516 23.6552C5.90384 24.5347 7.31806 24.5347 10.1465 24.5347H15.1465C17.9749 24.5347 19.3891 24.5347 20.2678 23.6552C21.1465 22.7757 21.1465 21.3602 21.1465 18.5291V12.023C21.1465 9.19197 21.1465 7.77644 20.2678 6.89695C19.626 6.25451 18.6984 6.08134 17.1426 6.03467" stroke="#A6A6A6" stroke-width="1.5"/>
+                <path d="M8.64453 17.868H12.6445M8.64453 12.4513H16.6445" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+
+                    ), lab: 'Applicant details', val: 'applicant_info' },
+                    { icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6465 6.53467H21.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M11.6465 12.5347H21.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M11.6465 18.5347H21.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M3.64648 7.92753C3.64648 7.92753 4.64648 8.57933 5.14648 9.53467C5.14648 9.53467 6.64648 5.78467 8.64648 4.53467" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.64648 18.9276C3.64648 18.9276 4.64648 19.5794 5.14648 20.5347C5.14648 20.5347 6.64648 16.7847 8.64648 15.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                    ), lab: 'Unit details', val: 'unit_information' },
+                    { icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.6625 2.53467C19.5491 2.53467 18.6465 5.22096 18.6465 8.53467H20.6625C21.6341 8.53467 22.1199 8.53467 22.4206 8.19922C22.7214 7.86376 22.669 7.422 22.5643 6.53848C22.2879 4.2061 21.5408 2.53467 20.6625 2.53467Z" stroke="#A6A6A6" stroke-width="1.5"/>
+                <path d="M18.6465 8.58893V19.1805C18.6465 20.6922 18.6465 21.448 18.1845 21.7455C17.4296 22.2318 16.2626 21.2121 15.6756 20.842C15.1906 20.5361 14.9482 20.3832 14.679 20.3744C14.3882 20.3648 14.1414 20.5115 13.6174 20.842L11.7065 22.0471C11.191 22.3721 10.9333 22.5347 10.6465 22.5347C10.3597 22.5347 10.1019 22.3721 9.58648 22.0471L7.67561 20.842C7.19063 20.5361 6.94814 20.3832 6.67901 20.3744C6.3882 20.3648 6.14141 20.5115 5.61735 20.842C5.03043 21.2121 3.86335 22.2318 3.10843 21.7455C2.64648 21.448 2.64648 20.6922 2.64648 19.1805V8.58893C2.64648 5.73492 2.64648 4.30792 3.52516 3.4213C4.40384 2.53467 5.81805 2.53467 8.64648 2.53467H20.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.64648 6.53467H14.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.64648 10.5347H6.64648" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13.1465 11.4097C12.3181 11.4097 11.6465 11.9973 11.6465 12.7222C11.6465 13.4471 12.3181 14.0347 13.1465 14.0347C13.9749 14.0347 14.6465 14.6223 14.6465 15.3472C14.6465 16.0721 13.9749 16.6597 13.1465 16.6597M13.1465 11.4097C13.7996 11.4097 14.3552 11.7749 14.5611 12.2847M13.1465 11.4097V10.5347M13.1465 16.6597C12.4934 16.6597 11.9378 16.2945 11.7319 15.7847M13.1465 16.6597V17.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+
+                    ), lab: 'Cost & Payments', val: 'finance_info' },
+                    { icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.64648 11.5347H6.64648C3.33715 11.5347 2.64648 12.2254 2.64648 15.5347V18.5347C2.64648 21.844 3.33715 22.5347 6.64648 22.5347H18.6465C21.9558 22.5347 22.6465 21.844 22.6465 18.5347V15.5347C22.6465 13.3236 22.3382 12.2815 21.1465 11.8334" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12.6465 18.5347H18.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17.8907 3.66758C18.3378 3.18245 18.5614 2.93989 18.7989 2.79841C19.3721 2.45701 20.078 2.4464 20.6607 2.7704C20.9022 2.90468 21.1327 3.14042 21.5935 3.61188C22.0544 4.08335 22.2848 4.31908 22.4161 4.56616C22.7328 5.16234 22.7224 5.88438 22.3887 6.47078C22.2504 6.7138 22.0133 6.9425 21.5391 7.3999L15.8969 12.8422C14.4021 14.284 13.4762 14.583 11.4057 14.5288C11.0298 14.5189 10.8419 14.514 10.7327 14.3898C10.6234 14.2657 10.6383 14.074 10.6681 13.6905C10.8057 11.9228 11.1171 11.0171 12.3202 9.71173L17.8907 3.66758Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+
+                    ), lab: 'Documents', val: 'agreement_info' },
+                    { icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.64648 5.03467H9.40384C10.1995 5.03467 10.9626 5.35074 11.5252 5.91335L14.6465 9.03467" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5.64648 14.0347H2.64648" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9.14648 8.03467L11.1465 10.0347C11.6988 10.587 11.6988 11.4824 11.1465 12.0347C10.5942 12.587 9.69877 12.587 9.14648 12.0347L7.64648 10.5347C6.78579 11.3954 5.42319 11.4922 4.44942 10.7619L4.14648 10.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5.64648 11.5347V16.0347C5.64648 17.9203 5.64648 18.8631 6.23227 19.4489C6.81805 20.0347 7.76086 20.0347 9.64648 20.0347H18.6465C20.5321 20.0347 21.4749 20.0347 22.0607 19.4489C22.6465 18.8631 22.6465 17.9203 22.6465 16.0347V13.0347C22.6465 11.1491 22.6465 10.2062 22.0607 9.62046C21.4749 9.03467 20.5321 9.03467 18.6465 9.03467H10.1465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15.8965 14.5347C15.8965 15.5012 15.113 16.2847 14.1465 16.2847C13.18 16.2847 12.3965 15.5012 12.3965 14.5347C12.3965 13.5682 13.18 12.7847 14.1465 12.7847C15.113 12.7847 15.8965 13.5682 15.8965 14.5347Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                    ), lab: 'Loan details', val: 'loan_info' },
+
+                    { icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.6465 11.0347V10.5347C19.6465 6.76343 19.6465 4.87782 18.4749 3.70624C17.3034 2.53467 15.4177 2.53467 11.6465 2.53467C7.87524 2.53467 5.98963 2.53467 4.81805 3.70624C3.64648 4.87782 3.64648 6.76343 3.64648 10.5347V16.5347C3.64648 18.3985 3.64648 19.3303 3.95096 20.0654C4.35694 21.0455 5.13563 21.8242 6.11575 22.2302C6.85083 22.5347 7.78271 22.5347 9.64648 22.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7.64648 7.53467H15.6465M7.64648 11.5347H11.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M15.929 19.5391C15.87 18.6504 15.7645 17.7005 15.3282 16.6264C14.956 15.7103 15.0597 13.5552 17.1465 13.5552C19.2333 13.5552 19.3129 15.7103 18.9407 16.6264C18.5043 17.7005 18.423 18.6504 18.364 19.5391M21.6465 22.5347H12.6465V21.289C12.6465 20.8425 12.9129 20.4501 13.2993 20.3275L15.5541 19.6117C15.7149 19.5606 15.8813 19.5347 16.0486 19.5347H18.2444C18.4117 19.5347 18.5781 19.5606 18.7389 19.6117L20.9937 20.3275C21.3801 20.4501 21.6465 20.8425 21.6465 21.289V22.5347Z" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                    ), lab: 'Brokerage  details', val: 'brokerage_info' },
+
+                    { icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.14648 12.5347C3.14648 8.05633 3.14648 5.81716 4.53772 4.42591C5.92897 3.03467 8.16814 3.03467 12.6465 3.03467C17.1248 3.03467 19.364 3.03467 20.7553 4.42591C22.1465 5.81716 22.1465 8.05633 22.1465 12.5347C22.1465 17.013 22.1465 19.2522 20.7553 20.6435C19.364 22.0347 17.1248 22.0347 12.6465 22.0347C8.16814 22.0347 5.92897 22.0347 4.53772 20.6435C3.14648 19.2522 3.14648 17.013 3.14648 12.5347Z" stroke="#A6A6A6" stroke-width="1.5"/>
+                <path d="M11.6465 7.53467H17.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M7.64648 7.53467H8.64648" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M7.64648 12.5347H8.64648" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M7.64648 17.5347H8.64648" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M11.6465 12.5347H17.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M11.6465 17.5347H17.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+
+                    ), lab: 'Tasks', val: 'tasks' },
+                    { icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.6465 22.5347C18.1693 22.5347 22.6465 18.0575 22.6465 12.5347C22.6465 7.01182 18.1693 2.53467 12.6465 2.53467C7.12364 2.53467 2.64648 7.01182 2.64648 12.5347C2.64648 18.0575 7.12364 22.5347 12.6465 22.5347Z" stroke="#A6A6A6" stroke-width="1.5"/>
+                <path d="M10.1465 10.0347L13.6464 13.5343M16.6465 8.53467L11.6465 13.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                    ), lab: 'Timeline', val: 'timeline' },
+                    { icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.6465 9.53467L9.64648 15.5343M15.6465 15.5347L9.64648 9.53506" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.14648 12.5347C3.14648 8.05633 3.14648 5.81716 4.53772 4.42591C5.92897 3.03467 8.16814 3.03467 12.6465 3.03467C17.1248 3.03467 19.364 3.03467 20.7553 4.42591C22.1465 5.81716 22.1465 8.05633 22.1465 12.5347C22.1465 17.013 22.1465 19.2522 20.7553 20.6435C19.364 22.0347 17.1248 22.0347 12.6465 22.0347C8.16814 22.0347 5.92897 22.0347 4.53772 20.6435C3.14648 19.2522 3.14648 17.013 3.14648 12.5347Z" stroke="#A6A6A6" stroke-width="1.5"/>
+                </svg>
+
+                    ), lab: 'Cancel Booking', val: 'cancel_booking' },
+                    { icon: (
+                      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.1465 20.5347C14.1465 20.5347 15.1465 20.5347 16.1465 22.5347C16.1465 22.5347 19.323 17.5347 22.1465 16.5347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7.64648 16.5347H11.6465M7.64648 11.5347H15.6465" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M7.14649 4.03467C5.59069 4.08134 4.6631 4.25451 4.02126 4.89694C3.14258 5.77644 3.14258 7.19197 3.14258 10.023V16.5291C3.14258 19.3602 3.14258 20.7757 4.02126 21.6552C4.89994 22.5347 6.31416 22.5347 9.14258 22.5347H11.6426M16.1387 4.03467C17.6945 4.08134 18.6221 4.25451 19.2639 4.89695C20.1426 5.77644 20.1426 7.19197 20.1426 10.023V14.0347" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M7.14258 4.28467C7.14258 3.31817 7.92609 2.53467 8.89258 2.53467H14.3926C15.3591 2.53467 16.1426 3.31817 16.1426 4.28467C16.1426 5.25117 15.3591 6.03467 14.3926 6.03467H8.89258C7.92609 6.03467 7.14258 5.25117 7.14258 4.28467Z"  stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+
+                    ), lab: 'Unit Audit', val: 'unit_audit' },
+
+                  ].map((d, i) => {
+                    return (
+                      <li
+                        key={i}
+                        className="mr-2 ml-2  text-sm font-bodyLato"
+                        role="presentation"
+                      >
+
+
+                 <div className='flex  items-center gap-3 text-gray-500 hover:bg-gray-50 p-2 rounded-lg cursor-pointer w-60'>
+
+                        <span  className={`hover:text-[#484848] border-transparent   ${
+                            selFeature === d.val
+                              ? 'text-[#484848]'
+                              : ''
+                          }`}
+
+                        >{d.icon}</span>
+                        <button
+                          className={`inline-block py-3 mr-3 px-1 text-sm font-medium text-center text-[#A6A6A6] rounded-lg border-b-2  hover:text-[#484848]  border-transparent  ${
+                            selFeature === d.val
+                              ? ' text-[#484848]'
+                              : ''
+                          }`}
+                          type="button"
+                          role="tab"
+                          onClick={() => setFeature(d.val)}
+                        >
+                         <span className={`mt-[3px] ${
+                            selFeature === d.val
+                              ? 'border-transparent text-[#484848]'
+                              : 'border-transparent'
+                          }`}>{`${d.lab} `}</span>
+
+
+
+
+
+
+                        </button>
+
+                        </div>
+
+
+
+
+
+                      </li>
+                    )
+                  })}
+                </ul>
               </div>
+
+
+
+
+
+
+
+
+
             </div>
           </div>
       </section>

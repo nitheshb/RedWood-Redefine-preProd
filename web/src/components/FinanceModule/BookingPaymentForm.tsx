@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState, useEffect, useRef } from 'react'
-
 import { arrayUnion, Timestamp } from 'firebase/firestore'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 import {
   addAccountslogS,
   addCustomer,
@@ -105,6 +107,7 @@ const AddPaymentDetailsForm = ({
     // enter customer details too
     const { Status } = leadDetailsObj2
 
+<<<<<<< HEAD
     //
     const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
     let primaryCustomerName
@@ -112,12 +115,22 @@ const AddPaymentDetailsForm = ({
       const { customerName1 } = customerInfo[0]
       primaryCustomerName = customerName1
     }
+=======
 
-    if (customerDetailsObj) {
+console.log('customer details are', customerInfo, selUnitDetails)
+    //
+    const { custObj1, custObj2 } = selUnitDetails
+>>>>>>> main
+
+    if (custObj1) {
       const customerD = {
         Name:
           leadDetailsObj2?.Name ||
+<<<<<<< HEAD
           customerInfo?.customerDetailsObj?.customerName1 || primaryCustomerName,
+=======
+          custObj1?.customerName1,
+>>>>>>> main
         my_assets: [selUnitDetails?.uid],
         T: Timestamp.now().toMillis(),
         Luid: leadDetailsObj2.id || '',
@@ -128,14 +141,14 @@ const AddPaymentDetailsForm = ({
         remaining_money: 0,
         utilized_money: 0,
       }
-      addCustomer(orgId, customerD, email, enqueueSnackbar, () => ({}))
+      addCustomer(orgId, customerD, email, () => ({}), () => ({}))
     }
-    if (secondaryCustomerDetailsObj) {
+    if (custObj2) {
       const customerD = {
-        Name: customerInfo?.secondaryCustomerDetailsObj?.customerName1,
+        Name: custObj2?.customerName1,
         my_assets: [selUnitDetails?.uid],
         T: Timestamp.now().toMillis(),
-        Luid: secondaryCustomerDetailsObj.Luid || '',
+        Luid: custObj2.Luid || '',
         added_by: email,
         projects: [projectDetails?.uid],
         input_money: 0,
@@ -143,7 +156,7 @@ const AddPaymentDetailsForm = ({
         remaining_money: 0,
         utilized_money: 0,
       }
-      addCustomer(orgId, customerD, email, enqueueSnackbar, () => ({}))
+      addCustomer(orgId, customerD, email, () => ({}), () => ({}))
     }
     return await createNewCustomerS(
       orgId,
@@ -154,7 +167,7 @@ const AddPaymentDetailsForm = ({
       Status,
       'booked',
       user?.email,
-      enqueueSnackbar
+      () => ({})
     )
   }
 
@@ -170,7 +183,7 @@ const AddPaymentDetailsForm = ({
       leadDetailsObj2,
       data,
       user?.email,
-      enqueueSnackbar
+      ()=>({})
     )
   }
   const updateCS = async (data, resetForm) => {}
@@ -181,12 +194,12 @@ const AddPaymentDetailsForm = ({
       orgId,
       true,
       projectDetails?.uid,
-      selUnitDetails?.uid,
+      selUnitDetails?.uid ,
       custNo,
       leadDetailsObj2,
       data,
       user?.email,
-      enqueueSnackbar
+      () => ({})
     )
 
     return x
@@ -290,8 +303,7 @@ const AddPaymentDetailsForm = ({
     T_elgible_balance = T_elgible - T_review
     console.log('newPlotPS', newPlotPS, newConstructPS, fullPs, T_elgible)
 
-    const customerfbA = await createNewCustoreSupa(data, resetForm)
-
+    const customerfbA = await createNewCustoreSupa(data)
     fullPs?.map((dataObj, i) => {
       dataObj.order = i
       updatePS(dataObj, resetForm)
@@ -398,7 +410,7 @@ const AddPaymentDetailsForm = ({
         user?.email,
         `lead created directly from booking`
       )
-      leadData.id = await createResp.id
+      leadData.id = await createResp?.id || ''
     }
     // const { id, purpose,  } =
     //   leadDetailsObj2
@@ -462,26 +474,26 @@ const AddPaymentDetailsForm = ({
         orgId,
         dataPayload,
         user.email,
-        enqueueSnackbar
+        () => ({})
       )
     })
     addModuleScheduler(
       `${orgId}_fin_tasks`,
-      id,
+      uid,
       finPayload,
       x1,
       data.assignedTo
     )
     addModuleScheduler(
       `${orgId}_crm_tasks`,
-      id,
+      uid,
       crmPayload,
       x1,
       data.assignedTo
     )
     addModuleScheduler(
       `${orgId}_project_tasks`,
-      id,
+      uid,
       projectPaylaod,
       x1,
       data.assignedTo
@@ -499,9 +511,9 @@ const AddPaymentDetailsForm = ({
 
     const x2 = await createBookedCustomer(
       orgId,
-      id,
+      uid,
       {
-        leadId: id,
+        // leadId: id,
         projectName: leadDetailsObj2?.Project || projectDetails?.projectName,
         ProjectId: leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
         // ...customerDetailsObj,
@@ -533,7 +545,7 @@ const AddPaymentDetailsForm = ({
         //paymentScheduleObj
       },
       user?.email,
-      enqueueSnackbar
+      () => ({})
     )
 
     const s2 = await bookCompSteps
@@ -548,7 +560,7 @@ const AddPaymentDetailsForm = ({
     // customerDetailsObj
     const otherData = leadDetailsObj2[`${uid}_others`]
     const unitUpdate = {
-      leadId: id,
+      leadId: id || '',
       status: 'booked',
       // customerDetailsObj: customerDetailsObj || {},
       // secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
@@ -616,7 +628,7 @@ const AddPaymentDetailsForm = ({
       orgId,
       leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
       uid,
-      id,
+
       uploadPayload,
       user?.email,
       enqueueSnackbar,
@@ -635,8 +647,9 @@ const AddPaymentDetailsForm = ({
       selUnitDetails?.pId,
       { soldVal: T_elgible, t_collect: amount },
       user?.email,
-      enqueueSnackbar
+      ()=>({})
     )
+    if(id){
     updateLeadStatus(
       orgId,
       leadDetailsObj2?.ProjectId || '',
@@ -646,6 +659,7 @@ const AddPaymentDetailsForm = ({
       user?.email,
       enqueueSnackbar
     )
+  }
 
     handleClick()
     const updatedData = {
@@ -689,7 +703,7 @@ const AddPaymentDetailsForm = ({
           {title}
         </Dialog.Title> */}
         <section className="flex flex-row">
-          <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div>
+          {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
           <div className="w-full flex flex-col">
             <div className=" flex flex-row justify-between gap-2 ">
               <div>
@@ -699,13 +713,14 @@ const AddPaymentDetailsForm = ({
                   </h6>
                 </section>
                 <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
-                  Unit will be blocked and will be booked on manager approval.
+                  Unit will be allocated on manager approval.
                 </div>
 
-                <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div>
+                {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
               </div>
 
               <div className="flex flex-col">
+<<<<<<< HEAD
                 <div>
                   Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}
                 </div>
@@ -713,6 +728,12 @@ const AddPaymentDetailsForm = ({
                   Balance:{' '}
                   {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}
                 </div>
+=======
+                <div>{selUnitDetails.customerDetailsObj
+        ?.customerName1 }</div>
+                <div>Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}</div>
+                <div>Balance: {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}</div>
+>>>>>>> main
               </div>
             </div>
 
@@ -731,6 +752,7 @@ const AddPaymentDetailsForm = ({
               bookCurentStep={bookCurentStep}
               selUnitDetails={selUnitDetails}
               projectDetails={projectDetails}
+              myBookingPayload={myBookingPayload}
               leadDetailsObj2={leadDetailsObj2}
               onSubmitFun={onSubmitFun}
               stepIndx={stepIndx}

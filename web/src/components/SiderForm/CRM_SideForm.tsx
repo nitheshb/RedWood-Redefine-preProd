@@ -1,42 +1,11 @@
-import { pid } from 'process'
-
-import { Fragment, useState, useEffect } from 'react'
-
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { useDispatch } from 'react-redux'
-
 import {
   searchValue as searchedVal,
   searchData as searchResponse,
 } from 'src/state/actions/search'
-import CostBreakUpPdfPreview from 'src/util/costBreakUpPdfPreview'
-
-import CrmCustomerSummary from '../A_CrmModule/A_CrmCustomerSummary'
-import CustomerSideViewCRM from '../A_CrmModule/CrmCustomerSideView'
-import UnitSideViewCRM from '../A_CrmModule/CrmUnitSideView'
-import ViewDocxFile from '../A_LegalModule/viewDocxFile'
-import NotificationsSetupForm from '../A_ProjModule/NotificatoinsSetupFromHome'
-import AddBankDetailsForm from '../addBankDetailsForm'
-import AddBlockForm from '../AddBlockForm/AddBlockForm'
-import AdditionalChargesForm from '../AdditionalChargesForm/AdditionalChargesForm'
-import AddLeadForm from '../AddLeadForm'
-import AddPhaseForm from '../AddPhaseForm/AddPhaseForm'
-import AddUnit from '../AddUnit'
-import ConstructUnitsDetails from '../ConstructModule/ConstructUnitsDetails'
-import CrmUnitSideView from '../crmUnitSideView'
-import DialogFormBody from '../DialogFormBody/DialogFormBody'
-import InventoryViewSideForm from '../DialogFormBody/InventoryViewSideView'
-import LeadProfileSideView from '../LeadProfileSideView'
-import LegalDocsUplaodHome from '../LeadUplodCsv/Legal_Docs_upload'
-import LeadsDropHomes from '../LeadUplodCsv/uploadHome'
-import LegalDocsViewHome from '../LegalModule/viewLegalDocument'
-import MoreDetailsPhaseForm from '../MoreDetailsPhaseForm/MoreDetailsPhaseForm'
-import PaymentScheduleForm from '../PaymentScheduleForm/PaymentScheduleForm'
-import ProjPhaseHome from '../ProjPhaseHome/ProjPhaseHome'
-import TransactionUpdateSideView from '../transactionUpdateSideView'
-import ViewUnitDetails from '../ViewUnitDetails'
-import ViewEditTaskManForm from '../A_TaskMan/ViewEditTaskManForm'
 import BookingPaymentFlow from '../A_CrmModule/A_Crm_sideFormBodies.tsx/booking_payment'
 import CsMangerApprovalFlow from '../A_CrmModule/A_Crm_sideFormBodies.tsx/cs_manager_approval'
 import Cs_customerKyc from '../A_CrmModule/A_Crm_sideFormBodies.tsx/cs_customerKyc'
@@ -45,6 +14,7 @@ import Crm_ATS_Draft from '../A_CrmModule/A_Crm_sideFormBodies.tsx/cs_ats_draft'
 import Crm_Sd_approval from '../A_CrmModule/A_Crm_sideFormBodies.tsx/cs_sd_approval'
 import Crm_ATS_approval from '../A_CrmModule/A_Crm_sideFormBodies.tsx/cs_ats_approval'
 import Crm_Unit_Posession from '../A_CrmModule/A_Crm_sideFormBodies.tsx/cs_posession'
+import LoanApplyFlowHome from '../A_LoanModule/LoanApplyFlowHome'
 
 const CrmSiderForm = ({
   BlockFeed,
@@ -87,9 +57,6 @@ const CrmSiderForm = ({
   wbPayload,
   widthClass,
 }) => {
-  // dont write too many here
-  //  this is for customerProfileSideView
-
 
   const dispatch = useDispatch()
   return (
@@ -170,6 +137,9 @@ const CrmSiderForm = ({
 
                 {title === 'crm_KYC' && (
                   <Cs_customerKyc title={title} dialogOpen={setOpen} selUnitPayload={customerDetails} />
+                )}
+                {title === 'crm_loan' && (
+                  <LoanApplyFlowHome customerDetails={customerDetails} />
                 )}
                 {title === 'crm_legal_clarity' && (
                   <Crm_legal_Clarity title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />

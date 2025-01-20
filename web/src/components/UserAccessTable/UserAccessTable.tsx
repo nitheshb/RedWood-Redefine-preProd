@@ -46,7 +46,7 @@ const StyledTableCell = styled(TableCell)(() => ({
 const StickyTableCell = styled(TableCell)(({ theme }) => ({
   minWidth: '50px',
   left: 0,
-  position: 'sticky',
+  //position: 'sticky',
   zIndex: theme.zIndex.appBar + 1,
   borderBottom: 0,
   backgroundColor: '#F5F5F5',
@@ -55,7 +55,7 @@ const StickyTableCell = styled(TableCell)(({ theme }) => ({
 const StickyHeaderCell = styled(TableCell)(({ theme }) => ({
   minWidth: '50px',
   left: 0,
-  position: 'sticky',
+  //position: 'sticky',
   zIndex: theme.zIndex.appBar + 2,
   borderBottom: 0,
   backgroundColor: '#F5F5F5',
@@ -95,6 +95,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
 
   useEffect(() => {
     if (category === 'all') {
+      console.log('filters are', settings)
       setFilterData(settings)
     } else {
       const updatedData = settings.map((item) => {
@@ -105,6 +106,8 @@ const UserAccessTable = ({showCompletedTasks}) => {
           ),
         }
       })
+      console.log('filters are', updatedData)
+
       setFilterData(updatedData)
     }
   }, [category, settings])
@@ -131,7 +134,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
     await updateAccessRoles(orgId,role, newAccess, user, enqueueSnackbar, element)
   }
   return (
-    <Box className="bg-white pb-4">
+    <Box className="bg-white pb-4 mt-1  mx-1">
       <Box className="flex ml-auto  mb-[0.5px] bg-white py-4">
         <StyledButton
           variant="outlined"
@@ -139,7 +142,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
           isCategoryMatched={category === 'all'}
           onClick={() => setCategory('all')}
         >
-          <EyeIcon className="h-3 w-3 mr-1" aria-hidden="true" />
+          <EyeIcon className="h-5 w-5 mr-1" aria-hidden="true" />
           All
         </StyledButton>
         <StyledButton
@@ -207,7 +210,9 @@ const UserAccessTable = ({showCompletedTasks}) => {
           overflowX: 'auto',
         }}
       >
-        <Table stickyHeader>
+
+{/* stickyHeader */}
+        <Table >
           <StyledTableHead>
             <StyledTableRow>
               {filterData?.[0] && (
@@ -215,7 +220,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
                   <StyledTableCell>Type</StyledTableCell>
                 </StickyHeaderCell>
               )}
-              {filterData?.[0]?.access?.map(({ name, key }) => (
+              {filterData?.[4]?.access?.map(({ name, key }) => (
                 <StyledTableCell key={key}>{name}</StyledTableCell>
               ))}
             </StyledTableRow>

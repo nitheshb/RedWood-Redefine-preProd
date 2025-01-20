@@ -1,3 +1,11 @@
+import  image from '../../public/image.png'
+import  image1 from '../../public/image1.png'
+import  image2 from '../../public/image2.png'
+import  image3 from '../../public/image3.png'
+
+
+
+
 export const statesList = [
   {
     value: 'AN',
@@ -182,11 +190,11 @@ export const unitTypeList = [
 
 export const bedRoomsList = [
   { label: 'Select Count', value: '' },
-  { label: '1 Bedroom', value: 'bed1' },
-  { label: '2 Bedroom', value: 'bed2' },
-  { label: '3 Bedroom', value: 'bed3' },
-  { label: '4 Bedroom', value: 'bed4' },
-  { label: '5 Bedroom', value: 'bed5' },
+  { label: '1 Bedroom', value: '1' },
+  { label: '2 Bedroom', value: '2' },
+  { label: '3 Bedroom', value: '3' },
+  { label: '4 Bedroom', value: '4' },
+  { label: '5 Bedroom', value: '5' },
   // { label: '6 Bedroom', value: 'bed6' },
   // { label: '7 Bedroom', value: 'bed7' },
 ]
@@ -263,7 +271,7 @@ export const mortgageType = [
 
 export const projectDetailFlow = [
   {
-    name: 'Project Details',
+    name: 'Project Setup',
     value: 'projectDetails',
     img: 'https://www.svgrepo.com/show/530258/medal.svg',
     indx: 0,
@@ -453,25 +461,39 @@ export const walletMode = [
     label: 'Imps/UPI',
   }
 ]
+
+
+
+
+
+
 export const demandMode = [
   {
     value: 'civil_alter',
     label: 'Civil Upgrade',
+    icon: image,
   },
   {
     value: 'Maintenance',
     label: 'Maintenance',
+    icon: image1,
   },
   {
     value: 'remainder_entry',
     label: 'Remainder Entry',
-    desc: 'indicate an entry made for the purpose of future follow-up or reference.Often used for informational purposes',
+    desc: 'Indicate an entry made for the purpose of future follow-up or reference. Often used for informational purposes.',
+    icon: image2,
   },
   {
     value: 'Upgrade',
     label: 'Upgrade',
+    icon: image3,
   },
-]
+];
+
+
+
+
 export const areaConversions = [
   {
     value: 'acre',

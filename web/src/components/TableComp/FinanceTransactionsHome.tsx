@@ -2,25 +2,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 // import { Link, routes } from '@redwoodjs/router'
 
-import { Fragment, useState, useEffect } from 'react'
-
-// import { XIcon } from '@heroicons/react/outline'
-import { DocumentIcon, AdjustmentsIcon } from '@heroicons/react/outline'
+import { useState, useEffect } from 'react'
+import { AdjustmentsIcon } from '@heroicons/react/outline'
 import { startOfDay } from 'date-fns'
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
-
 import { MetaTags } from '@redwoodjs/web'
-
-import LLeadsTableView from 'src/components/LLeadsTableView/LLeadsTableView'
-import { USER_ROLES } from 'src/constants/userRoles'
 import {
-  getFinanceTransactionsByStatus,
   streamGetAllTransactions,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { supabase } from 'src/context/supabase'
 import CSVDownloader from 'src/util/csvDownload'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
 import {
   SlimDateSelectBox,
   SlimSelectBox,
@@ -30,13 +21,7 @@ import {
   prettyDate
 
 } from 'src/util/dateConverter'
-
-import CircleProgress from '../Charts_Graphs/CircleProgress'
-import SemiCircleProgress from '../Charts_Graphs/SemiCircleProgress'
-import CardItem from '../leadsCard'
 import SiderForm from '../SiderForm/SiderForm'
-
-import FinanceTableView from './financeTableView'
 import { CountUpComp } from '../comps/countUpComp'
 
 const FinanceTransactionsHome = ({ leadsTyper }) => {
@@ -46,7 +31,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
   const [isImportLeadsOpen, setisImportLeadsOpen] = useState(false)
   const [openTransactionDetails, setOpenTransactionDetails] = useState(false)
 
-  // kanban board
+
   const [ready, setReady] = useState(false)
 
   const [addLeadsTypes, setAddLeadsTypes] = useState('')
@@ -61,6 +46,42 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     startOfDay(d).getTime()
   )
 
+
+
+
+
+
+
+  const sortTransactionsByDate = (transactions) => {
+    return [...transactions].sort((a, b) => {
+      const dateA = new Date(a.txt_dated)
+      const dateB = new Date(b.txt_dated)
+      return dateB - dateA 
+    })
+  }
+
+
+
+
+
+
+
+
+  useEffect(() => {
+    if(value === 'all') {
+      const sortedData = sortTransactionsByDate(finFetchedData)
+      setFinSelData(sortedData)
+    } else {
+      const filteredData = finFetchedData.filter((d) => d.status === value)
+      const sortedFilteredData = sortTransactionsByDate(filteredData)
+      setFinSelData(sortedFilteredData)
+    }
+  }, [finFetchedData, value])
+
+
+
+
+
   const [value, setValue] = useState('review')
   const tabHeadFieldsA = [
     { lab: 'All Transactions', val: 'all' },
@@ -71,6 +92,13 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
   useEffect(() => {
     getLeadsDataFun()
   }, [])
+
+
+
+
+
+  
+
 
   useEffect(() => {
     // getFinanceTransactionsByStatus(orgId, 'all')
@@ -145,10 +173,92 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
   }
 
-  const getLeadsDataFun = async () => {
-    console.log('login role detials', user)
-    const { access, uid } = user
+  // const getLeadsDataFun = async () => {
+  //   console.log('login role detials', user)
+  //   const { access, uid } = user
 
+  //   const steamLeadLogs = await streamGetAllTransactions(
+  //     orgId,
+  //     'snap',
+  //     {
+  //       uid,
+  //     },
+  //     (error) => []
+
+      
+  //   )
+  //   await setFinFetchedData(steamLeadLogs)
+
+  //   return
+
+
+  //   // if (access?.includes('manage_leads')) {
+  //   //   const unsubscribe = getFinanceTransactionsByStatus(
+  //   //     orgId,
+  //   //     async (querySnapshot) => {
+  //   //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
+  //   //         const x = docSnapshot.data()
+  //   //         x.id = docSnapshot.id
+  //   //         return x
+  //   //       })
+  //   //       // setBoardData
+  //   //       console.log('my Array data is ', usersListA, finFetchedData)
+  //   //       // await serealizeData(usersListA)
+  //   //       await setFinFetchedData(usersListA)
+  //   //       await console.log('my Array data is set it', finFetchedData)
+  //   //     },
+  //   //     {
+  //   //       status: [
+  //   //         'latest',
+  //   //         'review',
+  //   //         'review',
+  //   //         'received',
+  //   //         'rejected',
+  //   //         '',
+  //   //         // 'booked',
+  //   //       ],
+  //   //     },
+  //   //     () => setFinFetchedData([])
+  //   //   )
+  //   //   return unsubscribe
+  //   // } else {
+  //   //   const unsubscribe = getFinanceTransactionsByStatus(
+  //   //     orgId,
+  //   //     async (querySnapshot) => {
+  //   //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
+  //   //         const x = docSnapshot.data()
+  //   //         x.id = docSnapshot.id
+  //   //         return x
+  //   //       })
+  //   //       // setBoardData
+  //   //       console.log('my Array data is ', usersListA)
+  //   //       await serealizeData(usersListA)
+  //   //       await setFinFetchedData(usersListA)
+  //   //     },
+  //   //     {
+  //   //       uid: uid,
+  //   //       status: [
+  //   //         'new',
+  //   //         'review',
+  //   //         'review',
+  //   //         'received',
+  //   //         'rejected',
+  //   //         '',
+  //   //         // 'booked',
+  //   //       ],
+  //   //     },
+  //   //     () => setFinFetchedData([])
+  //   //   )
+  //   //   return unsubscribe
+  //   // }
+
+  //   // await console.log('leadsData', leadsData)
+  // }
+
+
+
+  const getLeadsDataFun = async () => {
+    const { access, uid } = user
     const steamLeadLogs = await streamGetAllTransactions(
       orgId,
       'snap',
@@ -157,81 +267,9 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
       },
       (error) => []
     )
-    await setFinFetchedData(steamLeadLogs)
-
-    return
-
-
-    // if (access?.includes('manage_leads')) {
-    //   const unsubscribe = getFinanceTransactionsByStatus(
-    //     orgId,
-    //     async (querySnapshot) => {
-    //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
-    //         const x = docSnapshot.data()
-    //         x.id = docSnapshot.id
-    //         return x
-    //       })
-    //       // setBoardData
-    //       console.log('my Array data is ', usersListA, finFetchedData)
-    //       // await serealizeData(usersListA)
-    //       await setFinFetchedData(usersListA)
-    //       await console.log('my Array data is set it', finFetchedData)
-    //     },
-    //     {
-    //       status: [
-    //         'latest',
-    //         'review',
-    //         'review',
-    //         'received',
-    //         'rejected',
-    //         '',
-    //         // 'booked',
-    //       ],
-    //     },
-    //     () => setFinFetchedData([])
-    //   )
-    //   return unsubscribe
-    // } else {
-    //   const unsubscribe = getFinanceTransactionsByStatus(
-    //     orgId,
-    //     async (querySnapshot) => {
-    //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
-    //         const x = docSnapshot.data()
-    //         x.id = docSnapshot.id
-    //         return x
-    //       })
-    //       // setBoardData
-    //       console.log('my Array data is ', usersListA)
-    //       await serealizeData(usersListA)
-    //       await setFinFetchedData(usersListA)
-    //     },
-    //     {
-    //       uid: uid,
-    //       status: [
-    //         'new',
-    //         'review',
-    //         'review',
-    //         'received',
-    //         'rejected',
-    //         '',
-    //         // 'booked',
-    //       ],
-    //     },
-    //     () => setFinFetchedData([])
-    //   )
-    //   return unsubscribe
-    // }
-
-    // await console.log('leadsData', leadsData)
+    const sortedData = sortTransactionsByDate(steamLeadLogs) 
+    setFinFetchedData(sortedData)
   }
-
-
-
-
-
-
-
-
 
 
   const serealizeData = (array) => {
@@ -296,19 +334,38 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                   <section className="flex flex-row justify-between">
                     <section className="flex flex-row mt-2 mr-1  mb-1 leading-7 text-gray-900  rounded-lg  ">
                       {[
-    { lab: 'All Payments', val: 'all' },
-    { lab: 'Reviewing', val: 'review' },
-    { lab: 'Received', val: 'received' },
-    { lab: 'Rejected', val: 'rejected' },
+    { lab: 'All Payments', val: 'all', icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M4 7c0-1.1.9-2 2-2h13a1 1 0 1 1 0 2H6c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h13c.55 0 1-.45 1-1v-2h-2c-1.1 0-2-.9-2-2v-1c0-1.1.9-2 2-2h2V8c0-1.1-.9-2-2-2H6a2 2 0 0 0-2 2zm15 5v-1h2v1h-2z"/>
+      </svg>
+    ) },
+    { lab: 'Reviewing', val: 'review' ,icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24">
+        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm2-5a2 2 0 1 0-4 0 2 2 0 0 0 4 0zm6.5 4.5l-1.5 1.5-3-3 1.5-1.5 3 3z"/>
+      </svg>
+    )
+  },
+    { lab: 'Received', val: 'received' ,icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-1.5 14l-3-3a1 1 0 0 1 1.4-1.4l2.1 2.1L15.6 8.9a1 1 0 1 1 1.4 1.4l-6 6a1 1 0 0 1-1.4 0z"/>
+      </svg>
+    )},
+    { lab: 'Rejected', val: 'rejected' ,icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm3 13a1 1 0 0 1-1.4 0L12 12.4l-1.6 1.6a1 1 0 0 1-1.4-1.4l1.6-1.6L9 9.4a1 1 0 0 1 1.4-1.4l1.6 1.6 1.6-1.6a1 1 0 1 1 1.4 1.4l-1.6 1.6 1.6 1.6a1 1 0 0 1 0 1.4z"/>
+      </svg>
+    )  },
   ].map((dat, i) => {
                         return (
                           <div className=" m-1 cursor-pointer" key={i}  onClick={() => setValue(dat?.val)}>
                             <div className={`border-[#E5EAF2]  rounded-xl border w-60 p-2  ${value === dat?.val ? ' bg-[#ffe4c4]': 'bg-white'}`}>
                               <section>
                                 <div className='flex flex-row justify-between'>
-                                <span className="flex mt-[13px] ml-[12px] justify-center items-center w-6 h-6 bg-[#3cdc94] rounded-full ring-8 ring-white  ">
-                                  <DocumentIcon className=" w-3 h-3" />
-                                </span>
+                                <span className="flex mt-[13px] ml-[12px] justify-center items-center w-6 h-6 rounded-full bg-[#E06349] ring-8 ring-white  ">
+                                  {/* <DocumentIcon className=" w-3 h-3" /> */}
+
+                                  {dat.icon}
+                                  </span>
                                 <div className="px-2 mt-[13px] flex flex-row justify-between">
                                   <h3 className=" css-5mn5yy">₹<CountUpComp value={totalAmountCounter(finFetchedData, dat?.val)} /></h3>
                                 </div>
@@ -413,7 +470,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                           return (
                             <li key={i} className="mr-2" role="presentation">
                               <button
-                                className={`inline-block pt-3 pb-2  mx-2 text-sm font-medium text-center text-black rounded-t-lg border-b-[3px]  hover:text-gray-800    ${
+                                className={`inline-block pt-3 pb-2  mx-4 text-sm font-medium text-center text-black rounded-t-lg border-b-[3px]  hover:text-gray-800    ${
                                   value === fieldHead?.val
                                     ? 'border-black text-gray-800'
                                     : 'border-transparent'
@@ -432,7 +489,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                   {' '}
                                   {`${fieldHead.lab} `}
                                 </span>
-                                <span className="border border-[#29b777] text-gray-800 px-1 py-1 rounded-full ml-[4px] text-[10px] ">
+                                <span className="border border-[#E06349] text-gray-800 px-1 py-1 rounded-full ml-[4px] text-[10px] ">
                                   {/* {rowsCounter(leadsFetchedData, d.val).length} */}
                                   {/* {statusSepA[0][d.val]?.length || 0} */}
                                   {
@@ -453,16 +510,16 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                       </ul>
                       <div className="flex flex-row mr-4">
                         <span
-                          className="flex mt-[4px] mr-[0px] justify-center items-center w-6 h-6 bg-[#3cdc94] rounded-full ring-8 ring-[#3cdc94] cursor-pointer "
+                          className="flex mt-[4px] mr-[0px] justify-center items-center w-6 h-6 bg-[#E06349] rounded-full ring-8 ring-[#ffe4c4] cursor-pointer "
                           onClick={() => {
                             setShowSettings(!showSettings)
                           }}
                         >
-                          <AdjustmentsIcon className=" w-4 h-4" />
+                          <AdjustmentsIcon className=" w-4 h-4 text-white" />
                         </span>
                         <button
                           onClick={() => setisImportLeadsOpen(true)}
-                          className={`flex items-center ml-5 pl-2 mt-2 pr-4 py-1 max-h-[30px] mt-[2px]  text-sm font-medium text-white bg-gray-800 rounded-[4px] hover:bg-gray-700  `}
+                          className={`flex items-center ml-5 pl-2 mt-2 pr-4 py-1 max-h-[30px] mt-[2px]  text-sm font-medium text-white hover:text-black bg-[#E06349] rounded-[4px] hover:bg-[#ffe4c4]  `}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -479,7 +536,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                             />
                           </svg>
 
-                          <span className="ml-1">New</span>
+                          <span className="ml-1 ">New</span>
                         </button>
                       </div>
                     </div>
@@ -562,7 +619,9 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                   </div>
                   <div className="flex flex-row bg-white px-[4px] py-2 relative">
                     <div className="flex w-full  ">
-                      <table className="w-full pt-[1px]">
+                    <div className="w-full max-h-[600px] overflow-y-auto">
+
+                    <table className="w-full pt-[1px]">
                         <thead className="">
                           <tr className="p-2">
                             <th className="w-2"></th>
@@ -700,6 +759,8 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                           ))}
                         </tbody>
                       </table>
+</div>
+               
                     </div>
                   </div>
                 </div>

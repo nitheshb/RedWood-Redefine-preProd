@@ -1,10 +1,6 @@
 import { InputAdornment, TextField as MuiTextField } from '@mui/material'
-
 import { areaConversions } from 'src/constants/projects'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import { TextField } from 'src/util/formFields/TextField'
 import { sqmtConverter } from 'src/util/sqmtConverter'
-
 import NoBorderDropDown from './comps/noBorderDropDown'
 
 export const AreaConverter = ({ formik, hideField, fieldName,textPrimaryName, textSecondaryName, dropDownPrimaryName, dropdownSecondaryName }) => {
@@ -38,7 +34,7 @@ export const AreaConverter = ({ formik, hideField, fieldName,textPrimaryName, te
       <label htmlFor="area" className="label font-regular text-sm">
         Sqmt Converter
       </label>
-      <div className="flex justify-between items-baseline">
+      <div className="">
         {/* <div className="basis-1/4 mr-2">
           <TextField label="" name="areaTextPrimary" type="text" />
         </div> */}
@@ -51,7 +47,7 @@ name={textPrimaryName}
 value={formik.values[textPrimaryName]}
 onChange={formik.handleChange}
           //id="area"
-          className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+          className={`w-[100%] bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 p-0 `}
           size="small"
           InputProps={{
             style: {
@@ -71,7 +67,7 @@ onChange={formik.handleChange}
                 <NoBorderDropDown
                   name="relation1"
                   label=""
-                  className="input  min-w-[122px] h-[32px]"
+                  className="input  min-w-[110px] h-[32px]"
                   onChange={({ value }) => {
                     formik.setFieldValue('areaDropDownPrimary', value)
                   }}
@@ -84,22 +80,22 @@ onChange={formik.handleChange}
           label=""
           //name="areaTextPrimary"
           type="text"
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderRight: 'none',
-                borderRadiusRight: '0px',
-              },
-              '&:hover fieldset': {
-                borderRight: 'none',
-                borderRadiusRight: '0px',
-              },
-              '&.Mui-focused fieldset': {
-                borderRight: 'none',
-                borderRadiusRight: '0px',
-              },
-            },
-          }}
+          // sx={{
+          //   '& .MuiOutlinedInput-root': {
+          //     '& fieldset': {
+          //       borderRight: 'none',
+          //       borderRadiusRight: '0px',
+          //     },
+          //     '&:hover fieldset': {
+          //       borderRight: 'none',
+          //       borderRadiusRight: '0px',
+          //     },
+          //     '&.Mui-focused fieldset': {
+          //       borderRight: 'none',
+          //       borderRadiusRight: '0px',
+          //     },
+          //   },
+          // }}
           //value={formik.values.areaTextPrimary}
           //onChange={formik.handleChange}
         />
@@ -115,7 +111,7 @@ onChange={formik.handleChange}
 
         
           //id="area"
-          className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 m-0 mt-1 p-0 border-l-none`}
+          className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10  mt-1 p-0`}
           size="small"
           InputProps={{
             style: {
@@ -125,7 +121,7 @@ onChange={formik.handleChange}
               margin: '0px',
               // background: 'red'
               // background: '#E5E7EB',
-              width: '200px',
+              // width: '200px',
             },
             endAdornment: (
               <InputAdornment
@@ -141,7 +137,7 @@ onChange={formik.handleChange}
                 <NoBorderDropDown
                   name="areaDropdownSecondary"
                   label=""
-                  className="input  min-w-[122px] h-[32px] bg-gray-200"
+                  className="input  min-w-[110px] h-[32px]"
                   onChange={({ value }) => {
                     formik.setFieldValue('areaDropdownSecondary', value)
                   }}
@@ -152,22 +148,22 @@ onChange={formik.handleChange}
             ),
           }}
           label=""
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderLeft: 'none',
-                borderRadiusLeft: '0px',
-              },
-              '&:hover fieldset': {
-                borderLeft: 'none',
-                borderRadiusLeft: '0px',
-              },
-              '&.Mui-focused fieldset': {
-                borderLeft: 'none',
-                borderRadiusLeft: '0px',
-              },
-            },
-          }}
+          // sx={{
+          //   '& .MuiOutlinedInput-root': {
+          //     '& fieldset': {
+          //       borderLeft: 'none',
+          //       borderRadiusLeft: '0px',
+          //     },
+          //     '&:hover fieldset': {
+          //       borderLeft: 'none',
+          //       borderRadiusLeft: '0px',
+          //     },
+          //     '&.Mui-focused fieldset': {
+          //       borderLeft: 'none',
+          //       borderRadiusLeft: '0px',
+          //     },
+          //   },
+          // }}
           //name="areaTextSecondary"
           type="text"
           //value={formik.values.areaTextSecondary}

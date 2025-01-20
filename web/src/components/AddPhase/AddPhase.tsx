@@ -1,5 +1,4 @@
 import { Box, Card, useTheme } from '@mui/material'
-import { H2, H5 } from '../Typography'
 import Chart from 'react-apexcharts'
 import { useTranslation } from 'react-i18next'
 const data = {

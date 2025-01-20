@@ -5,13 +5,16 @@ import { useState, useEffect } from 'react'
 
 import { Link } from '@redwoodjs/router'
 
-import AssigedToDropComp from 'src/components/assignedToDropComp'
-import { getAllProjects, getBlocksByPhase, getPhasesByProject, getUnits } from 'src/context/dbQueryFirebase'
+import {
+  getAllProjects,
+  getBlocksByPhase,
+  getPhasesByProject,
+  getUnits,
+} from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import 'flowbite'
 
+import 'flowbite'
 import DropDownSearchBar from '../dropDownSearchBar'
-import ProjPhaseHome from '../ProjPhaseHome/ProjPhaseHome'
 import 'src/styles/myStyles.css'
 import FloordetailsSearch from '../Floordetails/FloordetailsInSearch'
 const UnitsInventoryHome = ({ project }) => {
@@ -30,18 +33,21 @@ const UnitsInventoryHome = ({ project }) => {
   const [selUnitDetails, setSelUnitDetails] = useState({})
 
   const [projectDetails, setProjectDetails] = useState()
-    // phases
+  // phases
 
-    const [phasesList, setPhasesList] = useState([])
-    const [phaseViewFeature, setPhaseViewFeature] = useState('Blocks')
+  const [phasesList, setPhasesList] = useState([])
+  const [phaseViewFeature, setPhaseViewFeature] = useState('Blocks')
 
-    // blocks
-    const [blocks, setBlocks] = useState({})
-    const [selPhaseIs, setSelPhaseIs] = useState('')
-    const [selPhaseObj, setSelPhaseObj] = useState({})
+  // blocks
+  const [blocks, setBlocks] = useState([])
+  const [selPhaseIs, setSelPhaseIs] = useState('')
+  const [selPhaseObj, setSelPhaseObj] = useState({})
+  const [selBlock, setSelBlock] = useState({})
+  const [selFloor, setSelFloor] = useState('All')
 
   const [unitsFeedA, setUnitsFeedA] = useState([])
   const [filUnitsFeedA, setFilUnitsFeedA] = useState([])
+
 
   const [phaseDetails, setPhaseDetails] = useState({
     projectName: '',
@@ -55,7 +61,7 @@ const UnitsInventoryHome = ({ project }) => {
     value: 'any',
   })
 
-  const [selUnitType, setUnitType] = useState({
+  const [selUnitDimension, setUnitDimension] = useState({
     projectName: '',
     uid: '',
     value: 'any',
@@ -77,7 +83,6 @@ const UnitsInventoryHome = ({ project }) => {
   useEffect(() => {
     getUnitsFun()
     getPhases(projectDetails)
-
   }, [projectDetails])
   useEffect(() => {
     if (phases.length > 0) {
@@ -88,24 +93,29 @@ const UnitsInventoryHome = ({ project }) => {
     // setFilUnitsFeedA
 
     filFun()
-  }, [unitsFeedA,availType, selUnitType, selFacing])
+  }, [unitsFeedA, availType, selUnitDimension, selsize, selFacing])
 
-  const filFun = ()=>{
-    console.log('selected one is',unitsFeedA,  availType, selFacing)
+  const filFun = () => {
+
     const filData = unitsFeedA?.filter((da) => {
       const statusMatch =
-        (availType.value === 'any')
+        availType.value === 'any' ? true : da?.status == availType.value
+      const dimensionMatch =
+        selUnitDimension.value === 'any'
           ? true
-          : da?.status == availType.value
-      const typeMatch =
-          (selUnitType.value === 'any')
-            ? true
-            : da?.size?.toLocaleLowerCase() == selUnitType.value?.toLocaleLowerCase()
+          : projectDetails?.projectType?.name ==='Apartment'? (String(da?.bedrooms_c)?.toLocaleLowerCase() || 0) ==
+          selUnitDimension.value?.toLocaleLowerCase() : (String(da?.dimension)?.toLocaleLowerCase() || 0) ==
+            selUnitDimension.value?.toLocaleLowerCase()
+
       const facingMatch =
-            (selFacing.value === 'any')
-              ? true
-              : da?.facing?.toLocaleLowerCase() == selFacing.value
-          return statusMatch && facingMatch && typeMatch
+        selFacing.value === 'any'
+          ? true
+          : da?.facing?.toLocaleLowerCase() == selFacing.value
+       const sizeMatch =
+       selsize.value === 'any'
+          ? true
+          : Number(da?.area) < Number(selsize.value)
+      return statusMatch && facingMatch && dimensionMatch && sizeMatch
     })
     setFilUnitsFeedA(filData)
   }
@@ -171,25 +181,29 @@ const UnitsInventoryHome = ({ project }) => {
       console.log('error at getting phases', error)
     }
   }
-
+  useEffect(() => {
+    if (blocks.length > 0) {
+      setSelBlock(blocks[0])
+    }
+  }, [blocks])
   const getBlocks = async (phaseId) => {
     const unsubscribe = getBlocksByPhase(
+      orgId,
       { projectId: myProjectDetails?.uid, phaseId },
       (querySnapshot) => {
         const response = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-        setBlocks({ ...blocks, [phaseId]: response })
-        console.log(
-          'myblocks are',
-          blocks,
-         myProjectDetails?.uid,
-          phaseId
-        )
+        response.sort((a, b) => {
+          return a.blockName - b.blockName
+        })
+        setBlocks(response )
+        console.log('myblocks are',response, blocks, myProjectDetails?.uid, phaseId)
       },
       (e) => {
         console.log('error at getBlocks', e)
-        setBlocks({ ...blocks, [phaseId]: [] })
+        // setBlocks({ ...blocks, [phaseId]: [] })
+        setBlocks([])
       }
     )
     return unsubscribe
@@ -384,6 +398,39 @@ const UnitsInventoryHome = ({ project }) => {
       value: 'ODD',
     },
   ]
+  const typeB = [
+    {
+      label: 'East',
+      projectName: 'All',
+      value: 'any',
+    },
+    {
+      label: 'East',
+      projectName: '1BHK',
+      value: '1',
+    },
+    {
+      label: 'West',
+      projectName: '2BHK',
+      value: '2',
+    },
+    {
+      label: 'South',
+      projectName: '3BHK',
+      value: '3',
+    },
+    {
+      label: 'West',
+      projectName: '4BHK',
+      value: '4',
+    },
+    {
+      label: 'South',
+      projectName: '5BHK',
+      value: '5',
+    },
+
+  ]
   const sizeA = [
     {
       label: 'East',
@@ -392,13 +439,18 @@ const UnitsInventoryHome = ({ project }) => {
     },
     {
       label: 'East',
-      projectName: '35,397 sqft',
-      value: '35397',
+      projectName: 'Less than 1,000 sqft',
+      value: '1000',
+    },
+    {
+      label: 'East',
+      projectName: 'Less than 1,500 sqft',
+      value: '1500',
     },
     {
       label: 'West',
-      projectName: '59,895 sqft',
-      value: '59,895 sqft',
+      projectName: 'Less than 2,000 sqft',
+      value: '2000',
     },
   ]
   useEffect(() => {
@@ -424,7 +476,14 @@ const UnitsInventoryHome = ({ project }) => {
   }
   const selProjctFun = (project) => {
     setIsOpenSideView(!isOpenSideView)
+    console.log('sel project is', project)
     setProjectDetails(project)
+    setUnitDimension({
+      projectName: '',
+      uid: '',
+      value: 'any',
+    })
+
   }
   const selPhaseFun = (project) => {
     setPhaseDetails(project)
@@ -433,7 +492,7 @@ const UnitsInventoryHome = ({ project }) => {
     setAvailType(project)
   }
   const selTypeFun = (project) => {
-    setUnitType(project)
+    setUnitDimension(project)
   }
   const selFacingFun = (project) => {
     setFacing(project)
@@ -467,7 +526,7 @@ const UnitsInventoryHome = ({ project }) => {
               <section className=" top-0 left-0  flex flex-row  border bg-white border-[#dddddd] rounded-full custom-shadow">
                 <DropDownSearchBar
                   label={'Projects'}
-                  type={'All Projects'}
+                  type={'Select Project'}
                   id={'id'}
                   setStatusFun={{}}
                   viewUnitStatusA={[]}
@@ -502,8 +561,8 @@ const UnitsInventoryHome = ({ project }) => {
                   setStatusFun={{}}
                   viewUnitStatusA={[]}
                   pickCustomViewer={selTypeFun}
-                  selProjectIs={selUnitType}
-                  dropDownItemsA={typeA}
+                  selProjectIs={selUnitDimension}
+                  dropDownItemsA={projectDetails?.projectType?.name ==='Apartment'? typeB: typeA}
                 />
                 <DropDownSearchBar
                   label={'Facing'}
@@ -516,7 +575,7 @@ const UnitsInventoryHome = ({ project }) => {
                   dropDownItemsA={FacingA}
                 />
                 <DropDownSearchBar
-                  label={'Size'}
+                  label={'Unit Size'}
                   type={'All Status'}
                   id={'id'}
                   setStatusFun={{}}
@@ -541,7 +600,7 @@ const UnitsInventoryHome = ({ project }) => {
                     placeholder={` Search Unit No, Customer name, Phone no, Dues, Review.....`}
                     required
                   /> */}
-                <button
+                {/* <button
                   onClick={() => {
                     console.log('clicked')
                   }}
@@ -563,7 +622,7 @@ const UnitsInventoryHome = ({ project }) => {
                     ></path>
                   </svg>
                   <span className="sr-only">Search</span>
-                </button>
+                </button> */}
               </section>
             </div>
           </div>
@@ -601,25 +660,9 @@ const UnitsInventoryHome = ({ project }) => {
               phaseFeed={phases}
               unitsFeedA={unitsFeedA}
               filUnitsFeedA={filUnitsFeedA}
-              selBlock={{
-                totalValue: 0,
-                soldValue: 0,
-                availValue: 0,
-                bookValue: 0,
-                blockValue: 0,
-                holdValue: 0,
-                totalArea: 0,
-                soldArea: 0,
-                availArea: 0,
-                bookArea: 0,
-                blockArea: 0,
-                holdArea: 0,
-                totalUnitCount: 0,
-                soldUnitCount: 0,
-                availableCount: 0,
-                bookUnitCount: 0,
-                blockUnitCount: 0,
-              }}
+              BlockFeed={blocks}
+              selBlock={selBlock}
+              setSelBlock={setSelBlock}
               source={undefined}
               setShowCostSheetWindow={setShowCostSheetWindow}
               setSelUnitDetails={setSelUnitDetails}
@@ -627,11 +670,11 @@ const UnitsInventoryHome = ({ project }) => {
               leadDetailsObj={{}}
               setPhaseFun={setPhaseFun}
               selPhaseName={selPhaseName}
+
             />
           </div>
         )}
       </div>
-
     </section>
   )
 }

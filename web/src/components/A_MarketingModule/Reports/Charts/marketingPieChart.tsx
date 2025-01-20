@@ -1,14 +1,11 @@
 import React from 'react';
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
-
 const data = [
   { name: 'Desktop', value: 20 },
   { name: 'Mobile', value: 30 },
   { name: 'Others', value: 40 },
 ];
-
 const COLORS = ['#4F46E5', '#E5E7EB', '#67E8F9'];
-
 const PieChartComponent = () => {
   return (
     <PieChart width={400} height={400}>

@@ -1,30 +1,18 @@
-import { useState, useEffect, createRef, useRef } from 'react'
-
-import { InformationCircleIcon } from '@heroicons/react/outline'
+import { useState, useEffect, createRef } from 'react'
 import { Checkbox } from '@mui/material'
 import { PDFExport } from '@progress/kendo-react-pdf'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
-import { Field, Form, Formik } from 'formik'
+import { ErrorMessage, Field, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
-import * as Yup from 'yup'
-
-import CrmUnitHeader from 'src/components/A_CrmModule/CrmUnitHeader'
 import {
   updateCrmExecutiveAgreegations,
   updateManagerApproval,
   updateProjectionsAgreegations,
-  updateUnitStatus,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-
-import { computeTotal } from './computeCsTotals'
-import CostBreakUpPdfPreview from './costBreakUpPdfPreview'
 import { TextFieldFlat } from './formFields/TextFieldFlatType'
-
 import '../styles/myStyles.css'
-import { getWeekMonthNo, prettyDate } from './dateConverter'
 import CustomDatePicker from './formFields/CustomDatePicker'
 
 const CostBreakUpEditor = ({
@@ -58,6 +46,9 @@ const CostBreakUpEditor = ({
   const ref = createRef()
 
   const [initialValuesA, setInitialValuesA] = useState({})
+  const [rejection, setRejection] = useState(false)
+  const [fillError, showFillError] = useState(false)
+  const [rejectionReason, setRejectionReason] = useState('')
 
   const [newSqftPrice, setNewSqftPrice] = useState(0)
 
@@ -82,7 +73,7 @@ const CostBreakUpEditor = ({
   }, [selUnitDetails, selPhaseObj])
 
   useEffect(() => {
-    console.log('data is===> 0', selUnitDetails?.fullPs)
+    console.log('data is===> 1000', selUnitDetails?.fullPs, newPlotPS)
     newPlotPS.map((d) => {
       console.log('data max is', d)
       const newObj = d
@@ -117,12 +108,12 @@ const CostBreakUpEditor = ({
 
     constructCost = [
       {
-        others: 2540,
+        others: selUnitDetails?.construct_price_sqft || 0,
         component: {
           value: 'villa_construct_cost',
           label: 'Villa Construction Cost  ',
         },
-        charges: 2540,
+        charges: selUnitDetails?.construct_price_sqft || 0,
         myId: '3',
         units: {
           label: 'Fixed cost',
@@ -139,21 +130,83 @@ const CostBreakUpEditor = ({
     ]
 
     await setCostSheetA(plotCS)
-    await setPartBPayload(
-      addChargesCS?.length > 0 ? addChargesCS || [] : additonalChargesObj || []
-    )
-    await setPartCPayload(
-      constructCS?.length > 0 ? constructCS || [] : constructCost || []
-    )
+    await setPartBPayload(addChargesCS)
+
+    // selPhaseObj
+    await setPartCPayload(constructCS)
     await setPartDPayload(
       constAdditionalChargesCS?.length > 0
         ? constAdditionalChargesCS || []
         : constructOtherChargesObj || []
     )
-    await setPartEPayload(possessionAdditionalCostCS)
+    await setPartEPayload(possessionAdditionalCostCS || [])
     await setTotalFun(plotCS, addChargesCS)
+
+
+// resetting values
+let projectPs = selPhaseObj?.paymentScheduleObj || []
+
+      projectPs.map((data, i) => {
+     let x =  {
+  "value": newPlotPS[i]?.value || 0,
+  "preCheck": newPlotPS[i]?.preCheck || 0,
+  "elgFrom": newPlotPS[i]?.elgFrom || 0,
+  "schDate": newPlotPS[i]?.schDate || 0,
+  "zeroDay": newPlotPS[i]?.zeroDay || 0,
+  "oldDate": newPlotPS[i]?.oldDate || 0,
+
+  "category": "plotPS",
+  "description": "",
+  "order": 0,
+  "stage": data?.stage,
+  "percentage": data?.percentage,
+
+  "units": data?.units,
+  "tableData": {
+    "id": i +1
+  },
+  "myId": data?.id,
+  "elgible": i==0 ? true : false,
+
+  "id": data?.id,
+  "label": data?.stage?.label,
+
+}
+return x
+      })
+
+// {
+//   "value": 100,
+//   "schDate": 1734416831448,
+//   "category": "plotPS",
+//   "description": "",
+//   "order": 0,
+//   "stage": {
+//     "value": "on_booking",
+//     "label": "On Booking"
+//   },
+//   "percentage": 100,
+//   "zeroDay": "0",
+//   "oldDate": 1734416831448,
+//   "units": {
+//     "value": "fixedcost",
+//     "label": "Fixed cost"
+//   },
+//   "tableData": {
+//     "id": 1
+//   },
+//   "myId": "8ace002f-2b86-40b7-be9d-95049e6383d0",
+//   "elgible": true,
+//   "elgFrom": 1735842603603,
+//   "id": "8ace002f-2b86-40b7-be9d-95049e6383d0",
+//   "label": "On Booking",
+//   "preCheck": 826879
+// }
+
     await setNewPS(fullPs)
     await setPSPayload(fullPs)
+
+
     await fullPs?.map((data) => {
       if (data.stage?.value === 'on_booking') {
         setPlotBookingAdv(data?.percentage)
@@ -226,8 +279,8 @@ const CostBreakUpEditor = ({
   }
   const handlePriceChangePartD = (index, price) => {
     console.log('changed price is ', price)
-    const updatedRows = [...partCPayload]
-    console.log('new value is ', partCPayload)
+    const updatedRows = [...partDPayload]
+    console.log('new value is ', partDPayload)
     updatedRows[index].charges = price
 
     let total = 0
@@ -314,27 +367,27 @@ const CostBreakUpEditor = ({
     const partBTotal = partBPayload?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
-    )
+    ) || 0
     const partATotal = costSheetA?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
-    )
+    ) || 0
     const partCTotal = partCPayload?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
-    )
+    ) || 0
     const partDTotal = partDPayload?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
-    )
+    ) || 0
     const partETotal = partEPayload?.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
       0
-    )
+    ) || 0
     setPartBTotal(partBTotal)
     setPartCTotal(partCTotal)
     setPartDTotal(partDTotal)
-    setPartETotal(partBTotal)
+    setPartETotal(partETotal)
     console.log('sel unti details =>', partBTotal)
     setPartATotal(partATotal)
     CreateNewPsFun(netTotal, plotBookingAdv, csMode)
@@ -382,46 +435,31 @@ const CostBreakUpEditor = ({
   }
   const submitManagerApproval = (status) => {
     console.log('data max is', selUnitDetails)
-
-    // project1WweeknoMmonthnoYyearno
-
     newPlotPS.map((d, i) => {
-      console.log(
-        'data is===>',
-        prettyDate(newPlotPS[i]['schDate']),
-        prettyDate(d['oldDate']),
-        d?.stage.value,
-        prettyDate(bootedPs[i]['schDate']),
-        prettyDate(d?.schDate),
-        bootedPs[i]['schDate'] == d?.schDate
-      )
-      //
-      // this will set the previous date immutable as current date
-
       if (d?.oldDate != d?.schDate) {
         const dataPayload = {
           pId: selUnitDetails?.pId,
           oldDate: d?.oldDate,
           schDate: d?.schDate,
-          stageId: d?.stage.value,
+          stageId: d?.stage?.value,
           newPrice: d?.value,
           used: d?.used,
           assignedTo: selUnitDetails?.assignedTo || 'unassigned',
         }
 
-        updateProjectionsAgreegations(
-          orgId,
-          dataPayload,
-          user.email,
-          enqueueSnackbar
-        )
+        // updateProjectionsAgreegations(
+        //   orgId,
+        //   dataPayload,
+        //   user.email,
+        //   enqueueSnackbar
+        // )
 
-        updateCrmExecutiveAgreegations(
-          orgId,
-          dataPayload,
-          user.email,
-          enqueueSnackbar
-        )
+        // updateCrmExecutiveAgreegations(
+        //   orgId,
+        //   dataPayload,
+        //   user.email,
+        //   enqueueSnackbar
+        // )
       }
     })
     const fullPsPayload = newPlotPS.map((d) => {
@@ -485,22 +523,7 @@ const CostBreakUpEditor = ({
     T_elgible_balance = T_elgible - T_review
     const dataObj = {
       status: status,
-      // plotCS: costSheetA,
-      // fullPs: fullPsPayload,
-      // addChargesCS: partBPayload,
-      // T_balance:
-      //   netTotal -
-      //   (selUnitDetails?.T_review + (selUnitDetails?.T_cleared || 0)),
-      // T_Total: netTotal,
-      // T_review: selUnitDetails?.T_review,
-      // T_cleared: selUnitDetails?.T_cleared || 0,
-      // T_rejected: selUnitDetails?.T_rejected || 0,
-      // T_elgible_balance: selUnitDetails?.T_elgible_balance || 0,
-      // T_elgible_balance:
-      //   selUnitDetails?.T_elgible -
-      //   (selUnitDetails?.T_review + (selUnitDetails?.T_cleared || 0)),
-      // T_elgible: selUnitDetails?.T_elgible || 0,
-
+      rejectionReason: rejectionReason,
       T_total: netTotal,
       T_balance: netTotal - selUnitDetails?.T_review,
       T_elgible: T_elgible,
@@ -516,10 +539,9 @@ const CostBreakUpEditor = ({
       addChargesCS: partBPayload,
       constAdditionalChargesCS: partBPayload,
       possessionAdditionalCostCS: partEPayload,
-      // plotPS: plotPsNew,
-      // constructPS: constructPs,
-      // fullPs: fullPsPayload,
+      fullPsPayload: fullPsPayload
     }
+console.log('saved data is===>', dataObj)
 
     updateManagerApproval(
       orgId,
@@ -528,6 +550,8 @@ const CostBreakUpEditor = ({
       user.email,
       enqueueSnackbar
     )
+
+
   }
   const handlePSdateChange = (index, newDate) => {
     const updatedRows = [...newPlotPS]
@@ -558,7 +582,7 @@ const CostBreakUpEditor = ({
                   <div>
                     <div>
                       <div className="">
-                        <section className="flex flex-row justify-between bg-[#f3fff2] p-2 py-1 border-b rounded-t-lg">
+                        <section className="flex flex-row justify-between bg-[#e8e6fe] p-2 py-1 border-b rounded-t-lg">
                           <h1 className="text-bold font-bold text-center text-gray-800  text-[14px] mt-[10px] ">
                             COST SHEET
                           </h1>
@@ -587,7 +611,7 @@ const CostBreakUpEditor = ({
                         <div className=" rounded-md">
                           <table className="w-[100%]">
                             <thead>
-                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#f3fff2] ">
+                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
                                 <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
                                   Charges
                                 </th>
@@ -718,7 +742,7 @@ const CostBreakUpEditor = ({
                           </table>
                           <table className="w-full mt-1">
                           <thead>
-                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#f3fff2] ">
+                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
                                 <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
                                   Additonal Charges
                                 </th>
@@ -844,40 +868,13 @@ const CostBreakUpEditor = ({
                             </tbody>
                           </table>
 
-                          {['Villas'].includes(
-                            selPhaseObj?.projectType?.name
-                          ) && (
-                            <section className="flex flex-row justify-between  bg-[#dff6dd]  h-[34px] py-[7px] mt-2 ">
-                              <h1 className="px-2 text-[12px] text-left  text-[12px] font-bold ">
-                                Total Unit Cost (A+B)
-                              </h1>
-                              <section className="flex flex-row">
-                                <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
-                                  ₹{partATotal?.toLocaleString('en-IN')}
-                                </section>
-                                <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
-                                  +
-                                </section>
-
-                                <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
-                                  ₹{partBTotal?.toLocaleString('en-IN')}
-                                </section>
-                                <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
-                                  =
-                                </section>
-                                <section className="px-2 d-md font-bold text-[16px] text-[#000000e6] leading-none">
-                                  ₹{plotTotal?.toLocaleString('en-IN')}
-                                </section>
-                              </section>
-                            </section>
-                          )}
                           {/* Table C */}
                           {['Villas'].includes(
                             selPhaseObj?.projectType?.name
                           ) && (
                             <table className="w-full mt-1">
                                  <thead>
-                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#f3fff2] ">
+                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
                                 <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
                                   Construction Charges
                                 </th>
@@ -1025,7 +1022,7 @@ const CostBreakUpEditor = ({
                           ) && (
                             <table className="w-full mt-1">
                                  <thead>
-                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#f3fff2] ">
+                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
                                 <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
                                   Construction Additional Charges
                                 </th>
@@ -1167,62 +1164,265 @@ const CostBreakUpEditor = ({
                               </tbody>
                             </table>
                           )}
-                          <section className="flex flex-row justify-between  bg-[#dff6dd]  h-[34px] py-[7px] mt-2 ">
-                            <h1 className="px-2 text-[12px] text-left  text-[12px] font-bold ">
-                              Total Unit Cost (A+B
-                              {['Villas'].includes(
-                                selPhaseObj?.projectType?.name
-                              ) && '+C+D'}
-                              )
-                            </h1>
-                            <section className="flex flex-row">
-                              <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
-                                ₹{partATotal?.toLocaleString('en-IN')}
-                              </section>
-                              <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
-                                +
-                              </section>
-                              <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
-                                ₹{partBTotal?.toLocaleString('en-IN')}
-                              </section>
-                              {['Villas'].includes(
-                                selPhaseObj?.projectType?.name
-                              ) && (
-                                <>
-                                  {' '}
-                                  <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
-                                    +
+
+{partEPayload.length>0
+                          && (
+                            <table className="w-full mt-1">
+                                 <thead>
+                              <tr className="h-8 mb-1 border-none w-[100%] bg-[#e8e6fe] ">
+                                <th className="min-w-[35%] px-2  text-[10px] text-left  tracking-wide">
+                                  Possession Charges
+                                </th>
+                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                  Rate/Sqft
+                                </th>
+                                <th
+                                  className={`${
+                                    !showGstCol ? 'hidden' : ''
+                                  } w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                >
+                                  Sale Value
+                                </th>
+                                <th
+                                  className={`${
+                                    !showGstCol ? 'hidden' : ''
+                                  }  w-[15%] px-2 text-[10px] text-right  tracking-wide `}
+                                >
+                                  GST
+                                </th>
+                                <th className="w-[15%] px-2 text-[10px] text-right  tracking-wide ">
+                                  Total
+                                </th>
+                              </tr>
+                            </thead>
+                              <tbody>
+                                {partEPayload?.map((d1, inx) => (
+                                  <tr
+                                    key={inx}
+                                    className="py-1 my-2 h-[32px]  "
+                                  >
+                                    <th className="w-[40%] px-2 text-[11px] text-left text-gray-700   ">
+                                      {d1?.component?.label}
+                                    </th>
+                                    <td className="w-[15%]  px-2 text-[12px] text-right text-gray-700 border ">
+                                      <TextFieldFlat
+                                        label=""
+                                        className="w-[100%] text-[12px] text-right font-bold border-b  border-[#B76E00] border-dashed pr-1 py-[4px] text-[#B76E00]"
+                                        name="ratePerSqft"
+                                        onChange={(e) => {
+                                          // setNewSqftPrice(e.target.value)
+
+                                          setNewSqftPrice(
+                                            Number(e.target.value)
+                                          )
+                                          handlePriceChangePartD(
+                                            inx,
+                                            e.target.value
+                                          )
+                                          // changeOverallCostFun(
+                                          //   inx,
+                                          //   d1,
+                                          //   e.target.value
+                                          // )
+                                        }}
+                                        value={d1?.charges}
+                                      />
+                                      <TextFieldFlat
+                                        className=" hidden  "
+                                        label=""
+                                        name={d1?.component?.value}
+                                        type="number"
+                                      />
+                                    </td>
+                                    <td
+                                      className={`${
+                                        !showGstCol ? 'hidden' : ''
+                                      } w-[15%] px-2 text-[12px] text-right text-slate-500 text-sm border `}
+                                    >
+                                      ₹
+                                      {d1?.TotalSaleValue?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                    </td>
+                                    <td
+                                      className={`${
+                                        !showGstCol ? 'hidden' : ''
+                                      } w-[15%] px-2 text-[12px] text-right text-slate-500 text-sm border  `}
+                                    >
+                                      ₹{d1?.gstValue?.toLocaleString('en-IN')}
+                                    </td>
+                                    <td className="w-[15%] px-2 text-[12px] text-right text-slate-900 border ">
+                                      ₹{' '}
+                                      {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                    </td>
+                                  </tr>
+                                ))}
+                                <tr className="   h-[32px] border">
+                                  <th className="w-[40%] text-[12px] text-left text-[#118D57] pl-2 border ">
+                                    Total (E)
+                                  </th>
+                                  <td className="w-[15%] px-2 font-bold text-[12px] text-right text-gray-600 pr-3"></td>
+                                  <td
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    } w-[15%] px-2 font-bold  text-[12px] text-right text-gray-800 `}
+                                  >
+                                    ₹
+                                    {partEPayload
+                                      ?.reduce(
+                                        (partialSum, obj) =>
+                                          partialSum +
+                                          Number(obj?.TotalSaleValue || 0),
+                                        0
+                                      )
+                                      ?.toLocaleString('en-IN')}
+                                  </td>
+                                  <td
+                                    className={`${
+                                      !showGstCol ? 'hidden' : ''
+                                    } w-[15%] px-2 font-bold  text-[12px] text-right text-gray-800 `}
+                                  >
+                                    ₹
+                                    {partEPayload
+                                      ?.reduce(
+                                        (partialSum, obj) =>
+                                          partialSum +
+                                          Number(obj?.gstValue || 0),
+                                        0
+                                      )
+                                      ?.toLocaleString('en-IN')}
+                                  </td>
+                                  <td className="w-[15%] px-2 font-bold  text-[12px] text-right  text-[#118D57]  ">
+                                    ₹{' '}
+                                    {partEPayload
+                                      ?.reduce(
+                                        (partialSum, obj) =>
+                                          partialSum +
+                                          Number(
+                                            obj?.TotalNetSaleValueGsT || 0
+                                          ),
+                                        0
+                                      )
+                                      ?.toLocaleString('en-IN')}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          )}
+
+
+                          <div className='mt-5'>
+                            <section className="flex flex-row justify-between mb-8 mt-4">
+                              <div></div>
+
+                              <div className="border rounded-lg shadow-lg  mt-4">
+                                <section className="flex flex-row justify-between mt-2   ">
+                                  <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                  {selPhaseObj?.projectType?.name ===
+                                      'Apartment'
+                                        ? 'Flat'
+                                        : 'Plot'}{' '}
+                                      Charges
+                                  </h1>
+                                  <section className="flex flex-row mt-1">
+                                    <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                      ₹{partATotal?.toLocaleString('en-IN')}
+                                    </section>
                                   </section>
-                                  <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
-                                    ₹{partCTotal?.toLocaleString('en-IN')}
-                                  </section>{' '}
-                                  <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
-                                    +
+                                </section>
+                                <section className="flex flex-row justify-between  mt-2">
+                                  <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                    Additional Charges
+                                  </h1>
+                                  <section className="flex flex-row mt-1">
+                                    <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                      ₹{partBTotal?.toLocaleString('en-IN')}
+                                    </section>
                                   </section>
-                                  <section className="px-2 d-md font-bold text-[12px] text-[#0000008c] ">
-                                    ₹{partDTotal?.toLocaleString('en-IN')}
-                                  </section>{' '}
-                                </>
-                              )}
-                              <section className=" d-md font-bold text-[12px] text-[#0000008c] ">
-                                =
-                              </section>
-                              <section className="px-2 d-md font-bold text-[16px] text-[#000000e6] leading-none">
-                                ₹{netTotal?.toLocaleString('en-IN')}
-                              </section>
+                                </section>
+                                {selPhaseObj?.projectType?.name ===
+                                  'Villas' && (
+                                  <>
+                                    <section className="flex flex-row justify-between  mt-2">
+                                      <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                        Construction Charges
+                                      </h1>
+                                      <section className="flex flex-row mt-1">
+                                        <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                          ₹{partCTotal?.toLocaleString('en-IN')}
+                                        </section>
+                                      </section>
+                                    </section>
+                                    <section className="flex flex-row justify-between  mt-2">
+                                      <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal mr-9 ">
+                                      Construction Additional Charges
+                                      </h1>
+                                      <section className="flex flex-row mt-1">
+                                        <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                          ₹{partDTotal?.toLocaleString('en-IN')}
+                                        </section>
+                                      </section>
+                                    </section>
+                                    <section className="flex flex-row justify-between  mt-2">
+                                      <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                        Possession Charges
+                                      </h1>
+                                      <section className="flex flex-row mt-1">
+                                        <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                          ₹{partETotal?.toLocaleString('en-IN')}
+                                        </section>
+                                      </section>
+                                    </section>
+                                  </>
+                                )}
+
+                                <section className="flex flex-row justify-between rounded-b-lg  bg-[#E8E6FE]  mt-2 py-2   ">
+                                  <h1 className="px-3 text-[12px] text-left  text-[12px] font-semibold pr-8 ">
+                                    Total Cost
+                                  </h1>
+                                  <section className="flex flex-row mt-2">
+                                    <section className="px-2 d-md font-bold text-[12px] text-[#0D027D] leading-none">
+                                      ₹{netTotal?.toLocaleString('en-IN')}
+                                    </section>
+                                  </section>
+                                </section>
+                              </div>
                             </section>
-                          </section>
+                          </div>
                         </div>
                         <div className=" mt-4 ">
-                          <section className="flex p-2">
-                            <h1 className="text-bodyLato text-center text-gray-800 font-bold text-[14px] border-b ">
+                          <section className="flex p-2 flex-row justify-between">
+                            <h1 className="text-bodyLato mt-[11px] text-center text-gray-800 font-bold text-[14px] border-b ">
                               PAYMENT SCHEDULE
                             </h1>
+                            <section className="">
+                            <div className="w-full flex items-center ">
+                              <label
+                                htmlFor="area"
+                                className="label font-regular text-sm font-bodyLato"
+                              >
+                                Copy from Project
+                              </label>
+                              <Field
+                                name="isGSTChecked"
+                                type="checkbox"
+                                component={() => (
+                                  <Checkbox
+                                    color="primary"
+                                    checked={showGstCol}
+                                    onClick={() => setShowGstCol(!showGstCol)}
+                                  />
+                                )}
+                              />
+                            </div>
+                          </section>
                           </section>
                           <table className="w-full border-b border-dashed">
                             <thead className="">
                               {' '}
-                              <tr className=" h-8  border-none bg-[#f3fff2]  ">
+                              <tr className=" h-8  border-none bg-[#e8e6fe]  ">
                                 <th className="w-[50%] px-2   text-left  tracking-wide uppercase d-xsm  ">
                                 Charges
                                 </th>
@@ -1251,10 +1451,6 @@ const CostBreakUpEditor = ({
                                       className="pl- px-1 h-8 rounded-md mt-1 min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
                                       selected={d1?.schDate}
                                       onChange={(date) => {
-                                        // formik.setFieldValue(
-                                        //   'bmrdaStartDate',
-                                        //   date.getTime()
-                                        // )
                                         console.log('data', date.getTime())
                                         setStartDate(date)
                                         handlePSdateChange(inx, date.getTime())
@@ -1265,8 +1461,8 @@ const CostBreakUpEditor = ({
                                         setHours(setMinutes(d, 5), 12),
                                         setHours(setMinutes(d, 59), 23),
                                       ]}
-                                      //dateFormat="MMMM d, yyyy"
                                       dateFormat="MMM dd, yyyy"
+                                      leadYears={10}
                                     />
                                     <span className="text-right">
                                       {d1?.description}
@@ -1293,25 +1489,72 @@ const CostBreakUpEditor = ({
                         </div>
                       </div>
                     </div>
+
                     {/* end of paper */}
                   </div>
                 </div>
               </PDFExport>
             )}
           </Formik>
-          <div className="mt-5 left-0 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
-            <button
-              className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+          <div className="mt- left-0 text-right md:space-x-3 md:block flex flex-col-reverse pb-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
+          <div className="mx-2 o my-  ">
+              <div className="bg-white  py-2 rounded-xl">
+                {/* <h1 className="text-center text-xl font-semibold text-gray-500">
+                  Are you Sure to Canel this booking?
+                </h1> */}
+
+
+                {rejection &&    <div className="mt-">
+                      <div className="flex justify-center border-2 py-2 px-6 px-10 mb-2 rounded-xl">
+                        <input
+                          type="text"
+                          name="blockReason"
+                          placeholder="Write Rejection Comments"
+                          className="w-full outline-none text-gray-700 text-lg"
+                          onChange={(e) => {
+                            setRejectionReason(e.target.value)
+                            // formik.setFieldValue('blockReason', e.target.value)
+
+                          }}
+                        />
+                        {fillError && <div
+                          // component="div"
+
+                          // name={'blockReason'}
+                          className="error-message text-red-700 text-xs p-1 mx-auto"
+                        /> }
+                        <button
+                          type="submit"
+                          className={`${rejectionReason.length>0 ? 'bg-[#ff9f87]' : 'bg-[#f9eeeb]'  }  text-gray-700 font-semibold px-6 py-2 rounded-xl text-md`}
+                          onClick={() =>{
+                            if(rejectionReason!==''){
+                              showFillError(false)
+                              submitManagerApproval('rejected')
+              }else{
+                showFillError(true)
+              }
+}}
+                        >
+                          Reject
+                        </button>
+
+
+                      </div>
+                    </div>}
+                    <button
+              className=" text-black active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded  border  border-[#E3BDFF] shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
               type="submit"
               onClick={() => {
-                submitManagerApproval('rejected')
+                setRejection(!rejection)
+                // submitManagerApproval('rejected')
               }}
               // disabled={loading}
             >
               {'Reject'}
             </button>
-            <button
-              className="bg-green-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+
+                    <button
+              className="bg-[#e3bdff] text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
               type="submit"
               // disabled={loading}
               onClick={() => {
@@ -1320,8 +1563,11 @@ const CostBreakUpEditor = ({
                 submitManagerApproval('approved')
               }}
             >
-              {'Approvee'}
+              {'Approve'}
             </button>
+              </div>
+            </div>
+
           </div>
         </div>
       )}

@@ -1,6 +1,5 @@
 import React from 'react'
 import { useMemo, useEffect } from 'react'
-
 import {
   Document,
   Page,
@@ -11,13 +10,8 @@ import {
   Image,
   Font,
 } from '@react-pdf/renderer'
-import { format, getTime, formatDistanceToNow } from 'date-fns'
-import { Timestamp } from 'firebase/firestore'
+import { format } from 'date-fns'
 import numeral from 'numeral'
-
-import { useAuth } from 'src/context/firebase-auth-context'
-
-import { computeTotal } from './computeCsTotals'
 import { prettyDate } from './dateConverter'
 
 Font.register({
@@ -583,9 +577,7 @@ const MyDocument = ({
             </View>
           </View>
 
-            <Text style={{ fontSize: 12, marginBottom: 5 }}>
-              Address: {projectDetails?.address}-{projectDetails?.pincode}
-            </Text>
+
             <Text style={{ fontSize: 11, marginBottom: 5 }}>
               Owner Name: {selUnitDetails?.customerDetailsObj?.customerName1}
             </Text>
@@ -593,10 +585,8 @@ const MyDocument = ({
               Phone: {selUnitDetails?.customerDetailsObj?.countryCode1} {selUnitDetails?.customerDetailsObj?.phoneNo1}
             </Text>
             <Text style={{ fontSize: 12, marginBottom: 5 }}>
-              Email: {selUnitDetails?.customerDetailsObj?.email1}
+              Email: {selUnitDetails?.customerDetailsObj?.email1 || '-NA-'}
             </Text>
-
-
           </View>
 
           <View
@@ -630,6 +620,7 @@ const MyDocument = ({
             </View>
 
 {/* section - 3 */}
+
 <View style={{flexDirection: 'row', justifyContent: 'space-between',
                 borderTopWidth: 1,
 
@@ -641,11 +632,18 @@ const MyDocument = ({
               }}>
                 <View style={{border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0, marginTop: 10}}>
                    {payementDetails?.dated == undefined || '' ? null :<Text style={{ fontSize: 10, fontWeight: 'bold' }}> {fDate(prettyDate(payementDetails?.dated))}</Text>}
-                   <Text style={{ fontSize: 8 }}>Date</Text>
+                   <Text style={{ fontSize: 8, paddingLeft: 3 }}>Date</Text>
                 </View>
-                <View style={{textAlign: 'right',border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0, marginTop: 10}}>
-                   <Text style={{textAlign: 'right', fontSize: 10, fontWeight: 'bold' }}> {payementDetails?.bank_ref_no}</Text>
-                   <Text style={{ textAlign: 'right',fontSize: 8 }}>Referal Id</Text>
+                {/* <View style={{textAlign: 'right',border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0, marginTop: 10}}>
+                   <Text style={{textAlign: 'right',  fontSize: 10, fontWeight: 'bold' }}> {payementDetails?.bank_ref_no}</Text>
+                   <Text style={{ textAlign: 'right',fontSize: 8,  }}>Reference No</Text>
+                </View> */}
+                 <View style={{textAlign: 'right',border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0,  marginTop: 10}}>
+                <Text style={{ textAlign: 'right',fontSize: 10, fontWeight: 'bold',
+                    alignSelf: 'flex-end', // Aligns text to the right
+                    marginLeft: 'auto', // Ensures right alignment
+                 }}> {payementDetails?.bank_ref_no}</Text>
+                <Text style={{ textAlign: 'right',fontSize: 8 , }}>Reference No</Text>
                 </View>
                 {/* <View>
                    <Text style={{ fontSize: 10, fontWeight: 'bold' }}> {payementDetails?.builderName}</Text>
@@ -664,17 +662,23 @@ const MyDocument = ({
               }}>
                 <View style={{border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0,  marginTop: 10}}>
                 <Text style={{ fontSize: 10, fontWeight: 'bold' }}> {payementDetails?.builderName}</Text>
-                <Text style={{ fontSize: 8 }}>Bank</Text>
+                <Text style={{ fontSize: 8,paddingLeft: 3 }}>Bank</Text>
                 </View>
                 <View style={{textAlign: 'right',border: 0, borderColor: '#CCCCCC', borderRadius: 8, padding: 0,  marginTop: 10}}>
-                <Text style={{ textAlign: 'right',fontSize: 10, fontWeight: 'bold' }}> {payementDetails?.mode}</Text>
-                <Text style={{ textAlign: 'right',fontSize: 8 }}>Mode</Text>
+                <Text style={{ textAlign: 'right',fontSize: 10, fontWeight: 'bold',  alignSelf: 'flex-end', // Aligns text to the right
+                    marginLeft: 'auto', }}> {payementDetails?.mode}</Text>
+                <Text style={{ textAlign: 'right',fontSize: 8 , alignSelf: 'flex-end', // Aligns text to the right
+                    marginLeft: 'auto',}}>Mode</Text>
                 </View>
                 {/* <View>
 
                 </View> */}
 
             </View>
+
+
+
+
             <View
               style={{
                 borderTopWidth: 1,
@@ -780,7 +784,10 @@ const PdfReceiptGenerator = ({
             payementDetails={payementDetails}
           />
         }
-        fileName="sample.pdf"
+        // fileName="sample.pdf"
+        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selUnitDetails?.unit_no || 'unit_no'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_PaymentReceipt.pdf`}
+
+
       >
         {({ blob, url, loading, error }) =>
           loading ? (

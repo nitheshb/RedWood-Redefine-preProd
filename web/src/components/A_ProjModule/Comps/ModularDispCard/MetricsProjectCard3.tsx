@@ -95,7 +95,6 @@ const ProjectMetrics3 = ({ project }) => {
           </section>
         </section>
 
-        {/* section 2 */}
         <section className="flex flex-col mb-[11px]">
           <div className="flex flex-row justify-between">
             <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">

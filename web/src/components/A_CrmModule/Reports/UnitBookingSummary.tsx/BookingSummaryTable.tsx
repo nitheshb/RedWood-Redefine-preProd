@@ -4,9 +4,6 @@
 /* eslint-disable react/prop-types */
 
 import * as React from 'react'
-import {
-  Rating,
-} from '@mui/material'
 import Section from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Table from '@mui/material/Table'
@@ -19,7 +16,6 @@ import PropTypes from 'prop-types'
 
 
 
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import { useAuth } from 'src/context/firebase-auth-context'
 import {
   prettyDate,
@@ -38,8 +34,7 @@ import Highlighter from 'react-highlight-words'
 import CSVDownloader from 'src/util/csvDownload'
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import { computeTotal } from 'src/util/computeCsTotals'
-// import { prettyDate } from '../../util/dateConverter'
-// import DropCompUnitStatus from '../dropDownUnitStatus'
+
 
 
 
@@ -512,6 +507,7 @@ const [totalLandValue, setTotalLandValue] = React.useState(0);
 const [totalChargesIValue, setTotalChargesIValue] = React.useState(0);
 
 const [totalChargesIIValue, setTotalChargesIIValue] = React.useState(0);
+const [totalPossessionValue, setTotalPossessionValue] = React.useState(0);
 
 const [totalConstructValue, setTotalConstructValue] = React.useState(0);
 
@@ -546,6 +542,8 @@ React.useEffect(() => {
   setTotalConstructValue(totalConstruction);
   const totalChargesII = leadsFetchedData.reduce((total, row) => total + Number(row?.T_D || 0), 0);
   setTotalChargesIIValue(totalChargesII);
+  const totalPossessionII = leadsFetchedData.reduce((total, row) => total + Number(row?.T_E || 0), 0);
+  setTotalPossessionValue(totalPossessionII);
 
   const totalReceived = leadsFetchedData.reduce((total, row) => total + Number(row.T_approved || 0), 0);
   setTotalReceived(totalReceived);
@@ -749,6 +747,8 @@ function EnhancedTableHead(props) {
             lineHeight: '10px',
             maxWidth: '52px',
             minWidth: '25px',
+            padding: '0px',
+
             paddingLeft: '14px',
             paddingRight: '29px',
             marginRight: '10px',
@@ -766,7 +766,7 @@ function EnhancedTableHead(props) {
 
 
 
-          <TableSortLabel style={{backgroundColor: '#FFF6F0', color: '#000',fontWeight: '500' }}>S.No</TableSortLabel>
+          <TableSortLabel style={{backgroundColor: '#FFF6F0',borderRight: '0.2px solid #e7e5e4', color: '#000',fontWeight: '600' }}>S.No</TableSortLabel>
         </TableCell>
         {headCells.map((headCell) => (
           <>
@@ -778,11 +778,13 @@ function EnhancedTableHead(props) {
               style={{
                 backgroundColor: '#FFF6F0',
                 color: '#33393d',
+
+                fontWeight: '600',
                 height: '10px',
                 maxHeight: '10px',
                 lineHeight: '7px',
-                fontWeight: '500',
-                paddingRight: '6px',
+                padding: '8px 7px 8px 10px',
+                borderRight: '0.2px solid #e7e5e4',
                 display: displayHeadersFun(headCell.id)
               }}
             >
@@ -796,7 +798,7 @@ function EnhancedTableHead(props) {
                   fontFamily: 'inherit',
                 }}
               >
-                <span className="text-[#33393d] fwhitespace-nowrap">
+                <span className="text-[#33393d] whitespace-nowrap">
                   {headCell.label}
                 </span>
                 {orderBy === headCell.id ? (
@@ -809,10 +811,89 @@ function EnhancedTableHead(props) {
               </TableSortLabel>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </TableCell>
+          </>
+        ))}
+      </TableRow>  <TableRow selected={true}>
+        <TableCell
+          align="center"
+          component="th"
+          scope="row"
+          padding="none"
+          size="small"
+          style={{
+            backgroundColor: '#FFF6F0',
+            color: '#1a91eb',
+            maxHeight: '12px',
+            height: '12px',
+            lineHeight: '12px',
+            maxWidth: '52px',
+            minWidth: '25px',
+            padding: '0px',
+
+            paddingLeft: '14px',
+            paddingRight: '29px',
+            marginRight: '10px',
+          }}
+        >
+          {/* <Checkbox
+            color="primary"
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            inputProps={{
+              'aria-label': 'select all desserts',
+            }}
+          /> */}
+
+
+
+          <TableSortLabel style={{backgroundColor: '#FFF6F0', color: '#000',fontWeight: '500' }}></TableSortLabel>
+        </TableCell>
+        {headCells.map((headCell) => (
+          <>
+            <TableCell
+              key={headCell.id}
+              align={headCell?.align ||  'left'}
+              padding={headCell.disablePadding ? 'none' : 'normal'}
+              sortDirection={orderBy === headCell.id ? order : false}
+              style={{
+                backgroundColor: ['partA','partB','partC','partD','partE', 'sale', 'received', 'balance'].includes(headCell.id) ? '#F0F0F0': '#FFF6F0',
+                color: '#33393d',
+                height: '6px',
+                maxHeight: '10px',
+                lineHeight: '7px',
+                fontWeight: '500',
+                padding: '6px 1px 6px 10px',
+
+                borderRight: '0.2px solid #e7e5e4',
+
+                display: displayHeadersFun(headCell.id)
+              }}
+            >
+
+
+
               {headCell.id === 'partA' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
+<div className="bg-[#F0F0F0]  flex items-center justify-end py-2 pr-1">
   <span className="text-black text-[14px] ">₹{totalLandValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -823,8 +904,20 @@ function EnhancedTableHead(props) {
                  {headCell.id === 'partB' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
+<div className="bg-[#F0F0F0]  flex items-center justify-end py-2 pr-1">
   <span className="text-black text-[14px] ">₹{totalChargesIValue.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+
+               {headCell.id === 'partC' && (
+
+<div style={{  }}>
+<div className="bg-[#F0F0F0]  flex items-center justify-end py-2 pr-1">
+  <span className="text-black text-[14px] ">₹{totalConstructValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -835,7 +928,7 @@ function EnhancedTableHead(props) {
 {headCell.id === 'partD' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
+<div className="bg-[#F0F0F0]  flex items-center justify-end py-1 pr-1">
   <span className="text-black text-[14px] ">₹{totalChargesIIValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -843,11 +936,11 @@ function EnhancedTableHead(props) {
 
 
               )}
-                 {headCell.id === 'partC' && (
+              {headCell.id === 'partE' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
-  <span className="text-black text-[14px] ">₹{totalConstructValue.toLocaleString('en-IN')}</span>
+<div className="bg-[#F0F0F0]  flex items-center justify-end py-1 pr-1">
+  <span className="text-black text-[14px] ">₹{totalPossessionValue.toLocaleString('en-IN')}</span>
 </div>
 </div>
 
@@ -855,9 +948,10 @@ function EnhancedTableHead(props) {
 
               )}
 
+
               {headCell.id === 'sale' && (
 
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
+<div className="bg-[#F0F0F0] flex items-center justify-end py-1 pr-1">
   <span className="text-black text-[14px] ">₹{totalSaleValue.toLocaleString('en-IN')}</span>
 </div>
 
@@ -869,7 +963,7 @@ function EnhancedTableHead(props) {
             {headCell.id === 'received' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
+<div className="bg-[#F0F0F0]  flex items-center justify-end py-1 pr-1">
   <span className="text-black text-[14px] ">₹{totalReceived.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -881,7 +975,195 @@ function EnhancedTableHead(props) {
 {headCell.id === 'balance' && (
 
 <div style={{  }}>
-<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-2">
+<div className="bg-[#F0F0F0] flex items-center justify-end py-1 pr-1">
+  <span className="text-black text-[14px] ">₹{selTotalBalance.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+
+
+
+
+
+
+
+
+
+            </TableCell>
+          </>
+        ))}
+      </TableRow>
+    </TableHead>
+  )
+}
+function EnhancedTotalTableHead(props) {
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+    searchKey,
+    viewUnitStatusA,
+  } = props
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property)
+  }
+
+  const displayHeadersFun = (headCell) => {
+
+    if(['partA','partB','partC','partD','partE', 'legal', 'maintenance', 'club', 'infra'].includes(headCell)){
+      return viewUnitStatusA.includes('Cost Split') ? '' : 'none'
+    }  else if(['avgsft', 'sv_sft', 'bmrda_strr'].includes(headCell)){
+      return viewUnitStatusA.includes('Avg sqft Cost') ? '' : 'none'
+    } else if(['crm_executive'].includes(headCell)){
+      return viewUnitStatusA.includes('CRM Executive') ? '' : 'none'
+    }else if(['sale_executive'].includes(headCell)){
+      return viewUnitStatusA.includes('Sales Executive') ? '' : 'none'
+    }else if(['Notes'].includes(headCell)){
+      return viewUnitStatusA.includes('Remarks') ? '' : 'none'
+    }
+    else {
+      return ''
+    }
+
+    //   if(viewUnitStatusA.includes('Assigned To') &&
+    //   headCell === 'Assigned'){
+    //   return ''
+    //   }else{
+    //     return 'none'
+    //   }
+    // }else {
+    //   return ''
+    // }
+
+
+  }
+  return (
+    <TableHead style={{ height: '10px' }}>
+      <TableRow selected={true}>
+        <TableCell
+          align="center"
+          component="th"
+          scope="row"
+          padding="none"
+          size="small"
+          style={{
+            backgroundColor: '#FFF6F0',
+            color: '#1a91eb',
+            maxHeight: '10px',
+            height: '10px',
+            lineHeight: '10px',
+            maxWidth: '52px',
+            minWidth: '25px',
+            paddingLeft: '14px',
+            paddingRight: '29px',
+            marginRight: '10px',
+          }}
+        >
+
+
+
+
+        </TableCell>
+        {headCells.map((headCell) => (
+          <>
+            <TableCell
+              key={headCell.id}
+              align={headCell?.align ||  'left'}
+              padding={headCell.disablePadding ? 'none' : 'normal'}
+              sortDirection={orderBy === headCell.id ? order : false}
+              style={{
+                backgroundColor: '#FFF6F0',
+                color: '#33393d',
+                height: '6px',
+                maxHeight: '10px',
+                lineHeight: '7px',
+                fontWeight: '500',
+                paddingRight: '6px',
+                display: displayHeadersFun(headCell.id)
+              }}
+            >
+
+
+
+              {headCell.id === 'partA' && (
+
+<div style={{  }}>
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
+  <span className="text-black text-[14px] ">₹{totalLandValue.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+                 {headCell.id === 'partB' && (
+
+<div style={{  }}>
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
+  <span className="text-black text-[14px] ">₹{totalChargesIValue.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+
+{headCell.id === 'partD' && (
+
+<div style={{  }}>
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
+  <span className="text-black text-[14px] ">₹{totalChargesIIValue.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+                 {headCell.id === 'partC' && (
+
+<div style={{  }}>
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
+  <span className="text-black text-[14px] ">₹{totalConstructValue.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+
+              {headCell.id === 'sale' && (
+
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
+  <span className="text-black text-[14px] ">₹{totalSaleValue.toLocaleString('en-IN')}</span>
+</div>
+
+
+
+  )}
+
+
+            {headCell.id === 'received' && (
+
+<div style={{  }}>
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
+  <span className="text-black text-[14px] ">₹{totalReceived.toLocaleString('en-IN')}</span>
+</div>
+</div>
+
+
+
+              )}
+
+{headCell.id === 'balance' && (
+
+<div style={{  }}>
+<div className="bg-[#F0F0F0] rounded-lg flex items-center justify-end py-0">
   <span className="text-black text-[14px] ">₹{selTotalBalance.toLocaleString('en-IN')}</span>
 </div>
 </div>
@@ -967,6 +1249,16 @@ EnhancedTableHead.propTypes = {
               searchkey={searchKey}
               viewUnitStatusA={viewUnitStatusA}
             />
+               {/* <EnhancedTotalTableHead
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={rows?.length}
+              searchkey={searchKey}
+              viewUnitStatusA={viewUnitStatusA}
+            /> */}
 
             <TableBody>
               {
@@ -1077,7 +1369,7 @@ EnhancedTableHead.propTypes = {
                           id={labelId}
                           scope="row"
                           padding="none"
-                          sx={{ width: '142px',whiteSpace: 'nowrap', background: '#fff',  paddingRight: '6px' , paddingLeft: '6px',   borderLeft: '0.5px solid #eaeced' , }}
+                          sx={{ width: '142px',whiteSpace: 'nowrap', background: '#fff',  paddingRight: '6px' , paddingLeft: '6px',   borderLeft: '0.2px solid #e7e5e4' , }}
 
                         >
                           <section>
@@ -1098,7 +1390,7 @@ EnhancedTableHead.propTypes = {
                           scope="row"
                           padding="none"
                           align="center"
-                          sx={{width: '142px',background: '#fff', paddingTop: '4px', paddingBottom:'4px',  borderLeft: '0.5px solid #eaeced' , }}
+                          sx={{width: '142px',background: '#fff', paddingTop: '4px', paddingBottom:'4px',  borderLeft: '0.2px solid #e7e5e4' , }}
 
                         >
                           <section>
@@ -1109,13 +1401,13 @@ EnhancedTableHead.propTypes = {
                         </TableCell>
                           <TableCell
                           align="left"
-                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',  borderLeft: '0.5px solid #eaeced' , textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',  borderLeft: '0.2px solid #e7e5e4' , textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>{row.projName}</span>
                         </TableCell>
-                        <TableCell align="center" sx={{width: '142px',background: "#FFFF",  borderLeft: '0.5px solid #eaeced', }} padding="none">
+                        <TableCell align="center" sx={{width: '142px',background: "#FFFF",  borderLeft: '0.2px solid #e7e5e4', }} padding="none">
                         <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full bg-[#CCFBF1] text-[#115e59]">
                           <HighlighterStyle
                             searchKey={searchKey}
@@ -1124,29 +1416,29 @@ EnhancedTableHead.propTypes = {
                         </span>
                         </TableCell>
 
-                        <TableCell align="center" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.5px solid #eaeced' , fontSize:'13px'  }} padding="none">
+                        <TableCell align="center" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.2px solid #e7e5e4' , fontSize:'13px'  }} padding="none">
           {prettyDate(row?.booked_on)}
         </TableCell>
-        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', borderLeft: '0.5px solid #eaeced' , fontSize: '13px', paddingRight: '6px', color: '#0ea5e9',    '& span': {
+        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', borderLeft: '0.2px solid #e7e5e4' , fontSize: '13px', paddingRight: '6px', color: '#0ea5e9',    '& span': {
       display: 'inline-block',
       borderBottom: '1px solid transparent',
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.5px solid #eaeced', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
     } }} padding="none">
           <span
 
   >
     ₹{row?.T_A?.toLocaleString('en-IN')}
   </span>
-        </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', paddingRight: '6px', color: '#0ea5e9',borderLeft: '0.5px solid #eaeced'  , fontSize: '13px',   '& span': {
+        </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', paddingRight: '6px', color: '#0ea5e9',borderLeft: '0.2px solid #e7e5e4'  , fontSize: '13px',   '& span': {
       display: 'inline-block',
       borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.5px solid #eaeced', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
     }  }} padding="none">
 
   <span
@@ -1160,7 +1452,7 @@ EnhancedTableHead.propTypes = {
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.5px solid #eaeced', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
     } }} padding="none">
           <span>₹{row?.T_C?.toLocaleString('en-IN')}</span>
         </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap',  paddingRight: '6px',color: '#0ea5e9',borderLeft: '1px solid #e0e0e0' ,fontSize: '13px',    '& span': {
@@ -1169,7 +1461,7 @@ EnhancedTableHead.propTypes = {
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.5px solid #eaeced', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
     } }} padding="none">
           <span>₹{row?.T_D?.toLocaleString('en-IN')}</span>
         </TableCell>)}
@@ -1186,7 +1478,7 @@ EnhancedTableHead.propTypes = {
         {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px'  }} padding="none">
         ₹{legalCharge?.toLocaleString('en-IN')}
         </TableCell>)} */}
-       <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.5px solid #eaeced', paddingRight: '6px', fontSize: '13px' }} padding="none" >
+       <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.2px solid #e7e5e4', paddingRight: '6px', fontSize: '13px' }} padding="none" >
         ₹{row?.T_total?.toLocaleString('en-IN')}
         </TableCell>
         {viewUnitStatusA.includes('Avg sqft Cost') && (<TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px', fontSize: '13px' }} padding="none">
@@ -1195,27 +1487,27 @@ EnhancedTableHead.propTypes = {
         {viewUnitStatusA.includes('Avg sqft Cost') && (<TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px', fontSize: '13px' }} padding="none">
         ₹{row?.sqft_rate?.toLocaleString('en-IN')}
         </TableCell>)}
-        <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.5px solid #eaeced', paddingRight: '6px', fontSize: '13px' }} padding="none">
+        <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.2px solid #e7e5e4', paddingRight: '6px', fontSize: '13px' }} padding="none">
         ₹{row?.T_approved?.toLocaleString('en-IN')}
 
 
         </TableCell>
-      <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',  borderLeft: '0.5px solid #eaeced' , paddingRight: '6px', fontSize: '13px' ,'& span': {
+      <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',  borderLeft: '0.2px solid #e7e5e4' ,  borderRight: '0.2px solid #e7e5e4', paddingRight: '6px', fontSize: '13px' ,'& span': {
       display: 'inline-block',
       borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
     }, '& span:hover': {
-      borderBottom: '0.5px solid #eaeced', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
     } }} padding="none">
         ₹{row?.T_balance?.toLocaleString('en-IN')}
         </TableCell>
-        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',  paddingRight: '6px',color: '#0ea5e9',borderLeft: '0.5px solid #eaeced', borderRight: '0.5px solid #eaeced' ,fontSize: '13px',   '& span': {
+        {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap',  paddingRight: '6px',color: '#0ea5e9',borderLeft: '0.2px solid #e7e5e4', borderRight: '0.2px solid #e7e5e4' ,fontSize: '13px',   '& span': {
       display: 'inline-block',
       borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.5px solid #eaeced', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
     } }} padding="none">
           ₹{row?.T_E?.toLocaleString('en-IN')}
         </TableCell>)}

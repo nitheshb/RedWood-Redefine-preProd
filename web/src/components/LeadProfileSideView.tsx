@@ -2,45 +2,26 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { Menu } from '@headlessui/react'
-import { Listbox, Transition } from '@headlessui/react'
 import {
-  ArrowRightIcon,
-  PhoneIcon,
+  PencilIcon,
   DeviceMobileIcon,
   MailIcon,
 } from '@heroicons/react/outline'
-import CalendarIcon from '@heroicons/react/outline/CalendarIcon'
 import {
-  BadgeCheckIcon,
-  CheckIcon,
   CheckCircleIcon,
   DocumentIcon,
-  EyeIcon,
-  ViewBoardsIcon,
-  ViewGridIcon,
-  ArrowDownIcon,
-  ArrowUpIcon,
   AdjustmentsIcon,
   XIcon,
 } from '@heroicons/react/solid'
-import { SelectorIcon, DownloadIcon } from '@heroicons/react/solid'
+import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
-import PlusCircleIcon from '@heroicons/react/solid/PlusCircleIcon'
-import {
-  ArrowBackRounded,
-  ConstructionOutlined,
-  DriveEtaOutlined,
-  VerticalAlignBottom,
-} from '@mui/icons-material'
-import FileUploadIcon from '@mui/icons-material/FileUpload'
+import { Slider } from '@mui/material'
+import { setHours, setMinutes } from 'date-fns'
+import { Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { ErrorMessage, Form, Formik, useFormik } from 'formik'
-import DatePicker from 'react-datepicker'
-import { useDropzone } from 'react-dropzone'
-import toast from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
 
@@ -58,7 +39,6 @@ import {
   steamLeadNotes,
   createAttach,
   getCustomerDocs,
-  getUser,
   getAllProjects,
   updateLeadProject,
   steamLeadById,
@@ -74,30 +54,17 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
-import {
-  getDifferenceInDays,
-  getDifferenceInHours,
-  getDifferenceInMinutes,
-  prettyDate,
-  prettyDateTime,
-  timeConv,
-} from 'src/util/dateConverter'
+import { prettyDate, prettyDateTime, timeConv } from 'src/util/dateConverter'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 
 import LogSkelton from './shimmerLoaders/logSkelton'
-import SortComp from './sortComp'
 
 import 'react-datepicker/dist/react-datepicker.css'
-import { setHours, setMinutes } from 'date-fns'
-import { Timestamp } from 'firebase/firestore'
 
-import StatusDropComp from './statusDropComp'
 import AssigedToDropComp from './assignedToDropComp'
-import Loader from './Loader/Loader'
 import ProjPhaseHome from './ProjPhaseHome/ProjPhaseHome'
 
 import { useSnackbar } from 'notistack'
-import { async } from '@firebase/util'
 
 import SelectDropDownComp from './comps/dropDownhead'
 import EditLeadTask from './Comp_CustomerProfileSideView/EditLeadTask'
@@ -107,16 +74,15 @@ import LeadTaskFooter from './Comp_CustomerProfileSideView/LeadTaskFooter'
 
 import { USER_ROLES } from 'src/constants/userRoles'
 import { currentStatusDispFun } from 'src/util/leadStatusDispFun'
-import { sendWhatAppTextSms1 } from 'src/util/axiosWhatAppApi'
 
 import EmailForm from './customerProfileView/emailForm'
 import Confetti from './shared/confetti'
 
 import '../styles/myStyles.css'
-import { Slider } from '@mui/material'
 
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import SiderForm from './SiderForm/SiderForm'
 
 // interface iToastInfo {
 //   open: boolean
@@ -351,13 +317,24 @@ export default function LeadProfileSideView({
   const [addCommentTime, setAddCommentTime] = useState(d.getTime() + 60000)
   const {
     id,
+
+
+
+
+
+    // Status,
+    by,
+    CT,
+  } = customerDetails
+
+  const {
     Name,
     Project,
     projectType,
     ProjectId,
     Source,
     // Status,
-    by,
+
     Mobile,
     Date,
     Email,
@@ -371,8 +348,9 @@ export default function LeadProfileSideView({
     notInterestedNotes,
     stsUpT,
     assignT,
-    CT,
-  } = customerDetails
+
+  } = leadDetailsObj
+
 
   const { enqueueSnackbar } = useSnackbar()
   const [hover, setHover] = useState(false)
@@ -381,6 +359,7 @@ export default function LeadProfileSideView({
   const [streamCoveredA, setStreamCoveredA] = useState([])
   const [streamCurrentStatus, setStreamCurrentStatus] = useState('new')
   const [streamfrom, setStreamFrom] = useState('')
+  const [isImportLeadsOpen, setisImportLeadsOpen] = React.useState(false)
 
   const [closePrevious, setClosePrevious] = useState(false)
 
@@ -436,6 +415,8 @@ export default function LeadProfileSideView({
       (querySnapshot) => {
         const SnapData = querySnapshot.data()
         SnapData.id = id
+    console.log('lead changed', SnapData)
+
         setLeadDetailsObj(SnapData)
       },
       { uid: id },
@@ -454,6 +435,13 @@ export default function LeadProfileSideView({
     }
     setStreamCurrentStatus(Status)
     setStreamFrom(from || '')
+    const x = {
+      projectName: leadDetailsObj.Project,
+      uid: leadDetailsObj.ProjectId,
+    }
+    setSelProjectIs(x)
+    setAssignerName(leadDetailsObj?.assignedToObj?.name)
+    setAssignedTo(leadDetailsObj?.assignedTo)
   }, [leadDetailsObj])
 
   useEffect(() => {
@@ -722,7 +710,7 @@ export default function LeadProfileSideView({
     setLoader(true)
     setClosePrevious(true)
     if (newStatus == 'visitdone') {
-      enqueueSnackbar(`Mark VISIT-DONE  from VISIT-FIXED Task`, {
+      enqueueSnackbar(`Create VISIT-FIXED Task`, {
         variant: 'error',
       })
 
@@ -1560,6 +1548,7 @@ export default function LeadProfileSideView({
     },
   }
   return (
+    <>
     <div
       className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
     >
@@ -1582,6 +1571,13 @@ export default function LeadProfileSideView({
                     <div className="flex flex-col ml-[6px]">
                       <div className=" flex flex-row">
                         <span className="  text-[16px] uppercase">{Name}</span>
+                        <PencilIcon
+                          className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer "
+                          onClick={() => {
+                            setisImportLeadsOpen(true)
+
+                          }}
+                        />{' '}
                         <div className=" text-sm  ml-[4px]  px-[3px] pt-[px] rounded  text-[#FF8C02] ">
                           {currentStatusDispFun(leadDetailsObj?.Status)}{' '}
                         </div>
@@ -1671,7 +1667,8 @@ export default function LeadProfileSideView({
                             // />
                             <span className="px-[3px]   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
                               {' '}
-                              Cost sheet
+                              {/* Cost sheet  */}
+                              Show Units
                             </span>
                           ))}
                       </div>
@@ -2167,8 +2164,23 @@ export default function LeadProfileSideView({
                           </h3>
                           <button onClick={() => selFun()}>
                             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                              Better always attach a string
-                              <span className="text-blue-600"> Add</span>
+                              <span className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-700">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={2}
+                                  stroke="currentColor"
+                                  className="w-5 h-5"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M12 4.5v15m7.5-7.5h-15"
+                                  />
+                                </svg>
+                                Add Notes
+                              </span>
                             </time>
                           </button>
                           <Confetti />
@@ -2493,20 +2505,20 @@ export default function LeadProfileSideView({
                         <form onSubmit={docUploadHandler}>
                           <input
                             className="form-control
-    block
-    w-full
-    px-3
-    py-1.5
-    text-base
-    font-normal
-    text-gray-700
-    bg-white bg-clip-padding
-    border border-solid border-gray-300
-    rounded
-    transition
-    ease-in-out
-    m-0
-    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            block
+                            w-full
+                            px-3
+                            py-1.5
+                            text-base
+                            font-normal
+                            text-gray-700
+                            bg-white bg-clip-padding
+                            border border-solid border-gray-300
+                            rounded
+                            transition
+                            ease-in-out
+                            m-0
+                            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             type="file"
                             id="formFile"
                           />
@@ -3095,7 +3107,6 @@ export default function LeadProfileSideView({
                                                   ),
                                                 ]}
                                                 dateFormat="MMM d, yyyy h:mm aa"
-                                                
                                               />
                                             </span>
                                           </div>
@@ -3710,5 +3721,13 @@ export default function LeadProfileSideView({
         )}
       </div>
     </div>
+    <SiderForm
+        open={isImportLeadsOpen}
+        setOpen={setisImportLeadsOpen}
+        title={'Edit Lead'}
+        leadDetailsObj={leadDetailsObj}
+        widthClass="max-w-2xl"
+      />
+    </>
   )
 }

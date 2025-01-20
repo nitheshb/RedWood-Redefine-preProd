@@ -19,17 +19,25 @@ import axios from 'axios'
 import Loader from '../Loader/Loader'
 import { DEPARTMENT_LIST, ROLES_LIST } from 'src/constants/userRoles'
 import { PhoneNoField } from 'src/util/formFields/phNoField'
-import DatePicker from 'react-datepicker'
 import { setHours, setMinutes } from 'date-fns'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import { useSnackbar } from 'notistack'
 
-// import Select from 'react-select'
-// import SelectSearch from 'react-select-search'
 
 const SUserSignupBody = ({ title, dialogOpen, empData }) => {
   const d = new window.Date()
+  const { enqueueSnackbar } = useSnackbar()
+
   const { register, user } = useAuth()
   const { orgId, orgName } = user
+
+
+
+  const customPhoneNoFieldStyles = {
+    border: 'none',
+    fontSize: '13px',
+
+  }
 
   const formMethods = useForm()
   const [formMessage, setFormMessage] = useState({
@@ -126,7 +134,9 @@ console.log('rolws are ', filRoles)
         txt: `${email} as ${myRole}`,
         by: user?.email,
       })
-
+      enqueueSnackbar('Add Employee Successfully', {
+        variant: 'success',
+      })
       setFormMessage({
         color: 'green',
         message: `User updated Successfully`,
@@ -235,7 +245,7 @@ console.log('rolws are ', filRoles)
     //   .required('Required'),
     name: Yup.string()
       .max(15, 'Must be 15 characters or less')
-      .required('Required'),
+      .required('Name is required'),
     // lastName: Yup.string()
     //   .max(20, 'Must be 20 characters or less')
     //   .required('Required'),
@@ -246,17 +256,25 @@ console.log('rolws are ', filRoles)
     // confirmPassword: Yup.string()
     //   .oneOf([Yup.ref('password'), null], 'Password must match')
     //   .required('Confirm password is required'),
-    // offPh: Yup.string()
-    //   .matches(phoneRegExp, 'Phone number is not valid')
-    //   .min(10, 'to short')
-    //   .max(10, 'to long'),
-    // perPh: Yup.string()
-    //   .matches(phoneRegExp, 'Phone number is not valid')
-    //   .min(10, 'to short')
-    //   .max(10, 'to long'),
+    offPh: Yup.string()
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .min(10, 'Phone no is to short')
+      .max(10, 'Phone no is to long')
+      .required('Phone no is required')
+      ,
+    perPh: Yup.string()
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .min(10, 'Phone no is to short')
+      .max(10, 'Phone no is to long')
+      .required('Phone no is required'),
+
+
+    empId: Yup.string()
+    // .oneOf(['Admin', 'CRM'], 'Required Dept')
+    .required('Employee Id is required'),
     deptVal: Yup.string()
       // .oneOf(['Admin', 'CRM'], 'Required Dept')
-      .required('Req Dept'),
+      .required('Department is required'),
     myRole: Yup.string()
       //  .oneOf(['Admin', 'CRM'], 'DEPT IS REQ')
       .required('Required Role'),
@@ -305,10 +323,18 @@ console.log('rolws are ', filRoles)
                   disabled={editMode}
                 />
                 <TextField
-                  label="User Name*"
+                  label="Employee Name*"
                   name="name"
                   type="text"
                   disabled={editMode}
+                  onChange={(e) => {
+                    const value = e.target.value;
+
+                    const validatedValue = value.replace(/[^a-zA-Z\s]/g, '');
+                    e.target.value = validatedValue;
+                    formik.setFieldValue('name', validatedValue)
+
+                  }}
                 />
                 <TextField
                   label="Email Id*"
@@ -324,8 +350,8 @@ console.log('rolws are ', filRoles)
                 /> */}
                 <PhoneNoField
                   name="offPh"
-                  label="Official Phone Number*"
-                  className="input"
+                  label={<span className="text-[12px] font-regular  text-gray-700">Official Phone Number*</span>}
+                  className="input  text-[13px] placeholder-gray-700 placeholder:opacity-80 "
                   value={formik.values.offPh}
                   onChange={(value) => {
                     formik.setFieldValue('offPh', value.value)
@@ -339,8 +365,9 @@ console.log('rolws are ', filRoles)
                 /> */}
                 <PhoneNoField
                   name="perPh"
-                  label="Personal Phone Number*"
-                  className="input"
+                  //label="Personal Phone Number*"
+                  label={<span className=" font-regular  text-gray-700 text-[12px]">Personal Phone Number*</span>}
+                  className="input  text-[13px] placeholder-gray-700 placeholder:opacity-80"
                   value={formik.values.perPh}
                   onChange={(value) => {
                     formik.setFieldValue('perPh', value.value)
@@ -349,7 +376,7 @@ console.log('rolws are ', filRoles)
 
                 <CustomSelect
                   name="deptName"
-                  label="Department"
+                  label="Department*"
                   className="input mt-3"
                   onChange={(value) => {
                     changed(value)
@@ -366,7 +393,7 @@ console.log('rolws are ', filRoles)
                 ) : null}
                 <CustomSelect
                   name="roleName"
-                  label="Role"
+                  label="Role*"
                   className="input mt-3"
                   onChange={(value) =>
                     formik.setFieldValue('myRole', value.value)
@@ -395,14 +422,32 @@ console.log('rolws are ', filRoles)
                 />
 
                 <div className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-5">
-                  <div className="w-full flex flex-col mb-3">
+                  {/* <div className="w-full flex flex-col mb-3">
                     <TextField
                       label="Aadhar No"
                       name="aadharNo"
                       type="text"
                       disabled={editMode}
                     />
-                  </div>
+                  </div> */}
+
+
+                  <div className="w-full flex flex-col mb-3">
+  <TextField
+    label="Aadhar No"
+    name="aadharNo"
+    type="text"
+    disabled={editMode}
+    inputProps={{
+      inputMode: "numeric", // Show numeric keypad on mobile devices
+      pattern: "[0-9]*", // Allow only numeric input
+    }}
+    onInput={(e) => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, ''); // Replace any non-numeric characters
+    }}
+  />
+</div>
+
                   <div className="w-full flex flex-col mb-3">
 
                          {/* <TextField
@@ -440,16 +485,16 @@ console.log('rolws are ', filRoles)
 
 
 
-                  
+
                   </div>
 
-                  
 
-                  
 
-                  
 
-                    
+
+
+
+
                 </div>
 
                 <p className="text-xs text-red-500 text-right my-3">
@@ -458,18 +503,18 @@ console.log('rolws are ', filRoles)
                 </p>
                 <div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse">
                   <button
-                    className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+                    className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded hover:shadow-lg hover:bg-gray-100"
                     type="reset"
                   >
                     Reset
                   </button>
                   <button
-                    className="mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                    className="mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded hover:shadow-lg hover:bg-green-500"
                     type="submit"
                     disabled={loading}
                   >
                     {loading && <Loader />}
-                    {editMode ? 'Edit Employee' : 'Add Employee'}
+                    {editMode ? 'Save' : 'Add Employee'}
                   </button>
                 </div>
               </Form>

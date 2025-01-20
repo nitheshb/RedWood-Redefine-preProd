@@ -4,38 +4,17 @@
 // import { useState } from 'react'
 // import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
 // import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
-import { useState, useEffect } from 'react'
 
 import {
   Box,
-  Card,
-  CardHeader,
-  Container,
-  Grid,
   LinearProgress,
-  Stack,
-  Typography,
   useTheme,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-
-import { Link } from '@redwoodjs/router'
-
-import SiderForm from 'src/components/SiderForm/SiderForm'
-import { getAllProjects } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-
 import 'flowbite'
-
 import '../../../styles/myStyles.css'
-// import Chart from 'react-apexcharts'
-import ApexChart from '../../Apex_chart/ApexChart'
-import Conversion_rates from '../../Apex_chart/Conversion_rates'
-import PieChart from '../../Apex_chart/PieChart'
-import RadarChart from '../../Apex_chart/RadarChart'
-
 import CircleBar from './CircleBar'
-import ReportBars from './ReportBars'
 import TransactionCard from './TransactionCard'
 import UnitStatusCardReport from './UnitStatusCardReport'
 import { CountUpComp } from 'src/components/comps/countUpComp'

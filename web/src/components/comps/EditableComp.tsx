@@ -1,52 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import { useRef } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { ExclamationCircleIcon } from '@heroicons/react/outline'
 import { Select as SelectMAT, MenuItem } from '@material-ui/core'
-import { Rowing, Widgets } from '@mui/icons-material'
 import { styled } from '@mui/material/styles'
-import { gridColumnsTotalWidthSelector } from '@mui/x-data-grid'
 import { useSnackbar } from 'notistack'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 
 
 import {
-  approvalAuthority,
-  bathTypeList,
-  bedRoomsList,
-  carParkingList,
-  costSheetAdditionalChargesA,
-  csSections,
-  facingTypeList,
-  gstValesA,
-  mortgageType,
-  paymentScheduleA,
-  sourceListItems,
-  statesList,
-  statusList,
-  unitsCancellation,
-  unitTypeList,
   VillaCsSections,
 } from 'src/constants/projects'
 import {
   addCostSheetMaster,
-  addPhasePartAtax,
   addPhaseFullCs,
-  steamBankDetailsList,
   streamProjectCSMaster,
   streamMasters,
+  addPhaseDefaultSqftCost,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
-import { MultiSelectMultiLineField } from 'src/util/formFields/selectBoxMultiLineField'
 
-import { gstValesPartA } from '../../../../../RedefineV2/web/src/constants/projects'
 
 import WarningModel from './warnPopUp'
-import WarnPopUp from './warnPopUp'
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
   fontSize: '13px',
   '&.MuiInputBase-root': {
@@ -321,12 +296,18 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
         const x = costSqftA[0]
         setCostPerSqft(x?.charges)
         setGST(x?.gst.value)
+      }else{
+        setCostPerSqft(phase?.area_cost_persqft || 0)
+        setGST(phase?.area_tax || 0)
       }
       if (costConstructSqftA.length > 0) {
         console.log('setUpData', costSqftA)
         const x = costConstructSqftA[0]
-        setConstructionPerSqft(x?.charges)
-        setConstGST(x?.gst.value)
+        setConstructionPerSqft(x?.charges || 0)
+        setConstGST(x?.gst.value || 0)
+      }else{
+        setConstructionPerSqft(phase?.const_cost_persqft || 0)
+        setConstGST(phase?.const_tax || 0)
       }
       setRows(fullCs)
     } else {
@@ -493,7 +474,12 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
       const myId = selcDelRow?.id
       if (myId) setRows(rows.filter((item) => item.id !== myId))
       const newSet = rows.filter((item) => item.id !== myId)
+    const defaultSqftCost= {  area_cost_persqft: costPerSqft,
+      const_cost_persqft: constructionPerSqft,
+      area_tax:gst,
+      const_tax: constGst}
       addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', enqueueSnackbar)
+      addPhaseDefaultSqftCost(orgId, uid, defaultSqftCost, 'partATaxObj', enqueueSnackbar)
     } else {
       addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }
@@ -721,50 +707,145 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
     }
   }
   const handleConstructCostChange = (e) => {
-    const inputValue = e.target.value
-    setRows(
-      rows.map((row) =>
-        row.component.value === 'sqft_construct_cost_tax'
-          ? { ...row, ['charges']: inputValue }
-          : row
+    // const inputValue = e.target.value
+    // setRows(
+    //   rows.map((row) =>
+    //     row.component.value === 'sqft_construct_cost_tax'
+    //       ? { ...row, ['charges']: inputValue }
+    //       : row
+    //   )
+    // )
+    // setConstructionPerSqft(e.target.value)
+
+
+    const rawValue = e.target.value.replace(/,/g, '')
+    const numValue = parseFloat(rawValue)
+    if (!isNaN(numValue)) {
+      setRows(
+        rows.map((row) =>
+          row.component.value === 'sqft_construct_cost_tax'
+            ? { ...row, ['charges']: numValue }
+            : row
+        )
       )
-    )
-    setConstructionPerSqft(e.target.value)
+      setConstructionPerSqft(numValue)
+    } else {
+      setRows(
+        rows.map((row) =>
+          row.component.value === 'sqft_construct_cost_tax'
+            ? { ...row, ['charges']: 0 }
+            : row
+        )
+      )
+      setConstructionPerSqft(0)
+    }
   }
+
+
+  // const handleCostGSTChange = (e) => {
+  //   const inputValue = e.target.value
+
+  //   setRows(
+  //     rows.map((row) =>
+  //       row.component.value === 'sqft_cost_tax'
+  //         ? { ...row, ['gst']: { value: inputValue, label: `${inputValue}%` } }
+  //         : row
+  //     )
+  //   )
+  //   setGST(e.target.value)
+  // }
+
+
+
+
   const handleCostGSTChange = (e) => {
-    const inputValue = e.target.value
+    let inputValue = e.target.value;
+    if (inputValue === '' || isNaN(inputValue) || inputValue < 0) {
+      setGST('');
+      return;
+    }
+
+    inputValue = Math.min(100, inputValue);
+
     setRows(
       rows.map((row) =>
         row.component.value === 'sqft_cost_tax'
-          ? { ...row, ['gst']: { value: inputValue, label: `${inputValue}%` } }
+          ? { ...row, gst: { value: inputValue, label: `${inputValue}%` } }
           : row
       )
-    )
-    setGST(e.target.value)
-  }
+    );
+    setGST(inputValue);
+  };
+
+
+
+
+
+
+
+  // const handleConstCostGSTChange = (e) => {
+  //   const inputValue = e.target.value
+  //   setRows(
+  //     rows.map((row) =>
+  //       row.component.value === 'sqft_construct_cost_tax'
+  //         ? { ...row, ['gst']: { value: inputValue, label: `${inputValue}%` } }
+  //         : row
+  //     )
+  //   )
+  //   setConstGST(e.target.value)
+  // }
+
+
+
+
+  
+
+
+
+
+
   const handleConstCostGSTChange = (e) => {
-    const inputValue = e.target.value
+    let inputValue = e.target.value;
+  
+
+    if (inputValue === '' || isNaN(inputValue) || Number(inputValue) < 0) {
+      setConstGST(''); 
+      return;
+    }
+  
+    inputValue = Math.min(100, Number(inputValue));
+ 
     setRows(
       rows.map((row) =>
         row.component.value === 'sqft_construct_cost_tax'
-          ? { ...row, ['gst']: { value: inputValue, label: `${inputValue}%` } }
+          ? { ...row, gst: { value: inputValue, label: `${inputValue}%` } }
           : row
       )
-    )
-    setConstGST(e.target.value)
-  }
+    );
+  
+    setConstGST(inputValue);
+  };
+  
+
+
+
+
+
+
   return (
     <>
       <div className=" m-2 p-4 bg-white rounded-xl">
-        <div className="mb-4 ">
+       {source != 'Masters' &&
+<>
+       <div className="mb-4 ">
           <div className="inline">
             <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+              <label className="font-semibold	 text-[#053219]  text-sm  mb-1  ">
                 Unit Pricing Details<abbr title="required"></abbr>
               </label>
             </div>
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
           </div>
         </div>
         <section className="flex flex-row space-x-4 mx-">
@@ -820,6 +901,8 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                   className="rounded-none rounded-r-md bg-gray-50 border text-gray-900 focus:ring-none focus:border-none block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
                   placeholder="GST"
                   value={gst}
+                        min="0"      // Minimum value
+                        max="100"
                   onChange={handleCostGSTChange}
                 />
               </div>
@@ -863,6 +946,12 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                     max="100"
                     step="1"
                     onChange={handleConstCostGSTChange}
+                    onKeyDown={(e) => {
+                      if (e.key === '-' || e.key === '+' || e.key === 'e') {
+                        e.preventDefault(); // Prevent invalid characters
+                      }
+                    }}
+              
                   />
                 </div>
               </div>
@@ -873,6 +962,8 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           <abbr title="Required field">Note:</abbr> Set PLC value at unit level.
         </p>
 
+        </>}
+
         <div className="">
           <div className="mb-4 mt-2">
             <div className="inline">
@@ -882,25 +973,25 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                 </label>
               </div>
 
-              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
             </div>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
             <DragDropContext onDragEnd={onDragEnd}>
               <table className="w-full text-sm text-left text-gray-500 ">
-                <thead className="text-sm text-gray-700">
-                  <tr className="bg-gray-100 rounded-xl rounded-x-md">
-                    <th className=" p-2 pl-2 text-center   text-md">
+                <thead className="text-sm text-gray-800">
+                  <tr className="bg-gray-100 rounded-xl   rounded-x-md">
+                    <th className=" p-2 pl-2 text-center font-semibold	 text-md">
                       Charges For
                     </th>
-                    <th className=" p-1 pl-2 text-center">Category</th>
-                    <th className=" p-1 pl-2 text-center">Cost Type</th>
-                    <th className=" p-1 pl-2 text-center">Amount</th>
-                    <th className=" p-1 pl-2 text-center">Tax Rate</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">Category</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">Cost Type</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">Amount</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">Tax Rate</th>
                     {/* <th className="border border-[#e0e0e0] p-2 text-left">
                   Description
                 </th> */}
-                    <th className=" p-1 pl-2 text-center">Action</th>
+                    <th className=" p-1 pl-2 text-center  font-semibold">Action</th>
                   </tr>
                 </thead>
                 <Droppable droppableId="table">
@@ -1212,13 +1303,13 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           <div className="flex justify-between">
             <button
               onClick={addRow}
-              className="mt-4 bg-cyan-500  text-white font-md py-1 px-2 rounded-sm focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className="mt-4 bg-[#0891B2]  text-white font-md py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
             >
               Add Charges
             </button>
             <button
               onClick={saveSetup}
-              className="mt-4 bg-cyan-500 text-white font-md py-1 px-2 rounded-sm focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className="mt-4 bg-[#0891B2] text-white font-md py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
             >
               Save
             </button>

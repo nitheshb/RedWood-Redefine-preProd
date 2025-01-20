@@ -1,8 +1,5 @@
-import { useState } from 'react'
-
 import { Dialog } from '@headlessui/react'
 import { ExclamationCircleIcon } from '@heroicons/react/outline'
-
 export default function WarningModel({
   type,
   open,
@@ -12,7 +9,6 @@ export default function WarningModel({
   subtext,
   actionBtnTxt,
 }) {
-  // const [open, setOpen] = useState(true)
 
   return (
     <Dialog

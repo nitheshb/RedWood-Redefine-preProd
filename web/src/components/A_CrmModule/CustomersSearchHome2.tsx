@@ -2,31 +2,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-// import { useState } from 'react'
-// import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
-// import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
 import { useState, useEffect } from 'react'
-
-import { Link } from '@redwoodjs/router'
-
-import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
-import DummyBodyLayout from 'src/components/DummyBodyLayout/DummyBodyLayout'
 import SiderForm from 'src/components/SiderForm/SiderForm'
 import {
-  addCustomer,
-  getAllProjects,
   getCRMCustomer,
-  streamGetCustomersS,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import 'flowbite'
-import DropDownSearchBar from 'src/components/dropDownSearchBar'
-
-import { PlusIcon, TrashIcon } from '@heroicons/react/outline'
 import { useSnackbar } from 'notistack'
-
-import { error } from 'console'
-
 import { motion } from 'framer-motion'
 import { PencilIcon } from '@heroicons/react/solid'
 const CustomersSearchHome2 = ({ project }) => {
@@ -144,42 +127,42 @@ const CustomersSearchHome2 = ({ project }) => {
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider"
                     >
                       Customer Name
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider"
                     >
                       KYC
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider  text-right"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider  text-right"
                     >
                       Wallet
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider  text-right"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider  text-right"
                     >
                       Review
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider  text-right"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider  text-right"
                     >
                       Utilised
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider"
                     >
                       Units
                     </th> <th
                       scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-center text-xs font-semibold text-gray-500  tracking-wider"
                     >
                       Action
                     </th>
@@ -212,7 +195,7 @@ const CustomersSearchHome2 = ({ project }) => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full  text-green-800">
                           {person?.kyc_status ? 'Done' : 'Pending'}
                         </span>
                       </td>
@@ -232,7 +215,7 @@ const CustomersSearchHome2 = ({ project }) => {
                         {person?.utilized_money?.toLocaleString('en-IN')}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-green-800">
                           {person?.my_assets?.length}
                         </span>
                       </td>

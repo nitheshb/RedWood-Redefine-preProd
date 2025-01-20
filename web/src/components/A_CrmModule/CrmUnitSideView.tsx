@@ -2,48 +2,17 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment, useEffect, useState } from 'react'
-
-import { Menu } from '@headlessui/react'
-import { Listbox, Transition } from '@headlessui/react'
-import { AdjustmentsIcon, ArrowRightIcon } from '@heroicons/react/outline'
-import CalendarIcon from '@heroicons/react/outline/CalendarIcon'
+import { useEffect, useState } from 'react'
 import {
-  BadgeCheckIcon,
-  DocumentIcon,
-  EyeIcon,
-  MailIcon,
-  DeviceMobileIcon,
-  ViewBoardsIcon,
-  ViewGridIcon,
   XIcon,
 } from '@heroicons/react/solid'
-import { CheckIcon, SelectorIcon, DownloadIcon } from '@heroicons/react/solid'
-import ClockIcon from '@heroicons/react/solid/ClockIcon'
-import PlusCircleIcon from '@heroicons/react/solid/PlusCircleIcon'
-import { VerticalAlignBottom } from '@mui/icons-material'
-import { DateTimePicker } from '@mui/lab'
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
-import TimePicker from '@mui/lab/TimePicker'
-import { LinearProgress, TextField } from '@mui/material'
-import { LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import DatePicker from 'react-datepicker'
-import { useDropzone } from 'react-dropzone'
-import toast from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
-
 import {
   addLeadScheduler,
-  addSchedulerLog,
   deleteSchLog,
   steamLeadActivityLog,
-  steamLeadPhoneLog,
   steamLeadScheduleLog,
-  steamUsersListByRole,
-  updateLeadAssigTo,
-  updateLeadStatus,
   updateSchLog,
   addLeadNotes,
   steamLeadNotes,
@@ -58,42 +27,37 @@ import {
   updateUnitCrmOwner,
   streamUnitById,
   updateCrmExecutiveReAssignAgreegations,
+  getProjectByUid,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import {
-  getDifferenceInHours,
-  getDifferenceInMinutes,
   prettyDate,
   prettyDateTime,
-  timeConv,
 } from 'src/util/dateConverter'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-
-import SortComp from './sortComp'
-
 import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
-
-import Loader from './Loader/Loader'
-import AddBookingForm from './bookingForm'
-
 import { useSnackbar } from 'notistack'
-
 import SiderForm from '../SiderForm/SiderForm'
-
-import CrmUnitSummary from './A_CrmUnitSummary'
-
 import AssigedToDropComp from '../assignedToDropComp'
-
 import { USER_ROLES } from 'src/constants/userRoles'
-
-import CrmPaymentSummary from './CrmPaymentSummary'
 import UnitFullSummary from './CrmUnitFullSummary'
-
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import { supabase } from 'src/context/supabase'
+import { Pie } from 'recharts';
+import { PieChart,  Cell } from 'recharts';
+import { BellIcon } from 'lucide-react';
+import { ChevronDownIcon } from "lucide-react";
+import { calculatePercentages } from 'src/util/areaConverter'
+
+const data = [
+  { name: 'Paid', value: 10 },
+  { name: 'Remaining', value: 90 },
+];
+
+
+
 
 // interface iToastInfo {
 //   open: boolean
@@ -193,11 +157,14 @@ export default function UnitSideViewCRM({
   transactionData,
   customerDetails,
   selCustomerPayload,
+  selUnitDetails,
   setSelUnitDetails,
+
   selSubMenu,
   selSubMenu2,
 }) {
   const { user } = useAuth()
+  console.log('my user is ', user)
   const { enqueueSnackbar } = useSnackbar()
 
   const { orgId } = user
@@ -256,6 +223,14 @@ export default function UnitSideViewCRM({
   const [newStatusErrorList, setNewStatusErrorList] = useState('')
   const [unitPayload, setUnitPayload] = useState({})
 
+
+
+
+
+
+
+
+
   const [selProjectIs, setSelProjectIs] = useState({
     projectName: '',
     uid: '',
@@ -303,7 +278,7 @@ export default function UnitSideViewCRM({
 
   const streamUnitDataFun = () => {
     const { id } = customerDetails
-    console.log('hello', customerDetails)
+    console.log('hello ==>', customerDetails, unitPayload)
     const z = streamUnitById(
       orgId,
       (querySnapshot) => {
@@ -614,6 +589,7 @@ export default function UnitSideViewCRM({
   }
 
   const setStatusFun = async (leadDocId, newStatus) => {
+    console.log('New Statusiiiiiiiii: ', newStatus);
     const x = StatusListA.filter((d) => d.value === status)
     let allowedList = [{ allowed: [] }]
     if (x.length > 0) {
@@ -659,6 +635,7 @@ export default function UnitSideViewCRM({
           (selCustomerPayload?.T_review ||
             0 + selCustomerPayload?.T_approved ||
             0)
+            dataObj.eventKey= 'alloted_on'
         updateUnitStatus(
           orgId,
           selCustomerPayload?.id,
@@ -712,6 +689,7 @@ export default function UnitSideViewCRM({
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
+        dataObj.eventKey= 'agreement_on'
 
         updateUnitStatus(
           orgId,
@@ -730,6 +708,7 @@ export default function UnitSideViewCRM({
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
+        dataObj.eventKey= 'registered_on'
 
         updateUnitStatus(
           orgId,
@@ -748,6 +727,7 @@ export default function UnitSideViewCRM({
         dataObj.fullPs = selCustomerPayload?.fullPs
         dataObj.T_elgible_new = selCustomerPayload?.T_elgible
         dataObj.T_elgible_balance = selCustomerPayload?.T_elgible_balance
+        dataObj.eventKey= 'possession_on'
 
 
         updateUnitStatus(
@@ -1065,12 +1045,14 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
       customerDetailsObj,
     } = selCustomerPayload
     const customLeadObj = { Name: customerDetailsObj?.customerName1 }
-    data.attchUrl = data?.fileUploader?.url || ''
+    // data.attchUrl = data?.fileUploader?.url || data?.attchUrl || ''
     data.category = 'Payment'
     const y = {}
     y.m = data?.fileUploader
 
     console.log('unit log ', data, y, y.m, y['m']['url'])
+
+
 
     const x = await capturePaymentS(
       orgId,
@@ -1092,7 +1074,7 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
       customerDetailsObj,
     } = selCustomerPayload
     const customLeadObj = { Name: customerDetailsObj?.customerName1 }
-    data.attchUrl = data?.fileUploader?.url || ''
+    data.attchUrl = data?.fileUploader?.url || data?.attchUrl || ''
     data.category = 'Payment'
     const y = {}
     y.m = data?.fileUploader
@@ -1113,9 +1095,9 @@ return
   }
   return (
     <div
-      className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} overflow-y-scroll `}
     >
-      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#D9d8ff]">
+      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F9F9FA]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full   ">
             {/* <div className="">
@@ -1135,8 +1117,8 @@ return
                 </div>
               </div> */}
 
-            <div className="flex flex-col justify-between">
-              <section className="flex flex-row justify-between bg-[#D9d8ff] px-3 py-1 border border-[#e5e7f8] rounded-md ">
+             <div className="flex flex-col justify-between">
+              <section className="flex flex-row justify-between bg-[#F9F9FA] px-3 py-1  rounded-md ">
                 <section>
                 <section className="flex flex-row   pt-2 justify-between">
                                   <div className="flex flex-row">
@@ -1170,24 +1152,30 @@ return
                                       {selCustomerPayload?.projName}
                                       </div>
                                       <section>
-                                        <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                       {selCustomerPayload?.block_no!= undefined &&  <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                          Block:{selCustomerPayload?.block_no?.toLocaleString(
+                                            'en-IN'
+                                          )}{' '}
+
+                                        </span>}
+                                        {selCustomerPayload?.floor_no!= undefined && <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                          floor:{selCustomerPayload?.floor_no?.toLocaleString(
+                                            'en-IN'
+                                          )}{' '}
+
+                                        </span>}
+                                        <span className="  text-[10px] h-[20px]  text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {selCustomerPayload?.area?.toLocaleString(
                                             'en-IN'
                                           )}{' '}
                                           sqft
                                         </span>
 
-                                        <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                        <span className="  text-[10px] h-[20px] text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {selCustomerPayload?.facing}
                                         </span>
-                                        {/* <span className=" text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                        ₹{' '}
-                                        {finData?.sqft_rate?.toLocaleString(
-                                          'en-IN'
-                                        )}
-                                        /sqft
-                                      </span> */}
-                                         <span className=" ml- text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
+
+                                         <span className=" text-[10px]  text-[#824605] font-bodyLato font-[600] mt-[2px] bg-[#fff0c7] px-[14px] py-[8px] rounded-xl mr-1 ">
                         Booked : {prettyDate(selCustomerPayload?.booked_on || 0)}
                       </span>
                                       </section>
@@ -1199,13 +1187,16 @@ return
 
                 </section>
                 <section className="flex flex-row  h-[28px] mt-6">
-                  <section className="flex flow-row justify-between mb-1 mr-2 py-[0px] px-[10px] bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
-                    <div className="font-md text-xs text-gray-700 tracking-wide mr-1">
+                  <section
+                    style={{ padding: '12px 16px' }}
+
+                   className="flex flow-row justify-between bg-white  py-[15px]  mr-2   text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
+                    <div className="font-md text-xs  text-gray-700 tracking-wide mr-1">
                       CRM Owner
                     </div>
-                    <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                    <div className="font-md ml-8 text-xs tracking-wide font-semibold text-slate-900 ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div>
+                        <div className='mb-1.5 mt-[6px]'>
                           <AssigedToDropComp
                             assignerName={assignerName}
                             id={id}
@@ -1223,18 +1214,110 @@ return
                       )}
                     </div>
                   </section>
-                  <section className="flex flow-row justify-between mb-1 mr-2 py-[0px] px-[10px] bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
+                  <section className="flex flow-row justify-between  py-[15px] mr-2    px-[15px] bg-white text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
                     <div className="font-md text-xs text-gray-700 tracking-wide mr-1">
                       Status
                     </div>
-                    <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+                    <div className="font-md  ml-8  text-xs tracking-wide font-semibold text-slate-900 ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div>
+                        <div className=' mt-[2px]'>
                           <AssigedToDropComp
-                            assignerName={unitStatus}
+                           assignerName={status}
+
                             id={id}
                             setAssigner={setStatusFun}
                             usersList={StatusListA}
+                            align={undefined}
+                          />
+                        </div>
+                      )}
+
+                      {user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                        <span className="text-left text-sm">
+                          {' '}
+                          {assignerName}
+                        </span>
+                      )}
+                    </div>
+                  </section>
+                { (user?.role.includes('crm-manager') || user?.role.includes('crm-executive') || user?.role.includes('admin'))&&  <button
+                    className="text-[10px]  rounded-2xl ml-2 bg-[#E3BDFF] px-5 border    border-[#E3BDFF] text-gray-800"
+                    onClickCapture={() => {
+                      openPaymentFun()
+                    }}
+                  >
+                    CAPTURE PAYMENT
+                  </button>}
+
+                  {customerDetails?.man_cs_approval==="approved" &&<button
+                    className=" text-[10px]  rounded-2xl ml-2 bg-white px-5 border  border-[#E3BDFF]"
+                    onClickCapture={() => {
+                      openDemandFun()
+                    }}
+                  >
+                    NEW DEMAND
+                  </button>}
+
+                </section>
+              </section>
+            </div>
+
+
+
+          {/* {today 14} */}
+            {/* <div className="flex justify-between items-center mb-6">
+
+
+  <div className="bg-[#F9F9FA] p-4 rounded-lg  flex items-center space-x-4">
+      <div className="bg-white p-4 rounded-[18px] flex flex-col items-center justify-center w-20 h-20">
+        <span className="text-2xl font-bold"> {selCustomerPayload?.unit_no}</span>
+        <span className="text-xs text-[#000]">Unit no</span>
+      </div>
+      <div className="flex flex-col ml-4 space-y-2">
+        <span className="text-xs font-semibold">{selCustomerPayload?.customerDetailsObj?.customerName1 ||'NA'}</span>
+        <div className="flex space-x-2 items-center">
+          <span className="bg-white p-1 py-1  rounded-lg text-xs w-20 text-center">
+          {selCustomerPayload?.area?.toLocaleString('en-IN')}{' '}sqft
+          </span>
+          <div className="bg-white p-1 rounded-lg text-xs w-20 text-center flex items-center justify-center space-x-1">
+            <span>{selCustomerPayload?.facing}</span>
+            <svg
+              width="19"
+              height="19"
+              viewBox="0 0 19 19"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5.89648 13.4346V7.97028C5.89648 7.63636 6.01538 7.35049 6.25318 7.1127C6.49098 6.8749 6.77684 6.756 7.11077 6.756H12.0893L11.1179 5.78457L11.9679 4.93457L14.3965 7.36314L11.9679 9.79171L11.1179 8.94171L12.0893 7.97028H7.11077V13.4346H5.89648Z"
+                fill="#484848"
+              />
+            </svg>
+          </div>
+        </div>
+        <div className="flex items-center space-x-2">
+          <span className="bg-white p-1 px-2 rounded-lg text-xs">Booked : {prettyDate(selCustomerPayload?.booked_on || 0)}</span>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div className="flex space-x-4 bg-[#F9F9FA] p-8 rounded-lg">
+      <div className="relative inline-block text-left">
+        <button className="inline-flex justify-center w-full rounded-full border border-gray-300 shadow-sm px-4 py-3 bg-white text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
+          CRM Owner
+
+
+          <div className="font-md ml-8 text-xs tracking-wide font-semibold text-slate-900 ">
+                      {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                        <div className=''>
+                          <AssigedToDropComp
+                            assignerName={assignerName}
+                            id={id}
+                            setAssigner={setAssignerFun}
+                            usersList={usersList}
                             align={undefined}
                           />
                         </div>
@@ -1246,26 +1329,86 @@ return
                         </span>
                       )}
                     </div>
-                  </section>
-                  <section
-                    className="text-center px-[10px] py-[2px] pt-[3px] h-[24px] bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
-                    onClickCapture={() => {
-                      openPaymentFun()
-                    }}
-                  >
-                    CAPTURE PAYMENT
-                  </section>
-                  {customerDetails?.man_cs_approval==="approved" &&<section
+        </button>
+      </div>
+
+      <div className="relative inline-block items-center text-left">
+        <button className="flex justify-center items-center w-full rounded-full border border-gray-300 shadow-sm px-4 py-3 bg-white text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
+          Status
+
+
+<div className="font-md ml-8 text-xs   items-center tracking-wide font-semibold text-slate-900 ">
+
+                      {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                        <div className=''>
+
+
+                          <AssigedToDropComp
+                            assignerName={unitStatus}
+                            id={id}
+                            setAssigner={setStatusFun}
+                            usersList={StatusListA}
+                            align={undefined}
+                          />
+                        </div>
+                      )}
+                      {user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                        <span className="">
+                          {' '}
+                          {assignerName}
+                        </span>
+                      )}
+                    </div>
+        </button>
+      </div>
+
+      <button
+
+onClickCapture={() => {
+  openPaymentFun()
+}}
+      className="bg-white border border-gray-300 rounded-full py-3 px-4 text-xs flex items-center">
+        <svg
+          width="18"
+          className="mr-2"
+          height="18"
+          viewBox="0 0 23 23"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1.64648 8.10124H21.6465M8.31315 21.4346V8.10124M3.86871 1.43457H19.4243C20.6516 1.43457 21.6465 2.42949 21.6465 3.65679V19.2123C21.6465 20.4396 20.6516 21.4346 19.4243 21.4346H3.86871C2.64141 21.4346 1.64648 20.4396 1.64648 19.2123V3.65679C1.64648 2.42949 2.64141 1.43457 3.86871 1.43457Z"
+            stroke="#3E3E3E"
+            strokeWidth="1.44444"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        Payment
+
+        {customerDetails?.man_cs_approval==="approved" &&<section
                     className="text-center px-[10px] py-[2px]  pt-[3px] h-[24px] ml-2 bg-gradient-to-r from-[#E7E7E7] to-[#E7E7E7] text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
                     onClickCapture={() => {
                       openDemandFun()
                     }}
                   >
-                    NEW DEMAND
-                  </section>}
-                </section>
-              </section>
-            </div>
+                    NEW DEMAND</section>}
+      </button>
+    </div>
+        </div> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
           </div>
         </div>
         {statusValidError && (
@@ -1391,6 +1534,308 @@ return
           </>
         )}
       </div>
+
+
+      {/* {today 14} */}
+
+
+<div className='bg-[#F9F9FA] p-8  rounded-lg'>
+
+<div className="grid bg-[#F9F9FA]  rounded-lg grid-cols-3 gap-4 mb-3">
+  <div className="bg-white p-4 rounded-lg">
+    <div className="flex justify-between ">
+      <span className="font-medium">Stage Balance</span>
+      <span className='font-semibold'>...</span>
+    </div>
+    <div className="relative flex justify-center items-center">
+      <PieChart width={250} height={250}>
+        <Pie
+          data={[  { name: 'Paid', value:  calculatePercentages((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ), selCustomerPayload?.T_elgible).paidPercentage},
+          { name: 'Remaining', value:  calculatePercentages((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ), selCustomerPayload?.T_elgible).unpaidPercentage}]}
+          cx={125}
+          cy={125}
+          innerRadius={70}
+          outerRadius={95}
+          startAngle={90}
+          endAngle={-270}
+          dataKey="value"
+        >
+          <Cell fill="#E3BDFF" />
+          <Cell fill="#E5E7EB" />
+        </Pie>
+      </PieChart>
+      {/* Centered Text */}
+      <div className="absolute text-center">
+        <div className="text-xs text-gray-500">Balance</div>
+        <div className="font-bold">            ₹{selCustomerPayload?.T_elgible_balance <0 ? 0: selCustomerPayload?.T_elgible_balance?.toLocaleString('en-IN')}</div>
+      </div>
+    </div>
+
+
+    <section className="flex flex-row justify-between mx-2">
+    <div className="text-center">
+      <div className="text-[12px] text-gray-500">Elgible Cost</div>
+      <div className="font-bold text-[14px]">₹ {((selCustomerPayload?.T_elgible || 0)
+                                            )?.toLocaleString('en-IN')}</div>
+    </div>
+    <div className="text-center">
+      <div className="text-[12px] text-gray-500">Paid</div>
+      <div className="font-bold text-[14px]">              ₹{((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ))?.toLocaleString('en-IN')}</div>
+    </div>
+    <div className="text-center">
+      <div className="text-[12px] text-gray-500">Balance</div>
+      <div className="font-bold text-[14px]">₹ {selCustomerPayload?.T_elgible_balance <0 ? 0: selCustomerPayload?.T_elgible_balance?.toLocaleString('en-IN')}</div>
+    </div>
+    </section>
+  </div>
+
+  <div className="bg-white  p-4 rounded-lg">
+    <div className="flex justify-between items-center">
+      <span className="font-medium">Unit Cost</span>
+      <ChevronDownIcon size={16} className="ml-2" />
+    </div>
+    <div className="relative flex justify-center items-center">
+      <PieChart width={250} height={250}>
+        <Pie
+          data={[  { name: 'Paid', value:  calculatePercentages(  (selCustomerPayload?.T_review || 0) +
+          (selCustomerPayload?.T_approved || 0), selCustomerPayload?.T_total || selCustomerPayload?.T_Total).paidPercentage},
+          { name: 'Remaining', value:  calculatePercentages(  (selCustomerPayload?.T_review || 0) +
+          (selCustomerPayload?.T_approved || 0), selCustomerPayload?.T_total || selCustomerPayload?.T_Total).unpaidPercentage}]}
+          cx={125}
+          cy={125}
+          innerRadius={70}
+          outerRadius={95}
+          startAngle={90}
+          endAngle={-270}
+          dataKey="value"
+        >
+          <Cell fill="#E3BDFF" />
+          <Cell fill="#E5E7EB" />
+        </Pie>
+      </PieChart>
+         {/* <PieChart width={400} height={400}>
+        <Pie data={data} dataKey="value" innerRadius={60} outerRadius={80} fill="#8884d8">
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart> */}
+      {/* Centered Text */}
+      <div className="absolute text-center">
+        <div className="text-xs text-gray-500">Balance</div>
+        <div className="font-bold">₹ {selCustomerPayload?.T_balance?.toLocaleString(
+                                            'en-IN'
+                                          )}</div>
+      </div>
+    </div>
+    <section className="flex flex-row justify-between mx-2">
+    <div className="text-center">
+      <div className="text-[12px] text-gray-500">Unit Cost</div>
+      <div className="font-bold text-[14px]">₹ {((selCustomerPayload?.T_total || 0)
+                                            )?.toLocaleString('en-IN')}</div>
+    </div>
+    <div className="text-center">
+      <div className="text-[12px] text-gray-500">Paid</div>
+      <div className="font-bold text-[14px]">₹ {((selCustomerPayload?.T_review || 0) +
+                                            (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN')}</div>
+    </div>
+    <div className="text-center">
+      <div className="text-[12px] text-gray-500">Balance</div>
+      <div className="font-bold text-[14px]">₹ {(selCustomerPayload?.T_balance || 0)
+                                            ?.toLocaleString('en-IN')}</div>
+    </div>
+    </section>
+  </div>
+
+  <div className="bg-white p-4 rounded-lg">
+    {/* <div className="flex justify-between">
+      <span className="font-medium">Payment schedule</span>
+      <BellIcon size={16} />
+    </div> */}
+    <div className="flex justify-between items-center">
+  <span className="font-medium">Unit Payments</span>
+  <BellIcon size={16} className="ml-2" />
+</div>
+
+    <div className="flex flex-col items-center mt-8">
+      <section className='flex flex-row justify-between'>
+        <div className=''>
+      <div className="text-sm text-gray-500 mb-2">Total Paid</div>
+      <div className="font-bold mb-4">₹ {((selCustomerPayload?.T_review || 0) +
+                                            (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN')}</div>
+                                            </div>
+
+      </section>
+      <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
+        <div className="bg-[#E3BDFF] h-7 rounded-full w-1/3"></div>
+      </div>
+      <div className="text-sm text-gray-500 mb-2">Total Cost</div>
+      <div className="font-bold">₹ {((selCustomerPayload?.T_total || 0)
+                                            )?.toLocaleString('en-IN')}</div>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+{/*
+<div className="bg-white   rounded-xl shadow-sm">
+      <div className="border rounded-xl">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 bg-gray-100 rounded-full"></div>
+              <h3 className="font-semibold">Activity</h3>
+            </div>
+            <div className="flex gap-2">
+            <button className="px-2 py-1 border border-gray-200 rounded-full text-sm hover:bg-gray-50 transition-colors">
+            <svg width="5" height="17" viewBox="0 0 5 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.64648 16.5347C2.09648 16.5347 1.62565 16.3388 1.23398 15.9472C0.842318 15.5555 0.646484 15.0847 0.646484 14.5347C0.646484 13.9847 0.842318 13.5138 1.23398 13.1222C1.62565 12.7305 2.09648 12.5347 2.64648 12.5347C3.19648 12.5347 3.66732 12.7305 4.05898 13.1222C4.45065 13.5138 4.64648 13.9847 4.64648 14.5347C4.64648 15.0847 4.45065 15.5555 4.05898 15.9472C3.66732 16.3388 3.19648 16.5347 2.64648 16.5347ZM2.64648 10.5347C2.09648 10.5347 1.62565 10.3388 1.23398 9.94717C0.842318 9.5555 0.646484 9.08467 0.646484 8.53467C0.646484 7.98467 0.842318 7.51383 1.23398 7.12217C1.62565 6.7305 2.09648 6.53467 2.64648 6.53467C3.19648 6.53467 3.66732 6.7305 4.05898 7.12217C4.45065 7.51383 4.64648 7.98467 4.64648 8.53467C4.64648 9.08467 4.45065 9.5555 4.05898 9.94717C3.66732 10.3388 3.19648 10.5347 2.64648 10.5347ZM2.64648 4.53467C2.09648 4.53467 1.62565 4.33883 1.23398 3.94717C0.842318 3.5555 0.646484 3.08467 0.646484 2.53467C0.646484 1.98467 0.842318 1.51383 1.23398 1.12217C1.62565 0.730501 2.09648 0.534668 2.64648 0.534668C3.19648 0.534668 3.66732 0.730501 4.05898 1.12217C4.45065 1.51383 4.64648 1.98467 4.64648 2.53467C4.64648 3.08467 4.45065 3.5555 4.05898 3.94717C3.66732 4.33883 3.19648 4.53467 2.64648 4.53467Z" fill="#5F6368"/>
+</svg>
+
+              </button>
+              <button className="px-4 py-1.5 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+                All actions
+              </button>
+              <button className="px-4 py-1.5 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+                Filter
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 bg-gray-100 rounded-full"></div>
+              <div className="flex items-center border rounded-md bg-white shadow-md w-full max-w-md mx-auto">
+      <span className="material-icons text-gray-500 ml-3">search</span>
+      <input
+        type="text"
+        value={query}
+        onChange={handleChange}
+        placeholder="Search..."
+        className="flex-grow py-2 px-3 outline-none border-none text-gray-700"
+      />
+    </div>
+            </div>
+            <div className="flex gap-2">
+              <button className="px-4 py-1.5 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+              Booked
+              </button>
+              <button className="px-4 py-1.5 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+              Review
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div> */}
+
+
+
+
+
+</div>
+
+
+
+      {/* <div className="grid bg-[#F9F9FA]  rounded-lg grid-cols-3 gap-4 mb-3">
+  <div className="bg-white p-4 rounded-lg">
+    <div className="flex justify-between ">
+      <span className="font-medium">Stage Balance</span>
+      <span className='font-semibold'>...</span>
+    </div>
+    <div className="relative flex justify-center items-center">
+      <PieChart width={200} height={200}>
+        <Pie
+          data={data}
+          cx={100}
+          cy={100}
+          innerRadius={60}
+          outerRadius={80}
+          startAngle={90}
+          endAngle={-270}
+          dataKey="value"
+        >
+          <Cell fill="#00D4FF" />
+          <Cell fill="#E5E7EB" />
+        </Pie>
+      </PieChart>
+      <div className="absolute text-center">
+        <div className="text-xs text-gray-500">Amount Borrowed</div>
+        <div className="font-bold">₹ 67,23,523</div>
+      </div>
+    </div>
+    <div className="text-center">
+      <div className="text-sm text-gray-500">Paid</div>
+      <div className="font-bold">₹ 10,198</div>
+    </div>
+  </div>
+
+  <div className="bg-white  p-4 rounded-lg">
+    <div className="flex justify-between items-center">
+      <span className="font-medium">Cost sheet</span>
+      <ChevronDownIcon size={16} className="ml-2" />
+    </div>
+    <div className="relative flex justify-center items-center">
+      <PieChart width={200} height={200}>
+        <Pie
+          data={data}
+          cx={100}
+          cy={100}
+          innerRadius={60}
+          outerRadius={80}
+          startAngle={90}
+          endAngle={-270}
+          dataKey="value"
+        >
+          <Cell fill="#00D4FF" />
+          <Cell fill="#E5E7EB" />
+        </Pie>
+      </PieChart>
+
+      <div className="absolute text-center">
+        <div className="text-xs text-gray-500">Amount Borrowed</div>
+        <div className="font-bold">₹ 67,23,523</div>
+      </div>
+    </div>
+    <div className="text-center">
+      <div className="text-sm text-gray-500">Paid</div>
+      <div className="font-bold">₹ 10,198</div>
+    </div>
+  </div>
+
+  <div className="bg-white p-4 rounded-lg">
+
+    <div className="flex justify-between items-center">
+  <span className="font-medium">Payment schedule</span>
+  <BellIcon size={16} className="ml-2" />
+</div>
+
+    <div className="flex flex-col items-center mt-8">
+      <div className="text-sm text-gray-500 mb-2">Amount Borrowed</div>
+      <div className="font-bold mb-4">₹ 67,23,523</div>
+      <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
+        <div className="bg-cyan-400 h-7 rounded-full w-1/3"></div>
+      </div>
+      <div className="text-sm text-gray-500 mb-2">Received</div>
+      <div className="font-bold">₹ 10,198</div>
+    </div>
+  </div>
+
+
+
+</div> */}
+
+
+
+
 
       <UnitFullSummary
         customerDetails={customerDetails}

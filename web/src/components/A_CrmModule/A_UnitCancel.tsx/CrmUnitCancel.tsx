@@ -34,16 +34,8 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import { prettyDate, prettyDateTime } from 'src/util/dateConverter'
-
 import 'react-datepicker/dist/react-datepicker.css'
-
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
-
-// import AssigedToDropComp from '../assignedToDropComp'
-// import SiderForm from '../SiderForm/SiderForm'
-
-// import UnitFullSummary from './CrmUnitFullSummary'
-
 import { supabase } from 'src/context/supabase'
 import AssigedToDropComp from 'src/components/assignedToDropComp'
 import SiderForm from 'src/components/SiderForm/SiderForm'
@@ -896,7 +888,7 @@ export default function UnitBookingCancelCRM({
   }
   return (
     <div
-      className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`bg-white   h-screen   } `}
     >
       <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F8E7E3]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">

@@ -1,13 +1,6 @@
 import { useEffect, useState } from 'react'
-
-import { Tabs } from '@material-ui/core'
-import { Tab } from '@material-ui/core'
-import { TabList } from '@mui/lab'
-import { Box as Section, Card, Grid, styled } from '@mui/material'
-import { useTranslation } from 'react-i18next' // styled components
-
-import { prettyDate } from 'src/util/dateConverter'
-
+import { Box as Section, Card, Grid } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import LLeadsTableBody from '../LLeadsTableBody/LLeadsTableBody'
 import LogSkelton from '../shimmerLoaders/logSkelton'
 
@@ -410,7 +403,7 @@ const LLeadsTableView = ({
                             {' '}
                             {`${d.lab} `}
                             <span
-                              className={`  text-zinc-900  text-[9px] px-[4px] py-[3px] rounded-md ml-[4px]  ${
+                              className={`  text-zinc-900 border border-gray-400  text-[9px] px-[4px] py-[3px] rounded-full ml-[4px]  ${
                                 activeNeg === true
                                   ? 'bg-gray-950  font-semibold '
                                   : 'bg-gray-100 font-normal '
@@ -508,9 +501,11 @@ const LLeadsTableView = ({
                 </span>
               </div>
             )}
+   
             {!fetchLeadsLoader && statusSepA[0]?.[value].length != 0 && (
               <LLeadsTableBody
                 // data={filterTable}
+                leadsTyper={leadsTyper}
                 fetchLeadsLoader={fetchLeadsLoader}
                 selStatus={value}
                 rowsParent={statusSepA[0]}

@@ -2,23 +2,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect } from 'react'
-
-
 import * as React from 'react';
-
-
-import { ArrowCircleDownIcon, PlusIcon, LinkIcon } from '@heroicons/react/solid'
-import { InputAdornment, TextField as MuiTextField } from '@mui/material'
-import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
 
-import { statesList } from 'src/constants/projects'
 import {
   addLead,
   updateLeadCustomerDetailsTo,
@@ -30,15 +20,8 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
-import { PhoneNoField } from 'src/util/formFields/phNoField'
-import { PhoneNoField2 } from 'src/util/formFields/phNoField2'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import { TextField } from 'src/util/formFields/TextField'
 
-import NoBorderDropDown from './comps/noBorderDropDown'
 import { useFileUpload } from './useFileUpload'
-import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
-import CustomDatePicker from 'src/util/formFields/CustomDatePicker';
 import CloneableEmailForm from './ApplicantDetailsFormReuse';
 
 const AddApplicantDetails = ({
@@ -305,20 +288,23 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
   const [selRef2, setRefDataFun2] = useState({ label: 'S/O', value: 'S/O' })
   const [moveNext, setMoveNext] = useState(false)
   const [givenPhNo1, setGivenPhNo1] = useState()
+  // useEffect(() => {
+  //   if (givenPhNo1?.length == 10) {
+  //     searchFun()
+  //   }
+  // }, [givenPhNo1])
   useEffect(() => {
-    if (givenPhNo1?.length == 10) {
-      searchFun()
-    }
-  }, [givenPhNo1])
-  const searchFun = async () => {
-    const foundLength = await checkIfLeadAlreadyExists(
-      `${orgId}_leads`,
-      givenPhNo1
-    )
-    if (foundLength?.length > 0) {
-      setLeadPayload(foundLength[0])
-    }
-  }
+    console.log('leads payload is ', leadPayload)
+  },[])
+  // const searchFun = async () => {
+  //   const foundLength = await checkIfLeadAlreadyExists(
+  //     `${orgId}_leads`,
+  //     givenPhNo1
+  //   )
+  //   if (foundLength?.length > 0) {
+  //     setLeadPayload(foundLength[0])
+  //   }
+  // }
 
   const onSubmitFun = async (data, updateDoc, resetForm) => {
     console.log(data)
@@ -940,12 +926,17 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
         resetForm
       )
     }
+    moveNextStep()
 
+  }
+
+  const moveNextStep =  () => {
     if (currentMode == 'unitBookingMode') {
       setOnStep('additonalInfo')
     } else if (currentMode == 'unitBlockMode') {
       setOnStep('blocksheet')
     }
+
   }
   const handleFileUploadFun = async (file, type, formik) => {
     if (!file) return
@@ -1016,8 +1007,31 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
           {title}
         </Dialog.Title> */}
         </div>
-<CloneableEmailForm selUnitDetails={selUnitDetails} customerInfo={customerInfo} setCustomerInfo={setCustomerInfo}  />
+<CloneableEmailForm selUnitDetails={selUnitDetails} customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} leadPayload={leadPayload} />
+{source != "fromBookedUnit" &&<div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full w-[680px]">
 
+
+
+
+                              <button
+                                className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
+bg-gradient-to-r from-violet-600 to-indigo-600
+text-black
+
+ duration-200 ease-in-out
+transition
+ px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
+ bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-3 tracking-wider text-white  rounded-md hover:shadow-lg
+ "
+
+                                disabled={loading}
+                                onClick={() => moveNextStep()}
+                                // onClick={() => submitFormFun(formik)}
+                              >
+                                <span> {' Next'}</span>
+                              </button>
+
+                          </div>}
         {/* <div className="">
           <div className="flex flex-col rounded-lg bg-white ">
             <div className="mt-0">

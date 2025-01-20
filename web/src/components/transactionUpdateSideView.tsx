@@ -2,78 +2,23 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment, useEffect, useState } from 'react'
-
-import { Menu } from '@headlessui/react'
-import { Listbox, Transition } from '@headlessui/react'
-import { ArrowRightIcon } from '@heroicons/react/outline'
-import CalendarIcon from '@heroicons/react/outline/CalendarIcon'
-import {
-  BadgeCheckIcon,
-  DocumentIcon,
-  EyeIcon,
-  ViewBoardsIcon,
-  ViewGridIcon,
-  XIcon,
-} from '@heroicons/react/solid'
-import { CheckIcon, SelectorIcon, DownloadIcon } from '@heroicons/react/solid'
-import ClockIcon from '@heroicons/react/solid/ClockIcon'
-import PlusCircleIcon from '@heroicons/react/solid/PlusCircleIcon'
-import { VerticalAlignBottom } from '@mui/icons-material'
-import { DateTimePicker } from '@mui/lab'
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
-import TimePicker from '@mui/lab/TimePicker'
-import { TextField } from '@mui/material'
-import { LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { useEffect, useState } from 'react'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import DatePicker from 'react-datepicker'
-import { useDropzone } from 'react-dropzone'
-import toast from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 
 import {
-  addLeadScheduler,
-  addSchedulerLog,
-  deleteSchLog,
-  steamLeadActivityLog,
-  steamLeadPhoneLog,
-  steamLeadScheduleLog,
-  steamUsersListByRole,
-  updateLeadAssigTo,
-  updateLeadStatus,
-  updateSchLog,
-  addLeadNotes,
-  steamLeadNotes,
   createAttach,
-  getCustomerDocs,
-  getAllProjects,
-  updateLeadProject,
   updateTransactionStatus,
   updateWalletTransactionStatus,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import {
-  getDifferenceInHours,
-  getDifferenceInMinutes,
-  prettyDate,
-  prettyDateTime,
   timeConv,
 } from 'src/util/dateConverter'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-
-import SortComp from './sortComp'
-
 import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
-import { Timestamp } from 'firebase/firestore'
 
-import StatusDropComp from './statusDropComp'
-import AssigedToDropComp from './assignedToDropComp'
-import Loader from './Loader/Loader'
-import ProjPhaseHome from './ProjPhaseHome/ProjPhaseHome'
-import AddApplicantDetails from './AddApplicantDetails'
 
 import { useSnackbar } from 'notistack'
 
@@ -142,6 +87,17 @@ export default function TransactionUpdateSideView({
   const [attach, setAttach] = useState(false)
   const [loader, setLoader] = useState(false)
   const [viewDetails, setViewDetails] = useState(false)
+
+
+
+
+
+  const [rejection, setRejection] = useState(false)
+  const [rejectionReason, setRejectionReason] = useState('')
+  const [fillError, showFillError] = useState(false)
+
+
+
 
   const [projectList, setprojectList] = useState([])
 
@@ -233,12 +189,41 @@ export default function TransactionUpdateSideView({
     const data = transactionData
     data.Uuid = data?.unit_id
     data.status = status
-    console.log('transactionData', transactionData)
-    if(data?.unit_id === 'wallet'){
-      updateWalletTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
-    }else{
-      updateTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
+    console.log('transactionData', transactionData);
+
+console.log('status', status);
+
+    if (status === 'Rejected') {
+      // enqueueSnackbar('Transaction status updated to Rejected', { variant: 'error' });
+
+      if (rejectionReason !== '') {
+        data.rejectionReason = rejectionReason
+        enqueueSnackbar('Transaction status updated to Rejected', { variant: 'error' })
+        if(data?.unit_id === 'wallet'){
+          updateWalletTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
+        } else {
+          updateTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
+        }
+      } else {
+        showFillError(true)
+      }
+    }else if(status === 'received'){
+      if(data?.unit_id === 'wallet'){
+        updateWalletTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
+      } else {
+        updateTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
+      }
     }
+
+
+
+
+
+    // if(data?.unit_id === 'wallet'){
+    //   updateWalletTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
+    // }else{
+    //   updateTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
+    // }
   }
 
   useEffect(() => {
@@ -264,10 +249,21 @@ export default function TransactionUpdateSideView({
                       `}
               >
                 {'In-Review'}
+
+
               </span>
             </div>
           </section>
         </div>
+      </div>
+      <div>
+      {transactionData?.rejectionReason && (
+          <p className="text-md text-[15px] mr-2 ml-4 mt-1">
+
+            <span>Rejected Reason: </span>
+            {transactionData?.rejectionReason}
+          </p>
+        )}
       </div>
       <div className="py-3 px-3 m-4 mt-2 rounded-lg border border-gray-100 h-screen overflow-y-auto overflow-auto no-scrollbar">
         <div className="mt-2  grid grid-cols-2 ">
@@ -337,23 +333,52 @@ export default function TransactionUpdateSideView({
           </section>
         </div>
         <div className="my-2  grid grid-cols-2 mt-4 border-t border-[#e5e7f8]">
+
+        {rejection && (
+          <div className="col-span-2 mt-4 mb-4">
+            <div className="flex justify-center border-2 py-2 px-6 rounded-xl">
+              <input
+                type="text"
+                name="rejectionReason"
+                placeholder="Write Rejection Comments"
+                className="w-full outline-none text-gray-700 text-sm"
+                onChange={(e) => setRejectionReason(e.target.value)}
+              />
+              {fillError && (
+                <div className="error-message text-red-700 text-xs p-1 mx-auto">
+                  Please enter rejection reason
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+
+
+
           <button
-            className="mb-2 md:mb-0 mr-2 hover:scale-110 focus:outline-none              hover:bg-green-100
+            className="mb-2 md:mb-0 mr-2 hover:scale-110 focus:outline-none           hover:bg-green-100
 
 
                                   h-8
                                   border duration-200 ease-in-out
                                   border-green-700 transition
-                                   px-5  text-sm shadow-sm font-medium tracking-wider text-black rounded-sm hover:shadow-lg hover:bg-green-500"
+                                   px-5  text-sm shadow-sm font-medium tracking-wider text-black rounded hover:shadow-lg hover:bg-green-500"
             onClick={() => {
               // setActionMode('unitBookingMode')
-              updateTnxStatus('Failed', transactionData?.id, user)
+              // updateTnxStatus('Failed', transactionData?.id, user)
+
+              setRejection(!rejection)
+              if (rejection && rejectionReason !== '') {
+                updateTnxStatus('Rejected', transactionData?.id)
+              }
 
             }}
             // disabled={loading}
           >
             Reject
           </button>
+          {/* #E06349 */}
           <button
             className="mb-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-green-700
                                   bg-green-700
@@ -361,7 +386,7 @@ export default function TransactionUpdateSideView({
                                   h-8
                                   border duration-200 ease-in-out
                                   border-green-700 transition
-                                   px-5  text-sm shadow-sm font-medium tracking-wider text-white rounded-sm hover:shadow-lg hover:bg-green-500"
+                                   px-5  text-sm shadow-sm font-medium tracking-wider text-white rounded hover:shadow-lg hover:bg-green-500"
             onClick={() => {
               // setActionMode('unitBookingMode')
               // update the transaction details along with the apporver deatils and comments

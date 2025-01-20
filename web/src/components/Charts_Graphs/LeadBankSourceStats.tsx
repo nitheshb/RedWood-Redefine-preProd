@@ -1,14 +1,9 @@
-import { useState, useEffect } from 'react'
-
-import { ChatBubble, Edit, Flag } from '@mui/icons-material'
-import { Box, Card, Divider, Grid, LinearProgress } from '@mui/material'
+import { Box, LinearProgress } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { useAuth } from 'src/context/firebase-auth-context'
 
 const LeadBankSourceStats = ({ userTodayPerfA }) => {
-  // change navbar title
-
   const { t } = useTranslation()
   const { user } = useAuth()
   const { orgId, uid, name } = user
@@ -16,7 +11,6 @@ const LeadBankSourceStats = ({ userTodayPerfA }) => {
   return (
     <section className="bg-white rounded  flex flex-col p-4 w-100 ">
       <h5>{t('Today Stats')}</h5>
-
       <Box mt={2}>
         <div className="flex flex-row align-middle justify-between">
           <h6 className="font-bodyLato font-semibold text-sm">{t('Total')}</h6>

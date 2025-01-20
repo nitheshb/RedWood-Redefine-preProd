@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react'
-
 import { useDispatch } from 'react-redux'
-import { RootStateOrAny, useSelector } from 'react-redux'
-
 import { Link, routes } from '@redwoodjs/router'
-
 import Loader from 'src/components/Loader/Loader'
 import { getLeadsByPhoneNo } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -98,7 +94,7 @@ export const GlobalSearchBar = (props) => {
         <input
           type="text"
           id="globalSearch"
-          placeholder="Search Unit No, Customer name, Phone no, Dues..."
+          placeholder="Search Phone no"
           onChange={searchKeyField}
           autoComplete="off"
           // value={searchKey}
@@ -108,7 +104,7 @@ export const GlobalSearchBar = (props) => {
           <div ref={refContainer}>
             {showLoader ? (
               <div
-                style={{ width: '397px', right: '502px', top: '40px' }}
+                style={{ width: '397px', left: '393px', top: '40px' }}
                 className="z-10 absolute bg-white border border-gray-300 border-solid box-border rounded-r-lg p-2 min-h-[75px]"
               >
                 <div className="flex justify-center">

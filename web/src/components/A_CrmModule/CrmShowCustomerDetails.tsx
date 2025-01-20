@@ -2,25 +2,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect } from 'react'
-
-import { Dialog } from '@headlessui/react'
-import { RadioGroup } from '@headlessui/react'
-import { ArrowCircleDownIcon } from '@heroicons/react/solid'
-import { Box } from '@mui/material'
-import { setHours, setMinutes } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import { Form, Formik, Field } from 'formik'
 import { useSnackbar } from 'notistack'
-import DatePicker from 'react-datepicker'
-import NumberFormat from 'react-number-format'
-import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 import * as Yup from 'yup'
-
-import { Label, InputField, TextAreaField, FieldError } from '@redwoodjs/forms'
-import { useRouterStateSetter } from '@redwoodjs/router/dist/router-context'
-
 import {
   addLead,
   updateLeadCustomerDetailsTo,
@@ -36,16 +22,10 @@ import {
   sendWhatAppTextSms,
 } from 'src/util/axiosWhatAppApi'
 import { prettyDate } from 'src/util/dateConverter'
-import { PhoneNoField } from 'src/util/formFields/phNoField'
-import { PhoneNoField2 } from 'src/util/formFields/phNoField2'
-import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import { TextField } from 'src/util/formFields/TextField'
-import { TextField2 } from 'src/util/formFields/TextField2'
-
-import NoBorderDropDown from '../comps/noBorderDropDown'
 import { useFileUpload } from '../useFileUpload'
+import Profileimg from '../../../public/Profileimg.png'
 
-import Loader from './Loader/Loader'
+
 
 const ShowCustomerDetails = ({
   source,
@@ -601,8 +581,8 @@ const ShowCustomerDetails = ({
           {title}
         </Dialog.Title> */}
         </div>
-        <div className="grid gap-2 grid-cols-2 bg-[#EBECED] pt-2 py-3">
-          <div
+        <div className="grid gap-2 bg-[#E6F3FC] px-3 pt-2 py-3">
+          {/* <div
             className="flex flex-col p-4 mx-2  rounded-md   mt- bg-[#fff] hover:shadow-2xl"
             style={{
               boxShadow: '0 1px 12px #f2f2f2',
@@ -637,7 +617,7 @@ const ShowCustomerDetails = ({
                 </div>
               </div>
             </div>
-            {/* info panel */}
+            
             <div className="flex flex-col mt-4 px-4 py-1 border border-[#E6E7E8]  rounded-md ">
               <section className="flex flex-row justify-between">
                 <span className="font-semibold text-[12px]  py-1 ">
@@ -676,7 +656,226 @@ const ShowCustomerDetails = ({
                 {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}
               </span>
             </div>
+
+
+
+
+
+
+              
+          </div> */}
+
+
+
+
+<div className="max-w-sm 	 bg-white rounded-3xl shadow-lg ">
+      <div className="relative mb-16">
+        <div className="absolute inset-0 bg-blue-100 rounded-t-3xl">
+          <div
+            className="w-full h-full"
+            style={{
+              backgroundImage: `url(${Profileimg})`,
+              backgroundRepeat: 'repeat',
+            }}
+          />
+        </div>
+
+        <div className="absolute top-4 left-4">
+          <span className="bg-red-400 text-white px-3 py-1 rounded-full text-sm">
+            Primary
+          </span>
+        </div>
+
+        {/* <div className="relative top-10 pt-12 flex justify-center">
+          <div className="bg-[#CCEAFF] p-1 rounded-2xl shadow-md">
+            <img
+              // src={imagebox}
+              alt="Profile"
+              className="w-20 h-20 rounded-full object-cover"
+            />
           </div>
+        </div> */}
+
+
+<div className="relative top-10 pt-12 flex justify-center">
+  <div className="bg-[#E5E7EB] p-1 rounded-2xl shadow-md w-20 h-20 flex items-center justify-center">
+    {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
+    leadDetailsObj2?.Name ? (
+      <span className="text-[30px] font-bold text-gray-700">
+        {(
+          leadDetailsObj2?.customerDetailsObj?.customerName1 ||
+          leadDetailsObj2?.Name ||
+          '?'
+        ).charAt(0)}
+      </span>
+    ) : (
+      <img
+        // src={imagebox}
+        alt="Profile"
+        className="w-20 h-20 rounded-full object-cover"
+      />
+    )}
+  </div>
+</div>
+
+      </div>
+
+      <div className="text-center mb-6">
+        <h2 className="text-xl font-semibold">
+        {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
+                    leadDetailsObj2?.Name ||
+                    '?'}
+          
+          </h2>
+      </div>
+
+      <div className="space-y-6 p-4">
+        <h3 className="text-lg font-semibold">Details</h3>
+
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-gray-900">
+             {/* {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
+                    leadDetailsObj2?.Name ||
+                    '?'} */}
+
+
+{leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
+
+                
+                </p> 
+                
+              <p className="text-gray-400 text-sm">S/o</p>
+            </div>
+            <div className="text-right">
+              <p className="text-gray-900">
+              {' '}
+              {prettyDate(leadDetailsObj2?.customerDetailsObj?.dob1 || datee)}
+              </p>
+              <p className="text-gray-400 text-sm">D.O.B</p>
+            </div>
+          </div>
+
+          <hr />
+
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-gray-900">
+              {' '}
+              {leadDetailsObj2?.customerDetailsObj?.marital1?.value}
+
+              </p>
+              <p className="text-gray-400 text-sm">Marital Status</p>
+            </div>
+            <div className="text-right">
+              <p className="text-gray-900">
+              {leadDetailsObj2?.customerDetailsObj?.phoneNo1 ||
+                    leadDetailsObj2?.Mobile ||
+                    '?'}
+              </p>
+              <p className="text-gray-400 text-sm">Phone no</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Documents</h3>
+
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-gray-900">
+              {' '}
+              {leadDetailsObj2?.customerDetailsObj?.panNo1 || '?'}
+                </p> {/* Default PAN card */}
+              <p className="text-gray-400 text-sm">Pan Card</p>
+            </div>
+            <div className="text-right">
+              <p className="text-gray-900">{' '}
+              {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}</p> {/* Default Aadhar card */}
+              <p className="text-gray-400 text-sm">Aadhar Card</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div className="flex justify-end px-4 py-2">
+        <button
+        onClick={() => setShowApplicantEdit(true)}
+        className="p-2 hover:bg-gray-100 rounded-full">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+            />
+          </svg>
+        </button>
+
+
+
+        
+      </div>
+
+
+
+
+
+    </div>
+
+      {/* <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
+        <div className="flex items-center space-x-4 mb-6">
+          <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center">
+            <span className="text-3xl font-bold text-white">T</span>
+          </div>
+          <div>
+            <h1 className="text-xl font-bold">Test_1</h1>
+            <p className="text-gray-500">S/O xyz</p>
+            <p className="text-gray-500">123123123</p>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-6">
+          <div>
+            <p className="text-lg font-semibold">Single</p>
+            <p className="text-gray-500 text-sm">Marital Status</p>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">Jan-01-2024</p>
+            <p className="text-gray-500 text-sm">D.O.B</p>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">xyzxyzxyz</p>
+            <p className="text-gray-500 text-sm">Pan Card</p>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">123123123</p>
+            <p className="text-gray-500 text-sm">Aadhar Card</p>
+          </div>
+        </div>
+      </div> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* 
           <div
             className="flex flex-col p-4 mx-2  rounded-md   mt- bg-[#fff] hover:shadow-2xl"
             style={{
@@ -710,7 +909,7 @@ const ShowCustomerDetails = ({
                 </div>
               </div>
             </div>
-            {/* info panel */}
+          
             <div className="flex flex-col mt-4 px-4 py-1 border border-[#E6E7E8]  rounded-md ">
               <section className="flex flex-row justify-between">
                 <span className="font-semibold text-[12px]  py-1 ">
@@ -751,9 +950,16 @@ const ShowCustomerDetails = ({
                 {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || '?'}
               </span>
             </div>
-          </div>
+          </div> */}
         </div>
+
+
       </div>
+
+
+
+      
+
 
       {/* old form  */}
     </>
