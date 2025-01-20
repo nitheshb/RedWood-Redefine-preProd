@@ -1051,7 +1051,7 @@ useEffect(() => {
   const customTooltipone = ({ payload, label }) => {
     console.log(payload); // Add this line to see if payload is populated correctly
     if (!payload || payload.length === 0) return null;
-  
+
     return (
       <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
         <p className="font-semibold text-gray-800">{label}</p>
@@ -1067,7 +1067,7 @@ useEffect(() => {
       </div>
     );
   };
-  
+
 
 
   // const customTooltipone = ({ payload, label }) => {
@@ -1163,7 +1163,7 @@ function EnhancedTableHead(props) {
 
 
 
-  
+
 
   const displayHeadersFun = (headCell) => {
 
@@ -1216,7 +1216,7 @@ function EnhancedTableHead(props) {
             padding: '10px',
             borderRadius: '2xl',
             borderBottom: '0.2px solid #d3c5f1',
-           
+
 
             paddingLeft: '14px',
             paddingRight: '29px',
@@ -1253,7 +1253,7 @@ function EnhancedTableHead(props) {
                 maxHeight: '10px',
                 lineHeight: '7px',
                 padding: '8px 7px 8px 10px',
-                
+
                 borderBottom: '0.2px solid #d3c5f1',
 
                 display: displayHeadersFun(headCell.id)
@@ -1326,7 +1326,7 @@ function EnhancedTableHead(props) {
                 padding: '6px 1px 6px 10px',
 
 
-                
+
 
                 display: displayHeadersFun(headCell.id)
               }}
@@ -1600,9 +1600,9 @@ const customTooltip = ({ payload, label }) => {
     <p className="text-2xl font-bold mb-2">  {unitsFetchData?.length?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
-      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span>
-      <span className="text-gray-500">157 Units</span>
+      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+      <span>50%</span> */}
+      <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
@@ -1610,8 +1610,8 @@ const customTooltip = ({ payload, label }) => {
     <p className="text-2xl font-bold mb-2">₹ {totalSaleValue?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
-      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span>
+      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+      <span>50%</span> */}
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
@@ -1621,8 +1621,8 @@ const customTooltip = ({ payload, label }) => {
     <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
-      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span>
+      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+      <span>50%</span> */}
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
@@ -1632,8 +1632,8 @@ const customTooltip = ({ payload, label }) => {
     <p className="text-2xl font-bold mb-2">₹ {selTotalBalance?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
       {/* <ArrowDownRight size={20} /> */}
-      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span>
+      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
+      <span>50%</span> */}
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
@@ -1724,7 +1724,7 @@ const customTooltip = ({ payload, label }) => {
               />
 
 
-{/* 
+{/*
 <Tooltip content={<customTooltipone />} /> */}
 
 
@@ -1996,7 +1996,7 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-{/* 
+{/*
 <div className="p-6 mt-6 rounded-t-[30px] bg-white flex justify-between items-center">
           <h3 className="text-xl font-bold">Booking Summary calc</h3>
           <div className="flex gap-4">
@@ -2050,7 +2050,7 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-  
+
 <div className=" px-4 py-2 rounded-t-[30px] bg-white flex justify-between items-center">
           <h3 className="text-xl font-bold">Booking Summary</h3>
           <div className="flex gap-4">

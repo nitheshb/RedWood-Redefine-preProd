@@ -159,7 +159,7 @@ export default function UnitSideViewCRM({
   selCustomerPayload,
   selUnitDetails,
   setSelUnitDetails,
-  
+
   selSubMenu,
   selSubMenu2,
 }) {
@@ -227,7 +227,7 @@ export default function UnitSideViewCRM({
 
 
 
-  
+
 
 
 
@@ -1045,12 +1045,14 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
       customerDetailsObj,
     } = selCustomerPayload
     const customLeadObj = { Name: customerDetailsObj?.customerName1 }
-    data.attchUrl = data?.fileUploader?.url || ''
+    // data.attchUrl = data?.fileUploader?.url || data?.attchUrl || ''
     data.category = 'Payment'
     const y = {}
     y.m = data?.fileUploader
 
     console.log('unit log ', data, y, y.m, y['m']['url'])
+
+
 
     const x = await capturePaymentS(
       orgId,
@@ -1072,7 +1074,7 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
       customerDetailsObj,
     } = selCustomerPayload
     const customLeadObj = { Name: customerDetailsObj?.customerName1 }
-    data.attchUrl = data?.fileUploader?.url || ''
+    data.attchUrl = data?.fileUploader?.url || data?.attchUrl || ''
     data.category = 'Payment'
     const y = {}
     y.m = data?.fileUploader

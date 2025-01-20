@@ -13,7 +13,6 @@ import { useParams } from '@redwoodjs/router'
 import Confetti from 'src/components/shared/confetti'
 import { paymentMode } from 'src/constants/projects'
 import {
-  addPaymentReceivedEntry,
   addPaymentReceivedEntrySup,
   createNewCustomerS,
   getProject,
@@ -30,7 +29,7 @@ import { TextField2 } from 'src/util/formFields/TextField2'
 import PdfReceiptGenerator from 'src/util/PdfReceiptGenerator'
 import RupeeInWords from 'src/util/rupeeWords'
 import Loader from '../Loader/Loader'
-import { validate_capturePayment } from '../Schemas'
+import { validate_capturePayment, validate_captureWalletPayment } from '../Schemas'
 
 
 const CaptureUnitPayment = ({
@@ -51,6 +50,7 @@ const CaptureUnitPayment = ({
   phase,
   stepIndx,
   StatusListA,
+  myBookingPayload,
 }) => {
   const d = new window.Date()
 
@@ -66,6 +66,8 @@ const CaptureUnitPayment = ({
   const [walletCustomers, setWalletCustomers] = useState([])
   const [bankAccounts, setBankAccounts] = useState([])
   const [projectDetails, setProject] = useState({})
+  const [limitError, setLimitError] = useState(false)
+
 
 
 
@@ -125,7 +127,7 @@ const CaptureUnitPayment = ({
   const [payementDetails, setPayementDetails] = useState([])
   const [files, setFiles] = useState([])
 
-  const [commentAttachUrl, setCommentAttachUrl] = useState('')
+  const [commentAttachUrl, setCommentAttachUrl] = useState({})
   const [selWalletCustomer, setSelWalletCustomer] = useState({})
   const [cmntFileType, setCmntFileType] = useState('')
   const [amount, setAmount] = useState(0)
@@ -221,15 +223,18 @@ const CaptureUnitPayment = ({
         const bankA = querySnapshot.docs.map((docSnapshot) => {
           const x = docSnapshot.data()
           x.id = docSnapshot.id
+
           return x
         })
-        bankA.map((user) => {
+      console.log('fetched users list is',selUnitDetails?.custObj1?.customerName1)
+      let x = bankA.filter((u)=> u?.Name === (selUnitDetails?.custObj1?.customerName1 || selUnitDetails?.customerDetailsObj?.customerName1 || selUnitDetails?.secondaryCustomerDetailsObj?.customerName1  ))
+x.map((user) => {
           user.label = user?.Name
           user.value = user?.id
           user.walletAmount = user?.remaining_money
         })
         console.log('fetched users list is', bankA)
-        setWalletCustomers([...bankA])
+        setWalletCustomers([...x])
       },
       { pId: [selUnitDetails?.pId] },
       (error) => setWalletCustomers([])
@@ -237,51 +242,59 @@ const CaptureUnitPayment = ({
 
     return unsubscribe
   }, [])
-  const handleFileUploadFun = async (file, type) => {
-    console.log('am i inside handle FileUpload')
-    if (!file) return
-    try {
-      const uid = uuidv4()
-      const storageRef = ref(storage, `/spark_files/${'taskFiles'}_${uid}`)
-      const uploadTask = uploadBytesResumable(storageRef, file)
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const prog =
-            Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  const handleFileUploadFun = (file, type) => {
+    return new Promise((resolve, reject) => {
+      console.log('am i inside handle FileUpload')
+      if (!file) return reject('No file provided')
 
-          // setProgress(prog)
-          file.isUploading = false
-        },
-        (err) => console.log(err),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            // createAttach(orgId, url, by, file.name, id, attachType)
-            file.url = url
-            // setCmntFileType(file.name.split('.').pop())
-            // setFiles([...files, file])
+      try {
+        const uid = uuidv4()
+        const storageRef = ref(storage, `/spark_files/${'taskFiles'}_${uid}`)
+        const uploadTask = uploadBytesResumable(storageRef, file)
 
-            setCommentAttachUrl(url)
-            return url
-            //  save this doc as a new file in spark_leads_doc
-          })
-        }
-      )
-    } catch (error) {
-      console.log('upload error is ', error)
-    }
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+            // setProgress(prog)
+            file.isUploading = false
+          },
+          (err) => reject(err), // Reject the promise if there's an error during upload
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              file.url = url
+              console.log('url is ', url)
+
+              let x1 = { url: url, fileName: file.name }
+              setCommentAttachUrl(x1)
+
+              // Resolve the promise with the URL once the upload is successful
+              resolve(x1)
+            }).catch((err) => {
+              reject(err) // Reject if getDownloadURL fails
+            })
+          }
+        )
+      } catch (error) {
+        console.log('upload error is ', error)
+        reject(error) // Reject the promise in case of any other errors
+      }
+    })
   }
+
   const onSubmitSupabase = async (data, resetForm) => {
     console.log('inside supabase support', data)
-
-
+   let x =  await handleFileUploadFun(data?.fileUploader, 'panCard1')
+    const z = await commentAttachUrl
+    data.attchUrl = x
     let y = {}
     y = data
 
-    await handleFileUploadFun(data?.fileUploader, 'panCard1')
-    const z = await commentAttachUrl
 
-    setPayementDetails(data)
+   await console.log('data is ',x,commentAttachUrl, data,data?.fileUploader,data?.fileUploader[0],data?.fileUploader.File, data?.fileUploader.url, commentAttachUrl)
+
+   await setPayementDetails(data)
+
 
     await onSubmitFun(y, resetForm)
 
@@ -350,43 +363,7 @@ const CaptureUnitPayment = ({
     // updateLeadStatus(leadDocId, newStatus)
   }
 
-  const onSubmit = async (data, resetForm) => {
-    // get booking details, leadId, unitDetails,
-    //  from existing object send values of
-    //  booking
-    // copy unit data as it is
-    // copy lead data as it is
-    //  unit details
 
-    // 1)Make an entry to finance Table {source: ''}
-    // 2)Create new record in Customer Table
-    // 3)Update unit record with customer record and mark it as booked
-    // 4)update lead status to book
-
-    //   const x = await addDoc(collection(db, 'spark_leads'), data)
-    // await console.log('x value is', x, x.id)
-
-    const { uid } = selUnitDetails
-    // 1)Make an entry to finance Table {source: ''}
-
-    const x1 = await addPaymentReceivedEntry(
-      orgId,
-      uid,
-      { leadId: 'id' },
-      data,
-      'leadsPage',
-      'nitheshreddy.email@gmail.com',
-      enqueueSnackbar
-    )
-
-    // add phaseNo , projName to selUnitDetails
-    // 2)Create('')
-
-    // 3)Update unit record with customer record and mark it as booked
-
-    // 4)update lead status to book
-    // updateLeadStatus(leadDocId, newStatus)
-  }
 
   const datee = new Date().getTime()
   const initialState = {
@@ -450,8 +427,9 @@ const CaptureUnitPayment = ({
                   <Formik
                     enableReinitialize={true}
                     initialValues={initialState}
-                    validationSchema={validate_capturePayment}
+                    validationSchema={paymentModex === 'wallet' ? validate_captureWalletPayment : validate_capturePayment }
                     onSubmit={(values, { resetForm }) => {
+                      console.log(values)
                       setBookingProgress(true)
                       onSubmitSupabase(values, resetForm)
                       console.log(values)
@@ -490,8 +468,11 @@ const CaptureUnitPayment = ({
                                             {/* <h6 className="text-blueGray-400 text-sm mt- ml-6 mb- font-weight-[700]  font-uppercase">
                                               Payment
                                             </h6> */}
-                                            <span className="text-center text-[13px] font-normal">
+                                            <span className="text-right text-[13px] font-normal">
                                               {format(new Date(), 'dd-MMMM-yy')}
+                                            </span>
+                                            <span className="text-right text-[13px] font-normal">
+                                              Unit Balance: {selUnitDetails?.T_balance?.toLocaleString('en-IN')|| myBookingPayload?.T_balance?.toLocaleString('en-IN')}
                                             </span>
                                           </div>
                                         </section>
@@ -842,6 +823,7 @@ const CaptureUnitPayment = ({
                                                         'changed value is ',
                                                         payload
                                                       )
+
                                                       const {
                                                         value,
                                                         id,
@@ -892,7 +874,7 @@ const CaptureUnitPayment = ({
                                                     value={
                                                       formik.values.amount_commas!== null
                                                         ? formatIndianNumber(formik.values.amount_commas)
-                                                        : ''
+                                                        : 0
                                                     }
                                                     onChange={(e) => {
                                                       // setAmount(e.target.value)
@@ -944,6 +926,30 @@ const CaptureUnitPayment = ({
                                                         }
                                                       } else {
 
+                                                        let x =  Number((e.target.value || '').replace(/,/g, ''))
+                                                        console.log(
+                                                          'changed value is ',
+                                                          e.target.value,x )
+                                                        if (
+                                                          x > 0 &&
+                                                          (x <= selUnitDetails?.T_balance || x <= myBookingPayload?.T_balance)
+
+                                                        ){
+                                                        formik.setFieldValue(
+                                                          'amount',
+                                                          Number((e.target.value || '').replace(/,/g, ''))
+                                                        )
+                                                        formik.setFieldValue(
+                                                          'amount_commas',
+                                                          (String(Number(e.target.value.replace(/[^0-9]/g, ''))))
+                                                        )
+                                                        setLimitError(false)
+                                                      }
+                                                      else if(x > 0){
+
+                                                        setLimitError(true)
+
+                                                      }else{
                                                         formik.setFieldValue(
                                                           'amount',
                                                           Number((e.target.value || '').replace(/,/g, ''))
@@ -953,12 +959,13 @@ const CaptureUnitPayment = ({
                                                           (String(Number(e.target.value.replace(/[^0-9]/g, ''))))
                                                         )
                                                       }
+                                                      }
                                                     }}
                                                   />
                                                 </div>
                                               </div>
 
-                                              <div className="text-xs px-3 mb-3">
+                                              <div className="text-xs px-3 ">
                                                 {' '}
                                                 Paying{' '}
                                                 <RupeeInWords
@@ -967,8 +974,12 @@ const CaptureUnitPayment = ({
                                                   }
                                                 />
                                               </div>
+                                             {limitError && <div className="text-xs px-3  text-red-700">
+                                                {' '}
+                                                Amount cannot be greater than Unit Balance {' '}
+                                              </div>}
                                             </section>
-                                            <section className="flex flex-row">
+                                            <section className="flex flex-row mt-3">
                                               <div className="w-full lg:w-10/12 px-3">
                                                 <div className="relative w-full mb-5">
                                                   <TextField2
@@ -1063,10 +1074,7 @@ const CaptureUnitPayment = ({
                                                 'fileUploader',
                                                 e.target.files[0]
                                               )
-                                              // handleFileUploadFun(
-                                              //   e.target.files[0],
-                                              //   'panCard1'
-                                              // )
+
                                             }}
                                           />
                                         </div>

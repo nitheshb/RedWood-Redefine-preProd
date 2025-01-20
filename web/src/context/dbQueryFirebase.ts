@@ -528,7 +528,7 @@ export const updateWalletTransactionStatus = async (
       },
     ])
     console.log('check it ', status, status === 'received',status === 'Failed', totalAmount, data1)
-    if(status === 'Failed'){
+    if(status === 'Rejected'){
     await updateDoc(doc(db, `${orgId}_customers`, custId), {
       input_money: increment(-totalAmount),
 
@@ -594,7 +594,7 @@ export const updateTransactionStatus = async (
       },
     ])
     console.log('check it ', status, status === 'received',status === 'Failed', totalAmount, data1)
-    if(status === 'Failed'){
+    if(status === 'Rejected'){
     await updateDoc(doc(db, `${orgId}_units`, Uuid), {
       T_review: increment(-totalAmount),
       T_balance: increment(totalAmount),
@@ -2546,17 +2546,26 @@ export const addCustomer = async (
   enqueueSnackbar,
   resetForm
 ) => {
-  const did = uuidv4()
-  data.id = did
+  try {
+    const did = uuidv4()
+    data.id = did
+    console.log('error in customer creation')
 
 
-    await setDoc(doc(db, `${orgId}_customers`, did), data)
+      await setDoc(doc(db, `${orgId}_customers`, did), data)
 
-  enqueueSnackbar('Customer Details added successfully', {
-    variant: 'success',
-  })
-  resetForm()
-  return
+    enqueueSnackbar('Customer Details added successfully', {
+      variant: 'success',
+    })
+    resetForm()
+    return
+  } catch (error) {
+    console.log('error in customer creation', error)
+    enqueueSnackbar('Customer Details added successfully', {
+      variant: 'success',
+    })
+  }
+
 }
 
 export const addPlotUnit = async (orgId, data, by, msg) => {
@@ -3671,6 +3680,7 @@ export const addPaymentReceivedEntrySup = async (
     })
     return x.id
   } catch (e) {
+    console.log('error is', e)
     enqueueSnackbar(e.message, {
       variant: 'error',
     })
@@ -3712,14 +3722,23 @@ export const addPaymentReceivedEntry = async (
       unitId: unitDocId,
       created: Timestamp.now().toMillis(),
     }
+    updated.towards =   updated.towards || 'wallet'
+    updated.towards_id = updated.towards_id || 'wallet'
+    console.log('error is', updated)
     // const ref = doc(db, `${orgId}_fincance', unitDocId)
     const x = await addDoc(collection(db, `${orgId}_fincance`), updated)
-
+if(updated.mode === 'wallet'){
+    enqueueSnackbar('Payment captured from wallet..!', {
+      variant: 'success',
+    })
+  }else{
     enqueueSnackbar('Payment Captured..!', {
       variant: 'success',
     })
+  }
     return x.id
   } catch (e) {
+    console.log('error is', e )
     enqueueSnackbar(e.message, {
       variant: 'error',
     })
@@ -4898,6 +4917,17 @@ export const capturePaymentS = async (
   by,
   enqueueSnackbar
 ) => {
+
+  // if mode is from wallet then update the customer wallet cost
+
+  console.log('payment entry is',payload?.fileUploader?.url, payload?.fileUploader.File, payload)
+
+if(payload?.mode === 'wallet'){
+  await updateDoc(doc(db, `${orgId}_customers`, payload?.selCustomerWallet?.id), {
+    remaining_money: increment(-payload?.amount),
+})
+}
+  console.log('paylaod is',payload )
   try {
     const leadDocId = leadDetailsObj2.id
     const { Name } = leadDetailsObj2
@@ -4930,7 +4960,7 @@ console.log('unit log', payload)
         payReason: payload?.payReason,
         totalAmount: amount,
         bank_ref: bank_ref_no,
-        attchUrl: payload?.fileUploader?.url || payload?.attchUrl || '',
+        attchUrl: payload?.attchUrl || payload?.fileUploader?.url || payload?.attchUrl || '',
       },
     ])
     const paymentCB = await addPaymentReceivedEntry(
