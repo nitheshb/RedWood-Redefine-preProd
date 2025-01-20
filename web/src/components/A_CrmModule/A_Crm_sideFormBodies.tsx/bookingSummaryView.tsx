@@ -424,11 +424,18 @@ const BookingSummaryView = ({
       0
     )
 
+    const partETotal = myBookingPayload?.possessionAdditionalCostCS?.reduce(
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+      0
+    )
+
+
+
     setPartBTotal(partBTotal)
     setPartATotal(partATotal)
     setPartCTotal(partCTotal)
     setPartDTotal(partDTotal)
-    setNetTotal(partATotal + partBTotal +partCTotal + partDTotal)
+    setNetTotal(partATotal + partBTotal +partCTotal + partDTotal + partETotal)
     selPhaseObj?.paymentScheduleObj?.map((data) => {
       if (data.stage?.value === 'on_booking') {
         setPlotBookingAdv(data?.percentage)
@@ -846,6 +853,16 @@ const BookingSummaryView = ({
                               <section className="flex flex-row mt-[2px]">
                                 <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
                                   ₹{myBookingPayload?.T_D?.toLocaleString('en-IN')}
+                                </section>
+                              </section>
+                            </section>}
+                            {selPhaseObj?.projectType?.name === 'Villas' &&  <section className="flex flex-row justify-between  mt-2">
+                              <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                              Possession Charges
+                              </h1>
+                              <section className="flex flex-row mt-[2px]">
+                                <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                ₹{myBookingPayload?.T_E?.toLocaleString('en-IN')}
                                 </section>
                               </section>
                             </section>}
@@ -1501,7 +1518,7 @@ const BookingSummaryView = ({
                                         <td className="text-[12px] px-2  text-right text-gray-400 "></td>
                                         <th className="text-[12px] px-2  text-right text-gray-800 ">
                                           ₹  {(
-                                        (partCTotal || 0) + (partDTotal || 0)
+                                        (partCTotal || 0) + (partDTotal || 0) + (myBookingPayload?.T_E || 0)
                                       )?.toLocaleString('en-IN')}
                                         </th>
                                       </tr>

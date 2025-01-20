@@ -27,6 +27,7 @@ import {
   CartesianGrid,
 } from 'recharts';
 import { Calendar, ChevronRight, TrendingUp } from 'lucide-react';
+import CRMCollectionReportKPI from './collectionReportKPI'
 
 
 
@@ -87,25 +88,25 @@ const styles = {
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
-    const time = payload[0].payload.time; 
+    const time = payload[0].payload.time;
 
     return (
       <div className="bg-white p-3 rounded-md">
         <p className="text-black">Time: {time}</p>
 
         {payload.map((entry, index) => {
-          const { value, prevValue } = entry.payload; 
-          const strokeColor = entry.stroke; 
+          const { value, prevValue } = entry.payload;
+          const strokeColor = entry.stroke;
 
-      
+
           return (
             <div key={index} className="flex items-center gap-2">
-            
+
               <div
                 style={{ backgroundColor: strokeColor }}
                 className="w-4 h-4 "
               ></div>
-          
+
               <p className="text-black">
                 {entry.dataKey === "value"
                   ? `Current Value: ${value}`
@@ -122,7 +123,7 @@ const CustomTooltip = ({ active, payload }) => {
 
   return null;
 };
- 
+
 
 
 const timeSeriesData = [
@@ -379,7 +380,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
 
 
 
-  
+
 
 
   return (
@@ -396,57 +397,14 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
 
 
 
-<div className='max-w-7xl mx-auto mt-6'>
-<div className="grid grid-cols-4 gap-6 mb-8">
-  <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
-    <h3 className="text-gray-600 mb-2">Sold Units</h3>
-    <p className="text-2xl font-bold mb-2">{unitsFetchData?.length?.toLocaleString('en-IN')}</p>
-    <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span>
-      <span className="text-gray-500">157 Units</span>
-    </div>
-  </div>
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
-    <h3 className="text-gray-600 mb-2">Sales</h3>
-    <p className="text-2xl font-bold mb-2">₹ </p>
-    <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span>
-      <span className="text-gray-500"> Units</span>
-    </div>
-  </div>
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
-    <h3 className="text-gray-600 mb-2">Balance</h3>
-    <p className="text-2xl font-bold mb-2">₹ </p>
-    <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span>
-      <span className="text-gray-500"> Units</span>
-    </div>
-  </div>
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
-    <h3 className="text-gray-600 mb-2">Recieved</h3>
-    <p className="text-2xl font-bold mb-2">₹</p>
-    <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span>
-      <span className="text-gray-500">Units</span>
-    </div>
-  </div>
-</div>
-</div>
+<CRMCollectionReportKPI projects={projects}  />
 
 
 
 
 <div className='max-w-7xl mx-auto mt-6'>
 <div className="grid grid-cols-2 gap-6 h-full items-end">
-      
+
       <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
         <div className="pt-6 px-4">
           <h2 className="text-[#000000] text-[19px] ml-4">Total Collected</h2>
@@ -473,7 +431,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
 
 
 
-    
+
     <div className="flex ml-7 gap-4 mb-6 flex-row">
 
 
@@ -520,7 +478,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
               />
 
 
-         
+
               {/* <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} /> */}
 
 
@@ -547,7 +505,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
         </div>
       </div>
 
-    
+
       <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
 
       <div className="w-full max-w-3xl mx-auto p-8  ">
@@ -587,11 +545,18 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
       {/* Project Breakdown */}
       <div className="mb-12">
         <h3 className="text-xl font-normal mb-6">Project-wise Breakdown</h3>
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <span className="text-gray-500">Project 1</span>
-            <span className="text-gray-500">₹ 123.45</span>
-          </div>
+        <div className="space-y-4 max-h-[150px] overflow-y-auto">
+        {sortedData?.map((data, index) => {
+          return( <div className="flex justify-between items-center" key={index}>
+            <span className="text-gray-500">                      {capitalizeFirstLetter(data?.projectName)}</span>
+            <span className="text-gray-500">₹    {data?.months
+                        ?.reduce((accumulator, currentValue) => {
+                          return accumulator + (currentValue?.receive || 0)
+                        }, 0)
+                        ?.toLocaleString('en-IN')}</span>
+          </div>)
+        })}
+
           <div className="flex justify-between items-center">
             <span className="text-gray-500">Project 2</span>
             <span className="text-gray-500">₹ 0.0</span>
@@ -607,18 +572,27 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
       <div>
         <h3 className="text-xl font-normal mb-6">Employee-wise Breakdown</h3>
         <div className="space-y-4">
+        <div className="space-y-4 max-h-[150px] overflow-y-auto">
+        {sortedData?.map((data, index) => {
+          return( <div className="flex justify-between items-center" key={index}>
+            <span className="text-gray-500">                      {capitalizeFirstLetter(data?.projectName)}</span>
+            <span className="text-gray-500">₹    {data?.months
+                        ?.reduce((accumulator, currentValue) => {
+                          return accumulator + (currentValue?.receive || 0)
+                        }, 0)
+                        ?.toLocaleString('en-IN')}</span>
+          </div>)
+        })}
+
           <div className="flex justify-between items-center">
-            <span className="text-gray-500">Person 1</span>
-            <span className="text-gray-500">₹ 200.45</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-gray-500">Person 2</span>
+            <span className="text-gray-500">Project 2</span>
             <span className="text-gray-500">₹ 0.0</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-gray-500">Person 3</span>
+            <span className="text-gray-500">Project 3</span>
             <span className="text-gray-500">₹ 214.84</span>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -676,7 +650,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
           })}
         </div>
         {selCat === 'project_collections' && (
-                  <section className=" w-full max-w-7xl mx-auto mt-6"> 
+                  <section className=" w-full max-w-7xl mx-auto mt-6">
           <table className="rounded-[30px] w-full max-w-7xl mx-auto  my-3 overflow-hidden ">
             <thead className="">
               <tr
@@ -870,7 +844,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
 
 
 
-      
+
     </div>
   )
 }
