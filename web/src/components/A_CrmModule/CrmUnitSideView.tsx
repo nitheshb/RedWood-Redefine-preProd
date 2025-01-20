@@ -1584,8 +1584,7 @@ onClickCapture={() => {
     </div>
     <div className="text-center">
       <div className="text-[12px] text-gray-500">Balance</div>
-      <div className="font-bold text-[14px]">₹ {(selCustomerPayload?.T_elgible_balance || 0)
-                                            ?.toLocaleString('en-IN')}</div>
+      <div className="font-bold text-[14px]">₹ {selCustomerPayload?.T_elgible_balance <0 ? 0: selCustomerPayload?.T_elgible_balance?.toLocaleString('en-IN')}</div>
     </div>
     </section>
   </div>
