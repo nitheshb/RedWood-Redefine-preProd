@@ -145,50 +145,40 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
   return (
     <>
 
-    <div>
-
-      <PdfSummaryGenerator
-          user={user}
-          selUnitDetails={selUnitDetails}
-          streamUnitDetails={streamUnitDetails}
-          myBookingPayload={myBookingPayload}
-          myObj={newPlotCostSheetA}
-          selCustomerPayload={selCustomerPayload}
-          newPlotPS={newPlotPS}
-          myAdditionalCharges={newAdditonalChargesObj}
-          unitTransactionsA={unitTransactionsA}
-          netTotal={netTotal}
-          totalIs={totalIs}
-          customerDetails={customerDetails}
 
 
 
-          PSa={PSa}
-          setNetTotal={setNetTotal}
-          partATotal={partATotal}
-          partBTotal={partBTotal}
-          // setPartATotal={setPartATotal}
-          // setPartBTotal={setPartBTotal}
-          projectDetails={projectDetails}
-          leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined} 
-          // user={user}
-          // selUnitDetails={selUnitDetails}
-          // myObj={newPlotCostSheetA}
-          // newPlotPS={newPlotPS}
-          // netTotal={unitTotal}
-          // setNetTotal={setUnitTotal}
-          // partATotal={partATotal}
-
-          // partBTotal={0}
-          // setPartATotal={partATotal}
-          // projectDetails={{}} myAdditionalCharges={undefined} setPartBTotal={undefined} leadDetailsObj1={undefined} customerDetails={undefined}
-          />
-    </div>
 
 
-    <div>
 
-<PdfUniteSummary
+
+
+
+ 
+
+
+
+
+
+      <div className="mt-2  ">
+        <section className="mr- flex flex-row  ">
+          <div className="w-full">
+            <div className="border border-[#e5e7f8] bg-[#fff]  rounded-md mt-[4px]">
+              <div className="flex flex-row px-3 justify-between items-center">
+
+
+                <div className='flex items-center'>
+                <img
+                  src="https://static.ambitionbox.com/static/benefits/WFH.svg"
+                  alt=""
+                />
+                <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
+                  Cost Sheet
+                </h1>
+                </div>
+                <div>
+
+<PdfSummaryGenerator
     user={user}
     selUnitDetails={selUnitDetails}
     streamUnitDetails={streamUnitDetails}
@@ -201,9 +191,9 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
     netTotal={netTotal}
     totalIs={totalIs}
     customerDetails={customerDetails}
-    
-    
-    
+
+
+
     PSa={PSa}
     setNetTotal={setNetTotal}
     partATotal={partATotal}
@@ -229,25 +219,6 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
 
 
 
-
- 
-
-
-
-
-
-      <div className="mt-2  ">
-        <section className="mr- flex flex-row  ">
-          <div className="w-full">
-            <div className="border border-[#e5e7f8] bg-[#fff]  rounded-md mt-[4px]">
-              <div className="flex flex-row  px-3">
-                <img
-                  src="https://static.ambitionbox.com/static/benefits/WFH.svg"
-                  alt=""
-                />
-                <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
-                  Cost Sheet
-                </h1>
               </div>
               <div className="grid  grid-row-2  gap-x-2  px-3 ">
                 <div className=" p-[4px]">
@@ -645,24 +616,29 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
                     </table>
                   )} */}
                                 {selCustomerPayload?.addOnCS?.length > 0 && (
-                    <table className="w-full">
+
+                                  <>
+
+
+
+{/* <table className="w-full">
                       <thead>
                       {' '}
                       <tr className=" h-6  border-b-[0.2px] text-[#3D3D3D] bg-[#EDEDED] border-gray-300 h-[32px] px-2">
-                        <th className="w-[35%] text-[10px] text-left text-gray-700  uppercase px-2 ">
-                          Particulars
+                        <th className="w-[35%]  text-[12px]  text-[#3D3D3D] bg-[#EDEDED] ">
+                        New Demand
                         </th>
-                        <th className="w-[15%] text-[10px] text-right text-gray-700  uppercase ">
-                          Timeline
+                        <th className="w-[15%]   text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]    ">
+                          Amount
                         </th>
-                        <th className="w-[15%] text-[10px] text-right text-gray-700   uppercase ">
-                          Rate
+                        <th className="w-[15%]   text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]    ">
+                        Total Inc GST
                         </th>
-                        <th className="w-[15%] text-[10px] text-right text-gray-700   uppercase">
-                          Total Inc GST
+                        <th className="w-[15%]   text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  ">
+                        Comment
                         </th>
-                        <th className="w-[15%] text-[10px] text-right text-gray-700   uppercase px-2">
-                          Download
+                        <th className="w-[15%]   text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]   px-2">
+                        
                         </th>
                       </tr>
                     </thead>
@@ -678,9 +654,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
                             <td className="text-[12px] w-[15%] text-right text-gray-700 px-2 bg-[#fff]">
                               ₹{Number(d1?.charges)?.toLocaleString('en-IN')}
                             </td>
-                            <td className="text-[12px] w-[15%] text-right text-gray-700 bg-[#fff] ">
-                              {d1?.description}
-                            </td>
+
 
                             <td className="text-[12px] w-[15%] text-right text-gray-700 font-bold bg-[#fff] px-2">
                               ₹{' '}
@@ -692,6 +666,11 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
                                     ?.replace(',', '')
                                 )
                               )?.toLocaleString('en-IN')}
+                            </td>
+
+
+                            <td className="text-[12px] w-[15%] text-right text-gray-700 bg-[#fff] ">
+                              {d1?.description}
                             </td>
 
                             <td className="text-[12px] w-[15%] text-right text-gray-700 font-bold bg-[#fff]">
@@ -716,7 +695,108 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
                           </td>
                         </tr>
                       </tbody>
-                    </table>
+                    </table> */}
+
+
+
+
+<table className="w-full mt-2">
+                  <thead>
+                        <tr className=" h-8 border-b-[0.2px]  w-[100%]">
+                          <th className="min-w-[35%] text-[12px] text-left text-[#3D3D3D] bg-[#EDEDED]   rounded-tl-[10px]  tracking-wide  px-2">
+                          New Demand
+                          </th>
+                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  tracking-wide">
+                          Amount
+                          </th>
+                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  tracking-wide ">
+                          Total Inc GST	
+                          </th>
+                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]   tracking-wide px-2">
+                          Comment	
+                          </th>
+                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  rounded-tr-[10px]   tracking-wide px-2 ">
+                            
+                          </th>
+                        </tr>
+                      </thead>
+                    <tbody>
+                      {/* {selCustomerPayload?.addChargesCS?.map((d1, inx) => ( */}
+                      {selCustomerPayload?.addOnCS?.map((d1, inx) => (
+
+                        <tr
+                          key={inx}
+                          className="border-b-[0.05px] border-gray-300 border-t-0 h-[32px]"
+                        >
+                          <th className=" text-[12px] w-[40%] text-left text-[#6A6A6A] px-2 bg-[#fff]">
+                          {d1?.component?.label}
+                          </th>
+                          <td className="text-[12px] w-[15%] text-right text-[#6A6A6A] px-2 bg-[#fff]">
+                          ₹{Number(d1?.charges)?.toLocaleString('en-IN')}                             
+                         </td>
+
+                          <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#fff] ">
+                          ₹{' '}
+                              {Number(
+                                computeTotal(
+                                  d1,
+                                  selCustomerPayload?.area
+                                    ?.toString()
+                                    ?.replace(',', '')
+                                )
+                              )?.toLocaleString('en-IN')}
+                          </td>
+                          <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] px-2 bg-[#fff]">
+                          {d1?.description}
+                          </td>
+
+                          <td className="text-[12px] w-[15%] text-right text-[#6A6A6A] bg-[#fff] px-2">
+                            
+                            {/* {Number(
+                              computeTotal(
+                                d1,
+                                selCustomerPayload?.area
+                                  ?.toString()
+                                  ?.replace(',', '')
+                              )
+                            )?.toLocaleString('en-IN')} */}
+                            {/* {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')} */}
+                            <Download className="text-center ml-16 w-[13px] h-6 " />
+                          </td>
+                        </tr>
+                      ))}
+                      <tr className="border-b-[0.05px] border-gray-300 h-[32px]  ">
+                        <th className="w-[40%] text-[10px] text-left text-gray-800 "></th>
+                        <td className="w-[15%] font-bold text-[10px] text-right text-gray-800  "></td>
+                        <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800   "></td>
+                        <td className="w-[15%] font-semibold text-[#6A6A6A] text-[12px] text-right  pr-2  ">
+                          {' '}
+                          Total (C) :
+                        </td>
+                        <td className="text-[12px] text-right font-semibold text-[#6A6A6A]  px-2">
+                        ₹{addOnTotal?.toLocaleString('en-IN')}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                                  </>
+         
+
+
+
+
+                  
+
+
+
+
+
+
+
+
+
+
+
                   )}
                 </div>
               </div>

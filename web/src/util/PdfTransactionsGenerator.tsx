@@ -718,7 +718,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Customer ID:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.address1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>NA</Text>
   </View>
 
 
@@ -1205,15 +1205,13 @@ const PdfTransactionsGenerator = ({
             <button>Loading document...</button>
           ) : (
             <span
-              className="mb-4 md:mb-0 underline hover:scale-110 focus:outline-none bg-white px-1 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider rounded-sm hover:shadow-lg hover:bg-gray-100         hover:bg-teal-200
-
-            text-blue-700
+              className="px-1 py-1 pb-[5px] text-sm  font-bold
 
              duration-200 ease-in-out
              transition"
             >
           <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
-          Download Transactions
+          Transactions
             </span>
           )
         }

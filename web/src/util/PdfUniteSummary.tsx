@@ -748,7 +748,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Customer ID:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.address1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>NA</Text>
   </View>
 
 
@@ -906,6 +906,8 @@ const MyDocument = ({
         ? 'Plot'
         : projectDetails?.projectType?.name === 'Villas'
         ? 'Villa'
+          : projectDetails?.projectType?.name === 'WeekendVillas'
+          ? 'WeekendVillas'
         : ''}
     </Text>
   </View>
@@ -1502,7 +1504,7 @@ const MyDocument = ({
 
 
 
-          {projectDetails?.projectType?.name === 'Villas' &&
+          {/* {projectDetails?.projectType?.name === 'WeekendVillas' && */}
           <View style={[styles.fitter]}>
             <View style={[{ borderRadius: 8 }]}>
               <View
@@ -1567,7 +1569,7 @@ const MyDocument = ({
                 </View>
               </View>
               <View>
-                {myBookingPayload?.constructCS?.map((item, index) => (
+                {selCustomerPayload?.constructCS?.map((item, index) => (
                   <View
                     style={[
                       styles.tableRow,
@@ -1649,7 +1651,9 @@ const MyDocument = ({
               </View>
             </View>
 
-          </View>}
+          </View>
+          
+      
           {/* part -4 */}
 
 
@@ -2566,7 +2570,7 @@ const PdfUniteSummary = ({
           />
         }
         // fileName="sample.pdf"
-        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payments_Summary.pdf`}
+        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Unite_Summary.pdf`}
 
       >
         {({ blob, url, loading, error }) =>
@@ -2574,15 +2578,13 @@ const PdfUniteSummary = ({
             <button>Loading document...</button>
           ) : (
             <span
-              className="mb-4 md:mb-0 underline hover:scale-110 focus:outline-none bg-white px-1 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider rounded-sm hover:shadow-lg hover:bg-gray-100         hover:bg-teal-200
-
-            text-blue-700
+              className="px-1 py-1 pb-[5px] text-sm  font-bold  
 
              duration-200 ease-in-out
              transition"
             >
           <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
-          Download Unite Summary
+          Unite Summary
             </span>
           )
         }
