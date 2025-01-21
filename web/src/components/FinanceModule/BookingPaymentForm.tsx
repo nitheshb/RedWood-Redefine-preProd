@@ -102,15 +102,15 @@ const AddPaymentDetailsForm = ({
     const { Status } = leadDetailsObj2
 
 
-
+console.log('customer details are', customerInfo, selUnitDetails)
     //
-    const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
+    const { custObj1, custObj2 } = selUnitDetails
 
-    if (customerDetailsObj) {
+    if (custObj1) {
       const customerD = {
         Name:
           leadDetailsObj2?.Name ||
-          customerInfo?.customerDetailsObj?.customerName1,
+          custObj1?.customerName1,
         my_assets: [selUnitDetails?.uid],
         T: Timestamp.now().toMillis(),
         Luid: leadDetailsObj2.id || '',
@@ -123,12 +123,12 @@ const AddPaymentDetailsForm = ({
       }
       addCustomer(orgId, customerD, email, () => ({}), () => ({}))
     }
-    if (secondaryCustomerDetailsObj) {
+    if (custObj2) {
       const customerD = {
-        Name: customerInfo?.secondaryCustomerDetailsObj?.customerName1,
+        Name: custObj2?.customerName1,
         my_assets: [selUnitDetails?.uid],
         T: Timestamp.now().toMillis(),
-        Luid: secondaryCustomerDetailsObj.Luid || '',
+        Luid: custObj2.Luid || '',
         added_by: email,
         projects: [projectDetails?.uid],
         input_money: 0,
@@ -283,8 +283,7 @@ const AddPaymentDetailsForm = ({
     T_elgible_balance = T_elgible - T_review
     console.log('newPlotPS', newPlotPS, newConstructPS, fullPs, T_elgible)
 
-    const customerfbA = await createNewCustoreSupa(data, resetForm)
-
+    const customerfbA = await createNewCustoreSupa(data)
     fullPs?.map((dataObj, i) => {
       dataObj.order = i
       updatePS(dataObj, resetForm)
@@ -687,6 +686,7 @@ const AddPaymentDetailsForm = ({
               bookCurentStep={bookCurentStep}
               selUnitDetails={selUnitDetails}
               projectDetails={projectDetails}
+              myBookingPayload={myBookingPayload}
               leadDetailsObj2={leadDetailsObj2}
               onSubmitFun={onSubmitFun}
               stepIndx={stepIndx}

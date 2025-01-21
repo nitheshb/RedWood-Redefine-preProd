@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react'
 import { getProjectByUid } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
+import { downloadImage } from 'src/util/imageDownlaod'
 import PdfTransactionsGenerator from 'src/util/PdfTransactionsGenerator'
 
 const CrmUnitFinanceHistory = ({
   selCustomerPayload,
   assets,
   totalIs,
-  
+
   unitTransactionsA,
 }) => {
   const { user } = useAuth()
@@ -151,8 +152,18 @@ const CrmUnitFinanceHistory = ({
                         {d1?.Reviewer || "NA"}
                       </td>
 
-                      <td className="text-[12px] text-center text-gray-800 flex justify-center items-center">
-  <Download className="text-center w-[13px] h-6 mt-[8px]" />
+                      <td className={` text-[12px] text-center flex justify-center items-center`}>
+                      <button
+          color="gray"
+          className="border-0 block rounded ml-2"
+          onClick={() => { downloadImage(
+            JSON.parse(d1?.attchUrl)?.url,
+            `${JSON.parse(d1?.attchUrl)?.fileName}`
+          )}}
+        >
+  <Download className={`text-center w-[13px] h-6 mt-[8px]  ${d1?.attchUrl.length>1 ? 'text-gray-800 ' : 'text-gray-400 ' }`} />
+  </button>
+
 </td>
 
                     </tr>

@@ -127,11 +127,23 @@ const CostBreakUpPdf = ({
       const charges = 0
       const dataNewObj = { ...data4 }
       const x = data4?.units?.value
-      if (x === 'price_per_sft') {
-        // charges = Number(data?.garden_area_cost)
-        total = Number(data4?.charges) * Number(selUnitDetails?.construct_area)
-        gstTotal = Math.round(total * (Number(data4?.gst?.value) * 0.01))
-      }
+      const isChargedPerSqft = [
+        'costpersqft',
+        'cost_per_sqft',
+        'price_per_sft',
+      ].includes(x)
+
+      const gstPercent =
+      Number(data4?.gst?.value) > 1
+        ? Number(data4?.gst?.value) * 0.01
+        : Number(data4?.gst?.value)
+      total = isChargedPerSqft
+      ? Number(
+          selUnitDetails?.super_built_up_area ||
+            selUnitDetails?.area?.toString()?.replace(',', '')
+        ) * Number(data4?.charges)
+      : Number(data4?.charges)
+      gstTotal = Math.round(total * gstPercent)
       dataNewObj.TotalSaleValue = total
       dataNewObj.gstValue = gstTotal
       dataNewObj.TotalNetSaleValueGsT = total + gstTotal
@@ -505,7 +517,7 @@ const CostBreakUpPdf = ({
 
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
     const flatCost = Number(partATotal + partBTotal)
-    const constCost = Number((partCTotal || 0) + (partDTotal || 0))
+    const constCost = Number((partCTotal || 0) + (partDTotal || 0) + (partETotal || 0))
     console.log('flat fixed values ', psPayload)
     const flatFixedCosts = psPayload?.reduce(
       (acc, item) =>
@@ -560,7 +572,7 @@ const CostBreakUpPdf = ({
     })
     console.log('sel unti id => ', newPs, psPayload)
     setConstructPSPayload(newPs1)
-    const netValue = partATotal + partBTotal + partCTotal + partDTotal
+    const netValue = partATotal + partBTotal + partCTotal + partDTotal + partETotal
 
     const currentBookingPayload = {
       T_total: netValue,
@@ -639,7 +651,7 @@ const CostBreakUpPdf = ({
       (partATotal || 0) +
         (partBTotal || 0) +
         (partCTotal || 0) +
-        (partDTotal || 0)
+        (partDTotal || 0) +  (partETotal || 0)
     )
     selPhaseObj?.paymentScheduleObj?.map((data) => {
       if (data.stage?.value === 'on_booking') {
@@ -1031,7 +1043,7 @@ const CostBreakUpPdf = ({
                                 <thead>
                                   <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
                                     <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide ">
-                                      Additinal Charges
+                                      Additional Charges
                                     </th>
                                     <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
                                       Rate/Sqft
@@ -1327,7 +1339,7 @@ const CostBreakUpPdf = ({
                                     <thead>
                                       <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
                                         <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide ">
-                                          Construction Additonal Charges
+                                          Construction Additional Charges
                                         </th>
                                         <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
                                           Rate/Sqft
@@ -1442,203 +1454,8 @@ const CostBreakUpPdf = ({
                                     </tbody>
                                   </table>
                                 </div>
-                              </section>
-                            )}
-                          </section>
-                          <div className=" border rounded-lg shadow-md overflow-hidden mt-4">
-                            <table className="w-full">
-                              {/* <thead>
-                            {' '}
-                            <tr className=" h-6  border-b-[0.2px] border-gray-300">
-                              <th className="w-[50%] text-[12px] text-left  text-[#8993a4] tracking-wide uppercase ">
-                                Particulars
-                              </th>
-                              <th className="w-[35%] text-[12px] text-left  text-[#8993a4] tracking-wide uppercase ">
-                                Timeline
-                              </th>
-                              <th className="w-[15%] text-[12px] text-right   text-[#8993a4] tracking-wide uppercase">
-                                Total Inc GST
-                              </th>
-                            </tr>
-                          </thead> */}
-                              {/* partc  */}
-                              {/* <thead>
-                                <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
-                                  <th className="min-w-[35%] px-2  text-[10px] text-left font-bold tracking-wide uppercase">
-                                    Particulars
-                                  </th>
-                                  <th className="w-[15%] px-2 text-[10px] text-left font-bold text-right  tracking-wide uppercase ">
-                                    Rate/Sqft
-                                  </th>
-                                  <th
-                                    className={`${
-                                      !showGstCol ? 'hidden' : ''
-                                    } w-[15%] px-2 text-[10px] text-left font-bold text-right  tracking-wide uppercase `}
-                                  >
-                                    Cost
-                                  </th>
-                                  <th
-                                    className={`${
-                                      !showGstCol ? 'hidden' : ''
-                                    }  w-[15%] px-2 text-[10px] text-left font-bold text-right  tracking-wide uppercase `}
-                                  >
-                                    GST
-                                  </th>
-                                  <th className="w-[15%] px-2 text-[10px] text-left font-bold text-right  tracking-wide uppercase ">
-                                    Total
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {partCPayload?.map((d1, inx) => (
-                                  <tr
-                                    key={inx}
-                                    className="h-[32px] border-b border-dashed"
-                                  >
-                                    <th className=" text-[12px] px-2 text-left  font-normal ">
-                                      {d1?.component?.label}
-                                    </th>
-                                    <td className="w-[15%]  px-2 text-[12px] text-right   ">
-                                      {Number(d1?.charges)?.toLocaleString(
-                                        'en-IN'
-                                      )}
-                                    </td>
-                                    <td
-                                      className={`${
-                                        !showGstCol ? 'hidden' : ''
-                                      } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
-                                    >
-                                      ₹
-                                      {d1?.TotalSaleValue?.toLocaleString(
-                                        'en-IN'
-                                      )}
-                                    </td>
-                                    <td
-                                      className={`${
-                                        !showGstCol ? 'hidden' : ''
-                                      } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
-                                    >
-                                      ₹{d1?.gstValue?.toLocaleString('en-IN')}
-                                    </td>
-                                    <td className="text-[12px] px-2 text-right   ">
-                                      ₹
-                                      {Number(
-                                        computeTotal(
-                                          d1,
-                                          selUnitDetails?.area
-                                            ?.toString()
-                                            ?.replace(',', '')
-                                        )
-                                      )?.toLocaleString('en-IN')}
-                                    </td>
-                                  </tr>
-                                ))}
-                                <tr className=" h-[32px] ">
-                                  <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
-                                    Total (C)
-                                  </th>
-                                  <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
-                                  <td
-                                    className={`${
-                                      !showGstCol ? 'hidden' : ''
-                                    } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
-                                  >
-                                    ₹
-                                    {partCPayload
-                                      ?.reduce(
-                                        (partialSum, obj) =>
-                                          partialSum + Number(obj?.charges),
-                                        0
-                                      )
-                                      ?.toLocaleString('en-IN')}
-                                  </td>
-                                  <td
-                                    className={`${
-                                      !showGstCol ? 'hidden' : ''
-                                    } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
-                                  >
-                                    ₹
-                                    {partCPayload
-                                      ?.reduce(
-                                        (partialSum, obj) =>
-                                          partialSum + Number(obj?.gstValue),
-                                        0
-                                      )
-                                      ?.toLocaleString('en-IN')}
-                                  </td>
-                                  <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
-                                    ₹{partCTotal?.toLocaleString('en-IN')}
-                                  </td>
-                                </tr>
-                              </tbody> */}
-                            </table>
-                          </div>
 
-                          <div>
-                            <section className="flex flex-row justify-between mb-8">
-                              <div></div>
-
-                              <div className="border rounded-lg shadow-lg  mt-4">
-                                <section className="flex flex-row justify-between mt-2   ">
-                                  <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                    Part(A)
-                                  </h1>
-                                  <section className="flex flex-row">
-                                    <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                      ₹{partATotal?.toLocaleString('en-IN')}
-                                    </section>
-                                  </section>
-                                </section>
-                                <section className="flex flex-row justify-between  mt-2">
-                                  <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                    Part(B)
-                                  </h1>
-                                  <section className="flex flex-row">
-                                    <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                      ₹{partBTotal?.toLocaleString('en-IN')}
-                                    </section>
-                                  </section>
-                                </section>
-                                {selPhaseObj?.projectType?.name ===
-                                  'Villas' && (
-                                  <>
-                                    <section className="flex flex-row justify-between  mt-2">
-                                      <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                        Part(C)
-                                      </h1>
-                                      <section className="flex flex-row">
-                                        <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                          ₹{partCTotal?.toLocaleString('en-IN')}
-                                        </section>
-                                      </section>
-                                    </section>
-                                    <section className="flex flex-row justify-between  mt-2">
-                                      <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                        Part(D)
-                                      </h1>
-                                      <section className="flex flex-row">
-                                        <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
-                                          ₹{partDTotal?.toLocaleString('en-IN')}
-                                        </section>
-                                      </section>
-                                    </section>
-                                  </>
-                                )}
-                                <section className="flex flex-row justify-between rounded-b-lg  bg-[#E8E6FE]  mt-2 py-2   ">
-                                  <h1 className="px-3 text-[12px] text-left  text-[12px] font-semibold pr-8 ">
-                                    Total Cost
-                                  </h1>
-                                  <section className="flex flex-row mt-2">
-                                    <section className="px-2 d-md font-bold text-[12px] text-[#0D027D] leading-none">
-                                      ₹{netTotal?.toLocaleString('en-IN')}
-                                    </section>
-                                  </section>
-                                </section>
-                              </div>
-                            </section>
-                          </div>
-
-                          <div className=" border-y-1 overflow-hidden mt-4 mb-10">
+                                <div className=" border-y-1 overflow-hidden mt-4">
                             <table className="w-full">
                               <thead>
                                 <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
@@ -1749,6 +1566,90 @@ const CostBreakUpPdf = ({
                               </tbody>
                             </table>
                           </div>
+                              </section>
+                            )}
+                          </section>
+
+                          <div className='mt-5'>
+                            <section className="flex flex-row justify-between mb-8 mt-4">
+                              <div></div>
+
+                              <div className="border rounded-lg shadow-lg  mt-4">
+                                <section className="flex flex-row justify-between mt-2   ">
+                                  <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                  {selPhaseObj?.projectType?.name ===
+                                      'Apartment'
+                                        ? 'Flat'
+                                        : 'Plot'}{' '}
+                                      Charges
+                                  </h1>
+                                  <section className="flex flex-row mt-1">
+                                    <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                      ₹{partATotal?.toLocaleString('en-IN')}
+                                    </section>
+                                  </section>
+                                </section>
+                                <section className="flex flex-row justify-between  mt-2">
+                                  <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                    Additional Charges
+                                  </h1>
+                                  <section className="flex flex-row mt-1">
+                                    <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                      ₹{partBTotal?.toLocaleString('en-IN')}
+                                    </section>
+                                  </section>
+                                </section>
+                                {selPhaseObj?.projectType?.name ===
+                                  'Villas' && (
+                                  <>
+                                    <section className="flex flex-row justify-between  mt-2">
+                                      <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                        Construction Charges
+                                      </h1>
+                                      <section className="flex flex-row mt-1">
+                                        <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                          ₹{partCTotal?.toLocaleString('en-IN')}
+                                        </section>
+                                      </section>
+                                    </section>
+                                    <section className="flex flex-row justify-between  mt-2">
+                                      <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal mr-9 ">
+                                      Construction Additional Charges
+                                      </h1>
+                                      <section className="flex flex-row mt-1">
+                                        <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                          ₹{partDTotal?.toLocaleString('en-IN')}
+                                        </section>
+                                      </section>
+                                    </section>
+                                    <section className="flex flex-row justify-between  mt-2">
+                                      <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
+                                        Possession Charges
+                                      </h1>
+                                      <section className="flex flex-row mt-1">
+                                        <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
+                                          ₹{partETotal?.toLocaleString('en-IN')}
+                                        </section>
+                                      </section>
+                                    </section>
+                                  </>
+                                )}
+
+                                <section className="flex flex-row justify-between rounded-b-lg  bg-[#E8E6FE]  mt-2 py-2   ">
+                                  <h1 className="px-3 text-[12px] text-left  text-[12px] font-semibold pr-8 ">
+                                    Total Cost
+                                  </h1>
+                                  <section className="flex flex-row mt-2">
+                                    <section className="px-2 d-md font-bold text-[12px] text-[#0D027D] leading-none">
+                                      ₹{netTotal?.toLocaleString('en-IN')}
+                                    </section>
+                                  </section>
+                                </section>
+                              </div>
+                            </section>
+                          </div>
+
+
                         </section>
                       )}
                       {showOnly === 'payment_schedule' && (
@@ -1766,7 +1667,7 @@ const CostBreakUpPdf = ({
                                     Payment Schedule
                                   </th>
                                   <th className="w-[30%] px-2   text-left  tracking-wide  text-[12px] ">
-                                    Payment Timeline Of
+                                    Payment Timeline of
                                   </th>
                                   <th className="w-[20%] px-2   text-right  tracking-wide   text-[12px]">
                                     Total inc GST
@@ -1962,7 +1863,7 @@ const CostBreakUpPdf = ({
                                     <th className="text-[12px] px-2  text-right text-gray-800 ">
                                       ₹
                                       {(
-                                        (partCTotal || 0) + (partDTotal || 0)
+                                        (partCTotal || 0) + (partDTotal || 0) + (partETotal || 0)
                                       )?.toLocaleString('en-IN')}
                                     </th>
                                   </tr>

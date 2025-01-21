@@ -2460,7 +2460,7 @@ export default function UnitFullSummary({
 <UnitAudit selUnitDetails={selCustomerPayload} /> </>}
       </div>
 
-      <div className="w-[250px] min-w-[250px] h-full  rounded-md overflow-auto">
+      <div className="w-[250px] min-w-[250px] h-full  rounded-r-md overflow-auto">
             <div className="">
               {/* <div className="font-md font-medium text-xs  text-gray-800">
                           Notes
@@ -2517,9 +2517,9 @@ export default function UnitFullSummary({
 
 
 
-<div className=" border-gray-900  py-4 bg-[#F9F9FA] rounded-t-lg ">
+<div className=" border-gray-900  py-4 bg-[#F9F9FA]  bg-gradient-r to-[#EDEDED] from-[#EDEDED] ">
                 <ul
-                  className="flex flex-col  rounded-t-lg"
+                  className="flex flex-col  "
                   id="myTab"
                   data-tabs-toggle="#myTabContent"
                   role="tablist"

@@ -191,6 +191,7 @@ export default function TransactionUpdateSideView({
     data.status = status
     console.log('transactionData', transactionData);
 
+console.log('status', status);
 
     if (status === 'Rejected') {
       // enqueueSnackbar('Transaction status updated to Rejected', { variant: 'error' });
@@ -205,6 +206,12 @@ export default function TransactionUpdateSideView({
         }
       } else {
         showFillError(true)
+      }
+    }else if(status === 'received'){
+      if(data?.unit_id === 'wallet'){
+        updateWalletTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
+      } else {
+        updateTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
       }
     }
 
@@ -243,7 +250,7 @@ export default function TransactionUpdateSideView({
               >
                 {'In-Review'}
 
- 
+
               </span>
             </div>
           </section>
@@ -252,7 +259,7 @@ export default function TransactionUpdateSideView({
       <div>
       {transactionData?.rejectionReason && (
           <p className="text-md text-[15px] mr-2 ml-4 mt-1">
-            
+
             <span>Rejected Reason: </span>
             {transactionData?.rejectionReason}
           </p>
@@ -363,7 +370,7 @@ export default function TransactionUpdateSideView({
 
               setRejection(!rejection)
               if (rejection && rejectionReason !== '') {
-                updateTnxStatus('Rejected', transactionData?.id, user)
+                updateTnxStatus('Rejected', transactionData?.id)
               }
 
             }}

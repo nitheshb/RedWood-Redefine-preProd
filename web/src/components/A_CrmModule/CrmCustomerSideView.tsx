@@ -50,8 +50,6 @@ import {
   updateLeadProject,
   getFinanceForUnit,
   getCrmUnitById1,
-  addPaymentReceivedEntrySup,
-  addPaymentReceivedEntry,
   captureWalletPayment,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'

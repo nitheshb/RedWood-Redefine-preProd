@@ -76,6 +76,9 @@ const CostBreakUpSheet = ({
   const [newAdditonalChargesObj, setNewAdditonalChargesObj] = useState([])
   const [newAdditonalConstChargesObj, setNewAdditonalConstChargesObj] =
     useState([])
+    const [newPossessAdditionalCostCS, setNewPossessAdditionalCostCS] =
+    useState([])
+
   const [StatusListA, setStatusListA] = useState([])
   const [reviewLinks, setReviewLinks] = useState([])
   const [leadPayload, setLeadPayload] = useState({})
@@ -1088,7 +1091,7 @@ transition
                       newPlotCsObj={newPlotCsObj}
                       newPlotCostSheetA={newPlotCostSheetA}
                       newConstructCsObj={newConstructCsObj}
-                      newConstructCostSheetA={newConstructCostSheetA}
+                      newConstructCostSheetA={newConstCostSheetA}
                       newAdditonalChargesObj={newAdditonalChargesObj}
                       newConstructPS={newConstructPS}
                       newPlotPS={newPlotPS}
@@ -1118,6 +1121,7 @@ transition
                       constructCostSheetA={newConstCostSheetA}
                       newAdditonalChargesObj={newAdditonalChargesObj}
                       newAdditonalConstChargesObj={newAdditonalConstChargesObj}
+                 
                       setNewAdditonalConstChargesObj={
                         setNewAdditonalConstChargesObj
                       }

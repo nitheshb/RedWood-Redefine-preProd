@@ -159,7 +159,7 @@ export default function UnitSideViewCRM({
   selCustomerPayload,
   selUnitDetails,
   setSelUnitDetails,
-  
+
   selSubMenu,
   selSubMenu2,
 }) {
@@ -227,7 +227,7 @@ export default function UnitSideViewCRM({
 
 
 
-  
+
 
 
 
@@ -1045,12 +1045,14 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
       customerDetailsObj,
     } = selCustomerPayload
     const customLeadObj = { Name: customerDetailsObj?.customerName1 }
-    data.attchUrl = data?.fileUploader?.url || ''
+    // data.attchUrl = data?.fileUploader?.url || data?.attchUrl || ''
     data.category = 'Payment'
     const y = {}
     y.m = data?.fileUploader
 
     console.log('unit log ', data, y, y.m, y['m']['url'])
+
+
 
     const x = await capturePaymentS(
       orgId,
@@ -1072,7 +1074,7 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
       customerDetailsObj,
     } = selCustomerPayload
     const customLeadObj = { Name: customerDetailsObj?.customerName1 }
-    data.attchUrl = data?.fileUploader?.url || ''
+    data.attchUrl = data?.fileUploader?.url || data?.attchUrl || ''
     data.category = 'Payment'
     const y = {}
     y.m = data?.fileUploader
@@ -1568,15 +1570,28 @@ onClickCapture={() => {
         <div className="font-bold">            ₹{selCustomerPayload?.T_elgible_balance <0 ? 0: selCustomerPayload?.T_elgible_balance?.toLocaleString('en-IN')}</div>
       </div>
     </div>
+
+
+    <section className="flex flex-row justify-between mx-2">
     <div className="text-center">
-      <div className="text-sm text-gray-500">Paid</div>
-      <div className="font-bold">              ₹{((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ))?.toLocaleString('en-IN')}</div>
+      <div className="text-[12px] text-gray-500">Elgible Cost</div>
+      <div className="font-bold text-[14px]">₹ {((selCustomerPayload?.T_elgible || 0)
+                                            )?.toLocaleString('en-IN')}</div>
     </div>
+    <div className="text-center">
+      <div className="text-[12px] text-gray-500">Paid</div>
+      <div className="font-bold text-[14px]">              ₹{((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ))?.toLocaleString('en-IN')}</div>
+    </div>
+    <div className="text-center">
+      <div className="text-[12px] text-gray-500">Balance</div>
+      <div className="font-bold text-[14px]">₹ {selCustomerPayload?.T_elgible_balance <0 ? 0: selCustomerPayload?.T_elgible_balance?.toLocaleString('en-IN')}</div>
+    </div>
+    </section>
   </div>
 
   <div className="bg-white  p-4 rounded-lg">
     <div className="flex justify-between items-center">
-      <span className="font-medium">Cost sheet</span>
+      <span className="font-medium">Unit Cost</span>
       <ChevronDownIcon size={16} className="ml-2" />
     </div>
     <div className="relative flex justify-center items-center">
@@ -1613,11 +1628,23 @@ onClickCapture={() => {
                                           )}</div>
       </div>
     </div>
+    <section className="flex flex-row justify-between mx-2">
     <div className="text-center">
-      <div className="text-sm text-gray-500">Paid</div>
-      <div className="font-bold">₹ {((selCustomerPayload?.T_review || 0) +
+      <div className="text-[12px] text-gray-500">Unit Cost</div>
+      <div className="font-bold text-[14px]">₹ {((selCustomerPayload?.T_total || 0)
+                                            )?.toLocaleString('en-IN')}</div>
+    </div>
+    <div className="text-center">
+      <div className="text-[12px] text-gray-500">Paid</div>
+      <div className="font-bold text-[14px]">₹ {((selCustomerPayload?.T_review || 0) +
                                             (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN')}</div>
     </div>
+    <div className="text-center">
+      <div className="text-[12px] text-gray-500">Balance</div>
+      <div className="font-bold text-[14px]">₹ {(selCustomerPayload?.T_balance || 0)
+                                            ?.toLocaleString('en-IN')}</div>
+    </div>
+    </section>
   </div>
 
   <div className="bg-white p-4 rounded-lg">

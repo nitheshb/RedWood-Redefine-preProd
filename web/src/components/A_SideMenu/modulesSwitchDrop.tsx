@@ -85,7 +85,7 @@ export default function ModuleSwitchDrop({
                                 <span className="absolute inset-0" />
                               </a>
                               <p className="mt- pb-3 text-gray-600">
-                                Project Setup, Insights, Access...
+                                Project Setup,Access,Insights
                               </p>
                             </div>
                           </div>
@@ -117,7 +117,7 @@ export default function ModuleSwitchDrop({
                                 <span className="absolute inset-0" />
                               </a>
                               <p className="mt- pb-3  text-gray-600">
-                                Campaign, Branding & Insights
+                                Campaign,Branding,Insights
                               </p>
                             </div>
                           </div>
