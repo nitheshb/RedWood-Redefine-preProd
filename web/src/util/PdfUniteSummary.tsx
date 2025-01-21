@@ -2510,7 +2510,7 @@ style={[
 
 
 
-const PdfSummaryGenerator = ({
+const PdfUniteSummary = ({
   user,
   selUnitDetails,
   myObj,
@@ -2582,7 +2582,7 @@ const PdfSummaryGenerator = ({
              transition"
             >
           <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
-          Download Payments Summary
+          Download Unite Summary
             </span>
           )
         }
@@ -2591,4 +2591,4 @@ const PdfSummaryGenerator = ({
   )
 }
 
-export default PdfSummaryGenerator
+export default PdfUniteSummary

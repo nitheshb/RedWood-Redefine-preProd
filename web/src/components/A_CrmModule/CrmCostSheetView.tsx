@@ -5,8 +5,9 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import CombinedPdfGenerator from 'src/util/CombinedPdfGenerator'
 import { computeTotal } from 'src/util/computeCsTotals'
 import PdfSummaryGenerator from 'src/util/PdfSummaryGenerator'
+import PdfUniteSummary from 'src/util/PdfUniteSummary'
 
-const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, leadDetailsObj1, streamUnitDetails, newAdditonalChargesObj, myBookingPayload, assets, totalIs,selUnitDetails,newPlotCostSheetA, newPlotPS }) => {
+const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, leadDetailsObj1,customerDetails, streamUnitDetails, newAdditonalChargesObj, myBookingPayload, assets, totalIs,selUnitDetails,newPlotCostSheetA, newPlotPS }) => {
   const { user } = useAuth()
   const { orgId } = user
   const [partATotal, setPartA] = useState(0)
@@ -158,6 +159,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
           unitTransactionsA={unitTransactionsA}
           netTotal={netTotal}
           totalIs={totalIs}
+          customerDetails={customerDetails}
           
           
           
@@ -168,7 +170,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
           // setPartATotal={setPartATotal}
           // setPartBTotal={setPartBTotal}
           projectDetails={projectDetails}
-          leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined} customerDetails={undefined}
+          leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined} 
           // user={user}
           // selUnitDetails={selUnitDetails}
           // myObj={newPlotCostSheetA}
@@ -182,6 +184,53 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
           // projectDetails={{}} myAdditionalCharges={undefined} setPartBTotal={undefined} leadDetailsObj1={undefined} customerDetails={undefined}
           />
     </div>
+
+
+    <div>
+
+<PdfUniteSummary
+    user={user}
+    selUnitDetails={selUnitDetails}
+    streamUnitDetails={streamUnitDetails}
+    myBookingPayload={myBookingPayload}
+    myObj={newPlotCostSheetA}
+    selCustomerPayload={selCustomerPayload}
+    newPlotPS={newPlotPS}
+    myAdditionalCharges={newAdditonalChargesObj}
+    unitTransactionsA={unitTransactionsA}
+    netTotal={netTotal}
+    totalIs={totalIs}
+    customerDetails={customerDetails}
+    
+    
+    
+    PSa={PSa}
+    setNetTotal={setNetTotal}
+    partATotal={partATotal}
+    partBTotal={partBTotal}
+    // setPartATotal={setPartATotal}
+    // setPartBTotal={setPartBTotal}
+    projectDetails={projectDetails}
+    leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined} 
+    // user={user}
+    // selUnitDetails={selUnitDetails}
+    // myObj={newPlotCostSheetA}
+    // newPlotPS={newPlotPS}
+    // netTotal={unitTotal}
+    // setNetTotal={setUnitTotal}
+    // partATotal={partATotal}
+
+    // partBTotal={0}
+    // setPartATotal={partATotal}
+    // projectDetails={{}} myAdditionalCharges={undefined} setPartBTotal={undefined} leadDetailsObj1={undefined} customerDetails={undefined}
+    />
+</div>
+
+
+
+
+
+ 
 
 
 

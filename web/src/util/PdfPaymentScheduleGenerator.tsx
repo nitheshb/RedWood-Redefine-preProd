@@ -717,7 +717,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Applicant Name:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.customerName1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selCustomerPayload?.customerDetailsObj?.customerName1}</Text>
   </View>
 
 
@@ -739,7 +739,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Phone number:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.phoneNo1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {selCustomerPayload?.customerDetailsObj?.phoneNo1}</Text>
   </View>
 
 
@@ -749,7 +749,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Email:
     </Text>
-    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{streamUnitDetails?.custObj1?.email1}</Text>
+    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{selCustomerPayload?.customerDetailsObj?.email1}</Text>
   </View>
 </View>
 
@@ -779,7 +779,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
       Unit No:
     </Text>
-    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selUnitDetails?.unit_no}</Text>
+    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selCustomerPayload?.unit_no}</Text>
   </View>
 
 
@@ -792,7 +792,7 @@ const MyDocument = ({
       {selUnitDetails?.size}{' '}
       <Text>
         {'('}
-        {selUnitDetails?.area} sqft{')'}
+        {selCustomerPayload?.area}sqft{')'}
       </Text>
     </Text>
   </View>
@@ -803,7 +803,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
       Facing:
     </Text>
-    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selUnitDetails?.facing}</Text>
+    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selCustomerPayload?.facing}</Text>
   </View>
 
 
@@ -845,7 +845,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Unit Cost:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> ₹{netTotal?.toLocaleString('en-IN')}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> ₹{selCustomerPayload?.T_total?.toLocaleString('en-IN')} </Text>
   </View>
 
 
@@ -855,7 +855,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Current Status:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{streamUnitDetails?.status}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selCustomerPayload?.status}</Text>
   </View>
 
 
