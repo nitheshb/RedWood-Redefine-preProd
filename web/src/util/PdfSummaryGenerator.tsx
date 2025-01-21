@@ -1498,6 +1498,8 @@ const MyDocument = ({
             </Text>
           </View>
 
+          
+
 
 
 
@@ -1567,7 +1569,7 @@ const MyDocument = ({
                 </View>
               </View>
               <View>
-                {myBookingPayload?.constructCS?.map((item, index) => (
+                {selCustomerPayload?.constructCS?.map((item, index) => (
                   <View
                     style={[
                       styles.tableRow,
@@ -1649,7 +1651,10 @@ const MyDocument = ({
               </View>
             </View>
 
-          </View>}
+          </View>
+          
+          
+          }
           {/* part -4 */}
 
 

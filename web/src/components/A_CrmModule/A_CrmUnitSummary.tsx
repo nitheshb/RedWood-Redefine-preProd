@@ -18,6 +18,8 @@ const CrmUnitSummary = ({
   assets,
   totalIs,
   unitTransactionsA,
+  fullPs,
+  T_B,
   PSa,
   leadDetailsObj1,
   projectDetails,
@@ -249,6 +251,8 @@ const CrmUnitSummary = ({
     netTotal={netTotal}
     totalIs={totalIs}
     customerDetails={customerDetails}
+    fullPs={fullPs}
+    T_B={T_B}
     
     
     
