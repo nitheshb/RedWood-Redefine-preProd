@@ -3502,18 +3502,10 @@ style={[
 </View>
 </View> */}
 </View>
-
-
-
-
-
-
-
-
 </View>
 
 
-
+</View>
       </View>
 
 

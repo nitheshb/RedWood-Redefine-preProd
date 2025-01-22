@@ -11,14 +11,17 @@ import {
   getAllProjects,
   getLeadbyId1,
   steamUsersListByRole,
+  streamGetAllProjectTransactions,
+  streamGetAllTransactions,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import CSVDownloader from 'src/util/csvDownload'
-import { prettyDate, prettyDateTime } from 'src/util/dateConverter'
+import { prettyDate, prettyDateTime, timeConv } from 'src/util/dateConverter'
 
 const CollectionsDrillI = ({
   title,
   subtitle,
+  filterPaylod,
   leadsLogsPayload,
   dialogOpen,
   setCustomerDetails,
@@ -34,6 +37,10 @@ const CollectionsDrillI = ({
   const [loadingIcon, setLoadingIcon] = useState(false)
   const [projectList, setprojectList] = useState([])
   const [leadsFilA, setLeadsFilA] = useState([])
+  const [finSelData, setFinSelData] = useState([])
+  const [finFetchedData, setFinFetchedData] = useState([])
+
+
   const [selProjectIs, setSelProject] = useState({
     label: 'All Projects',
     value: 'allprojects',
@@ -51,11 +58,26 @@ const CollectionsDrillI = ({
     label: 'All Projects',
     value: 'allprojects',
   })
-
+  const sortTransactionsByDate = (transactions) => {
+    return [...transactions].sort((a, b) => {
+      const dateA = new Date(a.txt_dated)
+      const dateB = new Date(b.txt_dated)
+      return dateB - dateA
+    })
+  }
   useEffect(() => {
     console.log('use effect stuff', leadsLogsPayload)
     getProjectsListFun()
   }, [leadsLogsPayload])
+  useEffect(() => {
+    getProjectTransactionsDataFun()
+  }, [])
+
+  useEffect(() => {
+    console.log('use effect stuff', finFetchedData)
+    const sortedData = sortTransactionsByDate(finFetchedData)
+    setFinSelData(sortedData)
+  }, [finFetchedData])
 
   const getProjectsListFun = async () => {
     const unsubscribe = getAllProjects(
@@ -81,6 +103,22 @@ const CollectionsDrillI = ({
 
     return unsubscribe
   }
+
+
+  const getProjectTransactionsDataFun = async () => {
+    console.log('sideview payload', filterPaylod)
+      const { access, uid } = user
+      const steamLeadLogs = await streamGetAllProjectTransactions(
+        orgId,
+        'snap',
+        {
+          uid,
+        },
+        (error) => []
+      )
+      const sortedData = sortTransactionsByDate(steamLeadLogs)
+      setFinFetchedData(sortedData)
+    }
   useEffect(() => {
     // let projectFilAarray = [...leadsLogsPayload]
     if (selProjectIs?.value == 'allprojects') {
@@ -317,6 +355,145 @@ const CollectionsDrillI = ({
             {loadingIcon ? (
               <LogSkelton />
             ) : (
+              <>
+                      <table className="w-full pt-[1px]">
+                                      <thead className="">
+                                        <tr className="p-2">
+                                          <th className="w-2"></th>
+                                          <th className="text-left text-xs app-color-black py-2">
+                                            <span className="ml-4">From</span>
+                                          </th>
+                                          <th className="text-left text-xs app-color-black py-2">
+                                            <span className="ml-4">Dated as</span>
+                                          </th>
+                                          <th className="text-left text-xs app-color-black py-2">
+                                            Mode
+                                          </th>
+                                          <th className="text-left text-xs app-color-black py-2">
+                                            Details
+                                          </th>
+                                          <th className="text-right text-xs app-color-black py-2">
+                                            <span className="mr-10">Amount</span>
+                                          </th>
+                                          <th className="text-left text-xs app-color-black py-2">
+                                            <span className="mr-10">Assigned to</span>
+                                          </th>
+                                          <th className="text-left text-xs app-color-black py-2">
+                                            <span className="mr-10">Status</span>
+                                          </th>
+
+                                          <th className="text-left text-xs app-color-black py-2">
+                                            Comments
+                                          </th>
+
+                                          <th></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody className="p-2">
+                                        {finSelData?.map((finData, i) => (
+                                          <tr
+                                            className="app-border-1 border-y border-slate-200 "
+                                            key={i}
+                                            // onClick={() => viewTransaction(finData)}
+                                          >
+                                            <td className="pl-3 ">
+                                              <div className="flex justify-center text-right items-center rounded-md w-2 h-8 app-bg-yellow-2 app-color-yellow-1 text-xs font-semibold">
+                                                {i + 1}
+                                              </div>
+                                              {/* <div
+                                              className={`${
+                                                finData?.status === 'received'
+                                                  ? 'bg-green-700'
+                                                  : finData?.status === 'rejected'
+                                                  ? 'bg-yellow-600'
+                                                  : 'bg-violet-600'
+                                              }   w-24 text-xs font-semibold px-3 py-0.5 rounded-br-md rounded-tl-md text-white`}
+                                            >
+                                              {finData?.status?.toLocaleUpperCase()}
+                                            </div> */}
+                                            </td>
+                                            <td>
+                                              <div className="flex flex-row py-2 ml-4">
+                                                <div className="mr-2 w-[3px] rounded-2xl  bg-violet-300 "></div>
+                                                <div className="flex flex-col">
+                                                  <span className="font-semibold text-sm app-color-black">
+                                                    {finData?.customerName ||
+                                                      finData?.fromObj?.name ||
+                                                      'NA'}
+                                                  </span>
+                                                  <span className="font-normal text-xs app-color-gray-1">
+                                                    {finData?.towards}
+                                                  </span>
+                                                  <span className="font-normal text-xs app-color-gray-1">
+                                                    {finData?.fromObj?.bankName}
+                                                  </span>
+                                                  <span className="font-normal text-xs app-color-gray-1">
+                                                    {finData?.fromObj?.branch}
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            </td>
+                                            <td>
+                                              <div className="flex flex-row ml-4 py-2">
+                                                <span className="font-normal text-xs app-color-gray-1">
+                                                  {prettyDate(finData?.txt_dated)}
+                                                </span>
+                                              </div>
+                                            </td>
+                                            <td>
+                                              <div className="flex flex-row py-2">
+                                                {/* <div className="mr-2 w-[3px]  bg-gray-100 "></div> */}
+                                                <div className="flex flex-col">
+                                                  <span className="font-semibold text-sm app-color-black">
+                                                    {finData?.mode}
+                                                  </span>
+                                                  <span className="font-normal text-xs app-color-gray-1">
+                                                    {finData?.txt_id}
+                                                  </span>
+                                                  {/* <span className="font-normal text-xs app-color-gray-1">
+                                                    {timeConv(finData?.txt_dated)}
+                                                  </span> */}
+                                                </div>
+                                              </div>
+                                            </td>
+                                            <td>
+                                              <div className="flex flex-row py-2">
+                                                {/* <div className="mr-2 w-[3px]  bg-gray-100 "></div> */}
+                                                <div className="flex flex-col">
+                                                  <span className="font-normal text-xs app-color-gray-1">
+                                                    {finData?.txt_id}
+                                                  </span>
+                                                  <span className="font-normal text-xs app-color-gray-1">
+                                                   {timeConv(finData?.txt_dated)}
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            </td>
+                                            <td className="text-right">
+                                              <span className="text-right font-semibold text-sm app-color-gray-1 mr-10">
+                                                ₹ {finData?.totalAmount?.toLocaleString('en-IN')}
+                                              </span>
+                                            </td>
+                                            <td className="text-left">
+                                              <span className="text-left font-semibold text-sm app-color-gray-1 mr-10">
+                                                {finData?.assignedTo || 'NA'}
+                                              </span>
+                                            </td>
+
+                                            <td>
+                                              <span className=" text-left font-normal text-md app-color-gray-1">
+                                                {finData?.status}
+                                              </span>
+                                            </td>
+                                            <td>
+                                              <span className="font-semibold text-left text-sm app-color-black">
+                                                NA
+                                              </span>
+                                            </td>
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
               <table className="min-w-full text-center mt-6">
                 <thead className="border-b">
                   <tr>
@@ -414,6 +591,8 @@ const CollectionsDrillI = ({
                   })}
                 </tbody>
               </table>
+
+              </>
             )}
           </div>
           <div className="mt-0"></div>

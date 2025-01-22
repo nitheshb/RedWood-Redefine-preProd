@@ -389,6 +389,31 @@ export const streamGetAllUnitTransactions = async (
   return lead_logs
   // return onSnapshot(itemsQuery, snapshot, error)
 }
+export const streamGetAllProjectTransactions = async (
+  orgId,
+  snapshot,
+  data,
+  error
+) => {
+  // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
+  const { uid, cutoffDate, unit_id } = data
+  console.log('unit_id is ', uid, unit_id)
+  // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
+  const { data: lead_logs, error: countError } = await supabase
+    .from(`${orgId}_accounts`)
+    .select('*')
+    .eq('unit_id', unit_id)
+  // .is('projectId', null)
+  // .isNull('projectId')
+  // .eq('from', 'visitfixed')
+
+  if (countError) {
+    console.error(countError)
+    return
+  }
+  return lead_logs
+  // return onSnapshot(itemsQuery, snapshot, error)
+}
 // get all TaskManTasks from supabase
 export const streamGetAllTaskManTasks = async (
   orgId,
@@ -5761,14 +5786,15 @@ export const addNewUnitDemand = async (
 ) => {
   try {
     console.log('data is===>', unitId, data)
-    const { status, addOnCS, fullPs, T_balance, T_Total, T_elgible_balance } =
+    const { status, addOnCS, fullPs, T_balance, T_total,T_F, T_elgible_balance } =
       data
 
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       addOnCS: addOnCS,
       fullPs,
       T_balance,
-      T_Total,
+      T_total,
+      T_F,
       T_elgible_balance,
     })
     const { data: data4, error: error4 } = await supabase
