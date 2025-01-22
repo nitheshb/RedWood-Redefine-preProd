@@ -210,7 +210,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
 
       
 
-      
+{/*       
       <PdfPaymentScheduleGenerator
       user={user}
       PSa={PSa}
@@ -219,7 +219,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
 
 
       
-       />     
+       />      */}
 
 
 
@@ -227,7 +227,9 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
         <section className="flex flex-col  ">
           <div>
             <div className="border border-[#e5e7f8] bg-[#fff] rounded-md p-3 pb-4">
-              <div className="flex flex-row ">
+              <div className=" flex flex-row px-3 justify-between items-center">
+
+                <div className='flex items-center'>
                 <img
                   src="https://static.ambitionbox.com/static/benefits/JobTraining.svg"
                   alt=""
@@ -235,6 +237,21 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
                 <h1 className=" text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-1 ml-1">
                   Payment Schedule
                 </h1>
+                </div>
+
+
+                <div>
+                        
+      <PdfPaymentScheduleGenerator
+      user={user}
+      PSa={PSa}
+      selCustomerPayload={selCustomerPayload}
+      projectDetails={projectDetails}
+
+
+      
+       />  
+                </div>
               </div>
               <table className="w-full mb- ">
                 <thead>

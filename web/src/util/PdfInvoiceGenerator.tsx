@@ -750,7 +750,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Customer ID:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.address1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>NA</Text>
   </View>
 
 
