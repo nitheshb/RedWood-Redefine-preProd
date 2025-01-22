@@ -211,6 +211,8 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
   const { user } = useAuth()
   const { orgId } = user
   const [isOpenSideForm, setReportSideForm] = useState(false)
+  const [filterPayload, setFilterPayload] = useState({})
+
   const [subTitle, setSubTitle] = useState('')
 
   const [filter, setFilter] = useState('')
@@ -449,7 +451,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
   const showDrillDownFun = async (text, data) => {
     // Display sideForm
     setReportSideForm(true)
-    // setDrillDownPayload(data)
+    setFilterPayload(data)
     setSubTitle(text)
   }
 
@@ -885,7 +887,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
                             <td
                             key={i}
                             className="py-1 px-6 text-right border-t border-l  border-gray-100"
-                          onClick={() => showDrillDownFun('project_collections', month)}
+                          onClick={() => showDrillDownFun('project_collections', data)}
                           >
                             {`${x?.receive?.toLocaleString('en-IN')}`}
                           </td>
@@ -956,6 +958,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
             setOpen={setReportSideForm}
             title={subTitle}
             subtitle={subTitle}
+            filterPaylod={filterPayload}
             // setCustomerDetails={setCustomerDetails}
             // setisImportLeadsOpen={setisImportLeadsOpen}
             // leadsLogsPayload={drillDownPayload}

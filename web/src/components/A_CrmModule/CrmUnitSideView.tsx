@@ -222,6 +222,8 @@ export default function UnitSideViewCRM({
   const [statusValidError, setStatusValidError] = useState(false)
   const [newStatusErrorList, setNewStatusErrorList] = useState('')
   const [unitPayload, setUnitPayload] = useState({})
+  const [unitStatusLabel, setUnitStatusLabel] = useState('')
+
 
 
 
@@ -501,6 +503,10 @@ export default function UnitSideViewCRM({
     setLeadStatus(status?.toLowerCase())
   }, [customerDetails])
 
+  useEffect(() => {
+    setCorrectStatusLableFun(status)
+  }, [status])
+
   const setAssignerFun = (leadDocId, value) => {
     setAssignerName(value.name)
     setAssignedTo(value.value)
@@ -588,6 +594,12 @@ export default function UnitSideViewCRM({
     // updateLeadAssigTo(leadDocId, value, by)
   }
 
+  const setCorrectStatusLableFun = (status) => {
+    const x = StatusListA.filter((d) => d.value === status)
+    if (x.length > 0) {
+      setUnitStatusLabel(x[0]?.label)
+    }
+  }
   const setStatusFun = async (leadDocId, newStatus) => {
     console.log('New Statusiiiiiiiii: ', newStatus);
     const x = StatusListA.filter((d) => d.value === status)
@@ -1222,7 +1234,7 @@ return
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                         <div className=' mt-[2px]'>
                           <AssigedToDropComp
-                           assignerName={status}
+                           assignerName={unitStatusLabel}
 
                             id={id}
                             setAssigner={setStatusFun}

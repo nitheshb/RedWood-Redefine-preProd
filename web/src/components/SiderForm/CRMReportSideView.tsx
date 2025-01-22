@@ -20,6 +20,7 @@ const CRMReportSideWindow = ({
   setOpen,
   title,
   subtitle,
+  filterPaylod,
   leadsLogsPayload,
   onCloseDisabled = false,
   widthClass,
@@ -116,6 +117,7 @@ const CRMReportSideWindow = ({
                     title={title}
                     subtitle={subtitle}
                     dialogOpen={setOpen}
+                    filterPaylod={filterPaylod}
                     leadsLogsPayload={leadsLogsPayload}
                     setCustomerDetails= {setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
