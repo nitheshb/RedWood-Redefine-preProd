@@ -18,7 +18,7 @@ import { Timestamp } from 'firebase/firestore'
 import numeral from 'numeral'
 import { computeTotal } from './computeCsTotals'
 import { prettyDate } from './dateConverter'
-import { Bold } from 'lucide-react'
+import { Bold, Download } from 'lucide-react'
 
 import pdfimg1 from '../../public/pdfimg1.png'
 import pdfimg2 from '../../public/pdfimg2.png'
@@ -32,6 +32,7 @@ import pdfimg9 from '../../public/pdfimg9.png'
 import pdfimg10 from '../../public/pdfimg10.png'
 import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
+import Loader from 'src/components/Loader/Loader'
 
 
 Font.register({
@@ -1217,7 +1218,9 @@ const PdfPaymentScheduleGenerator = ({
       >
         {({ blob, url, loading, error }) =>
           loading ? (
-            <button>Loading document...</button>
+            <button className="flex items-center justify-center">
+            <Loader texColor="text-blue-600" size="h-5 w-5" />Payment Schedule
+          </button>
           ) : (
             <span
               className=" px-1 py-1 pb-[5px] text-sm font-bold 
@@ -1227,8 +1230,8 @@ const PdfPaymentScheduleGenerator = ({
              duration-200 ease-in-out
              transition"
             >
-          <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
-          Payment Schedule
+          <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
+          
             </span>
           )
         }

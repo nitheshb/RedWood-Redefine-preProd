@@ -35,6 +35,7 @@ import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
 import { streamGetAllUnitTransactions } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import Loader from 'src/components/Loader/Loader'
 
 
 Font.register({
@@ -3136,7 +3137,7 @@ style={[
 
 
 
-<View style={[ styles.pt2, styles.mT1]}>
+{/* <View style={[ styles.pt2, styles.mT1]}>
 <Text
 style={[
 styles.subtitle1,
@@ -3148,7 +3149,7 @@ styles.mb5,
 >
 II. Construction Schedule
 </Text>
-</View>
+</View> */}
 
 
 
@@ -3522,8 +3523,7 @@ style={[
             <Text style={{ fontSize: 9 }}>support@abcapp.com</Text>
           </View>
         </View> */}
-
-        </View>
+      
       </Page>
     </Document>
   )
@@ -3623,7 +3623,9 @@ const PdfUniteSummary = ({
       >
         {({ blob, url, loading, error }) =>
           loading ? (
-            <button>Loading document...</button>
+            <button className="flex items-center justify-center">
+            <Loader texColor="text-blue-600" size="h-5 w-5" />Unit Summary
+          </button>
           ) : (
             <span
               className="px-1 py-1 pb-[5px] text-sm text-blue-600

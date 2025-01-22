@@ -18,7 +18,7 @@ import { Timestamp } from 'firebase/firestore'
 import numeral from 'numeral'
 import { computeTotal } from './computeCsTotals'
 import { prettyDate } from './dateConverter'
-import { Bold } from 'lucide-react'
+import { Bold, Download } from 'lucide-react'
 
 import pdfimg1 from '../../public/pdfimg1.png'
 import pdfimg2 from '../../public/pdfimg2.png'
@@ -34,6 +34,7 @@ import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
 import { streamGetAllUnitTransactions } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import Loader from 'src/components/Loader/Loader'
 
 
 Font.register({
@@ -2578,7 +2579,9 @@ const PdfSummaryGenerator = ({
       >
         {({ blob, url, loading, error }) =>
           loading ? (
-            <button>Loading document...</button>
+            <button className="flex items-center justify-center">
+            <Loader texColor="text-blue-600" size="h-5 w-5" />Cost Sheet
+          </button>
           ) : (
             <span
               className=" focus:outline-none px-1 py-1 mt-4 text-sm font-bold tracking-wider rounded-sm
@@ -2588,8 +2591,8 @@ const PdfSummaryGenerator = ({
              duration-200 ease-in-out
              transition"
             >
-          <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
-          Cost Sheet
+          <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
+          
             </span>
           )
         }

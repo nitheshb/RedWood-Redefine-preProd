@@ -18,7 +18,7 @@ import { Timestamp } from 'firebase/firestore'
 import numeral from 'numeral'
 import { computeTotal } from './computeCsTotals'
 import { prettyDate } from './dateConverter'
-import { Bold } from 'lucide-react'
+import { Bold, Download } from 'lucide-react'
 
 
 
@@ -34,6 +34,7 @@ import pdfimg9 from '../../public/pdfimg9.png'
 import pdfimg10 from '../../public/pdfimg10.png'
 import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
+import Loader from 'src/components/Loader/Loader'
 
 
 
@@ -2398,7 +2399,9 @@ const PdfInvoiceGenerator = ({
     >
       {({ blob, url, loading, error }) =>
         loading ? (
-          <button>Loading document...</button>
+          <button className="flex items-center justify-center">
+          <Loader texColor="text-blue-600" size="h-5 w-5" />CostSheet
+        </button>
         ) : (
           <span
             className="mb-4 md:mb-0 underline hover:scale-110 focus:outline-none bg-white px-1 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider rounded-sm hover:shadow-lg hover:bg-gray-100         hover:bg-teal-200
@@ -2408,7 +2411,7 @@ const PdfInvoiceGenerator = ({
            duration-200 ease-in-out
            transition"
           >
-        <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
+          <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
         Download CostSheet
           </span>
         )
