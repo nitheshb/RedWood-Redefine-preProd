@@ -2158,7 +2158,7 @@ const MyDocument = ({
                 styles.ml1,
               ]}
             >
-              IV. New Demand
+              IV. Modofications
             </Text>
           </View>
           {/* {projectDetails?.projectType?.name === 'Villas' && */}
@@ -2193,7 +2193,7 @@ const MyDocument = ({
 
                   <View style={[styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'18px' }]}>
                     <Text style={styles.subtitle2}>
-                    New Demand
+                    Modifications
                     </Text>
                   </View>
 

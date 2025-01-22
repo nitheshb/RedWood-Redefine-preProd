@@ -112,6 +112,10 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
 
     await computeAmoounts(transactoinsA)
 
+    // update for the unit by recalculating the values of all units
+
+
+
     return
     const unsubscribe = await getAllUnitsByProject(
       orgId,
@@ -184,30 +188,77 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
   }
   const computeAmoounts = async (transactoinsA) => {
     console.log('values are', unitTransactionsA, selUnitDetails?.id)
+
+    let T_E = (selUnitDetails?.possessionAdditionalCostCS?.reduce(function (
+      _this,
+      val
+    ) {
+      return (
+        _this + (isNaN(val.TotalNetSaleValueGsT) ? 0 : val.TotalNetSaleValueGsT)
+      )
+    },
+    0) || 0)
+    let T_F =  (selUnitDetails?.addOnCS?.reduce(function (
+      _this,
+      val
+    ) {
+      return (
+        _this + (isNaN(val.TotalNetSaleValueGsT) ? 0 : val.TotalNetSaleValueGsT)
+      )
+    },
+    0) || 0)
+
     const totalUnitCost = (
       (selUnitDetails?.plotCS?.reduce(function (
         _this,
         val
       ) {
         return (
-          _this + val.TotalNetSaleValueGsT
+          _this + (isNaN(val.TotalNetSaleValueGsT) ? 0 : val.TotalNetSaleValueGsT)
+        )
+      },
+      0) || 0)
+       +
+
+      (selUnitDetails?.addChargesCS?.reduce(function (
+        _this,
+        val
+      ) {
+        return (
+          _this + (isNaN(val.TotalNetSaleValueGsT) ? 0 : val.TotalNetSaleValueGsT)
         )
       },
       0) || 0) +
-      selUnitDetails?.addChargesCS?.reduce(
-          (partialSum, obj) =>
-            partialSum +
-            Number(
-              computeTotal(
-                obj,
-                selUnitDetails?.super_built_up_area ||
-                selUnitDetails?.area?.toString()?.replace(',', '')
-              )
-            ),
-          0
-        ) || 0
+        (selUnitDetails?.constructCS?.reduce(function (
+          _this,
+          val
+        ) {
+          return (
+            _this + (isNaN(val.TotalNetSaleValueGsT) ? 0 : val.TotalNetSaleValueGsT)
+          )
+        },
+        0) || 0) +
+        (selUnitDetails?.constAdditionalChargesCS?.reduce(function (
+          _this,
+          val
+        ) {
+          return (
+            _this + (isNaN(val.TotalNetSaleValueGsT) ? 0 : val.TotalNetSaleValueGsT)
+          )
+        },
+        0) || 0) +
+        T_E+
+        (selUnitDetails?.addOnCS?.reduce(function (
+          _this,
+          val
+        ) {
+          return (
+            _this + (isNaN(val.TotalNetSaleValueGsT) ? 0 : val.TotalNetSaleValueGsT)
+          )
+        },
+        0) || 0)
     )
-
+    console.log('elgible amount is x12',selUnitDetails?.fullPs)
     let InReviewAmount = 0
     let totalReceivedAmount = 0
     let totalApprovedAmount = 0
@@ -226,14 +277,20 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
         totalApprovedAmount =
           totalApprovedAmount + (Number(d?.totalAmount) || Number(d?.amount))
       }
+      console.log('elgible amount is x1',selUnitDetails?.fullPs)
+
       const elgibleAmount = selUnitDetails?.fullPs.reduce((total, item) => {
+        console.log('elgible amount is x',item.value)
         if (item.elgible) {
-          return total + item.value
+          console.log('elgible amount is ',item.value)
+          return total + (isNaN(item.value) ? 0 : item.value)
         } else {
+          console.log('elgible amount is ',item.value, total)
+
           return total
         }
       }, 0)
-      console.log('elgible amount is ', elgibleAmount)
+      console.log('elgible amount is ',selUnitDetails?.unit_no,'-->',totalUnitCost, elgibleAmount)
       unitAuditDbFun(
         orgId,
         selUnitDetails?.pId,
@@ -243,9 +300,13 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
         totalReceivedAmount,
         InReviewAmount,
         totalApprovedAmount,
-        totalCancelledAmount
+        totalCancelledAmount,
+        T_E,
+        T_F
 
       )
+
+      setLoading(false)
       console.log(
         'valueare a',
         totalUnitCost,
