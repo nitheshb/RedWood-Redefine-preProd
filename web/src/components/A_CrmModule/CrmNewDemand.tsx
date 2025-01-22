@@ -403,7 +403,7 @@ const AddNewDemand = ({
                                               <label className="text-[20px] font-medium text-[#000000]    mb-1  ">
                                                 {title === 'capturePayment'
                                                   ? 'Capture Payment'
-                                                  : 'New Demand'}
+                                                  : 'Add Modification'}
                                                 <abbr title="required"></abbr>
                                               </label>
                                             </div>
@@ -673,7 +673,7 @@ const AddNewDemand = ({
                                           {' '}
                                           {title === 'capturePayment'
                                             ? 'Confirm Payment'
-                                            : 'Add New Demand'}{' '}
+                                            : 'Add Modification'}{' '}
                                         </span>
                                       </button>
                                     </div>
