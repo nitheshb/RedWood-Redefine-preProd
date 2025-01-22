@@ -2540,27 +2540,7 @@ const PdfSummaryGenerator = ({
   customerDetails,
 }) => {
   console.log('overall cost sheet is ', newPlotPS)
-  const { user: authUser } = useAuth()
 
-  useEffect(() => {
-    getAllTransactionsUnit()
-  }, [])
-
-const [unitTransactionsA, setUnitTransactionsA] = useState([])
-  const { orgId } = authUser
-   const getAllTransactionsUnit = async () => {
-
-
-      const steamLeadLogs = await streamGetAllUnitTransactions(
-        orgId,
-        'snap',
-        {
-          unit_id: selCustomerPayload?.id,
-        },
-        (error) => []
-      )
-      await setUnitTransactionsA(steamLeadLogs)
-      return}
   return (
     <div>
       {' '}
@@ -2574,7 +2554,7 @@ const [unitTransactionsA, setUnitTransactionsA] = useState([])
             myBookingPayload={myBookingPayload}
             myObj={myObj}
             selCustomerPayload={selCustomerPayload}
-            unitTransactionsA={unitTransactionsA}
+            // unitTransactionsA={unitTransactionsA}
             newPlotPS={newPlotPS}
             myAdditionalCharges={myAdditionalCharges}
             netTotal={netTotal}

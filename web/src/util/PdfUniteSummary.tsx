@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useMemo, useEffect } from 'react'
-import DownloadTwoToneIcon from '@mui/icons-material/DownloadTwoTone'
+import { Download } from 'lucide-react'
+
 
 import {
   Document,
@@ -32,6 +33,8 @@ import pdfimg9 from '../../public/pdfimg9.png'
 import pdfimg10 from '../../public/pdfimg10.png'
 import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
+import { streamGetAllUnitTransactions } from 'src/context/dbQueryFirebase'
+import { useAuth } from 'src/context/firebase-auth-context'
 
 
 Font.register({
@@ -604,7 +607,7 @@ const MyDocument = ({
         </Text>
       </View>
     );
-  
+
 
 
 
@@ -1114,7 +1117,7 @@ const MyDocument = ({
                       {projectDetails?.projectType?.name === 'Apartment'
                         ? 'Flat'
                         : 'Plot'}{' '}
-                      
+
                     </Text>
                   </View>
 
@@ -1256,7 +1259,7 @@ const MyDocument = ({
               </View>
             </View>
 
-                
+
               </View>
 
 
@@ -1412,7 +1415,7 @@ const MyDocument = ({
                   <View
                     style={[styles.tableCell_20, styles.alignRight, styles.pr4 ,]}
                   >
-                    <Text> 
+                    <Text>
                       ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
                     </Text>
                   </View>
@@ -1438,7 +1441,7 @@ const MyDocument = ({
                   <View
                     style={[styles.tableCell_20, styles.alignRight, styles.pr4 ,]}
                   >
-                    <Text> 
+                    <Text>
                     ₹{d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
 
                     </Text>
@@ -1482,7 +1485,7 @@ const MyDocument = ({
               </View>
 
 
-              
+
 {/* <View
                 style={[
                   styles.tableRow,
@@ -1722,8 +1725,8 @@ const MyDocument = ({
             </View>
 
           </View>
-          
-      
+
+
           {/* part -4 */}
 
 
@@ -2321,7 +2324,7 @@ const MyDocument = ({
 
 
 
-          
+
           {/* <View style={[  styles.pt2, styles.mT1]}>
                       <Text
                         style={[
@@ -2330,11 +2333,11 @@ const MyDocument = ({
                           styles.col,
                           styles.smallFitter,
                           styles.ml2,
-          
+
                         ]}
                       >
                        Payment Schedule
-                        
+
                       </Text>
                     </View> */}
                     {/* <View style={[styles.fitter]}>
@@ -2359,17 +2362,17 @@ const MyDocument = ({
                               {   paddingBottom: '2px' },
                             ]}
                           >
-          
-          
+
+
                             <View style={[styles.tableCell_35, styles.p12, { marginLeft:'20px' }]}>
                               <Text style={styles.subtitle2}>
 
-          
+
                                   Charges
-                                
+
                               </Text>
                             </View>
-          
+
                             <View
                               style={[
                                 styles.tableCell_200,
@@ -2383,9 +2386,9 @@ const MyDocument = ({
                               Eligible
                               </Text>
                             </View>
-          
-          
-          
+
+
+
                             <View
                               style={[
                                 styles.tableCell_200,
@@ -2397,10 +2400,10 @@ const MyDocument = ({
                             >
                               <Text style={styles.subtitle2}>
                               Total inc GST
-          
+
                               </Text>
                             </View>
-          
+
                             <View
                               style={[
                                 styles.tableCell_200,
@@ -2414,39 +2417,39 @@ const MyDocument = ({
                               Received
                               </Text>
                             </View>
-          
+
                             <View
                               style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr8, ]}
                             >
                               <Text style={styles.subtitle2}>Balance</Text>
                             </View>
                           </View>
-          
-          
+
+
                         </View>
-          
-          
+
+
                         <View>
 
 
 
 
 
-          
-          
-                        
-          
-          
-          
+
+
+
+
+
+
           <View
                         style={[styles.tableRow, styles.textcolor, {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px'  }]}
                       >
                         <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
-          
+
                         <View style={[styles.tableCell_35, styles.p10]}></View>
-          
+
                         <View style={[styles.tableCell_20, styles.alignRight]}></View>
-          
+
                         <View
                           style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
                         >
@@ -2454,20 +2457,20 @@ const MyDocument = ({
                                   ? 'Flat'
                                   : 'Plot'} Cost</Text>
                         </View>
-          
+
                         <View
                           style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
                         >
                           <Text>{fCurrency(partATotal)}</Text>
                         </View>
                       </View>
-          
-                          
+
+
                         </View>
-          
-          
+
+
                       </View>
-          
+
                     </View> */}
 
 
@@ -3187,6 +3190,205 @@ style={[
 
       </View>
 
+
+
+      <View style={[styles.bgb, ]}
+        // break={index === myBookingPayload.plotPS.length - 1 ? 'after' : null}
+      >
+
+
+      <View style={[styles.topBoderRadius, styles.bottomBorderRadius, { border:'1px solid #CCCCCC', backgroundColor: '#fff', marginTop: '10px' }]} >
+
+
+
+
+<View style={[ styles.topBoderRadius,  {  backgroundColor:'#EDEDED'}]}>
+    <Text
+      style={[
+        // styles.subtitle1,
+        // styles.mb5,
+        styles.col,
+        styles.smallFitter,
+        styles.ml1,
+        styles.mT1,
+        { color:'#3D3D3D', fontWeight: 450 , fontSize: 10,}
+      ]}
+
+
+      onRender={(e) => handleSectionRender(e, 2)}
+    >
+      Unit Payments
+    </Text>
+    <Text
+      style={[
+        // styles.subtitle1,
+        styles.mb5,
+        styles.col,
+        styles.smallFitter,
+        styles.ml1,
+        {color: '#6A6A6A'}
+      ]}
+    >
+      Payments,Transactions & Status
+    </Text>
+
+  </View>
+
+
+
+<View style={[styles.ml2, styles.pt2, styles.mT1]}>
+<Text
+style={[
+styles.subtitle1,
+styles.mb5,
+// styles.col,
+// styles.smallFitter,
+styles.ml1,
+]}
+>
+I. Payment Transactions
+</Text>
+</View>
+<View style={[styles.fitter]}>
+<View
+style={[
+{   borderTopLeftRadius: 8,
+borderTopRightRadius: 8,  borderBottom: '1 solid #e5e7eb '  },
+styles.mb20,
+]}
+>
+<View
+style={[
+styles.subtitle1,
+{
+backgroundColor: '#EDEDED',
+borderTopLeftRadius: 6,
+borderTopRightRadius: 6,
+},
+]}
+>
+<View
+style={[
+styles.tableHeader,
+//  styles.p4,
+styles.textcolorhead,
+{ paddingBottom: '2px' },
+]}
+>
+<View style={[styles.tableCell_1, styles.p11]}>
+<Text style={styles.subtitle2}></Text>
+</View>
+
+<View style={[styles.tableCell_20, styles.p12]}>
+<Text style={[styles.subtitle2]}>Charges</Text>
+</View>
+<View style={[styles.tableCell_20, styles.p12]}>
+<Text style={styles.subtitle2}>Eligible</Text>
+</View>
+<View
+style={[
+ styles.tableCell_3,
+ styles.alignRight,
+ styles.p12,
+]}
+>
+<Text style={styles?.subtitle2}>Total inc GST</Text>
+</View>
+
+
+
+<View
+style={[
+ styles.tableCell_3,
+ styles.alignRight,
+ styles.p12,
+]}
+>
+<Text style={styles?.subtitle2}>Received</Text>
+</View>
+
+
+
+
+
+</View>
+</View>
+
+
+
+{unitTransactionsA?.map((d1, inx) => {
+
+
+  return (
+    <View
+      style={[
+        styles.tableRow,
+        styles.textcolor,
+        inx + 1 !== myAdditionalCharges.length ? styles.borderbottom : null,
+        { borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px' },
+      ]}
+      key={d1.id}
+    >
+      <View style={[styles.tableCell_1, styles.pl2, { marginTop: '-1px' }]}>
+        <Text>{inx + 1}</Text>
+      </View>
+
+      <View style={[styles.tableCell_35]}>
+        <Text style={styles.subtitle2}>
+        {prettyDate(d1?.txt_dated)}
+        </Text>
+      </View>
+
+      <View style={[styles.tableCell_20, styles.alignRight]}>
+        <Text>{d1?.mode}</Text>
+      </View>
+
+      <View style={[styles.tableCell_20, styles.alignRight, styles.pr4]}>
+        <Text>₹{d1?.totalAmount?.toLocaleString('en-IN')}</Text>
+      </View>
+
+      <View style={[styles.tableCell_20, styles.alignRight]}>
+        <Text>₹{d1?.status}</Text>
+      </View>
+
+
+    </View>
+  );
+})}
+
+
+
+<View style={[styles.totalRow, styles.mT0 ,  styles.textcolor, ]}>
+<View style={styles.tableCell_1}></View>
+
+<View style={[styles.tableCell_4]}>
+<Text style={styles.subtitle2}>Total Value:</Text>
+</View>
+
+<View style={styles.tableCell_3}></View>
+
+<View style={styles.tableCell_3}></View>
+
+<View style={[styles.tableCell_3, styles.alignRight]}>
+<Text>{fCurrency(myBookingPayload?.T_A + myBookingPayload?.T_B)}</Text>
+</View>
+</View>
+</View>
+
+
+
+
+
+
+
+
+</View>
+
+
+
+      </View>
+
+
         {/* <View style={[styles.gridContainer, styles.footer]} fixed>
           <View style={styles.col8}>
             <Text style={styles.subtitle2}>NOTES</Text>
@@ -3227,7 +3429,6 @@ const PdfUniteSummary = ({
   setPartBTotal,
   projectDetails,
   leadDetailsObj1,
-  unitTransactionsA,
   PSa,
   fullPs,
   totalIs,
@@ -3235,6 +3436,28 @@ const PdfUniteSummary = ({
   customerDetails,
 }) => {
   console.log('overall cost sheet is ', newPlotPS)
+   const { user: authUser } = useAuth()
+  const [unitTransactionsA, setUnitTransactionsA] = useState([])
+
+
+    useEffect(() => {
+      getAllTransactionsUnit()
+    }, [])
+
+    const { orgId } = authUser
+     const getAllTransactionsUnit = async () => {
+
+
+        const steamLeadLogs = await streamGetAllUnitTransactions(
+          orgId,
+          'snap',
+          {
+            unit_id: selCustomerPayload?.id,
+          },
+          (error) => []
+        )
+        await setUnitTransactionsA(steamLeadLogs)
+        return}
   return (
     <div>
       {' '}
@@ -3260,8 +3483,8 @@ const PdfUniteSummary = ({
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
             customerDetails={customerDetails}
-         
-            custObj1={custObj1} 
+
+            custObj1={custObj1}
             T_B={T_B}
             totalIs={totalIs}
             PSa={PSa}
@@ -3277,13 +3500,13 @@ const PdfUniteSummary = ({
             <button>Loading document...</button>
           ) : (
             <span
-              className="px-1 py-1 pb-[5px] text-sm  font-bold  
+              className="px-1 py-1 pb-[5px] text-sm text-blue-600
 
              duration-200 ease-in-out
-             transition"
+             transition flex flex-row"
             >
-          <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
-          Unite Summary
+          <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
+          Unit Summary
             </span>
           )
         }
