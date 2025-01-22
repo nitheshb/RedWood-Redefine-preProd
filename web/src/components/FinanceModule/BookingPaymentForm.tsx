@@ -328,6 +328,9 @@ console.log('customer details are', customerInfo, selUnitDetails)
       y = [{ id: 'wallet' }]
     } else {
       // update customer wallet in db
+      data.customerName = selUnitDetails.customerDetailsObj
+      ?.customerName1
+  
       y = await capturePayment(custNo, data, resetForm)
     }
 
@@ -341,7 +344,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
     }
     await capturePayment_log(data, txId, resetForm)
 
-    return
+    // return
     const s1 = await bookCompSteps
     await s1.push('payment_captured')
     await setBookCompSteps(s1)

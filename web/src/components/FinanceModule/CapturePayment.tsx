@@ -243,55 +243,62 @@ x.map((user) => {
     return unsubscribe
   }, [])
   const handleFileUploadFun = (file, type) => {
-    return new Promise((resolve, reject) => {
-      console.log('am i inside handle FileUpload')
-      if (!file) return reject('No file provided')
+    try {
+      return new Promise((resolve, reject) => {
+        console.log('am i inside handle FileUpload')
+        if (!file) return reject('No file provided')
 
-      try {
-        const uid = uuidv4()
-        const storageRef = ref(storage, `/spark_files/${'taskFiles'}_${uid}`)
-        const uploadTask = uploadBytesResumable(storageRef, file)
+        try {
+          const uid = uuidv4()
+          const storageRef = ref(storage, `/spark_files/${'taskFiles'}_${uid}`)
+          const uploadTask = uploadBytesResumable(storageRef, file)
 
-        uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
-            // setProgress(prog)
-            file.isUploading = false
-          },
-          (err) => reject(err), // Reject the promise if there's an error during upload
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-              file.url = url
-              console.log('url is ', url)
+          uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+              const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+              // setProgress(prog)
+              file.isUploading = false
+            },
+            (err) => reject(err), // Reject the promise if there's an error during upload
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                file.url = url
+                console.log('url is ', url)
 
-              let x1 = { url: url, fileName: file.name }
-              setCommentAttachUrl(x1)
+                let x1 = { url: url, fileName: file.name }
+                setCommentAttachUrl(x1)
 
-              // Resolve the promise with the URL once the upload is successful
-              resolve(x1)
-            }).catch((err) => {
-              reject(err) // Reject if getDownloadURL fails
-            })
-          }
-        )
-      } catch (error) {
-        console.log('upload error is ', error)
-        reject(error) // Reject the promise in case of any other errors
-      }
-    })
+                // Resolve the promise with the URL once the upload is successful
+                resolve(x1)
+              }).catch((err) => {
+                reject(err) // Reject if getDownloadURL fails
+              })
+            }
+          )
+        } catch (error) {
+          console.log('upload error is ', error)
+          reject(error) // Reject the promise in case of any other errors
+        }
+      })
+    } catch (error) {
+
+    }
+
   }
 
   const onSubmitSupabase = async (data, resetForm) => {
-    console.log('inside supabase support', data)
+    console.log('inside supabase supports', data?.fileUploader, data?.fileUploader!="")
+if(data?.fileUploader){
    let x =  await handleFileUploadFun(data?.fileUploader, 'panCard1')
     const z = await commentAttachUrl
-    data.attchUrl = x
+    data.attchUrl = x || ''
+}
     let y = {}
     y = data
 
 
-   await console.log('data is ',x,commentAttachUrl, data,data?.fileUploader,data?.fileUploader[0],data?.fileUploader.File, data?.fileUploader.url, commentAttachUrl)
+   await console.log('data is ',commentAttachUrl, data,data?.fileUploader,data?.fileUploader[0],data?.fileUploader.File, data?.fileUploader.url, commentAttachUrl)
 
    await setPayementDetails(data)
 
@@ -845,7 +852,7 @@ x.map((user) => {
                                                         'towardsBankDocId',
                                                         payload?.id
                                                       )
-                                                    
+
                                                       formik.setFieldValue(
                                                         'selCustomerWallet',
                                                         payload
@@ -1053,7 +1060,7 @@ x.map((user) => {
                                               className="w-4 h-4 text-[14px]"
                                               style={{ fontSize: '14px' }}
                                             />
-                                          Add Receipt
+                                          Add attachment
                                           </label>
                                           {/* {panCard1 != '' && (
                         <button

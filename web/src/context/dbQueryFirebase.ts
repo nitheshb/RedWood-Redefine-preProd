@@ -2950,6 +2950,32 @@ export const gretProjectionSum = async (orgId, data) => {
   console.log('total is ', receivable)
   return receivable
 }
+
+export const gretProjectCollectionSum = async (orgId, data) => {
+  // db.collection(`${orgId}_leads`).doc().set(data)
+  // db.collection('')
+  const { pId, monthNo, currentYear } = data
+  console.log('pushed values are', pId)
+  const q = await query(
+    collection(db, `${orgId}_proj_M_amounts`),
+    where('pId', '==', pId),
+    // where('pId', '==', '02dce2f6-f056-4dcb-9819-01b9710781e1'), //
+    // where('month', '==', monthNo),
+    // where('year', '==', currentYear)
+  )
+  const parentDocs = []
+  const querySnapshot = await getDocs(q)
+  await console.log('foundLength @@', querySnapshot.docs.length)
+  let receivable = 0
+  querySnapshot.forEach((doc) => {
+    const x = doc.data()
+    console.log('dc', doc.id, ' => ', doc.data())
+    receivable = receivable + x.received
+    parentDocs.push(doc.data())
+  })
+  console.log('total is ', receivable)
+  return receivable
+}
 export const greProjectBookingsSum = async (orgId, data) => {
   // db.collection(`${orgId}_leads`).doc().set(data)
   // db.collection('')
@@ -5494,6 +5520,66 @@ export const updateCrmExecutiveReAssignAgreegations = async (
   }
 
   return
+}
+
+export const updateCrmReportAmountAgreeNew = async (
+  orgId,
+  data,
+  by,
+) => {
+  console.log('data is===>', data)
+  const { schDate, assignedTo,txt_dated, projectId, totalAmount, status, receive_by } = data
+  console.log('data is===>', schDate)
+    const x = getWeekMonthNo(txt_dated)
+    const docId_d = `${receive_by}W${x.weekNumberOfYear}M${x.month}Y${x.year}P${data.projectId}`
+    const monthDocId_d = `${receive_by}M${x.month}Y${x.year}P${data.projectId}`
+    const docId_ProjectId = `W${x.weekNumberOfYear}M${x.month}Y${x.year}P${data.projectId}`
+    const MonthdocId_ProjectId = `M${x.month}Y${x.year}P${data.projectId}`
+
+    const payload = {
+      empId: receive_by,
+      pId: projectId,
+      week: x.weekNumberOfYear,
+      month: x.month,
+      year: x.year,
+      received: increment(totalAmount),
+      approved: []?.includes(status)? increment(totalAmount) : increment(0),
+      rejected: []?.includes(status)? increment(totalAmount) : increment(0)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_emp_amounts`, docId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_emp_amounts`, docId_d), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_emp_M_amounts`, monthDocId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_emp_M_amounts`, monthDocId_d), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_amounts`, docId_ProjectId), payload)
+    } catch (error) {
+      console.log('Project  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_amounts`, docId_ProjectId), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_ProjectId), payload)
+    } catch (error) {
+      console.log('Project  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_ProjectId), payload)
+    }
+  return
+
 }
 export const updateManagerApproval = async (
   orgId,
