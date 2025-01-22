@@ -168,7 +168,7 @@ const AddNewDemand = ({
     // const z = await commentAttachUrl
     const { mode, payReason,dated, gst } = data
     const amount = data?.amount.replace(/,/g, '')
-    const gstV = gst / 100
+    const gstV = gst /100
     const totalWithGst = Number(amount) + Number(amount) * Number(gstV)
     const x = {
       TotalNetSaleValueGsT: totalWithGst,
@@ -211,7 +211,8 @@ const AddNewDemand = ({
       addOnCS: newAddOnCS,
       fullPs: newfullPs,
       T_balance: selUnitDetails?.T_balance + totalWithGst,
-      T_Total: selUnitDetails?.T_Total + totalWithGst,
+      T_total: selUnitDetails?.T_total + totalWithGst,
+      T_F: (selUnitDetails?.T_F|| 0) + totalWithGst,
       T_elgible_balance: selUnitDetails?.T_elgible_balance + totalWithGst
     }
     console.log('value is', amount,totalWithGst )

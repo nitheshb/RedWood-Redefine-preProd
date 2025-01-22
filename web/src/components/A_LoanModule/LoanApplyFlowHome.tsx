@@ -36,7 +36,8 @@ const [fillError, showFillError] = useState(false)
 const [submittedReason, setSubmittedReason] = useState('')
 
 
-
+const [postRejectionReason, setPostRejectionReason] = useState('')
+const [postFillError, showPostFillError] = useState(false)
 
 
 
@@ -84,13 +85,13 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
 
     const x1 ={'loanBank': selLoanBank?.value || '' }
 
-    // updateBankLoanApprovals(orgId, customerDetails?.id, x1, user.email, `${status} Saved..!`, 'success', enqueueSnackbar)
-    // if (status === 'Rejected') {
-    //   setSubmittedReason(rejectionReason)
-    //   setRejectionReason('')
-    //   setRejection(false)
-    // }
-    updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${selLoanBank?.value}Saved..!`,'success',enqueueSnackbar )
+    updateBankLoanApprovals(orgId, customerDetails?.id, x1, user.email, `${selLoanBank?.value}Saved..!`, `${status} Saved..!`, 'success', enqueueSnackbar)
+    if (status === 'Rejected') {
+      setSubmittedReason(rejectionReason)
+      setRejectionReason('')
+      setRejection(false)
+    }
+    // updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${selLoanBank?.value}Saved..!`,'success',enqueueSnackbar )
 }}
     }, [selLoanBank])
 
@@ -98,14 +99,17 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
     const updatePerSancationFun = (status)=> {
       SetPreSanctionReview(status)
       const x1 ={'LpreStatus': status || '',
-        // 'loan_rejection_reason': status === 'Rejected' ? rejectionReason : null
+        'loan_rejection_reason': status === 'Rejected' ? rejectionReason : null
        }
       updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`${status} Saved..!`,'success',enqueueSnackbar )
     }
 
     const updatePostSancationFun = (status)=> {
       SetPostSanctionReview(status)
-      const x1 ={'LpostStatus': status || '' }
+      const x1 ={'LpostStatus': status || '',
+        'post_loan_rejection_reason': status === 'Rejected' ? postRejectionReason : null
+
+       }
       updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`Banker Sanction ${status} Saved..!`,'success',enqueueSnackbar )
     }
 
@@ -154,7 +158,26 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
             <h2 className="font-medium flex-grow">Loan Approval</h2>
             <p className="text-md text-[10px] flex-grow text-right">
               {/* Banker sanction is {postSanctionReview} */}
-              {customerDetails?.loan_rejection_reason || `Banker sanction is ${postSanctionReview}`}
+              {/* {customerDetails?.loan_rejection_reason || `Banker sanction is ${postSanctionReview}`} */}
+              {/* {customerDetails?.loan_rejection_reason || customerDetails?.post_loan_rejection_reason || `Banker sanction is ${postSanctionReview}`} */}
+
+              <div>
+             {customerDetails?.loan_rejection_reason && (
+             <p>Pre Rejection Reason: {customerDetails.loan_rejection_reason}</p>
+                 )}
+                {customerDetails?.post_loan_rejection_reason && (
+
+              <p>Post Loan Rejection Reason: {customerDetails.post_loan_rejection_reason}</p>
+                )}
+             {!customerDetails?.loan_rejection_reason &&
+
+                    !customerDetails?.post_loan_rejection_reason && (
+                  <p>Banker sanction is {postSanctionReview}
+                  </p>
+                  
+                     )}
+
+                      </div>
 
             </p>
           </div>
@@ -872,14 +895,54 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     </div>
                   </>
                 )}
-
+{/* 
                 {postSanctionReview === 'Rejected' && (
                   <div className="mt-4">
                     <div className="p-4 bg-gray-200 rounded-md">
                       Enter Rejected Reason
                     </div>
                   </div>
-                )}
+                )} */}
+
+
+{postSanctionReview === 'Rejected' && (
+    <div className="mt-2">
+      <div className="mt-">
+        <div className="flex justify-center border-2 py-2 px-6 px-10 mb-2 rounded-xl">
+          <input
+            type="text"
+            name="postBlockReason"
+            placeholder="Write Post-Sanction Rejection Comments"
+            className="w-full outline-none text-gray-700 text-lg"
+            onChange={(e) => {
+              setPostRejectionReason(e.target.value)
+            }}
+          />
+          {postFillError && (
+            <div className="error-message text-red-700 text-xs p-1 mx-auto">
+              Please enter rejection reason
+            </div>
+          )}
+          <button
+            type="submit"
+            className={`${
+              postRejectionReason.length > 0 ? 'bg-[#ff9f87]' : 'bg-[#f9eeeb]'
+            } text-gray-700 font-semibold px-6 py-2 rounded-xl text-md`}
+            onClick={() => {
+              if (postRejectionReason !== '') {
+                showPostFillError(false)
+                updatePostSancationFun('Rejected')
+              } else {
+                showPostFillError(true)
+              }
+            }}
+          >
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
               </section>
             )}
           </section>

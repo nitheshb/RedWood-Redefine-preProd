@@ -11,12 +11,23 @@ import CrmUnitPaymentSchedule from './CrmPaymentSchedule'
 import CrmPaymentSummary from './CrmPaymentSummary'
 import CrmUnitPaymentGraph from './CrmUnitPaymentGraph'
 import { crmActivieLogNamer } from 'src/util/CrmActivityLogHelper'
+import PdfUniteSummary from 'src/util/PdfUniteSummary'
 
 const CrmUnitSummary = ({
   selCustomerPayload: selUnitPayload,
   assets,
   totalIs,
   unitTransactionsA,
+  fullPs,
+  T_B,
+  PSa,
+  leadDetailsObj1,
+  projectDetails,
+  streamUnitDetails,
+  selCustomerPayload,
+  myBookingPayload,
+  customerDetails,
+  selUnitDetails,
 }) => {
   const { user } = useAuth()
   const pdfUnitSummaryComp = useRef(null)
@@ -212,6 +223,68 @@ const CrmUnitSummary = ({
           </div>
 
           <div className="rounded w-[300px] ml-2 py-3 flex flex-col">
+
+          <div className="flex flex-col bg-[#f0f1ff] mb-2 rounded-lg p-3 ">
+
+          <div className="flex flex-row  bg-white shadow rounded-xl my-1  px-2 py-2 min-w-[260px]">
+              {/* <img
+                src="https://static.ambitionbox.com/static/benefits/WFH.svg"
+                alt=""
+              />
+              <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
+                  Payments Summary
+              </h1> */}
+
+
+<div>
+
+<PdfUniteSummary
+    user={user}
+    selUnitDetails={selUnitDetails}
+    streamUnitDetails={streamUnitDetails}
+    myBookingPayload={myBookingPayload}
+    myObj={newPlotCostSheetA}
+    selCustomerPayload={selCustomerPayload}
+    newPlotPS={newPlotPS}
+    myAdditionalCharges={newAdditonalChargesObj}
+    unitTransactionsA={unitTransactionsA}
+    netTotal={netTotal}
+    totalIs={totalIs}
+    customerDetails={customerDetails}
+    fullPs={fullPs}
+    T_B={T_B}
+    
+    
+    
+    PSa={PSa}
+    setNetTotal={setNetTotal}
+    partATotal={partATotal}
+    partBTotal={partBTotal}
+    // setPartATotal={setPartATotal}
+    // setPartBTotal={setPartBTotal}
+    projectDetails={projectDetails}
+    leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined} 
+    // user={user}
+    // selUnitDetails={selUnitDetails}
+    // myObj={newPlotCostSheetA}
+    // newPlotPS={newPlotPS}
+    // netTotal={unitTotal}
+    // setNetTotal={setUnitTotal}
+    // partATotal={partATotal}
+
+    // partBTotal={0}
+    // setPartATotal={partATotal}
+    // projectDetails={{}} myAdditionalCharges={undefined} setPartBTotal={undefined} leadDetailsObj1={undefined} customerDetails={undefined}
+    />
+</div>
+          </div>
+
+        </div>
+
+
+
+
+
           <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 ">
           <div className="flex flex-row ">
                 <img

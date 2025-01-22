@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react'
 
 import {
   getBookedUnitsByProject,
+  gretProjectCollectionSum,
   gretProjectionSum,
   steamUsersListByDept,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { getNextThreeMonths } from 'src/util/dateConverter'
+import { getLastThreeMonths, getNextThreeMonths } from 'src/util/dateConverter'
 
 import TableSkeleton from './_mock/comps/table/table-skeleton'
 import EmpCollectionSummary from './empCollectionReport'
@@ -28,6 +29,7 @@ import {
 } from 'recharts';
 import { Calendar, ChevronRight, TrendingUp } from 'lucide-react';
 import CRMCollectionReportKPI from './collectionReportKPI'
+import CRMReportSideWindow from 'src/components/SiderForm/CRMReportSideView'
 
 
 
@@ -208,11 +210,19 @@ const reportData = [
 const CrmCollectionReport = ({ projects, unitsFetchData }) => {
   const { user } = useAuth()
   const { orgId } = user
+  const [isOpenSideForm, setReportSideForm] = useState(false)
+  const [filterPayload, setFilterPayload] = useState({})
+
+  const [subTitle, setSubTitle] = useState('')
 
   const [filter, setFilter] = useState('')
   const [dataView, setDataView] = useState('monthly')
   const [monthsA, setMonthsA] = useState(getNextThreeMonths())
+  const [last3MonthsA, setLast3MonthsA] = useState(getLastThreeMonths())
+
   const [projectAValues, setProjectWithValues] = useState([])
+  const [projectCollections, setProjectCollections] = useState([])
+
   const [loader, setLoaderIcon] = useState(false)
   const [selCat, setSelCat] = useState('project_collections')
   const [crmEmployeesA, setCRMEmployees] = useState([])
@@ -241,6 +251,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
   }
   useEffect(() => {
     calMonthlyValueNew(projects)
+    calMonthlyEmpCollections(projects)
   }, [projects])
 
   const filteredData = reportData.filter((item) => {
@@ -284,6 +295,9 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
             // Fetch projection sum asynchronously
             const totalReceivableValue = await gretProjectionSum(orgId, payload)
 
+            // const totalReceivableValue = await gretProjectCollectionSum(orgId, payload)
+
+
             // Update month object with receivable value
             const updatedMonth = { ...month, receive: totalReceivableValue }
             console.log(
@@ -314,6 +328,8 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
     }
   }
 
+
+
   const calMonthlyValue = (pId, monthNo, currentYear) => {
     const data = { pId, monthNo, currentYear }
 
@@ -336,7 +352,58 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
     // get values matched to db
   }
 
+  const calMonthlyEmpCollections = async (projects) => {
+    try {
+      setLoaderIcon(true)
+      const insideValues = []
 
+      // Iterate over projects
+      for (const projectData of projects) {
+        //  const z = await projects.map((projectData) => {
+        const newProjectData = { ...projectData }
+        const projectMonthArray = []
+
+        // Use Promise.all to execute asynchronous operations concurrently
+        await Promise.all(
+          monthsA.map(async (month) => {
+            const payload = {
+              pId: projectData.uid,
+              monthNo: month.count,
+              currentYear: month.currentYear,
+            }
+
+            // Fetch projection sum asynchronously
+            const totalReceivableValue = await gretProjectCollectionSum(orgId, payload)
+
+            // Update month object with receivable value
+            const updatedMonth = { ...month, receive: totalReceivableValue }
+            console.log(
+              'Value refreshed',
+              updatedMonth,
+              projectData?.projectName,
+              '=>',
+              updatedMonth.receive?.length
+            )
+
+            projectMonthArray.push(updatedMonth)
+          })
+        )
+
+        // Update project data with month array
+        newProjectData.months = projectMonthArray
+        insideValues.push(newProjectData)
+      }
+
+      // After processing all projects, update state with updated project data
+      setProjectCollections(insideValues)
+    } catch (error) {
+      console.error('Error calculating monthly values:', error)
+      // Handle error
+    } finally {
+      // Set loading state to false
+      setLoaderIcon(false)
+    }
+  }
 
   //const [selCat, setSelCat] = useState("project_collections");
   //const [dataView, setDataView] = useState("monthly");
@@ -376,11 +443,17 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
   };
 
   const sortedData = sortData(projectAValues);
+  const collectedData = sortData(projectCollections);
 
 
 
 
-
+  const showDrillDownFun = async (text, data) => {
+    // Display sideForm
+    setReportSideForm(true)
+    setFilterPayload(data)
+    setSubTitle(text)
+  }
 
 
   return (
@@ -546,7 +619,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
       <div className="mb-12">
         <h3 className="text-xl font-normal mb-6">Project-wise Breakdown</h3>
         <div className="space-y-4 max-h-[150px] overflow-y-auto">
-        {sortedData?.map((data, index) => {
+        {collectedData?.map((data, index) => {
           return( <div className="flex justify-between items-center" key={index}>
             <span className="text-gray-500">                      {capitalizeFirstLetter(data?.projectName)}</span>
             <span className="text-gray-500">₹    {data?.months
@@ -653,42 +726,52 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
                   <section className=" w-full max-w-7xl mx-auto mt-6">
           <table className="rounded-[30px] w-full max-w-7xl mx-auto  my-3 overflow-hidden ">
             <thead className="">
-              <tr
-                className={
-                  dataView === 'monthly'
-                    ? 'bg-[#E0E4EB] text-gray-600 text-sm leading-normal   border-gray-100 rounded-2xl'
-                    : 'bg-[#E0E4EB] text-gray-600 text-sm leading-normal border  border-gray-100  rounded-2xl'
-                }
+            <tr
+            className={
+              dataView === 'monthly'
+                ? 'bg-[#E0E4EB] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
+                : 'bg-[#E0E4EB] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
+            }
+          >
+            <th
+              className="py-1 px-6 text-center border-0  rounded-tl-2xl"
+              colSpan="1"
+            ></th>
+            <th
+              className="py-1 px-6 text-center border-0  border-gray-100"
+              colSpan="1"
+            ></th>
+            <th
+              className="py-1 px-6 text-center border-0  border-gray-100"
+              colSpan="1"
+            ></th>
+            {dataView === 'weekly' && (
+              <th
+                className="py-1 px-6 text-center border  border-gray-100 rounded-tr-2xl"
+                colSpan="4"
               >
-                <th
-                  className="py-1 px-6 text-center  text-[#3D3D3D] text-[16px] font-semibold  border-gray-100"
-                  colSpan="1"
-                ></th>
-                <th
-                  className="py-1 px-6 text-center  text-[#3D3D3D] text-[16px] font-semibold  border-gray-100 "
-                  colSpan="1"
-                ></th>
-                <th
-                  className="py-1 px-6 text-center  text-[#3D3D3D] text-[16px] font-semibold  border-gray-100"
-                  colSpan="1"
-                ></th>
-                {dataView === 'weekly' && (
-                  <th
-                    className="py-1 px-6 text-center  text-[#3D3D3D] text-[16px] font-semibold  border-gray-100"
-                    colSpan="4"
-                  >
-                    Weekly
-                  </th>
-                )}
-                {dataView === 'monthly' && (
-                  <th
-                    className="py-1 px-6 text-center  text-[#3D3D3D] text-[16px] font-semibold  border-gray-100"
-                    colSpan="4"
-                  >
-                    Monthly
-                  </th>
-                )}
-              </tr>
+                Weekly
+              </th>
+            )}
+            {dataView === 'monthly' && (
+              <>
+                {last3MonthsA.map((month, i) => {
+                  return (
+                    <th
+                      key={i}
+                      className={`py-1 px-6 text-center border-l   border-[#d3d1d1] ${
+                        i+1 === monthsA.length ? 'rounded-tr-2xl' : ''
+                      }`}
+                      colSpan="3"
+                    >
+                      {month?.name}
+                    </th>
+                  )
+                })}
+              </>
+            )}
+          </tr>
+
               <tr className="bg-[#F0F2F5] border-t border-b border-[#E8ECF4]">
                 <th className="text-left pl-3 p-1 py-2 font-medium text-[#000000] whitespace-nowrap "
                 onClick={() => requestSort("projectName")}
@@ -707,14 +790,26 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
                 </th>
                 {dataView === 'monthly' ? (
                   <>
-                    {monthsA.map((month, i) => {
+                    {last3MonthsA.map((month, i) => {
                       return (
-                        <th
-                          key={i}
-                          className="text-right p-1 pr-3 font-medium text-[#000000] whitespace-nowrap "
-                        >
-                          {month?.name}
-                        </th>
+                        // <th
+                        //   key={i}
+                        //   className="text-right p-1 pr-3 font-medium text-[#000000] whitespace-nowrap "
+                        // >
+                        //   {month?.name}
+                        // </th>
+                        ['Target', 'Collection', 'Pending'].map(
+                          (month, i) => {
+                            return (
+                              <th
+                                key={i}
+                                className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
+                              >
+                                {month}
+                              </th>
+                            )
+                          }
+                        )
                       )
                     })}
                   </>
@@ -788,12 +883,27 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
                           const x = month
                           console.log('what is this', month)
                           return (
+                            <>
                             <td
-                              key={i}
-                              className="py- px-3 text-right border-t border-l  border-gray-100"
-                            >
-                              {`${x?.receive?.toLocaleString('en-IN')}`}
-                            </td>
+                            key={i}
+                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                          onClick={() => showDrillDownFun('project_collections', data)}
+                          >
+                            {`${x?.receive?.toLocaleString('en-IN')}`}
+                          </td>
+                          <td
+                            key={i}
+                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                          >
+                            {`${x?.collected?.toLocaleString('en-IN')}`}
+                          </td>
+                          <td
+                            key={i}
+                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                          >
+                            {`${x?.pending?.toLocaleString('en-IN')}`}
+                          </td>
+                          </>
                           )
                         })}
                         {/* <td className="py-3 px-6 text-right border border-black">
@@ -843,7 +953,19 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
 </div>
 
 
-
+<CRMReportSideWindow
+            open={isOpenSideForm}
+            setOpen={setReportSideForm}
+            title={subTitle}
+            subtitle={subTitle}
+            filterPaylod={filterPayload}
+            // setCustomerDetails={setCustomerDetails}
+            // setisImportLeadsOpen={setisImportLeadsOpen}
+            // leadsLogsPayload={drillDownPayload}
+            widthClass="max-w-7xl"
+            unitsViewMode={undefined}
+            setIsClicked={undefined}
+          />
 
     </div>
   )
