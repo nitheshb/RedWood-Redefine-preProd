@@ -11,6 +11,8 @@ import { USER_ROLES } from 'src/constants/userRoles'
 import {
   getAllProjects,
   steamUsersCreditNotesList,
+  streamGetAllTransactions,
+  updateCrmReportAmountAgreeNew,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
@@ -54,6 +56,14 @@ const CreditNoteSummaryHomePage = ({
   const [uuidKey, setUuidKey] = useState(uuidv4())
   const [tableData, setTableData] = useState([])
   const [unitsFetchData, setUnitsFetchData] = useState([])
+  const [loader, setLoader] = useState(false)
+  const [finFetchedData, setFinFetchedData] = useState([])
+  const [finFetchedLength, setFinFetchedLength] = useState(0)
+  const [finCompLength, setFinCompLength] = useState(0)
+
+
+
+
 
   const [searchValue, setSearchValue] = useState('')
   const [selProjectIs, setSelProject] = useState({
@@ -247,10 +257,37 @@ const handleSort = (key) => {
 
 
 
+const triggerCollectionsAudit = async () => {
+  // start loader
+  // get all the transactions
+  // loop through each transaction and call updateCrmReportAmountAgree
+  // end loader here
 
+  // 1) start loader
+  setLoader(true)
+  // 2) get all the transactions
+  getTransactionsDataFun()
 
+}
 
+  const getTransactionsDataFun = async () => {
+    const { access, uid , email} = user
+    const steamLeadLogs = await streamGetAllTransactions(
+      orgId,
+      'snap',
+      {
 
+      },
+      (error) => []
+    )
+    setFinFetchedData(steamLeadLogs)
+    setFinFetchedLength(steamLeadLogs.length)
+    steamLeadLogs.map((item, i) => {
+      updateCrmReportAmountAgreeNew(orgId, item,email)
+      setFinCompLength(i+1)
+      console.log('item is ', i)
+    })
+  }
 
 
 
@@ -418,6 +455,8 @@ const handleSort = (key) => {
               />
 
             )}
+            <div>{finCompLength}/{finFetchedLength}</div>
+            <button onClick={()=> triggerCollectionsAudit()}>Collections Audit</button>
           </div>
         </div>
       </div>

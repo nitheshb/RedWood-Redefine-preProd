@@ -762,7 +762,7 @@ const CostBreakUpPdf = ({
     } else {
       total = Math.round(
         Number(
-          selUnitDetails?.super_built_up_area || selUnitDetails?.construct_area
+          selUnitDetails?.super_built_up_area || selUnitDetails?.construct_area ||0
         ) * newValue
       )
       gstTotal = Math.round(total * (gstTaxIs / 100))

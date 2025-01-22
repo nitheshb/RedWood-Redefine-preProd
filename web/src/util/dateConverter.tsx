@@ -220,3 +220,53 @@ export function getNextThreeMonths() {
 
   return nextMonths
 }
+export function getLastThreeMonths() {
+  const months = [
+    { name: 'January', value: 1 },
+    { name: 'February', value: 2 },
+    { name: 'March', value: 3 },
+    { name: 'April', value: 4 },
+    { name: 'May', value: 5 },
+    { name: 'June', value: 6 },
+    { name: 'July', value: 7 },
+    { name: 'August', value: 8 },
+    { name: 'September', value: 9 },
+    { name: 'October', value: 10 },
+    { name: 'November', value: 11 },
+    { name: 'December', value: 12 },
+  ]
+
+  // Get the current month
+  const currentDate = new Date()
+  const currentYear = currentDate.getFullYear() % 100
+  const currentMonthIndex = currentDate.getMonth()
+  const currentMonthName = months[currentMonthIndex]
+
+  const lastMonths = [
+    {
+      name: `${currentMonthName?.name}-${currentYear}`,
+      count: currentMonthName?.value,
+      currentYear: currentYear //%100
+    },
+  ]
+
+// Get the names and counts of the last three months
+for (let i = 1; i <= 2; i++) {
+  let previousMonthIndex = (currentMonthIndex - i + 12) % 12;
+  let previousMonthName = months[previousMonthIndex];
+
+  // Adjust year when moving back to a previous year
+  let previousYear = currentYear;
+  if (currentMonthIndex - i < 0) {
+    previousYear = (currentYear - 1 + 100) % 100; // Handle the year transition
+  }
+
+  lastMonths.push({
+    name: `${previousMonthName.name}-${previousYear}`,
+    count: previousMonthName.value,
+    currentYear: previousYear,
+  });
+}
+
+return lastMonths.reverse();
+}

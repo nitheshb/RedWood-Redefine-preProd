@@ -32,6 +32,8 @@ import pdfimg9 from '../../public/pdfimg9.png'
 import pdfimg10 from '../../public/pdfimg10.png'
 import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
+import { streamGetAllUnitTransactions } from 'src/context/dbQueryFirebase'
+import { useAuth } from 'src/context/firebase-auth-context'
 
 
 Font.register({
@@ -1089,7 +1091,7 @@ const MyDocument = ({
                       {projectDetails?.projectType?.name === 'Apartment'
                         ? 'Flat'
                         : 'Plot'}{' '}
-                      
+
                     </Text>
                   </View>
 
@@ -1231,7 +1233,7 @@ const MyDocument = ({
               </View>
             </View>
 
-                
+
               </View>
 
 
@@ -1437,7 +1439,7 @@ const MyDocument = ({
               </View>
 
 
-              
+
 <View
                 style={[
                   styles.tableRow,
@@ -1498,7 +1500,7 @@ const MyDocument = ({
             </Text>
           </View>
 
-          
+
 
 
 
@@ -1652,8 +1654,8 @@ const MyDocument = ({
             </View>
 
           </View>
-          
-          
+
+
           }
           {/* part -4 */}
 
@@ -2532,13 +2534,33 @@ const PdfSummaryGenerator = ({
   setPartBTotal,
   projectDetails,
   leadDetailsObj1,
-  unitTransactionsA,
   PSa,
   totalIs,
   custObj1,
   customerDetails,
 }) => {
   console.log('overall cost sheet is ', newPlotPS)
+  const { user: authUser } = useAuth()
+
+  useEffect(() => {
+    getAllTransactionsUnit()
+  }, [])
+
+const [unitTransactionsA, setUnitTransactionsA] = useState([])
+  const { orgId } = authUser
+   const getAllTransactionsUnit = async () => {
+
+
+      const steamLeadLogs = await streamGetAllUnitTransactions(
+        orgId,
+        'snap',
+        {
+          unit_id: selCustomerPayload?.id,
+        },
+        (error) => []
+      )
+      await setUnitTransactionsA(steamLeadLogs)
+      return}
   return (
     <div>
       {' '}
@@ -2564,8 +2586,8 @@ const PdfSummaryGenerator = ({
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
             customerDetails={customerDetails}
-         
-            custObj1={custObj1} 
+
+            custObj1={custObj1}
             totalIs={totalIs}
             PSa={PSa}
           />
@@ -2581,7 +2603,7 @@ const PdfSummaryGenerator = ({
             <span
               className=" focus:outline-none px-1 py-1 mt-4 text-sm font-bold tracking-wider rounded-sm
 
-          
+
 
              duration-200 ease-in-out
              transition"

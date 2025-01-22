@@ -18,8 +18,10 @@ import {
   updateProjectCounts,
   updateProjectionsAgreegationsOnBooking,
   updateUnitAsBooked,
+  updateWalletTransactionStatus,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+
 import CaptureUnitPayment from './CapturePayment'
 
 const AddPaymentDetailsForm = ({
@@ -288,7 +290,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
       dataObj.order = i
       updatePS(dataObj, resetForm)
     })
-
+    const { uid } = selUnitDetails
     // customerfbA
     let custNo
     if ((await customerfbA?.length) > 0) {
@@ -296,8 +298,43 @@ console.log('customer details are', customerInfo, selUnitDetails)
     } else {
       return
     }
+
+    let primaryCustomerName
+    let phoneNo
+    if(customerInfo?.length > 0){
+      const { customerName1, phoneNo1 } = customerInfo[0]
+      primaryCustomerName = customerName1
+      phoneNo = phoneNo1
+    }
     await setBookCurentStep(['payment_captured'])
-    const y = await capturePayment(custNo, data, resetForm)
+    let y
+    // check if mode is not equal to 'wallet'
+    data.amount = Number(data?.amount)
+    data.totalAmount = Number(data?.amount)
+    if (data?.mode === 'wallet') {
+      data.status = 'walletAmount'
+
+      data.Uuid = uid
+      data.custId = data?.selCustomerWallet?.id
+
+      console.log('caputre block', data)
+
+      await updateWalletTransactionStatus(
+        orgId,
+        data,
+        user?.email,
+        enqueueSnackbar
+      )
+      y = [{ id: 'wallet' }]
+    } else {
+      // update customer wallet in db
+      data.customerName = selUnitDetails.customerDetailsObj
+      ?.customerName1
+  
+      y = await capturePayment(custNo, data, resetForm)
+    }
+
+
     // get paymentTxn id
     let txId
     if ((await y?.length) > 0) {
@@ -306,6 +343,8 @@ console.log('customer details are', customerInfo, selUnitDetails)
       return
     }
     await capturePayment_log(data, txId, resetForm)
+
+    // return
     const s1 = await bookCompSteps
     await s1.push('payment_captured')
     await setBookCompSteps(s1)
@@ -333,7 +372,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
       Date: Timestamp.now().toMillis(),
       Email: customerInfo?.customerDetailsObj?.email1 || '',
       Mobile: customerInfo?.customerDetailsObj?.email1 || '',
-      Name: customerInfo?.customerDetailsObj?.email1,
+      Name: customerInfo?.customerDetailsObj?.email1 || primaryCustomerName,
       Note: '',
       Project: '',
       Source: 'Booking' || '',
@@ -365,7 +404,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
     // proceed to copy
 
     const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
-    const { uid } = selUnitDetails
+
     // 1)Make an entry to finance Table {source: ''}
     console.log(
       'secondary value si s',
@@ -453,6 +492,8 @@ console.log('customer details are', customerInfo, selUnitDetails)
     // add phaseNo , projName to selUnitDetails
     // 2)Create('')
 
+
+
     const x2 = await createBookedCustomer(
       orgId,
       uid,
@@ -461,9 +502,9 @@ console.log('customer details are', customerInfo, selUnitDetails)
         projectName: leadDetailsObj2?.Project || projectDetails?.projectName,
         ProjectId: leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
         // ...customerDetailsObj,
-        Name: customerDetailsObj?.customerName1,
-        Mobile: customerDetailsObj?.phoneNo1,
-        Email: customerDetailsObj?.email1,
+        Name: customerDetailsObj?.customerName1 || primaryCustomerName,
+        Mobile: customerDetailsObj?.phoneNo1 || phoneNo,
+        Email: customerDetailsObj?.email1 || '',
         secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
         assets: arrayUnion(uid),
         // [`${uid}_cs`]: leadDetailsObj2[`${uid}_cs`],
@@ -565,7 +606,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
     unitUpdate[`T_balance`] = T_balance
     unitUpdate[`T_elgible_balance`] = T_elgible_balance
 
-    const uploadPayload = {...myBookingPayload, ...unitUpdate}
+    const uploadPayload = { ...myBookingPayload, ...unitUpdate }
 
     console.log('unit space is ', uid)
     await updateUnitAsBooked(

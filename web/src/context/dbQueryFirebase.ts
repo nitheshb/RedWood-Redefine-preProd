@@ -507,11 +507,12 @@ export const updateWalletTransactionStatus = async (
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
   const { id, status, custId, Uuid, projectId, totalAmount } = data1
   // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
+  if(status != 'walletAmount'){
   const { data: lead_logs, error } = await supabase
     .from(`${orgId}_accounts`)
     .update({ status: status })
     .eq('id', id)
-
+  }
   const { data: data4, error: error4 } = await supabase
     .from(`${orgId}_customer_logs`)
     .insert([
@@ -527,6 +528,17 @@ export const updateWalletTransactionStatus = async (
         projectId: projectId || '',
       },
     ])
+    console.log('error value is', {
+      type: 'accounts',
+      subtype: data1?.subtype || 'wallet_reviewer',
+      T: Timestamp.now().toMillis(),
+      Uuid: Uuid,
+      by,
+      payload: { comments: '' },
+      from: data1?.oldStatus || 'review',
+      to: status,
+      projectId: projectId || '',
+    })
     console.log('check it ', status, status === 'received',status === 'Failed', totalAmount, data1)
     if(status === 'Rejected'){
     await updateDoc(doc(db, `${orgId}_customers`, custId), {
@@ -548,6 +560,15 @@ export const updateWalletTransactionStatus = async (
         variant: 'success',
       })
     }
+    if(status === 'walletAmount'){
+      await updateDoc(doc(db, `${orgId}_customers`, custId), {
+        remaining_money: increment(-totalAmount),
+
+      })
+      await enqueueSnackbar('Marked as payment received', {
+        variant: 'success',
+      })
+    }
   console.log('check it ', data4, error4)
   if (lead_logs) {
     await enqueueSnackbar('Marked as Amount2 Recived', {
@@ -555,6 +576,8 @@ export const updateWalletTransactionStatus = async (
     })
   }
   if (error) {
+
+    console.log('error =>', error, data1)
     await enqueueSnackbar('Transaction Updation Failed', {
       variant: 'error',
     })
@@ -2400,6 +2423,7 @@ export const addLead = async (orgId, data, by, msg) => {
     delete data['']
     const x = await addDoc(collection(db, `${orgId}_leads`), data)
     await console.log('add Lead value is ', x, x.id, data)
+
     const {
       intype,
       Name,
@@ -2921,6 +2945,32 @@ export const gretProjectionSum = async (orgId, data) => {
     const x = doc.data()
     console.log('dc', doc.id, ' => ', doc.data())
     receivable = receivable + x.receivable
+    parentDocs.push(doc.data())
+  })
+  console.log('total is ', receivable)
+  return receivable
+}
+
+export const gretProjectCollectionSum = async (orgId, data) => {
+  // db.collection(`${orgId}_leads`).doc().set(data)
+  // db.collection('')
+  const { pId, monthNo, currentYear } = data
+  console.log('pushed values are', pId)
+  const q = await query(
+    collection(db, `${orgId}_proj_M_amounts`),
+    where('pId', '==', pId),
+    // where('pId', '==', '02dce2f6-f056-4dcb-9819-01b9710781e1'), //
+    // where('month', '==', monthNo),
+    // where('year', '==', currentYear)
+  )
+  const parentDocs = []
+  const querySnapshot = await getDocs(q)
+  await console.log('foundLength @@', querySnapshot.docs.length)
+  let receivable = 0
+  querySnapshot.forEach((doc) => {
+    const x = doc.data()
+    console.log('dc', doc.id, ' => ', doc.data())
+    receivable = receivable + x.received
     parentDocs.push(doc.data())
   })
   console.log('total is ', receivable)
@@ -5470,6 +5520,66 @@ export const updateCrmExecutiveReAssignAgreegations = async (
   }
 
   return
+}
+
+export const updateCrmReportAmountAgreeNew = async (
+  orgId,
+  data,
+  by,
+) => {
+  console.log('data is===>', data)
+  const { schDate, assignedTo,txt_dated, projectId, totalAmount, status, receive_by } = data
+  console.log('data is===>', schDate)
+    const x = getWeekMonthNo(txt_dated)
+    const docId_d = `${receive_by}W${x.weekNumberOfYear}M${x.month}Y${x.year}P${data.projectId}`
+    const monthDocId_d = `${receive_by}M${x.month}Y${x.year}P${data.projectId}`
+    const docId_ProjectId = `W${x.weekNumberOfYear}M${x.month}Y${x.year}P${data.projectId}`
+    const MonthdocId_ProjectId = `M${x.month}Y${x.year}P${data.projectId}`
+
+    const payload = {
+      empId: receive_by,
+      pId: projectId,
+      week: x.weekNumberOfYear,
+      month: x.month,
+      year: x.year,
+      received: increment(totalAmount),
+      approved: []?.includes(status)? increment(totalAmount) : increment(0),
+      rejected: []?.includes(status)? increment(totalAmount) : increment(0)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_emp_amounts`, docId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_emp_amounts`, docId_d), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_emp_M_amounts`, monthDocId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_emp_M_amounts`, monthDocId_d), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_amounts`, docId_ProjectId), payload)
+    } catch (error) {
+      console.log('Project  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_amounts`, docId_ProjectId), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_ProjectId), payload)
+    } catch (error) {
+      console.log('Project  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_ProjectId), payload)
+    }
+  return
+
 }
 export const updateManagerApproval = async (
   orgId,
