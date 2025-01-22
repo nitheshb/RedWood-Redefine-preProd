@@ -52,20 +52,17 @@ const CrmUnitFinanceHistory = ({
 
 
 
-       <PdfTransactionsGenerator
-  user={user}
-  unitTransactionsA={unitTransactionsA}
-  selCustomerPayload={selCustomerPayload}
-  projectDetails={projectDetails}
-  selUnitDetails={undefined} myObj={undefined} newPlotPS={undefined} myAdditionalCharges={undefined} streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined}  leadDetailsObj1={undefined} PSa={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}                                        // selUnitDetails={selUnitDetails}
-/>
+
 
 
       <div className="mt-2">
-        <section className="mr-2 flex flex-col bg-[#F0F1FF] from-green-50 to-amber-50  bg-[#F0F1FF] bg-[#F0F1FF] bg-[#F0F1FF] p-3 border border-[#e5e7f8] rounded-md ">
+        <section className="mr-2 flex flex-col   bg-white p-3 border border-[#e5e7f8] rounded-md ">
           <div>
-            <div className="flex flex-row ">
-                <img
+            <div className="flex flex-row px-3 justify-between items-center ">
+
+
+              <div className='flex items-center'>
+              <img
                   src="https://static.ambitionbox.com/static/benefits/JobTraining.svg"
                   alt=""
                 />
@@ -73,42 +70,69 @@ const CrmUnitFinanceHistory = ({
                 Payment History
                 </h1>
               </div>
+
+
+                <div>
+                <PdfTransactionsGenerator
+  user={user}
+  unitTransactionsA={unitTransactionsA}
+  selCustomerPayload={selCustomerPayload}
+  projectDetails={projectDetails}
+  selUnitDetails={undefined}
+   myObj={undefined}
+   newPlotPS={undefined}
+    myAdditionalCharges={undefined}
+     streamUnitDetails={undefined} 
+     myBookingPayload={undefined} 
+     netTotal={undefined} 
+     setNetTotal={undefined} 
+     partATotal={undefined} 
+     partBTotal={undefined} 
+     setPartATotal={undefined} 
+     setPartBTotal={undefined}
+    leadDetailsObj1={undefined}
+    PSa={undefined}
+    totalIs={undefined} 
+    custObj1={undefined} 
+  customerDetails={undefined}                                        
+  // selUnitDetails={selUnitDetails}
+/>
+                </div>
+              </div>
             <table className="w-full mb-10 mt-2">
               <thead>
                 {' '}
-                <tr className=" h-6 border-b-[0.2px] border-gray-300 ">
-                  <th className="w-[12%] text-[10px]  text-left text-gray-400 text-[#823d00] tracking-wide uppercase pl-2 ">
+                <tr className=" h-8 border-b-[0.2px] border-gray-300 ">
+                  <th className="w-[12%] text-[12px]  text-left text-[#3D3D3D]   rounded-tl-[10px]  bg-[#EDEDED]  tracking-wide  pl-2 ">
                     Paid On
                   </th>
-                  <th className="w-[8%] text-[10px] text-center text-gray-400 text-[#823d00] font-bodyLato tracking-wide uppercase ">
+                  <th className="w-[8%] text-[12px] text-center text-[#3D3D3D] bg-[#EDEDED]  tracking-wide  ">
                     Mode
                   </th>
-                  <th className="w-[15%] text-[10px] text-center text-gray-400 text-[#823d00] font-bodyLato tracking-wide uppercase ">
+                  <th className="w-[15%] text-[12px] text-center text-[#3D3D3D] bg-[#EDEDED]   tracking-wide  ">
                     Bank Ref Id
                   </th>
-                  <th className="w-[10%] text-[10px] text-right text-gray-400  text-[#823d00] font-bodyLato tracking-wide uppercase">
+                  <th className="w-[10%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]   tracking-wide ">
                     Amount
                   </th>
-                  {/* <th className="w-[10%] text-[10px] text-center text-gray-400  text-[#823d00] font-bodyLato tracking-wide uppercase">
-                    Event
-                  </th> */}
-                  <th className="w-[10%] text-[10px] text-center text-gray-400 text-[#823d00] font-bodyLato tracking-wide uppercase ">
+    
+                  <th className="w-[10%] text-[12px] text-center text-[#3D3D3D] bg-[#EDEDED]   tracking-wide  ">
                     Status
                   </th>
 
 
-                  <th className="w-[15%] text-[10px] text text-gray-400 text-[#823d00] font-bodyLato tracking-wide uppercase ">
+                  <th className="w-[15%] text-[12px] text text-[#3D3D3D] bg-[#EDEDED]   tracking-wide  ">
                     Accounts
                   </th>
                   {/* <th className="w-[15%] text-[10px] text-center text-gray-400 text-[#8993a4] font-bodyLato tracking-wide uppercase ">
                     Tx Id
                   </th> */}
-                  <th className="w-[15%] text-[10px] text-center text-gray-400 text-[#823d00] font-bodyLato tracking-wide uppercase ">
+                  <th className="w-[15%] text-[12px] text-center text-[#3D3D3D] bg-[#EDEDED]  tracking-wide  ">
                     Reviewer
                   </th>
 
-                  <th className="w-[15%] text-[10px] text-center text-gray-400 text-[#823d00] font-bodyLato tracking-wide uppercase ">
-                    Download
+                  <th className="w-[15%] text-[12px] text-center text-[#3D3D3D]  rounded-tr-[10px] bg-[#EDEDED]  tracking-wide  ">
+                    
                   </th>
                 </tr>
               </thead>
@@ -179,6 +203,11 @@ const CrmUnitFinanceHistory = ({
                 </tr> */}
               </tbody>
             </table>
+
+
+
+
+
           </div>
         </section>
       </div>

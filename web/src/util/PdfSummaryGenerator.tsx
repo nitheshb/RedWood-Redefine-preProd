@@ -555,6 +555,7 @@ const MyDocument = ({
   user,
   selUnitDetails,
   streamUnitDetails,
+  customerDetails,
   myBookingPayload,
   selCustomerPayload,
   totalIs,
@@ -664,7 +665,7 @@ const MyDocument = ({
       styles.pr3,
     ]}
   >
-    Cost Sheet
+    Payments Summary
   </Text>
 
   <Text style={[styles.body2, styles.pr3, {color:'#3D3D3D'}]}>
@@ -737,7 +738,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Applicant Name:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.customerName1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {selCustomerPayload?.customerDetailsObj?.customerName1}</Text>
   </View>
 
 
@@ -749,7 +750,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Customer ID:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.address1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>NA</Text>
   </View>
 
 
@@ -759,7 +760,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Phone number:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.phoneNo1}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {selCustomerPayload?.customerDetailsObj?.phoneNo1}</Text>
   </View>
 
 
@@ -769,7 +770,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
     Email:
     </Text>
-    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{streamUnitDetails?.custObj1?.email1}</Text>
+    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{selCustomerPayload?.customerDetailsObj?.email1}</Text>
   </View>
 </View>
 
@@ -867,7 +868,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
       Unit No:
     </Text>
-    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selUnitDetails?.unit_no}</Text>
+    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selCustomerPayload?.unit_no}</Text>
   </View>
 
 
@@ -877,10 +878,10 @@ const MyDocument = ({
       Size:
     </Text>
     <Text style={{ flex: 1,  color:'#6A6A6A' }}>
-      {selUnitDetails?.size}{' '}
+      {selCustomerPayload?.area}{' '}
       <Text>
         {'('}
-        {selUnitDetails?.area} sqft{')'}
+        {selCustomerPayload?.area} sqft{')'}
       </Text>
     </Text>
   </View>
@@ -891,7 +892,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
       Facing:
     </Text>
-    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selUnitDetails?.facing}</Text>
+    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selCustomerPayload?.facing}</Text>
   </View>
 
 
@@ -939,7 +940,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Unit Cost:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> ₹{netTotal?.toLocaleString('en-IN')}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> ₹{selCustomerPayload?.T_total?.toLocaleString('en-IN')} </Text>
   </View>
 
 
@@ -949,7 +950,7 @@ const MyDocument = ({
     <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
       Current Status:
     </Text>
-    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{streamUnitDetails?.status}</Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{selCustomerPayload?.status}</Text>
   </View>
 
 
@@ -1503,6 +1504,8 @@ const MyDocument = ({
 
 
 
+
+
           {projectDetails?.projectType?.name === 'Villas' &&
           <View style={[styles.fitter]}>
             <View style={[{ borderRadius: 8 }]}>
@@ -1568,7 +1571,7 @@ const MyDocument = ({
                 </View>
               </View>
               <View>
-                {myBookingPayload?.constructCS?.map((item, index) => (
+                {selCustomerPayload?.constructCS?.map((item, index) => (
                   <View
                     style={[
                       styles.tableRow,
@@ -1650,7 +1653,10 @@ const MyDocument = ({
               </View>
             </View>
 
-          </View>}
+          </View>
+
+
+          }
           {/* part -4 */}
 
 
@@ -2579,6 +2585,7 @@ const [unitTransactionsA, setUnitTransactionsA] = useState([])
             setPartBTotal={setPartBTotal}
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
+            customerDetails={customerDetails}
 
             custObj1={custObj1}
             totalIs={totalIs}
@@ -2594,15 +2601,15 @@ const [unitTransactionsA, setUnitTransactionsA] = useState([])
             <button>Loading document...</button>
           ) : (
             <span
-              className="mb-4 md:mb-0 underline hover:scale-110 focus:outline-none bg-white px-1 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider rounded-sm hover:shadow-lg hover:bg-gray-100         hover:bg-teal-200
+              className=" focus:outline-none px-1 py-1 mt-4 text-sm font-bold tracking-wider rounded-sm
 
-            text-blue-700
+
 
              duration-200 ease-in-out
              transition"
             >
           <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
-          Download Payments Summary
+          Cost Sheet
             </span>
           )
         }
