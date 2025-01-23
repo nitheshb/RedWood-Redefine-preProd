@@ -503,13 +503,10 @@ const AddNewDemand = ({
                                                   formik.values.amount.toLocaleString('en-IN')
                                                   }
                                                   onChange={(e) =>{
-const value = e.target.value.replace(/,/g, '')
-                                                    if(!isNaN(value)){
                                                     const rawValue = Number(e.target.value.replace(/,/g, ''))?.toLocaleString('en-IN')
 
 
                                                     formik.setFieldValue('amount', rawValue)
-}
 
                                                   }}
 
