@@ -4853,7 +4853,9 @@ export const unitAuditDbFun = async (
   totalReceivedAmount,
   InReviewAmount,
   totalApprovedAmount,
-  totalCancelledAmount
+  totalCancelledAmount,
+  T_E,
+  T_F,
 ) => {
   await updateDoc(doc(db, `${orgId}_units`, unitId), {
     T_total: totalUnitCost,
@@ -4865,6 +4867,8 @@ export const unitAuditDbFun = async (
     T_approved: totalApprovedAmount || 0,
     T_cancelled: totalCancelledAmount || 0,
     T_balance: totalUnitCost - ((InReviewAmount || 0) + (totalApprovedAmount || 0)),
+    T_E:T_E,
+    T_F:T_F
   })
 }
 

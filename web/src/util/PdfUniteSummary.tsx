@@ -273,7 +273,7 @@ const useStyles = () =>
         tableCell_2000: {
           width: '20%',
           paddingLeft: 3,
-          
+
 
         },
 
@@ -1304,8 +1304,8 @@ const MyDocument = ({
           {(selCustomerPayload?.unit_type === 'Villas' || selCustomerPayload?.unit_type === 'Apartment' || selCustomerPayload?.unit_type === 'plot') && (
 
             <>
-            
-            
+
+
           <View style={[styles.ml2, styles.pt2, styles.mT1]}>
             <Text
               style={[
@@ -1571,7 +1571,7 @@ const MyDocument = ({
          <>
 
 
-         
+
 <View style={[styles.ml2, styles.pt2, styles.mT1]}>
             <Text
               style={[
@@ -1765,7 +1765,7 @@ const MyDocument = ({
 
           </View>
 
-         
+
          </>
 
 )}
@@ -2199,15 +2199,15 @@ const MyDocument = ({
 
 
           </View>
-          
-          
+
+
           </>
 
 )}
 
 
 
-         
+
 
 
 
@@ -2220,7 +2220,7 @@ const MyDocument = ({
 
 
 
-   
+
 
 
 
@@ -2275,9 +2275,14 @@ VI. New Demand
         <Text style={styles.subtitle2}></Text>
       </View> */}
 
+                  <View style={[styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'18px' }]}>
+                    <Text style={styles.subtitle2}>
+                    Modifications
+                    </Text>
+                  </View>
       <View style={[  styles.ml1,styles.tableCell_35, styles.p12,  { marginLeft:'20px' } ]}>
         <Text style={styles.subtitle2}>
-        New Demand	
+        New Demand
         </Text>
       </View>
 
@@ -2367,7 +2372,7 @@ VI. New Demand
       </View>
 
       <View style={[styles.tableCell_200, styles.alignRight, ]}>
-        <Text style={[styles.alignRight]}> 
+        <Text style={[styles.alignRight]}>
           {/* ₹{Number(d1?.charges)?.toLocaleString('en-IN')} */}
           {d1?.description}
 
@@ -3477,7 +3482,7 @@ style={[
 <View
 style={[
  styles.tableCell_3,
- 
+
  styles.p12,
 ]}
 >
@@ -3580,7 +3585,7 @@ style={[
       <View style={[styles.tableCell_20, styles.alignRight]}>
         <Text>{d1?.towards}</Text>
       </View>
- 
+
 
 
 
@@ -3631,7 +3636,7 @@ style={[
             <Text style={{ fontSize: 9 }}>support@abcapp.com</Text>
           </View>
         </View> */}
-      
+
       </Page>
     </Document>
   )
@@ -3778,7 +3783,7 @@ const PdfUniteSummary = ({
         }
         // fileName="sample.pdf"
         // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Unite_Summary.pdf`}
-      
+
 
         fileName={`${selCustomerPayload?.unit_no || 'unit_no'}_${projectDetails?.projectName || 'project_name'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Unite_Summary.pdf`}
 
