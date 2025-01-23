@@ -666,7 +666,7 @@ const MyDocument = ({
       styles.pr3,
     ]}
   >
-    Payments Summary
+    Cost Sheet
   </Text>
 
   <Text style={[styles.body2, styles.pr3, {color:'#3D3D3D'}]}>
