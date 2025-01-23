@@ -219,7 +219,6 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
       },
       0) || 0)
        +
-
       (selUnitDetails?.addChargesCS?.reduce(function (
         _this,
         val

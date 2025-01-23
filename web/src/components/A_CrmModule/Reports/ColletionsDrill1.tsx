@@ -108,11 +108,12 @@ const CollectionsDrillI = ({
   const getProjectTransactionsDataFun = async () => {
     console.log('sideview payload', filterPaylod)
       const { access, uid } = user
+
       const steamLeadLogs = await streamGetAllProjectTransactions(
         orgId,
         'snap',
         {
-          uid,
+          projectId: filterPaylod.uid,
         },
         (error) => []
       )
@@ -494,104 +495,6 @@ const CollectionsDrillI = ({
                                         ))}
                                       </tbody>
                                     </table>
-              <table className="min-w-full text-center mt-6">
-                <thead className="border-b">
-                  <tr>
-                    {' '}
-                    {[
-                      { label: 'sNo', id: 'no' },
-                      { label: 'Project', id: 'label' },
-                      { label: 'Lead Ph', id: 'all' },
-                      { label: 'Status', id: 'new' },
-                      { label: 'From', id: 'all' },
-                      { label: 'To', id: 'all' },
-                      { label: 'Source', id: 'new' },
-                      { label: 'Visit Fixed On', id: 'new' },
-                      { label: 'Visit Fixed By', id: 'new' },
-                      { label: 'Visited On', id: 'new' },
-                      { label: 'Visit Done By', id: 'new' },
-                      { label: 'Executive', id: 'all' },
-                      { label: 'Created on', id: 'all' },
-                      { label: 'By', id: 'all' },
-                    ].map((d, i) => (
-                      <th
-                        key={i}
-                        scope="col"
-                        className={`text-sm font-medium text-gray-900 px-6 py-4 ${
-                          ['Project', 'Lead Name'].includes(d.label)
-                            ? 'text-left'
-                            : ''
-                        }`}
-                      >
-                        {d.label}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {leadsFilA?.map((data, i) => {
-                    return (
-                      <tr
-                        className={`  ${
-                          i % 2 === 0
-                            ? 'bg-white border-blue-200'
-                            : 'bg-gray-100'
-                        }`}
-                        key={i}
-                        onClick={() => selLeadFun(data)}
-                      >
-                        <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left">
-                          {i + 1}
-                        </td>
-                        <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left">
-                          {data?.Project}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap text-left">
-                          {data?.Mobile}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.Status}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.from}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.coverA?.includes('visitdone')
-                            ? 'visitdone'
-                            : data?.to}
-                        </td>
-
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.Source}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {prettyDateTime(data?.assignT || data?.Date)}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.visitFixedBy}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.Time}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.by}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.assignedToObj?.name}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {prettyDateTime(data?.Date)}
-                        </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                          {data?.leadOwner}
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-
               </>
             )}
           </div>

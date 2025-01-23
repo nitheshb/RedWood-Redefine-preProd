@@ -112,7 +112,7 @@ const CRMReportSideWindow = ({
                   />
                 )}
 
-{title === 'project_collections' && (
+                {title === 'project_collections' && (
                   <CollectionsDrillI
                     title={title}
                     subtitle={subtitle}
@@ -121,7 +121,6 @@ const CRMReportSideWindow = ({
                     leadsLogsPayload={leadsLogsPayload}
                     setCustomerDetails= {setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
 

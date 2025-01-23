@@ -396,14 +396,15 @@ export const streamGetAllProjectTransactions = async (
   error
 ) => {
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
-  const { uid, cutoffDate, unit_id } = data
+  const { uid, cutoffDate, unit_id, projectId } = data
   console.log('unit_id is ', uid, unit_id)
   // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
   const { data: lead_logs, error: countError } = await supabase
     .from(`${orgId}_accounts`)
     .select('*')
-    .eq('unit_id', unit_id)
-  // .is('projectId', null)
+    .eq('projectId', projectId)
+    // .eq('unit_id', unit_id)
+  // .is('projectId', 'projectId')
   // .isNull('projectId')
   // .eq('from', 'visitfixed')
 
@@ -2980,10 +2981,15 @@ export const gretProjectCollectionSum = async (orgId, data) => {
   // db.collection(`${orgId}_leads`).doc().set(data)
   // db.collection('')
   const { pId, monthNo, currentYear } = data
-  console.log('pushed values are', pId)
+  console.log('pushed values are', pId,  monthNo, currentYear)
   const q = await query(
     collection(db, `${orgId}_proj_M_amounts`),
-    where('pId', '==', pId),
+    // where('pId', '==', pId),
+    where('pId', '==', "25575536-a794-43fb-8235-23b5927af0d1"),
+    // where('year', '==', 2025),
+    where('month', '==', monthNo),
+
+
     // where('pId', '==', '02dce2f6-f056-4dcb-9819-01b9710781e1'), //
     // where('month', '==', monthNo),
     // where('year', '==', currentYear)
@@ -2992,14 +2998,17 @@ export const gretProjectCollectionSum = async (orgId, data) => {
   const querySnapshot = await getDocs(q)
   await console.log('foundLength @@', querySnapshot.docs.length)
   let receivable = 0
+  let collected = 0
+
   querySnapshot.forEach((doc) => {
     const x = doc.data()
-    console.log('dc', doc.id, ' => ', doc.data())
+    console.log('master received', doc.id, ' => ', doc.data(), x.received)
     receivable = receivable + x.received
+    collected= collected + x.received.toString()
     parentDocs.push(doc.data())
   })
   console.log('total is ', receivable)
-  return receivable
+  return {receivable, collected}
 }
 export const greProjectBookingsSum = async (orgId, data) => {
   // db.collection(`${orgId}_leads`).doc().set(data)

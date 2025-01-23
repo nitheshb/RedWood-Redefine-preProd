@@ -275,6 +275,8 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
   const calMonthlyValueNew = async (projects) => {
     try {
       setLoaderIcon(true)
+      gretProjectCollectionSum(orgId, {monthNo: 1})
+      return
       const insideValues = []
 
       // Iterate over projects
@@ -285,7 +287,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
 
         // Use Promise.all to execute asynchronous operations concurrently
         await Promise.all(
-          monthsA.map(async (month) => {
+          last3MonthsA.map(async (month) => {
             const payload = {
               pId: projectData.uid,
               monthNo: month.count,
@@ -293,19 +295,20 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
             }
 
             // Fetch projection sum asynchronously
-            const totalReceivableValue = await gretProjectionSum(orgId, payload)
+            // const totalReceivableValue = await gretProjectionSum(orgId, payload)
 
-            // const totalReceivableValue = await gretProjectCollectionSum(orgId, payload)
+            const totalReceivableValue = await gretProjectCollectionSum(orgId, payload)
 
 
             // Update month object with receivable value
-            const updatedMonth = { ...month, receive: totalReceivableValue }
-            console.log(
-              'Value refreshed',
-              updatedMonth,
-              projectData?.projectName,
-              '=>',
-              updatedMonth.receive?.length
+            const updatedMonth = { ...month, receive: totalReceivableValue?.receivable, collected: totalReceivableValue?.collected}
+           await console.log(
+              'Value refreshed mode',
+              totalReceivableValue,
+              // updatedMonth,
+              // projectData?.projectName,
+              // '=>',
+              // updatedMonth.receive?.length
             )
 
             projectMonthArray.push(updatedMonth)
@@ -893,7 +896,9 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
                           </td>
                           <td
                             key={i}
-                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                            className="py-1 px-6 text-right border-t border-l  border-gray-100 text-blue-400 cursor-pointer"
+                          onClick={() => showDrillDownFun('project_collections', data)}
+
                           >
                             {`${x?.collected?.toLocaleString('en-IN')}`}
                           </td>
