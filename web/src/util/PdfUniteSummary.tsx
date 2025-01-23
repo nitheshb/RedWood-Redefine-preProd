@@ -1962,7 +1962,7 @@ const MyDocument = ({
 
                 <View style={[styles.tableCell_20, styles.alignRight]}>
                   <Text>
-                    {fCurrency(selCustomerPayload?.T_D)}
+                    {fCurrency(selCustomerPayload?.T_E)}
 
                     {/* ₹{selCustomerPayload?.T_C?.toLocaleString('en-IN')} */}
 
@@ -2185,7 +2185,8 @@ const MyDocument = ({
                 </View>
 
                 <View style={[styles.tableCell_20, styles.alignRight]}>
-                  <Text>₹ 
+                  <Text>
+                  {fCurrency(selCustomerPayload?.T_E)}
                   </Text>
                 </View>
               </View>
@@ -3660,7 +3661,6 @@ const PdfUniteSummary = ({
   projectDetails,
   leadDetailsObj1,
   projectType,
-  PSa,
   fullPs,
   totalIs,
   custObj1,
@@ -3669,6 +3669,58 @@ const PdfUniteSummary = ({
   console.log('overall cost sheet is ', newPlotPS)
    const { user: authUser } = useAuth()
   const [unitTransactionsA, setUnitTransactionsA] = useState([])
+  const [PSa, setPSa] = useState([])
+
+
+
+
+
+  // export const updateUnitStatus = async (
+  //   orgId,
+  //   unitId,
+  //   data,
+  //   by,
+  //   enqueueSnackbar
+  // ) => {
+  //   try {
+  //     console.log('data is===>', unitId, data)
+  //     await updateDoc(doc(db, `${orgId}_units`, unitId), {
+  //       fullPs: data?.fullPs,
+  //       status: data?.status,
+  //       [data?.eventKey]: Timestamp.now().toMillis(),
+  //       T_elgible: data?.T_elgible_new,
+  //       T_elgible_balance: data?.T_elgible_balance,
+  //       // [`${data?.status}_on`]: data[`${data?.status}_on`],
+  //     })
+  //     const { data: data4, error: error4 } = await supabase
+  //       .from(`${orgId}_unit_logs`)
+  //       .insert([
+  //         {
+  //           type: 'sts_change',
+  //           subtype: 'sts_change',
+  //           T: Timestamp.now().toMillis(),
+  //           Uuid: unitId,
+  //           by,
+  //           payload: {},
+  //           from: 'sts_change',
+  //           to: data?.status,
+  //         },
+  //       ])
+  //     enqueueSnackbar('Unit Status Updated', {
+  //       variant: 'success',
+  //     })
+  //   } catch (error) {
+  //     console.log('Unit Status  updation failed', error, {
+  //       ...data,
+  //     })
+  //     enqueueSnackbar('Unit Status updation failed BBB', {
+  //       variant: 'error',
+  //     })
+  //   }
+  //   return
+  // }
+
+
 
 
     useEffect(() => {
