@@ -1441,6 +1441,427 @@ const MyDocument = ({
 
 
 
+
+
+
+
+            </View>
+            <View>
+
+
+
+
+
+            </View>
+          </View>
+          {/* part-3 */}
+
+
+
+
+
+
+
+          <View style={[  styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+
+              ]}
+            >
+             III Construction Charges
+            </Text>
+          </View>
+          <View style={[styles.fitter]}>
+            <View style={[{ borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+                    border: '1 solid #e5e7eb ',
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.textcolorhead,
+                    {   paddingBottom: '2px' },
+                  ]}
+                >
+                  {/* <View style={[styles.tableCell_1, styles.p11]}>
+                    <Text style={styles.subtitle2}></Text>
+                  </View> */}
+
+                  <View style={[styles.tableCell_35, styles.p12, { marginLeft:'20px' }]}>
+                    <Text style={styles.subtitle2}>
+                    Construction Charges
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr4,
+                      styles.ml1,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Rate/Sqft</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Cost</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>GST</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr8, ]}
+                  >
+                    <Text style={styles.subtitle2}>Total</Text>
+                  </View>
+                </View>
+
+
+              </View>
+
+
+              <View>
+                {/* {myObj?.map((item, index) => ( */}
+                {selCustomerPayload?.constructCS?.map((d1, inx) => (
+                  <View
+                    style={[
+                      styles.tableRow,
+                      styles.textcolor,
+                      inx + 1 != selCustomerPayload.length ? styles.borderbottom : null,
+
+                      // {
+                      //   backgroundColor:
+                      //     index % 2 === 0 ? '#ffffff' : '#ffffff',
+                      // },
+                      {  borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px' },
+                    ]}
+                    key={d1.id}
+                  >
+                    <View
+                      style={[
+                        styles.tableCell_1,
+                        styles.pl2,
+                        { marginTop: '-1px' },
+                      ]}
+                    >
+                      <Text>{inx + 1}</Text>
+                    </View>
+
+                    <View style={[styles.tableCell_35]}>
+                      <Text style={styles.subtitle2}>
+                      {d1?.component?.label}
+                      </Text>
+                    </View>
+
+                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                      <Text> ₹{d1?.charges?.toLocaleString('en-IN')}</Text>
+                    </View>
+
+                    <View
+                      style={[
+                        styles.tableCell_20,
+                        styles.alignRight,
+                        styles.pr4,
+                      ]}
+                    >
+                      <Text>₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}</Text>
+                    </View>
+
+                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                      <Text>₹{d1?.gstValue?.toLocaleString('en-IN')}</Text>
+                    </View>
+
+
+                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                      <Text>
+                      ₹
+                      {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
+                      </Text>
+                    </View>
+
+
+                  </View>
+                ))}
+
+
+
+<View
+              style={[styles.tableRow, styles.textcolor, {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px'  }]}
+            >
+              <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
+
+              <View style={[styles.tableCell_35, styles.p10]}></View>
+
+              <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+              <View
+                style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+              >
+                <Text style={[styles.subtitle2, styles.pt2]}>
+                Construction Cost:                        
+                </Text>
+              </View>
+
+              <View
+                style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
+              >
+                <Text>{fCurrency(partATotal)}</Text>
+              </View>
+            </View>
+
+
+              </View>
+
+
+            </View>
+
+          </View>
+
+
+
+
+
+
+
+          <View style={[styles.ml2, styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                // styles.smallFitter,
+                styles.ml1,
+              ]}
+            >
+              IV Construction Additional Charges	
+            </Text>
+          </View>
+
+          <View style={[styles.fitter, { marginTop: '5px', marginBottom:'10px' }]}>
+            <View style={[{  borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.textcolorhead,
+                    { paddingBottom: '2px' },
+                  ]}
+                >
+                  {/* <View style={[styles.tableCell_1, styles.p11]}>
+                    <Text style={styles.subtitle2}></Text>
+                  </View> */}
+
+                  <View style={[  styles.ml1,styles.tableCell_35, styles.p12,  { marginLeft:'20px' } ]}>
+                    <Text style={styles.subtitle2}>
+                    Construction Additional Charges	
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr4,
+                      styles.ml5,
+                      // { backgroundColor:'#FCC737'}
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Plot Rate/Sqft</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                      // { backgroundColor:'#A7D477'}
+                    ]}
+                  >
+                    <Text style={[styles.subtitle2 ]}>Sale Value	</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                      // { backgroundColor:'#A7D477'}
+                    ]}
+                  >
+                    <Text style={[styles.subtitle2 ]}>GST</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_20, styles.alignRight, styles.p12,
+                      styles.pr8,
+                     { paddingLeft:'0px',}]}
+                  >
+                    <Text style={styles.subtitle2}>Total
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+
+              {/* box1 */}
+              {/* {myAdditionalCharges?.map((item, index) => ( */}
+              {selCustomerPayload?.constAdditionalChargesCS?.map((d1, inx) => (
+
+                <View
+                  style={[
+                    styles.tableRow,
+                    styles.textcolor,
+                    // styles.ml1,
+                    inx + 1 != selCustomerPayload.length
+                      ? styles.borderbottom
+                      : null,
+
+                    {   borderBottom: '1px solid #e5e7eb',
+                      marginTop: '2px', paddingTop: '4px' },
+                  ]}
+                  key={d1.id}
+                >
+                  <View
+                    style={[
+                      styles.tableCell_1,
+                      styles.pl2,
+                      { marginTop: '-1px' },
+                    ]}
+                  >
+                    <Text>{inx + 1}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_35]}>
+                    <Text style={styles.subtitle2}>
+                    {d1?.component?.label}
+
+                    </Text>
+                  </View>
+
+                  <View style={[styles.tableCell_200, styles.alignRight, ]}>
+                    <Text style={[styles.alignRight]}>                            ₹{Number(d1?.charges)?.toLocaleString('en-IN')}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_20, styles.alignRight, styles.pr4 ,]}
+                  >
+                    <Text>                            ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.tableCell_20, styles.alignRight]}>
+                    <Text>
+                      {' '}
+                      {/* {fCurrency(
+                        Number(
+                          computeTotal(
+                            item,
+                            selUnitDetails?.area?.toString()?.replace(',', '')
+                          )
+                        )?.toLocaleString('en-IN')
+                      )} */}
+                                                  ₹{d1?.gstValue?.toLocaleString('en-IN')}
+
+                    </Text>
+                  </View>
+
+
+
+                  <View
+                    style={[styles.tableCell_20, styles.alignRight, styles.pr4 ,]}
+                  >
+                    <Text>      ₹{d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
+                    </Text>
+                  </View>
+
+
+                  
+                </View>
+              ))}
+
+<View
+                style={[
+                  styles.tableRow,
+                  styles.textcolor,
+                  {     borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px'  },
+                ]}
+              >
+                <View
+                  style={[styles.tableCell_1, styles.pl2, styles.p10]}
+                ></View>
+
+                <View style={[styles.tableCell_35, styles.p10]}></View>
+
+                <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+                <View
+                  style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                >
+                  <Text style={[styles.subtitle2]}>	Construction Additonal Charges:</Text>
+                </View>
+
+                <View style={[styles.tableCell_20, styles.alignRight]}>
+                  <Text>{fCurrency(partBTotal)}</Text>
+
+                </View>
+              </View>
+
+
+{/* 
 <View
                 style={[
                   styles.tableRow,
@@ -1469,7 +1890,7 @@ const MyDocument = ({
                   </Text>
 
                 </View>
-              </View>
+              </View> */}
 
 
 
@@ -1483,197 +1904,47 @@ const MyDocument = ({
 
             </View>
           </View>
-          {/* part-3 */}
+
+
+          {/*part-4  */}
 
 
 
-          <View style={[styles.ml2, styles.pt2, styles.mT1]}>
-            <Text
-              style={[
-                styles.subtitle1,
-                styles.mb5,
-                styles.col,
-                // styles.smallFitter,
-                styles.ml1,
-              ]}
-            >
-              III. Construction charges
-            </Text>
-          </View>
+          
 
 
 
 
+         
 
 
 
-          {projectDetails?.projectType?.name === 'Villas' &&
-          <View style={[styles.fitter]}>
-            <View style={[{ borderRadius: 8 }]}>
-              <View
-                style={[
-                  styles.subtitle1,
-                  styles.bg1,
-                  styles.textcolorhead,
-                  {
-                    backgroundColor: '#EDEDED',
-                    borderTopLeftRadius: 6,
-                    borderTopRightRadius: 6,
-                  },
-                ]}
-              >
-                <View
-                  style={[
-                    styles.tableHeader,
-                    styles.p4,
-                    styles.ml1,
-                    { paddingBottom: '2px' },
-                  ]}
-                >
-                  {/* <View style={[styles.tableCell_1, styles.p11]}>
-                    <Text style={styles.subtitle2}></Text>
-                  </View> */}
-
-                  <View style={[  styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'20px' }]}>
-                    <Text style={styles.subtitle2}>
-                     Construction Charges
-                    </Text>
-                  </View>
-
-                  <View
-                    style={[
-                      styles.tableCell_200,
-                      styles.alignRight,
-                      styles.p12,
-                      styles.pr4,
-                      styles.ml5,
-                    ]}
-                  >
-                    <Text style={styles.subtitle2}>Rate/Sqft</Text>
-                  </View>
-
-                  <View
-                    style={[
-                      styles.tableCell_200,
-                      styles.alignRight,
-                      styles.p12,
-                      styles.pr8,
-                      styles.ml2,
-                    ]}
-                  >
-                    <Text style={styles.subtitle2}>Cost</Text>
-                  </View>
-
-                  <View
-                    style={[styles.tableCell_20, styles.alignRight, styles.p12, styles.pr8,]}
-                  >
-                    <Text style={styles.subtitle2}>Total Inc GST</Text>
-                  </View>
-                </View>
-              </View>
-              <View>
-                {selCustomerPayload?.constructCS?.map((item, index) => (
-                  <View
-                    style={[
-                      styles.tableRow,
-                      styles.textcolor,
-                      index + 1 != myObj.length ? styles.borderbottom : null,
-
-                      // {
-                      //   backgroundColor:
-                      //     index % 2 === 0 ? '#ffffff' : '#ffffff',
-                      // },
-                      {     borderBottom: '1px solid #e5e7eb',
-                        marginTop: '2px', paddingTop: '4px' },
-                    ]}
-                    key={item.id}
-                  >
-                    <View
-                      style={[
-                        styles.tableCell_1,
-                        styles.pl2,
-                        { marginTop: '-1px' },
-                      ]}
-                    >
-                      <Text>{index + 1}</Text>
-                    </View>
-
-                    <View style={[styles.tableCell_35]}>
-                      <Text style={styles.subtitle2}>
-                        {item?.component?.label}
-                      </Text>
-                    </View>
-
-                    <View style={[styles.tableCell_200, styles.alignRight]}>
-                      <Text>{item?.charges}</Text>
-                    </View>
-
-                    <View
-                      style={[
-                        styles.tableCell_20,
-                        styles.alignRight,
-                        styles.pr4,
-                      ]}
-                    >
-                      <Text>{fCurrency(item?.TotalSaleValue)}</Text>
-                    </View>
-
-                    <View style={[styles.tableCell_20, styles.alignRight]}>
-                      <Text>{fCurrency(item?.TotalNetSaleValueGsT)}</Text>
-                    </View>
-                  </View>
-                ))}
+      
 
 
 
 
 
-<View
-              style={[styles.tableRow,  styles.textcolor, {   borderBottom: '1px solid #e5e7eb',    marginTop: '2px', paddingTop: '4px' }]}
-            >
-              <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
-
-              <View style={[styles.tableCell_35, styles.p10]}></View>
-
-              <View style={[styles.tableCell_20, styles.alignRight]}></View>
-
-              <View
-                style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
-              >
-                <Text style={[styles.subtitle2, styles.pt2]}>Construction Cost</Text>
-              </View>
-
-              <View
-                style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
-              >
-                <Text>{fCurrency(myBookingPayload?.T_C)}</Text>
-              </View>
-            </View>
-
-                {/* part 2 */}
-              </View>
-            </View>
-
-          </View>
 
 
-          }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           {/* part -4 */}
 
 
-          <View style={[styles.ml2, styles.pt2, styles.mT1]}>
-            <Text
-              style={[
-                styles.subtitle1,
-                // styles.mb5,
-                styles.col8,
-                // styles.smallFitter,
-                styles.ml1,
-              ]}
-            >
-              IV. Construction Additional charges
-            </Text>
-          </View>
+
           {projectDetails?.projectType?.name === 'Villas' &&
            <View style={[styles.fitter, { marginTop: '5px' }]}>
             <View style={[ styles.mb20, {    borderRadius: 8 }]}>
@@ -1836,6 +2107,416 @@ const MyDocument = ({
           {/* part -5 */}
 
 
+
+
+
+
+          <View style={[  styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+
+              ]}
+            >
+               V. Possession Charges
+            </Text>
+          </View>
+          <View style={[styles.fitter]}>
+            <View style={[{ borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+                    border: '1 solid #e5e7eb ',
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.textcolorhead,
+                    {   paddingBottom: '2px' },
+                  ]}
+                >
+                  {/* <View style={[styles.tableCell_1, styles.p11]}>
+                    <Text style={styles.subtitle2}></Text>
+                  </View> */}
+
+                  <View style={[styles.tableCell_35, styles.p12, { marginLeft:'20px' }]}>
+                    <Text style={styles.subtitle2}>
+
+                    Possession Charges
+
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr4,
+                      styles.ml1,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Rate/Sqft</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Sale Value</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>GST</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr8, ]}
+                  >
+                    <Text style={styles.subtitle2}>Total</Text>
+                  </View>
+                </View>
+
+
+              </View>
+
+
+              <View>
+                {/* {myObj?.map((item, index) => ( */}
+                {selCustomerPayload?.possessionAdditionalCostCS?.map((d1, inx) => (
+                  <View
+                    style={[
+                      styles.tableRow,
+                      styles.textcolor,
+                      inx + 1 != selCustomerPayload.length ? styles.borderbottom : null,
+
+                      // {
+                      //   backgroundColor:
+                      //     index % 2 === 0 ? '#ffffff' : '#ffffff',
+                      // },
+                      {  borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px' },
+                    ]}
+                    key={d1.id}
+                  >
+                    <View
+                      style={[
+                        styles.tableCell_1,
+                        styles.pl2,
+                        { marginTop: '-1px' },
+                      ]}
+                    >
+                      <Text>{inx + 1}</Text>
+                    </View>
+
+                    <View style={[styles.tableCell_35]}>
+                      <Text style={styles.subtitle2}>
+                      {d1?.component?.label}
+                      </Text>
+                    </View>
+
+                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                      <Text> ₹{d1?.charges?.toLocaleString('en-IN')}</Text>
+                    </View>
+
+                    <View
+                      style={[
+                        styles.tableCell_20,
+                        styles.alignRight,
+                        styles.pr4,
+                      ]}
+                    >
+                      <Text>₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}</Text>
+                    </View>
+
+                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                      <Text>₹{d1?.gstValue?.toLocaleString('en-IN')}</Text>
+                    </View>
+
+
+                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                      <Text>
+                      ₹
+                      {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
+                      </Text>
+                    </View>
+
+
+                  </View>
+                ))}
+
+
+
+<View
+              style={[styles.tableRow, styles.textcolor, {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px'  }]}
+            >
+              <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
+
+              <View style={[styles.tableCell_35, styles.p10]}></View>
+
+              <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+              <View
+                style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+              >
+                <Text style={[styles.subtitle2, styles.pt2]}>
+                Possession Charges
+                </Text>
+              </View>
+
+              <View
+                style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
+              >
+                <Text>{fCurrency(selCustomerPayload?.T_E)}</Text>
+              </View>
+            </View>
+
+
+              </View>
+
+
+            </View>
+
+          </View>
+
+
+
+
+
+          {/* part-6 */}
+
+
+
+          <View style={[  styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+
+              ]}
+            >
+               VI. New Demand
+            </Text>
+          </View>
+          <View style={[styles.fitter]}>
+            <View style={[{ borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+                    border: '1 solid #e5e7eb ',
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.textcolorhead,
+                    {   paddingBottom: '2px' },
+                  ]}
+                >
+                  {/* <View style={[styles.tableCell_1, styles.p11]}>
+                    <Text style={styles.subtitle2}></Text>
+                  </View> */}
+
+                  <View style={[styles.tableCell_35, styles.p12, { marginLeft:'20px' }]}>
+                    <Text style={styles.subtitle2}>
+
+                    New Demand	
+
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr4,
+                      styles.ml1,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Comment</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Sale Value</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>GST</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr8, ]}
+                  >
+                    <Text style={styles.subtitle2}>Total</Text>
+                  </View>
+                </View>
+
+
+              </View>
+
+
+              <View>
+                {/* {myObj?.map((item, index) => ( */}
+                {selCustomerPayload?.addOnCS?.map((d1, inx) => (
+                  <View
+                    style={[
+                      styles.tableRow,
+                      styles.textcolor,
+                      inx + 1 != selCustomerPayload.length ? styles.borderbottom : null,
+
+                      // {
+                      //   backgroundColor:
+                      //     index % 2 === 0 ? '#ffffff' : '#ffffff',
+                      // },
+                      {  borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px' },
+                    ]}
+                    key={d1.id}
+                  >
+                    <View
+                      style={[
+                        styles.tableCell_1,
+                        styles.pl2,
+                        { marginTop: '-1px' },
+                      ]}
+                    >
+                      <Text>{inx + 1}</Text>
+                    </View>
+
+                    <View style={[styles.tableCell_35]}>
+                      <Text style={styles.subtitle2}>
+                      {d1?.component?.label}
+                      </Text>
+                    </View>
+
+                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                      <Text> ₹{d1?.charges?.toLocaleString('en-IN')}</Text>
+                    </View>
+
+                    <View
+                      style={[
+                        styles.tableCell_20,
+                        styles.alignRight,
+                        styles.pr4,
+                      ]}
+                    >
+                      <Text>₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}</Text>
+                    </View>
+
+                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                      <Text>₹{d1?.gstValue?.toLocaleString('en-IN')}</Text>
+                    </View>
+
+
+                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                      <Text>
+                      ₹
+                      {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
+                      </Text>
+                    </View>
+
+
+                  </View>
+                ))}
+
+
+
+<View
+              style={[styles.tableRow, styles.textcolor, {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px'  }]}
+            >
+              <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
+
+              <View style={[styles.tableCell_35, styles.p10]}></View>
+
+              <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+              <View
+                style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+              >
+                <Text style={[styles.subtitle2, styles.pt2]}>
+                Total Addons:	
+                </Text>
+              </View>
+
+              <View
+                style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
+              >
+                <Text>
+                ₹{selCustomerPayload?.T_F?.toLocaleString('en-IN')}
+                </Text>
+              </View>
+            </View>
+
+
+              </View>
+
+
+            </View>
+
+          </View>
+
+
+
+
+
+
+
+
+
           {myBookingPayload?.possessionAdditionalCostCS?.length >0 &&
            <View style={[styles.fitter, { marginTop: '10px' }]}>
             <View style={[{ border: '1 solid #e5e7eb ', borderRadius: 8 }]}>
@@ -1975,7 +2656,7 @@ const MyDocument = ({
                 </View>
 
                 <View style={[styles.tableCell_20, styles.alignRight]}>
-                  <Text>{fCurrency(myBookingPayload?.T_E)}</Text>
+                  <Text>{fCurrency(selCustomerPayload?.T_E)}</Text>
                 </View>
               </View>
 
@@ -2085,7 +2766,7 @@ const MyDocument = ({
 
           </View>
 
-             {/*Payment Schedule box  */}
+
 
 
 
@@ -2116,381 +2797,6 @@ const MyDocument = ({
       >
 
 
-      <View style={[styles.topBoderRadius, styles.bottomBorderRadius, { border:'1px solid #CCCCCC', backgroundColor: '#fff', marginTop: '10px' }]} >
-
-
-
-
-<View style={[ styles.topBoderRadius,  {  backgroundColor:'#EDEDED'}]}>
-    <Text
-      style={[
-        // styles.subtitle1,
-        // styles.mb5,
-        styles.col,
-        styles.smallFitter,
-        styles.ml1,
-        styles.mT1,
-        { color:'#3D3D3D', fontWeight: 450 , fontSize: 10,}
-      ]}
-
-
-      onRender={(e) => handleSectionRender(e, 2)}
-    >
-      Payment Schedule
-    </Text>
-    <Text
-      style={[
-        // styles.subtitle1,
-        styles.mb5,
-        styles.col,
-        styles.smallFitter,
-        styles.ml1,
-        {color: '#6A6A6A'}
-      ]}
-    >
-      When to pay & what to pay
-    </Text>
-
-  </View>
-
-
-
-<View style={[styles.ml2, styles.pt2, styles.mT1]}>
-<Text
-style={[
-styles.subtitle1,
-styles.mb5,
-// styles.col,
-// styles.smallFitter,
-styles.ml1,
-]}
->
-I. Payment Schedule
-</Text>
-</View>
-<View style={[styles.fitter]}>
-<View
-style={[
-{   borderTopLeftRadius: 8,
-borderTopRightRadius: 8,  borderBottom: '1 solid #e5e7eb '  },
-styles.mb20,
-]}
->
-<View
-style={[
-styles.subtitle1,
-{
-backgroundColor: '#EDEDED',
-borderTopLeftRadius: 6,
-borderTopRightRadius: 6,
-},
-]}
->
-<View
-style={[
-styles.tableHeader,
-//  styles.p4,
-styles.textcolorhead,
-{ paddingBottom: '2px' },
-]}
->
-<View style={[styles.tableCell_1, styles.p11]}>
-<Text style={styles.subtitle2}></Text>
-</View>
-
-<View style={[styles.tableCell_20, styles.p12]}>
-<Text style={[styles.subtitle2]}>Charges</Text>
-</View>
-<View style={[styles.tableCell_20, styles.p12]}>
-<Text style={styles.subtitle2}>Eligible</Text>
-</View>
-<View
-style={[
- styles.tableCell_3,
- styles.alignRight,
- styles.p12,
-]}
->
-<Text style={styles?.subtitle2}>Total inc GST</Text>
-</View>
-
-
-
-<View
-style={[
- styles.tableCell_3,
- styles.alignRight,
- styles.p12,
-]}
->
-<Text style={styles?.subtitle2}>Received</Text>
-</View>
-
-
-
-<View
-style={[
- styles.tableCell_3,
- styles.alignRight,
- styles.p12,
-]}
->
-<Text style={styles?.subtitle2}>Balance</Text>
-</View>
-
-
-</View>
-</View>
-
-{/* {PSa?.map((d1, inx) => {
-  totalIs = selCustomerPayload?.T_review; // Move outside if not dynamic per iteration
-
-  return (
-    <View
-      style={[
-        styles.tableRow,
-        styles.borderbottom,
-        styles.textcolor,
-        { marginTop: '2px', paddingTop: '4px' },
-      ]}
-      key={d1.id}
-    >
-      <View
-        style={[
-          styles.tableCell_1,
-          styles.pl2,
-          { marginTop: '-1px' },
-        ]}
-      >
-        <Text>{inx + 1}</Text>
-      </View>
-
-      <View style={styles.tableCell_4}>
-        <Text style={styles.subtitle2}>
-        {d1?.stage?.label}
-          {' '}
-        {d1?.description}-{prettyDate(d1?.schDate)}
-        </Text>
-      </View>
-
-      <View style={styles.tableCell_5}>
-        <Text>{d1.description}</Text>
-      </View>
-
-      <View style={[styles.tableCell_3, styles.alignRight]}>
-        <Text>{fCurrency(d1?.value?.toLocaleString('en-IN'))}</Text>
-      </View>
-
-
-      <View style={[styles.tableCell_3, styles.alignRight]}>
-        <Text>{fCurrency(d1?.amt?.toLocaleString('en-IN'))}</Text>
-      </View>
-
-
-      <View style={[styles.tableCell_3, styles.alignRight]}>
-        <Text>{fCurrency(d1?.outStanding?.toLocaleString('en-IN'))}</Text>
-      </View>
-
-
-      <View style={[styles.tableCell_3, styles.alignRight]}>
-        <Text>{fCurrency(d1?.value?.toLocaleString('en-IN'))}</Text>
-      </View>
-
-
-
-
-
-    </View>
-  );
-})} */}
-
-
-              {PSa?.map((d1, inx) => (
-  <View
-    style={[
-      styles.tableRow,
-      styles.textcolor,
-      inx + 1 !== selCustomerPayload.length ? styles.borderbottom : null,
-      { borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px' },
-    ]}
-    key={d1.id}
-  >
-    <View style={[styles.tableCell_1, styles.pl2, { marginTop: '-1px' }]}>
-      <Text>{inx + 1}</Text>
-    </View>
-
-    <View style={[styles.tableCell_35]}>
-      <Text style={styles.subtitle2}>
-      <div>
-                            {d1?.stage?.label}
-                            <div className="text-[9px] text-left text-[#6A6A6A] bg-[#fff] tracking-wider ">
-                              {' '}
-                              {d1?.description}-{prettyDate(d1?.schDate)}
-                            </div>
-                            </div>
-      </Text>
-    </View>
-
-    <View style={[styles.tableCell_20, styles.alignRight]}>
-      <Text>                          ₹{d1?.value?.toLocaleString('en-IN')}
-      </Text>
-    </View>
-
-    <View style={[styles.tableCell_20, styles.alignRight, styles.pr4]}>
-      <Text></Text>
-    </View>
-
-    <View style={[styles.tableCell_20, styles.alignRight]}>
-      <Text>                          ₹{d1?.amt?.toLocaleString('en-IN')}
-      </Text>
-    </View>
-
-    <View style={[styles.tableCell_20, styles.alignRight]}>
-      <Text>                          {d1?.outStanding?.toLocaleString('en-IN')}
-      </Text>
-    </View>
-  </View>
-))}
-
-
-<View style={[styles.totalRow, styles.mT0 ,  styles.textcolor, ]}>
-<View style={styles.tableCell_1}></View>
-
-<View style={[styles.tableCell_4]}>
-<Text style={styles.subtitle2}>Total Cost</Text>
-</View>
-
-<View style={styles.tableCell_3}></View>
-
-<View style={styles.tableCell_3}></View>
-
-<View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(myBookingPayload?.T_A + myBookingPayload?.T_B)}</Text>
-</View>
-</View>
-</View>
-
-
-
-
-
-<View style={[ styles.pt2, styles.mT1]}>
-<Text
-style={[
-styles.subtitle1,
-styles.mb5,
-// styles.col,
-// styles.smallFitter,
-// styles.ml2,
-]}
->
-II. Construction Schedule
-</Text>
-</View>
-
-
-
-
-{projectDetails?.projectType?.name === 'Villas' &&  <View
-style={[
-{   borderTopLeftRadius: 8,
-borderTopRightRadius: 8,  borderBottom: '1 solid #e5e7eb ' },
-styles.mb20,
-]}
->
-<View
-style={[
-styles.subtitle1,
-{
-backgroundColor: '#EDEDED',
-borderTopLeftRadius: 6,
-borderTopRightRadius: 6,
-},
-]}
->
-<View
-style={[
-styles.tableHeader,
-//  styles.p4,
-styles.textcolorhead,
-{ paddingBottom: '2px' },
-]}
->
-<View style={[styles.tableCell_1, styles.p11]}>
-<Text style={styles.subtitle2}></Text>
-</View>
-
-<View style={[styles.tableCell_4, styles.p12]}>
-<Text style={[styles.subtitle2]}>Construction Schedule</Text>
-</View>
-<View style={[styles.tableCell_5, styles.p12]}>
-<Text style={styles.subtitle2}>Payment Timeline</Text>
-</View>
-<View
-style={[
- styles.tableCell_3,
- styles.alignRight,
- styles.p12,
-]}
->
-<Text style={styles?.subtitle2}>Total</Text>
-</View>
-</View>
-</View>
-{myBookingPayload?.constructPS?.map((item, index) => (
-<View
-style={[
-styles.tableRow,
-styles.borderbottom,
-styles.textcolor,
-{   marginTop: '2px', paddingTop: '4px' },
-]}
-key={item.id}
->
-<View
-style={[
- styles.tableCell_1,
- styles.pl2,
- styles.textcolor,
- { marginTop: '-1px' },
-]}
->
-<Text>{index + 1}</Text>
-</View>
-
-<View style={styles.tableCell_4}>
-<Text style={styles.subtitle2}>{item.stage?.label}</Text>
-</View>
-
-<View style={styles.tableCell_5}>
-<Text>{item.description}</Text>
-</View>
-
-<View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(item.value)}</Text>
-</View>
-</View>
-))}
-<View style={[styles.totalRow, styles.mT0,   styles.textcolor,  ]}>
-<View style={styles.tableCell_1}></View>
-
-<View style={[styles.tableCell_4]}>
-<Text style={styles.subtitle2}>Total Cost</Text>
-</View>
-
-<View style={styles.tableCell_3}></View>
-
-<View style={styles.tableCell_3}></View>
-
-<View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(myBookingPayload?.T_C + myBookingPayload?.T_D)}</Text>
-</View>
-</View>
-</View> }
-</View>
-
-
-</View>
 
 
 
@@ -2592,7 +2898,7 @@ const PdfSummaryGenerator = ({
              transition"
             >
           <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
-          
+          working
             </span>
           )
         }

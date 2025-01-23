@@ -1662,7 +1662,7 @@ const MyDocument = ({
                   <View
                     style={[styles.tableCell_20, styles.alignRight, styles.p12, styles.pr8,]}
                   >
-                    <Text style={styles.subtitle2}>Total Inc GST</Text>
+                    <Text style={styles.subtitle2}>Total</Text>
                   </View>
                 </View>
               </View>
@@ -2008,7 +2008,7 @@ const MyDocument = ({
                 styles.ml1,
               ]}
             >
-              IV. Possession Charges
+              V. Possession Charges
             </Text>
           </View>
            <View style={[styles.fitter, { marginTop: '5px' }]}>
@@ -2245,7 +2245,7 @@ const MyDocument = ({
     styles.ml1,
   ]}
 >
-IV. New Demand
+VI. New Demand
 
 </Text>
 </View>
