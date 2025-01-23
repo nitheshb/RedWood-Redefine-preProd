@@ -2444,7 +2444,11 @@ const MyDocument = ({
                     </View>
 
                     <View style={[styles.tableCell_20, styles.alignRight]}>
-                      <Text> ₹{d1?.charges?.toLocaleString('en-IN')}</Text>
+                      <Text>
+                        {/* ₹{Number(d1?.charges)?.toLocaleString('en-IN')} */}
+
+                      {d1?.description}
+                      </Text>
                     </View>
 
                     <View
@@ -2458,7 +2462,7 @@ const MyDocument = ({
                     </View>
 
                     <View style={[styles.tableCell_20, styles.alignRight]}>
-                      <Text>₹{d1?.gstValue?.toLocaleString('en-IN')}</Text>
+                      <Text>{d1?.gstValue?.toLocaleString('en-IN')}%</Text>
                     </View>
 
 
@@ -2898,7 +2902,7 @@ const PdfSummaryGenerator = ({
              transition"
             >
           <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
-          working
+          
             </span>
           )
         }
