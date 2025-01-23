@@ -18,7 +18,7 @@ import { Timestamp } from 'firebase/firestore'
 import numeral from 'numeral'
 import { computeTotal } from './computeCsTotals'
 import { prettyDate } from './dateConverter'
-import { Bold } from 'lucide-react'
+import { Bold, Download } from 'lucide-react'
 
 import pdfimg1 from '../../public/pdfimg1.png'
 import pdfimg2 from '../../public/pdfimg2.png'
@@ -32,6 +32,7 @@ import pdfimg9 from '../../public/pdfimg9.png'
 import pdfimg10 from '../../public/pdfimg10.png'
 import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
+import Loader from 'src/components/Loader/Loader'
 
 
 Font.register({
@@ -275,6 +276,11 @@ const useStyles = () =>
         tableCell_20: {
           width: '20%',
           paddingRight: 10,
+        },
+
+        tableCell_2000: {
+          width: '20%',
+        
         },
         tableCell_2: {
           width: '50%',
@@ -565,9 +571,11 @@ const MyDocument = ({
   myBookingPayload,
   selCustomerPayload,
   totalIs,
+  unitTotal,
   myObj,
   newPlotPS,
   myAdditionalCharges,
+  unitReceivedTotal,
   netTotal,
   projectDetails,
   PSa,
@@ -1104,25 +1112,44 @@ const MyDocument = ({
 <View
               style={[styles.tableRow, styles.textcolor, {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px'  }]}
             >
-              <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
+  
 
               <View style={[styles.tableCell_35, styles.p10]}></View>
 
-              <View style={[styles.tableCell_20, styles.alignRight]}></View>
 
-              <View
-                style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
-              >
-                <Text style={[styles.subtitle2, styles.pt2]}>{projectDetails?.projectType?.name === 'Apartment'
-                        ? 'Flat'
-                        : 'Plot'} Cost</Text>
+
+
+
+              <View style={[styles.tableCell_20, styles.alignRight]}>
+              <Text style={[styles.subtitle2,]}>
+                Total Value:
+                        </Text>
               </View>
 
               <View
-                style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
+                style={[styles.tableCell_2000, styles.ml2]}
               >
-                <Text>{fCurrency(partATotal)}</Text>
+
+
+<Text>
+                ₹{unitTotal?.toLocaleString('en-IN')}
+              
+                </Text>
+
               </View>
+
+              <View
+                style={[styles.tableCell_2000, ]}
+              >
+
+<Text>
+                ₹{unitReceivedTotal?.toLocaleString('en-IN')}
+                
+                </Text>
+
+              </View>
+
+
             </View>
 
                 
@@ -1162,12 +1189,14 @@ const PdfPaymentScheduleGenerator = ({
   selUnitDetails,
   myObj,
   selCustomerPayload,
+  unitReceivedTotal,
   newPlotPS,
   myAdditionalCharges,
   streamUnitDetails,
   myBookingPayload,
   netTotal,
   setNetTotal,
+  unitTotal,
   partATotal,
   partBTotal,
   setPartATotal,
@@ -1206,10 +1235,15 @@ const PdfPaymentScheduleGenerator = ({
             custObj1={custObj1} 
             totalIs={totalIs}
             PSa={PSa}
+            unitTotal={unitTotal}
+            unitReceivedTotal={unitReceivedTotal}
           />
         }
 
-        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payment_Schedule.pdf`}
+
+        fileName={`${selCustomerPayload?.unit_no || 'unit_no'}_${projectDetails?.projectName || 'project_name'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payment_Schedule.pdf`}
+
+        // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payment_Schedule.pdf`}
 
         // fileName="sample.pdf"
         // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selUnitDetails?.unit_no || 'unit_no'}_${streamUnitDetails?.custObj1?.customerName1 || 'customer_Name'}_CostSheet.pdf`}
@@ -1217,7 +1251,9 @@ const PdfPaymentScheduleGenerator = ({
       >
         {({ blob, url, loading, error }) =>
           loading ? (
-            <button>Loading document...</button>
+            <button className="flex items-center justify-center">
+            <Loader texColor="text-blue-600" size="h-5 w-5" />Payment Schedule
+          </button>
           ) : (
             <span
               className=" px-1 py-1 pb-[5px] text-sm font-bold 
@@ -1227,8 +1263,8 @@ const PdfPaymentScheduleGenerator = ({
              duration-200 ease-in-out
              transition"
             >
-          <DownloadTwoToneIcon style={{ height: '20px', width: '20px' }} />
-          Payment Schedule
+          <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
+          
             </span>
           )
         }
