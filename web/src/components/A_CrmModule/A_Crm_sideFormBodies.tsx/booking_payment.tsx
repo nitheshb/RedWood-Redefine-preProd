@@ -382,7 +382,7 @@ export default function BookingPaymentFlow({
                       newDemands === 'new_demands' ? 'text-indigo-600' : ''
                     } group-hover:text-indigo-600`}
                   >
-                    {'New Demand'}
+                    {'Add Modification'}
                     <span className="absolute inset-0" />
                   </a>
                   {/* <p className="mt- pb-2 border-b text-gray-600">

@@ -403,7 +403,7 @@ const AddNewDemand = ({
                                               <label className="text-[20px] font-medium text-[#000000]    mb-1  ">
                                                 {title === 'capturePayment'
                                                   ? 'Capture Payment'
-                                                  : 'New Demand'}
+                                                  : 'Add Modification'}
                                                 <abbr title="required"></abbr>
                                               </label>
                                             </div>
@@ -494,7 +494,8 @@ const AddNewDemand = ({
 
 
                                           <div className="w-full lg:w-4/12 pr-3">
-                                            <div className="relative w-full mb-5">
+
+                                          <div className="relative w-full mb-5">
                                               <TextField2
                                                 label="Amount"
                                                 name="amount"
@@ -503,10 +504,13 @@ const AddNewDemand = ({
                                                   formik.values.amount.toLocaleString('en-IN')
                                                   }
                                                   onChange={(e) =>{
+                                                  const value = e.target.value.replace(/,/g, '')
+                                                    if(!isNaN(value)){
                                                     const rawValue = Number(e.target.value.replace(/,/g, ''))?.toLocaleString('en-IN')
 
 
                                                     formik.setFieldValue('amount', rawValue)
+}
 
                                                   }}
 
@@ -514,6 +518,7 @@ const AddNewDemand = ({
                                               />
 
                                             </div>
+                    
                                           </div>
 
                                           <div className="w-full lg:w-4/12 px-3">
@@ -673,7 +678,7 @@ const AddNewDemand = ({
                                           {' '}
                                           {title === 'capturePayment'
                                             ? 'Confirm Payment'
-                                            : 'Add New Demand'}{' '}
+                                            : 'Add Modification'}{' '}
                                         </span>
                                       </button>
                                     </div>

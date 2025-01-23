@@ -704,7 +704,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
                   <thead>
                         <tr className=" h-8 border-b-[0.2px]  w-[100%]">
                           <th className="min-w-[35%] text-[12px] text-left text-[#3D3D3D] bg-[#EDEDED]   rounded-tl-[10px]  tracking-wide  px-2">
-                          New Demand
+                          Modifications
                           </th>
                           {/* <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]    tracking-wide px-2 ">
 
