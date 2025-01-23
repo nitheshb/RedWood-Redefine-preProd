@@ -247,6 +247,8 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
       PSa={PSa}
       selCustomerPayload={selCustomerPayload}
       projectDetails={projectDetails}
+      unitTotal={unitTotal}
+      unitReceivedTotal={unitReceivedTotal}
 
 
       
