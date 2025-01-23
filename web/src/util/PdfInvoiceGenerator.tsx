@@ -2394,7 +2394,10 @@ const PdfInvoiceGenerator = ({
       }
       // fileName="sample.pdf"
 
-      fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selUnitDetails?.unit_no || 'unit_no'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_CostSheet.pdf`}
+      // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selUnitDetails?.unit_no || 'unit_no'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_CostSheet.pdf`}
+
+      fileName={`${selUnitDetails?.unit_no || 'unit_no'}_${projectDetails?.projectName || 'project_name'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_CostSheet.pdf`}
+
 
     >
       {({ blob, url, loading, error }) =>

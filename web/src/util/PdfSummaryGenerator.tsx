@@ -2884,7 +2884,12 @@ const PdfSummaryGenerator = ({
           />
         }
         // fileName="sample.pdf"
-        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payments_Summary.pdf`}
+        // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payments_Summary.pdf`}
+        
+        
+        fileName={`${selCustomerPayload?.unit_no || 'unit_no'}_${projectDetails?.projectName || 'project_name'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payments_Summary.pdf`}
+
+
 
       >
         {({ blob, url, loading, error }) =>

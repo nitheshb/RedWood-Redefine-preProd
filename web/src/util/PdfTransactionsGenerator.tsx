@@ -1198,7 +1198,12 @@ const PdfTransactionsGenerator = ({
         }
         // fileName="sample.pdf"
           
-        fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Transactions.pdf`}
+        // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Transactions.pdf`}
+        
+
+        fileName={`${selCustomerPayload?.unit_no || 'unit_no'}_${projectDetails?.projectName || 'project_name'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Transactions.pdf`}
+
+
 
       >
         {({ blob, url, loading, error }) =>
