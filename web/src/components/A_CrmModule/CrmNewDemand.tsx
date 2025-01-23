@@ -494,7 +494,7 @@ const AddNewDemand = ({
 
 
                                           <div className="w-full lg:w-4/12 pr-3">
-                                            <div className="relative w-full mb-5">
+                                          <div className="relative w-full mb-5">
                                               <TextField2
                                                 label="Amount"
                                                 name="amount"
@@ -503,10 +503,13 @@ const AddNewDemand = ({
                                                   formik.values.amount.toLocaleString('en-IN')
                                                   }
                                                   onChange={(e) =>{
+                                                  const value = e.target.value.replace(/,/g, '')
+                                                    if(!isNaN(value)){
                                                     const rawValue = Number(e.target.value.replace(/,/g, ''))?.toLocaleString('en-IN')
 
 
                                                     formik.setFieldValue('amount', rawValue)
+}
 
                                                   }}
 
