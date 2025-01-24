@@ -11,14 +11,19 @@ import * as Yup from 'yup'
 
 import Loader from 'src/components/Loader/Loader'
 import {
+  cancelUnitDbFun,
   streamGetAllUnitTransactions,
   updateCancelProjectCounts,
   updateTransactionStatus,
   updateUnitAsBooked,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import { TextField2 } from 'src/util/formFields/TextField2'
+import {format, setHours, setMinutes } from 'date-fns'
 
 const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCurentStep }) => {
+  const d = new window.Date()
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
@@ -29,6 +34,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
   const [selDays, setSelDays] = useState(5)
   const [bookingProgress, setBookingProgress] = useState(true)
   const [unitTransactionsA, setUnitTransactionsA] = useState([])
+  const [startDate, setStartDate] = useState(d)
 
   useEffect(() => {
     getAllTransactionsUnit()
@@ -129,39 +135,226 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
       updateTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
     })
   }
-
+  const datee = new Date().getTime()
   const initialState = {
-    blockReason: '',
+    amount: 0,
+    dated:  datee,
+    payReason: ''
+
   }
   const validate = Yup.object({
-    blockReason: Yup.string().required('Reason is Required'),
+    payReason: Yup.string().required('Reason is Required'),
+
   })
   const resetter = () => {
     setSelected({})
     setFormMessage('')
   }
+
+   const onSubmitSupabase = async (data, resetForm) => {
+      console.log('inside supabase support', data)
+    // 1)get the selunit and put it into cancel table
+    // 2)add customer wallet with total amount received
+    // 3)update the unit as available and reset all values, add new values
+    // 4)-ve the booking unit and cancel
+
+    const x = selUnitDetails
+    x.cancellationCharges = data.amount
+    x.cancelledDate = datee
+    x.cancelledBy = user?.email
+    x.cancelReason = data?.payReason
+    cancelUnitDbFun(orgId, x, user,enqueueSnackbar)
+    }
   return (
     <>
-      <section className="bg-blueGray-50 ">
+      <section className="bg-blueGray-50 mt-3">
         <div className="w-full  mx-auto ">
-          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-[#F9FBFB] border-0 ">
-            <div className="rounded-t bg-[#F1F5F9] mb-0 px-3 py-2">
-              <div className="text-center flex justify-between">
-                <p className="text-xs font-extrabold tracking-tight uppercase font-body my-1">
-                  Block Unit
-                </p>
-              </div>
-            </div>
             <div className="mx-2 o my-10 mt-4 ">
               <div className="bg-white p-10 rounded-xl">
-                <h1 className="text-center text-xl font-semibold text-gray-500">
+                <h1 className="text-center text-xl text-gray-500">
                   Are you Sure to Canel this booking?
                 </h1>
+                <div className="h-screen">
+      <div className="flex items-center justify-center">
+        <div
+          id="bg-img"
+          className="flex h-[664px] w-full flex-col  h-screen">
+          <div className="relative top-6 mx-auto max-h-[65%] shadow-lg  border-gray-200 border rounded-xl  ">
+            <div className="grid gap-8 grid-cols-1">
+              <div className="flex flex-col ">
+                <div className="mt-0">
+                  <Formik
+                    enableReinitialize={false}
+                    initialValues={initialState}
+                    validationSchema={validate}
+                    onSubmit={(values, { resetForm }) => {
+                      console.log('values is', values)
 
+                      setBookingProgress(true)
+                      onSubmitSupabase(values, resetForm)
+                      console.log(values)
+                    }}
+                  >
+                    {(formik, setFieldValue) => (
+                      <Form>
+                        <div className="form">
+                          <section className=" ">
+                            <div className="w-full mx-auto ">
+                              <div className="relative flex flex-col min-w-0 break-words w-full mb-6  rounded-lg bg-white ">
+                                <div className=" flex flex-row px-2 py-2  overflow-y-scroll overflow-auto no-scrollbar">
+                                  <section className=" p-4 rounded-md w-[540px]">
+                                    <article className="mt-5">
+                                      <div className="flex flex-row justify-between">
+                                        <section className="flex flex-row">
+                                          <div className="inline">
+                                            <div className="mt-[7px]">
+                                              <label className="text-[20px] font-medium text-[#000000]    mb-[2px]  ">
+                                                Cancel Booking
+                                                <abbr title="required"></abbr>
+                                              </label>
+                                            </div>
+                                            <div>
+                                            <p className='text-[#6A6A6A] font-normal  mt-2 text-[12px]'>Refund amount will be added to customer wallet for withdrawal.</p>
+                                          </div>
+                                          </div>
+                                        </section>
+                                        <section className="flex flex-row justify-between">
+                                        </section>
+                                      </div>
+                                    </article>
+                                    <section>
+                                        <div className="flex flex-wrap mt-10">
+                                          <div className="w-full lg:w-4/12 pr-3 mt-[10px]">
+                                          <div className="relative w-full mb-5">
+                                              <TextField2
+                                                label="Cancellation Amount"
+                                                name="amount"
+                                                type="text"
+                                                value={
+                                                  formik?.values?.amount?.toLocaleString('en-IN')
+                                                  }
+                                                  onChange={(e) =>{
+                                                  const value = e.target.value.replace(/,/g, '')
+                                                    if(!isNaN(value)){
+                                                    const rawValue = Number(e.target.value.replace(/,/g, ''))?.toLocaleString('en-IN')
+                                                    formik.setFieldValue('amount', rawValue)}
+                                                  }}
+                                              />
+                                            </div>
+                                          </div>
+                                          <div className="w-full  lg:w-4/12 pl-3 ">
+                                            <div className="relative w-full mb-5 mt-[-1px] ">
+                                            <label
+
+        className="  text-xs text-[#6A6A6A] "
+      >
+       Cancellation Date
+
+      </label>
+                                              <span className="inline">
+                                                <CustomDatePicker
+                                                  className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-[#cccccc]  border-solid mt-[-4px]   min-w-[125px]  inline  text-[#0091ae]   lg:w-4/12 w-full flex bg-grey-lighter text-grey-darker border  "
+                                                  label="Dated"
+                                                  name="dated"
+                                                  // selected={startDate}
+                                                  selected={formik.values.dated}
+                                                  onChange={(date) => {
+                                                    // setFieldValue('dated')
+                                                    formik.setFieldValue(
+                                                      'dated',
+                                                      date.getTime()
+                                                    )
+                                                    // setStartDate(date)
+                                                    console.log(startDate)
+                                                  }}
+                                                  timeFormat="HH:mm"
+                                                  injectTimes={[
+                                                    setHours(
+                                                      setMinutes(d, 1),
+                                                      0
+                                                    ),
+                                                    setHours(
+                                                      setMinutes(d, 5),
+                                                      12
+                                                    ),
+                                                    setHours(
+                                                      setMinutes(d, 59),
+                                                      23
+                                                    ),
+                                                  ]}
+                                                  //dateFormat="MMM d, yyyy"
+                                                  dateFormat="MMM dd, yyyy"
+                                                />
+                                              </span>
+                                            </div>
+                                          </div>
+                                          <div className="w-full  ">
+                                            <div className="relative w-full mb-3">
+                                              <TextField2
+                                                label="Reason"
+                                                name="payReason"
+                                                type="text"
+                                              />
+                                            </div>
+
+                                          </div>
+                                        </div>
+
+                                      </section>
+
+
+                                    <div className="text-center space-x-4 mt-6">
+                                      <button
+                                        className="bg-[#00ADB4] translate-y-1 text-[#fff]  text-[12px]  py-2.5 px-6  font-medium  rounded-full inline-flex items-center"
+                                        type="submit"
+                                        disabled={loading}
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          viewBox="0 0 24 24"
+                                          fill="currentColor"
+                                          className="w-5 h-5"
+                                        >
+                                          <path
+                                            fillRule="evenodd"
+                                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
+                                            clipRule="evenodd"
+                                          />
+                                        </svg>
+                                        &nbsp; &nbsp;
+                                        <span>
+                                          {' '}
+                                         Cancel Booking
+                                        </span>
+                                      </button>
+                                    </div>
+
+
+                                  </section>
+                                </div>
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                      </Form>
+                    )}
+                  </Formik>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+{/*
                 <Formik
                   initialValues={initialState}
                   validationSchema={validate}
                   onSubmit={(values, { resetForm }) => {
+                    console.log('block unit values are ', values, selDays)
                     onSubmitFun(values, resetForm)
                     //
                     console.log('block unit values are ', values, selDays)
@@ -174,7 +367,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                           type="text"
                           name="blockReason"
                           placeholder="Write Cancellation Reason"
-                          className="w-full outline-none text-gray-700 text-lg"
+                          className="w-full  text-gray-700 text-lg"
                           onChange={(e) => {
                             formik.setFieldValue('blockReason', e.target.value)
                           }}
@@ -193,7 +386,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                       </div>
                     </Form>
                   )}
-                </Formik>
+                </Formik> */}
               </div>
             </div>
 
@@ -320,7 +513,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                 </div>
               </section>
             )}
-          </div>
+
         </div>
       </section>
     </>

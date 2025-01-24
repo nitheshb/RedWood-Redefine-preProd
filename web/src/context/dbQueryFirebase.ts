@@ -19,6 +19,7 @@ import {
   limit,
   arrayUnion,
   deleteField,
+  arrayRemove,
 } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -3100,7 +3101,114 @@ export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
   console.log('total is ', receivable)
   return receivable
 }
+export const cancelUnitDbFun = async (orgId, data, by, enqueueSnackbar) => {
+  console.log('my values is ', data)
+  try {
 
+
+
+    const x = await addDoc(collection(db, `${orgId}_cancelled_unit`), data)
+    await console.log('cancelled  Unit value is ', x, x.id, data)
+
+  //   const customerId = custObj1?.
+  // const y = updateDoc(doc(db, `${orgId}_customers`, data.uid), {
+  //   input_money: increment(data?.T_total),
+  //   remaining_money:increment(data?.T_received),
+  //   my_assets: arrayRemove(data?.uid),
+  // })
+   const z =  await updateDoc(doc(db, `${orgId}_units`, data.uid), {
+      T_A: 0,
+      T_B:0,
+      T_C:0,
+      T_D:0,
+      T_E:0,
+      T_F:0,
+      T_approved: 0,
+      T_balance: 0,
+      LpreStatus: 0,
+      status: 'available',
+        "Bank": "",
+        "Date": "",
+        "Katha_no": "",
+        "T_Total": 0,
+        "T_cancelled": 0,
+        "T_elgible": 0,
+        "T_elgible_balance": 0,
+        "T_received": 0,
+        "T_review": 0,
+        "T_total": 0,
+        "T_transaction": 0,
+        "addChargesCS": [],
+        "addOnCS": [],
+        "aggrementDetailsObj": {},
+        "annualIncome": "",
+        "applicantCount": 0,
+        "atb_date": "",
+        "ats_date": "",
+        "ats_target_date": "",
+        "bookedBy": "",
+        "booked_on": "",
+        "bookingSource": "",
+        "by": "",
+        "car_parkings_c": 0,
+        "constAdditionalChargesCS": [],
+        "constructCS": [],
+        "constructPS": [],
+        "custObj1": {},
+        "customerDetailsObj": {},
+        "designation": "",
+        "fullCs": [],
+        "fullPs": [],
+        "fund_type": "",
+        "industry": "",
+        "kyc_rejection_reason": "",
+        "kyc_status": "",
+        "leadId": "",
+        "leadSource": "",
+        "loanStatus": "",
+        "loan_rejection_reason": "",
+        "man_cs_approval": "",
+        "man_cs_rej_reason": "",
+        "mode": "",
+        "mortgage_type": "",
+        "plotCS": [],
+        "plotPS": [],
+        "possessionAdditionalCostCS": [],
+        "purchasePurpose": "",
+        "purpose": "",
+        "referralName": "",
+        "release_status": "",
+        "remarks": "",
+        "sd_date": "",
+        "sd_target_date": "",
+        "source": "",
+        "sourceOfPay": "",
+        "stepsComp": "",
+        "sub_source": "",
+    })
+
+    await updateDoc(doc(db, `${orgId}_projects`, data?.pId), {
+      t_collect: increment(-data?.T_approved),
+      bookUnitCount: increment(-1),
+      cancelUnitCount: increment(1),
+      soldUnitCount: increment(-1),
+      soldValue: increment(data?.T_total),
+
+    })
+await
+  enqueueSnackbar(`Unit booking is cancelled`, {
+    variant: 'success',
+  })
+
+
+  } catch (error) {
+        enqueueSnackbar('Cancellation Failed', {
+        variant: 'error',
+      })
+    console.log('error in uploading file with data', data, error)
+  }
+
+}
 export const streamBookedLeads = async (orgId, data, snapshot, error) => {
   const { pId, startTime, endTime } = data
   console.log('pushed values are', pId)
