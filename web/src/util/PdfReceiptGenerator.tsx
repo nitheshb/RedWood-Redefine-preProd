@@ -718,15 +718,15 @@ const MyDocument = ({
           <View
             style={[ styles.smallFitter, styles.pr3, styles.ml1 ,{flexDirection: 'row'}]}
           >
-            <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} />
+            {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
             <Text style={[styles.h4, styles.ml1,      styles.mT1,
                 styles.pt5,
                 styles.pr3,]}>
-              {projectDetails?.projectName}
+              {/* {projectDetails?.projectName} */}
             </Text>
             {/* <Text>{myObj} </Text> */}
           </View>
-          <View style={[styles.col6]}>
+          {/* <View style={[styles.col6]}>
             <Text
               style={[
 
@@ -738,8 +738,27 @@ const MyDocument = ({
             >
             {projectDetails?.address}-{projectDetails?.pincode}
             </Text>
-            {/* <Text>{myObj} </Text> */}
-          </View>
+          </View> */}
+
+
+
+<View style={[styles.col6]}>
+  <Text
+    style={[
+      styles.alignRight,
+      styles.mT1,
+      styles.pt5,
+      styles.pr3,
+      { fontSize: 9 } // Adjust font size if needed
+    ]}
+  >
+    Subha Builders and Developers
+    4th Floor, No 758 & 759, 19th Main Rd, near Sai Baba Temple, 
+    2nd Sector, Parangi Palaya, Sector 2, HSR Layout, 
+    Bengaluru, Karnataka 560102
+  </Text>
+</View>
+          
         </View>
       </Page>
     </Document>
