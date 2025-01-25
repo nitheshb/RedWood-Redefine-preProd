@@ -1931,7 +1931,9 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal) => {
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     console.log('dc', doc.id, ' => ', doc.data())
-    parentDocs.push(doc.data())
+    const x = doc.data()
+    x.id = doc.id
+    parentDocs.push(x)
   })
 
   const q1 = await query(
@@ -1944,7 +1946,9 @@ export const checkIfLeadAlreadyExists = async (cName, matchVal) => {
   querySnapshot1.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     console.log('dc', doc.id, ' => ', doc.data())
-    parentDocs.push(doc.data())
+    const x = doc.data()
+    x.id = doc.id
+    parentDocs.push(x)
   })
   return parentDocs
 
@@ -6522,6 +6526,47 @@ export const updateLeadLastUpdateTime = async (
     // enqueueSnackbar(e.message, {
     //   variant: 'error',
     // })
+  }
+}
+export const updateLeadBookedStatus = async (
+  orgId,
+  projectId,
+  leadDocId,
+  oldStatus,
+  newStatus,
+  by,
+  enqueueSnackbar
+) => {
+  try {
+    console.log('wow it should be here', leadDocId, newStatus)
+    await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
+      Status: newStatus,
+      coveredA: arrayUnion(oldStatus),
+      stsUpT: Timestamp.now().toMillis(),
+      leadUpT: Timestamp.now().toMillis(),
+    })
+    const { data, error } = await supabase.from(`${orgId}_lead_logs`).insert([
+      {
+        type: 'sts_change',
+        subtype: oldStatus,
+        T: Timestamp.now().toMillis(),
+        Luid: leadDocId,
+        by,
+        payload: {},
+        from: oldStatus,
+        to: newStatus,
+        projectId: projectId,
+      },
+    ])
+
+    console.log('chek if ther is any erro in supa', data, error)
+    enqueueSnackbar(`Status Updated to ${newStatus}`, {
+      variant: 'success',
+    })
+  } catch (e) {
+    enqueueSnackbar(e.message, {
+      variant: 'error',
+    })
   }
 }
 export const updateLeadStatus = async (
