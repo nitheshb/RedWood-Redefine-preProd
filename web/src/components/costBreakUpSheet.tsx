@@ -853,7 +853,7 @@ console.log('customer info', myBookingPayload)
                     onStep
                   ) && (
                     <div className="">
-                      <div className="flex flex-col p-2 border mx-0 bg-[#F8FAFC] ">
+                      <div className="flex flex-col  border mx-0 bg-[#F8FAFC] ">
                         <div className="">
                           <Formik
                             enableReinitialize={true}
@@ -949,8 +949,8 @@ console.log('customer info', myBookingPayload)
                                   )}
                                 </section>
 
-                                <div className="flex mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
-                                <div className="inline-block mt-4 ml-4">
+                                <div className="flex mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white  shadow-lg absolute bottom-0  w-full">
+                                <div className="inline-block mt-4">
                                       <PdfInvoiceGenerator
                                         user={user}
                                         selUnitDetails={selUnitDetails}
