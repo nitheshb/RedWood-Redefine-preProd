@@ -1530,6 +1530,7 @@ const BookingSummaryView = ({
                             )}
                           </div>
                         </div>
+                        
                         {/* end of paper */}
                       </div>
                     </div>

@@ -531,6 +531,17 @@ console.log('customer info', myBookingPayload)
       setOnStep('booking_summary')
     }
   }
+
+
+  if(isMover){
+    setOnStep('booking_summary')
+    if (onStep === 'booking_summary') {
+      setOnStep('booksheet')
+    }
+  }
+
+
+
   }
 
   const setStatusFun = async (index, newStatus) => {
@@ -1101,7 +1112,7 @@ transition
                     />
                   )}
 
-                  {['booking_summary'].includes(onStep) && (
+                  {['booking_summary' ].includes(onStep) && (
                     <BookingSummaryView
                       projectDetails={projectDetails}
                       csMode={csMode}
@@ -1113,6 +1124,7 @@ transition
                       selPhaseObj={selPhaseObj}
                       leadDetailsObj1={leadDetailsObj1}
                       customerInfo={streamUnitDetails}
+                      // setOnStep={setOnStep}
 
                       selUnitDetails={streamUnitDetails}
                       setNewPlotCsObj={setNewPlotCsObj}

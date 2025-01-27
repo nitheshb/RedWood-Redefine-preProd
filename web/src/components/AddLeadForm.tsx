@@ -894,7 +894,7 @@ Mobile No
                               Type<abbr title="required"></abbr>
                             </label>
                             <RadioGroup value={selected} onChange={typeSel}>
-                              <div className="grid grid-cols-4 gap-4">
+                              <div className="flex  bg-white   gap-4">
                                 {plans.map((plan) => (
                                   <RadioGroup.Option
                                     key={plan.name}
@@ -902,20 +902,20 @@ Mobile No
                                     className={({ active, checked }) =>
                                       `${
                                         active
-                                          ? 'ring-2 ring-offset-2  ring-white ring-opacity-60 col-span-2'
+                                          ? 'ring-2 ring-offset-2  border  border-[#000] bg-[#F2F2F2]  ring-white ring-opacity-60 col-span-2'
                                           : ''
                                       }
                 ${
                   selected.name == plan.name
-                    ? 'ring-1  ring-green-400 bg-opacity-75 text-black'
-                    : 'bg-[#f7f9f8]'
+                    ? 'ring-1  ring-green-400 border bg-opacity-75 text-black'
+                    : 'bg-white'
                 }
-                  relative rounded-lg px-5 py-2 cursor-pointer flex focus:outline-none col-span-2`
+                  relative rounded-lg px-5 py-2 cursor-pointer flex border border-[#E5E7EB]  col-span-2`
                                     }
                                   >
                                     {({ active, checked }) => (
                                       <>
-                                        <div className=" col-span-2 flex justify-center contents">
+                                        <div className="w-[150px] flex justify-between ">
                                           <div className="flex items-center">
                                             <div className="text-sm">
                                               <RadioGroup.Label
