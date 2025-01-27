@@ -14,6 +14,7 @@ import {
   createNewCustomerS,
   insertPSS,
   steamBankDetailsList,
+  updateLeadBookedStatus,
   updateLeadStatus,
   updateProjectCounts,
   updateProjectionsAgreegationsOnBooking,
@@ -330,7 +331,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
       // update customer wallet in db
       data.customerName = selUnitDetails.customerDetailsObj
       ?.customerName1
-  
+
       y = await capturePayment(custNo, data, resetForm)
     }
 
@@ -635,7 +636,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
       ()=>({})
     )
     if(id){
-    updateLeadStatus(
+      updateLeadBookedStatus(
       orgId,
       leadDetailsObj2?.ProjectId || '',
       id,

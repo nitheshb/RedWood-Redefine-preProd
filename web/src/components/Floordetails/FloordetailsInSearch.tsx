@@ -1168,14 +1168,14 @@ const FloordetailsSearch = ({
                                                 >
                                                   Details
                                                 </h3>
-                                                <h3
+                                                {/* <h3
                                                   className="m-0 mr-2 ml-2 mt- text-sm   leading-tight tracking-tight text-blue-800 border-0 border-blue-200"
                                                   onClick={() => {
                                                     setisUnitDetailsOpen(true)
                                                   }}
                                                 >
                                                   Payment
-                                                </h3>
+                                                </h3> */}
                                               </div>
                                               <div className="flex flex-row justify-between items-right">
                                                 <h3
@@ -1191,7 +1191,7 @@ const FloordetailsSearch = ({
                                                         leadDetailsObj:
                                                           leadDetailsObj,
                                                       },
-                                                      widthClass: 'max-w-4xl',
+                                                      widthClass: 'max-w-7xl',
                                                     })
                                                   }}
                                                 >
@@ -1483,7 +1483,7 @@ const FloordetailsSearch = ({
                                                         leadDetailsObj:
                                                           leadDetailsObj,
                                                       },
-                                                      widthClass: 'max-w-4xl',
+                                                      widthClass: 'max-w-7xl',
                                                     })
                                                   }}
                                                 >
@@ -1775,7 +1775,7 @@ const FloordetailsSearch = ({
                                                         leadDetailsObj:
                                                           leadDetailsObj,
                                                       },
-                                                      widthClass: 'max-w-4xl',
+                                                      widthClass: 'max-w-7xl',
                                                     })
                                                   }}
                                                 >

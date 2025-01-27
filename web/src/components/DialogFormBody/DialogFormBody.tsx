@@ -36,6 +36,7 @@ import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import UserAvatarUpload from '../comps/userAvatarUplaod'
 import ProjectLogoUploader from '../comps/projectLogoUploader'
+import { CustomRadioGroupProject } from 'src/util/formFields/CustomRadioGroupProject'
 
 
 
@@ -380,15 +381,34 @@ const DialogFormBody = ({
 
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col">
-          <div className="bg-white p-4">
-            <div className="flex flex-col mt-2  bg-white  m-4 pt-1 mb-0 ">
-              <CustomRadioGroup
+          <div className="bg-white">
+
+          {/* <div className="inline">
+                              <div className="">
+                                <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+                                  Details<abbr title="required"></abbr>
+                                </label>
+                              </div>
+
+                              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+                            </div> */}
+            <div className="flex flex-col mt-2  bg-white  m-2 pt-1 mb-0 ">
+              <div>
+                
+              </div>
+              <CustomRadioGroupProject
                 label="Type"
                 value={selected}
                 options={projectPlans}
                 onChange={setSelected}
               />
             </div>
+
+
+
+
+
+
             <div className="mt-0">
               <Formik
                 //  innerRef={ref}
