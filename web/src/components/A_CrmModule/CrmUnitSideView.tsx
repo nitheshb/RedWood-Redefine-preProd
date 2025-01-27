@@ -1267,7 +1267,7 @@ return
                       openDemandFun()
                     }}
                   >
-                    NEW DEMAND
+                    MODIFICATIONS
                   </button>}
 
                 </section>
