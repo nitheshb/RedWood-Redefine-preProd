@@ -265,6 +265,15 @@ const CostBreakUpPdf = ({
               selUnitDetails?.area?.toString()?.replace(',', '') *
                 (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
           )
+    const plcConstructSaleValue =
+          costSheetA.length > 1
+            ? selUnitDetails?.area?.toString()?.replace(',', '') *
+              Number(costSheetA[1]['charges'])
+            : Math.round(
+                selUnitDetails?.construct_area ||
+                  selUnitDetails?.area?.toString()?.replace(',', '') *
+                    (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
+              )
     const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'sqft_cost_tax'
     )
@@ -295,7 +304,7 @@ const CostBreakUpPdf = ({
     //       ? Number(gstTaxForConstructionA[0]?.gst?.value) * 0.01
     //       : Number(gstTaxForConstructionA[0]?.gst?.value)
     //     : 0
-    const gstConstTaxIs = (selPhaseObj?.area_tax/100)
+    const gstConstTaxIs = (selPhaseObj?.const_tax/100)
     const plot_gstValue = Math.round(plotSaleValue) * gstTaxIs
     const plc_gstValue = Math.round(plcSaleValue * plcGstIs)
     const const_gstValue = Math.round(constSaleValue * gstConstTaxIs )
@@ -427,7 +436,7 @@ const CostBreakUpPdf = ({
             value: 'plc_cost_sqft',
             label: 'PLC',
           },
-          others: selUnitDetails?.plc || 200,
+          others: selUnitDetails?.plc || 0,
           charges:
             costSheetA.length > 1
               ? Number(costSheetA[1]['charges'])
@@ -443,6 +452,7 @@ const CostBreakUpPdf = ({
           },
           TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
         },
+
       ]
 
       const constructionSqftRate = selUnitDetails?.construct_price_sqft || 0
@@ -475,6 +485,32 @@ const CostBreakUpPdf = ({
               ? Number(constructionArea * y)
               : Number(constructionArea * constructionSqftRate)) +
             const_gstValue,
+        },
+        {
+          myId: '4',
+          units: {
+            value: 'fixedcost',
+            label: 'Fixed cost',
+          },
+          component: {
+            value: 'plc_cost_sqft',
+            label: 'Construction PLC',
+          },
+          others: selUnitDetails?.plc || 0,
+          charges:
+            costSheetA.length > 1
+              ? Number(costSheetA[1]['charges'])
+              : Number.isFinite(z)
+              ? z
+              : selUnitDetails?.plc || selUnitDetails?.plc_per_sqft,
+          TotalSaleValue: plcSaleValue,
+          // charges: y,
+          gstValue: plc_gstValue,
+          gst: {
+            label: '0.05',
+            value: plcGstIs,
+          },
+          TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
         },
       ]
     }
