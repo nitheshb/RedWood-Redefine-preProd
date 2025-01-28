@@ -227,13 +227,13 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
 
 
 
-  // useEffect(() => {
-  //   if (phase?.projectType?.name === 'Villas') {
-  //     setCsCategoryOptionsA(VillaCsSections)
-  //   } else {
-  //     setCsCategoryOptionsA(csSections)
-  //   }
-  // }, [phase])
+  useEffect(() => {
+    if (phase?.projectType?.name === 'Villas') {
+      setCsCategoryOptionsA(VillaCsSections)
+    } else {
+      setCsCategoryOptionsA(csSections)
+    }
+  }, [phase])
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
 
   const handleChange = (id, field, value) => {
@@ -467,6 +467,27 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
       );
       setSourceListItems(updatedArr);
     }
+
+
+
+    if (data?.title === 'Villa Type Category') {
+      const updatedArr = VillaCsSectionsA.map(item =>
+        item.id === data.id
+          ? {
+              ...item,
+              label: value,
+              value: value.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace('%', ''),
+            }
+          : item
+      );
+      setVillaCsSections(updatedArr);
+    }
+
+
+
+    
+
+
 
     if (data?.title === 'Booking By') {
       const updatedArr = bookingByA.map(item =>
@@ -718,8 +739,9 @@ useEffect(() => {
         const oA = bankA.filter((item) => item.title === 'Status')
         const pA = bankA.filter((item) => item.title === 'Mortgage Type')
         const qA = bankA.filter((item) => item.title === 'Lead Source')
-        // const rA = bankA.filter((item) => item.title === 'Booking By')
         const sA = bankA.filter((item) => item.title === 'Villa Type Category');
+        const rA = bankA.filter((item) => item.title === 'Booking By')
+    
 
 
 
@@ -784,14 +806,16 @@ useEffect(() => {
           return a.order - b.order;
         }));
 
-        setBookingBy(rA.sort((a, b) => {
-          return a.order - b.order;
-        }));
-
         setVillaCsSections(sA.sort((a, b) =>{
           return a.order - b.order;
 
         }));
+
+        setBookingBy(rA.sort((a, b) => {
+          return a.order - b.order;
+        }));
+
+
 
 
 
@@ -843,7 +867,9 @@ useEffect(() => {
     statusListA,
     mortgageTypeA,
     sourceListItemsA,
-    bookingByA,VillaCsSectionsA])
+    VillaCsSectionsA,
+    bookingByA,
+    ])
   const addRowNew = (dataObj) => {
     const title = dataObj?.title
     const order = dataObj?.data?.length || 0
@@ -919,13 +945,15 @@ if (title === 'Lead Source') {
   setSourceListItems([...sourceListItemsA, newRow]);
 }
 
+if (title === 'Villa Type Category') {
+  setVillaCsSections([...VillaCsSectionsA, newRow]);
+}
+
 if (title === 'Booking By') {
   setBookingBy([...bookingByA, newRow]);
 }
 
-if (title === 'Villa Type Category') {
-  setVillaCsSections([...VillaCsSectionsA, newRow]);
-}
+
 
 
 
@@ -1160,14 +1188,6 @@ if (title === 'Villa Type Category') {
       setSourceListItems(setOrder);
     }
 
-    if (title === 'Booking By') {
-      const updatedArr = bookingByA.filter(item => item.id !== dataObj.id);
-      const setOrder = updatedArr.map((item, i) => {
-        return { ...item, order: i + 1 };
-      });
-      setBookingBy(setOrder);
-    }
-
 
     if (title === 'Villa Type Category') {
       const updatedArr = VillaCsSectionsA.filter(item => item.id !== dataObj.id);
@@ -1177,6 +1197,17 @@ if (title === 'Villa Type Category') {
       }));
       setVillaCsSections(setOrder);
     }
+
+    if (title === 'Booking By') {
+      const updatedArr = bookingByA.filter(item => item.id !== dataObj.id);
+      const setOrder = updatedArr.map((item, i) => {
+        return { ...item, order: i + 1 };
+      });
+      setBookingBy(setOrder);
+    }
+
+
+
 
 
 
@@ -1301,6 +1332,13 @@ if (title === 'Villa Type Category') {
     if (title === 'Lead Source') {
       newDataIs.push(...sourceListItemsA);
     }
+
+
+    if (title === 'Villa Type Category') {
+      newDataIs.push(...VillaCsSectionsA);
+    }
+
+
     if (title === 'Booking By') {
       newDataIs.push(...bookingByA);
     }

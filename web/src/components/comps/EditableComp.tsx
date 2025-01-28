@@ -217,6 +217,8 @@ const [costSheetAdditionalChargesA, setCostSheetAdditionalCharges] = useState([]
 const [csSectionsA, setCsSections] = useState([]);
 const [unitsCancellationA, setUnitsCancellation] = useState([]);
 const [paymentScheduleA, setPaymentSchedule] = useState([]);
+const [VillaCsSectionsA, setVillaCsSections] = useState([]);
+
 
 
 
@@ -240,6 +242,8 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           const gA = bankA.filter((item) => item.title === 'Category')
           const hA = bankA.filter((item) => item.title === 'Cost Type')
           const iA = bankA.filter((item) => item.title === 'Payment Stage')
+          const sA = bankA.filter((item) => item.title === 'Villa Type Category');
+
 
           setTaxA(cA.sort((a, b) => {
             return a.order - b.order
@@ -262,6 +266,13 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           setPaymentSchedule(iA.sort((a, b) => {
             return a.order - b.order;
           }));
+
+          setVillaCsSections(sA.sort((a, b) => {
+            return a.order - b.order;
+          }));
+
+
+          
 
         }
       },
@@ -342,13 +353,13 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
   }, [fullCs])
   useEffect(() => {
     if (phase?.projectType?.name === 'Villas') {
-      setCsCategoryOptionsA(VillaCsSections)
+      setCsCategoryOptionsA(VillaCsSectionsA)
     } else {
       setCsCategoryOptionsA(csSectionsA)
     }
-    console.log('csCategoryOptionsA set to:', phase?.projectType?.name === 'Villas' ? VillaCsSections : csSectionsA)
+    console.log('csCategoryOptionsA set to:', phase?.projectType?.name === 'Villas' ? VillaCsSectionsA : csSectionsA)
 
-  }, [phase,csSectionsA])
+  }, [phase,csSectionsA, VillaCsSectionsA])
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
 
   const handleChange = (id, field, value) => {
@@ -500,6 +511,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
     'Car Parking',
     'Status',
     'Mortgage Type',
+    'Villa Type Category',
   ]
 
   const crmItems = ['Lead Source', 'Booking By']

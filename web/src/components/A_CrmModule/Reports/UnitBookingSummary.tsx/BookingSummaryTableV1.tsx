@@ -2054,8 +2054,20 @@ const customTooltip = ({ payload, label }) => {
 <div className=" px-4 py-2 rounded-t-[30px] bg-white flex justify-between items-center">
           <h3 className="text-xl font-bold">Booking Summary</h3>
           <div className="flex gap-4">
-            <Filter className="text-gray-500" />
-            <Download className="text-gray-500" />
+            {/* <Filter className="text-gray-500" /> */}
+
+
+            <div className="relative group">
+  {/* <Download className="text-gray-500 " /> */}
+  <Download className="text-gray-500" width={16} height={16} />
+
+  <span className="absolute top-full mt-1 hidden w-max px-1 py-1 text-xs text-white text-sm font-medium font-['Lato'] bg-black  group-hover:block">
+    Download
+  </span>
+</div>
+
+
+                
           </div>
         </div>
 
