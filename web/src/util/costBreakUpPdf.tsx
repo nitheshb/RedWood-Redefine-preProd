@@ -139,7 +139,7 @@ const CostBreakUpPdf = ({
         : Number(data4?.gst?.value)
       total = isChargedPerSqft
       ? Number(
-          selUnitDetails?.super_built_up_area ||
+          selUnitDetails?.construct_area ||
             selUnitDetails?.area?.toString()?.replace(',', '')
         ) * Number(data4?.charges)
       : Number(data4?.charges)
@@ -261,19 +261,20 @@ const CostBreakUpPdf = ({
         ? selUnitDetails?.area?.toString()?.replace(',', '') *
           Number(costSheetA[1]['charges'])
         : Math.round(
-            selUnitDetails?.super_built_up_area ||
+            selUnitDetails?.construct_area ||
               selUnitDetails?.area?.toString()?.replace(',', '') *
                 (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
           )
     const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'sqft_cost_tax'
     )
-    const gstTaxIs =
-      gstTaxForProjA?.length > 0
-        ? Number(gstTaxForProjA[0]?.gst?.value) > 1
-          ? Number(gstTaxForProjA[0]?.gst?.value) * 0.01
-          : Number(gstTaxForProjA[0]?.gst?.value)
-        : 0
+    // const gstTaxIs =
+    //   gstTaxForProjA?.length > 0
+    //     ? Number(gstTaxForProjA[0]?.gst?.value) > 1
+    //       ? Number(gstTaxForProjA[0]?.gst?.value) * 0.01
+    //       : Number(gstTaxForProjA[0]?.gst?.value)
+    //     : 0
+    const gstTaxIs =(selPhaseObj?.area_tax / 100)
 
     const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'plc_tax'
@@ -288,12 +289,13 @@ const CostBreakUpPdf = ({
     const gstTaxForConstructionA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'sqft_construct_cost_tax'
     )
-    const gstConstTaxIs =
-      gstTaxForConstructionA?.length > 0
-        ? Number(gstTaxForConstructionA[0]?.gst?.value) > 1
-          ? Number(gstTaxForConstructionA[0]?.gst?.value) * 0.01
-          : Number(gstTaxForConstructionA[0]?.gst?.value)
-        : 0
+    // const gstConstTaxIs =
+    //   gstTaxForConstructionA?.length > 0
+    //     ? Number(gstTaxForConstructionA[0]?.gst?.value) > 1
+    //       ? Number(gstTaxForConstructionA[0]?.gst?.value) * 0.01
+    //       : Number(gstTaxForConstructionA[0]?.gst?.value)
+    //     : 0
+    const gstConstTaxIs = (selPhaseObj?.area_tax/100)
     const plot_gstValue = Math.round(plotSaleValue) * gstTaxIs
     const plc_gstValue = Math.round(plcSaleValue * plcGstIs)
     const const_gstValue = Math.round(constSaleValue * gstConstTaxIs )
@@ -325,7 +327,6 @@ const CostBreakUpPdf = ({
             : Number(data?.gst?.value)
         total = isChargedPerSqft
           ? Number(
-              selUnitDetails?.super_built_up_area ||
                 selUnitDetails?.area?.toString()?.replace(',', '')
             ) * Number(data?.charges)
           : Number(data?.charges)
@@ -366,7 +367,7 @@ const CostBreakUpPdf = ({
             : Number(data?.gst?.value)
         total = isChargedPerSqft
           ? Number(
-              selUnitDetails?.super_built_up_area ||
+              selUnitDetails?.construct_area ||
                 selUnitDetails?.area?.toString()?.replace(',', '')
             ) * Number(data?.charges)
           : Number(data?.charges)
@@ -705,15 +706,16 @@ const CostBreakUpPdf = ({
       resetForm
     )
   }
-  const changeOverallCostFun = async (inx, payload, newValue) => {
+  const changeOverallPartACostFun = async (inx, payload, newValue) => {
     const y = costSheetA
     let total = 0
     let gstTotal = 0
     const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'sqft_cost_tax'
     )
-    const gstTaxIs =
-      gstTaxForProjA?.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+    // const gstTaxIs = gstTaxForProjA?.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+
+      const gstTaxIs = selPhaseObj?.area_tax
     const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'plc_tax'
     )
@@ -724,7 +726,7 @@ const CostBreakUpPdf = ({
       gstTotal = Math.round(total * gstTaxIs)
     } else {
       total = Math.round(
-        Number(selUnitDetails?.super_built_up_area || selUnitDetails?.area) *
+        Number(selUnitDetails?.area) *
           newValue
       )
       gstTotal = Math.round(total * (gstTaxIs / 100))
@@ -749,24 +751,18 @@ const CostBreakUpPdf = ({
     const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'sqft_cost_tax'
     )
-    const gstTaxIs =
-      gstTaxForProjA?.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
+    const gstTaxIs =selPhaseObj?.const_tax
     const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'plc_tax'
     )
-    if (csMode === 'plot_cs') {
-      total = Math.round(
-        selUnitDetails?.construct_area?.toString()?.replace(',', '') * newValue
-      )
-      gstTotal = Math.round(total * gstTaxIs)
-    } else {
+
       total = Math.round(
         Number(
-          selUnitDetails?.super_built_up_area || selUnitDetails?.construct_area ||0
+          selUnitDetails?.construct_area || selUnitDetails?.construct_area ||0
         ) * newValue
       )
       gstTotal = Math.round(total * (gstTaxIs / 100))
-    }
+
 
     y[inx].charges = newValue
     y[inx].TotalSaleValue = total
@@ -929,7 +925,7 @@ const CostBreakUpPdf = ({
                                             setNewSqftPrice(
                                               Number(e.target.value)
                                             )
-                                            changeOverallCostFun(
+                                            changeOverallPartACostFun(
                                               inx,
                                               d1,
                                               e.target.value
@@ -1401,14 +1397,7 @@ const CostBreakUpPdf = ({
                                           <td className="text-[12px] px-2 text-right   ">
                                             {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
                                             ₹
-                                            {Number(
-                                              computeTotal(
-                                                d1,
-                                                selUnitDetails?.area
-                                                  ?.toString()
-                                                  ?.replace(',', '')
-                                              )
-                                            )?.toLocaleString('en-IN')}
+                                            {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
                                           </td>
                                         </tr>
                                       ))}

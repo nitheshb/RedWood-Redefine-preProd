@@ -208,9 +208,9 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
   return (
     <>
 
-      
 
-{/*       
+
+{/*
       <PdfPaymentScheduleGenerator
       user={user}
       PSa={PSa}
@@ -218,7 +218,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
       projectDetails={projectDetails}
 
 
-      
+
        />      */}
 
 
@@ -241,7 +241,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
 
 
                 <div>
-                        
+
       <PdfPaymentScheduleGenerator
       user={user}
       PSa={PSa}
@@ -251,8 +251,8 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
       unitReceivedTotal={unitReceivedTotal}
 
 
-      
-       />  
+
+       />
                 </div>
               </div>
               <table className="w-full mb- ">
@@ -304,6 +304,16 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
                               {' '}
                               {d1?.description}-{prettyDate(d1?.schDate)}
                             </div>
+                            <ul>
+                              {d1?.subA?.map((d2, inx) => {
+                                return (
+                                  <li className="text-[9px] text-left text-[#6A6A6A] bg-[#fff] tracking-wider ">
+                                    {d2?.stage.label}-{d2?.purpose}
+                                  </li>
+                                )
+                              })}
+
+                            </ul>
                           </div>
                         </th>
 

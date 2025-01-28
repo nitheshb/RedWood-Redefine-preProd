@@ -6,6 +6,8 @@ export const crmActivieLogNamer = (dat) => {
   switch (subtype) {
     case 'cs_approval':
       return (tex = 'Cost Sheet')
+    case 'unit_new_modification':
+        return (tex = 'New Modification')
     case 'kyc_approval':
         return (tex = 'KYC')
     case 'sd_approval':

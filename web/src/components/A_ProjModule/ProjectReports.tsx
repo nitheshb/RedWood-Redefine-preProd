@@ -125,7 +125,7 @@ const ProjectReportsBody = ({ title, pId, data }) => {
                 }
               } else {
                 console.log('New record added!')
-                return [...prevLogs, payload.new]
+                return [payload.new,...prevLogs]
               }
             })
           } else {
@@ -145,7 +145,7 @@ const ProjectReportsBody = ({ title, pId, data }) => {
                 }
               } else {
                 console.log('New record added!')
-                return [...prevLogs, payload.new]
+                return [payload.new,...prevLogs]
               }
             })
           }

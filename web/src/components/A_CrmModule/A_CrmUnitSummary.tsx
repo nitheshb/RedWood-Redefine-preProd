@@ -87,7 +87,7 @@ const CrmUnitSummary = ({
                 }
               } else {
                 console.log('New record added!')
-                return [...prevLogs, payload.new]
+                return [payload.new,...prevLogs]
               }
             })
           } else {
@@ -111,7 +111,7 @@ const CrmUnitSummary = ({
                   }
                 } else {
                   console.log('New record added!')
-                  return [...prevLogs, payload.new]
+                  return [payload.new,...prevLogs]
                 }
               })
             }
@@ -257,9 +257,9 @@ const CrmUnitSummary = ({
     customerDetails={customerDetails}
     fullPs={fullPs}
     T_B={T_B}
-    
-    
-    
+
+
+
     PSa={PSa}
     setNetTotal={setNetTotal}
     partATotal={partATotal}
@@ -267,7 +267,7 @@ const CrmUnitSummary = ({
     // setPartATotal={setPartATotal}
     // setPartBTotal={setPartBTotal}
     projectDetails={projectDetails}
-    leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined} 
+    leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined}
     // user={user}
     // selUnitDetails={selUnitDetails}
     // myObj={newPlotCostSheetA}
