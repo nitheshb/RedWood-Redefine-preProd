@@ -87,7 +87,6 @@ const AddUnit = ({
           const nA = bankA.filter((item) => item.title === 'Car Parking')
           const oA = bankA.filter((item) => item.title === 'Status')
           const pA = bankA.filter((item) => item.title === 'Mortgage Type')
-
           setUnitTypeList(
             jA.sort((a, b) => {
               return a.order - b.order
@@ -753,11 +752,11 @@ const AddUnit = ({
                 plc_per_sqft: unitDetails?.plc_per_sqft || 0,
                 construct_area: unitDetails?.construct_area || 0,
                 cartpet_area_sqft: unitDetails?.cartpet_area_sqft || 0,
-                uds_sqft: unitDetails?.uds_sqft || 0,
+                 uds_sqft: unitDetails?.uds_sqft || 0,
                 floor_plan: unitDetails?.floor_plan || 0,
-                bedrooms_c: Number(unitDetails?.bedrooms_c?.toString()?.replace(/\D/g, "")) || 0,
-                bathrooms_c: Number(unitDetails?.bathrooms_c?.toString()?.replace(/\D/g, "")) || 0,
-                car_parkings_c: Number(unitDetails?.car_parkings_c?.toString()?.replace(/\D/g, "")) || 0,
+                bedrooms_c: (unitDetails?.bedrooms_c?.toString()?.replace(/\D/g, "")) || 0,
+                bathrooms_c: (unitDetails?.bathrooms_c?.toString()?.replace(/\D/g, "")) || 0,
+                car_parkings_c: (unitDetails?.car_parkings_c?.toString()?.replace(/\D/g, "")) || 0,
                 tower_no: unitDetails?.tower_no || 0,
                 block_no: unitDetails?.block_no || 0,
                 floor_no: unitDetails?.floor_no || 0,
@@ -765,7 +764,7 @@ const AddUnit = ({
                 min_rate_per_sqft_c: unitDetails?.min_rate_per_sqft_c || 0,
 
                 size: unitDetails?.size || '',
-                facing: unitDetails?.facing || '',
+                facing: unitDetails?.facing?.toLowerCase() || '',
                 unit_d: unitDetails?.unit_d || '',
                 min_rate_per_sqft: unitDetails?.min_rate_per_sqft || 0,
                 construct_price_sqft: unitDetails?.construct_price_sqft || 0,
@@ -1042,10 +1041,7 @@ const AddUnit = ({
                                       'bedrooms_c',
                                       value.value
                                     )
-                                    formik.setFieldValue(
-                                      'bedrooms_c',
-                                      value.value
-                                    )
+
                                   }}
                                   value={formik.values.bedrooms_c}
                                   // options={aquaticCreatures}
