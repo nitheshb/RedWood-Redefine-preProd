@@ -266,14 +266,11 @@ const CostBreakUpPdf = ({
                 (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
           )
     const plcConstructSaleValue =
-          costSheetA.length > 1
-            ? selUnitDetails?.area?.toString()?.replace(',', '') *
-              Number(costSheetA[1]['charges'])
-            : Math.round(
-                selUnitDetails?.construct_area ||
-                  selUnitDetails?.area?.toString()?.replace(',', '') *
-                    (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
-              )
+    Math.round(
+      selUnitDetails?.construct_area
+ *
+          (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
+    )
     const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'sqft_cost_tax'
     )
@@ -308,6 +305,8 @@ const CostBreakUpPdf = ({
     const plot_gstValue = Math.round(plotSaleValue) * gstTaxIs
     const plc_gstValue = Math.round(plcSaleValue * plcGstIs)
     const const_gstValue = Math.round(constSaleValue * gstConstTaxIs )
+    const const_plc_gstValue =0
+
     console.log(
       'gen costSheetA values are ',
       Number.isFinite(y),
@@ -397,9 +396,10 @@ const CostBreakUpPdf = ({
       // setConstAddiChargesObj(additonalChargesObj)
       // setNewAdditonalConstChargesObj(constructOtherChargesObj)
       setPSConstAdditonalPayload(constructOtherChargesObj)
+
       setPSPayload(paymentScheduleObj)
       setPartCPayload(selPhaseObj?.partCTaxObj || [])
-      console.log('construct ps obj', ConstructPayScheduleObj)
+      console.log('construct ps obj', paymentScheduleObj)
       setConstructPSPayload(ConstructPayScheduleObj)
 
       x = [
@@ -493,7 +493,7 @@ const CostBreakUpPdf = ({
             label: 'Fixed cost',
           },
           component: {
-            value: 'plc_cost_sqft',
+            value: 'plc_const_cost_sqft',
             label: 'Construction PLC',
           },
           others: selUnitDetails?.plc || 0,
@@ -503,14 +503,14 @@ const CostBreakUpPdf = ({
               : Number.isFinite(z)
               ? z
               : selUnitDetails?.plc || selUnitDetails?.plc_per_sqft,
-          TotalSaleValue: plcSaleValue,
+          TotalSaleValue: plcConstructSaleValue,
           // charges: y,
-          gstValue: plc_gstValue,
+          gstValue: const_plc_gstValue,
           gst: {
             label: '0.05',
             value: plcGstIs,
           },
-          TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
+          TotalNetSaleValueGsT: plcConstructSaleValue + const_plc_gstValue,
         },
       ]
     }
@@ -797,7 +797,7 @@ const CostBreakUpPdf = ({
           selUnitDetails?.construct_area || selUnitDetails?.construct_area ||0
         ) * newValue
       )
-      gstTotal = Math.round(total * (gstTaxIs / 100))
+      gstTotal = inx===0? Math.round(total * (gstTaxIs / 100)) : 0
 
 
     y[inx].charges = newValue
@@ -1249,10 +1249,11 @@ const CostBreakUpPdf = ({
                                                     e.target.value
                                                   )
                                                 }
-
+if(inx===0){
                                                 setConstNewSqftPrice(
                                                   Number(e.target.value)
                                                 )
+                                              }
                                                 changeOverallConstructCostFun(
                                                   inx,
                                                   d1,
