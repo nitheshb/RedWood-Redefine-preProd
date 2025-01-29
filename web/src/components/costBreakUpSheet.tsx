@@ -533,12 +533,6 @@ console.log('customer info', myBookingPayload)
   }
 
 
-  if(isMover){
-    setOnStep('booking_summary')
-    if (onStep === 'booking_summary') {
-      setOnStep('booksheet')
-    }
-  }
 
 
 
