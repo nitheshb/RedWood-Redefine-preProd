@@ -20,12 +20,15 @@ const CrmUnitSummary = ({
   unitTransactionsA,
   projectType,
   project,
+  unitTotal,
   fullPs,
   T_B,
   PSa,
   leadDetailsObj1,
+  unitReceivedTotal,
   projectDetails,
   streamUnitDetails,
+  plotPS,
   selCustomerPayload,
   myBookingPayload,
   customerDetails,
@@ -256,6 +259,9 @@ const CrmUnitSummary = ({
     totalIs={totalIs}
     customerDetails={customerDetails}
     fullPs={fullPs}
+    unitReceivedTotal={unitReceivedTotal}
+    plotPS={plotPS}
+    unitTotal={unitTotal}
     T_B={T_B}
 
 
@@ -281,6 +287,14 @@ const CrmUnitSummary = ({
     // projectDetails={{}} myAdditionalCharges={undefined} setPartBTotal={undefined} leadDetailsObj1={undefined} customerDetails={undefined}
     />
 </div>
+
+
+
+  <div>
+    <p className='text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mt-1 ml-1'>Unit Summary</p>
+  </div>
+
+
           </div>
 
         </div>

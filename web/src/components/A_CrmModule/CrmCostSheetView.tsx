@@ -7,7 +7,21 @@ import { computeTotal } from 'src/util/computeCsTotals'
 import PdfSummaryGenerator from 'src/util/PdfSummaryGenerator'
 import PdfUniteSummary from 'src/util/PdfUniteSummary'
 
-const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, leadDetailsObj1,customerDetails, streamUnitDetails, newAdditonalChargesObj, myBookingPayload, assets, totalIs,selUnitDetails,newPlotCostSheetA, newPlotPS }) => {
+const CrmUnitCostSheetView = ({ selCustomerPayload,
+   unitTransactionsA, PSa, 
+   leadDetailsObj1,
+   customerDetails, 
+   streamUnitDetails,
+    newAdditonalChargesObj, 
+    myBookingPayload, 
+    assets, 
+    totalIs,
+    selUnitDetails,
+    newPlotCostSheetA, 
+    newPlotPS,
+    project,
+  
+  }) => {
   const { user } = useAuth()
   const { orgId } = user
   const [partATotal, setPartA] = useState(0)
@@ -191,6 +205,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
     netTotal={netTotal}
     totalIs={totalIs}
     customerDetails={customerDetails}
+    project={project}
 
 
 

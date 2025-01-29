@@ -41,6 +41,7 @@ const CostBreakUpSheet = ({
   leadDetailsObj1,
   projectDetails,
   selPhaseObj,
+  project,
   selUnitDetails,
   actionMode,
 }) => {
@@ -971,6 +972,7 @@ console.log('customer info', myBookingPayload)
                                         partATotal={partATotal}
                                         partBTotal={partBTotal}
                                         setPartATotal={setPartATotal}
+                                        project={project}
                                         setPartBTotal={setPartBTotal}
                                         projectDetails={projectDetails}
                                         leadDetailsObj1={leadDetailsObj1}

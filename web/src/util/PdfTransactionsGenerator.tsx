@@ -632,8 +632,11 @@ const MyDocument = ({
           <View
             style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1]}
           >
-            <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} />
-            <Text style={[styles.h4, styles.ml1]}>
+
+            <Image src={projectDetails?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+            
+            {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
+            <Text style={[styles.h4, styles.pt3, styles.ml1]}>
               {projectDetails?.projectName}
             </Text>
             {/* <Text>{myObj} </Text> */}
@@ -1206,7 +1209,7 @@ const PdfTransactionsGenerator = ({
 
 
       >
-        {({ blob, url, loading, error }) =>
+        {/* {({ blob, url, loading, error }) =>
           loading ? (
             <button className="flex items-center justify-center">
             <Loader texColor="text-blue-600" size="h-5 w-5" />Transactions
@@ -1222,7 +1225,41 @@ const PdfTransactionsGenerator = ({
               
             </span>
           )
-        }
+        } */}
+
+               {({ blob, url, loading, error }) =>
+                  loading ? (
+                  //   <button className="flex items-center justify-center px-1 py-1 mt-4">
+                  //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]" />Cost Sheet
+                  // </button>
+                    <div
+                    className=" focus:outline-none px-1 py-1 mt-4  text-sm font-bold tracking-wider rounded-sm flex flex-row
+        
+        
+        
+                   duration-200 ease-in-out
+                   transition"
+                  >
+                     <Download style={{ height: '20px', width: '14px' }} className='mr-1 text-gray-200'/>
+        
+                  </div>
+                  ) : (
+                  //   <button className="flex items-center justify-center  px-1 py-1 mt-4">
+                  //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]"  />Cost Sheet
+                  // </button>
+                    <div
+                      className=" focus:outline-none px-1 py-1 mt-4 text-sm font-bold tracking-wider rounded-sm
+        
+        
+        
+                     duration-200 ease-in-out
+                     transition"
+                    >
+                  <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
+        
+                    </div>
+                  )
+                }
       </PDFDownloadLink>
     </div>
   )
