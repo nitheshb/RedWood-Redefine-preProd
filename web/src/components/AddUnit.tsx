@@ -752,6 +752,7 @@ const AddUnit = ({
                 plc_per_sqft: unitDetails?.plc_per_sqft || 0,
                 construct_area: unitDetails?.construct_area || 0,
                 cartpet_area_sqft: unitDetails?.cartpet_area_sqft || 0,
+              
                  uds_sqft: unitDetails?.uds_sqft || 0,
                 floor_plan: unitDetails?.floor_plan || 0,
                 bedrooms_c: (unitDetails?.bedrooms_c?.toString()?.replace(/\D/g, "")) || 0,

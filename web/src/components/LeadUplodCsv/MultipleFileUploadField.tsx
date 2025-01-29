@@ -472,9 +472,11 @@ export function MultipleFileUploadField({
                 phaseId: dRow[''] || 1,
                 blockId: myBlock?.uid || 1,
                 Date: Timestamp.now().toMillis(),
+
                 unit_no:
                   dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
                 size: dRow['Type*']?.toLowerCase() || '',
+                type: dRow['Type*']?.toLowerCase() || '',
                 facing: dRow['Facing*'] || '',
                 bedrooms_c: dRow['Bedrooms'] || 0,
                 bathrooms_c: dRow['Bathrooms'] || 0,
@@ -495,7 +497,8 @@ export function MultipleFileUploadField({
                   dRow['Construction Price per sqft*'] ||
                   0,
                 // super_built_up_area: dRow[''] || 0,
-                cartpet_area_sqft: dRow['Carpet Area(sqft)'] || 0,
+                carpet_area_sqft: dRow['Carpet Area(sqft)'] ||  dRow['Carpet Area(sqft)*'] || 0,
+                dimension: dRow['Dimension'],
 
                 // construct_price: dRow['Construction price'] || 0,
 
@@ -517,7 +520,7 @@ export function MultipleFileUploadField({
                 PID_no: dRow['PID No'] || '',
                 sharing: dRow['Sharing'] || '',
                 intype: 'bulk',
-                unit_type: 'Apartment',
+                unit_type: title==='Import Booked Villas' ? 'Villa' : title==='Import Booked Apartments' ? 'Apartment' : 'Plot',
                 by: user?.email,
               }
               return await computPlotObj
