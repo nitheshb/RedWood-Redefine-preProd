@@ -58,7 +58,7 @@ const useStyles = () =>
         fitternew: {
           marginLeft: '20px',
           marginRight: '20px',
-          marginTop: '20px',
+          // marginTop: '20px',
 
         },
 
@@ -141,6 +141,9 @@ const useStyles = () =>
           backgroundColor: '#fff',
           textTransform: 'capitalize',
           padding: '0px',
+          paddingTop: 35,
+          paddingHorizontal: 5,
+          paddingBottom: 20 
           // padding: '40px 24px 60px 24px',
         },
         footer: {
@@ -273,6 +276,12 @@ const useStyles = () =>
         tableCell_200: {
           width: '20%',
           paddingRight: 3,
+
+        },
+        
+
+        tableCell_10: {
+          width: '10%',
 
         },
 
@@ -999,7 +1008,7 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_200,
+                      styles.tableCell_10,
                       styles.alignRight,
                       styles.p12,
                       styles.pr4,
@@ -1089,7 +1098,7 @@ const MyDocument = ({
       </Text>
     </View>
 
-    <View style={[styles.tableCell_20, styles.alignRight]}>
+    <View style={[styles.tableCell_10, styles.alignCenter]}>
       <Text>
 
       {renderSwitchStatus(d1?.elgible)}
@@ -1098,7 +1107,7 @@ const MyDocument = ({
       </Text>
     </View>
 
-    <View style={[styles.tableCell_20, styles.alignRight, styles.pr4]}>
+    <View style={[styles.tableCell_20, styles.alignRight,]}>
       <Text>
       ₹{d1?.value?.toLocaleString('en-IN')}
       </Text>
@@ -1126,20 +1135,20 @@ const MyDocument = ({
             >
   
 
-              <View style={[styles.tableCell_35, styles.p10]}></View>
+              <View style={[styles.tableCell_35,]}></View>
 
 
 
 
 
-              <View style={[styles.tableCell_20, styles.alignRight]}>
+              <View style={[styles.tableCell_20, ]}>
               <Text style={[styles.subtitle2,]}>
                 Total Value:
                         </Text>
               </View>
 
               <View
-                style={[styles.tableCell_2000, styles.ml2]}
+                style={[styles.tableCell_2000, ]}
               >
 
 

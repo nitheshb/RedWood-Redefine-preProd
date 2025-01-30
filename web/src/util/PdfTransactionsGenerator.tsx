@@ -56,7 +56,7 @@ const useStyles = () =>
         fitternew: {
           marginLeft: '20px',
           marginRight: '20px',
-          marginTop: '20px',
+          // marginTop: '20px',
 
         },
 
@@ -138,6 +138,9 @@ const useStyles = () =>
           backgroundColor: '#fff',
           textTransform: 'capitalize',
           padding: '0px',
+          paddingTop: 35,
+          paddingHorizontal: 5,
+          paddingBottom: 20 
           // padding: '40px 24px 60px 24px',
         },
         footer: {
@@ -275,6 +278,25 @@ const useStyles = () =>
 
         tableCell_20: {
           width: '20%',
+          paddingRight: 10,
+        },
+
+
+        tableCell_150: {
+          width: '15%',
+          paddingRight: 10,
+        },
+
+
+        tableCell_1500: {
+          width: '15%',
+       
+        },
+
+
+
+        tableCell_10: {
+          width: '10%',
           paddingRight: 10,
         },
         tableCell_2: {
@@ -961,7 +983,7 @@ const MyDocument = ({
                 >
 
 
-                  <View style={[styles.tableCell_35, styles.p12, { marginLeft:'20px' }]}>
+                  <View style={[styles.tableCell_10, styles.p12, { marginLeft:'14px' }]}>
                     <Text style={styles.subtitle2}>
 
                       Paid On
@@ -972,7 +994,7 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_200,
+                      styles.tableCell_10,
                       styles.alignRight,
                       styles.p12,
                       styles.pr4,
@@ -986,8 +1008,8 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_200,
-                      styles.alignRight,
+                      styles.tableCell_20,
+                      styles.alignCenter,
                       styles.p12,
                       styles.pr8,
                       styles.ml2,
@@ -1000,8 +1022,8 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_200,
-                      styles.alignRight,
+                      styles.tableCell_20,
+                      styles.alignCenter,
                       styles.p12,
                       styles.pr8,
                       styles.ml2,
@@ -1012,8 +1034,8 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_200,
-                      styles.alignRight,
+                      styles.tableCell_10,
+                      styles.alignCenter,
                       styles.p12,
                       styles.pr8,
                       styles.ml2,
@@ -1023,14 +1045,14 @@ const MyDocument = ({
                   </View>
 
                   <View
-                    style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr8, ]}
+                    style={[styles.tableCell_150, styles.alignCenter, styles.p12, styles.pr8, ]}
                   >
                     <Text style={styles.subtitle2}>Accounts</Text>
                   </View>
 
 
                   <View
-                    style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr8, ]}
+                    style={[styles.tableCell_150, styles.alignRight, styles.p12, styles.pr8, ]}
                   >
                     <Text style={styles.subtitle2}>
                     Reviewer
@@ -1068,37 +1090,40 @@ const MyDocument = ({
                       <Text>{inx + 1}</Text>
                     </View>
 
-                    <View style={[styles.tableCell_35]}>
+                    <View style={[styles.tableCell_10]}>
                       <Text style={styles.subtitle2}>
                       {prettyDate(d1?.txt_dated ||d1?.dated).toLocaleString() }
                       </Text>
                     </View>
 
-                    <View style={[styles.tableCell_20, styles.alignRight]}>
-                      <Text>                         {d1?.mode}
+                    <View style={[styles.tableCell_10, styles.alignCenter, styles.ml1]}>
+                      <Text>
+                        {d1?.mode}
                       </Text>
                     </View>
 
                     <View
                       style={[
                         styles.tableCell_20,
-                        styles.alignRight,
-                        styles.pr4,
+                        styles.alignCenter,
+                        
                       ]}
                     >
-                      <Text>   {d1?.bank_ref || d1?.chequeno}</Text>
+                      <Text>   
+                        {d1?.bank_ref || d1?.chequeno}
+                        </Text>
                     </View>
 
 
 
-                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                    <View style={[styles.tableCell_20, styles.alignCenter]}>
                       <Text>
                       ₹{d1?.totalAmount?.toLocaleString('en-IN') || d1?.amount?.toLocaleString('en-IN')}
 
                       </Text>
                     </View>
 
-                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                    <View style={[styles.tableCell_10, styles.alignCenter]}>
                       <Text>
                       {d1?.status}
                       </Text>
@@ -1107,7 +1132,7 @@ const MyDocument = ({
                 
 
 
-                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                    <View style={[styles.tableCell_150, styles.alignCenter]}>
                       <Text>
                       {d1?.towards ||d1?.builderName}
                      {d1?.customerName}
@@ -1115,7 +1140,7 @@ const MyDocument = ({
                     </View>
 
 
-                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                    <View style={[styles.tableCell_1500, styles.alignCenter]}>
                       <Text>
                       {d1?.Reviewer || "NA"}
 
