@@ -2263,6 +2263,7 @@ export default function UnitFullSummary({
             assets={selCustomerPayload?.assets}
             totalIs={totalIs}
             unitTransactionsA={unitTransactionsA}
+            
           />
         </div>
       )}

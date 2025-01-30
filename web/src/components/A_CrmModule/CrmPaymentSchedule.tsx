@@ -9,7 +9,7 @@ import SiderForm from '../SiderForm/SiderForm'
 import CrmConfirmationDialog from './CrmConfirmationDialog'
 import PdfPaymentScheduleGenerator from 'src/util/PdfPaymentScheduleGenerator'
 
-const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
+const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs }) => {
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
@@ -249,6 +249,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, totalIs }) => {
       projectDetails={projectDetails}
       unitTotal={unitTotal}
       unitReceivedTotal={unitReceivedTotal}
+      project={project}
 
 
 
