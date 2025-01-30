@@ -172,7 +172,7 @@ export const projectPlans = [
   },
 ]
 
- 
+
 
 
 
@@ -1444,6 +1444,62 @@ export const ProjectAccessFolder = [
   },
 ]
 
+
+export const constructCS_A =[
+
+    {
+      myId: '3',
+      units: {
+        value: 'cost_per_sqft',
+        label: 'Cost per cost',
+      },
+      component: {
+        value: 'villa_construct_cost',
+        label: 'Villa Construction Cost  ',
+      },
+
+    },
+    {
+      myId: '4',
+      units: {
+        value: 'cost_per_sqft',
+        label: 'Cost per cost',
+      },
+      component: {
+        value: 'plc_cost_sqft',
+        label: 'Construction PLC',
+      },
+
+    },
+
+]
+
+export const plotCS_Dummy_A = [
+
+    {
+      myId: '1',
+      units: {
+        value: 'cost_per_sqft',
+        label: 'Cost per cost',
+      },
+      component: {
+        value: 'unit_cost_charges',
+        label: 'Unit Cost',
+      },
+    },
+    {
+      myId: '2',
+      units: {
+        value: 'cost_per_sqft',
+        label: 'Cost per cost',
+      },
+      component: {
+        value: 'plc_cost_sqft',
+        label: 'PLC',
+      },
+    },
+
+  ]
 
 
 

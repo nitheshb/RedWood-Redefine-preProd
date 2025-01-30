@@ -1897,7 +1897,7 @@ export default function LfileuploadTableTemplate({
         },
         {
           id: 'sharing',
-          label: 'sharing',
+          label: 'Sharing',
           minWidth: 10,
           align: 'left',
         },
@@ -1951,13 +1951,13 @@ export default function LfileuploadTableTemplate({
     ) {
       columns = [
         { id: 'unit_no', label: 'unit_no', minWidth: 80 },
-        {
-          id: 'status',
-          label: 'Available Status',
-          minWidth: 10,
-          align: 'left',
-          format: (value) => value.toLocaleString('en-US'),
-        },
+        // {
+        //   id: 'status',
+        //   label: 'Available Status',
+        //   minWidth: 10,
+        //   align: 'left',
+        //   format: (value) => value.toLocaleString('en-US'),
+        // },
         {
           id: 'unitStatus',
           label: 'Unit Status',
@@ -1978,14 +1978,32 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString(),
         },
         {
-          id: 'sqft_rate',
-          label: 'Plot per sqft',
+          id: 'partA_total',
+          label: 'Part A',
           minWidth: 80,
           format: (value) => value.toLocaleString(),
         },
         {
-          id: 'construct_price_sqft',
-          label: 'Construction per sqft',
+          id: 'partC_total',
+          label: 'Part C',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'plot_area_sqft',
+          label: 'Plot area sqft',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'bua_sqft',
+          label: 'BUA sqft',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'sqft_rate',
+          label: 'Plot per sqft',
           minWidth: 80,
           format: (value) => value.toLocaleString(),
         },
@@ -1995,6 +2013,19 @@ export default function LfileuploadTableTemplate({
           minWidth: 80,
           format: (value) => value.toLocaleString(),
         },
+        {
+          id: 'construct_price_sqft',
+          label: 'Construction/sqft',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'const_plc_per_sqft',
+          label: 'Construction PLC/sqft',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+
         {
           id: 'legal_charges',
           label: 'Legal Charges',

@@ -11,6 +11,8 @@ import { computeTotal } from './computeCsTotals'
 import { TextFieldFlat } from './formFields/TextFieldFlatType'
 import '../styles/myStyles.css'
 import CustomDatePicker from './formFields/CustomDatePicker'
+import { CalculateComponentTotal, UpdateComponentCalTotal } from './unitCostSheetCalculator'
+import { plotCS_Dummy_A } from 'src/constants/projects'
 
 const CostBreakUpPdf = ({
   formik,
@@ -75,7 +77,7 @@ const CostBreakUpPdf = ({
   const [costPerSqft, setCostPerSqft] = useState(1000)
   const [constructionPerSqft, setConstructionPerSqft] = useState(1200)
   const [gst, setGST] = useState(12)
-  const [constGst, setConstGST] = useState(12)
+  const [constGst, setConstGST] = useState(0)
 
   const [plotBookingAdv, setPlotBookingAdv] = useState(0)
   const [partBPayload, setPartBPayload] = useState([])
@@ -256,6 +258,9 @@ const CostBreakUpPdf = ({
     const constSaleValue =Number.isFinite(y)
     ? Number( (selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0 )* y)
     : Number((selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0) * selUnitDetails?.construct_price_sqft || 0)
+    const constPlcSaleValue =Number.isFinite(y)
+    ? Number( (selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0 )* y)
+    : Number((selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0) * (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft || 0))
     const plcSaleValue =
       costSheetA.length > 1
         ? selUnitDetails?.area?.toString()?.replace(',', '') *
@@ -304,10 +309,17 @@ const CostBreakUpPdf = ({
     //       ? Number(gstTaxForConstructionA[0]?.gst?.value) * 0.01
     //       : Number(gstTaxForConstructionA[0]?.gst?.value)
     //     : 0
-    const gstConstTaxIs = (selPhaseObj?.const_tax/100)
+
+    const constTaxPercent = selPhaseObj?.const_tax
+    const gstConstTaxIs = (constTaxPercent/100)
+    const CplcGstIsPercent = 0
+    const  gstPlcConstTaxIs = CplcGstIsPercent/100
     const plot_gstValue = Math.round(plotSaleValue) * gstTaxIs
     const plc_gstValue = Math.round(plcSaleValue * plcGstIs)
     const const_gstValue = Math.round(constSaleValue * gstConstTaxIs )
+    const const_plc_gstValue = Math.round(constPlcSaleValue * gstPlcConstTaxIs )
+
+
     console.log(
       'gen costSheetA values are ',
       Number.isFinite(y),
@@ -321,75 +333,10 @@ const CostBreakUpPdf = ({
     // if (csMode === 'plot_cs') {
     if ('plot_cs' === 'plot_cs') {
       additonalChargesObj?.map((data, inx) => {
-        let total = 0
-        let gstTotal = 0
-        const isChargedPerSqft = [
-          'costpersqft',
-          'cost_per_sqft',
-          'price_per_sft',
-        ].includes(data?.units.value)
-        // const gstTaxIs =
-        //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
-        const gstPercent =
-          Number(data?.gst?.value) > 1
-            ? Number(data?.gst?.value) * 0.01
-            : Number(data?.gst?.value)
-        total = isChargedPerSqft
-          ? Number(
-                selUnitDetails?.area?.toString()?.replace(',', '')
-            ) * Number(data?.charges)
-          : Number(data?.charges)
-
-        //   costSheetA.length > 0
-        // ? Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
-        //   Number(costSheetA[0]['charges'])
-        // : Number.isFinite(y)
-        // ? Number(selUnitDetails?.selUnitDetails?.area * y)
-        // : Number(
-        //     Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
-        //       (selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate)
-        //   )
-
-        gstTotal = Math.round(total * gstPercent)
-
-        console.log('myvalue is ', data, gstPercent)
-        data.TotalSaleValue = total
-        data.gst.label = gstTaxIs
-        // data.gst.value = gstTotal
-        data.gstValue = gstTotal
-        data.TotalNetSaleValueGsT = total + gstTotal
-        return data
+        return CalculateComponentTotal(data,selUnitDetails?.area?.toString()?.replace(',', ''),selPhaseObj?.area_tax, data?.charges)
       })
       constructOtherChargesObj?.map((data, inx) => {
-        let total = 0
-        let gstTotal = 0
-        const isChargedPerSqft = [
-          'costpersqft',
-          'cost_per_sqft',
-          'price_per_sft',
-        ].includes(data?.units.value)
-        // const gstTaxIs =
-        //   gstTaxForProjA.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
-        const gstPercent =
-          Number(data?.gst?.value) > 1
-            ? Number(data?.gst?.value) * 0.01
-            : Number(data?.gst?.value)
-        total = isChargedPerSqft
-          ? Number(
-              selUnitDetails?.construct_area ||
-                selUnitDetails?.area?.toString()?.replace(',', '')
-            ) * Number(data?.charges)
-          : Number(data?.charges)
-
-        gstTotal = Math.round(total * gstPercent)
-
-        console.log('myvalue is ', data)
-        data.TotalSaleValue = total
-        data.gst.label = gstTaxIs
-        // data.gst.value = gstTotal
-        data.gstValue = gstTotal
-        data.TotalNetSaleValueGsT = total + gstTotal
-        return data
+       return  CalculateComponentTotal(data,selUnitDetails?.construct_area || selUnitDetails?.area?.toString()?.replace(',', ''),constTaxPercent, data?.charges)
       })
       setPartBPayload(additonalChargesObj)
       setAddiChargesObj(additonalChargesObj)
@@ -406,8 +353,8 @@ const CostBreakUpPdf = ({
         {
           myId: '1',
           units: {
-            value: 'fixedcost',
-            label: 'Fixed cost',
+            value: 'cost_per_sqft',
+            label: 'Cost per Sqft',
           },
           component: {
             value: 'unit_cost_charges',
@@ -429,8 +376,8 @@ const CostBreakUpPdf = ({
         {
           myId: '2',
           units: {
-            value: 'fixedcost',
-            label: 'Fixed cost',
+            value: 'cost_per_sqft',
+            label: 'Cost per Sqft',
           },
           component: {
             value: 'plc_cost_sqft',
@@ -455,6 +402,7 @@ const CostBreakUpPdf = ({
 
       ]
 
+
       const constructionSqftRate = selUnitDetails?.construct_price_sqft || 0
       const constructionArea =
         selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0
@@ -462,8 +410,8 @@ const CostBreakUpPdf = ({
         {
           myId: '3',
           units: {
-            value: 'fixedcost',
-            label: 'Fixed cost',
+            value: 'cost_per_sqft',
+            label: 'Cost per Sqft',
           },
           component: {
             value: 'villa_construct_cost',
@@ -477,8 +425,8 @@ const CostBreakUpPdf = ({
           // charges: y,
           gstValue: const_gstValue,
           gst: {
-            label: constGst,
-            value: const_gstValue,
+            label: constTaxPercent,
+            value: constTaxPercent,
           },
           TotalNetSaleValueGsT:
             (Number.isFinite(y)
@@ -489,8 +437,8 @@ const CostBreakUpPdf = ({
         {
           myId: '4',
           units: {
-            value: 'fixedcost',
-            label: 'Fixed cost',
+            value: 'cost_per_sqft',
+            label: 'Cost per Sqft',
           },
           component: {
             value: 'plc_cost_sqft',
@@ -503,14 +451,14 @@ const CostBreakUpPdf = ({
               : Number.isFinite(z)
               ? z
               : selUnitDetails?.plc || selUnitDetails?.plc_per_sqft,
-          TotalSaleValue: plcSaleValue,
+          TotalSaleValue: constPlcSaleValue,
           // charges: y,
-          gstValue: plc_gstValue,
+          gstValue: const_plc_gstValue,
           gst: {
-            label: '0.05',
-            value: plcGstIs,
+            label: CplcGstIsPercent,
+            value: CplcGstIsPercent,
           },
-          TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
+          TotalNetSaleValueGsT: constPlcSaleValue + const_plc_gstValue,
         },
       ]
     }
@@ -743,73 +691,82 @@ const CostBreakUpPdf = ({
     )
   }
   const changeOverallPartACostFun = async (inx, payload, newValue) => {
-    const y = costSheetA
-    let total = 0
-    let gstTotal = 0
-    const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
-      (d) => d?.component.value === 'sqft_cost_tax'
-    )
-    // const gstTaxIs = gstTaxForProjA?.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
 
-      const gstTaxIs = selPhaseObj?.area_tax
-    const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
-      (d) => d?.component.value === 'plc_tax'
-    )
-    if (csMode === 'plot_cs') {
-      total = Math.round(
-        selUnitDetails?.area?.toString()?.replace(',', '') * newValue
-      )
-      gstTotal = Math.round(total * gstTaxIs)
-    } else {
-      total = Math.round(
-        Number(selUnitDetails?.area) *
-          newValue
-      )
-      gstTotal = Math.round(total * (gstTaxIs / 100))
-    }
+    const area = selUnitDetails?.area?.toString()?.replace(',', '');
+    const taxPercent =selPhaseObj?.area_tax
+    let y = await UpdateComponentCalTotal(costSheetA,inx,area, taxPercent, newValue)
+    // const y = costSheetA
+    // let total = 0
+    // let gstTotal = 0
+    // const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
+    //   (d) => d?.component.value === 'sqft_cost_tax'
+    // )
+    // // const gstTaxIs = gstTaxForProjA?.length > 0 ? gstTaxForProjA[0]?.gst?.value : 0
 
-    y[inx].charges = newValue
-    y[inx].TotalSaleValue = total
-    y[inx].gst.label = gstTaxIs
-    // y[inx].gst.value = gstTotal
-    y[inx].gstValue = gstTotal
-    y[inx].TotalNetSaleValueGsT = total + gstTotal
-    console.log('gen costSheetA', y)
-    console.log(costSheetA)
+    //   const gstTaxIs = selPhaseObj?.area_tax
+    // const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
+    //   (d) => d?.component.value === 'plc_tax'
+    // )
+    // if (csMode === 'plot_cs') {
+    //   total = Math.round(
+    //     selUnitDetails?.area?.toString()?.replace(',', '') * newValue
+    //   )
+    //   gstTotal = Math.round(total * gstTaxIs)
+    // } else {
+    //   total = Math.round(
+    //     Number(selUnitDetails?.area) *
+    //       newValue
+    //   )
+    //   gstTotal = Math.round(total * (gstTaxIs / 100))
+    // }
+
+    // y[inx].charges = newValue
+    // y[inx].TotalSaleValue = total
+    // y[inx].gst.label = gstTaxIs
+    // // y[inx].gst.value = gstTotal
+    // y[inx].gstValue = gstTotal
+    // y[inx].TotalNetSaleValueGsT = total + gstTotal
+    // console.log('gen costSheetA', y)
+    // console.log(costSheetA)
 
     setCostSheetA(y)
     setTotalFun()
   }
   const changeOverallConstructCostFun = async (inx, payload, newValue) => {
-    const y = constructCostSheetA
-    let total = 0
-    let gstTotal = 0
-    const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
-      (d) => d?.component.value === 'sqft_cost_tax'
-    )
-    const gstTaxIs =selPhaseObj?.const_tax
-    const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
-      (d) => d?.component.value === 'plc_tax'
-    )
 
-      total = Math.round(
-        Number(
-          selUnitDetails?.construct_area || selUnitDetails?.construct_area ||0
-        ) * newValue
-      )
-      gstTotal = Math.round(total * (gstTaxIs / 100))
+    const area = selUnitDetails?.construct_area?.toString()?.replace(',', '');
+    const taxPercent =payload?.gst?.value
+    let  z = await UpdateComponentCalTotal(constructCostSheetA,inx,area, taxPercent, newValue)
+    // const y = constructCostSheetA
+
+    // let total = 0
+    // let gstTotal = 0
+    // const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
+    //   (d) => d?.component.value === 'sqft_cost_tax'
+    // )
+    // const gstTaxIs =selPhaseObj?.const_tax
+    // const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
+    //   (d) => d?.component.value === 'plc_tax'
+    // )
+
+    //   total = Math.round(
+    //     Number(
+    //       selUnitDetails?.construct_area || selUnitDetails?.construct_area ||0
+    //     ) * newValue
+    //   )
+    //   gstTotal = Math.round(total * (gstTaxIs / 100))
 
 
-    y[inx].charges = newValue
-    y[inx].TotalSaleValue = total
-    y[inx].gst.label = gstTaxIs
-    // y[inx].gst.value = gstTotal
-    y[inx].gstValue = gstTotal
-    y[inx].TotalNetSaleValueGsT = total + gstTotal
-    console.log('gen costSheetA', y)
-    console.log(costSheetA)
+    // y[inx].charges = newValue
+    // y[inx].TotalSaleValue = total
+    // y[inx].gst.label = gstTaxIs
+    // // y[inx].gst.value = gstTotal
+    // y[inx].gstValue = gstTotal
+    // y[inx].TotalNetSaleValueGsT = total + gstTotal
+    // console.log('gen costSheetA', y)
+    // console.log(costSheetA)
 
-    setConstructCostSheetA(y)
+    setConstructCostSheetA(z)
     setTotalFun()
   }
   return (

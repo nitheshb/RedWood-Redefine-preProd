@@ -548,9 +548,11 @@ export function MultipleFileUploadField({
           // set duplicate & valid records
           // check in db if record exists with matched phone Number & email
 
+
+
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
-              const currentStatus = dRow['Availability Status']
+              const currentStatus = dRow['Unit Status']
               let newCurrentStatus = ''
               if (currentStatus == 'Available') {
                 newCurrentStatus = 'available'
@@ -578,6 +580,117 @@ export function MultipleFileUploadField({
               if (foundLength.length > 0) {
                 unitDetails = foundLength[0]
               }
+              let x = []
+              let constructionCS = []
+              let bua_sqft = dRow['BUA(sqft)']?.replace(/,/g, '') || 0
+              let construct_price_sqft = dRow['Construction Price per sqft']?.replace(/,/g, '') || 0
+              let const_plc_per_sqft = dRow['Construction PLC per sqft']?.replace(/,/g, '') || 0
+              let const_plc_sqft = dRow['Construction PLC(sqft)']?.replace(/,/g, '') || 0
+              let const_plc_rate = dRow['Construction PLC rate/sqft']?.replace(/,/g, '') || 0
+
+              if(title==='Import Booked Villas'){
+                let plotValue = Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0)* dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0
+                let plcSaleValue = Number(dRow['PLC rate/sqft']?.replace(/,/g, '') || 0)* dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0
+                let plc_gstValue = Math.round(plcSaleValue * 0)
+                let buaSaleValue = Number(bua_sqft)* Number(construct_price_sqft)
+                let bua__gst_percent = 0
+                let bua_gstValue = Math.round(buaSaleValue * bua__gst_percent)
+                let constPlcSaleValue = Number(const_plc_sqft)* Number(const_plc_rate)
+                let CplcGstIsPercent = 0
+                 x = [
+                   {
+                     myId: '1',
+                     units: {
+                       value: 'cost_per_sqft',
+                       label: 'Cost per Sqft',
+                     },
+                     component: {
+                       value: 'unit_cost_charges',
+                       label: 'Unit Cost',
+                     },
+                     others: Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0),
+                     charges:
+                     Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0),
+                     TotalSaleValue: plotValue ,
+                     gstValue: 0,
+                     gst: {
+                       label: "0",
+                       value: 0,
+                     },
+                     TotalNetSaleValueGsT: plotValue + 0,
+                   },
+                   {
+                     myId: '2',
+                     units: {
+                       value: 'cost_per_sqft',
+                       label: 'Cost per Sqft',
+                     },
+                     component: {
+                       value: 'plc_cost_sqft',
+                       label: 'PLC',
+                     },
+                     others: dRow['PLC rate/sqft'] || 0,
+                     charges:dRow['PLC rate/sqft'] || 0,
+                     TotalSaleValue: plcSaleValue,
+                     // charges: y,
+                     gstValue: plc_gstValue,
+                     gst: {
+                       label: '0',
+                       value: 0,
+                     },
+                     TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
+                   },
+
+                 ]
+
+                 constructionCS = [
+                  {
+                    myId: '3',
+                    units: {
+                      value: 'cost_per_sqft',
+                      label: 'Cost per Sqft',
+                    },
+                    component: {
+                      value: 'villa_construct_cost',
+                      label: 'Villa Construction Cost  ',
+                    },
+                    others: construct_price_sqft,
+                    charges: construct_price_sqft,
+                    TotalSaleValue: buaSaleValue,
+                    // charges: y,
+                    gstValue: bua_gstValue,
+                    gst: {
+                      label: bua__gst_percent,
+                      value: bua__gst_percent,
+                    },
+                    TotalNetSaleValueGsT:buaSaleValue + bua_gstValue,
+
+                  },
+                  {
+                    myId: '4',
+                    units: {
+                      value: 'cost_per_sqft',
+                      label: 'Cost per Sqft',
+                    },
+                    component: {
+                      value: 'plc_cost_sqft',
+                      label: 'Construction PLC',
+                    },
+                    others: const_plc_rate,
+                    charges: const_plc_rate,
+                    TotalSaleValue: constPlcSaleValue,
+                    // charges: y,
+                    gstValue: 0,
+                    gst: {
+                      label: CplcGstIsPercent,
+                      value: CplcGstIsPercent,
+                    },
+                    TotalNetSaleValueGsT: constPlcSaleValue + 0,
+                  },
+                ]
+
+               }
+
 
               const computPlotObj = {
                 unit_no:
@@ -588,8 +701,10 @@ export function MultipleFileUploadField({
                 survey_no: dRow['Survey No'],
                 landOwnerName: dRow['Land Owner Name'],
 
-                status: newCurrentStatus, //filter and send valid values
+                status: dRow['Availablity Status'], //filter and send valid values
                 unitStatus: dRow['Unit Status'],
+
+
                 //filter and send valid values
                 // booked_on: dRow['Booking Date']?.getTime(),
                 booked_on: new Date(dRow['Booking Date'])?.getTime(),
@@ -791,9 +906,23 @@ export function MultipleFileUploadField({
                 plotCS: [],
                 constructCS: [],
                 constructPS: [],
+                plot_area_sqft: dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0,
                 sqft_rate: Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0),
-                construct_price_sqft: Number(dRow['Const rate/sqft']?.replace(/,/g, '') || 0),
+                bua_sqft: bua_sqft,
+                construct_price_sqft: construct_price_sqft,
                 plc_per_sqft: dRow['PLC rate/sqft'],
+                const_plc_per_sqft: const_plc_per_sqft,
+                partA_total: x.reduce(
+                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+                  0
+                ),
+                partC_total: constructionCS.reduce(
+                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+                  0
+                ),
+
+
+
                 T_received: Number(dRow['Collected']?.replace(/,/g, '') || 0),
 
                 // // Date: Timestamp.now().toMillis(),
