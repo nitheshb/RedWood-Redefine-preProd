@@ -35,6 +35,8 @@ import pdfimg10 from '../../public/pdfimg10.png'
 import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
 import Loader from 'src/components/Loader/Loader'
+import { getProject } from 'src/context/dbQueryFirebase'
+import { useAuth } from 'src/context/firebase-auth-context'
 
 
 
@@ -567,8 +569,10 @@ const MyDocument = ({
   myAdditionalCharges,
   netTotal,
   projectDetails,
+  selCustomerPayload,
   setNetTotal,
   partATotal,
+  project,
   partBTotal,
   leadDetailsObj1,
   custObj1,
@@ -635,8 +639,11 @@ const MyDocument = ({
           <View
             style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1]}
           >
-            <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} />
-            <Text style={[styles.h4, styles.ml1]}>
+
+          <Image src={projectDetails?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+            
+            {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
+            <Text style={[styles.h4, styles.pt3, styles.ml1]}>
               {projectDetails?.projectName}
             </Text>
             {/* <Text>{myObj} </Text> */}
@@ -2335,11 +2342,40 @@ const PdfInvoiceGenerator = ({
   setPartATotal,
   setPartBTotal,
   projectDetails,
+  
+  selCustomerPayload,
   leadDetailsObj1,
   custObj1,
 
 }) => {
   console.log('overall cost sheet is ', newPlotPS, selUnitDetails)
+
+      const { user: authUser } = useAuth()
+  
+   const [project, setProject] = useState({})
+
+
+   const { orgId } = authUser
+
+   
+
+          useEffect(() => {
+            getProjectFun()
+          }, [])
+
+          const getProjectFun = async () => {
+  
+    
+            const steamLeadLogs = await getProject(
+              orgId,
+              selCustomerPayload?.pId
+            )
+            
+            await setProject(steamLeadLogs)
+          
+            return}
+
+            
   return (
     // <div>
     //   {' '}
@@ -2385,9 +2421,11 @@ const PdfInvoiceGenerator = ({
         setNetTotal={setNetTotal}
         partATotal={partATotal}
         partBTotal={partBTotal}
+        project={project}
         setPartATotal={setPartATotal}
         setPartBTotal={setPartBTotal}
         projectDetails={projectDetails}
+        selCustomerPayload={selCustomerPayload}
         leadDetailsObj1={leadDetailsObj1}
         custObj1={custObj1} 
         />
@@ -2400,7 +2438,7 @@ const PdfInvoiceGenerator = ({
 
 
     >
-      {({ blob, url, loading, error }) =>
+      {/* {({ blob, url, loading, error }) =>
         loading ? (
           <button className="flex items-center justify-center">
           <Loader texColor="text-blue-600" size="h-5 w-5" />CostSheet
@@ -2418,7 +2456,43 @@ const PdfInvoiceGenerator = ({
         Download CostSheet
           </span>
         )
-      }
+      } */}
+
+
+             {({ blob, url, loading, error }) =>
+                loading ? (
+                //   <button className="flex items-center justify-center px-1 py-1 mt-4">
+                //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]" />Cost Sheet
+                // </button>
+                  <div
+                  className=" focus:outline-none px-1 py-1 mt-4  text-sm font-bold tracking-wider rounded-sm flex flex-row
+      
+      
+      
+                 duration-200 ease-in-out
+                 transition"
+                >
+                   <Download style={{ height: '20px', width: '14px' }} className='mr-1 text-gray-200'/>
+      
+                </div>
+                ) : (
+                //   <button className="flex items-center justify-center  px-1 py-1 mt-4">
+                //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]"  />Cost Sheet
+                // </button>
+                  <div
+                    className=" focus:outline-none px-1 py-1 mt-4 text-sm font-bold tracking-wider rounded-sm
+      
+      
+      
+                   duration-200 ease-in-out
+                   transition"
+                  >
+                <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
+      
+                  </div>
+                )
+              }
+      
     </PDFDownloadLink>
   </div>
         )

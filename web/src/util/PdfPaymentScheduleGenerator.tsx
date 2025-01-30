@@ -33,6 +33,8 @@ import pdfimg10 from '../../public/pdfimg10.png'
 import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
 import Loader from 'src/components/Loader/Loader'
+import { useAuth } from 'src/context/firebase-auth-context'
+import { getProject } from 'src/context/dbQueryFirebase'
 
 
 Font.register({
@@ -56,7 +58,7 @@ const useStyles = () =>
         fitternew: {
           marginLeft: '20px',
           marginRight: '20px',
-          marginTop: '20px',
+          // marginTop: '20px',
 
         },
 
@@ -102,6 +104,7 @@ const useStyles = () =>
         mr15: { marginRight: 15 },
         mT0: { marginTop: 0 },
         mT1: { marginTop: 10 },
+        mT4: { marginTop: 40 },
         ml1: { marginLeft: 5 },
         ml2: { marginLeft: 10 },
         ml3: { marginLeft: 15 },
@@ -138,6 +141,9 @@ const useStyles = () =>
           backgroundColor: '#fff',
           textTransform: 'capitalize',
           padding: '0px',
+          paddingTop: 35,
+          paddingHorizontal: 5,
+          paddingBottom: 20 
           // padding: '40px 24px 60px 24px',
         },
         footer: {
@@ -270,6 +276,12 @@ const useStyles = () =>
         tableCell_200: {
           width: '20%',
           paddingRight: 3,
+
+        },
+        
+
+        tableCell_10: {
+          width: '10%',
 
         },
 
@@ -576,6 +588,7 @@ const MyDocument = ({
   newPlotPS,
   myAdditionalCharges,
   unitReceivedTotal,
+  project,
   netTotal,
   projectDetails,
   PSa,
@@ -639,6 +652,9 @@ const MyDocument = ({
     <Document>
       <Page size="A4" style={styles.page}>
 
+        {/* <View style={[styles.mT4]}> */}
+
+
 
         <View style={[ styles.fitternew, ]}>
 
@@ -655,7 +671,12 @@ const MyDocument = ({
           <View
             style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1]}
           >
-            <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} />
+           
+
+         <Image src={project?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+           
+
+            {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
             <Text style={[styles.h4, styles.ml1]}>
               {projectDetails?.projectName}
             </Text>
@@ -987,7 +1008,7 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_200,
+                      styles.tableCell_10,
                       styles.alignRight,
                       styles.p12,
                       styles.pr4,
@@ -1077,7 +1098,7 @@ const MyDocument = ({
       </Text>
     </View>
 
-    <View style={[styles.tableCell_20, styles.alignRight]}>
+    <View style={[styles.tableCell_10, styles.alignCenter]}>
       <Text>
 
       {renderSwitchStatus(d1?.elgible)}
@@ -1086,7 +1107,7 @@ const MyDocument = ({
       </Text>
     </View>
 
-    <View style={[styles.tableCell_20, styles.alignRight, styles.pr4]}>
+    <View style={[styles.tableCell_20, styles.alignRight,]}>
       <Text>
       ₹{d1?.value?.toLocaleString('en-IN')}
       </Text>
@@ -1114,20 +1135,20 @@ const MyDocument = ({
             >
   
 
-              <View style={[styles.tableCell_35, styles.p10]}></View>
+              <View style={[styles.tableCell_35,]}></View>
 
 
 
 
 
-              <View style={[styles.tableCell_20, styles.alignRight]}>
+              <View style={[styles.tableCell_20, ]}>
               <Text style={[styles.subtitle2,]}>
                 Total Value:
                         </Text>
               </View>
 
               <View
-                style={[styles.tableCell_2000, styles.ml2]}
+                style={[styles.tableCell_2000, ]}
               >
 
 
@@ -1175,6 +1196,10 @@ const MyDocument = ({
       >
 
       </View>
+
+      {/* </View> */}
+
+
       </Page>
     </Document>
   )
@@ -1209,6 +1234,35 @@ const PdfPaymentScheduleGenerator = ({
   customerDetails,
 }) => {
   console.log('overall cost sheet is ', newPlotPS)
+
+        const { user: authUser } = useAuth()
+     const [project, setProject] = useState({})
+     const { orgId } = authUser
+
+
+               useEffect(() => {
+                 getProjectFun()
+               }, [])
+     
+               const getProjectFun = async () => {
+       
+         
+                 const steamLeadLogs = await getProject(
+                   orgId,
+                   selCustomerPayload?.pId
+                 )
+                 
+                 await setProject(steamLeadLogs)
+               
+                 return}
+
+
+
+
+
+
+
+
   return (
     <div>
       {' '}
@@ -1228,6 +1282,7 @@ const PdfPaymentScheduleGenerator = ({
             setNetTotal={setNetTotal}
             partATotal={partATotal}
             partBTotal={partBTotal}
+            project={project}
             setPartATotal={setPartATotal}
             setPartBTotal={setPartBTotal}
             projectDetails={projectDetails}
@@ -1249,7 +1304,7 @@ const PdfPaymentScheduleGenerator = ({
         // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selUnitDetails?.unit_no || 'unit_no'}_${streamUnitDetails?.custObj1?.customerName1 || 'customer_Name'}_CostSheet.pdf`}
 
       >
-        {({ blob, url, loading, error }) =>
+        {/* {({ blob, url, loading, error }) =>
           loading ? (
             <button className="flex items-center justify-center">
             <Loader texColor="text-blue-600" size="h-5 w-5" />Payment Schedule
@@ -1267,7 +1322,41 @@ const PdfPaymentScheduleGenerator = ({
           
             </span>
           )
-        }
+        } */}
+
+                {({ blob, url, loading, error }) =>
+                  loading ? (
+                  //   <button className="flex items-center justify-center px-1 py-1 mt-4">
+                  //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]" />Cost Sheet
+                  // </button>
+                    <div
+                    className=" focus:outline-none px-1 py-1 mt-4  text-sm font-bold tracking-wider rounded-sm flex flex-row
+        
+        
+        
+                   duration-200 ease-in-out
+                   transition"
+                  >
+                     <Download style={{ height: '20px', width: '14px' }} className='mr-1 text-gray-200'/>
+        
+                  </div>
+                  ) : (
+                  //   <button className="flex items-center justify-center  px-1 py-1 mt-4">
+                  //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]"  />Cost Sheet
+                  // </button>
+                    <div
+                      className=" focus:outline-none px-1 py-1 mt-4 text-sm font-bold tracking-wider rounded-sm
+        
+        
+        
+                     duration-200 ease-in-out
+                     transition"
+                    >
+                  <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
+        
+                    </div>
+                  )
+                }
       </PDFDownloadLink>
     </div>
   )

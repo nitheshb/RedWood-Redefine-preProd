@@ -33,9 +33,11 @@ import pdfimg9 from '../../public/pdfimg9.png'
 import pdfimg10 from '../../public/pdfimg10.png'
 import pdfimg11 from '../../public/pdfimg11.png'
 import pdfimg12 from '../../public/pdfimg12.png'
-import { streamGetAllUnitTransactions } from 'src/context/dbQueryFirebase'
+import { streamGetAllUnitTransactions, getProject, updateProjectLogo } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import Loader from 'src/components/Loader/Loader'
+import ProjectLogoUploader from 'src/components/comps/projectLogoUploader'
+import { getDownloadURL } from 'firebase/storage'
 
 
 Font.register({
@@ -59,7 +61,7 @@ const useStyles = () =>
         fitternew: {
           marginLeft: '20px',
           marginRight: '20px',
-          marginTop: '20px',
+          // marginTop: '20px',
 
         },
 
@@ -90,9 +92,12 @@ const useStyles = () =>
         p11: { padding: '0px 0px' },
         p12: { paddingTop: '4px', paddingBottom: '2px' },
         pr0: { paddingRight: '0px' },
+        pr2: { paddingRight: '2px' },
         pr4: { paddingRight: '4px' },
+        pr30: { paddingRight: '3px' },
         pr8: { paddingRight: '8px' },
         pr9: { paddingRight: '6px' },
+        pr10: { paddingRight: '18px' },
         mb4: { marginBottom: 4 },
         mb2: { marginBottom: 2 },
         mb8: { marginBottom: 8 },
@@ -104,6 +109,7 @@ const useStyles = () =>
         mr5: { marginRight: 10 },
         mr15: { marginRight: 15 },
         mT0: { marginTop: 0 },
+        mT4: { marginTop: 40 },
         mT1: { marginTop: 10 },
         ml1: { marginLeft: 5 },
         ml2: { marginLeft: 10 },
@@ -111,12 +117,13 @@ const useStyles = () =>
 
         mr2: { marginRight: 10, paddingRight: 10 },
         ml4: { marginLeft: 20 },
+        ml6: { marginLeft: 25 },
         ml5: { marginLeft: 20 },
         pl1: { paddingLeft: 5 },
         pl2: { paddingLeft: 10 },
         pl3: { paddingLeft: 15 },
         pr1: { paddingRight: 5 },
-        pr2: { paddingRight: 10 },
+        // pr2: { paddingRight: 10 },
         pr3: { paddingRight: 15 },
         pt2: { paddingTop: 4 },
         pt3: { paddingTop: 5 },
@@ -141,8 +148,14 @@ const useStyles = () =>
           backgroundColor: '#fff',
           textTransform: 'capitalize',
           padding: '0px',
+          paddingTop: 35,
+          paddingHorizontal: 5,
+          paddingBottom: 20 
           // padding: '40px 24px 60px 24px',
         },
+
+        // page: {  paddingHorizontal: 20, paddingBottom: 20 }, // Ensure space for header
+
         footer: {
           left: 0,
           right: 0,
@@ -270,6 +283,11 @@ const useStyles = () =>
           // paddingRight: 16,
         },
 
+        tableCell_350: {
+          width: '30%',
+          // paddingRight: 16,
+        },
+
         tableCell_2000: {
           width: '20%',
           paddingLeft: 3,
@@ -282,6 +300,43 @@ const useStyles = () =>
           paddingRight: 3,
 
         },
+
+        tableCell_210: {
+          width: '10%',
+          paddingRight: 3,
+
+        },
+
+
+        tableCell_2100: {
+          width: '10%',
+    
+
+        },
+
+        tableCell_10: {
+          width: '20%',
+          
+
+        },
+        tableCell_105: {
+          width: '15%',
+          
+
+        },
+
+
+        tableCell_1500: {
+          width: '15%',
+       
+        },
+
+        
+        tableCell_150: {
+          width: '15%',
+          paddingRight: 10,
+        },
+
 
         tableCell_20: {
           width: '20%',
@@ -303,6 +358,9 @@ const useStyles = () =>
         tableCell_3: {
           width: '15%',
           paddingRight: 16,
+        },
+        tableCell_30: {
+          width: '15%',
         },
         cellBg0: {
           backgroundColor: '#fffaee',
@@ -337,7 +395,27 @@ const useStyles = () =>
         switchText: {
           fontSize: 9,
           fontWeight: 'medium'
-        }
+        },
+
+
+
+
+        
+        
+    // page: { paddingTop: 60, paddingHorizontal: 20, paddingBottom: 20 }, // Ensure space for header
+    // header: {
+    //   position: "absolute",
+    //   top: 10,
+    //   left: 20,
+    //   right: 20,
+    //   textAlign: "center",
+    //   fontSize: 12,
+    //   fontWeight: "bold",
+    //   color: "gray",
+    // },
+    // content: {
+    //   marginTop: 40, // Ensures content does not overlap the header
+    // },
       }),
     []
   )
@@ -563,6 +641,7 @@ const invoiceDet: IInvoice[] = [
       phoneNumber: '7838103717',
       addressType: 'permanent',
     },
+
   },
 ]
 
@@ -581,9 +660,11 @@ const MyDocument = ({
   myObj,
   newPlotPS,
   myAdditionalCharges,
+  unitReceivedTotal,
   unitTransactionsA,
   netTotal,
   projectDetails,
+  plotPS,
   project,
   projectType,
   PSa,
@@ -595,6 +676,8 @@ const MyDocument = ({
   custObj1,
   customerDetailsObj,
   customerInfo,
+  projectLogoURL,
+  unitTotal,
 
   setPartATotal,
   setPartBTotal,
@@ -604,6 +687,9 @@ const MyDocument = ({
   useEffect(() => {
     console.log('myObj', myObj, myAdditionalCharges)
   }, [myObj])
+
+
+
 
 
 
@@ -645,9 +731,55 @@ const MyDocument = ({
     console.log(`Table ${tableIndex} rendered with dimensions:`, width, height);
   };
 
+
+
+  
+
   return (
+
+
+
+
+  //   <Document>
+  //   <Page size="A4" style={styles.page}>
+  //     {/* Header */}
+  //     {/* <Text style={styles.header}>My Custom Header</Text> */}
+
+  //     {/* Content */}
+  //     {/* <View >
+  //       <View>
+  //       <Text>
+  //         Testing
+  //       </Text>
+  //       </View>
+
+  //       <View>
+  //       <Text>
+  //         Lorem ipsum dolor, sit amet consectetur adipisicing elit. A deserunt fuga doloremque. Expedita, quidem amet. Nobis voluptate, voluptas cupiditate pariatur officia dolorem deleniti enim suscipit laboriosam ut tempora quisquam itaque.
+  //       </Text>
+  //       </View>
+
+  //       <View>
+  //       <Text>
+  //         Lorem ipsum dolor, sit amet consectetur adipisicing elit. A deserunt fuga doloremque. Expedita, quidem amet. Nobis voluptate, voluptas cupiditate pariatur officia dolorem deleniti enim suscipit laboriosam ut tempora quisquam itaque.
+  //       </Text>
+  //       </View>
+  //       <Text>
+  //         {Array(200).fill("This is a long paragraph that will force a page break. ").join(" ")}
+  //       </Text>
+  //     </View> */}
+  //   </Page>
+  // </Document>
+
+
     <Document>
       <Page size="A4" style={styles.page}>
+
+
+           <View>
+  
+
+   
 
 
         <View style={[ styles.fitternew, ]}>
@@ -668,12 +800,24 @@ const MyDocument = ({
           <View
             style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1]}
           >
-            <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} />
-            <Text style={[styles.h4, styles.ml1]}>
+            <Image src={project?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+            <Text style={[styles.h4,styles.pt3, styles.ml1]}>
               {projectDetails?.projectName}
             </Text>
+
+
+            
+
+
             {/* <Text>{myObj} </Text> */}
           </View>
+
+{/* 
+          <View>
+         <div>
+          <img src= {project?.projectLogoUrl} />
+         </div>
+          </View> */}
 
 
 
@@ -1155,7 +1299,7 @@ const MyDocument = ({
                       styles.tableCell_200,
                       styles.alignRight,
                       styles.p12,
-                      styles.pr8,
+                      styles.pr4,
                       styles.ml2,
                     ]}
                   >
@@ -1382,7 +1526,7 @@ const MyDocument = ({
                       styles.tableCell_200,
                       styles.alignRight,
                       styles.p12,
-                      styles.pr8,
+                      styles.pr4,
                       styles.ml2,
                       // { backgroundColor:'#A7D477'}
                     ]}
@@ -1449,7 +1593,7 @@ const MyDocument = ({
                     </Text>
                   </View>
 
-                  <View style={[styles.tableCell_20, styles.alignRight]}>
+                  <View style={[styles.tableCell_10, styles.alignRight]}>
                     <Text>
                       {' '}
                       {/* {fCurrency(
@@ -1468,7 +1612,7 @@ const MyDocument = ({
 
 
                   <View
-                    style={[styles.tableCell_20, styles.alignRight, styles.pr4 ,]}
+                    style={[styles.tableCell_20, styles.alignRight]}
                   >
                     <Text>
                     ₹{d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
@@ -1616,7 +1760,7 @@ const MyDocument = ({
                     <Text style={styles.subtitle2}></Text>
                   </View> */}
 
-                  <View style={[  styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'20px' }]}>
+                  <View style={[  styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'14px' }]}>
                     <Text style={styles.subtitle2}>
                      Construction Charges
                     </Text>
@@ -1779,7 +1923,7 @@ const MyDocument = ({
 
            <>
 
-<View style={[styles.ml2, styles.pt2, styles.mT1]}>
+<View wrap={false} style={[styles.ml2, styles.pt2, styles.mT1]}>
             <Text
               style={[
                 styles.subtitle1,
@@ -1787,6 +1931,9 @@ const MyDocument = ({
                 styles.col8,
                 // styles.smallFitter,
                 styles.ml1,
+
+                { flexWrap: 'wrap', width: '100%' }, 
+                
               ]}
             >
               IV. Construction Additional charges
@@ -1821,7 +1968,7 @@ const MyDocument = ({
                     <Text style={styles.subtitle2}></Text>
                   </View> */}
 
-                  <View style={[styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'18px' }]}>
+                  <View style={[styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'14px' }]}>
                     <Text style={styles.subtitle2}>
                       Construction Additonal Charges
                     </Text>
@@ -1897,26 +2044,26 @@ const MyDocument = ({
                     </Text>
                   </View>
 
-                  <View style={[styles.tableCell_200, styles.alignRight]}>
+                  <View style={[styles.tableCell_10, styles.alignRight]}>
                     <Text>{fCurrency(item?.charges)}</Text>
                   </View>
 
                   <View
-                    style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                    style={[styles.tableCell_10, styles.alignRight]}
                   >
                     <Text>{fCurrency(item?.TotalSaleValue)}</Text>
                   </View>
 
 
                   <View
-                    style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                    style={[styles.tableCell_10, styles.alignRight, styles.pr4]}
                   >
                     <Text>{fCurrency(item?.gstValue)}</Text>
                   </View>
 
 
                   <View
-                    style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                    style={[styles.tableCell_20, styles.alignRight, ]}
                   >
                     <Text>{fCurrency(item?.TotalNetSaleValueGsT)}</Text>
                   </View>
@@ -2040,7 +2187,7 @@ const MyDocument = ({
                     <Text style={styles.subtitle2}></Text>
                   </View> */}
 
-                  <View style={[styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'18px' }]}>
+                  <View style={[ styles.tableCell_35, styles.p12,  { marginLeft:'14px' }]}>
                     <Text style={styles.subtitle2}>
                     Possession Charges
                     </Text>
@@ -2063,7 +2210,7 @@ const MyDocument = ({
                       styles.tableCell_200,
                       styles.alignRight,
                       styles.p12,
-                      styles.pr8,
+                      styles.pr4,
                       styles.ml2,
                     ]}
                   >
@@ -2280,11 +2427,11 @@ VI. Modifications
                     Modifications
                     </Text>
                   </View>
-      <View style={[  styles.ml1,styles.tableCell_35, styles.p12,  { marginLeft:'20px' } ]}>
+      {/* <View style={[  styles.ml1,styles.tableCell_35, styles.p12,  { marginLeft:'20px' } ]}>
         <Text style={styles.subtitle2}>
         New Demand
         </Text>
-      </View>
+      </View> */}
 
       <View
         style={[
@@ -2408,7 +2555,7 @@ VI. Modifications
 
 
       <View
-        style={[styles.tableCell_20, styles.alignRight, styles.pr4 ,]}
+        style={[styles.tableCell_20, styles.alignRight,  ]}
       >
         <Text>
         ₹{d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
@@ -2442,7 +2589,7 @@ VI. Modifications
       <Text style={[styles.subtitle2]}>Total Addons:</Text>
     </View>
 
-    <View style={[styles.tableCell_20, styles.alignRight, styles.pr4]}>
+    <View style={[styles.tableCell_20, styles.alignRight]}>
       <Text>
         {/* {fCurrency(partBTotal)} */}
         ₹{selCustomerPayload?.T_F?.toLocaleString('en-IN')}
@@ -2986,7 +3133,7 @@ VI. Modifications
 
 
 
-<View style={[styles.ml2, styles.pt2, styles.mT1]}>
+{/* <View style={[styles.ml2, styles.pt2, styles.mT1]}>
 <Text
 style={[
 styles.subtitle1,
@@ -3073,118 +3220,12 @@ style={[
 </View>
 </View>
 
-{/* {PSa?.map((d1, inx) => {
-  totalIs = selCustomerPayload?.T_review; // Move outside if not dynamic per iteration
-
-  return (
-    <View
-      style={[
-        styles.tableRow,
-        styles.borderbottom,
-        styles.textcolor,
-        { marginTop: '2px', paddingTop: '4px' },
-      ]}
-      key={d1.id}
-    >
-      <View
-        style={[
-          styles.tableCell_1,
-          styles.pl2,
-          { marginTop: '-1px' },
-        ]}
-      >
-        <Text>{inx + 1}</Text>
-      </View>
-
-      <View style={styles.tableCell_4}>
-        <Text style={styles.subtitle2}>
-        {d1?.stage?.label}
-          {' '}
-        {d1?.description}-{prettyDate(d1?.schDate)}
-        </Text>
-      </View>
-
-      <View style={styles.tableCell_5}>
-        <Text>{d1.description}</Text>
-      </View>
-
-      <View style={[styles.tableCell_3, styles.alignRight]}>
-        <Text>{fCurrency(d1?.value?.toLocaleString('en-IN'))}</Text>
-      </View>
-
-
-      <View style={[styles.tableCell_3, styles.alignRight]}>
-        <Text>{fCurrency(d1?.amt?.toLocaleString('en-IN'))}</Text>
-      </View>
-
-
-      <View style={[styles.tableCell_3, styles.alignRight]}>
-        <Text>{fCurrency(d1?.outStanding?.toLocaleString('en-IN'))}</Text>
-      </View>
-
-
-      <View style={[styles.tableCell_3, styles.alignRight]}>
-        <Text>{fCurrency(d1?.value?.toLocaleString('en-IN'))}</Text>
-      </View>
 
 
 
 
 
-    </View>
-  );
-})} */}
-
-
-              {/* {PSa?.map((d1, inx) => (
-  <View
-    style={[
-      styles.tableRow,
-      styles.textcolor,
-      inx + 1 !== selCustomerPayload.length ? styles.borderbottom : null,
-      { borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px' },
-    ]}
-    key={d1.id}
-  >
-    <View style={[styles.tableCell_1, styles.pl2, { marginTop: '-1px' }]}>
-      <Text>{inx + 1}</Text>
-    </View>
-
-    <View style={[styles.tableCell_35]}>
-      <Text style={styles.subtitle2}>
-      <div>
-                            {d1?.stage?.label}
-                            <div className="text-[9px] text-left text-[#6A6A6A] bg-[#fff] tracking-wider ">
-                              {' '}
-                              {d1?.description}-{prettyDate(d1?.schDate)}
-                            </div>
-                            </div>
-      </Text>
-    </View>
-
-    <View style={[styles.tableCell_20, styles.alignRight]}>
-      <Text>                          ₹{d1?.value?.toLocaleString('en-IN')}
-      </Text>
-    </View>
-
-    <View style={[styles.tableCell_20, styles.alignRight, styles.pr4]}>
-      <Text></Text>
-    </View>
-
-    <View style={[styles.tableCell_20, styles.alignRight]}>
-      <Text>                          ₹{d1?.amt?.toLocaleString('en-IN')}
-      </Text>
-    </View>
-
-    <View style={[styles.tableCell_20, styles.alignRight]}>
-      <Text>                          {d1?.outStanding?.toLocaleString('en-IN')}
-      </Text>
-    </View>
-  </View>
-))} */}
-
-
-{selCustomerPayload?.fullPs?.map((d1, inx) => {
+{PSa?.map((d1, inx) => {
   const totalIs = selCustomerPayload?.T_review;
 
   return (
@@ -3250,19 +3291,7 @@ style={[
 
 
 
-{/* <View style={[ styles.pt2, styles.mT1]}>
-<Text
-style={[
-styles.subtitle1,
-styles.mb5,
-// styles.col,
-// styles.smallFitter,
-// styles.ml2,
-]}
->
-II. Construction Schedule
-</Text>
-</View> */}
+
 
 
 
@@ -3363,7 +3392,237 @@ style={[
 </View>
 </View>
 </View> }
+</View> */}
+
+
+
+
+<View style={[  styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+
+              ]}
+            >
+             Payment Schedule
+              
+            </Text>
+          </View>
+          <View style={[styles.fitter]}>
+            <View style={[{ borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+                    border: '1 solid #e5e7eb ',
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.textcolorhead,
+                    {   paddingBottom: '2px' },
+                  ]}
+                >
+
+
+                  <View style={[styles.tableCell_350, styles.p12, { marginLeft:'18px' }]}>
+                    <Text style={styles.subtitle2}>
+                      {/* {projectDetails?.projectType?.name === 'Apartment'
+                        ? 'Flat'
+                        : 'Plot'}{' '} */}
+
+                        Charges
+                      
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_210,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr4,
+                      styles.ml1,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>
+                    Eligible
+                    </Text>
+                  </View>
+
+
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr0,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>
+                    Total inc GST
+
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_200,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr0,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>
+                    Received
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr9, ]}
+                  >
+                    <Text style={styles.subtitle2}>Balance</Text>
+                  </View>
+                </View>
+
+
+              </View>
+
+
+              <View>
+
+
+              {PSa?.map((d1, inx) => (
+  <View
+    style={[
+      styles.tableRow,
+      styles.textcolor,
+      inx + 1 !== selCustomerPayload.length ? styles.borderbottom : null,
+      { borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px' },
+    ]}
+    key={d1.id}
+  >
+    <View style={[styles.tableCell_1, styles.pl2, { marginTop: '-1px' }]}>
+      <Text>{inx + 1}</Text>
+    </View>
+
+    <View style={[styles.tableCell_350]}>
+      <Text style={styles.subtitle2}>
+      <View style={[styles.tableCell_350]}>
+  <Text style={styles.subtitle2}>
+    {d1?.stage?.label}{' '}
+    <Text>
+
+      {d1?.description}
+    </Text>
+    <br/>
+    <Text>
+    {prettyDate(d1?.schDate)}
+    </Text>
+  </Text>
 </View>
+
+      </Text>
+    </View>
+
+    <View style={[styles.tableCell_210, styles.alignRight, styles.pr10 ]}>
+      <Text>
+
+      {renderSwitchStatus(d1?.elgible)}
+
+       
+      </Text>
+    </View>
+
+    <View style={[styles.tableCell_20, styles.alignRight, styles.pr4]}>
+      <Text>
+      ₹{d1?.value?.toLocaleString('en-IN')}
+      </Text>
+    </View>
+
+    <View style={[styles.tableCell_10, styles.alignRight, ]}>
+      <Text>
+        ₹{d1?.amt?.toLocaleString('en-IN')}
+      </Text>
+    </View>
+
+    <View style={[styles.tableCell_20, styles.alignRight,  ]}>
+      <Text>                          
+        {d1?.outStanding?.toLocaleString('en-IN')}
+      </Text>
+    </View>
+  </View>
+))}
+
+
+              
+
+
+
+<View
+              style={[styles.tableRow, styles.textcolor, {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px'  }]}
+            >
+  
+
+              <View style={[styles.tableCell_350, styles.p10]}></View>
+
+
+
+
+
+              <View style={[styles.tableCell_20, styles.alignRight]}>
+              <Text style={[styles.subtitle2, styles.pr9]}>
+                Total Value:
+              </Text>
+              </View>
+
+              <View
+                style={[styles.tableCell_2000, styles.ml2]}
+              >
+
+
+<Text>
+                ₹{unitTotal?.toLocaleString('en-IN')}
+              
+                </Text>
+
+              </View>
+
+              <View
+                style={[styles.tableCell_10, ]}
+              >
+
+<Text>
+                ₹{unitReceivedTotal?.toLocaleString('en-IN')}
+                
+                </Text>
+
+              </View>
+
+
+            </View>
+
+                
+              </View>
+
+
+            </View>
+
+          </View>
 
 
 </View>
@@ -3431,7 +3690,7 @@ styles.ml1,
 I. Payment Transactions
 </Text>
 </View>
-<View style={[styles.fitter]}>
+{/* <View style={[styles.fitter]}>
 <View
 style={[
 {   borderTopLeftRadius: 8,
@@ -3461,17 +3720,18 @@ styles.textcolorhead,
 <Text style={styles.subtitle2}></Text>
 </View>
 
-<View style={[styles.tableCell_20, styles.p12]}>
+<View style={[styles.tableCell_10, styles.p12, styles.ml2]}>
 <Text style={[styles.subtitle2]}>Paid On</Text>
 </View>
-<View style={[styles.tableCell_20, styles.p12]}>
+<View style={[styles.tableCell_20, styles.alignLeft
+]}>
 <Text style={styles.subtitle2}>Mode</Text>
 </View>
 <View
 style={[
- styles.tableCell_3,
-
+ styles.tableCell_10,
  styles.p12,
+ styles.alignLeft
 ]}
 >
 <Text style={styles?.subtitle2}>Bank Ref Id	</Text>
@@ -3493,7 +3753,7 @@ style={[
 <View
 style={[
  styles.tableCell_3,
-
+ styles.ml2,
  styles.p12,
 ]}
 >
@@ -3505,7 +3765,7 @@ style={[
 <View
 style={[
  styles.tableCell_3,
- styles.alignRight,
+ 
  styles.p12,
 ]}
 >
@@ -3545,28 +3805,28 @@ style={[
       ]}
       key={d1.id}
     >
-      {/* <View style={[styles.tableCell_1, styles.pl2, { marginTop: '-1px' }]}>
+      <View style={[styles.tableCell_1, styles.pl2, { marginTop: '-1px' }]}>
         <Text>{inx + 1}</Text>
-      </View> */}
+      </View>
 
-      <View style={[styles.tableCell_20, styles.alignRight]}>
+      <View style={[styles.tableCell_20, styles.alignCenter]}>
         <Text style={styles.subtitle2}>
         {prettyDate(d1?.txt_dated)}
         </Text>
       </View>
 
-      <View style={[styles.tableCell_20, styles.alignRight]}>
+      <View style={[styles.tableCell_210, styles.alignCenter]}>
         <Text>{d1?.mode}</Text>
       </View>
 
 
-      <View style={[styles.tableCell_20, styles.alignRight]}>
+      <View style={[styles.tableCell_10, styles.alignCenter]}>
         <Text>{d1?.bank_ref}</Text>
       </View>
 
 
 
-      <View style={[styles.tableCell_20, styles.alignRight, styles.pr4]}>
+      <View style={[styles.tableCell_20, styles.alignRight]}>
         <Text>₹{d1?.totalAmount?.toLocaleString('en-IN')}</Text>
       </View>
 
@@ -3589,7 +3849,7 @@ style={[
 
 
 
-      <View style={[styles.tableCell_20, styles.alignRight]}>
+      <View style={[styles.tableCell_200, styles.alignCenter ]}>
         <Text>{d1?.payReason}</Text>
       </View>
 
@@ -3600,23 +3860,216 @@ style={[
 
 
 
-{/* <View style={[styles.totalRow, styles.mT0 ,  styles.textcolor, ]}>
-<View style={styles.tableCell_1}></View>
-
-<View style={[styles.tableCell_4]}>
-<Text style={styles.subtitle2}>Total Value:</Text>
-</View>
-
-<View style={styles.tableCell_3}></View>
-
-<View style={styles.tableCell_3}></View>
-
-<View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(myBookingPayload?.T_A + myBookingPayload?.T_B)}</Text>
 </View>
 </View> */}
-</View>
-</View>
+
+
+
+
+
+
+
+     <View style={[styles.fitter]}>
+            <View style={[{ borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+                    border: '1 solid #e5e7eb ',
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.textcolorhead,
+                    {   paddingBottom: '2px' },
+                  ]}
+                >
+
+
+                  <View style={[styles.tableCell_10, styles.p12, { marginLeft:'14px' }]}>
+                    <Text style={styles.subtitle2}>
+
+                      Paid On
+
+                      
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_10,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr4,
+                      styles.ml1,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Mode</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[
+                      styles.tableCell_20,
+                      styles.alignCenter,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Bank Ref Id
+                    </Text>
+                  </View>
+
+
+                  <View
+                    style={[
+                      styles.tableCell_20,
+                      styles.alignCenter,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Amount</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_10,
+                      styles.alignCenter,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Status</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_150, styles.alignCenter, styles.p12, styles.pr8, ]}
+                  >
+                    <Text style={styles.subtitle2}>Accounts</Text>
+                  </View>
+
+
+                  <View
+                    style={[styles.tableCell_150, styles.alignRight, styles.p12, styles.pr8, ]}
+                  >
+                    <Text style={styles.subtitle2}>
+                    Reviewer
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              <View>
+                {/* {myObj?.map((item, index) => ( */}
+                {unitTransactionsA?.map((d1, inx) => (
+                                    // totalIs = 0
+
+                  <View
+                    style={[
+                      styles.tableRow,
+                      styles.textcolor,
+                      inx + 1 != selCustomerPayload.length ? styles.borderbottom : null,
+
+                      // {
+                      //   backgroundColor:
+                      //     index % 2 === 0 ? '#ffffff' : '#ffffff',
+                      // },
+                      {  borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px' },
+                    ]}
+                    key={d1.id}
+                  >
+                    <View
+                      style={[
+                        styles.tableCell_1,
+                        styles.pl2,
+                        { marginTop: '-1px' },
+                      ]}
+                    >
+                      <Text>{inx + 1}</Text>
+                    </View>
+
+                    <View style={[styles.tableCell_10]}>
+                      <Text style={styles.subtitle2}>
+                      {prettyDate(d1?.txt_dated ||d1?.dated).toLocaleString() }
+                      </Text>
+                    </View>
+
+                    <View style={[styles.tableCell_10, styles.alignRight]}>
+                      <Text>
+                        {d1?.mode}
+                      </Text>
+                    </View>
+
+                    <View
+                      style={[
+                        styles.tableCell_20,
+                        styles.alignCenter,
+                        
+                      ]}
+                    >
+                      <Text>   
+                        {d1?.bank_ref || d1?.chequeno}
+                        </Text>
+                    </View>
+
+
+
+                    <View style={[styles.tableCell_20, styles.alignCenter]}>
+                      <Text>
+                      ₹{d1?.totalAmount?.toLocaleString('en-IN') || d1?.amount?.toLocaleString('en-IN')}
+
+                      </Text>
+                    </View>
+
+                    <View style={[styles.tableCell_10, styles.alignCenter]}>
+                      <Text>
+                      {d1?.status}
+                      </Text>
+                    </View>
+
+                
+
+
+                    <View style={[styles.tableCell_150, styles.alignCenter]}>
+                      <Text>
+                      {d1?.towards ||d1?.builderName}
+                     {d1?.customerName}
+                      </Text>
+                    </View>
+
+
+                    <View style={[styles.tableCell_1500, styles.alignCenter]}>
+                      <Text>
+                      {d1?.Reviewer || "NA"}
+
+                      </Text>
+                    </View>
+
+
+                  </View>
+                ))}
+<View
+              style={[styles.tableRow, styles.textcolor, {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px'  }]}
+            >
+              <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
+              <View style={[styles.tableCell_35, styles.p10]}></View>
+              <View style={[styles.tableCell_20, styles.alignRight]}></View>
+            </View>            
+              </View>
+            </View>
+          </View>
 
 
 </View>
@@ -3637,6 +4090,11 @@ style={[
           </View>
         </View> */}
 
+
+
+
+</View>
+
       </Page>
     </Document>
   )
@@ -3651,15 +4109,18 @@ const PdfUniteSummary = ({
   selUnitDetails,
   myObj,
   selCustomerPayload,
-  project,
   newPlotPS,
   myAdditionalCharges,
   streamUnitDetails,
   myBookingPayload,
   netTotal,
   setNetTotal,
-  partATotal,
-  partBTotal,
+  // partATotal,
+  plotPS,
+  // partBTotal,
+  projectLogoURL,
+  // unitReceivedTotal,
+  // unitTotal,
   setPartATotal,
   T_B,
   setPartBTotal,
@@ -3674,7 +4135,19 @@ const PdfUniteSummary = ({
   console.log('overall cost sheet is ', newPlotPS)
    const { user: authUser } = useAuth()
   const [unitTransactionsA, setUnitTransactionsA] = useState([])
+const [project, setProject] = useState({})
+  const [imageUrl, setImageUrl] = useState('')
+
   const [PSa, setPSa] = useState([])
+
+
+  const [partATotal, setPartA] = useState(0)
+  const [partBTotal, setPartB] = useState(0)
+  const [unitTotal, setUnitTotal] = useState(0)
+  const [unitReceivedTotal, setReceivedTotal] = useState(0)
+
+
+
 
 
 
@@ -3728,14 +4201,72 @@ const PdfUniteSummary = ({
 
 
 
+  useEffect(() => {
+    const a = selCustomerPayload?.plotCS?.reduce(
+      (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+      0
+    )
+    const b = selCustomerPayload?.addChargesCS?.reduce(
+      (partialSum, obj) =>
+        partialSum +
+        Number(
+          computeTotal(
+            obj,
+            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
+          )
+        ),
+      0
+    )
+    const c = selCustomerPayload?.addOnCS?.reduce(
+      (partialSum, obj) =>
+        partialSum +
+        Number(
+          computeTotal(
+            obj,
+            selCustomerPayload?.super_built_up_area || selCustomerPayload?.area?.toString()?.replace(',', '')
+          )
+        ),
+      0
+    ) || 0
+    setPartA(a)
+    setPartB(b)
+    setUnitTotal(a + b + c)
+    setReceivedTotal(((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN'))
+    const paidAmount = (selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)
+    let bal = 0
+    let leftOver = paidAmount
+    let newPaidAmount = paidAmount
+    let outStanding = 0
+    const z = selCustomerPayload?.fullPs?.map((d1, inx) => {
+      console.log('left over stuff',inx, leftOver, d1.value)
+      bal = leftOver >= d1?.value ? d1?.value : leftOver
+
+      leftOver = newPaidAmount - d1?.value > 0 ? newPaidAmount - d1?.value : 0
+      newPaidAmount = newPaidAmount - d1?.value
+      outStanding =  d1?.value - bal
+      return { ...d1, amt: bal, leftOver, outStanding }
+    })
+
+    setPSa(z)
+  }, [selCustomerPayload])
+
+
+
+
+
+
+
+
+
+
+
     useEffect(() => {
       getAllTransactionsUnit()
+      getProjectFun()
     }, [])
 
     const { orgId } = authUser
      const getAllTransactionsUnit = async () => {
-
-
         const steamLeadLogs = await streamGetAllUnitTransactions(
           orgId,
           'snap',
@@ -3746,6 +4277,25 @@ const PdfUniteSummary = ({
         )
         await setUnitTransactionsA(steamLeadLogs)
         return}
+
+
+
+
+        const getProjectFun = async () => {
+
+  
+          const steamLeadLogs = await getProject(
+            orgId,
+            selCustomerPayload?.pId
+          )
+          
+          await setProject(steamLeadLogs)
+        
+          return}
+        
+
+
+
   return (
     <div>
       {' '}
@@ -3754,6 +4304,7 @@ const PdfUniteSummary = ({
           <MyDocument
 
             user={user}
+            
             selUnitDetails={selUnitDetails}
             streamUnitDetails={streamUnitDetails}
             myBookingPayload={myBookingPayload}
@@ -3761,18 +4312,22 @@ const PdfUniteSummary = ({
             selCustomerPayload={selCustomerPayload}
             unitTransactionsA={unitTransactionsA}
             newPlotPS={newPlotPS}
+            projectLogoURL={projectLogoURL}
             myAdditionalCharges={myAdditionalCharges}
             netTotal={netTotal}
             setNetTotal={setNetTotal}
-            partATotal={partATotal}
-            partBTotal={partBTotal}
+            // partATotal={partATotal}
+            // partBTotal={partBTotal}
             setPartATotal={setPartATotal}
             setPartBTotal={setPartBTotal}
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
             customerDetails={customerDetails}
             projectType={projectType}
+            unitReceivedTotal={unitReceivedTotal}
+            unitTotal={unitTotal}
             project={project}
+            plotPS={plotPS}
 
             custObj1={custObj1}
             T_B={T_B}
@@ -3790,10 +4345,10 @@ const PdfUniteSummary = ({
 
 
       >
-        {({ blob, url, loading, error }) =>
+        {/* {({ blob, url, loading, error }) =>
           loading ? (
             <button className="flex items-center justify-center">
-            <Loader texColor="text-blue-600" size="h-5 w-5" />Unit Summary
+            <Loader texColor="text-blue-600" size="h- w-5" />Unit Summary
           </button>
           ) : (
             <span
@@ -3806,7 +4361,55 @@ const PdfUniteSummary = ({
           Unit Summary
             </span>
           )
-        }
+        } */}
+
+               {({ blob, url, loading, error }) =>
+                  loading ? (
+                  //   <button className="flex items-center justify-center px-1 py-1 mt-4">
+                  //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]" />Cost Sheet
+                  // </button>
+                    <div
+                    className=" focus:outline-none px-1 py-1   text-sm font-bold tracking-wider rounded-sm flex flex-row
+        
+        
+        
+                   duration-200 ease-in-out
+                   transition"
+                  >
+                     <Download style={{ height: '20px', width: '14px' }} className='mr-1 text-gray-200'/>
+        
+                  </div>
+                  ) : (
+                  //   <button className="flex items-center justify-center  px-1 py-1 mt-4">
+                  //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]"  />Cost Sheet
+                  // </button>
+
+
+
+
+<div
+                      className=" focus:outline-none px-1 py-1  text-sm font-bold tracking-wider rounded-sm
+        
+        
+        
+                     duration-200 ease-in-out
+                     transition"
+                    >
+                  <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
+
+                    </div>
+
+                 
+           
+
+                
+                  )
+                }
+
+
+
+
+                
       </PDFDownloadLink>
     </div>
   )
