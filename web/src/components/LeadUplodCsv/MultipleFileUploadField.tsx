@@ -18,6 +18,7 @@ import {
   checkIfUnitAlreadyExists,
   createPhaseAssets,
   getAllProjects,
+  getPhasesByProject,
   steamUsersListByRole,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -29,6 +30,7 @@ import Loader from '../Loader/Loader'
 
 import { SingleFileUploadWithProgress } from './SingleFileUploadWithProgress'
 import { UploadError } from './UploadError'
+import { CalculateComponentTotal } from 'src/util/unitCostSheetCalculator'
 
 let currentId = 0
 
@@ -116,6 +118,8 @@ export function MultipleFileUploadField({
   const [fileName, setFileName] = useState('')
   const [projectList, setprojectList] = useState([])
   const [salesTeamList, setSalesTeamList] = useState([])
+  const [selPhaseObj, setSelPhaseObj] = useState({})
+
 
   const [uploadedUrl, setUploadedUrl] = useState('')
   const [loading, setLoading] = useState(false)
@@ -168,6 +172,43 @@ export function MultipleFileUploadField({
     helpers.setValue(files)
     // helpers.setTouched(true);
   }, [files])
+
+  const getPhases = async (projectDetails) => {
+
+
+    try {
+      const unsubscribe = getPhasesByProject(
+        orgId,
+        uid || projectDetails?.uid,
+        (querySnapshot) => {
+          const phases = querySnapshot.docs.map((docSnapshot) =>
+            docSnapshot.data()
+          )
+
+
+          phases.map((user) => {
+            user.name = user.phaseName
+            user.label = user.phaseName
+            user.value = user.uid
+          })
+
+          if (phases.length > 0) {
+            // setSelPhaseName(phases?.[0].phaseName)
+            // setSelPhaseIs(phases?.[0].uid)
+            setSelPhaseObj(phases?.[0])
+          }
+          console.log('myphases are', phases)
+        },
+        (e) => {
+          console.log('error at getPhases', e)
+          setSelPhaseObj({})
+        }
+      )
+      return unsubscribe
+    } catch (error) {
+      console.log('error at getting phases', error)
+    }
+  }
 
   function uploadFile(file: File) {
     console.log('cloud it 1 ', file)
@@ -239,8 +280,17 @@ export function MultipleFileUploadField({
       console.log('upload error is ', error)
     }
   }
+  const {
+    additonalChargesObj,
+    // ConstructOtherChargesObj,
+    constructOtherChargesObj,
+    ConstructPayScheduleObj,
+    paymentScheduleObj,
+  } = selPhaseObj
   function onUpload(file: File, url: string) {
     console.log('field uploaded successfully', file, url, uploadedUrl)
+
+
 
     parse(file, {
       header: true,
@@ -545,6 +595,9 @@ export function MultipleFileUploadField({
               (row['Unit No.*'] != '' && row['Unit No.*'] != undefined)
             )
           })
+
+
+
           // set duplicate & valid records
           // check in db if record exists with matched phone Number & email
 
@@ -582,6 +635,7 @@ export function MultipleFileUploadField({
               }
               let x = []
               let constructionCS = []
+              let plot_area_sqft = dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0
               let bua_sqft = dRow['BUA(sqft)']?.replace(/,/g, '') || 0
               let construct_price_sqft = dRow['Construction Price per sqft']?.replace(/,/g, '') || 0
               let const_plc_per_sqft = dRow['Construction PLC per sqft']?.replace(/,/g, '') || 0
@@ -589,8 +643,8 @@ export function MultipleFileUploadField({
               let const_plc_rate = dRow['Construction PLC rate/sqft']?.replace(/,/g, '') || 0
 
               if(title==='Import Booked Villas'){
-                let plotValue = Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0)* dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0
-                let plcSaleValue = Number(dRow['PLC rate/sqft']?.replace(/,/g, '') || 0)* dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0
+                let plotValue = Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0)* plot_area_sqft || 0
+                let plcSaleValue = Number(dRow['PLC rate/sqft']?.replace(/,/g, '') || 0)* plot_area_sqft || 0
                 let plc_gstValue = Math.round(plcSaleValue * 0)
                 let buaSaleValue = Number(bua_sqft)* Number(construct_price_sqft)
                 let bua__gst_percent = 0
@@ -688,6 +742,14 @@ export function MultipleFileUploadField({
                     TotalNetSaleValueGsT: constPlcSaleValue + 0,
                   },
                 ]
+
+
+           additonalChargesObj?.map((data, inx) => {
+            return CalculateComponentTotal(data,plot_area_sqft,selPhaseObj?.area_tax, data?.charges)
+          })
+          constructOtherChargesObj?.map((data, inx) => {
+           return  CalculateComponentTotal(data,Number(bua_sqft),selPhaseObj?.const_tax, data?.charges)
+          })
 
                }
 
@@ -916,7 +978,15 @@ export function MultipleFileUploadField({
                   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
                 ),
+                partB_total: additonalChargesObj.reduce(
+                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+                  0
+                ),
                 partC_total: constructionCS.reduce(
+                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+                  0
+                ),
+                partD_total: constructOtherChargesObj.reduce(
                   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
                 ),
