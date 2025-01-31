@@ -2177,7 +2177,7 @@ style={[
 <View style={styles.tableCell_3}></View>
 
 <View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(myBookingPayload?.T_A + myBookingPayload?.T_B)}</Text>
+<Text>{((myBookingPayload?.T_A + myBookingPayload?.T_B)?.toLocaleString('en-IN'))}</Text>
 </View>
 </View>
 </View>
@@ -2287,7 +2287,7 @@ style={[
 <View style={styles.tableCell_1}></View>
 
 <View style={[styles.tableCell_4]}>
-<Text style={styles.subtitle2}>Total Cost</Text>
+<Text style={styles.subtitle2}>Total Cost box</Text>
 </View>
 
 <View style={styles.tableCell_3}></View>
@@ -2295,7 +2295,7 @@ style={[
 <View style={styles.tableCell_3}></View>
 
 <View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(myBookingPayload?.T_C + myBookingPayload?.T_D)}</Text>
+<Text>{((myBookingPayload?.T_C + myBookingPayload?.T_D)?.toLocaleString('en-IN'))}</Text>
 </View>
 </View>
 </View> }

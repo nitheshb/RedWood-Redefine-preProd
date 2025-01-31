@@ -983,16 +983,16 @@ const AddUnit = ({
     label="Dimension"
     name="dimension"
     type="text"
-    onChange={(value) => {
-      const inputValue = value.target.value;
-      let formattedValue = inputValue.replace(/[^a-zA-Z0-9.]/g, '');
+    // onChange={(value) => {
+    //   const inputValue = value.target.value;
+    //   let formattedValue = inputValue.replace(/[^a-zA-Z0-9.]/g, '');
 
-      if (/^\d/.test(formattedValue)) {
-        formattedValue = formattedValue.replace(/^0+/, '');
-      }
+    //   if (/^\d/.test(formattedValue)) {
+    //     formattedValue = formattedValue.replace(/^0+/, '');
+    //   }
 
-      formik.setFieldValue('dimension', formattedValue);
-    }}
+    //   formik.setFieldValue('dimension', formattedValue);
+    // }}
   />
 </div>
 
