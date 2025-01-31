@@ -748,10 +748,10 @@ export function MultipleFileUploadField({
 
 
                 partB = additonalChargesObj?.map((data, inx) => {
-            return CalculateComponentTotal(data,plot_area_sqft,selPhaseObj?.area_tax, data?.charges)
+            return CalculateComponentTotal(data,Number(plot_area_sqft),Number(selPhaseObj?.area_tax), Number(data?.charges))
           })
           partD=  constructOtherChargesObj?.map((data, inx) => {
-           return  CalculateComponentTotal(data,Number(bua_sqft),selPhaseObj?.const_tax, data?.charges)
+           return  CalculateComponentTotal(data,Number(bua_sqft),Number(selPhaseObj?.const_tax), Number(data?.charges))
           })
 
                }
