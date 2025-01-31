@@ -635,6 +635,8 @@ export function MultipleFileUploadField({
               }
               let x = []
               let constructionCS = []
+              let partB= []
+              let partD= []
               let plot_area_sqft = dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0
               let bua_sqft = dRow['BUA(sqft)']?.replace(/,/g, '') || 0
               let construct_price_sqft = dRow['Construction Price per sqft']?.replace(/,/g, '') || 0
@@ -744,10 +746,10 @@ export function MultipleFileUploadField({
                 ]
 
 
-           additonalChargesObj?.map((data, inx) => {
+                partB = additonalChargesObj?.map((data, inx) => {
             return CalculateComponentTotal(data,plot_area_sqft,selPhaseObj?.area_tax, data?.charges)
           })
-          constructOtherChargesObj?.map((data, inx) => {
+          partD=  constructOtherChargesObj?.map((data, inx) => {
            return  CalculateComponentTotal(data,Number(bua_sqft),selPhaseObj?.const_tax, data?.charges)
           })
 
@@ -978,7 +980,7 @@ export function MultipleFileUploadField({
                   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
                 ),
-                partB_total: additonalChargesObj.reduce(
+                partB_total: partB.reduce(
                   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
                 ),
@@ -986,7 +988,7 @@ export function MultipleFileUploadField({
                   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
                 ),
-                partD_total: constructOtherChargesObj.reduce(
+                partD_total: partD.reduce(
                   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
                 ),
