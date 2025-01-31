@@ -1984,8 +1984,20 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString(),
         },
         {
+          id: 'partB_total',
+          label: 'Part B',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
           id: 'partC_total',
           label: 'Part C',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'partD_total',
+          label: 'Part D',
           minWidth: 80,
           format: (value) => value.toLocaleString(),
         },
