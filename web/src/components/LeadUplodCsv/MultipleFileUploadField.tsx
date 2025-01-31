@@ -156,6 +156,7 @@ export function MultipleFileUploadField({
         (error) => setSalesTeamList([])
       )
     }
+    getPhases(pId)
   }, [])
 
   const onDrop = useCallback((accFiles: File[], rejFiles: FileRejection[]) => {
@@ -173,13 +174,13 @@ export function MultipleFileUploadField({
     // helpers.setTouched(true);
   }, [files])
 
-  const getPhases = async (projectDetails) => {
+  const getPhases = async (pId) => {
 
 
     try {
       const unsubscribe = getPhasesByProject(
         orgId,
-        uid || projectDetails?.uid,
+        pId,
         (querySnapshot) => {
           const phases = querySnapshot.docs.map((docSnapshot) =>
             docSnapshot.data()
