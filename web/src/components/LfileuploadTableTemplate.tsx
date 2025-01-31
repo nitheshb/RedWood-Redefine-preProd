@@ -2056,9 +2056,10 @@ export default function LfileuploadTableTemplate({
           minWidth: 80,
           format: (value) => value.toLocaleString(),
         },
+        { id: 'bwssd_cost', label: 'BWSSD Cost', minWidth: 80, format: (value) => value.toLocaleString() },
         {
-          id: 'bwssd_cost',
-          label: 'BWSSD Cost',
+          id: 'maintenance_cost',
+          label: 'Maintenance Cost',
           minWidth: 80,
           format: (value) => value.toLocaleString(),
         },
