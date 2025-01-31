@@ -1480,7 +1480,7 @@ const AddUnit = ({
                               />
                             </div>
 
-                            <div className="w-full flex flex-col mb-3">
+                            {/* <div className="w-full flex flex-col mb-3">
                               <CustomSelect
                                 name="sharingType"
                                 label="Sharing Type"
@@ -1538,7 +1538,23 @@ const AddUnit = ({
                                   />
                                 </div>
                               )}
-                            </div>
+                            </div> */}
+
+
+
+<div className="w-full flex flex-col mb-3">
+  <TextField
+    name="sharingType"
+    label="Sharing Type"
+    type="text"
+    value={formik.values.sharingType}
+    onChange={(e) => {
+      formik.setFieldValue('sharingType', e.target.value);
+      setSelectedSharingType(e.target.value);
+    }}
+  />
+</div>
+
                           </div>
                         </section>
 
