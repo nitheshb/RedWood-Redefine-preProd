@@ -1119,7 +1119,8 @@ const MyDocument = ({
     </View>
 
     <View style={[styles.tableCell_20, styles.alignRight]}>
-      <Text>                          {d1?.outStanding?.toLocaleString('en-IN')}
+      <Text>
+      ₹{d1?.outStanding?.toLocaleString('en-IN')}
       </Text>
     </View>
   </View>
