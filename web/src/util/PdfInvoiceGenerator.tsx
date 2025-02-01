@@ -414,18 +414,20 @@ function result(format: string, key = '.00', currencySymbol: string) {
     ? currencySymbol + format.replace(key, '')
     : currencySymbol + format
 }
-export function fCurrency(number: InputValue) {
-  const format = number ? numeral(number).format('0,0.00') : '0'
+// export function fCurrency(number: InputValue) {
+//   const format = number ? numeral(number).format('0,0.00') : '0'
 
-  // Format the currency symbol using Intl.NumberFormat
-  const currencyFormatter = new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-  })
-  const formatedValue = currencyFormatter.format(parseFloat(format))
+//   // Format the currency symbol using Intl.NumberFormat
+//   const currencyFormatter = new Intl.NumberFormat('en-IN', {
+//     style: 'currency',
+//     currency: 'INR',
+//   })
+//   const formatedValue = currencyFormatter.format(parseFloat(format))
 
-  return result(format, '.00', '₹')
-}
+//   return result(format, '.00', '₹')
+// }
+
+
 export function fDate(date: InputValue2, newFormat?: string) {
   const fm = newFormat || 'dd MMM yyyy'
 
@@ -1054,7 +1056,10 @@ const MyDocument = ({
 {/* <View style={[{ border:'2px solid #CCCCCC',}]}> */}
 
 
-<View style={[  styles.pt2, styles.mT1]}>
+{myObj?.length > 0 && (
+
+  <View>
+    <View style={[  styles.pt2, styles.mT1]}>
             <Text
               style={[
                 styles.subtitle1,
@@ -1169,7 +1174,7 @@ const MyDocument = ({
                     </View>
 
                     <View style={[styles.tableCell_20, styles.alignRight]}>
-                      <Text>{item?.charges}</Text>
+                      <Text>₹ {((item?.charges)?.toLocaleString('en-IN'))}</Text>
                     </View>
 
                     <View
@@ -1179,11 +1184,11 @@ const MyDocument = ({
                         styles.pr4,
                       ]}
                     >
-                      <Text>{fCurrency(item?.TotalSaleValue)}</Text>
+                      <Text>₹ {((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
                     </View>
 
                     <View style={[styles.tableCell_20, styles.alignRight]}>
-                      <Text>{fCurrency(item?.TotalNetSaleValueGsT)}</Text>
+                      <Text>₹ {((item?.TotalNetSaleValueGsT)?.toLocaleString('en-IN'))}</Text>
                     </View>
                   </View>
                 ))}
@@ -1210,7 +1215,7 @@ const MyDocument = ({
               <View
                 style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
               >
-                <Text>{fCurrency(partATotal)}</Text>
+                <Text>₹ {((partATotal)?.toLocaleString('en-IN'))}</Text>
               </View>
             </View>
 
@@ -1219,9 +1224,22 @@ const MyDocument = ({
             </View>
 
           </View>
+  </View>
+
+)}
+
+
+
+
+
+
           {/* part -2 */}
 
-          <View style={[styles.ml2, styles.pt2, styles.mT1]}>
+          {myAdditionalCharges?.length > 0 && (
+
+
+<View>
+<View style={[styles.ml2, styles.pt2, styles.mT1]}>
             <Text
               style={[
                 styles.subtitle1,
@@ -1336,19 +1354,19 @@ const MyDocument = ({
                   </View>
 
                   <View style={[styles.tableCell_200, styles.alignRight, ]}>
-                    <Text style={[styles.alignRight]}>{fCurrency(item?.charges)}</Text>
+                    <Text style={[styles.alignRight]}>₹ {((item?.charges)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
                   <View
                     style={[styles.tableCell_20, styles.alignRight, styles.pr4 ,]}
                   >
-                    <Text>{fCurrency(item?.TotalSaleValue)}</Text>
+                    <Text>₹ {((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
                   <View style={[styles.tableCell_20, styles.alignRight]}>
                     <Text>
                       {' '}
-                      {fCurrency(
+                      ₹ {(
                         Number(
                           computeTotal(
                             item,
@@ -1383,7 +1401,7 @@ const MyDocument = ({
                 </View>
 
                 <View style={[styles.tableCell_20, styles.alignRight]}>
-                  <Text>{fCurrency(partBTotal)}</Text>
+                  <Text>₹ {((partBTotal)?.toLocaleString('en-IN'))}</Text>
 
                 </View>
               </View>
@@ -1399,6 +1417,14 @@ const MyDocument = ({
 
             </View>
           </View>
+</View>
+
+
+)}
+
+
+
+
           {/* part-3 */}
 
 
@@ -1519,7 +1545,7 @@ const MyDocument = ({
                     </View>
 
                     <View style={[styles.tableCell_200, styles.alignRight]}>
-                      <Text>{item?.charges}</Text>
+                      <Text>₹ {((item?.charges)?.toLocaleString('en-IN'))}</Text>
                     </View>
 
                     <View
@@ -1529,11 +1555,11 @@ const MyDocument = ({
                         styles.pr4,
                       ]}
                     >
-                      <Text>{fCurrency(item?.TotalSaleValue)}</Text>
+                      <Text>₹ {((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
                     </View>
 
                     <View style={[styles.tableCell_20, styles.alignRight]}>
-                      <Text>{fCurrency(item?.TotalNetSaleValueGsT)}</Text>
+                      <Text>₹ {((item?.TotalNetSaleValueGsT)?.toLocaleString('en-IN'))}</Text>
                     </View>
                   </View>
                 ))}
@@ -1560,7 +1586,7 @@ const MyDocument = ({
               <View
                 style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
               >
-                <Text>{fCurrency(myBookingPayload?.T_C)}</Text>
+                <Text>₹ {((myBookingPayload?.T_C)?.toLocaleString('en-IN'))}</Text>
               </View>
             </View>
 
@@ -1585,7 +1611,7 @@ const MyDocument = ({
               IV. Construction Additional charges
             </Text>
           </View>
-          {projectDetails?.projectType?.name === 'Villas' &&
+          {projectDetails?.projectType?.name === 'Villas' && 
            <View style={[styles.fitter, { marginTop: '5px' }]}>
             <View style={[ styles.mb20, {    borderRadius: 8 }]}>
               <View
@@ -1684,19 +1710,19 @@ const MyDocument = ({
                   </View>
 
                   <View style={[styles.tableCell_200, styles.alignRight]}>
-                    <Text>{fCurrency(item?.charges)}</Text>
+                    <Text>₹{((item?.charges)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
                   <View
                     style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
                   >
-                    <Text>{fCurrency(item?.TotalSaleValue)}</Text>
+                    <Text>₹{((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
                   <View style={[styles.tableCell_20, styles.alignRight]}>
                     <Text>
                       {' '}
-                      {fCurrency(
+                      ₹ {(
                         Number(
                           computeTotal(
                             item,
@@ -1732,7 +1758,7 @@ const MyDocument = ({
                 </View>
 
                 <View style={[styles.tableCell_20, styles.alignRight]}>
-                  <Text>{fCurrency(myBookingPayload?.T_D)}</Text>
+                  <Text>₹ {((myBookingPayload?.T_D)?.toLocaleString('en-IN'))}</Text>
                 </View>
               </View>
             </View>
@@ -1838,19 +1864,19 @@ const MyDocument = ({
                   </View>
 
                   <View style={[styles.tableCell_20, styles.alignRight]}>
-                    <Text>{fCurrency(item?.charges)}</Text>
+                    <Text>₹ {((item?.charges)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
                   <View
                     style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
                   >
-                    <Text>{fCurrency(item?.TotalSaleValue)}</Text>
+                    <Text>₹ {((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
                   <View style={[styles.tableCell_20, styles.alignRight]}>
                     <Text>
                       {' '}
-                      {fCurrency(
+                      ₹ {(
                         Number(
                           computeTotal(
                             item,
@@ -1886,7 +1912,7 @@ const MyDocument = ({
                 </View>
 
                 <View style={[styles.tableCell_20, styles.alignRight]}>
-                  <Text>{fCurrency(myBookingPayload?.T_E)}</Text>
+                  <Text>₹ {((myBookingPayload?.T_E)?.toLocaleString('en-IN'))}</Text>
                 </View>
               </View>
 
@@ -1928,7 +1954,7 @@ const MyDocument = ({
                         {item.label}
                       </Text>
                       <Text style={{ fontSize: 9, fontWeight: 'semibold' }}>
-                        ₹{item.value?.toLocaleString('en-IN')}
+                        ₹ {item.value?.toLocaleString('en-IN')}
                       </Text>
                     </View>
                   ))}
@@ -1954,7 +1980,7 @@ const MyDocument = ({
                         {item.label}
                       </Text>
                       <Text style={{ fontSize: 9, fontWeight: 'semibold' }}>
-                        ₹{item.value?.toLocaleString('en-IN')}
+                        ₹ {item.value?.toLocaleString('en-IN')}
                       </Text>
                     </View>
                   ))}
@@ -1982,7 +2008,7 @@ const MyDocument = ({
                         marginRight: 2,
                       }}
                     >
-                      ₹{netTotal?.toLocaleString('en-IN')}
+                      ₹ {netTotal?.toLocaleString('en-IN')}
                     </Text>
                   </View>
                 </View>
@@ -2159,7 +2185,7 @@ style={[
 </View>
 
 <View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(item.value)}</Text>
+<Text>₹ {((item.value)?.toLocaleString('en-IN'))}</Text>
 </View>
 </View>
 ))}
@@ -2177,7 +2203,7 @@ style={[
 <View style={styles.tableCell_3}></View>
 
 <View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(myBookingPayload?.T_A + myBookingPayload?.T_B)}</Text>
+<Text>₹ {((myBookingPayload?.T_A + myBookingPayload?.T_B)?.toLocaleString('en-IN'))}</Text>
 </View>
 </View>
 </View>
@@ -2279,7 +2305,7 @@ style={[
 </View>
 
 <View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(item.value)}</Text>
+<Text>₹ {((item.value)?.toLocaleString('en-IN'))}</Text>
 </View>
 </View>
 ))}
@@ -2287,7 +2313,7 @@ style={[
 <View style={styles.tableCell_1}></View>
 
 <View style={[styles.tableCell_4]}>
-<Text style={styles.subtitle2}>Total Cost</Text>
+<Text style={styles.subtitle2}>Total Cost box</Text>
 </View>
 
 <View style={styles.tableCell_3}></View>
@@ -2295,7 +2321,7 @@ style={[
 <View style={styles.tableCell_3}></View>
 
 <View style={[styles.tableCell_3, styles.alignRight]}>
-<Text>{fCurrency(myBookingPayload?.T_C + myBookingPayload?.T_D)}</Text>
+<Text>₹ {((myBookingPayload?.T_C + myBookingPayload?.T_D)?.toLocaleString('en-IN'))}</Text>
 </View>
 </View>
 </View> }
@@ -2488,6 +2514,8 @@ const PdfInvoiceGenerator = ({
                    transition"
                   >
                 <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
+                      {/* <span className="text-gray-600">Download Cost Sheet</span> */}
+
       
                   </div>
                 )

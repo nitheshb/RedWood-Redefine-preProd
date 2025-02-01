@@ -206,6 +206,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
     totalIs={totalIs}
     customerDetails={customerDetails}
     project={project}
+    constructTotalB={constructTotalB}
 
 
 
