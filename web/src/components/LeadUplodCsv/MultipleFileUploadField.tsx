@@ -30,7 +30,7 @@ import Loader from '../Loader/Loader'
 
 import { SingleFileUploadWithProgress } from './SingleFileUploadWithProgress'
 import { UploadError } from './UploadError'
-import { CalculateComponentTotal } from 'src/util/unitCostSheetCalculator'
+import { CalculateComponentTotal, computePartTotal } from 'src/util/unitCostSheetCalculator'
 
 let currentId = 0
 
@@ -638,10 +638,11 @@ export function MultipleFileUploadField({
               let constructionCS = []
               let partB= []
               let partD= []
+              let partD_total=0
               let plot_area_sqft = dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0
               let bua_sqft = dRow['BUA(sqft)']?.replace(/,/g, '') || 0
               let construct_price_sqft = dRow['Construction Price per sqft']?.replace(/,/g, '') || 0
-              let const_plc_per_sqft = dRow['Construction PLC per sqft']?.replace(/,/g, '') || 0
+              let const_plc_per_sqft = dRow['Construction PLC rate/sqft']?.replace(/,/g, '') || 0
               let const_plc_sqft = dRow['Construction PLC(sqft)']?.replace(/,/g, '') || 0
               let const_plc_rate = dRow['Construction PLC rate/sqft']?.replace(/,/g, '') || 0
 
@@ -747,16 +748,14 @@ export function MultipleFileUploadField({
                 ]
 
 
-                partB = additonalChargesObj?.map((data, inx) => {
-            return CalculateComponentTotal(data,Number(plot_area_sqft),Number(selPhaseObj?.area_tax), Number(data?.charges))
-          })
-          partD=  constructOtherChargesObj?.map((data, inx) => {
-           return  CalculateComponentTotal(data,Number(bua_sqft),Number(selPhaseObj?.const_tax), Number(data?.charges))
-          })
+
+
+          partD_total=  await computePartTotal(constructOtherChargesObj, bua_sqft, selPhaseObj?.const_tax,)
 
                }
 
 
+             let partB_total=  await computePartTotal(additonalChargesObj, plot_area_sqft, myPhase?.area_tax,)
               const computPlotObj = {
                 unit_no:
                   dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
@@ -981,18 +980,21 @@ export function MultipleFileUploadField({
                   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
                 ),
-                partB_total: partB.reduce(
-                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-                  0
-                ),
+                // partB_total: partB.reduce(
+                //   (partialSum, obj) => partialSum + isNaN(obj?.TotalNetSaleValueGsT)? 1 : obj?.TotalNetSaleValueGsT,
+                //   0
+                // ),
+                partB_total: partB_total,
+
                 partC_total: constructionCS.reduce(
                   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
                 ),
-                partD_total: partD.reduce(
-                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-                  0
-                ),
+                partD_total: partD_total,
+                // partD_total: partD.reduce(
+                //   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+                //   0
+                // ),
 
 
 
