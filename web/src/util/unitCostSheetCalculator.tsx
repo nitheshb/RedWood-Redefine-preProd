@@ -44,3 +44,25 @@ export const UpdateComponentCalTotal = async (costSheetA,inx,area,taxPercent, ne
   // setTotalFun()
 }
 
+export   async function computePartTotal(additionalChargesObj, plot_area_sqft, area_tax,) {
+  const results = await Promise.all(
+ additionalChargesObj?.map(async (data, inx) => {
+      let x = await CalculateComponentTotal(
+        data,
+        Number(plot_area_sqft),
+        Number(area_tax),
+        Number(data?.charges)
+      );
+      console.log("tax percent @@@", Number(x?.TotalNetSaleValueGsT));
+      return x;
+    })
+  );
+
+  const total = results.reduce(
+    (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT || 0),
+    0
+  );
+
+  return total;
+}
+
