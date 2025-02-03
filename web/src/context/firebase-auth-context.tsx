@@ -117,7 +117,7 @@ export default function AuthContextProvider({ children }) {
         orgId: additionalUserInfo?.orgId,
         orgName: additionalUserInfo?.orgName,
         avatarUrl: additionalUserInfo?.avatarUrl,
-        access,
+        access: access || [],
         userStatus: additionalUserInfo?.userStatus,
       }
       console.log('----user--', user)

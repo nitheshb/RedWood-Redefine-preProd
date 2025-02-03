@@ -2083,7 +2083,7 @@ export const getAllRoleAccess = async (orgId) => {
 
 export const getSelectedRoleAccess = async (orgId, role) => {
   const getRolesQueryById = await query(
-    collection(db, `spark_roles_access`),
+    collection(db, `${orgId}_roles_access`),
     where('role', '==', role)
   )
   const records = []
@@ -2621,7 +2621,31 @@ export const addCustomer = async (
   }
 
 }
+export const addUserAccessMaster = async (
+  orgId,
+  data,
+  by,
+  enqueueSnackbar,
+) => {
+  try {
+    const did = uuidv4()
+    data.id = did
+    console.log('error in customer creation')
 
+
+      await setDoc(doc(db, `${orgId}_roles_access`, data?.uid), data)
+
+
+
+    return
+  } catch (error) {
+    console.log('error in customer creation', error)
+    enqueueSnackbar('Roles addition failed', {
+      variant: 'success',
+    })
+  }
+
+}
 export const addPlotUnit = async (orgId, data, by, msg) => {
   const {
     pId,
