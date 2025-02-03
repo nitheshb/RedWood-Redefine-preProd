@@ -395,7 +395,7 @@ console.log('nothing found in subarray')
     backgroundSize: 'cover',
   }
   return (
-    <div className="h-screen">
+    <div className="h-screen bg-white">
       <div className="flex items-center justify-center">
         <div
           id="bg-img"
@@ -436,11 +436,11 @@ console.log('nothing found in subarray')
                                       <div className="flex flex-row justify-between">
                                         <section className="flex flex-row">
                                           {/* <span className="text-[42px] mt-[-16px]">
-                                            🎊
+                                            // 🎊
                                           </span> */}
                                           <div className="inline">
-                                            <div className="mt-[7px]">
-                                              <label className="text-[20px] font-medium text-[#000000]    mb-1  ">
+                                            <div className="mt-[4px]">
+                                              <label className="text-[24px] font-medium text-[#000000]    mb-1  ">
                                                 {title === 'capturePayment'
                                                   ? 'Capture Payment'
                                                   : 'Add Modification'}
@@ -490,7 +490,7 @@ console.log('nothing found in subarray')
     return (
       <button
         type="button"
-        className={`border rounded-xl p-2 px-[10px] cursor-pointer hover:bg-[#F2F2F2] hover:text-[#484848] text-[10px] flex flex-col items-center ${
+        className={`border rounded-xl p-2 px-[10px] w-[100px] cursor-pointer hover:bg-[#F2F2F2] hover:text-[#484848] text-[10px] flex flex-col items-center ${
           paymentModex === dat.value ? 'bg-[#F2F2F2] text-[#484848]' : ''
         }`}
         key={i}

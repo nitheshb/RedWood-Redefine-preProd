@@ -267,7 +267,7 @@ export const userAccessRoles = [
     id: 15,
     uid: 'A1985953380993671Z',
     category: 'admin_support',
-    type: 'admin support manager',
+    type: 'Admin support manager',
     access: [
       { key: 'manage_project', checked: false, name: 'Manage Project' },
       { name: 'View Project', checked: false, key: 'view_project' },
