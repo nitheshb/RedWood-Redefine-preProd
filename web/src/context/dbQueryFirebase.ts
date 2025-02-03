@@ -5892,6 +5892,75 @@ console.log('data is ===> @@@', data)
   }
   return
 }
+export const addNewUnitModification = async (
+  orgId,
+  selUnitDetails,
+  unitId,
+  data,
+  by,
+  enqueueSnackbar
+) => {
+  try {
+    console.log('data is===>', unitId, data)
+
+    const { status, addOnCS, fullPs, T_balance, T_total,T_D, T_elgible_balance, constAdditionalChargesCS } =
+      data
+
+    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+      constAdditionalChargesCS: constAdditionalChargesCS,
+      fullPs,
+      T_balance,
+      T_total,
+      T_D,
+      T_elgible_balance,
+    })
+    const { data: data4, error: error4 } = await supabase
+      .from(`${orgId}_unit_logs`)
+      .insert([
+        {
+          type: 'unit_modify',
+          subtype: 'unit_new_modification',
+          T: Timestamp.now().toMillis(),
+          Uuid: unitId,
+          by,
+          payload: {},
+          from: 'cs_review',
+          to: status,
+        },
+      ])
+    fullPs.map((d, i) => {
+      //
+      // this will set the previous date immutable as current date
+
+      if (d?.oldDate != d?.schDate) {
+        const dataPayload = {
+          pId: selUnitDetails?.pId,
+          oldDate: d?.oldDate,
+          schDate: d?.schDate,
+          stageId: d?.stage.value,
+          newPrice: d?.value,
+          used: d?.used,
+          assignedTo: selUnitDetails?.assignedTo || 'unassigned',
+        }
+
+        updateProjectionsAgreegations(orgId, dataPayload, by, enqueueSnackbar)
+
+        updateCrmExecutiveAgreegations(orgId, dataPayload, by, enqueueSnackbar)
+      }
+    })
+    enqueueSnackbar('Costsheet & Payment Schedule Updated.', {
+      variant: 'success',
+    })
+  } catch (error) {
+    console.log('Costsheet & Payment Schedule Updation Failed', error, {
+      ...data,
+    })
+    enqueueSnackbar('Costsheet & Payment Schedule Updation Failed .', {
+      variant: 'error',
+    })
+  }
+  return
+}
 export const addNewUnitDemand = async (
   orgId,
   selUnitDetails,

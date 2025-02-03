@@ -20,12 +20,15 @@ const CrmUnitSummary = ({
   unitTransactionsA,
   projectType,
   project,
+  unitTotal,
   fullPs,
   T_B,
   PSa,
   leadDetailsObj1,
+  unitReceivedTotal,
   projectDetails,
   streamUnitDetails,
+  plotPS,
   selCustomerPayload,
   myBookingPayload,
   customerDetails,
@@ -87,7 +90,7 @@ const CrmUnitSummary = ({
                 }
               } else {
                 console.log('New record added!')
-                return [...prevLogs, payload.new]
+                return [payload.new,...prevLogs]
               }
             })
           } else {
@@ -111,7 +114,7 @@ const CrmUnitSummary = ({
                   }
                 } else {
                   console.log('New record added!')
-                  return [...prevLogs, payload.new]
+                  return [payload.new,...prevLogs]
                 }
               })
             }
@@ -256,10 +259,13 @@ const CrmUnitSummary = ({
     totalIs={totalIs}
     customerDetails={customerDetails}
     fullPs={fullPs}
+    unitReceivedTotal={unitReceivedTotal}
+    plotPS={plotPS}
+    unitTotal={unitTotal}
     T_B={T_B}
-    
-    
-    
+
+
+
     PSa={PSa}
     setNetTotal={setNetTotal}
     partATotal={partATotal}
@@ -267,7 +273,7 @@ const CrmUnitSummary = ({
     // setPartATotal={setPartATotal}
     // setPartBTotal={setPartBTotal}
     projectDetails={projectDetails}
-    leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined} 
+    leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined}
     // user={user}
     // selUnitDetails={selUnitDetails}
     // myObj={newPlotCostSheetA}
@@ -281,6 +287,14 @@ const CrmUnitSummary = ({
     // projectDetails={{}} myAdditionalCharges={undefined} setPartBTotal={undefined} leadDetailsObj1={undefined} customerDetails={undefined}
     />
 </div>
+
+
+
+  <div>
+    <p className='text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mt-1 ml-1'>Unit Summary</p>
+  </div>
+
+
           </div>
 
         </div>

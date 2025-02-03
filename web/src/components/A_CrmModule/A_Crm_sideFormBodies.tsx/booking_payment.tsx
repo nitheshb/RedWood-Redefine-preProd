@@ -111,7 +111,7 @@ export default function BookingPaymentFlow({
           } else {
             console.log('New record added!', [...prevLogs, payload.new])
             if (payload?.new.unit_id === selUnitPayload?.id) {
-              return [...prevLogs, payload.new]
+              return [payload.new,...prevLogs]
             }
           }
         })

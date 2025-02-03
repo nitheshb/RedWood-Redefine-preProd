@@ -7,7 +7,21 @@ import { computeTotal } from 'src/util/computeCsTotals'
 import PdfSummaryGenerator from 'src/util/PdfSummaryGenerator'
 import PdfUniteSummary from 'src/util/PdfUniteSummary'
 
-const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, leadDetailsObj1,customerDetails, streamUnitDetails, newAdditonalChargesObj, myBookingPayload, assets, totalIs,selUnitDetails,newPlotCostSheetA, newPlotPS }) => {
+const CrmUnitCostSheetView = ({ selCustomerPayload,
+   unitTransactionsA, PSa, 
+   leadDetailsObj1,
+   customerDetails, 
+   streamUnitDetails,
+    newAdditonalChargesObj, 
+    myBookingPayload, 
+    assets, 
+    totalIs,
+    selUnitDetails,
+    newPlotCostSheetA, 
+    newPlotPS,
+    project,
+  
+  }) => {
   const { user } = useAuth()
   const { orgId } = user
   const [partATotal, setPartA] = useState(0)
@@ -191,6 +205,8 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
     netTotal={netTotal}
     totalIs={totalIs}
     customerDetails={customerDetails}
+    project={project}
+    constructTotalB={constructTotalB}
 
 
 
@@ -449,7 +465,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload, unitTransactionsA, PSa, lead
                               className="border-b-[0.05px] border-gray-300 h-[32px]"
                             >
                               <th className="w-[40%] text-[12px] text-left text-gray-700 bg-[#fff] px-2">
-                                {d1?.component?.label}
+                                {d1?.component?.label} {d1?.purpose}
                               </th>
 
                               <td className="w-[15%] text-[12px] text-right text-gray-700 bg-[#fff]">

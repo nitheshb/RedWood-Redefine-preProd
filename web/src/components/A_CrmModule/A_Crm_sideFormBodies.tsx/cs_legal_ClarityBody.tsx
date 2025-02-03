@@ -254,7 +254,7 @@ export default function Crm_legal_Clarity({
                 }
               } else {
                 console.log('New record added!')
-                return [...prevLogs, payload.new]
+                return [payload.new,...prevLogs]
               }
             })
           } else {
@@ -278,7 +278,7 @@ export default function Crm_legal_Clarity({
                   }
                 } else {
                   console.log('New record added!')
-                  return [...prevLogs, payload.new]
+                  return [payload.new,...prevLogs]
                 }
               })
             }

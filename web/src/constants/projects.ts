@@ -180,11 +180,11 @@ export const unitTypeList = [
   { label: 'Select Count', value: '' },
   { label: '1 Bhk', value: 1 },
   { label: '2 Bhk', value: 2 },
-  { label: '2.5 Bhk', value: 3 },
-  { label: '3 Bhk', value: 4 },
-  { label: '3.5 Bhk', value: 5 },
-  { label: '4 Bhk', value: 6 },
-  { label: '5 Bhk', value: 7 },
+  { label: '2.5 Bhk', value: 2.3 },
+  { label: '3 Bhk', value: 3 },
+  { label: '3.5 Bhk', value: 3.5 },
+  { label: '4 Bhk', value: 4 },
+  { label: '5 Bhk', value: 5 },
 ]
 
 
@@ -1444,6 +1444,62 @@ export const ProjectAccessFolder = [
   },
 ]
 
+
+export const constructCS_A =[
+
+    {
+      myId: '3',
+      units: {
+        value: 'cost_per_sqft',
+        label: 'Cost per cost',
+      },
+      component: {
+        value: 'villa_construct_cost',
+        label: 'Villa Construction Cost  ',
+      },
+
+    },
+    {
+      myId: '4',
+      units: {
+        value: 'cost_per_sqft',
+        label: 'Cost per cost',
+      },
+      component: {
+        value: 'plc_cost_sqft',
+        label: 'Construction PLC',
+      },
+
+    },
+
+]
+
+export const plotCS_Dummy_A = [
+
+    {
+      myId: '1',
+      units: {
+        value: 'cost_per_sqft',
+        label: 'Cost per cost',
+      },
+      component: {
+        value: 'unit_cost_charges',
+        label: 'Unit Cost',
+      },
+    },
+    {
+      myId: '2',
+      units: {
+        value: 'cost_per_sqft',
+        label: 'Cost per cost',
+      },
+      component: {
+        value: 'plc_cost_sqft',
+        label: 'PLC',
+      },
+    },
+
+  ]
 
 
 
