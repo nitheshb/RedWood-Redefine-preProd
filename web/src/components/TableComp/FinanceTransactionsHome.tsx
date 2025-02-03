@@ -56,7 +56,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     return [...transactions].sort((a, b) => {
       const dateA = new Date(a.txt_dated)
       const dateB = new Date(b.txt_dated)
-      return dateB - dateA 
+      return dateB - dateA
     })
   }
 
@@ -97,7 +97,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
 
 
-  
+
 
 
   useEffect(() => {
@@ -134,7 +134,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
             return [...updatedLogs]
           } else {
             console.log('New record added!')
-            return [...prevLogs, payload.new]
+            return [payload.new,...prevLogs]
           }
         })
         // const index = updatedLeadLogs.findIndex((log) => log.id === id)
@@ -185,7 +185,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
   //     },
   //     (error) => []
 
-      
+
   //   )
   //   await setFinFetchedData(steamLeadLogs)
 
@@ -267,7 +267,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
       },
       (error) => []
     )
-    const sortedData = sortTransactionsByDate(steamLeadLogs) 
+    const sortedData = sortTransactionsByDate(steamLeadLogs)
     setFinFetchedData(sortedData)
   }
 
@@ -760,7 +760,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                         </tbody>
                       </table>
 </div>
-               
+
                     </div>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useMemo, useEffect } from 'react'
 import {
   Document,
@@ -13,6 +13,8 @@ import {
 import { format } from 'date-fns'
 import numeral from 'numeral'
 import { prettyDate } from './dateConverter'
+import { useAuth } from 'src/context/firebase-auth-context'
+import { getProject } from 'src/context/dbQueryFirebase'
 
 Font.register({
   family: 'Roboto',
@@ -53,6 +55,7 @@ const useStyles = () =>
         col6: { width: '50%' },
         p4: { padding: '4px' },
         p10: { padding: '4px 6px' },
+        pt3: { paddingTop: 5 },
         p11: { padding: '0px 0px' },
         p12: { paddingTop: '4px', paddingBottom: '2px' },
         pr0: { paddingRight: '0px' },
@@ -483,6 +486,7 @@ const MyDocument = ({
   myAdditionalCharges,
   netTotal,
   projectDetails,
+  selCustomerPayload,
   setNetTotal,
   partATotal,
   partBTotal,
@@ -513,8 +517,11 @@ const MyDocument = ({
           <View
             style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1]}
           >
-            <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} />
-            <Text style={[styles.h4, styles.ml1]}>
+
+    <Image src={projectDetails?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+            
+            {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
+            <Text style={[styles.h4, styles.pt3, styles.ml1]}>
               {projectDetails?.projectName}
             </Text>
             {/* <Text>{myObj} </Text> */}
@@ -718,12 +725,15 @@ const MyDocument = ({
           <View
             style={[ styles.smallFitter, styles.pr3, styles.ml1 ,{flexDirection: 'row'}]}
           >
-            <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} />
-            <Text style={[styles.h4, styles.ml1,      styles.mT1,
+
+<Image src={projectDetails?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+
+            {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
+            {/* <Text style={[styles.h4, styles.ml1,      styles.mT1,
                 styles.pt5,
                 styles.pr3,]}>
               {projectDetails?.projectName}
-            </Text>
+            </Text> */}
             {/* <Text>{myObj} </Text> */}
           </View>
           <View style={[styles.col6]}>
@@ -756,13 +766,55 @@ const PdfReceiptGenerator = ({
   partATotal,
   partBTotal,
   setPartATotal,
+  selCustomerPayload,
   setPartBTotal,
   projectDetails,
   leadDetailsObj1,
   payementDetails
 }) => {
   console.log('overall cost sheet is ', newPlotPS)
+
+
+
+
+
+
+
+
+
+
+    useEffect(() => {
+      getProjectFun()
+    }, [])
+
+    const [project, setProject] = useState({})
+
+       const { user: authUser } = useAuth()
+    
+
+    const { orgId } = authUser
+
+
+      
+  const getProjectFun = async () => {
+    
+      
+    const steamLeadLogs = await getProject(
+      orgId,
+      selCustomerPayload?.pId
+    )
+    
+    await setProject(steamLeadLogs)
+  
+    return}
   return (
+
+
+
+
+
+
+
     <div>
       {' '}
       <PDFDownloadLink
@@ -782,6 +834,7 @@ const PdfReceiptGenerator = ({
             projectDetails={projectDetails}
             leadDetailsObj1={leadDetailsObj1}
             payementDetails={payementDetails}
+            selCustomerPayload={selCustomerPayload}
           />
         }
         // fileName="sample.pdf"

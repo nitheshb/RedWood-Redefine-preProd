@@ -14,6 +14,7 @@ import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { demandMode } from 'src/constants/projects'
 import {
   addNewUnitDemand,
+  addNewUnitModification,
   addPaymentReceivedEntrySup,
   createNewCustomerS,
   steamBankDetailsList,
@@ -165,29 +166,31 @@ const AddNewDemand = ({
     let y = {}
     y = data
 
-
-    // await handleFileUploadFun(data?.fileUploader, 'panCard1')
-    // const z = await commentAttachUrl
-    const { mode, payReason,dated, gst } = data
+    const { mode, comments,dated, purpose,gst } = data
     const amount = data?.amount.replace(/,/g, '')
     const gstV = gst /100
-    const totalWithGst = Number(amount) + Number(amount) * Number(gstV)
+    const totalWithGst = Number(amount) + (Number(amount) * Number(gstV))
     const x = {
       TotalNetSaleValueGsT: totalWithGst,
       TotalSaleValue: amount,
       charges: amount,
       component: { label: mode, value: mode },
-      description: payReason,
+      description: comments,
+      purpose: purpose,
+      type: 'modification',
       gst: { label: gst, value: gst },
-      gstValue: gst,
+      gstValue: (Number(amount) * Number(gstV)),
       myId: 'uuid',
       units: { label: 'Fixed Cost', value: 'fixedcost' },
     }
+
     const ps = {
-      description: payReason,
+      description: comments,
+      purpose: purpose || '',
       outStanding: 0,
       value: totalWithGst,
       elgible: true,
+      type: 'modification',
       stage: {
         value: mode,
         label: mode,
@@ -204,26 +207,36 @@ const AddNewDemand = ({
       preCheck: totalWithGst,
     }
 
+    console.log('value is',  ps )
 
     const newConstAdditionalChargesCS = selUnitDetails?.constAdditionalChargesCS || []
     newConstAdditionalChargesCS.push(x)
     let existingPs = selUnitDetails?.fullPs
     let newfullPs = selUnitDetails?.fullPs
     if(data?.payment_choice_1==='last_milestone'){
+      let milestoneSub = newfullPs[newfullPs.length-1]?.subA || []
+
+      milestoneSub.push(ps)
+      console.log('milestone sub is', milestoneSub, newfullPs[newfullPs.length-1], ps)
       newfullPs[newfullPs.length-1].elgFrom = dated
       newfullPs[newfullPs.length-1].value = newfullPs[newfullPs.length-1].value +  totalWithGst
-      newfullPs[newfullPs.length-1].subA =  newfullPs[newfullPs.length-1].subA.push(ps)
+      newfullPs[newfullPs.length-1].subA =  milestoneSub
+
+      console.log('matter of it', newfullPs[newfullPs.length-1],milestoneSub,  ps)
     } else if(data?.payment_choice_1==='split_equally'){
-    let z =   existingPs.filter((item)=>{ return item.elgible===false})
+    let z =   existingPs.filter((item)=>{ return item.elgible ==false})
     const splittedAmount = Math.floor(totalWithGst/z.length)
 
     if(z.length>0){
       z.map((item)=>{
+        let subArray = item.subA || []
+        subArray.push(ps)
         item.elgFrom = dated
         item.value = item.value +  splittedAmount
-        item.subA =  item.subA.push(ps)
+        item.subA =  subArray
       })
     }else{
+console.log('nothing found in subarray')
       newfullPs.push(ps)
     }
   }
@@ -243,7 +256,7 @@ const AddNewDemand = ({
     console.log('value is', amount,totalWithGst )
 
 
-    addNewUnitDemand(
+    addNewUnitModification(
       orgId,
       selUnitDetails,
       selUnitDetails?.id,
@@ -253,7 +266,7 @@ const AddNewDemand = ({
     )
     //
 
-    
+
 
     await onSubmitFun(y, resetForm)
 
@@ -343,8 +356,9 @@ const AddNewDemand = ({
     amount: bankData?.amount || '',
     towardsBankDocId: '',
     mode: bankData?.mode || paymentModex,
+    purpose: bankData?.purpose || '',
     payto: bankData?.payto || '',
-    payReason: bankData?.payReason || '',
+    comments: bankData?.comments || '',
     gst: bankData?.gst || 0,
     dated: bankData?.dated || datee,
     bookingSource: '',
@@ -381,7 +395,7 @@ const AddNewDemand = ({
     backgroundSize: 'cover',
   }
   return (
-    <div className="h-screen">
+    <div className="h-screen bg-white">
       <div className="flex items-center justify-center">
         <div
           id="bg-img"
@@ -422,11 +436,11 @@ const AddNewDemand = ({
                                       <div className="flex flex-row justify-between">
                                         <section className="flex flex-row">
                                           {/* <span className="text-[42px] mt-[-16px]">
-                                            🎊
+                                            // 🎊
                                           </span> */}
                                           <div className="inline">
-                                            <div className="mt-[7px]">
-                                              <label className="text-[20px] font-medium text-[#000000]    mb-1  ">
+                                            <div className="mt-[4px]">
+                                              <label className="text-[24px] font-medium text-[#000000]    mb-1  ">
                                                 {title === 'capturePayment'
                                                   ? 'Capture Payment'
                                                   : 'Add Modification'}
@@ -476,7 +490,7 @@ const AddNewDemand = ({
     return (
       <button
         type="button"
-        className={`border rounded-xl p-2 px-[10px] cursor-pointer hover:bg-[#F2F2F2] hover:text-[#484848] text-[10px] flex flex-col items-center ${
+        className={`border rounded-xl p-2 px-[10px] w-[100px] cursor-pointer hover:bg-[#F2F2F2] hover:text-[#484848] text-[10px] flex flex-col items-center ${
           paymentModex === dat.value ? 'bg-[#F2F2F2] text-[#484848]' : ''
         }`}
         key={i}
@@ -587,8 +601,17 @@ const AddNewDemand = ({
                                           <div className="w-full  ">
                                             <div className="relative w-full mb-3">
                                               <TextField2
+                                                label="Purpose"
+                                                name="purpose"
+                                                type="text"
+                                              />
+                                            </div>
+                                          </div>
+                                          <div className="w-full  ">
+                                            <div className="relative w-full mb-3">
+                                              <TextField2
                                                 label="Comments"
-                                                name="payReason"
+                                                name="comments"
                                                 type="text"
                                               />
                                             </div>

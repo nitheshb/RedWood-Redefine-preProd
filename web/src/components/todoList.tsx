@@ -125,7 +125,7 @@ const TodoListView = ({
                 }
               } else {
                 console.log('New record added!')
-                return [...prevLogs, payload.new]
+                return [payload.new,...prevLogs]
               }
             })
           } else if (updatedData?.followersUid.includes(user?.uid)) {
@@ -144,7 +144,7 @@ const TodoListView = ({
                 }
               } else {
                 console.log('New record added!')
-                return [...prevLogs, payload.new]
+                return [payload.new,...prevLogs]
               }
             })
           }
@@ -170,7 +170,7 @@ const TodoListView = ({
           //             }
           //           } else {
           //             console.log('New record added!')
-          //             return [...prevLogs, payload.new]
+          //             return [payload.new,...prevLogs]
           //           }
           //         })
           //       }
@@ -195,7 +195,7 @@ const TodoListView = ({
                   }
                 } else {
                   console.log('New record added!')
-                  return [...prevLogs, payload.new]
+                  return [payload.new,...prevLogs]
                 }
               })
             }
