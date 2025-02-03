@@ -413,7 +413,7 @@ if(data?.fileUploader){
     backgroundSize: 'cover',
   }
   return (
-    <div className="">
+    <div className="bg-white">
       <div className="flex items-center justify-center">
         <div id="bg-img" className="flex  w-full flex-col" style={bgImgStyle}>
           {StatusListA?.length > 0 && (
@@ -422,7 +422,7 @@ if(data?.fileUploader){
               {stepIndx} of {StatusListA?.length} steps
             </section>
           )}
-          <div className="relative mx-4 max-h-[65%]  rounded-xl  px-2 pb-14 border ">
+          <div className="relative mx-4 max-h-[65%]  rounded-xl  px-2 pb-14 border mt-2">
             {/* <div className="space-y-4 text-white">
               <h3 className="font-bold text-2xl">Confirm Booking</h3>
 
@@ -447,20 +447,20 @@ if(data?.fileUploader){
                         <div className="form">
                           {/* Phase Details */}
 
-                          <section className="overflow-y-auto h-[60vh] sm:h-[50vh] md:h-[60vh] lg:h-[100vh]">
+                          <section className="overflow-y-auto h-[60vh] sm:h-[50vh] md:h-[60vh] lg:h-[100vh] mt-2">
                             <div className="w-full mx-auto">
                               <div className="relative flex flex-col min-w-0 break-words w-full mb-6  rounded-lg bg-white ">
                                 <div className=" flex flex-row px-0 py-2  overflow-auto ">
                                   <section className=" p- rounded-md w-full ">
                                     <article className="mt-3">
                                       <div className="flex flex-row  justify-between">
-                                        <section className="flex flex-row">
-                                          <span className="text-[38px] mt-[-16px]">
+                                        <section className="flex flex-row mx-3">
+                                          {/* <span className="text-[38px] mt-[-16px]">
                                             🎊
-                                          </span>
+                                          </span> */}
                                           <div className="inline">
                                             <div className="mt-[4px]">
-                                              <label className="text-[22px] font-semibold text-[#053219]  text-sm  mb-1  ">
+                                              <label className="text-[24px] font-semibold text-[#053219]  text-sm  mb-1  ">
                                                 {title === 'capturePayment'
                                                   ? 'Capture Payment'
                                                   : 'Booking Confirmation'}
@@ -471,7 +471,7 @@ if(data?.fileUploader){
                                           </div>
                                         </section>
                                         <section className="flex flex-row justify-between">
-                                          <div className="flex flex-col mr-2 mt-2">
+                                          <div className="flex flex-col  mr-3">
                                             {/* <h6 className="text-blueGray-400 text-sm mt- ml-6 mb- font-weight-[700]  font-uppercase">
                                               Payment
                                             </h6> */}
