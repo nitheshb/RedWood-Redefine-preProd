@@ -1107,7 +1107,7 @@ return
   }
   return (
     <div
-      className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} overflow-y-scroll `}
+      className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} overflow-y-scroll overflow-x-hidden `}
     >
       <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F9F9FA]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
