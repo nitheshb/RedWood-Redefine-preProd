@@ -5885,7 +5885,9 @@ export const updateBankLoanApprovals = async (
 ) => {
   try {
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
-    ...data
+    ...data,
+    // loanAmount: data.loanAmount || '', 
+    // loanPercentage: data.loanPercentage || '', 
     })
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
@@ -5916,6 +5918,14 @@ console.log('data is ===> @@@', data)
   }
   return
 }
+
+
+
+
+
+
+
+
 export const addNewUnitModification = async (
   orgId,
   selUnitDetails,

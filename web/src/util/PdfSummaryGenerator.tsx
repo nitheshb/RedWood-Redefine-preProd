@@ -1278,7 +1278,9 @@ const MyDocument = ({
 
                 <View style={[styles.tableCell_15, styles.alignRight, styles.pr8]}>
 
-                <Text>₹{(partATotal?.toLocaleString('en-IN'))}</Text>
+                <Text>₹{(partATotal?.toLocaleString('en-IN'))}
+                  
+                </Text>
 
 
                 </View>
