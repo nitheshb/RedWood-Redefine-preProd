@@ -1635,7 +1635,7 @@ const MyDocument = ({
                 style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
               >
                 <Text style={[styles.subtitle2, styles.pt2]}>
-                Construction Cost:                        
+                Construction Cost:
                 </Text>
               </View>
 
@@ -1670,7 +1670,7 @@ const MyDocument = ({
                 styles.ml1,
               ]}
             >
-              IV Construction Additional Charges	
+              IV Construction Additional Charges
             </Text>
           </View>
 
@@ -1701,7 +1701,7 @@ const MyDocument = ({
 
                   <View style={[  styles.ml1,styles.tableCell_35, styles.p12,  { marginLeft:'20px' } ]}>
                     <Text style={styles.subtitle2}>
-                    Construction Additional Charges	
+                    Construction Additional Charges
                     </Text>
                   </View>
 
@@ -1829,7 +1829,7 @@ const MyDocument = ({
                   </View>
 
 
-                  
+
                 </View>
               ))}
 
@@ -1861,7 +1861,7 @@ const MyDocument = ({
               </View>
 
 
-{/* 
+{/*
 <View
                 style={[
                   styles.tableRow,
@@ -1910,16 +1910,16 @@ const MyDocument = ({
 
 
 
-          
 
 
 
 
-         
 
 
 
-      
+
+
+
 
 
 
@@ -2324,7 +2324,7 @@ const MyDocument = ({
 
               ]}
             >
-               VI. New Demand
+               VI. Modifications
             </Text>
           </View>
           <View style={[styles.fitter]}>
@@ -2356,7 +2356,7 @@ const MyDocument = ({
                   <View style={[styles.tableCell_35, styles.p12, { marginLeft:'20px' }]}>
                     <Text style={styles.subtitle2}>
 
-                    New Demand	
+                    Modifications
 
                     </Text>
                   </View>
@@ -2492,7 +2492,7 @@ const MyDocument = ({
                 style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
               >
                 <Text style={[styles.subtitle2, styles.pt2]}>
-                Total Addons:	
+                Total Addons:
                 </Text>
               </View>
 
@@ -2885,8 +2885,8 @@ const PdfSummaryGenerator = ({
         }
         // fileName="sample.pdf"
         // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selCustomerPayload?.unit_no || 'unit_no'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payments_Summary.pdf`}
-        
-        
+
+
         fileName={`${selCustomerPayload?.unit_no || 'unit_no'}_${projectDetails?.projectName || 'project_name'}_${selCustomerPayload?.customerDetailsObj?.customerName1 || 'customer_Name'}_Payments_Summary.pdf`}
 
 
@@ -2907,7 +2907,7 @@ const PdfSummaryGenerator = ({
              transition"
             >
           <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
-          
+
             </span>
           )
         }

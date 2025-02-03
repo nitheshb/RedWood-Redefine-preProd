@@ -26,6 +26,7 @@ import { EyeIcon } from 'lucide-react'
 
 import { FaTools, FaHammer, FaRegFileAlt, FaArrowUp } from 'react-icons/fa';
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
+import { CustomSelect } from 'src/util/formFields/selectBoxField'
 
 
 
@@ -160,9 +161,10 @@ const AddNewDemand = ({
     }
   }
   const onSubmitSupabase = async (data, resetForm) => {
-    console.log('inside supabase support', data)
+    console.log('inside supabase support', data.payment_choice_1, data)
     let y = {}
     y = data
+
 
     // await handleFileUploadFun(data?.fileUploader, 'panCard1')
     // const z = await commentAttachUrl
@@ -181,7 +183,6 @@ const AddNewDemand = ({
       myId: 'uuid',
       units: { label: 'Fixed Cost', value: 'fixedcost' },
     }
-
     const ps = {
       description: payReason,
       outStanding: 0,
@@ -202,17 +203,41 @@ const AddNewDemand = ({
       order: selUnitDetails?.fullPS?.length + 1,
       preCheck: totalWithGst,
     }
-    const newAddOnCS = selUnitDetails?.addOnCS || []
-    newAddOnCS.push(x)
-    const newfullPs = selUnitDetails?.fullPs || []
-    newfullPs.push(ps)
+
+
+    const newConstAdditionalChargesCS = selUnitDetails?.constAdditionalChargesCS || []
+    newConstAdditionalChargesCS.push(x)
+    let existingPs = selUnitDetails?.fullPs
+    let newfullPs = selUnitDetails?.fullPs
+    if(data?.payment_choice_1==='last_milestone'){
+      newfullPs[newfullPs.length-1].elgFrom = dated
+      newfullPs[newfullPs.length-1].value = newfullPs[newfullPs.length-1].value +  totalWithGst
+      newfullPs[newfullPs.length-1].subA =  newfullPs[newfullPs.length-1].subA.push(ps)
+    } else if(data?.payment_choice_1==='split_equally'){
+    let z =   existingPs.filter((item)=>{ return item.elgible===false})
+    const splittedAmount = Math.floor(totalWithGst/z.length)
+
+    if(z.length>0){
+      z.map((item)=>{
+        item.elgFrom = dated
+        item.value = item.value +  splittedAmount
+        item.subA =  item.subA.push(ps)
+      })
+    }else{
+      newfullPs.push(ps)
+    }
+  }
+
+    // }
+    // const newfullPs = selUnitDetails?.fullPs || []
+    // newfullPs.push(ps)
 
     const dataObj = {
-      addOnCS: newAddOnCS,
+      constAdditionalChargesCS: newConstAdditionalChargesCS,
       fullPs: newfullPs,
       T_balance: selUnitDetails?.T_balance + totalWithGst,
       T_total: selUnitDetails?.T_total + totalWithGst,
-      T_F: (selUnitDetails?.T_F|| 0) + totalWithGst,
+      T_D: (selUnitDetails?.T_D|| 0) + totalWithGst,
       T_elgible_balance: selUnitDetails?.T_elgible_balance + totalWithGst
     }
     console.log('value is', amount,totalWithGst )
@@ -228,7 +253,7 @@ const AddNewDemand = ({
     )
     //
 
-    return
+    
 
     await onSubmitFun(y, resetForm)
 
@@ -326,6 +351,7 @@ const AddNewDemand = ({
     bookedBy: bankData?.bookedBy || email,
     status: 'review',
     fileUploader: '',
+    payment_choice_1: {},
   }
 
   // const validateSchema = Yup.object({
@@ -438,33 +464,9 @@ const AddNewDemand = ({
 
                                         <div className="flex flex-wrap mt-3">
                                           <div className="justify-center w-full mx-auto">
-                                          <p className='text-[#6A6A6A] text-[12px]'> Demand Type</p>
+                                          <p className='text-[#6A6A6A] text-[14px]'> Category</p>
                                           </div>
-                                          {/* <div className="w-full  mb-8 mt-[12px]">
 
-                                            {demandMode.map((dat, i) => {
-                                              return (
-                                                <span
-                                                  className={` mr-2 border rounded-xl px-2 py-2 cursor-pointer hover:bg-[#F2F2F2] hover:text-[#484848] text-[10px] ${
-                                                    paymentModex == dat.value
-                                                      ? 'bg-[#F2F2F2] text-[#484848]'
-                                                      : ''
-                                                  }`}
-                                                  key={i}
-                                                  onClick={() => {
-                                                    setPaymentModex(dat.value)
-                                                    formik.setFieldValue(
-                                                      'mode',
-                                                      dat.value
-                                                    )
-                                                  }}
-                                                >
-                                                <img src={dat.icon} alt={dat.label} className="h-4 w-4 mr-2" />
-                                                  {dat.label}
-                                                </span>
-                                              )
-                                            })}
-                                          </div> */}
 
 
 
@@ -518,7 +520,7 @@ const AddNewDemand = ({
                                               />
 
                                             </div>
-                    
+
                                           </div>
 
                                           <div className="w-full lg:w-4/12 px-3">
@@ -585,12 +587,41 @@ const AddNewDemand = ({
                                           <div className="w-full  ">
                                             <div className="relative w-full mb-3">
                                               <TextField2
-                                                label="Reason"
+                                                label="Comments"
                                                 name="payReason"
                                                 type="text"
                                               />
                                             </div>
                                           </div>
+
+                                             <div className="w-full lg:w-12/12 ">
+                                                              <div className="relative w-full mb-3 mt-">
+                                                                <div className="w-full flex flex-col mb-3 mt-2">
+                                                                  <CustomSelect
+                                                                    name="payment_choice_1"
+                                                                    label="Payment Choice"
+                                                                    className="input"
+                                                                    onChange={(value) => {
+                                                                      console.log('value is ', value.value)
+                                                                      formik.setFieldValue('payment_choice_1', value.value)
+                                                                    }}
+                                                                    value={formik.values.payment_choice_1}
+                                                                    options={[
+                                                                      {label:'At last milestone', value:'last_milestone'},
+                                                                      {label:'Split equally into available milestone', value:'split_equally'},
+                                                                      {label:'Immediate milestone', value:'immediate_milestone'},
+                                                                      {label: 'On possession', value: 'on_possession'},
+                                                                   ]}
+                                                                  />
+                                                                  <p
+                                                                    className="text-sm text-red-500 hidden mt-3"
+                                                                    id="error"
+                                                                  >
+                                                                    Please fill out this field.
+                                                                  </p>
+                                                                </div>
+                                                              </div>
+                                                            </div>
                                         </div>
                                         <div>
                                           <label
@@ -628,30 +659,7 @@ const AddNewDemand = ({
                                             className="img-preview"
                                           />
                                         )}
-                                        <div className="flex flex-row justify-between mt-4 ">
-                                          <div className="flex flex-row justify-between">
-                                            <div></div>
-                                            <div className="flex flex-col">
-                                              <h6 className=" text-[12px] text-[#6A6A6A]  font-medium  font-uppercase">
-                                              Payment done on
-                                              </h6>
-                                              <span className="text-center mt-2 text-[13px] font-normal">
-                                                {format(
-                                                  new Date(),
-                                                  'dd-MMMM-yyyy'
-                                                )}
-                                              </span>
-                                            </div>
-                                          </div>
-                                          <div>
-                                            <div className="text-[12px] text-[#6A6A6A]  font-medium">
-                                            Recieved by
-                                            </div>
-                                            <div className="text-center font-normal mt-2 text-[13px]">
-                                              {displayName.toUpperCase()}
-                                            </div>
-                                          </div>
-                                        </div>
+
                                       </section>
                                     )}
 

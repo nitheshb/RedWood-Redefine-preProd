@@ -531,6 +531,17 @@ console.log('customer info', myBookingPayload)
       setOnStep('booking_summary')
     }
   }
+
+
+  if(isMover){
+    setOnStep('booking_summary')
+    if (onStep === 'booking_summary') {
+      setOnStep('booksheet')
+    }
+  }
+
+
+
   }
 
   const setStatusFun = async (index, newStatus) => {
@@ -853,7 +864,7 @@ console.log('customer info', myBookingPayload)
                     onStep
                   ) && (
                     <div className="">
-                      <div className="flex flex-col p-2 border mx-0 bg-[#F8FAFC] ">
+                      <div className="flex flex-col  border mx-0 bg-[#F8FAFC] ">
                         <div className="">
                           <Formik
                             enableReinitialize={true}
@@ -949,8 +960,8 @@ console.log('customer info', myBookingPayload)
                                   )}
                                 </section>
 
-                                <div className="flex mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
-                                <div className="inline-block mt-4 ml-4">
+                                <div className="flex mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white  shadow-lg absolute bottom-0  w-full">
+                                <div className="inline-block mt-4">
                                       <PdfInvoiceGenerator
                                         user={user}
                                         selUnitDetails={selUnitDetails}
@@ -1101,7 +1112,7 @@ transition
                     />
                   )}
 
-                  {['booking_summary'].includes(onStep) && (
+                  {['booking_summary' ].includes(onStep) && (
                     <BookingSummaryView
                       projectDetails={projectDetails}
                       csMode={csMode}
@@ -1113,6 +1124,7 @@ transition
                       selPhaseObj={selPhaseObj}
                       leadDetailsObj1={leadDetailsObj1}
                       customerInfo={streamUnitDetails}
+                      // setOnStep={setOnStep}
 
                       selUnitDetails={streamUnitDetails}
                       setNewPlotCsObj={setNewPlotCsObj}

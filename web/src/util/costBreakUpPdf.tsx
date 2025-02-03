@@ -851,8 +851,8 @@ const CostBreakUpPdf = ({
                           </section> */}
                       </section>
                       {showOnly === 'costsheet' && (
-                        <section className="">
-                          <section className="border- rounded-lg shadow-md overflow-hidden">
+                        <section className=" mb-20">
+                          <section className="border- rounded-lg  shadow-md overflow-hidden">
                             <div className="border-y-1 rounded-t-lg  overflow-hidden ">
                               <table className="min-w-full divide-y ">
                                 <thead>
@@ -1570,7 +1570,7 @@ const CostBreakUpPdf = ({
                             )}
                           </section>
 
-                          <div className='mt-5'>
+                          <div className='mt-5 mb-10'>
                             <section className="flex flex-row justify-between mb-8 mt-4">
                               <div></div>
 

@@ -19,14 +19,16 @@ import NoBorderDropDown from './comps/noBorderDropDown'
 import { useSnackbar } from 'notistack'
 import CrmConfirmationDialog from './A_CrmModule/CrmConfirmationDialog'
 import WarningModel from './comps/warnPopUp'
+import { use } from 'i18next'
 
 
 const EmailSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
 })
+let leadIdGlobal = ''
 
 const EmailForm = ({
-  onSubmit,
+  onSubmitFun,
   onSave,
   leadPayload,
   selUnitDetails,
@@ -46,6 +48,7 @@ const EmailForm = ({
   const [givenPhNo2, setGivenPhNo2] = useState('')
   const [statesListA, setStatesList] = useState([])
   const [fetchedLeadsObj, setFetchedLeadsObj] = useState({})
+  const [leadLink, setLeadLink] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   useEffect(() => {
     console.log('custoemr infor is',index,"-->", customerInfo)
@@ -55,6 +58,17 @@ const EmailForm = ({
       setGivenPhNo1(leadPayload?.Mobile || '')
     }
   }, [customerInfo, leadPayload])
+
+  useEffect(() => {
+  if(customerInfo?.leadId && customerInfo?.leadId.length >1 ){
+    setLeadLink(true)
+    setFetchedLeadsObj({id:customerInfo?.leadId})
+  }else{
+    setLeadLink(false)
+    setFetchedLeadsObj({})
+  }
+}, [customerInfo])
+
   useEffect(() => {
     const unsubscribe = streamMasters(
       orgId,
@@ -532,9 +546,9 @@ leadPayload?.Mobile ||
       console.log('upload error is ', error)
     }
   }
- const  searchPhoneNoFun= (givenPhNo1) => {
-    console.log('givenPhNo1 is ', givenPhNo1)
-    setGivenPhNo1(givenPhNo1)
+ const  searchPhoneNoFun= (providedPhNo1) => {
+    console.log('givenPhNo1 is ', providedPhNo1)
+    setGivenPhNo1(providedPhNo1)
 
   }
   const searchFun = async (formik) => {
@@ -543,16 +557,24 @@ leadPayload?.Mobile ||
       givenPhNo1
     )
     if (foundLength?.length > 0) {
+      console.log('foundLength', foundLength)
+
       setFetchedLeadsObj(foundLength[0])
+       leadIdGlobal=foundLength[0].id
+      setLeadLink(true)
       const x = foundLength[0]
       if(x?.Name){
+      console.log('setcustomerName', x?.Name)
+
       formik.setFieldValue('customerName1', x?.Name)
       }
-      console.log('customerName1', foundLength)
+      console.log('customerName1', foundLength, x)
       // formik.setFieldValue('co_Name1', x?.Name)
       if(x?.Mobile){
+        formik.setFieldValue('customerName1', x?.Name)
       formik.setFieldValue('phoneNo1', x?.Mobile)}
       if(x?.Email){
+        formik.setFieldValue('customerName1', x?.Name)
       formik.setFieldValue('email1', x?.Email)
       }
       // formik.setFieldValue('address1', x?.Address)
@@ -561,6 +583,10 @@ leadPayload?.Mobile ||
       // formik.setFieldValue('countryName1', x?.Country)
       // formik.setFieldValue('pincode1', x?.Pincode)
       // formik.setFieldValue('countryCode1', x?.CountryCode)
+
+      setFetchedLeadsObj(foundLength[0])
+
+      setLeadLink(true)
     }
     // formik.setFieldValue('customerName1', 'New1')
 
@@ -586,8 +612,11 @@ leadPayload?.Mobile ||
         console.log('submitted ==>', income)
 
         //  values.annualIncome1 = Number(values.annualIncome1.replace(/,/g, ''))
+      const fullData = values
+      console.log('testing link',leadLink,fetchedLeadsObj )
 
-        onSubmit(values, resetForm)
+        fullData.leadId = fetchedLeadsObj?.id  ||leadIdGlobal|| '';
+        onSubmitFun(fullData, resetForm)
       }}
     >
       {(formik) => (
@@ -647,13 +676,21 @@ leadPayload?.Mobile ||
                       Personal Details
                       <abbr title="required"></abbr>
                     </label>
-                    <div
+                   {!leadLink && <div
                             className=" ml- text-[13px] cursor-pointer  rounded-full px-2  text-[#0ea5e9] underline"
                             onClick={() => setShowLeadLink(!showLeadLink)}
                           >
                             {/* <LinkIcon className="w-3 h-3 cursor-pointer ml-1 mb-[3px] mr-1 inline-block text-[#0ea5e9]  rounded-[16px] " /> */}
-                            Auto fill from lead
-                          </div>
+                            Auto fill & link with lead
+                          </div>}
+
+                          {leadLink && <div
+                            className=" ml- text-[13px] cursor-pointer  rounded-full px-2  text-orange-500 underline"
+                            onClick={() => setShowLeadLink(!showLeadLink)}
+                          >
+                            {/* <LinkIcon className="w-3 h-3 cursor-pointer ml-1 mb-[3px] mr-1 inline-block text-[#0ea5e9]  rounded-[16px] " /> */}
+                            Applicant Linked to Lead
+                          </div>}
                   </span>
                 </section>
 {/* auto fill section */}
@@ -665,14 +702,14 @@ leadPayload?.Mobile ||
                     <div className="relative w-full ">
                       <PhoneNoField
                         label="Lead Phone No"
-                        name="leadPhNo"
+                        name="leadPhNo1"
                         // type="text"
-                        value={formik.values.leadPhNo}
+                        value={givenPhNo1}
                         onChange={(value) => {
                           // formik.setFieldValue('mobileNo', value.value)
                           console.log('value is ', value.value)
                           //
-                          formik.setFieldValue('leadPhNo', value.value)
+                          // formik.setFieldValue('leadPhNo', value.value)
                           searchPhoneNoFun(value.value)
                         }}
                         // value={formik.values.mobileNo}
@@ -897,15 +934,15 @@ leadPayload?.Mobile ||
                         let value = e.target.value;
                         value = value.toUpperCase();
                         value = value.replace(/[^A-Z0-9]/g, '');
-                      
-                 
-                        const part1 = value.slice(0, 5); 
-                        const part2 = value.slice(5, 9); 
-                        const part3 = value.slice(9, 10); 
-                      
-                    
+
+
+                        const part1 = value.slice(0, 5);
+                        const part2 = value.slice(5, 9);
+                        const part3 = value.slice(9, 10);
+
+
                         value = part1 + part2 + part3;
-                        formik.setFieldValue('panNo1', value); 
+                        formik.setFieldValue('panNo1', value);
                         const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
                         if (value && !panRegex.test(value)) {
                           formik.setFieldError('panNo1', 'PAN must be in the format: XXXXX1234X');
@@ -913,10 +950,10 @@ leadPayload?.Mobile ||
                           formik.setFieldError('panNo1', '');
                         }
                       }}
-                      
 
-               
-                      
+
+
+
 
                     />
                                   {formik.errors.panNo1 && formik.touched.panNo1 && (
@@ -1351,7 +1388,6 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
 
-
   useEffect(() => {
     streamUnitDataFun()
   }, [])
@@ -1439,6 +1475,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
     // a1[index] = values
     // console.log('customer info', a1)
     // setCustomerInfo(a1)
+    console.log('uploading values are', x.leadId)
     updateUnitCustomerDetailsTo(
       orgId,
       selUnitDetails?.uid || selUnitDetails?.id,
@@ -1471,7 +1508,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
         <div key={form.id} className="border p-4 rounded-lg">
           {/* <h2 className="text-lg font-semibold mb-4">Applicant {i + 1}</h2> */}
           <EmailForm
-            onSubmit={(values, formikBag) =>
+            onSubmitFun={(values, formikBag) =>
               handleSubmit(values, formikBag, form.id, i)
             }
             onSave={(values) => handleSave(values, form.id)}
