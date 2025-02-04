@@ -98,6 +98,7 @@ const useStyles = () =>
         pr0: { paddingRight: '0px' },
         pr4: { paddingRight: '4px' },
         pr8: { paddingRight: '8px' },
+        pr10: { paddingRight: '15px' },
         pr9: { paddingRight: '6px' },
         mb4: { marginBottom: 4 },
         mb2: { marginBottom: 2 },
@@ -277,6 +278,11 @@ const useStyles = () =>
           // paddingRight: 16,
         },
 
+        tableCell_350: {
+          width: '30%',
+          // paddingRight: 16,
+        },
+
 
         // tableCell_15: {
         //   width: '15%',
@@ -286,7 +292,7 @@ const useStyles = () =>
 
         tableCell_200: {
           width: '20%',
-          paddingRight: 3,
+          // paddingRight: 3,
 
         },
 
@@ -1141,7 +1147,7 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_200,
+                      styles.tableCell_15,
                       styles.alignRight,
                       styles.p12,
                       styles.pr4,
@@ -1153,7 +1159,7 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_200,
+                      styles.tableCell_15,
                       styles.alignRight,
                       styles.p12,
                       styles.pr8,
@@ -1164,10 +1170,23 @@ const MyDocument = ({
                   </View>
 
                   <View
-                    style={[styles.tableCell_200, styles.alignRight, styles.p12, styles.pr8, ]}
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
                   >
-                    <Text style={styles.subtitle2}>Total Inc GST</Text>
+                    <Text style={styles.subtitle2}>GST</Text>
                   </View>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8, ]}
+                  >
+                    <Text style={styles.subtitle2}>Total</Text>
+                  </View>
+
                 </View>
 
 
@@ -1204,21 +1223,32 @@ const MyDocument = ({
                       </Text>
                     </View>
 
-                    <View style={[styles.tableCell_20, styles.alignRight]}>
+                    <View style={[styles.tableCell_15, styles.alignRight]}>
                       <Text>₹ {((item?.charges)?.toLocaleString('en-IN'))}</Text>
                     </View>
 
                     <View
                       style={[
-                        styles.tableCell_20,
+                        styles.tableCell_15,
                         styles.alignRight,
-                        styles.pr4,
+                        // styles.pr4,
                       ]}
                     >
                       <Text>₹ {((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
                     </View>
 
-                    <View style={[styles.tableCell_20, styles.alignRight]}>
+
+                    <View
+                      style={[
+                        styles.tableCell_15,
+                        styles.alignRight,
+                        // styles.pr4,
+                      ]}
+                    >
+                      <Text>₹ {((item?.gstValue)?.toLocaleString('en-IN'))}</Text>
+                    </View>
+
+                    <View style={[styles.tableCell_15, styles.alignRight]}>
                       <Text>₹ {((item?.TotalNetSaleValueGsT)?.toLocaleString('en-IN'))}</Text>
                     </View>
                   </View>
@@ -1317,7 +1347,7 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_200,
+                      styles.tableCell_15,
                       styles.alignRight,
                       styles.p12,
                       styles.pr4,
@@ -1330,7 +1360,7 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_200,
+                      styles.tableCell_15,
                       styles.alignRight,
                       styles.p12,
                       styles.pr8,
@@ -1342,11 +1372,24 @@ const MyDocument = ({
                   </View>
 
                   <View
-                    style={[styles.tableCell_20, styles.alignRight, styles.p12,
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                      // { backgroundColor:'#A7D477'}
+                    ]}
+                  >
+                    <Text style={[styles.subtitle2 ]}>GST</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12,
                       styles.pr8,
                      { paddingLeft:'0px',}]}
                   >
-                    <Text style={styles.subtitle2}>Total Inc GST</Text>
+                    <Text style={styles.subtitle2}>Total</Text>
                   </View>
                 </View>
               </View>
@@ -1384,17 +1427,24 @@ const MyDocument = ({
                     </Text>
                   </View>
 
-                  <View style={[styles.tableCell_200, styles.alignRight, ]}>
-                    <Text style={[styles.alignRight]}>₹ {((item?.charges)?.toLocaleString('en-IN'))}</Text>
+                  <View style={[styles.tableCell_15, styles.alignRight, styles.pr4,]}>
+                    <Text >₹ {((item?.charges)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
                   <View
-                    style={[styles.tableCell_20, styles.alignRight, styles.pr4 ,]}
+                    style={[styles.tableCell_15, styles.alignRight, styles.pr4 ,]}
                   >
                     <Text>₹ {((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
-                  <View style={[styles.tableCell_20, styles.alignRight]}>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.pr4,  ]}
+                  >
+                    <Text>₹ {((item?.gstValue)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_15, styles.alignRight,  ]}>
                     <Text>
                       {' '}
                       ₹ {(
@@ -1691,11 +1741,11 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_2000,
+                      styles.tableCell_15,
                       styles.alignRight,
                       styles.p12,
                       styles.pr4,
-                      styles.ml5,
+                      styles.ml2,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
@@ -1703,7 +1753,7 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_2000,
+                      styles.tableCell_15,
                       styles.alignRight,
                       styles.p12,
                       styles.pr8,
@@ -1715,7 +1765,7 @@ const MyDocument = ({
 
 
                   <View
-                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,]}
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,     styles.ml2,]}
                   >
                     <Text style={styles.subtitle2}>GST</Text>
                   </View>
@@ -1761,18 +1811,18 @@ const MyDocument = ({
                     </Text>
                   </View>
 
-                  <View style={[styles.tableCell_2000, styles.alignRight]}>
+                  <View style={[styles.tableCell_15, styles.alignRight]}>
                     <Text>₹{((item?.charges)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
                   <View
-                    style={[styles.tableCell_15, styles.alignRight, styles.pr4]}
+                    style={[styles.tableCell_15, styles.alignRight,  styles.pr4 ]}
                   >
                     <Text>₹{((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
                   <View
-                    style={[styles.tableCell_15, styles.alignRight, styles.pr4]}
+                    style={[styles.tableCell_15, styles.alignRight,  styles.pr4]}
                   >
                     <Text>₹{((item?.gstValue)?.toLocaleString('en-IN'))}</Text>
                   </View>
@@ -1898,11 +1948,11 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_2000,
+                      styles.tableCell_15,
                       styles.alignRight,
                       styles.p12,
                       styles.pr4,
-                      styles.ml5,
+                      styles.ml2,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
@@ -1910,7 +1960,7 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_2000,
+                      styles.tableCell_15,
                       styles.alignRight,
                       styles.p12,
                       styles.pr8,
@@ -1922,7 +1972,7 @@ const MyDocument = ({
 
 
                   <View
-                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,]}
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8, styles.ml2,]}
                   >
                     <Text style={styles.subtitle2}>GST</Text>
                   </View>
@@ -1968,7 +2018,7 @@ const MyDocument = ({
                     </Text>
                   </View>
 
-                  <View style={[styles.tableCell_2000, styles.alignRight]}>
+                  <View style={[styles.tableCell_15, styles.alignRight]}>
                     <Text>₹{((item?.charges)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
@@ -2351,11 +2401,11 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_2000,
+                      styles.tableCell_15,
                       styles.alignRight,
                       styles.p12,
-                      styles.pr4,
-                      styles.ml5,
+                      styles.pr8,
+                      styles.ml2,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
@@ -2363,7 +2413,7 @@ const MyDocument = ({
 
                   <View
                     style={[
-                      styles.tableCell_2000,
+                      styles.tableCell_15,
                       styles.alignRight,
                       styles.p12,
                       styles.pr8,
@@ -2375,7 +2425,7 @@ const MyDocument = ({
 
 
                   <View
-                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,]}
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,   styles.ml2,]}
                   >
                     <Text style={styles.subtitle2}>GST</Text>
                   </View>
@@ -2421,7 +2471,7 @@ const MyDocument = ({
                     </Text>
                   </View>
 
-                  <View style={[styles.tableCell_2000, styles.alignRight]}>
+                  <View style={[styles.tableCell_15, styles.alignRight]}>
                     <Text>₹{((item?.charges)?.toLocaleString('en-IN'))}</Text>
                   </View>
 
