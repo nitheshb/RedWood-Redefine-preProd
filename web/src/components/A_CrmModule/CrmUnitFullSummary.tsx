@@ -1711,7 +1711,7 @@ export default function UnitFullSummary({
 
 
 
-          <div className="h-[65%]  mx-4 bg-[#f0f1ff] grid grid-cols-3 gap-2 rounded-lg border border-gray-100 p-4">
+          <div className="h-[68%]  mx-4 bg-[#f0f1ff] grid grid-cols-3 gap-2 rounded-lg border border-gray-100 p-4">
 
 
             {/* box1 */}
@@ -1763,7 +1763,7 @@ export default function UnitFullSummary({
             <img src={units4}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate">  {selCustomerPayload?.builtup_area?.toLocaleString('en-IN') || selCustomerPayload?.construct_area?.toLocaleString('en-IN')}</div>
               <div className="text-xs  font-medium   text-[#949494]">BUA</div>
             </div>
           </div>
