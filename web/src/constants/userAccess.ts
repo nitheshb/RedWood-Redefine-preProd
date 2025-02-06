@@ -1,4 +1,4 @@
-export const userAccessRoles = [
+export const userAccessRolesArray = [
   {
     category: 'admin',
     uid: 'A42739568414737450Z',

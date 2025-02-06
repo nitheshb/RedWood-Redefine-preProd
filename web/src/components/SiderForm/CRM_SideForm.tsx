@@ -20,6 +20,7 @@ const CrmSiderForm = ({
   BlockFeed,
   blockDetails,
   customerDetails = {},
+  setCustomerDetails,
   csMode,
   costSheetA,
   data = {},
@@ -139,7 +140,7 @@ const CrmSiderForm = ({
                   <Cs_customerKyc title={title} dialogOpen={setOpen} selUnitPayload={customerDetails} />
                 )}
                 {title === 'crm_loan' && (
-                  <LoanApplyFlowHome customerDetails={customerDetails} />
+                  <LoanApplyFlowHome customerDetails={customerDetails} setCustomerDetails={setCustomerDetails}  />
                 )}
                 {title === 'crm_legal_clarity' && (
                   <Crm_legal_Clarity title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />

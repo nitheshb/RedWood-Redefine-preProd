@@ -31,8 +31,10 @@ import {
   deleteMasterOption,
   addPhaseDefaultSqftCost,
   checkIfMasterAlreadyExists,
+  addUserAccessMaster,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import { userAccessRolesArray } from 'src/constants/userAccess'
 
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
   fontSize: '13px',
@@ -1553,7 +1555,32 @@ if (title === 'Villa Type Category') {
     // After all data objects are processed
     SetInitalSetup('Completed');
 };
+const createUserAccessFun2 = async () => {
+  // get all the data dataObj
+  // insert data to firebase db
+  console.log('Clicked masters', dataMapCopy);
 
+  // Wait for all InitialSetup entries to be processed
+  await Promise.all(
+      InitialSetup?.map(async (dataObj) => {
+          const dataPromises = userAccessRolesArray.map(async (data1, i) => {
+            SetInitalSetup('started');
+            addUserAccessMaster(orgId, data1, user?.email, enqueueSnackbar);
+
+
+
+
+
+          });
+
+          // Wait for all data entries of the current dataObj to complete
+          await Promise.all(dataPromises);
+      })
+  );
+
+  // After all data objects are processed
+  SetInitalSetup('Completed');
+};
   return (
     <>
       <div className=" m-2 bg-white rounded-xl">
@@ -1805,6 +1832,27 @@ if (title === 'Villa Type Category') {
               <div className="cursor-pointer flex flex-row" >
                 <label className="font-semibold text-[#053219]  text-sm  mb-1  cursor-pointer ">
                   Initial Masters setup<abbr title="required"></abbr>
+                </label>
+
+                {initalSetup==='started' && <label className="text-[#053219]  text-sm  mb-1  ml-2 ">
+                  Setting up....<abbr title="required"></abbr>
+                </label>}
+                {initalSetup==='Completed' && <label className="text-[#053219]  text-sm  mb-1  ml-2 ">
+                  Completed...!<abbr title="required"></abbr>
+                </label>}
+              </div>
+
+              {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}
+            </div>
+          </div>
+        </div>
+
+        <div className="cursor-pointer  p-4" onClick={() => createUserAccessFun2()}>
+          <div className="mb-4 mt-">
+            <div className="inline">
+              <div className="cursor-pointer flex flex-row" >
+                <label className="font-semibold text-[#053219]  text-sm  mb-1  cursor-pointer ">
+                  Access Management Setup<abbr title="required"></abbr>
                 </label>
 
                 {initalSetup==='started' && <label className="text-[#053219]  text-sm  mb-1  ml-2 ">

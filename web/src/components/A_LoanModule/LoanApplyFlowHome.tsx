@@ -18,7 +18,7 @@ import { useSnackbar } from 'notistack'
 import CrmActivityLog from '../A_CrmModule/CrmActivityLog'
 
 
-export default function LoanApplyFlowHome({ type, setStatusFun , customerDetails}) {
+export default function LoanApplyFlowHome({ type, setStatusFun , customerDetails,  setCustomerDetails}) {
   const [selLoanBank, setLoanBank] = useState({})
   const [preSanctionReview, SetPreSanctionReview] = useState('')
   const [postSanctionReview, SetPostSanctionReview] = useState('')
@@ -38,6 +38,10 @@ const [submittedReason, setSubmittedReason] = useState('')
 
 const [postRejectionReason, setPostRejectionReason] = useState('')
 const [postFillError, showPostFillError] = useState(false)
+
+
+const [loanAmount, setLoanAmount] = useState('');
+const [loanPercentage, setLoanPercentage] = useState('');
 
 
 
@@ -107,11 +111,58 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
     const updatePostSancationFun = (status)=> {
       SetPostSanctionReview(status)
       const x1 ={'LpostStatus': status || '',
-        'post_loan_rejection_reason': status === 'Rejected' ? postRejectionReason : null
+        'post_loan_rejection_reason': status === 'Rejected' ? postRejectionReason : null,
+        loanAmount: loanAmount,
+        loanPercentage: loanPercentage, 
 
        }
       updateBankLoanApprovals(orgId,customerDetails?.id,x1,user.email,`Banker Sanction ${status} Saved..!`,'success',enqueueSnackbar )
     }
+     
+
+
+
+
+
+    // const handleSaveLoanDetails = async () => {
+    //   if (!loanAmount || !loanPercentage) {
+    //     enqueueSnackbar('Please fill both Loan Amount and Loan Percentage.', {
+    //       variant: 'error',
+    //     });
+    //     return;
+    //   }
+    
+    //   const data = {
+    //     loanAmount: loanAmount,
+    //     loanPercentage: loanPercentage,
+    //   };
+    
+    //   try {
+    //     await updateBankLoanApprovals(
+    //       orgId,
+    //       customerDetails?.id,
+    //       data,
+    //       user.email,
+    //       'Loan details saved successfully!',
+    //       'success',
+    //       enqueueSnackbar
+    //     );
+    //     enqueueSnackbar('Loan details saved successfully!', {
+    //       variant: 'success',
+    //     });
+    //   } catch (error) {
+    //     console.error('Failed to save loan details:', error);
+    //     enqueueSnackbar('Failed to save loan details.', {
+    //       variant: 'error',
+    //     });
+    //   }
+    // };
+
+
+
+
+
+
 
 
 
@@ -129,6 +180,45 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
     //     setRejection(false)
     //   }
     // }
+
+
+
+    const handleSaveLoanDetails = async () => {
+      if (!loanAmount || !loanPercentage) {
+        enqueueSnackbar('Please fill both Loan Amount and Loan Percentage.', {
+          variant: 'error',
+        });
+        return;
+      }
+  
+      const data = {
+        loanAmount: loanAmount,
+        loanPercentage: loanPercentage,
+      };
+  
+      try {
+        await updateBankLoanApprovals(
+          orgId,
+          customerDetails?.id,
+          data,
+          user.email,
+          'Loan details saved successfully!',
+          'success',
+          enqueueSnackbar
+        );
+  
+
+  
+        enqueueSnackbar('Loan details saved successfully!', {
+          variant: 'success',
+        });
+      } catch (error) {
+        console.error('Failed to save loan details:', error);
+        enqueueSnackbar('Failed to save loan details.', {
+          variant: 'error',
+        });
+      }
+    };
 
 
 
@@ -865,6 +955,52 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                 )}
                 {postSanctionReview === 'Approved' && (
                   <>
+
+<div className="mt-4">
+        <div className="flex flex-row gap-4">
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700">Loan Amount</label>
+            <input
+              type="text"
+              value={loanAmount}
+              onChange={(e) => setLoanAmount(e.target.value)}
+              className="border border-gray-300 rounded-md p-2"
+              placeholder="Enter Loan Amount"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700">Loan Percentage</label>
+            <input
+              type="text"
+              value={loanPercentage}
+              onChange={(e) => setLoanPercentage(e.target.value)}
+              className="border border-gray-300 rounded-md p-2"
+              placeholder="Enter Loan Percentage"
+            />
+          </div>
+        </div>
+   
+        <div className="mt-4">
+          <button
+            onClick={handleSaveLoanDetails}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          >
+            Save Loan Details
+          </button>
+        </div>
+      </div>
+
+
+      <div className="mt-4">
+          <div className="p-4 bg-gray-100 rounded-md">
+            <p className="text-sm text-gray-700">
+              <strong>Loan Amount:</strong> {customerDetails?.loanAmount || 'N/A'}
+            </p>
+            <p className="text-sm text-gray-700">
+              <strong>Loan Percentage:</strong> {customerDetails?.loanPercentage || 'N/A'}
+            </p>
+          </div>
+        </div>
                     <div className="mt-4">
                       {[
                         {
