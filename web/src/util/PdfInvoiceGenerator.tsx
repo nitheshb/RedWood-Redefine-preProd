@@ -1510,7 +1510,19 @@ const MyDocument = ({
 
 
 
-          <View style={[styles.ml2, styles.pt2, styles.mT1]}>
+
+
+
+
+
+{/* 
+          {projectDetails?.projectType?.name === 'Villas' && */}
+
+{myBookingPayload?.constructCS?.length > 0 && (
+
+
+<>
+<View style={[styles.ml2, styles.pt2, styles.mT1]}>
             <Text
               style={[
                 styles.subtitle1,
@@ -1527,183 +1539,7 @@ const MyDocument = ({
 
 
 
-
-          {projectDetails?.projectType?.name === 'Villas' &&
-//           <View style={[styles.fitter]}>
-//             <View style={[{ borderRadius: 8 }]}>
-//               <View
-//                 style={[
-//                   styles.subtitle1,
-//                   styles.bg1,
-//                   styles.textcolorhead,
-//                   {
-//                     backgroundColor: '#EDEDED',
-//                     borderTopLeftRadius: 6,
-//                     borderTopRightRadius: 6,
-//                   },
-//                 ]}
-//               >
-//                 <View
-//                   style={[
-//                     styles.tableHeader,
-//                     styles.p4,
-//                     styles.ml1,
-//                     { paddingBottom: '2px' },
-//                   ]}
-//                 >
-//                   {/* <View style={[styles.tableCell_1, styles.p11]}>
-//                     <Text style={styles.subtitle2}></Text>
-//                   </View> */}
-
-//                   <View style={[  styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'20px' }]}>
-//                     <Text style={styles.subtitle2}>
-//                      Construction Charges
-//                     </Text>
-//                   </View>
-
-//                   <View
-//                     style={[
-//                       styles.tableCell_2000,
-//                       styles.alignRight,
-//                       styles.p12,
-//                       styles.pr4,
-//                       // styles.ml5,
-//                     ]}
-//                   >
-//                     <Text style={styles.subtitle2}>Rate/Sqft</Text>
-//                   </View>
-
-//                   <View
-//                     style={[
-//                       styles.tableCell_2000,
-//                       styles.alignRight,
-//                       styles.p12,
-//                       styles.pr8,
-//                       // styles.ml2,
-//                     ]}
-//                   >
-//                     <Text style={styles.subtitle2}>Cost</Text>
-//                   </View>
-
-
-//                   <View
-//                     style={[
-//                       styles.tableCell_2000,
-//                       styles.alignRight,
-//                       styles.p12,
-//                       styles.pr8,
-//                       // styles.ml2,
-//                     ]}
-//                   >
-//                     <Text style={styles.subtitle2}>GST</Text>
-//                   </View>
-
-
-
-
-//                   <View
-//                     style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,]}
-//                   >
-//                     <Text style={styles.subtitle2}>Total</Text>
-//                   </View>
-//                 </View>
-//               </View>
-//               <View>
-//                 {myBookingPayload?.constructCS?.map((item, index) => (
-//                   <View
-//                     style={[
-//                       styles.tableRow,
-//                       styles.textcolor,
-//                       index + 1 != myObj.length ? styles.borderbottom : null,
-
-//                       // {
-//                       //   backgroundColor:
-//                       //     index % 2 === 0 ? '#ffffff' : '#ffffff',
-//                       // },
-//                       {     borderBottom: '1px solid #e5e7eb',
-//                         marginTop: '2px', paddingTop: '4px' },
-//                     ]}
-//                     key={item.id}
-//                   >
-//                     <View
-//                       style={[
-//                         styles.tableCell_1,
-//                         styles.pl2,
-//                         { marginTop: '-1px' },
-//                       ]}
-//                     >
-//                       <Text>{index + 1}</Text>
-//                     </View>
-
-//                     <View style={[styles.tableCell_35]}>
-//                       <Text style={styles.subtitle2}>
-//                         {item?.component?.label}
-//                       </Text>
-//                     </View>
-
-//                     <View style={[styles.tableCell_2000, styles.alignRight]}>
-//                       <Text>₹ {((item?.charges)?.toLocaleString('en-IN'))}</Text>
-//                     </View>
-
-//                     <View
-//                       style={[
-//                         styles.tableCell_150,
-//                         styles.alignRight,
-//                         styles.pr4,
-//                       ]}
-//                     >
-//                       <Text>₹ {((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
-//                     </View>
-
-//                     <View
-//                       style={[
-//                         styles.tableCell_150,
-//                         styles.alignRight,
-//                         styles.pr4,
-//                       ]}
-//                     >
-//                       <Text>₹ {((item?.gstValue)?.toLocaleString('en-IN'))}</Text>
-//                     </View>
-
-//                     <View style={[styles.tableCell_150, styles.alignRight]}>
-//                       <Text>₹ {((item?.TotalNetSaleValueGsT)?.toLocaleString('en-IN'))}</Text>
-//                     </View>
-//                   </View>
-//                 ))}
-
-
-
-
-
-// <View
-//               style={[styles.tableRow,  styles.textcolor, {   borderBottom: '1px solid #e5e7eb',    marginTop: '2px', paddingTop: '4px' }]}
-//             >
-//               <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
-
-//               <View style={[styles.tableCell_35, styles.p10]}></View>
-
-//               <View style={[styles.tableCell_20, styles.alignRight]}></View>
-
-//               <View
-//                 style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
-//               >
-//                 <Text style={[styles.subtitle2, styles.pt2]}>Construction Cost</Text>
-//               </View>
-
-//               <View
-//                 style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
-//               >
-//                 <Text>₹ {((myBookingPayload?.T_C)?.toLocaleString('en-IN'))}</Text>
-//               </View>
-//             </View>
-
-//                 {/* part 2 */}
-//               </View>
-//             </View>
-
-//           </View>
-
-
+          
 <View style={[styles.fitter, { marginTop: '5px' }]}>
             <View style={[ styles.mb20, {    borderRadius: 8 }]}>
               <View
@@ -1881,13 +1717,16 @@ const MyDocument = ({
 
           </View>
 
+</>
 
 
-         
+
+
+)}
           
           
           
-          }
+          {/* } */}
 
 
 
@@ -1895,9 +1734,12 @@ const MyDocument = ({
 
 
           {/* part -4 */}
+          {myBookingPayload?.constAdditionalChargesCS?.length > 0 && (
 
 
-          <View style={[styles.ml2, styles.pt2, styles.mT1]}>
+
+             <>
+                       <View style={[styles.ml2, styles.pt2, styles.mT1]}>
             <Text
               style={[
                 styles.subtitle1,
@@ -1910,7 +1752,7 @@ const MyDocument = ({
               IV. Construction Additional charges
             </Text>
           </View>
-          {projectDetails?.projectType?.name === 'Villas' && 
+          {/* // {projectDetails?.projectType?.name === 'Villas' &&  */}
            <View style={[styles.fitter, { marginTop: '5px' }]}>
             <View style={[ styles.mb20, {    borderRadius: 8 }]}>
               <View
@@ -2087,8 +1929,12 @@ const MyDocument = ({
 
 
           </View>
-          }
+          {/* // } */}
 
+             
+             </>
+
+            )}
 
           {/* part -5 */}
 
@@ -2352,6 +2198,10 @@ const MyDocument = ({
             </View> */}
 
 
+{possessAdditionalCS?.length > 0 && (
+
+
+<>
 <View style={[styles.ml2, styles.pt2, styles.mT1]}>
             <Text
               style={[
@@ -2365,7 +2215,7 @@ const MyDocument = ({
               v.Possession Charges
             </Text>
           </View>
-          {projectDetails?.projectType?.name === 'Villas' && 
+          {/* {projectDetails?.projectType?.name === 'Villas' &&  */}
            <View style={[styles.fitter, { marginTop: '5px' }]}>
             <View style={[ styles.mb20, {    borderRadius: 8 }]}>
               <View
@@ -2533,7 +2383,17 @@ const MyDocument = ({
 
 
           </View>
-          }
+          {/* } */}
+</>
+
+
+
+
+)}
+
+
+
+
 
 
             <View>
@@ -2626,7 +2486,7 @@ const MyDocument = ({
                     </View>
                   ))}
                   {/* part c and D */}
-                  {projectDetails?.projectType?.name === 'Villas' &&
+                  {projectDetails?.projectType?.name === 'Villas' && 
                         [
                     { label: `Construction cost`, value: myBookingPayload?.T_C },
                     { label: 'Construction additional Charges', value: myBookingPayload?.T_D },
@@ -2652,6 +2512,8 @@ const MyDocument = ({
                       </Text>
                     </View>
                   ))}
+
+                  
                   <View
                    style={[styles.textcolor]}
                     style={{
@@ -2910,6 +2772,11 @@ style={[
 
 
 
+{myBookingPayload?.constructPS?.length > 0 && (
+
+
+
+<>
 
 <View style={[ styles.pt2, styles.mT1]}>
 <Text
@@ -2928,7 +2795,9 @@ II. Construction Schedule
 
 
 
-{projectDetails?.projectType?.name === 'Villas' &&  <View
+{/* {projectDetails?.projectType?.name === 'Villas' &&   */}
+
+<View
 style={[
 {   borderTopLeftRadius: 8,
 borderTopRightRadius: 8,  borderBottom: '1 solid #e5e7eb ' },
@@ -3030,7 +2899,23 @@ style={[
 </Text>
 </View>
 </View>
-</View> }
+</View> 
+
+
+</>
+
+
+
+
+)}
+
+
+
+
+
+{/* } */}
+
+
 </View>
 
 
