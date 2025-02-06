@@ -1414,7 +1414,10 @@ const MyDocument = ({
               <View
                 style={[styles.tableCell_20, styles.alignRight, styles.pt2]}
               >
-                <Text>₹{((partATotal)?.toLocaleString('en-IN'))}</Text>
+                <Text>₹{((partATotal)?.toLocaleString('en-IN'))}
+
+
+                </Text>
               </View>
             </View>
 
@@ -4168,7 +4171,7 @@ const PdfUniteSummary = ({
   myBookingPayload,
   netTotal,
   setNetTotal,
-  // partATotal,
+  //partATotal,
   plotPS,
   // partBTotal,
   projectLogoURL,
@@ -4369,8 +4372,8 @@ const [project, setProject] = useState({})
             myAdditionalCharges={myAdditionalCharges}
             netTotal={netTotal}
             setNetTotal={setNetTotal}
-            // partATotal={partATotal}
-            // partBTotal={partBTotal}
+            partATotal={partATotal}
+            partBTotal={partBTotal}
             setPartATotal={setPartATotal}
             setPartBTotal={setPartBTotal}
             projectDetails={projectDetails}

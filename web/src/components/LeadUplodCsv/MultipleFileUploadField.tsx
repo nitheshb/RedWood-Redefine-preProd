@@ -653,7 +653,7 @@ export function MultipleFileUploadField({
                 let buaSaleValue = Number(bua_sqft)* Number(construct_price_sqft)
                 let bua__gst_percent = 0
                 let bua_gstValue = Math.round(buaSaleValue * bua__gst_percent)
-                let constPlcSaleValue = Number(const_plc_sqft)* Number(const_plc_rate)
+                let constPlcSaleValue = Number(bua_sqft)* Number(const_plc_rate)
                 let CplcGstIsPercent = 0
                  x = [
                    {
