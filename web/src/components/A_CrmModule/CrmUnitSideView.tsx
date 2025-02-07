@@ -223,6 +223,8 @@ export default function UnitSideViewCRM({
   const [newStatusErrorList, setNewStatusErrorList] = useState('')
   const [unitPayload, setUnitPayload] = useState({})
   const [unitStatusLabel, setUnitStatusLabel] = useState('')
+  const [allowStatusChangeOnDue, setAllowStatusChangeOnDue] = useState(false)
+
 
 
 
@@ -236,6 +238,7 @@ export default function UnitSideViewCRM({
   const [selProjectIs, setSelProjectIs] = useState({
     projectName: '',
     uid: '',
+    allowCrmStatusDueChange: false
   })
 
   const [leadDetailsObj, setLeadDetailsObj] = useState({})
@@ -244,10 +247,14 @@ export default function UnitSideViewCRM({
     streamUnitDataFun()
   }, [])
 
+
   useEffect(() => {
     setSelUnitDetails(unitPayload)
   }, [unitPayload])
 
+  useEffect(() => {
+    setAllowStatusChangeOnDue(selProjectIs?.allowCrmStatusDueChange)
+  }, [selProjectIs])
   const {
     id,
     Name,

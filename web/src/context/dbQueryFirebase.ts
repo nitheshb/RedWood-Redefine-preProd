@@ -3554,6 +3554,17 @@ export const updateProjectComputedData = async (orgId, id, data) => {
   }
 }
 
+export const updateProjectPayload= async (orgId, id, data) => {
+  try {
+    const washingtonRef = doc(db, `${orgId}_projects`, id)
+    console.log('check add LeadLog', washingtonRef, id)
+    await updateDoc(washingtonRef, data)
+  } catch (error) {
+    console.log('error in updation', error)
+    // await setDoc(doc(db, `${orgId}_leads_notes`, id), yo)
+  }
+}
+
 export const updateLeadData = async (orgId, id, data, by) => {
 
   try {
@@ -5886,8 +5897,8 @@ export const updateBankLoanApprovals = async (
   try {
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
     ...data,
-    // loanAmount: data.loanAmount || '', 
-    // loanPercentage: data.loanPercentage || '', 
+    // loanAmount: data.loanAmount || '',
+    // loanPercentage: data.loanPercentage || '',
     })
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
