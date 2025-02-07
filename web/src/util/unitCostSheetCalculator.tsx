@@ -50,8 +50,9 @@ export   async function computePartTotal(additionalChargesObj, plot_area_sqft, a
       let x = await CalculateComponentTotal(
         data,
         Number(plot_area_sqft),
-        Number(area_tax),
+        Number( data?.gst?.value || area_tax || 0 ),
         Number(data?.charges)
+
       );
       console.log("tax percent @@@", Number(x?.TotalNetSaleValueGsT));
       return x;
