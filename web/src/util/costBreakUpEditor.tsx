@@ -446,35 +446,7 @@ return x
                         }
 
           })
-    const newPs = psPayload.map((d1) => {
-      const z = d1
-      console.log('sel unti details')
-      if (csMode === 'plot_cs') {
-        z.value = ['on_booking'].includes(d1?.stage?.value)
-          ? Number(d1?.percentage)
-          : Math.round((netTotal - plotBookingAdv) * (d1?.percentage / 100))
-
-        z.preCheck = ['on_booking'].includes(d1?.stage?.value)
-          ? Number(netTotal)
-          : Math.round(netTotal - plotBookingAdv)
-
-        if (['on_booking'].includes(d1?.stage?.value)) {
-          z.elgible = true
-          z.elgFrom = Timestamp.now().toMillis()
-          return z
-        }
-        console.log('z value is ', d1?.stage?.value, '=>', z.value)
-        return z
-      } else {
-        z.value = ['Total_Other_Charges_Amenities:\t']?.includes(
-          d1?.stage?.value
-        )
-          ? Number(partBTotal)
-          : Math.round((netTotal - partBTotal) * (d1?.percentage / 100))
-
-        return z
-      }
-    })
+   
     console.log('new ps is ', newPs)
     setNewPS(newPs)
   }
