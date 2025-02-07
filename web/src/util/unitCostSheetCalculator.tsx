@@ -14,8 +14,8 @@ export const CalculateComponentTotal = async (compObj ,area,taxPercent, newValue
       'cost_per_sqft',
       'price_per_sft',
     ].includes(compObj?.units.value)
-    total = isChargedPerSqft? Math.round(Number(area) *newValue) : Number(newValue)
-    gstTotal = Math.round(total * (gstTaxIs / 100))
+    total = isChargedPerSqft? (Number(area) *newValue) : Number(newValue)
+    gstTotal = (total * (gstTaxIs / 100))
 
 
     compObj.charges = newValue
@@ -50,8 +50,9 @@ export   async function computePartTotal(additionalChargesObj, plot_area_sqft, a
       let x = await CalculateComponentTotal(
         data,
         Number(plot_area_sqft),
-        Number(area_tax),
+        Number( data?.gst?.value || area_tax || 0 ),
         Number(data?.charges)
+
       );
       console.log("tax percent @@@", Number(x?.TotalNetSaleValueGsT));
       return x;

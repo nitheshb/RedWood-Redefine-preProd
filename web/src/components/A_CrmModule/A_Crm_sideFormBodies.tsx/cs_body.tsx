@@ -8,6 +8,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { computeTotal } from 'src/util/computeCsTotals'
 
 import "src/styles/myStyles.css"
+import { CalculateComponentTotal } from 'src/util/unitCostSheetCalculator'
 
 const CSBody = ({
   csMode,
@@ -313,26 +314,45 @@ const CSBody = ({
   }, [netTotal, plotBookingAdv, csMode])
 
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
-    const newPs = psPayload.map((d1) => {
+    const newPs = psPayload.map(async (d1, inx) => {
       const z = d1
-      if (csMode === 'plot_cs') {
-        z.value = ['on_booking'].includes(d1?.stage?.value)
-          ? Number(d1?.percentage)
-          : Math.round((netTotal - plotBookingAdv) * (d1?.percentage / 100))
-        if (['on_booking'].includes(d1?.stage?.value)) {
-          z.elgible = true
-          z.elgFrom = Timestamp.now().toMillis()
-          return z
-        }
-        return z
-      } else {
-        z.value = ['Total_Other_Charges_Amenities:\t'].includes(
-          d1?.stage?.value
+      let flatLegalFixedCosts = 0
+        const filLegalCharges = psPayload?.filter(
+          (d) => d?.component?.value === 'legal_charges'
         )
-          ? Number(partBTotal)
-          : Math.round((netTotal - partBTotal) * (d1?.percentage / 100))
-        return z
-      }
+        if(filLegalCharges && filLegalCharges?.length > 0){
+          flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+        }
+
+          if ('plot_cs' === 'plot_cs') {
+                   let applicablePlotCost = netTotal- flatLegalFixedCosts
+                  //  if(inx ==1){
+                  //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
+                  //  }
+
+                  if(!['costpersqft'].includes(d1?.units?.value)){
+
+                    z.value = ['fixedcost'].includes(d1?.units?.value)
+                      ? Number(d1?.percentage)
+                      : inx ==1 ? Number(
+                        (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - plotBookingAdv))
+
+                      :  Number(
+                          ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
+                        )
+                        // z.value = applicablePlotCost
+                      }else {
+                        let calc = await CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
+                        z.value = calc?.TotalNetSaleValueGsT
+                      }
+                    if (['fixedcost'].includes(d1?.units?.value)) {
+                      z.elgible = true
+                      z.elgFrom = Timestamp.now().toMillis()
+                      return z
+                    }
+                    return z
+                  }
+   
     })
     setNewPS(newPs)
   }
