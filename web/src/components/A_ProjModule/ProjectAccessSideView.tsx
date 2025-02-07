@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
-import { deleteProject, getPlanDiagramByPhase, updateMoreDetails } from 'src/context/dbQueryFirebase'
+import { deleteProject, getPlanDiagramByPhase, updateMoreDetails, updateProjectPayload } from 'src/context/dbQueryFirebase'
 import { getAllProjects } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import PaymentLeadAccess from '../PaymentScheduleForm/ProjectLeadAccess'
 import SiderForm from '../SiderForm/SiderForm'
+import { Checkbox } from '@mui/material'
 
 
 const ProjectAccessSideView = ({
@@ -23,6 +24,7 @@ const ProjectAccessSideView = ({
   const { user } = useAuth()
   const { orgId } = user
   const [loading, setLoading] = useState(false)
+  const [allowCrmStausOnDue, setAllowCrmStatusOnDue] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
   const [open, setOpen] = useState(false)
   const [projects, setProjects] = useState([])
@@ -31,6 +33,10 @@ const ProjectAccessSideView = ({
   const [isDocViewOpenSideView, setIsDocViewOpenSideView] = useState(false)
   const [isAccessSideView, setIsAccessSideView] = useState(false)
   const [planDiagramsA, setPlanDiagramsA] = useState([])
+
+  useEffect(()=>{
+    setAllowCrmStatusOnDue(projectDetails?.allowCrmStatusDueChange)
+  }, [projectDetails])
   useEffect(() => {
     getPlanDiagrams(data?.uid, 'plan_diagram')
     console.log('plan_diagram', data, projectDetails)
@@ -134,6 +140,11 @@ const ProjectAccessSideView = ({
     setSubView(type)
     setIsDocViewOpenSideView(!isDocViewOpenSideView)
   }
+  const updateCrmStatusAcess = (status) => {
+
+    updateProjectPayload(orgId, projectDetails?.uid, { allowCrmStatusDueChange: status.target.checked })
+    setAllowCrmStatusOnDue(status.target.checked )
+  }
   return (
     <div className="h-full flex flex-col  bg-white shadow-xl">
       <div className="   z-10">
@@ -168,6 +179,8 @@ const ProjectAccessSideView = ({
               source={source}
             />
           )}
+
+      <div className="flex flex-col w-full gap-4">
           {subView === 'crmAccess' && (
             <PaymentLeadAccess
               title={'CRM Access'}
@@ -176,6 +189,24 @@ const ProjectAccessSideView = ({
               source={source}
             />
           )}
+                   {subView === 'crmAccess' && (  <div className='ml-4'>
+                            <Checkbox
+                              color="primary"
+                              checked={allowCrmStausOnDue}
+                              onChange={(e) => {
+                                // console.log('earnet')
+                                // addRemoveProjectAccessFun(salesPerson)
+                                updateCrmStatusAcess(e)
+                              }}
+                              inputProps={{
+                                'aria-label': 'select all desserts',
+                              }}
+                            />
+                          Change unit status on Payment Due
+                          </div>)}
+
+    </div>
+
           {subView === 'FinAccess' && (
             <PaymentLeadAccess
               title={'Finance Access'}
@@ -256,3 +287,9 @@ const ProjectAccessSideView = ({
 }
 
 export default ProjectAccessSideView
+
+
+
+
+
+
