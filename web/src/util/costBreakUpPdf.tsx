@@ -336,7 +336,9 @@ const CostBreakUpPdf = ({
         return CalculateComponentTotal(data,selUnitDetails?.area?.toString()?.replace(',', ''),selPhaseObj?.area_tax, data?.charges)
       })
       constructOtherChargesObj?.map((data, inx) => {
-       return  CalculateComponentTotal(data,selUnitDetails?.construct_area || selUnitDetails?.area?.toString()?.replace(',', ''),constTaxPercent, data?.charges)
+        console.log('myvalue is', data)
+        let gstPercentIs= Number(data?.gst?.value || 0)
+       return  CalculateComponentTotal(data,selUnitDetails?.construct_area || selUnitDetails?.area?.toString()?.replace(',', ''),gstPercentIs, data?.charges)
       })
       setPartBPayload(additonalChargesObj)
       setAddiChargesObj(additonalChargesObj)
