@@ -1978,6 +1978,12 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString(),
         },
         {
+          id: 'unit_cost',
+          label: 'Unit Cost',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
           id: 'partA_total',
           label: 'Part A',
           minWidth: 80,
@@ -1998,6 +2004,12 @@ export default function LfileuploadTableTemplate({
         {
           id: 'partD_total',
           label: 'Part D',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
+          id: 'partE_total',
+          label: 'Part E',
           minWidth: 80,
           format: (value) => value.toLocaleString(),
         },

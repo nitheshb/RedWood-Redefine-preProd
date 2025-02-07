@@ -756,7 +756,7 @@ const AddUnit = ({
                 plc_per_sqft: unitDetails?.plc_per_sqft || 0,
                 construct_area: unitDetails?.construct_area || 0,
                 cartpet_area_sqft: unitDetails?.cartpet_area_sqft || 0,
-              
+
                  uds_sqft: unitDetails?.uds_sqft || 0,
                 floor_plan: unitDetails?.floor_plan || 0,
                 bedrooms_c: (unitDetails?.bedrooms_c?.toString()?.replace(/\D/g, "")) || 0,
@@ -771,7 +771,7 @@ const AddUnit = ({
                 construction_plc_sqft_c: unitDetails?.construction_plc_sqft_c || 0,
 
 
-                
+
 
                 size: unitDetails?.size || '',
                 facing: unitDetails?.facing?.toLowerCase() || '',
@@ -793,7 +793,7 @@ const AddUnit = ({
                 mortgage_type: unitDetails?.mortgage_type || '',
                 landOwnerName: unitDetails?.landOwnerName || '',
                 investorName: unitDetails?.investorName || '',
-                sharingType: unitDetails?.sharingType || '',
+                sharingType: unitDetails?.sharingType ||  unitDetails?.sharing || '',
                 // bathrooms: '',
                 // cartpet_area_sqft: 0,
                 // buildup_area: 0,
@@ -959,7 +959,7 @@ const AddUnit = ({
                             {(projectDetails?.projectType?.name === 'Villas' ||
                               projectDetails?.projectType?.name ===
                                 'Plots') && (
-                                  
+
                               // <div className="mb-3 space-y-2 w-full text-xs mt-2">
                               //   <TextField
                               //     label="Dimension"

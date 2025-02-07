@@ -14,8 +14,8 @@ export const CalculateComponentTotal = async (compObj ,area,taxPercent, newValue
       'cost_per_sqft',
       'price_per_sft',
     ].includes(compObj?.units.value)
-    total = isChargedPerSqft? Math.round(Number(area) *newValue) : Number(newValue)
-    gstTotal = Math.round(total * (gstTaxIs / 100))
+    total = isChargedPerSqft? (Number(area) *newValue) : Number(newValue)
+    gstTotal = (total * (gstTaxIs / 100))
 
 
     compObj.charges = newValue

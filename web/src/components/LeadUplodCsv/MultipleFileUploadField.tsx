@@ -569,7 +569,7 @@ export function MultipleFileUploadField({
                 survey_no: dRow['Survey No'] || '',
                 Katha_no: dRow['Katha No'] || '',
                 PID_no: dRow['PID No'] || '',
-                sharing: dRow['Sharing'] || '',
+                sharing: dRow['Sharing'] || dRow['Sharing Type']|| '',
                 intype: 'bulk',
                 unit_type: title==='Import Booked Villas' ? 'Villa' : title==='Import Booked Apartments' ? 'Apartment' : 'Plot',
                 by: user?.email,
@@ -638,7 +638,11 @@ export function MultipleFileUploadField({
               let constructionCS = []
               let partB= []
               let partD= []
+              let onPossessionChargesA = []
+              let partA_total = 0
+              let partC_total =0
               let partD_total=0
+              let partE_total= 0
               let plot_area_sqft = dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0
               let bua_sqft = dRow['BUA(sqft)']?.replace(/,/g, '') || 0
               let construct_price_sqft = dRow['Construction Price per sqft']?.replace(/,/g, '') || 0
@@ -651,8 +655,8 @@ export function MultipleFileUploadField({
                 let plcSaleValue = Number(dRow['PLC rate/sqft']?.replace(/,/g, '') || 0)* plot_area_sqft || 0
                 let plc_gstValue = Math.round(plcSaleValue * 0)
                 let buaSaleValue = Number(bua_sqft)* Number(construct_price_sqft)
-                let bua__gst_percent = 0
-                let bua_gstValue = Math.round(buaSaleValue * bua__gst_percent)
+                let bua__gst_percent =  selPhaseObj?.const_tax
+                let bua_gstValue = Math.round(buaSaleValue * (bua__gst_percent/100))
                 let constPlcSaleValue = Number(bua_sqft)* Number(const_plc_rate)
                 let CplcGstIsPercent = 0
                  x = [
@@ -747,12 +751,27 @@ export function MultipleFileUploadField({
                   },
                 ]
 
+                 onPossessionChargesA =
+                selPhaseObj?.fullCs?.filter(
+                  (d) => d?.section?.value === 'possessionAdditionalCost'
+                ) || []
 
 
+                partA_total = x.reduce(
+                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+                  0
+                )
+                partC_total = constructionCS.reduce(
+                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+                  0
+                )
 
           partD_total=  await computePartTotal(constructOtherChargesObj, bua_sqft, selPhaseObj?.const_tax,)
 
                }
+          partE_total=  await computePartTotal(onPossessionChargesA, bua_sqft, 18,)
+
+
 
 
              let partB_total=  await computePartTotal(additonalChargesObj, plot_area_sqft, myPhase?.area_tax,)
@@ -976,21 +995,18 @@ export function MultipleFileUploadField({
                 construct_price_sqft: construct_price_sqft,
                 plc_per_sqft: dRow['PLC rate/sqft'],
                 const_plc_per_sqft: const_plc_per_sqft,
-                partA_total: x.reduce(
-                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-                  0
-                ),
+                partA_total: partA_total,
+
                 // partB_total: partB.reduce(
                 //   (partialSum, obj) => partialSum + isNaN(obj?.TotalNetSaleValueGsT)? 1 : obj?.TotalNetSaleValueGsT,
                 //   0
                 // ),
                 partB_total: partB_total,
 
-                partC_total: constructionCS.reduce(
-                  (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-                  0
-                ),
+                partC_total: partC_total,
                 partD_total: partD_total,
+                partE_total: partE_total,
+                unit_cost: Number((partA_total + partB_total + partC_total + partD_total + partE_total).toFixed(2)),
                 // partD_total: partD.reduce(
                 //   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                 //   0

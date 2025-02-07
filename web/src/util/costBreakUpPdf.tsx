@@ -502,11 +502,12 @@ const CostBreakUpPdf = ({
 
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
     const flatCost = Number(partATotal + partBTotal)
+    const flatSchTotalCost = Number(partATotal + partBTotal)
     const constCost = Number((partCTotal || 0) + (partDTotal || 0) + (partETotal || 0))
     console.log('flat fixed values ', psPayload)
     const flatFixedCosts = psPayload?.reduce(
       (acc, item) =>
-        item.units.value === 'fixedcost' ? acc + item.value : acc,
+        item.units.value === 'fixedcost' ? acc + Number(item.value) : acc,
       0
     )
     const constFixedCosts = selPhaseObj?.ConstructPayScheduleObj?.reduce(
@@ -514,16 +515,52 @@ const CostBreakUpPdf = ({
         item.units.value === 'fixedcost' ? acc + item.value : acc,
       0
     )
-
-    const newPs = psPayload?.map((d1) => {
+    // const bookingAdvance  =0
+    // const bookingAdvance = myBookingPayload?.plotPS?.reduce(
+    //   (acc, item) =>
+    //     item?.stage?.value === 'on_booking' ? acc + Number(item.value) : acc,
+    //   0
+    // ) || 0
+    const bookingAdvance = myBookingPayload?.plotPS?.filter(
+      (d) => d?.stage?.value === 'on_booking'
+    )
+    const filLegalCharges = myBookingPayload?.addChargesCS?.filter(
+      (d) => d?.component?.value === 'legal_charges'
+    )
+    let flatLegalFixedCosts = 0
+    let bookingAdvanceCost = 0
+    if(filLegalCharges && filLegalCharges?.length > 0){
+      flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+    }
+    console.log('booking advance is', bookingAdvance)
+    if(bookingAdvance && bookingAdvance?.length > 0){
+      console.log('booking advance is', bookingAdvance)
+      bookingAdvanceCost =bookingAdvance[0]?.percentage || 10
+    }
+    const newPs = psPayload?.map(async (d1, inx) => {
       const z = d1
       // if (csMode === 'plot_cs') {
       if ('plot_cs' === 'plot_cs') {
+       let applicablePlotCost = flatCost- flatLegalFixedCosts
+      //  if(inx ==1){
+      //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
+      //  }
+
+      if(!['costpersqft'].includes(d1?.units?.value)){
+
         z.value = ['fixedcost'].includes(d1?.units?.value)
           ? Number(d1?.percentage)
-          : Number(
-              ((flatCost - flatFixedCosts) * (d1?.percentage / 100)).toFixed(2)
+          : inx ==1 ? Number(
+            (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - bookingAdvanceCost))
+
+          :  Number(
+              ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
             )
+            // z.value = applicablePlotCost
+          }else {
+            let calc = await CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
+            z.value = calc?.TotalNetSaleValueGsT
+          }
         if (['fixedcost'].includes(d1?.units?.value)) {
           z.elgible = true
           z.elgFrom = Timestamp.now().toMillis()
@@ -1727,7 +1764,7 @@ const CostBreakUpPdf = ({
                                       />
                                     </td>
                                     <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
-                                      ₹{d1?.value?.toLocaleString('en-IN')}
+                                     ₹{d1?.value?.toLocaleString('en-IN')}
                                     </td>
                                   </tr>
                                 ))}
