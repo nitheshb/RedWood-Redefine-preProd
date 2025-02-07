@@ -1825,6 +1825,27 @@ export default function LfileuploadTableTemplate({
         //   align: 'left',
         // },
         {
+          id: 'bedrooms_c',
+          label: 'Bedrooms',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'bathrooms_c',
+          label: 'Bathrooms',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
+          id: 'car_parkings_c',
+          label: 'Car Parkings',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
           id: 'east_d',
           label: 'East Dimension*(m)',
           minWidth: 10,

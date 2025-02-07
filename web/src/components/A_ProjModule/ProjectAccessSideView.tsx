@@ -168,6 +168,8 @@ const ProjectAccessSideView = ({
               source={source}
             />
           )}
+
+      <div className="flex flex-col w-full gap-4">
           {subView === 'crmAccess' && (
             <PaymentLeadAccess
               title={'CRM Access'}
@@ -176,6 +178,16 @@ const ProjectAccessSideView = ({
               source={source}
             />
           )}
+          {subView === 'crmAccess' && (
+            <PaymentLeadAccess
+              title={'Allow Status Changes on No Due'}
+              data={{ phase: data, project: projectDetails }}
+              dept="crm"
+              source={source}
+            />
+          )}
+    </div>
+
           {subView === 'FinAccess' && (
             <PaymentLeadAccess
               title={'Finance Access'}
