@@ -402,7 +402,7 @@ return x
   }
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
     console.log('sel unti details', psPayload, netTotal, partATotal, partBTotal)
-      const newPs = psPayload.map(async (d1, inx) => {
+      const newPs = psPayload.map( (d1, inx) => {
             const z = d1
             let flatLegalFixedCosts = 0
               const filLegalCharges = psPayload?.filter(
@@ -431,7 +431,7 @@ return x
 
                               // z.value = applicablePlotCost
                             }else {
-                              let calc = await CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
+                              let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
                               z.value = calc?.TotalNetSaleValueGsT
                             }
                             z.preCheck = ['on_booking'].includes(d1?.stage?.value)
@@ -446,7 +446,7 @@ return x
                         }
 
           })
-   
+
     console.log('new ps is ', newPs)
     setNewPS(newPs)
   }

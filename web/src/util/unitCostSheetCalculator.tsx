@@ -31,7 +31,7 @@ return compObj
   // setTotalFun()
 }
 
-export const UpdateComponentCalTotal = async (costSheetA,inx,area,taxPercent, newValue) => {
+export const UpdateComponentCalTotal =  (costSheetA,inx,area,taxPercent, newValue) => {
   console.log('tax percent',taxPercent)
   const y = costSheetA
   const myObj = y[inx]
