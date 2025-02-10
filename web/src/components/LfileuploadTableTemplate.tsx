@@ -364,6 +364,7 @@ const EnhancedTableToolbar = (props) => {
           construct_cost_sqf,
           construct_price_sqft,
           constructCS,
+          constructOtherChargesObj,
           possessionCS,
           area,
           construct_area,
@@ -514,9 +515,19 @@ const EnhancedTableToolbar = (props) => {
           )
           return dataObj
         })
-
+        const partD = constructOtherChargesObj
 
        const partB1 =       projectDetails[0]?.additonalChargesObj?.map( (dataObj, inx) => {
+
+        const x = dataObj?.component?.value
+        if (x === 'garden_area_cost') {
+          dataObj.charges = Number(data?.garden_area_cost || 0)
+        }
+
+        if (x === 'legal_charges') {
+          dataObj.charges = Number(data?.legal_charges || 0)
+
+        }
         const gstPercent = Number(dataObj?.gst?.value) || 0
                 return  CalculateComponentTotal(dataObj,area?.toString()?.replace(',', ''),gstPercent, dataObj?.charges)
               })
@@ -584,10 +595,7 @@ const EnhancedTableToolbar = (props) => {
 
         console.log('my additional charges', data['unite_no'], partB)
         // part D
-        const partD = projectDetails[0]?.constructOtherChargesObj?.map( (dataObj, inx) => {
-          const gstPercent = Number(dataObj?.gst?.value) || 0
-          return  CalculateComponentTotal(dataObj,construct_area?.toString()?.replace(',', ''),gstPercent, dataObj?.charges)
-        })
+
         const partD0 = projectDetails[0]?.constructOtherChargesObj?.map(
           (data4, inx) => {
             let total = 0
@@ -647,6 +655,19 @@ const EnhancedTableToolbar = (props) => {
             return dataNewObj
           }
         )
+        const partE = projectDetails[0]?.possessionCS?.map( (dataObj, inx) => {
+          const x = dataObj?.component?.value
+          if (x === 'maintenancecharges') {
+            dataObj.charges = Number(data?.maintenance_cost || 0)
+          }
+          if (x === 'corpus_charges') {
+            dataObj.charges = Number(data?.corpus_fund || 0)
+          }
+
+          const gstPercent = Number(dataObj?.gst?.value) || 0
+          return  CalculateComponentTotal(dataObj,construct_area?.toString()?.replace(',', ''),gstPercent, dataObj?.charges)
+        })
+
 
         // part E
         // const partE = [
@@ -711,11 +732,13 @@ const EnhancedTableToolbar = (props) => {
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )
-        const partDTotal = await partD.reduce(
+        const partDTotal = await  constructOtherChargesObj?.reduce(
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )
-        const partETotal = await possessionCS.reduce(
+        // const partDTotal = 0
+        // const partETotal = 0
+        const partETotal = await possessionCS?.reduce(
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )

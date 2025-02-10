@@ -759,7 +759,37 @@ export function MultipleFileUploadField({
                   (d) => d?.section?.value === 'possessionAdditionalCost'
                 ) || []
 
+                additonalChargesObj.map((additonalObj, inx) => {
+                  const x = additonalObj?.component?.value
+                  if (x === 'legal_charges') {
+                    additonalObj.charges = Number(dRow['Legal Charges']| 0)
 
+                  }
+                  if (x === 'garden_area_cost') {
+                    additonalObj.charges = Number(dRow['Garden Area Cost'] || 0)
+                  }
+                  return additonalObj
+                })
+                constructOtherChargesObj.map((dataObj, inx) => {
+                  const x = dataObj?.component?.value
+                  if (x === 'bescom_bwssb') {
+                    dataObj.charges = Number( dRow['BWSSB Cost'] || 0)
+                  }
+                  if (x === 'clubhouse_membership') {
+                    dataObj.charges = Number(dRow['Club House'] || 0)
+                  }
+                  return dataObj
+                })
+                onPossessionChargesA.map((dataObj, inx) => {
+                  const x = dataObj?.component?.value
+                  if (x === 'maintenancecharges') {
+                    dataObj.charges = Number( dRow['Maintenance Cost'] || 0)
+                  }
+                  if (x === 'corpus_charges') {
+                    dataObj.charges = Number(dRow['Corpus Fund'] || 0)
+                  }
+                  return dataObj
+                })
                 partA_total = x.reduce(
                   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
@@ -992,6 +1022,7 @@ export function MultipleFileUploadField({
                 plotCS: [],
                 constructCS: constructionCS,
                 possessionCS: onPossessionChargesA,
+                constructOtherChargesObj: constructOtherChargesObj,
                 constructPS: [],
                 plot_area_sqft: dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0,
                 sqft_rate: Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0),
