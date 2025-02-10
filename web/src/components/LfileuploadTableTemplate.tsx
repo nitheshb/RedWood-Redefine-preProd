@@ -363,6 +363,8 @@ const EnhancedTableToolbar = (props) => {
           plot_cost_sqf,
           construct_cost_sqf,
           construct_price_sqft,
+          constructCS,
+          possessionCS,
           area,
           construct_area,
         } = data
@@ -427,29 +429,30 @@ const EnhancedTableToolbar = (props) => {
           },
         ]
         // part C
-        const constructionCS = [
-          {
-            myId: '3',
-            units: {
-              value: 'fixedcost',
-              label: 'Fixed cost',
-            },
-            component: {
-              value: 'villa_construct_cost',
-              label: 'Villa Construction Cost  ',
-            },
-            others: construct_cost_sqf || construct_price_sqft,
-            charges: Number(construct_cost_sqf || construct_price_sqft),
-            TotalSaleValue: constSaleValue,
-            // charges: y,
-            gstValue: 0,
-            gst: {
-              label: '0',
-              value: 0,
-            },
-            TotalNetSaleValueGsT: Number(constSaleValue) + Number(0),
-          },
-        ]
+
+        // const constructionCS = [
+        //   {
+        //     myId: '3',
+        //     units: {
+        //       value: 'fixedcost',
+        //       label: 'Fixed cost',
+        //     },
+        //     component: {
+        //       value: 'villa_construct_cost',
+        //       label: 'Villa Construction Cost  ',
+        //     },
+        //     others: construct_cost_sqf || construct_price_sqft,
+        //     charges: Number(construct_cost_sqf || construct_price_sqft),
+        //     TotalSaleValue: constSaleValue,
+        //     // charges: y,
+        //     gstValue: 0,
+        //     gst: {
+        //       label: '0',
+        //       value: 0,
+        //     },
+        //     TotalNetSaleValueGsT: Number(constSaleValue) + Number(0),
+        //   },
+        // ]
         // part B
         const gstTaxIs = 0
         const partB = additonalChargesObj?.map((data1, inx) => {
@@ -646,52 +649,52 @@ const EnhancedTableToolbar = (props) => {
         )
 
         // part E
-        const partE = [
-          {
-            myId: '1',
-            units: {
-              value: 'fixedcost',
-              label: 'Fixed cost',
-            },
-            component: {
-              value: 'maintenance_cost',
-              label: 'Maintenance Cost',
-            },
-            others: 120,
-            charges: 120,
-            TotalSaleValue: Number(construct_area) * 120,
-            gstValue: Number(construct_area) * 120 * 0.18,
-            gst: {
-              label: '18',
-              value: 18,
-            },
-            TotalNetSaleValueGsT:
-              Number(construct_area) * 120 +
-              Number(construct_area) * 120 * 0.18,
-          },
-          {
-            myId: '2',
-            units: {
-              value: 'fixedcost',
-              label: 'Fixed cost',
-            },
-            component: {
-              value: 'corpus_fund',
-              label: 'Corpus Fund',
-            },
-            others: 50,
-            charges: 50,
+        // const partE = [
+        //   {
+        //     myId: '1',
+        //     units: {
+        //       value: 'fixedcost',
+        //       label: 'Fixed cost',
+        //     },
+        //     component: {
+        //       value: 'maintenance_cost',
+        //       label: 'Maintenance Cost',
+        //     },
+        //     others: 120,
+        //     charges: 120,
+        //     TotalSaleValue: Number(construct_area) * 120,
+        //     gstValue: Number(construct_area) * 120 * 0.18,
+        //     gst: {
+        //       label: '18',
+        //       value: 18,
+        //     },
+        //     TotalNetSaleValueGsT:
+        //       Number(construct_area) * 120 +
+        //       Number(construct_area) * 120 * 0.18,
+        //   },
+        //   {
+        //     myId: '2',
+        //     units: {
+        //       value: 'fixedcost',
+        //       label: 'Fixed cost',
+        //     },
+        //     component: {
+        //       value: 'corpus_fund',
+        //       label: 'Corpus Fund',
+        //     },
+        //     others: 50,
+        //     charges: 50,
 
-            TotalSaleValue: Number(construct_area) * 50,
-            // charges: y,
-            gstValue: 0,
-            gst: {
-              label: '0',
-              value: 0,
-            },
-            TotalNetSaleValueGsT: Number(construct_area) * 50,
-          },
-        ]
+        //     TotalSaleValue: Number(construct_area) * 50,
+        //     // charges: y,
+        //     gstValue: 0,
+        //     gst: {
+        //       label: '0',
+        //       value: 0,
+        //     },
+        //     TotalNetSaleValueGsT: Number(construct_area) * 50,
+        //   },
+        // ]
         // if (data.status === 'booked') {
         //   // get cost sheet
         // }
@@ -699,7 +702,7 @@ const EnhancedTableToolbar = (props) => {
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )
-        const partCTotal = await constructionCS.reduce(
+        const partCTotal = await constructCS.reduce(
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )
@@ -712,7 +715,7 @@ const EnhancedTableToolbar = (props) => {
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )
-        const partETotal = await partE.reduce(
+        const partETotal = await possessionCS.reduce(
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )
@@ -780,7 +783,7 @@ const EnhancedTableToolbar = (props) => {
           console.log(
             'log it',
             data['unit_no'],
-            constructionCS[0]['TotalNetSaleValueGsT'],
+            constructCS[0]['TotalNetSaleValueGsT'],
             x,
             constSaleValue,
             Number(construct_price_sqft),
@@ -849,11 +852,11 @@ const EnhancedTableToolbar = (props) => {
           data.plotCS = [...x]
           data.addChargesCS = partB1
           data.constAdditionalChargesCS = partD
-          data.constructCS = [...constructionCS]
+          data.constructCS = [...constructCS]
           data.fullPs = fullPs1
           data.plotPS = plotPs
           data.constructPS = constructPs
-          data.possessionAdditionalCostObj = partE
+          data.possessionAdditionalCostObj = possessionCS
           data.T_possession = partETotal
 
           data[`T_elgible`] = T_elgible
@@ -887,10 +890,10 @@ const EnhancedTableToolbar = (props) => {
             T_D: partDTotal,
             T_E: partETotal,
             plotCS: [...x],
-            constructCS: [...constructionCS],
+            constructCS: [...constructCS],
             addChargesCS: await partB1,
             constAdditionalChargesCS: partD,
-            possessionAdditionalCostCS: partE,
+            possessionAdditionalCostCS: possessionCS,
             plotPS: plotPs,
             constructPS: constructPs,
             fullPs: fullPs1,

@@ -646,8 +646,8 @@ export function MultipleFileUploadField({
               let partC_total =0
               let partD_total=0
               let partE_total= 0
-              let plot_area_sqft = dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0
-              let bua_sqft = dRow['BUA(sqft)']?.replace(/,/g, '') || 0
+              let plot_area_sqft = unitDetails?.area  || 0
+              let bua_sqft = unitDetails?.construct_area || 0
               let construct_price_sqft = dRow['Construction Price per sqft']?.replace(/,/g, '') || 0
               let const_plc_per_sqft = dRow['Construction PLC rate/sqft']?.replace(/,/g, '') || 0
               let const_plc_sqft = dRow['Construction PLC(sqft)']?.replace(/,/g, '') || 0
@@ -990,7 +990,8 @@ export function MultipleFileUploadField({
                 // ],
                 fullPs: [],
                 plotCS: [],
-                constructCS: [],
+                constructCS: constructionCS,
+                possessionCS: onPossessionChargesA,
                 constructPS: [],
                 plot_area_sqft: dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0,
                 sqft_rate: Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0),
