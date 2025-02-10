@@ -2,7 +2,7 @@
 
 import { zhCN } from "date-fns/locale"
 
-export const CalculateComponentTotal = async (compObj ,area,taxPercent, newValue) => {
+export const CalculateComponentTotal =  (compObj ,area,taxPercent, newValue) => {
   console.log('tax percent',compObj)
 
   let total = 0

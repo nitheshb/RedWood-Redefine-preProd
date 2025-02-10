@@ -35,10 +35,12 @@ import {
   getProjById1,
   getProjectByUid,
   updateUnitAsBooked,
+  uploadBookedUnitToDb,
   upSertMortgageUnit,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDate } from 'src/util/dateConverter'
+import { CalculateComponentTotal } from 'src/util/unitCostSheetCalculator'
 
 
 // function createData(
@@ -336,6 +338,9 @@ const EnhancedTableToolbar = (props) => {
       ConstructPayScheduleObj,
       paymentScheduleObj,
     } = projectDetails[0]
+    const selPhaseObj = projectDetails[0]
+    console.log('check it', projectDetails[0]?.area_tax, projectDetails[0])
+
     const costSqftA = fullCs?.filter(
       (row) => row.component.value === 'sqft_cost_tax'
     )
@@ -507,7 +512,12 @@ const EnhancedTableToolbar = (props) => {
           return dataObj
         })
 
-        const partB1 = projectDetails[0]?.additonalChargesObj?.map(
+
+       const partB1 =       projectDetails[0]?.additonalChargesObj?.map( (dataObj, inx) => {
+        const gstPercent = Number(dataObj?.gst?.value) || 0
+                return  CalculateComponentTotal(dataObj,area?.toString()?.replace(',', ''),gstPercent, dataObj?.charges)
+              })
+        const partB2 = projectDetails[0]?.additonalChargesObj?.map(
           (data1, inx) => {
             //  check if data1  component a
             // console.log('check the additonalCahrgesObj', data1)
@@ -571,7 +581,11 @@ const EnhancedTableToolbar = (props) => {
 
         console.log('my additional charges', data['unite_no'], partB)
         // part D
-        const partD = projectDetails[0]?.constructOtherChargesObj?.map(
+        const partD = projectDetails[0]?.constructOtherChargesObj?.map( (dataObj, inx) => {
+          const gstPercent = Number(dataObj?.gst?.value) || 0
+          return  CalculateComponentTotal(dataObj,construct_area?.toString()?.replace(',', ''),gstPercent, dataObj?.charges)
+        })
+        const partD0 = projectDetails[0]?.constructOtherChargesObj?.map(
           (data4, inx) => {
             let total = 0
             let gstTotal = 0
@@ -852,8 +866,9 @@ const EnhancedTableToolbar = (props) => {
           data['T_rejected'] = data['T_rejected'] || 0
 
           const finalUnitObj = {
-            status: data['status'],
-            unitStatus: data['unitStatus'],
+            status: 'booked',
+            // status: data['unitStatus'],
+            // unitStatus: data['unitStatus'],
             Katha_no: data['Katha_no'] || '',
             survey_no: data['survey_no'] || '',
             landOwnerName: data['landOwnerName'] || '',
@@ -873,7 +888,7 @@ const EnhancedTableToolbar = (props) => {
             T_E: partETotal,
             plotCS: [...x],
             constructCS: [...constructionCS],
-            addChargesCS: partB1,
+            addChargesCS: await partB1,
             constAdditionalChargesCS: partD,
             possessionAdditionalCostCS: partE,
             plotPS: plotPs,
@@ -1006,15 +1021,14 @@ const EnhancedTableToolbar = (props) => {
           //   enqueueSnackbar
           // )
 
-          await updateUnitAsBooked(
+          await uploadBookedUnitToDb(
             orgId,
             pId,
             data['unitUid'],
-            'id',
+
             finalUnitObj,
             user?.email,
-            enqueueSnackbar,
-            'resetForm'
+
           )
           await setUploadedUnitsCount(index + 1)
 
@@ -1139,6 +1153,7 @@ const EnhancedTableToolbar = (props) => {
   }
 
   const addUnitsToDB = async (records, pId) => {
+
     setUnitUploadMessage(false)
     // upload successfully
 
@@ -1165,7 +1180,7 @@ const EnhancedTableToolbar = (props) => {
         'Import Booked Apartments',
       ].includes(title)
     ) {
-      console.log('hello==>', records)
+      console.log('hello==> ',title, records)
       insertBookedUnitToDb(records, projPayload)
     } else if (title === 'Upload Mortgage') {
       console.log('hello==>', records)

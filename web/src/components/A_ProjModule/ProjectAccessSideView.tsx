@@ -35,7 +35,7 @@ const ProjectAccessSideView = ({
   const [planDiagramsA, setPlanDiagramsA] = useState([])
 
   useEffect(()=>{
-    setAllowCrmStatusOnDue(projectDetails?.allowCrmStatusDueChange)
+    setAllowCrmStatusOnDue(projectDetails?.allowCrmStatusChangeOnDue)
   }, [projectDetails])
   useEffect(() => {
     getPlanDiagrams(data?.uid, 'plan_diagram')
@@ -142,7 +142,7 @@ const ProjectAccessSideView = ({
   }
   const updateCrmStatusAcess = (status) => {
 
-    updateProjectPayload(orgId, projectDetails?.uid, { allowCrmStatusDueChange: status.target.checked })
+    updateProjectPayload(orgId, projectDetails?.uid, { allowCrmStatusChangeOnDue: status.target.checked })
     setAllowCrmStatusOnDue(status.target.checked )
   }
   return (
