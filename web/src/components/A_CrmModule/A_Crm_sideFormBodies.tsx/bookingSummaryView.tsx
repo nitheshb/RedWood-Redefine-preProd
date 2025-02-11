@@ -362,7 +362,7 @@ const BookingSummaryView = ({
   }, [netTotal, plotBookingAdv, csMode])
 
   const CreateNewPsFun =  async(netTotal, plotBookingAdv, csMode) => {
-    const newPs = psPayload?.map(async (d1, inx) => {
+    const newPs = psPayload?.map( (d1, inx) => {
       const z = d1
       // if (csMode === 'plot_cs') {
         let flatLegalFixedCosts = 0
@@ -390,7 +390,7 @@ const BookingSummaryView = ({
                   )
                   // z.value = applicablePlotCost
                 }else {
-                  let calc = await CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
+                  let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
                   z.value = calc?.TotalNetSaleValueGsT
                 }
               if (['fixedcost'].includes(d1?.units?.value)) {
@@ -400,7 +400,7 @@ const BookingSummaryView = ({
               }
               return z
             }
-    
+
     })
     setNewPS(newPs)
   }

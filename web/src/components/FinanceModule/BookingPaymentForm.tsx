@@ -450,7 +450,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
         pId: selUnitDetails?.pId,
         oldDate: d?.oldDate,
         schDate: d?.schDate,
-        stageId: d?.stage.value,
+        stageId: d?.stage?.value,
         newPrice: d?.value,
         used: d?.used,
         assignedTo: selUnitDetails?.assignedTo || 'unassigned',
