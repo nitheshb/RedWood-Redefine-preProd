@@ -1092,7 +1092,7 @@ const MyDocument = ({
 
                     <View style={[styles.tableCell_10]}>
                       <Text style={styles.subtitle2}>
-                      {prettyDate(d1?.txt_dated ||d1?.dated).toLocaleString() }
+                      {prettyDate(d1?.txt_dated ||d1?.dated) }
                       </Text>
                     </View>
 
