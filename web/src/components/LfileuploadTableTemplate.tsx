@@ -2331,7 +2331,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString('en-US'),
         },
         {
-          id: 'builderName',
+          id: 'paymentAgainst',
           label: 'Payment Against',
           minWidth: 10,
           align: 'left',
@@ -2363,7 +2363,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString(),
         },
         {
-          id: 'cancelDate',
+          id: 'cancelledDate',
           label: 'Cancelled Date',
           minWidth: 80,
           format: (value) => value.toLocaleString(),

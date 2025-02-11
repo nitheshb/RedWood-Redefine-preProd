@@ -1234,7 +1234,7 @@ export function MultipleFileUploadField({
                 payment_mode: dRow['Payment Mode'],
                 bank_ref_no: dRow['Transaction ID'],
                 payto: dRow['Payment Towards'],
-                builderName: dRow['Payment Against'],
+                paymentAgainst: dRow['Payment Against'],
                 dated: dRow['Payment Date'],
                 amount: Number(dRow['Amount']?.replace(/,/g, '') || 0),
                 status: dRow['Status'],

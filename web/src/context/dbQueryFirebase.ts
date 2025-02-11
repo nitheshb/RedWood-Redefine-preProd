@@ -3946,6 +3946,7 @@ export const addPaymentReceivedEntry = async (
     }
     updated.towards =   updated.towards || 'wallet'
     updated.towards_id = updated.towards_id || 'wallet'
+
     console.log('error is', updated)
     // const ref = doc(db, `${orgId}_fincance', unitDocId)
     const x = await addDoc(collection(db, `${orgId}_fincance`), updated)
@@ -5076,7 +5077,7 @@ export const captureWalletPayment = async (
         receive_by: payload?.bookedBy,
         txt_dated: dated, // modify this to dated time entred by user
         status: payload?.status || 'review',
-        payReason: payload?.payReason,
+        payReason: payload?.payReason || payload?.remarks,
         totalAmount: amount,
         bank_ref: bank_ref_no,
       },
@@ -5148,7 +5149,7 @@ export const capturePaymentS = async (
 
 
   console.log('payment entry is',payload?.fileUploader?.url,payload?.fileUploader ? payload?.fileUploader?.File : "File property missing",payload);
-  
+
 
 if(payload?.mode === 'wallet'){
   await updateDoc(doc(db, `${orgId}_customers`, payload?.selCustomerWallet?.id), {
@@ -5185,7 +5186,7 @@ console.log('unit log', payload)
         receive_by: payload?.bookedBy,
         txt_dated: dated, // modify this to dated time entred by user
         status: payload?.status || 'review',
-        payReason: payload?.payReason,
+        payReason: payload?.payReason || payload?.remarks,
         totalAmount: amount,
         bank_ref: bank_ref_no,
         attchUrl: payload?.attchUrl || payload?.fileUploader?.url || payload?.attchUrl || '',
@@ -5207,7 +5208,7 @@ console.log('unit log', payload)
         date_of_entry: payload?.date_of_entry || dated,
         txt_dated: dated, // modify this to dated time entred by user
         status: payload?.status || 'review',
-        payReason: payload?.payReason,
+        payReason: payload?.payReason || payload?.remarks,
         totalAmount: amount,
         bank_ref: bank_ref_no,
       },
