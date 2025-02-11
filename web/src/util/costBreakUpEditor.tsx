@@ -278,6 +278,8 @@ return x
     setPartCPayload(updatedRows)
     setTotalFun(costSheetA, partCPayload)
   }
+
+
   const handlePriceChangePartD = (index, price) => {
     console.log('changed price is ', price)
     const updatedRows = [...partDPayload]
@@ -306,8 +308,47 @@ return x
     updatedRows[index].gstValue = gstTotal
     updatedRows[index].TotalNetSaleValueGsT = total + gstTotal
     setPartDPayload(updatedRows)
+    setTotalFun(costSheetA, partDPayload)
+  }
+
+
+
+  const handlePriceChangePartE = (index, price) => {
+    const updatedRows = [...partEPayload]
+    updatedRows[index].charges = price
+
+    console.log('changed price is ', price)
+
+    console.log('new value is ', partEPayload)
+
+  
+    let total = 0
+    let gstTotal = 0
+    const isChargedPerSqft = updatedRows[index]?.units.value === 'costpersqft'
+  
+    const gstPercent =
+      Number(updatedRows[index]?.gst?.value) > 1
+        ? updatedRows[index]?.gst?.value * 18
+        : updatedRows[index]?.gst?.value
+    total = isChargedPerSqft
+      ? Number(selUnitDetails?.construct_area?.toString()?.replace(',', '')) *
+        Number(updatedRows[index]?.charges)
+      : Number(updatedRows[index]?.charges)
+  
+
+ 
+    gstTotal = Math.round(total * gstPercent)
+  
+
+  
+    updatedRows[index].TotalSaleValue = total
+    updatedRows[index].gstValue = gstTotal
+    updatedRows[index].TotalNetSaleValueGsT = total + gstTotal
+    setPartEPayload(updatedRows)
     setTotalFun(costSheetA, partCPayload)
   }
+
+
   const handlePriceChangePartA = (inx, newValue) => {
     console.log('changed price is ', newValue)
     const updatedRows = [...costSheetA]
@@ -1232,7 +1273,7 @@ console.log('saved data is===>', dataObj)
                                           setNewSqftPrice(
                                             Number(e.target.value)
                                           )
-                                          handlePriceChangePartD(
+                                          handlePriceChangePartE(
                                             inx,
                                             e.target.value
                                           )
@@ -1278,7 +1319,7 @@ console.log('saved data is===>', dataObj)
                                 ))}
                                 <tr className="   h-[32px] border">
                                   <th className="w-[40%] text-[12px] text-left text-[#118D57] pl-2 border ">
-                                    Total (E)
+                                    Total (E) box
                                   </th>
                                   <td className="w-[15%] px-2 font-bold text-[12px] text-right text-gray-600 pr-3"></td>
                                   <td
