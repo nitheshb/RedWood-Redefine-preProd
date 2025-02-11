@@ -144,7 +144,7 @@ const CrmUnitFinanceHistory = ({
                   return (
                     <tr key={inx} className={`border-b-[0.05px] border-gray-300 h-[45px] ${inx%2 === 0 ? '': ' '}`}>
                       <th className=" text-[12px] text-left text-blue-700  pl-2">
-                        {prettyDate(d1?.txt_dated ||d1?.dated).toLocaleString() }
+                        {prettyDate(d1?.txt_dated ||d1?.dated) }
                       </th>
                       <td className="text-[12px] text-center  text-gray-800 ">
                         {d1?.mode}

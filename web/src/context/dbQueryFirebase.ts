@@ -5146,7 +5146,9 @@ export const capturePaymentS = async (
 
   // if mode is from wallet then update the customer wallet cost
 
-  console.log('payment entry is',payload?.fileUploader?.url, payload?.fileUploader.File, payload)
+
+  console.log('payment entry is',payload?.fileUploader?.url,payload?.fileUploader ? payload?.fileUploader?.File : "File property missing",payload);
+  
 
 if(payload?.mode === 'wallet'){
   await updateDoc(doc(db, `${orgId}_customers`, payload?.selCustomerWallet?.id), {
