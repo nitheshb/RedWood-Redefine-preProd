@@ -221,7 +221,7 @@ const CostBreakUpPdfPreview = ({
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
     console.log('was this executed', newPlotPS)
 
-      const newPs = psPayload.map(async (d1, inx) => {
+      const newPs = psPayload.map( (d1, inx) => {
           const z = d1
           let flatLegalFixedCosts = 0
             const filLegalCharges = psPayload?.filter(
@@ -249,7 +249,7 @@ const CostBreakUpPdfPreview = ({
                             )
                             // z.value = applicablePlotCost
                           }else {
-                            let calc = await CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
+                            let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
                             z.value = calc?.TotalNetSaleValueGsT
                           }
                         if (['fixedcost'].includes(d1?.units?.value)) {
@@ -263,7 +263,7 @@ const CostBreakUpPdfPreview = ({
                       }
 
         })
-  
+
     setNewPS(newPs)
   }
 

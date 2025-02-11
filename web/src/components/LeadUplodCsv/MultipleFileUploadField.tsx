@@ -646,8 +646,8 @@ export function MultipleFileUploadField({
               let partC_total =0
               let partD_total=0
               let partE_total= 0
-              let plot_area_sqft = dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0
-              let bua_sqft = dRow['BUA(sqft)']?.replace(/,/g, '') || 0
+              let plot_area_sqft = unitDetails?.area  || 0
+              let bua_sqft = unitDetails?.construct_area || 0
               let construct_price_sqft = dRow['Construction Price per sqft']?.replace(/,/g, '') || 0
               let const_plc_per_sqft = dRow['Construction PLC rate/sqft']?.replace(/,/g, '') || 0
               let const_plc_sqft = dRow['Construction PLC(sqft)']?.replace(/,/g, '') || 0
@@ -759,7 +759,37 @@ export function MultipleFileUploadField({
                   (d) => d?.section?.value === 'possessionAdditionalCost'
                 ) || []
 
+                additonalChargesObj.map((additonalObj, inx) => {
+                  const x = additonalObj?.component?.value
+                  if (x === 'legal_charges') {
+                    additonalObj.charges = Number(dRow['Legal Charges']| 0)
 
+                  }
+                  if (x === 'garden_area_cost') {
+                    additonalObj.charges = Number(dRow['Garden Area Cost'] || 0)
+                  }
+                  return additonalObj
+                })
+                constructOtherChargesObj.map((dataObj, inx) => {
+                  const x = dataObj?.component?.value
+                  if (x === 'bescom_bwssb') {
+                    dataObj.charges = Number( dRow['BWSSB Cost'] || 0)
+                  }
+                  if (x === 'clubhouse_membership') {
+                    dataObj.charges = Number(dRow['Club House'] || 0)
+                  }
+                  return dataObj
+                })
+                onPossessionChargesA.map((dataObj, inx) => {
+                  const x = dataObj?.component?.value
+                  if (x === 'maintenancecharges') {
+                    dataObj.charges = Number( dRow['Maintenance Cost'] || 0)
+                  }
+                  if (x === 'corpus_charges') {
+                    dataObj.charges = Number(dRow['Corpus Fund'] || 0)
+                  }
+                  return dataObj
+                })
                 partA_total = x.reduce(
                   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
                   0
@@ -990,7 +1020,9 @@ export function MultipleFileUploadField({
                 // ],
                 fullPs: [],
                 plotCS: [],
-                constructCS: [],
+                constructCS: constructionCS,
+                possessionCS: onPossessionChargesA,
+                constructOtherChargesObj: constructOtherChargesObj,
                 constructPS: [],
                 plot_area_sqft: dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0,
                 sqft_rate: Number(dRow['Plot rate/sqft']?.replace(/,/g, '') || 0),

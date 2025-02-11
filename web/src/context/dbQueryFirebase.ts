@@ -6415,6 +6415,43 @@ export const updateUnitsCostSheetDetailsTo = async (
 
   return
 }
+export const uploadBookedUnitToDb = async (
+  orgId,
+  projectId,
+  unitId,
+  data,
+  by,
+
+) => {
+  try {
+    console.log('data is cost sheet', data,'unitId', unitId)
+
+    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+      ...data,
+    })
+    const { data1, error1 } = await supabase.from(`${orgId}_unit_logs`).insert([
+      {
+        type: 'sts_change',
+        subtype: data?.status || 'booked',
+        T: Timestamp.now().toMillis(),
+        Uuid: unitId,
+        by,
+        payload: { bookedBy: by },
+        from: data?.oldStatus || 'lead',
+        to: data?.status || 'booked',
+      },
+    ])
+
+  } catch (error) {
+    console.log('Unit Status Updation Failed', error, {
+      ...data,
+    })
+
+  }
+
+  return
+
+}
 export const updateUnitAsBooked = async (
   orgId,
   projectId,
@@ -6443,16 +6480,20 @@ export const updateUnitAsBooked = async (
         to: data?.status || 'booked',
       },
     ])
+    if(enqueueSnackbar){
     enqueueSnackbar(`Unit updated as ${data?.status}`, {
       variant: 'success',
     })
+  }
   } catch (error) {
     console.log('Unit Status Updation Failed', error, {
       ...data,
     })
+    if(enqueueSnackbar){
     enqueueSnackbar('Unit Status Updation Failed', {
       variant: 'error',
     })
+  }
   }
 
   return

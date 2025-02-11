@@ -238,7 +238,7 @@ export default function UnitSideViewCRM({
   const [selProjectIs, setSelProjectIs] = useState({
     projectName: '',
     uid: '',
-    allowCrmStatusDueChange: false
+    allowCrmStatusChangeOnDue: false
   })
 
   const [leadDetailsObj, setLeadDetailsObj] = useState({})
@@ -253,7 +253,7 @@ export default function UnitSideViewCRM({
   }, [unitPayload])
 
   useEffect(() => {
-    setAllowStatusChangeOnDue(selProjectIs?.allowCrmStatusDueChange)
+    setAllowStatusChangeOnDue(selProjectIs?.allowCrmStatusChangeOnDue)
   }, [selProjectIs])
   const {
     id,
@@ -615,6 +615,11 @@ export default function UnitSideViewCRM({
       allowedList = x[0].allowed
     }
     console.log('value is', x, newStatus)
+    console.log('balance ', selProjectIs)
+    const allowCrmStatusChangeOnDue = selProjectIs?.allowCrmStatusChangeOnDue || false
+    const isBalanceExists = selCustomerPayload?.T_elgible_balance > 0
+    const balanceRestrict = allowCrmStatusChangeOnDue ? false : isBalanceExists
+  
     if (!allowedList?.includes(newStatus?.value)) {
       enqueueSnackbar(`${status} unit cannot be ${newStatus?.label}`, {
         variant: 'warning',
@@ -630,8 +635,9 @@ export default function UnitSideViewCRM({
       if (
         newStatus?.value === 'agreement_pipeline' &&
         selCustomerPayload?.kyc_status &&
-        selCustomerPayload?.man_cs_approval
+        selCustomerPayload?.man_cs_approval && !balanceRestrict
       ) {
+        return
         setUnitStatusObj(newStatus)
         const updatedPs = fullPs.map((item) => {
           if (item.order === 2) {
