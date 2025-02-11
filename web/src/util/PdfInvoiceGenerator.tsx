@@ -676,10 +676,12 @@ const MyDocument = ({
           ]}
         >
           <View
-            style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1]}
+            style={[styles.col6,  styles.pr3, 
+              // {  flexDirection: 'column', alignItems: 'flex-start', }
+            ]}
           >
 
-          <Image src={projectDetails?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+          <Image src={projectDetails?.projectLogoUrl} style={{ width: 95, height: 45, objectFit: 'contain' }} />
             
             {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
             <Text style={[styles.h4, styles.pt3, styles.ml1]}>

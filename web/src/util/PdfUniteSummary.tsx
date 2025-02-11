@@ -798,9 +798,14 @@ const MyDocument = ({
           ]}
         >
           <View
-            style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1]}
+            style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1,
+             
+
+
+
+            ]}
           >
-            <Image src={project?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+            <Image src={project?.projectLogoUrl} style={{ width: 95, height: 45 ,objectFit: 'contain'  }} />
             <Text style={[styles.h4,styles.pt3, styles.ml1]}>
               {projectDetails?.projectName}
             </Text>
