@@ -529,8 +529,9 @@ export function MultipleFileUploadField({
 
                 unit_no:
                   dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
-                size: dRow['Type*']?.toLowerCase() || '',
-                type: dRow['Type*']?.toLowerCase() || '',
+                // size: dRow['Type*']?.toLowerCase() || '',
+                size: dRow['Type*'] || '',
+                // type: dRow['Type*']?.toLowerCase() || '',
                 facing: dRow['Facing*'] || '',
                 bedrooms_c: dRow['Bedrooms'] || 0,
                 bathrooms_c: dRow['Bathrooms'] || 0,

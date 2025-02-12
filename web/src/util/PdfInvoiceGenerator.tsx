@@ -616,6 +616,7 @@ const MyDocument = ({
   leadDetailsObj1,
   custObj1,
   customerDetailsObj,
+  possessionAdditionalCostCS,
   customerInfo,
 
   setPartATotal,
@@ -682,12 +683,11 @@ const MyDocument = ({
           >
 
           <Image src={projectDetails?.projectLogoUrl} style={{ width: 95, height: 45, objectFit: 'contain' }} />
-            
-            {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
+         
             <Text style={[styles.h4, styles.pt3, styles.ml1]}>
               {projectDetails?.projectName}
             </Text>
-            {/* <Text>{myObj} </Text> */}
+    
           </View>
 
 
@@ -1941,7 +1941,8 @@ const MyDocument = ({
           {/* part -5 */}
 
 
-          {possessAdditionalCS?.length >0 &&
+          {/* {possessAdditionalCS?.length >0 && */}
+          {myBookingPayload?.possessionAdditionalCostCS?.length > 0 && (
            <View style={[styles.fitter, { marginTop: '10px' }]}>
             {/* <View style={[{ border: '1 solid #e5e7eb ', borderRadius: 8 }]}>
               <View
@@ -2200,7 +2201,8 @@ const MyDocument = ({
             </View> */}
 
 
-{possessAdditionalCS?.length > 0 && (
+{/* {possessAdditionalCS?.length > 0 && ( */}
+{myBookingPayload?.possessionAdditionalCostCS?.length > 0 && (
 
 
 <>
@@ -2208,16 +2210,16 @@ const MyDocument = ({
             <Text
               style={[
                 styles.subtitle1,
-                // styles.mb5,
+             
                 styles.col8,
-                // styles.smallFitter,
+        
                 styles.ml1,
               ]}
             >
               v.Possession Charges
             </Text>
           </View>
-          {/* {projectDetails?.projectType?.name === 'Villas' &&  */}
+     
            <View style={[styles.fitter, { marginTop: '5px' }]}>
             <View style={[ styles.mb20, {    borderRadius: 8 }]}>
               <View
@@ -2292,7 +2294,7 @@ const MyDocument = ({
 
                 </View>
               </View>
-              {possessAdditionalCS?.map((item, index) => (
+              {myBookingPayload?.possessionAdditionalCostCS?.map((item, index) => (
                 <View
                   style={[
                     styles.tableRow,
@@ -2385,7 +2387,7 @@ const MyDocument = ({
 
 
           </View>
-          {/* } */}
+      
 </>
 
 
@@ -2548,6 +2550,7 @@ const MyDocument = ({
 
             </View>
           </View>
+          )
           }
 
 
@@ -2954,16 +2957,17 @@ const PdfInvoiceGenerator = ({
   myObj,
   newPlotPS,
   myAdditionalCharges,
+  possessionAdditionalCostCS,
   netTotal,
   setNetTotal,
   partATotal,
   partBTotal,
   setPartATotal,
+  possessAdditionalCS,
   setPartBTotal,
   projectDetails,
   selPhaseObj,
-
-  
+  project,
   selCustomerPayload,
   leadDetailsObj1,
   custObj1,
@@ -2971,73 +2975,73 @@ const PdfInvoiceGenerator = ({
 }) => {
   console.log('overall cost sheet is ', newPlotPS, selUnitDetails)
 
-      const { user: authUser } = useAuth()
+      // const { user: authUser } = useAuth()
   
-   const [project, setProject] = useState({})
+  //  const [project, setProject] = useState({})
 
-   const [possessAdditionalCS, setPossessAdditionalCS] = useState([])
-
-
-
-   const { orgId } = authUser
+  //  const [possessAdditionalCS, setPossessAdditionalCS] = useState([])
 
 
-   useEffect(() => {
-    const z =
-      selPhaseObj?.fullCs?.filter(
-        (d) => d?.section?.value === 'possessionAdditionalCost'
-      ) || []
-    const a = z.map((data4) => {
-      let total = 0
-      let gstTotal = 0
-      const charges = 0
-      const dataNewObj = { ...data4 }
-      const x = data4?.units?.value
-      const isChargedPerSqft = [
-        'costpersqft',
-        'cost_per_sqft',
-        'price_per_sft',
-      ].includes(x)
 
-      const gstPercent =
-      Number(data4?.gst?.value) > 1
-        ? Number(data4?.gst?.value) * 0.01
-        : Number(data4?.gst?.value)
-      total = isChargedPerSqft
-      ? Number(
-          selUnitDetails?.construct_area ||
-            selUnitDetails?.area?.toString()?.replace(',', '')
-        ) * Number(data4?.charges)
-      : Number(data4?.charges)
-      gstTotal = Math.round(total * gstPercent)
-      dataNewObj.TotalSaleValue = total
-      dataNewObj.gstValue = gstTotal
-      dataNewObj.TotalNetSaleValueGsT = total + gstTotal
-      console.log('Check it', dataNewObj)
+  //  const { orgId } = authUser
 
-      return dataNewObj
-    })
-    console.log('Check it', a)
-    setPossessAdditionalCS(a)
-  }, [selPhaseObj, selUnitDetails])
+
+  //  useEffect(() => {
+  //   const z =
+  //     selPhaseObj?.fullCs?.filter(
+  //       (d) => d?.section?.value === 'possessionAdditionalCost'
+  //     ) || []
+  //   const a = z.map((data4) => {
+  //     let total = 0
+  //     let gstTotal = 0
+  //     const charges = 0
+  //     const dataNewObj = { ...data4 }
+  //     const x = data4?.units?.value
+  //     const isChargedPerSqft = [
+  //       'costpersqft',
+  //       'cost_per_sqft',
+  //       'price_per_sft',
+  //     ].includes(x)
+
+  //     const gstPercent =
+  //     Number(data4?.gst?.value) > 1
+  //       ? Number(data4?.gst?.value) * 0.01
+  //       : Number(data4?.gst?.value)
+  //     total = isChargedPerSqft
+  //     ? Number(
+  //         selUnitDetails?.construct_area ||
+  //           selUnitDetails?.area?.toString()?.replace(',', '')
+  //       ) * Number(data4?.charges)
+  //     : Number(data4?.charges)
+  //     gstTotal = Math.round(total * gstPercent)
+  //     dataNewObj.TotalSaleValue = total
+  //     dataNewObj.gstValue = gstTotal
+  //     dataNewObj.TotalNetSaleValueGsT = total + gstTotal
+  //     console.log('Check it', dataNewObj)
+
+  //     return dataNewObj
+  //   })
+  //   console.log('Check it', a)
+  //   setPossessAdditionalCS(a)
+  // }, [selPhaseObj, selUnitDetails])
 
    
 
-          useEffect(() => {
-            getProjectFun()
-          }, [])
+          // useEffect(() => {
+          //   getProjectFun()
+          // }, [])
 
-          const getProjectFun = async () => {
+          // const getProjectFun = async () => {
   
     
-            const steamLeadLogs = await getProject(
-              orgId,
-              selCustomerPayload?.pId
-            )
+          //   const steamLeadLogs = await getProject(
+          //     orgId,
+          //     selCustomerPayload?.pId
+          //   )
             
-            await setProject(steamLeadLogs)
+          //   await setProject(steamLeadLogs)
           
-            return}
+          //   return}
 
             
   return (
@@ -3092,6 +3096,7 @@ const PdfInvoiceGenerator = ({
         selCustomerPayload={selCustomerPayload}
         leadDetailsObj1={leadDetailsObj1}
         possessAdditionalCS={possessAdditionalCS}
+        possessionAdditionalCostCS={possessionAdditionalCostCS}
         custObj1={custObj1} 
         />
       }

@@ -178,13 +178,13 @@ export const projectPlans = [
 
 export const unitTypeList = [
   { label: 'Select Count', value: '' },
-  { label: '1 Bhk', value: 1 },
-  { label: '2 Bhk', value: 2 },
-  { label: '2.5 Bhk', value: 2.3 },
-  { label: '3 Bhk', value: 3 },
-  { label: '3.5 Bhk', value: 3.5 },
-  { label: '4 Bhk', value: 4 },
-  { label: '5 Bhk', value: 5 },
+  { label: '1 Bhk', value: '1 Bhk' },
+  { label: '2 Bhk', value: '2 Bhk' },
+  { label: '2.5 Bhk', value: '2.5 Bhk' },
+  { label: '3 Bhk', value: '3 Bhk' },
+  { label: '3.5 Bhk', value: '3.5 Bhk' },
+  { label: '4 Bhk', value: '4 Bhk' },
+  { label: '5 Bhk', value: '5 Bhk' },
 ]
 
 

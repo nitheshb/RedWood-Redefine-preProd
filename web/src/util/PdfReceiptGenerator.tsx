@@ -726,7 +726,7 @@ const MyDocument = ({
             style={[ styles.smallFitter, styles.pr3, styles.ml1 ,{flexDirection: 'row'}]}
           >
 
-<Image src={projectDetails?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+<Image src={projectDetails?.projectLogoUrl} style={{ width: 85, height: 35, objectFit: 'contain'  }} />
 
             {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
             {/* <Text style={[styles.h4, styles.ml1,      styles.mT1,
