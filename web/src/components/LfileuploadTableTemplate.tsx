@@ -1161,7 +1161,7 @@ const EnhancedTableToolbar = (props) => {
 
         await capturePaymentS(
           orgId,
-          false,
+          true,
           projectId,
           data['unitUid'],
           data['unitUid'],
