@@ -529,8 +529,9 @@ export function MultipleFileUploadField({
 
                 unit_no:
                   dRow['Unit No.*'] || dRow['Flat No.*'] || dRow['Villa No*'],
-                size: dRow['Type*']?.toLowerCase() || '',
-                type: dRow['Type*']?.toLowerCase() || '',
+                // size: dRow['Type*']?.toLowerCase() || '',
+                size: dRow['Type*'] || '',
+                // type: dRow['Type*']?.toLowerCase() || '',
                 facing: dRow['Facing*'] || '',
                 bedrooms_c: dRow['Bedrooms'] || 0,
                 bathrooms_c: dRow['Bathrooms'] || 0,
@@ -1234,7 +1235,7 @@ export function MultipleFileUploadField({
                 payment_mode: dRow['Payment Mode'],
                 bank_ref_no: dRow['Transaction ID'],
                 payto: dRow['Payment Towards'],
-                builderName: dRow['Payment Against'],
+                paymentAgainst: dRow['Payment Against'],
                 dated: dRow['Payment Date'],
                 amount: Number(dRow['Amount']?.replace(/,/g, '') || 0),
                 status: dRow['Status'],

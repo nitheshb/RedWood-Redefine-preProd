@@ -63,6 +63,11 @@ export default function BankSelectionSwitchDrop({ type, setStatusFun }) {
                     bName: 'HDFC',
                     value: 'hdfc',
                   },
+                  { bName: 'Bank of Baroda', value: 'bankofbaroda' },
+                  { bName: 'Axis Bank', value: 'axisbank' },
+                  { bName: 'Punjab National Bank', value: 'punjabnationalbank' },
+                  { bName: 'Tata Capital', value: 'tatacapital' },
+  
                 ].map((data, i) => (
                   <Menu.Item key={i}>
                     {({ active }) => (

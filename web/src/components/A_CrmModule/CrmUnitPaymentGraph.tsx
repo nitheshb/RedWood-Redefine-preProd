@@ -13,13 +13,19 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
 
   const [unitTotal, setUnitTotal] = useState(0)
 
+
+  // const [grossUnitTotal, setGrossTotal] = useState(0)
+
+
   console.log('payload is ', selCustomerPayload)
   useEffect(() => {
     const a =
       selCustomerPayload?.plotCS?.reduce(
         (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
         0
-      ) || 0
+      ) || 0;
+
+
     const b =
       selCustomerPayload?.addChargesCS?.reduce(
         (partialSum, obj) =>
@@ -32,7 +38,7 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
             )
           ),
         0
-      ) || 0
+      ) || 0;
 
       const c = selCustomerPayload?.addOnCS?.reduce(
         (partialSum, obj) =>
@@ -44,12 +50,40 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
             )
           ),
         0
-      ) || 0
+      ) || 0;
+
+
+    //   const d =
+    //   selCustomerPayload?.constructCS?.reduce(
+    //     (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+    //     0
+    //   ) || 0;
+  
+    // const e =
+    //   selCustomerPayload?.constAdditionalChargesCS?.reduce(
+    //     (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+    //     0
+    //   ) || 0;
+  
+    // const f =
+    //   selCustomerPayload?.possessionAdditionalCostCS?.reduce(
+    //     (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+    //     0
+    //   ) || 0;
+
+
+
+
+
+
     setPartA(a)
     setPartB(b)
     setPartAddOn(c)
     console.log('value is ', a, b)
     setUnitTotal(a + b + c)
+ 
+
+
   }, [selCustomerPayload])
 
   return (
@@ -71,6 +105,8 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
                                           {(
                                             selCustomerPayload?.T_total || selCustomerPayload?.T_Total
                                           )?.toLocaleString('en-IN')}
+
+                                
                                         </div>
                                       </p>
 

@@ -1153,34 +1153,48 @@ export default function UnitFullSummary({
           )}
         </>
       </div>
-      {selFeature === 'applicant_info' && (
-        <>
-          {!openApplicantEdit && (
-            <div className="  mt-2 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
-              <ShowCustomerDetails
-                source="fromBookedUnit"
-                title="Booking Form"
-                selUnitDetails={selCustomerPayload}
-                leadDetailsObj2={selCustomerPayload}
-                setShowApplicantEdit={setShowApplicantEdit}
-              />
-            </div>
-          )}
-          {openApplicantEdit && (
-            <div className="  mt-2 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
-              <AddApplicantDetails
-                source="fromBookedUnit"
-                title="Booking Form"
-                customerInfo= {customerInfo}
-                setCustomerInfo= {setCustomerInfo}
-                selUnitDetails={selCustomerPayload}
-                leadDetailsObj2={selCustomerPayload}
-                setShowApplicantEdit={setShowApplicantEdit}
-              />
-            </div>
-          )}
-        </>
+
+      
+{selFeature === 'applicant_info' && (
+  <>
+    {!openApplicantEdit && (
+      <div className="mt-2 pb-[250px] overflow-auto no-scrollbar h-[100%] overflow-y-scroll">
+        <ShowCustomerDetails
+          source="fromBookedUnit"
+          title="Booking Form"
+          selUnitDetails={selCustomerPayload}
+          leadDetailsObj2={selCustomerPayload}
+          setShowApplicantEdit={setShowApplicantEdit}
+        />
+      </div>
+    )}
+    {openApplicantEdit && (
+      <div className="mt-2 h-full flex flex-col justify-between overflow-auto no-scrollbar">
+        <div className="flex-1 overflow-y-auto">
+          <AddApplicantDetails
+            source="fromBookedUnit"
+            title="Booking Form"
+            customerInfo={customerInfo}
+            setCustomerInfo={setCustomerInfo}
+            selUnitDetails={selCustomerPayload}
+            leadDetailsObj2={selCustomerPayload}
+            setShowApplicantEdit={setShowApplicantEdit}
+          />
+        </div>
+
+        <div className="flex justify-end mt-2 p-4">
+          <button
+            className="w-[80px] bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-sm hover:shadow-lg hover:bg-green-500"
+            onClick={() => setShowApplicantEdit(false)}
+          >
+            Back
+          </button>
+        </div>
+      </div>
       )}
+     </>
+   )}
+
       {selFeature === 'unit_information' && (
         <>
           <div className="">

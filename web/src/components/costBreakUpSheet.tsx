@@ -44,6 +44,7 @@ const CostBreakUpSheet = ({
   project,
   selUnitDetails,
   possessAdditionalCS,
+  possessionAdditionalCostCS,
   actionMode,
 }) => {
   const { user } = useAuth()
@@ -979,6 +980,7 @@ console.log('customer info', myBookingPayload)
                                         leadDetailsObj1={leadDetailsObj1}
                                         selPhaseObj={selPhaseObj}
                                         possessAdditionalCS={possessAdditionalCS}
+                                        possessionAdditionalCostCS={possessionAdditionalCostCS}
                                       />
 
 

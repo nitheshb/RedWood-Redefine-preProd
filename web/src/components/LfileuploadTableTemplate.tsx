@@ -1161,7 +1161,7 @@ const EnhancedTableToolbar = (props) => {
 
         await capturePaymentS(
           orgId,
-          false,
+          true,
           projectId,
           data['unitUid'],
           data['unitUid'],
@@ -1776,7 +1776,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString('en-US'),
         },
         {
-          id: 'type',
+          id: 'size',
           label: 'Type*',
           minWidth: 10,
           align: 'left',
@@ -1845,13 +1845,13 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toLocaleString('en-US'),
         },
-        {
-          id: 'size',
-          label: 'Plot Size*',
-          minWidth: 10,
-          align: 'left',
-          format: (value) => value.toFixed(2),
-        },
+        // {
+        //   id: 'size',
+        //   label: 'Plot Size*',
+        //   minWidth: 10,
+        //   align: 'left',
+        //   format: (value) => value.toFixed(2),
+        // },
         {
           id: 'carpet_area_sqft',
           label: 'Carpet Area(sqft)',
@@ -2331,7 +2331,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString('en-US'),
         },
         {
-          id: 'builderName',
+          id: 'paymentAgainst',
           label: 'Payment Against',
           minWidth: 10,
           align: 'left',
@@ -2363,7 +2363,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString(),
         },
         {
-          id: 'cancelDate',
+          id: 'cancelledDate',
           label: 'Cancelled Date',
           minWidth: 80,
           format: (value) => value.toLocaleString(),
