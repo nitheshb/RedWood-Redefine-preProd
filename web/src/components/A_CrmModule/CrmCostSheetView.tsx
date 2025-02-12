@@ -379,7 +379,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             Construction Charges
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED] tracking-wide">
-                            Construct Rate/Sqft
+                             Rate/Sqft
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED] tracking-wide ">
                             Sale Value
