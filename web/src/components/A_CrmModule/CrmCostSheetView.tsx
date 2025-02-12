@@ -8,19 +8,19 @@ import PdfSummaryGenerator from 'src/util/PdfSummaryGenerator'
 import PdfUniteSummary from 'src/util/PdfUniteSummary'
 
 const CrmUnitCostSheetView = ({ selCustomerPayload,
-   unitTransactionsA, PSa, 
+   unitTransactionsA, PSa,
    leadDetailsObj1,
-   customerDetails, 
+   customerDetails,
    streamUnitDetails,
-    newAdditonalChargesObj, 
-    myBookingPayload, 
-    assets, 
+    newAdditonalChargesObj,
+    myBookingPayload,
+    assets,
     totalIs,
     selUnitDetails,
-    newPlotCostSheetA, 
+    newPlotCostSheetA,
     newPlotPS,
     project,
-  
+
   }) => {
   const { user } = useAuth()
   const { orgId } = user
@@ -245,10 +245,10 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                     <thead className='  '>
                       <tr className=" h-8 border-b-[0.2px] bg-[#EDEDED]  rounded-lg w-[100%]">
                         <th className="min-w-[35%] text-[12px] text-left text-[#3D3D3D]   rounded-tl-[10px]  bg-[#EDEDED]  tracking-wide  px-2">
-                          Plot
+                          Charges
                         </th>
                         <th className="w-[15%] text-[12px] text-right  text-[#3D3D3D] bg-[#EDEDED] tracking-wide">
-                          Plot Rate/Sqft
+                          Rate/Sqft
                         </th>
                         <th className="w-[15%] text-[12px] text-right  text-[#3D3D3D] bg-[#EDEDED] tracking-wide ">
                           Sale Value
@@ -273,7 +273,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           </th>
 
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#fff]">
-                            ₹{d1?.charges?.toLocaleString('en-IN')}
+                            ₹ {d1?.charges?.toLocaleString('en-IN')}
                           </td>
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#fff] ">
                             ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
@@ -293,7 +293,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                         <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800   "></td>
                         <td className="w-[15%] font-interF font-semibold  text-[12px] text-right text-[#6A6A6A] pr-2  ">
                           {' '}
-                          Plot Cost:
+                           Cost:
                         </td>
                         <td className="w-[15%] font-semibold  text-[12px] text-right text-[#6A6A6A]  px-2">
                           ₹{partATotal?.toLocaleString('en-IN')}
@@ -309,7 +309,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             Additional Charges
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  tracking-wide">
-                            Plot Rate/Sqft
+                            Rate/Sqft
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  tracking-wide ">
                             Sale Value
@@ -332,7 +332,8 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             {d1?.component?.label}
                           </th>
                           <td className="text-[12px] w-[15%] text-right text-[#6A6A6A] px-2 bg-[#fff]">
-                            ₹{Number(d1?.charges)?.toLocaleString('en-IN')}
+                            {/* ₹{Number(d1?.charges)?.toLocaleString('en-IN')} */}
+                            {d1?.units.value==='fixedcost' ? 'Fixed': <>₹ {d1?.charges?.toLocaleString('en-IN')}</>}
                           </td>
 
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#fff] ">
@@ -378,7 +379,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             Construction Charges
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED] tracking-wide">
-                            Construct Rate/Sqft
+                             Rate/Sqft
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED] tracking-wide ">
                             Sale Value
@@ -443,7 +444,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           Construction Additional Charges
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#04050b] bg-[#EDEDED] tracking-wide">
-                            Plot Rate/Sqft
+                             Rate/Sqft
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#04050b] bg-[#EDEDED] tracking-wide ">
                             Sale Value
@@ -469,7 +470,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                               </th>
 
                               <td className="w-[15%] text-[12px] text-right text-gray-700 bg-[#fff]">
-                                ₹{d1?.charges?.toLocaleString('en-IN')}
+                                {d1?.units.value==='fixedcost' ? 'Fixed': <>₹ {d1?.charges?.toLocaleString('en-IN')}</>}
                               </td>
                               <td className="w-[15%] text-[12px] text-right text-gray-700 bg-[#fff] ">
                                 ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
@@ -510,7 +511,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             Possession Charges
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#EDEDED] tracking-wide">
-                            Plot Rate/Sqft
+                            Rate/Sqft
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#EDEDED] tracking-wide ">
                             Sale Value
@@ -536,7 +537,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                               </th>
 
                               <td className="w-[15%] text-[12px] text-right text-gray-700 bg-[#fff]">
-                                ₹{d1?.charges?.toLocaleString('en-IN')}
+                              {d1?.units.value==='fixedcost' ? 'Fixed': <>₹ {d1?.charges?.toLocaleString('en-IN')}</>}
                               </td>
                               <td className="w-[15%] text-[12px] text-right text-gray-700 bg-[#fff] ">
                                 ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
