@@ -619,7 +619,7 @@ export default function UnitSideViewCRM({
     const allowCrmStatusChangeOnDue = selProjectIs?.allowCrmStatusChangeOnDue || false
     const isBalanceExists = selCustomerPayload?.T_elgible_balance > 0
     const balanceRestrict = allowCrmStatusChangeOnDue ? false : isBalanceExists
-  
+
     if (!allowedList?.includes(newStatus?.value)) {
       enqueueSnackbar(`${status} unit cannot be ${newStatus?.label}`, {
         variant: 'warning',
@@ -1194,6 +1194,12 @@ return
                                             'en-IN'
                                           )}{' '}
                                           sqft
+                                        </span>
+                                        <span className="  text-[10px] h-[20px]  text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                          {  selCustomerPayload?.construct_area!= undefined && <>{selCustomerPayload?.construct_area?.toLocaleString(
+                                            'en-IN'
+                                          )}{' '}
+                                          sqft</>}
                                         </span>
 
                                         <span className="  text-[10px] h-[20px] text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
