@@ -245,7 +245,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                     <thead className='  '>
                       <tr className=" h-8 border-b-[0.2px] bg-[#EDEDED]  rounded-lg w-[100%]">
                         <th className="min-w-[35%] text-[12px] text-left text-[#3D3D3D]   rounded-tl-[10px]  bg-[#EDEDED]  tracking-wide  px-2">
-                          
+                          Charges
                         </th>
                         <th className="w-[15%] text-[12px] text-right  text-[#3D3D3D] bg-[#EDEDED] tracking-wide">
                           Rate/Sqft
