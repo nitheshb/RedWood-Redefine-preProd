@@ -652,10 +652,12 @@ const MyDocument = ({
           ]}
         >
           <View
-            style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1]}
+            style={[styles.col6, styles.smallFitter, styles.pr3, styles.ml1,
+              {  flexDirection: 'column', alignItems: 'flex-start', }
+            ]}
           >
 
-            <Image src={projectDetails?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+            <Image src={projectDetails?.projectLogoUrl} style={{ width: 95, height: 45, objectFit: 'contain'  }} />
             
             {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
             <Text style={[styles.h4, styles.pt3, styles.ml1]}>
@@ -1092,7 +1094,7 @@ const MyDocument = ({
 
                     <View style={[styles.tableCell_10]}>
                       <Text style={styles.subtitle2}>
-                      {prettyDate(d1?.txt_dated ||d1?.dated).toLocaleString() }
+                      {prettyDate(d1?.txt_dated ||d1?.dated) }
                       </Text>
                     </View>
 

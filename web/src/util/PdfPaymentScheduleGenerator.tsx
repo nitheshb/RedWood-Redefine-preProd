@@ -673,7 +673,7 @@ const MyDocument = ({
           >
            
 
-         <Image src={project?.projectLogoUrl} style={{ width: 85, height: 35 }} />
+         <Image src={project?.projectLogoUrl} style={{ width: 85, height: 35, objectFit: 'contain'  }} />
            
 
             {/* <Image source="/ps_logo.png" style={{ width: 85, height: 35 }} /> */}
