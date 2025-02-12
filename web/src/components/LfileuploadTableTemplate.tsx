@@ -1776,7 +1776,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString('en-US'),
         },
         {
-          id: 'type',
+          id: 'size',
           label: 'Type*',
           minWidth: 10,
           align: 'left',
@@ -1845,13 +1845,13 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toLocaleString('en-US'),
         },
-        {
-          id: 'size',
-          label: 'Plot Size*',
-          minWidth: 10,
-          align: 'left',
-          format: (value) => value.toFixed(2),
-        },
+        // {
+        //   id: 'size',
+        //   label: 'Plot Size*',
+        //   minWidth: 10,
+        //   align: 'left',
+        //   format: (value) => value.toFixed(2),
+        // },
         {
           id: 'carpet_area_sqft',
           label: 'Carpet Area(sqft)',
