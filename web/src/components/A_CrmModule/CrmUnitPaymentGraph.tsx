@@ -14,7 +14,7 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
   const [unitTotal, setUnitTotal] = useState(0)
 
 
-  const [grossUnitTotal, setGrossTotal] = useState(0)
+  // const [grossUnitTotal, setGrossTotal] = useState(0)
 
 
   console.log('payload is ', selCustomerPayload)
@@ -53,23 +53,23 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
       ) || 0;
 
 
-      const d =
-      selCustomerPayload?.constructCS?.reduce(
-        (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-        0
-      ) || 0;
+    //   const d =
+    //   selCustomerPayload?.constructCS?.reduce(
+    //     (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+    //     0
+    //   ) || 0;
   
-    const e =
-      selCustomerPayload?.constAdditionalChargesCS?.reduce(
-        (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-        0
-      ) || 0;
+    // const e =
+    //   selCustomerPayload?.constAdditionalChargesCS?.reduce(
+    //     (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+    //     0
+    //   ) || 0;
   
-    const f =
-      selCustomerPayload?.possessionAdditionalCostCS?.reduce(
-        (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-        0
-      ) || 0;
+    // const f =
+    //   selCustomerPayload?.possessionAdditionalCostCS?.reduce(
+    //     (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+    //     0
+    //   ) || 0;
 
 
 
@@ -81,7 +81,7 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
     setPartAddOn(c)
     console.log('value is ', a, b)
     setUnitTotal(a + b + c)
-    setGrossTotal(a + b + c + d + e + f);
+ 
 
 
   }, [selCustomerPayload])
@@ -102,11 +102,11 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
                                     <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
                                         Unit Cost: ₹
                                         <div>
-                                          {/* {(
+                                          {(
                                             selCustomerPayload?.T_total || selCustomerPayload?.T_Total
-                                          )?.toLocaleString('en-IN')} */}
+                                          )?.toLocaleString('en-IN')}
 
-                                          ₹{grossUnitTotal?.toLocaleString('en-IN')}
+                                
                                         </div>
                                       </p>
 
