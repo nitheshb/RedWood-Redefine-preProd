@@ -5178,7 +5178,7 @@ console.log('unit log', payload)
       {
         projectId,
         unit_id: unitId,
-        towards: builderName,
+        towards: payto || builderName ,
         towards_id: towardsBankDocId ,
         mode,
         custId: custNo,
@@ -5199,7 +5199,7 @@ console.log('unit log', payload)
       {
         projectId,
         unit_id: [unitId],
-        towards: builderName,
+        towards: payto|| builderName,
         towards_id: towardsBankDocId,
         mode,
         custId: custNo,
