@@ -70,6 +70,17 @@ const [loanPercentage, setLoanPercentage] = useState('');
     bName: 'HDFC',
     value: 'hdfc',
   },
+  { bName: 'Bank of Baroda', value: 'bankofbaroda' },
+  { bName: 'Axis Bank', value: 'axisbank' },
+  { bName: 'Punjab National Bank', value: 'punjabnationalbank' },
+  { bName: 'Tata Capital', value: 'tatacapital' },
+
+
+ 
+
+
+ 
+
 ].filter((d)=>d.value==customerDetails?.loanBank).map((d1)=>{
 
   setLoanBank(d1)
