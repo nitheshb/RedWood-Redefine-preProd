@@ -9,9 +9,10 @@ export default function DropDownSearchBar({
   pickCustomViewer,
   dropDownItemsA,
   selProjectIs,
+  noBorder,
 }) {
   return (
-    <div className="flex-shrink-0 z-10 inline-flex items-center  p-3 px-6 text-sm font-medium text-left text-gray-900 border-r border-gray-200 hover:bg-[#EAEBEA] hover:rounded-full focus:ring-4 focus:outline-none focus:ring-gray-100 ">
+    <div className={`flex-shrink-0 z-10 inline-flex items-center  p-3 px-6 text-sm font-medium text-left text-gray-900  hover:bg-[#EAEBEA] hover:rounded-full focus:ring-4 focus:outline-none focus:ring-gray-100   ${noBorder ? '' : 'border-r border-gray-200'}`}>
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex w-full px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
