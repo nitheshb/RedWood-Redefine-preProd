@@ -747,13 +747,21 @@ const EnhancedTableToolbar = (props) => {
         const constructTotalCost = partCTotal + partDTotal
         let plotPs = []
         let constructPs = []
-
+console.log('Plot ps==>  befoer', paymentScheduleObj)
         plotPs = paymentScheduleObj?.map((d1, inx) => {
           console.log('d1 is', d1)
           const z = d1
+
           z.value = ['fixedcost'].includes(d1?.units?.value)
             ? Number(d1?.percentage)
             : Number((plotTotalCost * (d1?.percentage / 100)).toFixed(2))
+          z.schDate = data['booked_on'] +
+          ((Number(d1?.zeroDay || 0)) *
+          86400000)
+
+
+
+
           if (['fixedcost'].includes(d1?.units?.value)) {
             z.elgible = true
             z.elgFrom = Timestamp.now().toMillis()
@@ -777,21 +785,19 @@ const EnhancedTableToolbar = (props) => {
             }
           }
 
-          d1.schDate =
-            d1?.schDate ||
-            d.getTime() +
-              (ConstructPayScheduleObj.slice(0, inx).reduce(
-                (sum, prevItem) => sum + (Number(prevItem.zeroDay) || 0),
-                0
-              ) +
-                Number(d1?.zeroDay || 0)) *
-                86400000
           return z
         })
         constructPs = ConstructPayScheduleObj?.map((d1, inx) => {
           console.log('d1 is => ', d1, constructTotalCost)
           const z = d1
           const z0 = { ...d1 }
+
+          z.value = ['fixedcost'].includes(d1?.units?.value)
+            ? Number(d1?.percentage)
+            : Number((plotTotalCost * (d1?.percentage / 100)).toFixed(2))
+          z0.schDate = data['booked_on'] +
+          ((Number(d1?.zeroDay || 0)) *
+          86400000)
           z0.myPercent = d1?.percentage / 100
           z0.trueCheck = ['fixedcost'].includes(d1?.units?.value)
           z0.check = Number(constructTotalCost * (d1?.percentage / 100))
@@ -828,6 +834,10 @@ const EnhancedTableToolbar = (props) => {
           )
           return z0
         })
+        console.log(
+          'Plot ps==>', plotPs
+        )
+
 
         setTimeout(async () => {
           // putToDb(constructPs,data,pId, partATotal,partBTotal, partCTotal, partDTotal  )
