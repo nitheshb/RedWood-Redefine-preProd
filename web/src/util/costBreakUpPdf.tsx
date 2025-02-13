@@ -828,14 +828,15 @@ const CostBreakUpPdf = ({
                     <div>
                       <section className="flex flex-row">
                         <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
-                          Cost Sheet
+                        {showOnly === 'payment_schedule' ? 'Payment Schedule' : 'Cost Sheet'}
                         </h6>
                       </section>
                       <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
-                        Quotation,Unit Cost Calculation.
+                      {showOnly === 'payment_schedule' 
+                      ? 'Schedule of payments and timelines' 
+                      : 'Quotation,Unit Cost Calculation.'}
                       </div>
 
-                      {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
                     </div>
 
                     <div></div>
@@ -1675,7 +1676,7 @@ const CostBreakUpPdf = ({
                       )}
                       {showOnly === 'payment_schedule' && (
                         <>
-                          <div className=" mt-4 border rounded-lg shadow-md overflow-hidden ">
+                          <div className=" mt-1 border rounded-lg shadow-md overflow-hidden ">
                             <table className="w-full border-b border-dashed">
                               <thead className="">
                                 {' '}
@@ -1792,7 +1793,7 @@ const CostBreakUpPdf = ({
                           </div>
                           {/* construction payment schedule */}
                           {selPhaseObj?.projectType?.name === 'Villas' && (
-                            <div className=" mt-4 border rounded-lg shadow-md overflow-hidden mb-16 ">
+                            <div className=" mt-4 border rounded-lg shadow-md overflow-hidden mb-24 ">
                               <table className="w-full border-b border-dashed">
                                 <thead className="">
                                   {' '}
@@ -1930,3 +1931,8 @@ const CostBreakUpPdf = ({
 }
 
 export default CostBreakUpPdf
+
+
+
+
+

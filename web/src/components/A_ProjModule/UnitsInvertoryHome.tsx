@@ -583,6 +583,7 @@ const UnitsInventoryHome = ({ project }) => {
                   pickCustomViewer={selSizeFun}
                   selProjectIs={selsize}
                   dropDownItemsA={sizeA}
+                  noBorder={true} 
                 />
                 {/* <DropDownSearchBar
                       type={'All Payments'}
@@ -654,7 +655,7 @@ const UnitsInventoryHome = ({ project }) => {
             source={undefined}
             unitDetails={undefined}
           /> */}
-            <FloordetailsSearch
+              <FloordetailsSearch
               pId={projectDetails?.uid}
               projectDetails={projectDetails}
               phaseFeed={phases}
@@ -671,9 +672,14 @@ const UnitsInventoryHome = ({ project }) => {
               setPhaseFun={setPhaseFun}
               selPhaseName={selPhaseName}
 
-            />
+            />            
           </div>
         )}
+
+
+
+
+
       </div>
     </section>
   )

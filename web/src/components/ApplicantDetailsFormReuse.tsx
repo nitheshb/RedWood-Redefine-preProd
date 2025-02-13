@@ -1505,7 +1505,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
   return (
     <div className="space-y-8">
       {forms.map((form, i) => (
-        <div key={form.id} className="border p-4 rounded-lg">
+        <div key={form.id} className="border p-2 rounded-lg">
           {/* <h2 className="text-lg font-semibold mb-4">Applicant {i + 1}</h2> */}
           <EmailForm
             onSubmitFun={(values, formikBag) =>
