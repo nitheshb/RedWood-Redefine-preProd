@@ -744,7 +744,7 @@ const EnhancedTableToolbar = (props) => {
         )
 
         const plotTotalCost = partATotal + partBTotal
-        const constructTotalCost = partCTotal + partDTotal
+        const constructTotalCost = partCTotal + partDTotal + partETotal
         let plotPs = []
         let constructPs = []
         const bookingAdvance = paymentScheduleObj?.filter(
@@ -753,33 +753,54 @@ const EnhancedTableToolbar = (props) => {
         const filLegalCharges = partB1?.filter(
           (d) => d?.component?.value === 'legal_charges'
         )
-console.log('Plot ps==>  befoer', paymentScheduleObj)
-let flatLegalFixedCosts = 0
-let bookingAdvanceCost = 0
-if(filLegalCharges && filLegalCharges?.length > 0){
-  flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
-}
-console.log('booking advance is', bookingAdvance)
-if(bookingAdvance && bookingAdvance?.length > 0){
-  console.log('booking advance is', bookingAdvance)
-  bookingAdvanceCost =bookingAdvance[0]?.percentage || 10
-}
-
+        console.log('Plot ps==>  befoer', paymentScheduleObj)
+        let flatLegalFixedCosts = 0
+        let bookingAdvanceCost = 0
+        if(filLegalCharges && filLegalCharges?.length > 0){
+          flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+        }
+        console.log('booking advance is', bookingAdvance)
+        if(bookingAdvance && bookingAdvance?.length > 0){
+          console.log('booking advance is', bookingAdvance)
+          bookingAdvanceCost =bookingAdvance[0]?.percentage || 10
+        }
 
         plotPs = paymentScheduleObj?.map((d1, inx) => {
           console.log('d1 is', d1)
           let applicablePlotCost = plotTotalCost- flatLegalFixedCosts
           const z = d1
 
-          z.value = ['fixedcost'].includes(d1?.units?.value)
-            ? Number(d1?.percentage)
-            : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+          console.log(' applicablePlotCost is', applicablePlotCost, flatLegalFixedCosts)
+
+          // z.value = ['fixedcost'].includes(d1?.units?.value)
+          //   ? Number(d1?.percentage)
+
+
+          //   : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+          if (d1.stage.value === 'Legal Charges') {
+            d1.percentage = Number(data?.legal_charges || 0)
+
+          }
+          if(!['costpersqft'].includes(d1?.units?.value)){
+
+            z.value = ['fixedcost'].includes(d1?.units?.value)
+              ? Number(d1?.percentage)
+              : inx ==1 ? Number(
+                (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - bookingAdvanceCost))
+
+              :  Number(
+                  ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
+                )
+                // z.value = applicablePlotCost
+              }else {
+                console.log('d1 is ',area,  d1?.units?.value,Number(d1?.percentage))
+
+                let calc =  CalculateComponentTotal(d1,area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
+                z.value = calc?.TotalNetSaleValueGsT
+              }
+              // z.value = applicablePlotCost
           z.schDate = data['booked_on'] +
           ((Number(d1?.zeroDay || 0)) * 86400000)
-
-
-
-
           if (['fixedcost'].includes(d1?.units?.value)) {
             z.elgible = true
             z.elgFrom = Timestamp.now().toMillis()
