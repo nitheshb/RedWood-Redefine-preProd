@@ -747,17 +747,35 @@ const EnhancedTableToolbar = (props) => {
         const constructTotalCost = partCTotal + partDTotal
         let plotPs = []
         let constructPs = []
+        const bookingAdvance = paymentScheduleObj?.filter(
+          (d) => d?.stage?.value === 'on_booking'
+        )
+        const filLegalCharges = partB1?.filter(
+          (d) => d?.component?.value === 'legal_charges'
+        )
 console.log('Plot ps==>  befoer', paymentScheduleObj)
+let flatLegalFixedCosts = 0
+let bookingAdvanceCost = 0
+if(filLegalCharges && filLegalCharges?.length > 0){
+  flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+}
+console.log('booking advance is', bookingAdvance)
+if(bookingAdvance && bookingAdvance?.length > 0){
+  console.log('booking advance is', bookingAdvance)
+  bookingAdvanceCost =bookingAdvance[0]?.percentage || 10
+}
+
+
         plotPs = paymentScheduleObj?.map((d1, inx) => {
           console.log('d1 is', d1)
+          let applicablePlotCost = plotTotalCost- flatLegalFixedCosts
           const z = d1
 
           z.value = ['fixedcost'].includes(d1?.units?.value)
             ? Number(d1?.percentage)
-            : Number((plotTotalCost * (d1?.percentage / 100)).toFixed(2))
+            : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
           z.schDate = data['booked_on'] +
-          ((Number(d1?.zeroDay || 0)) *
-          86400000)
+          ((Number(d1?.zeroDay || 0)) * 86400000)
 
 
 
