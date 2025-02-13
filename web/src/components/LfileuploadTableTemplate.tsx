@@ -756,8 +756,7 @@ console.log('Plot ps==>  befoer', paymentScheduleObj)
             ? Number(d1?.percentage)
             : Number((plotTotalCost * (d1?.percentage / 100)).toFixed(2))
           z.schDate = data['booked_on'] +
-          ((Number(d1?.zeroDay || 0)) *
-          86400000)
+          ((Number(d1?.zeroDay || 0)) * 86400000)
 
 
 
