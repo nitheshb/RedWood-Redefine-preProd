@@ -837,7 +837,7 @@ console.log('Plot ps==>  befoer', paymentScheduleObj)
         console.log(
           'Plot ps==>', plotPs
         )
-         return
+         
 
         setTimeout(async () => {
           // putToDb(constructPs,data,pId, partATotal,partBTotal, partCTotal, partDTotal  )
