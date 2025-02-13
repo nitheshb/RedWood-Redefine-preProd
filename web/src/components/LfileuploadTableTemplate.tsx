@@ -795,7 +795,7 @@ console.log('Plot ps==>  befoer', paymentScheduleObj)
           z.value = ['fixedcost'].includes(d1?.units?.value)
             ? Number(d1?.percentage)
             : Number((plotTotalCost * (d1?.percentage / 100)).toFixed(2))
-          z.schDate = data['booked_on'] +
+          z0.schDate = data['booked_on'] +
           ((Number(d1?.zeroDay || 0)) *
           86400000)
           z0.myPercent = d1?.percentage / 100
@@ -837,7 +837,7 @@ console.log('Plot ps==>  befoer', paymentScheduleObj)
         console.log(
           'Plot ps==>', plotPs
         )
-         
+
 
         setTimeout(async () => {
           // putToDb(constructPs,data,pId, partATotal,partBTotal, partCTotal, partDTotal  )
