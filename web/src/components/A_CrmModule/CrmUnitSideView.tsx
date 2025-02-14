@@ -637,7 +637,7 @@ export default function UnitSideViewCRM({
         selCustomerPayload?.kyc_status &&
         selCustomerPayload?.man_cs_approval && !balanceRestrict
       ) {
-        return
+
         setUnitStatusObj(newStatus)
         const updatedPs = fullPs.map((item) => {
           if (item.order === 2) {
@@ -672,7 +672,7 @@ export default function UnitSideViewCRM({
         newStatus?.value === 'ats_pipeline' &&
         // selCustomerPayload?.T_balance <= 0 &&
         selCustomerPayload?.ats_creation &&
-        selCustomerPayload?.both_ats_approval
+        selCustomerPayload?.both_ats_approval && !balanceRestrict
       ) {
         const updatedPs = fullPs.map((item) => {
           if (item.order === 3) {
@@ -705,7 +705,7 @@ export default function UnitSideViewCRM({
           enqueueSnackbar
         )
       }else if (
-        newStatus?.value === 'ATS'
+        newStatus?.value === 'ATS' && !balanceRestrict
         // &&
         // selCustomerPayload?.T_balance <= 0
 
@@ -727,7 +727,7 @@ export default function UnitSideViewCRM({
         newStatus?.value === 'registered'
         //  &&
         // selCustomerPayload?.T_balance <= 0
-
+        && !balanceRestrict
       ) {
         setUnitStatusObj(newStatus)
         dataObj.fullPs = selCustomerPayload?.fullPs
@@ -744,6 +744,7 @@ export default function UnitSideViewCRM({
         )
       }else if (
         newStatus?.value === 'possession'
+        && !balanceRestrict
         // &&
         // selCustomerPayload?.T_balance <= 0
 
@@ -799,7 +800,12 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
           errorList = errorList + 'Manger or Customer Costsheet Approval,'
         }
 
-        errorList = errorList + 'is mandatory steps are missing'
+        if (
+          selCustomerPayload?.T_elgible_balance > 0
+        ) {
+          errorList = errorList + 'Payment Due exists'
+        }
+        errorList = errorList +'...needs to be completed'
         setNewStatusErrorList(errorList)
         enqueueSnackbar(`${errorList}`, {
           variant: 'warning',

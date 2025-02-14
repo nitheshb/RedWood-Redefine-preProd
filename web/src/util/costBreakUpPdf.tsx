@@ -930,12 +930,15 @@ const CostBreakUpPdf = ({
                                         {d1?.component?.label}
                                       </th>
                                       <td className="w-[15%]  px-2 text-[12px] text-right  ">
-                                        <TextFieldFlat
+                                      {!(projectDetails?.allowSalesExCsEdit || false) && Number(d1?.charges)?.toLocaleString(
+                                          'en-IN'
+                                        )}
+                                     {(projectDetails?.allowSalesExCsEdit || false) &&   <TextFieldFlat
                                           label=""
                                           className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
                                           name="ratePerSqft"
                                           onChange={(e) => {
-                                            // setNewSqftPrice(e.target.value)
+
                                             console.log('iam hre')
                                             if (
                                               d1?.component?.value ===
@@ -963,39 +966,17 @@ const CostBreakUpPdf = ({
                                               d1,
                                               e.target.value
                                             )
-                                            // formik.setFieldValue(
-                                            //   'ratePerSqft',
-                                            //   e.target.value
-                                            // )
-                                            // console.log(
-                                            //   'what is =it',
-                                            //   value.value
-                                            // )
-                                            // formik.setFieldValue(
-                                            //   `${d1?.component?.value}`,
-                                            //   value
-                                            // )
+
                                           }}
-                                          // value={formik.values[`unit_cost_charges`]}
+
                                           value={d1?.charges}
-                                          // value={newSqftPrice}
-                                          // type="number"
-                                        />
+
+                                        />}
                                         <TextFieldFlat
                                           className=" hidden  "
                                           label=""
                                           name={d1?.component?.value}
-                                          // onChange={(value) => {
-                                          //   console.log('what is =it', value.value)
-                                          //   formik.setFieldValue(
-                                          //     `${d1?.component?.value}`,
-                                          //     value
-                                          //   )
-                                          // }}
-                                          // value={
-                                          //   formik.values[`${d1?.component?.value}`]
-                                          // }
-                                          // value={d1?.charges}
+
                                           type="number"
                                         />
                                       </td>
@@ -1225,7 +1206,12 @@ const CostBreakUpPdf = ({
                                             {d1?.component?.label}
                                           </th>
                                           <td className="w-[15%]  px-2 text-[12px] text-right  ">
-                                            <TextFieldFlat
+                                          {!(projectDetails?.allowSalesExCsEdit || false) && Number(d1?.charges)?.toLocaleString(
+                                          'en-IN'
+                                        )}
+
+                                         { (projectDetails?.allowSalesExCsEdit || false)
+                                   && <TextFieldFlat
                                               label=""
                                               className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
                                               name="constRatePerSqft"
@@ -1272,22 +1258,12 @@ const CostBreakUpPdf = ({
                                               value={d1?.charges}
                                               // value={newSqftPrice}
                                               // type="number"
-                                            />
+                                            />}
                                             <TextFieldFlat
                                               className=" hidden  "
                                               label=""
                                               name={d1?.component?.value}
-                                              // onChange={(value) => {
-                                              //   console.log('what is =it', value.value)
-                                              //   formik.setFieldValue(
-                                              //     `${d1?.component?.value}`,
-                                              //     value
-                                              //   )
-                                              // }}
-                                              // value={
-                                              //   formik.values[`${d1?.component?.value}`]
-                                              // }
-                                              // value={d1?.charges}
+
                                               type="number"
                                             />
                                           </td>
