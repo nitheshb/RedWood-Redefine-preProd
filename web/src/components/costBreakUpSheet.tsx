@@ -710,7 +710,7 @@ console.log('customer info', myBookingPayload)
         </Dialog.Title>
       </div>
       {showUnitDetails && (
-                    <div className="py-3 grid grid-cols-3 mb-2">
+                    <div className="py-3  mx-4 grid grid-cols-3 mb-2">
                       <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md">
                         <section className="flex flow-row justify-between mb-1">
                           <div className="font-md text-xs text-gray-700 tracking-wide">
@@ -861,7 +861,7 @@ console.log('customer info', myBookingPayload)
                     onStep
                   ) && (
                     <div className="">
-                      <div className="flex flex-col  border mx-0 bg-[#F8FAFC] ">
+                      <div className="flex flex-col rounded-md  border mx-0 bg-[#F8FAFC] ">
                         <div className="">
                           <Formik
                             enableReinitialize={true}
@@ -957,8 +957,8 @@ console.log('customer info', myBookingPayload)
                                   )}
                                 </section>
 
-                                <div className="flex mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white  shadow-lg absolute bottom-0  w-full">
-                                <div className="inline-block mt-4">
+                                <div className="flex z-10 flex-row justify-between items-center pr-6 bg-white shadow-lg absolute bottom-0 w-full py-3">
+                                <div className="inline-block ml-8 ">
                                       <PdfInvoiceGenerator
                                         user={user}
                                         selUnitDetails={selUnitDetails}
@@ -984,13 +984,12 @@ console.log('customer info', myBookingPayload)
                                       />
 
 
-                                    </div>
+                                  </div>
                                   <div className="mt-2 text-right md:space-x-3 md:block flex flex-row-reverse justify-between mb-3">
 
                                     <section className='flex gap-2'>
                                     <button
-                                      className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-bg-gradient-to-r from-violet-600 to-indigo-600
+                                      className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none hover:bg-[#5671fc] bg-gradient-to-r from-violet-600 to-indigo-600
 text-black
 
  duration-200 ease-in-out
@@ -1002,9 +1001,9 @@ transition
                                       onClick={()=>{
                                         setIsMover(false)
                                       }}
-                                      // onClick={() => submitFormFun(formik)}
+                                  
                                     >
-                                      {/* {loading && <Loader />} */}
+                               
                                       Save
                                     </button>
                                     {[
@@ -1026,10 +1025,10 @@ transition
                                         onClick={()=>{
                                           setIsMover(true)
                                         }}
-                                        // onClick={() => submitFormFun(formik)}
+                                      
                                       >
-                                        {/* {loading && <Loader />} */}
-                                        <span>Save & Next</span>
+                                 
+                                        <span>Save & Next new</span>
                                       </button>
                                     )}
                                     </section>

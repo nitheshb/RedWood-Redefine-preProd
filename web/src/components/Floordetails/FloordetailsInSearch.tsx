@@ -959,7 +959,7 @@ const FloordetailsSearch = ({
                   </button>
                 </section>
               </section>
-              <section className="text-sm mt-1 pr-2 font-blue text-[13px] italic flex flex-row ">
+              <section className="text-sm mt-1  pr-2 font-blue text-[13px] italic flex flex-row ">
                 {/* <span className="relative  flex flex-row items-center w-auto text-sm font-bold leading-none pl-0 mt-[px]">
 
                   <AssigedToDropComp
