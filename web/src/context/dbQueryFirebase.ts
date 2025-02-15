@@ -5447,6 +5447,7 @@ export const updateUnitStatus = async (
   enqueueSnackbar
 ) => {
   try {
+    const unitId = selCustomerPayload?.id
     console.log('data is===>', selCustomerPayload?.id, data)
     await updateDoc(doc(db, `${orgId}_units`, selCustomerPayload?.id), {
       fullPs: data?.fullPs,
