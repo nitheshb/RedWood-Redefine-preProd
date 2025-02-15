@@ -326,7 +326,7 @@ const ProjectsMHomeBody = ({
                 {[
                   { item: 'Total', value: soldUnitCount || 0 },
                   { item: 'Booked', value: bookUnitCount || 0 },
-                  { item: 'Agreement', value: project?.atsCount || 0 },
+                  { item: 'Allotment', value: project?.s_agreeCount || 0 },
                 ].map((data, i) => (
                   <div
                     className=" w-1/4  mx-1"
@@ -346,8 +346,9 @@ const ProjectsMHomeBody = ({
               </div>
               <div className="flex flex-row justify-between px-1 mt-3">
                 {[
+                  { item: 'Agreement', value: project?.atsCount || 0 },
                   { item: 'Registration', value: project?.s_regisCount || 0 },
-                  { item: 'Construction', value: s_constCount || 0 },
+                  // { item: 'Construction', value: s_constCount || 0 },
                   { item: 'Possession', value: s_possCount || 0 },
                 ].map((data, i) => (
                   <div

@@ -5469,27 +5469,20 @@ export const updateUnitStatus = async (
         availableCount: data?.status === 'available' ? 1: 0,
         cancelledCount: data?.status === 'available' ? 1: 0,
         soldUnitCount: data?.status === 'available' ? -1: 0,
-        bookUnitCount: ['booked'].includes(statusVal) ? 1 : 0,
-        s_agreeCount: ['agreement_pipeline'].includes(statusVal) ? 1 : 0,
-        atsCount: ['ATS'].includes(statusVal) ? 1 : 0,
-        s_regisCount: ['registered'].includes(statusVal) ? 1 : 0,
-        s_possCount: ['possession'].includes(statusVal) ? 1 : 0,
-        blockedUnitCount: ['blocked'].includes(statusVal) ? 1 : 0,
-        custBlockCount: ['customer_blocked'].includes(statusVal) ? 1 : 0,
-        mangBlockCount: ['management_blocked'].includes(statusVal) ? 1 : 0,
+        bookUnitCount: ['booked'].includes(oldStatus) ? -1 : ['booked'].includes(statusVal) ? 1 : 0,
+        s_agreeCount: ['agreement_pipeline'].includes(oldStatus) ? -1 : ['agreement_pipeline'].includes(statusVal) ? 1 : 0,
+        atsCount:['ATS'].includes(oldStatus) ? -1 : ['ATS'].includes(statusVal) ? 1 : 0,
+        s_regisCount: ['registered'].includes(oldStatus) ? -1 : ['registered'].includes(statusVal) ? 1 : 0,
+        s_possCount: ['possession'].includes(oldStatus) ? -1 : ['possession'].includes(statusVal) ? 1 : 0,
+        blockedUnitCount: ['blocked'].includes(oldStatus) ? -1 : ['blocked'].includes(statusVal) ? 1 : 0,
+        custBlockCount: ['customer_blocked'].includes(oldStatus) ? -1 : ['customer_blocked'].includes(statusVal) ? 1 : 0,
+        mangBlockCount:['management_blocked'].includes(oldStatus) ? -1 : ['management_blocked'].includes(statusVal) ? 1 : 0,
         asset_value: 0,
         area:0
 
       }
 
-        yo.bookUnitCount= ['booked'].includes(oldStatus) ? -1 : 0
-        yo.s_agreeCount= ['agreement_pipeline'].includes(oldStatus) ? -1 : 0
-        yo.atsCount= ['ATS'].includes(oldStatus) ? -1 : 0
-        yo.s_regisCount= ['registered'].includes(oldStatus) ? -1 : 0
-        yo.s_possCount= ['possession'].includes(oldStatus) ? -1 : 0
-        yo.blockedUnitCount= ['blocked'].includes(oldStatus) ? -1 : 0
-        yo.custBlockCount= ['customer_blocked'].includes(oldStatus) ? -1 : 0
-        yo.mangBlockCount=['management_blocked'].includes(oldStatus) ? -1 : 0
+
 
 
     await updateProjectComputedData(orgId, selCustomerPayload?.pId, yo)
