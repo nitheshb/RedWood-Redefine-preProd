@@ -2683,77 +2683,13 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
   console.log('status is ==> ', status,  ['available'].includes(statusVal))
 
 
-  const yo = {
-    totalUnitCount: increment(1),
-    availableCount: ['available'].includes(statusVal) ? increment(1) : increment(0),
-    releasedUnitCount: ['released', 'yes'].includes(release_status) ? increment(1) : increment(0),
-    possessionUnitCount: [ 'yes'].includes(possession_status) ? increment(1) : increment(0),
+  let yo={
+status: statusVal,
+release_status: release_status,
+possession_status :possession_status,
+asset_value: 0,
+area:0}
 
-    bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
-    atsCount: ['ats_pipeline'].includes(statusVal)
-      ? increment(1)
-      : increment(0),
-    s_agreeCount: ['agreement_pipeline'].includes(statusVal)
-      ? increment(1)
-      : increment(0),
-    s_regisCount: ['registered_pipeline'].includes(statusVal)
-      ? increment(1)
-      : increment(0),
-
-
-    custBlockCount:
-      statusVal === 'customer_blocked' ? increment(1) : increment(0),
-    mangBlockCount:
-      statusVal === 'management_blocked' ? increment(1) : increment(0),
-    soldUnitCount: [
-      'sold',
-      'ats_pipeline',
-      'agreement_pipeline',
-      'booked',
-    ].includes(statusVal)
-      ? increment(1)
-      : increment(0),
-    blockedUnitCount: ['customer_blocked', 'management_blocked'].includes(
-      statusVal
-    )
-      ? increment(1)
-      : increment(0),
-    // totalValue: increment(assetVal),
-    soldValue: [
-      'sold',
-      'ats_pipeline',
-      'agreement_pipeline',
-      'booked',
-    ].includes(statusVal)
-      ? increment(assetVal)
-      : increment(0),
-    custBlockValue: ['customer_blocked'].includes(statusVal)
-      ? increment(assetVal)
-      : increment(0),
-    mangBlockValue: ['management_blocked'].includes(statusVal)
-      ? increment(assetVal)
-      : increment(0),
-    blockedValue: ['customer_blocked', 'management_blocked'].includes(statusVal)
-      ? increment(assetVal)
-      : increment(0),
-    // totalEstPlotVal: increment(assetVal),
-    // totalArea: increment(area),
-    soldArea: ['sold', 'ats_pipeline', 'agreement_pipeline', 'booked'].includes(
-      statusVal
-    )
-      ? increment(area)
-      : increment(0),
-    custBlockArea: ['customer_blocked'].includes(statusVal)
-      ? increment(area)
-      : increment(0),
-    mangBlockArea: ['management_blocked'].includes(statusVal)
-      ? increment(area)
-      : increment(0),
-    blockedArea: ['customer_blocked', 'management_blocked'].includes(statusVal)
-      ? increment(area)
-      : increment(0),
-    // totalPlotArea: increment(area),
-  }
   console.log('yo', yo, statusVal === 'available', data)
 try {
 
@@ -2838,6 +2774,8 @@ console.log('error in uploading file with data', data, error)
 
   return
 }
+
+
 export const editPlotUnit = async (
   orgId,
   uid,
@@ -3553,10 +3491,86 @@ console.log('error in master update ', error)
 
 }
 export const updateProjectComputedData = async (orgId, id, data) => {
+  const statusVal = data?.status
+  const release_status = data?.release_status
+  const possession_status = data?.possession_status
+  const assetVal = data?.asset_value
+  const area = data?.area
+  const yo = {
+    totalUnitCount: increment(1),
+    availableCount: ['available'].includes(statusVal) ? increment(1) : increment(0),
+    releasedUnitCount: ['released', 'yes'].includes(release_status) ? increment(1) : increment(0),
+    possessionUnitCount: ['yes'].includes(possession_status) ? increment(1) : increment(0),
+
+    bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
+    atsCount: ['ats_pipeline'].includes(statusVal)
+      ? increment(1)
+      : increment(0),
+    s_agreeCount: ['agreement_pipeline'].includes(statusVal)
+      ? increment(1)
+      : increment(0),
+    s_regisCount: ['registered_pipeline'].includes(statusVal)
+      ? increment(1)
+      : increment(0),
+
+
+    custBlockCount:
+      statusVal === 'customer_blocked' ? increment(1) : increment(0),
+    mangBlockCount:
+      statusVal === 'management_blocked' ? increment(1) : increment(0),
+    soldUnitCount: [
+      'sold',
+      'ats_pipeline',
+      'agreement_pipeline',
+      'booked',
+    ].includes(statusVal)
+      ? increment(1)
+      : increment(0),
+    blockedUnitCount: ['customer_blocked', 'management_blocked'].includes(
+      statusVal
+    )
+      ? increment(1)
+      : increment(0),
+    // totalValue: increment(assetVal),
+    soldValue: [
+      'sold',
+      'ats_pipeline',
+      'agreement_pipeline',
+      'booked',
+    ].includes(statusVal)
+      ? increment(assetVal)
+      : increment(0),
+    custBlockValue: ['customer_blocked'].includes(statusVal)
+      ? increment(assetVal)
+      : increment(0),
+    mangBlockValue: ['management_blocked'].includes(statusVal)
+      ? increment(assetVal)
+      : increment(0),
+    blockedValue: ['customer_blocked', 'management_blocked'].includes(statusVal)
+      ? increment(assetVal)
+      : increment(0),
+    // totalEstPlotVal: increment(assetVal),
+    // totalArea: increment(area),
+    soldArea: ['sold', 'ats_pipeline', 'agreement_pipeline', 'booked'].includes(
+      statusVal
+    )
+      ? increment(area)
+      : increment(0),
+    custBlockArea: ['customer_blocked'].includes(statusVal)
+      ? increment(area)
+      : increment(0),
+    mangBlockArea: ['management_blocked'].includes(statusVal)
+      ? increment(area)
+      : increment(0),
+    blockedArea: ['customer_blocked', 'management_blocked'].includes(statusVal)
+      ? increment(area)
+      : increment(0),
+    // totalPlotArea: increment(area),
+  }
   try {
     const washingtonRef = doc(db, `${orgId}_projects`, id)
     console.log('check add LeadLog', washingtonRef, id)
-    await updateDoc(washingtonRef, data)
+    await updateDoc(washingtonRef, yo)
   } catch (error) {
     console.log('updateProjectComputedData error in updation', error)
     // await setDoc(doc(db, `${orgId}_leads_notes`, id), yo)
@@ -6441,6 +6455,14 @@ export const uploadBookedUnitToDb = async (
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       ...data,
     })
+    let yo={
+      status: data?.status,
+      release_status: '',
+      possession_status :'',
+      asset_value: data?.T_total || 0.5,
+      area:data?.area || 0}
+  const y = await updateProjectComputedData(orgId, projectId, yo)
+
     const { data1, error1 } = await supabase.from(`${orgId}_unit_logs`).insert([
       {
         type: 'sts_change',

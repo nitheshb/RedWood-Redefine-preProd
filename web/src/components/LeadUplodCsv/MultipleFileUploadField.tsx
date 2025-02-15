@@ -612,18 +612,19 @@ export function MultipleFileUploadField({
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
               const currentStatus = dRow['Unit Status']
-              let newCurrentStatus = ''
-              if (currentStatus == 'Available') {
-                newCurrentStatus = 'available'
-              } else if (currentStatus == 'Sold') {
-                newCurrentStatus = 'booked'
-              } else if (currentStatus == 'Blocked_M') {
-                newCurrentStatus = 'management_blocked'
-              } else if (currentStatus == 'Blocked') {
-                newCurrentStatus = 'blocked'
-              } else {
-                newCurrentStatus = 'available'
-              }
+              let newCurrentStatus =[ 'booked','management_blocked', 'agreement_pipeline','ats_pipeline','registered_pipeline'].includes(currentStatus) ?   currentStatus :  'available'
+              // if (currentStatus == 'Available') {
+              //   newCurrentStatus = 'available'
+              // } else if (currentStatus == 'Sold') {
+              //   newCurrentStatus = 'booked'
+              // } else if (currentStatus == 'Blocked_M') {
+              //   newCurrentStatus = 'management_blocked'
+              // } else if (currentStatus == 'Blocked') {
+              //   newCurrentStatus = 'blocked'
+              // } else {
+              //   newCurrentStatus = 'available'
+              // }
+
 
               const foundLength = await checkIfUnitAlreadyExists(
                 `${orgId}_units`,
@@ -819,7 +820,7 @@ export function MultipleFileUploadField({
                 survey_no: dRow['Survey No'],
                 landOwnerName: dRow['Land Owner Name'],
 
-                status: dRow['Availablity Status'], //filter and send valid values
+                // status: dRow['Availablity Status'], //filter and send valid values
                 unitStatus: dRow['Unit Status'],
 
 
