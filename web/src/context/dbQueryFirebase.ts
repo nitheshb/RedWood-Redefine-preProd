@@ -2671,6 +2671,7 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
     west_sch_by,
     status,
     release_status,
+    possession_status,
     mortgage_type,
   } = data
 
@@ -2684,6 +2685,10 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
 
   const yo = {
     totalUnitCount: increment(1),
+    availableCount: ['available'].includes(statusVal) ? increment(1) : increment(0),
+    releasedUnitCount: ['released', 'yes'].includes(release_status) ? increment(1) : increment(0),
+    possessionUnitCount: [ 'yes'].includes(possession_status) ? increment(1) : increment(0),
+
     bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
     atsCount: ['ats_pipeline'].includes(statusVal)
       ? increment(1)
@@ -2695,7 +2700,7 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
       ? increment(1)
       : increment(0),
 
-    availableCount: ['available'].includes(statusVal) ? increment(1) : increment(0),
+
     custBlockCount:
       statusVal === 'customer_blocked' ? increment(1) : increment(0),
     mangBlockCount:
@@ -2750,10 +2755,14 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
     // totalPlotArea: increment(area),
   }
   console.log('yo', yo, statusVal === 'available', data)
+try {
+
 
   const x = await addDoc(collection(db, `${orgId}_units`), data)
   const y = await updateProjectComputedData(orgId, pId, yo)
-
+} catch (error) {
+console.log('error in uploading file with data', data, error)
+}
   return
   // await addLeadLog(x.id, {
   //   s: 's',
@@ -3549,7 +3558,7 @@ export const updateProjectComputedData = async (orgId, id, data) => {
     console.log('check add LeadLog', washingtonRef, id)
     await updateDoc(washingtonRef, data)
   } catch (error) {
-    console.log('error in updation', error)
+    console.log('updateProjectComputedData error in updation', error)
     // await setDoc(doc(db, `${orgId}_leads_notes`, id), yo)
   }
 }

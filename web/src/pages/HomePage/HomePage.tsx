@@ -795,7 +795,14 @@ const HomePage = () => {
                                           <div className="flex flex-row">
                                             <div className="w-3.5 h-3.5 bg-emerald-500 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
+                                            <CountUpComp
+                                            value={projects.reduce(
+                                              (acc, project) =>
+                                                acc +
+                                                (project?.possessionUnitCount || 0),
                                               0
+                                            )}
+                                          />
                                             </div>
                                             <div className="text-slate-400  font-medium  text-[12px] ml-[2px] mt-[10px]">
                                               Posession
@@ -805,7 +812,14 @@ const HomePage = () => {
                                           <div className="flex flex-row mt-3">
                                             <div className="w-3.5 h-3.5 bg-violet-500 mt-[9px]" />
                                             <div className="text-sky-950 text-2xl font-semibold font-['Manrope'] ml-3">
+                                            <CountUpComp
+                                            value={projects.reduce(
+                                              (acc, project) =>
+                                                acc +
+                                                (project?.releasedUnitCount || 0),
                                               0
+                                            )}
+                                          />
                                             </div>
                                             <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
                                               Released
@@ -1212,7 +1226,7 @@ const HomePage = () => {
 
                                           <div className='flex'>
 
-                                          <ProjectFilterDropdown 
+                                          <ProjectFilterDropdown
                                            selectedFilter={selectedFilter}
                                            setSelectedFilter={setSelectedFilter}
                                            />
@@ -1249,9 +1263,9 @@ const HomePage = () => {
                                       </div>
                                       <section className="mx-2 rounded-xl bg-white shadow p-2">
                                         {projects
-                                            .filter(project => 
-                                              selectedFilter === 'All' 
-                                              ? true 
+                                            .filter(project =>
+                                              selectedFilter === 'All'
+                                              ? true
                                               : project?.projectType?.name === selectedFilter
                                             )
                                         .map((project) => (
