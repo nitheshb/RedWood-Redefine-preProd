@@ -3503,7 +3503,7 @@ export const updateProjectComputedData = async (orgId, id, data) => {
     totalUnitCount: increment(data?.newUnit || 0),
     availableCount: ['available'].includes(statusVal) ? increment(availableCount) : increment(availableCount),
     releasedUnitCount: ['released', 'yes'].includes(release_status) ? increment(1) : increment(0),
-    possessionUnitCount: ['yes'].includes(possession_status) ? increment(1) : increment(0),
+    // possessionUnitCount: ['yes'].includes(possession_status) ? increment(1) : increment(0),
 
     bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
     atsCount: ['ATS'].includes(statusVal)
@@ -3513,6 +3513,9 @@ export const updateProjectComputedData = async (orgId, id, data) => {
       ? increment(1)
       : increment(0),
     s_regisCount: ['registered'].includes(statusVal)
+      ? increment(1)
+      : increment(0),
+    s_possCount: ['possession'].includes(statusVal)
       ? increment(1)
       : increment(0),
 
@@ -3558,6 +3561,9 @@ export const updateProjectComputedData = async (orgId, id, data) => {
     blockedValue: ['customer_blocked', 'management_blocked'].includes(statusVal)
       ? increment(assetVal)
       : increment(0),
+    possessionValue: ['possession'].includes(statusVal)
+      ? increment(assetVal)
+      : increment(0),
     // totalEstPlotVal: increment(assetVal),
     // totalArea: increment(area),
     soldArea: [ 'sold',
@@ -3578,6 +3584,9 @@ export const updateProjectComputedData = async (orgId, id, data) => {
       ? increment(area)
       : increment(0),
     blockedArea: ['customer_blocked', 'management_blocked'].includes(statusVal)
+      ? increment(area)
+      : increment(0),
+    possessionArea: ['possession'].includes(statusVal)
       ? increment(area)
       : increment(0),
     // totalPlotArea: increment(area),

@@ -799,7 +799,7 @@ const HomePage = () => {
                                             value={projects.reduce(
                                               (acc, project) =>
                                                 acc +
-                                                (project?.possessionUnitCount || 0),
+                                                (project?.s_possCount || 0),
                                               0
                                             )}
                                           />
