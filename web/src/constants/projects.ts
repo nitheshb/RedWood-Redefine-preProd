@@ -255,6 +255,16 @@ export const releaseStausList = [
   { label: 'Released', value: 'released' },
   { label: 'Un-Released', value: 'un-released' },
 ]
+
+
+export const possessionStatusList = [
+  { label: 'Possession Status', value: '' },
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
+
+]
+
+
 export const mortgageType = [
   { label: 'Select Mortgage', value: '' },
   { label: 'NA', value: 'na' },
