@@ -654,6 +654,7 @@ const AddUnit = ({
       orgId,
       unitDetails?.uid,
       plotData1,
+      unitDetails?.status || '',
       user?.email,
       `Unit Created by form `,
       enqueueSnackbar

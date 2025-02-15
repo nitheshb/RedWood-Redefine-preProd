@@ -2683,14 +2683,28 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
   console.log('status is ==> ', status,  ['available'].includes(statusVal))
 
 
-  let yo={
-status: statusVal,
-release_status: release_status,
-possession_status :possession_status,
-newUnit: 1,
-availableCount: 1,
-asset_value: 0,
-area:0}
+ let oldStatus = ''
+
+let yo={
+  status: data?.status,
+  release_status: release_status,
+  possession_status :possession_status,
+  newUnit: 1,
+  availableCount: data?.status === 'available' ? 1: 0,
+  cancelledCount: data?.status === 'available' ? 1: 0,
+  soldUnitCount: data?.status === 'available' ? -1: 0,
+  bookUnitCount: ['booked'].includes(oldStatus) ? -1 : ['booked'].includes(statusVal) ? 1 : 0,
+  s_agreeCount: ['agreement_pipeline'].includes(oldStatus) ? -1 : ['agreement_pipeline'].includes(statusVal) ? 1 : 0,
+  atsCount:['ATS'].includes(oldStatus) ? -1 : ['ATS'].includes(statusVal) ? 1 : 0,
+  s_regisCount: ['registered'].includes(oldStatus) ? -1 : ['registered'].includes(statusVal) ? 1 : 0,
+  s_possCount: ['possession'].includes(oldStatus) ? -1 : ['possession'].includes(statusVal) ? 1 : 0,
+  blockedUnitCount: ['blocked'].includes(oldStatus) ? -1 : ['blocked'].includes(statusVal) ? 1 : 0,
+  custBlockCount: ['customer_blocked'].includes(oldStatus) ? -1 : ['customer_blocked'].includes(statusVal) ? 1 : 0,
+  mangBlockCount:['management_blocked'].includes(oldStatus) ? -1 : ['management_blocked'].includes(statusVal) ? 1 : 0,
+  asset_value: 0,
+  area:0
+
+}
 
   console.log('yo', yo, statusVal === 'available', data)
 try {
@@ -2782,6 +2796,7 @@ export const editPlotUnit = async (
   orgId,
   uid,
   data,
+  oldStatusValue,
   by,
   msg,
   enqueueSnackbar
@@ -2842,6 +2857,27 @@ export const editPlotUnit = async (
     await updateDoc(doc(db, `${orgId}_units`, uid), {
       ...data,
     })
+let statusVal = oldStatusValue?.toLowerCase()=== data?.status?.toLowerCase() ? '' : (data?.status?.toLowerCase() || '')
+let oldStatus = oldStatusValue?.toLowerCase()=== data?.status?.toLowerCase() ? '' : (oldStatusValue?.toLowerCase() || '')
+    let yo={
+      status: data?.status,
+      newUnit: 0,
+      availableCount: data?.status === 'available' ? 1: 0,
+      cancelledCount: data?.status === 'available' ? 1: 0,
+      soldUnitCount: data?.status === 'available' ? -1: 0,
+      bookUnitCount: ['booked'].includes(oldStatus) ? -1 : ['booked'].includes(statusVal) ? 1 : 0,
+      s_agreeCount: ['agreement_pipeline'].includes(oldStatus) ? -1 : ['agreement_pipeline'].includes(statusVal) ? 1 : 0,
+      atsCount:['ATS'].includes(oldStatus) ? -1 : ['ATS'].includes(statusVal) ? 1 : 0,
+      s_regisCount: ['registered'].includes(oldStatus) ? -1 : ['registered'].includes(statusVal) ? 1 : 0,
+      s_possCount: ['possession'].includes(oldStatus) ? -1 : ['possession'].includes(statusVal) ? 1 : 0,
+      blockedUnitCount: ['blocked'].includes(oldStatus) ? -1 : ['blocked'].includes(statusVal) ? 1 : 0,
+      custBlockCount: ['customer_blocked'].includes(oldStatus) ? -1 : ['customer_blocked'].includes(statusVal) ? 1 : 0,
+      mangBlockCount:['management_blocked'].includes(oldStatus) ? -1 : ['management_blocked'].includes(statusVal) ? 1 : 0,
+      asset_value: 0,
+      area:0
+
+    }
+    const y = await updateProjectComputedData(orgId, pId, yo)
     enqueueSnackbar('Updated successfully', {
       variant: 'success',
     })
