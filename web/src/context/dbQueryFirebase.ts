@@ -3506,13 +3506,13 @@ export const updateProjectComputedData = async (orgId, id, data) => {
     possessionUnitCount: ['yes'].includes(possession_status) ? increment(1) : increment(0),
 
     bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
-    atsCount: ['ats_pipeline'].includes(statusVal)
+    atsCount: ['ATS'].includes(statusVal)
       ? increment(1)
       : increment(0),
     s_agreeCount: ['agreement_pipeline'].includes(statusVal)
       ? increment(1)
       : increment(0),
-    s_regisCount: ['registered_pipeline'].includes(statusVal)
+    s_regisCount: ['registered'].includes(statusVal)
       ? increment(1)
       : increment(0),
 
@@ -3524,6 +3524,9 @@ export const updateProjectComputedData = async (orgId, id, data) => {
     soldUnitCount: [
       'sold',
       'ats_pipeline',
+      'possession',
+      'registered',
+      'ATS',
       'agreement_pipeline',
       'booked',
     ].includes(statusVal)
@@ -3538,6 +3541,9 @@ export const updateProjectComputedData = async (orgId, id, data) => {
     soldValue: [
       'sold',
       'ats_pipeline',
+      'possession',
+      'registered',
+      'ATS',
       'agreement_pipeline',
       'booked',
     ].includes(statusVal)
@@ -3554,7 +3560,13 @@ export const updateProjectComputedData = async (orgId, id, data) => {
       : increment(0),
     // totalEstPlotVal: increment(assetVal),
     // totalArea: increment(area),
-    soldArea: ['sold', 'ats_pipeline', 'agreement_pipeline', 'booked'].includes(
+    soldArea: [ 'sold',
+      'ats_pipeline',
+      'possession',
+      'registered',
+      'ATS',
+      'agreement_pipeline',
+      'booked',].includes(
       statusVal
     )
       ? increment(area)
