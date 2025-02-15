@@ -629,7 +629,8 @@ export default function UnitSideViewCRM({
       setLoader(true)
 
       // if newStatus  make check list
-      const dataObj = { status: newStatus?.value }
+      const dataObj = { status: newStatus?.value , oldStatus: ''}
+      dataObj.oldStatus = selCustomerPayload?.status || ''
       console.log('payment stuff is ', selCustomerPayload)
       const { fullPs } = selCustomerPayload
       dataObj[`${newStatus?.value}_on`] = Timestamp.now().toMillis()
@@ -664,7 +665,7 @@ export default function UnitSideViewCRM({
             dataObj.eventKey= 'alloted_on'
         updateUnitStatus(
           orgId,
-          selCustomerPayload?.id,
+          selCustomerPayload,
           dataObj,
           user.email,
           enqueueSnackbar
@@ -700,7 +701,7 @@ export default function UnitSideViewCRM({
         setUnitStatusObj(newStatus)
         updateUnitStatus(
           orgId,
-          selCustomerPayload?.id,
+          selCustomerPayload,
           dataObj,
           user.email,
           enqueueSnackbar
@@ -719,7 +720,7 @@ export default function UnitSideViewCRM({
 
         updateUnitStatus(
           orgId,
-          selCustomerPayload?.id,
+          selCustomerPayload,
           dataObj,
           user.email,
           enqueueSnackbar
@@ -738,7 +739,7 @@ export default function UnitSideViewCRM({
 
         updateUnitStatus(
           orgId,
-          selCustomerPayload?.id,
+          selCustomerPayload,
           dataObj,
           user.email,
           enqueueSnackbar
@@ -759,7 +760,7 @@ export default function UnitSideViewCRM({
 
         updateUnitStatus(
           orgId,
-          selCustomerPayload?.id,
+          selCustomerPayload,
           dataObj,
           user.email,
           enqueueSnackbar

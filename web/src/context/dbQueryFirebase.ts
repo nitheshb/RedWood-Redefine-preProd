@@ -3499,42 +3499,51 @@ export const updateProjectComputedData = async (orgId, id, data) => {
   const assetVal = data?.asset_value
   const area = data?.area
   const availableCount = data?.availableCount || 0
+  const cancelledCount = data?.cancelUnitCount || 0
+  const soldUnitCount = data?.soldUnitCount || 0
+const bookUnitCount = data?.bookUnitCount || 0
+const s_agreeCount = data?.s_agreeCount || 0
+const atsCount = data?.atsCount || 0
+const s_regisCount = data?.s_regisCount || 0
+const s_possCount = data?.s_possCount || 0
+const custBlockCount= data?.custBlockCount || 0
+const mangBlockCount= data?.mangBlockCount || 0
+
   const yo = {
     totalUnitCount: increment(data?.newUnit || 0),
     availableCount: ['available'].includes(statusVal) ? increment(availableCount) : increment(availableCount),
+    cancelledCount: increment(cancelledCount),
     releasedUnitCount: ['released', 'yes'].includes(release_status) ? increment(1) : increment(0),
     // possessionUnitCount: ['yes'].includes(possession_status) ? increment(1) : increment(0),
 
-    bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
-    atsCount: ['ATS'].includes(statusVal)
-      ? increment(1)
-      : increment(0),
-    s_agreeCount: ['agreement_pipeline'].includes(statusVal)
-      ? increment(1)
-      : increment(0),
-    s_regisCount: ['registered'].includes(statusVal)
-      ? increment(1)
-      : increment(0),
-    s_possCount: ['possession'].includes(statusVal)
-      ? increment(1)
-      : increment(0),
+    // bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
+    bookUnitCount: increment(bookUnitCount),
+
+    s_agreeCount: increment(s_agreeCount),
+    atsCount: increment(atsCount),
+    s_regisCount: increment(s_regisCount),
+    s_possCount: increment(s_possCount),
 
 
-    custBlockCount:
-      statusVal === 'customer_blocked' ? increment(1) : increment(0),
-    mangBlockCount:
-      statusVal === 'management_blocked' ? increment(1) : increment(0),
-    soldUnitCount: [
-      'sold',
-      'ats_pipeline',
-      'possession',
-      'registered',
-      'ATS',
-      'agreement_pipeline',
-      'booked',
-    ].includes(statusVal)
-      ? increment(1)
-      : increment(0),
+    // custBlockCount:
+    //   statusVal === 'customer_blocked' ? increment(1) : increment(0),
+    custBlockCount: increment(custBlockCount),
+    // mangBlockCount:
+    //   statusVal === 'management_blocked' ? increment(1) : increment(0),
+    mangBlockCount: increment(mangBlockCount),
+    soldUnitCost:increment(soldUnitCount),
+    // soldUnitCount: [
+    //   'sold',
+    //   'ats_pipeline',
+    //   'possession',
+    //   'registered',
+    //   'ATS',
+    //   'agreement_pipeline',
+    //   'booked',
+    // ].includes(statusVal)
+    //   ? increment(soldUnitCount)
+    //   : increment(0),
+
     blockedUnitCount: ['customer_blocked', 'management_blocked'].includes(
       statusVal
     )
@@ -5432,14 +5441,14 @@ export const updateUnitCustomerDetailsTo = async (
 }
 export const updateUnitStatus = async (
   orgId,
-  unitId,
+  selCustomerPayload,
   data,
   by,
   enqueueSnackbar
 ) => {
   try {
-    console.log('data is===>', unitId, data)
-    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+    console.log('data is===>', selCustomerPayload?.id, data)
+    await updateDoc(doc(db, `${orgId}_units`, selCustomerPayload?.id), {
       fullPs: data?.fullPs,
       status: data?.status,
       [data?.eventKey]: Timestamp.now().toMillis(),
@@ -5447,6 +5456,42 @@ export const updateUnitStatus = async (
       T_elgible_balance: data?.T_elgible_balance,
       // [`${data?.status}_on`]: data[`${data?.status}_on`],
     })
+    const statusVal = data?.status || ''
+    const oldStatus = data?.oldStatus || ''
+
+
+      let yo={
+        status: data?.status,
+        release_status: '',
+        possession_status :'',
+        newUnit: 0,
+        availableCount: data?.status === 'available' ? 1: 0,
+        cancelledCount: data?.status === 'available' ? 1: 0,
+        soldUnitCount: data?.status === 'available' ? -1: 0,
+        bookUnitCount: ['booked'].includes(statusVal) ? 1 : 0,
+        s_agreeCount: ['agreement_pipeline'].includes(statusVal) ? 1 : 0,
+        atsCount: ['ATS'].includes(statusVal) ? 1 : 0,
+        s_regisCount: ['registered'].includes(statusVal) ? 1 : 0,
+        s_possCount: ['possession'].includes(statusVal) ? 1 : 0,
+        blockedUnitCount: ['blocked'].includes(statusVal) ? 1 : 0,
+        custBlockCount: ['customer_blocked'].includes(statusVal) ? 1 : 0,
+        mangBlockCount: ['management_blocked'].includes(statusVal) ? 1 : 0,
+        asset_value: 0,
+        area:0
+
+      }
+
+        yo.bookUnitCount= ['booked'].includes(oldStatus) ? -1 : 0
+        yo.s_agreeCount= ['agreement_pipeline'].includes(oldStatus) ? -1 : 0
+        yo.atsCount= ['ATS'].includes(oldStatus) ? -1 : 0
+        yo.s_regisCount= ['registered'].includes(oldStatus) ? -1 : 0
+        yo.s_possCount= ['possession'].includes(oldStatus) ? -1 : 0
+        yo.blockedUnitCount= ['blocked'].includes(oldStatus) ? -1 : 0
+        yo.custBlockCount= ['customer_blocked'].includes(oldStatus) ? -1 : 0
+        yo.mangBlockCount=['management_blocked'].includes(oldStatus) ? -1 : 0
+
+
+    await updateProjectComputedData(orgId, selCustomerPayload?.pId, yo)
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
       .insert([
@@ -6479,12 +6524,22 @@ export const uploadBookedUnitToDb = async (
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       ...data,
     })
+    const statusVal = data?.status || ''
     let yo={
       status: data?.status,
       release_status: '',
       possession_status :'',
       newUnit: 0,
+      soldUnitCount:1,
       availableCount: -1,
+      bookUnitCount: ['booked'].includes(statusVal) ? 1 : 0,
+      s_agreeCount: ['agreement_pipeline'].includes(statusVal) ? 1 : 0,
+      atsCount: ['ATS'].includes(statusVal) ? 1 : 0,
+      s_regisCount: ['registered'].includes(statusVal) ? 1 : 0,
+      s_possCount: ['possession'].includes(statusVal) ? 1 : 0,
+      blockedUnitCount: ['blocked'].includes(statusVal) ? 1 : 0,
+      custBlockCount: ['customer_blocked'].includes(statusVal) ? 1 : 0,
+      mangBlockCount: ['management_blocked'].includes(statusVal) ? 1 : 0,
       asset_value: data?.T_total || 0.5,
       area:data?.area || 0}
   const y = await updateProjectComputedData(orgId, projectId, yo)
