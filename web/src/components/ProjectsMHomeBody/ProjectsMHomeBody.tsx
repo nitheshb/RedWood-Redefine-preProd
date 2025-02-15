@@ -272,7 +272,7 @@ const ProjectsMHomeBody = ({
                       { item: 'Sold', value: soldUnitCount || 0 },
                       { item: 'Blocked', value: blockedUnitCount || 0 },
 
-                      { item: 'Blocked', value: custBlockCount || 0 },
+                      { item: 'Cust B', value: custBlockCount || 0 },
                       { item: 'Mang B', value: mangBlockCount || 0 },
                     ].map((data, i) => (
                       <div
