@@ -35,6 +35,8 @@ const ProjectsMHomeBody = ({
     totalUnitCount,
     soldUnitCount,
     blockedUnitCount,
+    custBlockValue,
+    mangBlockValue,
     availableCount,
     bookUnitCount,
     blockUnitCount,
@@ -266,8 +268,8 @@ const ProjectsMHomeBody = ({
                       { item: 'Total', value: totalUnitCount || 0 },
                       { item: 'Available', value: availableCount || 0 },
                       { item: 'Sold', value: soldUnitCount || 0 },
-                      { item: 'Blocked', value: blockedUnitCount || 0 },
-                      { item: 'Mang B', value: blockedUnitCount || 0 },
+                      { item: 'Blocked', value: custBlockValue || 0 },
+                      { item: 'Mang B', value: mangBlockValue || 0 },
                     ].map((data, i) => (
                       <div
                         className=" w-1/4  mx-1"
