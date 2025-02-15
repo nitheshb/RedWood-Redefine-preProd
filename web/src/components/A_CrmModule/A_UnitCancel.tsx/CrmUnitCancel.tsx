@@ -545,7 +545,7 @@ export default function UnitBookingCancelCRM({
         dataObj.T_elgible_new = sum
         updateUnitStatus(
           orgId,
-          selCustomerPayload?.id,
+          selCustomerPayload,
           dataObj,
           user.email,
           enqueueSnackbar
@@ -559,7 +559,7 @@ export default function UnitBookingCancelCRM({
         setUnitStatus(newStatus)
         updateUnitStatus(
           orgId,
-          selCustomerPayload?.id,
+          selCustomerPayload,
           dataObj,
           user.email,
           enqueueSnackbar
