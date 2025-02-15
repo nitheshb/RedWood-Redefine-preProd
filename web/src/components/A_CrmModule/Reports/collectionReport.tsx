@@ -723,8 +723,10 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
           })}
         </div>
         {selCat === 'project_collections' && (
-                  <section className=" w-full max-w-7xl mx-auto mt-6">
-          <table className="rounded-[30px] w-full max-w-7xl mx-auto  my-3 overflow-hidden ">
+                  <section className=" w-full max-w-7xl overflow-hidden  mt-6">
+                      <div className="overflow-x-auto">
+
+          <table className="rounded-[30px] w-full max-w-7xl   my-3 overflow-hidden ">
             <thead className="">
             <tr
             className={
@@ -937,6 +939,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
               })}
             </tbody>
           </table>
+          </div>
           </section>
         )}
         {selCat === 'employee_collections' && (
