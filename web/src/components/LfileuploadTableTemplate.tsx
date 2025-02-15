@@ -941,8 +941,8 @@ const EnhancedTableToolbar = (props) => {
           data['T_rejected'] = data['T_rejected'] || 0
 
           const finalUnitObj = {
-            status: 'booked',
-            // status: data['unitStatus'],
+            // status: 'booked',
+            status: data['unitStatus'],
             // unitStatus: data['unitStatus'],
             Katha_no: data['Katha_no'] || '',
             survey_no: data['survey_no'] || '',

@@ -734,13 +734,13 @@ const HomePage = () => {
                                              value={projects.reduce(
                                               (acc, project) =>
                                                 acc +
-                                                (project?.bookUnitCount || 0),
+                                                (project?.custBlockCount || 0),
                                               0
                                             )}
                                             />
                                             </div>
                                             <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
-                                              Booked
+                                              Customer Blocked
                                             </div>
                                           </div>
                                           <div className="flex flex-row mt-3">
@@ -750,13 +750,13 @@ const HomePage = () => {
                                              value={projects.reduce(
                                               (acc, project) =>
                                                 acc +
-                                                (project?.blockedUnitCount || 0),
+                                                (project?.mangBlockCount || 0),
                                               0
                                             )}
                                             />
                                             </div>
                                             <div className="text-slate-400  font-medium   text-[12px] ml-[2px] mt-[10px]">
-                                              Blocked
+                                              Management Blocked
                                             </div>
                                           </div>
                                         </section>
