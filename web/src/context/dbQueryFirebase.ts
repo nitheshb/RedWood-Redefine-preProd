@@ -2687,6 +2687,7 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
 status: statusVal,
 release_status: release_status,
 possession_status :possession_status,
+newUnit: 1,
 asset_value: 0,
 area:0}
 
@@ -3497,7 +3498,7 @@ export const updateProjectComputedData = async (orgId, id, data) => {
   const assetVal = data?.asset_value
   const area = data?.area
   const yo = {
-    totalUnitCount: increment(1),
+    totalUnitCount: increment(data?.newUnit || 0),
     availableCount: ['available'].includes(statusVal) ? increment(1) : increment(0),
     releasedUnitCount: ['released', 'yes'].includes(release_status) ? increment(1) : increment(0),
     possessionUnitCount: ['yes'].includes(possession_status) ? increment(1) : increment(0),
@@ -6459,6 +6460,7 @@ export const uploadBookedUnitToDb = async (
       status: data?.status,
       release_status: '',
       possession_status :'',
+      newUnit: 0,
       asset_value: data?.T_total || 0.5,
       area:data?.area || 0}
   const y = await updateProjectComputedData(orgId, projectId, yo)
