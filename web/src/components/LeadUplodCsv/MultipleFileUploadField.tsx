@@ -612,7 +612,7 @@ export function MultipleFileUploadField({
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
               const currentStatus = dRow['Unit Status']
-              let newCurrentStatus =[ 'booked','management_blocked', 'agreement_pipeline','ats_pipeline','registered_pipeline'].includes(currentStatus) ?   currentStatus :  'available'
+              let newCurrentStatus =[ 'booked','customer_blocked', 'management_blocked', 'agreement_pipeline','ats_pipeline','registered_pipeline'].includes(currentStatus) ?   currentStatus :  'available'
               // if (currentStatus == 'Available') {
               //   newCurrentStatus = 'available'
               // } else if (currentStatus == 'Sold') {
