@@ -325,7 +325,7 @@ const ProjectsMHomeBody = ({
               <div className="flex flex-row justify-between px-1">
                 {[
                   { item: 'Total', value: soldUnitCount || 0 },
-                  { item: 'Booking', value: bookUnitCount || 0 },
+                  { item: 'Booked', value: bookUnitCount || 0 },
                   { item: 'Agreement', value: project?.atsCount || 0 },
                 ].map((data, i) => (
                   <div
