@@ -2000,6 +2000,13 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
+          id: 'possession_status',
+          label: 'Possession Status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
           id: 'mortgage_type',
           label: 'Mortgage Type',
           minWidth: 10,

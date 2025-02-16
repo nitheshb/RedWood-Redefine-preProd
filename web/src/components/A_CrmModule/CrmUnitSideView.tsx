@@ -45,11 +45,12 @@ import { USER_ROLES } from 'src/constants/userRoles'
 import UnitFullSummary from './CrmUnitFullSummary'
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import { supabase } from 'src/context/supabase'
-import { Pie } from 'recharts';
+import { Pie, Tooltip } from 'recharts';
 import { PieChart,  Cell } from 'recharts';
 import { BellIcon } from 'lucide-react';
 import { ChevronDownIcon } from "lucide-react";
 import { calculatePercentages } from 'src/util/areaConverter'
+import AssigedToDropCompCrm from '../assignedToDropCompCrm'
 
 const data = [
   { name: 'Paid', value: 10 },
@@ -1086,6 +1087,10 @@ console.log('newStatus?.value',  newStatus?.value, selCustomerPayload)
 
 
 
+
+
+
+
     const x = await capturePaymentS(
       orgId,
       true,
@@ -1125,6 +1130,42 @@ return
       enqueueSnackbar
     )
   }
+
+
+
+
+
+
+
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-2 shadow-lg rounded-md text-sm">
+          <p className="text-gray-700 font-medium">{payload[0].name}: ₹{payload[0].value.toLocaleString('en-IN')}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+  
+
+
+const CustomTooltiptwo = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white p-2 shadow-lg rounded-md text-sm border border-gray-200">
+        <p className="text-gray-700 font-medium">
+          {payload[0]?.name}: ₹{payload[0]?.value?.toLocaleString('en-IN') ?? '0'}
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
+
+
+
+
   return (
     <div
       className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} overflow-y-scroll overflow-x-hidden `}
@@ -1197,20 +1238,20 @@ return
 
                                         </span>}
                                         <span className="  text-[10px] h-[20px]  text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                          {selCustomerPayload?.area?.toLocaleString(
+                                        Size:{selCustomerPayload?.area?.toLocaleString(
                                             'en-IN'
                                           )}{' '}
                                           sqft
                                         </span>
                                         <span className="  text-[10px] h-[20px]  text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                          {  selCustomerPayload?.construct_area!= undefined && <>{selCustomerPayload?.construct_area?.toLocaleString(
+                                        BUA:{  selCustomerPayload?.construct_area!= undefined && <>{selCustomerPayload?.construct_area?.toLocaleString(
                                             'en-IN'
                                           )}{' '}
                                           sqft</>}
                                         </span>
 
                                         <span className="  text-[10px] h-[20px] text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                          {selCustomerPayload?.facing}
+                                        Facing:{selCustomerPayload?.facing}
                                         </span>
 
                                          <span className=" text-[10px]  text-[#824605] font-bodyLato font-[600] mt-[2px] bg-[#fff0c7] px-[14px] py-[8px] rounded-xl mr-1 ">
@@ -1228,14 +1269,14 @@ return
                   <section
                     style={{ padding: '12px 16px' }}
 
-                   className="flex flow-row justify-between bg-white  py-[15px]  mr-2   text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
-                    <div className="font-md text-xs  text-gray-700 tracking-wide mr-1">
+                   className="flex flow-row justify-between bg-white  py-[15px]  mr-2   text-black rounded-3xl items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]">
+                    <div className="font-medium	 text-sm   text-gray-700 tracking-wide border-r-[1.5px] border-gray-500 pr-2 mr-1">
                       CRM Owner
                     </div>
-                    <div className="font-md ml-8 text-xs tracking-wide font-semibold text-slate-900 ">
+                    <div className="font-md ml-2 text-xs tracking-wide font-semibold text-slate-900 ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div className='mb-1.5 mt-[6px]'>
-                          <AssigedToDropComp
+                        <div className=''>
+                          <AssigedToDropCompCrm
                             assignerName={assignerName}
                             id={id}
                             setAssigner={setAssignerFun}
@@ -1252,20 +1293,21 @@ return
                       )}
                     </div>
                   </section>
-                  <section className="flex flow-row justify-between  py-[15px] mr-2    px-[15px] bg-white text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline">
-                    <div className="font-md text-xs text-gray-700 tracking-wide mr-1">
+                  <section className="flex flow-row justify-between  py-[15px] mr-2    px-[15px] bg-white text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]">
+                    <div className="font-medium		 text-sm text-gray-700 tracking-wide   border-r-[1.5px] border-gray-500 pr-2 mr-1">
                       Status
                     </div>
-                    <div className="font-md  ml-8  text-xs tracking-wide font-semibold text-slate-900 ">
+                    <div className="font-md  ml-2  text-xs tracking-wide font-semibold text-slate-900 ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                        <div className=' mt-[2px]'>
-                          <AssigedToDropComp
+                        <div className=''>
+                          <AssigedToDropCompCrm
                            assignerName={unitStatusLabel}
 
                             id={id}
                             setAssigner={setStatusFun}
                             usersList={StatusListA}
                             align={undefined}
+                          
                           />
                         </div>
                       )}
@@ -1600,7 +1642,11 @@ onClickCapture={() => {
         >
           <Cell fill="#E3BDFF" />
           <Cell fill="#E5E7EB" />
+         
+
         </Pie>
+        <Tooltip content={<CustomTooltip />} />
+
       </PieChart>
       {/* Centered Text */}
       <div className="absolute text-center">
@@ -1650,6 +1696,8 @@ onClickCapture={() => {
           <Cell fill="#E3BDFF" />
           <Cell fill="#E5E7EB" />
         </Pie>
+        <Tooltip content={<CustomTooltiptwo />} />
+
       </PieChart>
          {/* <PieChart width={400} height={400}>
         <Pie data={data} dataKey="value" innerRadius={60} outerRadius={80} fill="#8884d8">

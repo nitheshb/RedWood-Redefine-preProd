@@ -12,6 +12,7 @@ import { useLocation } from '@redwoodjs/router'
 
 import {
   plotTypeList,
+  possessionStatusList,
   releaseStausList,
   unitTypeList,
 } from 'src/constants/projects'
@@ -413,6 +414,7 @@ const AddUnit = ({
 
       release_status,
       mortgage_type,
+      possession_status,
       landOwnerName,
       investorName,
       sharingType,
@@ -473,6 +475,7 @@ const AddUnit = ({
       status: status,
       release_status: release_status,
       mortgage_type: mortgage_type,
+      possession_status: possession_status,
       landOwnerName: landOwnerName,
       investorName: investorName,
       sharingType: sharingType,
@@ -586,6 +589,7 @@ const AddUnit = ({
 
       release_status,
       mortgage_type,
+      possession_status,
       landOwnerName,
       investorName,
       sharingType,
@@ -636,6 +640,7 @@ const AddUnit = ({
       status: status,
       release_status: release_status,
       mortgage_type: mortgage_type,
+      possession_status: possession_status,
       landOwnerName: landOwnerName,
       investorName: investorName,
       sharingType: sharingType,
@@ -792,6 +797,10 @@ const AddUnit = ({
                 status: unitDetails?.status || '',
                 release_status: unitDetails?.release_status || '',
                 mortgage_type: unitDetails?.mortgage_type || '',
+                possession_status: unitDetails?. possession_status || '',
+
+
+               
                 landOwnerName: unitDetails?.landOwnerName || '',
                 investorName: unitDetails?.investorName || '',
                 sharingType: unitDetails?.sharingType ||  unitDetails?.sharing || '',
@@ -1658,6 +1667,22 @@ const AddUnit = ({
                                 onInput={(e) => {
                                   e.target.value = e.target.value.replace(/[^0-9]/g, '');
                                 }}
+                              />
+                            </div>
+                            <div className="w-full flex flex-col mb-3">
+                              <CustomSelect
+                                name="possession_status"
+                                label="Possession Status"
+                                className="input mt-"
+                                onChange={(value) => {
+                                  formik.setFieldValue(
+                                    'possession_status',
+                                    value.value
+                                  )
+                                }}
+                                value={formik.values.possession_status}
+                                // options={aquaticCreatures}
+                                options={possessionStatusList}
                               />
                             </div>
                           </div>
