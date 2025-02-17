@@ -5358,6 +5358,13 @@ if(boolAgreegate){
           to: 'review',
         },
       ])
+const reportPayload = {
+  txt_dated: dated,
+  receive_by: payload?.bookedBy || payload?.receive_by,
+  projectId,
+  totalAmount: amount,
+}
+    await  updateCrmReportAmountAgreeV2(orgId, reportPayload1, by)
 console.log('unit log', data4, error4, data, error)
     // enqueueSnackbar(`Captured Payment...`, {
     //   variant: 'success',
@@ -5879,6 +5886,162 @@ export const updateCrmReportAmountAgreeNew = async (
       })
       await setDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_ProjectId), payload)
     }
+  return
+
+}
+export const updateCrmReportAmountAgreeV2 = async (
+  orgId,
+  data,
+  by,
+) => {
+  console.log('data is===>', data)
+  const { schDate, assignedTo,txt_dated, projectId, totalAmount, status, receive_by } = data
+  console.log('data is===>', schDate)
+    const x = getWeekMonthNo(txt_dated)
+    const {day} = x
+    const dayDocId_d = `${receive_by}D${x.day}M${x.month}Y${x.year}P${data.projectId}`
+    const weekDocId_d = `${receive_by}W${x.weekNumberOfYear}M${x.month}Y${x.year}P${data.projectId}`
+    const monthDocId_d = `${receive_by}M${x.month}Y${x.year}P${data.projectId}`
+    const yearDocId_d = `${receive_by}Y${x.year}P${data.projectId}`
+
+    const dayDocId_AllProject = `D${day}M${x.month}Y${x.year}P_all`
+    const WeekdocId_AllProject = `W${x.weekNumberOfYear}M${x.month}Y${x.year}P_all`
+    const MonthdocId_AllProject = `M${x.month}Y${x.year}P_all`
+    const YeardocId_AllProject = `Y${x.year}P_all`
+
+    const daydocId_ProjectId = `D${day}M${x.month}Y${x.year}P${data.projectId}`
+    const WdocId_ProjectId = `W${x.weekNumberOfYear}M${x.month}Y${x.year}P${data.projectId}`
+    const MonthdocId_ProjectId = `M${x.month}Y${x.year}P${data.projectId}`
+    const YeardocId_ProjectId = `Y${x.year}P${data.projectId}`
+
+
+    const payload = {
+      empId: receive_by,
+      pId: projectId,
+      day: txt_dated,
+      week: x.weekNumberOfYear,
+      month: x.month,
+      year: x.year,
+      received: increment(totalAmount),
+      approved: []?.includes(status)? increment(totalAmount) : increment(0),
+      rejected: []?.includes(status)? increment(totalAmount) : increment(0)
+    }
+
+    const projectPayload = {
+      pId: projectId,
+      week: x.weekNumberOfYear,
+      month: x.month,
+      year: x.year,
+      received: increment(totalAmount),
+      approved: []?.includes(status)? increment(totalAmount) : increment(0),
+      rejected: []?.includes(status)? increment(totalAmount) : increment(0)
+    }
+    const dailyProjectPayload = {...projectPayload, ...{ day: day, time: txt_dated,}}
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_D_amounts`, dayDocId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_D_amounts`, dayDocId_d), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_W_amounts`, weekDocId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_W_amounts`, weekDocId_d), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_M_amounts`, monthDocId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_M_amounts`, monthDocId_d), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_Y_amounts`, yearDocId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_Y_amounts`, yearDocId_d), payload)
+    }
+    // ALL PROJECTS
+
+    try {
+      await updateDoc(doc(db, `${orgId}_emp_D_amounts`, dayDocId_AllProject), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_emp_D_amounts`, dayDocId_AllProject), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_emp_W_amounts`, WeekdocId_AllProject), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_emp_W_amounts`, WeekdocId_AllProject), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_emp_M_amounts`, MonthdocId_AllProject), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_emp_M_amounts`, MonthdocId_AllProject), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_emp_Y_amounts`, YeardocId_AllProject), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_emp_Y_amounts`, YeardocId_AllProject), payload)
+    }
+
+    // SPECIFIC PROJECTS
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_D_amounts`, daydocId_ProjectId), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_D_amounts`, daydocId_ProjectId), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_W_amounts`, WdocId_ProjectId), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_W_amounts`, WdocId_ProjectId), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_ProjectId), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_ProjectId), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_Y_amounts`, YeardocId_ProjectId), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_Y_amounts`, YeardocId_ProjectId), payload)
+    }
+
+    // END
+
+
+
   return
 
 }
