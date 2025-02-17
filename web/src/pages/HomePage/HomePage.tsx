@@ -1224,7 +1224,6 @@ const HomePage = () => {
                                             {/* {viewable} */}
                                           </span>
 
-
                                           <div className='flex'>
 
                                           <ProjectFilterDropdown
