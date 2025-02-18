@@ -744,7 +744,7 @@ const EnhancedTableToolbar = (props) => {
         )
 
         const plotTotalCost = partATotal + partBTotal
-        const constructTotalCost = partCTotal + partDTotal + partETotal
+        const constructTotalCost = partCTotal + partDTotal
         let plotPs = []
         let constructPs = []
         const bookingAdvance = paymentScheduleObj?.filter(
@@ -847,7 +847,9 @@ const EnhancedTableToolbar = (props) => {
             ? Number(d1?.percentage)
             : Number((constructTotalCost * (d1?.percentage / 100)).toFixed(2))
           z0.value = z0.value1
-
+          if(inx=== ConstructPayScheduleObj?.length-1){
+            z.value = z.value  + partETotal
+          }
           console.log(
             'log it',
             data['unit_no'],

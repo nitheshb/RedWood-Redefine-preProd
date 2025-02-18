@@ -505,7 +505,7 @@ const CostBreakUpPdf = ({
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
     const flatCost = Number(partATotal + partBTotal)
     const flatSchTotalCost = Number(partATotal + partBTotal)
-    const constCost = Number((partCTotal || 0) + (partDTotal || 0) + (partETotal || 0))
+    const constCost = Number((partCTotal || 0) + (partDTotal || 0) )
     console.log('flat fixed values ', psPayload)
     const flatFixedCosts = psPayload?.reduce(
       (acc, item) =>
@@ -573,27 +573,30 @@ const CostBreakUpPdf = ({
     })
     console.log('sel unti id => ', newPs, psPayload, psConstructPayload)
     setNewPS(newPs)
-    const newPs1 = selPhaseObj?.ConstructPayScheduleObj?.map((d1) => {
+    const newPs1 = selPhaseObj?.ConstructPayScheduleObj?.map((d1, i) => {
       console.log('d1 is', d1)
       const z = d1
-      // if (csMode === 'plot_cs') {
-      if ('plot_cs' === 'plot_cs') {
+
         z.value = ['fixedcost'].includes(d1?.units?.value)
           ? Number(d1?.percentage)
-          : // : Math.round((constCost - constFixedCosts) * (d1?.percentage / 100))
+          :
             Number(
               ((constCost - constFixedCosts) * (d1?.percentage / 100)).toFixed(
                 2
               )
             )
+        if(i=== selPhaseObj?.ConstructPayScheduleObj?.length-1){
+          z.value = z.value  + partETotal
+        }
         if (['fixedcost'].includes(d1?.units?.value)) {
           z.elgible = true
           z.elgFrom = Timestamp.now().toMillis()
           return z
         }
         return z
-      }
+
     })
+
     console.log('sel unti id => ', newPs, psPayload)
     setConstructPSPayload(newPs1)
     const netValue = partATotal + partBTotal + partCTotal + partDTotal + partETotal
@@ -832,8 +835,8 @@ const CostBreakUpPdf = ({
                         </h6>
                       </section>
                       <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
-                      {showOnly === 'payment_schedule' 
-                      ? 'Schedule of payments and timelines' 
+                      {showOnly === 'payment_schedule'
+                      ? 'Schedule of payments and timelines'
                       : 'Quotation,Unit Cost Calculation.'}
                       </div>
 
