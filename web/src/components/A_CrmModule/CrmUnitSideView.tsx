@@ -1269,8 +1269,10 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                   <section
                     style={{ padding: '12px 16px' }}
 
-                   className="flex flow-row justify-between bg-white  py-[15px]  mr-2   text-black rounded-3xl items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]">
-                    <div className="font-medium	 text-sm   text-gray-700 tracking-wide border-r-[1.5px] border-gray-500 pr-2 mr-1">
+                   className="flex group  flow-row justify-between bg-white  py-[15px]  mr-2   text-black rounded-3xl items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]">
+                    <div className="font-medium text-sm text-gray-700 tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
+
+                    {/* <div className="font-medium	 text-sm   text-gray-700 tracking-wide border-r-[1.5px] border-gray-500 pr-2  h-2 mr-1"> */}
                       CRM Owner
                     </div>
                     <div className="font-md ml-2 text-xs tracking-wide font-semibold text-slate-900 ">
@@ -1293,8 +1295,10 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                       )}
                     </div>
                   </section>
-                  <section className="flex flow-row justify-between  py-[15px] mr-2    px-[15px] bg-white text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]">
-                    <div className="font-medium		 text-sm text-gray-700 tracking-wide   border-r-[1.5px] border-gray-500 pr-2 mr-1">
+                  <section className="flex group flow-row justify-between  py-[15px] mr-2    px-[15px] bg-white text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]">
+                  <div className="font-medium text-sm text-gray-700 tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
+
+                    {/* <div className="font-medium		 text-sm text-gray-700 tracking-wide   border-r-[1.5px] border-gray-500 pr-2 mr-1"> */}
                       Status
                     </div>
                     <div className="font-md  ml-2  text-xs tracking-wide font-semibold text-slate-900 ">
