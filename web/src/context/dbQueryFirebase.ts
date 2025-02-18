@@ -196,6 +196,64 @@ export const steamUsersActivityOfUser = (orgId, snapshot, error) => {
   )
   return onSnapshot(itemsQuery, snapshot, error)
 }
+// get users activity of user list
+export const steamCollectionsReport = (orgId, snapshot,data, error) => {
+  let q = collection(db, `${orgId}_proj_D_amounts`)
+  const {type} = data
+  // console.log('matched Type is', type, '==>', month,2000+currentYear, data)
+ const conditions = []
+
+ if(type==='W'){
+   conditions.push(where('week', '==', data?.weekNumber))
+   conditions.push(where('year', '==', data?.year))
+ }
+ if(type==='M'){
+  conditions.push(where('month', '==', data?.month))
+  conditions.push(where('year', '==', 2000+data?.currentYear))
+}
+if(type==='Y'){
+  conditions.push(where('year', '==', data?.year))
+}
+
+  if (conditions.length > 0) {
+    console.log('hello ', status,  conditions, data)
+    q = query(q, ...conditions)
+
+  }
+  return onSnapshot(q, snapshot, error)
+}
+// get topers spotlight
+
+export const steamCollectionsSpotLightReport = (orgId, snapshot,data, error) => {
+  try{
+  const {type} = data
+  let q = collection(db, `${orgId}_proj_${type}_amounts`)
+  // console.log('matched Type is', type, '==>', month,2000+currentYear, data)
+ const conditions = []
+
+ if(type==='W'){
+   conditions.push(where('week', '==', data?.weekNumber))
+   conditions.push(where('year', '==', data?.year))
+ }
+ if(type==='M'){
+  conditions.push(where('month', '==', data?.month))
+  conditions.push(where('year', '==', 2000+data?.currentYear))
+}
+if(type==='Y'){
+  conditions.push(where('year', '==', data?.year))
+}
+
+  if (conditions.length > 0) {
+    console.log('hello ',  conditions, data)
+    conditions.push(orderBy("received", "desc"))
+    conditions.push(limit(5))
+    q = query(q, ...conditions)
+  }
+  return onSnapshot(q, snapshot, error)
+}catch(err){
+  console.log('error in getLeadsActivity', err)
+}
+}
 // get all leadLogs from supabase
 export const steamAllLeadsActivity = async (orgId, snapshot, data, error) => {
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
@@ -5364,7 +5422,7 @@ const reportPayload = {
   projectId,
   totalAmount: amount,
 }
-    await  updateCrmReportAmountAgreeV2(orgId, reportPayload1, by)
+    await  updateCrmReportAmountAgreeV2(orgId, reportPayload, by)
 console.log('unit log', data4, error4, data, error)
     // enqueueSnackbar(`Captured Payment...`, {
     //   variant: 'success',
@@ -5972,36 +6030,36 @@ export const updateCrmReportAmountAgreeV2 = async (
     // ALL PROJECTS
 
     try {
-      await updateDoc(doc(db, `${orgId}_emp_D_amounts`, dayDocId_AllProject), payload)
+      await updateDoc(doc(db, `${orgId}_proj_D_amounts`, dayDocId_AllProject), payload)
     } catch (error) {
       console.log('Employee  updation failed', error, {
         ...data,
       })
-      await setDoc(doc(db, `${orgId}_emp_D_amounts`, dayDocId_AllProject), payload)
+      await setDoc(doc(db, `${orgId}_proj_D_amounts`, dayDocId_AllProject), payload)
     }
     try {
-      await updateDoc(doc(db, `${orgId}_emp_W_amounts`, WeekdocId_AllProject), payload)
+      await updateDoc(doc(db, `${orgId}_proj_W_amounts`, WeekdocId_AllProject), payload)
     } catch (error) {
       console.log('Employee  updation failed', error, {
         ...data,
       })
-      await setDoc(doc(db, `${orgId}_emp_W_amounts`, WeekdocId_AllProject), payload)
+      await setDoc(doc(db, `${orgId}_proj_W_amounts`, WeekdocId_AllProject), payload)
     }
     try {
-      await updateDoc(doc(db, `${orgId}_emp_M_amounts`, MonthdocId_AllProject), payload)
+      await updateDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_AllProject), payload)
     } catch (error) {
       console.log('Employee  updation failed', error, {
         ...data,
       })
-      await setDoc(doc(db, `${orgId}_emp_M_amounts`, MonthdocId_AllProject), payload)
+      await setDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_AllProject), payload)
     }
     try {
-      await updateDoc(doc(db, `${orgId}_emp_Y_amounts`, YeardocId_AllProject), payload)
+      await updateDoc(doc(db, `${orgId}_proj_Y_amounts`, YeardocId_AllProject), payload)
     } catch (error) {
       console.log('Employee  updation failed', error, {
         ...data,
       })
-      await setDoc(doc(db, `${orgId}_emp_Y_amounts`, YeardocId_AllProject), payload)
+      await setDoc(doc(db, `${orgId}_proj_Y_amounts`, YeardocId_AllProject), payload)
     }
 
     // SPECIFIC PROJECTS
