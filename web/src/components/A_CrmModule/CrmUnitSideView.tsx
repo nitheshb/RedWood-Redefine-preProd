@@ -1237,7 +1237,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                                           )}{' '}
 
                                         </span>}
-                                        <span className="  text-[10px] h-[20px]  text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
+                                        <span className="  text-[10px] h-[20px]  text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5]  py-[2px] rounded-xl mr-1 ">
                                         Size:{selCustomerPayload?.area?.toLocaleString(
                                             'en-IN'
                                           )}{' '}
