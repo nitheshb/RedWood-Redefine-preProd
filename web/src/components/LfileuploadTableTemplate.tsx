@@ -2693,7 +2693,7 @@ export default function LfileuploadTableTemplate({
                       <TableCell>{index + 1}</TableCell>
                       {columns?.map((column) => {
                         const value = ['Date', 'booked_on'].includes(column.id)
-                          ? prettyDate(row[column.id]).toLocaleString()
+                          ? prettyDate(row[column.id])
                           : row[column.id]
 
                         console.log('insert date value is', row[column.id], row)
