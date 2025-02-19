@@ -781,6 +781,12 @@ export function MultipleFileUploadField({
                   if (x === 'clubhouse_membership') {
                     dataObj.charges = Number(dRow['Club House'] || 0)
                   }
+                  if (x === 'club_house_membership') {
+                    dataObj.charges = Number(dRow['Club House'] || 0)
+                  }
+                  if (x === 'club_house_emenities') {
+                    dataObj.charges = Number(dRow['Club House'] || 0)
+                  }
                   return dataObj
                 })
                 onPossessionChargesA.map((dataObj, inx) => {
