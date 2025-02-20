@@ -1012,7 +1012,7 @@ const EnhancedTableToolbar = (props) => {
                 label: 'Single',
               },
               pincode1: '',
-              co_Name1: '',
+              co_Name2: '',
               city1: '',
               address1: data['address2'] || '',
               phoneNo3: '',
@@ -1028,7 +1028,7 @@ const EnhancedTableToolbar = (props) => {
               countryName1: 'country',
               companyName1: '',
               panDocUrl1: '',
-              relation1: {
+              relation2: {
                 label: 'S/O',
                 value: 'S/O',
               },
@@ -2227,6 +2227,21 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString(),
         },
         {
+          id: 'relation1',
+          label: 'S/o_W/o_D/o_C/o-1',
+          minWidth: 100,
+          // format: (value) => value.toLocaleString(),
+        },
+
+        {
+          id: 'co_Name1',
+          label: 'Son/Daughter/Wife of-1',
+          minWidth: 100,
+          // format: (value) => value.toLocaleString(),
+        },
+
+        
+        {
           id: 'phoneNo1',
           label: 'Phone No-1',
           minWidth: 80,
@@ -2265,6 +2280,20 @@ export default function LfileuploadTableTemplate({
         {
           id: 'customerName2',
           label: 'Applicant Name-2',
+          minWidth: 100,
+          format: (value) => value.toLocaleString(),
+        },
+
+        {
+          id: 'relation2',
+          label: 'S/o_W/o_D/o_C/o-1',
+          minWidth: 100,
+          format: (value) => value.toLocaleString(),
+        },
+
+        {
+          id: 'co_Name2',
+          label: 'Son/Daughter/Wife of-2',
           minWidth: 100,
           format: (value) => value.toLocaleString(),
         },

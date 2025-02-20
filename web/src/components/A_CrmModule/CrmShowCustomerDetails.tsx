@@ -822,7 +822,7 @@ const ShowCustomerDetails = ({
                     '?'} */}
 
 
-{leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
+{leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || '?'}
 
                 
                 </p> 
@@ -838,7 +838,7 @@ const ShowCustomerDetails = ({
                 )} */}
 
 
-               {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob2 || datee)}
+               {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob1 || datee)}
 
 
 

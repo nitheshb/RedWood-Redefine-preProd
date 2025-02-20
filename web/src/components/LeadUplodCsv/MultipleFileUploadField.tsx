@@ -875,6 +875,9 @@ export function MultipleFileUploadField({
                 customerName1: dRow['Applicant - 1 - Name']
                   .replace(/(Mr\.|Mr.|Miss|Mrs\.|Mrs.|Ms\.|Dr\.|MR\.|MISS)/gi, '')
                   ?.trim(),
+
+                relation1: dRow['S/o_W/o_D/o_C/o-1'],
+                co_Name1: dRow['Son/Daughter/Wife of-1'],
                 phoneNo1: dRow['Customer Number - 1'],
                 dob1: dRow['DOB-1'],
                 address1: dRow['Customer Address'],
@@ -883,6 +886,11 @@ export function MultipleFileUploadField({
                 panNo1: dRow['PAN Number-1'],
                 // second applicant
                 customerName2: dRow['Applicant 2 Name'],
+                relation2: dRow['S/o_W/o_D/o_C/o-2'],
+
+                co_Name2: dRow['Son/Daughter/Wife of-2'],
+              
+
                 phoneNo2: dRow['Customer Number - 2'],
                 dob2: dRow['DOB-2'],
                 address2: dRow['Address-2'],
