@@ -2196,6 +2196,12 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString(),
         },
         {
+          id: 'corpus_fund',
+          label: 'Corpus Fund',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
           id: 'club_house',
           label: 'Club House',
           minWidth: 80,

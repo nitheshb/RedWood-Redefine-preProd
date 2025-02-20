@@ -644,7 +644,7 @@ export function MultipleFileUploadField({
               let constructionCS = []
               let partB= []
               let partD= []
-              let possessionAdditionalCostCS = []
+              let onPossessionChargesA = []
               let partA_total = 0
               let partC_total =0
               let partD_total=0
@@ -757,7 +757,7 @@ export function MultipleFileUploadField({
                   },
                 ]
 
-                 possessionAdditionalCostCS =
+                 onPossessionChargesA =
                 selPhaseObj?.fullCs?.filter(
                   (d) => d?.section?.value === 'possessionAdditionalCost'
                 ) || []
@@ -789,14 +789,26 @@ export function MultipleFileUploadField({
                   }
                   return dataObj
                 })
-                possessionAdditionalCostCS.map((dataObj, inx) => {
+                onPossessionChargesA.map((dataObj, inx) => {
                   const x = dataObj?.component?.value
                   if (x === 'maintenancecharges') {
+                    dataObj.charges = Number( dRow['Maintenance Cost'] || 0)
+                  }
+
+                  if (x === 'Maintenance') {
                     dataObj.charges = Number( dRow['Maintenance Cost'] || 0)
                   }
                   if (x === 'corpus_charges') {
                     dataObj.charges = Number(dRow['Corpus Fund'] || 0)
                   }
+
+                  if (x === 'Corpus_Charges') {
+                    dataObj.charges = Number(dRow['Corpus Fund'] || 0)
+                  }
+
+           
+
+                
                   return dataObj
                 })
                 partA_total = x.reduce(
@@ -811,7 +823,7 @@ export function MultipleFileUploadField({
           partD_total=  await computePartTotal(constructOtherChargesObj, bua_sqft, selPhaseObj?.const_tax,)
 
                }
-          partE_total=  await computePartTotal(possessionAdditionalCostCS, bua_sqft, 18,)
+          partE_total=  await computePartTotal(onPossessionChargesA, bua_sqft, 18,)
 
 
 
@@ -1030,7 +1042,7 @@ export function MultipleFileUploadField({
                 fullPs: [],
                 plotCS: [],
                 constructCS: constructionCS,
-                possessionCS: possessionAdditionalCostCS,
+                possessionCS: onPossessionChargesA,
                 constructOtherChargesObj: constructOtherChargesObj,
                 constructPS: [],
                 plot_area_sqft: dRow['Plot Area(sqft)']?.replace(/,/g, '') || 0,
