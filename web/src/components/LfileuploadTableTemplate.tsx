@@ -848,16 +848,13 @@ const EnhancedTableToolbar = (props) => {
             : Number((constructTotalCost * (d1?.percentage / 100)).toFixed(2))
           z0.value = z0.value1
           if(inx=== ConstructPayScheduleObj?.length-1){
-            z.value = z.value  + partETotal
+            z0.value = z0.value  + partETotal
           }
           console.log(
-            'log it',
-            data['unit_no'],
-            constructCS[0]['TotalNetSaleValueGsT'],
-            x,
-            constSaleValue,
-            Number(construct_price_sqft),
-            Number(construct_area)
+            'log it bro ',
+            ConstructPayScheduleObj?.length-1,
+            inx,
+            partETotal,
           )
 
           console.log(
