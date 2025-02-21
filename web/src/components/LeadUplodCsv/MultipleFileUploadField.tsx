@@ -884,13 +884,14 @@ export function MultipleFileUploadField({
                 email1: dRow['Customer Email ID-1'],
                 aadharNo1: dRow['Aadhaar Number-1'],
                 panNo1: dRow['PAN Number-1'],
+                marriedStatus1: dRow['Marital Status-1'],
                 // second applicant
                 customerName2: dRow['Applicant 2 Name'],
                 relation2: dRow['S/o_W/o_D/o_C/o-2'],
 
                 co_Name2: dRow['Son/Daughter/Wife of-2'],
 
-
+                marriedStatus2: dRow['Marital Status-2'],
                 phoneNo2: dRow['Customer Number - 2'],
                 dob2: dRow['DOB-2'],
                 address2: dRow['Address-2'],

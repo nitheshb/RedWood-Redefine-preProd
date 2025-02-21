@@ -969,7 +969,7 @@ const EnhancedTableToolbar = (props) => {
             T_B: partBTotal,
             T_C: partCTotal,
             T_D: partDTotal,
-            T_E: partETotal || 0,
+            T_E: partETotal,
             plotCS: [...x],
             constructCS: [...constructCS],
             addChargesCS: await partB1,
@@ -986,7 +986,7 @@ const EnhancedTableToolbar = (props) => {
                 label: 'Single',
               },
               pincode1: '',
-              co_Name1: '',
+              co_Name1: data['co_Name1'] || '',
               city1: '',
               address1: data['address1'],
               phoneNo3: '',
@@ -1003,8 +1003,8 @@ const EnhancedTableToolbar = (props) => {
               companyName1: '',
               panDocUrl1: '',
               relation1: {
-                label: 'S/O',
-                value: 'S/O',
+                label: data?.relation1?.toUpperCase() || 'S/O',
+                value: data?.relation1?.toUpperCase() || 'S/O',
               },
               dob1: data['dob1'],
               occupation1: '',
@@ -1015,11 +1015,11 @@ const EnhancedTableToolbar = (props) => {
             secondaryCustomerDetailsObj: {
               phoneNo1: data['phoneNo2'] || '',
               marital1: {
-                value: 'Single',
-                label: 'Single',
+                value:  data?.marriedStatus1 ||'Single',
+                label:  data?.marriedStatus1 ||'Single',
               },
               pincode1: '',
-              co_Name2: '',
+              co_Name2: data['co_Name2'] ||'',
               city1: '',
               address1: data['address2'] || '',
               phoneNo3: '',
@@ -1036,8 +1036,8 @@ const EnhancedTableToolbar = (props) => {
               companyName1: '',
               panDocUrl1: '',
               relation2: {
-                label: 'S/O',
-                value: 'S/O',
+                label: data?.relation2?.toUpperCase() || 'S/O',
+                value: data?.relation2?.toUpperCase() || 'S/O',
               },
               dob1: data['dob1'],
               occupation1: '',
@@ -2247,7 +2247,7 @@ export default function LfileuploadTableTemplate({
           // format: (value) => value.toLocaleString(),
         },
 
-        
+
         {
           id: 'phoneNo1',
           label: 'Phone No-1',
