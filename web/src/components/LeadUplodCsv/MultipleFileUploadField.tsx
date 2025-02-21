@@ -898,7 +898,6 @@ export function MultipleFileUploadField({
                 email2: dRow['Email-2'],
                 aadharNo2: dRow['Aadhaar Number-2'],
                 panNo2: dRow['PAN Number-2'],
-
                 customerDetailsObj: '',
                 // {
                 //   "relation1": {
