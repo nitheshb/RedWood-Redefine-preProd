@@ -338,6 +338,7 @@ const EnhancedTableToolbar = (props) => {
       ConstructPayScheduleObj,
       paymentScheduleObj,
     } = projectDetails[0]
+
     const selPhaseObj = projectDetails[0]
     console.log('check it', projectDetails[0]?.area_tax, projectDetails[0])
 
@@ -348,15 +349,13 @@ const EnhancedTableToolbar = (props) => {
       (row) => row.component.value === 'sqft_construct_cost_tax'
     )
     console.log(
-      'check it',
-      records.length,
-      costSqftA,
-      costConstructSqftA,
-      projectDetails
+      'log it bro',
+      ConstructPayScheduleObj
     )
 
     const mappedArry = await Promise.all(
       records.map(async (data, index) => {
+        setTimeout(async () => {
         const {
           sqft_rate,
           plc_per_sqft,
@@ -377,6 +376,14 @@ const EnhancedTableToolbar = (props) => {
 
         // cost sheet
         // part A
+        console.log(
+          'log it bro ===>',
+          data['unit_no'],
+          data?.corpus_fund ,
+          data?.maintenance_cost,
+          ConstructPayScheduleObj,
+          possessionCS,
+        )
         const plotSaleValue = area * sqft_rate
         const plcSaleValue = Math.round(area * plc_per_sqft || 0)
         const plc_gstValue = Math.round(plcSaleValue * 0.0)
@@ -655,7 +662,8 @@ const EnhancedTableToolbar = (props) => {
             return dataNewObj
           }
         )
-        const partE = projectDetails[0]?.possessionCS?.map( (dataObj, inx) => {
+
+        const partE = possessionCS?.map( (dataObj, inx) => {
           const x = dataObj?.component?.value
           if (x === 'maintenancecharges') {
             dataObj.charges = Number(data?.maintenance_cost || 0)
@@ -667,7 +675,6 @@ const EnhancedTableToolbar = (props) => {
           const gstPercent = Number(dataObj?.gst?.value) || 0
           return  CalculateComponentTotal(dataObj,construct_area?.toString()?.replace(',', ''),gstPercent, dataObj?.charges)
         })
-
 
         // part E
         // const partE = [
@@ -738,7 +745,7 @@ const EnhancedTableToolbar = (props) => {
         )
         // const partDTotal = 0
         // const partETotal = 0
-        const partETotal = await possessionCS?.reduce(
+        const partETotal = await partE?.reduce(
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )
@@ -826,7 +833,7 @@ const EnhancedTableToolbar = (props) => {
 
           return z
         })
-        constructPs = ConstructPayScheduleObj?.map((d1, inx) => {
+        constructPs = projectDetails[0]?.ConstructPayScheduleObj?.map((d1, inx) => {
           console.log('d1 is => ', d1, constructTotalCost)
           const z = d1
           const z0 = { ...d1 }
@@ -848,13 +855,15 @@ const EnhancedTableToolbar = (props) => {
             : Number((constructTotalCost * (d1?.percentage / 100)).toFixed(2))
           z0.value = z0.value1
           if(inx=== ConstructPayScheduleObj?.length-1){
-            z0.value = z0.value  + partETotal
+            z0.value = (z.value || 0) + partETotal
           }
           console.log(
             'log it bro ',
+            data['unit_no'],
             ConstructPayScheduleObj?.length-1,
             inx,
             partETotal,
+            z0.value,
           )
 
           console.log(
@@ -877,7 +886,7 @@ const EnhancedTableToolbar = (props) => {
         )
 
 
-        setTimeout(async () => {
+
           // putToDb(constructPs,data,pId, partATotal,partBTotal, partCTotal, partDTotal  )
 
           const newTotal =
@@ -917,6 +926,7 @@ const EnhancedTableToolbar = (props) => {
               // T_review = T_review + (paidAmount || undefined)
             }
           })
+
           T_balance = newTotal - T_review
           T_elgible_balance = T_elgible - T_review
 
@@ -927,7 +937,7 @@ const EnhancedTableToolbar = (props) => {
           data.fullPs = fullPs1
           data.plotPS = plotPs
           data.constructPS = constructPs
-          data.possessionAdditionalCostObj = possessionCS
+          data.possessionAdditionalCostObj = partE
           data.T_possession = partETotal
 
           data[`T_elgible`] = T_elgible
@@ -959,12 +969,12 @@ const EnhancedTableToolbar = (props) => {
             T_B: partBTotal,
             T_C: partCTotal,
             T_D: partDTotal,
-            T_E: partETotal,
+            T_E: partETotal || 0,
             plotCS: [...x],
             constructCS: [...constructCS],
             addChargesCS: await partB1,
             constAdditionalChargesCS: partD,
-            possessionAdditionalCostCS: possessionCS,
+            possessionAdditionalCostCS: partE,
             plotPS: plotPs,
             constructPS: constructPs,
             fullPs: fullPs1,
@@ -1160,7 +1170,7 @@ const EnhancedTableToolbar = (props) => {
             newTotal,
             partD
           )
-        }, 3500)
+        }, 2500)
       })
     )
     // await setUnitUploadMessage(true)

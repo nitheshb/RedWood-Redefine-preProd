@@ -791,6 +791,7 @@ export function MultipleFileUploadField({
                   if (x === 'corpus_charges') {
                     dataObj.charges = Number(dRow['Corpus Fund'] || 0)
                   }
+           
                   return dataObj
                 })
                 partA_total = x.reduce(
