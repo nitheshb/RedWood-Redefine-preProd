@@ -616,7 +616,7 @@ const ShowCustomerDetails = ({
   <div className="bg-[#E5E7EB] p-1 rounded-2xl shadow-md w-20 h-20 flex items-center justify-center">
     {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
     leadDetailsObj2?.Name ? (
-      <span className="text-[30px] font-bold text-gray-700">
+      <span className="text-[30px] font-medium text-gray-700">
         {(
           leadDetailsObj2?.customerDetailsObj?.customerName1 ||
           leadDetailsObj2?.Name ||
@@ -636,7 +636,7 @@ const ShowCustomerDetails = ({
       </div>
 
       <div className="text-center mb-6">
-        <h2 className="text-xl font-semibold">
+        <h2 className="text-xl font-normal">
         {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
                     leadDetailsObj2?.Name ||
                     '?'}
@@ -644,10 +644,10 @@ const ShowCustomerDetails = ({
           </h2>
       </div>
 
-      <div className="space-y-4 p-2">
-        <h3 className="text-lg font-semibold">Details</h3>
+      <div className="space-y-4 py-2 px-4">
+        <h3 className="text-lg font-normal">Details</h3>
 
-        <div className="space-y-1">
+        <div className="space-y-1 ">
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">
@@ -673,6 +673,8 @@ const ShowCustomerDetails = ({
           </div>
 
           <hr />
+          
+
 
           <div className="flex justify-between items-center">
             <div>
@@ -695,7 +697,7 @@ const ShowCustomerDetails = ({
         </div>
 
         <div className="space-y-1">
-          <h3 className="text-lg font-semibold">Documents</h3>
+          <h3 className="text-lg  font-normal">Documents</h3>
 
           <div className="flex justify-between items-center">
             <div>
@@ -758,7 +760,7 @@ const ShowCustomerDetails = ({
 
         <div className="absolute top-4 left-4">
           <span className="bg-[#E3BDFF] text-black px-3 py-1 rounded-full text-sm">
-          secondary
+          Secondary
           </span>
         </div>
 
@@ -797,7 +799,7 @@ const ShowCustomerDetails = ({
       </div>
 
       <div className="text-center mb-6">
-        <h2 className="text-xl font-semibold">
+        <h2 className="text-xl font-normal">
         {/* {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
                     leadDetailsObj2?.Name ||
                     '?'} */}
@@ -808,8 +810,8 @@ const ShowCustomerDetails = ({
           </h2>
       </div>
 
-      <div className="space-y-4 p-2">
-        <h3 className="text-lg font-semibold">Details</h3>
+      <div className="space-y-4 py-2 px-4">
+        <h3 className="text-lg font-normal">Details</h3>
 
         <div className="space-y-1">
           <div className="flex justify-between items-center">
@@ -820,7 +822,7 @@ const ShowCustomerDetails = ({
                     '?'} */}
 
 
-{leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
+{leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || '?'}
 
                 
                 </p> 
@@ -836,7 +838,7 @@ const ShowCustomerDetails = ({
                 )} */}
 
 
-               {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob2 || datee)}
+               {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob1 || datee)}
 
 
 
@@ -874,7 +876,7 @@ const ShowCustomerDetails = ({
         </div>
 
         <div className="space-y-1">
-          <h3 className="text-lg font-semibold">Documents</h3>
+          <h3 className="text-lg font-normal">Documents</h3>
 
           <div className="flex justify-between items-center">
             <div>

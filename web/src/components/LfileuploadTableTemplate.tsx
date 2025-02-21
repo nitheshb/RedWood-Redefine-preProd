@@ -969,7 +969,7 @@ const EnhancedTableToolbar = (props) => {
             T_B: partBTotal,
             T_C: partCTotal,
             T_D: partDTotal,
-            T_E: partETotal || 0,
+            T_E: partETotal,
             plotCS: [...x],
             constructCS: [...constructCS],
             addChargesCS: await partB1,
@@ -986,7 +986,7 @@ const EnhancedTableToolbar = (props) => {
                 label: 'Single',
               },
               pincode1: '',
-              co_Name1: '',
+              co_Name1: data['co_Name1'] || '',
               city1: '',
               address1: data['address1'],
               phoneNo3: '',
@@ -1003,8 +1003,8 @@ const EnhancedTableToolbar = (props) => {
               companyName1: '',
               panDocUrl1: '',
               relation1: {
-                label: 'S/O',
-                value: 'S/O',
+                label: data?.relation1?.toUpperCase() || 'S/O',
+                value: data?.relation1?.toUpperCase() || 'S/O',
               },
               dob1: data['dob1'],
               occupation1: '',
@@ -1015,11 +1015,11 @@ const EnhancedTableToolbar = (props) => {
             secondaryCustomerDetailsObj: {
               phoneNo1: data['phoneNo2'] || '',
               marital1: {
-                value: 'Single',
-                label: 'Single',
+                value:  data?.marriedStatus1 ||'Single',
+                label:  data?.marriedStatus1 ||'Single',
               },
               pincode1: '',
-              co_Name1: '',
+              co_Name2: data['co_Name2'] ||'',
               city1: '',
               address1: data['address2'] || '',
               phoneNo3: '',
@@ -1035,9 +1035,9 @@ const EnhancedTableToolbar = (props) => {
               countryName1: 'country',
               companyName1: '',
               panDocUrl1: '',
-              relation1: {
-                label: 'S/O',
-                value: 'S/O',
+              relation2: {
+                label: data?.relation2?.toUpperCase() || 'S/O',
+                value: data?.relation2?.toUpperCase() || 'S/O',
               },
               dob1: data['dob1'],
               occupation1: '',
@@ -2203,6 +2203,12 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString(),
         },
         {
+          id: 'corpus_fund',
+          label: 'Corpus Fund',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
           id: 'club_house',
           label: 'Club House',
           minWidth: 80,
@@ -2227,6 +2233,21 @@ export default function LfileuploadTableTemplate({
           minWidth: 100,
           format: (value) => value.toLocaleString(),
         },
+        {
+          id: 'relation1',
+          label: 'S/o_W/o_D/o_C/o-1',
+          minWidth: 100,
+          // format: (value) => value.toLocaleString(),
+        },
+
+        {
+          id: 'co_Name1',
+          label: 'Son/Daughter/Wife of-1',
+          minWidth: 100,
+          // format: (value) => value.toLocaleString(),
+        },
+
+
         {
           id: 'phoneNo1',
           label: 'Phone No-1',
@@ -2266,6 +2287,20 @@ export default function LfileuploadTableTemplate({
         {
           id: 'customerName2',
           label: 'Applicant Name-2',
+          minWidth: 100,
+          format: (value) => value.toLocaleString(),
+        },
+
+        {
+          id: 'relation2',
+          label: 'S/o_W/o_D/o_C/o-1',
+          minWidth: 100,
+          format: (value) => value.toLocaleString(),
+        },
+
+        {
+          id: 'co_Name2',
+          label: 'Son/Daughter/Wife of-2',
           minWidth: 100,
           format: (value) => value.toLocaleString(),
         },
@@ -2702,7 +2737,7 @@ export default function LfileuploadTableTemplate({
                       <TableCell>{index + 1}</TableCell>
                       {columns?.map((column) => {
                         const value = ['Date', 'booked_on'].includes(column.id)
-                          ? prettyDate(row[column.id]).toLocaleString()
+                          ? prettyDate(row[column.id])
                           : row[column.id]
 
                         console.log('insert date value is', row[column.id], row)

@@ -1734,7 +1734,7 @@ export default function UnitFullSummary({
 
           <div className="w-full max-w-[400px]   h-[200px] shadow-md  rounded-[10px]   bg-white  pt-4  ">
         <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
-          Units
+          Unit Details
         </h2>
         <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
 
@@ -1745,7 +1745,7 @@ export default function UnitFullSummary({
             <img src={units1}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.unit_no}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.unit_no}</div>
               <div className="text-xs  font-medium text-[#949494]">Unit No</div>
             </div>
           </div>
@@ -1767,7 +1767,7 @@ export default function UnitFullSummary({
             <img src={units3}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.facing}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.facing}</div>
               <div className="text-xs  font-medium  text-[#949494]">Facing</div>
             </div>
           </div>
@@ -1778,7 +1778,7 @@ export default function UnitFullSummary({
             </div>
             <div className="min-w-0 flex-1">
               <div className="text-[14px] text-[#000000] font-normal truncate">  {selCustomerPayload?.builtup_area?.toLocaleString('en-IN') || selCustomerPayload?.construct_area?.toLocaleString('en-IN')}</div>
-              <div className="text-xs  font-medium   text-[#949494]">BUA</div>
+              <div className="text-xs  font-medium   text-[#949494]">BUA (sqft)</div>
             </div>
           </div>
         </div>
@@ -1810,7 +1810,7 @@ export default function UnitFullSummary({
 
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate"> {selCustomerPayload?.east_d?.toLocaleString('en-IN')}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize"> {selCustomerPayload?.east_d?.toLocaleString('en-IN')}</div>
               <div className="text-xs  font-medium   text-[#949494]">East</div>
             </div>
           </div>
@@ -1822,7 +1822,7 @@ export default function UnitFullSummary({
 
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.west_d?.toLocaleString('en-IN')}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.west_d?.toLocaleString('en-IN')}</div>
               <div className="text-xs   font-medium  text-[#949494]">West</div>
             </div>
           </div>
@@ -1834,7 +1834,7 @@ export default function UnitFullSummary({
 
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.south_d?.toLocaleString('en-IN')}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.south_d?.toLocaleString('en-IN')}</div>
               <div className="text-xs   font-medium  text-[#949494]">South</div>
             </div>
           </div>
@@ -1849,12 +1849,19 @@ export default function UnitFullSummary({
 
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.north_d?.toLocaleString('en-IN')}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.north_d?.toLocaleString('en-IN')}</div>
               <div className="text-xs  font-medium   text-[#949494]">North</div>
             </div>
           </div>
         </div>
       </div>
+
+      
+
+
+
+
+      
 
 
 
@@ -1924,7 +1931,7 @@ export default function UnitFullSummary({
         <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
         <div className="text-xs  text-[#949494]">East By</div>
       </div>
     </div>
@@ -1935,8 +1942,20 @@ export default function UnitFullSummary({
         <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
         <div className="text-xs  text-[#949494]">West By</div>
+      </div>
+    </div>
+
+
+    
+    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+        <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-xs  text-[#949494]">North By</div>
       </div>
     </div>
 
@@ -1946,21 +1965,12 @@ export default function UnitFullSummary({
         <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
         <div className="text-xs  text-[#949494]">South By</div>
       </div>
     </div>
 
 
-    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
-      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
-        <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}</div>
-        <div className="text-xs  text-[#949494]">North By</div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1969,9 +1979,9 @@ export default function UnitFullSummary({
 
 
      {/* box4 */}
-      <div className="w-full max-w-[400px]  h-[200px] shadow-md rounded-[10px]   bg-white  pt-4 ">
+      {/* <div className="w-full max-w-[400px]  h-[200px] shadow-md rounded-[10px]   bg-white  pt-4 ">
         <h2 className="text-[13px] ml-10 font-semibold text-[#3D3D3D]  ">
-        Additonal Details
+        Cost Details
         </h2>
         <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
 
@@ -2020,10 +2030,69 @@ export default function UnitFullSummary({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
 
       {/* box 5 */}
+
+
+
+
+
+
+      <div className="w-full max-w-[400px]  h-[200px] shadow-md rounded-[10px]   bg-white  pt-4 ">
+        <h2 className="text-[13px] ml-10 font-semibold text-[#3D3D3D]  ">
+        Additonal Details
+        </h2>
+        <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
+
+        <div className="grid grid-cols-1 mx-8 sm:grid-cols-2 gap-6 ">
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.survey_no}</div>
+              <div className="text-xs   font-medium  text-[#949494]">Survey No</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.Katha_no}</div>
+              <div className="text-xs  font-medium   text-[#949494]">Katha No</div>
+            </div>
+          </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.PID_no}</div>
+              <div className="text-xs   font-medium  text-[#949494]">PID No</div>
+            </div>
+          </div>
+
+{/* 
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.kathaId}</div>
+              <div className="text-xs   font-medium  text-[#949494]">KathaId</div>
+            </div>
+          </div> */}
+        </div>
+      </div>
+
 
       <div className="w-full max-w-[400px] shadow-md  h-[200px]   bg-white  rounded-[10px]  pt-4 ">
         <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
@@ -2038,8 +2107,8 @@ export default function UnitFullSummary({
               <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.status}</div>
-              <div className="text-xs  font-medium  text-[#949494]">Status</div>
+              <div className="text-[15px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.status}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Unit Status</div>
             </div>
           </div>
 
@@ -2049,8 +2118,8 @@ export default function UnitFullSummary({
               <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.release_status?.toLocaleString('en-IN')}</div>
-              <div className="text-xs  font-medium  text-[#949494]">Release Status</div>
+              <div className="text-[15px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.release_status?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Status</div>
             </div>
           </div>
 
@@ -2060,16 +2129,33 @@ export default function UnitFullSummary({
               <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.mortgage_type}</div>
-              <div className="text-xs  font-medium  text-[#949494]">Mortgage Type</div>
+              <div className="text-[15px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.mortgage_type}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Mortgage</div>
             </div>
           </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.sharingType}</div>
+              <div className="text-xs   font-medium  text-[#949494]">Sharing</div>
+            </div>
+          </div>
+
 
 
 
         </div>
       </div>
 
+
+      {/* box 6 */}
+
+
+    
 
 
     </div>
