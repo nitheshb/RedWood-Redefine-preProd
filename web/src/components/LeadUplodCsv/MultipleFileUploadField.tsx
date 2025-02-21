@@ -806,9 +806,9 @@ export function MultipleFileUploadField({
                     dataObj.charges = Number(dRow['Corpus Fund'] || 0)
                   }
 
-           
 
-                
+
+
                   return dataObj
                 })
                 partA_total = x.reduce(
@@ -889,7 +889,7 @@ export function MultipleFileUploadField({
                 relation2: dRow['S/o_W/o_D/o_C/o-2'],
 
                 co_Name2: dRow['Son/Daughter/Wife of-2'],
-              
+
 
                 phoneNo2: dRow['Customer Number - 2'],
                 dob2: dRow['DOB-2'],
