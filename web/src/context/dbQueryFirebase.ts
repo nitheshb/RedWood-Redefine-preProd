@@ -3586,6 +3586,96 @@ console.log('error in master update ', error)
 
 
 }
+export const AuditProjectComputedData = async (orgId, id, data) => {
+  const statusVal = data?.status
+  const release_status = data?.release_status
+  const possession_status = data?.possession_status
+  const assetVal = data?.asset_value
+  const area = data?.area
+  const availableCount = data?.availableCount || 0
+  const cancelledCount = data?.cancelUnitCount || 0
+  const soldUnitCount = data?.soldUnitCount || 0
+const bookUnitCount = data?.bookUnitCount || 0
+const s_agreeCount = data?.s_agreeCount || 0
+const atsCount = data?.atsCount || 0
+const s_regisCount = data?.s_regisCount || 0
+const s_possCount = data?.s_possCount || 0
+const custBlockCount= data?.custBlockCount || 0
+const mangBlockCount= data?.mangBlockCount || 0
+
+  const yo = {
+    totalUnitCount: data?.totalUnitCount || 0,
+    availableCount: availableCount,
+    cancelledCount: cancelledCount,
+    releasedUnitCount: ['released', 'yes'].includes(release_status) ? increment(1) : increment(0),
+    bookUnitCount: bookUnitCount,
+    s_agreeCount: s_agreeCount,
+    atsCount: atsCount,
+    s_regisCount: s_regisCount,
+    s_possCount: s_possCount,
+    custBlockCount:custBlockCount,
+    mangBlockCount: mangBlockCount,
+    soldUnitCost:soldUnitCount,
+    blockedUnitCount: data?.blockedUnitCount ||0,
+
+    // soldValue: [
+    //   'sold',
+    //   'ats_pipeline',
+    //   'possession',
+    //   'registered',
+    //   'ATS',
+    //   'agreement_pipeline',
+    //   'booked',
+    // ].includes(statusVal)
+    //   ? increment(assetVal)
+    //   : increment(0),
+    // custBlockValue: ['customer_blocked'].includes(statusVal)
+    //   ? increment(assetVal)
+    //   : increment(0),
+    // mangBlockValue: ['management_blocked'].includes(statusVal)
+    //   ? increment(assetVal)
+    //   : increment(0),
+    // blockedValue: ['customer_blocked', 'management_blocked'].includes(statusVal)
+    //   ? increment(assetVal)
+    //   : increment(0),
+    // possessionValue: ['possession'].includes(statusVal)
+    //   ? increment(assetVal)
+    //   : increment(0),
+
+    // soldArea: [ 'sold',
+    //   'ats_pipeline',
+    //   'possession',
+    //   'registered',
+    //   'ATS',
+    //   'agreement_pipeline',
+    //   'booked',].includes(
+    //   statusVal
+    // )
+    //   ? increment(area)
+    //   : increment(0),
+    // custBlockArea: ['customer_blocked'].includes(statusVal)
+    //   ? increment(area)
+    //   : increment(0),
+    // mangBlockArea: ['management_blocked'].includes(statusVal)
+    //   ? increment(area)
+    //   : increment(0),
+    // blockedArea: ['customer_blocked', 'management_blocked'].includes(statusVal)
+    //   ? increment(area)
+    //   : increment(0),
+    // possessionArea: ['possession'].includes(statusVal)
+    //   ? increment(area)
+    //   : increment(0),
+    // totalPlotArea: increment(area),
+  }
+  try {
+    const washingtonRef = doc(db, `${orgId}_projects`, id)
+    console.log('check add LeadLog', washingtonRef, id)
+    await updateDoc(washingtonRef, yo)
+  } catch (error) {
+    console.log('updateProjectComputedData error in updation', error)
+    // await setDoc(doc(db, `${orgId}_leads_notes`, id), yo)
+  }
+}
 export const updateProjectComputedData = async (orgId, id, data) => {
   const statusVal = data?.status
   const release_status = data?.release_status

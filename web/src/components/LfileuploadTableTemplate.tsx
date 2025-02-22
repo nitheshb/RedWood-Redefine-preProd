@@ -353,9 +353,10 @@ const EnhancedTableToolbar = (props) => {
       ConstructPayScheduleObj
     )
 
-    const mappedArry = await Promise.all(
-      records.map(async (data, index) => {
-        setTimeout(async () => {
+    // const mappedArry = await Promise.all(
+      for (const [index, data] of records.entries()) {
+      // records.map(async (data, index) => {
+        // setTimeout(async () => {
         const {
           sqft_rate,
           plc_per_sqft,
@@ -603,8 +604,26 @@ const EnhancedTableToolbar = (props) => {
         console.log('my additional charges', data['unite_no'], partB)
         // part D
 
-        const partD0 = projectDetails[0]?.constructOtherChargesObj?.map(
+        const partD0 = constructOtherChargesObj?.map(
           (data4, inx) => {
+            const x1 = data4?.component?.value
+            // if (x1 === 'maintenancecharges') {
+            //   data4.charges = Number(data?.maintenance_cost || 0)
+            // }
+            // if (x1 === 'corpus_charges') {
+            //   data4.charges = Number(data?.corpus_fund || 0)
+            // }
+
+            // if (x1 === 'bescom_bwssb') {
+            //   data4.charges = Number(data?.bescom_bwssb || 0)
+            // }
+            // if (x1 === 'corpus_charges') {
+            //   data4.charges = Number(data?.corpus_fund || 0)
+            // }
+
+            const gstPercent1 = Number(data4?.gst?.value) || 0
+            return  CalculateComponentTotal(data4,construct_area?.toString()?.replace(',', ''),gstPercent1, data4?.charges)
+
             let total = 0
             let gstTotal = 0
             let charges = 0
@@ -1170,9 +1189,10 @@ const EnhancedTableToolbar = (props) => {
             newTotal,
             partD
           )
-        }, 2500)
-      })
-    )
+        // }, 2500)
+        }
+      // })
+    // )
     // await setUnitUploadMessage(true)
   }
   const insertMortgageUnitToDb = async (records, projectDetails) => {

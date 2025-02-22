@@ -7,6 +7,7 @@ import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
 import { ProjectAccessFolder, ProjectFolders } from 'src/constants/projects'
 import {
+  AuditProjectComputedData,
   deleteProject,
   editPlotStatusAuditUnit,
   getAllUnitsByProject,
@@ -169,7 +170,9 @@ const ProjectAccessHomeList = ({
       soldArea: 0,
       custBlockArea: 0,
       mangBlockArea: 0,
-      blockedArea:0
+      blockedArea:0,
+      release_count: 0
+
     }
     console.log('total units are ', unitDetailsA);
 
@@ -180,17 +183,17 @@ const ProjectAccessHomeList = ({
       } else if (data?.status == 'customer_blocked') {
         yo.blockedUnitCount = yo.blockedUnitCount + 1
         yo.custBlockArea = yo.custBlockArea + (data?.area || 0)
-        yo.availableCount = yo.availableCount + 1
+        // yo.availableCount = yo.availableCount + 1
       } else if (data?.status == 'management_blocked') {
         yo.blockedUnitCount = yo.blockedUnitCount + 1
         yo.mangBlockArea = yo.mangBlockArea  + (data?.area || 0)
-        yo.management_blocked = yo.management_blocked + 1
+        // yo.management_blocked = yo.management_blocked + 1
       } else if (data?.status == 'booked') {
         yo.bookUnitCount = yo.bookUnitCount + 1
       }
 
       if (
-        ['sold', 'ats_pipeline', 'agreement_pipeline', 'booked'].includes(
+        ['sold', 'ats_pipeline', 'agreement_pipeline', 'booked','ATS', 'registered'].includes(
           data?.status
         )
       ) {
@@ -205,10 +208,13 @@ const ProjectAccessHomeList = ({
       ) {
         yo.blockedArea = yo.blockedArea + (data?.area || 0)
       }
+      if(['released', 'yes'].includes(data?.release_status  || '') ){
+        yo.release_count= yo.release_count+1
+      }
     })
 
     console.log('Total Unit details are ', yo);
-    await updateProjectComputedData(orgId, projectDetails?.uid, yo)
+    await AuditProjectComputedData(orgId, projectDetails?.uid, yo)
     return unsubscribe
 
     // await console.log('leadsData', leadsData)
