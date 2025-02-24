@@ -84,6 +84,10 @@ const UnitsInventoryHome = ({ project }) => {
     getUnitsFun()
     getPhases(projectDetails)
   }, [projectDetails])
+
+  useEffect(() => {
+    getUnitsFun()
+  }, [selBlock])
   useEffect(() => {
     if (phases.length > 0) {
       getBlocks(phases[0]['uid'] || '')
@@ -137,7 +141,7 @@ const UnitsInventoryHome = ({ project }) => {
         y.sort((a, b) => a.unit_no - b.unit_no)
         setUnitsFeedA(y)
       },
-      { pId: projectDetails?.uid, blockId: 0, type: 'today' },
+      { pId: projectDetails?.uid, blockId: selBlock?.uid || 0, type: 'today' },
       (error) => {
         console.log('error', error)
       }
@@ -583,7 +587,7 @@ const UnitsInventoryHome = ({ project }) => {
                   pickCustomViewer={selSizeFun}
                   selProjectIs={selsize}
                   dropDownItemsA={sizeA}
-                  noBorder={true} 
+                  noBorder={true}
                 />
                 {/* <DropDownSearchBar
                       type={'All Payments'}
@@ -672,7 +676,7 @@ const UnitsInventoryHome = ({ project }) => {
               setPhaseFun={setPhaseFun}
               selPhaseName={selPhaseName}
 
-            />            
+            />
           </div>
         )}
 

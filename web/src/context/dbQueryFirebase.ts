@@ -1893,8 +1893,8 @@ export const getUnits = (orgId, snapshot, data, error) => {
   const itemsQuery = query(
     collection(db, `${orgId}_units`),
     where('pId', '==', pId),
-    // where('blockId', '==', blockId || 1),
-    orderBy('unit_no', 'asc')
+    where('blockId', '==', blockId || 1),
+    // orderBy('unit_no', 'asc')
   )
 
   console.log('hello ', status, itemsQuery, data)

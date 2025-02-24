@@ -39,11 +39,7 @@ export default function DropDownUnitBlocks({
 
 
 
-  const handleSaveBlock = async (blockName) => {
-     localStorage.setItem('selectedBlock', blockName)
-   
-  }
-
+ 
 
 
   // const [selectedBlock, setSelectedBlock] = useState(null)
@@ -225,16 +221,16 @@ export default function DropDownUnitBlocks({
                                 ? 'bg-violet-500 text-white'
                                 : 'text-gray-900'
                             } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                            // onClick={() => setStatusFun(viewData)}
+                            onClick={() => setStatusFun(viewData)}
                             // onClick={() => {
                             //   setStatusFun(viewData);
                             //   formik.setFieldValue('block_no', viewData.blockName);
                             // }}
 
-             
-                            onClick={() => handleSaveBlock(viewData.blockName)}
 
-                            
+                            // onClick={() => handleSaveBlock(viewData.blockName)}
+
+
                           >
                             {active ? (
                               <DuplicateActiveIcon
