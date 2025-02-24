@@ -338,6 +338,7 @@ const EnhancedTableToolbar = (props) => {
       ConstructPayScheduleObj,
       paymentScheduleObj,
     } = projectDetails[0]
+
     const selPhaseObj = projectDetails[0]
     console.log('check it', projectDetails[0]?.area_tax, projectDetails[0])
 
@@ -348,15 +349,14 @@ const EnhancedTableToolbar = (props) => {
       (row) => row.component.value === 'sqft_construct_cost_tax'
     )
     console.log(
-      'check it',
-      records.length,
-      costSqftA,
-      costConstructSqftA,
-      projectDetails
+      'log it bro',
+      ConstructPayScheduleObj
     )
 
-    const mappedArry = await Promise.all(
-      records.map(async (data, index) => {
+    // const mappedArry = await Promise.all(
+      for (const [index, data] of records.entries()) {
+      // records.map(async (data, index) => {
+        // setTimeout(async () => {
         const {
           sqft_rate,
           plc_per_sqft,
@@ -377,6 +377,14 @@ const EnhancedTableToolbar = (props) => {
 
         // cost sheet
         // part A
+        console.log(
+          'log it bro ===>',
+          data['unit_no'],
+          data?.corpus_fund ,
+          data?.maintenance_cost,
+          ConstructPayScheduleObj,
+          possessionCS,
+        )
         const plotSaleValue = area * sqft_rate
         const plcSaleValue = Math.round(area * plc_per_sqft || 0)
         const plc_gstValue = Math.round(plcSaleValue * 0.0)
@@ -596,8 +604,26 @@ const EnhancedTableToolbar = (props) => {
         console.log('my additional charges', data['unite_no'], partB)
         // part D
 
-        const partD0 = projectDetails[0]?.constructOtherChargesObj?.map(
+        const partD0 = constructOtherChargesObj?.map(
           (data4, inx) => {
+            const x1 = data4?.component?.value
+            // if (x1 === 'maintenancecharges') {
+            //   data4.charges = Number(data?.maintenance_cost || 0)
+            // }
+            // if (x1 === 'corpus_charges') {
+            //   data4.charges = Number(data?.corpus_fund || 0)
+            // }
+
+            // if (x1 === 'bescom_bwssb') {
+            //   data4.charges = Number(data?.bescom_bwssb || 0)
+            // }
+            // if (x1 === 'corpus_charges') {
+            //   data4.charges = Number(data?.corpus_fund || 0)
+            // }
+
+            const gstPercent1 = Number(data4?.gst?.value) || 0
+            return  CalculateComponentTotal(data4,construct_area?.toString()?.replace(',', ''),gstPercent1, data4?.charges)
+
             let total = 0
             let gstTotal = 0
             let charges = 0
@@ -655,7 +681,8 @@ const EnhancedTableToolbar = (props) => {
             return dataNewObj
           }
         )
-        const partE = projectDetails[0]?.possessionCS?.map( (dataObj, inx) => {
+
+        const partE = possessionCS?.map( (dataObj, inx) => {
           const x = dataObj?.component?.value
           if (x === 'maintenancecharges') {
             dataObj.charges = Number(data?.maintenance_cost || 0)
@@ -667,7 +694,6 @@ const EnhancedTableToolbar = (props) => {
           const gstPercent = Number(dataObj?.gst?.value) || 0
           return  CalculateComponentTotal(dataObj,construct_area?.toString()?.replace(',', ''),gstPercent, dataObj?.charges)
         })
-
 
         // part E
         // const partE = [
@@ -738,7 +764,7 @@ const EnhancedTableToolbar = (props) => {
         )
         // const partDTotal = 0
         // const partETotal = 0
-        const partETotal = await possessionCS?.reduce(
+        const partETotal = await partE?.reduce(
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )
@@ -747,13 +773,60 @@ const EnhancedTableToolbar = (props) => {
         const constructTotalCost = partCTotal + partDTotal
         let plotPs = []
         let constructPs = []
+        const bookingAdvance = paymentScheduleObj?.filter(
+          (d) => d?.stage?.value === 'on_booking'
+        )
+        const filLegalCharges = partB1?.filter(
+          (d) => d?.component?.value === 'legal_charges'
+        )
+        console.log('Plot ps==>  befoer', paymentScheduleObj)
+        let flatLegalFixedCosts = 0
+        let bookingAdvanceCost = 0
+        if(filLegalCharges && filLegalCharges?.length > 0){
+          flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+        }
+        console.log('booking advance is', bookingAdvance)
+        if(bookingAdvance && bookingAdvance?.length > 0){
+          console.log('booking advance is', bookingAdvance)
+          bookingAdvanceCost =bookingAdvance[0]?.percentage || 10
+        }
 
         plotPs = paymentScheduleObj?.map((d1, inx) => {
           console.log('d1 is', d1)
+          let applicablePlotCost = plotTotalCost- flatLegalFixedCosts
           const z = d1
-          z.value = ['fixedcost'].includes(d1?.units?.value)
-            ? Number(d1?.percentage)
-            : Number((plotTotalCost * (d1?.percentage / 100)).toFixed(2))
+
+          console.log(' applicablePlotCost is', applicablePlotCost, flatLegalFixedCosts)
+
+          // z.value = ['fixedcost'].includes(d1?.units?.value)
+          //   ? Number(d1?.percentage)
+
+
+          //   : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+          if (d1.stage.value === 'Legal Charges') {
+            d1.percentage = Number(data?.legal_charges || 0)
+
+          }
+          if(!['costpersqft'].includes(d1?.units?.value)){
+
+            z.value = ['fixedcost'].includes(d1?.units?.value)
+              ? Number(d1?.percentage)
+              : inx ==1 ? Number(
+                (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - bookingAdvanceCost))
+
+              :  Number(
+                  ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
+                )
+                // z.value = applicablePlotCost
+              }else {
+                console.log('d1 is ',area,  d1?.units?.value,Number(d1?.percentage))
+
+                let calc =  CalculateComponentTotal(d1,area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
+                z.value = calc?.TotalNetSaleValueGsT
+              }
+              // z.value = applicablePlotCost
+          z.schDate = data['booked_on'] +
+          ((Number(d1?.zeroDay || 0)) * 86400000)
           if (['fixedcost'].includes(d1?.units?.value)) {
             z.elgible = true
             z.elgFrom = Timestamp.now().toMillis()
@@ -777,21 +850,19 @@ const EnhancedTableToolbar = (props) => {
             }
           }
 
-          d1.schDate =
-            d1?.schDate ||
-            d.getTime() +
-              (ConstructPayScheduleObj.slice(0, inx).reduce(
-                (sum, prevItem) => sum + (Number(prevItem.zeroDay) || 0),
-                0
-              ) +
-                Number(d1?.zeroDay || 0)) *
-                86400000
           return z
         })
-        constructPs = ConstructPayScheduleObj?.map((d1, inx) => {
+        constructPs = projectDetails[0]?.ConstructPayScheduleObj?.map((d1, inx) => {
           console.log('d1 is => ', d1, constructTotalCost)
           const z = d1
           const z0 = { ...d1 }
+
+          z.value = ['fixedcost'].includes(d1?.units?.value)
+            ? Number(d1?.percentage)
+            : Number((plotTotalCost * (d1?.percentage / 100)).toFixed(2))
+          z0.schDate = data['booked_on'] +
+          ((Number(d1?.zeroDay || 0)) *
+          86400000)
           z0.myPercent = d1?.percentage / 100
           z0.trueCheck = ['fixedcost'].includes(d1?.units?.value)
           z0.check = Number(constructTotalCost * (d1?.percentage / 100))
@@ -802,15 +873,16 @@ const EnhancedTableToolbar = (props) => {
             ? Number(d1?.percentage)
             : Number((constructTotalCost * (d1?.percentage / 100)).toFixed(2))
           z0.value = z0.value1
-
+          if(inx=== ConstructPayScheduleObj?.length-1){
+            z0.value = (z.value || 0) + partETotal
+          }
           console.log(
-            'log it',
+            'log it bro ',
             data['unit_no'],
-            constructCS[0]['TotalNetSaleValueGsT'],
-            x,
-            constSaleValue,
-            Number(construct_price_sqft),
-            Number(construct_area)
+            ConstructPayScheduleObj?.length-1,
+            inx,
+            partETotal,
+            z0.value,
           )
 
           console.log(
@@ -828,8 +900,12 @@ const EnhancedTableToolbar = (props) => {
           )
           return z0
         })
+        console.log(
+          'Plot ps==>', plotPs
+        )
 
-        setTimeout(async () => {
+
+
           // putToDb(constructPs,data,pId, partATotal,partBTotal, partCTotal, partDTotal  )
 
           const newTotal =
@@ -869,6 +945,7 @@ const EnhancedTableToolbar = (props) => {
               // T_review = T_review + (paidAmount || undefined)
             }
           })
+
           T_balance = newTotal - T_review
           T_elgible_balance = T_elgible - T_review
 
@@ -879,7 +956,7 @@ const EnhancedTableToolbar = (props) => {
           data.fullPs = fullPs1
           data.plotPS = plotPs
           data.constructPS = constructPs
-          data.possessionAdditionalCostObj = possessionCS
+          data.possessionAdditionalCostObj = partE
           data.T_possession = partETotal
 
           data[`T_elgible`] = T_elgible
@@ -892,8 +969,8 @@ const EnhancedTableToolbar = (props) => {
           data['T_rejected'] = data['T_rejected'] || 0
 
           const finalUnitObj = {
-            status: 'booked',
-            // status: data['unitStatus'],
+            // status: 'booked',
+            status: data['unitStatus'],
             // unitStatus: data['unitStatus'],
             Katha_no: data['Katha_no'] || '',
             survey_no: data['survey_no'] || '',
@@ -916,7 +993,7 @@ const EnhancedTableToolbar = (props) => {
             constructCS: [...constructCS],
             addChargesCS: await partB1,
             constAdditionalChargesCS: partD,
-            possessionAdditionalCostCS: possessionCS,
+            possessionAdditionalCostCS: partE,
             plotPS: plotPs,
             constructPS: constructPs,
             fullPs: fullPs1,
@@ -928,7 +1005,7 @@ const EnhancedTableToolbar = (props) => {
                 label: 'Single',
               },
               pincode1: '',
-              co_Name1: '',
+              co_Name1: data['co_Name1'] || '',
               city1: '',
               address1: data['address1'],
               phoneNo3: '',
@@ -945,8 +1022,8 @@ const EnhancedTableToolbar = (props) => {
               companyName1: '',
               panDocUrl1: '',
               relation1: {
-                label: 'S/O',
-                value: 'S/O',
+                label: data?.relation1?.toUpperCase() || 'S/O',
+                value: data?.relation1?.toUpperCase() || 'S/O',
               },
               dob1: data['dob1'],
               occupation1: '',
@@ -957,11 +1034,11 @@ const EnhancedTableToolbar = (props) => {
             secondaryCustomerDetailsObj: {
               phoneNo1: data['phoneNo2'] || '',
               marital1: {
-                value: 'Single',
-                label: 'Single',
+                value:  data?.marriedStatus1 ||'Single',
+                label:  data?.marriedStatus1 ||'Single',
               },
               pincode1: '',
-              co_Name1: '',
+              co_Name2: data['co_Name2'] ||'',
               city1: '',
               address1: data['address2'] || '',
               phoneNo3: '',
@@ -977,9 +1054,9 @@ const EnhancedTableToolbar = (props) => {
               countryName1: 'country',
               companyName1: '',
               panDocUrl1: '',
-              relation1: {
-                label: 'S/O',
-                value: 'S/O',
+              relation2: {
+                label: data?.relation2?.toUpperCase() || 'S/O',
+                value: data?.relation2?.toUpperCase() || 'S/O',
               },
               dob1: data['dob1'],
               occupation1: '',
@@ -1112,9 +1189,10 @@ const EnhancedTableToolbar = (props) => {
             newTotal,
             partD
           )
-        }, 3500)
-      })
-    )
+        // }, 2500)
+        }
+      // })
+    // )
     // await setUnitUploadMessage(true)
   }
   const insertMortgageUnitToDb = async (records, projectDetails) => {
@@ -1951,6 +2029,13 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toFixed(2),
         },
         {
+          id: 'possession_status',
+          label: 'Possession Status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toFixed(2),
+        },
+        {
           id: 'mortgage_type',
           label: 'Mortgage Type',
           minWidth: 10,
@@ -2138,6 +2223,12 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString(),
         },
         {
+          id: 'corpus_fund',
+          label: 'Corpus Fund',
+          minWidth: 80,
+          format: (value) => value.toLocaleString(),
+        },
+        {
           id: 'club_house',
           label: 'Club House',
           minWidth: 80,
@@ -2162,6 +2253,21 @@ export default function LfileuploadTableTemplate({
           minWidth: 100,
           format: (value) => value.toLocaleString(),
         },
+        {
+          id: 'relation1',
+          label: 'S/o_W/o_D/o_C/o-1',
+          minWidth: 100,
+          // format: (value) => value.toLocaleString(),
+        },
+
+        {
+          id: 'co_Name1',
+          label: 'Son/Daughter/Wife of-1',
+          minWidth: 100,
+          // format: (value) => value.toLocaleString(),
+        },
+
+
         {
           id: 'phoneNo1',
           label: 'Phone No-1',
@@ -2201,6 +2307,20 @@ export default function LfileuploadTableTemplate({
         {
           id: 'customerName2',
           label: 'Applicant Name-2',
+          minWidth: 100,
+          format: (value) => value.toLocaleString(),
+        },
+
+        {
+          id: 'relation2',
+          label: 'S/o_W/o_D/o_C/o-1',
+          minWidth: 100,
+          format: (value) => value.toLocaleString(),
+        },
+
+        {
+          id: 'co_Name2',
+          label: 'Son/Daughter/Wife of-2',
           minWidth: 100,
           format: (value) => value.toLocaleString(),
         },
@@ -2637,7 +2757,7 @@ export default function LfileuploadTableTemplate({
                       <TableCell>{index + 1}</TableCell>
                       {columns?.map((column) => {
                         const value = ['Date', 'booked_on'].includes(column.id)
-                          ? prettyDate(row[column.id]).toLocaleString()
+                          ? prettyDate(row[column.id])
                           : row[column.id]
 
                         console.log('insert date value is', row[column.id], row)

@@ -196,6 +196,64 @@ export const steamUsersActivityOfUser = (orgId, snapshot, error) => {
   )
   return onSnapshot(itemsQuery, snapshot, error)
 }
+// get users activity of user list
+export const steamCollectionsReport = (orgId, snapshot,data, error) => {
+  let q = collection(db, `${orgId}_proj_D_amounts`)
+  const {type} = data
+  // console.log('matched Type is', type, '==>', month,2000+currentYear, data)
+ const conditions = []
+
+ if(type==='W'){
+   conditions.push(where('week', '==', data?.weekNumber))
+   conditions.push(where('year', '==', data?.year))
+ }
+ if(type==='M'){
+  conditions.push(where('month', '==', data?.month))
+  conditions.push(where('year', '==', 2000+data?.currentYear))
+}
+if(type==='Y'){
+  conditions.push(where('year', '==', data?.year))
+}
+
+  if (conditions.length > 0) {
+    console.log('hello ', status,  conditions, data)
+    q = query(q, ...conditions)
+
+  }
+  return onSnapshot(q, snapshot, error)
+}
+// get topers spotlight
+
+export const steamCollectionsSpotLightReport = (orgId, snapshot,data, error) => {
+  try{
+  const {type} = data
+  let q = collection(db, `${orgId}_proj_${type}_amounts`)
+  // console.log('matched Type is', type, '==>', month,2000+currentYear, data)
+ const conditions = []
+
+ if(type==='W'){
+   conditions.push(where('week', '==', data?.weekNumber))
+   conditions.push(where('year', '==', data?.year))
+ }
+ if(type==='M'){
+  conditions.push(where('month', '==', data?.month))
+  conditions.push(where('year', '==', 2000+data?.currentYear))
+}
+if(type==='Y'){
+  conditions.push(where('year', '==', data?.year))
+}
+
+  if (conditions.length > 0) {
+    console.log('hello ',  conditions, data)
+    conditions.push(orderBy("received", "desc"))
+    conditions.push(limit(5))
+    q = query(q, ...conditions)
+  }
+  return onSnapshot(q, snapshot, error)
+}catch(err){
+  console.log('error in getLeadsActivity', err)
+}
+}
 // get all leadLogs from supabase
 export const steamAllLeadsActivity = async (orgId, snapshot, data, error) => {
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
@@ -1835,8 +1893,8 @@ export const getUnits = (orgId, snapshot, data, error) => {
   const itemsQuery = query(
     collection(db, `${orgId}_units`),
     where('pId', '==', pId),
-    // where('blockId', '==', blockId || 1),
-    orderBy('unit_no', 'asc')
+    where('blockId', '==', blockId || 1),
+    // orderBy('unit_no', 'asc')
   )
 
   console.log('hello ', status, itemsQuery, data)
@@ -2671,6 +2729,7 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
     west_sch_by,
     status,
     release_status,
+    possession_status,
     mortgage_type,
   } = data
 
@@ -2682,78 +2741,38 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
   console.log('status is ==> ', status,  ['available'].includes(statusVal))
 
 
-  const yo = {
-    totalUnitCount: increment(1),
-    bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
-    atsCount: ['ats_pipeline'].includes(statusVal)
-      ? increment(1)
-      : increment(0),
-    s_agreeCount: ['agreement_pipeline'].includes(statusVal)
-      ? increment(1)
-      : increment(0),
-    s_regisCount: ['registered_pipeline'].includes(statusVal)
-      ? increment(1)
-      : increment(0),
+ let oldStatus = ''
 
-    availableCount: ['available'].includes(statusVal) ? increment(1) : increment(0),
-    custBlockCount:
-      statusVal === 'customer_blocked' ? increment(1) : increment(0),
-    mangBlockCount:
-      statusVal === 'management_blocked' ? increment(1) : increment(0),
-    soldUnitCount: [
-      'sold',
-      'ats_pipeline',
-      'agreement_pipeline',
-      'booked',
-    ].includes(statusVal)
-      ? increment(1)
-      : increment(0),
-    blockedUnitCount: ['customer_blocked', 'management_blocked'].includes(
-      statusVal
-    )
-      ? increment(1)
-      : increment(0),
-    // totalValue: increment(assetVal),
-    soldValue: [
-      'sold',
-      'ats_pipeline',
-      'agreement_pipeline',
-      'booked',
-    ].includes(statusVal)
-      ? increment(assetVal)
-      : increment(0),
-    custBlockValue: ['customer_blocked'].includes(statusVal)
-      ? increment(assetVal)
-      : increment(0),
-    mangBlockValue: ['management_blocked'].includes(statusVal)
-      ? increment(assetVal)
-      : increment(0),
-    blockedValue: ['customer_blocked', 'management_blocked'].includes(statusVal)
-      ? increment(assetVal)
-      : increment(0),
-    // totalEstPlotVal: increment(assetVal),
-    // totalArea: increment(area),
-    soldArea: ['sold', 'ats_pipeline', 'agreement_pipeline', 'booked'].includes(
-      statusVal
-    )
-      ? increment(area)
-      : increment(0),
-    custBlockArea: ['customer_blocked'].includes(statusVal)
-      ? increment(area)
-      : increment(0),
-    mangBlockArea: ['management_blocked'].includes(statusVal)
-      ? increment(area)
-      : increment(0),
-    blockedArea: ['customer_blocked', 'management_blocked'].includes(statusVal)
-      ? increment(area)
-      : increment(0),
-    // totalPlotArea: increment(area),
-  }
+let yo={
+  status: data?.status,
+  release_status: release_status,
+  possession_status :possession_status,
+  newUnit: 1,
+  availableCount: data?.status === 'available' ? 1: 0,
+  cancelledCount: data?.status === 'available' ? 1: 0,
+  soldUnitCount: data?.status === 'available' ? -1: 0,
+  bookUnitCount: ['booked'].includes(oldStatus) ? -1 : ['booked'].includes(statusVal) ? 1 : 0,
+  s_agreeCount: ['agreement_pipeline'].includes(oldStatus) ? -1 : ['agreement_pipeline'].includes(statusVal) ? 1 : 0,
+  atsCount:['ATS'].includes(oldStatus) ? -1 : ['ATS'].includes(statusVal) ? 1 : 0,
+  s_regisCount: ['registered'].includes(oldStatus) ? -1 : ['registered'].includes(statusVal) ? 1 : 0,
+  s_possCount: ['possession'].includes(oldStatus) ? -1 : ['possession'].includes(statusVal) ? 1 : 0,
+  blockedUnitCount: ['blocked'].includes(oldStatus) ? -1 : ['blocked'].includes(statusVal) ? 1 : 0,
+  custBlockCount: ['customer_blocked'].includes(oldStatus) ? -1 : ['customer_blocked'].includes(statusVal) ? 1 : 0,
+  mangBlockCount:['management_blocked'].includes(oldStatus) ? -1 : ['management_blocked'].includes(statusVal) ? 1 : 0,
+  asset_value: 0,
+  area:0
+
+}
+
   console.log('yo', yo, statusVal === 'available', data)
+try {
+
 
   const x = await addDoc(collection(db, `${orgId}_units`), data)
   const y = await updateProjectComputedData(orgId, pId, yo)
-
+} catch (error) {
+console.log('error in uploading file with data', data, error)
+}
   return
   // await addLeadLog(x.id, {
   //   s: 's',
@@ -2829,10 +2848,13 @@ export const addPlotUnit = async (orgId, data, by, msg) => {
 
   return
 }
+
+
 export const editPlotUnit = async (
   orgId,
   uid,
   data,
+  oldStatusValue,
   by,
   msg,
   enqueueSnackbar
@@ -2893,6 +2915,27 @@ export const editPlotUnit = async (
     await updateDoc(doc(db, `${orgId}_units`, uid), {
       ...data,
     })
+let statusVal = oldStatusValue?.toLowerCase()=== data?.status?.toLowerCase() ? '' : (data?.status?.toLowerCase() || '')
+let oldStatus = oldStatusValue?.toLowerCase()=== data?.status?.toLowerCase() ? '' : (oldStatusValue?.toLowerCase() || '')
+    let yo={
+      status: data?.status,
+      newUnit: 0,
+      availableCount: data?.status === 'available' ? 1: 0,
+      cancelledCount: data?.status === 'available' ? 1: 0,
+      soldUnitCount: data?.status === 'available' ? -1: 0,
+      bookUnitCount: ['booked'].includes(oldStatus) ? -1 : ['booked'].includes(statusVal) ? 1 : 0,
+      s_agreeCount: ['agreement_pipeline'].includes(oldStatus) ? -1 : ['agreement_pipeline'].includes(statusVal) ? 1 : 0,
+      atsCount:['ATS'].includes(oldStatus) ? -1 : ['ATS'].includes(statusVal) ? 1 : 0,
+      s_regisCount: ['registered'].includes(oldStatus) ? -1 : ['registered'].includes(statusVal) ? 1 : 0,
+      s_possCount: ['possession'].includes(oldStatus) ? -1 : ['possession'].includes(statusVal) ? 1 : 0,
+      blockedUnitCount: ['blocked'].includes(oldStatus) ? -1 : ['blocked'].includes(statusVal) ? 1 : 0,
+      custBlockCount: ['customer_blocked'].includes(oldStatus) ? -1 : ['customer_blocked'].includes(statusVal) ? 1 : 0,
+      mangBlockCount:['management_blocked'].includes(oldStatus) ? -1 : ['management_blocked'].includes(statusVal) ? 1 : 0,
+      asset_value: 0,
+      area:0
+
+    }
+    const y = await updateProjectComputedData(orgId, pId, yo)
     enqueueSnackbar('Updated successfully', {
       variant: 'success',
     })
@@ -3543,13 +3586,210 @@ console.log('error in master update ', error)
 
 
 }
-export const updateProjectComputedData = async (orgId, id, data) => {
+export const AuditProjectComputedData = async (orgId, id, data) => {
+  const statusVal = data?.status
+  const release_status = data?.release_status
+  const possession_status = data?.possession_status
+  const assetVal = data?.asset_value
+  const area = data?.area
+  const availableCount = data?.availableCount || 0
+  const cancelledCount = data?.cancelUnitCount || 0
+  const soldUnitCount = data?.soldUnitCount || 0
+const bookUnitCount = data?.bookUnitCount || 0
+const s_agreeCount = data?.s_agreeCount || 0
+const atsCount = data?.atsCount || 0
+const s_regisCount = data?.s_regisCount || 0
+const s_possCount = data?.s_possCount || 0
+const custBlockCount= data?.custBlockCount || 0
+const mangBlockCount= data?.mangBlockCount || 0
+
+  const yo = {
+    totalUnitCount: data?.totalUnitCount || 0,
+    availableCount: availableCount,
+    cancelledCount: cancelledCount,
+    releasedUnitCount: ['released', 'yes'].includes(release_status) ? increment(1) : increment(0),
+    bookUnitCount: bookUnitCount,
+    s_agreeCount: s_agreeCount,
+    atsCount: atsCount,
+    s_regisCount: s_regisCount,
+    s_possCount: s_possCount,
+    custBlockCount:custBlockCount,
+    mangBlockCount: mangBlockCount,
+    soldUnitCost:soldUnitCount,
+    blockedUnitCount: data?.blockedUnitCount ||0,
+
+    // soldValue: [
+    //   'sold',
+    //   'ats_pipeline',
+    //   'possession',
+    //   'registered',
+    //   'ATS',
+    //   'agreement_pipeline',
+    //   'booked',
+    // ].includes(statusVal)
+    //   ? increment(assetVal)
+    //   : increment(0),
+    // custBlockValue: ['customer_blocked'].includes(statusVal)
+    //   ? increment(assetVal)
+    //   : increment(0),
+    // mangBlockValue: ['management_blocked'].includes(statusVal)
+    //   ? increment(assetVal)
+    //   : increment(0),
+    // blockedValue: ['customer_blocked', 'management_blocked'].includes(statusVal)
+    //   ? increment(assetVal)
+    //   : increment(0),
+    // possessionValue: ['possession'].includes(statusVal)
+    //   ? increment(assetVal)
+    //   : increment(0),
+
+    // soldArea: [ 'sold',
+    //   'ats_pipeline',
+    //   'possession',
+    //   'registered',
+    //   'ATS',
+    //   'agreement_pipeline',
+    //   'booked',].includes(
+    //   statusVal
+    // )
+    //   ? increment(area)
+    //   : increment(0),
+    // custBlockArea: ['customer_blocked'].includes(statusVal)
+    //   ? increment(area)
+    //   : increment(0),
+    // mangBlockArea: ['management_blocked'].includes(statusVal)
+    //   ? increment(area)
+    //   : increment(0),
+    // blockedArea: ['customer_blocked', 'management_blocked'].includes(statusVal)
+    //   ? increment(area)
+    //   : increment(0),
+    // possessionArea: ['possession'].includes(statusVal)
+    //   ? increment(area)
+    //   : increment(0),
+    // totalPlotArea: increment(area),
+  }
   try {
     const washingtonRef = doc(db, `${orgId}_projects`, id)
     console.log('check add LeadLog', washingtonRef, id)
-    await updateDoc(washingtonRef, data)
+    await updateDoc(washingtonRef, yo)
   } catch (error) {
-    console.log('error in updation', error)
+    console.log('updateProjectComputedData error in updation', error)
+    // await setDoc(doc(db, `${orgId}_leads_notes`, id), yo)
+  }
+}
+export const updateProjectComputedData = async (orgId, id, data) => {
+  const statusVal = data?.status
+  const release_status = data?.release_status
+  const possession_status = data?.possession_status
+  const assetVal = data?.asset_value
+  const area = data?.area
+  const availableCount = data?.availableCount || 0
+  const cancelledCount = data?.cancelUnitCount || 0
+  const soldUnitCount = data?.soldUnitCount || 0
+const bookUnitCount = data?.bookUnitCount || 0
+const s_agreeCount = data?.s_agreeCount || 0
+const atsCount = data?.atsCount || 0
+const s_regisCount = data?.s_regisCount || 0
+const s_possCount = data?.s_possCount || 0
+const custBlockCount= data?.custBlockCount || 0
+const mangBlockCount= data?.mangBlockCount || 0
+
+  const yo = {
+    totalUnitCount: increment(data?.newUnit || 0),
+    availableCount: ['available'].includes(statusVal) ? increment(availableCount) : increment(availableCount),
+    cancelledCount: increment(cancelledCount),
+    releasedUnitCount: ['released', 'yes'].includes(release_status) ? increment(1) : increment(0),
+    // possessionUnitCount: ['yes'].includes(possession_status) ? increment(1) : increment(0),
+
+    // bookUnitCount: ['booked'].includes(statusVal) ? increment(1) : increment(0),
+    bookUnitCount: increment(bookUnitCount),
+
+    s_agreeCount: increment(s_agreeCount),
+    atsCount: increment(atsCount),
+    s_regisCount: increment(s_regisCount),
+    s_possCount: increment(s_possCount),
+
+
+    // custBlockCount:
+    //   statusVal === 'customer_blocked' ? increment(1) : increment(0),
+    custBlockCount: increment(custBlockCount),
+    // mangBlockCount:
+    //   statusVal === 'management_blocked' ? increment(1) : increment(0),
+    mangBlockCount: increment(mangBlockCount),
+    soldUnitCost:increment(soldUnitCount),
+    // soldUnitCount: [
+    //   'sold',
+    //   'ats_pipeline',
+    //   'possession',
+    //   'registered',
+    //   'ATS',
+    //   'agreement_pipeline',
+    //   'booked',
+    // ].includes(statusVal)
+    //   ? increment(soldUnitCount)
+    //   : increment(0),
+
+    blockedUnitCount: ['customer_blocked', 'management_blocked'].includes(
+      statusVal
+    )
+      ? increment(1)
+      : increment(0),
+    // totalValue: increment(assetVal),
+    soldValue: [
+      'sold',
+      'ats_pipeline',
+      'possession',
+      'registered',
+      'ATS',
+      'agreement_pipeline',
+      'booked',
+    ].includes(statusVal)
+      ? increment(assetVal)
+      : increment(0),
+    custBlockValue: ['customer_blocked'].includes(statusVal)
+      ? increment(assetVal)
+      : increment(0),
+    mangBlockValue: ['management_blocked'].includes(statusVal)
+      ? increment(assetVal)
+      : increment(0),
+    blockedValue: ['customer_blocked', 'management_blocked'].includes(statusVal)
+      ? increment(assetVal)
+      : increment(0),
+    possessionValue: ['possession'].includes(statusVal)
+      ? increment(assetVal)
+      : increment(0),
+    // totalEstPlotVal: increment(assetVal),
+    // totalArea: increment(area),
+    soldArea: [ 'sold',
+      'ats_pipeline',
+      'possession',
+      'registered',
+      'ATS',
+      'agreement_pipeline',
+      'booked',].includes(
+      statusVal
+    )
+      ? increment(area)
+      : increment(0),
+    custBlockArea: ['customer_blocked'].includes(statusVal)
+      ? increment(area)
+      : increment(0),
+    mangBlockArea: ['management_blocked'].includes(statusVal)
+      ? increment(area)
+      : increment(0),
+    blockedArea: ['customer_blocked', 'management_blocked'].includes(statusVal)
+      ? increment(area)
+      : increment(0),
+    possessionArea: ['possession'].includes(statusVal)
+      ? increment(area)
+      : increment(0),
+    // totalPlotArea: increment(area),
+  }
+  try {
+    const washingtonRef = doc(db, `${orgId}_projects`, id)
+    console.log('check add LeadLog', washingtonRef, id)
+    await updateDoc(washingtonRef, yo)
+  } catch (error) {
+    console.log('updateProjectComputedData error in updation', error)
     // await setDoc(doc(db, `${orgId}_leads_notes`, id), yo)
   }
 }
@@ -5266,6 +5506,13 @@ if(boolAgreegate){
           to: 'review',
         },
       ])
+const reportPayload = {
+  txt_dated: dated,
+  receive_by: payload?.bookedBy || payload?.receive_by,
+  projectId,
+  totalAmount: amount,
+}
+    await  updateCrmReportAmountAgreeV2(orgId, reportPayload, by)
 console.log('unit log', data4, error4, data, error)
     // enqueueSnackbar(`Captured Payment...`, {
     //   variant: 'success',
@@ -5385,14 +5632,15 @@ export const updateUnitCustomerDetailsTo = async (
 }
 export const updateUnitStatus = async (
   orgId,
-  unitId,
+  selCustomerPayload,
   data,
   by,
   enqueueSnackbar
 ) => {
   try {
-    console.log('data is===>', unitId, data)
-    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+    const unitId = selCustomerPayload?.id
+    console.log('data is===>', selCustomerPayload?.id, data)
+    await updateDoc(doc(db, `${orgId}_units`, selCustomerPayload?.id), {
       fullPs: data?.fullPs,
       status: data?.status,
       [data?.eventKey]: Timestamp.now().toMillis(),
@@ -5400,6 +5648,35 @@ export const updateUnitStatus = async (
       T_elgible_balance: data?.T_elgible_balance,
       // [`${data?.status}_on`]: data[`${data?.status}_on`],
     })
+    const statusVal = data?.status || ''
+    const oldStatus = data?.oldStatus || ''
+
+
+      let yo={
+        status: data?.status,
+        release_status: '',
+        possession_status :'',
+        newUnit: 0,
+        availableCount: data?.status === 'available' ? 1: 0,
+        cancelledCount: data?.status === 'available' ? 1: 0,
+        soldUnitCount: data?.status === 'available' ? -1: 0,
+        bookUnitCount: ['booked'].includes(oldStatus) ? -1 : ['booked'].includes(statusVal) ? 1 : 0,
+        s_agreeCount: ['agreement_pipeline'].includes(oldStatus) ? -1 : ['agreement_pipeline'].includes(statusVal) ? 1 : 0,
+        atsCount:['ATS'].includes(oldStatus) ? -1 : ['ATS'].includes(statusVal) ? 1 : 0,
+        s_regisCount: ['registered'].includes(oldStatus) ? -1 : ['registered'].includes(statusVal) ? 1 : 0,
+        s_possCount: ['possession'].includes(oldStatus) ? -1 : ['possession'].includes(statusVal) ? 1 : 0,
+        blockedUnitCount: ['blocked'].includes(oldStatus) ? -1 : ['blocked'].includes(statusVal) ? 1 : 0,
+        custBlockCount: ['customer_blocked'].includes(oldStatus) ? -1 : ['customer_blocked'].includes(statusVal) ? 1 : 0,
+        mangBlockCount:['management_blocked'].includes(oldStatus) ? -1 : ['management_blocked'].includes(statusVal) ? 1 : 0,
+        asset_value: 0,
+        area:0
+
+      }
+
+
+
+
+    await updateProjectComputedData(orgId, selCustomerPayload?.pId, yo)
     const { data: data4, error: error4 } = await supabase
       .from(`${orgId}_unit_logs`)
       .insert([
@@ -5757,6 +6034,162 @@ export const updateCrmReportAmountAgreeNew = async (
       })
       await setDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_ProjectId), payload)
     }
+  return
+
+}
+export const updateCrmReportAmountAgreeV2 = async (
+  orgId,
+  data,
+  by,
+) => {
+  console.log('data is===>', data)
+  const { schDate, assignedTo,txt_dated, projectId, totalAmount, status, receive_by } = data
+  console.log('data is===>', schDate)
+    const x = getWeekMonthNo(txt_dated)
+    const {day} = x
+    const dayDocId_d = `${receive_by}D${x.day}M${x.month}Y${x.year}P${data.projectId}`
+    const weekDocId_d = `${receive_by}W${x.weekNumberOfYear}M${x.month}Y${x.year}P${data.projectId}`
+    const monthDocId_d = `${receive_by}M${x.month}Y${x.year}P${data.projectId}`
+    const yearDocId_d = `${receive_by}Y${x.year}P${data.projectId}`
+
+    const dayDocId_AllProject = `D${day}M${x.month}Y${x.year}P_all`
+    const WeekdocId_AllProject = `W${x.weekNumberOfYear}M${x.month}Y${x.year}P_all`
+    const MonthdocId_AllProject = `M${x.month}Y${x.year}P_all`
+    const YeardocId_AllProject = `Y${x.year}P_all`
+
+    const daydocId_ProjectId = `D${day}M${x.month}Y${x.year}P${data.projectId}`
+    const WdocId_ProjectId = `W${x.weekNumberOfYear}M${x.month}Y${x.year}P${data.projectId}`
+    const MonthdocId_ProjectId = `M${x.month}Y${x.year}P${data.projectId}`
+    const YeardocId_ProjectId = `Y${x.year}P${data.projectId}`
+
+
+    const payload = {
+      empId: receive_by,
+      pId: projectId,
+      day: txt_dated,
+      week: x.weekNumberOfYear,
+      month: x.month,
+      year: x.year,
+      received: increment(totalAmount),
+      approved: []?.includes(status)? increment(totalAmount) : increment(0),
+      rejected: []?.includes(status)? increment(totalAmount) : increment(0)
+    }
+
+    const projectPayload = {
+      pId: projectId,
+      week: x.weekNumberOfYear,
+      month: x.month,
+      year: x.year,
+      received: increment(totalAmount),
+      approved: []?.includes(status)? increment(totalAmount) : increment(0),
+      rejected: []?.includes(status)? increment(totalAmount) : increment(0)
+    }
+    const dailyProjectPayload = {...projectPayload, ...{ day: day, time: txt_dated,}}
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_D_amounts`, dayDocId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_D_amounts`, dayDocId_d), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_W_amounts`, weekDocId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_W_amounts`, weekDocId_d), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_M_amounts`, monthDocId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_M_amounts`, monthDocId_d), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_Y_amounts`, yearDocId_d), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_Y_amounts`, yearDocId_d), payload)
+    }
+    // ALL PROJECTS
+
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_D_amounts`, dayDocId_AllProject), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_D_amounts`, dayDocId_AllProject), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_W_amounts`, WeekdocId_AllProject), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_W_amounts`, WeekdocId_AllProject), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_AllProject), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_AllProject), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_Y_amounts`, YeardocId_AllProject), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_Y_amounts`, YeardocId_AllProject), payload)
+    }
+
+    // SPECIFIC PROJECTS
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_D_amounts`, daydocId_ProjectId), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_D_amounts`, daydocId_ProjectId), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_W_amounts`, WdocId_ProjectId), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_W_amounts`, WdocId_ProjectId), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_ProjectId), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_M_amounts`, MonthdocId_ProjectId), payload)
+    }
+    try {
+      await updateDoc(doc(db, `${orgId}_proj_Y_amounts`, YeardocId_ProjectId), payload)
+    } catch (error) {
+      console.log('Employee  updation failed', error, {
+        ...data,
+      })
+      await setDoc(doc(db, `${orgId}_proj_Y_amounts`, YeardocId_ProjectId), payload)
+    }
+
+    // END
+
+
+
   return
 
 }
@@ -6432,6 +6865,26 @@ export const uploadBookedUnitToDb = async (
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       ...data,
     })
+    const statusVal = data?.status || ''
+    let yo={
+      status: data?.status,
+      release_status: '',
+      possession_status :'',
+      newUnit: 0,
+      soldUnitCount:1,
+      availableCount: -1,
+      bookUnitCount: ['booked'].includes(statusVal) ? 1 : 0,
+      s_agreeCount: ['agreement_pipeline'].includes(statusVal) ? 1 : 0,
+      atsCount: ['ATS'].includes(statusVal) ? 1 : 0,
+      s_regisCount: ['registered'].includes(statusVal) ? 1 : 0,
+      s_possCount: ['possession'].includes(statusVal) ? 1 : 0,
+      blockedUnitCount: ['blocked'].includes(statusVal) ? 1 : 0,
+      custBlockCount: ['customer_blocked'].includes(statusVal) ? 1 : 0,
+      mangBlockCount: ['management_blocked'].includes(statusVal) ? 1 : 0,
+      asset_value: data?.T_total || 0.5,
+      area:data?.area || 0}
+  const y = await updateProjectComputedData(orgId, projectId, yo)
+
     const { data1, error1 } = await supabase.from(`${orgId}_unit_logs`).insert([
       {
         type: 'sts_change',

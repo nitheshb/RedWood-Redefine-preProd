@@ -322,7 +322,7 @@ const AdditonalBookingDetails = ({
                                 </div>
 
                                 <section
-                                  className=" m-4 rounded-[20px]  bg-[#fff]"
+                                  className=" m-2 rounded-[20px]  bg-[#fff]"
                                   style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                 >
                                   <section className="flex bg-[#EDEDED] p-4 mt-1 rounded-t-[20px] flex-row">

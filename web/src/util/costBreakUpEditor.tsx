@@ -321,26 +321,26 @@ return x
 
     console.log('new value is ', partEPayload)
 
-  
+
     let total = 0
     let gstTotal = 0
-    const isChargedPerSqft = updatedRows[index]?.units.value === 'costpersqft'
-  
+    const isChargedPerSqft = ['cost_per_sqft','costpersqft' ].includes(updatedRows[index]?.units.value)
+
     const gstPercent =
       Number(updatedRows[index]?.gst?.value) > 1
-        ? updatedRows[index]?.gst?.value * 18
+        ? updatedRows[index]?.gst?.value * 0.01
         : updatedRows[index]?.gst?.value
     total = isChargedPerSqft
       ? Number(selUnitDetails?.construct_area?.toString()?.replace(',', '')) *
         Number(updatedRows[index]?.charges)
       : Number(updatedRows[index]?.charges)
-  
 
- 
+
+
     gstTotal = Math.round(total * gstPercent)
-  
 
-  
+
+
     updatedRows[index].TotalSaleValue = total
     updatedRows[index].gstValue = gstTotal
     updatedRows[index].TotalNetSaleValueGsT = total + gstTotal
@@ -1319,7 +1319,7 @@ console.log('saved data is===>', dataObj)
                                 ))}
                                 <tr className="   h-[32px] border">
                                   <th className="w-[40%] text-[12px] text-left text-[#118D57] pl-2 border ">
-                                    Total (E) box
+                                    Total (E)
                                   </th>
                                   <td className="w-[15%] px-2 font-bold text-[12px] text-right text-gray-600 pr-3"></td>
                                   <td

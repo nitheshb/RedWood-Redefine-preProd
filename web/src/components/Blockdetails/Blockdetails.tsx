@@ -39,10 +39,14 @@ const Blockdetails = ({
   }, [source])
 
   useEffect(() => {
+    console.log('blocks is ', blocks)
     if (blocks.length > 0) {
       setSelBlock(blocks[0])
     }
   }, [blocks])
+  useEffect(() => {
+    console.log('blocks is ', blocks)
+  }, [setSelBlock])
 
   const pickCustomViewer = (item) => {
     const newViewer = viewUnitStatusA

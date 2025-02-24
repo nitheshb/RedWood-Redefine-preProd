@@ -388,7 +388,7 @@ export function MultipleFileUploadField({
                 west_sch_by: dRow['West Schedule*'],
                 status: dRow['Status*']?.toLowerCase() || 'available',
                 release_status: dRow['Release Status*']?.toLowerCase(),
-                mortgage_type: dRow['Mortgage Type*']?.toLowerCase(),
+                mortgage_type: dRow['Mortgage Type*']?.toLowerCase() || '',
                 sharing: dRow['Sharing'] || '',
                 intype: 'bulk',
                 unit_type: 'plot',
@@ -567,8 +567,9 @@ export function MultipleFileUploadField({
                 south_sch_by: dRow['South Schedule*'],
                 east_sch_by: dRow['East Schedule*'],
                 west_sch_by: dRow['West Schedule*'],
-                status: dRow['Status*']?.toLowerCase() || 'available',
+                status: 'available',
                 release_status: dRow['Release Status*']?.toLowerCase() || '',
+                possession_status: dRow['Possession Status*']?.toLowerCase() || '',
                 mortgage_type: dRow['Mortgage Type']?.toLowerCase() || '',
                 survey_no: dRow['Survey No'] || '',
                 Katha_no: dRow['Katha No'] || '',
@@ -611,18 +612,19 @@ export function MultipleFileUploadField({
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
               const currentStatus = dRow['Unit Status']
-              let newCurrentStatus = ''
-              if (currentStatus == 'Available') {
-                newCurrentStatus = 'available'
-              } else if (currentStatus == 'Sold') {
-                newCurrentStatus = 'booked'
-              } else if (currentStatus == 'Blocked_M') {
-                newCurrentStatus = 'management_blocked'
-              } else if (currentStatus == 'Blocked') {
-                newCurrentStatus = 'blocked'
-              } else {
-                newCurrentStatus = 'available'
-              }
+              let newCurrentStatus =[ 'booked','agreement_pipeline','ATS', 'registered', 'possession',  'customer_blocked', 'management_blocked', ].includes(currentStatus) ?   currentStatus :  'available'
+              // if (currentStatus == 'Available') {
+              //   newCurrentStatus = 'available'
+              // } else if (currentStatus == 'Sold') {
+              //   newCurrentStatus = 'booked'
+              // } else if (currentStatus == 'Blocked_M') {
+              //   newCurrentStatus = 'management_blocked'
+              // } else if (currentStatus == 'Blocked') {
+              //   newCurrentStatus = 'blocked'
+              // } else {
+              //   newCurrentStatus = 'available'
+              // }
+
 
               const foundLength = await checkIfUnitAlreadyExists(
                 `${orgId}_units`,
@@ -779,6 +781,12 @@ export function MultipleFileUploadField({
                   if (x === 'clubhouse_membership') {
                     dataObj.charges = Number(dRow['Club House'] || 0)
                   }
+                  if (x === 'club_house_membership') {
+                    dataObj.charges = Number(dRow['Club House'] || 0)
+                  }
+                  if (x === 'club_house_emenities') {
+                    dataObj.charges = Number(dRow['Club House'] || 0)
+                  }
                   return dataObj
                 })
                 onPossessionChargesA.map((dataObj, inx) => {
@@ -786,9 +794,21 @@ export function MultipleFileUploadField({
                   if (x === 'maintenancecharges') {
                     dataObj.charges = Number( dRow['Maintenance Cost'] || 0)
                   }
+
+                  if (x === 'Maintenance') {
+                    dataObj.charges = Number( dRow['Maintenance Cost'] || 0)
+                  }
                   if (x === 'corpus_charges') {
                     dataObj.charges = Number(dRow['Corpus Fund'] || 0)
                   }
+
+                  if (x === 'Corpus_Charges') {
+                    dataObj.charges = Number(dRow['Corpus Fund'] || 0)
+                  }
+
+
+
+
                   return dataObj
                 })
                 partA_total = x.reduce(
@@ -818,7 +838,7 @@ export function MultipleFileUploadField({
                 survey_no: dRow['Survey No'],
                 landOwnerName: dRow['Land Owner Name'],
 
-                status: dRow['Availablity Status'], //filter and send valid values
+                // status: dRow['Availablity Status'], //filter and send valid values
                 unitStatus: dRow['Unit Status'],
 
 
@@ -855,21 +875,29 @@ export function MultipleFileUploadField({
                 customerName1: dRow['Applicant - 1 - Name']
                   .replace(/(Mr\.|Mr.|Miss|Mrs\.|Mrs.|Ms\.|Dr\.|MR\.|MISS)/gi, '')
                   ?.trim(),
+
+                relation1: dRow['S/o_W/o_D/o_C/o-1'],
+                co_Name1: dRow['Son/Daughter/Wife of-1'],
                 phoneNo1: dRow['Customer Number - 1'],
                 dob1: dRow['DOB-1'],
                 address1: dRow['Customer Address'],
                 email1: dRow['Customer Email ID-1'],
                 aadharNo1: dRow['Aadhaar Number-1'],
                 panNo1: dRow['PAN Number-1'],
+                marriedStatus1: dRow['Marital Status-1'],
                 // second applicant
                 customerName2: dRow['Applicant 2 Name'],
+                relation2: dRow['S/o_W/o_D/o_C/o-2'],
+
+                co_Name2: dRow['Son/Daughter/Wife of-2'],
+
+                marriedStatus2: dRow['Marital Status-2'],
                 phoneNo2: dRow['Customer Number - 2'],
                 dob2: dRow['DOB-2'],
                 address2: dRow['Address-2'],
                 email2: dRow['Email-2'],
                 aadharNo2: dRow['Aadhaar Number-2'],
                 panNo2: dRow['PAN Number-2'],
-
                 customerDetailsObj: '',
                 // {
                 //   "relation1": {

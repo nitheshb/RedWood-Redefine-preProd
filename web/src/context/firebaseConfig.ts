@@ -3,7 +3,7 @@ import { getAnalytics } from 'firebase/analytics'
 import { initializeApp } from 'firebase/app'
 import firebase from 'firebase/app'
 import { getAuth } from 'firebase/auth'
-import { getFirestore, initializeFirestore } from 'firebase/firestore'
+import { initializeFirestore } from 'firebase/firestore'
 import { getMessaging, getToken, } from 'firebase/messaging'
 import { getStorage } from 'firebase/storage'
 // import { initializeApp } from 'firebase-admin/app'
@@ -22,9 +22,7 @@ const firebaseConfig = {
   measurementId: 'G-C2BJ3N02SQ',
 }
 
-const settings = {
-  experimentalForceLongPolling: true,
-}
+
 // Initialize Firebase
 
 const app = initializeApp(firebaseConfig)

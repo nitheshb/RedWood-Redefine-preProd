@@ -245,10 +245,10 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                     <thead className='  '>
                       <tr className=" h-8 border-b-[0.2px] bg-[#EDEDED]  rounded-lg w-[100%]">
                         <th className="min-w-[35%] text-[12px] text-left text-[#3D3D3D]   rounded-tl-[10px]  bg-[#EDEDED]  tracking-wide  px-2">
-                          Plot
+                          Charges
                         </th>
                         <th className="w-[15%] text-[12px] text-right  text-[#3D3D3D] bg-[#EDEDED] tracking-wide">
-                          Plot Rate/Sqft
+                          Rate/Sqft
                         </th>
                         <th className="w-[15%] text-[12px] text-right  text-[#3D3D3D] bg-[#EDEDED] tracking-wide ">
                           Sale Value
@@ -293,7 +293,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                         <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800   "></td>
                         <td className="w-[15%] font-interF font-semibold  text-[12px] text-right text-[#6A6A6A] pr-2  ">
                           {' '}
-                          Plot Cost:
+                           Cost:
                         </td>
                         <td className="w-[15%] font-semibold  text-[12px] text-right text-[#6A6A6A]  px-2">
                           ₹{partATotal?.toLocaleString('en-IN')}
@@ -309,7 +309,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             Additional Charges
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  tracking-wide">
-                            Plot Rate/Sqft
+                            Rate/Sqft
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  tracking-wide ">
                             Sale Value
@@ -379,7 +379,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             Construction Charges
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED] tracking-wide">
-                            Construct Rate/Sqft
+                             Rate/Sqft
                           </th>
                           <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED] tracking-wide ">
                             Sale Value
@@ -511,7 +511,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             Possession Charges
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#EDEDED] tracking-wide">
-                            Plot Rate/Sqft
+                            Rate/Sqft
                           </th>
                           <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#EDEDED] tracking-wide ">
                             Sale Value

@@ -197,7 +197,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
     }
     updateUnitStatus(
       orgId,
-      selCustomerPayload?.id,
+      selCustomerPayload,
       dataObj,
       user.email,
       enqueueSnackbar
@@ -270,7 +270,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                       Eligible
                     </th>
                     <th className="w-[15%] text-[12px]  px-2  text-right tracking-wide    text-[#3D3D3D]     bg-[#EDEDED] ">
-                      Total inc GST 
+                      Total inc GST
                     </th>
                     <th className="w-[15%] text-[12px]  px-2 text-right    tracking-wide    text-[#3D3D3D]     bg-[#EDEDED] ">
                       Received

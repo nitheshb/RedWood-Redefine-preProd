@@ -25,6 +25,8 @@ const ProjectAccessSideView = ({
   const { orgId } = user
   const [loading, setLoading] = useState(false)
   const [allowCrmStausOnDue, setAllowCrmStatusOnDue] = useState(false)
+  const [allowSalesExCsEdit, setAllowSalesExCsEdit] = useState(false)
+
   const { enqueueSnackbar } = useSnackbar()
   const [open, setOpen] = useState(false)
   const [projects, setProjects] = useState([])
@@ -35,7 +37,9 @@ const ProjectAccessSideView = ({
   const [planDiagramsA, setPlanDiagramsA] = useState([])
 
   useEffect(()=>{
-    setAllowCrmStatusOnDue(projectDetails?.allowCrmStatusChangeOnDue)
+    setAllowCrmStatusOnDue(projectDetails?.allowCrmStatusChangeOnDue || false)
+    setAllowSalesExCsEdit(projectDetails?.allowSalesExCsEdit || false)
+
   }, [projectDetails])
   useEffect(() => {
     getPlanDiagrams(data?.uid, 'plan_diagram')
@@ -145,6 +149,11 @@ const ProjectAccessSideView = ({
     updateProjectPayload(orgId, projectDetails?.uid, { allowCrmStatusChangeOnDue: status.target.checked })
     setAllowCrmStatusOnDue(status.target.checked )
   }
+  const updateAllowSalesExCsEdit = (status) => {
+
+    updateProjectPayload(orgId, projectDetails?.uid, { allowSalesExCsEdit: status.target.checked })
+    setAllowSalesExCsEdit(status.target.checked )
+  }
   return (
     <div className="h-full flex flex-col  bg-white shadow-xl">
       <div className="   z-10">
@@ -153,7 +162,7 @@ const ProjectAccessSideView = ({
         </Dialog.Title> */}
 
         <div className="flex flex-row ">
-
+        <div className="flex flex-col w-full gap-4">
           {subView === 'salesAccess' && (
             <PaymentLeadAccess
               title={'Leads Access'}
@@ -162,6 +171,21 @@ const ProjectAccessSideView = ({
               source={source}
             />
           )}
+          {subView === 'salesAccess' && (  <div className='ml-4'>
+                            <Checkbox
+                              color="primary"
+                              checked={allowSalesExCsEdit}
+                              onChange={(e) => {
+
+                                updateAllowSalesExCsEdit(e)
+                              }}
+                              inputProps={{
+                                'aria-label': 'select all desserts',
+                              }}
+                            />
+                            <span className="mt-1"> Allow Costsheet Edit feature for Sales Executive</span>
+                          </div>)}
+
           {subView === 'creditNoteIssuers' && (
             <PaymentLeadAccess
               title={'Credit Note Issuers'}
@@ -180,7 +204,7 @@ const ProjectAccessSideView = ({
             />
           )}
 
-      <div className="flex flex-col w-full gap-4">
+
           {subView === 'crmAccess' && (
             <PaymentLeadAccess
               title={'CRM Access'}
@@ -202,10 +226,10 @@ const ProjectAccessSideView = ({
                                 'aria-label': 'select all desserts',
                               }}
                             />
-                          Change unit status on Payment Due
+                            <span className="mt-1"> Allow Unit status change on Elgible Balance exists</span>
                           </div>)}
 
-    </div>
+
 
           {subView === 'FinAccess' && (
             <PaymentLeadAccess
@@ -231,6 +255,7 @@ const ProjectAccessSideView = ({
               source={source}
             />
           )}
+             </div>
         </div>
       </div>
 
