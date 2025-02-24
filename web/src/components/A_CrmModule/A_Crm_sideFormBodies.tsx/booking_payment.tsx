@@ -32,7 +32,6 @@ import CrmUnitPaymentSchedule from '../CrmPaymentSchedule'
 import CrmUnitFinanceHistory from '../CrmUnitFinanceHistory'
 import SiderForm from 'src/components/SiderForm/SiderForm'
 
-// import BankSelectionSwitchDrop from './BankSelectionDroopDown'
 
 export default function BookingPaymentFlow({
   type,
@@ -87,13 +86,10 @@ export default function BookingPaymentFlow({
     return
   }
   const streamTransactions = () => {
-    // Subscribe to real-time changes in the `${orgId}_accounts` table
     const subscription = supabase
       .from(`${orgId}_accounts`)
       .on('*', (payload) => {
-        // When a change occurs, update the 'leadLogs' state with the latest data
         console.log('account records', payload)
-        // Check if the updated data has the id 12
         const updatedData = payload.new
         const { id } = payload.old
         const updatedLeadLogs = [...unitTransactionsA]
@@ -118,7 +114,6 @@ export default function BookingPaymentFlow({
       })
       .subscribe()
 
-    // Clean up the subscription when the component unmounts
     return () => {
       supabase.removeSubscription(subscription)
     }
@@ -151,22 +146,7 @@ export default function BookingPaymentFlow({
   return (
     <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
-        {/* <div className="flex p-4 items-center justify-between">
-          <div className="flex flex-row">
-            <h2 className="font-medium flex-grow">Bank Loan Process</h2>
 
-            <span
-              className=" ml-2 text-blue-500 hover:underline"
-              onClick={() => {
-
-              }}
-            >
-              Add Doc
-            </span>
-          </div>
-          <p className="mr4">Date Created</p>
-
-        </div> */}
         <div className="mt-1">
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Payments</h2>
@@ -223,9 +203,7 @@ export default function BookingPaymentFlow({
               {'New Payment'}
               <span className="absolute inset-0" />
             </a>
-            {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+
           </div>
         </div>
       </div>
@@ -311,9 +289,7 @@ export default function BookingPaymentFlow({
                     {'All Demands'}
                     <span className="absolute inset-0" />
                   </a>
-                  {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+     
                 </div>
               </div>
               <div
@@ -349,9 +325,7 @@ export default function BookingPaymentFlow({
                     {'Active Demand'}
                     <span className="absolute inset-0" />
                   </a>
-                  {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+    
                 </div>
               </div>
               <div
@@ -385,9 +359,7 @@ export default function BookingPaymentFlow({
                     {'Add Modification'}
                     <span className="absolute inset-0" />
                   </a>
-                  {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+             
                 </div>
               </div>
             </div>
@@ -398,7 +370,6 @@ export default function BookingPaymentFlow({
               <section
                 key={i}
                 onClick={() => {
-                  // show sidebar and display the worddoc
                   setSliderInfo({
                     open: true,
                     title: 'viewDocx',
@@ -423,7 +394,6 @@ export default function BookingPaymentFlow({
                 <section
                   key={i}
                   onClick={() => {
-                    // show sidebar and display the worddoc
                     setSliderInfo({
                       open: true,
                       title: 'viewDocx',
@@ -448,7 +418,6 @@ export default function BookingPaymentFlow({
                 <section
                   key={i}
                   onClick={() => {
-                    // show sidebar and display the worddoc
                     setSliderInfo({
                       open: true,
                       title: 'viewDocx',
@@ -535,9 +504,7 @@ export default function BookingPaymentFlow({
                     {'All Payments'}
                     <span className="absolute inset-0" />
                   </a>
-                  {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+        
                 </div>
               </div>
               <div
@@ -573,9 +540,7 @@ export default function BookingPaymentFlow({
                     {'Active Payments'}
                     <span className="absolute inset-0" />
                   </a>
-                  {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+         
                 </div>
               </div>
               <div
@@ -609,9 +574,7 @@ export default function BookingPaymentFlow({
                     {'New Payment'}
                     <span className="absolute inset-0" />
                   </a>
-                  {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+      
                 </div>
               </div>
             </div>
@@ -631,7 +594,6 @@ export default function BookingPaymentFlow({
                   <section
                     key={i}
                     onClick={() => {
-                      // show sidebar and display the worddoc
                       setSliderInfo({
                         open: true,
                         title: 'viewDocx',
@@ -657,7 +619,6 @@ export default function BookingPaymentFlow({
                 <section
                   key={i}
                   onClick={() => {
-                    // show sidebar and display the worddoc
                     setSliderInfo({
                       open: true,
                       title: 'viewDocx',

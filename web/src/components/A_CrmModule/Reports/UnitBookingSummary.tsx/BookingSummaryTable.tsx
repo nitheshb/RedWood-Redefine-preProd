@@ -38,27 +38,7 @@ import { computeTotal } from 'src/util/computeCsTotals'
 
 
 
-// function createData(
-//   Date,
-//   Name,
-//   Mobile,
-//   Email,
-//   Project,
-//   Source,
-//   Empmobile,
-//   Note
-// ) {
-//   return {
-//     Date,
-//     Name,
-//     Mobile,
-//     Email,
-//     Project,
-//     Source,
-//     Empmobile,
-//     Note,
-//   }
-// }
+
 
 function descendingComparator(a, b, orderBy) {
   if ((b[orderBy] || b['stsUpT'] || b['Date']) < (a[orderBy] || a['stsUpT'] || a['Date'])) {
@@ -133,13 +113,7 @@ const headCells = [
     label: 'Status',
   },
 
-  // {
-  //   id: 'bmrda_strr',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'center',
-  //   label: 'BMRDA/STRR',
-  // },
+
 
   {
     id: 'booked',
@@ -173,34 +147,7 @@ const headCells = [
     align: 'right',
     label: 'Charges-II',
   },
-  // {
-  //   id: 'infra',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'right',
-  //   label: 'Infrastructure',
-  // },
-  // {
-  //   id: 'club',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'right',
-  //   label: 'ClubHouse Charges',
-  // },
-  // {
-  //   id: 'maintenance',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'right',
-  //   label: 'Maintenance Charges',
-  // },
-  // {
-  //   id: 'legal',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'right',
-  //   label: 'Legal Charges',
-  // },
+
   {
     id: 'sale',
     numeric: false,
@@ -293,25 +240,7 @@ const EnhancedTableToolbar = (props) => {
   React.useEffect(() => {
     setRowsAfterSearchKey(rows)
   }, [rows])
-  // React.useEffect(() => {
-  //  console.log('calendar state', isOpened, startDate?.getTime())
-  //  if(startDate !== null && endDate !=null){
-  //   console.log('inside you1')
-  //   let rowsR = rows.filter((item) => {
-  //    return item.Date >=startDate.getTime() && item.Date <=endDate.getTime()
-  //   })
-  //   setRowsAfterSearchKey(rowsR)
-  //  }else if(startDate !==null) {
-  //   console.log('inside you')
-  //   let rowsR = rows.filter((item) => {
-  //     console.log('inside you wjat os tjo filter', item.Date>= startDate.getTime() && item.Date <= startDate.getTime()+ 86400000,startDate.getTime()+ 86399999,startDate.getTime(),   item.Name)
-  //     return item.Date>= startDate.getTime() && item.Date <= startDate.getTime()+ 86400000
-  //    })
-  //    console.log('inside you wjat os tjo filter', rowsR.length)
-  //    setRowsAfterSearchKey(rowsR)
-  //    console.log('inside you wjat os tjo filter 1', rowsAfterSearchKey)
-  //  }
-  // }, [startDate,endDate ])
+
 
   React.useEffect(() => {
     const downRows = []
@@ -377,32 +306,7 @@ React.useEffect(()=>{
 
   return (
     <section className="flex flex-row justify-between pb pt-1 px-3 ">
-      {/* <span className="flex flex-row">
-        <span className="relative  p- border rounded h-7">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-3 w-3 absolute left-0 ml-1 mt-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-          <input
-            type="text"
-            placeholder={`Search...${selStatus}`}
-            // onChange={searchKeyField}
-            value={searchKey}
-            className="ml-6 bg-transparent text-xs focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none"
-          />
-        </span>
 
-      </span> */}
 
 
       <span style={{ display: 'flex' }}>
@@ -415,15 +319,7 @@ React.useEffect(()=>{
             pickCustomViewer={pickCustomViewer}
           />
         </section>
-        {/* <Tooltip title={`Download ${rowsAfterSearchKey.length} Rows`}>
 
-          <IconButton className="bg-gray-200 ">
-            <EventNoteTwoToneIcon
-              className="h-[20px] w-[20px]"
-              style={{ height: '20px', width: '20px' }}
-            />
-          </IconButton>
-        </Tooltip> */}
 
         {numSelected > 0 ? (
           <Tooltip title="Delete">
@@ -436,10 +332,6 @@ React.useEffect(()=>{
           </Tooltip>
         ) : (
           <Tooltip title={`Download ${leadsFetchedData?.length} Row`}>
-            {/* <IconButton>
-            <FileDownloadIcon />
-            <CSVDownloader />
-          </IconButton> */}
 
             <CSVDownloader
               className="mr-6 h-[20px] w-[20px]"
@@ -516,20 +408,7 @@ const [selTotalBalance, setTotalBalance] = React.useState(0);
 
 React.useEffect(() => {
 
-  // const partACost =
-  // row?.plotCS?.reduce(function (_this, val) {
-  //     return _this + val.TotalNetSaleValueGsT
-  //   }, 0) || 0
 
-  // const partBCost =
-  // row?.addChargesCS?.reduce(
-  //     (partialSum, obj) =>
-  //       partialSum +
-  //       Number(
-  //         computeTotal(obj, row?.super_built_up_area || row?.area)
-  //       ),
-  //     0
-  //   ) || 0
   console.log('valure are', leadsFetchedData)
   const totalSale = leadsFetchedData.reduce((total, row) => total + Number(row?.T_total || 0), 0);
   setTotalSaleValue(totalSale);
@@ -654,28 +533,15 @@ React.useEffect(() => {
   }
 
   const handleClick = (event, row) => {
-    // const selectedIndex = selected.indexOf(name)
     const newSelected = []
 
-    // if (selectedIndex === -1) {
-    //   newSelected = newSelected.concat(selected, name)
-    // } else if (selectedIndex === 0) {
-    //   newSelected = newSelected.concat(selected.slice(1))
-    // } else if (selectedIndex === selected.length - 1) {
-    //   newSelected = newSelected.concat(selected.slice(0, -1))
-    // } else if (selectedIndex > 0) {
-    //   newSelected = newSelected.concat(
-    //     selected.slice(0, selectedIndex),
-    //     selected.slice(selectedIndex + 1)
-    //   )
-    // }
+
     selUserProfileF('User Profile', row)
     setSelected(newSelected)
   }
 
   const isSelected = (name) => selected.indexOf(name) !== -1
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
 
@@ -683,7 +549,6 @@ React.useEffect(() => {
 
 
 
-  {/* today */}
 
 
 function EnhancedTableHead(props) {
@@ -754,15 +619,7 @@ function EnhancedTableHead(props) {
             marginRight: '10px',
           }}
         >
-          {/* <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          /> */}
+
 
 
 
@@ -852,15 +709,7 @@ function EnhancedTableHead(props) {
             marginRight: '10px',
           }}
         >
-          {/* <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          /> */}
+
 
 
 
@@ -1031,15 +880,7 @@ function EnhancedTotalTableHead(props) {
       return ''
     }
 
-    //   if(viewUnitStatusA.includes('Assigned To') &&
-    //   headCell === 'Assigned'){
-    //   return ''
-    //   }else{
-    //     return 'none'
-    //   }
-    // }else {
-    //   return ''
-    // }
+
 
 
   }
@@ -1212,22 +1053,7 @@ EnhancedTableHead.propTypes = {
 
   return (
     <Section sx={{ width: '100%' }} style={{ border: 'none', radius: 0 }}>
-      {/* <EnhancedTableToolbar
-        numSelected={selected.length}
-        selStatus={selStatus}
-        filteredData={rows}
-        searchKey={searchKey}
-        startDate={startDate}
-        endDate={endDate}
-        setDateRange={setDateRange}
-        setSearchKey={setSearchKey}
-        rows={rows}
-        viewUnitStatusA={viewUnitStatusA}
-        pickCustomViewer={pickCustomViewer}
-        setViewUnitStatusA={setViewUnitStatusA}
-        leadsFetchedData={leadsFetchedData}
-        searchVal={searchVal}
-      /> */}
+
       <section
         style={{ borderTop: '1px solid #efefef', background: '#fefafb' }}
       >
@@ -1249,16 +1075,7 @@ EnhancedTableHead.propTypes = {
               searchkey={searchKey}
               viewUnitStatusA={viewUnitStatusA}
             />
-               {/* <EnhancedTotalTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows?.length}
-              searchkey={searchKey}
-              viewUnitStatusA={viewUnitStatusA}
-            /> */}
+
 
             <TableBody>
               {
@@ -1438,7 +1255,7 @@ EnhancedTableHead.propTypes = {
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4', 
     }  }} padding="none">
 
   <span
@@ -1452,7 +1269,7 @@ EnhancedTableHead.propTypes = {
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4', 
     } }} padding="none">
           <span>₹{row?.T_C?.toLocaleString('en-IN')}</span>
         </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap',  paddingRight: '6px',color: '#0ea5e9',borderLeft: '1px solid #e0e0e0' ,fontSize: '13px',    '& span': {
@@ -1466,18 +1283,7 @@ EnhancedTableHead.propTypes = {
           <span>₹{row?.T_D?.toLocaleString('en-IN')}</span>
         </TableCell>)}
 
-        {/* {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
-        ₹{infraCharges?.toLocaleString('en-IN')}
-        </TableCell>)}
-       {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
-        ₹{clubHouseCharges?.toLocaleString('en-IN')}
-        </TableCell>)}
-        {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
-        ₹{maintenanceCharges?.toLocaleString('en-IN')}
-        </TableCell>)}
-        {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px'  }} padding="none">
-        ₹{legalCharge?.toLocaleString('en-IN')}
-        </TableCell>)} */}
+
        <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff", borderLeft: '0.2px solid #e7e5e4', paddingRight: '6px', fontSize: '13px' }} padding="none" >
         ₹{row?.T_total?.toLocaleString('en-IN')}
         </TableCell>
@@ -1497,7 +1303,7 @@ EnhancedTableHead.propTypes = {
       borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
     }, '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4', 
     } }} padding="none">
         ₹{row?.T_balance?.toLocaleString('en-IN')}
         </TableCell>
@@ -1553,7 +1359,6 @@ EnhancedTableHead.propTypes = {
                                     (row?.leadUpT || row?.stsUpT),
                                     ''
                                   )) || 0} Min`}{' '}
-                                  {/* in above line I have added 0 to take Nan value */}
                                 {getDifferenceInMinutes(
                                   (row?.leadUpT || row?.stsUpT),
                                   ''
@@ -1571,9 +1376,7 @@ EnhancedTableHead.propTypes = {
                           sx={{ whiteSpace: 'nowrap',  paddingRight: '8px' , paddingLeft: '8px', background: "#d1d1fb", fontSize: '13px' }}
                         >
                           <>
-                            {/* <span className="font-bodyLato">
-                          {prettyDate(row?.stsUpT || row.Date).toLocaleString()}
-                        </span> */}
+                
                             <span className="px- py-[1px]  min-w-[100px] inline-flex text-xs leading-5 tracking-wide  rounded-full  text-green-800">
                               {Math.abs(
                                 getDifferenceInMinutes(

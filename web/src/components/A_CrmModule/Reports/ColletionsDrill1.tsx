@@ -120,48 +120,26 @@ const CollectionsDrillI = ({
       setFinFetchedData(sortedData)
     }
   useEffect(() => {
-    // let projectFilAarray = [...leadsLogsPayload]
     if (selProjectIs?.value == 'allprojects') {
       console.log('project list i s', projectList)
-      // setFiltProjectListTuned(projectList)
 
-      // leadsSerialDatafun()
     } else {
-      // projectFilAarray = projectFilAarray.filter((d) => d.projectId === selProjectIs?.value)
-      // projectFilAarray = projectFilAarray.filter((d) => d.Project === selProjectIs?.label)
 
-      // leadsSerialDatafun()
-      // setFiltProjectListTuned(z)
-      // viewSource
     }
 
     if (selVisitFixedBy?.value == 'allexecutives') {
       console.log('project list i s', projectList)
-      // setFiltProjectListTuned(projectList)
 
-      // leadsSerialDatafun()
     } else {
-      // projectFilAarray = projectFilAarray.filter((d) => d.visitFixedBy === selVisitFixedBy?.value)
 
-      // leadsSerialDatafun()
-      // setFiltProjectListTuned(z)
-      // viewSource
     }    if (selVisitDoneBy?.value == 'allexecutives') {
       console.log('project list i s', projectList)
-      // setFiltProjectListTuned(projectList)
 
-      // leadsSerialDatafun()
     } else {
-      // projectFilAarray = projectFilAarray.filter((d) => d.by === selVisitDoneBy?.value)
 
-      // leadsSerialDatafun()
-      // setFiltProjectListTuned(z)
-      // viewSource
     }
 
-    // setLeadsFilA(
-    //   projectFilAarray
-    // )
+
   }, [projectList, selProjectIs, selVisitDoneBy, selVisitFixedBy])
 
   const leadsSerialDatafun = async () => {
@@ -275,9 +253,7 @@ const CollectionsDrillI = ({
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
-        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3  font-Playfair tracking-wider">
-          {subtitle || title} ({leadsFilA.length || 0})
-        </Dialog.Title> */}
+
          {subtitle || title} ({leadsFilA.length || 0})
         <section className="flex flex-row">
           <section className="flex flex-col border ml-2 py-1  px-4 text-xs  rounded-full">
@@ -328,10 +304,7 @@ const CollectionsDrillI = ({
           </section>
 
           <Tooltip title={`Download ${leadsFilA?.length} Row`}>
-            {/* <IconButton>
-            <FileDownloadIcon />
-            <CSVDownloader />
-          </IconButton> */}
+
 
             <CSVDownloader
               className="mr-6 h-[20px] w-[20px]"
@@ -346,12 +319,7 @@ const CollectionsDrillI = ({
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col m-4">
           <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
-            {/* <CustomRadioGroup
-              label="Type"
-              value={selected}
-              options={projectPlans}
-              onChange={setSelected}
-            /> */}
+
             {loadingIcon ? (
               <LogSkelton />
             ) : (
@@ -394,23 +362,12 @@ const CollectionsDrillI = ({
                                           <tr
                                             className="app-border-1 border-y border-slate-200 "
                                             key={i}
-                                            // onClick={() => viewTransaction(finData)}
                                           >
                                             <td className="pl-3 ">
                                               <div className="flex justify-center text-right items-center rounded-md w-2 h-8 app-bg-yellow-2 app-color-yellow-1 text-xs font-semibold">
                                                 {i + 1}
                                               </div>
-                                              {/* <div
-                                              className={`${
-                                                finData?.status === 'received'
-                                                  ? 'bg-green-700'
-                                                  : finData?.status === 'rejected'
-                                                  ? 'bg-yellow-600'
-                                                  : 'bg-violet-600'
-                                              }   w-24 text-xs font-semibold px-3 py-0.5 rounded-br-md rounded-tl-md text-white`}
-                                            >
-                                              {finData?.status?.toLocaleUpperCase()}
-                                            </div> */}
+                       
                                             </td>
                                             <td>
                                               <div className="flex flex-row py-2 ml-4">
@@ -442,7 +399,6 @@ const CollectionsDrillI = ({
                                             </td>
                                             <td>
                                               <div className="flex flex-row py-2">
-                                                {/* <div className="mr-2 w-[3px]  bg-gray-100 "></div> */}
                                                 <div className="flex flex-col">
                                                   <span className="font-semibold text-sm app-color-black">
                                                     {finData?.mode}
@@ -450,15 +406,12 @@ const CollectionsDrillI = ({
                                                   <span className="font-normal text-xs app-color-gray-1">
                                                     {finData?.txt_id}
                                                   </span>
-                                                  {/* <span className="font-normal text-xs app-color-gray-1">
-                                                    {timeConv(finData?.txt_dated)}
-                                                  </span> */}
+                                          
                                                 </div>
                                               </div>
                                             </td>
                                             <td>
                                               <div className="flex flex-row py-2">
-                                                {/* <div className="mr-2 w-[3px]  bg-gray-100 "></div> */}
                                                 <div className="flex flex-col">
                                                   <span className="font-normal text-xs app-color-gray-1">
                                                     {finData?.txt_id}

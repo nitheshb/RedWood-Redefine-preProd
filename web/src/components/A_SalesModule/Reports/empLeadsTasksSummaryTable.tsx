@@ -233,24 +233,6 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
           Employee Tasks Report
         </div>
 
-        {/* <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-
-          </label>
-          </label>
-          <select
-            id="view"
-            className="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={dataView}
-            onChange={(e) => handleChangeView(e.target.value)}
-          >
-            <option value="monthly">Monthly</option>
-            <option value="weekly">Weekly</option>
-            <option value=''>Anually</option>
-            <option value=''>Quarterly</option>
-            <option value=''>Halferly</option>
-          </select>
-        </div> */}
 
         <div className="flex mb-2 space-x-2">
           <button
@@ -318,12 +300,7 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-          {/* <tr className="bg-gray-100">
-            <td
-              colSpan={dataView === 'monthly' ? 7 : 6}
-              className="border border-black"
-            ></td>
-          </tr> */}
+
 
           {loader && <TableSkeleton rows={3} columns={7} />}
           {projectAValues

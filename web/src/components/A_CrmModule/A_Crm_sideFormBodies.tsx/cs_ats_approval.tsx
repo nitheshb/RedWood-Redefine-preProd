@@ -26,11 +26,6 @@ export default function Crm_ATS_approval({
   const submitManagerApproval = (status) => {
     const dataObj = {
       status: status,
-      // plotCS: costSheetA,
-      // fullPs: newPlotPS,
-      // addChargesCS: partBPayload,
-      // T_balance: netTotal - selUnitDetails?.T_review,
-      // T_Total: netTotal,
     }
     updateATSApproval(
       orgId,
@@ -62,16 +57,13 @@ export default function Crm_ATS_approval({
           onClick={() => {
             submitManagerApproval('rejected')
           }}
-          // disabled={loading}
         >
           {'Reject'}
         </button>
         <button
           className="bg-green-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="submit"
-          // disabled={loading}
           onClick={() => {
-            // mark man_cs_approval as true
             submitManagerApproval('approved')
           }}
         >

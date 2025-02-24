@@ -151,8 +151,7 @@ return
         const usersListA = querySnapshot.docs.map((docSnapshot) => {
           const x = docSnapshot.data()
           x.id = docSnapshot.id
-        //  let projObj = projects.find(project => project.uid === x.pId)
-        //   x.projectName = projObj?.projectName || 'Others'
+
 
           console.log('mylist is', x)
 
@@ -176,22 +175,7 @@ return
     )
 
     return
-     // Map over `x` and return an array of Promises
-  // const promises = x.map(async (data, i) => {
-  //   data.time = data.week;
 
-  //   const y = await getCollectionsReport(data);
-  //   const value = y.length > 0 ? y[0]?.received : 3;
-
-  //   const payloadNew = { ...data, value, prevValue: 5 };
-
-  //   console.log('Matched value:', y, data, projectMonthArray, payloadNew);
-
-  //   projectMonthArray.push(payloadNew); // Push into array
-  //   return payloadNew; // Return processed data
-  // });
-
-    // Create an array of promises
     setLoad(false)
     const promises = x.map(async (data, i) => {
       let z = {}
@@ -225,18 +209,7 @@ return
       return await getCollectionsReport(data);
     });
 
-    // Wait for all Promises to resolve
-    // const resolvedData = await Promise.all(promises);
 
-    // // Process resolved data to create the final array
-    // const finalData = await resolvedData.map(async (d, i) => {
-    //   console.log('matched value i ', await d)
-    //   const value = d.length > 0 ? d[0]?.received : 3;
-    //   return { ...x[i], value, prevValue: 5 }; // Ensure you're using x[i] for the original week data
-    // });
-
-    // Update the state with the final processed data
-    // await setTotalCollecionR(finalData);
 
 
    }
@@ -315,13 +288,10 @@ return
               currentYear: month.currentYear,
             }
 
-            // Fetch projection sum asynchronously
             const totalReceivableValue = await gretProjectionSum(orgId, payload)
 
-            // const totalReceivableValue = await gretProjectCollectionSum(orgId, payload)
 
 
-            // Update month object with receivable value
             const updatedMonth = { ...month, receive: totalReceivableValue }
             console.log(
               'Value refreshed',
@@ -335,18 +305,14 @@ return
           })
         )
 
-        // Update project data with month array
         newProjectData.months = projectMonthArray
         insideValues.push(newProjectData)
       }
 
-      // After processing all projects, update state with updated project data
       setProjectWithValues(insideValues)
     } catch (error) {
       console.error('Error calculating monthly values:', error)
-      // Handle error
     } finally {
-      // Set loading state to false
       setLoaderIcon(false)
     }
   }
@@ -356,13 +322,10 @@ return
         setLoaderIcon(true)
         const insideValues = []
 
-        // Iterate over projects
         for (const projectData of projects) {
-          //  const z = await projects.map((projectData) => {
           const newProjectData = { ...projectData }
           const projectMonthArray = []
 
-          // Use Promise.all to execute asynchronous operations concurrently
           await Promise.all(
             monthsA.map(async (month) => {
               const payload = {
@@ -371,10 +334,8 @@ return
                 currentYear: month.currentYear,
               }
 
-              // Fetch projection sum asynchronously
               const totalReceivableValue = await gretProjectCollectionSum(orgId, payload)
 
-              // Update month object with receivable value
               const updatedMonth = { ...month, receive: totalReceivableValue }
               console.log(
                 'Value refreshed',
@@ -388,18 +349,14 @@ return
             })
           )
 
-          // Update project data with month array
           newProjectData.months = projectMonthArray
           insideValues.push(newProjectData)
         }
 
-        // After processing all projects, update state with updated project data
         setProjectCollections(insideValues)
       } catch (error) {
         console.error('Error calculating monthly values:', error)
-        // Handle error
       } finally {
-        // Set loading state to false
         setLoaderIcon(false)
       }
     }
@@ -431,7 +388,6 @@ return
            return await unsubscribe
 
 
-         // await console.log('leadsData', leadsData)
        }
        const sortData = (data) => {
         if (!sortConfig.key) return data;
@@ -691,12 +647,7 @@ return
                   <>
                     {last3MonthsA.map((month, i) => {
                       return (
-                        // <th
-                        //   key={i}
-                        //   className="text-right p-1 pr-3 font-medium text-[#000000] whitespace-nowrap "
-                        // >
-                        //   {month?.name}
-                        // </th>
+          
                         ['Target', 'Collection', 'Pending'].map(
                           (month, i) => {
                             return (
@@ -734,12 +685,7 @@ return
             {loader && [1, 2, 3].map((d, i) => <TableSkeleton key={i} />)}
 
             <tbody className="">
-              {/* <tr className="bg-gray-100">
-            <td
-              colSpan={dataView === 'monthly' ? 7 : 6}
-              className="border border-black"
-            ></td>
-          </tr> */}
+
               {sortedData?.map((data, index) => {
                 console.log('final value is', data)
                 let totalAmount = 0
@@ -805,15 +751,7 @@ return
                           </>
                           )
                         })}
-                        {/* <td className="py-3 px-6 text-right border border-black">
-                      {data?.monthly?.june.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py-3 px-6 text-right border border-black">
-                      {data?.monthly?.may.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py-3 px-6 text-right border border-black">
-                      {data?.monthly?.april.toLocaleString('en-IN')}
-                    </td> */}
+  
                       </>
                     ) : (
                       <>
@@ -857,9 +795,7 @@ return
             title={subTitle}
             subtitle={subTitle}
             filterPaylod={filterPayload}
-            // setCustomerDetails={setCustomerDetails}
-            // setisImportLeadsOpen={setisImportLeadsOpen}
-            // leadsLogsPayload={drillDownPayload}
+
             widthClass="max-w-7xl"
             unitsViewMode={undefined}
             setIsClicked={undefined}

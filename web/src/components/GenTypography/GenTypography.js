@@ -1,13 +1,4 @@
-// const GenTypography = () => {
-//   return (
-//     <div>
-//       <h2>{'GenTypography'}</h2>
-//       <p>{'Find me in ./web/src/components/GenTypography/GenTypography.tsx'}</p>
-//     </div>
-//   )
-// }
 
-// export default GenTypography
 
 import { Box, styled } from '@mui/material'
 import clsx from 'clsx'

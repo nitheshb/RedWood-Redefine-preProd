@@ -4,88 +4,13 @@
 // // src/App.js
 // import React from 'react'
 
-// import {
-//   ColumnDef,
-//   useReactTable,
-//   getCoreRowModel,
-//   getFilteredRowModel,
-//   getPaginationRowModel,
-//   getSortedRowModel,
-//   flexRender,
-// } from '@tanstack/react-table'
 
-// const data = [{
-//   id: "728ed52f",
-//   amount: 100,
-//   status: "pending",
-//   email: "m@example.com",
-// },]
 
-// const columns = [
-//   {
-//     Header: 'ID',
-//     accessor: 'id',
-//   },
-//   {
-//     Header: 'Email',
-//     accessor: 'email',
-//   },
-//   {
-//     Header: 'Amount',
-//     accessor: 'amount',
-//   },
-//   {
-//     Header: 'Status',
-//     accessor: 'status',
-//   },
-//   // Add more columns as needed
-// ]
 
-// function AdvancedDataTableTest() {
-//   return (
-//     <div className="App">
-//       <h1>Advanced React Table Example</h1>
-//       <AdvancedDataTable columns={columns} data={data} />
-//     </div>
-//   )
-// }
-
-// export default AdvancedDataTableTest
-
-// // src/AdvancedDataTable.js
-
-// export function AdvancedDataTable({ columns, data }) {
-
-//   return (
-//     <table {...getTableProps()} className="table">
-//       <thead>
-//         {headerGroups.map((headerGroup) => (
-//           <tr {...headerGroup.getHeaderGroupProps()}>
-//             {headerGroup.headers.map((column) => (
-//               <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-//             ))}
-//           </tr>
-//         ))}
-//       </thead>
-//       <tbody {...getTableBodyProps()}>
-//         {rows.map((row) => {
-//           prepareRow(row)
-//           return (
-//             <tr {...row.getRowProps()}>
-//               {row.cells.map((cell) => {
-//                 return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-//               })}
-//             </tr>
-//           )
-//         })}
-//       </tbody>
-//     </table>
-//   )
-// }
 
 import { useState, useCallback, useEffect } from 'react'
 
-// @mui
+
 import { SearchIcon } from '@heroicons/react/solid'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
@@ -101,32 +26,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { startOfDay } from 'date-fns'
 import isEqual from 'lodash/isEqual'
 
-// routes
-// _mock
-// hooks
-// components
-// import CustomBreadcrumbs from 'src/components/custom-breadcrumbs'
-// import { ConfirmDialog } from 'src/components/custom-dialog'
-// import Iconify from 'src/components/iconify'
-// import Label from 'src/components/label'
-// import Scrollbar from 'src/components/scrollbar'
-// import { useSettingsContext } from 'src/components/settings'
 
-// import { useBoolean } from 'src/hooks/use-boolean'
-// import { RouterLink } from 'src/routes/components'
-// import { useRouter } from 'src/routes/hook'
-// import { paths } from 'src/routes/paths'
-// types
-// import {
-//   IUserItem,
-//   IUserTableFilters,
-//   IUserTableFilterValue,
-// } from 'src/types/user'
-
-//
-// import UserTableFiltersResult from '../user-table-filters-result'
-// import UserTableRow from '../user-table-row'
-// import UserTableToolbar from '../user-table-toolbar'
 
 import {
   getAllProjects,
@@ -276,29 +176,10 @@ export default function UserListView() {
           }
           return x
         })
-        // setBoardData
-        // console.log('my Array data is ', usersListA, crmCustomersDBData)
-        // await serealizeData(usersListA)
+
         await setTableData(usersListA)
 
-        // await setCrmCustomerDBData(usersListA)
-        // if (statusFil === 'booked') {
-        //   await setBookingReviewA(usersListA)
-        //   await setBookingReviewCo(usersListA.length)
-        // } else if (statusFil === 'agreement_pipeline') {
-        //   await setAgreePipeA(usersListA)
-        //   await setAgreePipeCo(usersListA.length)
-        // } else if (statusFil === 'sd_pipeline') {
-        //   await setSdPipeA(usersListA)
-        //   await setSdPipeCo(usersListA.length)
-        // } else if (statusFil === 'registered') {
-        //   await setRegisteredA(usersListA)
-        //   await setRegisteredCo(usersListA.length)
-        // } else if (statusFil === 'unassigned') {
-        //   await setUnAssignedA(usersListA)
-        //   await setUnAssignedCo(usersListA.length)
-        // }
-        // await console.log('my Array data is set it', crmCustomersDBData)
+   
       },
       {
         status: ['booked', 'agreement_pipeline', 'sd_pipeline', 'registered'],
@@ -360,12 +241,7 @@ export default function UserListView() {
     })
   }, [dataFiltered.length, dataInPage.length, table, tableData])
 
-  // const handleEditRow = useCallback(
-  //   (id: string) => {
-  //     // router.push(paths.dashboard.user.edit(id))
-  //   },
-  //   [router]
-  // )
+
 
   const handleFilterStatus = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
@@ -385,26 +261,7 @@ export default function UserListView() {
           maxWidth={settings.themeStretch ? false : 'lg'}
           sx={{ width: '100%', px: 0, '!important': { px: 0 } }}
         >
-          {/* <CustomBreadcrumbs
-          heading="List"
-          links={[
-            { name: 'Dashboard', href: "/" },
-            { name: 'User', href: "/" },
-            { name: 'List' },
-          ]}
-          action={
-            <Button
 
-              variant="contained"
-              startIcon={<Iconify icon="mingcute:add-line" />}
-            >
-              New User
-            </Button>
-          }
-          sx={{
-            mb: { xs: 3, md: 5 },
-          }}
-        /> */}
 
           <Card sx={{ px: 0 }}>
             <div className="flex flex-row ">
@@ -535,29 +392,7 @@ export default function UserListView() {
               </span>
             </div>
 
-            {/* <UserTableToolbar
-            filters={filters}
-            onFilters={handleFilters}
-            //
-            roleOptions={[
-              'booked',
-              'agreement_pipeline',
-              'sd_pipeline',
-              'registered',
-            ]}
-          />
 
-          {canReset && (
-            <UserTableFiltersResult
-              filters={filters}
-              onFilters={handleFilters}
-              //
-              onResetFilters={handleResetFilters}
-              //
-              results={dataFiltered.length}
-              sx={{ p: 2.5, pt: 0 }}
-            />
-          )} */}
 
             <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
               <TableSelectedAction
@@ -601,10 +436,7 @@ export default function UserListView() {
 
                     <TableBody>
                       {dispRows
-                        // .slice(
-                        //   table.page * table.rowsPerPage,
-                        //   table.page * table.rowsPerPage + table.rowsPerPage
-                        // )
+    
                         .map((row) => (
                           <UserTableRow
                             key={row.id}
@@ -612,7 +444,6 @@ export default function UserListView() {
                             selected={table.selected.includes(row.id)}
                             onSelectRow={() => table.onSelectRow(row.id)}
                             onDeleteRow={() => handleDeleteRow(row.id)}
-                            // onEditRow={() => handleEditRow(row.id)}
                           />
                         ))}
 
@@ -673,7 +504,6 @@ export default function UserListView() {
   )
 }
 
-// ----------------------------------------------------------------------
 
 function applyFilter({
   inputData,

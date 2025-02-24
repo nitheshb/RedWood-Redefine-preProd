@@ -33,11 +33,9 @@ const UnitBookingSummaryHomePage1 = ({
     user?.role?.includes(USER_ROLES.ADMIN) ||
     user?.role?.includes(USER_ROLES.SALES_MANAGER)
   const [isImportLeadsOpen, setisImportLeadsOpen] = useState(false)
-  // kanban board
   const [ready, setReady] = useState(false)
   const [boardData, setBoardData] = useState([])
-  // const [showForm, setShowForm] = useState(false)
-  // const [selectedBoard, setSelectedBoard] = useState(0)
+
   const [fetchedUsersList, setfetchedUsersList] = useState([])
   const [isOpened, setIsOpened] = React.useState(false)
   const [dateRange, setDateRange] = React.useState([null, null])
@@ -166,15 +164,7 @@ const UnitBookingSummaryHomePage1 = ({
   }
 
   useEffect(() => {
-    // axios
-    //   .get('/api/tableData1/all')
-    //   .then(({ data }) => {
-    //     setTableData(tableData1)
-    //   })
-    //   .catch((error) => {
-    //     // setTableData(tableData1)
-    //     console.log(error)
-    //   })
+
 
     const tabHeadFieldsA1 = [
       { value: 'all', lab: 'All', val: 'all' },
@@ -210,9 +200,7 @@ const UnitBookingSummaryHomePage1 = ({
           }
           return x
         })
-        // setBoardData
-        // console.log('my Array data is ', usersListA, crmCustomersDBData)
-        // await serealizeData(usersListA)
+
         console.log('values are', usersListA)
         await setUnitsFetchData(usersListA)
       },
@@ -301,9 +289,7 @@ const UnitBookingSummaryHomePage1 = ({
   return (
     <>
 
-    {/* <div className='bg-white w-full h-f'>
 
-    </div> */}
       <div className="bg-white max-w-7xl mx-auto ">
         <div className="">
           <div
@@ -323,7 +309,6 @@ const UnitBookingSummaryHomePage1 = ({
                     display: 'block',
                     marginLeft: 'auto',
                     marginRight: 'auto',
-                    // width: '50%',
                   }}
                 >
                   No Records
@@ -332,8 +317,7 @@ const UnitBookingSummaryHomePage1 = ({
             )}
             {statusSepA[0]?.[value].length != 0 && (
               <UnitSummaryTableBodyV1
-                // data={filterTable}
-                // data={filterTable}
+
                 leadsTyper={leadsTyper}
                 fetchLeadsLoader={fetchLeadsLoader}
                 selStatus={value}

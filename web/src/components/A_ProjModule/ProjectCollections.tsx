@@ -117,15 +117,7 @@ const ProjectCollections = () => {
     ticks={[1000, 10000, 50000, 100000]}
     
   />
-  {/* <Tooltip 
-    contentStyle={{ 
-      borderRadius: '8px',
-      border: 'none',
-      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-    }}
-    formatter={(value) => [`${formatYAxis(value)}`, '']}
-  />
-  <Legend content={<CustomLegend payload={undefined} />} /> */}
+
 
 
     

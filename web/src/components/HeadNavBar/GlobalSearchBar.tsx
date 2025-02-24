@@ -13,7 +13,6 @@ export const GlobalSearchBar = (props) => {
   const [searchKey, setSearchKey] = useState<string>(
     props.searchVal ? props.searchVal : ''
   )
-  // const searchValue = useSelector((state: RootStateOrAny) => state?.search)
   const [searchData, setSearchData] = useState([])
 
   const [showLoader, setshowLoader] = useState<boolean>(false)
@@ -25,9 +24,7 @@ export const GlobalSearchBar = (props) => {
     const val = e.target.value
     getSearchData(val)
   }
-  // useEffect(()=>{
 
-  // })
   const getSearchData = async (val) => {
     setSearchKey(val)
 
@@ -42,20 +39,7 @@ export const GlobalSearchBar = (props) => {
       console.log('myresponse', res[0], res[0].id)
       dispatch(searchResponse({ ...res[0], id: res[0].id }))
       setshowLoader(false)
-      // setTimeout(() => {
-      //   setSearchData([
-      //     {
-      //       customerName: 'Raghu',
-      //       sales: '/admin/leads-manager',
-      //     },
-      //     {
-      //       customerName: 'Raghu',
-      //       sales: '/admin/leads-manager',
-      //       finance: '/admin/leads-manager',
-      //     },
-      //   ])
-      //   setshowLoader(false)
-      // }, 2000)
+
     }
   }
   const refContainer = React.useRef(null)
@@ -97,7 +81,6 @@ export const GlobalSearchBar = (props) => {
           placeholder="Search Phone no"
           onChange={searchKeyField}
           autoComplete="off"
-          // value={searchKey}
           className="w-52 bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900 w-4/5 relative"
         />
         {showSearchDropdown && (
@@ -122,7 +105,6 @@ export const GlobalSearchBar = (props) => {
                         <div className="m-1 mx-2 mt-2">
                           <span>{item.Name}</span>
                           <div className="">
-                            {/* {item.sales && ( */}
                             <Link
                               to={routes.leadsManager({
                                 type: 'inProgress',
@@ -139,16 +121,14 @@ export const GlobalSearchBar = (props) => {
                             >
                               CRM
                             </Link>
-                            {/* )} */}
-                            {/* {item.finance && ( */}
+                  
                             <Link
                               to={routes.financeModule()}
                               className="text-xs underline mr-3 text-indigo-700"
                             >
                               Finance
                             </Link>
-                            {/* )} */}
-                            {/* {item.legal && ( */}
+              
                             <Link
                               to={routes.legalModule()}
                               className="text-xs underline mr-3 text-indigo-700"
@@ -156,15 +136,6 @@ export const GlobalSearchBar = (props) => {
                               Legal
                             </Link>
 
-                            {/* )} */}
-                            {/* {item.construction && ( */}
-                            {/* <Link
-                                  to={routes.leadsManager()}
-                                  className="text-lg underline mr-10 text-indigo-700"
-                                >
-                                  Construction {'   '}
-                                </Link> */}
-                            {/* )} */}
                           </div>
                           {searchData.length - 1 !== index && <hr></hr>}
                         </div>

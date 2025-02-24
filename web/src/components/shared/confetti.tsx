@@ -32,7 +32,6 @@ function getAnimationSettings(angle, originX) {
       x: Math.random(),
       y: Math.random() * 0.999 - 0.2,
     },
-    // choose different colors
     colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a'],
 
     scalar: randomInRange(0.2, 1),

@@ -33,16 +33,9 @@ export default function ConstructUnitsDetails({
       setPaymentSchA(fullPs)
     }
   }, [fullPs])
-  // get payment schedule from project
 
   const validateSchema = Yup.object({
-    // date: Yup.string().required('Bank Required'),
-    // amount: Yup.string().required('Required'),
-    // payto: Yup.string().required('Required'),
-    // mode: Yup.string().required('Bank Required'),
-    // drawnonbank: Yup.string().required('Required'),
-    // chequeno: Yup.string().required('Required'),
-    // dated: Yup.string().required('Required'),
+
   })
 
   return (
@@ -55,13 +48,11 @@ export default function ConstructUnitsDetails({
               initialValues={initialState}
               validationSchema={validateSchema}
               onSubmit={(values, { resetForm }) => {
-                // onSubmit(values, resetForm)
               }}
             >
               {(formik) => (
                 <Form>
                   <div className="form">
-                    {/* Phase Details */}
 
                     <section className="  bg-blueGray-50">
                       <div className="w-full mx-auto ">
@@ -343,7 +334,6 @@ export default function ConstructUnitsDetails({
                                           href="#"
                                           className="block items-center p-3 sm:flex hover:bg-gray-100 "
                                         >
-                                          {/* <PlusCircleIcon className="mr-3 mb-3 w-10 h-10 rounded-full sm:mb-0" /> */}
                                           {data?.type == 'status' && (
                                             <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
                                               <svg
@@ -445,13 +435,7 @@ export default function ConstructUnitsDetails({
                                             Upload image
                                           </h3>
                                         </div>
-                                        {/* <div className="w-full p-1 md:p-2">
-                                          <img
-                                            alt="gallery"
-                                            className="block object-cover object-center w-full h-full rounded-lg"
-                                            src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(74).webp"
-                                          />
-                                        </div> */}
+                  
                                       </div>
                                       <div className="flex flex-wrap w-1/3">
                                         <div className="w-full p-1 md:p-2">
@@ -472,15 +456,7 @@ export default function ConstructUnitsDetails({
                                           />
                                         </div>
                                       </div>
-                                      {/* <div className="flex flex-wrap w-1/3">
-                                        <div className="w-full p-1 md:p-2">
-                                          <img
-                                            alt="gallery"
-                                            className="block object-cover object-center w-full h-full rounded-lg"
-                                            src="https://martilyo.com/blog/wp-content/uploads/2020/10/2020-10-29-14.28.05-768x1024.jpg"
-                                          />
-                                        </div>
-                                      </div> */}
+         
                                       <div className="flex flex-wrap w-1/3">
                                         <div className="w-full p-1 md:p-2">
                                           <img

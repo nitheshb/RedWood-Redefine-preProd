@@ -40,11 +40,7 @@ export default function EditLeadTask({
       <section className=" px-4">
         <div className="text-xs font-bodyLato text-[#516f90]">
           Edit Title
-          {/* <ErrorMessage
-                                              component="div"
-                                              name="taskTitle"
-                                              className="error-message text-red-700 text-xs p-1"
-                                            /> */}
+
           {error && (
             <div className="error-message text-red-700 text-xs p-1">
               {' '}
@@ -76,7 +72,6 @@ export default function EditLeadTask({
 
                     (date) =>{
                       console.log('am i coming here',date,   date.getTime())
-                      // setPickerDate(date)
                       setStartDate(date.getTime())
 
                     }}

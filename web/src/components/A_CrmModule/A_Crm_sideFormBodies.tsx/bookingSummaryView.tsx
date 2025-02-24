@@ -266,62 +266,9 @@ const BookingSummaryView = ({
                   selUnitDetails?.builtup_area * selUnitDetails?.construct_price
                 ) * 0.05),
         },
-        // {
-        //   myId: '2',
-        //   units: {
-        //     value: 'fixedcost',
-        //     label: 'Fixed cost',
-        //   },
-        //   component: {
-        //     value: 'Bescom_Sewage_Charges',
-        //     label: 'Bescom & Sewage Charges ',
-        //   },
-        //   others: selUnitDetails?.PLC,
-        //   charges: Number.isFinite(y) ? y : selUnitDetails?.PLC || 200,
-        //   TotalSaleValue: Math.round(
-        //     selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //   ),
-        //   gst: {
-        //     label: '0.05',
-        //     value: Math.round(
-        //       Number(
-        //         selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //       ) * 0.05
-        //     ),
-        //   },
-        //   TotalNetSaleValueGsT:
-        //     Math.round(
-        //       selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //     ) +
-        //     Math.round(
-        //       Number(
-        //         selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //       ) * 0.05
-        //     ),
-        // },
-        // {
-        //   myId: '3',
-        //   units: {
-        //     value: 'fixedcost',
-        //     label: 'Fixed cost',
-        //   },
-        //   component: {
-        //     value: 'clubhouse',
-        //     label: 'Club House ',
-        //   },
-        //   others: selUnitDetails?.PLC,
-        //   charges: 0,
-        //   TotalSaleValue: 354000,
-        //   // charges: y,
-        //   gst: {
-        //     label: '0.05',
-        //     value: Math.round(354000 * 0.0),
-        //   },
-        //   TotalNetSaleValueGsT: 354000,
-        // },
+       
       ]
     }
-    // const x = costSheetA
     let merged = []
     try {
       if (leadDetailsObj1) {
@@ -351,7 +298,6 @@ const BookingSummaryView = ({
     })
     setInitialValuesA(initformValues)
     console.log('gen costSheetA', x)
-    // setCostSheetA(x)
   }, [selPhaseObj, leadDetailsObj1, csMode])
 
   useEffect(() => {
@@ -364,7 +310,6 @@ const BookingSummaryView = ({
   const CreateNewPsFun =  async(netTotal, plotBookingAdv, csMode) => {
     const newPs = psPayload?.map( (d1, inx) => {
       const z = d1
-      // if (csMode === 'plot_cs') {
         let flatLegalFixedCosts = 0
         const filLegalCharges = myBookingPayload?.addChargesCS?.filter(
           (d) => d?.component?.value === 'legal_charges'
@@ -374,9 +319,7 @@ const BookingSummaryView = ({
         }
         if ('plot_cs' === 'plot_cs') {
              let applicablePlotCost = netTotal- flatLegalFixedCosts
-            //  if(inx ==1){
-            //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
-            //  }
+   
 
             if(!['costpersqft'].includes(d1?.units?.value)){
 
@@ -388,7 +331,6 @@ const BookingSummaryView = ({
                 :  Number(
                     ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
                   )
-                  // z.value = applicablePlotCost
                 }else {
                   let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
                   z.value = calc?.TotalNetSaleValueGsT
@@ -407,24 +349,10 @@ const BookingSummaryView = ({
 
   const initialState = initialValuesA
   const validate = Yup.object({
-    // blockReason: Yup.number()
-    //   .max(15, 'Must be 15 characters or less')
-    //   .required('Name is Required'),
+
   })
 
   const setTotalFun = async () => {
-    // const partBTotal = selPhaseObj?.additonalChargesObj?.reduce(
-    //   (partialSum, obj) =>
-    //     partialSum +
-    //     Number(
-    //       computeTotal(
-    //         obj,
-    //         selUnitDetails?.super_built_up_area ||
-    //           selUnitDetails?.area?.toString()?.replace(',', '')
-    //       )
-    //     ),
-    //   0
-    // )
 
     const partATotal = costSheetA.reduce(
       (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
@@ -464,29 +392,12 @@ const BookingSummaryView = ({
   const onSubmit = async (data, resetForm) => {
     const { uid } = selUnitDetails
     const { id } = leadDetailsObj1
-    // const x = {
-    //   myId: '2',
-    //   units: {
-    //     value: 'fixedcost',
-    //     label: 'Fixed cost',
-    //   },
-    //   component: {
-    //     value: 'ratePerSqft',
-    //     label: 'sqftCost',
-    //   },
-    //   charges: Number(newSqftPrice),
-    //   gst: {
-    //     label: '0',
-    //     value: '0',
-    //   },
-    // }
 
     const newCostSheetA = costSheetA.map((dat) => {
       dat.charges = data[dat?.component?.value]
       return dat
     })
-    // newCostSheetA.push(x)
-    // i need unit_uID & unit details
+
     const xData = {}
 
     xData[`${uid}${'_cs'}`] = {
@@ -535,7 +446,6 @@ const BookingSummaryView = ({
     console.log('gen costSheetA', y)
     console.log(costSheetA)
 
-    // setCostSheetA(y)
     setTotalFun()
   }
   return (
@@ -742,32 +652,6 @@ const BookingSummaryView = ({
                               </article>
                             </section>
                             <section className="flex flex-col  mt-1 mb-2">
-                              {/* <article className="flex flex-row w-full justify-between mt-1  mb-1">
-                                <section className="flex flex-col px-3">
-                                  <div className="flex flex-row">
-                                    <div className="self-stretch text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide text-[9px]">
-                                      Booked By
-                                    </div>
-                                  </div>
-                                  <div className="self-stretch justify-start items-center gap-3 inline-flex">
-                                    <div className="text-zinc-800 text-[10px] font-bold font-['Lato'] tracking-wide">
-                                      Manjunath
-                                    </div>
-                                  </div>
-                                </section>
-                                <section className="flex flex-col px-3">
-                                  <div className="flex flex-row">
-                                    <div className="self-stretch text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide text-[9px]">
-                                      Date
-                                    </div>
-                                  </div>
-                                  <div className="self-stretch justify-start items-center gap-3 inline-flex">
-                                    <div className="text-zinc-800 text-[10px] font-bold font-['Lato'] tracking-wide">
-                                      12-Dec-2023
-                                    </div>
-                                  </div>
-                                </section>
-                              </article> */}
                               <section className="flex flex-col px-3">
                                 <div className="flex flex-row">
                                   <div className="self-stretch text-zinc-500  font-medium font-['Lato'] tracking-wide text-[10px]">
@@ -1066,7 +950,6 @@ const BookingSummaryView = ({
                                         >
                                           <th className=" text-[12px] px-2 text-left  font-normal ">
                                             {d1?.component?.label}
-                                            {/* {d1?.units?.value === 'costpersqft' && `(${d1?.charges}% on Sale value)`} */}
                                           </th>
                                           <td className="w-[15%]  px-2 text-[12px] text-right   ">
                                             ₹{' '}
@@ -1095,7 +978,6 @@ const BookingSummaryView = ({
                                             )}
                                           </td>
                                           <td className="text-[12px] px-2 text-right   ">
-                                            {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
                                             ₹
                                             {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
                                           </td>
@@ -1183,7 +1065,6 @@ const BookingSummaryView = ({
                                         >
                                           <th className=" text-[12px] px-2 text-left  font-normal ">
                                             {d1?.component?.label}
-                                            {/* {d1?.units?.value === 'costpersqft' && `(${d1?.charges}% on Sale value)`} */}
                                           </th>
                                           <td className="w-[15%]  px-2 text-[12px] text-right   ">
                                             ₹{' '}
@@ -1212,7 +1093,6 @@ const BookingSummaryView = ({
                                             )}
                                           </td>
                                           <td className="text-[12px] px-2 text-right   ">
-                                            {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
                                             ₹ {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
 
                                           </td>
@@ -1300,7 +1180,6 @@ const BookingSummaryView = ({
                                         >
                                           <th className=" text-[12px] px-2 text-left  font-normal ">
                                             {d1?.component?.label}
-                                            {/* {d1?.units?.value === 'costpersqft' && `(${d1?.charges}% on Sale value)`} */}
                                           </th>
                                           <td className="w-[15%]  px-2 text-[12px] text-right   ">
                                             ₹{' '}
@@ -1329,7 +1208,6 @@ const BookingSummaryView = ({
                                             )}
                                           </td>
                                           <td className="text-[12px] px-2 text-right   ">
-                                            {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
                                             ₹
                                             {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
                                           </td>
@@ -1453,9 +1331,7 @@ const BookingSummaryView = ({
                                           key={inx}
                                           className="border-b-[0.05px] border-gray-300 py-1 my-2 h-[32px]  py-[24px]"
                                         >
-                                          {/* <th className=" px-2  text-[11px] text-left  font-normal tracking-wide uppercase ">
-                                            {d1?.stage?.label}
-                                          </th> */}
+                              
                                            <th className=" px-2  text-[10px] text-left text-bold   tracking-wide  text-grey-900 ">
                                       {d1?.stage?.label}
                                       <div className="text-[9px] text-left   text-slate-500 ">
@@ -1565,7 +1441,6 @@ const BookingSummaryView = ({
         <CostBreakUpPdfPreview
           projectDetails={projectDetails}
           csMode={csMode}
-          // costSheetA={costSheetA}
           pdfExportComponent={pdfExportComponent}
           selPhaseObj={selPhaseObj}
           leadDetailsObj1={leadDetailsObj1}

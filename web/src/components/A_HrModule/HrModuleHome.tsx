@@ -22,8 +22,7 @@ const rowsCounter = (parent, searchKey) => {
 }
 
 const HrModuleHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
-  // change navbar title
-  // useTitle('Data Table V1')
+
   const { t } = useTranslation()
   const { user } = useAuth()
   const [value, setValue] = useState('new')
@@ -105,7 +104,6 @@ const HrModuleHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
         } catch (error) {
           setSchLoading(false)
         }
-        // await console.log('what are we', todoData)
       } else {
         console.log('git values is 1', taskType)
         setSchLoading(true)
@@ -121,16 +119,10 @@ const HrModuleHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
               console.log('git values is 2', x)
               const { staDA } = x
               y = staDA
-              // if (taskType === 'Today1') {
 
-              //   console.log('git values is ', staDA)
-              //   y = staDA
-              // } else {
-              //   y = staDA.filter((da) => x[da]['schTime'] > torrowDate)
-              // }
               if (y.length > 0) {
                 x.uid = docSnapshot.id
-                // eslint-disable-next-line prefer-const
+        
                 let y1 = await getLeadbyId1(orgId, x.uid)
                 await console.log('fetched value is ', x, y)
                 x.leadUser = await y1
@@ -139,12 +131,12 @@ const HrModuleHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
                 setSchLoading(false)
 
                 return
-                // return 'remove'
+             
               }
             })
-            //  get the task details from docid
+        
             if (projects.length > 0) {
-              // projects.filter((data) => data != undefined)
+         
               Promise.all(projects).then(function (results) {
                 console.log(
                   'my values are ',

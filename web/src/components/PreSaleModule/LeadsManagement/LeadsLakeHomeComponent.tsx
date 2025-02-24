@@ -123,23 +123,13 @@ export default function LeadsLakeHomeComponent({ todaySch, schLoading }) {
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((data, i) => (
               <LogSkelton key={i} />
             ))}
-          {/* searchKey, setSearchKey */}
+         
           {!schLoading && !leadByViewLayout && todaySch && (
             <>
               <div className=" ">
                 <div className="flex flex-wrap">
                   <div className="w-10/12">
-                    {/* <TodoListView
-                      taskListA={schFetCleanData}
-                      setisImportLeadsOpen={setisImportLeadsOpen}
-                      selUserProfileF={selUserProfileF}
-                      leadsFetchedData={undefined}
-                      leadsTyper={undefined}
-                      leadByViewLayout={leadByViewLayout}
-                      setLeadByViewLayout={setLeadByViewLayout}
-                      searchKey={searchKey}
-                      setSearchKey={setSearchKey}
-                    /> */}
+
                     <LeadsDisplayTable
                       leadsRawList={leadsRawList}
                       searchKey={searchKey}

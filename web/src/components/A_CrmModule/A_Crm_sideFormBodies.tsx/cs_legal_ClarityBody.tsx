@@ -497,12 +497,7 @@ export default function Crm_legal_Clarity({
     setTakTitle(data?.notes || '')
     setStartDate(setHours(setMinutes(data?.schTime, 30), 16))
 
-    // const inx = schStsMA.indexOf(data.ct)
-    // const x = schStsA
-    // x[inx] = 'completed'
-    // setschStsA(x)
 
-    // updateSchLog(orgId, id, data.ct, 'completed', schStsA)
   }
   const editTaskFun = (data) => {
     const inx = schStsMA.indexOf(data.ct)
@@ -1137,24 +1132,14 @@ export default function Crm_legal_Clarity({
                   initialValues={initialState}
                   validationSchema={validateSchema}
                   onSubmit={async (data, { resetForm }) => {
-                    // fAddSchedule()
-                    // create duplicate table
-                    // insert value to it with unassigned values
-                    // save data in db
-                    //
-                    // data.due_date = startDate.getTime()
-                    // data.priorities = prior ? 'high' : 'medium'
-                    // data.attachments = files
-                    // setLoading(true)
+
                     data.due_date = startDate
                     data.priorities = prior ? 'high' : 'medium'
                     data.attachments = files
                     data.Uuid = selUnitPayload?.id
                     await addLegalClarificationTicket(orgId, data, user)
 
-                    // await resetForm()
-                    // await setFormMessage('Task Created..!')
-                    // await setLoading(false)
+  
                     return
                   }}
                 >
@@ -1162,46 +1147,7 @@ export default function Crm_legal_Clarity({
                     <Form>
                       <div className=" form outline-none border  py-4">
                         <section className=" px-4">
-                          {/* {['visitfixed'].includes(tempLeadStatus) && (
-                            <div className="flex flex-row  border-b mb-4 ">
-                              <div className=" mb-3 flex justify-between">
-                                <section>
-                                  <span
-                                    className={`cursor-pointer  items-center h-6 px-3 py-1 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                    onClick={() => setTakTitle('Call again')}
-                                  >
-                                    Call again {addSch.toString()}
-                                  </span>
-                                  <span
-                                    className={`cursor-pointer  items-center h-6 px-3 py-1 ml-4 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                    onClick={() =>
-                                      setTakTitle('Get more details')
-                                    }
-                                  >
-                                    Get more details
-                                  </span>
-                                  <span
-                                    className={`cursor-pointer  items-center h-6 px-3 py-1 ml-4 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                    onClick={() => setTakTitle('Book Cab')}
-                                  >
-                                    Book Cab
-                                  </span>
-                                  <span
-                                    className={`cursor-pointer  items-center h-6 px-3 py-1 ml-4 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                    onClick={() =>
-                                      setTakTitle('Share Quotation')
-                                    }
-                                  >
-                                    Share Quotation
-                                  </span>
-                                </section>
-                              </div>
-                            </div>
-                          )} */}
+
                           <div className="text-xs font-bodyLato text-[#516f90]">
                             Task Title
                             <ErrorMessage
@@ -1211,7 +1157,6 @@ export default function Crm_legal_Clarity({
                             />
                           </div>
                           <input
-                            // onChange={setTakTitle()}
                             autoFocus
                             name="taskTitle"
                             type="text"
@@ -1234,7 +1179,6 @@ export default function Crm_legal_Clarity({
                                   Due Date
                                 </span>
                                 <div className="bg-green   pl-   flex flex-row ">
-                                  {/* <CalendarIcon className="w-4  ml-1 inline text-[#058527]" /> */}
                                   <span className="inline">
                                     <CustomDatePicker
                                       className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] bg-[#F2F5F8]"
@@ -1264,7 +1208,6 @@ export default function Crm_legal_Clarity({
                                   Priority
                                 </span>
                                 <div className="bg-green   pl-   flex flex-row  ">
-                                  {/* <CalendarIcon className="w-4  ml-1 inline text-[#058527]" /> */}
                                   <span className="inline">
                                     <input
                                       data-bx-id="task-edit-priority-cb"
@@ -1303,7 +1246,6 @@ export default function Crm_legal_Clarity({
                           <section className="flex">
                             <button
                               type="submit"
-                              // onClick={() => fAddSchedule()}
                               className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
                             >
                               <span className="ml-1 ">
@@ -1314,7 +1256,6 @@ export default function Crm_legal_Clarity({
                               </span>
                             </button>
                             <button
-                              // onClick={() => fSetLeadsType('Add Lead')}
                               onClick={() => cancelResetStatusFun()}
                               className={`flex mt-2 ml-4 rounded items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
                             >
@@ -1429,7 +1370,6 @@ export default function Crm_legal_Clarity({
                     ) : null}
                     <>
                       {' '}
-                      {/* header part */}
                       <LeadTaskDisplayHead
                         data={data}
                         setAddTaskCommentObj={setAddTaskCommentObj}
@@ -1440,13 +1380,8 @@ export default function Crm_legal_Clarity({
                           setShowVisitFeedBackStatusFun
                         }
                       />
-                      {/* add comment + close & Add New Task section */}
                       {addTaskCommentObj?.ct === data?.ct && (
-                        // <input
-                        //   type="text"
-                        //   className="block"
-                        //   placeholder="pastehere"
-                        // />
+           
                         <AddLeadTaskComment
                           closeTask={closeTask}
                           data={data}
@@ -1469,7 +1404,6 @@ export default function Crm_legal_Clarity({
                           d={d}
                         />
                       )}
-                      {/* comments display part */}
                       {data?.comments?.map((commentObj, k) => {
                         return (
                           <li
@@ -1501,7 +1435,6 @@ export default function Crm_legal_Clarity({
                           </li>
                         )
                       })}
-                      {/* not interested and visit done stuff */}
                       {(showNotInterested || showVisitFeedBackStatus) &&
                         selSchGrpO?.ct === data?.ct && (
                           <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
@@ -1515,7 +1448,6 @@ export default function Crm_legal_Clarity({
                                   options={notInterestOptions}
                                   value={fbTitle}
                                   onChange={(value) => {
-                                    // formik.setFieldValue('source', value.value)
                                     setFbTitle(value.value)
                                   }}
                                 />
@@ -1565,7 +1497,6 @@ export default function Crm_legal_Clarity({
                                     'on_sitevisit_done',
                                     'wa',
                                     'customer',
-                                    // 'ProjectId',
                                     ProjectId,
                                     receiverDetails,
                                     msgPayload
@@ -1576,7 +1507,6 @@ export default function Crm_legal_Clarity({
                                 <span className="ml-1 ">Save & Whats App</span>
                               </button>
                               <button
-                                // onClick={() => fSetLeadsType('Add Lead')}
                                 onClick={() => cancelResetStatusFun()}
                                 className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
                               >
@@ -1585,7 +1515,6 @@ export default function Crm_legal_Clarity({
                             </div>
                           </div>
                         )}
-                      {/* footer part */}
                       {addTaskCommentObj?.ct != data?.ct && (
                         <LeadTaskFooter
                           data={data}
@@ -1600,7 +1529,6 @@ export default function Crm_legal_Clarity({
               </ol>
             </div>
 
-            {/* comments section */}
           </div>
         )}
       </Formik>
@@ -1612,16 +1540,13 @@ export default function Crm_legal_Clarity({
           onClick={() => {
             submitManagerApproval('rejected')
           }}
-          // disabled={loading}
         >
           {'Reject'}
         </button>
         <button
           className="bg-green-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="submit"
-          // disabled={loading}
           onClick={() => {
-            // mark man_cs_approval as true
             submitManagerApproval('approved')
           }}
         >

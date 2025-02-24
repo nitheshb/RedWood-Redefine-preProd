@@ -140,9 +140,7 @@ const CustomTooltip = ({ active, payload }) => {
                 Nov 18, 2024
               </span>
             </div>
-            {/* <select className="px-4 py-2 border rounded-md bg-white">
-              <option>Select module</option>
-            </select> */}
+  
 
 
 
@@ -217,7 +215,6 @@ const CustomTooltip = ({ active, payload }) => {
 
 
              
-                  {/* <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} /> */}
 
 
                   <Tooltip content={<CustomTooltip />} />
@@ -301,17 +298,6 @@ const CustomTooltip = ({ active, payload }) => {
       </div>
 
 
-{/* 
-      <div className="grid bg-[#F1F1F1] grid-cols-1 sm:grid-cols-2 gap-6">
-        <TopCollections />
-        <ProjectCollections />
-        <ProjectInventoryDashboard />
-        <ExpenseBreakdown />
-      </div>
-
-      <div className="py-20">
-        <TaskTable />
-      </div> */}
 
 
 
@@ -370,11 +356,6 @@ const CustomTooltip = ({ active, payload }) => {
 
 
 
-
-{/* 
-  <div className="col-span-full bg-white rounded-lg shadow-lg p-6">
-    <DashboardComponent/>
-  </div> */}
 
 
   

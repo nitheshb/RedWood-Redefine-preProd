@@ -92,22 +92,7 @@ return
 
 
     const projectMonthArray = []
-     // Map over `x` and return an array of Promises
-  // const promises = x.map(async (data, i) => {
-  //   data.time = data.week;
 
-  //   const y = await getCollectionsReport(data);
-  //   const value = y.length > 0 ? y[0]?.received : 3;
-
-  //   const payloadNew = { ...data, value, prevValue: 5 };
-
-  //   console.log('Matched value:', y, data, projectMonthArray, payloadNew);
-
-  //   projectMonthArray.push(payloadNew); // Push into array
-  //   return payloadNew; // Return processed data
-  // });
-
-    // Create an array of promises
     setLoad(false)
     const promises = x.map(async (data, i) => {
       let z = {}
@@ -127,7 +112,7 @@ return
           projectMonthArray.push(z);
           setTotalCollecionR(projectMonthArray)
           await setLoad(i==x.length-1? true : false)
-          await console.log('matched value i vvvv',projectMonthArray )// Push into array
+          await console.log('matched value i vvvv',projectMonthArray )
           return z
           await console.log('my Array data is set it', )
         },
@@ -140,19 +125,6 @@ return
       return z
       return await getCollectionsReport(data);
     });
-
-    // Wait for all Promises to resolve
-    // const resolvedData = await Promise.all(promises);
-
-    // // Process resolved data to create the final array
-    // const finalData = await resolvedData.map(async (d, i) => {
-    //   console.log('matched value i ', await d)
-    //   const value = d.length > 0 ? d[0]?.received : 3;
-    //   return { ...x[i], value, prevValue: 5 }; // Ensure you're using x[i] for the original week data
-    // });
-
-    // Update the state with the final processed data
-    // await setTotalCollecionR(finalData);
 
 
    }
@@ -216,8 +188,7 @@ return
                  interval={0}
                />
                <YAxis
-                 // domain={[5, 100]}
-                 // ticks={[5, 25, 50, 75, 100]}
+       
                  axisLine={false}
                  tickLine={false}
                  stroke="#3D3D3D"
@@ -225,7 +196,6 @@ return
 
 
 
-               {/* <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} /> */}
 
 
                <Tooltip content={<CustomTooltip />} />

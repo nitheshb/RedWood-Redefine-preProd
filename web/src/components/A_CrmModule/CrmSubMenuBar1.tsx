@@ -37,28 +37,11 @@ const CrmSubMenuBar1 = ({
                 <ShieldExclamationIcon className="w-3 h-3 ml-[2px] mt-[2px] inline text-[##8e544d]" />
               )}
 
-              {/* <button className="bg-transparent hover focus:outline-none">
-                                    <svg
-                                      aria-hidden="true"
-                                      focusable="false"
-                                      data-prefix="fas"
-                                      data-icon="times"
-                                      className="w-2 ml-3"
-                                      role="img"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 352 512"
-                                    >
-                                      <path
-                                        fill="currentColor"
-                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                      ></path>
-                                    </svg>
-                                  </button> */}
+
             </span>
           ))}
         </div>
 
-        {/* <div className="w-[300px] ml-[150px] h-[1px] bg-[#efefef] mt-2 rounded-xl text-center"></div> */}
         <div className="flex flex-row justify-between  py-2  text-black   w-[640px]">
           <section>
             <span
@@ -67,19 +50,9 @@ const CrmSubMenuBar1 = ({
             >
               {finData?.customerName1}
             </span>
-            {/* <span className="font-normal ml-4 text-xs app-color-gray-1 inline-block max-w-[100px] min-w-[100px] w-[100px]">
-                                <PhoneIcon className="w-3 h-3 mr-1 inline text-[##8e544d]" />
-                                {finData?.ph}
-                              </span> */}
+ 
           </section>
-          {/* <section className="inline-block max-w-[100px] min-w-[100px] w-[100px]">
-                              <span className="font-normal ml-6 text-[10px] app-color-gray-1 text-[#b3b3b3]">
-                                Bal
-                              </span>
-                              <span className="font-normal ml-2 text-xs app-color-gray-1 text-[#F59A4C]">
-                                {finData?.pending || 0}
-                              </span>
-                            </section> */}
+
           <section
             className="inline-block max-w-[400px] min-w-[100px] flex flex-row"
             onClick={() =>

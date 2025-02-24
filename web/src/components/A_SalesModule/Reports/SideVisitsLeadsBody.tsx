@@ -64,7 +64,6 @@ const SideVisitLeadsBody = ({
         const projectsListA = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-        // setprojectList(projectsListA)
         projectsListA.map((user) => {
           user.label = user.projectName
           user.value = user.uid
@@ -85,40 +84,32 @@ const SideVisitLeadsBody = ({
     let projectFilAarray = [...leadsLogsPayload]
     if (selProjectIs?.value == 'allprojects') {
       console.log('project list i s', projectList)
-      // setFiltProjectListTuned(projectList)
 
       leadsSerialDatafun()
     } else {
-      // projectFilAarray = projectFilAarray.filter((d) => d.projectId === selProjectIs?.value)
       projectFilAarray = projectFilAarray.filter((d) => d.Project === selProjectIs?.label)
 
       leadsSerialDatafun()
-      // setFiltProjectListTuned(z)
-      // viewSource
     }
 
     if (selVisitFixedBy?.value == 'allexecutives') {
       console.log('project list i s', projectList)
-      // setFiltProjectListTuned(projectList)
 
       leadsSerialDatafun()
     } else {
       projectFilAarray = projectFilAarray.filter((d) => d.visitFixedBy === selVisitFixedBy?.value)
 
       leadsSerialDatafun()
-      // setFiltProjectListTuned(z)
-      // viewSource
+
     }    if (selVisitDoneBy?.value == 'allexecutives') {
       console.log('project list i s', projectList)
-      // setFiltProjectListTuned(projectList)
 
       leadsSerialDatafun()
     } else {
       projectFilAarray = projectFilAarray.filter((d) => d.by === selVisitDoneBy?.value)
 
       leadsSerialDatafun()
-      // setFiltProjectListTuned(z)
-      // viewSource
+
     }
 
     setLeadsFilA(
@@ -237,9 +228,7 @@ const SideVisitLeadsBody = ({
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
-        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3  font-Playfair tracking-wider">
-          {subtitle || title} ({leadsFilA.length || 0})
-        </Dialog.Title> */}
+ 
          {subtitle || title} ({leadsFilA.length || 0})
         <section className="flex flex-row">
           <section className="flex flex-col border ml-2 py-1  px-4 text-xs  rounded-full">
@@ -290,10 +279,7 @@ const SideVisitLeadsBody = ({
           </section>
 
           <Tooltip title={`Download ${leadsFilA?.length} Row`}>
-            {/* <IconButton>
-            <FileDownloadIcon />
-            <CSVDownloader />
-          </IconButton> */}
+
 
             <CSVDownloader
               className="mr-6 h-[20px] w-[20px]"
@@ -308,12 +294,7 @@ const SideVisitLeadsBody = ({
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col m-4">
           <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
-            {/* <CustomRadioGroup
-              label="Type"
-              value={selected}
-              options={projectPlans}
-              onChange={setSelected}
-            /> */}
+
             {loadingIcon ? (
               <LogSkelton />
             ) : (

@@ -26,9 +26,7 @@ const Blockdetails = ({
 
   const [viewUnitStatusA, setViewUnitStatusA] = useState([
     'Available',
-    // 'Blocked',
-    // 'Booked',
-    // 'Total',
+
   ])
   const [editOpitionsObj, setEditOptions] = useState(false)
 
@@ -93,18 +91,9 @@ const Blockdetails = ({
                   setOpenAddBlock(!openAddBlock)
                 }}
               >
-                {/* <img className="w-12 h-12 mr-2" alt="" src="/l1.png"></img> */}
                 <button
                   onClick={() => {
-                    // setSliderInfo({
-                    //   open: true,
-                    //   title: 'Add Block',
-                    //   sliderData: {
-                    //     phase,
-                    //     block: {},
-                    //   },
-                    //   widthClass: 'max-w-2xl',
-                    // })
+
                   }}
                   className={
                     'flex   cursor-pointer items-center h-6 px-3 text-[14px] font-semibold  rounded-full '

@@ -26,13 +26,7 @@ export default function LegalDocsUplaodHome({
   }
 
   const validateSchema = Yup.object({
-    // date: Yup.string().required('Bank Required'),
-    // amount: Yup.string().required('Required'),
-    // payto: Yup.string().required('Required'),
-    // mode: Yup.string().required('Bank Required'),
-    // drawnonbank: Yup.string().required('Required'),
-    // chequeno: Yup.string().required('Required'),
-    // dated: Yup.string().required('Required'),
+
   })
 
   return (
@@ -197,13 +191,7 @@ export default function LegalDocsUplaodHome({
         <div className="flex flex-col  my-10 rounded-lg  px-4 m-4 mt-12">
           <Formik
             initialValues={{ files: null }}
-            // validationSchema={object({
-            //   files: array(
-            //     object({
-            //       url: string().required(),
-            //     })
-            //   ),
-            // })}
+
             onSubmit={async (values) => {
               console.log('ehcek1', {
                 fileName: values.files[0].file.name,
@@ -225,56 +213,21 @@ export default function LegalDocsUplaodHome({
 
                 parse(values.files[0].file, {
                   header: true,
-                  // download: true,
                   complete: async function (input) {
                     await setexistingCols((existing) => [
                       ...existing,
                       ...input.data,
                     ])
-                    // let x =   await getLedsData()
+              
                     console.log('Finished:', existingCols)
                   },
                 })
               }
-              // const myFiles = Array.from(values.files)
-              // console.log('upload file values', values)
-              // console.log('vsv data is ', myFiles)
-
-              // myFiles.forEach((file) => {
-              //   console.log('filer is ', file)
-              //   try {
-              //     parse(file, {
-              //       complete: function (results) {
-              //         console.log('Finished:', results.data)
-              //       },
-              //     })
-              //   } catch (error) {
-              //     console.log('error', error)
-              //   }
-              // })
-              // const reader = new FileReader()
-              // const y = await reader.readAsText(values.files[0])
-              // await console.log('yo yo', y)
-              // Array.from(values.files)
-              //   .filter((file) => file.type === 'text/csv')
-
-              // myFiles.forEach(async (file) => {
-              //   // const text = await file.text()
-              //   console.log('ami i here')
-
-              //   const result = await parse(file, {
-              //     complete: function (results) {
-              //       console.log('Finished:', results.data)
-              //     },
-              //   })
-              //   await console.log('result is ', result)
-              // })
 
               return new Promise((res) => setTimeout(res, 2000))
             }}
           >
             {() => (
-              // {parseExcel(values)}
               <Form>
                 <Grid container spacing={2} direction="column">
                   <MultipleFileUploadField
@@ -285,16 +238,7 @@ export default function LegalDocsUplaodHome({
                     myBlock={myBlock}
                   />
 
-                  {/* <Grid item>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      disabled={!isValid || isSubmitting}
-                      type="submit"
-                    >
-                      Submit
-                    </Button>
-                  </Grid> */}
+    
                 </Grid>
               </Form>
             )}

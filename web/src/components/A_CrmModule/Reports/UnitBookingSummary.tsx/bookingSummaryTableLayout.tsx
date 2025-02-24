@@ -32,8 +32,7 @@ const UnitBookingSummaryTableLayout = ({
   leadsTyper,
   searchVal,
 }) => {
-  // change navbar title
-  // useTitle('Data Table V1')
+
   const { t } = useTranslation()
   const [value, setValue] = useState('all')
   const [tableData, setTableData] = useState([])
@@ -41,19 +40,10 @@ const UnitBookingSummaryTableLayout = ({
 
   const [statusSepA, setStatusSepA] = useState([])
 
-  // const [leadsFetchedData, setLeadsFetchedData] = useState([])
   const [finalKeyA, setFinalKeyA] = useState([])
 
   useEffect(() => {
-    // axios
-    //   .get('/api/tableData1/all')
-    //   .then(({ data }) => {
-    //     setTableData(tableData1)
-    //   })
-    //   .catch((error) => {
-    //     // setTableData(tableData1)
-    //     console.log(error)
-    //   })
+
 
     const tabHeadFieldsA1 = [
       { value: 'all', lab: 'All', val: 'all' },
@@ -174,19 +164,15 @@ const UnitBookingSummaryTableLayout = ({
             { lab: 'Visit Done', val: 'visitdone' },
             { lab: 'Visit Cancel', val: 'visitcancel' },
             { lab: 'Negotiation', val: 'negotiation' },
-            // { lab: 'Reassign', val: 'reassign' },
-            // { lab: 'RNR', val: 'RNR' },
+
             { lab: 'Un Assigned', val: 'unassigned' },
-            // { lab: 'Booked', val: 'booked' },
-            // { lab: 'Not Interested', val: 'notinterested' },
-            // { lab: 'Dead', val: 'dead' },
+
           ]
         : leadsTyper === 'archieveLeads'
         ? archieveTab
         : [
             { lab: 'Booked', val: 'booked' },
-            // { lab: 'Not Interested', val: 'notinterested' },
-            // { lab: 'Dead', val: 'dead' },
+
           ]
     const y = {}
 
@@ -316,9 +302,7 @@ const UnitBookingSummaryTableLayout = ({
   }, [leadsFetchedData, tabHeadFieldsA])
 
   const [filLeadsA, setFilLeadsA] = useState([])
-  // useEffect(() => {
-  //   setFilLeadsA(leadsFetchedData)
-  // }, [leadsFetchedData])
+
   useEffect(() => {
     console.log('selected value is', value)
     setFetchLeadsLoader(false)
@@ -454,7 +438,6 @@ const UnitBookingSummaryTableLayout = ({
                     display: 'block',
                     marginLeft: 'auto',
                     marginRight: 'auto',
-                    // width: '50%',
                   }}
                 >
                   No Records

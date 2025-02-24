@@ -118,14 +118,11 @@ const attachTypes = [
   { label: 'Co-Applicant Aadhar', value: 'co-applicant_Aadhar' },
   { label: 'Cancellation Form', value: 'cancellation_form' },
   { label: 'Cost Sheet', value: 'cost_sheet' },
-  // { label: 'Follow Up', value: 'followup' },
   { label: 'Estimation Sheet', value: 'estimation_sheet' },
   { label: 'Payment Screenshot (IMPS/RTGS/NEFT)', value: 'payment_screenshot' },
   { label: 'Payment Receipt', value: 'payment_receipt' },
   { label: 'Others', value: 'others' },
 
-  // { label: 'RNR', value: 'rnr' },
-  // { label: 'Dead', value: 'Dead' },
 ]
 
 const notInterestOptions = [
@@ -135,9 +132,7 @@ const notInterestOptions = [
 
   { label: 'Others', value: 'others' },
 
-  // { label: 'Follow Up', value: 'followup' },
-  // { label: 'RNR', value: 'rnr' },
-  // { label: 'Dead', value: 'Dead' },
+
 ]
 export default function CustomerSideViewCRM({
   openUserProfile,
@@ -149,7 +144,6 @@ export default function CustomerSideViewCRM({
 
   const { orgId } = user
 
-  // const [leadStatus, setLeadStatus] = useState([])
   const [selFeature, setFeature] = useState('summary')
   const [unitView, setUnitView] = useState(false)
   const [unitsOverviewA, setUnitsOverviewA] = useState([])
@@ -211,54 +205,16 @@ export default function CustomerSideViewCRM({
   const onSubmitFun = async (data, resetForm) => {
     console.log('selected value is ', data)
 
-    // add entry in finance table for review
     const y = await capturePayment(data, resetForm)
-    // add T_review under customer wallet
-
-
-
-    // 1)Make an entry to finance Table {source: ''}
-
-    // create customer
-
-    // update unit record with booked status
-
-    // update payment schedule
-    // log cost sheet
-    // capture transaction
-    // entry  payment log
-    // entry payment sheet
-
-
-    // const x1 =  addPaymentReceivedEntrySup(
-    //   orgId,
-    //   uid,
-    //   { leadId: 'id' },
-    //   data,
-    //   'leadsPage',
-    //   'nitheshreddy.email@gmail.com',
-    //   enqueueSnackbar
-    // )
-
+    
   }
 
   const capturePayment = async (data, resetForm) => {
-    // enter payment log
-    // const x = await capturePaymentS(
-    //   orgId,
-    //   projectDetails?.uid,
-    //   selUnitDetails?.uid,
-    //   custNo,
-    //   leadDetailsObj2,
-    //   data,
-    //   user?.email,
-    //   enqueueSnackbar
-    // )
+    
 
     const paymentCB = await captureWalletPayment(orgId,selCustomerPayload,data, user?.email, enqueueSnackbar)
 
 
-    // await console.log('xo o is ', x)
   }
   return (
     <div
@@ -267,22 +223,7 @@ export default function CustomerSideViewCRM({
       <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#D9D8FF]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full  xl:w-4/12  ">
-            {/* <div className="">
-                <div className="font-semibold text-[#053219]  text-sm  mt-3 mb-1  tracking-wide font-bodyLato">
-                  <span className="mb-[4px] text-xl uppercase">{Name}</span>
 
-                  <div className="mt-1">
-                    <div className="font-md text-sm text-gray-500 mb-[2] tracking-wide">
-                      <MailIcon className="w-3 h-3 inline text-[#058527] " />{' '}
-                      {Email}
-                    </div>
-                    <div className="font-md text-sm text-gray-500 mb-[2] tracking-wide ">
-                      <DeviceMobileIcon className="w-3 h-3 inline text-[#058527] " />{' '}
-                      {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}
-                    </div>
-                  </div>
-                </div>
-              </div> */}
             <div className="flex flex-col justify-between">
               <p className="text-md font-bold tracking-tight uppercase font-body my-[2px]  ml-2">
                 {selCustomerPayload?.Name}
@@ -333,22 +274,7 @@ export default function CustomerSideViewCRM({
                 <section>
                   <div>
                     <div className="text-center items-center mr-2 mt-3">
-                      {/* <div>
-                        <Checkbox
-                          color="primary"
-                          // checked={salesPerson?.projAccessA?.includes(selProjId)}
-                          checked={unitView}
-                          onChange={(e) => {
-                            console.log('earnet')
-                            setUnitView(!unitView)
-                            // addRemoveProjectAccessFun(salesPerson)
-                          }}
-                          inputProps={{
-                            'aria-label': 'select all desserts',
-                          }}
-                        />
-                        Assets view
-                      </div> */}
+
                       <div
                         className="text-center p-[10px] mt-5 bg-[#318896] text-white rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
                         onClickCapture={() => {
@@ -368,11 +294,9 @@ export default function CustomerSideViewCRM({
         <div className="flex flex-row justify-between">
           <div
             className="relative flex flex-col  group"
-            // style={{ alignItems: 'end' }}
           >
             <div
               className="absolute bottom-0 right-0 flex-col items-center hidden mb-6 group-hover:flex"
-              // style={{  width: '300px' }}
               style={{ zIndex: '9999' }}
             >
               <span
@@ -385,7 +309,6 @@ export default function CustomerSideViewCRM({
               >
                 <div className="italic flex flex-col">
                   <div className="font-bodyLato">
-                    {/* {Source?.toString() || 'NA'} */}
                   </div>
                 </div>
               </span>
@@ -395,12 +318,7 @@ export default function CustomerSideViewCRM({
               ></div>
             </div>
             <span className="font-bodyLato text-[#867777] text-xs mt-2">
-              {/* <HighlighterStyle
-                            searchKey={searchKey}
-                            source={row.Source.toString()}
-                          /> */}
 
-              {/* {Source?.toString() || 'NA'} */}
             </span>
           </div>
         </div>
@@ -410,9 +328,7 @@ export default function CustomerSideViewCRM({
           <>
             <div className="">
               <div className="">
-                {/* <div className="font-md font-medium text-xs  text-gray-800">
-                          Notes
-                        </div> */}
+  
 
                 <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg ">
                   <ul
@@ -422,14 +338,9 @@ export default function CustomerSideViewCRM({
                     role="tablist"
                   >
                     {[
-                      // { lab: 'Schedules', val: 'appointments' },
                       { lab: 'Summary', val: 'summary' },
                       { lab: 'Profile', val: 'Profile' },
-
                       { lab: 'Assets Information', val: 'unit_information' },
-
-
-                      // { lab: 'Phone', val: 'phone' },
                       { lab: 'Timeline', val: 'timeline' },
                     ].map((d, i) => {
                       return (
@@ -449,20 +360,14 @@ export default function CustomerSideViewCRM({
                             onClick={() => setFeature(d.val)}
                           >
                             {`${d.lab} `}
-                            {/* <span className="bg-gray-100 px-2 py-1 rounded-full">
-                          {/* {rowsCounter(leadsFetchedData, d.val).length} */}
+            
                           </button>
                         </li>
                       )
                     })}
                   </ul>
                 </div>
-                {/* <CrmUnitFinanceHistory
-              selCustomerPayload={selCustomerPayload}
-              assets={assets}
-              totalIs={totalIs}
-              unitTransactionsA={unitTransactionsA}
-            /> */}
+   
               </div>
             </div>
 
@@ -575,7 +480,6 @@ export default function CustomerSideViewCRM({
                         href="#"
                         className="block items-center p-3 sm:flex hover:bg-gray-100 "
                       >
-                        {/* <PlusCircleIcon className="mr-3 mb-3 w-10 h-10 rounded-full sm:mb-0" /> */}
                         {data?.type == 'status' && (
                           <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
                             <svg
@@ -651,18 +555,7 @@ export default function CustomerSideViewCRM({
                               {data?.txt}
                             </div>
                             <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                              {/* <svg
-                          className="mr-1 w-3 h-3"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg> */}
+
 
                               <ClockIcon className="mr-1 w-3 h-3" />
                               {data?.type == 'ph'

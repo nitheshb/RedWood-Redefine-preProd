@@ -549,10 +549,8 @@ export default function ReportMainCom() {
         onChange={(value) => {
           console.log('zoro condition changed one  is', value)
           selEmp1(value)
-          // formik.setFieldValue('project', value.value)
         }}
         value={viewEmp1?.value}
-        // options={aquaticCreatures}
         options={[
           ...[{ label: 'All Employees', value: 'allemployees' }],
           ...empListTuned,

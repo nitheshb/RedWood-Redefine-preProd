@@ -59,8 +59,7 @@ const CrmUnitPsHome = ({
                   onClick={() => setFinanceMode(d.val)}
                 >
                   {`${d.lab} `}
-                  {/* <span className="bg-gray-100 px-2 py-1 rounded-full">
-                {/* {rowsCounter(leadsFetchedData, d.val).length} */}
+
                 </button>
               </li>
             )
@@ -68,108 +67,7 @@ const CrmUnitPsHome = ({
         </ul>
 
         <section className="flex flex-row bg-[#F6F7FE]">
-          {/* <div className="flex flex-row w-full  mr-2 mt-3">
-            <div
-              className="flex flex-row  items-center align-middle text-blue-500 text-xs cursor-pointer hover:underline"
-              onClickCapture={async () => {
-                await setShowHeader(true)
-                await setFinanceMode('schedule')
-                const x = await pdfPaymentScheduleComp.current.save()
-                await console.log('what is wait ', x)
-                await setShowHeader(true)
-                await setShowHeader(true)
-                await setShowHeader(true)
-                await setShowHeader(true)
-                await setShowHeader(false)
-              }}
-            >
-              <>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-4 h-4 pr-1"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-                  />
-                </svg>
-                <span className="text-[11px] min-w-[115px]">
-                  PAYMENT SCHEDULE
-                </span>
-              </>
-            </div>
-          </div> */}
-          {/* <div className="flex flex-row w-full  mr-2 mt-3">
-            <div
-              className="flex flex-row  items-center align-middle text-blue-500 text-xs cursor-pointer hover:underline"
-              onClickCapture={async () => {
-                await setShowHeader(true)
-                await setFinanceMode('transactions')
-                await pdfTransactionComp.current.save()
-                await setShowHeader(true)
-                await setShowHeader(true)
-                await setShowHeader(true)
-                await setShowHeader(true)
-                await setShowHeader(false)
-              }}
-            >
-              <>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-4 h-4 pr-1"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-                  />
-                </svg>
-                <span className="text-[11px]">TRANSACTIONS</span>
-              </>
-            </div>
-          </div> */}
-
-
-
-{/* <PdfPaymentScheduleGenerator
-            user={user}
-            PSa={PSa}
-            selCustomerPayload={selCustomerPayload} selUnitDetails={undefined} myObj={undefined} newPlotPS={undefined} myAdditionalCharges={undefined} streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}
-
-
-       />     */}
-
-
-
-{/* <PdfTransactionsGenerator
-  user={user}
-  selUnitDetails={undefined}
-  myObj={undefined}
-  selCustomerPayload={undefined}
-  newPlotPS={undefined}
-  myAdditionalCharges={undefined}
-  streamUnitDetails={undefined} myBookingPayload={undefined} netTotal={undefined} setNetTotal={undefined} partATotal={undefined} partBTotal={undefined} setPartATotal={undefined} setPartBTotal={undefined} projectDetails={undefined} leadDetailsObj1={undefined} PSa={undefined} totalIs={undefined} custObj1={undefined} customerDetails={undefined}                                        // selUnitDetails={selUnitDetails}
-/> */}
-
-
-
-
-
-
-
-
-
-
-
+  
           <div className="w-full flex items-center mt-3 mr-3 ">
             <label
               htmlFor="area"
@@ -183,8 +81,7 @@ const CrmUnitPsHome = ({
       {financeMode === 'schedule' && (
         <>
           <PDFExport paperSize="A4" margin="1cm" ref={pdfPaymentScheduleComp}>
-            {/* 1 } customer details */}
-            {/* Unit details */}
+
             {showHeader && (
               <>
                 <CrmUnitHeader projectDetails={selCustomerPayload} />

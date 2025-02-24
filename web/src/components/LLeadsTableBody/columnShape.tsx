@@ -45,12 +45,7 @@ const columnShape = [
             />
           </IconButton>
 
-          {/* <AddEmployeeModal
-            edit
-            open={open}
-            data={row.original}
-            onClose={() => setOpen(false)}
-          /> */}
+
         </>
       )
     },

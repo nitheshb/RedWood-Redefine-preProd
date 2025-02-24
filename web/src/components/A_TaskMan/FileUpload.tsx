@@ -28,11 +28,9 @@ export default function FileUpload  ({ files, setFiles, removeFile }) {
         (err) => console.log(err),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            // createAttach(orgId, url, by, file.name, id, attachType)
             file.url = url
             setFiles([...files, file])
             console.log('file url i s', url)
-            //  save this doc as a new file in spark_leads_doc
           })
         }
       )

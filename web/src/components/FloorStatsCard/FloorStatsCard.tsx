@@ -52,12 +52,7 @@ const FloorStatsCard = ({ kind, feedData, bg }) => {
         </IconButton>
       </div>
       <div className="flex flex-col justify-between px-2">
-        {/* <span className="flex flex-row items-center justify-between mt-2">
-            <span className="text-sm text-gray-700">Unit No:</span>
-            <span className="text-sm font-semibold">
-              {feedData?.unitNo || 0}
-            </span>
-          </span> */}
+ 
         <span className="flex flex-row items-center justify-between mt-2">
           <span className="text-sm text-gray-700 ">Units</span>
           <span className="text-sm font-semibold">{feedData?.units || 0}</span>

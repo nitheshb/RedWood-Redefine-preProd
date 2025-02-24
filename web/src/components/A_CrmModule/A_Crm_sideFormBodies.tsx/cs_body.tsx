@@ -54,7 +54,6 @@ const CSBody = ({
   }, [costSheetA, selPhaseObj])
 
   useEffect(() => {
-    // setNewPlotCsObj(costSheetA)
   }, [newSqftPrice])
 
 
@@ -65,7 +64,6 @@ const CSBody = ({
       ConstructPayScheduleObj,
       paymentScheduleObj,
     } = selPhaseObj
-    // const { uid } = selUnitDetails
     const y = selUnitDetails?.rate_per_sqft
     const z = selUnitDetails?.plc
 
@@ -108,31 +106,7 @@ const CSBody = ({
             value: plot_gstValue,
           },
           TotalNetSaleValueGsT: plotTotalSaleValue + plot_gstValue,
-          // others: selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate,
-          // charges: Number.isFinite(y) ? y : selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate,
-          // TotalSaleValue: Number.isFinite(y)
-          //   ? Number(selUnitDetails?.plot_Sqf * y)
-          //   : Number(selUnitDetails?.plot_Sqf * selUnitDetails?.rate_per_sqft),
-          // // charges: y,
-          // gst: {
-          //   label: '0.05',
-          //   value: Number.isFinite(y)
-          //     ? Number(selUnitDetails?.plot_Sqf * y)
-          //     : Math.round(
-          //         selUnitDetails?.plot_Sqf * selUnitDetails?.rate_per_sqft
-          //       ) * 0.05,
-          // },
-          // TotalNetSaleValueGsT:
-          //   (Number.isFinite(y)
-          //     ? Number(selUnitDetails?.plot_Sqf * y)
-          //     : Number(
-          //         selUnitDetails?.plot_Sqf * selUnitDetails?.rate_per_sqft
-          //       )) +
-          //   (Number.isFinite(y)
-          //     ? Number(selUnitDetails?.plot_Sqf * y)
-          //     : Math.round(
-          //         selUnitDetails?.plot_Sqf * selUnitDetails?.rate_per_sqft
-          //       ) * 0.05),
+
         },
         {
           myId: '2',
@@ -153,7 +127,6 @@ const CSBody = ({
               selUnitDetails?.plot_Sqf *
                 (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
           ),
-          // charges: y,
           gst: {
             label: '0.05',
             value: Math.round(
@@ -197,7 +170,6 @@ const CSBody = ({
             : Number(
                 selUnitDetails?.builtup_area * selUnitDetails?.construct_price
               ),
-          // charges: y,
           gst: {
             label: '0.05',
             value: Number.isFinite(y)
@@ -218,74 +190,12 @@ const CSBody = ({
                   selUnitDetails?.builtup_area * selUnitDetails?.construct_price
                 ) * 0.05),
         },
-        // {
-        //   myId: '2',
-        //   units: {
-        //     value: 'fixedcost',
-        //     label: 'Fixed cost',
-        //   },
-        //   component: {
-        //     value: 'Bescom_Sewage_Charges',
-        //     label: 'Bescom & Sewage Charges ',
-        //   },
-        //   others: selUnitDetails?.PLC,
-        //   charges: Number.isFinite(y) ? y : selUnitDetails?.PLC || 200,
-        //   TotalSaleValue: Math.round(
-        //     selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //   ),
-        //   gst: {
-        //     label: '0.05',
-        //     value: Math.round(
-        //       Number(
-        //         selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //       ) * 0.05
-        //     ),
-        //   },
-        //   TotalNetSaleValueGsT:
-        //     Math.round(
-        //       selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //     ) +
-        //     Math.round(
-        //       Number(
-        //         selUnitDetails?.builtup_area * (selUnitDetails?.PLC || 200)
-        //       ) * 0.05
-        //     ),
-        // },
-        // {
-        //   myId: '3',
-        //   units: {
-        //     value: 'fixedcost',
-        //     label: 'Fixed cost',
-        //   },
-        //   component: {
-        //     value: 'clubhouse',
-        //     label: 'Club House ',
-        //   },
-        //   others: selUnitDetails?.PLC,
-        //   charges: 0,
-        //   TotalSaleValue: 354000,
-        //   // charges: y,
-        //   gst: {
-        //     label: '0.05',
-        //     value: Math.round(354000 * 0.0),
-        //   },
-        //   TotalNetSaleValueGsT: 354000,
-        // },
+
       ]
     }
-    // const x = costSheetA
     let merged = []
     try {
-      // if (leadDetailsObj1) {
-      //   if (leadDetailsObj1[`${uid}_cs`]['costSheetA']) {
-      //     const removeFulCostFieldA = leadDetailsObj1[`${uid}_cs`][
-      //       'costSheetA'
-      //     ].filter((dat) => dat?.component?.value != 'unit_cost_charges')
-      //     merged = [...x, ...removeFulCostFieldA]
-      //   } else {
-      //     merged = [...x, ...additonalChargesObj]
-      //   }
-      // }
+
       merged = [...x, ...additonalChargesObj]
 
     } catch (error) {
@@ -303,7 +213,6 @@ const CSBody = ({
     setInitialValuesA(initformValues)
     console.log('gen costSheetA', x)
     setCostSheetA(x)
-  // }, [selPhaseObj, leadDetailsObj1, csMode])
   },[])
 
   useEffect(() => {
@@ -326,9 +235,7 @@ const CSBody = ({
 
           if ('plot_cs' === 'plot_cs') {
                    let applicablePlotCost = netTotal- flatLegalFixedCosts
-                  //  if(inx ==1){
-                  //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
-                  //  }
+
 
                   if(!['costpersqft'].includes(d1?.units?.value)){
 
@@ -340,7 +247,6 @@ const CSBody = ({
                       :  Number(
                           ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
                         )
-                        // z.value = applicablePlotCost
                       }else {
                         let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
                         z.value = calc?.TotalNetSaleValueGsT
@@ -359,9 +265,7 @@ const CSBody = ({
 
   const initialState = initialValuesA
   const validate = Yup.object({
-    // blockReason: Yup.number()
-    //   .max(15, 'Must be 15 characters or less')
-    //   .required('Name is Required'),
+ 
   })
 
   const setTotalFun = async () => {
@@ -388,29 +292,13 @@ const CSBody = ({
   const onSubmit = async (data, resetForm) => {
     const { uid } = selUnitDetails
     const { id } = leadDetailsObj1
-    // const x = {
-    //   myId: '2',
-    //   units: {
-    //     value: 'fixedcost',
-    //     label: 'Fixed cost',
-    //   },
-    //   component: {
-    //     value: 'ratePerSqft',
-    //     label: 'sqftCost',
-    //   },
-    //   charges: Number(newSqftPrice),
-    //   gst: {
-    //     label: '0',
-    //     value: '0',
-    //   },
-    // }
+
 
     const newCostSheetA = costSheetA.map((dat) => {
       dat.charges = data[dat?.component?.value]
       return dat
     })
-    // newCostSheetA.push(x)
-    // i need unit_uID & unit details
+
     const xData = {}
 
     xData[`${uid}${'_cs'}`] = {
@@ -504,63 +392,7 @@ const CSBody = ({
                           </thead>
                           <tbody>
                             {' '}
-                            {/* {costSheetA?.map((d1, inx) => (
-                              <tr key={inx} className="py-1 my-2 h-[24px]">
-                                <th className="w-[40%] px-2 text-[11px] text-left text-gray-700  ">
-                                  {d1?.component?.label}
-                                </th>
-                                <td className="w-[15%]  px-2 text-[12px] text-right text-gray-700 ">
-                                  <TextFieldFlat
-                                    label=""
-                                    className="w-[100%] text-[12px] text-right text-gray-800 border  border-black"
-                                    name="ratePerSqft"
-                                    onChange={(e) => {
-                                      // setNewSqftPrice(e.target.value)
 
-                                      formik.setFieldValue(
-                                        'unit_cost_charges',
-                                        e.target.value
-                                      )
-                                      setNewSqftPrice(Number(e.target.value))
-                                      changeOverallCostFun(
-                                        inx,
-                                        d1,
-                                        e.target.value
-                                      )
-                                    }}
-                                    // value={formik.values[`unit_cost_charges`]}
-                                    value={d1?.charges}
-                                    // value={newSqftPrice}
-                                    // type="number"
-                                  />
-                                  <TextFieldFlat
-                                    className=" hidden  "
-                                    label=""
-                                    name={d1?.component?.value}
-                                    type="number"
-                                  />
-                                </td>
-                                <td
-                                  className={`${
-                                    !showGstCol ? 'hidden' : ''
-                                  } w-[15%] px-2 text-[12px] text-right text-gray-700 `}
-                                >
-                                  {d1?.TotalSaleValue?.toLocaleString('en-IN')}
-                                </td>
-                                <td
-                                  className={`${
-                                    !showGstCol ? 'hidden' : ''
-                                  } w-[15%] px-2 text-[12px] text-right text-gray-700 `}
-                                >
-                                  {d1?.gst?.value?.toLocaleString('en-IN')}
-                                </td>
-                                <td className="w-[15%] px-2 text-[12px] text-right text-gray-800 ">
-                                  {d1?.TotalNetSaleValueGsT?.toLocaleString(
-                                    'en-IN'
-                                  )}
-                                </td>
-                              </tr>
-                            ))} */}
                             <tr className=" border-[#fab56c]  bg-[#e3fcff]">
                               <th className="w-[40%] text-[12px] text-left text-gray-600 pl-2 ">
                                 Total (A)
@@ -607,20 +439,7 @@ const CSBody = ({
                           </tbody>
                         </table>
                         <table className="w-full mt-1">
-                          {/* <thead>
-                            {' '}
-                            <tr className=" h-6  border-b-[0.2px] border-gray-300">
-                              <th className="w-[50%] text-[12px] text-left text-gray-700 text-[#8993a4] tracking-wide uppercase ">
-                                Particulars
-                              </th>
-                              <th className="w-[35%] text-[12px] text-left text-gray-700 text-[#8993a4] tracking-wide uppercase ">
-                                Timeline
-                              </th>
-                              <th className="w-[15%] text-[12px] text-right text-gray-700  text-[#8993a4] tracking-wide uppercase">
-                                Total Inc GST
-                              </th>
-                            </tr>
-                          </thead> */}
+  
                           <tbody>
                             {partBPayload?.map((d1, inx) => (
                               <tr key={inx} className="h-[22px]">
@@ -631,7 +450,6 @@ const CSBody = ({
                                   {d1?.description}
                                 </td>
                                 <td className="text-[12px] px-2 text-right text-gray-700 ">
-                                  {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
                                   {Number(
                                     computeTotal(
                                       d1,
@@ -684,22 +502,7 @@ const CSBody = ({
                           </thead>
 
                           <tbody>
-                            {/* {newPlotPS?.map((d1, inx) => (
-                              <tr
-                                key={inx}
-                                className="border-b-[0.05px] border-gray-300"
-                              >
-                                <th className=" px-2  text-[12px] text-left text-gray-700 ">
-                                  {d1?.stage?.label}
-                                </th>
-                                <td className="text-[12px] px-2  text-left text-gray-700 ">
-                                  {d1?.description}
-                                </td>
-                                <td className="text-[12px] px-2  text-right text-gray-800 ">
-                                  {d1?.value?.toLocaleString('en-IN')}
-                                </td>
-                              </tr>
-                            ))} */}
+         
 
                             <tr className="border-b-[0.05px] border-black">
                               <th className="text-[12px] px-2  text-left text-gray-800 ">
@@ -715,7 +518,6 @@ const CSBody = ({
                       </div>
                     </div>
                   </div>
-                  {/* end of paper */}
                 </div>
               </div>
             )}

@@ -68,12 +68,7 @@ export function serialEmployeeTaskLeadData(employeeListA) {
                 x[da]['schTime'] < tomorrowDate  &&
                 x[da]['schTime'] >= todayDate && x[da]['sts'] === 'pending' && x[da]['assTo'] != undefined
             )
-            // const sevenDaysNew = staDA.filter(
-            //   (da) =>
-            //     ((x[da]['sts'] === 'pending') &&
-            //     (x[da]['schTime'] < sevenDaysDate ) &&
-            //     (x[da]['schTime'] >= tomorrowDate) && x[da]['assTo'] != undefined)
-            // )
+
             const sevenDaysNew = staDA.filter(
               (da) =>
                 ((x[da]['sts'] === 'pending') &&
@@ -138,21 +133,6 @@ export function serialEmployeeTaskLeadData(employeeListA) {
           })
         }
 
-        // //  get the task details from docid
-        // if (projects.length > 0) {
-        //   console.log(
-        //     'my values are ',
-        //     projects,
-        //     projects.filter((data) => data != 'remove')
-        //   )
-        //   projects.filter((data) => data != undefined)
-        //   Promise.all(projects).then(function (results) {
-        //     console.log('master one', results)
-        //     results.filter((data) => data != 'remove')
-        //   })
-        // } else {
-        //   console.log('my values are 1 ', projects)
-        // }
       },
       { uid: value, type: 'today' },
       () => {

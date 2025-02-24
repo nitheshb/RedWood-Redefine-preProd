@@ -163,56 +163,12 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
         />
       ),
     },
-    // {
-    //   title: 'Due date*',
-    //   field: 'dueDate',
-    //   headerStyle: {
-    //     padding: '0.25rem',
-    //   },
-    //   cellStyle: {
-    //     padding: '0.25rem',
-    //   },
-    //   editComponent: ({ value, onChange }) => (
-    //     <DatePicker
-    //       selected={
-    //         value && !isDate(value)
-    //           ? parse(value, 'dd/MM/yyyy', new Date())
-    //           : value
-    //       }
-    //       onChange={onChange}
-    //       autoComplete="off"
-    //       className="w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 px-2"
-    //       dateFormat="dd/MM/yyyy"
-    //       placeholderText="dd/mm/yyyy"
-    //     />
-    //   ),
-    // },
+  
   ]
 
-  // const getPayments = async () => {
-  //   const { projectId, uid } = data?.phase || {}
-  //   const unsubscribe = getPaymentSchedule(
-  //     { projectId, phaseId: uid },
-  //     (querySnapshot) => {
-  //       const response = querySnapshot.docs.map((docSnapshot) =>
-  //         docSnapshot.data()
-  //       )
-  //       setTableData(response)
-  //     },
-  //     (e) => {
-  //       console.log('error', e)
-  //       setTableData([])
-  //     }
-  //   )
-  //   return unsubscribe
-  // }
-
-  // useEffect(() => {
-  //   getPayments()
-  // }, [])
+ 
 
   const errors = (formData, isEdit) => {
-    //validating the data inputs
     const errorList = []
     if (!formData.stage) {
       errorList.push("Try Again, You didn't enter the stage field")
@@ -221,15 +177,9 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
       errorList.push("Try Again, You didn't enter the Percentage field")
     }
 
-    // if (!formData.description) {
-    //   errorList.push("Try Again, description field can't be blank")
-    // }
-    // if (!isEdit && !isDate(formData.dueDate)) {
-    //   errorList.push("Try Again, You didn't enter valid date")
-    // }
+
     return errorList
   }
-  //function for updating the existing row details
   const handleRowUpdate = async (newData, oldData) => {
     const errorList = errors(newData, true)
     if (errorList.length < 1) {
@@ -267,7 +217,6 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
     }
   }
 
-  //function for deleting a row
   const handleRowDelete = async (oldData) => {
     const { uid } = data?.phase || {}
     const c = tableData.filter((e) => e.myId != oldData.myId)
@@ -287,7 +236,6 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
     )
   }
 
-  //function for adding a new row to the table
   const handleRowAdd = async (newData) => {
     setIserror(false)
     setErrorMessages([])
@@ -297,9 +245,8 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
       const { projectId, uid } = data?.phase || {}
       const update = {
         ...newData,
-        // dueDate: format(newData.dueDate, 'dd/MM/yyyy'),
       }
-      // await createPayment(update, enqueueSnackbar)
+     
 
       await addPhasePaymentScheduleCharges(
         orgId,
@@ -338,40 +285,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
               projData={data}
             />
           ))}
-        {/* <div className="mt-1">
-          <MaterialCRUDTable
-            title={
-              blocksViewFeature === 'Construction_Payment_Schedule'
-                ? 'Construction Payment Schedule'
-                : 'Plot Payment Schedule'
-            }
-            columns={columns}
-            data={tableData}
-            options={{
-              headerStyle: {
-                borderBottomWidth: '3px',
-                zIndex: '0',
-              },
-              actionsColumnIndex: -1,
-              paging: false,
-              minBodyHeight: '1000px',
-              doubleHorizontalScroll: true,
-              zIndex: '0',
-            }}
-            style={{
-              padding: '30px',
-              paddingTop: '15px',
-              borderRadius: '0px',
-              boxShadow: 'none',
-            }}
-            actionsCellStyle={{
-              width: 'auto',
-              justifyCenter: 'center',
-            }}
-            editable={editOpitionsObj}
-          />
-        </div> */}
-
+     
         <div>
           {iserror && (
             <Alert severity="error">

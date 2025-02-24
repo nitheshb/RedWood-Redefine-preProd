@@ -106,10 +106,7 @@ const EmpTasksReportM = ({
                   }`,
                 },
 
-                // { stausTitle: 'Site Vists', count: '295' },
-                // { stausTitle: 'Negotiation', count: '501' },
-                // { stausTitle: 'Bookings', count: '295' },
-                // { stausTitle: 'Junk', count: '194' },
+
               ].map((item, i) => (
                 <div
                   key={i}
@@ -216,7 +213,6 @@ const EmpTasksReportM = ({
                         showDrillDownFun('Total Visits Fixed', data?.visitdone)
                       }
                     >
-                      {/* {data?.all_comp || 0}/{data?.all || 0} */}
                       {data?.all || 0}
                     </td>
                     <td
@@ -226,7 +222,6 @@ const EmpTasksReportM = ({
                       }
                     >
                       {data?.all_comp || 0}
-                      {/* {data?.inprogress?.length} */}
                     </td>
                     <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
                       {data?.rnr || 0}

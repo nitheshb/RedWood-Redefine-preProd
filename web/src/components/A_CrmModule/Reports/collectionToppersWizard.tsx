@@ -128,22 +128,7 @@ return
     )
 
     return
-     // Map over `x` and return an array of Promises
-  // const promises = x.map(async (data, i) => {
-  //   data.time = data.week;
 
-  //   const y = await getCollectionsReport(data);
-  //   const value = y.length > 0 ? y[0]?.received : 3;
-
-  //   const payloadNew = { ...data, value, prevValue: 5 };
-
-  //   console.log('Matched value:', y, data, projectMonthArray, payloadNew);
-
-  //   projectMonthArray.push(payloadNew); // Push into array
-  //   return payloadNew; // Return processed data
-  // });
-
-    // Create an array of promises
     setLoad(false)
     const promises = x.map(async (data, i) => {
       let z = {}
@@ -177,23 +162,11 @@ return
       return await getCollectionsReport(data);
     });
 
-    // Wait for all Promises to resolve
-    // const resolvedData = await Promise.all(promises);
 
-    // // Process resolved data to create the final array
-    // const finalData = await resolvedData.map(async (d, i) => {
-    //   console.log('matched value i ', await d)
-    //   const value = d.length > 0 ? d[0]?.received : 3;
-    //   return { ...x[i], value, prevValue: 5 }; // Ensure you're using x[i] for the original week data
-    // });
-
-    // Update the state with the final processed data
-    // await setTotalCollecionR(finalData);
 
 
    }
   useEffect(() => {
-    // calMonthlyValueNew(projects)
     calMonthlyEmpCollections(projects)
   }, [projects])
 
@@ -209,13 +182,10 @@ return
       setLoaderIcon(true)
       const insideValues = []
 
-      // Iterate over projects
       for (const projectData of projects) {
-        //  const z = await projects.map((projectData) => {
         const newProjectData = { ...projectData }
         const projectMonthArray = []
 
-        // Use Promise.all to execute asynchronous operations concurrently
         await Promise.all(
           monthsA.map(async (month) => {
             const payload = {
@@ -224,10 +194,8 @@ return
               currentYear: month.currentYear,
             }
 
-            // Fetch projection sum asynchronously
             const totalReceivableValue = await gretProjectCollectionSum(orgId, payload)
 
-            // Update month object with receivable value
             const updatedMonth = { ...month, receive: totalReceivableValue }
             console.log(
               'Value refreshed',
@@ -241,18 +209,14 @@ return
           })
         )
 
-        // Update project data with month array
         newProjectData.months = projectMonthArray
         insideValues.push(newProjectData)
       }
 
-      // After processing all projects, update state with updated project data
       setProjectCollections(insideValues)
     } catch (error) {
       console.error('Error calculating monthly values:', error)
-      // Handle error
     } finally {
-      // Set loading state to false
       setLoaderIcon(false)
     }
   }
@@ -284,7 +248,6 @@ return
            return await unsubscribe
 
 
-         // await console.log('leadsData', leadsData)
        }
        const sortData = (data) => {
         if (!sortConfig.key) return data;

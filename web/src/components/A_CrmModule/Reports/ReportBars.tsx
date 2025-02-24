@@ -1,4 +1,3 @@
-// import { iconsImgs } from "../../utils/images";
 import "./ReportBars.css";
 import { reportData } from "./data";
 

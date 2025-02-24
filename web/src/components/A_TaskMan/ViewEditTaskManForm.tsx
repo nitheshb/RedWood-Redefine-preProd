@@ -582,16 +582,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                       } bg-white`}
                     ></input>
 
-                    {/* <div className="sm-file-card">
-                    <div className="sm-file-inputs">
-          <input type="file" onChange={uploadHandler} />
-          <button>
 
-              <PaperClipIcon className="w-4 h-4 cursor-pointer mt-[10px] mr-[2px] inline-block text-gray-400 " />
-          </button>
-        </div>
-
-        </div> */}
 
                     <div>
                       <label
@@ -603,16 +594,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                           style={{ fontSize: '18px' }}
                         />
                       </label>
-                      {/* {panCard1 != '' && (
-                        <button
-                          onClick={() =>
-                            downloadImage(panCard1, 'pancard1.PNG')
-                          }
-                        >
-                          {' '}
-                          <ArrowCircleDownIcon className="w-4 h-4 cursor-pointer ml-1 mb-[9px] mr-2 inline-block text-gray-400 " />
-                        </button>
-                      )} */}
+     
                       <input
                         type="file"
                         className="hidden"
@@ -630,7 +612,6 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                             addCommentTitle === 'undefined' ||
                             addCommentTitle === ''
                           ) {
-                            // cancelResetStatusFun()
                             setError(true)
                           }
                           if (
@@ -640,8 +621,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                               addCommentTitle === ''
                             )
                           ) {
-                            // addTaskCommentFun(data)
-                            // addCommentTitle
+                 
                             const x = []
 
                             if (commentAttachUrl === '') {
@@ -679,8 +659,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                         }  `}
                       >
                         <span className="text-md">
-                          {/* {(addCommentTitle === 'undefined' ||
-                      addCommentTitle === '') && <CloseTwoToneIcon />} */}
+       
                           {!closeTask &&
                             !addCommentPlusTask &&
                             !(
@@ -692,14 +671,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                               addCommentTitle === 'undefined' ||
                               addCommentTitle === ''
                             ) && <CheckTwoToneIcon />}
-                          {/* {closeTask && (
-                <span className="text-[#4b4a4a]">Close This Task </span>
-              )}{' '}
-              {addCommentPlusTask && (
-                <>
-                  & <span className="text-[#4b4a4a]">Create New Task</span>
-                </>
-              )} */}
+
                         </span>
                       </button>
                     )}
@@ -880,14 +852,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                       <div key={i} className="text-[#0b66c3]  text-xs mt-1">
                         {data?.name}
                       </div>
-                      {/* <a
-                        href={data?.url}
-                        download="MyExampleDoc"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <ArrowCircleDownIcon className="w-4 h-4 cursor-pointer mt-[8px] mr-2 inline-block text-gray-400 " />
-                      </a> */}
+
                       <button
                         onClick={() => downloadImage(data?.url, data?.name)}
                       >
@@ -949,16 +914,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                                     value.target.value
                                   )
                                 }}
-                                // value={taskTitle}
-                                // onChange={(e) => {
-                                //   console.log('any error ', e, e.target.value)
-
-                                //   // if (e.target.value === '') {
-                                //   //   setClicked(false)
-                                //   //   setHover(true)
-                                //   // }
-                                //   setAddCommentTitle(e.target.value)
-                                // }}
+     
                                 placeholder="Things to do"
                                 className={`w-full  pb-2 pt-1 outline-none text-[18px] font-bodyLato focus:border-blue-600 hover:border-blue-600  ${
                                   true ? ' text-[33475b] ' : ' text-[33475b]'
@@ -1109,25 +1065,7 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                                 </div>
                               </div>
                               <div className="w-full flex flex-row my-3 mt-6">
-                                {/* <TextField
-                              type="file"
-                              name="file"
-                              label="Add file"
-                              className="mt-[-3px] border border-gray-300 w-full rounded h-[36px] pt-0.5 pl-1"
-                            /> */}
 
-                                {/* <label
-                              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                              htmlFor="file_input"
-                            >
-                              Upload file
-                            </label> */}
-                                {/* <input
-                                  className="block w-full text-sm text-gray-900 border border-blue-300 rounded-sm cursor-pointer bg-blue-50  focus:outline-none "
-                                  id="file_input"
-                                  type="file"
-                                  name="file"
-                                /> */}
                               </div>
                             </div>
                             <div className=" mt-3">
@@ -1140,34 +1078,9 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                               />
                             </div>
                           </section>
-                          {/* <div className="w-full flex flex-col  ">
-                          <CustomSelect
-                            name="priorities"
-                            label="Priority"
-                            className="input mt-"
-                            onChange={(value) => {
-                              formik.setFieldValue('priorities', value.value)
-                            }}
-                            value={formik.values.priorities}
-                            // options={aquaticCreatures}
-                            options={[
-                              { label: 'Low', value: 'low' },
-                              { label: 'Medium', value: 'medium' },
-                              { label: 'High', value: 'high' },
-                            ]}
-                          />
-                          <p
-                            className="text-sm text-red-500 hidden mt-3"
-                            id="error"
-                          >
-                            Please fill out this field.
-                          </p>
-                        </div> */}
+
                         </div>
-                        {/* <span className="text-[#0091ae]">
-                    Save
-                    <ArrowRightIcon className="w-5 ml-5" />
-                  </span> */}
+       
                       </div>
                     </div>
                     <div className="flex flex-row z-10 justify-between mt-4 pb-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
@@ -1186,23 +1099,14 @@ const ViewEditTaskManForm = ({ title, dialogOpen, taskManObj }) => {
                           </p>
                         )}
                         <button
-                          // onClick={() => fAddSchedule()}
                           className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  text-[#535c69]  bg-[#bbed21]   hover:shadow-lg `}
                         >
                           <span className="ml-1 ">Save Task</span>
                         </button>
-                        {/* <button
-                        // onClick={() => fAddSchedule()}
-                        className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  border border-[#c6cdd3] text-[#535b69] hover:shadow-lg   `}
-                      >
-                        <span className="ml-1 ">
-                          Add Task & Close
-                        </span>
-                      </button> */}
+     
 
                         <button
-                          // onClick={() => fSetLeadsType('Add Lead')}
-                          // onClick={() => cancelResetStatusFun()}
+             
                           onClick={() => dialogOpen(false)}
                           className={`flex mt-2 ml- rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium `}
                         >

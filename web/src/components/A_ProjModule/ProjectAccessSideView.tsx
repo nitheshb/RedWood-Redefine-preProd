@@ -45,13 +45,6 @@ const ProjectAccessSideView = ({
     getPlanDiagrams(data?.uid, 'plan_diagram')
     console.log('plan_diagram', data, projectDetails)
 
-    // if (pId && title === 'Plan Diagram') {
-    //   getPlanDiagrams(data?.uid, 'plan_diagram')
-    // } else if (pId && title === 'Brouchers') {
-    //   getPlanDiagrams(data?.uid, 'broucher')
-    // } else if (pId && title === 'Approvals') {
-    //   getPlanDiagrams(data?.uid, 'approval')
-    // }
   }, [pId, data])
   const getPlanDiagrams = async (phaseId, type) => {
     const unsubscribe = getPlanDiagramByPhase(
@@ -157,9 +150,7 @@ const ProjectAccessSideView = ({
   return (
     <div className="h-full flex flex-col  bg-white shadow-xl">
       <div className="   z-10">
-        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
+ 
 
         <div className="flex flex-row ">
         <div className="flex flex-col w-full gap-4">
@@ -271,16 +262,6 @@ const ProjectAccessSideView = ({
         widthClass="max-w-2xl"
         projectsList={projects}
       />
-      {/* <SiderForm
-        open={isDocViewOpenSideView}
-        setOpen={setIsDocViewOpenSideView}
-        title={'disp_legal_docs'}
-        projectDetails={projectDetails}
-        unitsViewMode={false}
-        widthClass="max-w-xl"
-        projectsList={projects}
-        viewLegalDocData={viewDocData}
-      /> */}
        <SiderForm
         open={isDocViewOpenSideView}
         setOpen={setIsDocViewOpenSideView}
@@ -297,9 +278,7 @@ const ProjectAccessSideView = ({
         setOpen={setIsAccessSideView}
         title={'disp_project_access'}
         subView={subView}
-              //    data={{ phase: data, project: projectDetails }}
-              // dept="admin"
-              // source={source}
+
         phaseDetails={data}
         projectDetails={projectDetails}
         unitsViewMode={false}

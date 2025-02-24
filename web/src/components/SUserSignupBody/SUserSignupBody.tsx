@@ -79,20 +79,7 @@ const SUserSignupBody = ({ title, dialogOpen, empData }) => {
     }
   }, [empData])
 
-  // const cityList = [
-  //   { label: 'Bangalore,KA', value: 'Bangalore,KA' },
-  //   { label: 'Cochin,KL', value: 'Cochin,KL' },
-  //   { label: 'Mumbai,MH', value: 'Mumbai,MH' },
-  // ]
 
-  // const plans = []
-  // const [selected, setSelected] = useState(plans[1])
-
-  // const typeSel = async (sel) => {
-  //   await console.log('value is', selected)
-  //   await setSelected(sel)
-  //   await console.log('thsi si sel type', sel, selected)
-  // }
 
   const changed = async (data) => {
     console.log('i was changed', data, data)

@@ -30,7 +30,7 @@ const ProjectBubbleChart = () => {
     fetchData();
 
     return () => {
-      isMounted = false; // Cleanup function to prevent state update on unmounted component
+      isMounted = false; 
     };
   }, []);
   return (

@@ -78,13 +78,7 @@ const baseStyle = {
   transition: 'border .24s ease-in-out',
   lineHeight: '70px',
 
-  // background: 'yellow',
-  // textAlign: 'center',
-  // lineHeight: '100px',
-  // background: 'linear-gradient(to right, orange 50%, rgba(255, 255, 255, 0) 0%), linear-gradient(blue 50%, rgba(255, 255, 255, 0) 0%), linear-gradient(to right, green 50%, rgba(255, 255, 255, 0) 0%), linear-gradient(red 50%, rgba(255, 255, 255, 0) 0%)',
-  // backgroundPosition: 'top, right, bottom, left',
-  // backgroundRepeat: 'repeat-x, repeat-y',
-  // backgroundSize: '10px 1px, 1px 10px',
+
 }
 
 const focusedStyle = {
@@ -171,7 +165,6 @@ export function MultipleFileUploadField({
 
   useEffect(() => {
     helpers.setValue(files)
-    // helpers.setTouched(true);
   }, [files])
 
   const getPhases = async (pId) => {
@@ -295,18 +288,14 @@ export function MultipleFileUploadField({
 
     parse(file, {
       header: true,
-      // download: true,
       complete: async function (input) {
         const records = input.data
         console.log('import stuff is', records)
-        // await setfileRecords((existing) => [...existing, ...input.data])
-        // set All records
+
         if (['Import Units'].includes(title)) {
           console.log('import stuff is ', records)
           const clean1 = records.filter((row) => row['unit_no'] != '')
 
-          // set duplicate & valid records
-          // check in db if record exists with matched phone Number & email
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
               console.log('input date is ', dRow)
@@ -341,8 +330,7 @@ export function MultipleFileUploadField({
               (row['Unit No.*'] != '' && row['Unit No.*'] != undefined)
             )
           })
-          // set duplicate & valid records
-          // check in db if record exists with matched phone Number & email
+      
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
               const foundLength = await checkIfUnitAlreadyExists(

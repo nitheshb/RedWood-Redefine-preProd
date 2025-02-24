@@ -18,9 +18,7 @@ const CrmPaymentSummary = ({ selCustomerPayload }) => {
 
             </h6>
             <section className="flex flex-row">
-              {/* <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                {selCustomerPayload?.T_elgible?.toLocaleString('en-IN')}
-              </h6> */}
+
 
               <h6 className="font-bodyLato font-semibold text-xs m-1 flex flex-col text-right">
 
@@ -41,9 +39,7 @@ const CrmPaymentSummary = ({ selCustomerPayload }) => {
 
             </h6>
             <section className="flex flex-row">
-              {/* <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
-                {selCustomerPayload?.T_elgible?.toLocaleString('en-IN')}
-              </h6> */}
+  
               <h6 className="font-bodyLato font-semibold text-xs m-1 mb-2">
               <span className="text-[#637381] tracking-wide font-thin">Stage Cost:</span> {' '}₹{selCustomerPayload?.T_elgible?.toLocaleString('en-IN')}
               </h6>
@@ -52,22 +48,7 @@ const CrmPaymentSummary = ({ selCustomerPayload }) => {
         </div>
       </>
 
-      {/* <section className="flex flow-row justify-between mb-1">
-        <div className="font-md text-xs text-gray-500  tracking-wide">
-          Total Review
-        </div>
-        <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-          Rs {selCustomerPayload?.T_review?.toLocaleString('en-IN')}
-        </div>
-      </section>
-      <section className="flex flow-row justify-between mb-1">
-        <div className="font-md text-xs text-gray-500  tracking-wide">
-          Out Standing Balance
-        </div>
-        <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-          Rs {selCustomerPayload?.T_balance?.toLocaleString('en-IN')}
-        </div>
-      </section> */}
+
     </section>
   )
 }

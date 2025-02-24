@@ -117,30 +117,9 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       },
       editComponent: ({ value, onChange, rowData }) => {
         return (
-          // <select
-          //   value={defaultValue(
-          //     blocksViewFeature === 'Construction_Other_Charges'
-          //       ? csConstruAdditionalChargesA
-          //       : costSheetAdditionalChargesA,
-          //     value
-          //   )}
-          //   onChange={(value_x) => {
-          //     console.log('onchane ', value_x)
-          //     onChange(value_x)
-          //   }}
-          //   // onChange={(e) => handleEdit(row?.id, 'sex', e.target.value)}>
-          // >
-          //   {blocksViewFeature === 'Construction_Other_Charges'
-          //     ? csConstruAdditionalChargesA
-          //     : costSheetAdditionalChargesA.map((data, i) => (
-          //         <option key={i} value={data?.value}>
-          //           {data?.label}
-          //         </option>
-          //       ))}
-          // </select>
+ 
           <SelectMAT
             defaultValue={'Car Parking'}
-            // value={'Car Parking'}
             onChange={(e) => {
               const selectedOptionObject =
                 blocksViewFeature === 'Construction_Other_Charges'
@@ -168,41 +147,10 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
                   </MenuItem>
                 ))}
           </SelectMAT>
-          // <Select
-          //   name="component"
-          //   onChange={(value_x) => {
-          //     onChange(value_x)
-          //   }}
-          //   options={
-          //     blocksViewFeature === 'Construction_Other_Charges'
-          //       ? csConstruAdditionalChargesA
-          //       : costSheetAdditionalChargesA
-          //   }
-          //   value={defaultValue(
-          //     blocksViewFeature === 'Construction_Other_Charges'
-          //       ? csConstruAdditionalChargesA
-          //       : costSheetAdditionalChargesA,
-          //     value
-          //   )}
-          //   className="text-md mr-2"
-          //   styles={{
-          //     menu: (provided) => ({
-          //       ...provided,
-          //       zIndex: 9999, // Adjust the z-index value as needed
-          //     }),
-          //   }}
-          // />
+
         )
       },
-      // editComponent: ({ value, onChange }) => (
-      //   <input
-      //     placeholder="Charges For"
-      //     className="w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 px-2"
-      //     autoComplete="off"
-      //     onChange={(e) => onChange(e.target.value)}
-      //     value={value}
-      //   />
-      // ),
+
     },
     {
       title: 'Units*',
@@ -229,7 +177,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
               menu: (provided) => ({
                 ...provided,
                 zIndex: 9,
-                position: 'absolute', // Adjust the z-index value as needed
+                position: 'absolute', 
               }),
             }}
           />
@@ -315,8 +263,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
     },
   ]
 
-  // Part-2
-  // partA columns
+
   const partAcolumns = [
     {
       title: 'Charges For*',
@@ -352,15 +299,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
           />
         )
       },
-      // editComponent: ({ value, onChange }) => (
-      //   <input
-      //     placeholder="Charges For"
-      //     className="w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 px-2"
-      //     autoComplete="off"
-      //     onChange={(e) => onChange(e.target.value)}
-      //     value={value}
-      //   />
-      // ),
+
     },
     {
       title: 'GST*',
@@ -388,8 +327,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
     },
   ]
 
-  // Part-3
-  // partC columns
+
   const partCcolumns = [
     {
       title: 'Charges For*',
@@ -425,15 +363,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
           />
         )
       },
-      // editComponent: ({ value, onChange }) => (
-      //   <input
-      //     placeholder="Charges For"
-      //     className="w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 px-2"
-      //     autoComplete="off"
-      //     onChange={(e) => onChange(e.target.value)}
-      //     value={value}
-      //   />
-      // ),
+
     },
     {
       title: 'Units*',
@@ -538,7 +468,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
   ]
 
   const errors = (formData) => {
-    //validating the data inputs
+
     const errorList = []
     if (!formData.component) {
       errorList.push("Try Again, You didn't enter the Charges For field")
@@ -553,13 +483,10 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       errorList.push("Try Again, You didn't enter the gst field")
     }
 
-    // if (!formData.description) {
-    //   errorList.push("Try Again, description field can't be blank")
-    // }
+
     return errorList
   }
   const partAerrors = (formData) => {
-    //validating the data inputs
     const errorList = []
     if (!formData.component) {
       errorList.push("Try Again, You didn't enter the Charges For field")
@@ -571,7 +498,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
 
     return errorList
   }
-  //function for updating the existing row details
+
   const handleRowUpdate = async (newData, oldData) => {
     const { uid, additonalChargesObj } = data?.phase || {}
 
@@ -593,7 +520,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         : 'additonalChargesObj',
       enqueueSnackbar
     )
-  } //function for updating the existing row details
+  } 
   const handleRowUpdatePartA = async (newData, oldData) => {
     const { uid, additonalChargesObj } = data?.phase || {}
 
@@ -621,7 +548,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
     )
   }
 
-  //function for updating the existing row details
+
   const handleRowUpdatePartC = async (newData, oldData) => {
     const { uid, additonalChargesObj } = data?.phase || {}
 
@@ -649,7 +576,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
     )
   }
 
-  //function for deleting a row
   const handleRowDelete = async (oldData) => {
     const { uid } = data?.phase || {}
     const c = tableData.filter((e) => e.myId != oldData.myId)
@@ -663,8 +589,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         : 'additonalChargesObj',
       enqueueSnackbar
     )
-    // await deleteAdditionalCharge(oldData?.uid, enqueueSnackbar)
-  } //function for deleting a row
+    
+  } 
   const handleRowDeletePartA = async (oldData) => {
     const { uid } = data?.phase || {}
     const c = partAData.filter((e) => e.myId != oldData.myId)
@@ -676,8 +602,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       'partATaxObj',
       enqueueSnackbar
     )
-    // await deleteAdditionalCharge(oldData?.uid, enqueueSnackbar)
-  } //function for deleting a row
+  } 
   const handleRowDeletePartC = async (oldData) => {
     const { uid } = data?.phase || {}
     const c = partAData.filter((e) => e.myId != oldData.myId)
@@ -689,10 +614,10 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       'partCTaxObj',
       enqueueSnackbar
     )
-    // await deleteAdditionalCharge(oldData?.uid, enqueueSnackbar)
+
   }
 
-  //function for adding a new row to the table
+
   const handleRowAdd = async (newData) => {
     setIserror(false)
     setErrorMessages([])
@@ -703,7 +628,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       const additonalChargesObj = {
         ...newData,
       }
-      // await createAdditonalCharges(additonalChargesObj, enqueueSnackbar)
       await addPhaseAdditionalCharges(
         orgId,
         uid,
@@ -718,7 +642,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       setIserror(true)
     }
   }
-  //function for adding a new row to the table
   const handleRowAddPartA = async (newData) => {
     console.log('newData is', newData)
     setIserror(false)
@@ -731,7 +654,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       const additonalChargesObj = {
         ...newData,
       }
-      // await createAdditonalCharges(additonalChargesObj, enqueueSnackbar)
       await addPhasePartAtax(
         orgId,
         uid,
@@ -756,7 +678,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
   }
 
   const genders = ['Male', 'Female', 'Other']
-  //function for adding a new row to the table
   const handleRowAddPartC = async (newData) => {
     setIserror(false)
     setErrorMessages([])
@@ -767,7 +688,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       const additonalChargesObj = {
         ...newData,
       }
-      // await createAdditonalCharges(additonalChargesObj, enqueueSnackbar)
       await addPhaseAdditionalCharges(
         orgId,
         uid,
@@ -806,289 +726,17 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
 
   return (
     <section className="">
-      {/* <table>
-        <thead>
-          {partAcolumns?.map((rowDa, i) => (
-            <tr key={i}>
-              <th>{rowDa?.title}</th>
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {partAData.map((row) => (
-            <tr key={row?.id}>
-              <td>
-                <input
-                  type="text"
-                  value={row?.component?.label}
-                  onChange={(e) => handleEdit(row?.id, 'name', e.target.value)}
-                />
-              </td>
-              <td>
-                <select
-                  value={row?.gst?.label}
-                  onChange={(e) => handleEdit(row?.id, 'sex', e.target.value)}
-                >
-                  {gstValesA.map((data, i) => (
-                    <option key={i} value={data?.value}>
-                      {data?.label}
-                    </option>
-                  ))}
-                </select>
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={row?.class}
-                  onChange={(e) => handleEdit(row.id, 'class', e.target.value)}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
+    
 
-      {/* <div className="flex flex-col px-4 my-6 space-y-4">
-        <div className="flex items-center ">
-          <div
-            className={`flex items-center ${
-              currentStep === 0 ? 'text-blue-500' : 'text-gray-500'
-            }`}
-          >
-            <div
-              className={`rounded-full ${
-                currentStep >= 0 ? 'bg-[#DDD6FE]' : 'bg-gray-300'
-              } w-8 h-8 flex items-center justify-center `}
-            >
-              A
-            </div>
-          </div>
-          <div className="w-full h-[2px] bg-[#E5E7EB]"></div>
-          <div
-            className={`flex items-center ${
-              currentStep === 1 ? 'text-blue-500' : 'text-gray-500'
-            }`}
-          >
-            <div
-              className={`rounded-full ${
-                currentStep >= 1 ? 'bg-[#DDD6FE]' : 'bg-gray-300'
-              } w-8 h-8 flex items-center justify-center `}
-            >
-              B
-            </div>
-          </div>
-
-          <div className="w-full h-[2px] bg-[#E5E7EB]"></div>
-
-          <div
-            className={`flex items-center ${
-              currentStep === 2 ? 'text-blue-500' : 'text-gray-500'
-            }`}
-          >
-            <div
-              className={`rounded-full ${
-                currentStep >= 2 ? 'bg-[#DDD6FE]' : 'bg-gray-300'
-              } w-8 h-8 flex items-center justify-center `}
-            >
-              C
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-      {/* Buttons for navigation */}
-      {/* <div className="flex justify-between px-4 mb-4">
-        {currentStep > 0 && (
-          <button className="px-4 py-2 bg-blue-500 text-white rounded" onClick={prevStep}>Back</button>
-        )}
-        {currentStep < 2 && (
-          <button className="px-4 py-2 bg-blue-500 text-white rounded" onClick={nextStep}>Next</button>
-        )}
-      </div> */}
-
-      {/* <div className="flex justify-between px-4 mb-4">
-        <button
-          className="px-2 py-0 bg-[#DDD6FE] text-[10px] rounded-xl"
-          onClick={prevStep}
-        >
-          Back
-        </button>
-        <button
-          className="px-2 py-0 bg-[#DDD6FE] text-[10px] rounded-xl"
-          onClick={nextStep}
-        >
-          Next
-        </button>
-      </div> */}
+   
+   
       <div className=" ">
       <EditableTable  phase={data?.phase || {}}  partAData={partAData} fullCs= {fullCs} source={'project'} type={data?.phase?.projectType.name}/>
       </div>
 
-      {/* {currentStep === 0 && (
-        <>
-          <section className="ml-4 text-md font-[500]">
-            Unit Pricing & PLC
-          </section>
+ 
 
-
-          <div className="h-full w-full shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll">
-            <div className="">
-              <div className="mt-1">
-
-
-                <MaterialCRUDTable
-                  title=""
-                  columns={partAcolumns.map((column, index) => ({
-                    ...column,
-                    headerStyle: headerStyles(index),
-                  }))}
-                  data={partAData}
-                  options={{
-                    headerStyle: {
-                      borderTopLeftRadius: '12px',
-                      borderTopRightRadius: '12px',
-                      borderBottomWidth: '2px',
-                      fontWeight: '600px',
-                      padding: '13px',
-                      borderRadius: '0px',
-                      zIndex: '0',
-                    },
-                    actionsColumnIndex: -1,
-                    minBodyHeight: '600px',
-                    borderRadius: '30px',
-                    search: false,
-                    paging: false,
-                    doubleHorizontalScroll: true,
-                    position: 'absolute',
-                  }}
-                  style={{
-                    padding: '0px 20px',
-                    borderRadius: '30px',
-                    boxShadow: 'none',
-                    fontSize: '12px',
-                    marginLeft: '10px',
-                    marginRight: '10px',
-                  }}
-                  actionsCellStyle={{
-                    width: 'auto',
-                    justifyCenter: 'center',
-                  }}
-                  source={source}
-                  editable={editOpitionsObjPartA}
-                />
-              </div>
-            </div>
-          </div>
-        </>
-      )} */}
-
-      {/* Part B */}
-      {/* {currentStep === 1 && (
-        <>
-          <section className="ml-4 text-md font-[500]">Additional Charges</section>
-
-          <div className="">
-
-            <div className=" min">
-              <MaterialCRUDTable
-                title=""
-                columns={columns}
-                data={tableData}
-                options={{
-                  headerStyle: {
-                    borderTopLeftRadius: '12px',
-                    borderTopRightRadius: '12px',
-                    borderBottomWidth: '2px',
-                    fontWeight: '600px',
-                    padding: '13px',
-                    zIndex: '0',
-                  },
-                  actionsColumnIndex: -1,
-                  minBodyHeight: '1000px',
-                  paging: false,
-                  search: false,
-                  doubleHorizontalScroll: true,
-                  position: 'absolute',
-                }}
-                style={{
-                  padding: '0px 20px',
-                  borderRadius: '30px',
-                  boxShadow: 'none',
-                  fontSize: '12px',
-                  marginLeft: '10px',
-                  marginRight: '10px',
-                }}
-                actionsCellStyle={{
-                  width: 'auto',
-                  justifyCenter: 'center',
-                }}
-                source={source}
-                editable={editOpitionsObj}
-              />
-            </div>
-
-            <div>
-              {iserror && (
-                <Alert severity="error">
-                  <AlertTitle>ERROR</AlertTitle>
-                  {errorMessages.map((msg, i) => {
-                    return <div key={i}>{msg}</div>
-                  })}
-                </Alert>
-              )}
-            </div>
-          </div>
-        </>
-      )} */}
-
-      {/* Part C */}
-      {/* {currentStep === 2 && (
-        <>
-          <section className="ml-4 text-md font-[500]">Other Charges</section>
-          <div className="">
-            <MaterialCRUDTable
-              title=""
-              columns={partCcolumns}
-              data={partCData}
-              options={{
-                headerStyle: {
-                  borderTopLeftRadius: '12px',
-                  borderTopRightRadius: '12px',
-                  borderBottomWidth: '2px',
-                  background: '#f8fafd',
-                  fontWeight: '600px',
-                  padding: '13px',
-                  zIndex: '0',
-                },
-                actionsColumnIndex: -1,
-                minBodyHeight: '1000px',
-                paging: false,
-                search: false,
-                doubleHorizontalScroll: true,
-                position: 'absolute',
-              }}
-              style={{
-                padding: '0px 30px',
-                borderRadius: '30px',
-                boxShadow: 'none',
-                fontSize: '12px',
-                marginLeft: '10px',
-                marginRight: '10px',
-              }}
-              actionsCellStyle={{
-                width: 'auto',
-                justifyCenter: 'center',
-              }}
-              source={source}
-              editable={editOpitionsObjPartC}
-            />
-          </div>
-        </>
-      )} */}
-
-      {/* <section className="ml-4 text-md font-[500]">Part-A</section> */}
-
-      {/* part b */}
+ 
       <div className="h-full shadow-xl flex flex-col  mb-6 bg-[#F1F5F9] rounded-t overflow-y-scroll"></div>
     </section>
   )

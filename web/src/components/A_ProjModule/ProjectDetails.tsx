@@ -96,13 +96,10 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
       submitMyForm(e)
     }
   }
-  // const bindSubmitForm = (submitForm) => {
-  //   return
-  //   submitMyForm = submitForm;
-  // };
+
   const bindSubmitForm = (submitFormFunction: () => void) => {
     return
-    // setSubmitForm(() => submitFormFunction);
+
   }
   return (
     <div className="h-full flex flex-col  py-6  shadow-xl overflow-y-scroll bg-gradient-to-r from-blue-300 to-cyan-300">
@@ -110,12 +107,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
         <Dialog.Title className=" font-semibold text-xl mr-auto    tracking-wider text-[14px]">
           Project Information
         </Dialog.Title>
-        {/* <CustomRadioGroup
-          label="Type"
-          value={selected}
-          options={projectPlans}
-          onChange={setSelected}
-        /> */}
+
         <div className="flex flex-row mt-1 ">
           {projectDetailFlow.map((option) => (
             <>
@@ -166,25 +158,6 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
                             } w-4 h-4`}
                           />
 
-                          {/* <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            className="w-4 h-4"
-                          >
-                            <circle
-                              cx={11}
-                              cy={11}
-                              r={11}
-                              fill={ selFlow.value === option.value ? '#57C0D0' : ''}
-                            />
-                            <path
-                              d="M6 11l3 3 7-7"
-                              stroke={ selFlow.value === option.value ? '#fff' : ''}
-                              strokeWidth={1.5}
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg> */}
                         </div>
                       </section>{' '}
                       <div className="mt-1 mr-2 inline text-sm text-b  ">
@@ -255,8 +228,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
                   setLoading(true)
                   setSubmitter(1)
                 }
-                // onClick={submitForm}
-                // onClick={submitForm}
+  
               }
             >
               {loading && <Loader />}
@@ -276,8 +248,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
                 () => {
                   dialogOpen(false)
                 }
-                // onClick={submitForm}
-                // onClick={submitForm}
+
               }
             >
 
