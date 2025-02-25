@@ -470,7 +470,6 @@ const ProjectAccessHomeList = ({
         setOpen={setIsAccessSideView}
         title={'disp_project_access'}
         subView={subView}
-
         phaseDetails={data}
         projectDetails={projectDetails}
         unitsViewMode={false}

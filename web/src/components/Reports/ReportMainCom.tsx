@@ -220,7 +220,7 @@ export default function ReportMainCom() {
         return da.value == viewProjs?.value
       })
       setFiltProjectListTuned(z)
-      // viewSource
+   
     }
   }, [projectList, viewProjs])
 
@@ -260,29 +260,7 @@ export default function ReportMainCom() {
     setmounted(true)
     getLeadsDataFun(startOfDay(d).getTime(), true, true, true)
   }, [])
-  // useEffect(() => {
-  //   fetchLogsData()
-  // }, [])
-  // useEffect(() => {
-  //   fetchLogsData()
-  // }, [sourceDateRange])
 
-  // const fetchLogsData = async () => {
-  //   try{
-  //   const steamLeadLogs = await steamAllLeadsActivity(
-  //     orgId,
-  //     'snap',
-  //     {
-  //       uid: 'VIzMzz5rl0NAywdnpHpb',
-  //       cutoffDate: sourceDateRange,
-  //     },
-  //     (error) => setLeadLogsRawData([])
-  //   )
-  //   await setLeadLogsRawData(steamLeadLogs)
-  //   }catch(err){
-  //     setLeadLogsRawData([])
-  //   }
-  // }
   useEffect(() => {
     if (sourceDateRange) {
       getLeadsDataFun(sourceDateRange, true, false, false)
