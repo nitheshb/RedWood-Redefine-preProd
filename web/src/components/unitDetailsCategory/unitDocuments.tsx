@@ -12,30 +12,16 @@ const UnitDocumentsBody = () => {
     <div>
       <section className="py-8 mb-8 leading-7 text-gray-900 bg-white sm:py-12 md:py-16 lg:py-18 rounded-lg">
         <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
-          {/* <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
-            <div className="flex items-center flex-shrink-0  px-0  pl-0 border-b border-grey  mb-2">
-              <Link
-                className="flex items-center"
-                to={routes.projectEdit({ uid })}
-              >
-                <img className="w-16 h-16" alt="" src="/apart.svg"></img>
-                <span className="relative z-10 flex items-center w-auto text-3xl font-bold leading-none pl-0 mt-[18px]">
-                  {projectName}
-                </span>
-              </Link>
-            </div>
-          </div> */}
+
 
           <div className="grid grid-cols-2 gap-7 mt-10">
             <span>
-              {/* sec 1 */}
               <span>
                 <div
                   className="drop-shadow-md min-w-full z-10 flex flex-col  max-w-md p-4 mx-auto my-0 rounded-lg "
                   style={{ backgroundColor: '#f3f5ff' }}
                 >
                   <div className="flex items-center flex-shrink-0  px-0  pl-0 mb-2 ">
-                    {/* <h1 className="text-lg font-medium">redefine.</h1> */}
                     <img className="w-8 h-8" alt="" src={'/m4.png'}></img>
                     <span className="relative z-10 flex items-center w-auto text-xl font-bold leading-none pl-0 ml-1 ">
                       {'Legal Documents'}

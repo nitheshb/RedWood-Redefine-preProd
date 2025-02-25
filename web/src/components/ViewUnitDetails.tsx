@@ -116,11 +116,7 @@ const ViewUnitDetails = ({
     { label: 'Esperanza', value: 'esperanza' },
     { label: 'Nakshatra Township', value: 'nakshatratownship' },
   ]
-  // const usersList = [
-  //   { label: 'User1', value: 'User1' },
-  //   { label: 'User2', value: 'User2' },
-  //   { label: 'User3', value: 'User3' },
-  // ]
+
 
   const devTypeA = [
     {
@@ -367,11 +363,7 @@ const ViewUnitDetails = ({
                             </span>
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {/* {data?.unitDetail?.builtup_area?.toLocaleString(
-                              'en-IN'
-                            )|| data?.unitDetail?.area?.toLocaleString(
-                              'en-IN'
-                            ) } */}
+               
                             {data?.unitDetail?.area?.toLocaleString('en-IN')}
                           </div>
                         </section>
@@ -388,11 +380,7 @@ const ViewUnitDetails = ({
                             BUA
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {/* {data?.unitDetail?.builtup_area?.toLocaleString(
-                              'en-IN'
-                            )|| data?.unitDetail?.area?.toLocaleString(
-                              'en-IN'
-                            ) } */}
+                 
                             {data?.unitDetail?.builtup_area?.toLocaleString('en-IN') || data?.unitDetail?.construct_area?.toLocaleString('en-IN')}
 
                           </div>

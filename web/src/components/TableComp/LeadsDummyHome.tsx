@@ -54,12 +54,7 @@ const LeadsDummyHome = ({ leadsTyper }) => {
     } else {
       return serialLeadsData.filter((item) => {
         return item?.status?.toLowerCase() === searchKey?.toLowerCase()
-        // if (searchKey === 'inprogress') {
-        //   return item
-        // } else if (item?.status?.toLowerCase() === searchKey?.toLowerCase()) {
-        //   console.log('All1', item)
-        //   return item
-        // }
+
       })
     }
   }
@@ -88,10 +83,7 @@ const LeadsDummyHome = ({ leadsTyper }) => {
         await setLeadsFetchedData(usersListA)
         await console.log('this is strange 2', serialLeadsData.length)
 
-        // await setLeadsFetchedRawData(usersListA)
-        // await serealizeData(usersListA)
-        // filter_Leads_Projects_Users_Fun()
-        // await setLeadsFetchedData(usersListA)
+ 
       },
       {
         status:
@@ -176,18 +168,15 @@ const LeadsDummyHome = ({ leadsTyper }) => {
       return unsubscribe
     }
 
-    // await console.log('leadsData', leadsData)
   }
 
   const serealizeData = (array) => {
-    // let newData =
     const x = [
       'new',
       'review',
       'cleared',
       'rejected',
       '',
-      // 'booked',
     ].map((status) => {
       const items = array.filter((data) => data.Status.toLowerCase() == status)
 
@@ -458,14 +447,7 @@ const LeadsDummyHome = ({ leadsTyper }) => {
               </div>
             )}
 
-            {/* {!ready && (
-              <FinanceTableView
-                leadsFetchedData={leadsFetchedData}
-                setisImportLeadsOpen={setisImportLeadsOpen}
-                selUserProfileF={selUserProfileF}
-                leadsTyper={leadsTyper}
-              />
-            )} */}
+
           </div>
         </div>
       </div>

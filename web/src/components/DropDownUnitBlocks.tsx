@@ -222,13 +222,6 @@ export default function DropDownUnitBlocks({
                                 : 'text-gray-900'
                             } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                             onClick={() => setStatusFun(viewData)}
-                            // onClick={() => {
-                            //   setStatusFun(viewData);
-                            //   formik.setFieldValue('block_no', viewData.blockName);
-                            // }}
-
-
-                            // onClick={() => handleSaveBlock(viewData.blockName)}
 
 
                           >
@@ -312,10 +305,7 @@ export default function DropDownUnitBlocks({
                                 : 'text-gray-900'
                             } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                             onClick={() => setStatusFun(viewData)}
-                            // onClick={() => {
-                            //   setStatusFun(viewData);
-                            //   formik.setFieldValue('block_no', viewData.blockName);
-                            // }}
+
 
                           >
                             {active ? (

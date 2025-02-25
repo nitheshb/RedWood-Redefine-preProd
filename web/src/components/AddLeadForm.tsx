@@ -474,31 +474,20 @@ if(leadDetailsObj.id){
 
       const sMapStsA = []
       const { staA, staDA } = usersList
-      // setschStsA(staA)
-      // setschStsMA(staDA)
+
 
       Object.entries(usersList).forEach((entry) => {
         const [key, value] = entry
         if (['staA', 'staDA'].includes(key)) {
           if (key === 'staA') {
-            // setschStsA(value)
           } else if (key === 'staDA') {
-            // sMapStsA = value
           }
         } else {
           usersListA.push(value)
-          // console.log(
-          //   'my total fetched list is 3',
-          //   `${key}: ${JSON.stringify(value)}`
-          // )
+
         }
       })
-      // for (const key in usersList) {
-      //   if (usersList.hasOwnProperty(key)) {
-      //     console.log(`${key} : ${usersList[key]}`)
-      //     console.log(`my total fetched list is 2 ${usersList[key]}`)
-      //   }
-      // }
+
 
       setLeadsFetchedSchData(
         usersListA.sort((a, b) => {
@@ -607,7 +596,6 @@ if(leadDetailsObj.id){
                             Client Details<abbr title="required"></abbr>
                           </label>
                         </div>
-                        {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-green-600"></div> */}
 
                         <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
                       </div>
@@ -622,37 +610,6 @@ if(leadDetailsObj.id){
                       </div>
 
 
-                      {/* <div className="mb-1 space-y-2 w-full text-xs">
-<div className="flex">
-    <div className="inline-block mt-5">
-    <input
-      type="text"
-      id="countryCode"
-      name="countryCode"
-      value={formik.values.countryCode}
-      onChange={(e) => {
-        formik.setFieldValue('countryCode', e.target.value)}}
-      onBlur={formik.handleBlur}
-      className="w-20 bg-grey-lighter text-grey-darker border-l border-t border-b border-[#cccccc] border-r-0 rounded-l-md rounded-tr-none rounded-br-none h-8 px-4"
-    />
-    {formik.errors.countryCode && formik.touched.countryCode && (
-      <div className="text-red-500 text-xs">{formik.errors.countryCode}</div>
-    )}
-     </div>
-
-    <PhoneNoField
-      name="mobileNo"
-      label="Mobile No*"
-      className="input w-full !rounded-none !rounded-r-md"
-      onChange={(value) => {
-        formik.setFieldValue('mobileNo', value.value)
-      }}
-      value={formik.values.mobileNo}
-      options={sourceList}
-    />
-
-</div>
-                      </div> */}
 
 
 <div className=" space-y-1 w-full text-xs">
@@ -722,8 +679,7 @@ Mobile No
     setHours(setMinutes(d, 5), 12),
     setHours(setMinutes(d, 59), 23),
   ]}
-  // dateFormat="MMMM d, yyyy"
-  //dateFormat="d-MMMM-yyyy"
+
   dateFormat="MMM dd, yyyy"
   maxDate={new Date()}
 />
@@ -1159,9 +1115,7 @@ Mobile No
                                                 ].includes(Status) && (
                                                   <div className="font-semibold text-[#053219] text-sm  mt- px-[3px] pt-[2px] rounded ">
                                                     {assignedToObj?.label}{' '}
-                                                    {/* {leadDetailsObj?.Status != tempLeadStatus
-  ? `--> ${' '}${tempLeadStatus}`
-  : ''} */}
+
                                                   </div>
                                                 )}
                                               {user?.role?.includes(
@@ -1170,7 +1124,6 @@ Mobile No
                                                 <span className="text-left text-sm">
                                                   {' '}
                                                   {assignedToObj?.label}
-                                                  {/* {assignerName} */}
                                                 </span>
                                               )}
                                             </section>
@@ -1180,9 +1133,7 @@ Mobile No
                                               </div>
                                               <div className="font-semibold text-[#053219] text-sm  mt- px-[3px] pt-[2px] rounded ">
                                                 {currentStatusDispFun(Status)}{' '}
-                                                {/* {leadDetailsObj?.Status != tempLeadStatus
-? `--> ${' '}${tempLeadStatus}`
-: ''} */}
+
                                               </div>
                                             </section>
                                           </div>
@@ -1264,10 +1215,7 @@ Mobile No
                                           ></div>
                                         </div>
                                         <span className="font-bodyLato text-[#867777] text-xs mt-2">
-                                          {/* <HighlighterStyle
-searchKey={searchKey}
-source={row.Source.toString()}
-/> */}
+
 
                                           {Source?.toString() || 'NA'}
                                         </span>
@@ -1294,7 +1242,6 @@ source={row.Source.toString()}
    >
      Reset
    </button>
-   {/* bg-green-700 */}
    <button
      className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
      type="submit"
@@ -1317,7 +1264,6 @@ source={row.Source.toString()}
                                  >
                                    Reset
                                  </button>
-                                 {/* bg-green-700 */}
                                  <button
                                    className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
                                    type="submit"

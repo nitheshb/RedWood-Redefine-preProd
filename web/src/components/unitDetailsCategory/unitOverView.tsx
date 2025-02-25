@@ -75,38 +75,7 @@ const UnitOverView = ({ data }) => {
 
 
         </div>
-        {/* <div className="w-full border-b border-[#ebebeb] mt-4"></div> */}
-        {/* <div className=" w-full  pt-1 font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4 grid grid-cols-3 gap-5">
-        {' '}
-        <section>
-          <span className="font-thin   font-bodyLato text-[9px]  py-[6px]">
-            Created On
-            <span className="text-[#867777] ck ml-2">
-           { {customerDetails?.customerName1}}
-            </span>
-          </span>
-        </section>
-        <section>
-          <span className="font-thin   font-bodyLato text-[9px]  py-[6px]">
-            Updated On :
-            <span className="text-[#867777] ck ml-2">
-              {stsUpT === undefined
-                ? 'NA'
-                : prettyDateTime(stsUpT) || 'NA'}
-            </span>
-          </span>
-        </section>
-        <section>
-          <span className="font-thin text-[#867777]   font-bodyLato text-[9px]  py-[6px]">
-            Assigned On
-            <span className="text-[#867777] ck ml-2">
-              {assignT != undefined
-                ? prettyDateTime(assignT)
-                : prettyDateTime(Date)}
-            </span>
-          </span>
-        </section>
-      </div> */}
+
       </div>
     </div>
   )

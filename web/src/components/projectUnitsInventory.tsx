@@ -79,7 +79,6 @@ const ProjectsUnitInventory = ({
             <div className="flex items-center flex-shrink-0  px-0  pl-0 border-b border-grey  mb-2">
               <Link
                 className="flex items-center"
-                // to={routes.projectEdit({ uid })}
               >
                 <img className="w-16 h-16" alt="" src="/apart.svg"></img>
                 <span className="relative z-10 flex items-center w-auto text-3xl font-bold leading-none pl-0 mt-[18px]">
@@ -92,7 +91,6 @@ const ProjectsUnitInventory = ({
           <section className="grid justify-center md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-7 my-10 ">
             {projects.length > 0 ? (
               projects.map((project, i) => (
-                // <span key={i}>{project?.projectName}</span>
                 <>
                   <div
                     key={i}
@@ -127,112 +125,18 @@ const ProjectsUnitInventory = ({
                           </div>
                         </div>
                       </div>
-                      {/* <div className="text-center mt-2 mb-4">
-                        <div className="flex justify-center lg:pt-2 pt-2 pb-0">
-                          <div className="p-3 text-center">
-                            <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                              3,360
-                            </span>
-                            <span className="text-sm text-slate-400">
-                              Phases
-                            </span>
-                          </div>
-                          <div className="p-3 text-center">
-                            <span className="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                              2,454
-                            </span>
-                            <span className="text-sm text-slate-400">
-                              Available Units
-                            </span>
-                          </div>
-
-                        </div>
-                      </div> */}
+    
                     </div>
                   </div>
                 </>
 
-                // <ProjectsMHomeBody
-                //   key={project.uid}
-                //   project={project}
-                //   onSliderOpen={() => {
-                //     // setProject(project)
-                //     // setIsEditProjectOpen(true)
-                //   }}
-                //   isEdit={false}
-                // />
+
               ))
             ) : (
               <DummyBodyLayout />
             )}
           </section>
-          {/* <div className="grid grid-cols-1 gap-7 mt-10">
-            <span>
-              <div
-                className="drop-shadow-md min-w-full z-10 flex flex-col  max-w-md p-4 mx-auto my-0 rounded-lg "
-                style={{ backgroundColor: '#f3f5ff' }}
-              >
-                <div className="flex items-center flex-row px-0  pl-0 mb-2 ">
-                  <div className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 ">
-                    {'Payslips'}
-                  </div>
-                </div>
-
-                <div className="relative z-10 flex items-center w-auto text-md  text-gray-500 leading-none pl-0 ml-1 mt-1 ">
-                  {'This gets generated after 10 days of salary credit'}
-                </div>
-                <ul className="flex-1 p-0 mt-8 ml-2 mr-2  border   rounded-md leading-7 text-gray-900  border-gray-200">
-                  {valueFeedData.map((data, i) => {
-                    return (
-                      <li
-                        key={i}
-                        className="flex justify-between px-4 py-1 w-full mb-2  font-semibold text-left border-dotted border-b border-gray-300 "
-                      >
-                        <span className="inline-flex">
-                          <span className="text-[16px]    text-blue-900">
-                            {' '}
-                            {data.k}
-                          </span>
-                        </span>
-
-                        <div
-                          className="relative flex flex-col items-center group"
-                          style={{ alignItems: 'end' }}
-                        >
-                          <div
-                            className="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex"
-                            style={{ alignItems: 'end', width: '300px' }}
-                          >
-                            <span
-                              className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-                              style={{
-                                color: 'black',
-                                background: '#e2c062',
-                                maxWidth: '300px',
-                              }}
-                            ></span>
-                            <div
-                              className="w-3 h-3  -mt-2 rotate-45 bg-black"
-                              style={{
-                                background: '#e2c062',
-                                marginRight: '12px',
-                              }}
-                            ></div>
-                          </div>
-                          <span className="text-[16px] font-medium text-gray-900">
-                            <DownloadIcon
-                              className="h-5 w-5 mr-1 mt-1"
-                              aria-hidden="true"
-                            />
-                          </span>
-                        </div>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            </span>
-          </div> */}
+         
         </div>
       </section>
       <SiderForm

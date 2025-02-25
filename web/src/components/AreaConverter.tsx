@@ -11,12 +11,7 @@ export const AreaConverter = ({ formik, hideField, fieldName,textPrimaryName, te
     secondaryUnit,
     formik,
   }) => {
-    // const primaryValue = primary ? sqmtConverter(primary, primaryUnit) : 0
-    // const secondaryValue = secondary
-    //   ? sqmtConverter(secondary, secondaryUnit)
-    //   : 0
-    // const value = primaryValue + secondaryValue
-    // value && formik.setFieldValue(fieldName, value) && hideField(false)
+
     const primaryValue = formik.values[textPrimaryName] 
     ? sqmtConverter(formik.values[textPrimaryName], formik.values[dropDownPrimaryName]) 
     : 0
@@ -35,18 +30,14 @@ export const AreaConverter = ({ formik, hideField, fieldName,textPrimaryName, te
         Sqmt Converter
       </label>
       <div className="">
-        {/* <div className="basis-1/4 mr-2">
-          <TextField label="" name="areaTextPrimary" type="text" />
-        </div> */}
+   
         <MuiTextField
 
 
 id={fieldName}
-// ... other props ...
 name={textPrimaryName}
 value={formik.values[textPrimaryName]}
 onChange={formik.handleChange}
-          //id="area"
           className={`w-[100%] bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 p-0 `}
           size="small"
           InputProps={{
@@ -78,26 +69,8 @@ onChange={formik.handleChange}
             ),
           }}
           label=""
-          //name="areaTextPrimary"
           type="text"
-          // sx={{
-          //   '& .MuiOutlinedInput-root': {
-          //     '& fieldset': {
-          //       borderRight: 'none',
-          //       borderRadiusRight: '0px',
-          //     },
-          //     '&:hover fieldset': {
-          //       borderRight: 'none',
-          //       borderRadiusRight: '0px',
-          //     },
-          //     '&.Mui-focused fieldset': {
-          //       borderRight: 'none',
-          //       borderRadiusRight: '0px',
-          //     },
-          //   },
-          // }}
-          //value={formik.values.areaTextPrimary}
-          //onChange={formik.handleChange}
+
         />
         <MuiTextField
 
@@ -110,18 +83,14 @@ value={formik.values[textSecondaryName]}
 onChange={formik.handleChange}
 
         
-          //id="area"
           className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10  mt-1 p-0`}
           size="small"
           InputProps={{
             style: {
               height: '2rem',
-              // paddingLeft: '7px',
               padding: '0px',
               margin: '0px',
-              // background: 'red'
-              // background: '#E5E7EB',
-              // width: '200px',
+        
             },
             endAdornment: (
               <InputAdornment
@@ -148,26 +117,8 @@ onChange={formik.handleChange}
             ),
           }}
           label=""
-          // sx={{
-          //   '& .MuiOutlinedInput-root': {
-          //     '& fieldset': {
-          //       borderLeft: 'none',
-          //       borderRadiusLeft: '0px',
-          //     },
-          //     '&:hover fieldset': {
-          //       borderLeft: 'none',
-          //       borderRadiusLeft: '0px',
-          //     },
-          //     '&.Mui-focused fieldset': {
-          //       borderLeft: 'none',
-          //       borderRadiusLeft: '0px',
-          //     },
-          //   },
-          // }}
-          //name="areaTextSecondary"
+
           type="text"
-          //value={formik.values.areaTextSecondary}
-          //onChange={formik.handleChange}
         />
       </div>
       <button

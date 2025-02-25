@@ -22,11 +22,6 @@ import { setHours, setMinutes } from 'date-fns'
 
 import { useSnackbar } from 'notistack'
 
-// interface iToastInfo {
-//   open: boolean
-//   message: string
-//   severity: AlertColor
-// }
 const people = [
   { name: 'Priority 1' },
   { name: 'Priority 2' },
@@ -176,7 +171,6 @@ export default function TransactionUpdateSideView({
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             createAttach(orgId, url, by, file.name, id, attachType)
             console.log('file url i s', url)
-            //  save this doc as a new file in spark_leads_doc
           })
         }
       )
@@ -185,7 +179,6 @@ export default function TransactionUpdateSideView({
     }
   }
   const updateTnxStatus = (status, id) => {
-    // const data = {status, id}
     const data = transactionData
     data.Uuid = data?.unit_id
     data.status = status
@@ -219,11 +212,7 @@ console.log('status', status);
 
 
 
-    // if(data?.unit_id === 'wallet'){
-    //   updateWalletTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
-    // }else{
-    //   updateTransactionStatus(orgId,data, user?.email,  enqueueSnackbar )
-    // }
+ 
   }
 
   useEffect(() => {
@@ -365,8 +354,7 @@ console.log('status', status);
                                   border-green-700 transition
                                    px-5  text-sm shadow-sm font-medium tracking-wider text-black rounded hover:shadow-lg hover:bg-green-500"
             onClick={() => {
-              // setActionMode('unitBookingMode')
-              // updateTnxStatus('Failed', transactionData?.id, user)
+       
 
               setRejection(!rejection)
               if (rejection && rejectionReason !== '') {
@@ -374,11 +362,9 @@ console.log('status', status);
               }
 
             }}
-            // disabled={loading}
           >
             Reject
           </button>
-          {/* #E06349 */}
           <button
             className="mb-2 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-green-700
                                   bg-green-700
@@ -388,12 +374,9 @@ console.log('status', status);
                                   border-green-700 transition
                                    px-5  text-sm shadow-sm font-medium tracking-wider text-white rounded hover:shadow-lg hover:bg-green-500"
             onClick={() => {
-              // setActionMode('unitBookingMode')
-              // update the transaction details along with the apporver deatils and comments
-              // Increment the reviewed cost and decrement the unReviewed
+
               updateTnxStatus('received', transactionData?.id)
             }}
-            // disabled={loading}
 
           >
             Received
