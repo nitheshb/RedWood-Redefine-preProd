@@ -12,7 +12,7 @@ import { useLocation } from '@redwoodjs/router'
 
 import {
   plotTypeList,
-  possessionStatusList,
+  inventorytypeList,
   releaseStausList,
   unitTypeList,
 } from 'src/constants/projects'
@@ -414,7 +414,7 @@ const AddUnit = ({
 
       release_status,
       mortgage_type,
-      possession_status,
+      inventory_type,
       landOwnerName,
       investorName,
       sharingType,
@@ -475,7 +475,7 @@ const AddUnit = ({
       status: status,
       release_status: release_status,
       mortgage_type: mortgage_type,
-      possession_status: possession_status,
+      inventory_type: inventory_type,
       landOwnerName: landOwnerName,
       investorName: investorName,
       sharingType: sharingType,
@@ -589,7 +589,7 @@ const AddUnit = ({
 
       release_status,
       mortgage_type,
-      possession_status,
+      inventory_type,
       landOwnerName,
       investorName,
       sharingType,
@@ -640,7 +640,7 @@ const AddUnit = ({
       status: status,
       release_status: release_status,
       mortgage_type: mortgage_type,
-      possession_status: possession_status,
+      inventory_type: inventory_type,
       landOwnerName: landOwnerName,
       investorName: investorName,
       sharingType: sharingType,
@@ -750,7 +750,7 @@ const AddUnit = ({
                 status: unitDetails?.status || '',
                 release_status: unitDetails?.release_status || '',
                 mortgage_type: unitDetails?.mortgage_type || '',
-                possession_status: unitDetails?. possession_status || '',
+                inventory_type: unitDetails?. inventory_type || '',
 
 
                
@@ -1463,21 +1463,34 @@ const AddUnit = ({
                                 }}
                               />
                             </div>
-                            <div className="w-full flex flex-col mb-3">
+                            {/* <div className="w-full flex flex-col mb-3">
                               <CustomSelect
-                                name="possession_status"
-                                label="Possession Status"
+                                name="inventory_type"
+                                label="Inventory Type"
                                 className="input mt-"
                                 onChange={(value) => {
                                   formik.setFieldValue(
-                                    'possession_status',
+                                    'inventory_type',
                                     value.value
                                   )
                                 }}
-                                value={formik.values.possession_status}
+                                value={formik.values.inventory_type}
                                 options={possessionStatusList}
                               />
-                            </div>
+                            </div> */}
+                            <div className="w-full flex flex-col mb-3">
+  <CustomSelect
+    name="inventory_type"
+    label="Inventory Type"
+    className="input mt-"
+    onChange={(value) => {
+      formik.setFieldValue('inventory_type', value.value);
+    }}
+    value={formik.values.inventory_type}
+    options={inventorytypeList}
+  />
+</div>
+
                           </div>
                         </section>
                       </section>

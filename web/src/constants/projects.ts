@@ -257,10 +257,10 @@ export const releaseStausList = [
 ]
 
 
-export const possessionStatusList = [
-  { label: 'Possession Status', value: '' },
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
+export const inventorytypeList = [
+  { label: 'Inventory Type', value: '' },
+  { label: 'MAA', value: 'maa' },
+  { label: 'SUBHA', value: 'subha' },
 
 ]
 
