@@ -1472,7 +1472,7 @@ export default function UnitFullSummary({
               <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.sharingType}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.sharing}</div>
               <div className="text-xs   font-medium  text-[#949494]">Sharing</div>
             </div>
           </div>

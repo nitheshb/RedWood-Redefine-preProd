@@ -975,6 +975,8 @@ const EnhancedTableToolbar = (props) => {
             Katha_no: data['Katha_no'] || '',
             survey_no: data['survey_no'] || '',
             landOwnerName: data['landOwnerName'] || '',
+            release_status: data['release_status']?.toLowerCase()|| '',
+            mortgage_type: data['mortgage_type']?.toLowerCase() || '',
             T_total: newTotal,
             T_balance: T_balance,
             T_received: data['T_received'] || 0,
@@ -1038,7 +1040,8 @@ const EnhancedTableToolbar = (props) => {
                 label:  data?.marriedStatus1 ||'Single',
               },
               pincode1: '',
-              co_Name2: data['co_Name2'] ||'',
+              // co_Name2: data['co_Name2'] ||'',
+              co_Name1: data['co_Name2'] ||'',
               city1: '',
               address1: data['address2'] || '',
               phoneNo3: '',
@@ -1058,7 +1061,7 @@ const EnhancedTableToolbar = (props) => {
                 label: data?.relation2?.toUpperCase() || 'S/O',
                 value: data?.relation2?.toUpperCase() || 'S/O',
               },
-              dob1: data['dob1'],
+              dob1: data['dob2'],
               occupation1: '',
               countryCode1: '',
               customerName1: data['customerName2'],
@@ -1555,6 +1558,9 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toLocaleString('en-US'),
         },
+
+
+        
         {
           id: 'area_sqm',
           label: 'Plot Area*(Sq.m)',
@@ -1902,6 +1908,16 @@ export default function LfileuploadTableTemplate({
           align: 'left',
           format: (value) => value.toLocaleString('en-US'),
         },
+
+        
+        {
+          id: 'construct_area',
+          label: 'BUA (sqft)*',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+
         {
           id: 'area_sqm',
           label: 'Plot Area*(Sq.m)',
@@ -2108,6 +2124,43 @@ export default function LfileuploadTableTemplate({
         {
           id: 'unitStatus',
           label: 'Unit Status',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'survey_no',
+          label: 'Survey No',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+
+        {
+          id: 'Katha_no',
+          label: 'Katha No',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+
+        {
+          id: 'PID_no',
+          label: 'PID No',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'release_status',
+          label: 'Release Status*',
+          minWidth: 10,
+          align: 'left',
+          format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+          id: 'mortgage_type',
+          label: 'Mortgage Type*',
           minWidth: 10,
           align: 'left',
           format: (value) => value.toLocaleString('en-US'),
