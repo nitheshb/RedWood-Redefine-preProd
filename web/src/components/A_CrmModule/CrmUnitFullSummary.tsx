@@ -31,6 +31,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { db, storage } from 'src/context/firebaseConfig'
 import {
   prettyDate,
+  prettyDateTime,
   timeConv,
 } from 'src/util/dateConverter'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
@@ -700,8 +701,8 @@ export default function UnitFullSummary({
   const events = [
     { event: 'Booked', key: 'booked_on' },
     { event: 'Allotment', key: 'alloted_on' },
-    { event: 'Agreement', key: 'agreement_on' },
-    { event: 'Registered', key: 'registered_on' },
+    { event: 'Agreement', key: 'ats_date' },
+    { event: 'Registered', key: 'sd_date' },
     { event: 'Possession', key: 'possession_on' },
   ];
 
@@ -779,9 +780,9 @@ export default function UnitFullSummary({
 
 
   return (
-    //bg-[#F9F9FA] 
+    //bg-[#F9F9FA]
     <div
-      className={`bg-[#fff]    rounded-md h-screen      `} 
+      className={`bg-[#fff]    rounded-md h-screen      `}
     >
 <section className="flex flex-row-reverse	">
     <div className='w-full'>
@@ -934,7 +935,7 @@ export default function UnitFullSummary({
                                 </td>
                                 <td className="px-5 py-5 bg-white text-sm">
                                   <>
-              
+
 
                                     <DownloadIcon
                                       onClick={() => downloadFile(dat.url)}
@@ -1091,7 +1092,7 @@ export default function UnitFullSummary({
         </>
       </div>
 
-      
+
 {selFeature === 'applicant_info' && (
   <>
     {!openApplicantEdit && (
@@ -1354,7 +1355,7 @@ export default function UnitFullSummary({
     </div>
 
 
-    
+
     <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
       <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
         <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
@@ -1487,7 +1488,7 @@ export default function UnitFullSummary({
       {/* box 6 */}
 
 
-    
+
 
 
     </div>
@@ -1612,7 +1613,7 @@ export default function UnitFullSummary({
             assets={selCustomerPayload?.assets}
             totalIs={totalIs}
             unitTransactionsA={unitTransactionsA}
-            
+
           />
         </div>
       )}
@@ -1846,27 +1847,27 @@ export default function UnitFullSummary({
                 className="mr-2 ml-2 text-sm font-bodyLato"
                 role="presentation"
               >
-                <div 
+                <div
                   className={`flex items-center gap-3 text-gray-500 hover:bg-gray-50 p-2 rounded-lg cursor-pointer w-60 ${
                     selFeature === d.val ? 'bg-gray-100' : ''
                   }`}
                   onClick={() => setFeature(d.val)}
                 >
-                  <span 
+                  <span
                     className={`hover:text-[#484848] ${
                       selFeature === d.val ? 'text-[#484848]' : 'text-gray-500'
                     }`}
                   >
-      
+
                     {React.cloneElement(d.icon, {
                     className: "w-5 h-5",
                     fill: "none",
-                    stroke: selFeature === d.val ? "#484848" : "#A6A6A6", 
-                    strokeWidth: 1.5, 
-                    
+                    stroke: selFeature === d.val ? "#484848" : "#A6A6A6",
+                    strokeWidth: 1.5,
+
                      })}
 
-                     
+
                   </span>
                   <button
                     className={`inline-block  mt-1 mr-2 py-1  text-sm font-medium text-center rounded-lg border-b-2 hover:text-[#484848] border-transparent ${

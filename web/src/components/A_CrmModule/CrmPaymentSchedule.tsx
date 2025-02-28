@@ -271,7 +271,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
 
                         <td className="text-[10px] text-center  font-bold text-[#6A6A6A] bg-[#fff]">
                           <span
-           
+
                           >
                             <div className="">
                               <Switch
@@ -314,7 +314,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
                       <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px]leading-none px-2 ">
-                        ₹{unitTotal?.toLocaleString('en-IN')}
+                        ₹{selCustomerPayload?.T_total?.toLocaleString('en-IN')}
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
@@ -326,7 +326,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                       <section className="py-1 d-md font-semibold text-[#6A6A6A] text-[12px] leading-none px-2 ">
                       </section>
                     </th>
- 
+
                   </tr>
                 </tbody>
               </table>

@@ -330,7 +330,7 @@ export function MultipleFileUploadField({
               (row['Unit No.*'] != '' && row['Unit No.*'] != undefined)
             )
           })
-      
+
           const serialData = await Promise.all(
             clean1.map(async (dRow) => {
               const foundLength = await checkIfUnitAlreadyExists(
@@ -774,6 +774,9 @@ export function MultipleFileUploadField({
                   }
                   if (x === 'club_house_emenities') {
                     dataObj.charges = Number(dRow['Club House'] || 0)
+                  }
+                  if (x === 'garden_area_cost') {
+                    dataObj.charges = Number(dRow['Garden Area Cost'] || dataObj.charges ||  0)
                   }
                   return dataObj
                 })

@@ -59,10 +59,11 @@ export function prettyDate(d) {
     'Dec',
   ]
 
+ 
   return (
-    months[date.getUTCMonth()] + '-' +
-    date.getUTCDate() + '-' +
-    date.getUTCFullYear()
+    months[date.getMonth()] + '-' +
+    date.getDate() + '-' +
+    date.getFullYear()
   )
   }else{
     'NA'

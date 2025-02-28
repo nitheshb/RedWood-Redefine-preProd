@@ -523,7 +523,7 @@ const EnhancedTableToolbar = (props) => {
           )
           return dataObj
         })
-        const partD = constructOtherChargesObj
+        let partD = constructOtherChargesObj
 
        const partB1 =       projectDetails[0]?.additonalChargesObj?.map( (dataObj, inx) => {
 
@@ -604,22 +604,25 @@ const EnhancedTableToolbar = (props) => {
         console.log('my additional charges', data['unite_no'], partB)
         // part D
 
-        const partD0 = constructOtherChargesObj?.map(
+         partD = constructOtherChargesObj?.map(
           (data4, inx) => {
             const x1 = data4?.component?.value
-            // if (x1 === 'maintenancecharges') {
-            //   data4.charges = Number(data?.maintenance_cost || 0)
-            // }
-            // if (x1 === 'corpus_charges') {
-            //   data4.charges = Number(data?.corpus_fund || 0)
-            // }
+            if (x1 === 'maintenancecharges') {
+              data4.charges = Number(data?.maintenance_cost ||  data4.charges || 0)
+            }
+            if (x1 === 'corpus_charges') {
+              data4.charges = Number(data?.corpus_fund ||    data4.charges || 0)
+            }
 
-            // if (x1 === 'bescom_bwssb') {
-            //   data4.charges = Number(data?.bescom_bwssb || 0)
-            // }
-            // if (x1 === 'corpus_charges') {
-            //   data4.charges = Number(data?.corpus_fund || 0)
-            // }
+            if (x1 === 'bescom_bwssb') {
+              data4.charges = Number(data?.bescom_bwssb ||    data4.charges || 0)
+            }
+            if (x1 === 'corpus_charges') {
+              data4.charges = Number(data?.corpus_fund  ||    data4.charges|| 0)
+            }
+            if (x1 === 'garden_area_cost') {
+              data4.charges = Number(data?.garden_area_cost || data4.charges || 0)
+            }
 
             const gstPercent1 = Number(data4?.gst?.value) || 0
             return  CalculateComponentTotal(data4,construct_area?.toString()?.replace(',', ''),gstPercent1, data4?.charges)
@@ -785,10 +788,14 @@ const EnhancedTableToolbar = (props) => {
         if(filLegalCharges && filLegalCharges?.length > 0){
           flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
         }
-        console.log('booking advance is', bookingAdvance)
-        if(bookingAdvance && bookingAdvance?.length > 0){
+        console.log('booking advance is',paymentScheduleObj,  bookingAdvance)
+        // if(bookingAdvance && bookingAdvance?.length > 0){
+        //   console.log('booking advance is', bookingAdvance)
+        //   bookingAdvanceCost =bookingAdvance[0]?.percentage || 10
+        // }
+         if(paymentScheduleObj && paymentScheduleObj?.length > 0){
           console.log('booking advance is', bookingAdvance)
-          bookingAdvanceCost =bookingAdvance[0]?.percentage || 10
+          bookingAdvanceCost =paymentScheduleObj[0]?.percentage || 10
         }
 
         plotPs = paymentScheduleObj?.map((d1, inx) => {
@@ -849,6 +856,7 @@ const EnhancedTableToolbar = (props) => {
               z.elgFrom = Timestamp.now().toMillis()
             }
           }
+          z.category = 'plotPS'
 
           return z
         })
@@ -900,9 +908,7 @@ const EnhancedTableToolbar = (props) => {
           )
           return z0
         })
-        console.log(
-          'Plot ps==>', plotPs
-        )
+
 
 
 
@@ -915,10 +921,7 @@ const EnhancedTableToolbar = (props) => {
             (partDTotal || 0)
           // constructionCS
 
-          const categorizedNewPlotPS = plotPs?.map((item) => ({
-            ...item,
-            category: 'plotPS',
-          }))
+          const categorizedNewPlotPS = plotPs
           const categorizedNewConstructPS =
             constructPs?.map((item) => ({
               ...item,
@@ -1560,7 +1563,7 @@ export default function LfileuploadTableTemplate({
         },
 
 
-        
+
         {
           id: 'area_sqm',
           label: 'Plot Area*(Sq.m)',
@@ -1909,7 +1912,7 @@ export default function LfileuploadTableTemplate({
           format: (value) => value.toLocaleString('en-US'),
         },
 
-        
+
         {
           id: 'construct_area',
           label: 'BUA (sqft)*',
