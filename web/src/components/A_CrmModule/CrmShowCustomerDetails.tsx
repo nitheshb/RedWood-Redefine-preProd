@@ -443,11 +443,12 @@ const ShowCustomerDetails = ({
     }
     const secondaryCustomerDetailsObj = {
       customerName2,
-      co_Name2,
+      co_Name2: co_Name2,
+      marital2: marital2,
       phoneNo2,
       email2,
-      dob2,
-      marital2,
+      dob2: dob2,
+      marital1,
       panNo2,
       panDocUrl2: panCard2 || '',
       aadharNo2,

@@ -826,6 +826,9 @@ export function MultipleFileUploadField({
                 survey_no: dRow['Survey No'],
                 landOwnerName: dRow['Land Owner Name'],
 
+                release_status: dRow['Release Status*']?.toLowerCase(),
+                mortgage_type: dRow['Mortgage Type*']?.toLowerCase() || '',
+
                 // status: dRow['Availablity Status'], //filter and send valid values
                 unitStatus: dRow['Unit Status'],
 
