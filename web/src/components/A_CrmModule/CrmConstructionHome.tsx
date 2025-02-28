@@ -285,33 +285,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
   }
 
   useEffect(() => {
-    // if (selCategory === 'manage') {
-    //   setTabHeadFields(DocumentationHeadA)
-    // } else if (selCategory === 'Query') {
-    //   setTabHeadFields(QueriesHeadA)
-    // } else if (selCategory === 'Finance') {
-    //   setTabHeadFields(FinanceHeadA)
-    // } else if (selCategory === 'Legal') {
-    //   setTabHeadFields(LegalHeadA)
-    // } else if (selCategory === 'Construction') {
-    //   setTabHeadFields(ConstructionHeadA)
-    // }
-    // if (selCategory === 'unAssigned_crm') {
-    //   setTableDataA(bookingReviewDummy)
-    //   setTableHeadFieldsA(bookingReviewTableHeadA)
-    // } else if (selCategory === 'agreement_pipeline') {
-    //   setTableDataA(preRegisterDummy)
-    //   setTableHeadFieldsA(perResisterTableHeadA)
-    // } else if (selCategory === 'sd_pipeline') {
-    //   setTableDataA(postRegisterDummy)
-    //   setTableHeadFieldsA(postResisterTableHeadA)
-    // } else if (selCategory === 'queries') {
-    //   setTableDataA(queriesDummy)
-    //   setTableHeadFieldsA(queriesTableHeadA)
-    // } else if (selCategory === 'booked') {
-    //   setTableDataA(bookingReviewDummy)
-    //   setTableHeadFieldsA(bookingReviewTableHeadA)
-    // }
+
   }, [selCategory])
 
   const rowsCounter = (parent, searchKey) => {
@@ -343,11 +317,8 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
           }
           return x
         })
-        // setBoardData
         console.log('my Array data is ', usersListA, crmCustomersDBData)
-        // await serealizeData(usersListA)
 
-        // await setCrmCustomerDBData(usersListA)
         await console.log('my Array data is set it', crmCustomersDBData)
       },
       {
@@ -358,7 +329,6 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
           'cleared',
           'rejected',
           '',
-          // 'booked',
         ],
       },
       () => setCrmCustomerDBData([])
@@ -382,9 +352,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
           }
           return x
         })
-        // setBoardData
         console.log('my Array data is ', usersListA, crmCustomersDBData)
-        // await serealizeData(usersListA)
         usersListA.sort((a, b) => {
           return b?.booked_on || 0 - b?.booked_on || 0
         })
@@ -508,10 +476,8 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                       onChange={(value) => {
                         console.log('changed value is ', value.value)
                         setSelLeadsOf(value)
-                        // formik.setFieldValue('project', value.value)
                       }}
                       value={selLeadsOf?.value}
-                      // options={aquaticCreatures}
                       options={[
                         ...[
                           { label: 'Team Units', value: 'teamunits' },
@@ -525,11 +491,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
               </div>
             </div>
             <div className="items-center justify-between  my-1 bg-white rounded-lg  ">
-              {/* <div>
-                <h2 className="text-lg font-semibold text-gray-900 leading-light py-2 ">
-                  Accounts Transactions Space
-                </h2>
-              </div> */}
+  
 
               <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg flex flex-row justify-between">
                 <ul
@@ -582,8 +544,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                             )}
                             {d.val === 'queries' && <span>{unassignedCo}</span>}
                           </span>
-                          {/* <span className="bg-gray-100 px-2 py-1 rounded-full">
-                          {/* {rowsCounter(leadsFetchedData, d.val).length} */}
+          
                         </button>
                       </li>
                     )
@@ -1052,26 +1013,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                   <section className="font-rubikF flex flex-row w-[100%] justify-between">
                                     <section className="flex flex-col ml-2 mt-[3px] w-[100%]">
                                       <section className="flex flex-row justify-between">
-                                        {/* <section className="flex flex-col">
-                                          <section className="flex flex-row justify-between">
-                                            <span className=" text-[14px] text-black font-[500] ml-[2px]">
-                                              Unit-{unit_no}
-                                              {finData?.unit_type ===
-                                                'apartment' && (
-                                                <span className=" text-[10px] text-black font-[500] ml-[2px]">
-                                                  Block-{finData?.blockId}
-                                                </span>
-                                              )}
-                                              <span className=" text-[10px] text-black font-[500] ml-[2px]">
-                                                Phase-{finData?.phaseId}{' '}
-
-                                              </span>
-                                            </span>
-                                          </section>
-                                          <span className=" text-[12px] text-[#036046] font-[400] ml-[2px]">
-                                            {projName}
-                                          </span>
-                                        </section> */}
+           
                                         <div className="flex flex-row w-full">
                                           <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 min-w-[100px]">
                                             <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
@@ -1116,14 +1058,10 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                       </section>
 
                                       <section className="flex flex-row mt-3  ">
-                                        {/* <span className=" text-[10px] h-[20px]  text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl  mr-1">
-                                          {finData?.unit_type}
-
-                                        </span> */}
+                           
                                         <section>
                                           <span className="  text-[10px] h-[20px]  text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                            {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
+                             
                                             {finData?.area?.toLocaleString(
                                               'en-IN'
                                             )}{' '}
@@ -1134,8 +1072,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                             {finData?.facing}
                                           </span>
                                           <span className=" text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                            {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
+                               
                                             ₹{' '}
                                             {finData?.sqft_rate?.toLocaleString(
                                               'en-IN'
@@ -1147,16 +1084,11 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                           {finData?.assignedToObj?.name ||
                                             'Not Assigned'}
                                         </span>
-                                        {/* <span className=" text-[8px] h-[18px] text-black font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                        Status:{' '}
-                                            {prettyDate(finData?.Date || 0)}
-                                        </span> */}
+                          
                                       </section>
                                     </section>
                                   </section>
-                                  {/* <span className="font-normal text-xs app-color-gray-1">
-                                  {finData?.ph}
-                                </span> */}
+                
                                 </div>
                               </div>
                             </div>
@@ -1436,9 +1368,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                     </div>
                                     <div className="text-zinc-800 text-[20px] font-bold font-['Lato'] tracking-wide">
                                       ₹
-                                      {/* {finData?.T_elgible_balance?.toLocaleString(
-                                          'en-IN'
-                                        )} */}
+                    
                                       {finData?.T_elgible?.toLocaleString(
                                         'en-IN'
                                       )}
@@ -1530,81 +1460,6 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                               </div>
                             </div>
 
-                            {/* <div className=" w-1/4 flex flex-col-reverse ml-3">
-                            <div className="flex flex-wrap  p-1 pl-0 pt-0 pb-0  mb-[16px] bg-[#F1F5F9]">
-                              {[
-
-                                {
-                                  item: 'Payment Schedule',
-                                  status: 'completed',
-                                },
-
-                                {
-                                  item: 'Cost Sheet',
-                                  status: 'completed',
-                                },
-
-
-
-                                {
-                                  item: 'Bank Loan',
-                                  status: 'pending',
-                                },
-                              ].map((dat, i) => (
-                                <span
-                                  key={i}
-                                  className={`pl-2 pr-1 py-[4px] mr-2  text-[#333] bg-[#${
-                                    dat.status === 'completed'
-                                      ? 'F1F5F9'
-                                      : 'F1F5F9'
-                                  }] font-bodyLato text-[10px] flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease`}
-                                >
-                                  {dat?.item}
-                                  {dat?.status === 'completed' && (
-                                    <CheckCircleIcon className="w-4 h-4 ml-1 inline text-[#3EE494]" />
-                                  )}
-                                  {dat?.status === 'pending' && (
-                                    <ShieldExclamationIcon className="w-4 h-4 ml-1 inline text-[#8e544d]" />
-                                  )}
-
-                                </span>
-                              ))}
-                            </div>
-                            <div className="flex flex-row justify-between px-2 py-1  text-black   w-[640px]">
-                              <section>
-                                <span className="font-normal text-sm text-uppercase app-color-gray-1 inline-block max-w-[100px] min-w-[100px] w-[100px] mb-[4px]">
-                                  {finData?.ownerName}
-                                </span>
-                                <span className="font-normal ml-4 text-xs app-color-gray-1 inline-block max-w-[100px] min-w-[100px] w-[100px]">
-                                  {finData?.ph}
-                                </span>
-                              </section>
-                              <section className="inline-block max-w-[100px] min-w-[100px] w-[100px]">
-                                <span className="font-normal ml-6 text-[10px] app-color-gray-1 text-[#b3b3b3]">
-                                  Bal
-                                </span>
-                                <span className="font-normal ml-2 text-xs app-color-gray-1 text-[#F59A4C]">
-                                  {finData?.pending || 0}
-                                </span>
-                              </section>
-                              <section className="inline-block max-w-[400px] min-w-[100px]">
-                                <span className="font-normal ml-6 text-[10px] app-color-gray-1 text-[#b3b3b3]">
-                                  Review
-                                </span>
-                                <span className="font-normal ml-2 text-xs app-color-gray-1">
-                                  {finData?.reviw || 0}
-                                </span>
-                              </section>
-                              <section className="inline-block max-w-[400px] min-w-[100px] text-right">
-                                <span className="font-normal ml-6 text-[10px] app-color-gray-1 text-[#b3b3b3]">
-                                  T Cost
-                                </span>
-                                <span className="font-normal ml-2 text-xs app-color-gray-1 text-right">
-                                  {finData?.Breviw || 0}
-                                </span>
-                              </section>
-                            </div>
-                          </div> */}
                           </section>
                         </section>
                       )
@@ -1645,22 +1500,16 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                   }
                                 >
                                   <section className="font-rubikF flex flex-row">
-                                    {/* <img
-                                      className="w-10 h-10 mr-2"
-                                      alt=""
-                                      src="/apart.svg"
-                                    ></img> */}
+                    
                                     <section className="flex flex-col ml-2 mt-[3px]">
                                       <section className="flex flex-col">
                                         <section className="flex flex-row justify-between">
                                           <span className=" text-[14px] text-black font-[500] ml-[2px]">
-                                            {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
+                                   
                                             Unit-{unit_no}
                                           </span>
                                           <span className=" text-[10px] text-black font-bodyLato font-[600] mt-[2px] ">
-                                            {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
+                            
                                             ₹{' '}
                                             {finData?.plotCS
                                               ?.reduce(function (_this, val) {
@@ -1687,17 +1536,14 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                               'NA'}
                                           </span>
                                           <span className=" text-[10px] text-black font-[400] mt-[2px] ">
-                                            {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
+                                    
                                             12-June-2023
                                           </span>
                                         </section>
                                       </section>
                                     </section>
                                   </section>
-                                  {/* <span className="font-normal text-xs app-color-gray-1">
-                                  {finData?.ph}
-                                </span> */}
+                    
                                 </div>
                               </div>
                             </div>
@@ -1997,7 +1843,6 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                             <div className="">
                               <div className="flex flex-row   ">
                                 <div
-                                  // className="flex flex-col bg-gradient-to-r from-emerald-300 to-cyan-400 text-black p-1 rounded-sm w-[220px] h-[96px]"
                                   className="flex flex-col bg-gradient-to-r from-[#d8daff] to-[#9ae8fd] text-black p-1 rounded-sm w-[220px] h-[96px]"
                                   onClick={() =>
                                     viewTransaction(
@@ -2008,18 +1853,13 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                   }
                                 >
                                   <section className="font-rubikF flex flex-row">
-                                    {/* <img
-                                      className="w-10 h-10 mr-2"
-                                      alt=""
-                                      src="/apart.svg"
-                                    ></img> */}
+                 
                                     <section className="flex flex-col ml-2 mt-[7px]">
                                       <span className=" text-[12px] text-[#036046] font-[400]">
                                         {projName}
                                       </span>
                                       <span className=" text-[14px] text-black font-[500] ">
-                                        {/* {finData?.[`${assets[0]}_unitDetails`]
-                                          ?.unit_no || ''} */}
+                
                                         Unit-{unit_no}
                                       </span>
 
@@ -2032,9 +1872,7 @@ const CrmConstuctionModeHome = ({ leadsTyper }) => {
                                       </span>
                                     </section>
                                   </section>
-                                  {/* <span className="font-normal text-xs app-color-gray-1">
-                                  {finData?.ph}
-                                </span> */}
+          
                                 </div>
                               </div>
                             </div>

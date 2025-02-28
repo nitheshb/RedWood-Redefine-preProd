@@ -266,9 +266,7 @@ const LeadsTransferTableBody = ({
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
 
       <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
-        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3  font-Playfair tracking-wider">
-          {subtitle || title} ({leadsFilA.length || 0})
-        </Dialog.Title> */}
+
         {'Leads'} ({leadsFilA.length || 0})
         <section className="flex flex-row">
           <button className="ml-2 px-3 py-1 rounded-lg bg-transparent text-blue-800 font-bold text-sm">
@@ -293,10 +291,7 @@ const LeadsTransferTableBody = ({
 
 
           <Tooltip title={`Download ${selectedIds.length} Row`}>
-            {/* <IconButton>
-            <FileDownloadIcon />
-            <CSVDownloader />
-          </IconButton> */}
+
 
             <CSVDownloader
               className="mr-6 h-[20px] w-[20px]"
@@ -311,12 +306,7 @@ const LeadsTransferTableBody = ({
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col m-4">
           <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
-            {/* <CustomRadioGroup
-              label="Type"
-              value={selected}
-              options={projectPlans}
-              onChange={setSelected}
-            /> */}
+
             {loadingIcon ? (
               <LogSkelton />
             ) : (
@@ -326,7 +316,6 @@ const LeadsTransferTableBody = ({
                     <th
                       scope="col"
                       className={`text-sm font-medium text-gray-900 px-6 py-4`}
-                      // style={{ display: 'flex', alignItems: 'center' }}
                     >
                       <label
                         htmlFor="selectAllCheckbox"

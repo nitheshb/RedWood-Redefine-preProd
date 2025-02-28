@@ -34,11 +34,9 @@ const CreditNoteSummaryHomePage = ({
     user?.role?.includes(USER_ROLES.ADMIN) ||
     user?.role?.includes(USER_ROLES.SALES_MANAGER)
   const [isImportLeadsOpen, setisImportLeadsOpen] = useState(false)
-  // kanban board
   const [ready, setReady] = useState(false)
   const [boardData, setBoardData] = useState([])
-  // const [showForm, setShowForm] = useState(false)
-  // const [selectedBoard, setSelectedBoard] = useState(0)
+
   const [fetchedUsersList, setfetchedUsersList] = useState([])
   const [isOpened, setIsOpened] = React.useState(false)
   const [dateRange, setDateRange] = React.useState([null, null])
@@ -92,15 +90,6 @@ const CreditNoteSummaryHomePage = ({
 
 
 
-//   useEffect(() => {
-//     setSearchValue(searchVal)
-//   }, [searchVal])
-//   const searchData = useSelector((state: RootStateOrAny) => state.searchData)
-//   useEffect(() => {
-//     Object.keys(searchData).length &&
-//       isClicked &&
-//       selUserProfileF('User Profile', searchData)
-//   }, [searchData, isClicked])
 
 
 
@@ -130,9 +119,7 @@ const CreditNoteSummaryHomePage = ({
           }
           return x
         })
-        // setBoardData
-        // console.log('my Array data is ', usersListA, crmCustomersDBData)
-        // await serealizeData(usersListA)
+  
         console.log('values are',usersListA )
         await setUnitsFetchData(usersListA)
 
@@ -145,7 +132,6 @@ const CreditNoteSummaryHomePage = ({
     return unsubscribe
   }
   useEffect(() => {
-// unitsFetchData
 console.log('values are', unitsFetchData.length, selProjectIs?.uid)
 switch (selProjectIs?.value) {
   case 'allprojects':
@@ -175,37 +161,6 @@ switch (selProjectIs?.value) {
     )
     return unsubscribe
   }
-//   useEffect(() => {
-//     const unsubscribe = getMyProjects(
-//       orgId,
-//       { projAccessA: projAccessA },
-//       (querySnapshot) => {
-//         const projectsListA = querySnapshot.docs.map((docSnapshot) =>
-//           docSnapshot.data()
-//         )
-
-//         projectsListA.map((user) => {
-//           user.label = user.projectName
-//           user.value = user.projectName
-//         })
-//         if (user?.role?.includes(USER_ROLES.ADMIN)) {
-//           setprojectList(projectsListA)
-//         } else {
-//           setprojectList(
-//             projectsListA.filter((d) => projAccessA.includes(d.uid))
-//           )
-//         }
-//       },
-//       (error) => {
-//         console.log('error at bro', error)
-//         setprojectList([])
-//       }
-//     )
-
-//     return unsubscribe
-
-
-//   }, [])
 
 
 
@@ -258,14 +213,8 @@ const handleSort = (key) => {
 
 
 const triggerCollectionsAudit = async () => {
-  // start loader
-  // get all the transactions
-  // loop through each transaction and call updateCrmReportAmountAgree
-  // end loader here
 
-  // 1) start loader
   setLoader(true)
-  // 2) get all the transactions
   getTransactionsDataFun()
 
 }
@@ -304,34 +253,7 @@ const triggerCollectionsAudit = async () => {
             className="
             px-3 py-6"
           >
-            {/* <div className="flex items-center flex-row flex-wrap py-1 pb-5 justify-between">
-              <h2 className="text-lg font-semibold text-black leading-light font-Playfair">
-                Credit Note Summary
-              </h2>
 
-              <div className="flex">
-                <div className=" flex flex-col mr-5  w-40">
-                  <SlimSelectBox
-                    name="project"
-                    label=""
-                    className="input "
-                    onChange={(value) => {
-                      console.log('changed value is ', value.value)
-                      setSelProject(value)
-                      // formik.setFieldValue('project', value.value)
-                    }}
-                    value={selProjectIs?.value}
-                    // options={aquaticCreatures}
-                    options={[
-                      ...[{ label: 'All Projects', value: 'allprojects' }],
-                      ...projectList,
-                    ]}
-                  />
-                </div>
-
-
-              </div>
-            </div> */}
 
 
 
@@ -350,10 +272,8 @@ const triggerCollectionsAudit = async () => {
                     onChange={(value) => {
                       console.log('changed value is ', value.value)
                       setSelProject(value)
-                      // formik.setFieldValue('project', value.value)
                     }}
                     value={selProjectIs?.value}
-                    // options={aquaticCreatures}
                     options={[
                       ...[{ label: 'All Projects', value: 'allprojects' }],
                       ...projectList,

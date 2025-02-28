@@ -156,12 +156,9 @@ const LeadsTransferHome = ({ project }) => {
       const { uid } = user
       getMyLeadsOrAnyUserLeads(uid)
     } else if (selLeadsOf?.value == 'cpleads') {
-      // getCpTeamLeads()
     } else if (selLeadsOf?.value == 'teamleads') {
       if (user?.role?.includes(USER_ROLES.ADMIN)) {
-        // getAdminAllLeads()
       } else {
-        // getMyTeamLeads()
       }
     } else {
       getMyLeadsOrAnyUserLeads(selLeadsOf?.value)
@@ -284,7 +281,7 @@ const LeadsTransferHome = ({ project }) => {
             <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-1">
               <Link
                 className="flex items-center"
-                // to={routes.projectEdit({ uid })}
+         
               >
                 <span className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0">
                   Leads Transfer
@@ -308,16 +305,10 @@ const LeadsTransferHome = ({ project }) => {
                       onChange={(value) => {
                         console.log('changed value is ', value.value)
                         selProjctFun(value)
-                        // formik.setFieldValue('project', value.value)
                       }}
                       value={selLeadsOf?.value}
-                      // options={aquaticCreatures}
                       options={[
-                        // ...[
-                        //   { label: 'Team Leads', value: 'teamleads' },
-                        //   { label: 'My Leads', value: 'myleads' },
-                        //   { label: 'Cp Leads', value: 'cpleads' },
-                        // ],
+
                         ...usersAllList,
                       ]}
                     />
@@ -352,11 +343,7 @@ const LeadsTransferHome = ({ project }) => {
                               val: 'visitdone',
                               match: ['visitdone'],
                             },
-                            // {
-                            //   lab: 'Booked',
-                            //   val: 'booked',
-                            //   match: ['booked'],
-                            // },
+      
                             {
                               lab: 'Not Interested',
                               val: 'notinterested',
@@ -385,71 +372,7 @@ const LeadsTransferHome = ({ project }) => {
                         </div>
                       </div>
                     </div>
-                    {/* <section className="flex flex-row mt-4">
-                      <div className=" rounded px-1 mb-3">
-                        <div>Covered Status</div>
-                        <div className="sm:flex items-center justify-between rounded">
-                          <div className="flex items-center">
-                            {[
-                              {
-                                lab: 'All',
-                                val: 'dept_tasks',
-                                match: ['completed', 'pending'],
-                              },
-                              {
-                                lab: 'New',
-                                val: 'new',
-                                match: ['new'],
-                              },
-                              {
-                                lab: 'Followup',
-                                val: 'followup',
-                                match: ['followup'],
-                              },
-                              {
-                                lab: 'Visit Fixed',
-                                val: 'visitfixed',
-                                match: ['visitfixed'],
-                              },
-                              {
-                                lab: 'Visit Done',
-                                val: 'visitdone',
-                                match: ['visitdone'],
-                              },
-                              {
-                                lab: 'Booked',
-                                val: 'booked',
-                                match: ['booked'],
-                              },
-                              {
-                                lab: 'Not Interested',
-                                val: 'notinterested',
-                                match: ['notinterested'],
-                              },
-                            ].map((d, i) => {
-                              return (
-                                <a
-                                  key={i}
-                                  className="rounded-full focus:outline-none mr-2"
-                                  href="javascript:void(0)"
-                                  onClick={() => setSearchKey(d.match)}
-                                >
-                                  <div
-                                    className={`px-3 rounded-full pt-[2px] pb-[4px] text-[14px]  ${
-                                      searchKey.includes(d.val)
-                                        ? 'bg-gradient-to-r from-violet-200 to-pink-200 scale-105  font-normal'
-                                        : 'hover:text-[#027576] hover:bg-[#E7DDFF] bg-[#F2F7FA] text-gray-800  hover:scale-95 font-light'
-                                    }`}
-                                  >
-                                    {d.lab}
-                                  </div>
-                                </a>
-                              )
-                            })}
-                          </div>
-                        </div>
-                      </div>
-                    </section> */}
+                  
 
 
                   </section>
@@ -469,10 +392,8 @@ const LeadsTransferHome = ({ project }) => {
                       onChange={(value) => {
                         console.log('changed value is ', value.value)
                         setSelLeadTransferTo(value)
-                        // formik.setFieldValue('project', value.value)
                       }}
                       value={selLeadTransferTo?.value}
-                      // options={aquaticCreatures}
                       options={[
                         ...usersList,
                       ]}
@@ -523,17 +444,7 @@ const LeadsTransferHome = ({ project }) => {
           </div>
         </div>
       </section>
-      {/* <SiderForm
-        open={isImportLeadsOpen}
-        setOpen={setisImportLeadsOpen}
-        title={addLeadsTypes}
-        widthClass="max-w-4xl"
-        customerDetails={selUserProfile}
-        unitsViewMode={unitsViewMode}
-        setUnitsViewMode={setUnitsViewMode}
-        setIsClicked={setIsClicked}
 
-      /> */}
     </>
   )
 }

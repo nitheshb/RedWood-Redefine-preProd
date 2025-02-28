@@ -134,12 +134,10 @@ const notInterestOptions = [
   { label: 'just doing property research', value: 'property_research' },
   { label: 'Others', value: 'others' },
 
-  // { label: 'Follow Up', value: 'followup' },
-  // { label: 'RNR', value: 'rnr' },
-  // { label: 'Dead', value: 'Dead' },
+
 ]
 const junktOptions = [
-  // { label: 'Select Reason', value: '' },
+
   { label: 'Phone no invalid', value: 'phone_no_invalid' },
 
   {
@@ -148,13 +146,10 @@ const junktOptions = [
   },
   { label: 'RNR from Long Time', value: 'long_time_rnr' },
 
-  // { label: 'Follow Up', value: 'followup' },
-  // { label: 'RNR', value: 'rnr' },
-  // { label: 'Dead', value: 'Dead' },
+
 ]
 
 const siteVisitFeedbackOptions = [
-  // { label: 'Visit Feedback', value: '' },
   { label: 'Happy', value: 'happy' },
   {
     label: 'Sad',
@@ -165,9 +160,7 @@ const siteVisitFeedbackOptions = [
 
   { label: 'Others', value: 'others' },
 
-  // { label: 'Follow Up', value: 'followup' },
-  // { label: 'RNR', value: 'rnr' },
-  // { label: 'Dead', value: 'Dead' },
+
 ]
 const lookingAtBudgetRange = [
   { label: 'less than 25 lakhs', value: 'less25L', str: 10 },
@@ -222,7 +215,6 @@ export default function LeadProfileSideView({
   const [uploadFile, setUploadFile] = useState()
   const [postPoneToFuture, setPostPoneToFuture] = useState('present')
 
-  // const [leadStatus, setLeadStatus] = useState([])
   const [selFeature, setFeature] = useState('appointments')
   const [myStatus, setMyStatus] = useState('')
   const [tempLeadStatus, setLeadStatus] = useState('')
@@ -268,7 +260,6 @@ export default function LeadProfileSideView({
   const d = new window.Date()
   const [value, setValue] = useState(d)
 
-  // const [startDate, setStartDate] = useState(d)
   const [startDate, setStartDate] = useState(d.getTime() + 60000)
 
   const [selected, setSelected] = useState(people[0])
@@ -291,7 +282,6 @@ export default function LeadProfileSideView({
     projectName: '',
     uid: '',
   })
-  // email formik
   const emailFormik = useFormik({
     initialValues: {
       fromEmail: '',
@@ -310,9 +300,7 @@ export default function LeadProfileSideView({
   const [addTaskCommentObj, setAddTaskCommentObj] = useState({})
   const [addCommentPlusTask, setAddCommentPlusTask] = useState(false)
   const [addCommentTitle, setAddCommentTitle] = useState('')
-  // const [addCommentTime, setAddCommentTime] = useState(
-  //   setHours(setMinutes(d, 30), 16)
-  // )
+
 
   const [addCommentTime, setAddCommentTime] = useState(d.getTime() + 60000)
   const {
@@ -322,7 +310,6 @@ export default function LeadProfileSideView({
 
 
 
-    // Status,
     by,
     CT,
   } = customerDetails
@@ -333,7 +320,6 @@ export default function LeadProfileSideView({
     projectType,
     ProjectId,
     Source,
-    // Status,
 
     Mobile,
     Date,
@@ -373,15 +359,11 @@ export default function LeadProfileSideView({
   }, [optionvalues])
 
   useEffect(() => {
-    //   get lead data by id
     streamLeadDataFun()
   }, [])
 
   useEffect(() => {
-    //   get project Id
-    // add project details
 
-    // projectList
     console.log('my stuff ', selProjectIs?.uid, ProjectId)
 
     const z = projectList.filter((da) => {
@@ -507,27 +489,7 @@ export default function LeadProfileSideView({
     if (fet === 'appoint') {
       return
     }
-    //  else if (fet === 'ph') {
-    //   const unsubscribe = steamLeadPhoneLog(orgId,
-    //     (doc) => {
-    //       console.log('my total fetched list is yo yo 1', doc.data())
-    //       const usersList = doc.data()
-    //       const usersListA = []
 
-    //       Object.entries(usersList).forEach((entry) => {
-    //         const [key, value] = entry
-    //         usersListA.push(value)
-    //         console.log('my total fetched list is 3', `${key}: ${value}`)
-    //       })
-    //       console.log('my total fetched list is', usersListA.length)
-    //       // setLeadsFetchedActivityData(usersListA)
-    //     },
-    //     {
-    //       uid: id,
-    //     },
-    //     (error) => setLeadsFetchedActivityData([])
-    //   )
-    // }
     else {
       let x = []
       if (selFeature != 'timeline') {
@@ -596,7 +558,6 @@ export default function LeadProfileSideView({
     return unsubscribe
   }
   useEffect(() => {
-    // setLeadStatus(Status?.toLowerCase())
   }, [customerDetails])
 
   const setAssigner = (leadDocId, value) => {
@@ -604,9 +565,7 @@ export default function LeadProfileSideView({
     if (assignedTo != value.value) {
       setAssignerName(value.name)
       setAssignedTo(value.value)
-      // save assigner Details in db
       const x = leadDetailsObj?.Status || 'unassigned'
-      // check if there any pending lead with scheduleTime < tomorrow and send count
       const todayTasksIncre = leadSchFetchedData?.filter(
         (d) => d?.sts === 'pending' && d?.schTime < torrowDate
       ).length
@@ -637,7 +596,6 @@ export default function LeadProfileSideView({
           'on_lead_assign',
           'wa',
           'customer',
-          // 'ProjectId',
           projId,
           receiverDetails,
           msgPayload
@@ -647,7 +605,6 @@ export default function LeadProfileSideView({
           'on_reassign',
           'wa',
           'customer',
-          // 'ProjectId',
           projId,
           receiverDetails,
           msgPayload
@@ -656,10 +613,7 @@ export default function LeadProfileSideView({
     }
   }
   const setNewProject = (leadDocId, value) => {
-    // setProjectName(value.projectName)
-    // setProjectId(value.uid)
-    // save assigner Details in db
-    // projectName
+
     const x = {
       Project: value.projectName,
       ProjectId: value.uid,
@@ -667,21 +621,7 @@ export default function LeadProfileSideView({
     setSelProjectIs(value)
     updateLeadProject(orgId, leadDocId, x)
 
-    // const receiverDetails = {
-    //   customerName: Name,
-    //   executiveName: assignerName,
-    //   receiverPhNo: Mobile,
-    // }
-    // getWhatsAppTemplates(
-    //   'on_reassign',
-    //   'wa',
-    //   'customer',
-    //   // 'ProjectId',
-    //   x.ProjectId,
-    //   receiverDetails,
-    //   msgPayload
-    // )
-    // updateLeadAssigTo(leadDocId, value, by)
+
   }
 
   const setShowNotInterestedFun = (scheduleData, value) => {
@@ -695,7 +635,6 @@ export default function LeadProfileSideView({
 
     setShowNotInterested(true)
 
-    // setFeature('appointments')
   }
   const setShowVisitFeedBackStatusFun = (scheduleData, value) => {
     setSelSchGrpO(scheduleData)
@@ -745,15 +684,12 @@ export default function LeadProfileSideView({
       } else if (newStatus === 'booked') {
         setLeadStatus('booked')
         await setTakTitle('Share the Details with CRM team')
-        // await fAddSchedule()
       } else {
         setTakTitle(' ')
       }
     }
 
-    //
-    // updateLeadStatus(leadDocId, newStatus)
-    // toast.success('Status Updated Successfully')
+
   }
 
   const downloadFile = (url) => {
@@ -781,12 +717,7 @@ export default function LeadProfileSideView({
           const [key, value] = entry
           usersListA.push(value)
         })
-        // for (const key in usersList) {
-        //   if (usersList.hasOwnProperty(key)) {
-        //     console.log(`${key} : ${usersList[key]}`)
-        //     console.log(`my total fetched list is 2 ${usersList[key]}`)
-        //   }
-        // }
+
 
         setLeadsFetchedActivityData(usersListA)
       },
@@ -796,7 +727,6 @@ export default function LeadProfileSideView({
       (error) => setLeadsFetchedActivityData([])
     )
 
-    //  lead Schedule list
     steamLeadScheduleLog(
       orgId,
       (doc) => {
@@ -808,30 +738,19 @@ export default function LeadProfileSideView({
         const { staA, staDA } = usersList
         setschStsA(staA)
         setschStsMA(staDA)
-        // delete usersList['staA']
-        // delete usersList['staDA']
+     
         Object.entries(usersList).forEach((entry) => {
           const [key, value] = entry
           if (['staA', 'staDA'].includes(key)) {
             if (key === 'staA') {
-              // setschStsA(value)
             } else if (key === 'staDA') {
-              // sMapStsA = value
             }
           } else {
             usersListA.push(value)
-            // console.log(
-            //   'my total fetched list is 3',
-            //   `${key}: ${JSON.stringify(value)}`
-            // )
+   
           }
         })
-        // for (const key in usersList) {
-        //   if (usersList.hasOwnProperty(key)) {
-        //     console.log(`${key} : ${usersList[key]}`)
-        //     console.log(`my total fetched list is 2 ${usersList[key]}`)
-        //   }
-        // }
+
 
         setLeadsFetchedSchData(
           usersListA.sort((a, b) => {
@@ -899,12 +818,10 @@ export default function LeadProfileSideView({
 
     x.push('pending')
     setschStsA(x)
-    // addSchedulerLog(orgId,id, data)
-    //  get assignedTo Led
+
 
     await addLeadScheduler(orgId, id, data, schStsA, assignedTo)
 
-    // for booked status this startDate might not exists
     if (
       (startDate?.getTime() || Timestamp.now().toMillis() + 10800000) <
       torrowDate
@@ -945,7 +862,6 @@ export default function LeadProfileSideView({
           'on_sitevisit_fix',
           'wa',
           'customer',
-          // 'ProjectId',
           ProjectId,
           receiverDetails,
           msgPayload
@@ -955,7 +871,6 @@ export default function LeadProfileSideView({
           'on_sitevisit_done',
           'wa',
           'customer',
-          // 'ProjectId',
           ProjectId,
           receiverDetails,
           msgPayload
@@ -965,7 +880,6 @@ export default function LeadProfileSideView({
           'on_booking',
           'wa',
           'customer',
-          // 'ProjectId',
           ProjectId,
           receiverDetails,
           msgPayload
@@ -983,7 +897,6 @@ export default function LeadProfileSideView({
     setEditTaskObj({})
     setAddTaskCommentObj({})
     setAddCommentTitle('')
-    // setAddCommentTime('')
     setAddCommentPlusTask(false)
     setTakTitle('')
     setStartDate(setHours(setMinutes(d, 30), 16))
@@ -992,7 +905,6 @@ export default function LeadProfileSideView({
     setShowVisitFeedBackStatus(false)
     setAddSch(false)
     setAddNote(false)
-    // if its not edit mode ignore it
     setLeadStatus(streamCurrentStatus)
     setLoader(false)
   }
@@ -1036,12 +948,7 @@ export default function LeadProfileSideView({
     setTakTitle(data?.notes || '')
     setStartDate(setHours(setMinutes(data?.schTime, 30), 16))
 
-    // const inx = schStsMA.indexOf(data.ct)
-    // const x = schStsA
-    // x[inx] = 'completed'
-    // setschStsA(x)
 
-    // updateSchLog(orgId, id, data.ct, 'completed', schStsA)
   }
   const editTaskFun = (data) => {
     const inx = schStsMA.indexOf(data.ct)
@@ -1080,7 +987,6 @@ export default function LeadProfileSideView({
     if (addCommentPlusTask) {
       await setTakTitle(addCommentTitle)
       await fAddSchedule()
-      // mark current task as done
       await editAddTaskCommentDB(orgId, id, data.ct, 'pending', schStsA, data)
       if (data?.stsType != 'visitfixed') {
         await doneFun(data)
@@ -1091,7 +997,6 @@ export default function LeadProfileSideView({
         doneFun(data)
       }
       if (selType === 'reschedule') {
-        // rescheduleTaskDB(orgId, id, data.ct, 'pending', schStsA, addCommentTime)
         data.schTime = addCommentTime
       }
       await editAddTaskCommentDB(orgId, id, data.ct, 'pending', schStsA, data)
@@ -1128,7 +1033,6 @@ export default function LeadProfileSideView({
 
   const notInterestedFun = async () => {
     await closeAllPerviousTasks('closed by Not-Interested')
-    //3) set status as not interested
     await fAddNotes()
     await getWhatsAppTemplates(
       'on_not_interested',
@@ -1168,14 +1072,8 @@ export default function LeadProfileSideView({
     const pendingTaskAObj = leadSchFetchedData.filter(
       (d) => d?.schTime != undefined && d?.sts === 'pending'
     )
-    // const inx = schStsMA.indexOf(data.ct)
     pendingTaskAObj?.map(async (pendObj) => {
-      //1)add comment on task
-
-      //2) mark the tasks as done
-      //3) set status as not interested
-
-      // 1) add comment on task
+     
       pendObj.comments = [
         {
           c: closingComments,
@@ -1191,7 +1089,6 @@ export default function LeadProfileSideView({
         schStsA,
         pendObj
       )
-      //2) mark the tasks as done
       await doneFun(pendObj)
       if (pendObj?.schTime < torrowDate) {
         await IncrementTastCompletedCount(
@@ -1235,13 +1132,11 @@ export default function LeadProfileSideView({
 
     await setTakTitle('Negotiate with customer')
 
-    // await editAddTaskCommentDB(orgId, id, data.ct, 'pending', schStsA, data)
     closeAllPerviousTasks(`${fbTitle}-${fbNotes}`)
 
     await doneFun(data)
     await fAddSchedule()
 
-    // update status + remarks + fbTitle + fbNotes
     await fAddNotes()
     await setSelSchGrpO({})
 
@@ -1304,13 +1199,11 @@ export default function LeadProfileSideView({
       const { email } = userIsA[0] || []
       return email
     } else {
-      // const getUserDetails =  getUser(emp_id)
       return emp_id
     }
   }
 
   const fAddNotes = async () => {
-    //  make it as notInterested if source is from NotInterestedd Page
     const data = {
       by: user.email,
       type: 'notes',
@@ -1403,7 +1296,6 @@ export default function LeadProfileSideView({
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             createAttach(orgId, url, by, file.name, id, attachType)
             console.log('file url i s', url)
-            //  save this doc as a new file in spark_leads_doc
           })
         }
       )
@@ -1482,34 +1374,7 @@ export default function LeadProfileSideView({
       color: ' bg-violet-500',
     },
   ]
-  // const styles = {
-  //   .blockHead:after {
-  //     color: "#4D81BF",
-  //     borderLeft: "20px solid"
-  //     borderTop: 20px solid transparent;
-  //     borderBottom: 20px solid transparent;
-  //     display: inline-block;
-  //     content: '';
-  //     position: absolute;
-  //     right: -20px;
-  //     top: 0;
-  //   }
-  //   .blockHead {
-  //     backgroundColor: "#4D81BF",
-  //     /*width: 150px; */
-  //     height: "40px",
-  //     lineHeight: "40px",
-  //     display: inline-block;
-  //     position: relative;
-  //   }
-  //   .blocktext {
-  //     color: white;
-  //     fontWeight: bold;
-  //     paddingLeft: 10px;
-  //     fontFamily: Arial;
-  //     fontSize: 11;
-  //   }
-  // }
+ 
   const hoverEffectFun = (id) => {
     setHoverID(id)
   }
@@ -1552,14 +1417,7 @@ export default function LeadProfileSideView({
     <div
       className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
     >
-      {/* <div className="">
-        <div className="p-3 flex justify-between">
-          <span className="text-md mt-1 font-semibold font-Playfair text-xl mr-auto ml-2 text-[#053219] tracking-wide">
-            Lead Details
-          </span>
-          <XIcon className="w-5 h-5 mt-[2px]" />
-        </div>
-      </div> */}
+
       <div className="h-screen overflow-y-auto">
         <div className=" pb-[2px] px-3  mt-0 rounded-xs  bg-[#F2F5F8]">
           <div className="-mx-3 flex  sm:-mx-4 px-3 flex justify-between">
@@ -1567,7 +1425,6 @@ export default function LeadProfileSideView({
               <div className="">
                 <div className="font-semibold text-[#053219]  text-sm  mt-3 mb-1  tracking-wide font-bodyLato">
                   <div className="flex flex-row">
-                    {/* <div className="w-7 h-7 mt-[3px] rounded-full bg-gradient-to-r from-violet-200 to-pink-200 "></div> */}
                     <div className="flex flex-col ml-[6px]">
                       <div className=" flex flex-row">
                         <span className="  text-[16px] uppercase">{Name}</span>
@@ -1630,8 +1487,7 @@ export default function LeadProfileSideView({
                     </div>
                   </div>
                   <div className="font-semibold text-sm text-slate-900 tracking-wide overflow-ellipsis">
-                    {/* {Project} */}
-                    {/* projectList */}
+         
                     <AssigedToDropComp
                       assignerName={selProjectIs?.projectName || Project}
                       id={id}
@@ -1652,22 +1508,15 @@ export default function LeadProfileSideView({
                       >
                         {selProjectIs?.uid?.length > 4 &&
                           (unitsViewMode ? (
-                            // <XIcon
-                            //   className="h-4 w-4  inline text-white"
-                            //   aria-hidden="true"
-                            // />
+            
                             <span className="px-[3px]   text-black  text-[10px] text-[#] font-semibold whitespace-nowrap">
                               {' '}
                               Show Lead
                             </span>
                           ) : (
-                            // <ViewGridIcon
-                            //   className="h-4 w-4 mr-1 mb-[2px] inline text-blue-600"
-                            //   aria-hidden="true"
-                            // />
+               
                             <span className="px-[3px]   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
                               {' '}
-                              {/* Cost sheet  */}
                               Show Units
                             </span>
                           ))}
@@ -1688,11 +1537,9 @@ export default function LeadProfileSideView({
             </div>
             <div
               className="relative flex flex-col  group"
-              // style={{ alignItems: 'end' }}
             >
               <div
                 className="absolute bottom-0 right-0 flex-col items-center hidden mb-6 group-hover:flex"
-                // style={{  width: '300px' }}
                 style={{ zIndex: '9999' }}
               >
                 <span
@@ -1716,10 +1563,7 @@ export default function LeadProfileSideView({
               </div>
               <div className=" flex flex-row ">
                 <span className="font-bodyLato text-[#867777] text-xs mt-2">
-                  {/* <HighlighterStyle
-                            searchKey={searchKey}
-                            source={row.Source.toString()}
-                          /> */}
+          
 
                   {Source?.toString() || 'NA'}
                 </span>
@@ -1798,28 +1642,7 @@ export default function LeadProfileSideView({
               key={i}
               className="font-bodyLato text-sm font-normal px-[2px] py-[1px] mr-1 "
               onClick={() => setStatusFun(id, statusFlowObj.value)}
-              // style={{
-              //   width: '100%',
-              //   height: '32px',
-              //   borderWidth: '3px 10px 3px 3px',
-              //   boxSizing: 'border-box',
-              //   borderStyle: 'solid',
-              //   verticalAlign: 'middle',
-              //   cursor: 'pointer',
-              //   textOverflow: 'ellipsis',
-              //   transition: 'all 250ms ease',
-              //   position: 'relative',
-              //   overflow: 'hidden',
-              //   whiteSpace: 'nowrap',
-              //   borderImage:
-              //     'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2216px%22%20height%3D%2232px%22%20viewBox%3D%220%200%2016%2032%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cdefs%3E%3Cpath%20d%3D%22M0%2C2.99610022%20C0%2C1.34139976%201.3355407%2C0%202.99805158%2C0%20L6.90478569%2C0%20C8.56056385%2C0%2010.3661199%2C1.25756457%2010.9371378%2C2.80757311%20L16%2C16.5505376%20L11.0069874%2C29.2022189%20C10.3971821%2C30.7473907%208.56729657%2C32%206.90478569%2C32%20L2.99805158%2C32%20C1.34227341%2C32%200%2C30.6657405%200%2C29.0038998%20L0%2C2.99610022%20Z%22%20id%3D%22Bg%22/%3E%3C/defs%3E%3Cg%20id%3D%22Bar%22%20stroke%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cmask%20fill%3D%22white%22%20id%3D%22mask%22%3E%3Cuse%20xlink%3Ahref%3D%22%23Bg%22/%3E%3C/mask%3E%3Cuse%20fill%3D%22%232FC6F6%22%20xlink%3Ahref%3D%22%23Bg%22/%3E%3Cpolygon%20id%3D%22Ln%22%20fill%3D%22%232FC6F6%22%20mask%3D%22url%28%23mask%29%22%20points%3D%220%2030%2016%2030%2016%2032%200%2032%22/%3E%3C/g%3E%3C/svg%3E") 3 10 3 3 fill / 1 / 0 repeat',
-              //   borderImage:
-              //     'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2216px%22%20height%3D%2232px%22%20viewBox%3D%220%200%2016%2032%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cdefs%3E%3Cpath%20d%3D%22M0%2C2.99610022%20C0%2C1.34139976%201.3355407%2C0%202.99805158%2C0%20L6.90478569%2C0%20C8.56056385%2C0%2010.3661199%2C1.25756457%2010.9371378%2C2.80757311%20L16%2C16.5505376%20L11.0069874%2C29.2022189%20C10.3971821%2C30.7473907%208.56729657%2C32%206.90478569%2C32%20L2.99805158%2C32%20C1.34227341%2C32%200%2C30.6657405%200%2C29.0038998%20L0%2C2.99610022%20Z%22%20id%3D%22Bg%22/%3E%3C/defs%3E%3Cg%20id%3D%22Bar%22%20stroke%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cmask%20fill%3D%22white%22%20id%3D%22mask%22%3E%3Cuse%20xlink%3Ahref%3D%22%23Bg%22/%3E%3C/mask%3E%3Cuse%20fill%3D%22%23d3d7dc%22%20xlink%3Ahref%3D%22%23Bg%22/%3E%3Cpolygon%20id%3D%22Ln%22%20fill%3D%22%2347E4C2%22%20mask%3D%22url%28%23mask%29%22%20points%3D%220%2030%2016%2030%2016%2032%200%2032%22/%3E%3C/g%3E%3C/svg%3E") 3 10 3 3 fill / 1 / 0 repeat',
-
-              //   color: 'rgb(51, 51, 51)',
-              //   dataBaseColor: '#2fc6f6',
-              // }}
-              //{leadDetailsObj?.Remarks
+              
               style={{
                 ...styleO.normal,
                 ...(statusFlowObj.value === streamCurrentStatus
@@ -1850,74 +1673,9 @@ export default function LeadProfileSideView({
             </span>
           ))}
         </div>
-        {/* <div
-          className="flex flex-row justify-between mb-6 "
-          style={{ flex: '4 0 100%' }}
-        >
-          {StatusListA.map((statusFlowObj, i) => (
-            <div
-              key={i}
-              className="blockHead font-bodyLato text-sm font-normal px-[2px] py-[4px] mr-1 "
-            >
-              <span className="blocktext">{statusFlowObj.label}</span>
-            </div>
-          ))}
-        </div> */}
+       
 
-        {/* <div className="border-b mt-3">
-          <div className="py-2 px-1">
-            <div className="px-3  font-md font-medium text-sm mb-3  text-gray-800">
-              Assigner Details
-            </div>
-            <div className="px-3  flex justify-between">
-              <section>
-                <div className="font-md text-xs text-gray-500 mb-[2]">
-                  Assigned To
-                </div>
-                <div className="font-lg text-sm text-slate-900 min-w-[200%] bg-red-50">
-
-                  <CustomSelect
-                    name="roleName"
-                    label=""
-                    className="input mt-3"
-                    onChange={(value) => {
-                      // formik.setFieldValue('myRole', value.value)
-                      console.log('i was changed', value, usersList)
-                      setAssigner(id, value)
-                    }}
-                    value={assignedTo}
-                    options={usersList}
-                  />
-                </div>
-              </section>
-              <section>
-                <div className="font-md text-xs text-gray-500 mb-[2]">
-                  Assigned On
-                </div>
-
-                <div className="font-lg text-sm text-slate-900">26 July</div>
-              </section>
-            </div>
-
-            <div className="px-3 py-1 mb-3 mt-3 flex justify-between">
-              <div>
-                <div className="font-md text-xs mt-2 text-gray-500 mb-[2]">
-                  Assigned By
-                </div>
-                <div className="font-lg text-sm text-slate-900">
-                  {AssignedBy || 'NA'}
-                </div>
-              </div>
-              <div>
-                <div className="font-md text-xs mt-2 text-gray-500 mb-[2]">
-                  Last Activist
-                </div>
-                <div className="font-lg text-sm text-slate-900">3 days ago</div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
+       
         {unitsViewMode && (
           <>
             <ProjPhaseHome
@@ -1933,10 +1691,7 @@ export default function LeadProfileSideView({
             <section className=" pb-8 pt-1 px-2 mt-[0.5px] rounded-xs bg-[#F2F5F8]">
               <div className="">
                 <div className="">
-                  {/* <div className="font-md font-medium text-xs  text-gray-800">
-                          Notes
-                        </div> */}
-
+                 
                   <div className="flex flex-row justify-between border-gray-200">
                     <ul
                       className="flex   rounded-t-lg border-b mx-2"
@@ -1947,9 +1702,7 @@ export default function LeadProfileSideView({
                       {[
                         { lab: 'Tasks', val: 'appointments' },
                         { lab: 'Notes', val: 'notes' },
-                        // { lab: 'Notes', val: 'notes' },
-                        // { lab: 'Documents', val: 'documents' },
-                        // { lab: 'Phone', val: 'phone' },
+                    
                         { lab: 'Email', val: 'email' },
                         { lab: 'Activity Log', val: 'timeline' },
                       ].map((d, i) => {
@@ -1966,8 +1719,7 @@ export default function LeadProfileSideView({
                               onClick={() => setFeature(d.val)}
                             >
                               {`${d.lab} `}
-                              {/* <span className="bg-gray-100 px-2 py-1 rounded-full">
-                          {/* {rowsCounter(leadsFetchedData, d.val).length} */}
+                            
                             </button>
                           </li>
                         )
@@ -1994,27 +1746,12 @@ export default function LeadProfileSideView({
                     <>
                       <Formik
                         enableReinitialize={true}
-                        // initialValues={{
-                        //   name: customerDetailsTuned?.name || '',
-                        //   cDate: customerDetailsTuned?.Date || '',
-                        //   mobileNo: customerDetailsTuned?.phone || '',
-                        //   email: customerDetailsTuned?.email || '',
-                        //   source: customerDetailsTuned?.source || '',
-                        //   project: customerDetailsTuned?.projectName || '',
-                        //   projectId: customerDetailsTuned?.projectId || '',
-                        //   assignedTo: customerDetailsTuned?.name || '',
-                        //   budget: '20-30L',
-                        //   deptVal: '',
-                        //   myRole: '',
-                        // }}
+                      
                         initialValues={{
                           assetPossesed: {},
                         }}
-                        // validationSchema={validate}
                         onSubmit={(values, { resetForm }) => {
-                          // console.log('ami submitted', values)
-                          // console.log('ami submitted 1', values.assignedTo === '')
-                          // onSubmitFun(values, resetForm)
+                       
                         }}
                       >
                         {(formik) => (
@@ -2033,27 +1770,7 @@ export default function LeadProfileSideView({
                               />
                             </div>
                             <div className="grid grid-cols-2 gap-8 pt-3 mx-3  mt-2">
-                              {/* <div className="mt-2">
-                            <div className="flex justify-between w-11.7/12 m-auto">
-                              <div> Looking at Budget Range*</div>
-                              <div> {`${optionvalues.bstr}%`}</div>
-                            </div>
-                            <CustomSelect
-                              name="bugetRange"
-                              className="input"
-                              onChange={(value) => {
-                                // formik.setFieldValue('source', value.value)
-
-                                setoptionvalues({
-                                  ...optionvalues,
-                                  budget: value.value,
-                                  bstr: value.str,
-                                })
-                              }}
-                              value={optionvalues.budget}
-                              options={lookingAtBudgetRange}
-                            />
-                          </div> */}
+       
                               <div className="mt-2">
                                 <div className="flex justify-between w-11.7/12 m-auto">
                                   <div>Any Existing Banglore Assets ?*</div>
@@ -2064,7 +1781,6 @@ export default function LeadProfileSideView({
                                   label="Existing Asset"
                                   className="input"
                                   onChange={(value) => {
-                                    // formik.setFieldValue('source', value.value)
                                     setoptionvalues({
                                       ...optionvalues,
                                       asset: value.value,
@@ -2085,8 +1801,7 @@ export default function LeadProfileSideView({
                                   label="Purchase Reason"
                                   className="input"
                                   onChange={(value) => {
-                                    // formik.setFieldValue('source', value.value)
-                                    //  setNotInterestType(value.value)
+               
                                     setoptionvalues({
                                       ...optionvalues,
                                       purchase: value.value,
@@ -2106,7 +1821,6 @@ export default function LeadProfileSideView({
                                   name="preferredArea"
                                   className="input"
                                   onChange={(value) => {
-                                    // formik.setFieldValue('source', value.value)
                                     setoptionvalues({
                                       ...optionvalues,
                                       area: value.value,
@@ -2130,7 +1844,6 @@ export default function LeadProfileSideView({
                                 </button>
 
                                 <button
-                                  // onClick={() => fSetLeadsType('Add Lead')}
                                   onClick={() => setFeature('appointments')}
                                   className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-teal-900 hover:text-white  `}
                                 >
@@ -2198,20 +1911,7 @@ export default function LeadProfileSideView({
                           {(formik1) => (
                             <Form>
                               <div className=" form flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
-                                {/*
-                          <div className="w-full flex flex-col mb-3 mt-2">
-                            <CustomSelect
-                              name="source"
-                              label="Not Interested Reason*"
-                              className="input mt-3"
-                              onChange={(value) => {
-                                // formik.setFieldValue('source', value.value)
-                                setNotInterestType(value.value)
-                              }}
-                              value={notInterestType}
-                              options={notInterestOptions}
-                            />
-                          </div> */}
+            
 
                                 <div className="  outline-none border  rounded p-4 mt-4">
                                   <ErrorMessage
@@ -2254,7 +1954,6 @@ export default function LeadProfileSideView({
                                     </span>
                                   </button>
                                   <button
-                                    // onClick={() => fSetLeadsType('Add Lead')}
                                     onClick={() => cancelResetStatusFun()}
                                     className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
                                   >
@@ -2286,14 +1985,7 @@ export default function LeadProfileSideView({
                             {leadNotesFetchedData.map((data, i) => (
                               <section key={i} className="">
                                 <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
-                                  {/* <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-3 w-3 text-blue-600 "
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                            </svg> */}
+                   
                                   <DocumentIcon className=" w-3 h-3" />
                                 </span>
                                 <div className="text-gray-600  m-3 ml-6">
@@ -2356,7 +2048,6 @@ export default function LeadProfileSideView({
                               label="Site Visit Feedback*"
                               className="input mt-3"
                               onChange={(value) => {
-                                // formik.setFieldValue('source', value.value)
 
                                 setNotInterestType(value.value)
                               }}
@@ -2387,7 +2078,6 @@ export default function LeadProfileSideView({
                               <span className="ml-1 ">Save & Whats App</span>
                             </button>
                             <button
-                              // onClick={() => fSetLeadsType('Add Lead')}
                               onClick={() => cancelResetStatusFun()}
                               className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
                             >
@@ -2416,14 +2106,7 @@ export default function LeadProfileSideView({
                             {leadNotesFetchedData.map((data, i) => (
                               <section key={i} className="">
                                 <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
-                                  {/* <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-3 w-3 text-blue-600 "
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                            </svg> */}
+        
                                   <DocumentIcon className=" w-3 h-3" />
                                 </span>
                                 <div className="text-gray-600  m-3 ml-6">
@@ -2489,7 +2172,6 @@ export default function LeadProfileSideView({
                             label="Document Type *"
                             className="input mt-3"
                             onChange={(value) => {
-                              // formik.setFieldValue('source', value.value)
                               setAttachType(value.value)
                             }}
                             value={attachType}
@@ -2524,14 +2206,12 @@ export default function LeadProfileSideView({
                           />
                           <div className="flex flex-row mt-3">
                             <button
-                              // onClick={() => fAddSchedule()}
                               type="submit"
                               className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
                             >
                               <span className="ml-1 ">Upload</span>
                             </button>
                             <button
-                              // onClick={() => fSetLeadsType('Add Lead')}
                               onClick={() => setAttach(false)}
                               className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700  `}
                             >
@@ -2540,7 +2220,6 @@ export default function LeadProfileSideView({
                           </div>
                         </form>
 
-                        {/* <h3> {progress}</h3> */}
                       </div>
                     </div>
                   )}
@@ -2572,7 +2251,6 @@ export default function LeadProfileSideView({
                                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                   Status
                                 </th>
-                                {/* <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"></th> */}
                               </tr>
                             </thead>
                             <tbody>
@@ -2602,13 +2280,7 @@ export default function LeadProfileSideView({
                                     </td>
                                     <td className="px-5 py-5 bg-white text-sm">
                                       <>
-                                        {/* <span className="relative inline px-3 py-1 font-semibold text-red-900 leading-tight">
-                                    <span
-                                      aria-hidden
-                                      className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
-                                    ></span>
-                                    <span className="relative">Approved</span>
-                                  </span> */}
+               
 
                                         <DownloadIcon
                                           onClick={() => downloadFile(dat.url)}
@@ -2723,10 +2395,7 @@ export default function LeadProfileSideView({
                 <>
                   <Formik
                     initialValues={initialState1}
-                    //  validationSchema={validateSchema1}
-                    // onSubmit={(values, { resetForm }) => {
-                    //   console.log('values of form is ', values)
-                    // }}
+       
                   >
                     {(formik2) => (
                       <div className=" h-screen ">
@@ -2745,7 +2414,6 @@ export default function LeadProfileSideView({
                                     } is  not Interested *`}
                                     className="input mt-3"
                                     onChange={(value) => {
-                                      // formik.setFieldValue('source', value.value)
                                       setNotInterestType(value.value)
                                     }}
                                     value={notInterestType}
@@ -2760,7 +2428,6 @@ export default function LeadProfileSideView({
                                     label={`Why customer details are Junk ?`}
                                     className="input mt-3"
                                     onChange={(value) => {
-                                      // formik.setFieldValue('source', value.value)
                                       setJunkReason(value.value)
                                     }}
                                     value={junkReason}
@@ -2776,7 +2443,6 @@ export default function LeadProfileSideView({
                                     label="Sitess Visit Feedback*"
                                     className="input mt-3"
                                     onChange={(value) => {
-                                      // formik.setFieldValue('source', value.value)
                                       setNotInterestType(value.value)
                                     }}
                                     value={notInterestType}
@@ -2813,7 +2479,6 @@ export default function LeadProfileSideView({
                                   </span>
                                 </button>
                                 <button
-                                  // onClick={() => fSetLeadsType('Add Lead')}
                                   onClick={() => cancelResetStatusFun()}
                                   className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
                                 >
@@ -2824,38 +2489,13 @@ export default function LeadProfileSideView({
                           )}
 
                         <div className="font-md font-medium text-xs  ml-2 text-gray-800 flex flex-row justify-between mr-4 py-2">
-                          {/* <section> Schedule</section> */}
                           <section className="flex flex-row py-1">
-                            {/* <div
-                          className="text-blue-600  mr-4  cursor-pointer"
-                          onClick={() => setAddSch(true)}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4 mb-1 inline"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                          </svg>{' '}
-                          <div className="inline boder-b ">Add Task</div>
-                        </div> */}
+                           
 
-                            {/* <SortComp
-                          selFilterVal={selFilterVal}
-                          setSelFilterVal={setSelFilterVal}
-                        /> */}
+     
                           </section>
                           <div className="flex flex-row ">
-                            {/* <div className="font-md font-semibold inline text-wider text-[14px] font-bodyLato text-[#053219]">
-                          {selFilterVal.toUpperCase()} Tasks
-                        </div> */}
+               
 
                             <div className="flex flex-row bg-white rounded-xl border ">
                               <div
@@ -2925,48 +2565,10 @@ export default function LeadProfileSideView({
                      bg-[#516F90]"
                             role="alert"
                           >
-                            {/* {loader && (
-                        <span className="pl-3 pr-3">
-                          {' '}
 
-                          <svg
-                            height="21"
-                            viewBox="0 0 21 21"
-                            width="21"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <g
-                              fill="none"
-                              fillRule="evenodd"
-                              transform="translate(1 1)"
-                            >
-                              <path
-                                d="m9.5.5 9 16h-18z"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="m9.5 10.5v-5"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <circle
-                                cx="9.5"
-                                cy="13.5"
-                                fill="currentColor"
-                                r="1"
-                              />
-                            </g>
-                          </svg>
-                        </span>
-                      )} */}
 
                             <div className=" text-sm font-normal font-bodyLato tight-wider">
-                              {/* <div className=" text-sm font-normal font-bodyLato tight-wider">
-                          Create Task
-                        </div> */}
+            
                               Hey, Plan your{' '}
                               <span className="text-xs  tight-wider ">
                                 {tempLeadStatus.toLocaleUpperCase()}{' '}
@@ -3009,46 +2611,7 @@ export default function LeadProfileSideView({
                                 <Form>
                                   <div className=" form outline-none border  py-4">
                                     <section className=" px-4">
-                                      {/* {['visitfixed'].includes(tempLeadStatus) && (
-                            <div className="flex flex-row  border-b mb-4 ">
-                              <div className=" mb-3 flex justify-between">
-                                <section>
-                                  <span
-                                    className={`cursor-pointer  items-center h-6 px-3 py-1 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                    onClick={() => setTakTitle('Call again')}
-                                  >
-                                    Call again {addSch.toString()}
-                                  </span>
-                                  <span
-                                    className={`cursor-pointer  items-center h-6 px-3 py-1 ml-4 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                    onClick={() =>
-                                      setTakTitle('Get more details')
-                                    }
-                                  >
-                                    Get more details
-                                  </span>
-                                  <span
-                                    className={`cursor-pointer  items-center h-6 px-3 py-1 ml-4 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                    onClick={() => setTakTitle('Book Cab')}
-                                  >
-                                    Book Cab
-                                  </span>
-                                  <span
-                                    className={`cursor-pointer  items-center h-6 px-3 py-1 ml-4 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                    onClick={() =>
-                                      setTakTitle('Share Quotation')
-                                    }
-                                  >
-                                    Share Quotation
-                                  </span>
-                                </section>
-                              </div>
-                            </div>
-                          )} */}
+   
                                       <div className="text-xs font-bodyLato text-[#516f90]">
                                         Task Title
                                         <ErrorMessage
@@ -3058,7 +2621,6 @@ export default function LeadProfileSideView({
                                         />
                                       </div>
                                       <input
-                                        // onChange={setTakTitle()}
                                         autoFocus
                                         name="taskTitle"
                                         type="text"
@@ -3085,7 +2647,6 @@ export default function LeadProfileSideView({
                                             Due Date
                                           </span>
                                           <div className="bg-green   pl-   flex flex-row ">
-                                            {/* <CalendarIcon className="w-4  ml-1 inline text-[#058527]" /> */}
                                             <span className="inline">
                                               <CustomDatePicker
                                                 className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] bg-[#F2F5F8]"
@@ -3120,7 +2681,6 @@ export default function LeadProfileSideView({
                                       <section className="flex">
                                         <button
                                           type="submit"
-                                          // onClick={() => fAddSchedule()}
                                           className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
                                         >
                                           <span className="ml-1 ">
@@ -3132,7 +2692,6 @@ export default function LeadProfileSideView({
                                           </span>
                                         </button>
                                         <button
-                                          // onClick={() => fSetLeadsType('Add Lead')}
                                           onClick={() => cancelResetStatusFun()}
                                           className={`flex mt-2 ml-4 rounded items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
                                         >
@@ -3146,164 +2705,7 @@ export default function LeadProfileSideView({
                             </Formik>
                           </div>
                         )}
-                        {/* {addSch && (
-                    <div className="flex flex-col pt-0 my-10 mx-4 mt-[10px] rounded">
-                      <div className="  outline-none border  rounded p-4">
-                        <div className=" text-sm font-normal">
-                          Set{' '}
-                          <span className="text-xs  text-orange-600">
-                            {tempLeadStatus.toLocaleUpperCase()}{' '}
-                          </span>
-                          Time
-                        </div>
-                        {['visitfixed'].includes(tempLeadStatus) && (
-                          <div className="flex flex-row  border-b mb-4">
-                            <div className=" mb-3 flex justify-between">
-                              <section>
-                                <span
-                                  className={`cursor-pointer  items-center h-6 px-3 py-1 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                  onClick={() => setTakTitle('Call again')}
-                                >
-                                  Call again {addSch.toString()}
-                                </span>
-                                <span
-                                  className={`cursor-pointer  items-center h-6 px-3 py-1 ml-4 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                  onClick={() =>
-                                    setTakTitle('Get more details')
-                                  }
-                                >
-                                  Get more details
-                                </span>
-                                <span
-                                  className={`cursor-pointer  items-center h-6 px-3 py-1 ml-4 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                  onClick={() => setTakTitle('Book Cab')}
-                                >
-                                  Book Cab
-                                </span>
-                                <span
-                                  className={`cursor-pointer  items-center h-6 px-3 py-1 ml-4 mt-1 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full
-                      `}
-                                  onClick={() => setTakTitle('Share Quotation')}
-                                >
-                                  Share Quotation
-                                </span>
-                              </section>
-                            </div>
-                          </div>
-                        )}
-
-                        <textarea
-                          // onChange={setTakTitle()}
-                          value={takTitle}
-                          onChange={(e) => setTitleFun(e)}
-                          placeholder="Schedule Title"
-                          className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded  "
-                        ></textarea>
-                        <div className="flex flex-row mt-1">
-                          <div className="bg-green border  pl-4  rounded flex flex-row mt-2 h-[36px]">
-                            <CalendarIcon className="w-4  ml-1 inline text-[#058527]" />
-                            <span className="inline">
-                              <DatePicker
-                                className=" mt-[7px] pl- px-2  inline text-sm "
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                injectTimes={[
-                                  setHours(setMinutes(d, 1), 0),
-                                  setHours(setMinutes(d, 5), 12),
-                                  setHours(setMinutes(d, 59), 23),
-                                ]}
-                                dateFormat="MMMM d, yyyy h:mm aa"
-                              />
-                            </span>
-                          </div>
-
-                          <div className="flex ml-4 mt-1 h-[36px]">
-                            <Listbox value={selected} onChange={setSelected}>
-                              <div className="relative mt-1">
-                                <Listbox.Button className="relative w-full w-[116px]  h-[36px] py-2 pl-3 pr-10 text-left border bg-white rounded  cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                                  <span className="block truncate">
-                                    {selected.name}
-                                  </span>
-                                  <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                    <SelectorIcon
-                                      className="w-5 h-5 text-gray-400"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                </Listbox.Button>
-                                <Transition
-                                  as={Fragment}
-                                  leave="transition ease-in duration-100"
-                                  leaveFrom="opacity-100"
-                                  leaveTo="opacity-0"
-                                >
-                                  <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                    {people.map((person, personIdx) => (
-                                      <Listbox.Option
-                                        key={personIdx}
-                                        className={({ active }) =>
-                                          `cursor-default select-none relative py-2 pl-10 pr-4 ${
-                                            active
-                                              ? 'text-amber-900 bg-amber-100'
-                                              : 'text-gray-900'
-                                          }`
-                                        }
-                                        value={person}
-                                      >
-                                        {({ selected }) => (
-                                          <>
-                                            <span
-                                              className={`block truncate ${
-                                                selected
-                                                  ? 'font-medium'
-                                                  : 'font-normal'
-                                              }`}
-                                            >
-                                              {person.name}
-                                            </span>
-                                            {selected ? (
-                                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                                <CheckIcon
-                                                  className="w-5 h-5"
-                                                  aria-hidden="true"
-                                                />
-                                              </span>
-                                            ) : null}
-                                          </>
-                                        )}
-                                      </Listbox.Option>
-                                    ))}
-                                  </Listbox.Options>
-                                </Transition>
-                              </div>
-                            </Listbox>
-                          </div>
-                        </div>
-                      </div>
-
-
-                      <div className="flex flex-row mt-4">
-                        <button
-                          onClick={() => fAddSchedule()}
-                          className={`flex mt-2 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
-                        >
-                          <span className="ml-1 ">Add Schedule</span>
-                        </button>
-                        <button
-                          // onClick={() => fSetLeadsType('Add Lead')}
-                          onClick={() => cancelResetStatusFun()}
-                          className={`flex mt-2 ml-4 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700  `}
-                        >
-                          <span className="ml-1 ">Cancel</span>
-                        </button>
-                      </div>
-                    </div>
-                  )} */}
+                      
 
                         {leadSchLoading &&
                           [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
@@ -3341,11 +2743,9 @@ export default function LeadProfileSideView({
                                 className=" mx-2 bg-[#FFF] mb-[1px]  px-3 py-3"
                                 onMouseEnter={() => {
                                   hoverEffectTaskFun(data?.ct)
-                                  // setHover(true)
                                 }}
                                 onMouseLeave={() => {
                                   hoverEffectTaskFun(2000)
-                                  // setHover(false)
                                 }}
                               >
                                 {editTaskObj?.ct === data?.ct ? (
@@ -3362,7 +2762,6 @@ export default function LeadProfileSideView({
                                 ) : null}
                                 <>
                                   {' '}
-                                  {/* header part */}
                                   <LeadTaskDisplayHead
                                     data={data}
                                     setAddTaskCommentObj={setAddTaskCommentObj}
@@ -3373,13 +2772,8 @@ export default function LeadProfileSideView({
                                       setShowVisitFeedBackStatusFun
                                     }
                                   />
-                                  {/* add comment + close & Add New Task section */}
                                   {addTaskCommentObj?.ct === data?.ct && (
-                                    // <input
-                                    //   type="text"
-                                    //   className="block"
-                                    //   placeholder="pastehere"
-                                    // />
+             
                                     <AddLeadTaskComment
                                       closeTask={closeTask}
                                       data={data}
@@ -3408,7 +2802,6 @@ export default function LeadProfileSideView({
                                       d={d}
                                     />
                                   )}
-                                  {/* comments display part */}
                                   {data?.comments?.map((commentObj, k) => {
                                     return (
                                       <li
@@ -3445,7 +2838,6 @@ export default function LeadProfileSideView({
                                       </li>
                                     )
                                   })}
-                                  {/* not interested and visit done stuff */}
                                   {(showNotInterested ||
                                     showVisitFeedBackStatus) &&
                                     selSchGrpO?.ct === data?.ct && (
@@ -3460,7 +2852,6 @@ export default function LeadProfileSideView({
                                               options={notInterestOptions}
                                               value={fbTitle}
                                               onChange={(value) => {
-                                                // formik.setFieldValue('source', value.value)
                                                 setFbTitle(value.value)
                                               }}
                                             />
@@ -3473,7 +2864,6 @@ export default function LeadProfileSideView({
                                               options={siteVisitFeedbackOptions}
                                               value={fbTitle}
                                               onChange={(value) => {
-                                                // formik.setFieldValue('source', value.value)
 
                                                 setFbTitle(value.value)
                                               }}
@@ -3529,7 +2919,6 @@ export default function LeadProfileSideView({
                                                 'on_sitevisit_done',
                                                 'wa',
                                                 'customer',
-                                                // 'ProjectId',
                                                 ProjectId,
                                                 receiverDetails,
                                                 msgPayload
@@ -3542,7 +2931,6 @@ export default function LeadProfileSideView({
                                             </span>
                                           </button>
                                           <button
-                                            // onClick={() => fSetLeadsType('Add Lead')}
                                             onClick={() =>
                                               cancelResetStatusFun()
                                             }
@@ -3555,7 +2943,6 @@ export default function LeadProfileSideView({
                                         </div>
                                       </div>
                                     )}
-                                  {/* footer part */}
                                   {addTaskCommentObj?.ct != data?.ct && (
                                     <LeadTaskFooter
                                       data={data}
@@ -3572,7 +2959,6 @@ export default function LeadProfileSideView({
                           </ol>
                         </div>
 
-                        {/* comments section */}
                       </div>
                     )}
                   </Formik>
@@ -3607,7 +2993,6 @@ export default function LeadProfileSideView({
                           href="#"
                           className="block items-center px-3 sm:flex hover:bg-gray-100 "
                         >
-                          {/* <PlusCircleIcon className="mr-3 mb-3 w-10 h-10 rounded-full sm:mb-0" /> */}
                           {data?.type == 'status' && (
                             <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
                               <svg

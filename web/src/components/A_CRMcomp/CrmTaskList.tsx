@@ -167,13 +167,7 @@ const BoardData = [
     ],
   },
 ]
-// function createGuidId() {
-//   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//     const r = (Math.random() * 16) | 0,
-//       v = c == 'x' ? r : (r & 0x3) | 0x8
-//     return v.toString(16)
-//   })
-// }
+
 const CrmTaskList = ({ leadsTyper }) => {
   const { user } = useAuth()
   const { orgId } = user
@@ -183,11 +177,9 @@ const CrmTaskList = ({ leadsTyper }) => {
     user?.role?.includes(USER_ROLES.SALES_MANAGER)
   const [isImportLeadsOpen, setisImportLeadsOpen] = useState(false)
 
-  // kanban board
   const [ready, setReady] = useState(false)
   const [boardData, setBoardData] = useState(BoardData)
-  // const [showForm, setShowForm] = useState(false)
-  // const [selectedBoard, setSelectedBoard] = useState(0)
+
   const [openUserProfile, setopenUserProfile] = useState(false)
   const [addLeadsTypes, setAddLeadsTypes] = useState('')
   const [selUserProfile, setSelUserProfile] = useState({})
@@ -294,39 +286,9 @@ const CrmTaskList = ({ leadsTyper }) => {
       dragItem
     )
 
-    // updateLeadStatus(
-    //   orgId,
-    //   re.draggableId,
-    //   statusFields[parseInt(re.destination.droppableId)],
-    //   enqueueSnackbar
-    // )
     setBoardData(newBoardData)
   }
 
-  // const onTextAreaKeyPress = (e) => {
-  //   if (e.keyCode === 13) {
-  //     //Enter
-  //     const val = e.target.value
-  //     if (val.length === 0) {
-  //       setShowForm(false)
-  //     } else {
-  //       const boardId = e.target.attributes['data-id'].value
-  //       const item = {
-  //         id: createGuidId(),
-  //         title: val,
-  //         priority: 0,
-  //         chat: 0,
-  //         attachment: 0,
-  //         assignees: [],
-  //       }
-  //       const newBoardData = boardData
-  //       newBoardData[boardId].items.push(item)
-  //       setBoardData(newBoardData)
-  //       setShowForm(false)
-  //       e.target.value = ''
-  //     }
-  //   }
-  // }
 
   const fSetLeadsType = (type) => {
     setAddLeadsTypes(type)
@@ -397,18 +359,17 @@ const CrmTaskList = ({ leadsTyper }) => {
       return unsubscribe
     }
 
-    // await console.log('leadsData', leadsData)
   }
 
   const serealizeData = (array) => {
-    // let newData =
+ 
     const x = [
       'new',
       'review',
       'cleared',
       'rejected',
       '',
-      // 'booked',
+
     ].map((status) => {
       const items = array.filter((data) => data.Status.toLowerCase() == status)
 
@@ -418,8 +379,7 @@ const CrmTaskList = ({ leadsTyper }) => {
   }
 
   const selUserProfileF = (data) => {
-    // setAddLeadsTypes(title)
-    // setisImportLeadsOpen(true)
+
     setSelUserProfile(data)
   }
   return (
@@ -670,20 +630,7 @@ const CrmTaskList = ({ leadsTyper }) => {
                                 <span className="font-normal text-xs app-color-gray-1">
                                   {finData?.[`${assets[0]}_comment`] || '-'}
                                 </span>
-                                {/* <svg
-                                  className="w-6 h-6 app-color-blue-3"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-                                  ></path>
-                                </svg> */}
+  
                               </td>
                             </tr>
                           )

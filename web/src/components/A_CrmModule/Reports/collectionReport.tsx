@@ -122,15 +122,7 @@ export const CustomTooltip = ({ active, payload }) => {
 
 
 
-// const timeSeriesData = [
-//   { time: '12', value: 5, prevValue: 5 },
-//   { time: '13', value: 5, prevValue: 5 },
-//   { time: '14', value: 20, prevValue: 5 },
-//   { time: '15', value: 5, prevValue: 5 },
-//   { time: '16', value: 5, prevValue: 5 },
-//   { time: '17', value: 90, prevValue: 30 },
-//   { time: '18', value: 5, prevValue: 5 },
-// ];
+
 const timeSeriesData = [
   { time: 'Week-1', value: 5, prevValue: 2505 },
   { time: 'Week-2', value: 5, prevValue: 5 },
@@ -200,11 +192,10 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
   const calMonthlyValue = (pId, monthNo, currentYear) => {
     const data = { pId, monthNo, currentYear }
 
-    let totalReceivableValue = 0 // Declare variable to store the total receivable value
+    let totalReceivableValue = 0 
 
     gretProjectionSum(orgId, data)
       .then((payload) => {
-        // Assign totalReceivable from the payload to the variable
         totalReceivableValue = payload
         console.log(
           'Total receivable stored in variable:',
@@ -216,13 +207,11 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
       })
     return totalReceivableValue
 
-    // get values matched to db
   }
 
 
 
-  //const [selCat, setSelCat] = useState("project_collections");
-  //const [dataView, setDataView] = useState("monthly");
+
 
 
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });

@@ -58,21 +58,14 @@ const SalesCompletedTasksBody = ({
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
-        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3  font-Playfair tracking-wider">
-          {subtitle || title} ({leadsFilA.length || 0})
-        </Dialog.Title> */}
+
         {subtitle || title} ({leadsFilA.length || 0})
       </div>
 
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col m-4">
           <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
-            {/* <CustomRadioGroup
-              label="Type"
-              value={selected}
-              options={projectPlans}
-              onChange={setSelected}
-            /> */}
+
             {loadingIcon ? (
               <LogSkelton />
             ) : (

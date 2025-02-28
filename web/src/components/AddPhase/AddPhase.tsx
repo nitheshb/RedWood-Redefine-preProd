@@ -134,8 +134,7 @@ const AddPhase = () => {
         },
       }}
     >
-      {/* <H5>{t('Total Spent')}</H5>
-      <H2 color="primary.main">$682.5</H2> */}
+
 
       <Box
         sx={{

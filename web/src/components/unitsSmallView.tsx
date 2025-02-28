@@ -27,8 +27,7 @@ const UnitsSmallViewCard = ({ kind, feedData, bg,  setSelUnitDetails,
       setBgColor("#fff")
     }else if(["booked", 'agreement_pipeline', 'agreement', 'allotment','possession', 'construction', 'registered'].includes(kind.status)){
       setBgColor("#CCFBF1")
-      // setBgColor("#22c55e29")
-      // setFontColor("#118d57")
+
     }else if(["blocked", 'customer_blocked', 'management_blocked'].includes(kind.status)){
       setBgColor("#e9e9e9")
     }else {
@@ -66,11 +65,7 @@ const UnitsSmallViewCard = ({ kind, feedData, bg,  setSelUnitDetails,
 
           </span>
         </span>
-        {/* <DropCompUnitStatus
-            type={'unitMode'}
-            id={'id'}
-            pickCustomViewer={handleClose}
-          /> */}
+
       </div>
       <div className="flex flex-row justify-between px-2">
         <span className="flex flex-row items-center justify-between mr-2">
@@ -89,12 +84,7 @@ const UnitsSmallViewCard = ({ kind, feedData, bg,  setSelUnitDetails,
 
       </div>
 
-      {/* <SiderForm
-        open={sliderInfo.open}
-        setOpen={handleSliderClose}
-        title={sliderInfo.title}
-        data={sliderInfo.sliderData}
-      /> */}
+
     </div>
   )
 }

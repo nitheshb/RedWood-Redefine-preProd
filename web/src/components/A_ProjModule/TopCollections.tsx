@@ -79,11 +79,7 @@ const TopCollections = () => {
                 dot={false}
                 isAnimationActive={false}
               />
-              {/* <Tooltip
-                contentStyle={{ backgroundColor: '#fff', borderRadius: '5px', border: '1px solid #ddd' }}
-                itemStyle={{ color: '#000' }}
-                formatter={(value) => new Intl.NumberFormat().format(value)}
-              /> */}
+
 
 
 <Tooltip

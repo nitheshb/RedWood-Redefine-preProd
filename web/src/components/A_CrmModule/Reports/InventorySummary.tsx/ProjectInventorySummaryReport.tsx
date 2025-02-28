@@ -216,9 +216,7 @@ console.log('units feed is ', y);
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
-        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3  font-Playfair tracking-wider">
-          {subtitle || title} ({leadsFilA.length || 0})
-        </Dialog.Title> */}
+
          {leadsLogsPayload?.projectName || title} Units-({unitsFeed.length})
         <section className="flex flex-row">
           <section className="flex flex-col border ml-2 py-1  px-4 text-xs  rounded-full">

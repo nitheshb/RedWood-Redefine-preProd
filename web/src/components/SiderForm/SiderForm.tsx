@@ -173,11 +173,7 @@ const SiderForm = ({
                   />
                 )}
                 {(title === 'Create Project' || title === 'Edit Project') && (
-                  // <DialogFormBody
-                  //   title={title}
-                  //   dialogOpen={setOpen}
-                  //   project={data}
-                  // />
+
                   <ProjectDetailsFlowBody
                     title={title}
                     dialogOpen={setOpen}
@@ -190,7 +186,6 @@ const SiderForm = ({
                     title={title}
                     dialogOpen={setOpen}
                     project={data}
-                    // setProject={setProject}
 
                   />
                 )}
@@ -316,22 +311,12 @@ const SiderForm = ({
                 )}
                 {title === 'disp_project_docs' && (
                   <>
-                    {/* <ProjectsDocsListView
-                      title={title}
-                      dialogOpen={setOpen}
-                      pId={pId}
-                      source={'planDiagram'}
-                      myPhase={phaseDetails}
-                      myBlock={myBlock}
-                      projectsList={projectsList}
-                      viewLegalDocData={viewLegalDocData}
-                    /> */}
+
                     <LegalHomeList
                       title={'Finance'}
                       dialogOpen={'false'}
                       data={phaseDetails}
                       source={'projectManagement'}
-                      // setSubView={setSubView}
                       subView={subView}
                       projectDetails={projectDetails}
                       pId={projectDetails?.uid}
@@ -435,12 +420,7 @@ const SiderForm = ({
                     title={title}
                     projectDetails={projectDetails}
                   />
-                  // <ProjPhaseHome
-                  //   projectDetails={projectDetails}
-                  //   leadDetailsObj={undefined}
-                  //   source={undefined}
-                  //   unitDetails={undefined}
-                  // />
+
                 )}
                 {title === 'Additional Charges' && (
                   <AdditionalChargesForm

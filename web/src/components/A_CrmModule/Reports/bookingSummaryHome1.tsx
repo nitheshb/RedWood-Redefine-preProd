@@ -33,11 +33,9 @@ const UnitBookingSummaryHomePage = ({
     user?.role?.includes(USER_ROLES.ADMIN) ||
     user?.role?.includes(USER_ROLES.SALES_MANAGER)
   const [isImportLeadsOpen, setisImportLeadsOpen] = useState(false)
-  // kanban board
   const [ready, setReady] = useState(false)
   const [boardData, setBoardData] = useState([])
-  // const [showForm, setShowForm] = useState(false)
-  // const [selectedBoard, setSelectedBoard] = useState(0)
+
   const [fetchedUsersList, setfetchedUsersList] = useState([])
   const [isOpened, setIsOpened] = React.useState(false)
   const [dateRange, setDateRange] = React.useState([null, null])
@@ -107,7 +105,6 @@ const UnitBookingSummaryHomePage = ({
 
 
   const boot = async () => {
-    // await getProjectsListFun()
     const unsubscribe = await getBookedUnitsByProject(
       orgId,
       async (querySnapshot) => {
@@ -122,9 +119,7 @@ const UnitBookingSummaryHomePage = ({
           }
           return x
         })
-        // setBoardData
-        // console.log('my Array data is ', usersListA, crmCustomersDBData)
-        // await serealizeData(usersListA)
+
         console.log('values are',usersListA )
         await setUnitsFetchData(usersListA)
 
@@ -137,7 +132,6 @@ const UnitBookingSummaryHomePage = ({
     return unsubscribe
   }
   useEffect(() => {
-// unitsFetchData
 console.log('values are', unitsFetchData.length, selProjectIs.uid)
 switch (selProjectIs.value) {
   case 'allprojects':
@@ -221,10 +215,8 @@ switch (selProjectIs.value) {
                     onChange={(value) => {
                       console.log('changed value is ', value.value)
                       setSelProject(value)
-                      // formik.setFieldValue('project', value.value)
                     }}
                     value={selProjectIs?.value}
-                    // options={aquaticCreatures}
                     options={[
                       ...[{ label: 'All Projects', value: 'allprojects' }],
                       ...projectList,

@@ -40,7 +40,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
 
   const [progress, setProgress] = useState(0)
 
-  // const { user } = useContext(AuthContext)
+
 
 
 
@@ -77,24 +77,16 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
           console.log(err)},
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            // createAttach(orgId, url, by, file.name, id, attachType)
             file.url = url
             setCmntFileType(file.name.split('.').pop())
-            // setFiles([...files, file])
 
-            // save it in unit docs table
-
-            // add this to db and update it in unit record
-
-            // updateUnitDocs(orgId, id, file.url, file.name, by)
             console.log('data is ===>', file)
             const x1 = {[`${type}DocUrl`] : url, [`${type}FilName`]: file.name,[`${type}DocUpDate`]: Timestamp.now().toMillis()}
             console.log('data is ===> @@@', data?.type, type, x1)
             updateUnitDocs(orgId,id,'Uploaded',fileName,x1,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
-            // setCommentAttachUrl(url)
             setUplaoding(false)
             return url
-            //  save this doc as a new file in spark_leads_doc
+  
           })
         }
       )
@@ -109,25 +101,18 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
     fetch(imageUrl)
       .then((response) => response.blob())
       .then((blob) => {
-        // Create a temporary anchor element
         const url = window.URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = url
 
-        // Extract the filename from the URL
-        // const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
 
-        // Set the download attribute and filename
         link.setAttribute('download', filename)
         document.body.appendChild(link)
         console.log('fetcher url ', filename)
-        // Simulate a click on the anchor element to start the download
         link.click()
 
-        // Clean up the temporary anchor element
         link.parentNode.removeChild(link)
 
-        // Set the downloaded image URL to display on the page
         setImageUrl(url)
       })
       .catch((error) => {
@@ -170,13 +155,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
                         }}
                       />
                     </div>
-        {/* <button
-          color="gray"
-          className="border-0 block rounded ml-2"
-          onClick={() => setShoModel(true)}
-        >
-          <EyeIcon name="delete" className="w-4 h-4" />
-        </button> */}
+
 
         <button
           color="gray"
@@ -197,27 +176,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
           <TrashIcon name="delete" className="w-4 h-4" />
         </button>
       </div>
-      {/* <Modal size="sm" active={showModel} toggler={toggle}>
-        <ModalBody>Do you really want to delete this document?</ModalBody>
-        <ModalFooter>
-          <Button
-            color="red"
-            onClick={() => deleteDocument(id)}
-            ripple="dark"
-            type="submit"
-          >
-            Yes
-          </Button>
-          <Button
-            color="blue"
-            buttonType="link"
-            onClick={() => setShoModel(false)}
-            ripple="dark"
-          >
-            No
-          </Button>
-        </ModalFooter>
-      </Modal> */}
+
     </>
   )
 }

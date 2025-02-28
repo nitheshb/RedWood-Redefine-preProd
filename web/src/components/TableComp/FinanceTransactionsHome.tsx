@@ -137,17 +137,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
             return [payload.new,...prevLogs]
           }
         })
-        // const index = updatedLeadLogs.findIndex((log) => log.id === id)
-        // if (index !== -1) {
-        //   console.log('check it ..........!')
-        //   updatedLeadLogs[index] = updatedData
-        // } else {
-        //   // Add new record to the 'leadLogs' state
-        //   updatedLeadLogs.push(updatedData)
-        // }
 
-        // // Update the 'leadLogs' state with the latest data
-        // setFinFetchedData(updatedLeadLogs)
       })
       .subscribe()
 
@@ -173,89 +163,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
   }
 
-  // const getLeadsDataFun = async () => {
-  //   console.log('login role detials', user)
-  //   const { access, uid } = user
-
-  //   const steamLeadLogs = await streamGetAllTransactions(
-  //     orgId,
-  //     'snap',
-  //     {
-  //       uid,
-  //     },
-  //     (error) => []
-
-
-  //   )
-  //   await setFinFetchedData(steamLeadLogs)
-
-  //   return
-
-
-  //   // if (access?.includes('manage_leads')) {
-  //   //   const unsubscribe = getFinanceTransactionsByStatus(
-  //   //     orgId,
-  //   //     async (querySnapshot) => {
-  //   //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
-  //   //         const x = docSnapshot.data()
-  //   //         x.id = docSnapshot.id
-  //   //         return x
-  //   //       })
-  //   //       // setBoardData
-  //   //       console.log('my Array data is ', usersListA, finFetchedData)
-  //   //       // await serealizeData(usersListA)
-  //   //       await setFinFetchedData(usersListA)
-  //   //       await console.log('my Array data is set it', finFetchedData)
-  //   //     },
-  //   //     {
-  //   //       status: [
-  //   //         'latest',
-  //   //         'review',
-  //   //         'review',
-  //   //         'received',
-  //   //         'rejected',
-  //   //         '',
-  //   //         // 'booked',
-  //   //       ],
-  //   //     },
-  //   //     () => setFinFetchedData([])
-  //   //   )
-  //   //   return unsubscribe
-  //   // } else {
-  //   //   const unsubscribe = getFinanceTransactionsByStatus(
-  //   //     orgId,
-  //   //     async (querySnapshot) => {
-  //   //       const usersListA = querySnapshot.docs.map((docSnapshot) => {
-  //   //         const x = docSnapshot.data()
-  //   //         x.id = docSnapshot.id
-  //   //         return x
-  //   //       })
-  //   //       // setBoardData
-  //   //       console.log('my Array data is ', usersListA)
-  //   //       await serealizeData(usersListA)
-  //   //       await setFinFetchedData(usersListA)
-  //   //     },
-  //   //     {
-  //   //       uid: uid,
-  //   //       status: [
-  //   //         'new',
-  //   //         'review',
-  //   //         'review',
-  //   //         'received',
-  //   //         'rejected',
-  //   //         '',
-  //   //         // 'booked',
-  //   //       ],
-  //   //     },
-  //   //     () => setFinFetchedData([])
-  //   //   )
-  //   //   return unsubscribe
-  //   // }
-
-  //   // await console.log('leadsData', leadsData)
-  // }
-
-
+ 
 
   const getLeadsDataFun = async () => {
     const { access, uid } = user
@@ -273,14 +181,12 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
 
   const serealizeData = (array) => {
-    // let newData =
     const x = [
       'new',
       'review',
       'received',
       'rejected',
       '',
-      // 'booked',
     ].map((status) => {
       const items = array.filter((data) => data.Status.toLowerCase() == status)
 
@@ -308,29 +214,16 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
             "
           >
             <div className="items-center justify-between  py-2 px-2  pl-[1%] ">
-              {/* <div>
-                <h2 className="text-lg font-semibold text-gray-900 leading-light py-2 ">
-                  Accounts Transactions Space
-                </h2>
-              </div> */}
+   
               <div className="flex flex-row items-center">
                 <section className="min-w-[150px]">
                   <div className="flex flex-col ml-3">
                     <span className="text-[56px] text-black font-bold">0</span>
                     <span className="text-[18px] text-black">Todo Tasks</span>
                   </div>
-                  {/* <CircleProgress /> */}
                 </section>
-                {/* <SemiCircleProgress /> */}
                 <div className="flex flex-col">
-                  {/* <div className="flex flex-row">
-                    <h2 className="headTxt1 font-semibold text-[11px] ">
-                      TOTAL COLLECTION
-                    </h2>
-                    <span className="headTxt1 font-semibold text-[11px] ml-4 bg-[#d6e9ed] text-[#53a0a3] px-2 rounded-md ">
-                      10
-                    </span>
-                  </div> */}
+ 
                   <section className="flex flex-row justify-between">
                     <section className="flex flex-row mt-2 mr-1  mb-1 leading-7 text-gray-900  rounded-lg  ">
                       {[
@@ -362,7 +255,6 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                               <section>
                                 <div className='flex flex-row justify-between'>
                                 <span className="flex mt-[13px] ml-[12px] justify-center items-center w-6 h-6 rounded-full bg-[#E06349] ring-8 ring-white  ">
-                                  {/* <DocumentIcon className=" w-3 h-3" /> */}
 
                                   {dat.icon}
                                   </span>
@@ -490,19 +382,13 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                   {`${fieldHead.lab} `}
                                 </span>
                                 <span className="border border-[#E06349] text-gray-800 px-1 py-1 rounded-full ml-[4px] text-[10px] ">
-                                  {/* {rowsCounter(leadsFetchedData, d.val).length} */}
-                                  {/* {statusSepA[0][d.val]?.length || 0} */}
+                          
                                   {
                                     rowsCounter(finFetchedData, fieldHead?.val)
                                       ?.length
                                   }
                                 </span>
-                                {/*
-                        <div className="px-2 mt-1 text-[9px] text-black  rounded-full">
-                          <span className="bg-gray-100 px-2 py-1 rounded-full">
-                            {rowsCounter(leadsFetchedData, d.val).length}
-                          </span>
-                        </div> */}
+      
                               </button>
                             </li>
                           )
@@ -566,9 +452,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                         type="text"
                         id="globalSearch"
                         placeholder="Search Unit No, Customer name, Phone no, Dues..."
-                        // onChange={searchKeyField}
                         autoComplete="off"
-                        // value={searchKey}
                         className="w-52 bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900 w-4/5 relative"
                       />
                     </span>
@@ -578,11 +462,9 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                         label=""
                         className="input "
                         onChange={(value) => {
-                          // setSelProject(value)
-                          // formik.setFieldValue('project', value.value)
+                        
                         }}
                         value={'alltransactions'}
-                        // options={aquaticCreatures}
                         options={[
                           ...[
                             {
@@ -602,7 +484,6 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                       <SlimDateSelectBox
                         onChange={async (value) => {
                           setSourceDateRange(value)
-                          //getLeadsDataFun()
                         }}
                         label={sourceDateRange}
                         placeholder={undefined}
@@ -665,17 +546,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                 <div className="flex justify-center text-right items-center rounded-md w-2 h-8 app-bg-yellow-2 app-color-yellow-1 text-xs font-semibold">
                                   {i + 1}
                                 </div>
-                                {/* <div
-                                className={`${
-                                  finData?.status === 'received'
-                                    ? 'bg-green-700'
-                                    : finData?.status === 'rejected'
-                                    ? 'bg-yellow-600'
-                                    : 'bg-violet-600'
-                                }   w-24 text-xs font-semibold px-3 py-0.5 rounded-br-md rounded-tl-md text-white`}
-                              >
-                                {finData?.status?.toLocaleUpperCase()}
-                              </div> */}
+      
                               </td>
                               <td>
                                 <div className="flex flex-row py-2 ml-4">

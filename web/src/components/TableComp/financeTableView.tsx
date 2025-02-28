@@ -437,13 +437,11 @@ const FinanceTableView = ({
   leadsFetchedData,
   leadsTyper,
 }) => {
-  // change navbar title
-  // useTitle('Data Table V1')
+
   const { t } = useTranslation()
   const [value, setValue] = useState('new')
   const [tableData, setTableData] = useState([])
   const [tabHeadFieldsA, settabHeadFieldsA] = useState([])
-  // const [leadsFetchedData, setLeadsFetchedData] = useState([])
   const [openModal, setOpenModal] = useState(false)
 
   const handleChange = (_, newValue) => {
@@ -454,15 +452,7 @@ const FinanceTableView = ({
   useEffect(() => {
     console.log('table data is ', tableData2)
     setTableData(tableData2)
-    // axios
-    //   .get('/api/tableData1/all')
-    //   .then(({ data }) => {
-    //     setTableData(tableData1)
-    //   })
-    //   .catch((error) => {
-    //     // setTableData(tableData1)
-    //     console.log(error)
-    //   })
+
 
     const tabHeadFieldsA1 =
       leadsTyper === 'inProgress'
@@ -475,11 +465,8 @@ const FinanceTableView = ({
             { lab: 'Visit Cancel', val: 'visitcancel' },
             { lab: 'Negotiation', val: 'negotiation' },
             { lab: 'Reassign', val: 'reassign' },
-            // { lab: 'RNR', val: 'RNR' },
             { lab: 'Un Assigned', val: 'unassigned' },
-            // { lab: 'Booked', val: 'booked' },
-            // { lab: 'Not Interested', val: 'notinterested' },
-            // { lab: 'Dead', val: 'dead' },
+       
           ]
         : leadsTyper === 'archieveLeads'
         ? archieveTab
@@ -550,12 +537,7 @@ const FinanceTableView = ({
                         <span className="bg-gray-100 px-2 py-1 rounded-full">
                           {rowsCounter(leadsFetchedData, d.val).length}
                         </span>
-                        {/*
-                        <div className="px-2 mt-1 text-[9px] text-black  rounded-full">
-                          <span className="bg-gray-100 px-2 py-1 rounded-full">
-                            {rowsCounter(leadsFetchedData, d.val).length}
-                          </span>
-                        </div> */}
+      
                       </button>
                     </li>
                   )

@@ -1,6 +1,5 @@
 import { Button } from '@mui/material'
 
-// py-2 px-8
 const StyledRoundedButton = ({ isCategoryMatched, children, ...props }) => (
   <Button
     sx={{

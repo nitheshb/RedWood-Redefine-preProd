@@ -112,31 +112,20 @@ const ShowCustomerDetails = ({
         const link = document.createElement('a')
         link.href = url
 
-        // Extract the filename from the URL
-        // const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
-
-        // Set the download attribute and filename
         link.setAttribute('download', filename)
         document.body.appendChild(link)
         console.log('fetcher url ', filename)
-        // Simulate a click on the anchor element to start the download
         link.click()
 
-        // Clean up the temporary anchor element
         link.parentNode.removeChild(link)
 
-        // Set the downloaded image URL to display on the page
         setImageUrl(url)
       })
       .catch((error) => {
         console.error('Error downloading image:', error)
       })
   }
-  // const usersList = [
-  //   { label: 'User1', value: 'User1' },
-  //   { label: 'User2', value: 'User2' },
-  //   { label: 'User3', value: 'User3' },
-  // ]
+
   const budgetList = [
     { label: 'Select Customer Budget', value: '' },
     { label: '5 - 10 Lacs', value: 'Bangalore,KA' },
@@ -368,7 +357,6 @@ const ShowCustomerDetails = ({
   }
 
   const isValidAadhar = (value) => {
-    // Aadhar card format: 12 digits
     const regex = /^\d{12}$/
     if (value === '' || value == undefined) {
       return true
@@ -376,11 +364,9 @@ const ShowCustomerDetails = ({
     return regex.test(value)
   }
   const validateSchema = Yup.object({
-    // customerName1: Yup.string().required('Required'),
-    // co_Name1: Yup.string().required('Required'),
+
     panNo1: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
     panNo2: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
-    // panDocUrl1: Yup.string().required('Required'),
     aadharNo1: Yup.string().test(
       'aadhar',
       'Invalid Aadhar card number',
@@ -391,12 +377,10 @@ const ShowCustomerDetails = ({
       'Invalid Aadhar card number',
       isValidAadhar
     ),
-    // aadharUrl1: Yup.string().required('Required'),
-    // occupation1: Yup.string().required('Required'),
-    // phoneNo1: Yup.string().required('Required'),
+ 
     email1: Yup.string().email('Email is invalid'),
     email2: Yup.string().email('Email is invalid'),
-    // aggrementAddress: Yup.string().required('Required'),
+
   })
 
   const resetter = () => {
@@ -476,7 +460,7 @@ const ShowCustomerDetails = ({
     }
 
     const xData = {}
-    xData[`${uid}${'_source_of_pay'}`] = { self: 20, bank: 80 } // sourceOfPay
+    xData[`${uid}${'_source_of_pay'}`] = { self: 20, bank: 80 } 
     xData[`${uid}${'_otherInfo'}`] = { leadSource, sourceOfPay, purpose }
 
     const updateDoc = {
@@ -511,19 +495,7 @@ const ShowCustomerDetails = ({
       )
     }
 
-    // const updatedData = {
-    //   ...data,
-    // }
 
-    // setLoading(true)
-    // addCustomer(
-    // orgId,
-    //   updatedData,
-    //   'nithe.nithesh@gmail.com',
-    //   enqueueSnackbar,
-    //   resetForm
-    // )
-    // setLoading(false)
   }
   const handleFileUploadFun = async (file, type) => {
     if (!file) return
@@ -543,9 +515,7 @@ const ShowCustomerDetails = ({
         (err) => console.log(err),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            // createAttach(orgId, url, by, file.name, id, attachType)
             file.url = url
-            // setFiles([...files, file])
             if (type === 'panCard1') {
               setPanCard1(url)
             } else if (type === 'panCard2') {
@@ -564,7 +534,6 @@ const ShowCustomerDetails = ({
               aadhrUrl1
             )
             return url
-            //  save this doc as a new file in spark_leads_doc
           })
         }
       )
@@ -588,10 +557,7 @@ const ShowCustomerDetails = ({
         <div className="absolute inset-0 bg-blue-100 rounded-t-3xl">
           <div
             className="w-full h-full rounded-t-3xl bg-[#F0F1FF]"
-            // style={{
-            //   backgroundImage: `url(${Profileimg})`,
-            //   backgroundRepeat: 'repeat',
-            // }}
+
           />
         </div>
 
@@ -601,15 +567,7 @@ const ShowCustomerDetails = ({
           </span>
         </div>
 
-        {/* <div className="relative top-10 pt-12 flex justify-center">
-          <div className="bg-[#CCEAFF] p-1 rounded-2xl shadow-md">
-            <img
-              // src={imagebox}
-              alt="Profile"
-              className="w-20 h-20 rounded-full object-cover"
-            />
-          </div>
-        </div> */}
+
 
 
 <div className="relative top-10 pt-8 flex justify-center">
@@ -625,7 +583,6 @@ const ShowCustomerDetails = ({
       </span>
     ) : (
       <img
-        // src={imagebox}
         alt="Profile"
         className="w-20 h-20 rounded-full object-cover"
       />
@@ -651,9 +608,6 @@ const ShowCustomerDetails = ({
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">
-             {/* {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-                    leadDetailsObj2?.Name ||
-                    '?'} */}
 
 
 {leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
@@ -704,12 +658,12 @@ const ShowCustomerDetails = ({
               <p className="text-gray-900">
               {' '}
               {leadDetailsObj2?.customerDetailsObj?.panNo1 || '?'}
-                </p> {/* Default PAN card */}
+                </p> 
               <p className="text-gray-400 text-sm">Pan Card</p>
             </div>
             <div className="text-right">
               <p className="text-gray-900">{' '}
-              {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}</p> {/* Default Aadhar card */}
+              {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}</p> 
               <p className="text-gray-400 text-sm">Aadhar Card</p>
             </div>
           </div>
@@ -751,10 +705,7 @@ const ShowCustomerDetails = ({
         <div className="absolute inset-0 bg-blue-100 rounded-t-3xl">
           <div
             className="w-full h-full rounded-t-3xl bg-[#F0F1FF]"
-            // style={{
-            //   backgroundImage: `url(${Profileimg})`,
-            //   backgroundRepeat: 'repeat',
-            // }}
+
           />
         </div>
 
@@ -764,15 +715,7 @@ const ShowCustomerDetails = ({
           </span>
         </div>
 
-        {/* <div className="relative top-10 pt-12 flex justify-center">
-          <div className="bg-[#CCEAFF] p-1 rounded-2xl shadow-md">
-            <img
-              // src={imagebox}
-              alt="Profile"
-              className="w-20 h-20 rounded-full object-cover"
-            />
-          </div>
-        </div> */}
+
 
 
 <div className="relative top-10 pt-8 flex justify-center">
@@ -788,7 +731,6 @@ const ShowCustomerDetails = ({
       </span>
     ) : (
       <img
-        // src={imagebox}
         alt="Profile"
         className="w-20 h-20 rounded-full object-cover"
       />
@@ -800,9 +742,7 @@ const ShowCustomerDetails = ({
 
       <div className="text-center mb-6">
         <h2 className="text-xl font-normal">
-        {/* {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-                    leadDetailsObj2?.Name ||
-                    '?'} */}
+
 
 {leadDetailsObj2?.secondaryCustomerDetailsObj
                     ?.customerName1 || '?'}
@@ -817,9 +757,6 @@ const ShowCustomerDetails = ({
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">
-             {/* {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-                    leadDetailsObj2?.Name ||
-                    '?'} */}
 
 
 {leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || '?'}
@@ -833,9 +770,7 @@ const ShowCustomerDetails = ({
               <p className="text-gray-900">
               {' '}
 
-              {/* {prettyDate(
-                  leadDetailsObj2?.secondaryCustomerDetailsObj?.dob2 
-                )} */}
+
 
 
                {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob1 || datee)}
@@ -843,7 +778,6 @@ const ShowCustomerDetails = ({
 
 
 
-              {/* {prettyDate(leadDetailsObj2?.customerDetailsObj?.dob1 || datee)} */}
               </p>
               <p className="text-gray-400 text-sm">D.O.B</p>
             </div>
@@ -855,7 +789,6 @@ const ShowCustomerDetails = ({
             <div>
               <p className="text-gray-900">
               {' '}
-              {/* {leadDetailsObj2?.customerDetailsObj?.marital1?.value} */}
               {leadDetailsObj2?.secondaryCustomerDetailsObj?.marital1?.value}
 
               </p>
@@ -863,9 +796,6 @@ const ShowCustomerDetails = ({
             </div>
             <div className="text-right">
               <p className="text-gray-900">
-              {/* {leadDetailsObj2?.customerDetailsObj?.phoneNo1 ||
-                    leadDetailsObj2?.Mobile ||
-                    '?'} */}
 
 {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo1 ||
                     '?'}
@@ -883,15 +813,13 @@ const ShowCustomerDetails = ({
               <p className="text-gray-900">
               {' '}
               {leadDetailsObj2?.secondaryCustomerDetailsObj?.panNo1 || '?'}
-              {/* {leadDetailsObj2?.customerDetailsObj?.panNo1 || '?'} */}
-                </p> {/* Default PAN card */}
+                </p>
               <p className="text-gray-400 text-sm">Pan Card</p>
             </div>
             <div className="text-right">
               <p className="text-gray-900">{' '}
-              {/* {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'} */}
               {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || '?'}
-              </p> {/* Default Aadhar card */}
+              </p> 
               <p className="text-gray-400 text-sm">Aadhar Card</p>
             </div>
           </div>

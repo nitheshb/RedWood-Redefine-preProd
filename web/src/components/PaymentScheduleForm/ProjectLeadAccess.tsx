@@ -83,16 +83,13 @@ const PaymentLeadAccess = ({ title, data, dept, source, }) => {
       enqueueSnackbar
     )
 
-    // setLeadsProjectAccessA(value.target.value)
   }
 
   return (
     <>
       <div className="h-full w-full shadow-xl flex flex-col pt-6 mb-6  bg-[#F1F5F9] rounded-t overflow-y-scroll">
         <div className="z-10">
-          {/* <Dialog.Title className="font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
+
           <span className="mr-auto ml-3  text-md font-extrabold tracking-tight uppercase font-body ">
             {title}
           </span>

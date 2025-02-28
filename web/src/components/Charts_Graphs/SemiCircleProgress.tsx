@@ -70,8 +70,7 @@ const SemiCircleProgress = () => {
   }
   return (
     <section sx={{}} style={{ minWidth: '200px' }}>
-      {/* <h5>{t('Total Project Completion Rate')}</h5>
-      <span color="text.disabled">More than 50+ new projects running</span> */}
+
 
       <section
         sx={{

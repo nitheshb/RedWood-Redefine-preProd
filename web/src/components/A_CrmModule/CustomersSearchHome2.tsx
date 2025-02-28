@@ -80,15 +80,6 @@ const CustomersSearchHome2 = ({ project }) => {
   const getProjects = async () => {
     const { access, uid } = user
 
-    // const streamrawData = await streamGetCustomersS(
-    //   orgId,
-    //   'snap',
-    //   {
-    //     uid,
-    //   },
-    //   (error) => []
-    // )
-    // await setCustomerRawData(streamrawData)
 
     const unsubscribe = getCRMCustomer(
       orgId,

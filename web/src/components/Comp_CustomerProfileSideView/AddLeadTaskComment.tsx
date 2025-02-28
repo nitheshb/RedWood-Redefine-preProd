@@ -89,23 +89,14 @@ export default function AddLeadTaskComment({
 
   return (
     <div className=" form outline-none   py-2 mx-4  max-h-[72px] min-h-[72px] mb-4">
-      {/* <section className="">
-        <div className="flex flex-row  border-b mb-4 px-4 ">
-          <div className=" mb-3 flex justify-between">
 
-          </div>
-        </div>
-      </section> */}
       <div className="flex flex-row justify-between px-4">
         <section className="w-full flex flex-col">
 
 
           {(addCommentTitle === '' && !clicked && !addCommentPlusTask) && (
             <section className="flex flex-row mt-2">
-              {/* <span className="text-xs font-Playfair  text-[#5c6575] font-bold mr-2">
-                {' '}
-                Template:
-              </span> */}
+
               {[
                 {
                   type: 'reschedule',
@@ -139,17 +130,6 @@ export default function AddLeadTaskComment({
                   desc: 'Share Quotation',
                 },
 
-                // {
-                //   type: 'notinterested',
-
-                //   label: 'Not Interested',
-                //   desc: 'Not Interested',
-                // },
-                // {
-                //   type: 'visitdone',
-                //   label: 'Visit Done',
-                //   desc: 'Visit Done',
-                // },
               ].map(
                 (dataObj, i) =>
                   (dataObj?.type === 'reschedule' ||
@@ -169,40 +149,16 @@ export default function AddLeadTaskComment({
                           setAddCommentTitle(dataObj?.desc)
                         }}
                         onMouseEnter={() => {
-                          // if (clicked) {
-                          //   setClicked(false)
-                          // }
-                          // setAddCommentTitle(dataObj?.desc)
 
-                          // setHover(true)
                         }}
                         onMouseLeave={() => {
-                          // if (!clicked) {
-                          //   setAddCommentTitle('')
-                          // }
 
-                          // setHover(false)
                         }}
                       >
                         {' '}
                         {dataObj?.label}
                       </span>
-                      {/* {!['visitdone', 'notinterested'].includes(dataObj?.type) && (
-                  <span className="">
-                    <span
-                      key={i}
-                      className={`cursor-pointer   mr-2  px-3 py-1  text-xs
-`}
-                      onClick={() => {
 
-                        setAddCommentTitle(dataObj?.desc)
-
-                      }}
-                    >
-                      {dataObj?.label}
-                    </span>
-                  </span>
-                )} */}
                     </>
                   )
               )}
@@ -289,9 +245,7 @@ export default function AddLeadTaskComment({
                           addCommentTitle === dataObj?.label ? 'border-b' : ''
                         } `}
                         onClick={() => {
-                          // setClicked(true)
-                          // setHover(false)
-                          // setAddCommentTitle(dataObj?.label)
+
                           console.log('am i coming here clicked')
                           setAddCommentTime(d.getTime() + dataObj.value)
                           setPostPoneCounterFun(d.getTime() + dataObj.value)
@@ -312,20 +266,9 @@ export default function AddLeadTaskComment({
             </section>
           )}
             <section className="w-full flex flex-row min-h-[36px]">
-            {/* <div className="text-xs font-bodyLato text-[#516f90]">
-            <span className="text-red-800">{closeTask && 'Task Closing'}</span>{' '}
-            Comment
-            {error && (
-              <span className="error-message text-red-700 text-xs p-1">
-                {' '}
-                Required
-              </span>
-            )}
 
-          </div> */}
             <input
-              // onChange={setTakTitle()}
-              // autoFocus
+     
               name="commentTitle"
               type="text"
               value={addCommentTitle}
@@ -375,14 +318,7 @@ export default function AddLeadTaskComment({
               {(!closeTask &&  !addCommentPlusTask && selType != 'reschedule' && !(addCommentTitle === 'undefined' || addCommentTitle === '')) && <SendTwoToneIcon />}{' '}
               {(!closeTask  && selType === 'reschedule' && !(addCommentTitle === 'undefined' || addCommentTitle === '')) && <ScheduleSendTwoToneIcon />}
              {(closeTask && !(addCommentTitle === 'undefined' || addCommentTitle === '')) && <CheckTwoToneIcon />}
-              {/* {closeTask && (
-                <span className="text-[#4b4a4a]">Close This Task </span>
-              )}{' '}
-              {addCommentPlusTask && (
-                <>
-                  & <span className="text-[#4b4a4a]">Create New Task</span>
-                </>
-              )} */}
+
             </span>
           </button>}
           </section>
@@ -393,9 +329,7 @@ export default function AddLeadTaskComment({
           <section>
             <div className="flex flex-row ml-3">
               <section className="max-h-[42px] mt-[5px]">
-                {/* <span className="text-xs font-bodyLato text-[#516f90] cursor-none">
-                  Set Due Date
-                </span> */}
+
                 <div className="bg-green   pl-   flex flex-row cursor-pointer">
                   <CalendarMonthTwoToneIcon className="cursor-none" />
                   <span className="inline">
@@ -419,87 +353,7 @@ export default function AddLeadTaskComment({
           </section>
         )}
 
-      {/* <div className="flex flex-row mt-4 justify-between pr-4 border-t">
-        <section className="ml-2 mt-2">
-          <span className="text-xs text-md font-bodyLato  font-normal text-[#7e92a2]  ">
-
-            <input
-              type="checkbox"
-              checked={addCommentPlusTask}
-              className=""
-              onClick={() => {
-                console.log('was this clicked ', addCommentPlusTask)
-                setAddCommentPlusTask(!addCommentPlusTask)
-                console.log('was this clicked ', addCommentPlusTask)
-              }}
-            />
-
-            <span className="ml-2">Also</span>
-            <span className="italic text-[#0091ae]"> Create New Task</span>
-            <span className="ml-1">with Same Comment</span>
-          </span>
-
-        </section>
-
-        <section className="flex">
-          {addCommentPlusTask && <button
-            type="submit"
-            onClick={() => {
-              if (addCommentTitle === 'undefined' || addCommentTitle === '') {
-                setError(true)
-              }
-              if (
-                !error &&
-                !(addCommentTitle === 'undefined' || addCommentTitle === '')
-              ) {
-                setClosePrevious(false)
-                addTaskCommentFun(data)
-              }
-            }}
-            className={`flex mt-2 ml-4 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[28px] pr-4 py-1 text-xs font-medium  bg-[#21C55D]  hover:bg-[#21C55D]  `}
-          >
-            <span className="ml-1 text-md">
-              {!closeTask && <SendTwoToneIcon />}{' '}
-              {closeTask && (
-                <span className="text-[#4b4a4a]">Close This Task </span>
-              )}{' '}
-              {addCommentPlusTask && (
-                <>
-                  & <span className="text-[#4b4a4a]">Create New Task</span>
-                </>
-              )}
-            </span>
-          </button>}
-
-          <button
-            type="submit"
-            onClick={() => {
-              if (addCommentTitle === 'undefined' || addCommentTitle === '') {
-                setError(true)
-              }
-              if (
-                !error &&
-                !(addCommentTitle === 'undefined' || addCommentTitle === '')
-              ) {
-                setAddCommentPlusTask(true)
-                setClosePrevious(false)
-                addTaskCommentFun(data)
-              }
-            }}
-            className={`flex mt-2 ml-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[28px] pr-4 py-2 text-xs font-medium text-black bg-[#9dbfde]  hover:bg-[#21C55D] `}
-          >
-            <span className="ml-1 text-md">Close & Add New Task</span>
-          </button>
-
-          <button
-            // onClick={() => fSetLeadsType('Add Lead')}
-            onClick={() => cancelResetStatusFun()}
-            className={`flex mt-2 ml-2 rounded-xs items-center text-bodyLato pl-2 h-[28px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
-          >
-            <span className="ml-1 ">Close</span>
-          </button>
-        </section>
-      </div> */}
+  
     </div>
   )
 }

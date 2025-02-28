@@ -47,13 +47,6 @@ const ProjectAccessHomeList = ({
     getPlanDiagrams(data?.uid, 'plan_diagram')
     console.log('plan_diagram', data, projectDetails)
 
-    // if (pId && title === 'Plan Diagram') {
-    //   getPlanDiagrams(data?.uid, 'plan_diagram')
-    // } else if (pId && title === 'Brouchers') {
-    //   getPlanDiagrams(data?.uid, 'broucher')
-    // } else if (pId && title === 'Approvals') {
-    //   getPlanDiagrams(data?.uid, 'approval')
-    // }
   }, [pId, data])
   const getPlanDiagrams = async (phaseId, type) => {
     const unsubscribe = getPlanDiagramByPhase(
@@ -259,7 +252,6 @@ const ProjectAccessHomeList = ({
     return unsubscribe
   }
   const handleDelete = async () => {
-    // projectDetails.uid
     if (
       projectDetails?.bookUnitCount == undefined ||
       projectDetails?.bookUnitCount == 0
@@ -271,9 +263,7 @@ const ProjectAccessHomeList = ({
         projectDetails,
         enqueueSnackbar
       )
-      // enqueueSnackbar('Deleted Successfully', {
-      //   variant: 'success',
-      // })
+
     } else {
       enqueueSnackbar(
         `Cannot delete: ${projectDetails?.bookUnitCount} Booked unit exists `,
@@ -304,7 +294,6 @@ const ProjectAccessHomeList = ({
           <li className="">
             <section className="flex flex-row mt- grid grid-cols-4 ">
               {ProjectFolders?.map((project, i) => (
-                // <span key={i}>{project?.projectName}</span>
                 <>
                   {project.type === 'folder' ? (
                     <>
@@ -313,7 +302,6 @@ const ProjectAccessHomeList = ({
                         className=" cursor-pointer relative mx-auto break-words bg-white  mb-2  rounded-xl  transition duration-300 ease-in-out  "
                         onClick={() => dispDoc(project, project.category)}
                       >
-                        {/* <FileCardAnim projectDetails={project} /> */}
                         <Card
                           sx={{
                             borderRadius: 4,
@@ -327,8 +315,7 @@ const ProjectAccessHomeList = ({
                             src={project.img}
                           />
                           <div className="font-semibold text-[12px] ml-2 mt-[-1.5px]">{project.name}</div>
-                          {/* <div className="text-xs">{project.size}</div>
-                          <div className="text-xs">{project.shared}</div> */}
+          
                         </Card>
                       </div>
                     </>
@@ -345,7 +332,6 @@ const ProjectAccessHomeList = ({
           <li className="">
             <section className="flex flex-row mt- grid grid-cols-4 ">
               {ProjectAccessFolder?.map((project, i) => (
-                // <span key={i}>{project?.projectName}</span>
                 <>
                   {project.type === 'ppt' ? (
                     <>
@@ -354,7 +340,6 @@ const ProjectAccessHomeList = ({
                         className=" cursor-pointer relative mx-auto break-words bg-white  mb-4  rounded-xl  transition duration-300 ease-in-out  "
                         onClick={() => dispAccess(project, project.category)}
                       >
-                        {/* <FileCardAnim projectDetails={project} /> */}
                         <Card
                           sx={{
                             borderRadius: 4,
@@ -368,8 +353,7 @@ const ProjectAccessHomeList = ({
                             src={project.img}
                           />
                           <div className="font-semibold	text-[12px] ml-2 mt-[-1.5px]">{project.name}</div>
-                          {/* <div className="text-xs">{project.size}</div>
-                          <div className="text-xs">{project.shared}</div> */}
+       
                         </Card>
                       </div>
                     </>
@@ -407,9 +391,7 @@ const ProjectAccessHomeList = ({
           <button
             type="button"
             onClick={() => {
-              // proceedAction()
-              // setOpen(false)
-              // setOpen(true)
+   
               auditFun()
             }}
             className={`inline-flex w-full justify-center rounded-sm mt-3 px-3 py-2 bg-cyan-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
@@ -449,8 +431,7 @@ const ProjectAccessHomeList = ({
           <button
             type="button"
             onClick={() => {
-              // proceedAction()
-              // setOpen(false)
+
               setOpen(true)
             }}
             className={`inline-flex w-full justify-center rounded-sm mt-3 px-3 py-2 bg-cyan-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
@@ -472,16 +453,7 @@ const ProjectAccessHomeList = ({
         widthClass="max-w-2xl"
         projectsList={projects}
       />
-      {/* <SiderForm
-        open={isDocViewOpenSideView}
-        setOpen={setIsDocViewOpenSideView}
-        title={'disp_legal_docs'}
-        projectDetails={projectDetails}
-        unitsViewMode={false}
-        widthClass="max-w-xl"
-        projectsList={projects}
-        viewLegalDocData={viewDocData}
-      /> */}
+
       <SiderForm
         open={isDocViewOpenSideView}
         setOpen={setIsDocViewOpenSideView}
@@ -498,9 +470,6 @@ const ProjectAccessHomeList = ({
         setOpen={setIsAccessSideView}
         title={'disp_project_access'}
         subView={subView}
-        //    data={{ phase: data, project: projectDetails }}
-        // dept="admin"
-        // source={source}
         phaseDetails={data}
         projectDetails={projectDetails}
         unitsViewMode={false}

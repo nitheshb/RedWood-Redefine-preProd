@@ -91,50 +91,7 @@ const MycalculatePercentage = (total, count) => {
   return Math.ceil(isNaN(per) ? 0 * 100 : per * 100)
 }
 const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
-  // const [unitsView, setUnitsView] = useState(false)
-  // const [areaView, setAreaView] = useState(false)
-  // const [valueView, setValueView] = useState(false)
-
-  // const [selbg, setSelbg] = useState('')
-  // const [seldata, setSeldata] = useState('')
-  // const [selkind, setSelkind] = useState('')
-  // const [selcurrency, setSelcurrency] = useState('')
-
-  // const [areabg, setAreabg] = useState('')
-  // const [areaData, setAreaData] = useState('')
-  // const [areakind, setAreakind] = useState('')
-  // const [areaCurrency, setareaCurrency] = useState('')
-
-  // const [valuebg, setValuebg] = useState('')
-  // const [valuedata, setValuedata] = useState('')
-  // const [valueKind, setValueKind] = useState('')
-  // const [valueCurrency, setValueCurrency] = useState('')
-  // const displayDetailView = (state, bgColor, data, kind, currency) => {
-  //   // console.log('am i clicked')
-  //   console.log('check')
-  //   setUnitsView(!unitsView)
-  //   setSelbg(bgColor)
-  //   setSeldata(data)
-  //   setSelkind(kind)
-  //   setSelcurrency(currency)
-  // }
-  // const areaDetailView = (state, bgColor, data, kind, currency) => {
-  //   // console.log('am i clicked')
-  //   console.log('check')
-  //   setAreaView(state)
-  //   setAreabg(bgColor)
-  //   setAreaData(data)
-  //   setAreakind(kind)
-  //   setareaCurrency(currency)
-  // }
-  // const valueDetailView = (state, bgColor, data, kind, currency) => {
-  //   // console.log('am i clicked')
-  //   console.log('check')
-  //   setValueView(state)
-  //   setValuebg(bgColor)
-  //   setValuedata(data)
-  //   setValueKind(kind)
-  //   setValueCurrency(currency)
+  
   const sourceDropDown = () => {
     return (
       <SlimSelectBox
@@ -144,10 +101,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
         onChange={(value) => {
           console.log('zoro condition changed one  is', value)
           selViewSource(value)
-          // formik.setFieldValue('project', value.value)
         }}
         value={viewSource?.value}
-        // options={aquaticCreatures}
         options={[
           ...[{ label: 'All Sources', value: 'allsources' }],
           ...sourceListTuned,
@@ -259,9 +214,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     showAllEmpTodayActivity()
   }, [usersCleanList])
 
-  // useEffect(() => {
-  //   console.log('emp task list is ', empTaskListTuned)
-  // }, [empTaskListTuned])
+ 
 
   useEffect(() => {
     if (selProjectIs?.value === 'allprojects') {
@@ -296,7 +249,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
         return da.value == viewSource?.value
       })
       setFiltSourceListTuned(z)
-      // viewSource
     }
   }, [sourceListTuned, viewSource])
 
@@ -308,7 +260,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
         return da.value == viewEmp1?.value
       })
       setFiltEmployeeListTuned(z)
-      // viewSource
     }
   }, [empListTuned, viewEmp1])
 
@@ -321,15 +272,10 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
         return da.value == viewProjs?.value
       })
       setFiltProjectListTuned(z)
-      // viewSource
     }
   }, [projectList, viewProjs])
 
-  // const [projectFilList, setFiltProjectListTuned] = useState([])
-  // const [viewProjs, selProjs] = useState({
-  //   label: 'All Projects',
-  //   value: 'allprojects',
-  // })
+
 
   useEffect(() => {
     setProjectListTuned(serialProjectLeadData(projectList, leadsFetchedRawData))
@@ -390,9 +336,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   }, [usersList, leadsFetchedRawData, selProjectEmpIs])
   const insertTodaySourcePerformance = () => {
     console.log('insertTodaySourcePerformance')
-    // get leads from bank and get cT (dd-mm-yy)=>milliseconds,  source
-    // Check status
-    //
+
 
     updateTodaySourceStatsDB(orgId, 'snap', {}, (error) => [])
   }
@@ -479,15 +423,13 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   }
 
   const showDrillDownFun = async (text, data) => {
-    // Display sideForm
     setReportSideForm(true)
     setDrillDownPayload(data)
     setSubTitle(text)
   }
   const setEmpTaskFun = async () => {
     const x = await serialEmployeeTaskLeadData(usersCleanList)
-    // await console.log('master one', x)
-    // await setTaskEmployeeListTuned(x)
+  
     const z = Promise.all(x).then(function (results) {
       console.log('master one', results)
       setTaskEmployeeListTuned(results)
@@ -522,7 +464,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
       setTaskEmployeeListTunedTotal(Total)
       console.log('sum1 is ', Total)
 
-      // results.filter((data) => data != 'remove')
       return results
     })
     await console.log('setted value is 0', z)
@@ -550,7 +491,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
       return z
     })
-    // await setTaskEmployeeListTuned(a1)
     await console.log('setted value is ', a1, a1.length)
   }
   useEffect(() => {
@@ -567,7 +507,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
         const usersListA1 = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-        // setusersList(usersListA)
         usersListA1.map((user) => {
           user.label = user.displayName || user.name
           user.value = user.uid
@@ -585,11 +524,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     return unsubscribe
   }
 
-  // const DateSourceComponent = () => {
-  //   return (
 
-  //   )
-  // }
 
   const getUsersDataFun1 = async () => {
     const unsubscribe = steamUsersListByRole(
@@ -598,7 +533,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
         const usersListA = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-        // setusersList(usersListA)
         usersListA.map((user) => {
           user.label = user.displayName || user.name
           user.value = user.uid
@@ -619,7 +553,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
         const projectsListA = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-        // setprojectList(projectsListA)
         projectsListA.map((user) => {
           user.label = user.projectName
           user.value = user.uid
@@ -689,19 +622,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     await setLeadLogsRawData(steamLeadLogs)
   }
   const GenerateTasksDailyReportForEmp = async () => {
-    // get all the employees based on orgId
     console.log('employee list is ', usersList)
-    // const data = []
-    // for (const empListD of [
-    //   { uid: 'yP5IMRXqByUNYZ6atk5AaJjaoGH3', name: 'RAM PRASAD' },
-    // ]) {
-    //   const dataUser = await getRestEmpTodayTasksCount(
-    //     empListD?.uid,
-    //     empListD?.name
-    //   )
-    //   data.push(dataUser)
-    // }
-    // return
+
     await getEmployeesListDept(orgId, {}).then(async (empList) => {
       console.log('employee list is ', empList)
       const data = []
@@ -714,17 +636,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
       }
     })
     await setResettingEmpValues(false)
-    // const empDempListA = await getEmployeesListDept(orgId, {})
-    // await empDempListA.map(async (empDetails) => {
-    //   const { uid } = empDetails
-    //   if (uid) {
-    //     await getRestEmpTodayTasksCount(uid)
-    //   } else {
-    //     return
-    //   }
-    // })
-
-    // await console.log('get users list is', empDempListA)
+    
     return
     const unsubscribe = steamUsersListByRole(
       orgId,
@@ -732,7 +644,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
         const usersListA1 = await querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-        // setusersList(usersListA)
         usersListA1.map((user) => {
           user.label = user.displayName || user.name
           user.value = user.uid
@@ -768,20 +679,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
       orgId,
       async (querySnapshot) => {
         let pro
-        let y = []
-        // const projects = await querySnapshot.docs.map(async (docSnapshot) => {
-        //   const x = docSnapshot.data()
-        //   console.log('git values is 2', x)
-        //   const { staDA } = x
-        //   y = staDA
-        //   if (y.length > 0) {
-        //     x.uid = docSnapshot.id
-        //     // eslint-disable-next-line prefer-const
-        //     let y1 = await getLeadbyId1(orgId, x.uid)
-        //     x.leadUser = await y1
-        //     return x
-        //   }
-        // })
+
 
         const userTodoTasksList = []
         console.log('Total fetcher is ', querySnapshot.docs.length, name)
@@ -799,20 +697,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             userTodoTasksList.push(x)
           }
         }
-        //  get the task details from docid
         if (userTodoTasksList.length > 0) {
-          // projects.filter((data) => data != undefined)
-          // const data = []
-          // for (const results of userTodoTasksList) {
-          //   console.log('TaskListResults is', results)
-          //   results?.filter((data) => data != 'remove')
-          //   const dataUser = await filterTodayTodoFun(
-          //     results?.filter((data) => data != 'remove'),
-          //     empID,
-          //     name
-          //   )
-          //   data.push(dataUser)
-          // }
+
           Promise.all(userTodoTasksList).then(function (results) {
             results.filter((data) => data != 'remove')
             filterTodayTodoFun(
@@ -844,15 +730,12 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
       todaydate.getMonth() +
       'Y' +
       todaydate.getFullYear()
-    //find the year of the current date
     const oneJan = new Date(todaydate.getFullYear(), 0, 1)
 
-    // calculating number of days in given year before a given date
     const numberOfDays = Math.floor(
       (todaydate - oneJan) / (24 * 60 * 60 * 1000)
     )
 
-    // adding 1 since to current date and returns value starting from 0
     const weekCount = Math.ceil((todaydate.getDay() + 1 + numberOfDays) / 7)
     const streamedTodo = []
     const whole = {
@@ -879,7 +762,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           +new Date().setHours(0, 0, 0, 0) + 86400000
         ).getTime()
         if (y['sts'] === 'pending' && y['schTime'] < torrowDate) {
-          // make sure if date less than tomorrow is added
           if (y['schTime'] < torrowDate) {
             y.uid = data1.uid
             y.id = data1.uid
@@ -929,7 +811,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
         }
       })
     })
-    // save this value in DB against the user
     const taskCounts = {
       uid: empID,
       emp: name,
@@ -956,44 +837,14 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
       negotiation_comp: 0,
       others_comp: 0,
     }
-    //  this week docId = ${uidXweekcountXtodaydate.getFullYear()}
-    //  this month docId = ${uidXweekcountXtodaydate.getFullYear()}
+
 
     updateTodayTasksTotal(orgId, `${empID}DD${ddMy}`, taskCounts)
 
     console.log('whole is ', name, whole)
   }
   const updateLeadsLastUpdatetimeFun = async () => {
-    // get data from tasks table with pending as available
-    // steamLeadScheduleLog(
-    //   orgId,
-    //   (doc) => {
-    //     console.log('my total fetched list is 1', doc.data())
-    //     const x = doc.data()
-    //     let y = []
-    //     const { staA, staDA } = x
-    //     const indi = staA.indexOf('pending')
-    //     y = staDA
-    //     if (y.length > 0) {
-    //       // x.uid = docSnapshot.id
-    //       // eslint-disable-next-line prefer-const
-    //       const { comments, ct, schTime } = x[y[indi]]
-    //       if (comments) {
-    //         console.log('insdied coment ', x.uid, comments[0]['t'], schTime)
-    //         // updateLeadLastUpdateTime(orgId, x.uid, comments[0]['t'], schTime)
-    //       } else if (ct) {
-    //         console.log('insdied ct ', x.uid, ct, schTime)
-
-    //         updateLeadLastUpdateTime(orgId, 'suAn4KcwwEUVy4ziYTwb', ct, schTime)
-    //       }
-    //     }
-    //   },
-
-    //   {
-    //     uid: 'suAn4KcwwEUVy4ziYTwb',
-    //   },
-    //   (error) => console.log('error', error)
-    // )
+  
 
     getTodayTodoLeadsData(
       orgId,
@@ -1009,20 +860,12 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           y = staDA
 
           if (y.length > 0 && y[indi]) {
-            // x.uid = docSnapshot.id
-            // eslint-disable-next-line prefer-const
+          
 
             const { comments, ct, schTime } = x[y[indi]]
             if (comments) {
-              // console.log(
-              //   'insdied coment ',
-              //   docSnapshot.id,
-              //   comments[0]['t'],
-              //   schTime
-              // )
-              // updateLeadLastUpdateTime(orgId, x.uid, comments[0]['t'], schTime)
+            
             } else if (ct) {
-              // console.log('insdied ct ', docSnapshot.id, ct, schTime)
               try {
                 updateLeadLastUpdateTime(orgId, docSnapshot.id, ct, schTime)
               } catch (error) {
@@ -1042,9 +885,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     )
   }
   const updateProjectNameInlogs = async () => {
-    // get all the logs from supabase
-    // loop through each doc and get projectId
-    // update the respective doc in supabase with projectId
+  
 
     const steamLeadLogs = await streamLeadLogdWithNullProj(
       orgId,
@@ -1230,79 +1071,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           </div>
 
         </div>
-{/*             
-            <div className="flex overflow-x-auto ml-2 border-b pb-2">
-              
-              
-              
-              
-              
-              <div className="flex items-center flex-shrink-0   border-grey maahome">
-     
-
-
-
-
-                
-
-
-
-                <span className="relative  flex items-center w-auto text-xl font-bold leading-none pl-0 mt-[18px]">
-                  Sales Reports
-                </span>
-      
-              </div>
-              {[
-                { label: 'Booking Performance', value: 'booking_perf' },
-                { label: 'Leads Performance', value: 'lead_perf' },
-                { label: 'Source Performance', value: 'source_perf' },
-                { label: 'Site Visits', value: 'site_visits' },
-                { label: 'Employee Performance', value: 'emp_tasks' },
-                { label: 'Home', value: 'sale_report_home' },
-                { label: 'Marketing', value: 'marketing_Dashboard' },
-
-                { label: 'Top Bar', value: 'bar_tasks' },
-                { label: 'Profile', value: 'profile_tasks' },
-            
-              ].map((data, i) => {
-                return !(
-                  [
-                    'sale_report_home',
-                    'marketing_Dashboard',
-                    'bar_tasks',
-                    'profile_tasks',
-                  ].includes(data.value) && orgId != 'spark'
-                ) ? (
-                  <section
-                    key={i}
-                    className="flex  mt-[18px]"
-                    onClick={() => {
-                      console.log('am i clicked', data.value)
-                      setSelCat(data.value)
-                    }}
-                  >
-                    <button>
-                      <span
-                        className={`flex ml-2 items-center py-3 px-3 text-xs flex flex-col  min-w-[120px] ${
-                          selCat === data.value
-                            ? 'font-normal text-green-800 bg-[#FFEDEA]'
-                            : 'font-normal text-black-100 bg-[#f0f8ff]'
-                        }  rounded`}
-                      >
-                        <img
-                          alt=""
-                          src="/temp2.png"
-                          className="h-5 w-5 mr-1 mb-1"
-                        />
-                        {data?.label}
-                      </span>
-                    </button>
-                  </section>
-                ) : null
-              })}
-            </div> */}
-
-
+ 
 
 
             <div className="flex items-center space-x-1 mb-6 border-b">
@@ -1338,172 +1107,13 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                       : 'font-medium text-black-100 '
                   }  rounded-full`}
                 >
-                  {/* <PencilIcon className="h-3 w-3 mr-1" aria-hidden="true" /> */}
                   <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
                   {data?.label}
                 </span>
             </button>
           ))}
         </div>
-            {/* <div className=" mt-10 grid grid-cols-1 gap-7">
-              <span className="min-w-100 ">
-                <span>
-                  <div
-                    className="drop-shadow-md min-w-full z-10 flex flex-col  max-w-md p-4 mx-auto my-0 rounded-lg "
-                    style={{ backgroundColor: '#EBF9F9' }}
-                  >
-                    <div className="flex items-center flex-row px-0  pl-0 mb-2 ">
-
-                      <div className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 mt-4 ">
-                        {`Lead Stastics of Team for this Week `}
-                      </div>
-                    </div>
-
-                    <section className="flex ml-auto mt-[18px]">
-                      {!isEdit && (
-
-                        <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-pink-800 bg-pink-200 rounded-full">
-                          <EyeIcon
-                            className="h-3 w-3 mr-1"
-                            aria-hidden="true"
-                          />
-                          Current Week
-                        </span>
-
-                      )}
-
-                      <button onClick={onSliderOpen}>
-                        <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                          <CalendarIcon
-                            className="h-3 w-3 mr-1"
-                            aria-hidden="true"
-                          />
-                          This Month
-                        </span>
-                      </button>
-                      <button onClick={onSliderOpen}>
-                        <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                          <CalendarIcon
-                            className="h-3 w-3 mr-1"
-                            aria-hidden="true"
-                          />
-                          Last 6 Months
-                        </span>
-                      </button>
-                    </section>
-
-                    <div className="grid grid-cols-2 gap-0">
-                      <ul className="flex-1 p-0 mt-8 ml-2 mr-2 max-w-[300px] border-r pr-10  border-slate-400 leading-7 text-gray-900  border-gray-200">
-                        {valueFeedData.map((data, i) => {
-                          return (
-                            <li
-                              key={i}
-                              className="flex justify-between px-4 py-1 w-full mb-2  font-semibold text-left border-dotted border-b border-gray-300 "
-                            >
-                              <span className="inline-flex">
-                                <span className="text-[16px] text-gray-900 font-light  text-gray-900">
-                                  {' '}
-                                  {data.k}
-                                </span>
-                              </span>
-
-                              <div
-                                className="relative flex flex-col items-center group"
-                                style={{ alignItems: 'end' }}
-                              >
-                                <div
-                                  className="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex"
-                                  style={{ alignItems: 'end', width: '300px' }}
-                                >
-                                  <span
-                                    className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-                                    style={{
-                                      color: 'black',
-                                      background: '#e2c062',
-                                      maxWidth: '300px',
-                                    }}
-                                  ></span>
-                                  <div
-                                    className="w-3 h-3  -mt-2 rotate-45 bg-black"
-                                    style={{
-                                      background: '#e2c062',
-                                      marginRight: '12px',
-                                    }}
-                                  ></div>
-                                </div>
-                                <span className="text-[16px] font-medium text-gray-900">
-                                  {data.v.toLocaleString('en-IN')}
-                                </span>
-                              </div>
-                            </li>
-                          )
-                        })}
-                      </ul>
-
-                      <section
-                        className=" mt-[40px]"
-                        style={{ marginLeft: '-220px' }}
-                      >
-                        <BarChart
-                          width={600}
-                          height={300}
-                          data={[
-                            {
-                              name: 'Total',
-                              count: 1050,
-                              pv: 2400,
-                              amt: 2400,
-                            },
-                            {
-                              name: 'Progress',
-                              count: 420,
-                              pv: 1398,
-                              amt: 2210,
-                            },
-                            {
-                              name: 'Booked',
-                              count: 120,
-                              pv: 9800,
-                              amt: 2290,
-                            },
-                            {
-                              name: 'RNR',
-                              count: 105,
-                              pv: 9800,
-                              amt: 2290,
-                            },
-                            {
-                              name: 'Dead',
-                              count: 90,
-                              pv: 9800,
-                              amt: 2290,
-                            },
-                            {
-                              name: 'Non Interested',
-                              count: 750,
-                              pv: 9800,
-                              amt: 2290,
-                            },
-                          ]}
-                          margin={{
-                            top: 5,
-                            right: 30,
-                            left: 0,
-                            bottom: 5,
-                          }}
-                        >
-                          <XAxis dataKey="name" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <Bar dataKey="count" barSize={40} fill="#1EB968" />
-                        </BarChart>
-                      </section>
-                    </div>
-                  </div>
-                </span>
-              </span>
-            </div> */}
+           
           </div>
           {selCat === 'lead_perf' && (
             <div className="flex flex-col  mt-2 drop-shadow-md rounded-lg  px-4">
@@ -1704,22 +1314,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             />
                           </span>
                         </section>
-                        {/* <div style={{ width: '13rem' }} className="ml-2 mt-1">
-                          <SlimSelectBox
-                            name="project"
-                            label=""
-                            className="input min-w-[164px] "
-                            onChange={(value) => {
-                              selProjs(value)
-                            } }
-                            value={viewProjs?.value}
-                            options={[
-                              ...[
-                                { label: 'All Projects', value: 'allprojects' },
-                              ],
-                              ...projectList,
-                            ]} placeholder={undefined}                          />
-                        </div> */}
+   
                       </div>
                     </div>
                     <LeadsCoversionGraphs
@@ -1780,26 +1375,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             </span>
                           </button>
 
-                          {/* <SlimSelectBox
-                        name="project"
-                        label=""
-                        className="input min-w-[164px] "
-                        onChange={(value) => {
-                          setSelProjectEmp(value)
-                        }}
-                        value={selProjectEmpIs?.value}
-                        options={[
-                          ...[{ label: 'All Projects', value: 'allprojects' }],
-                          ...projectList,
-                        ]}
-                      /> */}
-                          {/* <span style={{ display: '' }}>
-                        <CSVDownloader
-                          className="mr-6 h-[20px] w-[20px]"
-                          downloadRows={EmpDownloadRows}
-                          style={{ height: '20px', width: '20px' }}
-                        />
-                      </span> */}
+   
                         </div>
                       </section>
                     </div>
@@ -1811,7 +1387,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                       MycalculatePercentage={MycalculatePercentage}
                     />
 
-                    {/* hiding this table till we setup tables */}
                     <table className="text-center mt-6 ">
                       <thead className="border-b">
                         <tr>
@@ -1825,11 +1400,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             { label: 'Visit Fixed', id: 'visitfixed' },
                             { label: 'Visit Done', id: 'visitdone' },
                             { label: 'Visit Cancel', id: 'visitCancel' },
-                            // { label: 'Booked', id: 'booked' },
-                            // { label: 'Dead', id: 'dead' },
-                            // { label: 'Blocked', id: 'blocked' },
-                            // { label: 'Junk', id: 'junk' },
-
+                  
                             { label: 'Negotiations', id: 'negotiation' },
                             { label: 'Others', id: 'others' },
                           ].map((d, i) => (
@@ -1893,18 +1464,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                 {data?.visitCancel_comp || 0}/{' '}
                                 {data?.visitCancel || 0}
                               </td>
-                              {/* <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                {data?.booked_comp || 0}/ {data?.booked || 0}
-                              </td>
-                              <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                {data?.dead_comp || 0}/ {data?.dead || 0}
-                              </td>
-                              <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                {data?.blocked_comp || 0}/ {data?.blocked || 0}
-                              </td>
-                              <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                {data?.junk_comp || 0}/ {data?.junk || 0}
-                              </td> */}
+      
                               <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
                                 {data?.negotiation_comp || 0}/
                                 {data?.negotiation || 0}
@@ -1921,16 +1481,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             Total
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                            {/* {Object.keys(empTaskListTuned.Total).length
-                            empTaskListTuned.reduce((a, b) => {
-                              return a.Total + b.Total
-                            }).length
-                          } */}
-                            {/* {empTaskListTuned.reduce(
-                            (previousValue, currentValue) =>
-                              previousValue.Total + currentValue.Total,
-                            0
-                          )} */}
+     
                             {}
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
@@ -1996,13 +1547,10 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           {selCat === 'edit_table' && <TableEdit />}
 
-          {/* {selCat === 'tab_task' && <TabTask />} */}
-
-          {/* Graph Bar start */}
+      
 
           {selCat === 'bar_tasks' && <CampaingsTopBarsComponent />}
 
-          {/* Graph Bar end */}
 
           {selCat === 'site_visits' && (
             <>
@@ -2029,10 +1577,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                 value
                               )
                               setSelProject(value)
-                              // formik.setFieldValue('project', value.value)
                             }}
                             value={selProjectIs?.value}
-                            // options={aquaticCreatures}
                             options={[
                               ...[
                                 { label: 'All Projects', value: 'allprojects' },
@@ -2047,7 +1593,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                       <section className="flex flex-row justify-between mt-[18px]">
                         <section className="flex mb-2">
                           {!isEdit && (
-                            // <Link to={routes.projectEdit({ uid })}>
                             <button
                               onClick={() => {
                                 setSourceDateRange(startOfDay(d).getTime())
@@ -2149,7 +1694,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                     aria-hidden="true"
                                   />
                                   {startDate == null ? 'Custom' : ''}
-                                  {/* {sourceDateRange} -- {startDate?.getTime()} */}
                                   {startDate != null
                                     ? prettyDate(
                                         startDate?.getTime() + 21600000
@@ -2194,8 +1738,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                     onClear={() => {
                                       console.log('am i cleared')
                                     }}
-                                    // dateFormat="MMM d, yyyy "
-                                    //dateFormat="d-MMMM-yyyy"
+                           
                                     dateFormat="MMM dd, yyyy"
                                   />
                                 </span>
@@ -2215,29 +1758,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             </button>
                           )}
                         </section>
-                        {/* <div className=" flex flex-row   ">
-                          <SlimSelectBox
-                            name="project"
-                            label=""
-                            className="input min-w-[164px] "
-                            onChange={(value) => {
-                              selProjs(value)
-                            } }
-                            value={viewProjs?.value}
-                            options={[
-                              ...[
-                                { label: 'All Projects', value: 'allprojects' },
-                              ],
-                              ...projectList,
-                            ]} placeholder={undefined}                          />
-                          <span style={{ display: '' }}>
-                            <CSVDownloader
-                              className="mr-6 h-[20px] w-[20px]"
-                              downloadRows={leadLogsRawData}
-                              style={{ height: '20px', width: '20px' }}
-                            />
-                          </span>
-                        </div> */}
+                  
                       </section>
                       <SiteVisitM
                         leadLogsRawData={leadLogsRawData}
@@ -2841,12 +2362,10 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                               {' '}
                               <button
                                 className={`inline-block pb-[6px] mr-3 text-sm  text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
-                                  // isClicked === d.val
                                   1 == 1 ? 'border-black' : 'border-transparent'
                                 }`}
                                 type="button"
                                 role="tab"
-                                // onClick={() => setisClicked(d.val)}
                               >
                                 <section className="flex flex-row text-[15px] mb-1ss ">
                                   <div
@@ -2899,10 +2418,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                     value
                                   )
                                   selViewSource(value)
-                                  // formik.setFieldValue('project', value.value)
                                 }}
                                 value={viewSource?.value}
-                                // options={aquaticCreatures}
                                 options={[
                                   ...[
                                     {
@@ -2925,10 +2442,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   value
                                 )
                                 setSelProject(value)
-                                // formik.setFieldValue('project', value.value)
                               }}
                               value={selProjectIs?.value}
-                              // options={aquaticCreatures}
                               options={[
                                 ...[
                                   {
@@ -2949,31 +2464,11 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             </span>
                           </div>
                         </div>
-                        {/* <section className="flex flex-row text-blue">
-                      <div
-                        onClick={() => {
-                          updateProjectNameInlogs()
-                        }}
-                      >
-                        Update projectName
-                      </div>
-
-                      <div
-                        className="ml-4"
-                        onClick={() => {
-                          updateLeadsLastUpdatetimeFun()
-                        }}
-                      >
-                        update LeadsLastUpdatetTime
-                      </div>
-
-                      {}
-                    </section> */}
+                     
 
                         <section className="flex flex-row justify-between mt-[18px]">
                           <section className="flex">
                             {!isEdit && (
-                              // <Link to={routes.projectEdit({ uid })}>
                               <button
                                 onClick={() => {
                                   setDateRange([null, null])
@@ -2994,7 +2489,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   Now
                                 </span>
                               </button>
-                              // </Link>
                             )}
 
                             <button
@@ -3118,8 +2612,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                       onClear={() => {
                                         console.log('am i cleared')
                                       }}
-                                      // dateFormat="MMM d, yyyy "
-                                      //dateFormat="d-MMMM-yyyy"
+                                 
                                       dateFormat="MMM dd, yyyy"
                                     />
                                   </span>
@@ -3621,10 +3114,8 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                 value
                               )
                               selEmp1(value)
-                              // formik.setFieldValue('project', value.value)
                             }}
                             value={viewEmp1?.value}
-                            // options={aquaticCreatures}
                             options={[
                               ...[
                                 {
@@ -4431,26 +3922,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             Alert Tasks Counts
                           </span>
                         </button>
-                        {/* <SlimSelectBox
-                        name="project"
-                        label=""
-                        className="input min-w-[164px] "
-                        onChange={(value) => {
-                          setSelProjectEmp(value)
-                        }}
-                        value={selProjectEmpIs?.value}
-                        options={[
-                          ...[{ label: 'All Projects', value: 'allprojects' }],
-                          ...projectList,
-                        ]}
-                      /> */}
-                        {/* <span style={{ display: '' }}>
-                        <CSVDownloader
-                          className="mr-6 h-[20px] w-[20px]"
-                          downloadRows={EmpDownloadRows}
-                          style={{ height: '20px', width: '20px' }}
-                        />
-                      </span> */}
+                      
                       </div>
                     </section>
                     <table className="min-w-full  font-semibold text-center mt-6">
@@ -4531,16 +4003,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             Total
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                            {/* {Object.keys(empTaskListTuned.Total).length
-                            empTaskListTuned.reduce((a, b) => {
-                              return a.Total + b.Total
-                            }).length
-                          } */}
-                            {/* {empTaskListTuned.reduce(
-                            (previousValue, currentValue) =>
-                              previousValue.Total + currentValue.Total,
-                            0
-                          )} */}
+
                             {empTaskListTunedTotal?.TotalSum}
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
@@ -4574,37 +4037,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             </div>
           )}
 
-          {/* {unitsView && (
-            <div className="grid grid-cols-1 gap-7 mt-10">
-              <PhaseDetailsCard
-                kind={selkind}
-                feedData={seldata}
-                bg={selbg}
-                currency={selcurrency}
-              />
-            </div>
-          )}
-          {areaView && (
-            <div className="grid grid-cols-1 gap-7 mt-10">
-              <PhaseDetailsCard
-                kind={areakind}
-                feedData={areaData}
-                bg={areabg}
-                currency={areaCurrency}
-              />
-            </div>
-          )}
-          {valueView && (
-            <div className="grid grid-cols-1 gap-7 mt-10">
-              <PhaseDetailsCard
-                kind={valueKind}
-                feedData={valuedata}
-                bg={valuebg}
-                currency={valueCurrency}
-              />
-            </div>
-          )} */}
-
+        
           <ReportSideWindow
             open={isOpenSideForm}
             setOpen={setReportSideForm}

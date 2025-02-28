@@ -121,51 +121,11 @@ export default function ProfileSummary() {
           </svg>
         </figure>
 
-{/* <div className="w-full h-64">
-  <img src={profilecover} className="w-full h-full object-cover !rounded-none" alt="" />
-</div> */}
+
 
 
       <UserAvatarUpload />
-        {/* <div className="-mt-12 relative flex items-center justify-center">
-          <div style={{ position: 'relative' }}>
-            <img
-              className="h-24 w-24 bottom-4 rounded-full border-4 border-white shadow-lg"
-              src="https://images.unsplash.com/photo-1659482633369-9fe69af50bfb?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=320&amp;h=320&amp;q=80"
-              alt="Image Description"
-            />
-            <div className="absolute  bottom-1 left-9 w-full flex items-center justify-center">
-              <button
-                type="button"
-                style={{
-                  width: '1.7rem',
-                  height: '1.7rem',
-                  borderRadius: '50%',
-                  backgroundColor: '#f56565',
-                  color: '#fff',
-                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                  outline: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <svg
-                  className="w-4 h-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                  <line x1="9" y1="9" x2="9.01" y2="9" />
-                  <line x1="15" y1="9" x2="15.01" y2="9" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div> */}
+     
 
         <div className="text-center mt-2 p-4">
           <h1 className="text-lg font-semibold text-black text-black">

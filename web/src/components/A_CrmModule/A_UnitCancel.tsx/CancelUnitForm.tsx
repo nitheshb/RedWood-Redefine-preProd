@@ -53,32 +53,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
     return
   }
   const onSubmitFun = async (data, resetForm) => {
-    // const { uid } = selUnitDetails
-    // const unitUpdate = {
-    //   blocked_leadId: id || '',
-    //   status: 'customer_blocked',
-    //   blocked_by: customerDetailsObj?.Name || '',
-    //   blockedOn: Timestamp.now().toMillis(),
-    //   ct: Timestamp.now().toMillis(),
-    //   Date: Timestamp.now().toMillis(),
-    // }
-    // updateUnitAsBlocked(
-    //   orgId,
-    //   leadDetailsObj2?.ProjectId,
-    //   uid,
-    //   id,
-    //   unitUpdate,
-    //   user?.email,
-    //   enqueueSnackbar,
-    //   resetForm
-    // )
 
-    // step1: check the status of unit
-    // step2: get all transactions of unit
-    // step3: update unit details
-    // step4: update agreegations
-
-    // step1:  check the status of unit
     console.log('status is', selUnitDetails)
 
     if (selUnitDetails?.status === 'booked') {
@@ -93,7 +68,6 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
         ct: Timestamp.now().toMillis(),
         Date: Timestamp.now().toMillis(),
       }
-      // unitUpdate[`cs`] = leadDetailsObj2[`${uid}_cs`]
       unitUpdate[`plotCS`] = []
       unitUpdate[`addChargesCS`] = []
       unitUpdate[`constructCS`] = []
@@ -153,10 +127,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
    const onSubmitSupabase = async (data, resetForm) => {
       console.log('inside supabase support', data)
-    // 1)get the selunit and put it into cancel table
-    // 2)add customer wallet with total amount received
-    // 3)update the unit as available and reset all values, add new values
-    // 4)-ve the booking unit and cancel
+
 
     const x = selUnitDetails
     x.cancellationCharges = data.amount
@@ -349,44 +320,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
 
 
-{/*
-                <Formik
-                  initialValues={initialState}
-                  validationSchema={validate}
-                  onSubmit={(values, { resetForm }) => {
-                    console.log('block unit values are ', values, selDays)
-                    onSubmitFun(values, resetForm)
-                    //
-                    console.log('block unit values are ', values, selDays)
-                  }}
-                >
-                  {(formik) => (
-                    <Form className="mt-8">
-                      <div className="flex justify-center border-2 py-2 px-6 rounded-xl">
-                        <input
-                          type="text"
-                          name="blockReason"
-                          placeholder="Write Cancellation Reason"
-                          className="w-full  text-gray-700 text-lg"
-                          onChange={(e) => {
-                            formik.setFieldValue('blockReason', e.target.value)
-                          }}
-                        />
-                        <ErrorMessage
-                          component="div"
-                          name={'blockReason'}
-                          className="error-message text-red-700 text-xs p-1 mx-auto"
-                        />
-                        <button
-                          type="submit"
-                          className="bg-[#FFCD3E]  text-green-50 font-semibold px-6 py-2 rounded-xl text-md"
-                        >
-                          Cancel Booking
-                        </button>
-                      </div>
-                    </Form>
-                  )}
-                </Formik> */}
+
               </div>
             </div>
 

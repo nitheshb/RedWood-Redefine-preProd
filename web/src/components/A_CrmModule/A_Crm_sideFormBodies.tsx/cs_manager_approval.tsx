@@ -36,22 +36,7 @@ export default function CsMangerApprovalFlow({ type, setStatusFun , selUnitPaylo
     <div className='flex flex-row bg-white '>
     <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%]  overflow-y-scroll" style={{ height: `calc(100vh - 60px)` }}>
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
-        {/* <div className="flex p-4 items-center justify-between">
-          <div className="flex flex-row">
-            <h2 className="font-medium flex-grow">Bank Loan Process</h2>
 
-            <span
-              className=" ml-2 text-blue-500 hover:underline"
-              onClick={() => {
-
-              }}
-            >
-              Add Doc
-            </span>
-          </div>
-          <p className="mr4">Date Created</p>
-
-        </div> */}
         <div className="mt-1">
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Cost Sheet Approval</h2>
@@ -96,16 +81,7 @@ export default function CsMangerApprovalFlow({ type, setStatusFun , selUnitPaylo
           {S1 && (
             <section className="mt-1 ml-9 container">
               <CSManagerApprovalBody selUnitPayload={selUnitPayload} />
-                     {/* <CostBreakUpSheet
-                  selMode={'Detail View'}
-                  title="Cost Break Up Sheetx"
-                  leadDetailsObj1={{}}
-                  selPhaseObj={{}}
-                  unitDetails={selUnitPayload}
-                  projectDetails={{}}
-                  setShowCostSheetWindow={()=>{}}
-                  selUnitDetails={selUnitPayload}
-                /> */}
+  
             </section>
           )}
         </section>

@@ -29,8 +29,7 @@ const LeadsDisplayTable = ({
   allProjectsA,
   setDateRange,
 }) => {
-  // change navbar title
-  // useTitle('Data Table V1')
+
   const { user } = useAuth()
   const { orgId } = user
   const [sortedList, setSortedList] = useState([])
@@ -41,7 +40,6 @@ const LeadsDisplayTable = ({
 
   useEffect(() => {
     console.log('yo yo ', leadsRawList)
-    // selProjectIs?.value === 'allprojects'
     const filList = []
     const query = (item) => {
       if (selProjectIs?.value === 'allprojects') {
@@ -218,14 +216,7 @@ const LeadsDisplayTable = ({
             <table className="w-full whitespace-nowrap">
               <tbody>
                 {
-                  // [
-                  //   {
-                  //     title: 'Marketing Keynote Presentation1',
-                  //     p: 'Urgent',
-                  //     date: '04/07',
-                  //     due: 'Today',
-                  //   },
-                  // ]
+      
                   sortedList.map((dat, i) => {
                     const {
                       comments,
@@ -247,9 +238,7 @@ const LeadsDisplayTable = ({
                         key={i}
                         onClick={() => {
                           console.log('macho 1', dat?.leadUser, dat)
-                          // const y = dat.leadUser
-                          // y.id = dat?.uid
-                          // console.log('macho 1', y)
+                    
                           selUserProfileF('User Profile', dat)
                         }}
                       >

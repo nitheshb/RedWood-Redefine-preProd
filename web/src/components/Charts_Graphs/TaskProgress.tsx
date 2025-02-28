@@ -43,10 +43,7 @@ const TaskProgress = ({ userTodayPerfA }) => {
       </Box>
 
       <Box mt={3}>
-        {/* <FlexBox mb={1} alignItems="center" justifyContent="space-between">
-        <h6>{t('Illustrations')}</h6>
-        <span color="text.disabled">2/7</span>
-      </FlexBox> */}
+
         <div className="flex flex-row align-middle justify-between">
           <h6 className="font-bodyLato font-semibold text-sm">
             {t('Visits Fixed')}

@@ -14,7 +14,6 @@ const CrmUnitCustomerDetailsView1 = ({
           Addressed To
         </h1>
         <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-          {/* {selCustomerPayload?.[`${assets[0]}_unitDetails`]?.unit_no} */}
         </div>
 
         <p className="font-playfair font-semibold  text-gray-600 text-[9px]">

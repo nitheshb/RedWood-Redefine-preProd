@@ -18,24 +18,12 @@ const ProjectStatsCard = ({
       style={{ backgroundColor: bg }}
     >
       <div className="flex items-center flex-shrink-0  px-0  pl-0 mb-2 justify-center">
-        {/* <h1 className="text-lg font-medium">redefine.</h1> */}
         <img className="w-8 h-8" alt="" src={iconP}></img>
         <span className="relative z-10 flex items-center w-auto text-xl font-bold leading-none pl-0 ml-1 ">
           {kind}
         </span>
       </div>
 
-      {/* <div className="flex items-end mt-6 leading-7 text-gray-900 border-0 border-gray-200">
-        <p className="box-border m-0 text-2xl font-semibold leading-none border-solid">
-          $5
-        </p>
-        <p
-          className="box-border m-0 border-solid"
-          style={{ borderImage: 'initial' }}
-        >
-          / montxl
-        </p>
-      </div> */}
 
       <ul className="flex-1 p-0 mt-4 ml-2 mr-2 leading-7 text-gray-900 border-0 border-gray-200">
         {feedData.map((data, i) => {
@@ -45,20 +33,7 @@ const ProjectStatsCard = ({
               className="flex justify-between  w-full mb-2  font-semibold text-left border-dotted border-b border-gray-300 "
             >
               <span className="inline-flex">
-                {/* <svg
-                  className="w-5 h-5 mr-0.5 font-semibold leading-7 text-indigo-500 sm:h-5 sm:w-5 md:h-6 md:w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  ></path>
-                </svg> */}
+
                 <span className="text-[16px] text-gray-900 font-light  text-gray-900">
                   {' '}
                   {data.k}

@@ -24,30 +24,13 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
     console.log('otttt', leadLogsRawData)
     if (leadLogsRawData && leadLogsRawData.length > 0) {
       console.log('innn')
-      // const val1 = Math.round(
-      //   (leadLogsRawData.filter((datObj) =>
-      //     [
-      //       'followup',
-      //       'visitfixed',
-      //       'visitdone',
-      //       'booked',
-      //       'negotiation',
-      //     ].includes(datObj?.Status)
-      //   ).length /
-      //     leadLogsRawData.length) *
-      //     100
-      // )
+
       const val1 = Math.round(
         (leadLogsRawData?.filter((datObj) => datObj?.to == 'visitdone').length /
           leadLogsRawData?.length) *
           100
       )
-      // const val2 = Math.round(
-      //   (leadLogsRawData?.filter((datObj) => datObj?.to == 'negotiation')
-      //     .length /
-      //     leadLogsRawData?.length) *
-      //     100
-      // )
+
       const val2 = Math.round(
         (leadLogsRawData?.filter((datObj) => datObj?.to == 'notinterested')
           .length /
@@ -127,10 +110,7 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
                   }`,
                 },
 
-                // { stausTitle: 'Site Vists', count: '295' },
-                // { stausTitle: 'Negotiation', count: '501' },
-                // { stausTitle: 'Bookings', count: '295' },
-                // { stausTitle: 'Junk', count: '194' },
+
               ].map((item, i) => (
                 <div
                   key={i}
@@ -374,200 +354,7 @@ const SiteVisitM = ({ leadLogsRawData, showDrillDownFun }) => {
                   </div>
                 </div>
               </div>
-              {/* <div
-                style={{
-                  width: '50rem',
-
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <div
-                    style={{
-                      height: '100%',
-                      width: '100%',
-                      display: 'flex',
-                      padding: '0.5rem',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '1.2rem',
-                          color: 'black',
-                          fontWeight: '600',
-                        }}
-                      >
-                        Daniel
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '0.8rem',
-                          color: 'grey',
-                        }}
-                      >
-                        SALES MANAGER
-                      </div>
-                    </div>
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '1.2rem',
-                          color: 'black',
-                          textAlign: 'center',
-                          fontWeight: '600',
-                        }}
-                      >
-                        3 %
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '0.8rem',
-                          color: 'grey',
-                        }}
-                      >
-                        CONVERSION RATE
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <LineGraph />
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <div
-                    style={{
-                      height: '100%',
-                      width: '100%',
-                      display: 'flex',
-                      padding: '0.5rem',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '1.2rem',
-                          color: 'black',
-                          fontWeight: '600',
-                        }}
-                      >
-                        Daniel
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '0.8rem',
-                          color: 'grey',
-                        }}
-                      >
-                        SALES MANAGER
-                      </div>
-                    </div>
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '1.2rem',
-                          color: 'black',
-                          textAlign: 'center',
-                          fontWeight: '600',
-                        }}
-                      >
-                        3 %
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '0.8rem',
-                          color: 'grey',
-                        }}
-                      >
-                        CONVERSION RATE
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <LineGraph />
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <div
-                    style={{
-                      height: '100%',
-                      width: '100%',
-                      display: 'flex',
-                      padding: '0.5rem',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '1.2rem',
-                          color: 'black',
-                          fontWeight: '600',
-                        }}
-                      >
-                        Daniel
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '0.8rem',
-                          color: 'grey',
-                        }}
-                      >
-                        SALES MANAGER
-                      </div>
-                    </div>
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '1.2rem',
-                          color: 'black',
-                          textAlign: 'center',
-                          fontWeight: '600',
-                        }}
-                      >
-                        3 %
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '0.8rem',
-                          color: 'grey',
-                        }}
-                      >
-                        CONVERSION RATE
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <LineGraph />
-                  </div>
-                </div>
-              </div> */}
+           
             </div>
           </div>
         </div>

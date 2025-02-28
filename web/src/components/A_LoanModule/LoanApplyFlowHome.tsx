@@ -53,9 +53,7 @@ const [loanPercentage, setLoanPercentage] = useState('');
 
 
   useEffect(() => {
-  //  save to db :
 
-// write on change and save it to db:
 
 [
   {
@@ -134,66 +132,6 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
 
 
 
-
-    // const handleSaveLoanDetails = async () => {
-    //   if (!loanAmount || !loanPercentage) {
-    //     enqueueSnackbar('Please fill both Loan Amount and Loan Percentage.', {
-    //       variant: 'error',
-    //     });
-    //     return;
-    //   }
-    
-    //   const data = {
-    //     loanAmount: loanAmount,
-    //     loanPercentage: loanPercentage,
-    //   };
-    
-    //   try {
-    //     await updateBankLoanApprovals(
-    //       orgId,
-    //       customerDetails?.id,
-    //       data,
-    //       user.email,
-    //       'Loan details saved successfully!',
-    //       'success',
-    //       enqueueSnackbar
-    //     );
-    //     enqueueSnackbar('Loan details saved successfully!', {
-    //       variant: 'success',
-    //     });
-    //   } catch (error) {
-    //     console.error('Failed to save loan details:', error);
-    //     enqueueSnackbar('Failed to save loan details.', {
-    //       variant: 'error',
-    //     });
-    //   }
-    // };
-
-
-
-
-
-
-
-
-
-
-    // const updatePerSancationFun = (status) => {
-    //   SetPreSanctionReview(status)
-    //   const x1 = {
-    //     'LpreStatus': status || '',
-    //     'rejectionReason': status === 'Rejected' ? rejectionReason : ''
-    //   }
-    //   updateBankLoanApprovals(orgId, customerDetails?.id, x1, user.email, `${status} Saved..!`, 'success', enqueueSnackbar)
-    //   if (status === 'Rejected') {
-    //     setSubmittedReason(rejectionReason)
-    //     setRejectionReason('')
-    //     setRejection(false)
-    //   }
-    // }
-
-
-
     const handleSaveLoanDetails = async () => {
       if (!loanAmount || !loanPercentage) {
         enqueueSnackbar('Please fill both Loan Amount and Loan Percentage.', {
@@ -238,29 +176,12 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
     <div className='flex flex-row bg-white'>
     <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px]  h-[100vh]   overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
-        {/* <div className="flex p-4 items-center justify-between">
-          <div className="flex flex-row">
-            <h2 className="font-medium flex-grow">Bank Loan Process</h2>
 
-            <span
-              className=" ml-2 text-blue-500 hover:underline"
-              onClick={() => {
-
-              }}
-            >
-              Add Doc
-            </span>
-          </div>
-          <p className="mr4">Date Created</p>
-
-        </div> */}
         <div className="mt-1">
           <div className="p-2  bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Loan Approval</h2>
             <p className="text-md text-[10px] flex-grow text-right">
-              {/* Banker sanction is {postSanctionReview} */}
-              {/* {customerDetails?.loan_rejection_reason || `Banker sanction is ${postSanctionReview}`} */}
-              {/* {customerDetails?.loan_rejection_reason || customerDetails?.post_loan_rejection_reason || `Banker sanction is ${postSanctionReview}`} */}
+            
 
               <div>
              {customerDetails?.loan_rejection_reason && (
@@ -508,9 +429,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                       {'In-Review'}
                       <span className="absolute inset-0" />
                     </a>
-                    {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+        
                   </div>
                 </div>
 
@@ -551,9 +470,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                       {'Approved'}
                       <span className="absolute inset-0" />
                     </a>
-                    {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+
                   </div>
                 </div>
                 <div
@@ -603,9 +520,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                       {'Rejected'}
                       <span className="absolute inset-0" />
                     </a>
-                    {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+          
                   </div>
                 </div>
               </div>
@@ -625,7 +540,6 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     <section
                       key={i}
                       onClick={() => {
-                        // show sidebar and display the worddoc
                       }}
                     >
                       <DocRow
@@ -639,15 +553,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                 </div>
               )}
 
-              {/* {preSanctionReview === 'Rejected' && (
-                <div className="mt-2">
-                  <div className="p-4 bg-gray-200 rounded-md">
-                    Enter Rejected Reason
-                  </div>
-                </div>
-              )} */}
 
-{/* {preSanctionReview === 'Rejected' && ( */}
 {preSanctionReview === 'Rejected' && (
 
     <div className="mt-2">
@@ -741,11 +647,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     name: 'Demand Letter',
                     type: 'demandLet',  time: customerDetails?.demandLetDocUpDate, url: customerDetails?.demandLetDocUrl , filName: customerDetails?.demandLetFilName
                   },
-                  // {
-                  //   id: 1236,
-                  //   name: 'Payment Receipts',
-                  //   type: 'receipts',  time: customerDetails?.sancletterDocUpDate, url: customerDetails?.sancletterDocUrl , filName: customerDetails?.sancletterFilName
-                  // },
+       
                   {
                     id: 3,
                     name: 'Builder Noc',
@@ -765,7 +667,6 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                   <section
                     key={i}
                     onClick={() => {
-                      // show sidebar and display the worddoc
                       setSliderInfo({
                         open: true,
                         title: 'viewDocx',
@@ -866,9 +767,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                         {'In-Review'}
                         <span className="absolute inset-0" />
                       </a>
-                      {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+        
                     </div>
                   </div>
 
@@ -909,9 +808,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                         {'Approved'}
                         <span className="absolute inset-0" />
                       </a>
-                      {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+          
                     </div>
                   </div>
                   <div
@@ -951,9 +848,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                         {'Rejected'}
                         <span className="absolute inset-0" />
                       </a>
-                      {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+           
                     </div>
                   </div>
                 </div>
@@ -1023,7 +918,6 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                         <section
                           key={i}
                           onClick={() => {
-                            // show sidebar and display the worddoc
                           }}
                         >
                           <DocRow
@@ -1042,14 +936,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     </div>
                   </>
                 )}
-{/* 
-                {postSanctionReview === 'Rejected' && (
-                  <div className="mt-4">
-                    <div className="p-4 bg-gray-200 rounded-md">
-                      Enter Rejected Reason
-                    </div>
-                  </div>
-                )} */}
+
 
 
 {postSanctionReview === 'Rejected' && (

@@ -23,7 +23,6 @@ const LeadsManagementHome = () => {
   const [rows, setRows] = useState([])
   const [searchKey, setSearchKey] = useState('')
 
-  // kanban board
   const [ready, setReady] = useState(false)
   const [addLeadsTypes, setAddLeadsTypes] = useState('')
 
@@ -31,10 +30,7 @@ const LeadsManagementHome = () => {
     setAddLeadsTypes(title)
     setisImportLeadsOpen(true)
   }
-  // useEffect(() => {
-  //   console.log('table data is ', tableData2)
-  //   setTableData(tableData2)
-  // }, [])
+
 
   useEffect(() => {
     getLeadsDataFun()
@@ -80,12 +76,7 @@ const LeadsManagementHome = () => {
       if (item.Source.toLowerCase().includes(selStatus.toLowerCase())) {
         return item
       }
-      //  else if (item.Status.toLowerCase() === selStatus.toLowerCase()) {
-      //   console.log('All1', item)
-      //   return item
-      // } else if (item.Source.toLowerCase().includes(selStatus.toLowerCase())) {
-      //   return item
-      // }
+
     })
     await setRows(x)
     await console.log('xo', x)
@@ -173,12 +164,7 @@ const LeadsManagementHome = () => {
             </div>
 
             <MetaTags title="ExecutiveHome" description="ExecutiveHome page" />
-            {/* {!ready && (
-              <TodayLeadsActivityListHomeView
-                setisImportLeadsOpen={setisImportLeadsOpen}
-                selUserProfileF={selUserProfileF}
-              />
-            )} */}
+ 
             {leadsFetchedData.length === 0 && (
               <div className="py-8 px-8 mt-10 flex flex-col items-center bg-red-100 rounded">
                 <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
@@ -197,18 +183,9 @@ const LeadsManagementHome = () => {
               </div>
             )}
             <div>
-              {/* <Header /> */}
               <div className="flex justify-center items-center text-gray-900 h-12"></div>
               <div className=" p-16 justify-center items-center text-gray-900">
-                {/* { listings.map(listing => <JobCard listing={listing} key={listing.id} filtering={filterListings} />) } */}
-                {/* <EnhancedTableToolbar
-                  numSelected={selected.length}
-                  selStatus={selStatus}
-                  filteredData={rows}
-                  searchKey={searchKey}
-                  setSearchKey={setSearchKey}
-                  rows={rows}
-                /> */}
+  
                 {leadsFetchedData
                   .filter((item) => {
                     if (searchKey == '' || !searchKey) {
@@ -239,8 +216,7 @@ const LeadsManagementHome = () => {
                   .slice()
                   .sort(getComparator(order, orderBy))
                   .map((listing, index) => {
-                    // const isItemSelected = isSelected(listing.Name)
-                    // const labelId = `enhanced-table-checkbox-${index}`
+                
                     return (
                       <>
                         <div

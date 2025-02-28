@@ -220,7 +220,7 @@ export default function ReportMainCom() {
         return da.value == viewProjs?.value
       })
       setFiltProjectListTuned(z)
-      // viewSource
+   
     }
   }, [projectList, viewProjs])
 
@@ -260,29 +260,7 @@ export default function ReportMainCom() {
     setmounted(true)
     getLeadsDataFun(startOfDay(d).getTime(), true, true, true)
   }, [])
-  // useEffect(() => {
-  //   fetchLogsData()
-  // }, [])
-  // useEffect(() => {
-  //   fetchLogsData()
-  // }, [sourceDateRange])
 
-  // const fetchLogsData = async () => {
-  //   try{
-  //   const steamLeadLogs = await steamAllLeadsActivity(
-  //     orgId,
-  //     'snap',
-  //     {
-  //       uid: 'VIzMzz5rl0NAywdnpHpb',
-  //       cutoffDate: sourceDateRange,
-  //     },
-  //     (error) => setLeadLogsRawData([])
-  //   )
-  //   await setLeadLogsRawData(steamLeadLogs)
-  //   }catch(err){
-  //     setLeadLogsRawData([])
-  //   }
-  // }
   useEffect(() => {
     if (sourceDateRange) {
       getLeadsDataFun(sourceDateRange, true, false, false)
@@ -549,10 +527,8 @@ export default function ReportMainCom() {
         onChange={(value) => {
           console.log('zoro condition changed one  is', value)
           selEmp1(value)
-          // formik.setFieldValue('project', value.value)
         }}
         value={viewEmp1?.value}
-        // options={aquaticCreatures}
         options={[
           ...[{ label: 'All Employees', value: 'allemployees' }],
           ...empListTuned,

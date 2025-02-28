@@ -13,19 +13,8 @@ const ProjectDocRow = ({ id, fileName,url,  date, amount, status, key }) => {
   const [showModel, setShoModel] = useState(false)
   const [dateIs, setDate] = useState('NA')
   const toggle = () => setShoModel(!showModel)
-  // const { user } = useContext(AuthContext)
   const deleteDocument = async (id) => {
-    // console.log(id);
-    // try {
-    //   const docRef = doc(firestore, 'userDocs', `${user?.uid}`, 'docs', id)
-    //   console.log(docRef)
-    //   if (docRef) {
-    //     deleteDoc(docRef)
-    //     setShoModel(false)
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    // }
+
   }
   useEffect(() => {
     if (date) {
@@ -67,27 +56,7 @@ const ProjectDocRow = ({ id, fileName,url,  date, amount, status, key }) => {
           <TrashIcon name="delete" className="w-4 h-4" />
         </button>
       </div>
-      {/* <Modal size="sm" active={showModel} toggler={toggle}>
-        <ModalBody>Do you really want to delete this document?</ModalBody>
-        <ModalFooter>
-          <Button
-            color="red"
-            onClick={() => deleteDocument(id)}
-            ripple="dark"
-            type="submit"
-          >
-            Yes
-          </Button>
-          <Button
-            color="blue"
-            buttonType="link"
-            onClick={() => setShoModel(false)}
-            ripple="dark"
-          >
-            No
-          </Button>
-        </ModalFooter>
-      </Modal> */}
+     
     </>
   )
 }

@@ -48,42 +48,25 @@ export default function ConstructProjectUnitsDisplay({
     <ul className="">
       <li className="py-2">
         <section>
-          {/* <section className="px-8 bg-red-100 w-[130px] rounded-r-2xl">
-          Fl-{floorDat}
-        </section> */}
+
           <div className=" mt-">
             {unitsFeed
-              // ?.filter((da) => da?.floor == i)
               .map((data, index) => {
                 return unitShrink ? (
-                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
                   <div
                     className=" mb-1  mx-1 inline-block"
                     key={index}
-                    // onClick={() => handleDetailView_Close(data)}
                     onClick={() => {
                       console.log('i as clicked here 0')
                       dispSideView(data)
-                      // console.log('check is ', leadDetailsObj)
-                      // setSliderInfo({
-                      //   open: true,
-                      //   title: 'View Unit',
-                      //   sliderData: {
-                      //     unitDetail: data,
-                      //     phaseDetail: phaseFeed,
-                      //     leadDetailsObj: leadDetailsObj,
-                      //   },
-                      //   widthClass: 'max-w-4xl',
-                      // })
+
                     }}
                   >
                     <ConstructUnitCardSmall
                       kind={data}
                       feedData={unitsFeed}
                       bg="#CCFBF1"
-                      // setShowCostSheetWindow={setShowCostSheetWindow}
-                      // setSelUnitDetails={setSelUnitDetails}
-                      // setSelMode={setSelMode}
+          
                     />
                   </div>
                 ) : (
@@ -92,7 +75,6 @@ export default function ConstructProjectUnitsDisplay({
                     className="p-2 mb-1  mx-1 inline-block cursor-pointer"
                     key={index}
                     onClick={() => {
-                      // handleDetailView_Close(data)
                       console.log('i as clicked here 0')
                       dispSideView(data)
                     }}

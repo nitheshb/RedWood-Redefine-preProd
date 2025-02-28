@@ -129,26 +129,8 @@ const PaymentScheduleSheet = ({
         : ''
 
     const x = [
-      // {
-      //   myId: '1',
-      //   units: {
-      //     value: 'fixedcost',
-      //     label: 'Fixed cost',
-      //   },
-      //   component: {
-      //     value: 'unit_cost_charges',
-      //     label: 'Unit Cost',
-      //   },
-      //   charges: typeof y
-      //     ? selUnitDetails?.super_built_up_area * y
-      //     : selUnitDetails?.super_built_up_area * selUnitDetails?.rate_per_sqft,
-      //   gst: {
-      //     label: '0',
-      //     value: '0',
-      //   },
-      // },
+      
     ]
-    // const x = costSheetA
     let merged = []
     try {
       if (leadDetailsObj2) {
@@ -185,16 +167,7 @@ const PaymentScheduleSheet = ({
   const initialState = initialValuesA
 
   const validateSchema = Yup.object({
-    // customerName1: Yup.string().required('Required'),
-    // co_Name1: Yup.string().required('Required'),
-    // panNo1: Yup.string().required('Required'),
-    // panDocUrl1: Yup.string().required('Required'),
-    // aadharNo1: Yup.string().required('Required'),
-    // aadharUrl1: Yup.string().required('Required'),
-    // occupation1: Yup.string().required('Required'),
-    // phoneNo1: Yup.string().required('Required'),
-    // email1: Yup.string().required('Required'),
-    // aggrementAddress: Yup.string().required('Required'),
+  
   })
 
   const resetter = () => {
@@ -347,12 +320,6 @@ const PaymentScheduleSheet = ({
                                   Payment Schedule
                                 </p>
 
-                                {/* <button
-                                  className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                                  type="button"
-                                >
-                                  Receipt Download
-                                </button> */}
                                 <div className="flex-auto flex flex-row-reverse">
                                   <button
                                     className="h-[30px] text-base hover:scale-110 focus:outline-none flex justify-center px-2  rounded font-bold cursor-pointer
@@ -463,19 +430,7 @@ const PaymentScheduleSheet = ({
                                                           label=""
                                                           name="Booking"
                                                           onChange={(e) => {
-                                                            // setNewSqftPrice(e.target.value)
-                                                            // console.log(
-                                                            //   'changed value is',
-                                                            //   e.target.value
-                                                            // )
-                                                            // formik.setFieldValue(
-                                                            //   'unit_cost_charges',
-                                                            //   selUnitDetails?.super_built_up_area *
-                                                            //     e.target.value
-                                                            // )
-                                                            // setNewSqftPrice(
-                                                            //   e.target.value
-                                                            // )
+                                                            
                                                             formik.setFieldValue(
                                                               `${
                                                                 d1?.stage?.value
@@ -501,7 +456,6 @@ const PaymentScheduleSheet = ({
                                                               `Booking`
                                                             ]
                                                           }
-                                                          // value={newSqftPrice}
                                                           type="number"
                                                         />
                                                       </>
@@ -584,19 +538,8 @@ const PaymentScheduleSheet = ({
                                                   paymentScheduleA,
                                                   formik
                                                 )}
-                                                {/* {paymentScheduleA.reduce(
-                                                  (partialSum, obj) =>
-                                                    partialSum +
-                                                    Number(
-                                                      formik.values[
-                                                        `${obj['percentage']}`
-                                                      ]
-                                                    ),
-                                                  0
-                                                )} */}
-                                                {/* {paymentScheduleA.reduce(function (acc, obj) {
-                                    return acc + obj.x
-                                  }, 0)} */}
+                 
+                        
                                               </td>
                                             </tr>
                                           </tfoot>
@@ -612,18 +555,7 @@ const PaymentScheduleSheet = ({
                                             {' '}
                                             Send to WhatsApp{' '}
                                           </button>
-                                          {/* <Pdf targetRef={ref} filename="post.pdf">
-                              {({ toPdf }) => (
-                                <button
-                                  onClick={toPdf}
-                                  type="button"
-                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
-                                >
-                                  {' '}
-                                  Download{' '}
-                                </button>
-                              )}
-                            </Pdf> */}
+
                                           <button
                                             onClick={() => downloadPdf()}
                                             type="button"
@@ -637,9 +569,8 @@ const PaymentScheduleSheet = ({
                                             className="mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-sm hover:shadow-lg hover:bg-green-500"
                                             type="submit"
                                             disabled={loading}
-                                            // onClick={() => submitFormFun(formik)}
                                           >
-                                            {/* {loading && <Loader />} */}
+                                          
                                             Save
                                           </button>
                                         </div>
@@ -661,7 +592,6 @@ const PaymentScheduleSheet = ({
         </div>
       </div>
 
-      {/* old form  */}
     </>
   )
 }

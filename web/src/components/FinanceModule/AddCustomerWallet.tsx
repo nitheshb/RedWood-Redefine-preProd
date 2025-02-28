@@ -61,13 +61,7 @@ const AddCustomerWallet = ({
 
 
 
-  // const [formattedValue, setFormattedValue] = useState('');
 
-  // const handleChange = (e) => {
-  //   const value = e.target.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-  //   const formatted = value ? `Rs.${parseInt(value, 10).toLocaleString('en-IN')}` : '';
-  //   setFormattedValue(formatted);
-  // };
 
   const [startDate, setStartDate] = useState(d)
 
@@ -113,14 +107,11 @@ const AddCustomerWallet = ({
         (err) => console.log(err),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            // createAttach(orgId, url, by, file.name, id, attachType)
             file.url = url
-            // setCmntFileType(file.name.split('.').pop())
-            // setFiles([...files, file])
+ 
 
             setCommentAttachUrl(url)
             return url
-            //  save this doc as a new file in spark_leads_doc
           })
         }
       )
@@ -143,33 +134,9 @@ const AddCustomerWallet = ({
     await confettiRef?.current?.fire()
 
     return
-    // get booking details, leadId, unitDetails,
-    //  from existing object send values of
-    //  booking
-    // copy unit data as it is
-    // copy lead data as it is
-    //  unit details
-
-    // 1)Make an entry to finance Table {source: ''}
-    // 2)Create new record in Customer Table
-    // 3)Update unit record with customer record and mark it as booked
-    // 4)update lead status to book
-
-    //   const x = await addDoc(collection(db, 'spark_leads'), data)
-    // await console.log('x value is', x, x.id)
 
     const { uid } = selUnitDetails
-    // 1)Make an entry to finance Table {source: ''}
 
-    // create customer
-
-    // update unit record with booked status
-
-    // update payment schedule
-    // log cost sheet
-    // capture transaction
-    // entry  payment log
-    // entry payment sheet
 
     console.log('check this value ', user, leadDetailsObj2)
     const { Status } = leadDetailsObj2
@@ -196,13 +163,6 @@ const AddCustomerWallet = ({
       enqueueSnackbar
     )
 
-    // add phaseNo , projName to selUnitDetails
-    // 2)Create('')
-
-    // 3)Update unit record with customer record and mark it as booked
-
-    // 4)update lead status to book
-    // updateLeadStatus(leadDocId, newStatus)
   }
 
 
@@ -222,15 +182,7 @@ const AddCustomerWallet = ({
     fileUploader: '',
   }
 
-  // const validateSchema = Yup.object({
-  // date: Yup.string().required('Bank Required'),
-  // amount: Yup.string().required('Required'),
-  // payto: Yup.string().required('Required'),
-  // mode: Yup.string().required('Bank Required'),
-  // drawnonbank: Yup.string().required('Required'),
-  // bank_ref_no: Yup.string().required('Required'),
-  // dated: Yup.string().required('Required'),
-  // })
+
 
   const submitFormFun = (formik) => {
     formik.handleSubmit()
@@ -267,30 +219,7 @@ const AddCustomerWallet = ({
       )
 
       return unsubscribe
-    // const additionalUserInfo = await getProject(orgId, selUnitDetails?.pId)
-    // const bankA = await additionalUserInfo?.bankAccounts?.map((user) => {
-    //   user.label = user?.accountName
-    //   user.value = user?.accountNo
-    // })
-    // await console.log(
-    //   'fetched users list is ==>',
-    //   additionalUserInfo,
-    //   additionalUserInfo?.bankAccounts,
-    //   additionalUserInfo?.bankAccounts?.map((user) => {
-    //     user.label = user?.accountName
-    //     user.value = user?.accountNo
-    //     return user
-    //   })
-    // )
 
-    // await setBankDetailsA(
-    //   additionalUserInfo?.bankAccounts?.map((user) => {
-    //     user.label = user?.accountName
-    //     user.value = user?.accountNo
-    //     return user
-    //   })
-    // )
-    // await console.log('selected value is xxx ', additionalUserInfo)
   }
   return (
     <div className="bg-white h-full">
@@ -303,10 +232,7 @@ const AddCustomerWallet = ({
             </section>
           )}
           <div className="relative mx-4 max-h-[65%]  rounded-xl  px-2 pb-14 border ">
-            {/* <div className="space-y-4 text-white">
-              <h3 className="font-bold text-2xl">Confirm Booking</h3>
-
-            </div> */}
+ 
 
             <div className="grid gap-8 grid-cols-1">
               <div className="flex flex-col ">
@@ -377,11 +303,7 @@ const AddCustomerWallet = ({
                                                   label="Amount"
                                                   name="amount"
                                                   type="number"
-                                                  // onChange={(e) => {
-                                                  //   setAmount(e.target.value)
-                                                  //   console.log('changed value is ', e.target.value)
-                                                  //   formik.setFieldValue('amount', e.target.value)
-                                                  // }}
+       
                                                 />
                                               </div>
                                             </div>
@@ -556,18 +478,9 @@ const AddCustomerWallet = ({
                                             />
 
 
-                                            {/* Add Receipt  */}
+                         
                                           </label>
-                                          {/* {panCard1 != '' && (
-                        <button
-                          onClick={() =>
-                            downloadImage(panCard1, 'pancard1.PNG')
-                          }
-                        >
-                          {' '}
-                          <ArrowCircleDownIcon className="w-4 h-4 cursor-pointer ml-1 mb-[9px] mr-2 inline-block text-gray-400 " />
-                        </button>
-                      )} */}
+  
                                           <input
                                             type="file"
                                             className="hidden"
@@ -578,10 +491,7 @@ const AddCustomerWallet = ({
                                                 'fileUploader',
                                                 e.target.files[0]
                                               )
-                                              // handleFileUploadFun(
-                                              //   e.target.files[0],
-                                              //   'panCard1'
-                                              // )
+                               
                                             }}
                                           />
                                         </div>
@@ -617,31 +527,7 @@ const AddCustomerWallet = ({
                                       )}
                                     {formik?.file?.fileUploader}
 
-                                    {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
 
-                                    {/* <h6 className="text-blueGray-400 text-sm mt-3 ml-3 pt-4 mb-6 font-bold uppercase">
-                                Source Of Booking
-                              </h6> */}
-                                    {/* <div className="flex flex-wrap">
-                                <div className="w-full lg:w-12/12 px-4">
-                                  <div className="relative w-full mb-3">
-                                    <TextField2
-                                      label="Source"
-                                      name="bookingSource"
-                                      type="text"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="w-full lg:w-12/12 px-4">
-                                  <div className="relative w-full mb-3">
-                                    <TextField2
-                                      label="Booked By"
-                                      name="bookedBy"
-                                      type="text"
-                                    />
-                                  </div>
-                                </div>
-                              </div> */}
                                     {!bookingProgress && (
                                       <div className="text-center space-x-4 mt-6">
                                         <button
@@ -684,47 +570,13 @@ const AddCustomerWallet = ({
                                   myObj={newPlotCostSheetA}
                                   newPlotPS={newPlotPS}
                                   payementDetails={payementDetails}
-                                  // myAdditionalCharges={
-                                  //   newAdditonalChargesObj
-                                  // }
-                                  // netTotal={netTotal}
-                                  // setNetTotal={setNetTotal}
-                                  // partATotal={partATotal}
-                                  // partBTotal={partBTotal}
-                                  // setPartATotal={setPartATotal}
-                                  // setPartBTotal={setPartBTotal}
+ 
                                   projectDetails={projectDetails}
-                                  // leadDetailsObj1={leadDetailsObj1}
                                 />
                               </div>
                             )}
 
-                            {/* <div className=" text-right  md:block flex flex-col-reverse py-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg    w-full">
-                              <button
-                                className=" bg-gradient-to-r from-violet-300 to-indigo-300
-                                  text-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                                onClick={handleClick}
-                                type="button"
-                              >
-                                Reset
-                              </button>
-                              <button
-                                className=" bg-gradient-to-r from-violet-300 to-indigo-300
-                                  text-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                                onClick={handleClick}
-                                type="button"
-                              >
-                                Download
-                              </button>
-                              <button
-                                className=" bg-gradient-to-r from-violet-300 to-indigo-300
-                                  text-black  font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                                type="submit"
-                                disabled={loading}
-                              >
-                                {'Capture Payment'}
-                              </button>
-                            </div> */}
+
                           </section>
                         </div>
                       </Form>

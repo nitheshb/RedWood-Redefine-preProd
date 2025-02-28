@@ -479,15 +479,13 @@ const TermsConditionsEditableTable = ({
     if (title === 'Cost Sheet Estimation') {
       setCostSheetEstimationA([...costSheetEstimationA, newRow])
     }
-    // setDataMapCopy(dataMapCopy1)
     console.log('receiptA', newRow)
   }
-  // step 4: Assign useState value w.r.t to each title
   const dataMapCopy1 = [
     {
       title: 'Receipt',
-      data: receiptA, // use state value here
-      // data: [] ,
+      data: receiptA, 
+      
       desccription: 'Terms & Conditions to display on Payment Receipt',
     },
 
@@ -504,45 +502,14 @@ const TermsConditionsEditableTable = ({
   const handleCellChange = (e, key, rowIndex) => {
     console.log('handleCellChange', e, key, rowIndex)
     const newValue = e.target.value
-    // setCellValues((prev) => ({
-    //   ...prev,
-    //   [key]: prev[key].map((value, i) => (i === rowIndex ? newValue : value)),
-    // }))
+
   }
 
   const handleCellBlur = () => {
     setEditingCell(null)
   }
 
-  // const handleDeleteRow = (dataObj) => {
-  //   // step : 7
-  
-  //   const title = dataObj?.title;
-  //   const id = dataObj?.id;
-  //   // const data = dataObj?.data?.find((item) => item.id === selcDelRow?.id)
-  //   // console.log('data is', data)
 
-  //   setDeletedRows([...deletedRows, dataObj])
-  //   console.log('deletedRows', deletedRows)
-  //   if (title === 'Receipt') {
-  //     const updatedArr = receiptA.filter((item) => item.id != dataObj.id)
-  //     const setOrder = updatedArr.map((item, i) => {
-  //       return { ...item, order: i }
-  //     })
-  //     setReceiptA(setOrder)
-  //   }
-  // }
-
-  // const handleClick = (item: string) => {
-  //   setActiveItem(item)
-  //   if (contentRefs.current[item]) {
-  //     contentRefs.current[item].scrollIntoView({
-  //       behavior: 'smooth',
-  //       block: 'start',
-  //     })
-  //     setCurrentSection(item)
-  //   }
-  // }
 
 
 
@@ -788,10 +755,8 @@ const TermsConditionsEditableTable = ({
     setConstGST(e.target.value)
   }
   const createDBFun = () => {
-    // get all the data dataObj
-    // insert data to firebase db
+
     dataMapCopy?.map((dataObj, key) => {
-      // console.log('dataObj', dataObj)
       const data = dataObj?.data?.map((data1, i) => {
         const data2 = {
           title: dataObj?.title,
@@ -805,10 +770,9 @@ const TermsConditionsEditableTable = ({
     })
   }
   const createDBFun2 = () => {
-    // get all the data dataObj
-    // insert data to firebase db
+
     dataMapCopy?.map((dataObj) => {
-      // console.log('dataObj', dataObj)
+  
       const data = dataObj?.data?.map((data1, i) => {
         const uId = uuidv4()
         const data2 = {
@@ -891,49 +855,15 @@ const TermsConditionsEditableTable = ({
 
                             <td className="py-5 px-4 text-[#0891B2] text-md border-b">{i+1}</td>
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
-                              {/* {editingCell?.key === dataObj.title &&
-                              editingCell.rowIndex === i &&
-                              editingCell.column === 'Options' ? (
-                                <input
-                                  type="text"
-                                  className="border-none w-full"
-                                  value={
-                                    cellValues[dataObj.title] || data.label
-                                  }
-                                  onChange={(e) =>
-                                    handleCellChange(e, data?.title, i)
-                                  }
-                                  onBlur={handleCellBlur}
-                                  autoFocus
-                                />
-                              ) : (
-                                <span
-                                  onClick={() =>
-                                    handleCellEdit(dataObj.title, i, 'Options')
-                                  }
-                                >
-                                  {data.label}
-                                </span>
-                              )} */}
+
                               <input
                                 type="text"
                                 value={data.label}
                                 onChange={(e) => {
-                                  // handleChange(row.id, 'unit', e.target.value)
                                   const rawValue = e.target.value
-                                  // dataObj?.title
 
-                                  // const numValue = parseFloat(rawValue)
                                   handleChange1(dataObj?.title, data, rawValue)
-                                  // if (!isNaN(numValue)) {
-                                  //   handleChange1(
-                                  //     row.id,
-                                  //     'charges',
-                                  //     numValue
-                                  //   )
-                                  // } else {
-                                  //   handleChange1(row.id, 'charges', 0)
-                                  // }
+    
                                 }}
                                 className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                               />
@@ -942,7 +872,6 @@ const TermsConditionsEditableTable = ({
 
                             <td className="py-5 px-4 text-md items-center align-middle border-b text-[#6b7280]">
                               <button
-                                // onClick={() => handleDeleteRow(data, i)}
                                 onClick={() => handleDeleteRow(data)}
                                 className="flex items-center text-[#728195]"
                                 aria-label="Delete"
@@ -1005,7 +934,6 @@ const TermsConditionsEditableTable = ({
 
                     <div className="flex  justify-between">
                       <button
-                        // onClick={() => appendRow(dataObj?.title)}
                         onClick={() => addRowNew(dataObj)}
                         className=" mt-4 px-2 py- bg-[#0891B2] text-white rounded-lg"
                       >
@@ -1025,18 +953,7 @@ const TermsConditionsEditableTable = ({
             </div>
           </div>
         </div>
-        {/* <div className="">
-          <div className="mb-4 mt-2">
-            <div className="inline">
-              <div className="" onClick={() => createDBFun2()}>
-                <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                  Initial Setup <abbr title="required"></abbr>
-                </label>
-              </div>
 
-            </div>
-          </div>
-        </div> */}
       </div>
     </>
   )

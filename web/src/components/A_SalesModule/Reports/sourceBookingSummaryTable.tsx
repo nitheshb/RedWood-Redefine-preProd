@@ -152,7 +152,6 @@ const SourceBookingSummaryTable = ({ projects }) => {
 
 
   const showDrillDownFun = async (text, data) => {
-    // Display sideForm
     setReportSideForm(true)
     setDrillDownPayload(data)
     setSubTitle(text)
@@ -242,24 +241,6 @@ const SourceBookingSummaryTable = ({ projects }) => {
           Source Booking Report
         </div>
 
-        {/* <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-
-          </label>
-          <select
-            id="view"
-            className="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={dataView}
-            onChange={(e) => handleChangeView(e.target.value)}
-          >
-            <option value="monthly">Monthly</option>
-            <option value="weekly">Weekly</option>
-            <option value=''>Anually</option>
-            <option value=''>Quarterly</option>
-            <option value=''>Halferly</option>
-          </select>
-        </div> */}
-
         <div className="flex mb-2 space-x-2">
           <button
             onClick={handleDecreaseMonth}
@@ -326,12 +307,7 @@ const SourceBookingSummaryTable = ({ projects }) => {
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-          {/* <tr className="bg-gray-100">
-            <td
-              colSpan={dataView === 'monthly' ? 7 : 6}
-              className="border border-black"
-            ></td>
-          </tr> */}
+
 
           {loader && <TableSkeleton rows={3} columns={7} />}
           {projectAValues
@@ -429,33 +405,9 @@ const SourceBookingSummaryTable = ({ projects }) => {
                   className="border-b border-gray-200 hover:bg-gray-100"
                 >
                   <td className="py-3 px-6 text-left whitespace-nowrap bg-white border-b font-medium text-gray-900">
-                    {/* {capitalizeFirstLetter(data?.projectName)} */}
                     {data?.label}
                   </td>
 
-
-
-                  {/* <td className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900"
-                                   onClick={() =>{
-                                    console.log('data is ', data)
-                                    showDrillDownFun('Source Bookings', {
-                                      uid: data.uid,
-                                      months: data?.months,
-                                     thisMonth: {
-                                        startOfMonth: data?.months[0]['startOfMonth'],
-                                        endOfMonth:
-                                          data?.months[data?.months.length - 1]['endOfMonth'],
-                                      },
-                                    })
-                                  }
-                                }
-                  >
-                    {data?.months
-                      ?.reduce((accumulator, currentValue) => {
-                        return accumulator + (currentValue?.receive || 0)
-                      }, 0)
-                      ?.toLocaleString('en-IN')}
-                  </td> */}
 
 
 <td

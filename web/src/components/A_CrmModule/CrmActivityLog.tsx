@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-// import { useState } from 'react'
-// import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
-// import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
+
 import { useState, useEffect } from 'react'
 import { supabase } from 'src/context/supabase'
 import { Card, CardHeader, Container, Grid, Stack, Typography, useTheme } from '@mui/material'
@@ -113,7 +111,6 @@ console.log('account records', selUnitPayload?.id, orgId)
       })
       .subscribe()
 
-    // Clean up the subscription when the component unmounts
     return () => {
       supabase.removeSubscription(subscription)
     }

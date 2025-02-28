@@ -251,23 +251,16 @@ const LfileUploadTableHome = ({ fileRecords, title, pId, myBlock }) => {
             )}
 
             {value === 'duplicateR' && (
-              // dupeDatais.map((data, index) => (
               <LfileuploadTableTemplate
-                // key={index}
                 title={title}
                 selStatus={'all'}
                 rowsParent={dupRows}
                 sourceTab={value}
                 pId={pId}
               />
-              // )
             )}
 
-            {/* <LLeadsTableBody
-              data={filterTable}
-              handleDelete={handleDelete}
-              selStatus={value}
-            /> */}
+   
           </Grid>
         </Grid>
       </Card>

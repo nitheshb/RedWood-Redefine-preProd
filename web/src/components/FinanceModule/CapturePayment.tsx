@@ -92,13 +92,7 @@ const CaptureUnitPayment = ({
       getProjectDetails(selUnitDetails?.pId)
     }, [selUnitDetails])
 
-  // const [formattedValue, setFormattedValue] = useState('');
 
-  // const handleChange = (e) => {
-  //   const value = e.target.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-  //   const formatted = value ? `Rs.${parseInt(value, 10).toLocaleString('en-IN')}` : '';
-  //   setFormattedValue(formatted);
-  // };
 
 
 
@@ -269,16 +263,15 @@ x.map((user) => {
                 let x1 = { url: url, fileName: file.name }
                 setCommentAttachUrl(x1)
 
-                // Resolve the promise with the URL once the upload is successful
                 resolve(x1)
               }).catch((err) => {
-                reject(err) // Reject if getDownloadURL fails
+                reject(err) 
               })
             }
           )
         } catch (error) {
           console.log('upload error is ', error)
-          reject(error) // Reject the promise in case of any other errors
+          reject(error) 
         }
       })
     } catch (error) {
@@ -308,33 +301,10 @@ if(data?.fileUploader){
     await confettiRef?.current?.fire()
 
     return
-    // get booking details, leadId, unitDetails,
-    //  from existing object send values of
-    //  booking
-    // copy unit data as it is
-    // copy lead data as it is
-    //  unit details
 
-    // 1)Make an entry to finance Table {source: ''}
-    // 2)Create new record in Customer Table
-    // 3)Update unit record with customer record and mark it as booked
-    // 4)update lead status to book
-
-    //   const x = await addDoc(collection(db, 'spark_leads'), data)
-    // await console.log('x value is', x, x.id)
 
     const { uid } = selUnitDetails
-    // 1)Make an entry to finance Table {source: ''}
 
-    // create customer
-
-    // update unit record with booked status
-
-    // update payment schedule
-    // log cost sheet
-    // capture transaction
-    // entry  payment log
-    // entry payment sheet
 
     console.log('check this value ', user, leadDetailsObj2)
     const { Status } = leadDetailsObj2
@@ -361,13 +331,6 @@ if(data?.fileUploader){
       enqueueSnackbar
     )
 
-    // add phaseNo , projName to selUnitDetails
-    // 2)Create('')
-
-    // 3)Update unit record with customer record and mark it as booked
-
-    // 4)update lead status to book
-    // updateLeadStatus(leadDocId, newStatus)
   }
 
 
@@ -389,15 +352,7 @@ if(data?.fileUploader){
     selCustomerWallet: {},
   }
 
-  // const validateSchema = Yup.object({
-  // date: Yup.string().required('Bank Required'),
-  // amount: Yup.string().required('Required'),
-  // payto: Yup.string().required('Required'),
-  // mode: Yup.string().required('Bank Required'),
-  // drawnonbank: Yup.string().required('Required'),
-  // bank_ref_no: Yup.string().required('Required'),
-  // dated: Yup.string().required('Required'),
-  // })
+
 
   const submitFormFun = (formik) => {
     formik.handleSubmit()
@@ -423,10 +378,7 @@ if(data?.fileUploader){
             </section>
           )}
           <div className="relative mx-4 max-h-[65%]  rounded-xl  px-2 pb-14 border mt-2">
-            {/* <div className="space-y-4 text-white">
-              <h3 className="font-bold text-2xl">Confirm Booking</h3>
-
-            </div> */}
+   
 
             <div className="grid gap-8 grid-cols-1">
               <div className="flex flex-col ">
@@ -467,14 +419,11 @@ if(data?.fileUploader){
                                                 <abbr title="required"></abbr>
                                               </label>
                                             </div>
-                                            {/* <div className="border-t-4 rounded-xs w-100 border-[#8B5CF6]"></div> */}
                                           </div>
                                         </section>
                                         <section className="flex flex-row justify-between">
                                           <div className="flex flex-col  mr-3">
-                                            {/* <h6 className="text-blueGray-400 text-sm mt- ml-6 mb- font-weight-[700]  font-uppercase">
-                                              Payment
-                                            </h6> */}
+                                  
                                             <span className="text-right text-[13px] font-normal">
                                               {format(new Date(), 'dd-MMMM-yy')}
                                             </span>
@@ -573,27 +522,7 @@ if(data?.fileUploader){
                                                       label="Select Paying For"
                                                       name="towardsBankDocId"
                                                       onChange={(payload) => {
-                                                        // console.log(
-                                                        //   'changed value is ',
-                                                        //   payload
-                                                        // )
-                                                        // const {
-                                                        //   value,
-                                                        //   id,
-                                                        //   accountName,
-                                                        // } = payload
-                                                        // formik.setFieldValue(
-                                                        //   'builderName',
-                                                        //   accountName
-                                                        // )
-                                                        // formik.setFieldValue(
-                                                        //   'landlordBankDocId',
-                                                        //   id
-                                                        // )
-                                                        // formik.setFieldValue(
-                                                        //   'towardsBankDocId',
-                                                        //   id
-                                                        // )
+         
                                                         console.log(
                                                           'changed value is ',
                                                           payload
@@ -607,8 +536,7 @@ if(data?.fileUploader){
                                                           'selected value is ',
                                                           payload
                                                         )
-                                                        // formik.setFieldValue('builderName', accountName)
-                                                        // formik.setFieldValue('landlordBankDocId', id)
+                                    
                                                         const x = payingForA
                                                         const exists =
                                                           payingForA.find(
@@ -651,28 +579,11 @@ if(data?.fileUploader){
                                             <div className="w-full px-3 mb-4 mt-8 flex flex-row gap-x-6">
                                               {paymentMode.map((dat, i) => {
                                                 return (
-                                                  // <span
-                                                  //   className={` mr-2 border rounded-xl px-2 py-2 cursor-pointer hover:bg-violet-400 hover:text-white text-sm ${
-                                                  //     paymentModex == dat.value
-                                                  //       ? 'bg-violet-400 text-white'
-                                                  //       : ''
-                                                  //   }`}
-                                                  //   key={i}
-                                                  //   onClick={() => {
-                                                  //     setPaymentModex(dat.value)
-                                                  //     formik.setFieldValue(
-                                                  //       'mode',
-                                                  //       dat.value
-                                                  //     )
-                                                  //   }}
-                                                  // >
-                                                  //   {dat.label}
-                                                  // </span>
+
                                                   <div
                                                     className="flex flex-col items-center gap-x-1"
                                                     key={i}
                                                     onClick={() => {
-                                                      // setPaymentModex(dat.value)
 
 
 
@@ -746,28 +657,6 @@ if(data?.fileUploader){
                                                 </div>
 
 
-{/* <div className="mb-4 w-full">
-      <MultiSelectMultiLineField
-        label="Paid Towards Account box"
-        name="towardsBankDocId"
-        onChange={(payload) => {
-          console.log('Changed value is ', payload);
-          const { value, id, accountName } = payload;
-
-
-          const formattedValue = formatIndianNumber(value);
-
-
-          formik.setFieldValue('builderName', accountName);
-          formik.setFieldValue('landlordBankDocId', id);
-          formik.setFieldValue('towardsBankDocId', formattedValue);
-
-          console.log('Formatted value:', formattedValue);
-        }}
-        value={formik.values.towardsBankDocId}
-        options={bankDetailsA}
-      />
-    </div> */}
 
 
 
@@ -885,7 +774,6 @@ if(data?.fileUploader){
                                                         : 0
                                                     }
                                                     onChange={(e) => {
-                                                      // setAmount(e.target.value)
                                                       console.log(
                                                         'changed value is ',
                                                         e.target.value,  formik.values
@@ -1004,17 +892,17 @@ if(data?.fileUploader){
                                                       className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-gray-500  border-solid mt-[-4px] pb-1  min-w-[125px]  inline  text-[#0091ae]   lg:w-11/12 w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] "
                                                       label="Dated"
                                                       name="dated"
-                                                      // selected={startDate}
+                                      
                                                       selected={
                                                         formik.values.dated
                                                       }
                                                       onChange={(date) => {
-                                                        // setFieldValue('dated')
+                                         
                                                         formik.setFieldValue(
                                                           'dated',
                                                           date.getTime()
                                                         )
-                                                        // setStartDate(date)
+                                        
                                                         console.log(startDate)
                                                       }}
                                                       timeFormat="HH:mm"
@@ -1032,7 +920,7 @@ if(data?.fileUploader){
                                                           23
                                                         ),
                                                       ]}
-                                                      //dateFormat="MMM d, yyyy"
+                                                 
                                                       dateFormat="MMM dd, yyyy"
                                                     />
                                                   </span>
@@ -1062,16 +950,7 @@ if(data?.fileUploader){
                                             />
                                           Add attachment
                                           </label>
-                                          {/* {panCard1 != '' && (
-                        <button
-                          onClick={() =>
-                            downloadImage(panCard1, 'pancard1.PNG')
-                          }
-                        >
-                          {' '}
-                          <ArrowCircleDownIcon className="w-4 h-4 cursor-pointer ml-1 mb-[9px] mr-2 inline-block text-gray-400 " />
-                        </button>
-                      )} */}
+
                                           <input
                                             type="file"
                                             className="hidden"
@@ -1263,31 +1142,6 @@ if(data?.fileUploader){
                                       )}
                                     {formik?.file?.fileUploader}
 
-                                    {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
-
-                                    {/* <h6 className="text-blueGray-400 text-sm mt-3 ml-3 pt-4 mb-6 font-bold uppercase">
-                                Source Of Booking
-                              </h6> */}
-                                    {/* <div className="flex flex-wrap">
-                                <div className="w-full lg:w-12/12 px-4">
-                                  <div className="relative w-full mb-3">
-                                    <TextField2
-                                      label="Source"
-                                      name="bookingSource"
-                                      type="text"
-                                    />
-                                  </div>
-                                </div>
-                                <div className="w-full lg:w-12/12 px-4">
-                                  <div className="relative w-full mb-3">
-                                    <TextField2
-                                      label="Booked By"
-                                      name="bookedBy"
-                                      type="text"
-                                    />
-                                  </div>
-                                </div>
-                              </div> */}
                                     {!bookingProgress && (
                                       <div className="text-center space-x-4 mt-6 pb-10">
                                         <button
@@ -1331,47 +1185,12 @@ if(data?.fileUploader){
                                   myObj={newPlotCostSheetA}
                                   newPlotPS={newPlotPS}
                                   payementDetails={payementDetails}
-                                  // myAdditionalCharges={
-                                  //   newAdditonalChargesObj
-                                  // }
-                                  // netTotal={netTotal}
-                                  // setNetTotal={setNetTotal}
-                                  // partATotal={partATotal}
-                                  // partBTotal={partBTotal}
-                                  // setPartATotal={setPartATotal}
-                                  // setPartBTotal={setPartBTotal}
+
                                   projectDetails={projectDetails}
-                                  // leadDetailsObj1={leadDetailsObj1}
                                 />
                               </div>
                             )}
 
-                            {/* <div className=" text-right  md:block flex flex-col-reverse py-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg    w-full">
-                              <button
-                                className=" bg-gradient-to-r from-violet-300 to-indigo-300
-                                  text-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                                onClick={handleClick}
-                                type="button"
-                              >
-                                Reset
-                              </button>
-                              <button
-                                className=" bg-gradient-to-r from-violet-300 to-indigo-300
-                                  text-black font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                                onClick={handleClick}
-                                type="button"
-                              >
-                                Download
-                              </button>
-                              <button
-                                className=" bg-gradient-to-r from-violet-300 to-indigo-300
-                                  text-black  font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                                type="submit"
-                                disabled={loading}
-                              >
-                                {'Capture Payment'}
-                              </button>
-                            </div> */}
                           </section>
                         </div>
                       </Form>

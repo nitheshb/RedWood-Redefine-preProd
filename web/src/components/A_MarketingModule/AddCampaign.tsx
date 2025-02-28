@@ -92,11 +92,7 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
     return unsubscribe
   }, [])
 
-  // const usersList = [
-  //   { label: 'User1', value: 'User1' },
-  //   { label: 'User2', value: 'User2' },
-  //   { label: 'User3', value: 'User3' },
-  // ]
+
 
   const devTypeA = [
     {
@@ -165,35 +161,11 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
     campaignTitle: Yup.string().required('Campaign Title is Required'),
 
     assignedTo: Yup.string().required('Required'),
-    // to_email: Yup.string().email('Email is invalid').required('Email is required'),
-
-    // password: Yup.string()
-    //   .min(6, 'Password must be at least 6 charaters')
-    //   .required('Password is required'),
-    // confirmPassword: Yup.string()
-    //   .oneOf([Yup.ref('password'), null], 'Password must match')
-    //   .required('Confirm password is required'),
-    // mobileNo
-    // mobileNo: Yup.string()
-    //   .required('Phone number is required')
-    //   .matches(phoneRegExp, 'Phone number is not valid')
-    //   .min(10, 'to short')
-    //   .max(10, 'to long'),
-
-    // deptVal: Yup.string()
-    //   // .oneOf(['Admin', 'CRM'], 'Required Dept')
-    //   .required('Req Dept'),
-    // myRole: Yup.string()
-    //   //  .oneOf(['Admin', 'CRM'], 'DEPT IS REQ')
-    //   .required('Required Role'),
+   
   })
   return (
     <div className="h-full flex flex-col pb-6 bg-white shadow-xl overflow-y-scroll no-scrollbar bg-gradient-to-r from-blue-200 to-cyan-200">
-      {/* <div className="px-4 sm:px-6  z-10 flex items-center justify-between">
-        <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title>
-      </div> */}
+
       <div className="">
         <section className="flex flex-row justify-between mx-4 pt-2 pb-2">
           <span className="ml-1 mt-[1px] ">
@@ -263,16 +235,7 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                                   value.target.value
                                 )
                               }}
-                              // value={taskTitle}
-                              // onChange={(e) => {
-                              //   console.log('any error ', e, e.target.value)
-
-                              //   // if (e.target.value === '') {
-                              //   //   setClicked(false)
-                              //   //   setHover(true)
-                              //   // }
-                              //   setAddCommentTitle(e.target.value)
-                              // }}
+         
                               placeholder="Campaign name"
                               className={`w-full  pb-2 pt-1 outline-none text-[18px] font-bodyLato focus:border-blue-600 hover:border-blue-600  ${
                                 true ? ' text-[33475b] ' : ' text-[33475b]'
@@ -454,34 +417,9 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
 
                           <div className=" mt-3"></div>
                         </section>
-                        {/* <div className="w-full flex flex-col  ">
-                          <CustomSelect
-                            name="priorities"
-                            label="Priority"
-                            className="input mt-"
-                            onChange={(value) => {
-                              formik.setFieldValue('priorities', value.value)
-                            }}
-                            value={formik.values.priorities}
-                            // options={aquaticCreatures}
-                            options={[
-                              { label: 'Low', value: 'low' },
-                              { label: 'Medium', value: 'medium' },
-                              { label: 'High', value: 'high' },
-                            ]}
-                          />
-                          <p
-                            className="text-sm text-red-500 hidden mt-3"
-                            id="error"
-                          >
-                            Please fill out this field.
-                          </p>
-                        </div> */}
+     
                       </div>
-                      {/* <span className="text-[#0091ae]">
-                    Save
-                    <ArrowRightIcon className="w-5 ml-5" />
-                  </span> */}
+       
                     </div>
                   </div>
                   <div className="z-10 flex flex-row justify-between mt-4 pb-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
@@ -500,23 +438,14 @@ const AddCampaignForm = ({ mode, dialogOpen, campaignPaylaod }) => {
                         </p>
                       )}
                       <button
-                        // onClick={() => fAddSchedule()}
                         className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  text-[#fff]  bg-[#0891B2]   hover:shadow-lg `}
                       >
                         <span className="ml-1 ">Add Campaign</span>
                       </button>
-                      {/* <button
-                        // onClick={() => fAddSchedule()}
-                        className={`flex mt-2 ml-4 cursor-pointer rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  border border-[#c6cdd3] text-[#535b69] hover:shadow-lg   `}
-                      >
-                        <span className="ml-1 ">
-                          Add Task & Close
-                        </span>
-                      </button> */}
+        
 
                       <button
-                        // onClick={() => fSetLeadsType('Add Lead')}
-                        // onClick={() => cancelResetStatusFun()}
+
                         onClick={() => dialogOpen(false)}
                         className={`flex mt-2 ml- rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium `}
                       >

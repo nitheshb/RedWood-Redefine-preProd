@@ -13,7 +13,7 @@ import TableSkeleton from './_mock/comps/table/table-skeleton'
 import { ChevronDown } from 'lucide-react'
 
 {
-  /* frist capitalize all letters */
+ 
 }
 
 const capitalizeFirstLetter = (str) => {
@@ -21,7 +21,7 @@ const capitalizeFirstLetter = (str) => {
 }
 
 {
-  /* date */
+ 
 }
 const getDateForWeek = (weekNumber) => {
   const today = new Date()
@@ -37,7 +37,7 @@ const getDateForWeek = (weekNumber) => {
 }
 
 {
-  /* dummy data */
+ 
 }
 
 const styles = {
@@ -317,18 +317,7 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
               </>
             ) : (
               <>
-                {/* <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
-                  Week 1 <br /> ({getDateForWeek(1)})
-                </th>
-                <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
-                  Week 2 <br /> ({getDateForWeek(2)})
-                </th>
-                <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
-                  Week 3 <br /> ({getDateForWeek(3)})
-                </th>
-                <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]">
-                  Week 4 <br /> ({getDateForWeek(4)})
-                </th> */}
+
 
                {[1, 2, 3, 4].map((week) => (
               <th
@@ -344,104 +333,11 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
         </thead>
 
         {loader && [1, 2, 3].map((d, i) => <TableSkeleton key={i} />)}
- 
-        {/* <tbody className="text-gray-600 text-sm font-light">
-          
 
-          {projectAValues?.map((data, index) => {
-            console.log('final value is', data)
-            let totalAmount = 0
-            if (dataView === 'monthly') {
-              totalAmount =
-                data?.monthly?.june + data?.monthly?.may + data?.monthly?.april
-            } else {
-              totalAmount =
-                data?.weekly?.week1 +
-                data?.weekly?.week2 +
-                data?.weekly?.week3 +
-                data?.weekly?.week4
-            }
-            const oldDue = 0
-            return (
-              <tr
-                key={index}
-                className="border-t border-gray-100 hover:bg-gray-100 text-[#33393d] font-[400]"
-              >
-                <td className="py- px-3 text-left whitespace-nowrap border-t  border-gray-100">
-                  {capitalizeFirstLetter(data?.name)}
-                </td>
-                <td className="py- px-6 pr-10 text-right border-t border-l  border-gray-100">
-                  {data?.soldUnitCount?.toLocaleString('en-IN')}
-                </td>
-                <td className="py- px-6  border text-right  border-t border-l border-gray-100">
-            
-                  {data?.months
-                    ?.reduce((accumulator, currentValue) => {
-                      return accumulator + (currentValue?.receive || 0)
-                    }, 0)
-                    ?.toLocaleString('en-IN')}
-                </td>
-                {dataView === 'monthly' ? (
-                  <>
-                    {data?.months?.map((month, i) => {
-                      console.log('what is this', month)
-                      const x = month
-                      console.log('what is this', month)
-                      return (
-                        <>
-                          <td
-                            key={i}
-                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
-                          >
-                            {`${x?.receive?.toLocaleString('en-IN')}`}
-                          </td>
-                          <td
-                            key={i}
-                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
-                          >
-                            {`${x?.collected?.toLocaleString('en-IN')}`}
-                          </td>
-                          <td
-                            key={i}
-                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
-                          >
-                            {`${x?.pending?.toLocaleString('en-IN')}`}
-                          </td>
-                          <td
-                            key={i}
-                            className="py-1 px-6 text-right border-t border-l  border-gray-100"
-                          >
-                            {`${x?.otherCollection?.toLocaleString('en-IN')}`}
-                          </td>
-                        </>
-                      )
-                    })}
-
-                  </>
-                ) : (
-                  <>
-                    <td className="py- px-6 text-right border border-black">
-                      {data?.weekly?.week1.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py- px-6 text-right border border-black">
-                      {data?.weekly?.week2.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py- px-6 text-right border border-black">
-                      {data?.weekly?.week3.toLocaleString('en-IN')}
-                    </td>
-                    <td className="py- px-6 text-right border border-black">
-                      {data?.weekly?.week4.toLocaleString('en-IN')}
-                    </td>
-                  </>
-                )}
-              </tr>
-            )
-          })}
-        </tbody>  */}
 
 
 <tbody className="text-gray-600 text-sm font-light">
-      {/* Check if data is empty */}
+
       {projectAValues?.length === 0 ? (
         <tr>
 

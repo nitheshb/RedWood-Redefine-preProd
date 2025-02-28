@@ -41,13 +41,7 @@ export default function ProjectsDocsListView({
   }
 
   const validateSchema = Yup.object({
-    // date: Yup.string().required('Bank Required'),
-    // amount: Yup.string().required('Required'),
-    // payto: Yup.string().required('Required'),
-    // mode: Yup.string().required('Bank Required'),
-    // drawnonbank: Yup.string().required('Required'),
-    // chequeno: Yup.string().required('Required'),
-    // dated: Yup.string().required('Required'),
+
   })
 
   return (
@@ -60,13 +54,13 @@ export default function ProjectsDocsListView({
               initialValues={initialState}
               validationSchema={validateSchema}
               onSubmit={(values, { resetForm }) => {
-                // onSubmit(values, resetForm)
+             
               }}
             >
               {(formik) => (
                 <Form>
                   <div className="form">
-                    {/* Phase Details */}
+                 
 
                     <section className="  bg-blueGray-50">
                       <div className="w-full mx-auto ">
@@ -88,55 +82,7 @@ export default function ProjectsDocsListView({
                                 </div>
                               </div>
                             </div>
-{/*
-                            <div className="">
-                              <div className="">
-                                <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg ">
-                                  <ul
-                                    className="flex   rounded-t-lg overflow-x-scroll overflow-auto no-scrollbar"
-                                    id="myTab"
-                                    data-tabs-toggle="#myTabContent"
-                                    role="tablist"
-                                  >
-                                    {[
-                                      {
-                                        lab: 'Documents',
-                                        val: 'documents',
-                                      },
-                                      { lab: 'Details', val: 'summary' },
-                                      { lab: 'Tasks', val: 'tasks' },
 
-                                      {
-                                        lab: 'Access',
-                                        val: 'access',
-                                      },
-                                      { lab: 'Timeline', val: 'timeline' },
-                                    ].map((d, i) => {
-                                      return (
-                                        <li
-                                          key={i}
-                                          className="mr-2 ml-2 text-sm font-bodyLato"
-                                          role="presentation"
-                                        >
-                                          <button
-                                            className={`inline-block py-3 mr-3 px-1 text-sm font-medium text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
-                                              selFeature === d.val
-                                                ? 'border-black text-black'
-                                                : 'border-transparent'
-                                            }`}
-                                            type="button"
-                                            role="tab"
-                                            onClick={() => setFeature(d.val)}
-                                          >
-                                            {`${d.lab} `}
-                                          </button>
-                                        </li>
-                                      )
-                                    })}
-                                  </ul>
-                                </div>
-                              </div>
-                            </div> */}
                           </div>
                           {selFeature === 'summary' && (
                             <div className="flex-auto px-2 py-4 ">
@@ -349,7 +295,6 @@ export default function ProjectsDocsListView({
 
                                   </div>
                                   <p className="mr4">Date Created</p>
-                                  {/* <Icon name="folder" size="3xl" color="gray" /> */}
                                 </div>
                               </div>
                               {[
@@ -387,7 +332,6 @@ export default function ProjectsDocsListView({
                                 <section
                                   key={i}
                                   onClick={() => {
-                                    // show sidebar and display the worddoc
                                     setSliderInfo(  {
                                       open: true,
                                       title: 'viewDocx',

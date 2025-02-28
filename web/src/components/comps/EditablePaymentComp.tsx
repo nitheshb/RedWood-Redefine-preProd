@@ -257,23 +257,6 @@ const EditablePaymentTable = ({
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
 
   const handleChange = (id, field, value) => {
-    // if (field === 'category') {
-    //   const isDuplicate = data.some(
-    //     (item) => item.id !== id && item.category === value
-    //   )
-    //   if (isDuplicate) {
-    //     setErrors((prev) => ({
-    //       ...prev,
-    //       [id]: 'This category is already in use',
-    //     }))
-    //   } else {
-    //     setErrors((prev) => {
-    //       const newErrors = { ...prev }
-    //       delete newErrors[id]
-    //       return newErrors
-    //     })
-    //   }
-    // }
 
     setData(
       data.map((item) =>
@@ -320,12 +303,7 @@ const EditablePaymentTable = ({
   }
 
   const addRow = () => {
-    // const newRow = {
-    //   id: String(rows.length + 1),
-    //   category: { label: 'Add new', value: 'addNewOption' },
-    //   col2: '',
-    //   col3: '',
-    // }
+
     const uid = uuidv4()
 
     const newRow = {
@@ -370,7 +348,6 @@ const EditablePaymentTable = ({
     const data = { fullCs: rows, type: type }
     const { projectId, uid } = phase || {}
     if (source === 'project') {
-      // addPhaseFullCs(orgId, uid, rows, 'partATaxObj', enqueueSnackbar)
       await addPhasePaymentScheduleCharges(
         orgId,
         uid || projData?.phase?.uid,
@@ -390,17 +367,11 @@ const EditablePaymentTable = ({
           : 'paymentScheduleObj',
         enqueueSnackbar
       )
-      // addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
     }
   }
   }
   const [rows, setRows] = useState([
-    // {
-    //   id: '1',
-    //   category: { label: 'option1', value: 'addNewOption' },
-    //   col2: '',
-    //   col3: '',
-    // },
+
     {
       id: '0',
       myId: '2c7bcd74-d334-471e-9138-5de5c96ee484',
@@ -417,11 +388,7 @@ const EditablePaymentTable = ({
     },
   ])
   useEffect(() => {
-    // if(blocksViewFeature === 'Plot_Payment_Schedule'){
-    //   setRows(paymentScheduleA)
-    // }else{
-    //   setRows(paymetScheduleConstruct)
-    // }
+
   }, [])
 
   return (
@@ -450,7 +417,6 @@ const EditablePaymentTable = ({
                   {(provided) => (
                     <tbody {...provided.droppableProps} ref={provided.innerRef}>
                       {rows
-                        // .filter((row) => row.section.value != 'unitCost')
                         ?.map((row, index) => (
                           <Draggable
                             key={row.id}
@@ -481,49 +447,7 @@ const EditablePaymentTable = ({
                                     />
 
                                   </section>
-                                  {/* <StyledSelect
-                                    disableUnderline={true}
-                                    defaultValue={row?.stage?.value}
-                                    value={row?.stage?.value}
-                                    onChange={(e) => {
-                                      const chargesForDropDown =
-                                        blocksViewFeature ===
-                                        'Plot_Payment_Schedule'
-                                          ? paymentScheduleA
-                                          : paymetScheduleConstruct
-                                      const selectedOptionObject =
-                                        chargesForDropDown.find(
-                                          (option) =>
-                                            option.value === e.target.value
-                                        )
-                                      handleChange1(
-                                        row.id,
-                                        'stage',
-                                        selectedOptionObject
-                                      )
-                                    }}
-                                  >
-                                    {blocksViewFeature ===
-                                    'Plot_Payment_Schedule'
-                                      ? paymentScheduleA.map((option) => (
-                                          <MenuItem
-                                            key={option.value}
-                                            value={option.value}
-                                          >
-                                            {option.label}
-                                          </MenuItem>
-                                        ))
-                                      : paymetScheduleConstruct.map(
-                                          (option) => (
-                                            <MenuItem
-                                              key={option.value}
-                                              value={option.value}
-                                            >
-                                              {option.label}
-                                            </MenuItem>
-                                          )
-                                        )}
-                                  </StyledSelect> */}
+
                                 </td>
                                 <td className="border-b border-[#e0e0e0]">
                                   <StyledSelect

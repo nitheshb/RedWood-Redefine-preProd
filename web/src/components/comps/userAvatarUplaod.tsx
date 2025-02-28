@@ -31,14 +31,13 @@ const UserAvatarUpload = () => {
       const storageRef = ref(storage, `/${orgId}_userProfile/_${uid}.png`)
       const uploadTask = uploadBytesResumable(storageRef, file)
 
-      // const uploadTask = storageRef.put(file);
       return uploadTask.on(
         'state_changed',
         (snapshot) => {
           const prog =
             Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
 console.log('iam here')
-          // setProgress(prog)
+     
         },
         (err) => console.log(err),
         async () => {
@@ -61,33 +60,26 @@ console.log('iam here')
 
 
           return url
-          //  save this doc as a new file in spark_leads_doc
+    
         }
       )
     } catch (error) {
       return ''
       console.log('upload error is ', error)
     }
-    // return new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     const fakeUrl = URL.createObjectURL(file)
-    //     resolve(fakeUrl)
-    //   }, 1500)
-    // })
+
   }
 
   const handleFileSelect = async (event) => {
     const file = event.target.files?.[0]
     if (!file) return
 
-    // Validate file type
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png']
     if (!validTypes.includes(file.type)) {
       setError('Please select only .jpg, .jpeg, or .png files')
       return
     }
 
-    // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       setError('File size must be less than 5MB')
       return

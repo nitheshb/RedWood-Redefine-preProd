@@ -25,7 +25,6 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
       ...formData,
       projectId:  data?.phase?.projectId || data?.data?.projectId,
       uid:  data?.uid || data?.data?.uid,
-      // phaseId: data?.phase?.uid,
       editMode: true,
     }
     setLoading(true)
@@ -85,14 +84,7 @@ const AddBlockForm = ({ title, dialogOpen, data }) => {
                         />
                       </div>
                       <div className=" flex justify-end mt-4 ">
-                        {/* <button
-                          onClick={() => dialogOpen(false)}
-                          type="button"
-                          className="mb-4  mt-5 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100"
-                        >
-                          {' '}
-                          Cancel{' '}
-                        </button> */}
+
                         <button
                           className="flex items-center px-4 py-2 bg-green-400 text-white text-sm shadow-sm font-medium rounded-lg hover:bg-green-500 disabled:opacity-50 "
                           type="submit"

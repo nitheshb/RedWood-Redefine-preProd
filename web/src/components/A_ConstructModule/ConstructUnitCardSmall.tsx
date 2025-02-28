@@ -64,12 +64,6 @@ const ConstructUnitCardSmall = ({ kind
         />
       </Box>
 
-      {/* <SiderForm
-        open={sliderInfo.open}
-        setOpen={handleSliderClose}
-        title={sliderInfo.title}
-        data={sliderInfo.sliderData}
-      /> */}
     </div>
   )
 }

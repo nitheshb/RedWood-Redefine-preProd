@@ -81,7 +81,6 @@ const AdditonalBookingDetails = ({
   const { enqueueSnackbar } = useSnackbar()
   const [loading, setLoading] = useState(false)
 
-  // const { uid } = selUnitDetails
   const uid = selUnitDetails?.uid || selUnitDetails?.id
   const datee = new Date().getTime()
   const initialState = {
@@ -105,9 +104,7 @@ const AdditonalBookingDetails = ({
     bookedOn: additionalInfo?.bookedOn ||selUnitDetails?.bookedOn || d,
 
     purchasePurpose: leadDetailsObj2?.purchasePurpose || '',
-    // leadSource: "",
-    // sourceOfPay: "",
-    // purpose: "",
+ 
     bookingSource: leadDetailsObj2?.bookingSource || '',
     bookedBy:
       leadDetailsObj2?.bookedBy ||
@@ -115,7 +112,7 @@ const AdditonalBookingDetails = ({
       additionalInfo?.bookedBy || selUnitDetails?.bookedBy ||
       '',
 
-    referralName: '', // New field for referral name
+    referralName: '',
     annualIncome:
       leadDetailsObj2?.annualIncome || additionalInfo?.annualIncome || '',
     designation:
@@ -216,7 +213,6 @@ const AdditonalBookingDetails = ({
 
     const updateDoc = {
       aggrementDetailsObj,
-      // ...xData,
       industry,
       designation,
       annualIncome,
@@ -287,35 +283,13 @@ const AdditonalBookingDetails = ({
                 {(formik) => (
                   <Form>
                     <div className="form">
-                      {/* Phase Details */}
 
                       <section className=" bg-blueGray-50">
                         <div className="w-full mx-auto ">
                           <div className="relative flex flex-col min-w-0 break-words w-full mb-6  bg-[#F9FBFB] border rounded-[12px]">
                             <div className="flex-auto">
                               <section className=" ">
-                                {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
-                                {/* <section
-                                  className="rounded-md  p-4 mt-2 bg-[#fff]"
-                                  style={{ boxShadow: '0 1px 12px #f2f2f2' }}
-                                >
-                                  <h6 className="text-blueGray-400 text-[13px] mt-3 mb-6 font-bold uppercase">
-                                    Agreement Information
-                                  </h6>
-                                  <div className="flex flex-wrap">
-                                    <div className="w-full lg:w-12/12 px-4">
-                                      <div className="relative w-full mb-3">
-                                        <TextField2
-                                          label="Address"
-                                          name="aggrementAddress"
-                                          type="text"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </section> */}
-                                {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
-                                {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
+
 
                                 <div>
 
@@ -326,7 +300,6 @@ const AdditonalBookingDetails = ({
                                   style={{ boxShadow: '0 1px 12px #f2f2f2' }}
                                 >
                                   <section className="flex bg-[#EDEDED] p-4 mt-1 rounded-t-[20px] flex-row">
-                                    {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
                                     <div className="w-full flex flex-col">
                                       <div className=" flex flex-row gap-2 ">
                                         <div>
@@ -339,15 +312,12 @@ const AdditonalBookingDetails = ({
                                             These details are helpful to understand customer better.
                                           </div>
 
-                                          {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
                                         </div>
 
                                         <div></div>
                                       </div>
 
-                                      {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
-                                            Details of applicant is mandatory
-                                          </div> */}
+                                   
                                     </div>
                                   </section>
 
@@ -360,21 +330,11 @@ const AdditonalBookingDetails = ({
 
                                   <div className="flex flex-wrap">
                                     <div className="w-full lg:w-12/12 px-4">
-                                      {/* <div className="relative w-full mb-3">
-                                        <TextField2
-                                          label="How do you come to know about this project?"
-                                          name="leadSource"
-                                          type="text"
-                                        />
-                                      </div> */}
+           
                                     </div>
                                     <div className="w-1/2 lg:w-12/12 ">
                                       <div className="relative w-full mb-3">
-                                        {/* <TextField2
-                                          label="Source of payment/source"
-                                          name="sourceOfPay"
-                                          type="text"
-                                        /> */}
+                    
 
 
 <CustomSelect
@@ -395,11 +355,7 @@ const AdditonalBookingDetails = ({
                                     </div>
                                     <div className="w-1/2 lg:w-12/12 px-4">
                                       <div className="relative w-full mb-3">
-                                        {/* <TextField2
-                                          label="Purpose of purchase"
-                                          name="purpose"
-                                          type="text"
-                                        /> */}
+               
 
 <CustomSelect
   name="purpose"
@@ -432,24 +388,7 @@ const AdditonalBookingDetails = ({
                                       </div>
                                     </div>
 
-                                    {/* <div className="w-full lg:w-12/12 px-4">
-      <div className="relative w-full mb-3">
-        <TextField2
-          label="Annual Income"
-          name="annualIncome"
-          type="text"
-        />
-      </div>
-    </div> */}
-                                    {/* <div className="w-full lg:w-12/12 px-4">
-      <div className="relative w-full mb-3">
-        <TextField2
-          label="Designation"
-          name="designation"
-          type="text"
-        />
-      </div>
-    </div> */}
+
                                   </div>
 
                                   </div>
@@ -467,11 +406,7 @@ const AdditonalBookingDetails = ({
 
                                       <div className="w-full lg:w-4/12 ">
                                         <div className="relative w-full mb-3">
-                                          {/* <TextField2
-                                          label="Booked By"
-                                          name="industry"
-                                          type="text"
-                                        /> */}
+                          
                                           <CustomSelect
                                             name="bookedBy"
                                             label="Booking By"
@@ -503,8 +438,7 @@ const AdditonalBookingDetails = ({
                                                   'bookedOn',
                                                   date
                                                 )
-                                                // setStartDate(date)
-                                                // console.log(startDate)
+    
                                               }}
                                               timeFormat="HH:mm"
                                               injectTimes={[
@@ -512,7 +446,6 @@ const AdditonalBookingDetails = ({
                                                 setHours(setMinutes(d, 5), 12),
                                                 setHours(setMinutes(d, 59), 23),
                                               ]}
-                                              //dateFormat="d-MMMM-yyyy"
                                               dateFormat="MMM dd, yyyy"
                                             />
                                           </span>
@@ -545,7 +478,6 @@ const AdditonalBookingDetails = ({
                                               name="referralName"
                                               type="text"
 
-                                              //  placeholder="Referral name"
                                             />
                                           </div>
                                         </div>
@@ -555,7 +487,6 @@ const AdditonalBookingDetails = ({
                                   </section>
                                 </section>
 
-                                {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
 
                                 <hr className="mt-3 border-b-1 border-blueGray-300" />
                               </section>
@@ -585,14 +516,12 @@ transition
  px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
  bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-2 tracking-wider text-white  rounded-md hover:shadow-lg"
                         type="submit"
-                        //disabled={loading}
                         disabled={loading}
                         onClick={()=>{
                           setIsMover(false)
                         }}
-                        // onClick={() => submitFormFun(formik)}
                       >
-                        {/* {loading && <Loader />} */}
+
                         <span> {'Save'}</span>
                       </button>
                       {setShowApplicantEdit == undefined && (
@@ -606,14 +535,11 @@ transition
  px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
  bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-3 tracking-wider text-white  rounded-md hover:shadow-lg"
                           type="submit"
-                          //disabled={loading}
                           disabled={loading}
                           onClick={()=>{
                             setIsMover(true)
                           }}
-                          // onClick={() => submitFormFun(formik)}
                         >
-                          {/* {loading && <Loader />} */}
                           <span> {'Save & Next'}</span>
                         </button>
                       )}
@@ -626,7 +552,6 @@ transition
         </div>
       </div>
 
-      {/* old form  */}
     </>
   )
 }
