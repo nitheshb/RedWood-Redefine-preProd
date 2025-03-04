@@ -571,7 +571,7 @@ useEffect(() => {
   }
 }, [unitsFetchData, selProjectIs])
 const boot = async () => {
-  // await getProjectsListFun()
+  await getProjectsListFun()
   const unsubscribe = await getBookedUnitsByProject(
     orgId,
     async (querySnapshot) => {
@@ -896,14 +896,24 @@ useEffect(() => {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
 
-  const amenities = [
-    "Project 1", "Project 2", "Project 3", "Project 4",
-    "Project 5", "Project 6", "Project 7", "Project 8",
-  ];
+  // const amenities = [
+  //   "Project 1", "Project 2", "Project 3", "Project 4",
+  //   "Project 5", "Project 6", "Project 7", "Project 8",
+  // ];
   
 
 
+  const [projects, setProjects] = useState([]);
 
+
+  useEffect(() => {
+    if (unitsFetchData.length > 0) {
+      setProjects([...new Set(unitsFetchData.map((item) => item.projName))]); 
+    }
+  }, [unitsFetchData]);
+  
+  const amenities = projects; 
+  
 
 
 
@@ -1747,20 +1757,22 @@ const customTooltip = ({ payload, label }) => {
         <div className="flex-1 overflow-y-auto px-4 py-2 max-h-[60vh]">
           <h3 className="mt-4 text-lg font-semibold">Projects</h3>
           <div className="flex flex-wrap gap-2 mt-2">
+    
             {amenities.slice(0, showMore ? amenities.length : 6).map((item) => (
-              <button
-                key={item}
-                className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
-                  selectedFilters.includes(item) ? "bg-gray-200" : ""
-                }`}
-                onClick={() => toggleFilter(item)}
-              >
-                {selectedFilters.includes(item) && (
-                  <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
-                )}
-                {item}
-              </button>
-            ))}
+  <button
+    key={item}
+    className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+      selectedFilters.includes(item) ? "bg-gray-200" : ""
+    }`}
+    onClick={() => toggleFilter(item)}
+  >
+    {selectedFilters.includes(item) && (
+      <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+    )}
+    {item}
+  </button>
+))}
+
           </div>
 
           <button onClick={() => setShowMore(!showMore)} className="mt-2 text-blue-600 underline">
