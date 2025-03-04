@@ -31,7 +31,7 @@ import {
 } from 'recharts';
 
 
-import { Calendar, ChevronRight } from 'lucide-react';
+import { Calendar, ChevronRight, SlidersHorizontal, X } from 'lucide-react';
 
 
 
@@ -60,6 +60,7 @@ import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import { computeTotal } from 'src/util/computeCsTotals'
 import { getAllProjects, getBookedUnitsByProject, getUnitsAgreeByProject } from 'src/context/dbQueryFirebase'
 import { Download, Filter } from 'lucide-react'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 
 
 
@@ -870,14 +871,56 @@ useEffect(() => {
 
   const [selBlock, setSelBlock] = useState({})
 
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [filters, setFilters] = useState({
+  //   bookingOption: "",
+  //   projectName: "",
+  //   status: "",
+  // });
+
+  // const onFilterChange = (e) => {
+  //   setFilters({ ...filters, [e.target.name]: e.target.value });
+  // };
+
+
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [showMore, setShowMore] = useState(false);
+
+
+
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [customDate, setCustomDate] = useState(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+
+  const amenities = [
+    "Project 1", "Project 2", "Project 3", "Project 4",
+    "Project 5", "Project 6", "Project 7", "Project 8",
+  ];
+  
 
 
 
 
 
 
+  const bookingOptions = ["This Week", "This Month", "Last 6 Months", "Custom Date"];
 
+  const toggleFilter = (item: string) => {
+    setSelectedFilters((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+    );
 
+    
+    if (item === "Custom Date") {
+      setShowDatePicker(true);
+    } else {
+      setShowDatePicker(false);
+    }
+  };
 
 
   const channelData = [
@@ -1620,11 +1663,194 @@ const customTooltip = ({ payload, label }) => {
 
 <div className=" px-4 py-2 rounded-t-[30px] bg-white flex justify-between items-center">
           <h3 className="text-xl font-bold">Booking Summary</h3>
-          <div className="flex gap-4">
-            <Filter className="text-gray-500" />
-            <Download className="text-gray-500" />
+
+
+
+<div className="relative flex gap-4">
+
+
+
+
+
+<button 
+  className="relative flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:bg-gray-100 transition"
+  onClick={() => setIsOpen(!isOpen)}
+>
+  
+  <SlidersHorizontal className="w-4 h-4 text-gray-500" />
+  <span className="text-gray-700 text-sm">Filters</span>
+
+
+  {selectedFilters.length > 0 && (
+    <span className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
+      {selectedFilters.length}
+    </span>
+  )}
+
+
+  <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:opacity-100 transition">
+    Sorting
+  </span>
+</button>
+
+
+
+
+{/* <div className="relative group">
+  <Download className="text-gray-500 h-4 w-4 absolute top-2" />
+  <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:opacity-100 transition">
+    Download
+  </span>
+</div> */}
+
+
+<button 
+  className="relative flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:bg-gray-100 transition"
+>
+
+  <Download className="w-4 h-4 text-gray-500" />
+  <span className="text-gray-700 text-sm">Download</span>
+
+
+
+
+
+  <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:opacity-100 transition">
+    Download
+  </span>
+</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div
+        className={`absolute right-20 top-full mt-2 bg-white w-[500px] max-h-[70vh] flex flex-col rounded-xl shadow-lg border border-gray-200 z-50 transition-all ${
+          isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+        }`}
+      >
+        <div className="p-4 border-b flex justify-between items-center">
+          <h2 className="text-lg font-bold">Filters</h2>
+          <button onClick={() => setIsOpen(false)} className="text-gray-500">
+            <X/>
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-4 py-2 max-h-[60vh]">
+          <h3 className="mt-4 text-lg font-semibold">Projects</h3>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {amenities.slice(0, showMore ? amenities.length : 6).map((item) => (
+              <button
+                key={item}
+                className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+                  selectedFilters.includes(item) ? "bg-gray-200" : ""
+                }`}
+                onClick={() => toggleFilter(item)}
+              >
+                {selectedFilters.includes(item) && (
+                  <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+                )}
+                {item}
+              </button>
+            ))}
+          </div>
+
+          <button onClick={() => setShowMore(!showMore)} className="mt-2 text-blue-600 underline">
+            {showMore ? "Show less" : "Show more"}
+          </button>
+
+    
+          <h3 className="mt-4 text-lg font-semibold">Booking Dates</h3>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {bookingOptions.map((option) =>
+              option === "Custom Date" && showDatePicker ? (
+                <div
+                  key={option}
+                  className="relative flex items-center border border-gray-300 rounded-full px-3 py-2"
+                >
+           
+                  <CustomDatePicker
+                    selected={customDate}
+                    onChange={(date) => {
+                      setCustomDate(date);
+                      if (date && !selectedFilters.includes("Custom Date")) {
+                        setSelectedFilters([...selectedFilters, "Custom Date"]);
+                      }
+                    }}
+                    placeholder="Pick a date"
+                  />
+
+               
+                  {customDate && (
+                    <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+                  )}
+
+       
+                  <Calendar className="w-5 h-5 text-gray-500 ml-2 cursor-pointer" />
+
+                  <button
+                    onClick={() => {
+                      setCustomDate(null);
+                      setShowDatePicker(false);
+                      setSelectedFilters((prev) => prev.filter((i) => i !== "Custom Date"));
+                    }}
+                    className="ml-2 text-red-500 hover:text-red-700"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  key={option}
+                  onClick={() => toggleFilter(option)}
+                  className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+                    selectedFilters.includes(option) ? "bg-gray-200" : ""
+                  }`}
+                >
+                  {selectedFilters.includes(option) && (
+                    <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+                  )}
+                  {option}
+                </button>
+              )
+            )}
           </div>
         </div>
+
+        <div className="px-4 py-3 border-t flex justify-between items-center bg-gray-50 rounded-b-xl">
+          <button className="text-gray-500" onClick={() => setSelectedFilters([])}>
+            Clear all
+          </button>
+          <button className="bg-black text-white px-4 py-2 rounded-lg">
+            {selectedFilters.length > 0 ? `Count ${selectedFilters.length} selected` : "Show More"}
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+  
+        </div>
+
+
+
+
+
 
 
 <div className="flex  bg-white  items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
@@ -1870,6 +2096,7 @@ const customTooltip = ({ payload, label }) => {
                           <section>
                             <span className="font-bodyLato">
                             {row?.unit_no}
+                         
                             </span>
                           </section>
                         </TableCell>
@@ -1879,7 +2106,13 @@ const customTooltip = ({ payload, label }) => {
                           padding='none'
                         >
 
-                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>{row.projName}</span>
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.projName}
+
+
+                          </span>
                         </TableCell>
                         <TableCell align="center" sx={{width: '142px',background: "#FFFF",  }} padding="none">
                         <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full  text-[#115e59]">
