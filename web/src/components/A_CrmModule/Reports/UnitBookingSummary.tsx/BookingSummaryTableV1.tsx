@@ -117,6 +117,8 @@ const headCells = [
     align: 'left',
     label: 'Customer Details',
   },
+  
+
   {
     id: 'AssignedOn',
     numeric: false,
@@ -124,6 +126,14 @@ const headCells = [
     align: 'center',
     label: 'Unit',
   },
+
+  // lkjhgghh
+
+
+
+
+
+  
   {
     id: 'Project',
     numeric: false,
@@ -154,6 +164,123 @@ const headCells = [
     align: 'center',
     label: 'Booked',
   },
+
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Faceing',
+  },
+
+  {
+    id: 'share',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Sharing',
+  },
+
+
+
+  {
+    id: 'releasestatus',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Release Status',
+  },
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Plot Area',
+  },
+
+
+
+  {
+    id: 'ratesqft',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Rate/sqft',
+  },
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Plot Cost',
+  },
+
+
+
+  {
+    id: 'Age',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Ageing',
+  },
+
+
+  // {
+  //   id: 'bua',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'BUA',
+  // },
+
+
+
+  // {
+  //   id: 'bua',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'BUA',
+  // },
+
+
+
+
+
+  // {
+  //   id: 'crm Manager',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Ageing',
+  // },
+
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Collected',
+  },
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Due',
+  },
+
+
   {
     id: 'partA',
     numeric: false,
@@ -895,12 +1022,23 @@ useEffect(() => {
   const [customDate, setCustomDate] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
+  const [selectedView, setSelectedView] = useState([]);
 
-  // const amenities = [
-  //   "Project 1", "Project 2", "Project 3", "Project 4",
-  //   "Project 5", "Project 6", "Project 7", "Project 8",
-  // ];
-  
+
+  const [selectedCostView, setSelectedCostView] = useState([]);
+
+
+
+const costViewOptions = ["Plot Cost", "Construction Cost"];
+
+const toggleCostView = (item: string) => {
+  setSelectedCostView((prev) =>
+    prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+  );
+};
+
+
+
 
 
   const [projects, setProjects] = useState([]);
@@ -931,6 +1069,33 @@ useEffect(() => {
       setShowDatePicker(false);
     }
   };
+
+
+
+
+
+
+
+
+
+
+    // const [selectedView, setSelectedView] = useState('Plot Cost');
+
+    // const computeCosts = (row) => {
+    //   const plotCost = row?.plotCS?.reduce((sum, val) => sum + val.TotalNetSaleValueGsT, 0) || 0;
+    //   const constructionCost = row?.addChargesCS?.reduce((sum, obj) => 
+    //     sum + Number(computeTotal(obj, row?.super_built_up_area || row?.area?.toString()?.replace(',', ''))), 
+    //     0
+    //   ) || 0;
+  
+    //   return { plotCost, constructionCost };
+    // };
+  
+ 
+    // const computeTotal = (obj, area) => {
+ 
+    //   return obj.charges * Number(area);
+    // };
 
 
   const channelData = [
@@ -1263,6 +1428,13 @@ function EnhancedTableHead(props) {
         ))}
       </TableRow>
     </TableHead>
+
+
+  //  /* Construction Table */
+
+
+
+  
 
 
 
@@ -1672,7 +1844,7 @@ const customTooltip = ({ payload, label }) => {
 
 
 <div className=" px-4 py-2 rounded-t-[30px] bg-white flex justify-between items-center">
-          <h3 className="text-xl font-bold">Booking Summary</h3>
+          <h3 className="text-xl font-bold">Booking Summary box</h3>
 
 
 
@@ -1691,9 +1863,9 @@ const customTooltip = ({ payload, label }) => {
   <span className="text-gray-700 text-sm">Filters</span>
 
 
-  {selectedFilters.length > 0 && (
+  {selectedFilters.length + selectedCostView.length > 0 && (
     <span className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
-      {selectedFilters.length}
+      {selectedFilters.length  + selectedCostView.length}
     </span>
   )}
 
@@ -1835,15 +2007,44 @@ const customTooltip = ({ payload, label }) => {
               )
             )}
           </div>
+
+
+
+          <h3 className="text-lg font-semibold mt-4">Cost View</h3>
+<div className="flex flex-wrap gap-2 mt-2">
+  {costViewOptions.map((view) => (
+    <button
+      key={view}
+      className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+        selectedCostView.includes(view) ? "bg-gray-200" : ""
+      }`}
+      onClick={() => toggleCostView(view)}
+    >
+      {selectedCostView.includes(view) && (
+        <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+      )}
+      {view}
+    </button>
+  ))}
+</div>
+
+
+
+
+
+      
         </div>
 
         <div className="px-4 py-3 border-t flex justify-between items-center bg-gray-50 rounded-b-xl">
-          <button className="text-gray-500" onClick={() => setSelectedFilters([])}>
+          <button className="text-gray-500" onClick={() => {setSelectedFilters([]);  setSelectedCostView([]);}}>
             Clear all
           </button>
           <button className="bg-black text-white px-4 py-2 rounded-lg">
-            {selectedFilters.length > 0 ? `Count ${selectedFilters.length} selected` : "Show More"}
+            {selectedFilters.length + selectedCostView.length > 0 ? `Count ${selectedFilters.length + selectedCostView.length} selected` : "Show More"}
           </button>
+
+
+
         </div>
       </div>
     </div>
@@ -2112,7 +2313,10 @@ const customTooltip = ({ payload, label }) => {
                             </span>
                           </section>
                         </TableCell>
-                          <TableCell
+
+
+
+                        <TableCell
                           align="left"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
@@ -2126,6 +2330,9 @@ const customTooltip = ({ payload, label }) => {
 
                           </span>
                         </TableCell>
+
+
+
                         <TableCell align="center" sx={{width: '142px',background: "#FFFF",  }} padding="none">
                         <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full  text-[#115e59]">
                           <HighlighterStyle
@@ -2138,6 +2345,184 @@ const customTooltip = ({ payload, label }) => {
                         <TableCell align="center" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff",  fontSize:'13px'  }} padding="none">
           {prettyDate(row?.booked_on)}
         </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.facing}
+
+
+                          </span>
+                        </TableCell>
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.sharing}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.release_status}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.area}
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.sqft_rate}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.T_A}
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       Ageing
+
+
+                          </span>
+                        </TableCell>
+
+
+                        {/* <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       Ageing
+
+
+                          </span>
+                        </TableCell> */}
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       Collected
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                           Due
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+
+
+
+
+          
+
         {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap',  fontSize: '13px', paddingRight: '6px', color: '#0ea5e9',    '& span': {
       display: 'inline-block',
       borderBottom: '1px solid transparent',
@@ -2336,6 +2721,9 @@ const customTooltip = ({ payload, label }) => {
 
 </div>
 </div>
+
+
+
 
 
 
