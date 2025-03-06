@@ -222,6 +222,77 @@ const headCells = [
 
 
 
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'BUA',
+  },
+
+
+
+
+  
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Const. Rate/Sqft',
+  },
+
+
+
+
+  
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Construction Cost',
+  },
+
+
+
+
+  
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'CRM',
+  },
+
+
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Sale Manager',
+  },
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Status Updated Date',
+  },
+
+
+
+
   {
     id: 'Age',
     numeric: false,
@@ -229,6 +300,15 @@ const headCells = [
     align: 'center',
     label: 'Ageing',
   },
+
+
+
+
+
+
+
+
+
 
 
   // {
@@ -269,7 +349,7 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     align: 'center',
-    label: 'Collected',
+    label: 'Plot Collected',
   },
 
   {
@@ -277,7 +357,26 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     align: 'center',
-    label: 'Due',
+    label: 'Plot Due',
+  },
+
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Const Collected',
+  },
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Const Due',
   },
 
 
@@ -1025,14 +1124,27 @@ useEffect(() => {
   const [selectedView, setSelectedView] = useState([]);
 
 
-  const [selectedCostView, setSelectedCostView] = useState([]);
+//   const [selectedCostView, setSelectedCostView] = useState([]);
 
 
 
-const costViewOptions = ["Plot Cost", "Construction Cost"];
+// const costViewOptions = ["Plot Cost", "Construction Cost"];
 
-const toggleCostView = (item: string) => {
-  setSelectedCostView((prev) =>
+
+const [selectedUnitType, setSelectedUnitType] = useState([]);
+
+const unitTypeOptions = ["Plot", "Villa", "Apartment"];
+
+// const toggleCostView = (item: string) => {
+//   setSelectedCostView((prev) =>
+//     prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+//   );
+// };
+
+
+
+const toggleUnitType = (item: string) => {
+  setSelectedUnitType((prev) =>
     prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
   );
 };
@@ -1844,7 +1956,7 @@ const customTooltip = ({ payload, label }) => {
 
 
 <div className=" px-4 py-2 rounded-t-[30px] bg-white flex justify-between items-center">
-          <h3 className="text-xl font-bold">Booking Summary box</h3>
+          <h3 className="text-xl font-bold">Booking Summary</h3>
 
 
 
@@ -1863,9 +1975,9 @@ const customTooltip = ({ payload, label }) => {
   <span className="text-gray-700 text-sm">Filters</span>
 
 
-  {selectedFilters.length + selectedCostView.length > 0 && (
+  {selectedFilters.length + selectedUnitType.length > 0 && (
     <span className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
-      {selectedFilters.length  + selectedCostView.length}
+      {selectedFilters.length  + selectedUnitType.length}
     </span>
   )}
 
@@ -2009,7 +2121,7 @@ const customTooltip = ({ payload, label }) => {
           </div>
 
 
-
+{/* 
           <h3 className="text-lg font-semibold mt-4">Cost View</h3>
 <div className="flex flex-wrap gap-2 mt-2">
   {costViewOptions.map((view) => (
@@ -2026,6 +2138,25 @@ const customTooltip = ({ payload, label }) => {
       {view}
     </button>
   ))}
+</div> */}
+
+
+<h3 className="text-lg font-semibold mt-4">Unit Type</h3>
+<div className="flex flex-wrap gap-2 mt-2">
+  {unitTypeOptions.map((view) => (
+    <button
+      key={view}
+      className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+        selectedUnitType.includes(view) ? "bg-gray-200" : ""
+      }`}
+      onClick={() => toggleUnitType(view)}
+    >
+      {selectedUnitType.includes(view) && (
+        <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+      )}
+      {view}
+    </button>
+  ))}
 </div>
 
 
@@ -2036,18 +2167,18 @@ const customTooltip = ({ payload, label }) => {
         </div>
 
         <div className="px-4 py-3 border-t flex justify-between items-center bg-gray-50 rounded-b-xl">
-          <button className="text-gray-500" onClick={() => {setSelectedFilters([]);  setSelectedCostView([]);}}>
+          <button className="text-gray-500" onClick={() => {setSelectedFilters([]);  setSelectedUnitType([]); }}>
             Clear all
           </button>
           <button className="bg-black text-white px-4 py-2 rounded-lg">
-            {selectedFilters.length + selectedCostView.length > 0 ? `Count ${selectedFilters.length + selectedCostView.length} selected` : "Show More"}
+            {selectedFilters.length  + selectedUnitType.length> 0 ? `Count ${selectedFilters.length  + selectedUnitType.length} selected` : "Show More"}
           </button>
 
 
 
         </div>
       </div>
-    </div>
+</div>
 
 
 
@@ -2446,6 +2577,114 @@ const customTooltip = ({ payload, label }) => {
 
 
 
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       {row?.construct_area}
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                          {row?.construct_price_sqft}
+
+
+
+                       
+
+
+
+
+                          </span>
+                        </TableCell>
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
                         
 
                         <TableCell
@@ -2457,7 +2696,7 @@ const customTooltip = ({ payload, label }) => {
 
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
-                       Ageing
+                       NA
 
 
                           </span>
@@ -2490,7 +2729,7 @@ const customTooltip = ({ payload, label }) => {
 
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
-                       Collected
+                       NA
 
 
                           </span>
@@ -2507,7 +2746,39 @@ const customTooltip = ({ payload, label }) => {
 
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
-                           Due
+                           NA
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                           NA
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                           NA
 
 
                           </span>
