@@ -444,6 +444,29 @@ useEffect(() => {
       )
   }
 }, [unitsFetchData, selProjectIs])
+
+
+
+
+
+
+// useEffect(() => {
+//   // unitsFetchData
+//   console.log('values are', unitsFetchData.length, selProjectIs.uid);
+//   switch (selProjectIs.value) {
+//     case 'allprojects':
+//       return setTableData(unitsFetchData);
+//     default:
+//       return setTableData(
+//         unitsFetchData.filter((dat) => dat?.pId === selProjectIs.uid)
+//       );
+//   }
+// }, [unitsFetchData, selProjectIs]);
+
+
+
+
+
 const boot = async () => {
   // await getProjectsListFun()
   const unsubscribe = await getBookedUnitsByProject(
@@ -745,20 +768,7 @@ useEffect(() => {
 
   const [selBlock, setSelBlock] = useState({})
 
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [filters, setFilters] = useState({
-  //   bookingOption: "",
-  //   projectName: "",
-  //   status: "",
-  // });
 
-  // const onFilterChange = (e) => {
-  //   setFilters({ ...filters, [e.target.name]: e.target.value });
-  // };
-
-
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [showMore, setShowMore] = useState(false);
 
 
 
@@ -770,30 +780,54 @@ useEffect(() => {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
 
-  // const amenities = [
-  //   "Project 1", "Project 2", "Project 3", "Project 4",
-  //   "Project 5", "Project 6", "Project 7", "Project 8",
-  // ];
 
   const [selectedView, setSelectedView] = useState([]);
 
 
-  // const [selectedCostView, setSelectedCostView] = useState([]);
 
-
-
-// const costViewOptions = ["Plot Cost", "Construction Cost"];
 
 
 const [selectedUnitType, setSelectedUnitType] = useState([]);
 
 const unitTypeOptions = ["Plot", "Villa", "Apartment"];
 
-// const toggleCostView = (item: string) => {
-//   setSelectedCostView((prev) =>
-//     prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
-//   );
-// };
+
+
+
+
+
+
+
+
+useEffect(() => {
+  console.log("Selected Filters:", selectedFilters);
+  console.log("Selected Unit Types:", selectedUnitType);
+  console.log("Custom Date:", customDate);
+  console.log("Original Data:", unitsFetchData);
+
+  let filteredData = unitsFetchData;
+
+
+  if (selectedFilters.length > 0) {
+    filteredData = filteredData.filter((dat) =>
+      selectedFilters.includes(dat.projName)
+    );
+    console.log("Filtered by Project:", filteredData);
+  }
+
+
+  filteredData = filterByUnitType(filteredData, selectedUnitType);
+  console.log("Filtered by Unit Type:", filteredData);
+
+  
+  setTableData(filteredData);
+}, [selectedFilters, selectedUnitType, unitsFetchData, customDate]);
+
+
+
+
+
+
 
 
 
@@ -805,10 +839,20 @@ const toggleUnitType = (item: string) => {
 
 
 
+const filterByUnitType = (data, selectedUnitType) => {
+  if (selectedUnitType.length === 0) {
+    return data; 
+  }
+
+  return data.filter((row) => selectedUnitType.includes(row.unit_type));
+};
+
+
+
 
 const [selectedCostView, setSelectedCostView] = useState([]);
 
-const costViewOptions = ["Plot Cost", "Construction Cost"];
+// const costViewOptions = ["Plot Cost", "Construction Cost"];
 
 const toggleCostView = (item) => {
   setSelectedCostView((prev) =>
@@ -908,6 +952,16 @@ const headCells = [
     label: 'Release Status',
   },
 
+
+  
+  {
+    id: 'releasestatus',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Unit Type',
+  },
+
   {
     id: 'AssignedOn',
     numeric: false,
@@ -928,9 +982,9 @@ const headCells = [
 
 
 
-   // Plot Cost Columns (shown if "Plot Cost" is selected)
-   ...(selectedCostView.includes("Plot Cost")
-   ? [
+
+  //  ...(selectedCostView.includes("Plot Cost")
+  //  ? [
        {
          id: 'PlotCost',
          numeric: false,
@@ -952,8 +1006,8 @@ const headCells = [
          align: 'center',
          label: 'Plot Due',
        },
-     ]
-   : []),
+  //    ]
+  //  : []),
 
 
    {
@@ -973,8 +1027,8 @@ const headCells = [
 
 
 
-   ...(selectedCostView.includes("Construction Cost")
-   ? [
+  //  ...(selectedCostView.includes("Construction Cost")
+  //  ? [
 
        {
          id: 'ConstructionCost',
@@ -997,8 +1051,8 @@ const headCells = [
          align: 'center',
          label: 'Const Due',
        },
-     ]
-   : []),
+  //    ]
+  //  : []),
 
 
 
@@ -1262,12 +1316,14 @@ const headCells = [
 
   const bookingOptions = ["This Week", "This Month", "Last 6 Months", "Custom Date"];
 
-  const toggleFilter = (item: string) => {
+ 
+
+
+  const toggleFilter = (item) => {
     setSelectedFilters((prev) =>
       prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
     );
-
-
+  
     if (item === "Custom Date") {
       setShowDatePicker(true);
     } else {
@@ -1277,8 +1333,56 @@ const headCells = [
 
 
 
+  const filterByBookingDate = (data, selectedFilters) => {
+    const currentDate = new Date(); 
+  
+    return data.filter((row) => {
+      const bookedDate = new Date(row.booked_on); 
+  
+  
+      if (selectedFilters.includes("This Week")) {
+        const startOfWeek = new Date(currentDate);
+        startOfWeek.setDate(currentDate.getDate() - currentDate.getDay()); 
+        return bookedDate >= startOfWeek && bookedDate <= currentDate;
+      }
+  
+      if (selectedFilters.includes("This Month")) {
+        const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1); 
+        return bookedDate >= startOfMonth && bookedDate <= currentDate;
+      }
+  
+      if (selectedFilters.includes("Last 6 Months")) {
+        const sixMonthsAgo = new Date(currentDate);
+        sixMonthsAgo.setMonth(currentDate.getMonth() - 6); 
+        return bookedDate >= sixMonthsAgo && bookedDate <= currentDate;
+      }
+  
+      if (selectedFilters.includes("Custom Date") && customDate) {
+        const customDateObj = new Date(customDate);
+        return bookedDate.toDateString() === customDateObj.toDateString(); 
+      }
+  
+      return true; 
+    });
+  };
 
 
+  useEffect(() => {
+    let filteredData = unitsFetchData;
+  
+
+    if (selectedFilters.length > 0) {
+      filteredData = filteredData.filter((dat) =>
+        selectedFilters.includes(dat.projName)
+      );
+    }
+  
+  
+    filteredData = filterByBookingDate(filteredData, selectedFilters);
+  
+
+    setTableData(filteredData);
+  }, [selectedFilters, unitsFetchData, customDate]);
 
 
 
@@ -2083,12 +2187,7 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-{/* <div className="relative group">
-  <Download className="text-gray-500 h-4 w-4 absolute top-2" />
-  <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:opacity-100 transition">
-    Download
-  </span>
-</div> */}
+
 
 
 <button
@@ -2133,23 +2232,24 @@ const customTooltip = ({ payload, label }) => {
 
         <div className="flex-1 overflow-y-auto px-4 py-2 max-h-[60vh]">
           <h3 className="mt-4 text-sm font-semibold">Projects</h3>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {amenities.slice(0, showMore ? amenities.length : 6).map((item) => (
-  <button
-    key={item}
-    className={`relative px-3 py-1 border rounded-full text-[12px] text-gray-700 hover:bg-gray-100 border-gray-300 ${
-      selectedFilters.includes(item) ? "bg-gray-200" : ""
-    }`}
-    onClick={() => toggleFilter(item)}
-  >
-    {selectedFilters.includes(item) && (
-      <span className="absolute top-[-2px] left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
-    )}
-    {item}
-  </button>
-))}
 
-          </div>
+
+<div className="flex flex-wrap gap-2 mt-2">
+  {amenities.slice(0, showMore ? amenities.length : 6).map((item) => (
+    <button
+      key={item}
+      className={`relative px-3 py-1 border rounded-full text-[12px] text-gray-700 hover:bg-gray-100 border-gray-300 ${
+        selectedFilters.includes(item) ? "bg-gray-200" : ""
+      }`}
+      onClick={() => toggleFilter(item)}
+    >
+      {selectedFilters.includes(item) && (
+        <span className="absolute top-[-2px] left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
+      )}
+      {item}
+    </button>
+  ))}
+</div>
 
           <button onClick={() => setShowMore(!showMore)} className="mt-2 text-blue-600 text-sm underline">
             {showMore ? "Show less" : "Show more"}
@@ -2157,122 +2257,88 @@ const customTooltip = ({ payload, label }) => {
 
 
           <h3 className="mt-4 text-sm font-semibold">Booking Dates</h3>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {bookingOptions.map((option) =>
-              option === "Custom Date" && showDatePicker ? (
-                <div
-                  key={option}
-                  className="relative flex items-center border border-gray-300 rounded-full px-3 py-1 text-sm"
-                >
-
-                  <CustomDatePicker
-                    selected={customDate}
-                    onChange={(date) => {
-                      setCustomDate(date);
-                      if (date && !selectedFilters.includes("Custom Date")) {
-                        setSelectedFilters([...selectedFilters, "Custom Date"]);
-                      }
-                    }}
-                    placeholder="Pick a date"
-                  />
 
 
-                  {customDate && (
-                    <span className="absolute top-0 left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
-                  )}
-
-
-                  <Calendar className="w-5 h-5 text-gray-500 ml-2 cursor-pointer" />
-
-                  <button
-                    onClick={() => {
-                      setCustomDate(null);
-                      setShowDatePicker(false);
-                      setSelectedFilters((prev) => prev.filter((i) => i !== "Custom Date"));
-                    }}
-                    className="ml-2 text-red-500 hover:text-red-700"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-              ) : (
-                <button
-                  key={option}
-                  onClick={() => toggleFilter(option)}
-                  className={`relative px-3 py-1 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 text-[12px] ${
-                    selectedFilters.includes(option) ? "bg-gray-200" : ""
-                  }`}
-                >
-                  {selectedFilters.includes(option) && (
-                    <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
-                  )}
-                  {option}
-                </button>
-              )
-            )}
-          </div>
-
-
-{/*
-          <h3 className="text-lg font-semibold mt-4">Cost View</h3>
 <div className="flex flex-wrap gap-2 mt-2">
-  {costViewOptions.map((view) => (
-    <button
-      key={view}
-      className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
-        selectedCostView.includes(view) ? "bg-gray-200" : ""
-      }`}
-      onClick={() => toggleCostView(view)}
-    >
-      {selectedCostView.includes(view) && (
-        <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
-      )}
-      {view}
-    </button>
-  ))}
-</div> */}
+  {bookingOptions.map((option) =>
+    option === "Custom Date" && showDatePicker ? (
+      <div
+        key={option}
+        className="relative flex items-center border border-gray-300 rounded-full px-3 py-1 text-sm"
+      >
+        <CustomDatePicker
+          selected={customDate}
+          onChange={(date) => {
+            setCustomDate(date);
+            if (date && !selectedFilters.includes("Custom Date")) {
+              setSelectedFilters([...selectedFilters, "Custom Date"]);
+            }
+          }}
+          placeholder="Pick a date"
+        />
+        {customDate && (
+          <span className="absolute top-0 left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
+        )}
+        <Calendar className="w-5 h-5 text-gray-500 ml-2 cursor-pointer" />
+        <button
+          onClick={() => {
+            setCustomDate(null);
+            setShowDatePicker(false);
+            setSelectedFilters((prev) => prev.filter((i) => i !== "Custom Date"));
+          }}
+          className="ml-2 text-red-500 hover:text-red-700"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+    ) : (
+      <button
+        key={option}
+        onClick={() => toggleFilter(option)}
+        className={`relative px-3 py-1 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 text-[12px] ${
+          selectedFilters.includes(option) ? "bg-gray-200" : ""
+        }`}
+      >
+        {selectedFilters.includes(option) && (
+          <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+        )}
+        {option}
+      </button>
+    )
+  )}
+</div>
+
+
+
 
 
 <h3 className="text-sm font-semibold mt-4">Unit Type</h3>
+
+
 <div className="flex flex-wrap gap-2 mt-2">
-  {unitTypeOptions.map((view) => (
+  {unitTypeOptions.map((option) => (
     <button
-      key={view}
+      key={option}
       className={`relative px-3 py-1 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 text-[12px] ${
-        selectedUnitType.includes(view) ? "bg-gray-200" : ""
+        selectedUnitType.includes(option) ? "bg-gray-200" : ""
       }`}
-      onClick={() => toggleUnitType(view)}
+      onClick={() => toggleUnitType(option)}
     >
-      {selectedUnitType.includes(view) && (
+      {selectedUnitType.includes(option) && (
         <span className="absolute top-0 left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
       )}
-      {view}
+      {option}
     </button>
   ))}
 </div>
 
 
 
-<h3 className="text-sm font-semibold mt-4">Cost View</h3>
+{/* <h3 className="text-sm font-semibold mt-4">Cost View</h3> */}
+
+
+
 {/* <div className="flex flex-wrap gap-2 mt-2">
-  {costViewOptions.map((view) => (
-    <button
-      key={view}
-      className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
-        selectedCostView.includes(view) ? "bg-gray-200" : ""
-      }`}
-      onClick={() => toggleCostView(view)}
-    >
-      {selectedCostView.includes(view) && (
-        <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
-      )}
-      {view}
-    </button>
-  ))}
-</div> */}
-
-
-<div className="flex flex-wrap gap-2 mt-2">
         {costViewOptions.map((view) => (
           <button
             key={view}
@@ -2287,7 +2353,7 @@ const customTooltip = ({ payload, label }) => {
             {view}
           </button>
         ))}
-      </div>
+      </div> */}
 
 
 
@@ -2297,7 +2363,7 @@ const customTooltip = ({ payload, label }) => {
         </div>
 
         <div className="px-4 py-3 border-t flex justify-between items-center bg-gray-50 rounded-b-xl text-sm">
-          <button className="text-gray-500" onClick={() => {setSelectedFilters([]);  setSelectedUnitType([]); }}>
+          <button className="text-gray-500" onClick={() => {setSelectedFilters([]);  setSelectedUnitType([]); setCustomDate(null); setShowDatePicker(false); }}>
             Clear all
           </button>
           <button className=" text-[#38BDF8] px-4 py-2 rounded-lg text-sm">
@@ -2662,6 +2728,22 @@ const customTooltip = ({ payload, label }) => {
 
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.unit_type}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
                             {row?.area}
 
 
@@ -2688,10 +2770,10 @@ const customTooltip = ({ payload, label }) => {
                           </span>
                         </TableCell>
 
-
+{/* 
                         {selectedCostView.includes("Plot Cost") && (
 
-                          <>
+                          <> */}
 
 
 
@@ -2746,10 +2828,10 @@ const customTooltip = ({ payload, label }) => {
 
                           </span>
                         </TableCell>
-
+{/* 
                           </>
 
-                   )}
+                   )} */}
 
 
 
@@ -2802,27 +2884,10 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-                        {selectedCostView.includes("Construction Cost") && (
+                        {/* {selectedCostView.includes("Construction Cost") && (
 
 
-                         <>
-
-
-
-                        <TableCell
-                          align="left"
-                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
-                          padding='none'
-                        >
-
-
-
-                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
-                       NA
-
-
-                          </span>
-                        </TableCell>
+                         <> */}
 
 
 
@@ -2843,6 +2908,23 @@ const customTooltip = ({ payload, label }) => {
 
 
 
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
 
 
                         <TableCell
@@ -2859,14 +2941,14 @@ const customTooltip = ({ payload, label }) => {
 
                           </span>
                         </TableCell>
-                         </>
+                         {/* </>
 
 
 
 
 
 
-)}
+)} */}
 
                         {/* <TableCell
                           align="left"
