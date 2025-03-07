@@ -337,7 +337,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
 
       console.log('project details are', record)
 
-  
+
 
       y.available += record?.availableCount || 0;
       y.booked += record?.bookUnitCount || 0;
@@ -382,7 +382,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
           }
           return x
         })
-  
+
         console.log('booking details values are', usersListA)
         await setUnitsFetchData(usersListA)
         await updateBookingData(usersListA)
@@ -548,7 +548,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
     <h3 className="text-gray-600 mb-2">Recieved</h3>
     <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
-   
+
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>

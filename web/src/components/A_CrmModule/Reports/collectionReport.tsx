@@ -192,7 +192,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
   const calMonthlyValue = (pId, monthNo, currentYear) => {
     const data = { pId, monthNo, currentYear }
 
-    let totalReceivableValue = 0 
+    let totalReceivableValue = 0
 
     gretProjectionSum(orgId, data)
       .then((payload) => {

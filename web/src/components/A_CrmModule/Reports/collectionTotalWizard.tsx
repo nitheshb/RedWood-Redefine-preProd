@@ -188,7 +188,7 @@ return
                  interval={0}
                />
                <YAxis
-       
+
                  axisLine={false}
                  tickLine={false}
                  stroke="#3D3D3D"

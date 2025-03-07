@@ -625,7 +625,7 @@ const handleSort = (key) => {
                 {key === 'name' ? 'Project Name' : key.charAt(0).toUpperCase() + key.slice(1)}
 
                 </span>
- 
+
 
 <span className="inline-block ml-2">
                       {sortConfig.key === key ? (

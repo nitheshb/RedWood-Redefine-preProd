@@ -301,7 +301,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
           }
           return x
         })
-  
+
       },
       {
         status: [
@@ -311,7 +311,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
           'cleared',
           'rejected',
           '',
-     
+
         ],
       },
       () => setCrmCustomerDBData([])
@@ -328,12 +328,12 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
           x.id = docSnapshot.id
           const y = projectList.filter((proj) => proj?.uid == x?.pId)
           if (y.length > 0) {
-          
+
             x.projName = y[0].projectName
           }
           return x
         })
- 
+
 
         await usersListA.sort((a, b) => {
           return a.unit_no - b.unit_no
@@ -500,7 +500,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                         setSelLeadsOf(value)
                       }}
                       value={selLeadsOf?.value}
-                  
+
                       options={[
                         ...[
                           { label: 'Team Units', value: 'teamunits' },
@@ -514,7 +514,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
               </div>
             </div>
             <div className="items-center justify-between  my-1 bg-white rounded-lg  ">
-   
+
               <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg flex flex-row justify-between">
                 <ul
                   className="flex   rounded-t-lg "
@@ -626,7 +626,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                       className=" bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900 w-4/5 relative"
                     />
                   </span>
-                
+
 
                   <span className="mt-2 ml-2 text-red-400 cursor-pointer text-xs" onClick={()=> setSearchKeyField('')}>
                     {' '}
@@ -768,7 +768,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {finData?.facing}
                                         </span>
-             
+
                                       </section>
                                     </div>
                                   </div>
@@ -1003,7 +1003,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <section className="font-rubikF flex flex-row w-[100%] justify-between">
                                     <section className="flex flex-col ml-2 mt-[3px] w-[100%]">
                                       <section className="flex flex-row justify-between">
-   
+
                                         <div className="flex flex-row w-full">
                                           <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 min-w-[100px]">
                                             <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
