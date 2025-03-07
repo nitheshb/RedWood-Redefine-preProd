@@ -2069,7 +2069,7 @@ const customTooltip = ({ payload, label }) => {
 
 
   {selectedFilters.length + selectedUnitType.length > 0 && (
-    <span className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
+    <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#38BDF8] text-white text-xs font-bold flex items-center justify-center rounded-full">
       {selectedFilters.length  + selectedUnitType.length}
     </span>
   )}
@@ -2132,19 +2132,18 @@ const customTooltip = ({ payload, label }) => {
         </div>
 
         <div className="flex-1 overflow-y-auto px-4 py-2 max-h-[60vh]">
-          <h3 className="mt-4 text-lg font-semibold">Projects</h3>
+          <h3 className="mt-4 text-sm font-semibold">Projects</h3>
           <div className="flex flex-wrap gap-2 mt-2">
-
             {amenities.slice(0, showMore ? amenities.length : 6).map((item) => (
   <button
     key={item}
-    className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+    className={`relative px-3 py-1 border rounded-full text-[12px] text-gray-700 hover:bg-gray-100 border-gray-300 ${
       selectedFilters.includes(item) ? "bg-gray-200" : ""
     }`}
     onClick={() => toggleFilter(item)}
   >
     {selectedFilters.includes(item) && (
-      <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+      <span className="absolute top-[-2px] left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
     )}
     {item}
   </button>
@@ -2152,18 +2151,18 @@ const customTooltip = ({ payload, label }) => {
 
           </div>
 
-          <button onClick={() => setShowMore(!showMore)} className="mt-2 text-blue-600 underline">
+          <button onClick={() => setShowMore(!showMore)} className="mt-2 text-blue-600 text-sm underline">
             {showMore ? "Show less" : "Show more"}
           </button>
 
 
-          <h3 className="mt-4 text-lg font-semibold">Booking Dates</h3>
+          <h3 className="mt-4 text-sm font-semibold">Booking Dates</h3>
           <div className="flex flex-wrap gap-2 mt-2">
             {bookingOptions.map((option) =>
               option === "Custom Date" && showDatePicker ? (
                 <div
                   key={option}
-                  className="relative flex items-center border border-gray-300 rounded-full px-3 py-2"
+                  className="relative flex items-center border border-gray-300 rounded-full px-3 py-1 text-sm"
                 >
 
                   <CustomDatePicker
@@ -2179,7 +2178,7 @@ const customTooltip = ({ payload, label }) => {
 
 
                   {customDate && (
-                    <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span className="absolute top-0 left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
                   )}
 
 
@@ -2200,7 +2199,7 @@ const customTooltip = ({ payload, label }) => {
                 <button
                   key={option}
                   onClick={() => toggleFilter(option)}
-                  className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+                  className={`relative px-3 py-1 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 text-[12px] ${
                     selectedFilters.includes(option) ? "bg-gray-200" : ""
                   }`}
                 >
@@ -2234,18 +2233,18 @@ const customTooltip = ({ payload, label }) => {
 </div> */}
 
 
-<h3 className="text-lg font-semibold mt-4">Unit Type</h3>
+<h3 className="text-sm font-semibold mt-4">Unit Type</h3>
 <div className="flex flex-wrap gap-2 mt-2">
   {unitTypeOptions.map((view) => (
     <button
       key={view}
-      className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+      className={`relative px-3 py-1 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 text-[12px] ${
         selectedUnitType.includes(view) ? "bg-gray-200" : ""
       }`}
       onClick={() => toggleUnitType(view)}
     >
       {selectedUnitType.includes(view) && (
-        <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+        <span className="absolute top-0 left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
       )}
       {view}
     </button>
@@ -2254,7 +2253,7 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-<h3 className="text-lg font-semibold mt-4">Cost View</h3>
+<h3 className="text-sm font-semibold mt-4">Cost View</h3>
 {/* <div className="flex flex-wrap gap-2 mt-2">
   {costViewOptions.map((view) => (
     <button
@@ -2277,13 +2276,13 @@ const customTooltip = ({ payload, label }) => {
         {costViewOptions.map((view) => (
           <button
             key={view}
-            className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+            className={`relative px-3 py-1 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 text-[12px] ${
               selectedCostView.includes(view) ? "bg-gray-200" : ""
             }`}
             onClick={() => toggleCostView(view)}
           >
             {selectedCostView.includes(view) && (
-              <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+              <span className="absolute top-0 left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
             )}
             {view}
           </button>
@@ -2297,16 +2296,13 @@ const customTooltip = ({ payload, label }) => {
 
         </div>
 
-        <div className="px-4 py-3 border-t flex justify-between items-center bg-gray-50 rounded-b-xl">
+        <div className="px-4 py-3 border-t flex justify-between items-center bg-gray-50 rounded-b-xl text-sm">
           <button className="text-gray-500" onClick={() => {setSelectedFilters([]);  setSelectedUnitType([]); }}>
             Clear all
           </button>
-          <button className="bg-black text-white px-4 py-2 rounded-lg">
-            {selectedFilters.length  + selectedUnitType.length> 0 ? `Count ${selectedFilters.length  + selectedUnitType.length} selected` : "Show More"}
+          <button className=" text-[#38BDF8] px-4 py-2 rounded-lg text-sm">
+            {selectedFilters.length  + selectedUnitType.length> 0 ? `Count ${selectedFilters.length  + selectedUnitType.length} showing` : "showing"}
           </button>
-
-
-
         </div>
       </div>
 </div>
