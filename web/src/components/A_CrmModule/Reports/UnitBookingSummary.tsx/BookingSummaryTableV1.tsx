@@ -509,6 +509,9 @@ const rowsCounter = (parent, searchKey) => {
       )
 }
 useEffect(() => {
+  getProjectsListFun()
+}, [])
+useEffect(() => {
   boot()
 }, [projectList])
 useEffect(() => {
@@ -571,7 +574,7 @@ useEffect(() => {
   }
 }, [unitsFetchData, selProjectIs])
 const boot = async () => {
-  await getProjectsListFun()
+  // await getProjectsListFun()
   const unsubscribe = await getBookedUnitsByProject(
     orgId,
     async (querySnapshot) => {
@@ -645,7 +648,7 @@ function updateBookingData(myDbDataIs) {
     const month = monthNames[date.getUTCMonth()];
     const booking = projectBookingsData.find(entry => entry.time === month);
     if (booking) {
-      booking.value += 1; 
+      booking.value += 1;
     }
   });
   setProjectBookingsData(projectBookingsData)
@@ -900,7 +903,7 @@ useEffect(() => {
   //   "Project 1", "Project 2", "Project 3", "Project 4",
   //   "Project 5", "Project 6", "Project 7", "Project 8",
   // ];
-  
+
 
 
   const [projects, setProjects] = useState([]);
@@ -908,12 +911,12 @@ useEffect(() => {
 
   useEffect(() => {
     if (unitsFetchData.length > 0) {
-      setProjects([...new Set(unitsFetchData.map((item) => item.projName))]); 
+      setProjects([...new Set(unitsFetchData.map((item) => item.projName))]);
     }
   }, [unitsFetchData]);
-  
-  const amenities = projects; 
-  
+
+  const amenities = projects;
+
 
 
 
@@ -924,7 +927,7 @@ useEffect(() => {
       prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
     );
 
-    
+
     if (item === "Custom Date") {
       setShowDatePicker(true);
     } else {
@@ -1345,7 +1348,7 @@ const customTooltip = ({ payload, label }) => {
   return (
 
     <section>
-     
+
 
 
 
@@ -1580,7 +1583,7 @@ const customTooltip = ({ payload, label }) => {
            />
           <Tooltip content={customTooltipone} />
 <Bar dataKey="count" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-      
+
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -1645,10 +1648,10 @@ const customTooltip = ({ payload, label }) => {
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="day" />
           <YAxis tickFormatter={(value) => `${value}`}
-   
+
            />
           <Tooltip content={customTooltipone} />
-    
+
 <Bar dataKey="count" fill="#38bdf8" radius={[4, 4, 0, 0]} />
 
         </BarChart>
@@ -1682,11 +1685,11 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-<button 
+<button
   className="relative flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:bg-gray-100 transition"
   onClick={() => setIsOpen(!isOpen)}
 >
-  
+
   <SlidersHorizontal className="w-4 h-4 text-gray-500" />
   <span className="text-gray-700 text-sm">Filters</span>
 
@@ -1714,7 +1717,7 @@ const customTooltip = ({ payload, label }) => {
 </div> */}
 
 
-<button 
+<button
   className="relative flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:bg-gray-100 transition"
 >
 
@@ -1757,7 +1760,7 @@ const customTooltip = ({ payload, label }) => {
         <div className="flex-1 overflow-y-auto px-4 py-2 max-h-[60vh]">
           <h3 className="mt-4 text-lg font-semibold">Projects</h3>
           <div className="flex flex-wrap gap-2 mt-2">
-    
+
             {amenities.slice(0, showMore ? amenities.length : 6).map((item) => (
   <button
     key={item}
@@ -1779,7 +1782,7 @@ const customTooltip = ({ payload, label }) => {
             {showMore ? "Show less" : "Show more"}
           </button>
 
-    
+
           <h3 className="mt-4 text-lg font-semibold">Booking Dates</h3>
           <div className="flex flex-wrap gap-2 mt-2">
             {bookingOptions.map((option) =>
@@ -1788,7 +1791,7 @@ const customTooltip = ({ payload, label }) => {
                   key={option}
                   className="relative flex items-center border border-gray-300 rounded-full px-3 py-2"
                 >
-           
+
                   <CustomDatePicker
                     selected={customDate}
                     onChange={(date) => {
@@ -1800,12 +1803,12 @@ const customTooltip = ({ payload, label }) => {
                     placeholder="Pick a date"
                   />
 
-               
+
                   {customDate && (
                     <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
                   )}
 
-       
+
                   <Calendar className="w-5 h-5 text-gray-500 ml-2 cursor-pointer" />
 
                   <button
@@ -1856,7 +1859,7 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-  
+
         </div>
 
 
@@ -2090,7 +2093,7 @@ const customTooltip = ({ payload, label }) => {
                             {row?.customerDetailsObj?.customerName1?.toString()}
                             </div>
                             </article>
-                  
+
 
                           </section>
                         </TableCell>
@@ -2108,7 +2111,7 @@ const customTooltip = ({ payload, label }) => {
                           <section>
                             <span className="font-bodyLato">
                             {row?.unit_no}
-                         
+
                             </span>
                           </section>
                         </TableCell>
@@ -2144,7 +2147,7 @@ const customTooltip = ({ payload, label }) => {
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', 
+      borderBottom: '0.2px solid #e7e5e4',
     } }} padding="none">
           <span
 
@@ -2157,7 +2160,7 @@ const customTooltip = ({ payload, label }) => {
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', 
+      borderBottom: '0.2px solid #e7e5e4',
     }  }} padding="none">
 
   <span
@@ -2185,7 +2188,7 @@ const customTooltip = ({ payload, label }) => {
           <span>₹{row?.T_D?.toLocaleString('en-IN')}</span>
         </TableCell>)}
 
- 
+
        <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff",  paddingRight: '6px', fontSize: '13px' }} padding="none" >
         ₹{row?.T_total?.toLocaleString('en-IN')}
         </TableCell>
@@ -2205,7 +2208,7 @@ const customTooltip = ({ payload, label }) => {
       borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
     }, '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', 
+      borderBottom: '0.2px solid #e7e5e4',
     } }} padding="none">
         ₹{row?.T_balance?.toLocaleString('en-IN')}
         </TableCell>
@@ -2233,7 +2236,7 @@ const customTooltip = ({ payload, label }) => {
                             sx={{ whiteSpace: 'nowrap',  paddingRight: '8px' , paddingLeft: '8px', background: "#d1d1fb",fontSize: '13px'  }}
                           >
                             <>
-         
+
                               <span className="px- py-[1px]  min-w-[100px] inline-flex text-xs leading-5 tracking-wide  rounded-full  text-green-800">
                                 {Math.abs(
                                   getDifferenceInMinutes(
@@ -2276,7 +2279,7 @@ const customTooltip = ({ payload, label }) => {
                           sx={{ whiteSpace: 'nowrap',  paddingRight: '8px' , paddingLeft: '8px', background: "#d1d1fb", fontSize: '13px' }}
                         >
                           <>
-          
+
                             <span className="px- py-[1px]  min-w-[100px] inline-flex text-xs leading-5 tracking-wide  rounded-full  text-green-800">
                               {Math.abs(
                                 getDifferenceInMinutes(

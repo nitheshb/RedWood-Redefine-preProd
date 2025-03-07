@@ -647,7 +647,7 @@ return
                   <>
                     {last3MonthsA.map((month, i) => {
                       return (
-          
+
                         ['Target', 'Collection', 'Pending'].map(
                           (month, i) => {
                             return (
@@ -751,7 +751,7 @@ return
                           </>
                           )
                         })}
-  
+
                       </>
                     ) : (
                       <>

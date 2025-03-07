@@ -179,7 +179,7 @@ export default function UserListView() {
 
         await setTableData(usersListA)
 
-   
+
       },
       {
         status: ['booked', 'agreement_pipeline', 'sd_pipeline', 'registered'],
@@ -436,7 +436,7 @@ export default function UserListView() {
 
                     <TableBody>
                       {dispRows
-    
+
                         .map((row) => (
                           <UserTableRow
                             key={row.id}
