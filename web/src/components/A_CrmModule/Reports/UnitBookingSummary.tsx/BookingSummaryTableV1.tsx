@@ -103,146 +103,9 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0])
 }
 
-const headCells = [
-  // {
-  //   id: 'S.No',
-  //   numeric: true,
-  //   disablePadding: false,
-  //   label: 'S.No',
-  // },
-  {
-    id: 'Date',
-    numeric: false,
-    disablePadding: true,
-    align: 'left',
-    label: 'Customer Details',
-  },
-  {
-    id: 'AssignedOn',
-    numeric: false,
-    disablePadding: false,
-    align: 'center',
-    label: 'Unit',
-  },
-  {
-    id: 'Project',
-    numeric: false,
-    disablePadding: false,
-    align: 'left',
-    label: 'Project',
-  },
-  {
-    id: 'Clientdetails',
-    numeric: false,
-    disablePadding: false,
-    align: 'center',
-    label: 'Status',
-  },
 
-  // {
-  //   id: 'bmrda_strr',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'center',
-  //   label: 'BMRDA/STRR',
-  // },
 
-  {
-    id: 'booked',
-    numeric: false,
-    disablePadding: false,
-    align: 'center',
-    label: 'Booked',
-  },
-  {
-    id: 'partA',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Land',
-  },{
-    id: 'partB',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Charges-I',
-  },{
-    id: 'partC',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Construction',
-  },{
-    id: 'partD',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Charges-II',
-  },
 
-  {
-    id: 'sale',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Sale Value',
-  },
-  {
-    id: 'avgsft',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Sft Cost',
-  },
-  {
-    id: 'sv_sft',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Sv/Sft',
-  },
-  {
-    id: 'received',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Received',
-  },
-  {
-    id: 'balance',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Balance',
-  },
-  {
-    id: 'partE',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Possession',
-  },
-  {
-    id: 'crm_executive',
-    numeric: false,
-    disablePadding: true,
-    align: 'left',
-    label: 'CRM Executive',
-  },
-  {
-    id: 'sale_executive',
-    numeric: false,
-    disablePadding: true,
-    align: 'left',
-    label: 'Sale Executive',
-  },
-  {
-    id: 'Notes',
-    numeric: true,
-    disablePadding: false,
-    label: 'Comments',
-  },
-]
 
 
 
@@ -339,6 +202,14 @@ useEffect(()=>{
     setRowsAfterSearchKey(rowsR)
     // setRows(rowsR)
   }
+
+
+
+
+
+
+
+
 
 
 
@@ -904,6 +775,475 @@ useEffect(() => {
   //   "Project 5", "Project 6", "Project 7", "Project 8",
   // ];
 
+  const [selectedView, setSelectedView] = useState([]);
+
+
+  // const [selectedCostView, setSelectedCostView] = useState([]);
+
+
+
+// const costViewOptions = ["Plot Cost", "Construction Cost"];
+
+
+const [selectedUnitType, setSelectedUnitType] = useState([]);
+
+const unitTypeOptions = ["Plot", "Villa", "Apartment"];
+
+// const toggleCostView = (item: string) => {
+//   setSelectedCostView((prev) =>
+//     prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+//   );
+// };
+
+
+
+const toggleUnitType = (item: string) => {
+  setSelectedUnitType((prev) =>
+    prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+  );
+};
+
+
+
+
+const [selectedCostView, setSelectedCostView] = useState([]);
+
+const costViewOptions = ["Plot Cost", "Construction Cost"];
+
+const toggleCostView = (item) => {
+  setSelectedCostView((prev) =>
+    prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+  );
+};
+
+
+const headCells = [
+  // {
+  //   id: 'S.No',
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: 'S.No',
+  // },
+  {
+    id: 'Date',
+    numeric: false,
+    disablePadding: true,
+    align: 'left',
+    label: 'Customer Details',
+  },
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Unit',
+  },
+
+  // lkjhgghh
+
+
+
+
+
+
+  {
+    id: 'Project',
+    numeric: false,
+    disablePadding: false,
+    align: 'left',
+    label: 'Project',
+  },
+  {
+    id: 'Clientdetails',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Status',
+  },
+
+  // {
+  //   id: 'bmrda_strr',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'BMRDA/STRR',
+  // },
+
+  {
+    id: 'booked',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Booked',
+  },
+
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Faceing',
+  },
+
+  {
+    id: 'share',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Sharing',
+  },
+
+
+
+  {
+    id: 'releasestatus',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Release Status',
+  },
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Plot Area',
+  },
+
+
+
+  {
+    id: 'ratesqft',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Rate/sqft',
+  },
+
+
+
+   // Plot Cost Columns (shown if "Plot Cost" is selected)
+   ...(selectedCostView.includes("Plot Cost")
+   ? [
+       {
+         id: 'PlotCost',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Plot Cost',
+       },
+       {
+         id: 'PlotCollected',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Plot Collected',
+       },
+       {
+         id: 'PlotDue',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Plot Due',
+       },
+     ]
+   : []),
+
+
+   {
+    id: 'BUA',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'BUA',
+  },
+  {
+    id: 'ConstRateSqft',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Const. Rate/Sqft',
+  },
+
+
+
+   ...(selectedCostView.includes("Construction Cost")
+   ? [
+
+       {
+         id: 'ConstructionCost',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Construction Cost',
+       },
+       {
+         id: 'ConstCollected',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Const Collected',
+       },
+       {
+         id: 'ConstDue',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Const Due',
+       },
+     ]
+   : []),
+
+
+
+
+
+
+
+  // {
+  //   id: 'AssignedOn',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'BUA',
+  // },
+
+
+
+
+
+  // {
+  //   id: 'AssignedOn',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Const. Rate/Sqft',
+  // },
+
+
+
+
+
+  // {
+  //   id: 'AssignedOn',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Construction Cost',
+  // },
+
+
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'CRM',
+  },
+
+
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Sale Manager',
+  },
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Status Updated Date',
+  },
+
+
+
+
+  {
+    id: 'Age',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Ageing',
+  },
+
+
+
+
+
+
+
+
+
+
+
+  // {
+  //   id: 'bua',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'BUA',
+  // },
+
+
+
+  // {
+  //   id: 'bua',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'BUA',
+  // },
+
+
+
+
+
+  // {
+  //   id: 'crm Manager',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Ageing',
+  // },
+
+
+
+
+
+
+
+
+  // {
+  //   id: 'AssignedOn',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Const Collected',
+  // },
+
+  // {
+  //   id: 'AssignedOn',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Const Due',
+  // },
+
+
+  {
+    id: 'partA',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Land',
+  },{
+    id: 'partB',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Charges-I',
+  },{
+    id: 'partC',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Construction',
+  },{
+    id: 'partD',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Charges-II',
+  },
+
+  {
+    id: 'sale',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Sale Value',
+  },
+  {
+    id: 'avgsft',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Sft Cost',
+  },
+  {
+    id: 'sv_sft',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Sv/Sft',
+  },
+  {
+    id: 'received',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Received',
+  },
+  {
+    id: 'balance',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Balance',
+  },
+  {
+    id: 'partE',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Possession',
+  },
+  {
+    id: 'crm_executive',
+    numeric: false,
+    disablePadding: true,
+    align: 'left',
+    label: 'CRM Executive',
+  },
+  {
+    id: 'sale_executive',
+    numeric: false,
+    disablePadding: true,
+    align: 'left',
+    label: 'Sale Executive',
+  },
+  {
+    id: 'Notes',
+    numeric: true,
+    disablePadding: false,
+    label: 'Comments',
+  },
+]
+
+
+
+
+
+
+
+
 
 
   const [projects, setProjects] = useState([]);
@@ -936,6 +1276,33 @@ useEffect(() => {
   };
 
 
+
+
+
+
+
+
+
+
+
+
+    const computeCosts = (row) => {
+      const plotCost = row?.plotCS?.reduce((sum, val) => sum + val.TotalNetSaleValueGsT, 0) || 0;
+      const constructionCost = row?.addChargesCS?.reduce((sum, obj) =>
+        sum + Number(computeTotal(obj, row?.super_built_up_area || row?.area?.toString()?.replace(',', ''))),
+        0
+      ) || 0;
+
+      return { plotCost, constructionCost };
+    };
+
+
+    const computeTotal = (obj, area) => {
+
+      return obj.charges * Number(area);
+    };
+
+
   const channelData = [
     { name: 'Make an offer', value1: 80, value2: 120, value3: 0 },
     { name: 'Online store', value1: 20, value2: 0, value3: 0 },
@@ -958,7 +1325,7 @@ useEffect(() => {
 
 
   const customTooltipone = ({ payload, label }) => {
-    console.log(payload); // Add this line to see if payload is populated correctly
+    console.log(payload);
     if (!payload || payload.length === 0) return null;
 
     return (
@@ -1266,6 +1633,13 @@ function EnhancedTableHead(props) {
         ))}
       </TableRow>
     </TableHead>
+
+
+  //  /* Construction Table */
+
+
+
+
 
 
 
@@ -1694,9 +2068,9 @@ const customTooltip = ({ payload, label }) => {
   <span className="text-gray-700 text-sm">Filters</span>
 
 
-  {selectedFilters.length > 0 && (
+  {selectedFilters.length + selectedUnitType.length > 0 && (
     <span className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
-      {selectedFilters.length}
+      {selectedFilters.length  + selectedUnitType.length}
     </span>
   )}
 
@@ -1838,18 +2212,104 @@ const customTooltip = ({ payload, label }) => {
               )
             )}
           </div>
+
+
+{/*
+          <h3 className="text-lg font-semibold mt-4">Cost View</h3>
+<div className="flex flex-wrap gap-2 mt-2">
+  {costViewOptions.map((view) => (
+    <button
+      key={view}
+      className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+        selectedCostView.includes(view) ? "bg-gray-200" : ""
+      }`}
+      onClick={() => toggleCostView(view)}
+    >
+      {selectedCostView.includes(view) && (
+        <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+      )}
+      {view}
+    </button>
+  ))}
+</div> */}
+
+
+<h3 className="text-lg font-semibold mt-4">Unit Type</h3>
+<div className="flex flex-wrap gap-2 mt-2">
+  {unitTypeOptions.map((view) => (
+    <button
+      key={view}
+      className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+        selectedUnitType.includes(view) ? "bg-gray-200" : ""
+      }`}
+      onClick={() => toggleUnitType(view)}
+    >
+      {selectedUnitType.includes(view) && (
+        <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+      )}
+      {view}
+    </button>
+  ))}
+</div>
+
+
+
+<h3 className="text-lg font-semibold mt-4">Cost View</h3>
+{/* <div className="flex flex-wrap gap-2 mt-2">
+  {costViewOptions.map((view) => (
+    <button
+      key={view}
+      className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+        selectedCostView.includes(view) ? "bg-gray-200" : ""
+      }`}
+      onClick={() => toggleCostView(view)}
+    >
+      {selectedCostView.includes(view) && (
+        <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+      )}
+      {view}
+    </button>
+  ))}
+</div> */}
+
+
+<div className="flex flex-wrap gap-2 mt-2">
+        {costViewOptions.map((view) => (
+          <button
+            key={view}
+            className={`relative px-3 py-2 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 ${
+              selectedCostView.includes(view) ? "bg-gray-200" : ""
+            }`}
+            onClick={() => toggleCostView(view)}
+          >
+            {selectedCostView.includes(view) && (
+              <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+            )}
+            {view}
+          </button>
+        ))}
+      </div>
+
+
+
+
+
+
         </div>
 
         <div className="px-4 py-3 border-t flex justify-between items-center bg-gray-50 rounded-b-xl">
-          <button className="text-gray-500" onClick={() => setSelectedFilters([])}>
+          <button className="text-gray-500" onClick={() => {setSelectedFilters([]);  setSelectedUnitType([]); }}>
             Clear all
           </button>
           <button className="bg-black text-white px-4 py-2 rounded-lg">
-            {selectedFilters.length > 0 ? `Count ${selectedFilters.length} selected` : "Show More"}
+            {selectedFilters.length  + selectedUnitType.length> 0 ? `Count ${selectedFilters.length  + selectedUnitType.length} selected` : "Show More"}
           </button>
+
+
+
         </div>
       </div>
-    </div>
+</div>
 
 
 
@@ -2115,7 +2575,10 @@ const customTooltip = ({ payload, label }) => {
                             </span>
                           </section>
                         </TableCell>
-                          <TableCell
+
+
+
+                        <TableCell
                           align="left"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
@@ -2129,6 +2592,9 @@ const customTooltip = ({ payload, label }) => {
 
                           </span>
                         </TableCell>
+
+
+
                         <TableCell align="center" sx={{width: '142px',background: "#FFFF",  }} padding="none">
                         <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full  text-[#115e59]">
                           <HighlighterStyle
@@ -2141,6 +2607,362 @@ const customTooltip = ({ payload, label }) => {
                         <TableCell align="center" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff",  fontSize:'13px'  }} padding="none">
           {prettyDate(row?.booked_on)}
         </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.facing}
+
+
+                          </span>
+                        </TableCell>
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.sharing}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.release_status}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.area}
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.sqft_rate}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        {selectedCostView.includes("Plot Cost") && (
+
+                          <>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.T_A}
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+                          </>
+
+                   )}
+
+
+
+
+
+<TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       {row?.construct_area}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                          {row?.construct_price_sqft}
+
+
+
+
+
+
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+
+
+
+
+
+
+                        {selectedCostView.includes("Construction Cost") && (
+
+
+                         <>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+                         </>
+
+
+
+
+
+
+)}
+
+                        {/* <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       Ageing
+
+
+                          </span>
+                        </TableCell> */}
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                           NA
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                           NA
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                           NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+
+
+
+
+
+
         {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap',  fontSize: '13px', paddingRight: '6px', color: '#0ea5e9',    '& span': {
       display: 'inline-block',
       borderBottom: '1px solid transparent',
@@ -2339,6 +3161,9 @@ const customTooltip = ({ payload, label }) => {
 
 </div>
 </div>
+
+
+
 
 
 

@@ -1164,6 +1164,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   {/* section 2 */}
                                  {['booked', 'selCategory'].includes(selCategory) &&
                                  <section>
+                                  {!(user?.role.includes('crm-executive')) && (
                                  <div
                                     className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
                                       finData?.man_cs_approval == 'approved'
@@ -1199,6 +1200,8 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       </h6>
                                     </div>
                                   </div>
+                                  )}
+
                                   {/* section 3*/}
                                   <div
                                     className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
