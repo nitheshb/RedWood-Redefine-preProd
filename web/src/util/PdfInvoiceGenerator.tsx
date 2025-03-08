@@ -41,9 +41,6 @@ import { useAuth } from 'src/context/firebase-auth-context'
 
 
 
-
-
-
 Font.register({
   family: 'Roboto',
   fonts: [

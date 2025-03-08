@@ -61,6 +61,7 @@ import { computeTotal } from 'src/util/computeCsTotals'
 import { getAllProjects, getBookedUnitsByProject, getUnitsAgreeByProject } from 'src/context/dbQueryFirebase'
 import { Download, Filter } from 'lucide-react'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import PdfBookingSummaryReport from './PdfBookingSummaryReport'
 
 
 
@@ -899,13 +900,13 @@ const headCells = [
     align: 'left',
     label: 'Project',
   },
-  {
-    id: 'Clientdetails',
-    numeric: false,
-    disablePadding: false,
-    align: 'center',
-    label: 'Status',
-  },
+  // {
+  //   id: 'Clientdetails',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Status',
+  // },
 
   // {
   //   id: 'bmrda_strr',
@@ -1501,7 +1502,7 @@ function EnhancedTableHead(props) {
   return (
 
 
-    <TableHead style={{ height: '10px', borderRadius: '2xl' }}>
+    <TableHead style={{ height: '10px', borderRadius: '2xl' ,  position: 'sticky', top: 0, backgroundColor: '#F0F2F5', zIndex: 10 }}>
       <TableRow selected={true}>
         <TableCell
           align="center"
@@ -1855,7 +1856,7 @@ const customTooltip = ({ payload, label }) => {
   </div>
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
     <h3 className="text-gray-600 mb-2">Sales</h3>
-    <p className="text-2xl font-bold mb-2">₹ {totalSaleValue?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(totalSaleValue)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
 
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
@@ -1864,7 +1865,7 @@ const customTooltip = ({ payload, label }) => {
 
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Recieved</h3>
-    <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(totalReceived)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
 
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
@@ -1873,7 +1874,7 @@ const customTooltip = ({ payload, label }) => {
 
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Balance</h3>
-    <p className="text-2xl font-bold mb-2">₹ {selTotalBalance?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(selTotalBalance)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
 
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
@@ -2191,11 +2192,13 @@ const customTooltip = ({ payload, label }) => {
 
 
 <button
-  className="relative flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:bg-gray-100 transition"
+  className="relative flex items-center gap-2  rounded-md border border-gray-300 hover:bg-gray-100 transition"
 >
 
-  <Download className="w-4 h-4 text-gray-500" />
-  <span className="text-gray-700 text-sm">Download</span>
+  {/* <Download className="w-4 h-4 text-gray-500" />
+  <span className="text-gray-700 text-sm"> */}
+  <PdfBookingSummaryReport/>
+  {/* </span> */}
 
 
 
@@ -2657,14 +2660,14 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-                        <TableCell align="center" sx={{width: '142px',background: "#FFFF",  }} padding="none">
+                        {/* <TableCell align="center" sx={{width: '142px',background: "#FFFF",  }} padding="none">
                         <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full  text-[#115e59]">
                           <HighlighterStyle
                             searchKey={searchKey}
                             source={row?.unitStatus?.toString() || row.status.toString()}
                           />
                         </span>
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell align="center" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff",  fontSize:'13px'  }} padding="none">
           {prettyDate(row?.booked_on)}
@@ -2786,7 +2789,9 @@ const customTooltip = ({ payload, label }) => {
 
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
-                            {row?.T_A}
+                            {/* {row?.T_A} */}
+                            {Math.round(row?.T_A)}
+
 
 
                           </span>
