@@ -17,15 +17,28 @@ import { format } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 import numeral from 'numeral'
 
+// import { prettyDate } from './dateConverter'
 import { Bold, Download } from 'lucide-react'
 
 
 
+// import pdfimg1 from '../../public/pdfimg1.png'
+// import pdfimg2 from '../../public/pdfimg2.png'
+// import pdfimg3 from '../../public/pdfimg3.png'
+// import pdfimg4 from '../../public/pdfimg4.png'
+// import pdfimg5 from '../../public/pdfimg5.png'
+// import pdfimg6 from '../../public/pdfimg6.png'
+// import pdfimg7 from '../../public/pdfimg7.png'
+// import pdfimg8 from '../../public/pdfimg8.png'
+// import pdfimg9 from '../../public/pdfimg9.png'
+// import pdfimg10 from '../../public/pdfimg10.png'
+// import pdfimg11 from '../../public/pdfimg11.png'
+// import pdfimg12 from '../../public/pdfimg12.png'
 import Loader from 'src/components/Loader/Loader'
 import { getProject } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { prettyDate } from 'src/util/dateConverter'
 import { computeTotal } from 'src/util/computeCsTotals'
+import { prettyDate } from 'src/util/dateConverter'
 
 
 
@@ -37,314 +50,377 @@ Font.register({
     { src: '/fonts/Roboto-Bold.ttf' },
   ],
 })
-// const useStyles = () =>
-//   useMemo(
-//     () =>
-//       StyleSheet.create({
-//         fitter: {
-//           paddingLeft: '10px',
-//           marginLeft: '5px',
-//           marginRight: '5px',
-//           paddingRight: '10px',
-//         },
+const useStyles = () =>
+  useMemo(
+    () =>
+      StyleSheet.create({
+        fitter: {
+          paddingLeft: '10px',
+          marginLeft: '5px',
+          marginRight: '5px',
+          paddingRight: '10px',
+        },
 
-//         fitternew: {
-//           marginLeft: '20px',
-//           marginRight: '20px',
-//           marginTop: '20px',
+        fitternew: {
+          marginLeft: '20px',
+          marginRight: '20px',
+          marginTop: '20px',
 
-//         },
-
-
-
-//         smallFitter: {
-//           paddingLeft: '10px',
-//         },
-//         headFitter: {
-//           padding: '10px',
-//         },
-//         AllsmallFitter: {
-//           padding: '10px',
-//         },
-//         col4: {
-//           width: '33%',
-//           paddingLeft: '20px',
-//           marginLeft: '10px',
-//           marginRight: '10px',
-//           paddingRight: '20px',
-//         },
-//         col: { width: '23%' },
-//         col8: { width: '75%' },
-//         col2: { width: '13%', marginTop: '10px' },
-//         col6: { width: '50%' },
-//         p4: { padding: '4px' },
-//         p10: { padding: '4px 6px' },
-//         p11: { padding: '0px 0px' },
-//         p12: { paddingTop: '4px', paddingBottom: '2px' },
-//         pr0: { paddingRight: '0px' },
-//         pr4: { paddingRight: '4px' },
-//         pr8: { paddingRight: '8px' },
-//         pr10: { paddingRight: '15px' },
-//         pr9: { paddingRight: '6px' },
-//         mb4: { marginBottom: 4 },
-//         mb2: { marginBottom: 2 },
-//         mb8: { marginBottom: 8 },
-//         mb40: { marginBottom: 40 },
-//         mb30: { marginBottom: 30 },
-//         mb20: { marginBottom: 20 },
-//         mb10: { marginBottom: 10 },
-//         mb5: { marginBottom: 5 },
-//         mr5: { marginRight: 10 },
-//         mr15: { marginRight: 15 },
-//         mT0: { marginTop: 0 },
-//         mT1: { marginTop: 10 },
-//         ml1: { marginLeft: 5 },
-//         ml2: { marginLeft: 10 },
-//         ml3: { marginLeft: 15 },
-
-//         mr2: { marginRight: 10, paddingRight: 10 },
-//         ml4: { marginLeft: 20 },
-//         ml5: { marginLeft: 20 },
-//         pl1: { paddingLeft: 5 },
-//         pl2: { paddingLeft: 10 },
-//         pl3: { paddingLeft: 15 },
-//         pr1: { paddingRight: 5 },
-//         pr2: { paddingRight: 10 },
-//         pr3: { paddingRight: 15 },
-//         pt2: { paddingTop: 4 },
-//         pt3: { paddingTop: 5 },
-//         pt5: { paddingTop: 10 },
-//         h3: { fontSize: 16, fontWeight: 400 },
-//         h4: { fontSize: 13, fontWeight: 700 },
-//         bold: {fontWeight: 700, color: '#000' },
-//         h1: {
-//           fontSize: 20,
-//           fontWeight: 700,
-//         },
-//         body1: { fontSize: 10 },
-//         body2: { fontSize: 9 },
-//         subtitle1: { fontSize: 10, fontWeight: 700 },
-//         subtitle2: { fontSize: 8, fontWeight: 700 },
-//         alignRight: { textAlign: 'right' },
-//         alignLeft: { textAlign: 'left' },
-//         alignCenter: { textAlign: 'center' },
-//         page: {
-//           fontSize: 9,
-//           lineHeight: 1.6,
-//           fontFamily: 'Roboto',
-//           backgroundColor: '#fff',
-//           textTransform: 'capitalize',
-//           padding: '0px',
-//           // padding: '40px 24px 60px 24px',
-//         },
-//         footer: {
-//           left: 0,
-//           right: 0,
-//           bottom: 0,
-//           padding: 24,
-//           margin: 'auto',
-//           borderTopWidth: 1,
-//           borderStyle: 'solid',
-//           position: 'absolute',
-//           borderColor: '#DFE3E8',
-//         },
-//         gridContainer: {
-//           flexDirection: 'row',
-//           justifyContent: 'space-between',
-//         },
-//         contBorder: {
-//           border: 0.5,
-//           borderStyle: 'solid',
-//           // borderColor: '#DFE3E8',
-//         },
-//         dashBorder: {
-//           borderBottom: 1,
-//           borderStyle: 'dashed',
-//           borderColor: '#DFE3E8',
-//         },
-//         table: {
-//           display: 'flex',
-//           width: 'auto',
-//           border: 0.5,
-//           borderStyle: 'solid',
-//         },
-//         tableRow: {
-//           // padding: '8px 0',
-//           flexDirection: 'row',
-//           // borderBottomWidth: 0.5,
-//           // borderStyle: 'solid',
-//           // borderColor: '#DFE3E8',
-
-//         },
-//         borderbottom: {
-//           borderBottomWidth: 1,
-//           borderStyle: 'solid',
-//           borderColor: '#DFE3E8',
-//         },
-//         totalRow: {
-//           padding: '6px 0',
-//           marginTop: '8px',
-//           flexDirection: 'row',
-//           borderRadius: 3,
-
-//         },
-//         totalRowNew: {
-
-
-//           flexDirection: 'row',
-//           borderRadius: 1,
-
-//         },
-//         topBoderRadius: {
-//           borderTopLeftRadius: '16px',
-//           borderTopRightRadius: '16px',
-//         },
-
-//         topBoderRadiusnew: {
-//           borderTopLeftRadius: '15px',
-//           borderTopRightRadius: '15px',
-//         },
-
-//         bottomBorderRadius: {
-//           borderBottomLeftRadius: '16px',
-//           borderBottomRightRadius: '16px',
-//         },
+        },
 
 
 
-//         tableHeader: {
-//           padding: '4px 0',
-//           flexDirection: 'row',
-//           alignItems:'flex-end'
+        smallFitter: {
+          paddingLeft: '10px',
+        },
+        headFitter: {
+          padding: '10px',
+        },
+        AllsmallFitter: {
+          padding: '10px',
+        },
+        col4: {
+          width: '33%',
+          paddingLeft: '20px',
+          marginLeft: '10px',
+          marginRight: '10px',
+          paddingRight: '20px',
+        },
+        col: { width: '23%' },
+        col8: { width: '75%' },
+        col2: { width: '13%', marginTop: '10px' },
+        col6: { width: '50%' },
+        p4: { padding: '4px' },
+        p10: { padding: '4px 6px' },
+        p11: { padding: '0px 0px' },
+        p12: { paddingTop: '4px', paddingBottom: '2px' },
+        pr0: { paddingRight: '0px' },
+        pr4: { paddingRight: '4px' },
+        pr8: { paddingRight: '8px' },
+        pr10: { paddingRight: '15px' },
+        pr9: { paddingRight: '6px' },
+        mb4: { marginBottom: 4 },
+        mb2: { marginBottom: 2 },
+        mb8: { marginBottom: 8 },
+        mb40: { marginBottom: 40 },
+        mb30: { marginBottom: 30 },
+        mb20: { marginBottom: 20 },
+        mb10: { marginBottom: 10 },
+        mb5: { marginBottom: 5 },
+        mr5: { marginRight: 10 },
+        mr15: { marginRight: 15 },
+        mT0: { marginTop: 0 },
+        mT1: { marginTop: 10 },
+        ml1: { marginLeft: 5 },
+        ml2: { marginLeft: 10 },
+        ml3: { marginLeft: 15 },
+
+        mr2: { marginRight: 10, paddingRight: 10 },
+        ml4: { marginLeft: 20 },
+        ml5: { marginLeft: 20 },
+        pl1: { paddingLeft: 5 },
+        pl2: { paddingLeft: 10 },
+        pl3: { paddingLeft: 15 },
+        pr1: { paddingRight: 5 },
+        pr2: { paddingRight: 10 },
+        pr3: { paddingRight: 15 },
+        pt2: { paddingTop: 4 },
+        pt3: { paddingTop: 5 },
+        pt5: { paddingTop: 10 },
+        h3: { fontSize: 16, fontWeight: 400 },
+        h4: { fontSize: 13, fontWeight: 700 },
+        bold: {fontWeight: 700, color: '#000' },
+        h1: {
+          fontSize: 20,
+          fontWeight: 700,
+        },
+        body1: { fontSize: 10 },
+        body2: { fontSize: 9 },
+        subtitle1: { fontSize: 10, fontWeight: 700 },
+        subtitle2: { fontSize: 8, fontWeight: 700 },
+        alignRight: { textAlign: 'right' },
+        alignLeft: { textAlign: 'left' },
+        alignCenter: { textAlign: 'center' },
+        page: {
+          fontSize: 9,
+          lineHeight: 1.6,
+          fontFamily: 'Roboto',
+          backgroundColor: '#fff',
+          textTransform: 'capitalize',
+          padding: '0px',
+          // padding: '40px 24px 60px 24px',
+        },
+        footer: {
+          left: 0,
+          right: 0,
+          bottom: 0,
+          padding: 24,
+          margin: 'auto',
+          borderTopWidth: 1,
+          borderStyle: 'solid',
+          position: 'absolute',
+          borderColor: '#DFE3E8',
+        },
+        gridContainer: {
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        },
+        contBorder: {
+          border: 0.5,
+          borderStyle: 'solid',
+          // borderColor: '#DFE3E8',
+        },
+        dashBorder: {
+          borderBottom: 1,
+          borderStyle: 'dashed',
+          borderColor: '#DFE3E8',
+        },
+        table: {
+          display: 'flex',
+          width: 'auto',
+          border: 0.5,
+          borderStyle: 'solid',
+        },
+        tableRow: {
+          // padding: '8px 0',
+          flexDirection: 'row',
+          // borderBottomWidth: 0.5,
+          // borderStyle: 'solid',
+          // borderColor: '#DFE3E8',
+
+        },
+        borderbottom: {
+          borderBottomWidth: 1,
+          borderStyle: 'solid',
+          borderColor: '#DFE3E8',
+        },
+        totalRow: {
+          padding: '6px 0',
+          marginTop: '8px',
+          flexDirection: 'row',
+          borderRadius: 3,
+          // borderWidth: 1,
+          // borderStyle: 'solid',
+          // borderColor: '#DFE3E8',
+          // backgroundColor: '#DFF6DD',
+        },
+        totalRowNew: {
+          // padding: '6px 0',
+          // marginTop: '8px',
+
+          flexDirection: 'row',
+          borderRadius: 1,
+          // borderWidth: 1,
+          // borderStyle: 'solid',
+          // borderColor: '#DFE3E8',
+          // backgroundColor: '#DFF6DD',
+        },
+        topBoderRadius: {
+          borderTopLeftRadius: '16px',
+          borderTopRightRadius: '16px',
+        },
+
+        topBoderRadiusnew: {
+          borderTopLeftRadius: '15px',
+          borderTopRightRadius: '15px',
+        },
+
+        bottomBorderRadius: {
+          borderBottomLeftRadius: '16px',
+          borderBottomRightRadius: '16px',
+        },
 
 
-//         },
-//         bg: {
-//           backgroundColor: '#F3FFF2',
-//           paddingHorizontal: '4px',
-//           paddingVertical: '8px',
-//         },
-//         bg1: {
-//           backgroundColor: '#fff',
-//           // paddingHorizontal: '20px',
-//         },
-//         bgb: {
-//           backgroundColor: '#fff',
-//           paddingHorizontal: '20px',
-//         },
 
-//         bg2: {
-//           backgroundColor: '#F3FFF2',
-//           padding: '8px 0',
-//           flexDirection: 'row',
-//         },
-//         bg3: {
-//           backgroundColor: '#DFF6DD',
-//           padding: '8px 0',
-//           flexDirection: 'row',
-//         },
-//         noBorder: {
-//           paddingTop: 8,
-//           paddingBottom: 0,
-//           borderBottomWidth: 0,
-//         },
-//         tableCell_1: {
-//           width: '5%',
-//            paddingLeft: 10,
-//         },
-//         tableCell_35: {
-//           width: '35%',
-//           // paddingRight: 16,
-//         },
-
-//         tableCell_350: {
-//           width: '30%',
-//           // paddingRight: 16,
-//         },
+        tableHeader: {
+          padding: '4px 0',
+          flexDirection: 'row',
+          alignItems:'flex-end'
 
 
-//         // tableCell_15: {
-//         //   width: '15%',
+        },
+        bg: {
+          backgroundColor: '#F3FFF2',
+          paddingHorizontal: '4px',
+          paddingVertical: '8px',
+        },
+        bg1: {
+          backgroundColor: '#fff',
+          // paddingHorizontal: '20px',
+        },
+        bgb: {
+          backgroundColor: '#fff',
+          paddingHorizontal: '20px',
+        },
 
-//         // },
+        bg2: {
+          backgroundColor: '#F3FFF2',
+          padding: '8px 0',
+          flexDirection: 'row',
+        },
+        bg3: {
+          backgroundColor: '#DFF6DD',
+          padding: '8px 0',
+          flexDirection: 'row',
+        },
+        noBorder: {
+          paddingTop: 8,
+          paddingBottom: 0,
+          borderBottomWidth: 0,
+        },
+        tableCell_1: {
+          width: '5%',
+           paddingLeft: 10,
+        },
+        tableCell_35: {
+          width: '35%',
+          // paddingRight: 16,
+        },
+
+        tableCell_350: {
+          width: '30%',
+          // paddingRight: 16,
+        },
+
+
+        // tableCell_15: {
+        //   width: '15%',
+
+        // },
         
 
-//         tableCell_200: {
-//           width: '20%',
-//           // paddingRight: 3,
+        tableCell_200: {
+          width: '20%',
+          // paddingRight: 3,
 
-//         },
+        },
 
-//         tableCell_2000: {
-//           width: '15%',
-//           paddingRight: 3,
+        tableCell_2000: {
+          width: '15%',
+          paddingRight: 3,
 
-//         },
+        },
 
-//         tableCell_20: {
-//           width: '20%',
-//           paddingRight: 10,
-//         },
+        tableCell_20: {
+          width: '20%',
+          paddingRight: 10,
+        },
 
-//         tableCell_15: {
-//           width: '20%',
-//           paddingRight: 10,
-//         },
+        tableCell_15: {
+          width: '20%',
+          paddingRight: 10,
+        },
 
-//         tableCell_150: {
-//           width: '15%',
+        tableCell_150: {
+          width: '15%',
          
-//         },
+        },
+
+
+        tableCell_b1: {
+          width: '5%',
+        },
+
+        tableCell_b2: {
+          width: '5%',
+        },
+
+
+        tableCell_b3: {
+          width: '5%',
+        },
+
+        tableCell_b4: {
+          width: '5%',
+        },
+
+        tableCell_b5: {
+          width: '15%',
+        },
+
+        tableCell_b6: {
+          width: '5%',
+        },
+
+        tableCell_b7: {
+          width: '5%',
+        },
+
+        tableCell_b8: {
+          width: '5%',
+        },
+
+        tableCell_b9: {
+          width: '10%',
+        },
+
+        tableCell_b10: {
+          width: '10%',
+        },
+
+        tableCell_b11: {
+          width: '10%',
+        },
+
+        tableCell_b12: {
+          width: '10%',
+        },
+
+        tableCell_b13: {
+          width: '10%',
+        },
 
 
 
 
 
-//         tableCell_2: {
-//           width: '50%',
-//           // paddingRight: 16,
-//         },
-//         tableCell_5: {
-//           width: '30%',
-//           // paddingRight: 16,
-//         },
-//         tableCell_4: {
-//           width: '53%',
-//           paddingRight: 8,
-//           marginRight: 2,
-//         },
-//         tableCell_3: {
-//           width: '15%',
-//           paddingRight: 16,
-//         },
-//         cellBg0: {
-//           backgroundColor: '#fffaee',
-//         },
-//         cellBg1: {
-//           backgroundColor: '#f8f2e2',
-//         },
-//         cellBg2: {
-//           backgroundColor: '#f8efd2',
-//         },
-//         cellBg3: {
-//           backgroundColor: '#f6e8c2',
-//         },
-//         cellBgHead: {
-//           backgroundColor: '#EDEDED',
-//         },
-//         textcolor:{
-//           color: '#6A6A6A',
-//         },
-//         textcolorhead:{
-//           color: '#3D3D3D',
-//         },
 
-//         blockborder:{
-//           border: '1px solid 6A6A6A'
-//         }
-//       }),
-//     []
-//   )
+
+        tableCell_2: {
+          width: '50%',
+          // paddingRight: 16,
+        },
+        tableCell_5: {
+          width: '30%',
+          // paddingRight: 16,
+        },
+        tableCell_4: {
+          width: '53%',
+          paddingRight: 8,
+          marginRight: 2,
+        },
+        tableCell_3: {
+          width: '15%',
+          paddingRight: 16,
+        },
+        cellBg0: {
+          backgroundColor: '#fffaee',
+        },
+        cellBg1: {
+          backgroundColor: '#f8f2e2',
+        },
+        cellBg2: {
+          backgroundColor: '#f8efd2',
+        },
+        cellBg3: {
+          backgroundColor: '#f6e8c2',
+        },
+        cellBgHead: {
+          backgroundColor: '#EDEDED',
+        },
+        textcolor:{
+          color: '#6A6A6A',
+        },
+        textcolorhead:{
+          color: '#3D3D3D',
+        },
+
+        blockborder:{
+          border: '1px solid 6A6A6A'
+        }
+      }),
+    []
+  )
 export type IInvoice = {
   id: number
   invoiceName: string
@@ -428,6 +504,18 @@ function result(format: string, key = '.00', currencySymbol: string) {
     ? currencySymbol + format.replace(key, '')
     : currencySymbol + format
 }
+// export function fCurrency(number: InputValue) {
+//   const format = number ? numeral(number).format('0,0.00') : '0'
+
+//   // Format the currency symbol using Intl.NumberFormat
+//   const currencyFormatter = new Intl.NumberFormat('en-IN', {
+//     style: 'currency',
+//     currency: 'INR',
+//   })
+//   const formatedValue = currencyFormatter.format(parseFloat(format))
+
+//   return result(format, '.00', '₹')
+// }
 
 
 export function fDate(date: InputValue2, newFormat?: string) {
@@ -589,7 +677,7 @@ const MyDocument = ({
   setPartATotal,
   setPartBTotal,
 }) => {
-  // const styles = useStyles()
+  const styles = useStyles()
 
   useEffect(() => {
     console.log('myObj', myObj, myAdditionalCharges)
@@ -623,257 +711,1718 @@ const MyDocument = ({
     console.log(`Table ${tableIndex} rendered with dimensions:`, width, height);
   };
 
-
-  const styles = StyleSheet.create({
-    page: {
-      padding: 20,
-      fontFamily: 'Helvetica',
-      size: 'A4', // Set page size to A4
-    },
-    heading: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      marginBottom: 10,
-      textAlign: 'center',
-      color: '#2E86C1', // Blue color for heading
-    },
-    secondHeading: {
-      fontSize: 14,
-      fontWeight: 'bold',
-      marginBottom: 10,
-      textAlign: 'left',
-      color: '#E74C3C', // Red color for second heading
-    },
-    headerRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginBottom: 10,
-    },
-    header: {
-      fontSize: 12,
-      fontWeight: 'bold',
-      color: '#8E44AD', // Purple color for headers
-    },
-    table: {
-      width: '100%',
-      borderStyle: 'solid',
-      borderWidth: 1,
-      borderColor: '#000',
-    },
-    tableRow: {
-      flexDirection: 'row',
-      borderBottomWidth: 1, // Bottom border for every row
-      borderBottomColor: '#000',
-    },
-    tableHeader: {
-      backgroundColor: '#F4D03F', // Yellow background for table header
-      borderBottomWidth: 1,
-      borderBottomColor: '#000',
-      padding: 5,
-      fontSize: 10,
-      fontWeight: 'bold',
-    },
-    tableCell: {
-      padding: 5,
-      borderRightWidth: 1,
-      borderRightColor: '#000',
-      textAlign: 'center',
-      fontSize: 9,
-      flex: 1,
-    },
-    lastCell: {
-      padding: 5,
-      textAlign: 'center',
-      fontSize: 9,
-      borderRightWidth: 0, // No border for the last cell
-      flex: 1,
-    },
-    emptySpace: {
-      height: 20, // Empty space height
-      marginBottom: 10,
-    },
-    textInEmptySpace: {
-      fontSize: 12,
-      color: '#2ECC71', // Green color for text in empty space
-      textAlign: 'left',
-    },
-  });
-  
-
-
-  const dummyData = [
-    {
-      id: 1,
-      customerDetails: 'John Doe',
-      unit: 'Unit 101',
-      project: 'Project A',
-      status: 'Booked',
-      booked: 'Yes',
-      faceing: 'North',
-      sharing: 'No',
-      releaseStatus: 'Released',
-      unitType: '2BHK',
-      plotArea: '1200 sqft',
-      ratePerSqft: '₹5000',
-      plotCost: '₹60,00,000',
-      plotCollected: '₹30,00,000',
-      plotDue: '₹30,00,000',
-      bua: '1000 sqft',
-      constRatePerSqft: '₹2000',
-      constructionCost: '₹20,00,000',
-      constCollected: '₹10,00,000',
-      constDue: '₹10,00,000',
-      crm: 'CRM001',
-      saleManager: 'Manager A',
-      statusUpdatedDate: '2023-10-01',
-      ageing: '30 days',
-      construction: 'Ongoing',
-      saleValue: '₹80,00,000',
-      sftCost: '₹8000',
-      crmExecutive: 'Executive A',
-      saleExecutive: 'Executive B',
-      comments: 'No comments',
-    },
-    {
-      id: 2,
-      customerDetails: 'Jane Smith',
-      unit: 'Unit 102',
-      project: 'Project B',
-      status: 'Pending',
-      booked: 'No',
-      faceing: 'South',
-      sharing: 'Yes',
-      releaseStatus: 'Not Released',
-      unitType: '3BHK',
-      plotArea: '1500 sqft',
-      ratePerSqft: '₹5500',
-      plotCost: '₹82,50,000',
-      plotCollected: '₹41,25,000',
-      plotDue: '₹41,25,000',
-      bua: '1200 sqft',
-      constRatePerSqft: '₹2500',
-      constructionCost: '₹30,00,000',
-      constCollected: '₹15,00,000',
-      constDue: '₹15,00,000',
-      crm: 'CRM002',
-      saleManager: 'Manager B',
-      statusUpdatedDate: '2023-09-15',
-      ageing: '45 days',
-      construction: 'Not Started',
-      saleValue: '₹90,00,000',
-      sftCost: '₹7500',
-      crmExecutive: 'Executive C',
-      saleExecutive: 'Executive D',
-      comments: 'Follow up required',
-    },
-    // Add more rows as needed
-  ];
-
-
   return (
     <Document>
-    <Page size="A3" orientation="landscape"  style={styles.page}>
-      {/* Heading */}
-      <Text style={styles.heading}>Ecostone Plot Booking Summary - 08-Mar-25</Text>
+      <Page size="A3" orientation="landscape" style={styles.page}>
 
-      {/* Second Heading with Empty Space and Text */}
-      <View style={styles.emptySpace} />
-      <Text style={styles.secondHeading}>Facng [~}; Shering [</Text>
 
-      {/* Three Headers */}
-      <View style={styles.headerRow}>
-        <Text style={styles.header}>Header 1</Text>
-        <Text style={styles.header}>Header 2</Text>
-        <Text style={styles.header}>Header 3</Text>
-      </View>
+        <View style={[ styles.fitternew, ]}>
 
-      {/* Table */}
-      <View style={styles.table}>
-        {/* Table Header */}
-        {/* <View style={[styles.tableRow, ]}>
-          <Text style={styles.tableCell}>S.No</Text>
-            <Text style={styles.tableCell}>Customer Details</Text>
-            <Text style={styles.tableCell}>Unit</Text>
-            <Text style={styles.tableCell}>Project</Text>
-            <Text style={styles.tableCell}>Status</Text>
-            <Text style={styles.tableCell}>Booked</Text>
-            <Text style={styles.tableCell}>Faceing</Text>
-            <Text style={styles.tableCell}>Sharing</Text>
-            <Text style={styles.tableCell}>Release Status</Text>
-            <Text style={styles.tableCell}>Unit Type</Text>
-            <Text style={styles.tableCell}>Plot Area</Text>
-            <Text style={styles.tableCell}>Rate/sqft</Text>
-            <Text style={styles.tableCell}>Additional 1</Text>
-            <Text style={styles.tableCell}>Additional 2</Text>
-            <Text style={styles.tableCell}>Additional 3</Text>
-            <Text style={styles.tableCell}>Additional 4</Text>
-            <Text style={styles.tableCell}>Additional 5</Text>
-            <Text style={styles.tableCell}>Additional 6</Text>
-            <Text style={styles.tableCell}>Additional 7</Text>
-            <Text style={styles.tableCell}>Additional 8</Text>
-            <Text style={styles.tableCell}>Additional 9</Text>
-            <Text style={styles.lastCell}>Additional 10</Text>
-          
 
+        <View
+          style={[
+            styles.gridContainer,
+            // styles.mb10,
+            // styles.fitternew,
+            styles.topBoderRadius,
+
+            styles.dashBorder,
+            styles.cellBgHead,
+            styles.headFitter,
+          ]}
+        >
+          <View
+            style={[styles.col6,  styles.pr3, 
+     
+            ]}
+          >
+
+         
+            <Text style={[styles.h4, styles.pt3, styles.ml1]}>
+              {projectDetails?.projectName}
+            </Text>
+    
+          </View>
+
+
+
+<View
+  style={[
+    styles.col6,
+
+    // styles.fitternew,
+    {
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
+      height: '100%',
+
+    },
+  ]}
+>
+  <Text
+    style={[
+      styles.h4,
+      styles.mT1,
+      styles.pt5,
+      styles.pr3,
+    ]}
+  >
+    Cost Sheet
+  </Text>
+
+  <Text style={[styles.body2, styles.pr3, {color:'#3D3D3D'}]}>
+    {fDate(prettyDate(Timestamp.now().toMillis()))}
+  </Text>
+</View>
+
+
+
+
+
+
+        </View>
+
+        <View style={[styles.gridContainer, styles.bottomBorderRadius, styles.pt3,    styles.mb10, { backgroundColor:'#EDEDED'}]}>
+
+          <View
+  style={[
+    styles.col4,
+    styles.ml3,
+    styles.cellBgHead,
+    styles.AllsmallFitter,
+
+    // styles.mb10,
+  ]}
+>
+
+
+
+
+
+
+
+
+  <View>
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
+    Applicant Name:
+    </Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.customerName1}</Text>
+  </View>
+
+
+
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+  {/* <Image src={pdfimg2} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} /> */}
+
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
+    Customer ID:
+    </Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>NA</Text>
+  </View>
+
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+  {/* <Image src={pdfimg3} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} /> */}
+
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
+    Phone number:
+    </Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> {streamUnitDetails?.custObj1?.phoneNo1}</Text>
+  </View>
+
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+  {/* <Image src={pdfimg5} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} /> */}
+
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
+    Email:
+    </Text>
+    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{streamUnitDetails?.custObj1?.email1}</Text>
+  </View>
+</View>
+
+
+
+</View>
+
+
+
+
+
+
+
+
+
+
+
+          <View style={[styles.col4, styles.cellBgHead, styles.AllsmallFitter]}>
+            {/* <View>
+              <Text style={[styles.subtitle2, styles.mb2]}>
+                Date create:{' '}
+                <Text style={styles.body2}>
+                  {fDate(prettyDate(Timestamp.now().toMillis()))}
+                </Text>
+              </Text>
+            </View> */}
+
+
+
+            {/* <View >
+
+            <View style={{ flexDirection: 'row' }}>
+
+              <Text  style={[styles.subtitle2, { fontWeight: 'bold' }]}>
+                Unit No:{' '}     </Text>
+                <Text style={[ { marginLeft: 15 }]}>{selUnitDetails?.unit_no}</Text>
+
+              </View>
+
+
+
+              <View style={{ flexDirection: 'row' }}>
+
+              <Text  style={[styles.subtitle2, { fontWeight: 'bold' }]}>
+                Size:{' '} </Text>
+                <Text  style={[ { marginLeft: 15 }]}>
+                  {selUnitDetails?.size}
+                  <Text  style={[ { marginLeft: 15 }]}>
+                    {'('}
+                    {selUnitDetails?.area}sqft{')'}
+                  </Text>
+                </Text>
+
+
+              </View>
+
+
+              <View style={{ flexDirection: 'row' }}>
+
+              <Text style={[styles.subtitle2, { fontWeight: 'bold' }]}>
+                Facing:{' '} </Text>
+                <Text style={[ { marginLeft: 15 }]}>{selUnitDetails?.facing}</Text>
+
+              </View>
+
+
+             <View style={{ flexDirection: 'row' }}>
+      <Text style={[styles.subtitle2, { fontWeight: 'bold' }]}>Email address:</Text>
+      <Text style={[ { marginLeft: 15 }]}>
+        {leadDetailsObj1?.Mobile}
+      </Text>
+    </View>
+
+
+
+              <View style={{ flexDirection: 'row' }}>
+
+              <Text style={[styles.subtitle2, { fontWeight: 'bold' }]}>
+                type:{' '}         </Text>
+
+            <Text style={[ { marginLeft: 15 }]}>
+                {projectDetails?.projectType?.name === 'Apartment'
+               ? (projectDetails?.projectType?.displayName || 'Flat')
+               : (projectDetails?.projectType?.displayName || 'Plot')}{' '}
+           </Text>
+              </View>
+
+
+            </View> */}
+
+<View>
+
+  <View style={{ flexDirection: 'row',  alignItems: 'center', marginBottom: 5 }}>
+  {/* <Image src={pdfimg5} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} /> */}
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
+      Unit No:
+    </Text>
+    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selUnitDetails?.unit_no}</Text>
+  </View>
+
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+  {/* <Image src={pdfimg6} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} /> */}
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
+      Size:
+    </Text>
+    <Text style={{ flex: 1,  color:'#6A6A6A' }}>
+      {selUnitDetails?.size}{' '}
+      <Text>
+        {'('}
+        {selUnitDetails?.area} sqft{')'}
+      </Text>
+    </Text>
+  </View>
+
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+  {/* <Image src={pdfimg7} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} /> */}
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
+      Facing:
+    </Text>
+    <Text style={{ flex: 1,  color:'#6A6A6A' }}>{selUnitDetails?.facing}</Text>
+  </View>
+
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+  {/* <Image src={pdfimg8} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} /> */}
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 40 }]}>
+      Type:
+    </Text>
+    <Text style={{ flex: 1,  color:'#6A6A6A' }}>
+      {projectDetails?.projectType?.name === 'Apartment'
+        ? 'Flat'
+        :projectDetails?.projectType?.name === 'Plots'
+        ? 'Plot'
+        : projectDetails?.projectType?.name === 'Villas'
+        ? 'Villa'
+        : ''}
+    </Text>
+  </View>
+</View>
+
+
+
+
+
+          </View>
+
+
+
+
+
+          <View style={[styles.col4, styles.cellBgHead, styles.mr15, styles.AllsmallFitter]}>
+            {/* <Text style={styles.subtitle2}>Unit Cost:</Text>
+            <Text style={styles.body2}>
+              {user?.role[0]}
+            </Text>
+            <Text style={styles.subtitle2}>Current status:</Text>
+            <Text style={styles.subtitle2}>Booked date:</Text>
+            <Text style={styles.subtitle2}>Booked by</Text> */}
+
+<View>
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+  {/* <Image src={pdfimg9} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} /> */}
+
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
+      Unit Cost:
+    </Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}> ₹{netTotal?.toLocaleString('en-IN')}</Text>
+  </View>
+
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+  {/* <Image src={pdfimg10} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} /> */}
+
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
+      Current Status:
+    </Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{streamUnitDetails?.status}</Text>
+  </View>
+
+
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+  {/* <Image src={pdfimg11} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} /> */}
+
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
+      Issued Date:
+    </Text>
+    <Text style={[ { marginLeft: 15,  color:'#6A6A6A' }]}>{prettyDate(Timestamp.now().toMillis())}</Text>
+  </View>
+
+{/*
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+  <Image src={pdfimg12} style={{ width: 10, height: 10,  marginRight: 8 , marginBottom:5 }} />
+
+    <Text style={[styles.subtitle2, { fontWeight: 600, width: 60 }]}>
+      Booked By:
+    </Text>
+    <Text style={[ { marginLeft: 15, color:'#6A6A6A' }]}>{streamUnitDetails?.bookedBy}</Text>
+  </View> */}
+</View>
+
+
+          </View>
+
+
+
+
+
+
+        </View>
+
+
+        </View>
+
+
+
+
+        {/* <View style={[styles.gridContainer, styles.mb40]}>
+          <View style={styles.col6}>
+            <Text style={[styles.subtitle2, styles.mb4]}>Date create</Text>
+            <Text style={styles.body2}>
+              {fDate(invoiceDet[i].createDate)}
+            </Text>
+          </View>
+          <View style={styles.col6}>
+            <Text style={[styles.subtitle2, styles.mb4]}>Due date</Text>
+            <Text style={styles.body2}>{fDate(invoiceDet[i].dueDate)}</Text>
+          </View>
         </View> */}
 
-<View  style={styles.tableRow}>
-<Text style={styles.tableCell}>Customer Details</Text>
-        <Text style={styles.tableCell}>Unit</Text>
-        <Text style={styles.tableCell}>Project</Text>
-        <Text style={styles.tableCell}>Status</Text>
-        <Text style={styles.tableCell}>Booked</Text>
-        <Text style={styles.tableCell}>Faceing</Text>
-        <Text style={styles.tableCell}>Sharing</Text>
-        <Text style={styles.tableCell}>Release Status</Text>
-        <Text style={styles.tableCell}>Unit Type</Text>
-        <Text style={styles.tableCell}>Plot Area</Text>
-        <Text style={styles.tableCell}>Rate/sqft</Text>
-        <Text style={styles.tableCell}>BUA</Text>
-        <Text style={styles.tableCell}>Const. Rate/Sqft</Text>
-        <Text style={styles.tableCell}>CRM</Text>
-        <Text style={styles.tableCell}>Sale Manager</Text>
-        <Text style={styles.tableCell}>Status Updated Date</Text>
-        <Text style={styles.tableCell}>Ageing</Text>
-        <Text style={styles.tableCell}>Construction</Text>
-        <Text style={styles.tableCell}>Sale Value</Text>
-        <Text style={styles.tableCell}>Sft Cost</Text>
-        <Text style={styles.tableCell}>CRM Executive</Text>
-        <Text style={styles.tableCell}>Sale Executive</Text>
-        <Text style={styles.lastCell}>Comments</Text>
+
+    <View style={[styles.bgb,]}
+    onRender={(e) => handleTableRender(e, 1)}
+    >
+
+    <View style={[styles.topBoderRadius, styles.bottomBorderRadius, {border:'1px solid #CCCCCC',}]}>
+          <View style={[ styles.topBoderRadiusnew,   { backgroundColor:'#EDEDED' }]}>
+            <Text
+              style={[
+                // styles.subtitle1,
+                // styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                // styles.pt2,
+                styles.mT1,
+                styles.ml2,
+                { color:'#3D3D3D', fontWeight: 450 , fontSize: 10,}
+              ]}
+            >
+              Cost Sheet
+            </Text>
+            <Text
+              style={[
+                // styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+                {color: '#6A6A6A'}
+              ]}
+            >
+              Know your charges
+            </Text>
+
           </View>
 
-        {/* Table Rows */}
-        {dummyData.map((row, index) => (
-          <View key={index} style={styles.tableRow}>
-                      <Text style={styles.tableCell}>{row.customerDetails}</Text>
-          <Text style={styles.tableCell}>{row.unit}</Text>
-          <Text style={styles.tableCell}>{row.project}</Text>
-          <Text style={styles.tableCell}>{row.status}</Text>
-          <Text style={styles.tableCell}>{row.booked}</Text>
-          <Text style={styles.tableCell}>{row.faceing}</Text>
-          <Text style={styles.tableCell}>{row.sharing}</Text>
-          <Text style={styles.tableCell}>{row.releaseStatus}</Text>
-          <Text style={styles.tableCell}>{row.unitType}</Text>
-          <Text style={styles.tableCell}>{row.plotArea}</Text>
-          <Text style={styles.tableCell}>{row.ratePerSqft}</Text>
-          <Text style={styles.tableCell}>{row.bua}</Text>
-          <Text style={styles.tableCell}>{row.constRatePerSqft}</Text>
-          <Text style={styles.tableCell}>{row.crm}</Text>
-          <Text style={styles.tableCell}>{row.saleManager}</Text>
-          <Text style={styles.tableCell}>{row.statusUpdatedDate}</Text>
-          <Text style={styles.tableCell}>{row.ageing}</Text>
-          <Text style={styles.tableCell}>{row.construction}</Text>
-          <Text style={styles.tableCell}>{row.saleValue}</Text>
-          <Text style={styles.tableCell}>{row.sftCost}</Text>
-          <Text style={styles.tableCell}>{row.crmExecutive}</Text>
-          <Text style={styles.tableCell}>{row.saleExecutive}</Text>
-          <Text style={styles.lastCell}>{row.comments}</Text>
+
+
+
+
+  <View>
+    <View style={[  styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.smallFitter,
+                styles.ml2,
+
+              ]}
+            >
+              I. Booking
+            </Text>
           </View>
-        ))}
+          <View style={[styles.fitter]}>
+            <View style={[{ borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+                    border: '1 solid #e5e7eb ',
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.textcolorhead,
+                    {   paddingBottom: '2px' },
+                  ]}
+                >
+
+
+                  <View style={[styles.tableCell_b1, styles.p12, { marginLeft:'20px' }]}>
+                    <Text style={styles.subtitle2}>
+                      S.NO
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_b2,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr4,
+                      styles.ml1,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Unit No</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_b3,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Faceing</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_b4,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Plot Area</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_b5, styles.alignRight, styles.p12, styles.pr8, ]}
+                  >
+                    <Text style={styles.subtitle2}>Customer  name</Text>
+                  </View>
+
+
+                  <View
+                    style={[
+                      styles.tableCell_b5,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Booking Date</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[
+                      styles.tableCell_b6,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Status Update Date</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[
+                      styles.tableCell_b7,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Price/sqft</Text>
+                  </View>
+
+
+
+
+                  <View
+                    style={[
+                      styles.tableCell_b8,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Sale value</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[
+                      styles.tableCell_b9,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Recieved</Text>
+                  </View>
+
+
+                  <View
+                    style={[
+                      styles.tableCell_b10,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Balance</Text>
+                  </View>
+
+
+                  <View
+                    style={[
+                      styles.tableCell_b11,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Sales Person Name</Text>
+                  </View>
+
+
+                  <View
+                    style={[
+                      styles.tableCell_b12,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>CRM Name</Text>
+                  </View>
+
+
+
+
+
+
+
+
+
+              </View>
+              <View>
+                {myObj?.map((item, index) => (
+                  <View
+                    style={[
+                      styles.tableRow,
+                      styles.textcolor,
+                      index + 1 != myObj.length ? styles.borderbottom : null,
+
+           
+                      {  borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px' },
+                    ]}
+                    key={item.id}
+                  >
+                    <View
+                      style={[
+                        styles.tableCell_1,
+                        styles.pl2,
+                        { marginTop: '-1px' },
+                      ]}
+                    >
+                      <Text>{index + 1}</Text>
+                    </View>
+
+                    <View style={[styles.tableCell_35]}>
+                      <Text style={styles.subtitle2}>
+                        {item?.component?.label}
+                      </Text>
+                    </View>
+
+                    <View style={[styles.tableCell_15, styles.alignRight]}>
+                      <Text>₹ {((item?.charges)?.toLocaleString('en-IN'))}</Text>
+                    </View>
+
+                    <View
+                      style={[
+                        styles.tableCell_15,
+                        styles.alignRight,
+                      ]}
+                    >
+                      <Text>₹ {((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
+                    </View>
+
+
+                    <View
+                      style={[
+                        styles.tableCell_15,
+                        styles.alignRight,
+                      ]}
+                    >
+                      <Text>₹ {((item?.gstValue)?.toLocaleString('en-IN'))}</Text>
+                    </View>
+
+                    <View style={[styles.tableCell_15, styles.alignRight]}>
+                      <Text>₹ {((item?.TotalNetSaleValueGsT)?.toLocaleString('en-IN'))}</Text>
+                    </View>
+                  </View>
+                ))}
+
+
+
+<View
+              style={[styles.tableRow, styles.textcolor, {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px'  }]}
+            >
+              <View style={[styles.tableCell_1, styles.pl2, styles.p10]}></View>
+
+              <View style={[styles.tableCell_35, styles.p10]}></View>
+
+              <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+              <View
+                style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+              >
+                <Text style={[styles.subtitle2, styles.pt2]}>{projectDetails?.projectType?.name === 'Apartment'
+                        ? 'Flat'
+                        : 'Plot'} Cost</Text>
+              </View>
+
+              <View
+                style={[styles.tableCell_20, styles.alignRight, styles.pt2, styles.bold]}
+              >
+                <Text>₹ {((partATotal)?.toLocaleString('en-IN'))}</Text>
+              </View>
+            </View>
+
+        
+              </View>
+            </View>
+
+          </View>
+  </View>
+
+
+
+
+
+
+
+
+
+
+          {myAdditionalCharges?.length > 0 && (
+
+
+<View>
+<View style={[styles.ml2, styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb5,
+                styles.col,
+     
+                styles.ml1,
+              ]}
+            >
+              II. Additional charges
+            </Text>
+          </View>
+
+          <View style={[styles.fitter, { marginTop: '5px', marginBottom:'10px' }]}>
+            <View style={[{  borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.textcolorhead,
+                    { paddingBottom: '2px' },
+                  ]}
+                >
+
+
+                  <View style={[  styles.ml1,styles.tableCell_35, styles.p12,  { marginLeft:'20px' } ]}>
+                    <Text style={styles.subtitle2}>
+                      Additional Charges
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr4,
+                      styles.ml5,
+        
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Rate/Sqft</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+        
+                    ]}
+                  >
+                    <Text style={[styles.subtitle2 ]}>Cost</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+         
+                    ]}
+                  >
+                    <Text style={[styles.subtitle2 ]}>GST</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12,
+                      styles.pr8,
+                     { paddingLeft:'0px',}]}
+                  >
+                    <Text style={styles.subtitle2}>Total</Text>
+                  </View>
+                </View>
+              </View>
+
+
+  
+              {myAdditionalCharges?.map((item, index) => (
+                <View
+                  style={[
+                    styles.tableRow,
+                    styles.textcolor,
+         
+                    index + 1 != myAdditionalCharges.length
+                      ? styles.borderbottom
+                      : null,
+
+                    {   borderBottom: '1px solid #e5e7eb',
+                      marginTop: '2px', paddingTop: '4px' },
+                  ]}
+                  key={item.id}
+                >
+                  <View
+                    style={[
+                      styles.tableCell_1,
+                      styles.pl2,
+                      { marginTop: '-1px' },
+                    ]}
+                  >
+                    <Text>{index + 1}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_35]}>
+                    <Text style={styles.subtitle2}>
+                      {item?.component?.label}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.tableCell_15, styles.alignRight, styles.pr4,]}>
+                    <Text >₹ {((item?.charges)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.pr4 ,]}
+                  >
+                    <Text>₹ {((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.pr4,  ]}
+                  >
+                    <Text>₹ {((item?.gstValue)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_15, styles.alignRight,  ]}>
+                    <Text>
+                      {' '}
+                      ₹ {(
+                        Number(
+                          computeTotal(
+                            item,
+                            selUnitDetails?.area?.toString()?.replace(',', '')
+                          )
+                        )?.toLocaleString('en-IN')
+                      )}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+
+<View
+                style={[
+                  styles.tableRow,
+                  styles.textcolor,
+                  {     borderBottom: '1px solid #e5e7eb',  marginTop: '2px', paddingTop: '4px'  },
+                ]}
+              >
+                <View
+                  style={[styles.tableCell_1, styles.pl2, styles.p10]}
+                ></View>
+
+                <View style={[styles.tableCell_35, styles.p10]}></View>
+
+                <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+                <View
+                  style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                >
+                  <Text style={[styles.subtitle2]}>Additonal Charges</Text>
+                </View>
+
+                <View style={[styles.tableCell_20, styles.alignRight, styles.bold]}>
+                  <Text>₹ {((partBTotal)?.toLocaleString('en-IN'))}</Text>
+
+                </View>
+              </View>
+
+
+
+            </View>
+            <View>
+
+
+
+
+
+            </View>
+          </View>
+</View>
+
+
+)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{myBookingPayload?.constructCS?.length > 0 && (
+
+
+<>
+<View style={[styles.ml2, styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                styles.mb5,
+                styles.col,
+                styles.ml1,
+              ]}
+            >
+              III. Construction charges
+            </Text>
+          </View>
+
+
+
+
+          
+<View style={[styles.fitter, { marginTop: '5px' }]}>
+            <View style={[ styles.mb20, {    borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  styles.textcolorhead,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+
+
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.ml1,
+
+                    { paddingBottom: '2px' },
+                  ]}
+                >
+                  {/* <View style={[styles.tableCell_1, styles.p11]}>
+                    <Text style={styles.subtitle2}></Text>
+                  </View> */}
+
+                  <View style={[styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'18px' }]}>
+                    <Text style={styles.subtitle2}>
+                    Construction Charges
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr4,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Rate/Sqft</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Cost</Text>
+                  </View>
+
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,     styles.ml2,]}
+                  >
+                    <Text style={styles.subtitle2}>GST</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,]}
+                  >
+                    <Text style={styles.subtitle2}>Total</Text>
+                  </View>
+
+                </View>
+              </View>
+              {myBookingPayload?.constructCS?.map((item, index) => (
+                <View
+                  style={[
+                    styles.tableRow,
+                    styles.textcolor,
+                    // styles.ml1,
+                    index + 1 != myAdditionalCharges.length
+                      ? styles.borderbottom
+                      : null,
+
+                    {   borderBottom: '1px solid #e5e7eb',
+                      marginTop: '2px', paddingTop: '4px' },
+                  ]}
+                  key={item.id}
+                >
+                  <View
+                    style={[
+                      styles.tableCell_1,
+                      styles.pl2,
+                      { marginTop: '-1px' },
+                    ]}
+                  >
+                    <Text>{index + 1}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_35]}>
+                    <Text style={styles.subtitle2}>
+                      {item?.component?.label}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.tableCell_15, styles.alignRight]}>
+                    <Text>₹{((item?.charges)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight,  styles.pr4 ]}
+                  >
+                    <Text>₹{((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight,  styles.pr4]}
+                  >
+                    <Text>₹{((item?.gstValue)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_15, styles.alignRight]}>
+                    <Text>
+                      {' '}
+                      ₹ {((item?.TotalNetSaleValueGsT)?.toLocaleString('en-IN'))}
+                      
+
+                    </Text>
+                  </View>
+                </View>
+              ))}
+
+<View>
+              <View
+                style={[
+                  styles.tableRow,
+                  styles.textcolor,
+                  {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px' },
+                ]}
+              >
+                <View
+                  style={[styles.tableCell_1, styles.pl2, styles.p10]}
+                ></View>
+
+                <View style={[styles.tableCell_35, styles.p10]}></View>
+
+                <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+                <View
+                  style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                >
+                  <Text style={[styles.subtitle2 ]}>Construction Charges </Text>
+                </View>
+
+                <View style={[styles.tableCell_20, styles.alignRight, styles.bold]}>
+                  <Text>₹ {((myBookingPayload?.T_C)?.toLocaleString('en-IN'))}</Text>
+                </View>
+              </View>
+            </View>
+
+
+
+
+            </View>
+
+
+          </View>
+
+</>
+
+
+
+
+)}
+          
+          
+          
+          {/* } */}
+
+
+
+
+
+
+          {/* part -4 */}
+          {myBookingPayload?.constAdditionalChargesCS?.length > 0 && (
+
+
+
+             <>
+                       <View style={[styles.ml2, styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+                // styles.mb5,
+                styles.col8,
+                // styles.smallFitter,
+                styles.ml1,
+              ]}
+            >
+              IV. Construction Additional charges
+            </Text>
+          </View>
+          {/* // {projectDetails?.projectType?.name === 'Villas' &&  */}
+           <View style={[styles.fitter, { marginTop: '5px' }]}>
+            <View style={[ styles.mb20, {    borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  styles.textcolorhead,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+
+
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.ml1,
+
+                    { paddingBottom: '2px' },
+                  ]}
+                >
+     
+
+                  <View style={[styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'18px' }]}>
+                    <Text style={styles.subtitle2}>
+                      Construction Additonal Charges
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr4,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Rate/Sqft</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Cost</Text>
+                  </View>
+
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8, styles.ml2,]}
+                  >
+                    <Text style={styles.subtitle2}>GST</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,]}
+                  >
+                    <Text style={styles.subtitle2}>Total</Text>
+                  </View>
+
+                </View>
+              </View>
+              {myBookingPayload?.constAdditionalChargesCS?.map((item, index) => (
+                <View
+                  style={[
+                    styles.tableRow,
+                    styles.textcolor,
+                    // styles.ml1,
+                    index + 1 != myAdditionalCharges.length
+                      ? styles.borderbottom
+                      : null,
+
+                    {   borderBottom: '1px solid #e5e7eb',
+                      marginTop: '2px', paddingTop: '4px' },
+                  ]}
+                  key={item.id}
+                >
+                  <View
+                    style={[
+                      styles.tableCell_1,
+                      styles.pl2,
+                      { marginTop: '-1px' },
+                    ]}
+                  >
+                    <Text>{index + 1}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_35]}>
+                    <Text style={styles.subtitle2}>
+                      {item?.component?.label}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.tableCell_15, styles.alignRight]}>
+                    <Text>₹{((item?.charges)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.pr4]}
+                  >
+                    <Text>₹{((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.pr4]}
+                  >
+                    <Text>₹{((item?.gstValue)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_15, styles.alignRight]}>
+                    <Text>
+                      {' '}
+                      ₹ {((item?.TotalNetSaleValueGsT)?.toLocaleString('en-IN'))}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+
+<View>
+              <View
+                style={[
+                  styles.tableRow,
+                  styles.textcolor,
+                  {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px' },
+                ]}
+              >
+                <View
+                  style={[styles.tableCell_1, styles.pl2, styles.p10]}
+                ></View>
+
+                <View style={[styles.tableCell_35, styles.p10]}></View>
+
+                <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+                <View
+                  style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                >
+                  <Text style={[styles.subtitle2]}>Construction Additional Charges</Text>
+                </View>
+
+                <View style={[styles.tableCell_20, styles.bold, styles.alignRight]}>
+                  <Text>₹ {((myBookingPayload?.T_D)?.toLocaleString('en-IN'))}</Text>
+                </View>
+              </View>
+            </View>
+
+
+
+
+            </View>
+
+
+          </View>
+          {/* // } */}
+
+             
+             </>
+
+            )}
+
+
+
+          {myBookingPayload?.possessionAdditionalCostCS?.length > 0 && (
+           <View style={[styles.fitter, { marginTop: '10px' }]}>
+
+
+
+{myBookingPayload?.possessionAdditionalCostCS?.length > 0 && (
+
+
+<>
+<View style={[styles.ml2, styles.pt2, styles.mT1]}>
+            <Text
+              style={[
+                styles.subtitle1,
+             
+                styles.col8,
+        
+                styles.ml1,
+              ]}
+            >
+              v.Possession Charges
+            </Text>
+          </View>
+     
+           <View style={[styles.fitter, { marginTop: '5px' }]}>
+            <View style={[ styles.mb20, {    borderRadius: 8 }]}>
+              <View
+                style={[
+                  styles.subtitle1,
+                  styles.bg1,
+                  styles.textcolorhead,
+                  {
+                    backgroundColor: '#EDEDED',
+                    borderTopLeftRadius: 6,
+                    borderTopRightRadius: 6,
+
+
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.tableHeader,
+                    styles.p4,
+                    styles.ml1,
+
+                    { paddingBottom: '2px' },
+                  ]}
+                >
+
+
+                  <View style={[styles.ml1, styles.tableCell_35, styles.p12,  { marginLeft:'18px' }]}>
+                    <Text style={styles.subtitle2}>
+                    Possession Charges
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Rate/Sqft</Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.tableCell_15,
+                      styles.alignRight,
+                      styles.p12,
+                      styles.pr8,
+                      styles.ml2,
+                    ]}
+                  >
+                    <Text style={styles.subtitle2}>Cost</Text>
+                  </View>
+
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,   styles.ml2,]}
+                  >
+                    <Text style={styles.subtitle2}>GST</Text>
+                  </View>
+
+
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.p12, styles.pr8,]}
+                  >
+                    <Text style={styles.subtitle2}>Total</Text>
+                  </View>
+
+                </View>
+              </View>
+              {myBookingPayload?.possessionAdditionalCostCS?.map((item, index) => (
+                <View
+                  style={[
+                    styles.tableRow,
+                    styles.textcolor,
+                    // styles.ml1,
+                    index + 1 != myAdditionalCharges.length
+                      ? styles.borderbottom
+                      : null,
+
+                    {   borderBottom: '1px solid #e5e7eb',
+                      marginTop: '2px', paddingTop: '4px' },
+                  ]}
+                  key={item.id}
+                >
+                  <View
+                    style={[
+                      styles.tableCell_1,
+                      styles.pl2,
+                      { marginTop: '-1px' },
+                    ]}
+                  >
+                    <Text>{index + 1}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_35]}>
+                    <Text style={styles.subtitle2}>
+                      {item?.component?.label}
+                    </Text>
+                  </View>
+
+                  <View style={[styles.tableCell_15, styles.alignRight]}>
+                    <Text>₹{((item?.charges)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.pr4]}
+                  >
+                    <Text>₹{((item?.TotalSaleValue)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View
+                    style={[styles.tableCell_15, styles.alignRight, styles.pr4]}
+                  >
+                    <Text>₹{((item?.gstValue)?.toLocaleString('en-IN'))}</Text>
+                  </View>
+
+                  <View style={[styles.tableCell_15, styles.alignRight]}>
+                    <Text>
+                      {' '}
+                      ₹ {((item?.TotalNetSaleValueGsT)?.toLocaleString('en-IN'))}
+                      
+      
+                    </Text>
+                  </View>
+                </View>
+              ))}
+
+<View>
+              <View
+                style={[
+                  styles.tableRow,
+                  styles.textcolor,
+                  {  borderBottom: '1px solid #e5e7eb', marginTop: '2px', paddingTop: '4px' },
+                ]}
+              >
+                <View
+                  style={[styles.tableCell_1, styles.pl2, styles.p10]}
+                ></View>
+
+                <View style={[styles.tableCell_35, styles.p10]}></View>
+
+                <View style={[styles.tableCell_20, styles.alignRight]}></View>
+
+                <View
+                  style={[styles.tableCell_20, styles.alignRight, styles.pr4]}
+                >
+                  <Text style={[styles.subtitle2]}>Possession Charges</Text>
+                </View>
+
+                <View style={[styles.tableCell_20, styles.bold, styles.alignRight]}>
+                  <Text>₹ {((myBookingPayload?.T_E)?.toLocaleString('en-IN'))}</Text>
+                </View>
+              </View>
+            </View>
+
+
+
+
+            </View>
+
+
+          </View>
+      
+</>
+
+
+
+
+)}
+
+
+
+
+
+
+            <View>
+  
+
+         
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  marginTop: 20,
+                  marginBottom: 20,
+                }}
+              >
+                <View
+                  style={{
+                    border: '1 solid #e5e7eb ',
+                    borderRadius: 8,
+                    paddingTop: 10,
+                    minWidth: 220,
+                    // Adjust as needed
+                  }}
+                >
+                  {[
+                    { label: `${projectDetails?.projectType?.name === 'Apartment'
+                      ? 'Flat'
+                      : 'Plot'} cost`, value: myBookingPayload?.T_A },
+                    { label: 'Additional Charges', value: partBTotal },
+                  ].map((item, index) => (
+                    <View
+                      key={index}
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginBottom: 10,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                      }}
+                    >
+                      <Text style={{ fontSize: 9, fontWeight: 'normal' }}>
+                        {item.label}
+                      </Text>
+                      <Text style={{ fontSize: 9, fontWeight: 'semibold' }}>
+                        ₹ {item.value?.toLocaleString('en-IN')}
+                      </Text>
+                    </View>
+                  ))}
+                  {/* part c and D */}
+                  {projectDetails?.projectType?.name === 'Villas' && 
+                        [
+                    { label: `Construction cost`, value: myBookingPayload?.T_C },
+                    { label: 'Construction additional Charges', value: myBookingPayload?.T_D },
+                    { label: 'Possession Charges', value: myBookingPayload?.T_E },
+                  ].map((item, index) => (
+                    <View
+                      key={index}
+
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginBottom: 10,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+
+                      }}
+                    >
+                      <Text style={{ fontSize: 9, fontWeight: 'normal' }}>
+                        {item.label}
+                      </Text>
+                      <Text style={{ fontSize: 9, fontWeight: 'semibold' }}>
+                        ₹ {item.value?.toLocaleString('en-IN')}
+                      </Text>
+                    </View>
+                  ))}
+
+                  
+                  <View
+                   style={[styles.textcolor]}
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      backgroundColor: '#EDEDED',
+                      padding: 8,
+                      borderBottomLeftRadius: 6,
+                      borderBottomRightRadius: 6,
+
+
+                    }}
+                  >
+                    <Text style={{ fontSize: 9, fontWeight: 'medium' }}>
+                      Total Cost
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 9,
+                        fontWeight: 'medium',
+                        color: '#0D027D',
+                        marginRight: 2,
+                      }}
+                    >
+                      ₹ {netTotal?.toLocaleString('en-IN')}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+            </View>
+          </View>
+          )
+          }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+
+
+
+
+
+
+
+
+
+
+
+          {/* </View> */}
+
+          </View>
+
+             {/*Payment Schedule box  */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {/* payment end */}
+
+
+
+
+
+    </View>
+
+
+
+
+
+      <View style={[styles.bgb, ]}
+      >
+
+
+
       </View>
-    </Page>
-  </Document>
+
+
+</View>
+
+      </Page>
+    </Document>
   )
 }
 const PdfBookingSummaryReport = ({
@@ -900,17 +2449,103 @@ const PdfBookingSummaryReport = ({
   custObj1,
 
 }) => {
-  // console.log('overall cost sheet is ', newPlotPS, selUnitDetails)
+  console.log('overall cost sheet is ', newPlotPS, selUnitDetails)
+
+      // const { user: authUser } = useAuth()
+  
+  //  const [project, setProject] = useState({})
+
+  //  const [possessAdditionalCS, setPossessAdditionalCS] = useState([])
 
 
 
+  //  const { orgId } = authUser
 
 
+  //  useEffect(() => {
+  //   const z =
+  //     selPhaseObj?.fullCs?.filter(
+  //       (d) => d?.section?.value === 'possessionAdditionalCost'
+  //     ) || []
+  //   const a = z.map((data4) => {
+  //     let total = 0
+  //     let gstTotal = 0
+  //     const charges = 0
+  //     const dataNewObj = { ...data4 }
+  //     const x = data4?.units?.value
+  //     const isChargedPerSqft = [
+  //       'costpersqft',
+  //       'cost_per_sqft',
+  //       'price_per_sft',
+  //     ].includes(x)
 
+  //     const gstPercent =
+  //     Number(data4?.gst?.value) > 1
+  //       ? Number(data4?.gst?.value) * 0.01
+  //       : Number(data4?.gst?.value)
+  //     total = isChargedPerSqft
+  //     ? Number(
+  //         selUnitDetails?.construct_area ||
+  //           selUnitDetails?.area?.toString()?.replace(',', '')
+  //       ) * Number(data4?.charges)
+  //     : Number(data4?.charges)
+  //     gstTotal = Math.round(total * gstPercent)
+  //     dataNewObj.TotalSaleValue = total
+  //     dataNewObj.gstValue = gstTotal
+  //     dataNewObj.TotalNetSaleValueGsT = total + gstTotal
+  //     console.log('Check it', dataNewObj)
+
+  //     return dataNewObj
+  //   })
+  //   console.log('Check it', a)
+  //   setPossessAdditionalCS(a)
+  // }, [selPhaseObj, selUnitDetails])
+
+   
+
+          // useEffect(() => {
+          //   getProjectFun()
+          // }, [])
+
+          // const getProjectFun = async () => {
+  
+    
+          //   const steamLeadLogs = await getProject(
+          //     orgId,
+          //     selCustomerPayload?.pId
+          //   )
+            
+          //   await setProject(steamLeadLogs)
+          
+          //   return}
 
             
   return (
-
+    // <div>
+    //   {' '}
+    //   <PDFDownloadLink
+    //     document={
+    //       <MyDocument
+    //         user={user}
+    //         selUnitDetails={selUnitDetails}
+    //         streamUnitDetails={streamUnitDetails}
+    //         myBookingPayload={myBookingPayload}
+    //         myObj={myObj}
+    //         newPlotPS={newPlotPS}
+    //         myAdditionalCharges={myAdditionalCharges}
+    //         netTotal={netTotal}
+    //         setNetTotal={setNetTotal}
+    //         partATotal={partATotal}
+    //         partBTotal={partBTotal}
+    //         setPartATotal={setPartATotal}
+    //         setPartBTotal={setPartBTotal}
+    //         projectDetails={projectDetails}
+    //         leadDetailsObj1={leadDetailsObj1}
+    //         custObj1={custObj1} 
+    //         />
+    //     } />
+        
+    //     </div>
 
 
 
@@ -919,41 +2554,62 @@ const PdfBookingSummaryReport = ({
     <PDFDownloadLink
       document={
         <MyDocument
-            user={user}
-            selUnitDetails={selUnitDetails}
-            streamUnitDetails={streamUnitDetails}
-            myBookingPayload={myBookingPayload}
-            myObj={myObj}
-            newPlotPS={newPlotPS}
-            myAdditionalCharges={myAdditionalCharges}
-            netTotal={netTotal}
-            setNetTotal={setNetTotal}
-            partATotal={partATotal}
-            partBTotal={partBTotal}
-            project={project}
-            setPartATotal={setPartATotal}
-            setPartBTotal={setPartBTotal}
-            projectDetails={projectDetails}
-            selCustomerPayload={selCustomerPayload}
-            leadDetailsObj1={leadDetailsObj1}
-            possessAdditionalCS={possessAdditionalCS}
-            possessionAdditionalCostCS={possessionAdditionalCostCS}
-            custObj1={custObj1} selPhaseObj={undefined} customerDetailsObj={undefined} customerInfo={undefined}        />
+        user={user}
+        selUnitDetails={selUnitDetails}
+        streamUnitDetails={streamUnitDetails}
+        myBookingPayload={myBookingPayload}
+        myObj={myObj}
+        newPlotPS={newPlotPS}
+        myAdditionalCharges={myAdditionalCharges}
+        netTotal={netTotal}
+        setNetTotal={setNetTotal}
+        partATotal={partATotal}
+        partBTotal={partBTotal}
+        project={project}
+        setPartATotal={setPartATotal}
+        setPartBTotal={setPartBTotal}
+        projectDetails={projectDetails}
+        selCustomerPayload={selCustomerPayload}
+        leadDetailsObj1={leadDetailsObj1}
+        possessAdditionalCS={possessAdditionalCS}
+        possessionAdditionalCostCS={possessionAdditionalCostCS}
+        custObj1={custObj1} 
+        />
       }
+      // fileName="sample.pdf"
 
+      // fileName={`${projectDetails?.projectName || 'project_name'}_unit_${selUnitDetails?.unit_no || 'unit_no'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_CostSheet.pdf`}
 
       fileName={`${selUnitDetails?.unit_no || 'unit_no'}_${projectDetails?.projectName || 'project_name'}_${selUnitDetails?.customerDetailsObj?.customerName1 || 'customer_Name'}_CostSheet.pdf`}
 
 
     >
+      {/* {({ blob, url, loading, error }) =>
+        loading ? (
+          <button className="flex items-center justify-center">
+          <Loader texColor="text-blue-600" size="h-5 w-5" />CostSheet
+        </button>
+        ) : (
+          <span
+            className="mb-4 md:mb-0  flex underline hover:scale-110 focus:outline-none bg-white px-1 py-1 pb-[5px] text-sm shadow-sm font-medium tracking-wider rounded-sm hover:shadow-lg hover:bg-gray-100         hover:bg-teal-200
 
+          text-blue-700
+
+           duration-200 ease-in-out
+           transition"
+          >
+          <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
+        Download CostSheet
+          </span>
+        )
+      } */}
 
 
              {({ blob, url, loading, error }) =>
                 loading ? (
 
                 <div
-                className="flex items-center  bg-white text-black     px-3 py-1    text-sm  tracking-wider rounded-md transition duration-200 ease-in-out focus:outline-none"
+                className="flex items-center  bg-white text-black     px-3 py-1  text-sm  border border-[1.6px]  border-[#6D28D9] tracking-wider rounded-md  focus:outline-none"
               >
                 <Download style={{ height: '20px', width: '14px',strokeWidth: '2.5' }} className="mr-2 mb-0.5 font-semibold" />
                 <p className="text-black text-[13px] font-semibold">Download</p>
@@ -961,7 +2617,7 @@ const PdfBookingSummaryReport = ({
               
                 ) : (
                 <div
-  className="flex items-center  bg-white px-3 py-1 text-black      text-sm  tracking-wider rounded-md transition duration-200 ease-in-out focus:outline-none"
+  className="flex items-center  bg-white px-3 py-1 text-black   text-sm  tracking-wider rounded-md focus:outline-none"
 >
   <Download style={{ height: '20px', width: '14px', strokeWidth: '2.5' }} className="mr-2 mb-0.5   font-semibold" />
   <p className="text-black text-[13px] font-semibold">Download</p>
@@ -977,5 +2633,3 @@ const PdfBookingSummaryReport = ({
 
 
 export default PdfBookingSummaryReport
-
-
