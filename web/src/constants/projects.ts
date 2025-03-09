@@ -442,8 +442,12 @@ export const paymentMode = [
   },
 
   {
-    value: 'Neft',
+    value: 'Rtgs',
     label: 'Neft/Rtgs',
+  },
+  {
+    value: 'DD',
+    label: 'DD',
   },
   {
     value: 'online',

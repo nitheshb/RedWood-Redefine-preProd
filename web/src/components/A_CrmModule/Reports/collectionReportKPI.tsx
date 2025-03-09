@@ -537,7 +537,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
   </div>
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
     <h3 className="text-gray-600 mb-2">Sales</h3>
-    <p className="text-2xl font-bold mb-2">₹ {totalSaleValue?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(totalSaleValue)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
 
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
@@ -546,7 +546,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
 
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Recieved</h3>
-    <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(totalReceived)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
 
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
@@ -555,7 +555,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
 
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Balance</h3>
-    <p className="text-2xl font-bold mb-2">₹ {selTotalBalance?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(selTotalBalance)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
 
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
