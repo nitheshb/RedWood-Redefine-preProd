@@ -111,6 +111,7 @@ const useStyles = () =>
         mr15: { marginRight: 15 },
         mT0: { marginTop: 0 },
         mT1: { marginTop: 10 },
+        mT5: { marginTop: 5 },
         ml1: { marginLeft: 5 },
         ml2: { marginLeft: 10 },
         ml3: { marginLeft: 15 },
@@ -147,8 +148,8 @@ const useStyles = () =>
           fontFamily: 'Roboto',
           backgroundColor: '#fff',
           textTransform: 'capitalize',
-          padding: '0px',
-          // padding: '40px 24px 60px 24px',
+          // padding: '0px',
+          padding: '10px 0px 40px 0px',
         },
         footer: {
           left: 0,
@@ -748,7 +749,7 @@ const MyDocument = ({
 
   const renderTable = (data, status) => (
     <View key={status}>
-      <Text style={[styles.subtitle1, styles.mb5, styles.col, styles.smallFitter, styles.ml2]}>
+      <Text style={[styles.subtitle1, styles.mb5, styles.mT5, styles.col, styles.smallFitter, styles.ml2]}>
         {status.toUpperCase()}
       </Text>
       <View style={[styles.fitter]}>
@@ -815,7 +816,7 @@ const MyDocument = ({
               </View>
             </View>
           </View>
-          <View style={[styles.bg1]}>
+          <View style={[styles.bg1, styles.mb8]}>
             {data?.map((item, index) => (
               <View
                 style={[
@@ -886,7 +887,7 @@ const MyDocument = ({
             </View>
             <View style={[styles.col6, { flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', height: '100%' }]}>
               <Text style={[styles.h4, styles.mT1, styles.pt5, styles.pr3]}>
-                Cost Sheet
+              Summary by Stage
               </Text>
               <Text style={[styles.body2, styles.pr3, { color: '#3D3D3D' }]}>
                 {fDate(prettyDate(Timestamp.now().toMillis()))}
