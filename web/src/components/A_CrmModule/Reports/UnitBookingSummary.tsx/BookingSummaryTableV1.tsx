@@ -2197,8 +2197,33 @@ const customTooltip = ({ payload, label }) => {
 
   {/* <Download className="w-4 h-4 text-gray-500" />
   <span className="text-gray-700 text-sm"> */}
-  <PdfBookingSummaryReport/>
+  {/* <PdfBookingSummaryReport/> */}
   {/* </span> */}
+
+
+  <PdfBookingSummaryReport
+  user={user}
+  // selUnitDetails={selUnitDetails}
+  // streamUnitDetails={streamUnitDetails}
+  // myBookingPayload={myBookingPayload}
+  // myObj={myObj}
+  // newPlotPS={newPlotPS}
+  // myAdditionalCharges={myAdditionalCharges}
+  // netTotal={netTotal}
+  // setNetTotal={setNetTotal}
+  // partATotal={partATotal}
+  // partBTotal={partBTotal}
+  // project={project}
+  // setPartATotal={setPartATotal}
+  // setPartBTotal={setPartBTotal}
+  // projectDetails={projectDetails}
+  // selCustomerPayload={selCustomerPayload}
+  // leadDetailsObj1={leadDetailsObj1}
+  // possessAdditionalCS={possessAdditionalCS}
+  // possessionAdditionalCostCS={possessionAdditionalCostCS}
+  // custObj1={custObj1}
+  tableData={filLeadsA}
+/>
 
 
 
