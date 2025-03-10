@@ -731,21 +731,61 @@ const MyDocument = ({
   const [sectionDimensions, setSectionDimensions] = useState([]);
   const [tableDimensions, setTableDimensions] = useState([]);
 
-  const categorizedData = {
+
+
+
+  const [categorizedData, setCategorizedData] = useState<Record<string, any>>({
     booked: [],
     allotment: [],
     ATS: [],
     registered: [],
     construction: [],
     possession: [],
-  };
-
-  tableData?.forEach((item) => {
-    const status = item?.unitStatus?.toString() || item.status.toString();
-    if (categorizedData.hasOwnProperty(status)) {
-      categorizedData[status].push(item);
-    }
   });
+  
+  const keys = Object.keys(categorizedData || {}); 
+
+
+  // const categorizedData = {
+  //   booked: [],
+  //   allotment: [],
+  //   ATS: [],
+  //   registered: [],
+  //   construction: [],
+  //   possession: [],
+  // };
+
+  // tableData?.forEach((item) => {
+  //   const status = item?.unitStatus?.toString() || item.status.toString();
+  //   if (categorizedData.hasOwnProperty(status)) {
+  //     categorizedData[status].push(item);
+  //   }
+  // });
+
+
+
+  useEffect(() => {
+    if (!tableData) return; 
+  
+    const newCategorizedData = {
+      booked: [],
+      allotment: [],
+      ATS: [],
+      registered: [],
+      construction: [],
+      possession: [],
+    };
+  
+    tableData.forEach((item) => {
+      const status = item?.unitStatus?.toString() || item.status.toString(); 
+      if (newCategorizedData.hasOwnProperty(status)) {
+        newCategorizedData[status].push(item);
+      }
+    });
+  
+    setCategorizedData(newCategorizedData);
+  }, [tableData]); 
+  
 
   const renderTable = (data, status) => (
     <View key={status}>
@@ -774,7 +814,6 @@ const MyDocument = ({
                 { paddingBottom: '2px' },
               ]}
             >
-              {/* Table Headers */}
               <View style={[styles.tableCell_b1, styles.p12]}>
                 <Text style={styles.subtitle2}>S.NO</Text>
               </View>
@@ -935,27 +974,28 @@ const PdfBookingSummaryReport = ({
       <PDFDownloadLink
         document={
           <MyDocument
-            user={user}
-            selUnitDetails={selUnitDetails}
-            streamUnitDetails={streamUnitDetails}
-            myBookingPayload={myBookingPayload}
-            myObj={myObj}
-            newPlotPS={newPlotPS}
-            myAdditionalCharges={myAdditionalCharges}
-            netTotal={netTotal}
-            setNetTotal={setNetTotal}
-            partATotal={partATotal}
-            partBTotal={partBTotal}
-            project={project}
-            setPartATotal={setPartATotal}
-            setPartBTotal={setPartBTotal}
-            projectDetails={projectDetails}
-            selCustomerPayload={selCustomerPayload}
-            leadDetailsObj1={leadDetailsObj1}
-            possessAdditionalCS={possessAdditionalCS}
-            possessionAdditionalCostCS={possessionAdditionalCostCS}
-            custObj1={custObj1}
-            tableData={tableData}
+            user={user || {}}
+            selUnitDetails={selUnitDetails || {}}
+            streamUnitDetails={streamUnitDetails || {}}
+            myBookingPayload={myBookingPayload || {}}
+            myObj={myObj || {}}
+            newPlotPS={newPlotPS || {}}
+            myAdditionalCharges={myAdditionalCharges || {}}
+            netTotal={netTotal || {}}
+            setNetTotal={setNetTotal || {}}
+            partATotal={partATotal || {}}
+            partBTotal={partBTotal || {}}
+            project={project || {}}
+            setPartATotal={setPartATotal || {}}
+            setPartBTotal={setPartBTotal || {}}
+            projectDetails={projectDetails || {}}
+            selCustomerPayload={selCustomerPayload || {}}
+            leadDetailsObj1={leadDetailsObj1 || {}}
+            possessAdditionalCS={possessAdditionalCS || {}}
+            possessionAdditionalCostCS={possessionAdditionalCostCS || {}}
+            custObj1={custObj1 || {}}
+           tableData={tableData || {}}
+
           />
         }
 

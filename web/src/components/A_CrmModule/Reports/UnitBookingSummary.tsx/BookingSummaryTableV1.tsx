@@ -2202,7 +2202,7 @@ const customTooltip = ({ payload, label }) => {
 
 
   <PdfBookingSummaryReport
-  user={user}
+  user={user || {}}
   // selUnitDetails={selUnitDetails}
   // streamUnitDetails={streamUnitDetails}
   // myBookingPayload={myBookingPayload}
@@ -2222,7 +2222,7 @@ const customTooltip = ({ payload, label }) => {
   // possessAdditionalCS={possessAdditionalCS}
   // possessionAdditionalCostCS={possessionAdditionalCostCS}
   // custObj1={custObj1}
-  tableData={filLeadsA}
+  tableData={filLeadsA || {}}
 />
 
 
