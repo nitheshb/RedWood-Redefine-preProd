@@ -982,6 +982,9 @@ const MyDocument = ({
                 <View style={[styles.tableCell_b7, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
                   <Text></Text>
                 </View>
+                <View style={[styles.tableCell_b14, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
+                  <Text></Text>
+                </View>
                 <View style={[styles.tableCell_b8, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
                   <Text></Text>
                 </View>
