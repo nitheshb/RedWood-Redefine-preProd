@@ -945,7 +945,7 @@ const MyDocument = ({
                     <Text>NA</Text>
                   </View>
                   <View style={[styles.tableCell_b8, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
-                    <Text>{item?.sqft_rate}</Text>
+                    <Text>₹{item?.sqft_rate?.toLocaleString('en-IN')}</Text>
                   </View>
                   <View style={[styles.tableCell_b9, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
                     <Text>₹{item?.T_A?.toLocaleString('en-IN')}</Text>

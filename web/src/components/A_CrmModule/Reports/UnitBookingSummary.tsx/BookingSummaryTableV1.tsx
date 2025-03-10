@@ -2814,7 +2814,7 @@ tableData={filLeadsA || {}}
 
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
-                            {row?.sqft_rate}
+                          ₹{row?.sqft_rate?.toLocaleString('en-IN')}
 
 
                           </span>
@@ -2837,7 +2837,7 @@ tableData={filLeadsA || {}}
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
                             {/* {row?.T_A} */}
-                            {Math.round(row?.T_A)}
+                            {Math.round(row?.T_A || 0).toLocaleString('en-IN')}
 
 
 
@@ -2914,7 +2914,7 @@ tableData={filLeadsA || {}}
 
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
-                          {row?.construct_price_sqft}
+                          ₹{row?.construct_price_sqft?.toLocaleString('en-IN')}
 
 
 
