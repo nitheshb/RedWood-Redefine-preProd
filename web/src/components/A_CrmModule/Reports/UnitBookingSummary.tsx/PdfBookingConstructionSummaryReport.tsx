@@ -17,23 +17,8 @@ import { format } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 import numeral from 'numeral'
 
-// import { prettyDate } from './dateConverter'
+
 import { Bold, Download } from 'lucide-react'
-
-
-
-// import pdfimg1 from '../../public/pdfimg1.png'
-// import pdfimg2 from '../../public/pdfimg2.png'
-// import pdfimg3 from '../../public/pdfimg3.png'
-// import pdfimg4 from '../../public/pdfimg4.png'
-// import pdfimg5 from '../../public/pdfimg5.png'
-// import pdfimg6 from '../../public/pdfimg6.png'
-// import pdfimg7 from '../../public/pdfimg7.png'
-// import pdfimg8 from '../../public/pdfimg8.png'
-// import pdfimg9 from '../../public/pdfimg9.png'
-// import pdfimg10 from '../../public/pdfimg10.png'
-// import pdfimg11 from '../../public/pdfimg11.png'
-// import pdfimg12 from '../../public/pdfimg12.png'
 import Loader from 'src/components/Loader/Loader'
 import { getProject } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
@@ -874,7 +859,7 @@ const MyDocument = ({
                   <Text style={styles.subtitle1}>Facing</Text>
                 </View>
                 <View style={[styles.tableCell_b4, styles.alignRight, styles.p12, styles.pr8, styles.ml1]}>
-                  <Text style={styles.subtitle1}>Plot Area</Text>
+                  <Text style={styles.subtitle1}>BUA</Text>
                 </View>
                 <View style={[styles.tableCell_b5, styles.alignLeft, styles.p12, styles.pr8, styles.ml1]}>
                   <Text style={styles.subtitle1}>Customer Name</Text>
@@ -930,7 +915,7 @@ const MyDocument = ({
                     <Text>{item?.facing}</Text>
                   </View>
                   <View style={[styles.tableCell_b4, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
-                    <Text>{item?.area}</Text>
+                    <Text>{item?.construct_area}</Text>
                   </View>
                   <View style={[styles.tableCell_b5, styles.alignLeft, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
                     <Text>{item?.customerDetailsObj?.customerName1}</Text>
@@ -945,7 +930,7 @@ const MyDocument = ({
                     <Text>NA</Text>
                   </View>
                   <View style={[styles.tableCell_b8, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
-                    <Text>{item?.sqft_rate}</Text>
+                    <Text>{item?.construct_price_sqft}</Text>
                   </View>
                   <View style={[styles.tableCell_b9, styles.alignRight, styles.p12, styles.pr8, styles.ml1, styles.bg1]}>
                     <Text>₹{item?.T_A?.toLocaleString('en-IN')}</Text>
@@ -1086,7 +1071,7 @@ const MyDocument = ({
         textAlign: 'left',
       }}
     >
-      Booking Summary
+      Construction Summary
     </Text>
     <Text color='#6A6A6A'>Booked, ATS, SD</Text>
   </View>
@@ -1106,7 +1091,7 @@ const MyDocument = ({
 
 
 
-const PdfBookingSummaryReport = ({
+const PdfBookingConstructionSummaryReport = ({
   user,
   selUnitDetails,
   streamUnitDetails,
@@ -1158,18 +1143,18 @@ const PdfBookingSummaryReport = ({
             tableData={tableData || {}}
           />
         }
-        fileName="Booking Summary.pdf"
+        fileName="Booking_Construction_Summary.pdf"
       >
         {({ blob, url, loading, error }) =>
           loading ? (
             <div className="flex items-center bg-white text-black px-3 py-1 text-sm tracking-wider rounded-md focus:outline-none">
               <Download style={{ height: '20px', width: '14px', strokeWidth: '2.5' }} className="mr-2 mb-0.5 font-semibold" />
-              <p className="text-black text-[13px] font-semibold">Download</p>
+              <p className="text-black text-[13px] font-semibold">Construction Download</p>
             </div>
           ) : (
             <div className="flex items-center bg-white px-3 py-1 text-black text-sm tracking-wider rounded-md focus:outline-none">
               <Download style={{ height: '20px', width: '14px', strokeWidth: '2.5' }} className="mr-2 mb-0.5 font-semibold" />
-              <p className="text-black text-[13px] font-semibold">Download</p>
+              <p className="text-black text-[13px] font-semibold">Construction Download</p>
             </div>
           )
         }
@@ -1180,4 +1165,4 @@ const PdfBookingSummaryReport = ({
 
 
 
-export default PdfBookingSummaryReport
+export default PdfBookingConstructionSummaryReport

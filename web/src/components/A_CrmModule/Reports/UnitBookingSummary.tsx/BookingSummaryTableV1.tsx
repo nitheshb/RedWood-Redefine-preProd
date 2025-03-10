@@ -62,6 +62,7 @@ import { getAllProjects, getBookedUnitsByProject, getUnitsAgreeByProject } from 
 import { Download, Filter } from 'lucide-react'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import PdfBookingSummaryReport from './PdfBookingSummaryReport'
+import PdfBookingConstructionSummaryReport from './PdfBookingConstructionSummaryReport'
 
 
 
@@ -2227,12 +2228,33 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-
-
   <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:opacity-100 transition">
     Download
   </span>
 </button>
+
+{/* <button
+  className="relative flex items-center gap-2  rounded-md border border-gray-300 hover:bg-gray-100 transition"
+>
+
+
+<PdfBookingConstructionSummaryReport
+
+user={user || {}}
+
+
+tableData={filLeadsA || {}}
+
+/>
+
+
+
+
+
+  <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:opacity-100 transition">
+    Construction Download
+  </span>
+</button> */}
 
 
 
