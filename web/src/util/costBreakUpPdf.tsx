@@ -505,7 +505,7 @@ const CostBreakUpPdf = ({
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
     const flatCost = Number(partATotal + partBTotal)
     const flatSchTotalCost = Number(partATotal + partBTotal)
-    const constCost = Number((partCTotal || 0) + (partDTotal || 0) + (partETotal || 0))
+    const constCost = Number((partCTotal || 0) + (partDTotal || 0) )
     console.log('flat fixed values ', psPayload)
     const flatFixedCosts = psPayload?.reduce(
       (acc, item) =>
@@ -573,27 +573,30 @@ const CostBreakUpPdf = ({
     })
     console.log('sel unti id => ', newPs, psPayload, psConstructPayload)
     setNewPS(newPs)
-    const newPs1 = selPhaseObj?.ConstructPayScheduleObj?.map((d1) => {
+    const newPs1 = selPhaseObj?.ConstructPayScheduleObj?.map((d1, i) => {
       console.log('d1 is', d1)
       const z = d1
-      // if (csMode === 'plot_cs') {
-      if ('plot_cs' === 'plot_cs') {
+
         z.value = ['fixedcost'].includes(d1?.units?.value)
           ? Number(d1?.percentage)
-          : // : Math.round((constCost - constFixedCosts) * (d1?.percentage / 100))
+          :
             Number(
               ((constCost - constFixedCosts) * (d1?.percentage / 100)).toFixed(
                 2
               )
             )
+        if(i=== selPhaseObj?.ConstructPayScheduleObj?.length-1){
+          z.value = z.value  + partETotal
+        }
         if (['fixedcost'].includes(d1?.units?.value)) {
           z.elgible = true
           z.elgFrom = Timestamp.now().toMillis()
           return z
         }
         return z
-      }
+
     })
+
     console.log('sel unti id => ', newPs, psPayload)
     setConstructPSPayload(newPs1)
     const netValue = partATotal + partBTotal + partCTotal + partDTotal + partETotal
@@ -828,14 +831,15 @@ const CostBreakUpPdf = ({
                     <div>
                       <section className="flex flex-row">
                         <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
-                          Cost Sheet
+                        {showOnly === 'payment_schedule' ? 'Payment Schedule' : 'Cost Sheet'}
                         </h6>
                       </section>
                       <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
-                        Quotation,Unit Cost Calculation.
+                      {showOnly === 'payment_schedule'
+                      ? 'Schedule of payments and timelines'
+                      : 'Quotation,Unit Cost Calculation.'}
                       </div>
 
-                      {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
                     </div>
 
                     <div></div>
@@ -929,12 +933,15 @@ const CostBreakUpPdf = ({
                                         {d1?.component?.label}
                                       </th>
                                       <td className="w-[15%]  px-2 text-[12px] text-right  ">
-                                        <TextFieldFlat
+                                      {!(projectDetails?.allowSalesExCsEdit || false) && Number(d1?.charges)?.toLocaleString(
+                                          'en-IN'
+                                        )}
+                                     {(projectDetails?.allowSalesExCsEdit || false) &&   <TextFieldFlat
                                           label=""
                                           className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
                                           name="ratePerSqft"
                                           onChange={(e) => {
-                                            // setNewSqftPrice(e.target.value)
+
                                             console.log('iam hre')
                                             if (
                                               d1?.component?.value ===
@@ -962,39 +969,17 @@ const CostBreakUpPdf = ({
                                               d1,
                                               e.target.value
                                             )
-                                            // formik.setFieldValue(
-                                            //   'ratePerSqft',
-                                            //   e.target.value
-                                            // )
-                                            // console.log(
-                                            //   'what is =it',
-                                            //   value.value
-                                            // )
-                                            // formik.setFieldValue(
-                                            //   `${d1?.component?.value}`,
-                                            //   value
-                                            // )
+
                                           }}
-                                          // value={formik.values[`unit_cost_charges`]}
+
                                           value={d1?.charges}
-                                          // value={newSqftPrice}
-                                          // type="number"
-                                        />
+
+                                        />}
                                         <TextFieldFlat
                                           className=" hidden  "
                                           label=""
                                           name={d1?.component?.value}
-                                          // onChange={(value) => {
-                                          //   console.log('what is =it', value.value)
-                                          //   formik.setFieldValue(
-                                          //     `${d1?.component?.value}`,
-                                          //     value
-                                          //   )
-                                          // }}
-                                          // value={
-                                          //   formik.values[`${d1?.component?.value}`]
-                                          // }
-                                          // value={d1?.charges}
+
                                           type="number"
                                         />
                                       </td>
@@ -1224,7 +1209,12 @@ const CostBreakUpPdf = ({
                                             {d1?.component?.label}
                                           </th>
                                           <td className="w-[15%]  px-2 text-[12px] text-right  ">
-                                            <TextFieldFlat
+                                          {!(projectDetails?.allowSalesExCsEdit || false) && Number(d1?.charges)?.toLocaleString(
+                                          'en-IN'
+                                        )}
+
+                                         { (projectDetails?.allowSalesExCsEdit || false)
+                                   && <TextFieldFlat
                                               label=""
                                               className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
                                               name="constRatePerSqft"
@@ -1271,22 +1261,12 @@ const CostBreakUpPdf = ({
                                               value={d1?.charges}
                                               // value={newSqftPrice}
                                               // type="number"
-                                            />
+                                            />}
                                             <TextFieldFlat
                                               className=" hidden  "
                                               label=""
                                               name={d1?.component?.value}
-                                              // onChange={(value) => {
-                                              //   console.log('what is =it', value.value)
-                                              //   formik.setFieldValue(
-                                              //     `${d1?.component?.value}`,
-                                              //     value
-                                              //   )
-                                              // }}
-                                              // value={
-                                              //   formik.values[`${d1?.component?.value}`]
-                                              // }
-                                              // value={d1?.charges}
+
                                               type="number"
                                             />
                                           </td>
@@ -1675,7 +1655,7 @@ const CostBreakUpPdf = ({
                       )}
                       {showOnly === 'payment_schedule' && (
                         <>
-                          <div className=" mt-4 border rounded-lg shadow-md overflow-hidden ">
+                          <div className=" mt-1 border rounded-lg shadow-md overflow-hidden ">
                             <table className="w-full border-b border-dashed">
                               <thead className="">
                                 {' '}
@@ -1792,7 +1772,7 @@ const CostBreakUpPdf = ({
                           </div>
                           {/* construction payment schedule */}
                           {selPhaseObj?.projectType?.name === 'Villas' && (
-                            <div className=" mt-4 border rounded-lg shadow-md overflow-hidden mb-16 ">
+                            <div className=" mt-4 border rounded-lg shadow-md overflow-hidden mb-24 ">
                               <table className="w-full border-b border-dashed">
                                 <thead className="">
                                   {' '}
@@ -1930,3 +1910,8 @@ const CostBreakUpPdf = ({
 }
 
 export default CostBreakUpPdf
+
+
+
+
+

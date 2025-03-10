@@ -273,33 +273,10 @@ console.log('nothing found in subarray')
     await confettiRef?.current?.fire()
 
     return
-    // get booking details, leadId, unitDetails,
-    //  from existing object send values of
-    //  booking
-    // copy unit data as it is
-    // copy lead data as it is
-    //  unit details
 
-    // 1)Make an entry to finance Table {source: ''}
-    // 2)Create new record in Customer Table
-    // 3)Update unit record with customer record and mark it as booked
-    // 4)update lead status to book
-
-    //   const x = await addDoc(collection(db, 'spark_leads'), data)
-    // await console.log('x value is', x, x.id)
 
     const { uid } = selUnitDetails
-    // 1)Make an entry to finance Table {source: ''}
 
-    // create customer
-
-    // update unit record with booked status
-
-    // update payment schedule
-    // log cost sheet
-    // capture transaction
-    // entry  payment log
-    // entry payment sheet
 
     console.log('check this value ', user, leadDetailsObj2)
     const { Status } = leadDetailsObj2
@@ -326,25 +303,9 @@ console.log('nothing found in subarray')
       enqueueSnackbar
     )
 
-    // add phaseNo , projName to selUnitDetails
-    // 2)Create('')
-
-    // 3)Update unit record with customer record and mark it as booked
-
-    // 4)update lead status to book
-    // updateLeadStatus(leadDocId, newStatus)
   }
 
 
-  // const [value, setValue] = useState('');
-
-  // const handleChange = (e) => {
-  //   const rawValue = e.target.value.replace(/,/g, '');
-  //   if (!isNaN(rawValue)) {
-  //     const formattedValue = new Intl.NumberFormat().format(rawValue);
-  //     setValue(formattedValue);
-  //   }
-  // };
 
 
 
@@ -368,15 +329,7 @@ console.log('nothing found in subarray')
     payment_choice_1: {},
   }
 
-  // const validateSchema = Yup.object({
-  // date: Yup.string().required('Bank Required'),
-  // amount: Yup.string().required('Required'),
-  // payto: Yup.string().required('Required'),
-  // mode: Yup.string().required('Bank Required'),
-  // drawnonbank: Yup.string().required('Required'),
-  // gst: Yup.string().required('Required'),
-  // dated: Yup.string().required('Required'),
-  // })
+
 
   const submitFormFun = (formik) => {
     formik.handleSubmit()
@@ -415,7 +368,6 @@ console.log('nothing found in subarray')
                   <Formik
                     enableReinitialize={false}
                     initialValues={initialState}
-                    // validationSchema={validate_capturePayment}
                     onSubmit={(values, { resetForm }) => {
                       setBookingProgress(true)
                       onSubmitSupabase(values, resetForm)
@@ -435,9 +387,7 @@ console.log('nothing found in subarray')
                                     <article className="mt-5">
                                       <div className="flex flex-row justify-between">
                                         <section className="flex flex-row">
-                                          {/* <span className="text-[42px] mt-[-16px]">
-                                            // 🎊
-                                          </span> */}
+      
                                           <div className="inline">
                                             <div className="mt-[4px]">
                                               <label className="text-[24px] font-medium text-[#000000]    mb-1  ">
@@ -453,23 +403,14 @@ console.log('nothing found in subarray')
                                             <div>
                                             <p className='text-[#6A6A6A] font-normal  mt-2 text-[12px]'>Created demand will be added to existing payment schedule of this unit.</p>
                                           </div>
-                                            {/* <div className="border-t-4 rounded-xs w-100 border-[#8B5CF6]"></div> */}
                                           </div>
 
 
                                         </section>
                                         <section className="flex flex-row justify-between">
-                                          {/* <div className="flex flex-col mt-">
-                                            <h6 className="text-blueGray-400 text-sm mt- ml-6 mb- font-weight-[700]  font-uppercase">
-                                              Payment
-                                            </h6>
-                                            <span className="text-center text-[13px] font-normal">
-                                              {format(new Date(), 'dd-MMMM-yy')}
-                                            </span>
-                                          </div> */}
+                        
                                         </section>
                                       </div>
-                                      {/* <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
                                     </article>
                                     {!bookingProgress && (
                                       <section>
@@ -495,7 +436,6 @@ console.log('nothing found in subarray')
         }`}
         key={i}
         onClick={() => {
-          // setPaymentModex(dat.value);
           setValueFun(dat.value)
           formik.setFieldValue('mode', dat.value);
         }}
@@ -566,15 +506,12 @@ console.log('nothing found in subarray')
                                                   className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-[#cccccc]  border-solid mt-[-4px]   min-w-[125px]  inline  text-[#0091ae]   lg:w-4/12 w-full flex bg-grey-lighter text-grey-darker border  "
                                                   label="Dated"
                                                   name="dated"
-                                                  // selected={startDate}
                                                   selected={formik.values.dated}
                                                   onChange={(date) => {
-                                                    // setFieldValue('dated')
                                                     formik.setFieldValue(
                                                       'dated',
                                                       date.getTime()
                                                     )
-                                                    // setStartDate(date)
                                                     console.log(startDate)
                                                   }}
                                                   timeFormat="HH:mm"
@@ -592,7 +529,6 @@ console.log('nothing found in subarray')
                                                       23
                                                     ),
                                                   ]}
-                                                  //dateFormat="MMM d, yyyy"
                                                   dateFormat="MMM dd, yyyy"
                                                 />
                                               </span>

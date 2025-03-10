@@ -255,6 +255,16 @@ export const releaseStausList = [
   { label: 'Released', value: 'released' },
   { label: 'Un-Released', value: 'un-released' },
 ]
+
+
+export const inventorytypeList = [
+  { label: 'Inventory Type', value: '' },
+  { label: 'MAA', value: 'maa' },
+  { label: 'SUBHA', value: 'subha' },
+
+]
+
+
 export const mortgageType = [
   { label: 'Select Mortgage', value: '' },
   { label: 'NA', value: 'na' },
@@ -432,8 +442,12 @@ export const paymentMode = [
   },
 
   {
-    value: 'Neft',
+    value: 'Rtgs',
     label: 'Neft/Rtgs',
+  },
+  {
+    value: 'DD',
+    label: 'DD',
   },
   {
     value: 'online',

@@ -47,9 +47,7 @@ const MyActivityHome = ({ source }) => {
     }
   }, [selDept, leadsFetchedData])
   const getLeadsDataFun = async (source) => {
-    // const leadsData = await getUsersList()
-    // setLeadsFetchedData(leadsData)
-    // await console.log('leadsData', leadsData)
+ 
     if (source === 'team') {
       const unsubscribe = steamUsersActivityLog(
         orgId,

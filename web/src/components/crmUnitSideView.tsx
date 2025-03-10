@@ -672,9 +672,7 @@ export default function CrmUnitSideView({
                   <span className="font-md text-xs text-gray-600 tracking-wide uppercase">
                     Area(sft)
                   </span>
-                  {/* <div className="font-md text-xs mt-2 text-gray-500 mb-[1] tracking-wide">
-                  Assigned To
-                </div> */}
+      
                 </div>
                 <div className="p-3 text-center">
                   <span className="text-sm font-semibold  block uppercase tracking-wide text-gray-900">
@@ -697,59 +695,7 @@ export default function CrmUnitSideView({
           </div>
         </div>
 
-        {/* <div className="border-b mt-3">
-          <div className="py-2 px-1">
-            <div className="px-3  font-md font-medium text-sm mb-3  text-gray-800">
-              Assigner Details
-            </div>
-            <div className="px-3  flex justify-between">
-              <section>
-                <div className="font-md text-xs text-gray-500 mb-[2]">
-                  Assigned To
-                </div>
-                <div className="font-lg text-sm text-slate-900 min-w-[200%] bg-red-50">
 
-                  <CustomSelect
-                    name="roleName"
-                    label=""
-                    className="input mt-3"
-                    onChange={(value) => {
-                      // formik.setFieldValue('myRole', value.value)
-                      console.log('i was changed', value, usersList)
-                      setAssigner(id, value)
-                    }}
-                    value={assignedTo}
-                    options={usersList}
-                  />
-                </div>
-              </section>
-              <section>
-                <div className="font-md text-xs text-gray-500 mb-[2]">
-                  Assigned On
-                </div>
-
-                <div className="font-lg text-sm text-slate-900">26 July</div>
-              </section>
-            </div>
-
-            <div className="px-3 py-1 mb-3 mt-3 flex justify-between">
-              <div>
-                <div className="font-md text-xs mt-2 text-gray-500 mb-[2]">
-                  Assigned By
-                </div>
-                <div className="font-lg text-sm text-slate-900">
-                  {AssignedBy || 'NA'}
-                </div>
-              </div>
-              <div>
-                <div className="font-md text-xs mt-2 text-gray-500 mb-[2]">
-                  Last Activist
-                </div>
-                <div className="font-lg text-sm text-slate-900">3 days ago</div>
-              </div>
-            </div>
-          </div>
-        </div> */}
 
         {unitsViewMode && (
           <>
@@ -763,9 +709,7 @@ export default function CrmUnitSideView({
           <>
             <div className="">
               <div className="">
-                {/* <div className="font-md font-medium text-xs  text-gray-800">
-                          Notes
-                        </div> */}
+
 
                 <div className=" border-gray-200 ">
                   <ul
@@ -775,7 +719,6 @@ export default function CrmUnitSideView({
                     role="tablist"
                   >
                     {[
-                      // { lab: 'Schedules', val: 'appointments' },
                       { lab: 'Tasks', val: 'tasks' },
                       { lab: 'Payment Summary', val: 'payment_summary' },
                       { lab: 'Cost Information', val: 'cost_information' },
@@ -787,7 +730,6 @@ export default function CrmUnitSideView({
                       },
                       { lab: 'Booking Details', val: 'booking_details' },
                       { lab: 'Payment History', val: 'payment_history' },
-                      // { lab: 'Phone', val: 'phone' },
                       { lab: 'Lead Logs', val: 'timeline' },
                     ].map((d, i) => {
                       return (
@@ -803,8 +745,7 @@ export default function CrmUnitSideView({
                             onClick={() => setFeature(d.val)}
                           >
                             {`${d.lab} `}
-                            {/* <span className="bg-gray-100 px-2 py-1 rounded-full">
-                          {/* {rowsCounter(leadsFetchedData, d.val).length} */}
+               
                           </button>
                         </li>
                       )
@@ -1551,7 +1492,6 @@ export default function CrmUnitSideView({
                             label="Not Interest Reason*"
                             className="input mt-3"
                             onChange={(value) => {
-                              // formik.setFieldValue('source', value.value)
                               setNotInterestType(value.value)
                             }}
                             value={notInterestType}
@@ -1581,7 +1521,6 @@ export default function CrmUnitSideView({
                             <span className="ml-1 ">Save & Whats App</span>
                           </button>
                           <button
-                            // onClick={() => fSetLeadsType('Add Lead')}
                             onClick={() => cancelResetStatusFun()}
                             className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700  `}
                           >
@@ -1607,14 +1546,7 @@ export default function CrmUnitSideView({
                           {leadNotesFetchedData.map((data, i) => (
                             <section key={i} className="">
                               <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
-                                {/* <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-3 w-3 text-blue-600 "
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                            </svg> */}
+           
                                 <DocumentIcon className=" w-3 h-3" />
                               </span>
                               <div className="text-gray-600  m-3 ml-6">
@@ -1680,7 +1612,6 @@ export default function CrmUnitSideView({
                           label="Document Type *"
                           className="input mt-3"
                           onChange={(value) => {
-                            // formik.setFieldValue('source', value.value)
                             setAttachType(value.value)
                           }}
                           value={attachType}
@@ -1715,14 +1646,12 @@ export default function CrmUnitSideView({
                         />
                         <div className="flex flex-row mt-3">
                           <button
-                            // onClick={() => fAddSchedule()}
                             type="submit"
                             className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
                           >
                             <span className="ml-1 ">Upload</span>
                           </button>
                           <button
-                            // onClick={() => fSetLeadsType('Add Lead')}
                             onClick={() => setAttach(false)}
                             className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700  `}
                           >
@@ -1731,7 +1660,6 @@ export default function CrmUnitSideView({
                         </div>
                       </form>
 
-                      {/* <h3> {progress}</h3> */}
                     </div>
                   </div>
                 )}
@@ -1763,7 +1691,6 @@ export default function CrmUnitSideView({
                               <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                 Status
                               </th>
-                              {/* <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"></th> */}
                             </tr>
                           </thead>
                           <tbody>
@@ -1793,13 +1720,7 @@ export default function CrmUnitSideView({
                                   </td>
                                   <td className="px-5 py-5 bg-white text-sm">
                                     <>
-                                      {/* <span className="relative inline px-3 py-1 font-semibold text-red-900 leading-tight">
-                                    <span
-                                      aria-hidden
-                                      className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
-                                    ></span>
-                                    <span className="relative">Approved</span>
-                                  </span> */}
+                    
 
                                       <DownloadIcon
                                         onClick={() => downloadFile(dat.url)}
@@ -1937,7 +1858,6 @@ export default function CrmUnitSideView({
                         href="#"
                         className="block items-center p-3 sm:flex hover:bg-gray-100 "
                       >
-                        {/* <PlusCircleIcon className="mr-3 mb-3 w-10 h-10 rounded-full sm:mb-0" /> */}
                         {data?.type == 'status' && (
                           <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
                             <svg
@@ -2013,18 +1933,7 @@ export default function CrmUnitSideView({
                               {data?.txt}
                             </div>
                             <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                              {/* <svg
-                          className="mr-1 w-3 h-3"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg> */}
+
 
                               <ClockIcon className="mr-1 w-3 h-3" />
                               {data?.type == 'ph'

@@ -1506,16 +1506,13 @@ if (title === 'Villa Type Category') {
       title
     )
     if (foundLength?.length > 0) {
-      // setLeadPayload(foundLength[0])
     }
     console.log('foundLength', foundLength.length)
   }
   const createDBFun2 = async () => {
-    // get all the data dataObj
-    // insert data to firebase db
+
     console.log('Clicked masters', dataMapCopy);
 
-    // Wait for all InitialSetup entries to be processed
     await Promise.all(
         InitialSetup?.map(async (dataObj) => {
             const dataPromises = dataObj?.data?.map(async (data1, i) => {
@@ -1529,7 +1526,7 @@ if (title === 'Villa Type Category') {
                 if (foundLength?.length > 0) {
                     console.log('duplicate');
                     SetInitalSetup('started');
-                    return; // Skip further processing for duplicates
+                    return; 
                 } else {
                     SetInitalSetup('started');
 
@@ -1547,20 +1544,17 @@ if (title === 'Villa Type Category') {
                 }
             });
 
-            // Wait for all data entries of the current dataObj to complete
+        
             await Promise.all(dataPromises);
         })
     );
 
-    // After all data objects are processed
     SetInitalSetup('Completed');
 };
 const createUserAccessFun2 = async () => {
-  // get all the data dataObj
-  // insert data to firebase db
+
   console.log('Clicked masters', dataMapCopy);
 
-  // Wait for all InitialSetup entries to be processed
   await Promise.all(
       InitialSetup?.map(async (dataObj) => {
           const dataPromises = userAccessRolesArray.map(async (data1, i) => {
@@ -1573,12 +1567,10 @@ const createUserAccessFun2 = async () => {
 
           });
 
-          // Wait for all data entries of the current dataObj to complete
           await Promise.all(dataPromises);
       })
   );
 
-  // After all data objects are processed
   SetInitalSetup('Completed');
 };
   return (
@@ -1629,16 +1621,8 @@ const createUserAccessFun2 = async () => {
 
           <div className="flex-1 p-6 overflow-auto mx-2 bg-white text-gray-300">
             <div className="bg-white text-white p-6">
-              {/* {Object.keys(dataMap).map((key) => ( */}
               {dataMapCopy?.map((dataObj) => (
-                // <div
-                //    key={key}
 
-
-                //   className="mb-24"
-                //   ref={(el) => (contentRefs.current[key] = el)}
-                //   id={key.replace(/\s+/g, '-').toLowerCase()}
-                // >
                 <div
                 key={dataObj.title}
                 className="mb-24"
@@ -1656,9 +1640,7 @@ const createUserAccessFun2 = async () => {
                     <table className="w-full text-left">
                       <thead>
                         <tr className="border-b border-[#e5e7eb]">
-                          {/* <th className="py-3 px-4 text-lg font-bold text-[#334155]">
-                            Title
-                          </th> */}
+
                           <th className="py-3 px-4 text-lg font-bold text-[#334155]">
                             Options
                           </th>
@@ -1674,47 +1656,15 @@ const createUserAccessFun2 = async () => {
                       <tbody>
                         {dataObj?.data?.map((data, i) => (
                           <tr key={`static-${i}`}>
-                            {/* {i === 0 ? (
-                              <td className="py-5 px-4 font-bold text-[#0891B2] text-md">
-                                {dataObj.title}
-                              </td>
-                            ) : (
-                              <td className="py-5 px-4 text-[#0891B2] text-md"></td>
-                            )} */}
+     
                             <td className="py-5 px-4 border-b text-md text-[#728195] italic">
-                              {/* {editingCell?.key === dataObj.title &&
-                              editingCell.rowIndex === i &&
-                              editingCell.column === 'Options' ? (
-                                <input
-                                  type="text"
-                                  className="border-none w-full"
-                                  value={
-                                    cellValues[dataObj.title] || data.label
-                                  }
-                                  onChange={(e) =>
-                                    handleCellChange(e, data?.title, i)
-                                  }
-                                  onBlur={handleCellBlur}
-                                  autoFocus
-                                />
-                              ) : (
-                                <span
-                                  onClick={() =>
-                                    handleCellEdit(dataObj.title, i, 'Options')
-                                  }
-                                >
-                                  {data.label}
-                                </span>
-                              )} */}
+
                               <input
                                 type="text"
                                 value={data.label}
                                 onChange={(e) => {
-                                  // handleChange(row.id, 'unit', e.target.value)
                                   const rawValue = e.target.value;
-                                  // dataObj?.title
 
-                                  // const numValue = parseFloat(rawValue)
                                   let x = dataObj.data.filter((item)=>item.value === rawValue)
                                   if(x.length===0){
                                   handleChange1(
@@ -1723,15 +1673,7 @@ const createUserAccessFun2 = async () => {
                                     rawValue
                                   )
                                   }
-                                  // if (!isNaN(numValue)) {
-                                  //   handleChange1(
-                                  //     row.id,
-                                  //     'charges',
-                                  //     numValue
-                                  //   )
-                                  // } else {
-                                  //   handleChange1(row.id, 'charges', 0)
-                                  // }
+      
                                 }}
                                 className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                               />
@@ -1806,7 +1748,6 @@ const createUserAccessFun2 = async () => {
 
                     <div className="flex  justify-between">
                       <button
-                        // onClick={() => appendRow(dataObj?.title)}
                         onClick={() => addRowNew(dataObj)}
                         className=" mt-4 px-2 py- bg-[#0891B2] text-white rounded"
                       >
@@ -1842,7 +1783,6 @@ const createUserAccessFun2 = async () => {
                 </label>}
               </div>
 
-              {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}
             </div>
           </div>
         </div>
@@ -1863,7 +1803,6 @@ const createUserAccessFun2 = async () => {
                 </label>}
               </div>
 
-              {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}
             </div>
           </div>
         </div>

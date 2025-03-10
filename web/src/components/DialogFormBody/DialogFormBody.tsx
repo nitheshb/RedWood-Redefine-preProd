@@ -146,14 +146,11 @@ const DialogFormBody = ({
     }
   }
   const EditedBuilderShare = (e) => {
-    // e.preventdefault()
-    // setLandLordShare(e.target.value)
-    // setBuilderShare(100 - e.target.value)
-    // console.log('my eis ', e.target.value)
+
   }
 
 
-  //const { statesList } = useMasterData();
+
 
 
   useEffect(() => {
@@ -166,7 +163,7 @@ const DialogFormBody = ({
         })
 
         console.log('fetched users list is', bankA)
-        // step 3: filter and set values to each title
+
         if (bankA?.length > 0) {
           const dA = bankA.filter((item) => item.title == 'State')
           const eA = bankA.filter((item) => item.title == 'Planning Authority')
@@ -205,7 +202,6 @@ const DialogFormBody = ({
       reraApproval: reraApproval,
     }
     console.log('selected value is testing ', project?.editMode, project)
-    // setLoading(true)
     if (project?.editMode || project?.uid !=null) {
       await updateProject(
         orgId,
@@ -348,9 +344,7 @@ const DialogFormBody = ({
     projectName: Yup.string()
       .max(30, 'Must be 30 characters or less')
       .required('Required'),
-    // builderName: Yup.string()
-    //   .min(3, 'Must be 3 characters or more')
-    //   .required('Required'),
+
     location: Yup.string().required('Required'),
     pincode: Yup.string()
       .required('Required')
@@ -358,40 +352,16 @@ const DialogFormBody = ({
       .length(6, 'Must be 6 digits'),
     city: Yup.string().required('Required'),
     state: Yup.string().required('Required'),
-    // marketedby: Yup.string().required('Required'),
-    // projectWebsiteurl: Yup.string().required('Required'),
-    // landlordShare:
-    //   devType.name === 'Joint'
-    //     ? Yup.number().required('Required')
-    //     : Yup.string().notRequired(),
-    // builderShare: Yup.number().required('Required'),
-    // builderBankDocId: Yup.string().required('Required'),
-    // landlordBankDocId:
-    //   devType.name === 'Joint'
-    //     ? Yup.string().required('Required')
-    //     : Yup.string().notRequired(),
+
   })
   return (
     <div className=" lg:col-span-10 border w-full bg-[#F0F1FF] ">
-      {/* <div className="px-2 sm:px-6  z-10 absolute top-0  w-full bg-[#D9D8FF] py-2">
-        <Dialog.Title className=" font-semibold text-xl mr-auto ml-3  font-Playfair tracking-wider">
-          {title}
-        </Dialog.Title>
-      </div> */}
 
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col">
           <div className="bg-white">
 
-          {/* <div className="inline">
-                              <div className="">
-                                <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                                  Details<abbr title="required"></abbr>
-                                </label>
-                              </div>
 
-                              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
-                            </div> */}
             <div className="flex flex-col mt-2  bg-white  m-2 pt-1 mb-0 ">
               <div>
                 
@@ -411,7 +381,6 @@ const DialogFormBody = ({
 
             <div className="mt-0">
               <Formik
-                //  innerRef={ref}
                 initialValues={initialState}
                 validationSchema={createProjectSchema}
                 onSubmit={(values, { resetForm }) => {
@@ -420,7 +389,6 @@ const DialogFormBody = ({
                 }}
               >
                 {(formik) => {
-                  // bindSubmitForm(formik.submitForm);
                   return (
                     <Form>
                       <div className="form m-4 mt-0 ">
@@ -452,9 +420,7 @@ const DialogFormBody = ({
 
 
                           <div className='col-span-3 items-start'>
-{/* <p className="text-sm text-gray-800 ">
-  Project Name*
-</p> */}
+
 <TextField label="Project Name*"  name="projectName" type="text" />
 <section className="flex flex-row space-x-4 w-full text-xs mt-[14px]">
   <div className="mb-3 w-[50%]">
@@ -617,15 +583,11 @@ const DialogFormBody = ({
 
 <div className="grid grid-cols-2 gap-4 w-full">
 <div>
-{/* <p className="text-sm text-gray-800">
-Project Website URL*
-</p> */}
+
 <TextField label="Project Website URL" name="projectWebsiteurl" type="text" />
 </div>
 <div>
-{/* <p className="text-sm text-gray-800">
-Marketed By*
-</p> */}
+
 <TextField label="Marketed By" name="marketedby" type="text" />
 </div>
 </div>
@@ -688,12 +650,7 @@ Marketed By*
                                   />
                                 </div>
                                 <div className="mt-2 w-full">
-                                  {/*  <TextField
-                            label="Start Date*"
-                            name="bmrdaStartDate"
-                            type="text"
-                          />*/}
-
+             
                                   <label className="label font-regular block mb-1">
                                     Approval Date*
                                   </label>
@@ -715,42 +672,13 @@ Marketed By*
                                       setHours(setMinutes(d, 5), 12),
                                       setHours(setMinutes(d, 59), 23),
                                     ]}
-                                    // dateFormat="MMMM d, yyyy"
-                                    //dateFormat="d-MMMM-yyyy"
+                       
                                     dateFormat="MMM dd, yyyy"
                                   />
                                 </div>
-                                {/* <div className="mt-2 w-full"> */}
-                                  {/*<TextField
-                            label="End Date*"
-                            name="bmrdaEndDate"
-                            type="text"
-                            />*/}
 
-                                  {/* <label className="label font-regular block mb-1">
-                                  End Date*
-                                </label>
-                                <DatePicker
-                                  id="authrorityEndDate"
-                                  name="authrorityEndDate"
-                                  className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
-                                  selected={authorityEndDate}
-                                  onChange={(date) => {
-                                    formik.setFieldValue(
-                                      'authorityEndDate',
-                                      date.getTime()
-                                    )
-                                    setAuthorityEndDate(date)
-                                  }}
-                                  timeFormat="HH:mm"
-                                  injectTimes={[
-                                    setHours(setMinutes(d, 1), 0),
-                                    setHours(setMinutes(d, 5), 12),
-                                    setHours(setMinutes(d, 59), 23),
-                                  ]}
-                                  dateFormat="MMMM d, yyyy"
-                                /> */}
-                                {/* </div> */}
+
+
                               </div>
                             </div>
                             </>
@@ -781,11 +709,6 @@ Marketed By*
                               <div className='flex flex-row gap-2 w-full  '>
 
                               <div className="mt-1 mb-[6px] w-1/2 min-w-0">
-                                {/*<TextField
-                            label="Start Date*"
-                            name="hdmaStartDate"
-                            type="text"
-                           />*/}
 
                                 <label className="label font-regular block mb-1">
                                   Approval Date*
@@ -810,16 +733,11 @@ Marketed By*
                                     setHours(setMinutes(new Date(), 5), 12),
                                     setHours(setMinutes(new Date(), 59), 23),
                                   ]}
-                                  // dateFormat="MMMM d, yyyy"
                                   dateFormat="d-MMMM-yyyy"
                                 />
                               </div>
                               <div className="mt-1 mb-[6px] w-1/2 min-w-0">
-                                {/*  <TextField
-                            label="End Date*"
-                            name="hdmaEndDate"
-                            type="text"
-                          />*/}
+     
 
                                 <label className="label font-regular block mb-1">
                                   End Date*
@@ -851,7 +769,6 @@ Marketed By*
                                     setHours(setMinutes(d, 5), 12),
                                     setHours(setMinutes(d, 59), 23),
                                   ]}
-                                  // dateFormat="MMMM d, yyyy"
                                   dateFormat="d-MMMM-yyyy"
                                 />
                               </div>
@@ -883,15 +800,7 @@ Marketed By*
                               <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
                             </div>
                           </div>
-                          {/* <CustomRadioGroup
-                          label="Development Type"
-                          value={devType}
-                          options={developmentTypes}
-                          onChange={setdevType}
-                        /> */}
-                          {/* <label className="label font-regular text-sm mb-2 mt-3">
-                          Builder Bank Account *
-                        </label> */}
+    
 
                           {bankAccounts.length > 0 && (
                             <div className="flex  space-x-2 w-full text-xs">
@@ -916,8 +825,7 @@ Marketed By*
                                   console.log('changed value is ', payload)
                                   const { value, id, accountName } = payload
                                   console.log('selected value is ', payload)
-                                  // formik.setFieldValue('builderName', accountName)
-                                  // formik.setFieldValue('landlordBankDocId', id)
+   
                                   const x = bankAccounts
                                   const exists = bankAccounts.find(
                                     (item) => item.id === payload.id
@@ -936,27 +844,10 @@ Marketed By*
                                 setAddNewBankStuff={setAddNewBankStuff}
                               />
 
-                              {/* {formik.errors.builderBankDocId ? (
-                             <div className="error-message text-red-700 text-xs p-2">
-                             {formik.errors.builderBankDocId}
-                                {formik.values.builderBankDocId}
-                                  </div>
-                               ) : null} */}
+    
                             </div>
 
-                            {/* {devType.name === 'Joint' && (
-                          <div className="mt-2 mr-3 w-full py-1">
-                            <TextField
-                              label="Builder Share*"
-                              name="builderShare"
-                              value={builerShare}
-                              type="number"
-                               onChange={(e) => EditedLandlord(e, formik)}
-                             id="numberSize"
-                              className="border border-gray-300 h-9 p-2 rounded-md w-full"
-                            />
-                          </div>
-                        )} */}
+   
                           </div>
 
                           {addNewBankStuff && (
@@ -967,52 +858,6 @@ Marketed By*
                             />
                           )}
 
-                          {/* {devType.name === 'Joint' && (
-                        <div className="flex  mb-3 space-y-2 w-full text-xs">
-                          <div className=" mt-2 mr-3 w-full">
-                            <MultiSelectMultiLineField
-                              label="Landlord Bank Account*"
-                              name="landlordBankDocId"
-                              onChange={(payload) => {
-                                console.log('changed value is ', payload)
-                                const { value, id, accountName } = payload
-                                formik.setFieldValue(
-                                  'landlordName',
-                                  accountName
-                                )
-                                formik.setFieldValue('landlordBankDocId', id)
-
-                                console.log('changed value is ', value)
-
-                                if (value === 'addNewOption') {
-                                  setAddNewBankStuff(true)
-                                }
-                                formik.setFieldValue('landlordBankDocId', id)
-                              }}
-                              value={formik.values.landlordBankDocId}
-                              options={bankDetailsA}
-                              setAddNewBankStuff={setAddNewBankStuff}
-                            />
-                            {formik.errors.landlordBankDocId ? (
-                              <div className="error-message text-red-700 text-xs p-2">
-                                {formik.errors.landlordBankDocId}
-                                {formik.values.landlordBankDocId}
-                              </div>
-                            ) : null}
-                          </div>
-
-                          <div className="mt-2 mr-3 w-full py-1">
-                            <TextField
-                              label="LandLord Share*"
-                              name="landlordShare"
-                              value={landLordShare}
-                              type="number"
-                              onChange={(e) => EditedLandlord(e, formik)}
-                              className="border border-gray-300 h-9 p-2 rounded-md w-full"
-                            />
-                          </div>
-                        </div>
-                      )} */}
                         </div>
                         <div className="flex flex-col mt-2 rounded-lg pt-4 ">
                           <div className="mb-4 mt-2">
@@ -1069,12 +914,7 @@ Marketed By*
 
 
                               />
-                              {/* {formik.errors.state ? (
-                            <div className="error-message text-red-700 text-xs p-2">
-                              {formik.errors.state}
-                              {formik.values.state}
-                            </div>
-                          ) : null} */}
+     
                             </div>
                           </div>
                           <div className="mt-2 w-full mb-10">

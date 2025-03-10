@@ -67,51 +67,9 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
     }
 
     fetchDbValue()
-    // const unsubscribe = getProjectByUid(
-    //   orgId,
-    //   uid,
-    //   (querySnapshot) => {
-    //     const projects = querySnapshot.docs.map((docSnapshot) =>
-    //       docSnapshot.data()
-    //     )
-    //     console.log('set project value is ', projects[0])
-    //   },
-    //   () =>
-    //     setProject({
-    //       projectName: '',
-    //     })
-    // )
-    // return unsubscribe
+
   }, [selProjectIs])
 
-  // useEffect(() => {
-  //   const quill = new Quill('#editor', {
-  //     theme: 'snow',
-  //     modules: {
-  //       toolbar: [
-  //         [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  //         ['bold', 'italic', 'underline'],
-  //         ['link', 'image'],
-  //         ['clean'],
-  //       ],
-  //     },
-  //   })
-
-  //   quill.on('text-change', () => {
-  //     // am i here
-  //     console.log('am here')
-  //     setEditorState(quill.root.innerHTML)
-  //   })
-
-  //   // quill.setContents(editorState)
-  //   // quill.setContents([{ insert: 'Hello World!' }]);
-  //   // const delta = JSON.parse(editorState);
-  //   // quill.setContents([{ insert: "<p>helo</p>" }]);
-  //   quill.setText()
-
-  //   // quill.setContents(JSON.parse(editorState))
-
-  // }, [])
 
   useEffect(() => {
     console.log('retrieve this value ', wbPayload)
@@ -323,12 +281,7 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
         </span>
       </section>
       <section className="bg-teal-50 h-[400px] m-5 rounded-md">
-        {/* <div id="editor"></div> */}
-        {/* <Quill
-          value={editorState}
-          // onChange={handleEditorChange}
-          // options={editorOptions}
-        /> */}
+
 
         <ReactQuill
           theme="snow"

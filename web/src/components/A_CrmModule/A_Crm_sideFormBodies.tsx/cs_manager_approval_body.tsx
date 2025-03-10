@@ -69,9 +69,7 @@ export default function CSManagerApprovalBody({
           })
           setPhasesList(phases)
           if (phases.length > 0) {
-            // setSelPhaseName(phases?.[0].phaseName)
-            // setSelPhaseIs(phases?.[0].uid)
-            // setSelPhaseObj(phases?.[0])
+
             setSelPhaseObj(phases?.[0])
           }
           console.log('myphases are', phases)
@@ -131,20 +129,11 @@ export default function CSManagerApprovalBody({
           </span>
         </div>
       </div>
-      {/* <CSBody
-        csMode="plot_cs"
-        costSheetA={costSheetA}
-        selUnitDetails={selUnitPayload}
-        setCostSheetA={setCostSheetA}
-        setSelPhaseObj={setSelPhaseObj}
-        selPhaseObj={selPhaseObj}
-        setAddiChargesObj={setAddiChargesObj}
-      /> */}
+
       <CostBreakUpEditor
         csMode={'plot_cs'}
         netTotal= {netTotal}
         setNetTotal ={setNetTotal}
-        // costSheetA={costSheetA}
         pdfExportComponent={pdfExportComponent}
         selPhaseObj={selPhaseObj}
         leadDetailsObj1={{ id: 'leadId' }}

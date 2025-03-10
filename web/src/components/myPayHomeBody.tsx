@@ -40,51 +40,7 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     { k: 'Phases', v: 0, pic: '/p1.png' },
   ]
 
-  // const [unitsView, setUnitsView] = useState(false)
-  // const [areaView, setAreaView] = useState(false)
-  // const [valueView, setValueView] = useState(false)
-
-  // const [selbg, setSelbg] = useState('')
-  // const [seldata, setSeldata] = useState('')
-  // const [selkind, setSelkind] = useState('')
-  // const [selcurrency, setSelcurrency] = useState('')
-
-  // const [areabg, setAreabg] = useState('')
-  // const [areaData, setAreaData] = useState('')
-  // const [areakind, setAreakind] = useState('')
-  // const [areaCurrency, setareaCurrency] = useState('')
-
-  // const [valuebg, setValuebg] = useState('')
-  // const [valuedata, setValuedata] = useState('')
-  // const [valueKind, setValueKind] = useState('')
-  // const [valueCurrency, setValueCurrency] = useState('')
-  // const displayDetailView = (state, bgColor, data, kind, currency) => {
-  //   // console.log('am i clicked')
-  //   console.log('check')
-  //   setUnitsView(!unitsView)
-  //   setSelbg(bgColor)
-  //   setSeldata(data)
-  //   setSelkind(kind)
-  //   setSelcurrency(currency)
-  // }
-  // const areaDetailView = (state, bgColor, data, kind, currency) => {
-  //   // console.log('am i clicked')
-  //   console.log('check')
-  //   setAreaView(state)
-  //   setAreabg(bgColor)
-  //   setAreaData(data)
-  //   setAreakind(kind)
-  //   setareaCurrency(currency)
-  // }
-  // const valueDetailView = (state, bgColor, data, kind, currency) => {
-  //   // console.log('am i clicked')
-  //   console.log('check')
-  //   setValueView(state)
-  //   setValuebg(bgColor)
-  //   setValuedata(data)
-  //   setValueKind(kind)
-  //   setValueCurrency(currency)
-  // }
+  
   const bgColors = [
     'bg-blue-100 border-blue-200',
     'bg-purple-100 border-purple-200',
@@ -114,15 +70,7 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           <div className="grid grid-cols-2 gap-7 mt-10">
             <span
-            // onClick={() =>
-            //   displayDetailView(
-            //     !unitsView,
-            //     '#ebf9f9',
-            //     projectFeedData,
-            //     'Units',
-            //     false
-            //   )
-            // }
+         
             >
               {/* sec 1 */}
               <span>
@@ -131,7 +79,6 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                   style={{ backgroundColor: '#f3f5ff' }}
                 >
                   <div className="flex items-center flex-shrink-0  px-0  pl-0 mb-2 ">
-                    {/* <h1 className="text-lg font-medium">redefine.</h1> */}
                     <img className="w-8 h-8" alt="" src={'/m4.png'}></img>
                     <span className="relative z-10 flex items-center w-auto text-xl font-bold leading-none pl-0 ml-1 ">
                       {'Downloads'}
@@ -155,23 +102,9 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             </span>
 
             <span
-            // onClick={() =>
-            //   areaDetailView(
-            //     !areaView,
-            //     '#fef7f7',
-            //     unitFeedData,
-            //     'Area',
-            //     false
-            //   )
-            // }
+          
             >
-              {/* <ProjectStatsCard
-                kind="Area"
-                iconP="/l2.png"
-                feedData={unitFeedData}
-                bg="#fef7f7"
-                currency={false}
-              /> */}
+              
 
               <span>
                 <div
@@ -209,8 +142,7 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 style={{ backgroundColor: '#f3f5ff' }}
               >
                 <div className="flex items-center flex-row px-0  pl-0 mb-2 ">
-                  {/* <h1 className="text-lg font-medium">redefine.</h1> */}
-                  {/* <img className="w-8 h-8" alt="" src={'/m4.png'}></img> */}
+       
                   <div className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 ">
                     {'Payslips'}
                   </div>
@@ -271,36 +203,7 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
               </div>
             </span>
           </div>
-          {/* {unitsView && (
-            <div className="grid grid-cols-1 gap-7 mt-10">
-              <PhaseDetailsCard
-                kind={selkind}
-                feedData={seldata}
-                bg={selbg}
-                currency={selcurrency}
-              />
-            </div>
-          )}
-          {areaView && (
-            <div className="grid grid-cols-1 gap-7 mt-10">
-              <PhaseDetailsCard
-                kind={areakind}
-                feedData={areaData}
-                bg={areabg}
-                currency={areaCurrency}
-              />
-            </div>
-          )}
-          {valueView && (
-            <div className="grid grid-cols-1 gap-7 mt-10">
-              <PhaseDetailsCard
-                kind={valueKind}
-                feedData={valuedata}
-                bg={valuebg}
-                currency={valueCurrency}
-              />
-            </div>
-          )} */}
+        
         </div>
       </section>
     </div>

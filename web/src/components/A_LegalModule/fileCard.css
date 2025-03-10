@@ -16,12 +16,7 @@
 }
  .folder-front::before {
 	 content: "";
-	 /* width: 42px;
-	 height: 15px;
-	 position: absolute;
-	 top: -10px;
-	 background-color: #5166FA;
-	 border-radius: 5px; */
+
    position: absolute;
    top: -10px;
    width: 35%;
@@ -31,7 +26,7 @@
     border-bottom: 12px solid #5166FA;
     border-right: 12px solid transparent;
     border-top-left-radius: 8px;
-    /* left:104px; */
+
 }
  .folder-back {
 	 position: absolute;

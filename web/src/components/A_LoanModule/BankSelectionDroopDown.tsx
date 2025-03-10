@@ -46,7 +46,7 @@ export default function BankSelectionSwitchDrop({ type, setStatusFun }) {
             className={`${
               ['Facing', 'show'].includes(type) ? 'right-0' : 'left-0'
             }  absolute  w-[360px] mt-2 origin-top-left bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[9000]`}
-            // style={{ 'z-index': '9' }}
+   
           >
             <div className="px-1 py-1 ">
               <>
@@ -88,9 +88,7 @@ export default function BankSelectionSwitchDrop({ type, setStatusFun }) {
                               {data.bName}
                               <span className="absolute inset-0" />
                             </a>
-                            {/* <p className="mt- pb-2 border-b text-gray-600">
-                              Project Setup, Insights, Access...
-                            </p> */}
+            
                           </div>
                         </div>
 

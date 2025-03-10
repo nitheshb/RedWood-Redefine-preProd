@@ -25,6 +25,8 @@ const ProjectAccessSideView = ({
   const { orgId } = user
   const [loading, setLoading] = useState(false)
   const [allowCrmStausOnDue, setAllowCrmStatusOnDue] = useState(false)
+  const [allowSalesExCsEdit, setAllowSalesExCsEdit] = useState(false)
+
   const { enqueueSnackbar } = useSnackbar()
   const [open, setOpen] = useState(false)
   const [projects, setProjects] = useState([])
@@ -35,19 +37,14 @@ const ProjectAccessSideView = ({
   const [planDiagramsA, setPlanDiagramsA] = useState([])
 
   useEffect(()=>{
-    setAllowCrmStatusOnDue(projectDetails?.allowCrmStatusChangeOnDue)
+    setAllowCrmStatusOnDue(projectDetails?.allowCrmStatusChangeOnDue || false)
+    setAllowSalesExCsEdit(projectDetails?.allowSalesExCsEdit || false)
+
   }, [projectDetails])
   useEffect(() => {
     getPlanDiagrams(data?.uid, 'plan_diagram')
     console.log('plan_diagram', data, projectDetails)
 
-    // if (pId && title === 'Plan Diagram') {
-    //   getPlanDiagrams(data?.uid, 'plan_diagram')
-    // } else if (pId && title === 'Brouchers') {
-    //   getPlanDiagrams(data?.uid, 'broucher')
-    // } else if (pId && title === 'Approvals') {
-    //   getPlanDiagrams(data?.uid, 'approval')
-    // }
   }, [pId, data])
   const getPlanDiagrams = async (phaseId, type) => {
     const unsubscribe = getPlanDiagramByPhase(
@@ -145,15 +142,18 @@ const ProjectAccessSideView = ({
     updateProjectPayload(orgId, projectDetails?.uid, { allowCrmStatusChangeOnDue: status.target.checked })
     setAllowCrmStatusOnDue(status.target.checked )
   }
+  const updateAllowSalesExCsEdit = (status) => {
+
+    updateProjectPayload(orgId, projectDetails?.uid, { allowSalesExCsEdit: status.target.checked })
+    setAllowSalesExCsEdit(status.target.checked )
+  }
   return (
     <div className="h-full flex flex-col  bg-white shadow-xl">
       <div className="   z-10">
-        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
+ 
 
         <div className="flex flex-row ">
-
+        <div className="flex flex-col w-full gap-4">
           {subView === 'salesAccess' && (
             <PaymentLeadAccess
               title={'Leads Access'}
@@ -162,6 +162,21 @@ const ProjectAccessSideView = ({
               source={source}
             />
           )}
+          {subView === 'salesAccess' && (  <div className='ml-4'>
+                            <Checkbox
+                              color="primary"
+                              checked={allowSalesExCsEdit}
+                              onChange={(e) => {
+
+                                updateAllowSalesExCsEdit(e)
+                              }}
+                              inputProps={{
+                                'aria-label': 'select all desserts',
+                              }}
+                            />
+                            <span className="mt-1"> Allow Costsheet Edit feature for Sales Executive</span>
+                          </div>)}
+
           {subView === 'creditNoteIssuers' && (
             <PaymentLeadAccess
               title={'Credit Note Issuers'}
@@ -180,7 +195,7 @@ const ProjectAccessSideView = ({
             />
           )}
 
-      <div className="flex flex-col w-full gap-4">
+
           {subView === 'crmAccess' && (
             <PaymentLeadAccess
               title={'CRM Access'}
@@ -202,10 +217,10 @@ const ProjectAccessSideView = ({
                                 'aria-label': 'select all desserts',
                               }}
                             />
-                          Change unit status on Payment Due
+                            <span className="mt-1"> Allow Unit status change on Elgible Balance exists</span>
                           </div>)}
 
-    </div>
+
 
           {subView === 'FinAccess' && (
             <PaymentLeadAccess
@@ -231,6 +246,7 @@ const ProjectAccessSideView = ({
               source={source}
             />
           )}
+             </div>
         </div>
       </div>
 
@@ -246,16 +262,6 @@ const ProjectAccessSideView = ({
         widthClass="max-w-2xl"
         projectsList={projects}
       />
-      {/* <SiderForm
-        open={isDocViewOpenSideView}
-        setOpen={setIsDocViewOpenSideView}
-        title={'disp_legal_docs'}
-        projectDetails={projectDetails}
-        unitsViewMode={false}
-        widthClass="max-w-xl"
-        projectsList={projects}
-        viewLegalDocData={viewDocData}
-      /> */}
        <SiderForm
         open={isDocViewOpenSideView}
         setOpen={setIsDocViewOpenSideView}
@@ -272,9 +278,7 @@ const ProjectAccessSideView = ({
         setOpen={setIsAccessSideView}
         title={'disp_project_access'}
         subView={subView}
-              //    data={{ phase: data, project: projectDetails }}
-              // dept="admin"
-              // source={source}
+
         phaseDetails={data}
         projectDetails={projectDetails}
         unitsViewMode={false}

@@ -263,15 +263,9 @@ const LeadsTransferBody = ({
         return da.value == viewProjs?.value
       })
       setFiltProjectListTuned(z)
-      // viewSource
     }
   }, [projectList, viewProjs])
 
-  // const [projectFilList, setFiltProjectListTuned] = useState([])
-  // const [viewProjs, selProjs] = useState({
-  //   label: 'All Projects',
-  //   value: 'allprojects',
-  // })
 
   useEffect(() => {
     setProjectListTuned(serialProjectLeadData(projectList, leadsFetchedRawData))
@@ -332,9 +326,7 @@ const LeadsTransferBody = ({
   }, [usersList, leadsFetchedRawData, selProjectEmpIs])
   const insertTodaySourcePerformance = () => {
     console.log('insertTodaySourcePerformance')
-    // get leads from bank and get cT (dd-mm-yy)=>milliseconds,  source
-    // Check status
-    //
+
 
     updateTodaySourceStatsDB(orgId, 'snap', {}, (error) => [])
   }
@@ -381,9 +373,7 @@ const LeadsTransferBody = ({
         const empTodayTasksCountA = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-        // const sortVal = empTodayTasksCountA.sort((a, b) => {
-        //   return b.emp < a.emp
-        // })
+
         const sortVal = empTodayTasksCountA.sort((a, b) =>
           a.emp.localeCompare(b.emp)
         )
@@ -404,7 +394,6 @@ const LeadsTransferBody = ({
   }
 
   const showDrillDownFun = async (text, data) => {
-    // Display sideForm
     setReportSideForm(true)
     setDrillDownPayload(data)
     setSubTitle(text)
@@ -563,25 +552,7 @@ const LeadsTransferBody = ({
   }
 
   const getTransferLeadsDB = async () => {
-    // const z = getLeadsTransfer(
-    //   orgId,
-    //   (querySnapshot) => {
-    //     const SnapData = querySnapshot.data()
-    //     // SnapData.id = id
-    //     console.log('hello is ', SnapData)
-    //     setLeadsSearchRawDB(SnapData)
-    //   },
-    //   {
-    //     uid: 'VIzMzz5rl0NAywdnpHpb',
-    //     projectId: 'projectId',
-    //     cutoffDate: sourceDateRange,
-    //     dateRange: dateRange,
-    //     leadAssignedTo: leadAssignedTo,
-    //   },
-    //   () => {
-    //     console.log('error')
-    //   }
-    // )
+
 
     const unsubscribe = getLeadsTransfer(
       orgId,
@@ -605,11 +576,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
        await setLeadsSearchRawDB(usersListA)
         await console.log('hello valure are ', usersListA)
 
-        // usersListA.sort((a, b) => {
-        //   return b?.booked_on || 0 - b?.booked_on || 0
-        // })
-
-        // setLoading(false)
       },
       {
         uid: 'VIzMzz5rl0NAywdnpHpb',
@@ -676,19 +642,8 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
     await setLeadLogsRawData(steamLeadLogs)
   }
   const GenerateTasksDailyReportForEmp = async () => {
-    // get all the employees based on orgId
     console.log('employee list is ', usersList)
-    // const data = []
-    // for (const empListD of [
-    //   { uid: 'yP5IMRXqByUNYZ6atk5AaJjaoGH3', name: 'RAM PRASAD' },
-    // ]) {
-    //   const dataUser = await getRestEmpTodayTasksCount(
-    //     empListD?.uid,
-    //     empListD?.name
-    //   )
-    //   data.push(dataUser)
-    // }
-    // return
+
     await getEmployeesListDept(orgId, {}).then(async (empList) => {
       console.log('employee list is ', empList)
       const data = []
@@ -701,17 +656,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
       }
     })
     await setResettingEmpValues(false)
-    // const empDempListA = await getEmployeesListDept(orgId, {})
-    // await empDempListA.map(async (empDetails) => {
-    //   const { uid } = empDetails
-    //   if (uid) {
-    //     await getRestEmpTodayTasksCount(uid)
-    //   } else {
-    //     return
-    //   }
-    // })
 
-    // await console.log('get users list is', empDempListA)
     return
     const unsubscribe = steamUsersListByRole(
       orgId,
@@ -719,7 +664,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
         const usersListA1 = await querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
         )
-        // setusersList(usersListA)
         usersListA1.map((user) => {
           user.label = user.displayName || user.name
           user.value = user.uid
@@ -745,30 +689,13 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
     )
   }
   const getRestEmpTodayTasksCount = async (empID, name) => {
-    // Get all the employees of sales,crm , finance, legal of each dept
-    // Loop through each emp and get TastDate < Tomorrow
-    // get the Lead status of each task and put that into that section count
-    // save count in db too
-    // send to whats app
+
 
     return await getTodayTodoLeadsDataByUser(
       orgId,
       async (querySnapshot) => {
         let pro
         let y = []
-        // const projects = await querySnapshot.docs.map(async (docSnapshot) => {
-        //   const x = docSnapshot.data()
-        //   console.log('git values is 2', x)
-        //   const { staDA } = x
-        //   y = staDA
-        //   if (y.length > 0) {
-        //     x.uid = docSnapshot.id
-        //     // eslint-disable-next-line prefer-const
-        //     let y1 = await getLeadbyId1(orgId, x.uid)
-        //     x.leadUser = await y1
-        //     return x
-        //   }
-        // })
 
         const userTodoTasksList = []
         console.log('Total fetcher is ', querySnapshot.docs.length, name)
@@ -786,20 +713,8 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
             userTodoTasksList.push(x)
           }
         }
-        //  get the task details from docid
         if (userTodoTasksList.length > 0) {
-          // projects.filter((data) => data != undefined)
-          // const data = []
-          // for (const results of userTodoTasksList) {
-          //   console.log('TaskListResults is', results)
-          //   results?.filter((data) => data != 'remove')
-          //   const dataUser = await filterTodayTodoFun(
-          //     results?.filter((data) => data != 'remove'),
-          //     empID,
-          //     name
-          //   )
-          //   data.push(dataUser)
-          // }
+
           Promise.all(userTodoTasksList).then(function (results) {
             results.filter((data) => data != 'remove')
             filterTodayTodoFun(
@@ -943,45 +858,14 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
       negotiation_comp: 0,
       others_comp: 0,
     }
-    //  this week docId = ${uidXweekcountXtodaydate.getFullYear()}
-    //  this month docId = ${uidXweekcountXtodaydate.getFullYear()}
+
 
     updateTodayTasksTotal(orgId, `${empID}DD${ddMy}`, taskCounts)
 
     console.log('whole is ', name, whole)
   }
   const updateLeadsLastUpdatetimeFun = async () => {
-    // get data from tasks table with pending as available
-    // steamLeadScheduleLog(
-    //   orgId,
-    //   (doc) => {
-    //     console.log('my total fetched list is 1', doc.data())
-    //     const x = doc.data()
-    //     let y = []
-    //     const { staA, staDA } = x
-    //     const indi = staA.indexOf('pending')
-    //     y = staDA
-    //     if (y.length > 0) {
-    //       // x.uid = docSnapshot.id
-    //       // eslint-disable-next-line prefer-const
-    //       const { comments, ct, schTime } = x[y[indi]]
-    //       if (comments) {
-    //         console.log('insdied coment ', x.uid, comments[0]['t'], schTime)
-    //         // updateLeadLastUpdateTime(orgId, x.uid, comments[0]['t'], schTime)
-    //       } else if (ct) {
-    //         console.log('insdied ct ', x.uid, ct, schTime)
-
-    //         updateLeadLastUpdateTime(orgId, 'suAn4KcwwEUVy4ziYTwb', ct, schTime)
-    //       }
-    //     }
-    //   },
-
-    //   {
-    //     uid: 'suAn4KcwwEUVy4ziYTwb',
-    //   },
-    //   (error) => console.log('error', error)
-    // )
-
+   
     getTodayTodoLeadsData(
       orgId,
       (querySnapshot) => {
@@ -996,20 +880,12 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
           y = staDA
 
           if (y.length > 0 && y[indi]) {
-            // x.uid = docSnapshot.id
-            // eslint-disable-next-line prefer-const
+
 
             const { comments, ct, schTime } = x[y[indi]]
             if (comments) {
-              // console.log(
-              //   'insdied coment ',
-              //   docSnapshot.id,
-              //   comments[0]['t'],
-              //   schTime
-              // )
-              // updateLeadLastUpdateTime(orgId, x.uid, comments[0]['t'], schTime)
+  
             } else if (ct) {
-              // console.log('insdied ct ', docSnapshot.id, ct, schTime)
               try {
                 updateLeadLastUpdateTime(orgId, docSnapshot.id, ct, schTime)
               } catch (error) {
@@ -1029,9 +905,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
     )
   }
   const updateProjectNameInlogs = async () => {
-    // get all the logs from supabase
-    // loop through each doc and get projectId
-    // update the respective doc in supabase with projectId
+
 
     const steamLeadLogs = await streamLeadLogdWithNullProj(
       orgId,
@@ -1194,172 +1068,12 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
         <div className="box-border  border-solid  ">
           <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
 
-            {/* <div className=" mt-10 grid grid-cols-1 gap-7">
-              <span className="min-w-100 ">
-                <span>
-                  <div
-                    className="drop-shadow-md min-w-full z-10 flex flex-col  max-w-md p-4 mx-auto my-0 rounded-lg "
-                    style={{ backgroundColor: '#EBF9F9' }}
-                  >
-                    <div className="flex items-center flex-row px-0  pl-0 mb-2 ">
-
-                      <div className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 mt-4 ">
-                        {`Lead Stastics of Team for this Week `}
-                      </div>
-                    </div>
-
-                    <section className="flex ml-auto mt-[18px]">
-                      {!isEdit && (
-
-                        <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-pink-800 bg-pink-200 rounded-full">
-                          <EyeIcon
-                            className="h-3 w-3 mr-1"
-                            aria-hidden="true"
-                          />
-                          Current Week
-                        </span>
-
-                      )}
-
-                      <button onClick={onSliderOpen}>
-                        <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                          <CalendarIcon
-                            className="h-3 w-3 mr-1"
-                            aria-hidden="true"
-                          />
-                          This Month
-                        </span>
-                      </button>
-                      <button onClick={onSliderOpen}>
-                        <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                          <CalendarIcon
-                            className="h-3 w-3 mr-1"
-                            aria-hidden="true"
-                          />
-                          Last 6 Months
-                        </span>
-                      </button>
-                    </section>
-
-                    <div className="grid grid-cols-2 gap-0">
-                      <ul className="flex-1 p-0 mt-8 ml-2 mr-2 max-w-[300px] border-r pr-10  border-slate-400 leading-7 text-gray-900  border-gray-200">
-                        {valueFeedData.map((data, i) => {
-                          return (
-                            <li
-                              key={i}
-                              className="flex justify-between px-4 py-1 w-full mb-2  font-semibold text-left border-dotted border-b border-gray-300 "
-                            >
-                              <span className="inline-flex">
-                                <span className="text-[16px] text-gray-900 font-light  text-gray-900">
-                                  {' '}
-                                  {data.k}
-                                </span>
-                              </span>
-
-                              <div
-                                className="relative flex flex-col items-center group"
-                                style={{ alignItems: 'end' }}
-                              >
-                                <div
-                                  className="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex"
-                                  style={{ alignItems: 'end', width: '300px' }}
-                                >
-                                  <span
-                                    className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-                                    style={{
-                                      color: 'black',
-                                      background: '#e2c062',
-                                      maxWidth: '300px',
-                                    }}
-                                  ></span>
-                                  <div
-                                    className="w-3 h-3  -mt-2 rotate-45 bg-black"
-                                    style={{
-                                      background: '#e2c062',
-                                      marginRight: '12px',
-                                    }}
-                                  ></div>
-                                </div>
-                                <span className="text-[16px] font-medium text-gray-900">
-                                  {data.v.toLocaleString('en-IN')}
-                                </span>
-                              </div>
-                            </li>
-                          )
-                        })}
-                      </ul>
-
-                      <section
-                        className=" mt-[40px]"
-                        style={{ marginLeft: '-220px' }}
-                      >
-                        <BarChart
-                          width={600}
-                          height={300}
-                          data={[
-                            {
-                              name: 'Total',
-                              count: 1050,
-                              pv: 2400,
-                              amt: 2400,
-                            },
-                            {
-                              name: 'Progress',
-                              count: 420,
-                              pv: 1398,
-                              amt: 2210,
-                            },
-                            {
-                              name: 'Booked',
-                              count: 120,
-                              pv: 9800,
-                              amt: 2290,
-                            },
-                            {
-                              name: 'RNR',
-                              count: 105,
-                              pv: 9800,
-                              amt: 2290,
-                            },
-                            {
-                              name: 'Dead',
-                              count: 90,
-                              pv: 9800,
-                              amt: 2290,
-                            },
-                            {
-                              name: 'Non Interested',
-                              count: 750,
-                              pv: 9800,
-                              amt: 2290,
-                            },
-                          ]}
-                          margin={{
-                            top: 5,
-                            right: 30,
-                            left: 0,
-                            bottom: 5,
-                          }}
-                        >
-                          <XAxis dataKey="name" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <Bar dataKey="count" barSize={40} fill="#1EB968" />
-                        </BarChart>
-                      </section>
-                    </div>
-                  </div>
-                </span>
-              </span>
-            </div> */}
+          
           </div>
           {selCat === 'lead_perf' && (
            leadsSearchRawDB.length>0 ? <LeadsTransferTableBody
               title={'Site Visit Leads'}
-              // subtitle={'subTitle'}
-              // dialogOpen={setOpen}
-              // leadsLogsPayload={drillDownPayload}
+
               leadsLogsPayload={leadsSearchRawDB}
               setCustomerDetails={setCustomerDetails}
               setisImportLeadsOpen={setisImportLeadsOpen}
@@ -1383,79 +1097,8 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
             </time>
           </div>
           )}
-          {/* {selCat === 'lead_perf' && (
-            <LeadsTransferTableBody
-              title={'Site Visit Leads'}
-              // subtitle={'subTitle'}
-              // dialogOpen={setOpen}
-              // leadsLogsPayload={drillDownPayload}
-              leadsLogsPayload={sourceRawFilData}
-              setCustomerDetails={setCustomerDetails}
-              setisImportLeadsOpen={setisImportLeadsOpen}
-              setSelectedIds={setSelectedIds}
-              selectedIds={selectedIds}
-            />
-          )} */}
-          {/* {selCat === 'lead_perf' && (
-            <div className="flex flex-col  mt-2 drop-shadow-md rounded-lg  px-4">
-              <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div
-                  className="py-2 inline-block  sm:px-6 lg:px-8"
-                  style={{ backgroundColor: '#ebfafa' }}
-                >
-                  <div className="overflow-hidden">
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                      }}
-                      className=" text-md font-bold leading-none pl-0 mt-4 border-b pb-4 mb-4 "
-                    >
-                      <div>Performance by Lead Created Date</div>
-                      <div className="flex flex-row">
-                        {orgId == 'spark' && (
-                          <div
-                            className="mt-3 mr-2 cursor-pointer"
-                            onClick={() =>
-                              updateAgreegatedValues(projectFilList)
-                            }
-                          >
-                            Calculate
-                          </div>
-                        )}
-                        <div className="mr-3">
-                          <SlimDateSelectBox
-                            onChange={async (value) => {
-                              console.log(value, 'dateValueSource')
-                              setSourceDateRange(value)
-                              //getLeadsDataFun()
-                            }}
-                            label={sourceDateRange}
-                            placeholder={undefined}
-                          />
-                        </div>
 
-                        <span style={{ display: '' }}>
-                          <CSVDownloader
-                            className="mr-6 h-[20px] w-[20px]"
-                            downloadRows={sourceRawFilData}
-                            style={{ height: '20px', width: '20px' }}
-                          />
-                        </span>
-                      </div>
-                    </div>
-                    <LeadsCoversionGraphs
-                      sourceRawFilData={sourceRawFilData}
-                      showDrillDownFun={showDrillDownFun}
-                      projectFilList={projectListTuned}
-                      leadsFetchedRawData={leadsFetchedRawData}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )} */}
+        
           {selCat === 'emp_tasks' && (
             <div className="flex flex-col  mt-4 drop-shadow-md rounded-lg  px-4">
               <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -1467,7 +1110,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                     <div className="flex flex-row justify-between pl-0 mt-4 border-b pb-4 mb-4 ">
                       <div className=" text-md font-bold leading-none mt-2">
                         {`Today Employee Tasks Performance`}
-                        {/* <div>DateSourceComponent()</div> */}
                       </div>
                       <section className="flex flex-row justify-between">
                         <section></section>
@@ -1501,26 +1143,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                             </span>
                           </button>
 
-                          {/* <SlimSelectBox
-                        name="project"
-                        label=""
-                        className="input min-w-[164px] "
-                        onChange={(value) => {
-                          setSelProjectEmp(value)
-                        }}
-                        value={selProjectEmpIs?.value}
-                        options={[
-                          ...[{ label: 'All Projects', value: 'allprojects' }],
-                          ...projectList,
-                        ]}
-                      /> */}
-                          {/* <span style={{ display: '' }}>
-                        <CSVDownloader
-                          className="mr-6 h-[20px] w-[20px]"
-                          downloadRows={EmpDownloadRows}
-                          style={{ height: '20px', width: '20px' }}
-                        />
-                      </span> */}
                         </div>
                       </section>
                     </div>
@@ -1532,7 +1154,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                       MycalculatePercentage={MycalculatePercentage}
                     />
 
-                    {/* hiding this table till we setup tables */}
                     <table className="text-center mt-6 hidden">
                       <thead className="border-b">
                         <tr>
@@ -1546,10 +1167,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                             { label: 'Visit Fixed', id: 'visitfixed' },
                             { label: 'Visit Done', id: 'visitdone' },
                             { label: 'Visit Cancel', id: 'visitCancel' },
-                            // { label: 'Booked', id: 'booked' },
-                            // { label: 'Dead', id: 'dead' },
-                            // { label: 'Blocked', id: 'blocked' },
-                            // { label: 'Junk', id: 'junk' },
 
                             { label: 'Negotiations', id: 'negotiation' },
                             { label: 'Others', id: 'others' },
@@ -1614,18 +1231,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                 {data?.visitCancel_comp || 0}/{' '}
                                 {data?.visitCancel || 0}
                               </td>
-                              {/* <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                {data?.booked_comp || 0}/ {data?.booked || 0}
-                              </td>
-                              <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                {data?.dead_comp || 0}/ {data?.dead || 0}
-                              </td>
-                              <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                {data?.blocked_comp || 0}/ {data?.blocked || 0}
-                              </td>
-                              <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                                {data?.junk_comp || 0}/ {data?.junk || 0}
-                              </td> */}
+
                               <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
                                 {data?.negotiation_comp || 0}/
                                 {data?.negotiation || 0}
@@ -1642,16 +1248,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                             Total
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                            {/* {Object.keys(empTaskListTuned.Total).length
-                            empTaskListTuned.reduce((a, b) => {
-                              return a.Total + b.Total
-                            }).length
-                          } */}
-                            {/* {empTaskListTuned.reduce(
-                            (previousValue, currentValue) =>
-                              previousValue.Total + currentValue.Total,
-                            0
-                          )} */}
+
                             {}
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
@@ -1713,18 +1310,14 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
 
           {selCat === 'profile_tasks' && <ProfileSummary />}
 
-          {/* Graph Bar start */}
 
           {selCat === 'bar_tasks' && <CampaingsTopBarsComponent />}
 
-          {/* Graph Bar end */}
 
           {selCat === 'site_visits' && (
             <LeadsTransferTableBody
               title={'Site Visit Leads'}
-              // subtitle={'subTitle'}
-              // dialogOpen={setOpen}
-              // leadsLogsPayload={drillDownPayload}
+
               leadsLogsPayload={leadLogsRawData}
               setCustomerDetails={setCustomerDetails}
               setisImportLeadsOpen={setisImportLeadsOpen}
@@ -1756,10 +1349,8 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                 value
                               )
                               setSelProject(value)
-                              // formik.setFieldValue('project', value.value)
                             }}
                             value={selProjectIs?.value}
-                            // options={aquaticCreatures}
                             options={[
                               ...[
                                 { label: 'All Projects', value: 'allprojects' },
@@ -1774,7 +1365,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                       <section className="flex flex-row justify-between mt-[18px]">
                         <section className="flex mb-2">
                           {!isEdit && (
-                            // <Link to={routes.projectEdit({ uid })}>
                             <button
                               onClick={() => {
                                 setSourceDateRange(startOfDay(d).getTime())
@@ -1875,7 +1465,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                     aria-hidden="true"
                                   />
                                   {startDate == null ? 'Custom' : ''}
-                                  {/* {sourceDateRange} -- {startDate?.getTime()} */}
                                   {startDate != null
                                     ? prettyDate(
                                         startDate?.getTime() + 21600000
@@ -1918,7 +1507,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                                     onClear={() => {
                                       console.log('am i cleared')
                                     }}
-                                    //dateFormat="MMM d, yyyy "
                                     dateFormat="MMM dd, yyyy"
                                   />
                                 </span>
@@ -1938,29 +1526,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                             </button>
                           )}
                         </section>
-                        {/* <div className=" flex flex-row   ">
-                          <SlimSelectBox
-                            name="project"
-                            label=""
-                            className="input min-w-[164px] "
-                            onChange={(value) => {
-                              selProjs(value)
-                            } }
-                            value={viewProjs?.value}
-                            options={[
-                              ...[
-                                { label: 'All Projects', value: 'allprojects' },
-                              ],
-                              ...projectList,
-                            ]} placeholder={undefined}                          />
-                          <span style={{ display: '' }}>
-                            <CSVDownloader
-                              className="mr-6 h-[20px] w-[20px]"
-                              downloadRows={leadLogsRawData}
-                              style={{ height: '20px', width: '20px' }}
-                            />
-                          </span>
-                        </div> */}
+
                       </section>
                       <SiteVisitM
                         leadLogsRawData={leadLogsRawData}
@@ -4149,26 +3715,8 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                             Alert Tasks Counts
                           </span>
                         </button>
-                        {/* <SlimSelectBox
-                        name="project"
-                        label=""
-                        className="input min-w-[164px] "
-                        onChange={(value) => {
-                          setSelProjectEmp(value)
-                        }}
-                        value={selProjectEmpIs?.value}
-                        options={[
-                          ...[{ label: 'All Projects', value: 'allprojects' }],
-                          ...projectList,
-                        ]}
-                      /> */}
-                        {/* <span style={{ display: '' }}>
-                        <CSVDownloader
-                          className="mr-6 h-[20px] w-[20px]"
-                          downloadRows={EmpDownloadRows}
-                          style={{ height: '20px', width: '20px' }}
-                        />
-                      </span> */}
+
+        
                       </div>
                     </section>
                     <table className="min-w-full  font-semibold text-center mt-6">
@@ -4249,16 +3797,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                             Total
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-                            {/* {Object.keys(empTaskListTuned.Total).length
-                            empTaskListTuned.reduce((a, b) => {
-                              return a.Total + b.Total
-                            }).length
-                          } */}
-                            {/* {empTaskListTuned.reduce(
-                            (previousValue, currentValue) =>
-                              previousValue.Total + currentValue.Total,
-                            0
-                          )} */}
+        
                             {empTaskListTunedTotal?.TotalSum}
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
@@ -4291,37 +3830,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
               </div>
             </div>
           )}
-
-          {/* {unitsView && (
-            <div className="grid grid-cols-1 gap-7 mt-10">
-              <PhaseDetailsCard
-                kind={selkind}
-                feedData={seldata}
-                bg={selbg}
-                currency={selcurrency}
-              />
-            </div>
-          )}
-          {areaView && (
-            <div className="grid grid-cols-1 gap-7 mt-10">
-              <PhaseDetailsCard
-                kind={areakind}
-                feedData={areaData}
-                bg={areabg}
-                currency={areaCurrency}
-              />
-            </div>
-          )}
-          {valueView && (
-            <div className="grid grid-cols-1 gap-7 mt-10">
-              <PhaseDetailsCard
-                kind={valueKind}
-                feedData={valuedata}
-                bg={valuebg}
-                currency={valueCurrency}
-              />
-            </div>
-          )} */}
 
           <ReportSideWindow
             open={isOpenSideForm}

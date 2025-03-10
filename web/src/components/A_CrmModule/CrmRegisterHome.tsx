@@ -245,20 +245,14 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
   }, [selProjectIs])
 
   const filter_Leads_Projects_Users_Fun = () => {
-    // setFetchLeadsLoader(true)
-    // const x = leadsFetchedRawData
+
     getLeadsDataFun(projectList, ['booked', 'Booked'])
     getLeadsDataFun(projectList, ['agreement_pipeline'])
     getLeadsDataFun(projectList, ['agreement', 'ATS'])
     getLeadsDataFun(projectList, ['registered', 'Registered'])
     getLeadsDataFun(projectList, ['possession', 'Possession'])
     getLeadsDataFun(projectList, ['unassigned'])
-    // console.log(
-    //   'my Array data is ',
-    //   queryResult,
-    //   crmCustomersDBData,
-    //   bookingReviewA
-    // )
+
   }
 
   const getProjectsListFun = () => {
@@ -280,33 +274,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
   }
 
   useEffect(() => {
-    // if (selCategory === 'manage') {
-    //   setTabHeadFields(DocumentationHeadA)
-    // } else if (selCategory === 'Query') {
-    //   setTabHeadFields(QueriesHeadA)
-    // } else if (selCategory === 'Finance') {
-    //   setTabHeadFields(FinanceHeadA)
-    // } else if (selCategory === 'Legal') {
-    //   setTabHeadFields(LegalHeadA)
-    // } else if (selCategory === 'Construction') {
-    //   setTabHeadFields(ConstructionHeadA)
-    // }
-    // if (selCategory === 'unAssigned_crm') {
-    //   setTableDataA(bookingReviewDummy)
-    //   setTableHeadFieldsA(bookingReviewTableHeadA)
-    // } else if (selCategory === 'agreement_pipeline') {
-    //   setTableDataA(preRegisterDummy)
-    //   setTableHeadFieldsA(perResisterTableHeadA)
-    // } else if (selCategory === 'sd_pipeline') {
-    //   setTableDataA(postRegisterDummy)
-    //   setTableHeadFieldsA(postResisterTableHeadA)
-    // } else if (selCategory === 'queries') {
-    //   setTableDataA(queriesDummy)
-    //   setTableHeadFieldsA(queriesTableHeadA)
-    // } else if (selCategory === 'booked') {
-    //   setTableDataA(bookingReviewDummy)
-    //   setTableHeadFieldsA(bookingReviewTableHeadA)
-    // }
+
   }, [selCategory])
 
   const rowsCounter = (parent, searchKey) => {
@@ -333,10 +301,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
           }
           return x
         })
-        // setBoardData
-        // await serealizeData(usersListA)
 
-        // await setCrmCustomerDBData(usersListA)
       },
       {
         status: [
@@ -346,7 +311,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
           'cleared',
           'rejected',
           '',
-          // 'booked',
+
         ],
       },
       () => setCrmCustomerDBData([])
@@ -362,18 +327,13 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
           const x = docSnapshot.data()
           x.id = docSnapshot.id
           const y = projectList.filter((proj) => proj?.uid == x?.pId)
-          // console.log(',my prject sel is  ===> ', projectList)
           if (y.length > 0) {
-            // console.log(',my prject sel is ', y)
+
             x.projName = y[0].projectName
           }
           return x
         })
-        // setBoardData
-        // console.log('my Array data is ', usersListA, crmCustomersDBData)
-        // await serealizeData(usersListA)
 
-        // await setCrmCustomerDBData(usersListA)
 
         await usersListA.sort((a, b) => {
           return a.unit_no - b.unit_no
@@ -386,20 +346,12 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
           return dateB - dateA;
         });
 
-           // usersListA.sort((a, b) => {
-        //   return b?.booked_on || 0 - b?.booked_on || 0
-        // })
 
 
         if (statusFil.includes('booked')) {
-          // await console.log(
-          //   'my Array data is ',
-          //   usersListA.length,
-          //   queryResult.length
-          // )
+
           await setBookingReviewA(usersListA)
           await setBookingReviewCo(usersListA.length)
-          // await setBookingReviewCo(200)
 
           await setQueryResult(usersListA)
           await setFilteredDataA(usersListA)
@@ -431,7 +383,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     )
     return unsubscribe
 
-    // await console.log('leadsData', leadsData)
   }
 
   useEffect(() => {
@@ -455,14 +406,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
       await setFilteredDataA(z)
   }
   const searchBar = async (searchKey) => {
-    // if (statusFil === 'booked') {
 
-    // await setBookingReviewA(usersListA)
-    // await setBookingReviewCo(usersListA.length)
-    // await setBookingReviewCo(200)
-    // await usersListA.sort((a, b) => {
-    //   return a.unit_no - b.unit_no
-    // })
     if(selCategory === 'booked'){
       searchLogic(searchKey, queryResult)
     }
@@ -537,10 +481,8 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                     className="input "
                     onChange={(value) => {
                       setSelProject(value)
-                      // formik.setFieldValue('project', value.value)
                     }}
                     value={selProjectIs?.value}
-                    // options={aquaticCreatures}
                     options={[
                       ...[{ label: 'All Projects', value: 'allprojects' }],
                       ...projectList,
@@ -556,10 +498,9 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                       className="input "
                       onChange={(value) => {
                         setSelLeadsOf(value)
-                        // formik.setFieldValue('project', value.value)
                       }}
                       value={selLeadsOf?.value}
-                      // options={aquaticCreatures}
+
                       options={[
                         ...[
                           { label: 'Team Units', value: 'teamunits' },
@@ -573,11 +514,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
               </div>
             </div>
             <div className="items-center justify-between  my-1 bg-white rounded-lg  ">
-              {/* <div>
-                <h2 className="text-lg font-semibold text-gray-900 leading-light py-2 ">
-                  Accounts Transactions Space
-                </h2>
-              </div> */}
 
               <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg flex flex-row justify-between">
                 <ul
@@ -690,34 +626,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                       className=" bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900 w-4/5 relative"
                     />
                   </span>
-                  {/* <div className=" mr-2">
-                    <SlimSelectBox
-                      name="project"
-                      label=""
-                      className="input "
-                      onChange={(value) => {
-                        console.log('value is ', value)
-                        setSelProject(value)
-                        // formik.setFieldValue('project', value.value)
-                      }}
-                      value={selProjectIs?.value}
-                      // options={aquaticCreatures}
-                      options={[
-                        ...[{ label: 'All Projects', value: 'allprojects' }],
-                        ...projectList,
-                      ]}
-                    />
-                  </div>
-                  <div className=" mt-[-4px]">
-                    <SlimDateSelectBox
-                      onChange={async (value) => {
-                        setSourceDateRange(value)
-                        //getLeadsDataFun()
-                      }}
-                      label={sourceDateRange}
-                      placeholder={undefined}
-                    />
-                  </div> */}
+
 
                   <span className="mt-2 ml-2 text-red-400 cursor-pointer text-xs" onClick={()=> setSearchKeyField('')}>
                     {' '}
@@ -859,13 +768,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
                                           {finData?.facing}
                                         </span>
-                                        {/* <span className=" text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                        ₹{' '}
-                                        {finData?.sqft_rate?.toLocaleString(
-                                          'en-IN'
-                                        )}
-                                        /sqft
-                                      </span> */}
+
                                       </section>
                                     </div>
                                   </div>
@@ -1082,7 +985,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                         pId,
                         projName,
                       } = finData
-                      // console.log('fin data is ', finData)
                       return (
                         <section key={c} className="border border-b-0 ">
                           <section className="flex flex-row bg-gradient-to-r from-[#Fff] to-[#fff]">
@@ -1090,7 +992,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                               <div className="flex flex-row   ">
                                 <div
                                   className="flex flex-col bg-gradient-to-r text-black  py-1 rounded-sm w-[437px] "
-                                  // className="flex flex-col bg-gradient-to-r from-[#d8daff] to-[#9ae8fd] text-black p-1 rounded-sm w-[220px] h-[96px]"
                                   onClick={() =>
                                     viewTransaction(
                                       finData,
@@ -1102,26 +1003,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   <section className="font-rubikF flex flex-row w-[100%] justify-between">
                                     <section className="flex flex-col ml-2 mt-[3px] w-[100%]">
                                       <section className="flex flex-row justify-between">
-                                        {/* <section className="flex flex-col">
-                                          <section className="flex flex-row justify-between">
-                                            <span className=" text-[14px] text-black font-[500] ml-[2px]">
-                                              Unit-{unit_no}
-                                              {finData?.unit_type ===
-                                                'apartment' && (
-                                                <span className=" text-[10px] text-black font-[500] ml-[2px]">
-                                                  Block-{finData?.blockId}
-                                                </span>
-                                              )}
-                                              <span className=" text-[10px] text-black font-[500] ml-[2px]">
-                                                Phase-{finData?.phaseId}{' '}
 
-                                              </span>
-                                            </span>
-                                          </section>
-                                          <span className=" text-[12px] text-[#036046] font-[400] ml-[2px]">
-                                            {projName}
-                                          </span>
-                                        </section> */}
                                         <div className="flex flex-row w-full">
                                           <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 min-w-[100px]">
                                             <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
@@ -1164,46 +1046,13 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                           </div>
                                         </div>
                                       </section>
-                                      {/* <span className=" text-[10px] h-[20px]  text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl  mr-1">
-                                          {finData?.unit_type}
 
-                                        </span> */}
-                                      {/* <section className="flex flex-row mt-  ">
-
-                                        <section>
-                                          <span className="  text-[10px] h-[20px]  text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-
-                                            {finData?.area?.toLocaleString(
-                                              'en-IN'
-                                            )}{' '}
-                                            sqft
-                                          </span>
-
-                                          <span className="  text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                            {finData?.facing}
-                                          </span>
-                                          <span className=" text-[10px] h-[20px] text-[#823d00] font-bodyLato font-[600] mt-[2px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-
-                                            ₹{' '}
-                                            {finData?.sqft_rate?.toLocaleString(
-                                              'en-IN'
-                                            )}
-                                            /sqft
-                                          </span>
-                                        </section>
-                                        <span className=" truncate text-[10px] h-[18px] text-[#823d00] font-bodyLato font-[600] mt-[5px] bg-[#ffeccf] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                          {finData?.assignedToObj?.name ||
-                                            'Not Assigned'}
-                                        </span>
-
-                                      </section> */}
                                     </section>
                                   </section>
                                 </div>
                               </div>
                             </div>
 
-                            {/* check it  */}
                             <div>
                               <div className="flex flex-col  border rounded-lg my-1  px-2  pb-4 min-w-[340px] justify-between mr-1">
                                 <div className="flex flex-row justify-between mx- mb-1">
@@ -1218,7 +1067,6 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       )}
                                     </div>
                                   </section>
-                                  {/* section-2 */}
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full">
                                     <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
                                       Paid
@@ -1316,6 +1164,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                   {/* section 2 */}
                                  {['booked', 'selCategory'].includes(selCategory) &&
                                  <section>
+                                  {!(user?.role.includes('crm-executive')) && (
                                  <div
                                     className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
                                       finData?.man_cs_approval == 'approved'
@@ -1351,6 +1200,8 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       </h6>
                                     </div>
                                   </div>
+                                  )}
+
                                   {/* section 3*/}
                                   <div
                                     className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${

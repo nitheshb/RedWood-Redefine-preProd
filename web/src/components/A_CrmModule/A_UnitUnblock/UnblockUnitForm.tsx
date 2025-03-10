@@ -49,42 +49,13 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
   const onSubmitFun = async (data, resetForm) => {
 
 
-    // const { uid } = selUnitDetails
-    // const unitUpdate = {
-    //   blocked_leadId: id || '',
-    //   status: 'customer_blocked',
-    //   blocked_by: customerDetailsObj?.Name || '',
-    //   blockedOn: Timestamp.now().toMillis(),
-    //   ct: Timestamp.now().toMillis(),
-    //   Date: Timestamp.now().toMillis(),
-    // }
-    // updateUnitAsBlocked(
-    //   orgId,
-    //   leadDetailsObj2?.ProjectId,
-    //   uid,
-    //   id,
-    //   unitUpdate,
-    //   user?.email,
-    //   enqueueSnackbar,
-    //   resetForm
-    // )
-
-    // step1: check the status of unit
-    // step2: get all transactions of unit
-    // step3: update unit details
-    // step4: update agreegations
-
-    // step1:  check the status of unit
     console.log('status is', selUnitDetails)
 
     if (['customer_blocked'].includes(selUnitDetails?.status)) {
-      // UpdateAllTransactionsAsCancel()
       const unitUpdate = {
-        // leadId: 'id',
         status: 'available',
         unblocked_on: Timestamp.now().toMillis(),
       }
-      // unitUpdate[`cs`] = leadDetailsObj2[`${uid}_cs`]
 
       unitUpdate[`oldStatus`] = selUnitDetails?.status
 

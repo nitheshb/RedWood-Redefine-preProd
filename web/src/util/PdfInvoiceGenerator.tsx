@@ -41,9 +41,6 @@ import { useAuth } from 'src/context/firebase-auth-context'
 
 
 
-
-
-
 Font.register({
   family: 'Roboto',
   fonts: [
@@ -3131,37 +3128,22 @@ const PdfInvoiceGenerator = ({
 
              {({ blob, url, loading, error }) =>
                 loading ? (
-                //   <button className="flex items-center justify-center px-1 py-1 mt-4">
-                //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]" />Cost Sheet
-                // </button>
-                  <div
-                  className=" focus:outline-none px-1 py-1 mt-4  text-sm font-bold tracking-wider rounded-sm flex flex-row
-      
-      
-      
-                 duration-200 ease-in-out
-                 transition"
-                >
-                   <Download style={{ height: '20px', width: '14px' }} className='mr-1 text-gray-200'/>
-      
-                </div>
-                ) : (
-                //   <button className="flex items-center justify-center  px-1 py-1 mt-4">
-                //   <Loader texColor="text-blue-600" size="h-[20px] w-[14px]"  />Cost Sheet
-                // </button>
-                  <div
-                    className=" focus:outline-none px-1 py-1 mt-4 text-sm font-bold tracking-wider rounded-sm
-      
-      
-      
-                   duration-200 ease-in-out
-                   transition"
-                  >
-                <Download style={{ height: '20px', width: '14px' }} className='mr-1'/>
-                      {/* <span className="text-gray-600">Download Cost Sheet</span> */}
 
-      
-                  </div>
+                <div
+                className="flex items-center  bg-white text-black     px-3 py-1  hover:scale-110  duration-200 ease-in-out  mt-4  mb-3 text-sm  border border-[1.6px]  border-[#6D28D9] tracking-wider rounded-md transition duration-200 ease-in-out focus:outline-none"
+              >
+                <Download style={{ height: '20px', width: '14px',strokeWidth: '2.5' }} className="mr-2 mb-0.5 font-semibold" />
+                <p className="text-black text-[13px] font-semibold">Cost Sheet</p>
+              </div>
+              
+                ) : (
+                <div
+  className="flex items-center  bg-white px-3 py-1 text-black  hover:scale-110  duration-200 ease-in-out transition border  border-[1.6px]  border-[#6D28D9]  mt-4  mb-3 text-sm  tracking-wider rounded-md transition duration-200 ease-in-out focus:outline-none"
+>
+  <Download style={{ height: '20px', width: '14px', strokeWidth: '2.5' }} className="mr-2 mb-0.5   font-semibold" />
+  <p className="text-black text-[13px] font-semibold">Cost Sheet</p>
+</div>
+
                 )
               }
       

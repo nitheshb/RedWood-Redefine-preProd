@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-// import { useState } from 'react'
-// import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
-// import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
+
 
 import {
   Box,
@@ -336,28 +334,7 @@ const CrmAnalyticsUnitHome = ({ project }) => {
           </div>
         ))}
       </div>
-      {/* <div className="flex flex-row justify-between px-1 mt-3">
-        {[
-          { item: 'Balance', value: 0 },
-          { item: 'Refunds', value: 0 },
-          { item: '', value: '' },
-        ].map((data, i) => (
-          <div
-            key={i}
-            className=" w-1/4  mx-1"
-            style={{ display: 'inline-block', alignSelf: 'flex-end' }}
-          >
-            <div className="flex flex-col  justify-center mr-1  mb-1 mt[2px]">
-              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                ₹{data.value}
-              </h6>
-              <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                {data.item}
-              </h6>
-            </div>
-          </div>
-        ))}
-      </div> */}
+
     </div>
         </section>
         {/* section - 3 */}

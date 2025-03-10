@@ -95,8 +95,7 @@ const PlanDiagramView = ({
   }
   const deleteAssetFun = async (docId) => {
     console.log('assert details ', docId)
-    // create a delete query for assetDetails
-    // where url = assetDetails?.url
+    
     deleteAsset(orgId, docId, '', '', '')
   }
 
@@ -138,7 +137,6 @@ const PlanDiagramView = ({
                 {' '}
                 <ToggleButtonGroup
                   value={formats}
-                  // onChange={()=>{console.log(formats)}}
                   aria-label="text formatting"
                   sx={{ height: '28px' }}
                 >
@@ -198,7 +196,6 @@ const PlanDiagramView = ({
                     key={i}
                     className="w-full"
                     onClick={() => {
-                      // show sidebar and display the worddoc
                       setSliderInfo({
                         open: true,
                         title: 'viewDocx',
@@ -216,11 +213,7 @@ const PlanDiagramView = ({
                   </section>
                 )
               })}
-            {/* <ProjectDocRow
-                                    id={doc?.id}
-                                    fileName={doc?.name}
-                                    date={doc?.time}
-                                  /> */}
+    
             {formats === 'grid' && (
               <section className="grid gap-4 grid-cols-2">
                 {planDiagramsA.map((planDiagram, i) => {
@@ -262,7 +255,6 @@ const PlanDiagramView = ({
                             rel="noopener noreferrer"
                             download={planDiagram?.name}
                             style={{ textDecoration: 'none', color: 'inherit' }}
-                            // onClick={() => setShowAssetLink(planDiagram?.url)}
                           >
                             <EyeIcon
                               className="h-4 w-4 mr-2  mt-3 inline"
@@ -294,13 +286,7 @@ const PlanDiagramView = ({
                           )}
                         </section>
                       </div>
-                      {/* <span>{planDiagram?.url}</span> */}
-                      {/* <BlockStatsCards
-                  kind={block?.blockName}
-                  feedData={block}
-                  bg={selBlock?.uid === block?.uid ? '#efefef' : '#fef7f7'}
-                  setSelBlock={setSelBlock}
-                /> */}
+     
                     </li>
                   )
                 })}
@@ -310,26 +296,7 @@ const PlanDiagramView = ({
         </div>
         {planDiagramsA.length > 0 && (
           <>
-            {/* <iframe
-              src="http://docs.google.com/gview?url=https://firebasestorage.googleapis.com/v0/b/redefine-erp.appspot.com/o/spark_files%2F_1ee556d8-a0c0-4be1-a4bd-841a85807eab?alt=media&token=3ca92b26-ed31-4205-b006-acba3bb5951a&embedded=true"
-              style={{ width: '718px', height: '700px' }}
-              frameBorder="0"
-            ></iframe> */}
-            {/* <section className="h-[600px] w-[51%]">
-              <object
-                data={showAssetLink}
-                type="application/pdf"
-                width="100%"
-                height="100%"
-              >
-                <p>
-                  Alternative text - include a link{' '}
-                  <a href="https://firebasestorage.googleapis.com/v0/b/redefine-erp.appspot.com/o/spark_files%2F_1ee556d8-a0c0-4be1-a4bd-841a85807eab?alt=media&token=3ca92b26-ed31-4205-b006-acba3bb5951a">
-                    to the PDF!
-                  </a>
-                </p>
-              </object>
-            </section> */}
+           
           </>
         )}
         {planDiagramsA.length === 0 && (

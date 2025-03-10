@@ -59,9 +59,7 @@ const BlockStatsCards = ({
         >
           {kind}
         </h3>
-        {/* <IconButton onClick={handleClick}>
-          <MoreVert sx={{ fontSize: '1rem' }} />
-        </IconButton> */}
+
       </div>
       <div className="flex flex-col justify-between px-2">
         {viewUnitStatusA.includes('Available') && (
@@ -90,12 +88,7 @@ const BlockStatsCards = ({
             </span>
           </span>
         )}
-        {/* <span className="flex flex-row items-center justify-between mt-2">
-          <span className="text-sm text-gray-700">Parking</span>
-          <span className="text-sm font-semibold">
-            {feedData?.parking || 0}
-          </span>
-        </span> */}
+
         {viewUnitStatusA.includes('Total') && (
           <span className="flex flex-row items-center justify-between mt-2">
             <span className={`${txtColor} text-sm font-semibold`}>Total</span>
@@ -105,24 +98,7 @@ const BlockStatsCards = ({
           </span>
         )}
 
-        {/* <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
-          }}
-        >
-          <CustomMenuItem onClick={() => handleClose('edit')}>
-            <Edit className="mr-1" sx={{ fontSize: '1rem' }} />
-            Edit
-          </CustomMenuItem>
-          <CustomMenuItem onClick={() => handleClose('units')}>
-            <AddBusiness className="mr-1" sx={{ fontSize: '1rem' }} />
-            Add floor
-          </CustomMenuItem>
-        </Menu> */}
+
       </div>
       <SiderForm
         open={sliderInfo.open}

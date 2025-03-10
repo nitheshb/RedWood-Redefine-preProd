@@ -356,8 +356,8 @@ const CrmProjectionReport = ({ projects }) => {
 
 
   const [sortConfig, setSortConfig] = useState({
-    key: 'projectName', // default column to sort by
-    direction: 'ascending', // default sort direction
+    key: 'projectName', 
+    direction: 'ascending',
   });
 
   const handleSort = (key) => {
@@ -369,15 +369,6 @@ const CrmProjectionReport = ({ projects }) => {
     setSortConfig({ key, direction });
   };
 
-  // const sortedData = [...projectAValues].sort((a, b) => {
-  //   if (a[sortConfig.key] < b[sortConfig.key]) {
-  //     return sortConfig.direction === 'ascending' ? -1 : 1;
-  //   }
-  //   if (a[sortConfig.key] > b[sortConfig.key]) {
-  //     return sortConfig.direction === 'ascending' ? 1 : -1;
-  //   }
-  //   return 0;
-  // });
 
 
 
@@ -576,15 +567,6 @@ const CrmProjectionReport = ({ projects }) => {
     ticks={[1000, 10000, 50000, 100000]}
     
   />
-  {/* <Tooltip 
-    contentStyle={{ 
-      borderRadius: '8px',
-      border: 'none',
-      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-    }}
-    formatter={(value) => [`${formatYAxis(value)}`, '']}
-  />
-  <Legend content={<CustomLegend payload={undefined} />} /> */}
 
 
     
@@ -679,10 +661,7 @@ const CrmProjectionReport = ({ projects }) => {
 
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-medium text-gray-800">CRM Inventory Report</h1>
-        {/* <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md text-gray-600">
-          Project Name
-          <ChevronDown className="w-4 h-4" />
-        </button> */}
+
 
         <div className="flex mb-2 space-x-2">
             <button
@@ -704,37 +683,11 @@ const CrmProjectionReport = ({ projects }) => {
 
 
 
-        {/* <div className="flex justify-between "> */}
-          {/* <div>
-            <h2 className="mb-4 text-lg font-semibold text-black leading-light">
-              CRM Projection Report
-            </h2>
-          </div> */}
-
-          {/* <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-
-          </label>
-          <select
-            id="view"
-            className="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={dataView}
-            onChange={(e) => handleChangeView(e.target.value)}
-          >
-            <option value="monthly">Monthly</option>
-            <option value="weekly">Weekly</option>
-            <option value=''>Anually</option>
-            <option value=''>Quarterly</option>
-            <option value=''>Halferly</option>
-          </select>
-        </div> */}
 
 
 
-
-        {/* </div> */}
         <section className="rounded-t-[30px]  my-3  overflow-x-auto">
-          {/* give border */}
+     
           <table className="min-w-full  bg-white ">
             <thead className=''>
               <tr
@@ -867,12 +820,7 @@ const CrmProjectionReport = ({ projects }) => {
               </tr>
             </thead>
             <tbody className="">
-              {/* <tr className="bg-gray-100">
-            <td
-              colSpan={dataView === 'monthly' ? 7 : 6}
-              className="border border-black"
-            ></td>
-          </tr> */}
+
 
               {loader && <TableSkeleton rows={3} columns={7} />}
               {sortedData?.map((data, index) => {

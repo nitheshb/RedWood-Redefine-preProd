@@ -20,35 +20,6 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
   const [PSa, setPSa] = useState([])
 
 
-
-  // const [isOpenSideView, setIsOpenSideView] = useState(false);
-  // const [isSwitchOn, setIsSwitchOn] = useState(false);
-  // const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-
-  // const toggleSiderForm = () => {
-  //   setIsOpenSideView((prev) => !prev);
-  // };
-
-
-  // const handleConfirm = () => {
-  //   console.log('Confirm button clicked');
-  //   setIsSwitchOn(true);
-  //   setIsDialogOpen(false);
-  //   setIsOpenSideView(false);
-  // };
-
-
-  // const handleCancel = () => {
-  //   console.log('Cancel button clicked');
-  //   setIsSwitchOn(false);
-  //   setIsDialogOpen(false);
-  //   setIsOpenSideView(false);
-  // };
-
-
-
-
   const [projectDetails, setProject] = useState({})
   const getProjectDetails = async (id) => {
     const unsubscribe = await getProjectByUid(
@@ -197,7 +168,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
     }
     updateUnitStatus(
       orgId,
-      selCustomerPayload?.id,
+      selCustomerPayload,
       dataObj,
       user.email,
       enqueueSnackbar
@@ -207,21 +178,6 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
 
   return (
     <>
-
-
-
-{/*
-      <PdfPaymentScheduleGenerator
-      user={user}
-      PSa={PSa}
-      selCustomerPayload={selCustomerPayload}
-      projectDetails={projectDetails}
-
-
-
-       />      */}
-
-
 
       <div className="mt-2">
         <section className="flex flex-col  ">
@@ -270,7 +226,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                       Eligible
                     </th>
                     <th className="w-[15%] text-[12px]  px-2  text-right tracking-wide    text-[#3D3D3D]     bg-[#EDEDED] ">
-                      Total inc GST 
+                      Total inc GST
                     </th>
                     <th className="w-[15%] text-[12px]  px-2 text-right    tracking-wide    text-[#3D3D3D]     bg-[#EDEDED] ">
                       Received
@@ -278,9 +234,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                     <th className="w-[15%] text-[12px]  px-2 text-right  tracking-wide    text-[#3D3D3D] rounded-tr-[10px]     bg-[#EDEDED]  ">
                       Balance
                     </th>
-                    {/* <th className="w-[15%] text-[10px] text-right text-gray-400 text-[#823d00]  tracking-wide uppercase ">
-                      Status
-                    </th> */}
+
                   </tr>
                 </thead>
 
@@ -288,9 +242,6 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                   {PSa?.map((d1, inx) => {
                     totalIs = selCustomerPayload?.T_review
 
-                    //      {[].map((d1, inx) => {
-                    // totalIs = 0
-                    // selCustomerPayload?.[`${assets[0]}_T_review`] - d1?.value
                     return (
                       <tr
                         key={inx}
@@ -320,12 +271,9 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
 
                         <td className="text-[10px] text-center  font-bold text-[#6A6A6A] bg-[#fff]">
                           <span
-                          // className={`text-[10px] px-2 py-[2px] rounded-2xl  ${
-                          //   !d1?.elgible ? '' : 'bg-[#98ebc9]  '
-                          // } `}
+
                           >
                             <div className="">
-                              {/* <span className="text-[10px] mt-1 mr-1">Yes</span> */}
                               <Switch
                                 checked={d1?.elgible}
                                 onChange={() => triggerPaymentScheudlefun(d1)}
@@ -349,14 +297,10 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                         </td>
 
                         <td className="text-[12px] text-right text-green-600 bg-[#fff] px-2 font-bold">
-                          {/* {totalIs > d1?.value?.toLocaleString('en-IN')
-                          ? d1?.value?.toLocaleString('en-IN')
-                          : 0} */}
-                          {/* ₹{d1?.elgible ? totalIs?.toLocaleString('en-IN') : 0} */}
+
                           ₹{d1?.amt?.toLocaleString('en-IN')}
                         </td>
                         <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
-                          {/* ₹{d1?.leftOver?.toLocaleString('en-IN')} */}₹
                           {d1?.outStanding?.toLocaleString('en-IN')}
                         </td>
                       </tr>
@@ -365,13 +309,12 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
 
                   <tr className=" py-3 h-[51px] ">
                     <td className="text-[10px] text-right text-gray-400  bg-[#fff]"></td>
-                    {/* <td className="text-[10px] text-right text-gray-400 "></td> */}
                     <th className="text-[12px] text-left font-semibold text-[#6A6A6A]  ">
                       Total Value:
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
                       <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px]leading-none px-2 ">
-                        ₹{unitTotal?.toLocaleString('en-IN')}
+                        ₹{selCustomerPayload?.T_total?.toLocaleString('en-IN')}
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
@@ -381,14 +324,9 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
                       <section className="py-1 d-md font-semibold text-[#6A6A6A] text-[12px] leading-none px-2 ">
-                        {/* ₹{unitReceivedTotal?.toLocaleString('en-IN')} */}
                       </section>
                     </th>
-                    {/* <th className="text-[10px] text-right text-gray-800 ">
-                    <section className="py-1 d-md font-bold text-[14px] text-[#000000e6] leading-none">
-                    ₹{unitTotal?.toLocaleString('en-IN')}
-                  </section>
-                    </th> */}
+
                   </tr>
                 </tbody>
               </table>
@@ -399,20 +337,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
 
 
 
-{/*
-        <Switch
-        checked={isOpenSideView}
-        onChange={toggleSiderForm}
-        className={`${
-          isOpenSideView ? 'bg-blue-600' : 'bg-gray-200'
-        } relative inline-flex h-6 w-11 items-center rounded-full`}
-      >
-        <span
-          className={`${
-            isOpenSideView ? 'translate-x-6' : 'translate-x-1'
-          } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-        />
-      </Switch> */}
+
 
       {isOpenSideView && (
         <SiderForm

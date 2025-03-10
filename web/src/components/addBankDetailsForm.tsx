@@ -52,11 +52,7 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
       )
       await setLoading(false)
     }
-    // if (bankData?.editMode) {
-    //   await updatePhase(bankData.uid, updatedData, enqueueSnackbar)
-    // } else {
-    //   await createPhase(updatedData, enqueueSnackbar, resetForm)
-    // }
+  
   }
 
   const initialState = {
@@ -83,7 +79,6 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
       .required('Branch Name Required'),
     bank: Yup.string().required('Bank Required'),
     preferredtype: Yup.string().required('Required'),
-    // gstNo: Yup.string().required('Required'),
   })
 
   const submitFormFun = (formik) => {
@@ -164,19 +159,12 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
                               {formik.errors.bank ? (
                                 <div className="error-message text-red-700 text-xs p-2">
                                   {formik.errors.bank}
-                                  {/* {formik.values.bank} */}
                                 </div>
                               ) : null}
                             </div>
                           </div>
                           <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
-                            {/* <div className="mt-2 w-full">
-                              <TextField
-                                label="GST No"
-                                name="gstNo"
-                                type="text"
-                              />
-                            </div> */}
+   
                             <div className="w-[49%]">
                               <CustomSelect
                                 name="preferredtype"
@@ -191,7 +179,6 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
                               {formik.errors.preferredtype ? (
                                 <div className="error-message text-red-700 text-xs p-2">
                                   {formik.errors.preferredtype}
-                                  {/* {formik.values.preferredtype} */}
                                 </div>
                               ) : null}
                             </div>

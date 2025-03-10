@@ -31,6 +31,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { db, storage } from 'src/context/firebaseConfig'
 import {
   prettyDate,
+  prettyDateTime,
   timeConv,
 } from 'src/util/dateConverter'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
@@ -360,13 +361,10 @@ export default function UnitFullSummary({
     return unsubscribe
   }
   useEffect(() => {
-    // Subscribe to real-time changes in the `${orgId}_accounts` table
     const subscription = supabase
       .from(`${orgId}_accounts`)
       .on('*', (payload) => {
-        // When a change occurs, update the 'leadLogs' state with the latest data
         console.log('account records', payload)
-        // Check if the updated data has the id 12
         const updatedData = payload.new
         const { id } = payload.old
         const updatedLeadLogs = [...unitTransactionsA]
@@ -386,21 +384,10 @@ export default function UnitFullSummary({
             return [...prevLogs]
           }
         })
-        // const index = updatedLeadLogs.findIndex((log) => log.id === id)
-        // if (index !== -1) {
-        //   console.log('check it ..........!')
-        //   updatedLeadLogs[index] = updatedData
-        // } else {
-        //   // Add new record to the 'leadLogs' state
-        //   updatedLeadLogs.push(updatedData)
-        // }
 
-        // // Update the 'leadLogs' state with the latest data
-        // setFinFetchedData(updatedLeadLogs)
       })
       .subscribe()
 
-    // Clean up the subscription when the component unmounts
     return () => {
       supabase.removeSubscription(subscription)
     }
@@ -452,24 +439,18 @@ export default function UnitFullSummary({
   const setAssigner = (leadDocId, value) => {
     setAssignerName(value.name)
     setAssignedTo(value.value)
-    // save assigner Details in db
 
-    // updateLeadAssigTo(orgId, leadDocId, value, '', by)
   }
   const setNewProject = (leadDocId, value) => {
     console.log('sel pROJECT DETAILS ', value)
 
-    // setProjectName(value.projectName)
-    // setProjectId(value.uid)
-    // save assigner Details in db
-    // projectName
+
     const x = {
       Project: value.projectName,
       ProjectId: value.uid,
     }
     setSelProjectIs(value)
     updateLeadProject(orgId, leadDocId, x)
-    // updateLeadAssigTo(leadDocId, value, by)
   }
 
   const setStatusFun = async (leadDocId, newStatus) => {
@@ -488,9 +469,7 @@ export default function UnitFullSummary({
       setTakTitle(' ')
     }
 
-    //
-    // updateLeadStatus(leadDocId, newStatus)
-    // toast.success('Status Updated Successfully')
+
   }
 
   const downloadFile = (url) => {
@@ -511,12 +490,7 @@ export default function UnitFullSummary({
           usersListA.push(value)
           console.log('my total fetched list is 3', `${key}: ${value}`)
         })
-        // for (const key in usersList) {
-        //   if (usersList.hasOwnProperty(key)) {
-        //     console.log(`${key} : ${usersList[key]}`)
-        //     console.log(`my total fetched list is 2 ${usersList[key]}`)
-        //   }
-        // }
+
 
         console.log('my total fetched list is', usersListA.length)
         setLeadsFetchedActivityData(usersListA)
@@ -539,30 +513,19 @@ export default function UnitFullSummary({
         console.log('this is what we found', usersList?.staA)
         setschStsA(usersList?.staA || [])
         setschStsMA(usersList?.staDA || [])
-        // delete usersList['staA']
-        // delete usersList['staDA']
+
         Object.entries(usersList).forEach((entry) => {
           const [key, value] = entry
           if (['staA', 'staDA'].includes(key)) {
             if (key === 'staA') {
-              // setschStsA(value)
             } else if (key === 'staDA') {
-              // sMapStsA = value
             }
           } else {
             usersListA.push(value)
-            // console.log(
-            //   'my total fetched list is 3',
-            //   `${key}: ${JSON.stringify(value)}`
-            // )
+
           }
         })
-        // for (const key in usersList) {
-        //   if (usersList.hasOwnProperty(key)) {
-        //     console.log(`${key} : ${usersList[key]}`)
-        //     console.log(`my total fetched list is 2 ${usersList[key]}`)
-        //   }
-        // }
+
 
         console.log('my total fetched list is', usersListA.length)
         usersListA.sort((a, b) => {
@@ -738,25 +701,19 @@ export default function UnitFullSummary({
   const events = [
     { event: 'Booked', key: 'booked_on' },
     { event: 'Allotment', key: 'alloted_on' },
-    { event: 'Agreement', key: 'agreement_on' },
-    { event: 'Registered', key: 'registered_on' },
+    { event: 'Agreement', key: 'ats_date' },
+    { event: 'Registered', key: 'sd_date' },
     { event: 'Possession', key: 'possession_on' },
   ];
 
-  // const handleEdit = (key) => {
-  //   setEditableEvent(key);
-  //   setEditedDate(customerDetails[key] || '');
-  // };
+
 
   const handleEdit = (key) => {
     setEditableEvent(key)
     setEditedDate(customerDetails[key] || '')
   }
 
-  // const handleSave = (key) => {
-  //   customerDetails[key] = editedDate;
-  //   setEditableEvent(null);
-  // };
+
 
 
 
@@ -823,9 +780,9 @@ export default function UnitFullSummary({
 
 
   return (
-    //bg-[#F9F9FA] 
+    //bg-[#F9F9FA]
     <div
-      className={`bg-[#fff]    rounded-md h-screen      `} 
+      className={`bg-[#fff]    rounded-md h-screen      `}
     >
 <section className="flex flex-row-reverse	">
     <div className='w-full'>
@@ -867,7 +824,6 @@ export default function UnitFullSummary({
                         label="Document Type *"
                         className="input mt-3"
                         onChange={(value) => {
-                          // formik.setFieldValue('source', value.value)
                           setAttachType(value.value)
                         }}
                         value={attachType}
@@ -950,7 +906,6 @@ export default function UnitFullSummary({
                             <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                               Status
                             </th>
-                            {/* <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"></th> */}
                           </tr>
                         </thead>
                         <tbody>
@@ -980,13 +935,7 @@ export default function UnitFullSummary({
                                 </td>
                                 <td className="px-5 py-5 bg-white text-sm">
                                   <>
-                                    {/* <span className="relative inline px-3 py-1 font-semibold text-red-900 leading-tight">
-                                    <span
-                                      aria-hidden
-                                      className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
-                                    ></span>
-                                    <span className="relative">Approved</span>
-                                  </span> */}
+
 
                                     <DownloadIcon
                                       onClick={() => downloadFile(dat.url)}
@@ -1125,18 +1074,7 @@ export default function UnitFullSummary({
                           </div>
                           <div className="text-sm font-normal">{data?.txt}</div>
                           <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                            {/* <svg
-                          className="mr-1 w-3 h-3"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg> */}
+
 
                             <ClockIcon className="mr-1 w-3 h-3" />
                             {data?.type == 'ph'
@@ -1154,7 +1092,7 @@ export default function UnitFullSummary({
         </>
       </div>
 
-      
+
 {selFeature === 'applicant_info' && (
   <>
     {!openApplicantEdit && (
@@ -1199,338 +1137,6 @@ export default function UnitFullSummary({
         <>
           <div className="">
             <div className="">
-
-              {/* <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-700 tracking-wide">
-                    Unit No
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.unit_no}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    Size
-                    <span className="text-[10px] text-black-500 ml-1">
-                      (sqft)
-                    </span>
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.area?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    Facing
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.facing}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    BUA
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-              </section> */}
-
-
-              {/* <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-
-
-  <div className="flex items-center mb-2">
-    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Units
-    </div>
-  </div>
-
-  <section className="grid grid-cols-2 ">
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.unit_no}
-      </div>
-      <div className="text-xs text-gray-500">Unit No</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.area?.toLocaleString('en-IN')}
-      </div>
-      <div className="text-xs text-gray-500">
-      Size
-                    <span className="text-[10px] text-black-500 ml-1">
-                      (sqft)
-                    </span>
-      </div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.facing}
-      </div>
-      <div className="text-xs text-gray-500">Facing</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}
-      </div>
-      <div className="text-xs text-gray-500">BUA</div>
-    </div>
-
-  </section>
-
-
-
-
-
-
-
-
-
-
-</section> */}
-
-
-
-
-
-
-
-{/*
-              <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-
-
-  <div className="flex items-center mb-2">
-    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Dimensions</div>
-  </div>
-
-  <section className="grid grid-cols-2 ">
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">  {selCustomerPayload?.east_d?.toLocaleString('en-IN')}</div>
-      <div className="text-xs text-gray-500"> East</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.west_d?.toLocaleString('en-IN')}</div>
-      <div className="text-xs text-gray-500">West</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.south_d?.toLocaleString('en-IN')}</div>
-      <div className="text-xs text-gray-500">South</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.north_d?.toLocaleString('en-IN')}</div>
-      <div className="text-xs text-gray-500">North</div>
-    </div>
-
-  </section>
-</section> */}
-
-
-
-
-
-{/* <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-
-
-  <div className="flex items-center mb-2">
-    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Schedule
-    </div>
-  </div>
-
-  <section className="grid grid-cols-2 ">
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900"> {selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
-      <div className="text-xs text-gray-500"> East By</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900"> {selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
-      <div className="text-xs text-gray-500">West By</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
-      <div className="text-xs text-gray-500">South By</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}
-      </div>
-      <div className="text-xs text-gray-500">North By</div>
-    </div>
-
-  </section>
-</section> */}
-
-
-{/*
-<section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-
-
-  <div className="flex items-center mb-2">
-    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Additonal Details
-    </div>
-  </div>
-
-  <section className="grid grid-cols-2 ">
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.rate_per_sqft?.toLocaleString('en-IN')}
-      </div>
-      <div className="text-xs text-gray-500">Cost</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}
-      </div>
-      <div className="text-xs text-gray-500">PLC</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.facing}
-      </div>
-      <div className="text-xs text-gray-500">Total</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.kathaId}
-
-      </div>
-      <div className="text-xs text-gray-500">KathaId</div>
-    </div>
-
-  </section>
-</section> */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              {/* <section className="flex flex-col mx-4 bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2 ">
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-700 tracking-wide">
-                    East
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.east_d?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    West
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.west_d?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    South
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.south_d?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    North
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.north_d?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-              </section> */}
-              {/* <section className="flex flex-col mx-4 bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-700 tracking-wide">
-                    East By
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    West By
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    South By
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    North By
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-              </section> */}
-              {/* <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2 ">
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-700 tracking-wide">
-                    Cost
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {(
-                      data?.unitDetail?.builtup_area *
-                      data?.unitDetail?.rate_per_sqft
-                    )?.toLocaleString('en-IN')}
-                    {selCustomerPayload?.rate_per_sqft?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    PLC
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    Total
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.facing}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    KathaId
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.kathaId}
-                  </div>
-                </section>
-              </section> */}
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1584,138 +1190,10 @@ export default function UnitFullSummary({
   </section>
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-            // <section className="flex flex-col bg-[#F6F7FF] p-3 border  border-[#e5e7f8] rounded-md mb-2">
-            //     <section className="flex flow-row justify-between mb-1">
-            //       <div className="font-md text-xs text-gray-700 tracking-wide">
-            //       BedRooms
-            //       </div>
-            //       <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-            //         {selCustomerPayload?.Bedrooms_D}
-            //       </div>
-            //     </section>
-            //     <section className="flex flow-row justify-between mb-1">
-            //       <div className="font-md text-xs text-gray-500  tracking-wide">
-            //       Bathrooms
-            //       </div>
-            //       <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-            //         {selCustomerPayload?.BathRooms_D?.toLocaleString('en-IN')}
-            //       </div>
-            //     </section>
-            //     <section className="flex flow-row justify-between mb-1">
-            //       <div className="font-md text-xs text-gray-500  tracking-wide">
-            //       Car Parking
-            //       </div>
-            //       <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-            //         {selCustomerPayload?.Car_Parking_D}
-            //       </div>
-            //     </section>
-            //     <section className="flex flow-row justify-between mb-1">
-            //       <div className="font-md text-xs text-gray-500  tracking-wide">
-            //       Carpet Area Sqft
-            //       </div>
-            //       <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-            //         {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
-            //       </div>
-            //     </section>
-            //   </section>
                 )}
 
 
-
-              {/* <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md mb-2">
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-700 tracking-wide">
-                  Status
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.status}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                  Release Status
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.release_status?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                  Mortgage Type
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.mortgage_type}
-                  </div>
-                </section>
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                  Carpet Area Sqft
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
-                  </div>
-                </section>
-              </section> */}
-
-
-
-
-
-
-
-              {/* <section className="flex flex-col  bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-
-
-  <div className="flex items-center mb-2">
-    <div className="border-l-4 border-[#57C0D0] pl-2 text-sm font-semibold text-gray-700">Status
-    </div>
-  </div>
-
-  <section className="grid grid-cols-2 ">
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900"> {selCustomerPayload?.status}</div>
-      <div className="text-xs text-gray-500"> Status</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.release_status?.toLocaleString('en-IN')}
-      </div>
-      <div className="text-xs text-gray-500">Release Status</div>
-    </div>
-    <div className="text-start">
-      <div className="text-base font-semibold text-slate-900">{selCustomerPayload?.mortgage_type}
-      </div>
-      <div className="text-xs text-gray-500">Mortgage Type
-      </div>
-    </div>
-
-
-  </section>
-</section> */}
-
-
-
               </div>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1728,13 +1206,12 @@ export default function UnitFullSummary({
           <div className="h-[68%]  mx-4 bg-[#f0f1ff] grid grid-cols-3 gap-2 rounded-lg border border-gray-100 p-4">
 
 
-            {/* box1 */}
 
 
 
           <div className="w-full max-w-[400px]   h-[200px] shadow-md  rounded-[10px]   bg-white  pt-4  ">
         <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
-          Units
+          Unit Details
         </h2>
         <div className='border-b my-4 mt-2 border-[#f1f1f1]'></div>
 
@@ -1745,7 +1222,7 @@ export default function UnitFullSummary({
             <img src={units1}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.unit_no}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.unit_no}</div>
               <div className="text-xs  font-medium text-[#949494]">Unit No</div>
             </div>
           </div>
@@ -1767,7 +1244,7 @@ export default function UnitFullSummary({
             <img src={units3}  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600"  />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.facing}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.facing}</div>
               <div className="text-xs  font-medium  text-[#949494]">Facing</div>
             </div>
           </div>
@@ -1778,21 +1255,13 @@ export default function UnitFullSummary({
             </div>
             <div className="min-w-0 flex-1">
               <div className="text-[14px] text-[#000000] font-normal truncate">  {selCustomerPayload?.builtup_area?.toLocaleString('en-IN') || selCustomerPayload?.construct_area?.toLocaleString('en-IN')}</div>
-              <div className="text-xs  font-medium   text-[#949494]">BUA</div>
+              <div className="text-xs  font-medium   text-[#949494]">BUA (sqft)</div>
             </div>
           </div>
         </div>
       </div>
 
 
-
-
-
-
-
-
-
-       {/* box2 */}
 
       <div className="w-full max-w-[400px] h-[200px] shadow-md rounded-[10px]  bg-white pt-4   ">
         <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
@@ -1810,7 +1279,7 @@ export default function UnitFullSummary({
 
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate"> {selCustomerPayload?.east_d?.toLocaleString('en-IN')}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize"> {selCustomerPayload?.east_d?.toLocaleString('en-IN')}</div>
               <div className="text-xs  font-medium   text-[#949494]">East</div>
             </div>
           </div>
@@ -1822,7 +1291,7 @@ export default function UnitFullSummary({
 
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.west_d?.toLocaleString('en-IN')}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.west_d?.toLocaleString('en-IN')}</div>
               <div className="text-xs   font-medium  text-[#949494]">West</div>
             </div>
           </div>
@@ -1834,7 +1303,7 @@ export default function UnitFullSummary({
 
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.south_d?.toLocaleString('en-IN')}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.south_d?.toLocaleString('en-IN')}</div>
               <div className="text-xs   font-medium  text-[#949494]">South</div>
             </div>
           </div>
@@ -1849,68 +1318,13 @@ export default function UnitFullSummary({
 
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.north_d?.toLocaleString('en-IN')}</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.north_d?.toLocaleString('en-IN')}</div>
               <div className="text-xs  font-medium   text-[#949494]">North</div>
             </div>
           </div>
         </div>
       </div>
 
-
-
-
-      {/* <div className="w-full max-w-[400px] shadow-md rounded-lg px-4 sm:px-6 py-4 sm:py-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-[#3D3D3D]  ">
-        Schedule
-        </h2>
-        <div className='border-b my-4 mt-2 border-[#949494]'></div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-
-          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
-            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
-              <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
-              <div className="text-xs sm:text-sm text-[#949494]">East By</div>
-            </div>
-          </div>
-
-
-          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
-            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
-              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
-              <div className="text-xs sm:text-sm text-[#949494]">West By</div>
-            </div>
-          </div>
-
-
-          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
-            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
-              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
-              <div className="text-xs sm:text-sm text-[#949494]">South By</div>
-            </div>
-          </div>
-
-
-          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
-            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
-              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-base sm:text-lg text-[#000000] font-normal truncate">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}</div>
-              <div className="text-xs sm:text-sm text-[#949494]">North By</div>
-            </div>
-          </div>
-        </div>
-      </div> */}
 
 
 <div className="w-full max-w-[400px] h-[200px] shadow-md rounded-[10px]  bg-white   pt-4 ">
@@ -1924,7 +1338,7 @@ export default function UnitFullSummary({
         <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}</div>
         <div className="text-xs  text-[#949494]">East By</div>
       </div>
     </div>
@@ -1935,8 +1349,20 @@ export default function UnitFullSummary({
         <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}</div>
         <div className="text-xs  text-[#949494]">West By</div>
+      </div>
+    </div>
+
+
+
+    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+        <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-xs  text-[#949494]">North By</div>
       </div>
     </div>
 
@@ -1946,29 +1372,16 @@ export default function UnitFullSummary({
         <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
+        <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}</div>
         <div className="text-xs  text-[#949494]">South By</div>
       </div>
     </div>
 
 
-    <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
-      <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
-        <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}</div>
-        <div className="text-xs  text-[#949494]">North By</div>
-      </div>
-    </div>
   </div>
 </div>
 
 
-
-
-
-     {/* box4 */}
       <div className="w-full max-w-[400px]  h-[200px] shadow-md rounded-[10px]   bg-white  pt-4 ">
         <h2 className="text-[13px] ml-10 font-semibold text-[#3D3D3D]  ">
         Additonal Details
@@ -1982,8 +1395,8 @@ export default function UnitFullSummary({
               <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.rate_per_sqft?.toLocaleString('en-IN')}</div>
-              <div className="text-xs   font-medium  text-[#949494]">Cost</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.survey_no}</div>
+              <div className="text-xs   font-medium  text-[#949494]">Survey No</div>
             </div>
           </div>
 
@@ -1993,8 +1406,8 @@ export default function UnitFullSummary({
               <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.builtup_area?.toLocaleString('en-IN')}</div>
-              <div className="text-xs  font-medium   text-[#949494]">PLC</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.Katha_no}</div>
+              <div className="text-xs  font-medium   text-[#949494]">Katha No</div>
             </div>
           </div>
 
@@ -2004,26 +1417,15 @@ export default function UnitFullSummary({
               <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.facing}</div>
-              <div className="text-xs   font-medium  text-[#949494]">Total</div>
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.PID_no}</div>
+              <div className="text-xs   font-medium  text-[#949494]">PID No</div>
             </div>
           </div>
 
 
-          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
-            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
-              <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-[14px] text-[#000000] font-normal truncate">{selCustomerPayload?.kathaId}</div>
-              <div className="text-xs   font-medium  text-[#949494]">KathaId</div>
-            </div>
-          </div>
         </div>
       </div>
 
-
-      {/* box 5 */}
 
       <div className="w-full max-w-[400px] shadow-md  h-[200px]   bg-white  rounded-[10px]  pt-4 ">
         <h2 className="text-[13px] font-semibold ml-10 text-[#3D3D3D]  ">
@@ -2038,8 +1440,8 @@ export default function UnitFullSummary({
               <Square className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.status}</div>
-              <div className="text-xs  font-medium  text-[#949494]">Status</div>
+              <div className="text-[15px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.status}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Unit Status</div>
             </div>
           </div>
 
@@ -2049,8 +1451,8 @@ export default function UnitFullSummary({
               <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.release_status?.toLocaleString('en-IN')}</div>
-              <div className="text-xs  font-medium  text-[#949494]">Release Status</div>
+              <div className="text-[15px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.release_status?.toLocaleString('en-IN')}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Status</div>
             </div>
           </div>
 
@@ -2060,10 +1462,22 @@ export default function UnitFullSummary({
               <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[15px] text-[#000000] font-normal truncate">{selCustomerPayload?.mortgage_type}</div>
-              <div className="text-xs  font-medium  text-[#949494]">Mortgage Type</div>
+              <div className="text-[15px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.mortgage_type}</div>
+              <div className="text-xs  font-medium  text-[#949494]">Mortgage</div>
             </div>
           </div>
+
+
+          <div className="flex items-center space-x-3 p-2 sm:p-0 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-1.5 sm:p-2 bg-gray-100 rounded-full shrink-0">
+              <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[14px] text-[#000000] font-normal truncate capitalize">{selCustomerPayload?.sharing}</div>
+              <div className="text-xs   font-medium  text-[#949494]">Sharing</div>
+            </div>
+          </div>
+
 
 
 
@@ -2071,63 +1485,14 @@ export default function UnitFullSummary({
       </div>
 
 
+      {/* box 6 */}
+
+
+
+
 
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/*
-          <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 mx-4 ">
-          <div className="flex flex-row ">
-                <img
-                  src="https://static.ambitionbox.com/static/benefits/WFH.svg"
-                  alt=""
-                />
-                <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
-                  Dates
-                </h1>
-              </div>
-
-            <div className="relative col-span-12 pl-6 space-y-2 sm:col-span-9 mt-1">
-
-            <ol className="items-center sm:flex">
-    {[{'event': 'Booked', 'key': 'booked_on'},
-    {'event': 'Allotment', 'key': 'agreement_pipeline'},
-    {'event': 'Agreement', 'key': 'agreement_on'},
-    {'event': 'Registered', 'key': 'registered_on'},
-    {'event': 'Possession', 'key': 'possession_on'}].map((d, i)=> <li key={i} className="relative mb-6 sm:mb-0 ">
-        <div className="flex items-center">
-            <div className="z-10 flex items-center justify-center w-6 h-6 bg-[#E5E7EB] rounded-full ring-0 ring-[#DDD6FE] sm:ring-8  shrink-0">
-                <svg className="w-2.5 h-2.5 text-blue-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                </svg>
-            </div>
-            <div className="hidden sm:flex w-full bg-[#E5E7EB] h-0.5 "></div>
-        </div>
-        <div className="mt-3 sm:pe-8 bg-white p-3 rounded-lg mr-2">
-            <h4 className="text-lg font-semibold text-gray-900 text-[12px] ">{d?.event}</h4>
-            <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">On: {timeConv(Number(customerDetails[d?.key])).toLocaleString()}</time>
-        </div>
-    </li>)}
-
-</ol>
-
-
-
-            </div>
-          </div> */}
 
 
 <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 mx-4">
@@ -2165,36 +1530,6 @@ export default function UnitFullSummary({
                   {d.event}
                 </h4>
 
-                {/* {editableEvent === d.key ? (
-                  <div>
-                    <input
-                      type="date"
-                      className="border border-gray-300 rounded-md p-1 text-sm"
-                      value={editedDate}
-                      onChange={(e) => setEditedDate(e.target.value)}
-                    />
-                    <div className="flex space-x-2 mt-2">
-                      <button
-                        onClick={() => handleSave(d.key)}
-                        className="px-3 py-1 text-sm text-white bg-blue-500 rounded"
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={handleCancel}
-                        className="px-3 py-1 text-sm text-gray-500 bg-gray-100 rounded"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-                    On: {customerDetails[d.key]
-                      ? timeConv(Number(customerDetails[d.key])).toLocaleString()
-                      : 'Not Available'}
-                  </time>
-                )} */}
 
 
 {editableEvent === d.key ? (
@@ -2278,7 +1613,7 @@ export default function UnitFullSummary({
             assets={selCustomerPayload?.assets}
             totalIs={totalIs}
             unitTransactionsA={unitTransactionsA}
-            
+
           />
         </div>
       )}
@@ -2302,91 +1637,7 @@ export default function UnitFullSummary({
               unitTransactionsA={unitTransactionsA}
             />
           </div>
-          {/* {selFeature === 'summary' && (
-            <div className="py-3 px-3 m-4 mt-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll">
-              <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-                <section className="flex flow-row justify-between mb-1">
-                  <div className="font-md text-xs text-gray-500  tracking-wide">
-                    Amount
-                  </div>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    Rs 1,20,000
-                  </div>
-                </section>
-              </section>
 
-              <div className="mt-2  grid grid-cols-2">
-                <section className="mr-2 flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-                  <section className="flex flex-row justify-between mb-1">
-                    <div className="font-md text-xs text-gray-500  tracking-wide">
-                      From
-                    </div>
-                    <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                      Imps
-                    </div>
-                  </section>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    data
-                  </div>
-                </section>
-                <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-                  <section className="flex flex-row  justify-between mb-1">
-                    <div className="font-md text-xs text-gray-500  tracking-wide">
-                      To
-                    </div>
-                    <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                      date
-                    </div>
-                  </section>
-                  <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                    data
-                  </div>
-                </section>
-              </div>
-              <div className="my-2  grid grid-cols-2 ">
-                <section className="mr-2 flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-                  <section className="flex flex-row justify-between mb-1">
-                    <div className="font-md text-xs text-gray-500  tracking-wide">
-                      Date
-                    </div>
-                    <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                      31/11/2022
-                    </div>
-                  </section>
-                  <section className="flex flex-row justify-between mb-1">
-                    <div className="font-md text-xs text-gray-500  tracking-wide">
-                      Ref No
-                    </div>
-                    <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                      00022344x45
-                    </div>
-                  </section>
-                  <section className="flex flex-row  justify-between mb-1">
-                    <div className="font-md text-xs text-gray-500  tracking-wide">
-                      By
-                    </div>
-                    <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                      date
-                    </div>
-                  </section>
-                </section>
-                <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
-                  <section className="flex flex-row justify-between mb-1">
-                    <div className="font-md text-xs text-gray-500  tracking-wide">
-                      Owner
-                    </div>
-                    <div className="font-md text-xs tracking-wide font-semibold text-slate-900 "></div>
-                  </section>
-                  <section className="flex flex-row  justify-between mb-1">
-                    <div className="font-md text-xs text-gray-500  tracking-wide">
-                      Status
-                    </div>
-                    <div className="font-md text-xs tracking-wide font-semibold text-slate-900 "></div>
-                  </section>
-                </section>
-              </div>
-            </div>
-          )} */}
         </>
       )}
 
@@ -2413,11 +1664,9 @@ export default function UnitFullSummary({
                     })
                   }}
                 >
-                  {/* Add Doc */}
                 </span>
               </div>
               <p className="mr4">Date Created</p>
-              {/* <Icon name="folder" size="3xl" color="gray" /> */}
             </div>
           </div>
           {[
@@ -2478,59 +1727,6 @@ export default function UnitFullSummary({
 
       <div className="w-[250px] min-w-[250px] h-full  rounded-r-md overflow-auto">
             <div className="">
-              {/* <div className="font-md font-medium text-xs  text-gray-800">
-                          Notes
-                        </div> */}
-{/*
-              <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg ">
-                <ul
-                  className="flex flex-col  rounded-t-lg"
-                  id="myTab"
-                  data-tabs-toggle="#myTabContent"
-                  role="tablist"
-                >
-                  {[
-
-                     { lab: 'Summary', val: 'summary' },
-                    { lab: 'Applicant details', val: 'applicant_info' },
-                    { lab: 'Unit details', val: 'unit_information' },
-                    { lab: 'Cost & Payments', val: 'finance_info' },
-                    { lab: 'Loan details', val: 'loan_info' },
-                    { lab: 'Agreement  details', val: 'agreement_info' },
-                    { lab: 'Brokerage  details', val: 'brokerage_info' },
-
-                    { lab: 'Tasks', val: 'tasks' },
-                    { lab: 'Timeline', val: 'timeline' },
-                    { lab: 'Cancel Booking', val: 'cancel_booking' },
-                    { lab: 'Unit Audit', val: 'unit_audit' },
-
-                  ].map((d, i) => {
-                    return (
-                      <li
-                        key={i}
-                        className="mr-2 ml-2 text-sm font-bodyLato"
-                        role="presentation"
-                      >
-                        <button
-                          className={`inline-block py-3 mr-3 px-1 text-sm font-medium text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
-                            selFeature === d.val
-                              ? 'border-black text-black'
-                              : 'border-transparent'
-                          }`}
-                          type="button"
-                          role="tab"
-                          onClick={() => setFeature(d.val)}
-                        >
-                          {`${d.lab} `}
-
-                        </button>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>  */}
-
-
 
 
 <div className="  border border-[#F3F4F6]  py-4 bg-[#fff]  rounded-md  bg-gradient-r to-[#EDEDED] from-[#EDEDED] ">
@@ -2645,79 +1841,33 @@ export default function UnitFullSummary({
 
                   ].map((d, i) => {
                     return (
-                //       <li
-                //         key={i}
-                //         className="mr-2 ml-2  text-sm font-bodyLato"
-                //         role="presentation"
-                //       >
 
-
-                //  <div className='flex  items-center gap-3 text-gray-500 hover:bg-gray-50 p-2 rounded-lg cursor-pointer w-60'>
-
-                //         <span  className={`hover:text-[#484848] border-transparent   ${
-                //             selFeature === d.val ? 'text-gray-800' : ''
-                //               // ? 'text-[#484848]'
-                //               // : ''
-                //           }`}
-                //           onClick={() => setFeature(d.val)}
-
-                //         >{d.icon}</span>
-                //         <button
-                //           className={`inline-block py-3 mr-3 px-1 text-sm font-medium text-center text-[#A6A6A6] rounded-lg border-b-2  hover:text-[#484848]  border-transparent  ${
-                //             selFeature === d.val
-                //               ? ' text-[#484848]'
-                //               : ''
-                //           }`}
-                //           type="button"
-                //           role="tab"
-                //           onClick={() => setFeature(d.val)}
-                //         >
-                //          <span className={`mt-[3px] ${
-                //             selFeature === d.val
-                //               ? 'border-transparent text-[#484848]'
-                //               : 'border-transparent'
-                //           }`}>{`${d.lab} `}</span>
-
-
-
-
-
-
-                //         </button>
-
-                //         </div>
-
-
-
-
-
-                //       </li>
                 <li
                 key={i}
                 className="mr-2 ml-2 text-sm font-bodyLato"
                 role="presentation"
               >
-                <div 
+                <div
                   className={`flex items-center gap-3 text-gray-500 hover:bg-gray-50 p-2 rounded-lg cursor-pointer w-60 ${
                     selFeature === d.val ? 'bg-gray-100' : ''
                   }`}
                   onClick={() => setFeature(d.val)}
                 >
-                  <span 
+                  <span
                     className={`hover:text-[#484848] ${
                       selFeature === d.val ? 'text-[#484848]' : 'text-gray-500'
                     }`}
                   >
-                    {/* {d.icon} */}
+
                     {React.cloneElement(d.icon, {
                     className: "w-5 h-5",
                     fill: "none",
-                    stroke: selFeature === d.val ? "#484848" : "#A6A6A6", 
-                    strokeWidth: 1.5, 
-                    
+                    stroke: selFeature === d.val ? "#484848" : "#A6A6A6",
+                    strokeWidth: 1.5,
+
                      })}
 
-                     
+
                   </span>
                   <button
                     className={`inline-block  mt-1 mr-2 py-1  text-sm font-medium text-center rounded-lg border-b-2 hover:text-[#484848] border-transparent ${

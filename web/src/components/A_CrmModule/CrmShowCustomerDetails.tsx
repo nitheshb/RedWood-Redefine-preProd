@@ -112,31 +112,20 @@ const ShowCustomerDetails = ({
         const link = document.createElement('a')
         link.href = url
 
-        // Extract the filename from the URL
-        // const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
-
-        // Set the download attribute and filename
         link.setAttribute('download', filename)
         document.body.appendChild(link)
         console.log('fetcher url ', filename)
-        // Simulate a click on the anchor element to start the download
         link.click()
 
-        // Clean up the temporary anchor element
         link.parentNode.removeChild(link)
 
-        // Set the downloaded image URL to display on the page
         setImageUrl(url)
       })
       .catch((error) => {
         console.error('Error downloading image:', error)
       })
   }
-  // const usersList = [
-  //   { label: 'User1', value: 'User1' },
-  //   { label: 'User2', value: 'User2' },
-  //   { label: 'User3', value: 'User3' },
-  // ]
+
   const budgetList = [
     { label: 'Select Customer Budget', value: '' },
     { label: '5 - 10 Lacs', value: 'Bangalore,KA' },
@@ -368,7 +357,6 @@ const ShowCustomerDetails = ({
   }
 
   const isValidAadhar = (value) => {
-    // Aadhar card format: 12 digits
     const regex = /^\d{12}$/
     if (value === '' || value == undefined) {
       return true
@@ -376,11 +364,9 @@ const ShowCustomerDetails = ({
     return regex.test(value)
   }
   const validateSchema = Yup.object({
-    // customerName1: Yup.string().required('Required'),
-    // co_Name1: Yup.string().required('Required'),
+
     panNo1: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
     panNo2: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
-    // panDocUrl1: Yup.string().required('Required'),
     aadharNo1: Yup.string().test(
       'aadhar',
       'Invalid Aadhar card number',
@@ -391,12 +377,10 @@ const ShowCustomerDetails = ({
       'Invalid Aadhar card number',
       isValidAadhar
     ),
-    // aadharUrl1: Yup.string().required('Required'),
-    // occupation1: Yup.string().required('Required'),
-    // phoneNo1: Yup.string().required('Required'),
+ 
     email1: Yup.string().email('Email is invalid'),
     email2: Yup.string().email('Email is invalid'),
-    // aggrementAddress: Yup.string().required('Required'),
+
   })
 
   const resetter = () => {
@@ -459,11 +443,12 @@ const ShowCustomerDetails = ({
     }
     const secondaryCustomerDetailsObj = {
       customerName2,
-      co_Name2,
+      co_Name2: co_Name2,
+      marital2: marital2,
       phoneNo2,
       email2,
-      dob2,
-      marital2,
+      dob2: dob2,
+      marital1,
       panNo2,
       panDocUrl2: panCard2 || '',
       aadharNo2,
@@ -476,7 +461,7 @@ const ShowCustomerDetails = ({
     }
 
     const xData = {}
-    xData[`${uid}${'_source_of_pay'}`] = { self: 20, bank: 80 } // sourceOfPay
+    xData[`${uid}${'_source_of_pay'}`] = { self: 20, bank: 80 } 
     xData[`${uid}${'_otherInfo'}`] = { leadSource, sourceOfPay, purpose }
 
     const updateDoc = {
@@ -511,19 +496,7 @@ const ShowCustomerDetails = ({
       )
     }
 
-    // const updatedData = {
-    //   ...data,
-    // }
 
-    // setLoading(true)
-    // addCustomer(
-    // orgId,
-    //   updatedData,
-    //   'nithe.nithesh@gmail.com',
-    //   enqueueSnackbar,
-    //   resetForm
-    // )
-    // setLoading(false)
   }
   const handleFileUploadFun = async (file, type) => {
     if (!file) return
@@ -543,9 +516,7 @@ const ShowCustomerDetails = ({
         (err) => console.log(err),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            // createAttach(orgId, url, by, file.name, id, attachType)
             file.url = url
-            // setFiles([...files, file])
             if (type === 'panCard1') {
               setPanCard1(url)
             } else if (type === 'panCard2') {
@@ -564,7 +535,6 @@ const ShowCustomerDetails = ({
               aadhrUrl1
             )
             return url
-            //  save this doc as a new file in spark_leads_doc
           })
         }
       )
@@ -576,132 +546,36 @@ const ShowCustomerDetails = ({
   return (
     <>
       <div className="">
-        <div className="z-10">
-          {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
-        </div>
-        <div className="grid grid grid-cols-2 gap-2 rounded-md gap-2 bg-[#E6F3FC] px-3 pt-2 py-3">
-          {/* <div
-            className="flex flex-col p-4 mx-2  rounded-md   mt- bg-[#fff] hover:shadow-2xl"
-            style={{
-              boxShadow: '0 1px 12px #f2f2f2',
-            }}
-          >
-            <div className="flex flex-row w-full justify-between">
-              <div className="flex flex-col">
-                <span className="font-semibold text-[14px] ">
-                  {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-                    leadDetailsObj2?.Name ||
-                    '?'}
-                </span>
-                <span className="font-semibold text-[12px] px-2 bg-[#E6E7E8] rounded-md mt-[2px]">
-                  {leadDetailsObj2?.customerDetailsObj?.phoneNo1 ||
-                    leadDetailsObj2?.Mobile ||
-                    '?'}
-                </span>
-              </div>
-              <div className="flex flex-row">
-                <div
-                  className="flex flex-col cursor-pointer"
-                  onClick={() => setShowApplicantEdit(true)}
-                >
-                  <span className="font-semibold text-[12px] px-4 py-[1px] border border-[#F04A2D] bg-[#FFF0EB] text-[#D96038] rounded-md mt-[2px]">
-                    Edit
-                  </span>
-                </div>
-                <div className="flex flex-col ml-1 ">
-                  <span className="font-semibold text-[12px] px-4 py-[1px] border border-[#F04A2D] bg-[#FFF0EB] text-[#D96038] rounded-md mt-[2px]">
-                    Primary
-                  </span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex flex-col mt-4 px-4 py-1 border border-[#E6E7E8]  rounded-md ">
-              <section className="flex flex-row justify-between">
-                <span className="font-semibold text-[12px]  py-1 ">
-                  Details
-                </span>
-                <span className="font-semibold text-[12px] px-4  border border-[#3266F5] bg-[#EAF0FE] text-[#3266F5] rounded-md mt-[2px]">
-                  @
-                </span>
-              </section>
-              <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]"> {leadDetailsObj2?.customerDetailsObj?.relation1?.value || ''}:</span>{' '}
-                {leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
-              </span>
-              <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">D.O.B:</span>{' '}
-                {prettyDate(leadDetailsObj2?.customerDetailsObj?.dob1 || datee)}
-              </span>
-              <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">Marital Status:</span>{' '}
-                {leadDetailsObj2?.customerDetailsObj?.marital1?.value}
-              </span>
-              <section className="flex flex-row justify-between mt-4">
-                <span className="font-semibold text-[12px]  py-1 ">
-                  Documents
-                </span>
-                <span className="font-semibold text-[12px] px-4  border border-[#3266F5] bg-[#EAF0FE] text-[#3266F5] rounded-md mt-[2px]">
-                  @
-                </span>
-              </section>
-              <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">Pan:</span>{' '}
-                {leadDetailsObj2?.customerDetailsObj?.panNo1 || '?'}
-              </span>
-              <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px] mb-2">
-                <span className="text-[#99488e]">Aadhar:</span>{' '}
-                {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}
-              </span>
-            </div>
+
+        <div className="   rounded-md bg-[#fff] px-3 pt-2 py-3">
 
 
 
 
-
-
-              
-          </div> */}
-
-
-
-
-<div className="max-w-sm 	 bg-white rounded-3xl shadow-lg ">
+        <div className=' flex space-x-4 '>
+        <div className="w-[350px] 	 bg-white rounded-3xl shadow-lg ">
       <div className="relative mb-16">
         <div className="absolute inset-0 bg-blue-100 rounded-t-3xl">
           <div
-            className="w-full h-full"
-            style={{
-              backgroundImage: `url(${Profileimg})`,
-              backgroundRepeat: 'repeat',
-            }}
+            className="w-full h-full rounded-t-3xl bg-[#F0F1FF]"
+
           />
         </div>
 
         <div className="absolute top-4 left-4">
-          <span className="bg-red-400 text-white px-3 py-1 rounded-full text-sm">
+          <span className="bg-[#E3BDFF] text-black px-3 py-1 rounded-full text-sm">
             Primary
           </span>
         </div>
 
-        {/* <div className="relative top-10 pt-12 flex justify-center">
-          <div className="bg-[#CCEAFF] p-1 rounded-2xl shadow-md">
-            <img
-              // src={imagebox}
-              alt="Profile"
-              className="w-20 h-20 rounded-full object-cover"
-            />
-          </div>
-        </div> */}
 
 
-<div className="relative top-10 pt-12 flex justify-center">
+
+<div className="relative top-10 pt-8 flex justify-center">
   <div className="bg-[#E5E7EB] p-1 rounded-2xl shadow-md w-20 h-20 flex items-center justify-center">
     {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
     leadDetailsObj2?.Name ? (
-      <span className="text-[30px] font-bold text-gray-700">
+      <span className="text-[30px] font-medium text-gray-700">
         {(
           leadDetailsObj2?.customerDetailsObj?.customerName1 ||
           leadDetailsObj2?.Name ||
@@ -710,7 +584,6 @@ const ShowCustomerDetails = ({
       </span>
     ) : (
       <img
-        // src={imagebox}
         alt="Profile"
         className="w-20 h-20 rounded-full object-cover"
       />
@@ -721,7 +594,7 @@ const ShowCustomerDetails = ({
       </div>
 
       <div className="text-center mb-6">
-        <h2 className="text-xl font-semibold">
+        <h2 className="text-xl font-normal">
         {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
                     leadDetailsObj2?.Name ||
                     '?'}
@@ -729,16 +602,13 @@ const ShowCustomerDetails = ({
           </h2>
       </div>
 
-      <div className="space-y-6 p-4">
-        <h3 className="text-lg font-semibold">Details</h3>
+      <div className="space-y-4 py-2 px-4">
+        <h3 className="text-lg font-normal">Details</h3>
 
-        <div className="space-y-4">
+        <div className="space-y-1 ">
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">
-             {/* {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-                    leadDetailsObj2?.Name ||
-                    '?'} */}
 
 
 {leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
@@ -758,6 +628,8 @@ const ShowCustomerDetails = ({
           </div>
 
           <hr />
+          
+
 
           <div className="flex justify-between items-center">
             <div>
@@ -779,20 +651,20 @@ const ShowCustomerDetails = ({
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold">Documents</h3>
+        <div className="space-y-1">
+          <h3 className="text-lg  font-normal">Documents</h3>
 
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">
               {' '}
               {leadDetailsObj2?.customerDetailsObj?.panNo1 || '?'}
-                </p> {/* Default PAN card */}
+                </p> 
               <p className="text-gray-400 text-sm">Pan Card</p>
             </div>
             <div className="text-right">
               <p className="text-gray-900">{' '}
-              {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}</p> {/* Default Aadhar card */}
+              {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}</p> 
               <p className="text-gray-400 text-sm">Aadhar Card</p>
             </div>
           </div>
@@ -826,82 +698,40 @@ const ShowCustomerDetails = ({
 
     </div>
 
-      {/* <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
-        <div className="flex items-center space-x-4 mb-6">
-          <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center">
-            <span className="text-3xl font-bold text-white">T</span>
-          </div>
-          <div>
-            <h1 className="text-xl font-bold">Test_1</h1>
-            <p className="text-gray-500">S/O xyz</p>
-            <p className="text-gray-500">123123123</p>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-2 gap-6">
-          <div>
-            <p className="text-lg font-semibold">Single</p>
-            <p className="text-gray-500 text-sm">Marital Status</p>
-          </div>
-          <div>
-            <p className="text-lg font-semibold">Jan-01-2024</p>
-            <p className="text-gray-500 text-sm">D.O.B</p>
-          </div>
-          <div>
-            <p className="text-lg font-semibold">xyzxyzxyz</p>
-            <p className="text-gray-500 text-sm">Pan Card</p>
-          </div>
-          <div>
-            <p className="text-lg font-semibold">123123123</p>
-            <p className="text-gray-500 text-sm">Aadhar Card</p>
-          </div>
-        </div>
-      </div> */}
 
 
-<div className="max-w-sm 	 bg-white rounded-3xl shadow-lg ">
+
+<div className="w-[350px] 	 bg-white rounded-3xl shadow-lg ">
       <div className="relative mb-16">
         <div className="absolute inset-0 bg-blue-100 rounded-t-3xl">
           <div
-            className="w-full h-full"
-            style={{
-              backgroundImage: `url(${Profileimg})`,
-              backgroundRepeat: 'repeat',
-            }}
+            className="w-full h-full rounded-t-3xl bg-[#F0F1FF]"
+
           />
         </div>
 
         <div className="absolute top-4 left-4">
-          <span className="bg-red-400 text-white px-3 py-1 rounded-full text-sm">
-          secondary
+          <span className="bg-[#E3BDFF] text-black px-3 py-1 rounded-full text-sm">
+          Secondary
           </span>
         </div>
 
-        {/* <div className="relative top-10 pt-12 flex justify-center">
-          <div className="bg-[#CCEAFF] p-1 rounded-2xl shadow-md">
-            <img
-              // src={imagebox}
-              alt="Profile"
-              className="w-20 h-20 rounded-full object-cover"
-            />
-          </div>
-        </div> */}
 
 
-<div className="relative top-10 pt-12 flex justify-center">
+
+<div className="relative top-10 pt-8 flex justify-center">
   <div className="bg-[#E5E7EB] p-1 rounded-2xl shadow-md w-20 h-20 flex items-center justify-center">
     {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
     leadDetailsObj2?.Name ? (
       <span className="text-[30px] font-bold text-gray-700">
         {(
-          leadDetailsObj2?.customerDetailsObj?.customerName1 ||
+          leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 ||
           leadDetailsObj2?.Name ||
           '?'
         ).charAt(0)}
       </span>
     ) : (
       <img
-        // src={imagebox}
         alt="Profile"
         className="w-20 h-20 rounded-full object-cover"
       />
@@ -912,10 +742,8 @@ const ShowCustomerDetails = ({
       </div>
 
       <div className="text-center mb-6">
-        <h2 className="text-xl font-semibold">
-        {/* {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-                    leadDetailsObj2?.Name ||
-                    '?'} */}
+        <h2 className="text-xl font-normal">
+
 
 {leadDetailsObj2?.secondaryCustomerDetailsObj
                     ?.customerName1 || '?'}
@@ -923,19 +751,16 @@ const ShowCustomerDetails = ({
           </h2>
       </div>
 
-      <div className="space-y-6 p-4">
-        <h3 className="text-lg font-semibold">Details</h3>
+      <div className="space-y-4 py-2 px-4">
+        <h3 className="text-lg font-normal">Details</h3>
 
-        <div className="space-y-4">
+        <div className="space-y-1">
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">
-             {/* {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-                    leadDetailsObj2?.Name ||
-                    '?'} */}
 
 
-{leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
+{leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || '?'}
 
                 
                 </p> 
@@ -946,17 +771,14 @@ const ShowCustomerDetails = ({
               <p className="text-gray-900">
               {' '}
 
-              {/* {prettyDate(
-                  leadDetailsObj2?.secondaryCustomerDetailsObj?.dob2 
-                )} */}
 
 
-               {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob2 || datee)}
+
+               {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob1 || datee)}
 
 
 
 
-              {/* {prettyDate(leadDetailsObj2?.customerDetailsObj?.dob1 || datee)} */}
               </p>
               <p className="text-gray-400 text-sm">D.O.B</p>
             </div>
@@ -968,7 +790,6 @@ const ShowCustomerDetails = ({
             <div>
               <p className="text-gray-900">
               {' '}
-              {/* {leadDetailsObj2?.customerDetailsObj?.marital1?.value} */}
               {leadDetailsObj2?.secondaryCustomerDetailsObj?.marital1?.value}
 
               </p>
@@ -976,9 +797,6 @@ const ShowCustomerDetails = ({
             </div>
             <div className="text-right">
               <p className="text-gray-900">
-              {/* {leadDetailsObj2?.customerDetailsObj?.phoneNo1 ||
-                    leadDetailsObj2?.Mobile ||
-                    '?'} */}
 
 {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo1 ||
                     '?'}
@@ -988,23 +806,21 @@ const ShowCustomerDetails = ({
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold">Documents</h3>
+        <div className="space-y-1">
+          <h3 className="text-lg font-normal">Documents</h3>
 
           <div className="flex justify-between items-center">
             <div>
               <p className="text-gray-900">
               {' '}
               {leadDetailsObj2?.secondaryCustomerDetailsObj?.panNo1 || '?'}
-              {/* {leadDetailsObj2?.customerDetailsObj?.panNo1 || '?'} */}
-                </p> {/* Default PAN card */}
+                </p>
               <p className="text-gray-400 text-sm">Pan Card</p>
             </div>
             <div className="text-right">
               <p className="text-gray-900">{' '}
-              {/* {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'} */}
               {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || '?'}
-              </p> {/* Default Aadhar card */}
+              </p> 
               <p className="text-gray-400 text-sm">Aadhar Card</p>
             </div>
           </div>
@@ -1038,112 +854,16 @@ const ShowCustomerDetails = ({
 
     </div>
 
+        </div>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* 
-          <div
-            className="flex flex-col p-4 mx-2  rounded-md   mt- bg-[#fff] hover:shadow-2xl"
-            style={{
-              boxShadow: '0 1px 12px #f2f2f2',
-            }}
-          >
-            <div className="flex flex-row w-full justify-between">
-              <div className="flex flex-col">
-                <span className="font-semibold text-[14px]">
-                  {leadDetailsObj2?.secondaryCustomerDetailsObj
-                    ?.customerName1 || '?'}
-                </span>
-                <span className="font-semibold text-[12px] px-2 bg-[#E6E7E8] rounded-md mt-[2px]">
-                  {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo1 ||
-                    '?'}
-                </span>
-              </div>
-              <div className="flex flex-row">
-                <div
-                  className="flex flex-col cursor-pointer"
-                  onClick={() => setShowApplicantEdit(true)}
-                >
-                  <span className="font-semibold text-[12px] px-4 py-[1px] border border-[#F04A2D] bg-[#FFF0EB] text-[#D96038] rounded-md mt-[2px]">
-                    Edit
-                  </span>
-                </div>
-                <div className="flex flex-col ml-1">
-                  <span className="font-semibold text-[12px] px-4 py-[1px] border border-[#F04A2D] bg-[#FFF0EB] text-[#D96038] rounded-md mt-[2px]">
-                    Secondary
-                  </span>
-                </div>
-              </div>
-            </div>
-          
-            <div className="flex flex-col mt-4 px-4 py-1 border border-[#E6E7E8]  rounded-md ">
-              <section className="flex flex-row justify-between">
-                <span className="font-semibold text-[12px]  py-1 ">
-                  Details
-                </span>
-                <span className="font-semibold text-[12px] px-4  border border-[#3266F5] bg-[#EAF0FE] text-[#3266F5] rounded-md mt-[2px]">
-                  @
-                </span>
-              </section>
-              <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">  {leadDetailsObj2?.secondaryCustomerDetailsObj?.relation2?.value || '?'}:</span>{' '}
-                {leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || '?'}
-              </span>
-              <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">D.O.B:</span>{' '}
-                {prettyDate(
-                  leadDetailsObj2?.secondaryCustomerDetailsObj?.dob1 || datee
-                )}
-              </span>
-              <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">Marital Status:</span>{' '}
-                {leadDetailsObj2?.secondaryCustomerDetailsObj?.marital1?.value}
-              </span>
-              <section className="flex flex-row justify-between mt-4">
-                <span className="font-semibold text-[12px]  py-1 ">
-                  Documents
-                </span>
-                <span className="font-semibold text-[12px] px-4  border border-[#3266F5] bg-[#EAF0FE] text-[#3266F5] rounded-md mt-[2px]">
-                  @
-                </span>
-              </section>
-              <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px]">
-                <span className="text-[#99488e]">Pan:</span>{' '}
-                {leadDetailsObj2?.secondaryCustomerDetailsObj?.panNo1 || '?'}
-              </span>
-              <span className="font-semibold text-[12px] px-4 py-1 border border-[#EA84DD] bg-[#FCEEFA]  rounded-md mt-[8px] mb-2">
-                <span className="text-[#99488e]">Aadhar:</span>{' '}
-                {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || '?'}
-              </span>
-            </div>
-          </div> */}
         </div>
 
 
       </div>
 
 
-
-      
-
-
-      {/* old form  */}
     </>
   )
 }

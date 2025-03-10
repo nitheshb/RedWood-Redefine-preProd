@@ -194,13 +194,6 @@ const CrmUnitFinanceHistory = ({
                   )
                 })}
 
-                {/* <tr className="border-b-[0.05px] border-gray-300">
-                  <th className="text-[10px] text-left text-gray-800 ">
-                    Plot Value Total Rs.:
-                  </th>
-                  <td className="text-[10px] text-right text-gray-400 "></td>
-                  <th className="text-[10px] text-right text-gray-800 "></th>
-                </tr> */}
               </tbody>
             </table>
 

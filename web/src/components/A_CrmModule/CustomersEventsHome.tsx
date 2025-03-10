@@ -752,198 +752,7 @@ const CustomersEventsHome = () => {
           SALES
         </StyledButton>
       </Box>
-      {/* <div className=" bg-[#F5F8FA] px-10 pt-6 ">
-        <table className="">
-          <thead>
-            <tr>
-              <th className="text-left text-xs app-color-black pb-3">
-                <span className=""> Schedule</span>
-              </th>
-              <th className="text-left text-xs app-color-black pb-3">
-                <span className="ml-4">Unit Details</span>
-              </th>
-              <th className="text-left text-xs app-color-black pb-3">
-                <span className="ml-4">Customer Details</span>
-              </th>
-              <th className="text-left text-xs app-color-black pb-3">
-                <span className="ml-4">Due</span>
-              </th>
-              <th className="text-left text-xs app-color-black pb-3">
-                <span className="ml-4">Review</span>
-              </th>
-              <th className="text-left text-xs app-color-black pb-3">
-                <span className="ml-4">Elgible</span>
-              </th>
-              <th className="text-left text-xs app-color-black pb-3">
-                <span className="ml-4">Cleared</span>
-              </th>
-              <th className="text-left text-xs app-color-black pb-3">
-                <span className="ml-4">Steps</span>
-              </th>
-              <th className="text-left text-xs app-color-black pb-3">Loan %</th>
-              <th className="text-left text-xs app-color-black pb-3">
-                Comments
-              </th>
-
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {leadsFetchedData.map((finData, i) => {
-              const {
-                uid,
-                assets,
-                customerDetailsObj,
-                customerName1,
-                phoneNo1,
-              } = finData
-              return (
-                <tr
-                  className="app-border-1 border-y border-slate-200 my-2 "
-                  key={i}
-                  onClick={() => viewTransaction(finData)}
-                >
-                  <td>
-                    <div className="flex  items-center rounded-md  app-bg-yellow-2 app-color-yellow-1 text-md font-semibold">
-                      {i + 1}{' '}
-                      <span className="ml-1 text-xs font-thin">day Due</span>
-                    </div>
-                    <div className={` text-xs font-semibold  py-0.5 `}>
-                      {'Agreement'}
-                    </div>
-                  </td>
-                  <td>
-                    <div className="flex flex-row py-3 ml-4">
-                      <div className="mr-2 w-[3px] rounded-2xl  bg-violet-300 "></div>
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-sm app-color-black">
-                          {finData?.[`${assets[0]}_unitDetails`]?.unit_no || ''}
-                        </span>
-                        <span className="font-normal text-xs app-color-gray-1">
-                          {finData?.[`${assets[0]}_unitDetails`]?.phaseNo || ''}
-                        </span>
-                        <span className="font-normal text-xs app-color-gray-1">
-                          {finData?.[`${assets[0]}_unitDetails`]?.projName ||
-                            ''}
-                        </span>
-                        <span className="font-normal text-xs app-color-gray-1">
-                          {finData?.fromObj?.branch}
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td>
-                    <div className="flex flex-row py-3 ml-4">
-                      <div className="mr-2 w-[3px] rounded-2xl  bg-violet-300 "></div>
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-sm app-color-black">
-                          {customerName1 || ''}
-                        </span>
-                        <span className="font-normal text-xs app-color-gray-1">
-                          {phoneNo1 || ''}
-                        </span>
-                        <span className="font-normal text-xs app-color-gray-1">
-                          {finData?.fromObj?.bankName}
-                        </span>
-                        <span className="font-normal text-xs app-color-gray-1">
-                          {finData?.fromObj?.branch}
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="text-left">
-                    <div className="flex flex-row py-3 ml-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-sm app-color-black">
-                          Rs {finData?.[`${assets[0]}_T_balance`] || 0}
-                        </span>
-                        <span className="font-semibold text-sm app-color-black">
-                          <span className="font-normal text-xs app-color-gray-1">
-                            {'26-10-2022'}
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="text-left">
-                    <div className="flex flex-row py-3 ml-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-sm app-color-black">
-                          Rs {finData?.[`${assets[0]}_T_review`] || 0}
-                        </span>
-                        <span className="font-semibold text-sm app-color-black">
-                          <span className="font-normal text-xs app-color-gray-1">
-                            {'26-10-2022'}
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="text-left">
-                    <div className="flex flex-row py-3 ml-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-sm app-color-black">
-                          Rs {finData?.[`${assets[0]}_T_elgible`] || 0}
-                        </span>
-                        <span className="font-semibold text-sm app-color-black">
-                          <span className="font-normal text-xs app-color-gray-1">
-                            {'26-10-2022'}
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="text-left">
-                    <div className="flex flex-row py-3 ml-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-sm app-color-black">
-                          Rs {finData?.[`${assets[0]}_T_cleared`] || 0}
-                        </span>
-                        <span className="font-semibold text-sm app-color-black">
-                          <span className="font-normal text-xs app-color-gray-1">
-                            {'26-10-2022'}
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="text-left">
-                    <div className="flex flex-row py-3 ml-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-sm app-color-black">
-                          {finData?.[`${assets[0]}_stepsComp`] || 0}
-                        </span>
-                        <span className="font-semibold text-sm app-color-black">
-                          <span className="font-normal text-xs app-color-gray-1">
-                            {'26-10-2022'}
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td className="text-left">
-                    <div className="flex flex-row py-3 ml-4">
-                      <div className="flex flex-col">
-                        <span className="font-normal text-xs app-color-gray-1">
-                          {finData?.[`${assets[0]}_loanPer`] || 'NA'}
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <span className="font-normal text-xs app-color-gray-1">
-                      {finData?.[`${assets[0]}_comment`] || '-'}
-                    </span>
-
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div> */}
+  
       <Box
         sx={{
           width: (2.3 / 3) * window.innerWidth,
@@ -963,9 +772,7 @@ const CustomersEventsHome = () => {
                   </StyledTableCell>
                 </StickyHeaderCell>
               )}
-              {/* {filterData?.[0]?.access?.map(({ name, key }) => (
-                <StyledTableCell key={key}>{name}</StyledTableCell>
-              ))} */}
+      
               {[
                 {
                   cat: 'crm',
@@ -1065,22 +872,7 @@ const CustomersEventsHome = () => {
             </StyledTableRow>
           </StyledTableHead>
           <TableBody>
-            {/* {filterData?.map((item) => (
-              <StyledTableRow key={item?.uid}>
-                <StickyTableCell>
-                  <StyledTableCell>{item?.type}</StyledTableCell>
-                </StickyTableCell>
-
-                {item?.access?.map((element) => (
-                  <StyledTableCell key={element.key}>
-                    <StyledCheckBox
-                      defaultChecked={element.checked}
-                      onChange={() => onRoleChangeListener(item, element)}
-                    />
-                  </StyledTableCell>
-                ))}
-              </StyledTableRow>
-            ))} */}
+           
             {dummyData?.map((finData, i) => {
               const {
                 plotId,
@@ -1264,11 +1056,7 @@ const CustomersEventsHome = () => {
                       <h3 className=" css-5mn5yy text-xs text-center">
                         {tt_amountOutStanding?.amount}
                       </h3>
-                      {/* <span className="font-semibold text-sm app-color-black">
-                        <span className="font-normal text-[10px]">
-                          {bookingAmont?.date}
-                        </span>
-                      </span> */}
+        
                     </div>
                   </td>
                   <td className="border-b bg-[#FFF1E3]">
@@ -1276,11 +1064,7 @@ const CustomersEventsHome = () => {
                       <h3 className=" css-5mn5yy text-xs text-center">
                         {tt_amountElgible?.amount}
                       </h3>
-                      {/* <span className="font-semibold text-sm app-color-black">
-                        <span className="font-normal text-[10px]">
-                          {tt_amountElgible?.date}
-                        </span>
-                      </span> */}
+
                     </div>
                   </td>
                   <td className="border-b bg-[#FFF1E3]">
@@ -1295,11 +1079,7 @@ const CustomersEventsHome = () => {
                       <h3 className=" css-5mn5yy text-xs text-center">
                         {latePayment?.count}
                       </h3>
-                      {/* <span className="font-semibold text-sm app-color-black">
-                        <span className="font-normal text-[10px]">
-                          {latePayment?.date}
-                        </span>
-                      </span> */}
+      
                     </div>
                   </td>
                   <td className="border-b bg-[#FFF1E3]">
@@ -1307,18 +1087,12 @@ const CustomersEventsHome = () => {
                       <h3 className=" css-5mn5yy text-xs text-center">
                         {latePayment?.count}
                       </h3>
-                      {/* <span className="font-semibold text-sm app-color-black">
-                        <span className="font-normal text-[10px]">
-                          {latePayment?.date}
-                        </span>
-                      </span> */}
+ 
                     </div>
                   </td>
                   <td className="border-b bg-[#E2FBFB]">
                     <div className="px-2 py-2  text-center border-r-[1px] border-[#eae7e7]">
-                      {/* <h3 className=" css-5mn5yy text-xs text-center">
-                        {constructionProgress?.percentage}
-                      </h3> */}
+
                       <LinearProgress
                         variant="determinate"
                         value={constructionProgress?.percentage}

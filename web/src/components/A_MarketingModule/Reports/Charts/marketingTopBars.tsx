@@ -184,24 +184,6 @@ const CampaingsTopBarsComponent = () => {
       </div>
 
 
-{/* 
-      <BookingHeader/>
-
-
-
-      <div>
-        <ProfileCard data={undefined} />
-      </div> */}
-
-      {/* line bar */}
-
-      
-
-
-
-
-
-
 
     </div>
   )

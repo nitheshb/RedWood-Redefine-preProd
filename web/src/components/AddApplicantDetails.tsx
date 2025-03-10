@@ -118,47 +118,6 @@ useEffect(() => {
 
 
 
-//   const [annualIncome, setAnnualIncome] = useState(0);
-
-// const handleIncomeChange = (e) => {
-//   const rawValue = e.target.value.replace(/,/g, '');
-//   const numValue = parseFloat(rawValue);
-
-//   if (!isNaN(numValue)) {
-//     setAnnualIncome(numValue);
-//   } else {
-//     setAnnualIncome(0);
-//   }
-// };
-
-// const [annualIncome, setAnnualIncome] = useState('');
-
-
-// const handleIncomeChange = (e) => {
-//   const rawValue = e.target.value.replace(/,/g, '');
-//   const numValue = parseFloat(rawValue);
-
-//   if (!isNaN(numValue)) {
-//     setAnnualIncome(rawValue); // Set the raw input value with commas
-//   } else {
-//     setAnnualIncome(''); // Clear the input if the value is not a number
-//   }
-// };
-
-
-// const [annualIncome, setAnnualIncome] = useState(null);
-
-// const handleIncomeChange = (e) => {
-//   const rawValue = e.target.value.replace(/,/g, '');
-//   const numValue = parseFloat(rawValue);
-
-//   if (!isNaN(numValue)) {
-//     setAnnualIncome(numValue);
-//   } else {
-//     setAnnualIncome(null);
-//   }
-// };
-
 
 
 
@@ -248,20 +207,14 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
         const link = document.createElement('a')
         link.href = url
 
-        // Extract the filename from the URL
-        // const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
 
-        // Set the download attribute and filename
         link.setAttribute('download', filename)
         document.body.appendChild(link)
         console.log('fetcher url ', filename)
-        // Simulate a click on the anchor element to start the download
         link.click()
 
-        // Clean up the temporary anchor element
         link.parentNode.removeChild(link)
 
-        // Set the downloaded image URL to display on the page
         setImageUrl(url)
       })
       .catch((error) => {
@@ -288,30 +241,16 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
   const [selRef2, setRefDataFun2] = useState({ label: 'S/O', value: 'S/O' })
   const [moveNext, setMoveNext] = useState(false)
   const [givenPhNo1, setGivenPhNo1] = useState()
-  // useEffect(() => {
-  //   if (givenPhNo1?.length == 10) {
-  //     searchFun()
-  //   }
-  // }, [givenPhNo1])
+
   useEffect(() => {
     console.log('leads payload is ', leadPayload)
   },[])
-  // const searchFun = async () => {
-  //   const foundLength = await checkIfLeadAlreadyExists(
-  //     `${orgId}_leads`,
-  //     givenPhNo1
-  //   )
-  //   if (foundLength?.length > 0) {
-  //     setLeadPayload(foundLength[0])
-  //   }
-  // }
+
 
   const onSubmitFun = async (data, updateDoc, resetForm) => {
     console.log(data)
     setLoading(true)
 
-    // const { email, name, mobileNo, assignedTo, assignedToObj, project } = data
-    // updateUserRole(uid, deptVal, myRole, email, 'nitheshreddy.email@gmail.com')
     const {
       customerName1,
       co_Name1,
@@ -752,26 +691,17 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
   }
   const validateSchema = Yup.object({
     customerName1: Yup.string().required('Required'),
-    // co_Name1: Yup.string().required('Required'),
     panNo1: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
     panNo2: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
-    // panDocUrl1: Yup.string().required('Required'),
-    // aadharNo1: Yup.string().test(
-    //   'aadhar',
-    //   'Invalid Aadhar card number',
-    //   isValidAadhar
-    // ),
+ 
     aadharNo2: Yup.string().test(
       'aadhar',
       'Invalid Aadhar card number',
       isValidAadhar
     ),
-    // aadharUrl1: Yup.string().required('Required'),
-    // occupation1: Yup.string().required('Required'),
-    // phoneNo1: Yup.string().required('Required'),
+
     email1: Yup.string().email('Email is invalid'),
     email2: Yup.string().email('Email is invalid'),
-    // aggrementAddress: Yup.string().required('Required'),
   })
 
   const onSubmit = async (data, resetForm) => {
@@ -900,22 +830,13 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
       annualIncome,
     }
     console.log('update doc is ', updateDoc)
-    // local updater
     setCustomerInfo(updateDoc)
 
     if (source === 'fromBookedUnit' || source === 'Booking') {
-      // create lead and call below function
 
       await onSubmitFun(data, updateDoc, resetForm)
       console.log('am here', leadPayload)
-      // await  updateLeadCustomerDetailsTo(
-      //   orgId,
-      //   leadPayload?.id,
-      //   updateDoc,
-      //   'nitheshreddy.email@gmail.com',
-      //   enqueueSnackbar,
-      //   resetForm
-      // )
+
     } else {
       updateLeadCustomerDetailsTo(
         orgId,
@@ -950,26 +871,19 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
           const prog =
             Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
 
-          // setProgress(prog)
           file.isUploading = false
         },
         (err) => console.log(err),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            // createAttach(orgId, url, by, file.name, id, attachType)
             file.url = url
-            // setFiles([...files, file])
             if (type === 'panCard1') {
-              // setPanCard1(url)
               formik.setFieldValue('panDocUrl1', url)
             } else if (type === 'panCard2') {
-              // setPanCard2(url)
               formik.setFieldValue('panDocUrl2', url)
             } else if (type === 'aadharNo1Url') {
-              // setAadharUrl1(url)
               formik.setFieldValue('aadharUrl1', url)
             } else if (type === 'aadharNo2Url') {
-              // setAadharUrl2(url)
               formik.setFieldValue('aadharUrl2', url)
             }
             console.log(
@@ -981,7 +895,6 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
               aadhrUrl1
             )
             return url
-            //  save this doc as a new file in spark_leads_doc
           })
         }
       )
@@ -1003,9 +916,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     <>
       <div className="flex flex-col mx-0 bg-[#F8FAFC]  rounded-md overflow-y-scroll no-scrollbar" style={{ height: `calc(100vh - 120px)` }}>
         <div className="z-10">
-          {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
+      
         </div>
 <CloneableEmailForm selUnitDetails={selUnitDetails} customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} leadPayload={leadPayload} />
 {source != "fromBookedUnit" &&<div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full w-[680px]">
@@ -1026,7 +937,6 @@ transition
 
                                 disabled={loading}
                                 onClick={() => moveNextStep()}
-                                // onClick={() => submitFormFun(formik)}
                               >
                                 <span> {' Next'}</span>
                               </button>

@@ -31,8 +31,7 @@ const CreditNoteSummaryTableLayout = ({
   leadsTyper,
   searchVal,
 }) => {
-  // change navbar title
-  // useTitle('Data Table V1')
+
   const { t } = useTranslation()
   const [value, setValue] = useState('all')
   const [tableData, setTableData] = useState([])
@@ -40,19 +39,10 @@ const CreditNoteSummaryTableLayout = ({
 
   const [statusSepA, setStatusSepA] = useState([])
 
-  // const [leadsFetchedData, setLeadsFetchedData] = useState([])
   const [finalKeyA, setFinalKeyA] = useState([])
 
   useEffect(() => {
-    // axios
-    //   .get('/api/tableData1/all')
-    //   .then(({ data }) => {
-    //     setTableData(tableData1)
-    //   })
-    //   .catch((error) => {
-    //     // setTableData(tableData1)
-    //     console.log(error)
-    //   })
+
 
     const tabHeadFieldsA1 = [
       { value: 'all', lab: 'All', val: 'all' },
@@ -130,9 +120,7 @@ const CreditNoteSummaryTableLayout = ({
 
 
   const [filLeadsA, setFilLeadsA] = useState([])
-  // useEffect(() => {
-  //   setFilLeadsA(leadsFetchedData)
-  // }, [leadsFetchedData])
+
   useEffect(() => {
 
     console.log('selected value is', value)

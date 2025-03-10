@@ -12,6 +12,7 @@ import { useLocation } from '@redwoodjs/router'
 
 import {
   plotTypeList,
+  inventorytypeList,
   releaseStausList,
   unitTypeList,
 } from 'src/constants/projects'
@@ -413,6 +414,7 @@ const AddUnit = ({
 
       release_status,
       mortgage_type,
+      inventory_type,
       landOwnerName,
       investorName,
       sharingType,
@@ -473,6 +475,7 @@ const AddUnit = ({
       status: status,
       release_status: release_status,
       mortgage_type: mortgage_type,
+      inventory_type: inventory_type,
       landOwnerName: landOwnerName,
       investorName: investorName,
       sharingType: sharingType,
@@ -586,6 +589,7 @@ const AddUnit = ({
 
       release_status,
       mortgage_type,
+      inventory_type,
       landOwnerName,
       investorName,
       sharingType,
@@ -636,6 +640,7 @@ const AddUnit = ({
       status: status,
       release_status: release_status,
       mortgage_type: mortgage_type,
+      inventory_type: inventory_type,
       landOwnerName: landOwnerName,
       investorName: investorName,
       sharingType: sharingType,
@@ -644,53 +649,24 @@ const AddUnit = ({
       by: user?.email,
     }
     console.log('user is ', user)
-    // proceed to copy
     await editPlotUnit(
       orgId,
       unitDetails?.uid,
       plotData1,
+      unitDetails?.status || '',
       user?.email,
       `Unit Created by form `,
       enqueueSnackbar
     )
 
-    // msg2
-    // await resetForm()
+    
     await setFormMessage('Unit Saved Successfully..!')
     await setLoading(false)
     return
   }
 
 
-  // const validate = Yup.object({
 
-  // unit_no: Yup.string()
-  // .max(15, 'Must be 15 characters or less')
-  // .required('Unit_no is Required'),
-  // lastName: Yup.string()
-  //   .max(20, 'Must be 20 characters or less')
-  //   .required('Required'),
-  // sqft_rate: Yup.number().required('sqft rate is required'),
-  // bedRooms:
-  //   projectDetails?.projectType?.name === 'Apartment'
-  //     ? Yup.string().required('bedRooms is required')
-  //     : Yup.string().notRequired(),
-  // floor: Yup.number().required('floor is required'),
-  // bathrooms:
-  //   projectDetails?.projectType?.name === 'Apartment'
-  //     ? Yup.string().required('bathrooms is required')
-  //     : Yup.string().notRequired(),
-  // // bathrooms: Yup.string().required('bathrooms is required'),
-  // area:
-  //   projectDetails?.projectType?.name === 'Plots'
-  //     ? Yup.number().required('area is required')
-  //     : Yup.number().notRequired(),
-
-  // facing: Yup.string().required('facing is required'),
-  // cartpet_area_sqft: Yup.number().required('Carpet Area is required'),
-  // buildup_area: Yup.number().required('Buildup Area is required'),
-  // super_build_up_area: Yup.number().required('Sqft Rate is required'),
-  // })
   const resetter = () => {
     setSelected({})
     setFormMessage('')
@@ -717,31 +693,14 @@ const AddUnit = ({
   }, [formik])
 
 
-  // const location = useLocation()
-  // const blockName = location.state?.blockName || ''
-
-
-
-  // useEffect(() => {
-  //   if (blockName) {
-  //     formik.setFieldValue('block_no', blockName)
-  //   }
-  // }, [blockName, formik])
 
   return (
     <div className="h-full flex flex-col pb-6 bg-white shadow-xl overflow-y-scroll">
-      {/* <div className="border-b py-3">
-        <div className="px-2 sm:px-6  z-10 flex items-center justify-between">
-          <Dialog.Title className=" font-semibold text-xl mr-auto  text-[#053219]">
-            {title}
-          </Dialog.Title>
-        </div>
-      </div> */}
 
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col ">
           <div className="mt-0">
-            {/* new one */}
+         
 
             <Formik
               enableReinitialize={true}
@@ -791,13 +750,14 @@ const AddUnit = ({
                 status: unitDetails?.status || '',
                 release_status: unitDetails?.release_status || '',
                 mortgage_type: unitDetails?.mortgage_type || '',
+                inventory_type: unitDetails?. inventory_type || '',
+
+
+               
                 landOwnerName: unitDetails?.landOwnerName || '',
                 investorName: unitDetails?.investorName || '',
                 sharingType: unitDetails?.sharingType ||  unitDetails?.sharing || '',
-                // bathrooms: '',
-                // cartpet_area_sqft: 0,
-                // buildup_area: 0,
-                // super_build_up_area: 0,
+
               }}
               validationSchema={validate_AddUnit}
               onSubmit={(values, { resetForm }) => {
@@ -824,7 +784,6 @@ const AddUnit = ({
                                     : 'Edit Unit'}
 
 
-                                    {/* {title === 'Add Unit' ? 'Add Unit' : 'Save Unit'} */}
 
 
                                   <abbr title="required"></abbr>
@@ -871,10 +830,7 @@ const AddUnit = ({
                                   label="Block"
                                   name="block_no"
                                   type="text"
-                                  // onChange={(value) => {
-                                  //   formik.setFieldValue('block_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
 
-                                  // }}
 
                                   value={formik.values.block_no || blockName}
                                   onChange={(e) =>
@@ -900,12 +856,7 @@ const AddUnit = ({
 
                                   }}
 
-                                  // onChange={(value) => {
-                                  //   formik.setFieldValue(
-                                  //     'block_no',
-                                  //     String(Number(value.target.value.replace(/[^0-9]/g, '')))
-                                  //   )
-                                  // }}
+
 
                                 />
                               </div>
@@ -926,13 +877,6 @@ const AddUnit = ({
                               </div>
                             )}
 
-                            {/* <div className="mb-3 space-y-2 w-full text-xs mt-2">
-                              <TextField
-                                label="Type*"
-                                name="size"
-                                type="text"
-                              />
-                            </div> */}
 
                             {projectDetails?.projectType?.name === 'Plots' && (
                               <div className="w-full flex flex-col mt-2">
@@ -944,7 +888,6 @@ const AddUnit = ({
                                     formik.setFieldValue('size', value.value)
                                   }}
                                   value={formik.values.size}
-                                  // options={aquaticCreatures}
                                   options={
                                     projectDetails?.projectType?.name ===
                                     'Plots'
@@ -952,7 +895,6 @@ const AddUnit = ({
                                       : unitTypeListA
                                   }
 
-                                  //options={unitTypeList}
                                 />
                               </div>
                             )}
@@ -960,21 +902,7 @@ const AddUnit = ({
                               projectDetails?.projectType?.name ===
                                 'Plots') && (
 
-                              // <div className="mb-3 space-y-2 w-full text-xs mt-2">
-                              //   <TextField
-                              //     label="Dimension"
-                              //     name="dimension"
-                              //     type="text"
-                              //     onChange={(value) => {
-                              //       formik.setFieldValue('dimension', value.target.value.replace(/^0+/, ''))
-
-                              //     }}
-                              //     onChange={(value) => {
-                              //       formik.setFieldValue('dimension', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
-
-                              //     }}
-                              //   />
-                              // </div>
+   
 
 
 
@@ -983,16 +911,7 @@ const AddUnit = ({
     label="Dimension"
     name="dimension"
     type="text"
-    // onChange={(value) => {
-    //   const inputValue = value.target.value;
-    //   let formattedValue = inputValue.replace(/[^a-zA-Z0-9.]/g, '');
 
-    //   if (/^\d/.test(formattedValue)) {
-    //     formattedValue = formattedValue.replace(/^0+/, '');
-    //   }
-
-    //   formik.setFieldValue('dimension', formattedValue);
-    // }}
   />
 </div>
 
@@ -1017,7 +936,6 @@ const AddUnit = ({
                                       : unitTypeList
                                   }
 
-                                  //options={unitTypeList}
                                 />
                               </div>
                             )}
@@ -1030,7 +948,6 @@ const AddUnit = ({
                                   formik.setFieldValue('facing', value.value)
                                 }}
                                 value={formik.values.facing}
-                                // options={aquaticCreatures}
                                 options={facingTypeListA}
                               />
                             </div>
@@ -1050,21 +967,7 @@ const AddUnit = ({
                               </span>
                             </section>
                             <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
-                              {/* <div className=" space-y-2 w-full text-xs mt-">
-                                <TextField
-                                  label="Bedrooms"
-                                  name="bedrooms_c"
-                                  type="number"
-                                />
-                              </div> */}
-                              {/* <div className="space-y-2 w-full text-xs ">
-                              <TextField
-                                label={`${["Villas","Plots"].includes(projectDetails?.projectType?.name)? "BUA Sqft*" : "Super BUA"
-                                }`}
-                                name="area"
-                                type="number"
-                              />
-                            </div> */}
+         
                               <div className="w-full flex flex-col mt-">
                                 <CustomSelect
                                   name="bedrooms_c"
@@ -1078,24 +981,14 @@ const AddUnit = ({
 
                                   }}
                                   value={formik.values.bedrooms_c}
-                                  // options={aquaticCreatures}
-                                  // options={
-                                  //   projectDetails?.projectType?.name ===
-                                  //   'Plots'
-                                  //     ? plotTypeList
-                                  //     : unitTypeList
-                                  // }
+            
 
                                   options={bedRoomsListA}
                                 />
                               </div>
 
                               <div className="space-y-2 w-full text-xs mt-">
-                                {/* <TextField
-                                  label="Bathrooms"
-                                  name="bathrooms_c"
-                                  type="number"
-                                /> */}
+      
                                 <CustomSelect
                                   name="bathrooms_c"
                                   label="Bathrooms"
@@ -1112,12 +1005,7 @@ const AddUnit = ({
                               </div>
 
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
-                                {/* <TextField
-                                  label="Car Parking"
-                                  name="car_parkings_c"
-                                  type="text"
-                                /> */}
-
+       
                                 <CustomSelect
                                   name="car_parkings_c"
                                   label="Car Parking"
@@ -1133,14 +1021,7 @@ const AddUnit = ({
                                 />
                               </div>
 
-                              {/* <div className="space-y-2 w-full text-xs ">
-    <TextField
-      label={`${["Villas","Plots"].includes(projectDetails?.projectType?.name)? "BUA Sqft*" : "Super BUA"
-      }`}
-      name="area"
-      type="number"
-    />
-  </div> */}
+
 
                               {projectDetails?.projectType?.name ===
                                 'Apartment' && (
@@ -1183,14 +1064,7 @@ const AddUnit = ({
                             </span>
                           </section>
                           <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
-                            {/* <div className="space-y-2 w-full text-xs ">
-                              <TextField
-                                label={`${["Villas","Plots"].includes(projectDetails?.projectType?.name)? "Plot Area Sqft*" : "Super BUA"
-                                }`}
-                                name="area"
-                                type="number"
-                              />
-                            </div> */}
+     
 
                             <div className="space-y-2 w-full text-xs ">
                               <TextField
@@ -1209,7 +1083,6 @@ const AddUnit = ({
                                     Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))
                                   ))
                                 }}
-                                // value={formik.values.area}
                               />
 
 
@@ -1296,14 +1169,7 @@ const AddUnit = ({
                                   }}
                                 />
                               </div>
-                              {/* <div className="space-y-2 w-full text-xs ">
-                              <TextField
-                                label={`${["Villas","Plots"].includes(projectDetails?.projectType?.name)? "BUA Sqft*" : "Super BUA"
-                                }`}
-                                name="area"
-                                type="number"
-                              />
-                            </div> */}
+
 
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
                                 <TextField
@@ -1501,7 +1367,6 @@ const AddUnit = ({
                                   formik.setFieldValue('status', value.value)
                                 }}
                                 value={formik.values.status}
-                                // options={aquaticCreatures}
                                 options={statusListA}
                               />
                             </div>
@@ -1517,7 +1382,6 @@ const AddUnit = ({
                                   )
                                 }}
                                 value={formik.values.release_status}
-                                // options={aquaticCreatures}
                                 options={releaseStausList}
                               />
                             </div>
@@ -1535,71 +1399,11 @@ const AddUnit = ({
                                   )
                                 }}
                                 value={formik.values.mortgage_type}
-                                // options={aquaticCreatures}
                                 options={mortgageTypeA}
                               />
                             </div>
 
-                            {/* <div className="w-full flex flex-col mb-3">
-                              <CustomSelect
-                                name="sharingType"
-                                label="Sharing Type"
-                                options={sharingTypeOptions}
-                                onChange={(value) => {
-                                  formik.setFieldValue(
-                                    'sharingType',
-                                    value.value
-                                  )
-                                  setSelectedSharingType(value.value)
-                                }}
-                                value={formik.values.sharingType}
-                              />
-
-                              {selectedSharingType === 'Land Owner' && (
-                                <div className="flex flex-col mt-2 rounded-lg pt-4">
-                                  <div className="mb-4 mt-2">
-                                    <div className="inline">
-                                      <div className="">
-                                        <label className="font-semibold text-[#053219] text-sm mb-1">
-                                          Land Owner Details
-                                        </label>
-                                      </div>
-                                      <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
-                                    </div>
-                                  </div>
-                                  <TextField
-                                    name="landOwnerName"
-                                    label="Land Owner Name"
-                                    type="text"
-                                    value={formik.values.landOwnerName}
-                                    onChange={formik.handleChange}
-                                  />
-                                </div>
-                              )}
-
-                              {selectedSharingType === 'Investor' && (
-                                <div className="flex flex-col mt-2 rounded-lg pt-4">
-                                  <div className="mb-4 mt-2">
-                                    <div className="inline">
-                                      <div className="">
-                                        <label className="font-semibold text-[#053219] text-sm mb-1">
-                                          Investor Details
-                                        </label>
-                                      </div>
-                                      <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
-                                    </div>
-                                  </div>
-                                  <TextField
-                                    name="investorName"
-                                    label="Investor Name"
-                                    type="text"
-                                    value={formik.values.investorName}
-                                    onChange={formik.handleChange}
-                                  />
-                                </div>
-                              )}
-                            </div> */}
-
+                      
 
 
 <div className="w-full flex flex-col mb-3">
@@ -1659,6 +1463,34 @@ const AddUnit = ({
                                 }}
                               />
                             </div>
+                            {/* <div className="w-full flex flex-col mb-3">
+                              <CustomSelect
+                                name="inventory_type"
+                                label="Inventory Type"
+                                className="input mt-"
+                                onChange={(value) => {
+                                  formik.setFieldValue(
+                                    'inventory_type',
+                                    value.value
+                                  )
+                                }}
+                                value={formik.values.inventory_type}
+                                options={possessionStatusList}
+                              />
+                            </div> */}
+                            <div className="w-full flex flex-col mb-3">
+  <CustomSelect
+    name="inventory_type"
+    label="Inventory Type"
+    className="input mt-"
+    onChange={(value) => {
+      formik.setFieldValue('inventory_type', value.value);
+    }}
+    value={formik.values.inventory_type}
+    options={inventorytypeList}
+  />
+</div>
+
                           </div>
                         </section>
                       </section>
@@ -1709,7 +1541,6 @@ const AddUnit = ({
                             {loading && <Loader />}
                             <span>
                               {' '}
-                              {/* {title === 'Edit Unit' ? 'Edit Unit' : 'Add Unit'} */}
                               {title === 'Edit Unit' ? 'Save' : 'Add Unit'}
                             </span>
                           </button>

@@ -50,10 +50,7 @@ const CrmUnitDetailsView1 = ({ selCustomerPayload, assets }) => {
             Cost
           </div>
           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-            {/* {(
-                      data?.unitDetail?.builtup_area *
-                      data?.unitDetail?.rate_per_sqft
-                    )?.toLocaleString('en-IN')} */}
+
             {selCustomerPayload?.[
               `${assets[0]}_unitDetails`
             ]?.rate_per_sqft?.toLocaleString('en-IN')}

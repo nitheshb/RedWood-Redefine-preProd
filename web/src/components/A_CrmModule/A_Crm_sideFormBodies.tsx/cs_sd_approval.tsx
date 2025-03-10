@@ -10,7 +10,6 @@ import { updateSDApproval } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import CrmActivityLog from '../CrmActivityLog'
 
-// import BankSelectionSwitchDrop from './BankSelectionDroopDown'
 
 export default function Crm_Sd_approval({
   type,
@@ -58,7 +57,6 @@ export default function Crm_Sd_approval({
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Unit SD</h2>
             <p className="text-md text-[10px] flex-grow text-right">
-              {/* Waiting for banker sanction{' '} */}
               {selUnitPayload?.sd_rejection_reason || 'Sd Rejection'}{' '}
             </p>
           </div>
@@ -76,14 +74,11 @@ export default function Crm_Sd_approval({
                           className="w-full outline-none text-gray-700 text-lg"
                           onChange={(e) => {
                             setRejectionReason(e.target.value)
-                            // formik.setFieldValue('blockReason', e.target.value)
 
                           }}
                         />
                         {fillError && <div
-                          // component="div"
 
-                          // name={'blockReason'}
                           className="error-message text-red-700 text-xs p-1 mx-auto"
                         /> }
                         <button
@@ -109,19 +104,15 @@ export default function Crm_Sd_approval({
           className=" text-black   border  border-[#E3BDFF] active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="submit"
           onClick={() => {
-            // submitManagerApproval('rejected')
             setRejection(!rejection)
           }}
-          // disabled={loading}
         >
           {'Reject'}
         </button>
         <button
           className="bg-[#e3bdff] text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="submit"
-          // disabled={loading}
           onClick={() => {
-            // mark man_cs_approval as true
             submitManagerApproval('approved')
           }}
         >

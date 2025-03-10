@@ -213,29 +213,7 @@ console.log('customer info', myBookingPayload)
       ])
       setOnStep('costsheet')
     }
-    //  else if (actionMode === 'unitBlockMode') {
-    //   setStatusListA([
-    //     {
-    //       label: 'Cost sheet',
-    //       value: 'costsheet',
-    //       logo: 'RefreshIcon',
-    //       color: ' bg-violet-500',
-    //     },
-    //     {
-    //       label: 'Customer details',
-    //       value: 'customerDetails',
-    //       logo: 'FireIcon',
-    //       color: ' bg-violet-500',
-    //     },
-    //     {
-    //       label: 'Block Unit',
-    //       value: 'blocksheet',
-    //       logo: 'DuplicateInactiveIcon',
-    //       color: ' bg-violet-500',
-    //     },
-    //   ])
-    //   setOnStep('blocksheet')
-    // }
+
     else if (actionMode === 'unitBlockMode') {
       setStatusListA([
         {
@@ -378,7 +356,6 @@ console.log('customer info', myBookingPayload)
     } else {
       setCsMode('both')
     }
-    // projectDetails
   }, [projectDetails])
 
   useEffect(() => {
@@ -441,9 +418,7 @@ console.log('customer info', myBookingPayload)
     console.log('phase details are ', merged, costSheetA)
   }, [selPhaseObj, leadDetailsObj1])
 
-  // useEffect(() => {
-  //   console.log('value os costsheet', costSheetA)
-  // }, [costSheetA])
+
 
   const [loading, setLoading] = useState(false)
   const [isImportLeadsOpen, setisImportLeadsOpen] = useState(false)
@@ -453,9 +428,7 @@ console.log('customer info', myBookingPayload)
 
   const initialState = initialValuesA
   const validate = Yup.object({
-    // blockReason: Yup.number()
-    //   .max(15, 'Must be 15 characters or less')
-    //   .required('Name is Required'),
+
   })
   const moveStep = (stepper) => {
     console.log('customerInf i s', customerInfo)
@@ -473,30 +446,14 @@ console.log('customer info', myBookingPayload)
 
     const { uid } = selUnitDetails
     const { id } = leadDetailsObj1
-    // const x = {
-    //   myId: '2',
-    //   units: {
-    //     value: 'fixedcost',
-    //     label: 'Fixed cost',
-    //   },
-    //   component: {
-    //     value: 'ratePerSqft',
-    //     label: 'sqftCost',
-    //   },
-    //   charges: Number(newSqftPrice),
-    //   gst: {
-    //     label: '0',
-    //     value: '0',
-    //   },
-    // }
+
 
     const newCostSheetA = costSheetA.map((dat) => {
       dat.charges = data[dat?.component?.value]
       return dat
     })
     console.log('${uid}', newCostSheetA, uid)
-    // newCostSheetA.push(x)
-    // i need unit_uID & unit details
+
     const xData = {}
     if (uid) {
       xData[`${uid}${'_cs'}`] = {
@@ -543,12 +500,10 @@ console.log('customer info', myBookingPayload)
 
   const setStatusFun = async (index, newStatus) => {
     if(newStatus === 'booksheet'){
-      // if(selUnitDetails.custObj && (selUnitDetails.custObj.name != "")){
       if(streamUnitDetails?.status=='available'){
       if(streamUnitDetails.customerDetailsObj && (streamUnitDetails.customerDetailsObj
         ?.customerName1 != "")){
         moveStep(newStatus)
-        // setStepIndx(index + 1)
       }else{
           enqueueSnackbar('Please fill customer details', {
             variant: 'error',
@@ -561,7 +516,6 @@ console.log('customer info', myBookingPayload)
       console.log('confirm booking')
     }else{
       moveStep(newStatus)
-      // setStepIndx(index + 1)
     }
 
   }
@@ -595,7 +549,7 @@ console.log('customer info', myBookingPayload)
                           borderRadius: '6px',
                           height: '7px',
                           '& .MuiLinearProgress-bar': {
-                            backgroundColor: '#8B5CF6', // or any other color you prefer for the filled part
+                            backgroundColor: '#8B5CF6', 
                           },
                         }}
                         style={{
@@ -692,25 +646,14 @@ console.log('customer info', myBookingPayload)
               {selUnitDetails?.unitDetail?.status === 'available' && (    <div className=" flex flex-col mt-1">
 
 
-                {/* <ButtonDropDown
-                  type={'All Projects'}
-                  pickCustomViewer={setActionMode}
-                  selProjectIs={actionMode}
-                  dropDownItemsA={[
-                    ...[
-                      { label: 'Cost sheet', value: 'costSheetMode' },
-                      { label: 'Block Unit', value: 'unitBlockMode' },
-                      { label: 'Book Unit', value: 'unitBookingMode' },
-                    ],
-                  ]}
-                /> */}
+
               </div>)}
             </div>
           </div>
         </Dialog.Title>
       </div>
       {showUnitDetails && (
-                    <div className="py-3 grid grid-cols-3 mb-2">
+                    <div className="py-3  mx-4 grid grid-cols-3 mb-2">
                       <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md">
                         <section className="flex flow-row justify-between mb-1">
                           <div className="font-md text-xs text-gray-700 tracking-wide">
@@ -861,7 +804,7 @@ console.log('customer info', myBookingPayload)
                     onStep
                   ) && (
                     <div className="">
-                      <div className="flex flex-col  border mx-0 bg-[#F8FAFC] ">
+                      <div className="flex flex-col rounded-md  border mx-0 bg-[#F8FAFC] ">
                         <div className="">
                           <Formik
                             enableReinitialize={true}
@@ -880,33 +823,7 @@ console.log('customer info', myBookingPayload)
                                     boxShadow: '0 1px 12px #f2f2f2',
                                   }}
                                 >
-                                  {/* {csMode === 'both' && (
-                                    <CostBreakUpPdfAll
-                                      projectDetails={projectDetails}
-                                      csMode={csMode}
-                                      setCostSheet={setCostSheet}
-                                      costSheet={costSheet}
-                                      // costSheetA={costSheetA}
-                                      pdfExportComponent={
-                                        pdfExportComponentConstruct
-                                      }
-                                      selPhaseObj={selPhaseObj}
-                                      leadDetailsObj1={leadDetailsObj1}
-                                      selUnitDetails={selUnitDetails}
-                                      setNewConstructCsObj={
-                                        setNewConstructCsObj
-                                      }
-                                      newConstructCsObj={newConstructCsObj}
-                                      newConstructCostSheetA={
-                                        newConstructCostSheetA
-                                      }
-                                      setCostSheetA={setNewConstructCostSheetA}
-                                      costSheetA={newConstructCostSheetA}
-                                      setNewPS={setNewConstructPS}
-                                      setNewConstructPS={setNewConstructPS}
-                                      newConstructPS={newConstructPS}
-                                    />
-                                  )} */}
+                                
                                   {csMode === 'both' && (
                                     <CostBreakUpPdf
                                       formik={formik}
@@ -916,7 +833,6 @@ console.log('customer info', myBookingPayload)
                                       costSheet={costSheet}
                                       myBookingPayload={myBookingPayload}
                                       setMyBookingPayload={setMyBookingPayload}
-                                      // costSheetA={costSheetA}
                                       pdfExportComponent={pdfExportComponent}
                                       selPhaseObj={selPhaseObj}
                                       leadDetailsObj1={leadDetailsObj1}
@@ -957,8 +873,8 @@ console.log('customer info', myBookingPayload)
                                   )}
                                 </section>
 
-                                <div className="flex mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white  shadow-lg absolute bottom-0  w-full">
-                                <div className="inline-block mt-4">
+                                <div className="flex z-10 flex-row justify-between items-center pr-6 bg-white shadow-lg absolute bottom-0 w-full py-3">
+                                <div className="inline-block ml-8 ">
                                       <PdfInvoiceGenerator
                                         user={user}
                                         selUnitDetails={selUnitDetails}
@@ -984,13 +900,12 @@ console.log('customer info', myBookingPayload)
                                       />
 
 
-                                    </div>
+                                  </div>
                                   <div className="mt-2 text-right md:space-x-3 md:block flex flex-row-reverse justify-between mb-3">
 
                                     <section className='flex gap-2'>
                                     <button
-                                      className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
-bg-gradient-to-r from-violet-600 to-indigo-600
+                                      className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none hover:bg-[#5671fc] bg-gradient-to-r from-violet-600 to-indigo-600
 text-black
 
  duration-200 ease-in-out
@@ -1002,9 +917,9 @@ transition
                                       onClick={()=>{
                                         setIsMover(false)
                                       }}
-                                      // onClick={() => submitFormFun(formik)}
+                                  
                                     >
-                                      {/* {loading && <Loader />} */}
+                               
                                       Save
                                     </button>
                                     {[
@@ -1026,10 +941,10 @@ transition
                                         onClick={()=>{
                                           setIsMover(true)
                                         }}
-                                        // onClick={() => submitFormFun(formik)}
+                                      
                                       >
-                                        {/* {loading && <Loader />} */}
-                                        <span>Save & Next</span>
+                                 
+                                        <span>Save & Next new</span>
                                       </button>
                                     )}
                                     </section>
@@ -1043,16 +958,7 @@ transition
                     </div>
                   )}
 
-                  {/* PaymentScheduleSheet */}
-                  {/* {['payment_sch', 'allsheets'].includes(onStep) && (
-                <PaymentScheduleSheet
-                  title="Booking Form"
-                  leadDetailsObj2={leadDetailsObj1}
-                  selUnitDetails={selUnitDetails}
-                  phase={selPhaseObj}
-                  soldPrice={soldPrice}
-                />
-              )} */}
+
                   {['customerDetails', 'allsheets'].includes(onStep) && (
                     <>
                       <AddApplicantDetails
@@ -1119,13 +1025,11 @@ transition
                       csMode={csMode}
                       myBookingPayload={myBookingPayload}
                       setMyBookingPayload={setMyBookingPayload}
-                      // costSheetA={costSheetA}
                       pdfExportComponent={pdfExportComponent}
                       costSheet={costSheet}
                       selPhaseObj={selPhaseObj}
                       leadDetailsObj1={leadDetailsObj1}
                       customerInfo={streamUnitDetails}
-                      // setOnStep={setOnStep}
 
                       selUnitDetails={streamUnitDetails}
                       setNewPlotCsObj={setNewPlotCsObj}
@@ -1174,64 +1078,9 @@ transition
                     />
                   )}
                   {['Detail View'].includes(onStep) && <UnitTransactionForm />}
-                  {/* <div className="mt-8 p-4"> */}
-                  {/* <div>
-            <div className="font-bold text-gray-600 text-xs leading-8 uppercase h-6 mx-2 mt-3">Full Name</div>
-            <div className="flex flex-col md:flex-row">
-                <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                    <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                        <input placeholder="First Name" className="p-1 px-2 appearance-none outline-none w-full text-gray-800"> </div>
+                 
                 </div>
-                <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                    <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                        <input placeholder="Last Name" className="p-1 px-2 appearance-none outline-none w-full text-gray-800"> </div>
-                </div>
-            </div>
-            <div className="flex flex-col md:flex-row">
-                <div className="w-full mx-2 flex-1 svelte-1l8159u">
-                    <div className="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase"> Username</div>
-                    <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                        <input placeholder="Just a hint.." className="p-1 px-2 appearance-none outline-none w-full text-gray-800"> </div>
-                </div>
-                <div className="w-full mx-2 flex-1 svelte-1l8159u">
-                    <div className="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase"> Your Email</div>
-                    <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                        <input placeholder="jhon@doe.com" className="p-1 px-2 appearance-none outline-none w-full text-gray-800"> </div>
-                </div>
-            </div>
-        </div> */}
-
-                  {/* </div> */}
-                </div>
-                {/* {['unitBookingMode', 'unitBlockMode'].includes(actionMode) && (
-                  <div className="flex flex-col  w-[250px] pt-4 px-2 bg-violet-100 h-screen">
-                    {StatusListA.map((statusFlowObj, i) => (
-                      <span
-                        key={i}
-                        className={`font-bodyLato text-sm font-normal px-2 py-[4px]   mt-2 mr-1 cursor-pointer rounded-full ${
-                          onStep === statusFlowObj.value
-                            ? 'bg-violet-500 text-white'
-                            : ''
-                        } `}
-                        onClick={() => setStatusFun(i, statusFlowObj.value)}
-                      >
-                        <section className="flex flex-row">
-                          <span
-                            className={`w-4 h-4 mt-[1px] text-[9px] mr-1 flex justify-center items-center rounded-full  border ${
-                              onStep === statusFlowObj.value
-                                ? 'bg-violet-500 text-white'
-                                : ''
-                            } `}
-                          >
-                            {i + 1}
-                          </span>
-                          <div>{statusFlowObj.label}</div>
-                        </section>
-                      </span>
-                    ))}
-
-                  </div>
-                )} */}
+              
               </section>
             </div>
           </article>
@@ -1252,11 +1101,7 @@ transition
         newPlotCsObj={newPlotCsObj}
         costSheetA={costSheetA || newPlotCostSheetA || []}
         newPlotCostSheetA={costSheetA || newPlotCostSheetA || []}
-        // setNewPlotCsObj={setNewPlotCsObj}
-        // setCostSheetA={setNewPlotCostSheetA}
-        // setNewPS={setNewPlotPS}
-        // newPlotPS={newPlotPS}
-        // showGstCol={showGstCol}
+
       />
     </>
   )
@@ -1321,11 +1166,11 @@ ScrollHighlightNabbar.propTypes = {
 }
 
 /**
- * @param {number} currentPosition Current Scroll position
- * @param {Array} sectionPositionArray Array of positions of all sections
- * @param {number} startIndex Start index of array
- * @param {number} endIndex End index of array
- * @return {number} Current Active index
+ * @param {number} currentPosition 
+ * @param {Array} sectionPositionArray 
+ * @param {number} startIndex 
+ * @param {number} endIndex 
+ * @return {number} 
  */
 const nearestIndex = (
   currentPosition,
@@ -1387,7 +1232,6 @@ ScrollHighlightNabbar.propTypes = {
 
 export const MyComponent = ({ data }) => {
   if (data && data?.customerDetailsObj) {
-    // CustomerDetailsObj exists
     const customerDetails = data?.customerDetailsObj
 
     const emptyValueCount = Object.values(customerDetails).filter(
@@ -1406,15 +1250,11 @@ export const MyComponent = ({ data }) => {
 
   return null
 
-  // else {
 
-  //   return <p>0 of 10 Filled</p>
-  // }
 }
 
 export const PaymentScheduleStats = ({ newPlotPS }) => {
   if (newPlotPS?.length > 0) {
-    // CustomerDetailsObj exists
 
     let start = 'NA'
     let end = 'NA'
@@ -1433,7 +1273,6 @@ export const PaymentScheduleStats = ({ newPlotPS }) => {
       </div>
     )
   } else {
-    // CustomerDetailsObj does not exist
     return <p></p>
   }
 }

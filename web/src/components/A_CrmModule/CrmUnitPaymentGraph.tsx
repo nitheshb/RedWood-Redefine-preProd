@@ -14,7 +14,6 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
   const [unitTotal, setUnitTotal] = useState(0)
 
 
-  // const [grossUnitTotal, setGrossTotal] = useState(0)
 
 
   console.log('payload is ', selCustomerPayload)
@@ -53,23 +52,6 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
       ) || 0;
 
 
-    //   const d =
-    //   selCustomerPayload?.constructCS?.reduce(
-    //     (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-    //     0
-    //   ) || 0;
-  
-    // const e =
-    //   selCustomerPayload?.constAdditionalChargesCS?.reduce(
-    //     (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-    //     0
-    //   ) || 0;
-  
-    // const f =
-    //   selCustomerPayload?.possessionAdditionalCostCS?.reduce(
-    //     (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-    //     0
-    //   ) || 0;
 
 
 

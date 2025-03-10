@@ -92,23 +92,7 @@ export function serialMyData(sourceListItemsA, fullData, mode) {
       )
       x.others = []
     } else {
-      // x.Total = fullData.filter(
-      //   (datObj) =>
-      //     souceObj?.rep.includes(datObj?.Source) &&
-      //     ![
-      //       'new',
-      //       'unassigned',
-      //       'followup',
-      //       'visitfixed',
-      //       'visitdone',
-      //       'negotiation',
-      //       'booked',
-      //       'blocked',
-      //       'dead',
-      //       'notinterested',
-      //       'junk',
-      //     ].includes(datObj?.Status)
-      // )
+
       x.Total = fullData.filter((datObj) =>
         souceObj?.rep.includes(datObj?.Source)
       )

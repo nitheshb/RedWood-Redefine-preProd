@@ -35,6 +35,10 @@ const ProjectsMHomeBody = ({
     totalUnitCount,
     soldUnitCount,
     blockedUnitCount,
+    custBlockCount,
+    mangBlockCount,
+    custBlockValue,
+    mangBlockValue,
     availableCount,
     bookUnitCount,
     blockUnitCount,
@@ -76,7 +80,6 @@ const ProjectsMHomeBody = ({
     dataLabels: {
       enabled: false,
     },
-    // fill: { opacity: 1 },
     grid: {
       show: false,
     },
@@ -160,55 +163,8 @@ const ProjectsMHomeBody = ({
     ],
   }
 
-  // const [unitsView, setUnitsView] = useState(false)
-  // const [areaView, setAreaView] = useState(false)
-  // const [valueView, setValueView] = useState(false)
-
-  // const [selbg, setSelbg] = useState('')
-  // const [seldata, setSeldata] = useState('')
-  // const [selkind, setSelkind] = useState('')
-  // const [selcurrency, setSelcurrency] = useState('')
-
-  // const [areabg, setAreabg] = useState('')
-  // const [areaData, setAreaData] = useState('')
-  // const [areakind, setAreakind] = useState('')
-  // const [areaCurrency, setareaCurrency] = useState('')
-
-  // const [valuebg, setValuebg] = useState('')
-  // const [valuedata, setValuedata] = useState('')
-  // const [valueKind, setValueKind] = useState('')
-  // const [valueCurrency, setValueCurrency] = useState('')
-  // const displayDetailView = (state, bgColor, data, kind, currency) => {
-  //   // console.log('am i clicked')
-  //   console.log('check')
-  //   setUnitsView(!unitsView)
-  //   setSelbg(bgColor)
-  //   setSeldata(data)
-  //   setSelkind(kind)
-  //   setSelcurrency(currency)
-  // }
-  // const areaDetailView = (state, bgColor, data, kind, currency) => {
-  //   // console.log('am i clicked')
-  //   console.log('check')
-  //   setAreaView(state)
-  //   setAreabg(bgColor)
-  //   setAreaData(data)
-  //   setAreakind(kind)
-  //   setareaCurrency(currency)
-  // }
-  // const valueDetailView = (state, bgColor, data, kind, currency) => {
-  //   // console.log('am i clicked')
-  //   console.log('check')
-  //   setValueView(state)
-  //   setValuebg(bgColor)
-  //   setValuedata(data)
-  //   setValueKind(kind)
-  //   setValueCurrency(currency)
-
-  //
   const chartSeries = data.series
   return (
-    // <div className="px-4 pb-[0.1px] flex bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700 ">
     <>
       <div onClick={() => setIsNewProjectOpen(true)} className="cursor-pointer">
         <div className="flex flex-row mb-[2px] ">
@@ -219,7 +175,6 @@ const ProjectsMHomeBody = ({
                   <div className="flex flex-col align-middle justify-between">
                     <Link
                       className="flex flex-col items-center"
-                      // to={routes.projectEdit({ uid })}
                     >
                       <img className="w-10 h-10" alt="" src="/apart.svg"></img>
                       <span className="relative  flex items-center w-auto text-md font-bold leading-none pl-0 mt-[8px]">
@@ -228,14 +183,7 @@ const ProjectsMHomeBody = ({
                     </Link>
                   </div>
 
-                  {/* <section className="flex flex-row justify-between mt-4">
-                      <span className="text-sm  font-light  font text-gray-700 ">
-                        {projectType?.name}
-                      </span>
-                      <span className="text-sm  font-light  font text-gray-700 ">
-                        {builderName}
-                      </span>
-                    </section> */}
+      
                   <section className="flex flex-row justify-between mt-2">
                     <span className="text-sm  font-light  font text-gray-800 ">
                       {projectType?.name}
@@ -267,7 +215,9 @@ const ProjectsMHomeBody = ({
                       { item: 'Available', value: availableCount || 0 },
                       { item: 'Sold', value: soldUnitCount || 0 },
                       { item: 'Blocked', value: blockedUnitCount || 0 },
-                      { item: 'Mang B', value: blockedUnitCount || 0 },
+
+                      { item: 'Cust B', value: custBlockCount || 0 },
+                      { item: 'Mang B', value: mangBlockCount || 0 },
                     ].map((data, i) => (
                       <div
                         className=" w-1/4  mx-1"
@@ -318,9 +268,9 @@ const ProjectsMHomeBody = ({
               </h6>
               <div className="flex flex-row justify-between px-1">
                 {[
-                  { item: 'Total', value: bookUnitCount || 0 },
-                  { item: 'Booking', value: bookUnitCount || 0 },
-                  { item: 'Agreement', value: s_agreeCount || 0 },
+                  { item: 'Total', value: soldUnitCount || 0 },
+                  { item: 'Booked', value: bookUnitCount || 0 },
+                  { item: 'Allotment', value: project?.s_agreeCount || 0 },
                 ].map((data, i) => (
                   <div
                     className=" w-1/4  mx-1"
@@ -340,8 +290,8 @@ const ProjectsMHomeBody = ({
               </div>
               <div className="flex flex-row justify-between px-1 mt-3">
                 {[
-                  { item: 'Registration', value: s_registerCount || 0 },
-                  { item: 'Construction', value: s_constCount || 0 },
+                  { item: 'Agreement', value: project?.atsCount || 0 },
+                  { item: 'Registration', value: project?.s_regisCount || 0 },
                   { item: 'Possession', value: s_possCount || 0 },
                 ].map((data, i) => (
                   <div

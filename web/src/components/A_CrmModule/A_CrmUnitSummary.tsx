@@ -168,49 +168,14 @@ const CrmUnitSummary = ({
   return (
     <PDFExport paperSize="A4" margin="1cm" ref={pdfUnitSummaryComp}>
       <div className="py-1 px-1 m-2 mt-[1px] rounded-lg border border-gray-100  overflow-y-scroll" style={{ height: `calc(100vh - 120px)` }}>
-        {/* customer details */}
-        {/* Unit details */}
-        {/* payment schedule */}
-        {/* Finance History */}
-        {/* Payment Summay */}
-        {/* Unit Position Summary */}
+
         <div className="flex flex-row">
           <div className="w-full">
-            {/* customer details */}
             <div className="flex flex-row justify-between text-end items-end mr-2">
 
-              {/* <PdfUnitSummaryFile
-                user={user}
-                selUnitDetails={selUnitPayload}
-                myObj={newPlotCostSheetA}
-                myAdditionalCharges={newAdditonalChargesObj}
-                netTotal={netTotal}
-                setNetTotal={setNetTotal}
-                partATotal={partATotal}
-                partBTotal={partBTotal}
-                setPartATotal={setPartATotal}
-                setPartBTotal={setPartBTotal}
-                projectDetails={[]}
-                leadDetailsObj1={[]}
-              /> */}
+
             </div>
 
-            {/* <CrmUnitHeader projectDetails={selUnitPayload} /> */}
-
-            {/* 1 } customer details */}
-            {/* Unit details */}
-
-            {/* <CrmUnitCustomerDetailsView1
-          Name={selUnitPayload?.customerName1}
-          Mobile={selUnitPayload?.phoneNo1}
-          netTotal={12345}
-          selCustomerPayload={selUnitPayload}
-          assets={assets}
-        /> */}
-            {/* Payment Summay */}
-
-            {/* Unit Position Summary */}
-            {/* payment schedule */}
             <div>
               <CrmUnitCostSheetView
                 selCustomerPayload={selUnitPayload}
@@ -232,13 +197,7 @@ const CrmUnitSummary = ({
           <div className="flex flex-col bg-[#f0f1ff] mb-2 rounded-lg p-3 ">
 
           <div className="flex flex-row  bg-white shadow rounded-xl my-1  px-2 py-2 min-w-[260px]">
-              {/* <img
-                src="https://static.ambitionbox.com/static/benefits/WFH.svg"
-                alt=""
-              />
-              <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
-                  Payments Summary
-              </h1> */}
+
 
 
 <div>
@@ -270,21 +229,10 @@ const CrmUnitSummary = ({
     setNetTotal={setNetTotal}
     partATotal={partATotal}
     partBTotal={partBTotal}
-    // setPartATotal={setPartATotal}
-    // setPartBTotal={setPartBTotal}
+
     projectDetails={projectDetails}
     leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined}
-    // user={user}
-    // selUnitDetails={selUnitDetails}
-    // myObj={newPlotCostSheetA}
-    // newPlotPS={newPlotPS}
-    // netTotal={unitTotal}
-    // setNetTotal={setUnitTotal}
-    // partATotal={partATotal}
-
-    // partBTotal={0}
-    // setPartATotal={partATotal}
-    // projectDetails={{}} myAdditionalCharges={undefined} setPartBTotal={undefined} leadDetailsObj1={undefined} customerDetails={undefined}
+  
     />
 </div>
 
@@ -378,7 +326,6 @@ const CrmUnitSummary = ({
 
                       </section>
                       <span className="text-[12px] font- text-[#151F2B] flex flex-row">
-                          {/* {data?.type?.toUpperCase()} */}
                          By: {data?.by}
                         </span>
                       <span className="inline-flex flex-row items-center text-[12px] font-normal text-gray-500 ">

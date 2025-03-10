@@ -40,13 +40,7 @@ export default function LegalDocsViewHome({
   }
 
   const validateSchema = Yup.object({
-    // date: Yup.string().required('Bank Required'),
-    // amount: Yup.string().required('Required'),
-    // payto: Yup.string().required('Required'),
-    // mode: Yup.string().required('Bank Required'),
-    // drawnonbank: Yup.string().required('Required'),
-    // chequeno: Yup.string().required('Required'),
-    // dated: Yup.string().required('Required'),
+
   })
 
   return (
@@ -59,7 +53,7 @@ export default function LegalDocsViewHome({
               initialValues={initialState}
               validationSchema={validateSchema}
               onSubmit={(values, { resetForm }) => {
-                // onSubmit(values, resetForm)
+
               }}
             >
               {(formik) => (
@@ -344,22 +338,9 @@ export default function LegalDocsViewHome({
                                     <h2 className="font-medium flex-grow">
                                       Unit Document
                                     </h2>
-                                    {/* <span
-                                      className=" ml-2 text-blue-500 hover:underline"
-                                      onClick={() => {
-                                        setSliderInfo({
-                                          open: true,
-                                          title: 'legal_doc_upload',
-                                          sliderData: {},
-                                          widthClass: 'max-w-xl',
-                                        })
-                                      }}
-                                    >
-                                      Add Doc
-                                    </span> */}
+    
                                   </div>
                                   <p className="mr4">Date Created</p>
-                                  {/* <Icon name="folder" size="3xl" color="gray" /> */}
                                 </div>
                               </div>
                               {[
@@ -397,7 +378,6 @@ export default function LegalDocsViewHome({
                                 <section
                                   key={i}
                                   onClick={() => {
-                                    // show sidebar and display the worddoc
                                     setSliderInfo(  {
                                       open: true,
                                       title: 'viewDocx',

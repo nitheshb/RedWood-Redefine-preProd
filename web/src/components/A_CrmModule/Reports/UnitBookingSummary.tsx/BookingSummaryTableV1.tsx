@@ -31,7 +31,7 @@ import {
 } from 'recharts';
 
 
-import { Calendar, ChevronRight } from 'lucide-react';
+import { Calendar, ChevronRight, SlidersHorizontal, X } from 'lucide-react';
 
 
 
@@ -50,7 +50,7 @@ import {
 
 import 'react-datepicker/dist/react-datepicker.css'
 import TableSortLabel from '@mui/material/TableSortLabel'
-// import Tooltip from '@mui/material/Tooltip'
+
 import DeleteIcon from '@mui/icons-material/Delete'
 import { visuallyHidden } from '@mui/utils'
 import Highlighter from 'react-highlight-words'
@@ -60,32 +60,14 @@ import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
 import { computeTotal } from 'src/util/computeCsTotals'
 import { getAllProjects, getBookedUnitsByProject, getUnitsAgreeByProject } from 'src/context/dbQueryFirebase'
 import { Download, Filter } from 'lucide-react'
-// import { prettyDate } from '../../util/dateConverter'
-// import DropCompUnitStatus from '../dropDownUnitStatus'
+import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import PdfBookingSummaryReport from './PdfBookingSummaryReport'
+import PdfBookingConstructionSummaryReport from './PdfBookingConstructionSummaryReport'
 
 
 
-// function createData(
-//   Date,
-//   Name,
-//   Mobile,
-//   Email,
-//   Project,
-//   Source,
-//   Empmobile,
-//   Note
-// ) {
-//   return {
-//     Date,
-//     Name,
-//     Mobile,
-//     Email,
-//     Project,
-//     Source,
-//     Empmobile,
-//     Note,
-//   }
-// }
+
+
 
 function descendingComparator(a, b, orderBy) {
   if ((b[orderBy] || b['stsUpT'] || b['Date']) < (a[orderBy] || a['stsUpT'] || a['Date'])) {
@@ -110,8 +92,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
+
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
@@ -124,173 +105,9 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0])
 }
 
-const headCells = [
-  // {
-  //   id: 'S.No',
-  //   numeric: true,
-  //   disablePadding: false,
-  //   label: 'S.No',
-  // },
-  {
-    id: 'Date',
-    numeric: false,
-    disablePadding: true,
-    align: 'left',
-    label: 'Customer Details',
-  },
-  {
-    id: 'AssignedOn',
-    numeric: false,
-    disablePadding: false,
-    align: 'center',
-    label: 'Unit',
-  },
-  {
-    id: 'Project',
-    numeric: false,
-    disablePadding: false,
-    align: 'left',
-    label: 'Project',
-  },
-  {
-    id: 'Clientdetails',
-    numeric: false,
-    disablePadding: false,
-    align: 'center',
-    label: 'Status',
-  },
 
-  // {
-  //   id: 'bmrda_strr',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'center',
-  //   label: 'BMRDA/STRR',
-  // },
 
-  {
-    id: 'booked',
-    numeric: false,
-    disablePadding: false,
-    align: 'center',
-    label: 'Booked',
-  },
-  {
-    id: 'partA',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Land',
-  },{
-    id: 'partB',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Charges-I',
-  },{
-    id: 'partC',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Construction',
-  },{
-    id: 'partD',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Charges-II',
-  },
-  // {
-  //   id: 'infra',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'right',
-  //   label: 'Infrastructure',
-  // },
-  // {
-  //   id: 'club',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'right',
-  //   label: 'ClubHouse Charges',
-  // },
-  // {
-  //   id: 'maintenance',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'right',
-  //   label: 'Maintenance Charges',
-  // },
-  // {
-  //   id: 'legal',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   align: 'right',
-  //   label: 'Legal Charges',
-  // },
-  {
-    id: 'sale',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Sale Value',
-  },
-  {
-    id: 'avgsft',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Sft Cost',
-  },
-  {
-    id: 'sv_sft',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Sv/Sft',
-  },
-  {
-    id: 'received',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Received',
-  },
-  {
-    id: 'balance',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Balance',
-  },
-  {
-    id: 'partE',
-    numeric: false,
-    disablePadding: false,
-    align: 'right',
-    label: 'Possession',
-  },
-  {
-    id: 'crm_executive',
-    numeric: false,
-    disablePadding: true,
-    align: 'left',
-    label: 'CRM Executive',
-  },
-  {
-    id: 'sale_executive',
-    numeric: false,
-    disablePadding: true,
-    align: 'left',
-    label: 'Sale Executive',
-  },
-  {
-    id: 'Notes',
-    numeric: true,
-    disablePadding: false,
-    label: 'Comments',
-  },
-]
+
 
 
 
@@ -327,25 +144,7 @@ const EnhancedTableToolbar = (props) => {
   useEffect(() => {
     setRowsAfterSearchKey(rows)
   }, [rows])
-  // useEffect(() => {
-  //  console.log('calendar state', isOpened, startDate?.getTime())
-  //  if(startDate !== null && endDate !=null){
-  //   console.log('inside you1')
-  //   let rowsR = rows.filter((item) => {
-  //    return item.Date >=startDate.getTime() && item.Date <=endDate.getTime()
-  //   })
-  //   setRowsAfterSearchKey(rowsR)
-  //  }else if(startDate !==null) {
-  //   console.log('inside you')
-  //   let rowsR = rows.filter((item) => {
-  //     console.log('inside you wjat os tjo filter', item.Date>= startDate.getTime() && item.Date <= startDate.getTime()+ 86400000,startDate.getTime()+ 86399999,startDate.getTime(),   item.Name)
-  //     return item.Date>= startDate.getTime() && item.Date <= startDate.getTime()+ 86400000
-  //    })
-  //    console.log('inside you wjat os tjo filter', rowsR.length)
-  //    setRowsAfterSearchKey(rowsR)
-  //    console.log('inside you wjat os tjo filter 1', rowsAfterSearchKey)
-  //  }
-  // }, [startDate,endDate ])
+
 
   useEffect(() => {
     const downRows = []
@@ -409,34 +208,17 @@ useEffect(()=>{
 
 
 
+
+
+
+
+
+
+
+
   return (
     <section className="flex flex-row justify-between pb pt-1 px-3 ">
-      {/* <span className="flex flex-row">
-        <span className="relative  p- border rounded h-7">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-3 w-3 absolute left-0 ml-1 mt-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-          <input
-            type="text"
-            placeholder={`Search...${selStatus}`}
-            // onChange={searchKeyField}
-            value={searchKey}
-            className="ml-6 bg-transparent text-xs focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none"
-          />
-        </span>
 
-      </span> */}
 
 
       <span style={{ display: 'flex' }}>
@@ -449,15 +231,6 @@ useEffect(()=>{
             pickCustomViewer={pickCustomViewer}
           />
         </section>
-        {/* <Tooltip title={`Download ${rowsAfterSearchKey.length} Rows`}>
-
-          <IconButton className="bg-gray-200 ">
-            <EventNoteTwoToneIcon
-              className="h-[20px] w-[20px]"
-              style={{ height: '20px', width: '20px' }}
-            />
-          </IconButton>
-        </Tooltip> */}
 
         {numSelected > 0 ? (
           <Tooltip title="Delete">
@@ -589,12 +362,7 @@ const [inventoryPayload, setInventoryPayload] = useState([
   { day: 'Available', count: 0 },
   { day: 'Booked', count: 0 },
   { day: 'Blocked', count: 0 },
-  // { day: '8', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
-  // { day: '9', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
-  // { day: '10', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
-  // { day: '11', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
-  // { day: '12', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
-  // { day: '13', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+
 ]);
 
 const [unitStatusPayload, setUnitStatusPayload] = useState([
@@ -614,18 +382,12 @@ const rowsCounter = (parent, searchKey) => {
       )
 }
 useEffect(() => {
+  getProjectsListFun()
+}, [])
+useEffect(() => {
   boot()
 }, [projectList])
 useEffect(() => {
-  // axios
-  //   .get('/api/tableData1/all')
-  //   .then(({ data }) => {
-  //     setTableData(tableData1)
-  //   })
-  //   .catch((error) => {
-  //     // setTableData(tableData1)
-  //     console.log(error)
-  //   })
 
   const tabHeadFieldsA1 = [
     { value: 'all', lab: 'All', val: 'all' },
@@ -684,6 +446,29 @@ useEffect(() => {
       )
   }
 }, [unitsFetchData, selProjectIs])
+
+
+
+
+
+
+// useEffect(() => {
+//   // unitsFetchData
+//   console.log('values are', unitsFetchData.length, selProjectIs.uid);
+//   switch (selProjectIs.value) {
+//     case 'allprojects':
+//       return setTableData(unitsFetchData);
+//     default:
+//       return setTableData(
+//         unitsFetchData.filter((dat) => dat?.pId === selProjectIs.uid)
+//       );
+//   }
+// }, [unitsFetchData, selProjectIs]);
+
+
+
+
+
 const boot = async () => {
   // await getProjectsListFun()
   const unsubscribe = await getBookedUnitsByProject(
@@ -700,9 +485,7 @@ const boot = async () => {
         }
         return x
       })
-      // setBoardData
-      // console.log('my Array data is ', usersListA, crmCustomersDBData)
-      // await serealizeData(usersListA)
+
       console.log('booking details values are', usersListA)
       await setUnitsFetchData(usersListA)
       await updateBookingData(usersListA)
@@ -757,14 +540,11 @@ function updateBookingData(myDbDataIs) {
   ];
 
   myDbDataIs.forEach(record => {
-    // Convert the timestamp to a Date object
     const date = new Date(record.Date);
-    // Get the month name
     const month = monthNames[date.getUTCMonth()];
-    // Find the corresponding month in projectBookingsData
     const booking = projectBookingsData.find(entry => entry.time === month);
     if (booking) {
-      booking.value += 1; // Increment the value
+      booking.value += 1;
     }
   });
   setProjectBookingsData(projectBookingsData)
@@ -772,7 +552,6 @@ function updateBookingData(myDbDataIs) {
   return projectBookingsData;
 }
 function updateInventoryData(myDbDataIs) {
-  // Month mapping for easy lookup
   const monthNames = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "July", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -780,27 +559,15 @@ function updateInventoryData(myDbDataIs) {
 let x = []
 let y = {available: 0, booked: 0, blocked: 0}
   myDbDataIs.map((record, i) => {
-    // Convert the timestamp to a Date object
-    // const date = new Date(record.Date);
-    // // Get the month name
-    // const month = monthNames[date.getUTCMonth()];
-    // // Find the corresponding month in projectBookingsData
-    // const booking = projectBookingsData.find(entry => entry.time === month);
-    // if (booking) {
-    //   booking.value += 1; // Increment the value
-    // }
+
     console.log('project details are', record)
 
-    // y.day = record?.projectName;
-    // y.Available= record?.availableCount || 0;
-    // y.Sold= record?.bookUnitCount || 0;
-    // y.Blocked= record?.blockedUnitCount || 0;
+
 
     y.available += record?.availableCount || 0;
     y.booked += record?.bookUnitCount || 0;
     y.blocked += record?.blockedUnitCount || 0;
 
-    // x.push(y)
   });
   setInventoryPayload([{day: 'Available', count: y.available}, {day: 'Booked', count: y.booked}, {day: 'Blocked', count: y.blocked}])
   console.log('booking details values are',projectBookingsData )
@@ -989,28 +756,15 @@ useEffect(() => {
   }
 
   const handleClick = (event, row) => {
-    // const selectedIndex = selected.indexOf(name)
     const newSelected = []
 
-    // if (selectedIndex === -1) {
-    //   newSelected = newSelected.concat(selected, name)
-    // } else if (selectedIndex === 0) {
-    //   newSelected = newSelected.concat(selected.slice(1))
-    // } else if (selectedIndex === selected.length - 1) {
-    //   newSelected = newSelected.concat(selected.slice(0, -1))
-    // } else if (selectedIndex > 0) {
-    //   newSelected = newSelected.concat(
-    //     selected.slice(0, selectedIndex),
-    //     selected.slice(selectedIndex + 1)
-    //   )
-    // }
+
     selUserProfileF('User Profile', row)
     setSelected(newSelected)
   }
 
   const isSelected = (name) => selected.indexOf(name) !== -1
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
 
@@ -1018,13 +772,641 @@ useEffect(() => {
 
 
 
-  {/* today */}
+
+
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [customDate, setCustomDate] = useState(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+
+
+  const [selectedView, setSelectedView] = useState([]);
+
+
+
+
+
+const [selectedUnitType, setSelectedUnitType] = useState([]);
+
+const unitTypeOptions = ["Plot", "Villa", "Apartment"];
 
 
 
 
 
 
+
+
+
+useEffect(() => {
+  console.log("Selected Filters:", selectedFilters);
+  console.log("Selected Unit Types:", selectedUnitType);
+  console.log("Custom Date:", customDate);
+  console.log("Original Data:", unitsFetchData);
+
+  let filteredData = unitsFetchData;
+
+
+  if (selectedFilters.length > 0) {
+    filteredData = filteredData.filter((dat) =>
+      selectedFilters.includes(dat.projName)
+    );
+    console.log("Filtered by Project:", filteredData);
+  }
+
+
+  filteredData = filterByUnitType(filteredData, selectedUnitType);
+  console.log("Filtered by Unit Type:", filteredData);
+
+  
+  setTableData(filteredData);
+}, [selectedFilters, selectedUnitType, unitsFetchData, customDate]);
+
+
+
+
+
+
+
+
+
+const toggleUnitType = (item: string) => {
+  setSelectedUnitType((prev) =>
+    prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+  );
+};
+
+
+
+const filterByUnitType = (data, selectedUnitType) => {
+  if (selectedUnitType.length === 0) {
+    return data; 
+  }
+
+  return data.filter((row) => selectedUnitType.includes(row.unit_type));
+};
+
+
+
+
+const [selectedCostView, setSelectedCostView] = useState([]);
+
+// const costViewOptions = ["Plot Cost", "Construction Cost"];
+
+const toggleCostView = (item) => {
+  setSelectedCostView((prev) =>
+    prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+  );
+};
+
+
+const headCells = [
+  // {
+  //   id: 'S.No',
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: 'S.No',
+  // },
+  {
+    id: 'Date',
+    numeric: false,
+    disablePadding: true,
+    align: 'left',
+    label: 'Customer Details',
+  },
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Unit',
+  },
+
+  // lkjhgghh
+
+
+
+
+
+
+  {
+    id: 'Project',
+    numeric: false,
+    disablePadding: false,
+    align: 'left',
+    label: 'Project',
+  },
+  // {
+  //   id: 'Clientdetails',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Status',
+  // },
+
+  // {
+  //   id: 'bmrda_strr',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'BMRDA/STRR',
+  // },
+
+  {
+    id: 'booked',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Booked',
+  },
+
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Faceing',
+  },
+
+  {
+    id: 'share',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Sharing',
+  },
+
+
+
+  {
+    id: 'releasestatus',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Release Status',
+  },
+
+
+  
+  {
+    id: 'releasestatus',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Unit Type',
+  },
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Plot Area',
+  },
+
+
+
+  {
+    id: 'ratesqft',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Rate/sqft',
+  },
+
+
+
+
+  //  ...(selectedCostView.includes("Plot Cost")
+  //  ? [
+       {
+         id: 'PlotCost',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Plot Cost',
+       },
+       {
+         id: 'PlotCollected',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Plot Collected',
+       },
+       {
+         id: 'PlotDue',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Plot Due',
+       },
+  //    ]
+  //  : []),
+
+
+   {
+    id: 'BUA',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'BUA',
+  },
+  {
+    id: 'ConstRateSqft',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Const. Rate/Sqft',
+  },
+
+
+
+  //  ...(selectedCostView.includes("Construction Cost")
+  //  ? [
+
+       {
+         id: 'ConstructionCost',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Construction Cost',
+       },
+       {
+         id: 'ConstCollected',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Const Collected',
+       },
+       {
+         id: 'ConstDue',
+         numeric: false,
+         disablePadding: false,
+         align: 'center',
+         label: 'Const Due',
+       },
+  //    ]
+  //  : []),
+
+
+
+
+
+
+
+  // {
+  //   id: 'AssignedOn',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'BUA',
+  // },
+
+
+
+
+
+  // {
+  //   id: 'AssignedOn',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Const. Rate/Sqft',
+  // },
+
+
+
+
+
+  // {
+  //   id: 'AssignedOn',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Construction Cost',
+  // },
+
+
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'CRM',
+  },
+
+
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Sale Manager',
+  },
+
+
+
+  {
+    id: 'AssignedOn',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Status Updated Date',
+  },
+
+
+
+
+  {
+    id: 'Age',
+    numeric: false,
+    disablePadding: false,
+    align: 'center',
+    label: 'Ageing',
+  },
+
+
+
+
+
+
+
+
+
+
+
+  // {
+  //   id: 'bua',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'BUA',
+  // },
+
+
+
+  // {
+  //   id: 'bua',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'BUA',
+  // },
+
+
+
+
+
+  // {
+  //   id: 'crm Manager',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Ageing',
+  // },
+
+
+
+
+
+
+
+
+  // {
+  //   id: 'AssignedOn',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Const Collected',
+  // },
+
+  // {
+  //   id: 'AssignedOn',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   align: 'center',
+  //   label: 'Const Due',
+  // },
+
+
+  {
+    id: 'partA',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Land',
+  },{
+    id: 'partB',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Charges-I',
+  },{
+    id: 'partC',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Construction',
+  },{
+    id: 'partD',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Charges-II',
+  },
+
+  {
+    id: 'sale',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Sale Value',
+  },
+  {
+    id: 'avgsft',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Sft Cost',
+  },
+  {
+    id: 'sv_sft',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Sv/Sft',
+  },
+  {
+    id: 'received',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Received',
+  },
+  {
+    id: 'balance',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Balance',
+  },
+  {
+    id: 'partE',
+    numeric: false,
+    disablePadding: false,
+    align: 'right',
+    label: 'Possession',
+  },
+  {
+    id: 'crm_executive',
+    numeric: false,
+    disablePadding: true,
+    align: 'left',
+    label: 'CRM Executive',
+  },
+  {
+    id: 'sale_executive',
+    numeric: false,
+    disablePadding: true,
+    align: 'left',
+    label: 'Sale Executive',
+  },
+  {
+    id: 'Notes',
+    numeric: true,
+    disablePadding: false,
+    label: 'Comments',
+  },
+]
+
+
+
+
+
+
+
+
+
+
+  const [projects, setProjects] = useState([]);
+
+
+  useEffect(() => {
+    if (unitsFetchData.length > 0) {
+      setProjects([...new Set(unitsFetchData.map((item) => item.projName))]);
+    }
+  }, [unitsFetchData]);
+
+  const amenities = projects;
+
+
+
+
+  const bookingOptions = ["This Week", "This Month", "Last 6 Months", "Custom Date"];
+
+ 
+
+
+  const toggleFilter = (item) => {
+    setSelectedFilters((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+    );
+  
+    if (item === "Custom Date") {
+      setShowDatePicker(true);
+    } else {
+      setShowDatePicker(false);
+    }
+  };
+
+
+
+  const filterByBookingDate = (data, selectedFilters) => {
+    const currentDate = new Date(); 
+  
+    return data.filter((row) => {
+      const bookedDate = new Date(row.booked_on); 
+  
+  
+      if (selectedFilters.includes("This Week")) {
+        const startOfWeek = new Date(currentDate);
+        startOfWeek.setDate(currentDate.getDate() - currentDate.getDay()); 
+        return bookedDate >= startOfWeek && bookedDate <= currentDate;
+      }
+  
+      if (selectedFilters.includes("This Month")) {
+        const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1); 
+        return bookedDate >= startOfMonth && bookedDate <= currentDate;
+      }
+  
+      if (selectedFilters.includes("Last 6 Months")) {
+        const sixMonthsAgo = new Date(currentDate);
+        sixMonthsAgo.setMonth(currentDate.getMonth() - 6); 
+        return bookedDate >= sixMonthsAgo && bookedDate <= currentDate;
+      }
+  
+      if (selectedFilters.includes("Custom Date") && customDate) {
+        const customDateObj = new Date(customDate);
+        return bookedDate.toDateString() === customDateObj.toDateString(); 
+      }
+  
+      return true; 
+    });
+  };
+
+
+  useEffect(() => {
+    let filteredData = unitsFetchData;
+  
+
+    if (selectedFilters.length > 0) {
+      filteredData = filteredData.filter((dat) =>
+        selectedFilters.includes(dat.projName)
+      );
+    }
+  
+  
+    filteredData = filterByBookingDate(filteredData, selectedFilters);
+  
+
+    setTableData(filteredData);
+  }, [selectedFilters, unitsFetchData, customDate]);
+
+
+
+
+
+
+
+    const computeCosts = (row) => {
+      const plotCost = row?.plotCS?.reduce((sum, val) => sum + val.TotalNetSaleValueGsT, 0) || 0;
+      const constructionCost = row?.addChargesCS?.reduce((sum, obj) =>
+        sum + Number(computeTotal(obj, row?.super_built_up_area || row?.area?.toString()?.replace(',', ''))),
+        0
+      ) || 0;
+
+      return { plotCost, constructionCost };
+    };
+
+
+    const computeTotal = (obj, area) => {
+
+      return obj.charges * Number(area);
+    };
 
 
   const channelData = [
@@ -1049,7 +1431,7 @@ useEffect(() => {
 
 
   const customTooltipone = ({ payload, label }) => {
-    console.log(payload); // Add this line to see if payload is populated correctly
+    console.log(payload);
     if (!payload || payload.length === 0) return null;
 
     return (
@@ -1067,73 +1449,6 @@ useEffect(() => {
       </div>
     );
   };
-
-
-
-  // const customTooltipone = ({ payload, label }) => {
-  //   if (!payload || payload.length === 0) return null;
-
-  //   return (
-  //     <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg text-sm">
-  //       <p className="font-semibold text-gray-800">{label}</p>
-  //       {payload.map((entry, index) => (
-  //         <div key={`tooltip-item-${index}`} className="flex items-center space-x-2 mb-2">
-  //           <div
-  //             className="w-3 h-3 "
-  //             style={{ backgroundColor: entry.color }}
-  //           ></div>
-  //           <span className="text-gray-700">{`${entry.name}: ₹  ${entry.value}`}</span>
-  //         </div>
-  //       ))}
-  //     </div>
-  //   );
-  // };
-
-
-
-
-
-// const CustomTooltip = ({ active, payload }) => {
-//   if (active && payload && payload.length) {
-//     const time = payload[0].payload.time;
-
-//     return (
-//       <div className="bg-white p-3 rounded-md">
-//         <p className="text-black">Time: {time}</p>
-
-//         {payload.map((entry, index) => {
-//           const { value, prevValue } = entry.payload;
-//           const strokeColor = entry.stroke;
-
-
-//           return (
-//             <div key={index} className="flex items-center gap-2">
-
-//               <div
-//                 style={{ backgroundColor: strokeColor }}
-//                 className="w-4 h-4 "
-//               ></div>
-
-//               <p className="text-black">
-//                 {entry.dataKey === "value"
-//                   ? `Current Value: ${value}`
-//                   : entry.dataKey === "prevValue"
-//                   ? `Previous Value: ${prevValue}`
-//                   : null}
-//               </p>
-//             </div>
-//           );
-//         })}
-//       </div>
-//     );
-//   }
-
-//   return null;
-// };
-
-
-
-
 
 
 
@@ -1182,22 +1497,13 @@ function EnhancedTableHead(props) {
       return ''
     }
 
-    //   if(viewUnitStatusA.includes('Assigned To') &&
-    //   headCell === 'Assigned'){
-    //   return ''
-    //   }else{
-    //     return 'none'
-    //   }
-    // }else {
-    //   return ''
-    // }
 
 
   }
   return (
 
 
-    <TableHead style={{ height: '10px', borderRadius: '2xl' }}>
+    <TableHead style={{ height: '10px', borderRadius: '2xl' ,  position: 'sticky', top: 0, backgroundColor: '#F0F2F5', zIndex: 10 }}>
       <TableRow selected={true}>
         <TableCell
           align="center"
@@ -1223,15 +1529,7 @@ function EnhancedTableHead(props) {
             marginRight: '10px',
           }}
         >
-          {/* <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          /> */}
+
 
 
 
@@ -1443,6 +1741,13 @@ function EnhancedTableHead(props) {
     </TableHead>
 
 
+  //  /* Construction Table */
+
+
+
+
+
+
 
 
 
@@ -1491,7 +1796,7 @@ EnhancedTableHead.propTypes = {
   searchkey: PropTypes.number.isRequired || PropTypes.string.isRequired,
 }
 
-{ /* today */}
+
 
 
 
@@ -1523,59 +1828,6 @@ const customTooltip = ({ payload, label }) => {
   return (
 
     <section>
-      {/* <div className="col-span-2 px-2">
-         <div className="border rounded-xl   border-gray-200 flex flex-row  bg-white shadow ">
-
-        <div className="bg-warm-white-100 rounded-lg p-6">
-          <dt className="text-gray-700 text-xs font-semibold leading-loose">Sale box</dt>
-
-          <dd>
-            <div className="flex items-end font-semibold">
-              <div className="text-3xl font-heading leading-normal">
-                <span className="text-xl">₹</span>{totalSaleValue?.toLocaleString('en-IN')}</div>
-                </div>
-          </dd>
-         <div className="flex items-center ml-2">
-          <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-          <div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span>
-          </div>
-
-        </div>
-
-        <div className="bg-warm-white-100 rounded-lg p-6">
-          <dt className="text-gray-700 text-xs font-semibold leading-loose">Received</dt>
-
-          <dd>
-            <div className="flex items-end font-semibold">
-              <div className="text-3xl font-heading leading-normal">
-                <span className="text-xl">₹</span>{totalReceived?.toLocaleString('en-IN')}</div>
-                </div>
-          </dd>
-         <div className="flex items-center ml-2">
-          <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-         <div className="font-semibold text-orange-600">50%</div><span className="ml-2">{leadsFetchedData?.length}units</span></div>
-
-        </div>
-
-        <div className="bg-warm-white-100 rounded-lg p-6">
-          <dt className="text-gray-700 text-xs font-semibold leading-loose">Balance</dt>
-
-          <dd>
-            <div className="flex items-end font-semibold">
-              <div className="text-3xl font-heading leading-normal">
-                <span className="text-xl">₹</span>{selTotalBalance?.toLocaleString('en-IN')}</div>
-                </div>
-          </dd>
-         <div className="flex items-center ml-2">
-          <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-          <div className="font-semibold text-orange-600">50%</div>
-          <span className="ml-2">{leadsFetchedData?.length}units</span></div>
-
-        </div>
-
-        </div>
-
-        </div> */}
 
 
 
@@ -1599,41 +1851,33 @@ const customTooltip = ({ payload, label }) => {
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
     <p className="text-2xl font-bold mb-2">  {unitsFetchData?.length?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span> */}
+
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
     <h3 className="text-gray-600 mb-2">Sales</h3>
-    <p className="text-2xl font-bold mb-2">₹ {totalSaleValue?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(totalSaleValue)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span> */}
+
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
 
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Recieved</h3>
-    <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(totalReceived)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span> */}
+
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
 
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Balance</h3>
-    <p className="text-2xl font-bold mb-2">₹ {selTotalBalance?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(selTotalBalance)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span> */}
+
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
@@ -1716,16 +1960,13 @@ const customTooltip = ({ payload, label }) => {
                 interval={0}
               />
               <YAxis
-                // domain={[5, 100]}
-                // ticks={[5, 25, 50, 75, 100]}
+
                 axisLine={false}
                 tickLine={false}
                 stroke="#3D3D3D"
               />
 
 
-{/*
-<Tooltip content={<customTooltipone />} /> */}
 
 
 <Tooltip
@@ -1779,97 +2020,13 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-
-
-
-      {/* <div className="flex flex-col  rounded-[30px] py-5 h-full bg-white shadow">
-      <div className="w-full max-w-4xl p-6 bg-white ">
-
-  <div className="mb-6">
-    <h2 className="text-[18px] text-[#6A6A6A] font-medium">Collections</h2>
-    <div className="flex items-center justify-between mt-1">
-      <div className="text-[30px] font-semibold text-[#00000]">&#8377; 708.84</div>
-
-    </div>
-
-
-    <div className="flex items-center gap-2 mt-4 text-gray-600">
-      <Calendar className="w-5 h-5" />
-      <span>Jun 07, 2024</span>
-      <ChevronRight className="w-5 h-5" />
-      <i data-lucide="arrow-right"></i>
-      <span>Jun 13, 2024</span>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-
-  <div className="flex gap-6 mb-6">
-    <div className="flex items-center gap-2">
-      <div className="w-3 h-3 bg-indigo-600 rounded"></div>
-      <span>Available</span>
-    </div>
-    <div className="flex items-center gap-2">
-      <div className="w-3 h-3 bg-sky-400 rounded"></div>
-      <span>Sales</span>
-    </div>
-    <div className="flex items-center gap-2">
-      <div className="w-3 h-3 bg-gray-400 rounded"></div>
-      <span>Blocked</span>
-    </div>
-  </div>
-
-
-  <div className="h-80  ">
-    <ResponsiveContainer width="100%" height="100%">
-      <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-        <XAxis dataKey="day" />
-        <YAxis
-          tickFormatter={(value) => `$ ${value}`}
-          ticks={[0, 50, 100, 150, 200, 250]}
-        />
-         <Tooltip
-          formatter={(value) => [`$ ${value}`, '']}
-          contentStyle={{
-            backgroundColor: 'white',
-            border: '1px solid #e2e8f0',
-            borderRadius: '6px',
-            padding: '8px'
-          }}
-        />
-
-        <Tooltip content={customTooltipone} />
-
-        <Bar dataKey="Available" fill="#6366f1" radius={[4, 4, 0, 0]} />
-        <Bar dataKey="Sales" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-        <Bar dataKey="Blocked" fill="#9ca3af" radius={[4, 4, 0, 0]} />
-      </BarChart>
-    </ResponsiveContainer>
-  </div>
-</div>
-      </div> */}
-
-
 <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
   <div className="w-full max-w-4xl p-6 bg-white flex flex-col justify-between h-full">
     <div className="mb-6">
       <h2 className="text-[18px] text-[#6A6A6A] font-medium">Units</h2>
       <div className="flex items-center justify-between mt-1">
         <div className="text-[30px] font-semibold text-[#00000]">{inventoryPayload.reduce((acc, curr) => acc + curr.count, 0)?.toLocaleString('en-IN')}</div>
-        {/* <div className="flex items-center gap-2 px-4 py-2 border rounded-lg">
-          <span className="text-gray-600">View:</span>
-          <svg className="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h2v10H7V7zm4 0h2v10h-2V7zm4 0h2v10h-2V7z" />
-          </svg>
-          <span className="text-gray-600">Bar Line Chart</span>
-        </div> */}
+
       </div>
 
       <div className="flex items-center gap-2 mt-4 text-gray-600">
@@ -1903,12 +2060,10 @@ const customTooltip = ({ payload, label }) => {
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="day" />
           <YAxis tickFormatter={(value) => `Units ${value}`}
-          // ticks={[0, 50, 100, 150, 200, 250]}
            />
           <Tooltip content={customTooltipone} />
-          {/* <Bar dataKey="count" fill="#6366f1" radius={[4, 4, 0, 0]} /> */}
 <Bar dataKey="count" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-          {/* <Bar dataKey="Blocked" fill="#9ca3af" radius={[4, 4, 0, 0]} /> */}
+
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -1933,13 +2088,7 @@ const customTooltip = ({ payload, label }) => {
       <h2 className="text-[18px] text-[#6A6A6A] font-medium">Units</h2>
       <div className="flex items-center justify-between mt-1">
         <div className="text-[30px] font-semibold text-[#00000]">{inventoryPayload.reduce((acc, curr) => acc + curr.count, 0)?.toLocaleString('en-IN')}</div>
-        {/* <div className="flex items-center gap-2 px-4 py-2 border rounded-lg">
-          <span className="text-gray-600">View:</span>
-          <svg className="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h2v10H7V7zm4 0h2v10h-2V7zm4 0h2v10h-2V7z" />
-          </svg>
-          <span className="text-gray-600">Bar Line Chart</span>
-        </div> */}
+
       </div>
 
 
@@ -1979,12 +2128,12 @@ const customTooltip = ({ payload, label }) => {
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="day" />
           <YAxis tickFormatter={(value) => `${value}`}
-          // ticks={[0, 50, 100, 150, 200, 250]}
+
            />
           <Tooltip content={customTooltipone} />
-          {/* <Bar dataKey="count" fill="#6366f1" radius={[4, 4, 0, 0]} /> */}
+
 <Bar dataKey="count" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-          {/* <Bar dataKey="Blocked" fill="#9ca3af" radius={[4, 4, 0, 0]} /> */}
+
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -1996,52 +2145,6 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-{/*
-<div className="p-6 mt-6 rounded-t-[30px] bg-white flex justify-between items-center">
-          <h3 className="text-xl font-bold">Booking Summary calc</h3>
-          <div className="flex gap-4">
-            <Filter className="text-gray-500" />
-            <Download className="text-gray-500" />
-          </div>
-        </div> */}
-
-        {/* <div className="flex  max-w-7xl mx-auto justify-between my-2 items-center h-10 m-2 mt-6">
-          <h3 className="text-xl font-bold">Booking Summary</h3>
-          <section className="cursor-pointer leading-snug rounded border border-solid border-transparent no-underline font-sans font-semibold transition duration-200 hover:no-underline focus:no-underline focus:outline-none align-middle text-center inline-flex items-center justify-center text-sm py-2 px-4 h-10 rounded-[10px] text-gray-800 bg-transparent hover:bg-gray-900 hover:bg-opacity-[0.06] focus:outline-blue">Go to subscribers
-
-         </section>
-
-
-
-
-
-
-
-
-
-
-         <div className="flex">
-                <div className=" flex flex-col   w-40">
-                  <SlimSelectBox
-                    name="project"
-                    label=""
-                    className="input "
-                    onChange={(value) => {
-                      console.log('changed value is ', value.value)
-                      setSelProject(value)
-                      // formik.setFieldValue('project', value.value)
-                    }}
-                    value={selProjectIs?.value}
-                    // options={aquaticCreatures}
-                    options={[
-                      ...[{ label: 'All Projects', value: 'allprojects' }],
-                      ...projectList,
-                    ]}
-                  />
-                </div>
-              </div>
-
-         </div> */}
 
 
 
@@ -2053,17 +2156,291 @@ const customTooltip = ({ payload, label }) => {
 
 <div className=" px-4 py-2 rounded-t-[30px] bg-white flex justify-between items-center">
           <h3 className="text-xl font-bold">Booking Summary</h3>
-          <div className="flex gap-4">
-            <Filter className="text-gray-500" />
-            <Download className="text-gray-500" />
-          </div>
+
+
+
+<div className="relative flex gap-4">
+
+
+
+
+
+<button
+  className="relative flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:bg-gray-100 transition"
+  onClick={() => setIsOpen(!isOpen)}
+>
+
+  <SlidersHorizontal className="w-4 h-4 text-gray-500" />
+  <span className="text-gray-700 text-sm">Filters</span>
+
+
+  {selectedFilters.length + selectedUnitType.length > 0 && (
+    <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#38BDF8] text-white text-xs font-bold flex items-center justify-center rounded-full">
+      {selectedFilters.length  + selectedUnitType.length}
+    </span>
+  )}
+
+
+  <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:opacity-100 transition">
+    Sorting
+  </span>
+</button>
+
+
+
+
+
+
+
+<button
+  className="relative flex items-center gap-2  rounded-md border border-gray-300 hover:bg-gray-100 transition"
+>
+
+  {/* <Download className="w-4 h-4 text-gray-500" />
+  <span className="text-gray-700 text-sm"> */}
+  {/* <PdfBookingSummaryReport/> */}
+  {/* </span> */}
+
+
+  <PdfBookingSummaryReport
+  user={user || {}}
+  // selUnitDetails={selUnitDetails}
+  // streamUnitDetails={streamUnitDetails}
+  // myBookingPayload={myBookingPayload}
+  // myObj={myObj}
+  // newPlotPS={newPlotPS}
+  // myAdditionalCharges={myAdditionalCharges}
+  // netTotal={netTotal}
+  // setNetTotal={setNetTotal}
+  // partATotal={partATotal}
+  // partBTotal={partBTotal}
+  // project={project}
+  // setPartATotal={setPartATotal}
+  // setPartBTotal={setPartBTotal}
+  // projectDetails={projectDetails}
+  // selCustomerPayload={selCustomerPayload}
+  // leadDetailsObj1={leadDetailsObj1}
+  // possessAdditionalCS={possessAdditionalCS}
+  // possessionAdditionalCostCS={possessionAdditionalCostCS}
+  // custObj1={custObj1}
+  tableData={filLeadsA || {}}
+/>
+
+
+
+  <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:opacity-100 transition">
+    Download
+  </span>
+</button>
+
+{/* <button
+  className="relative flex items-center gap-2  rounded-md border border-gray-300 hover:bg-gray-100 transition"
+>
+
+
+<PdfBookingConstructionSummaryReport
+
+user={user || {}}
+
+
+tableData={filLeadsA || {}}
+
+/>
+
+
+
+
+
+  <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:opacity-100 transition">
+    Construction Download
+  </span>
+</button> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div
+        className={`absolute right-20 top-full mt-2 bg-white w-[500px] max-h-[70vh] flex flex-col rounded-xl shadow-lg border border-gray-200 z-50 transition-all ${
+          isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+        }`}
+      >
+        <div className="p-4 border-b flex justify-between items-center">
+          <h2 className="text-lg font-bold">Filters</h2>
+          <button onClick={() => setIsOpen(false)} className="text-gray-500">
+            <X/>
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-4 py-2 max-h-[60vh]">
+          <h3 className="mt-4 text-sm font-semibold">Projects</h3>
+
+
+<div className="flex flex-wrap gap-2 mt-2">
+  {amenities.slice(0, showMore ? amenities.length : 6).map((item) => (
+    <button
+      key={item}
+      className={`relative px-3 py-1 border rounded-full text-[12px] text-gray-700 hover:bg-gray-100 border-gray-300 ${
+        selectedFilters.includes(item) ? "bg-gray-200" : ""
+      }`}
+      onClick={() => toggleFilter(item)}
+    >
+      {selectedFilters.includes(item) && (
+        <span className="absolute top-[-2px] left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
+      )}
+      {item}
+    </button>
+  ))}
+</div>
+
+          <button onClick={() => setShowMore(!showMore)} className="mt-2 text-blue-600 text-sm underline">
+            {showMore ? "Show less" : "Show more"}
+          </button>
+
+
+          <h3 className="mt-4 text-sm font-semibold">Booking Dates</h3>
+
+
+<div className="flex flex-wrap gap-2 mt-2">
+  {bookingOptions.map((option) =>
+    option === "Custom Date" && showDatePicker ? (
+      <div
+        key={option}
+        className="relative flex items-center border border-gray-300 rounded-full px-3 py-1 text-sm"
+      >
+        <CustomDatePicker
+          selected={customDate}
+          onChange={(date) => {
+            setCustomDate(date);
+            if (date && !selectedFilters.includes("Custom Date")) {
+              setSelectedFilters([...selectedFilters, "Custom Date"]);
+            }
+          }}
+          placeholder="Pick a date"
+        />
+        {customDate && (
+          <span className="absolute top-0 left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
+        )}
+        <Calendar className="w-5 h-5 text-gray-500 ml-2 cursor-pointer" />
+        <button
+          onClick={() => {
+            setCustomDate(null);
+            setShowDatePicker(false);
+            setSelectedFilters((prev) => prev.filter((i) => i !== "Custom Date"));
+          }}
+          className="ml-2 text-red-500 hover:text-red-700"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+    ) : (
+      <button
+        key={option}
+        onClick={() => toggleFilter(option)}
+        className={`relative px-3 py-1 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 text-[12px] ${
+          selectedFilters.includes(option) ? "bg-gray-200" : ""
+        }`}
+      >
+        {selectedFilters.includes(option) && (
+          <span className="absolute top-0 left-1 w-2 h-2 bg-green-500 rounded-full"></span>
+        )}
+        {option}
+      </button>
+    )
+  )}
+</div>
+
+
+
+
+
+<h3 className="text-sm font-semibold mt-4">Unit Type</h3>
+
+
+<div className="flex flex-wrap gap-2 mt-2">
+  {unitTypeOptions.map((option) => (
+    <button
+      key={option}
+      className={`relative px-3 py-1 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 text-[12px] ${
+        selectedUnitType.includes(option) ? "bg-gray-200" : ""
+      }`}
+      onClick={() => toggleUnitType(option)}
+    >
+      {selectedUnitType.includes(option) && (
+        <span className="absolute top-0 left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
+      )}
+      {option}
+    </button>
+  ))}
+</div>
+
+
+
+{/* <h3 className="text-sm font-semibold mt-4">Cost View</h3> */}
+
+
+
+{/* <div className="flex flex-wrap gap-2 mt-2">
+        {costViewOptions.map((view) => (
+          <button
+            key={view}
+            className={`relative px-3 py-1 border rounded-full text-gray-700 hover:bg-gray-100 border-gray-300 text-[12px] ${
+              selectedCostView.includes(view) ? "bg-gray-200" : ""
+            }`}
+            onClick={() => toggleCostView(view)}
+          >
+            {selectedCostView.includes(view) && (
+              <span className="absolute top-0 left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
+            )}
+            {view}
+          </button>
+        ))}
+      </div> */}
+
+
+
+
+
+
+        </div>
+
+        <div className="px-4 py-3 border-t flex justify-between items-center bg-gray-50 rounded-b-xl text-sm">
+          <button className="text-gray-500" onClick={() => {setSelectedFilters([]);  setSelectedUnitType([]); setCustomDate(null); setShowDatePicker(false); }}>
+            Clear all
+          </button>
+          <button className=" text-[#38BDF8] px-4 py-2 rounded-lg text-sm">
+            {selectedFilters.length  + selectedUnitType.length> 0 ? `Count ${selectedFilters.length  + selectedUnitType.length} showing` : "showing"}
+          </button>
+        </div>
+      </div>
+</div>
+
+
+
+
+
+
+
+
+
+
         </div>
 
 
+
+
+
+
+
 <div className="flex  bg-white  items-center flex-row flex-wrap py-1 pb-2 px-2 justify-between">
-              {/* <h2 className="text-lg font-semibold text-black leading-light">
-                Booked Units Summary
-              </h2> */}
 
               <div className="border rounded-xl  w-[100%]   border-gray-200 flex flex-row justify-between  shadow ">
                 <ul
@@ -2130,22 +2507,7 @@ const customTooltip = ({ payload, label }) => {
 
             </div>
     <div className=" max-w-7xl mx-auto rounded-2xl  ">
-      {/* <EnhancedTableToolbar
-        numSelected={selected.length}
-        selStatus={selStatus}
-        filteredData={rows}
-        searchKey={searchKey}
-        startDate={startDate}
-        endDate={endDate}
-        setDateRange={setDateRange}
-        setSearchKey={setSearchKey}
-        rows={rows}
-        viewUnitStatusA={viewUnitStatusA}
-        pickCustomViewer={pickCustomViewer}
-        setViewUnitStatusA={setViewUnitStatusA}
-        leadsFetchedData={leadsFetchedData}
-        searchVal={searchVal}
-      /> */}
+
       <section
         style={{background: '#fff', borderRadius: '15px', }}
       >
@@ -2153,17 +2515,6 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-{/* scroll  */}
-
-{/*
-className='max-h-[30px] overflow-y-auto
-  [&::-webkit-scrollbar]:w-2
-  [&::-webkit-scrollbar-track]:rounded-full
-  [&::-webkit-scrollbar-track]:bg-gray-100
-  [&::-webkit-scrollbar-thumb]:rounded-full
-  [&::-webkit-scrollbar-thumb]:bg-gray-300
-  white:[&::-webkit-scrollbar-track]:bg-neutral-700
-  light-gray:[&::-webkit-scrollbar-thumb]:bg-neutral-500 ' */}
 
 <TableContainer sx={{ maxHeight: 640, borderRadius: '15px'  }} className='max-h-[30px] overflow-y-auto
   [&::-webkit-scrollbar]:w-2
@@ -2191,16 +2542,7 @@ className='max-h-[30px] overflow-y-auto
               searchkey={searchKey}
               viewUnitStatusA={viewUnitStatusA}
             />
-               {/* <EnhancedTotalTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows?.length}
-              searchkey={searchKey}
-              viewUnitStatusA={viewUnitStatusA}
-            /> */}
+
 
             <TableBody>
               {
@@ -2323,9 +2665,7 @@ className='max-h-[30px] overflow-y-auto
                             {row?.customerDetailsObj?.customerName1?.toString()}
                             </div>
                             </article>
-                            {/* <div className="font-bodyLato">
-                            {row?.customerDetailsObj?.email1?.toString()}
-                            </div> */}
+
 
                           </section>
                         </TableCell>
@@ -2343,36 +2683,423 @@ className='max-h-[30px] overflow-y-auto
                           <section>
                             <span className="font-bodyLato">
                             {row?.unit_no}
+
                             </span>
                           </section>
                         </TableCell>
-                          <TableCell
+
+
+
+                        <TableCell
                           align="left"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
 
-                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>{row.projName}</span>
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.projName}
+
+
+                          </span>
                         </TableCell>
-                        <TableCell align="center" sx={{width: '142px',background: "#FFFF",  }} padding="none">
+
+
+
+                        {/* <TableCell align="center" sx={{width: '142px',background: "#FFFF",  }} padding="none">
                         <span className="px-2 uppercase inline-flex text-[10px] leading-5 font-semibold rounded-full  text-[#115e59]">
                           <HighlighterStyle
                             searchKey={searchKey}
                             source={row?.unitStatus?.toString() || row.status.toString()}
                           />
                         </span>
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell align="center" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff",  fontSize:'13px'  }} padding="none">
           {prettyDate(row?.booked_on)}
         </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.facing}
+
+
+                          </span>
+                        </TableCell>
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.sharing}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.release_status}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.unit_type}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {row?.area}
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                          ₹{row?.sqft_rate?.toLocaleString('en-IN')}
+
+
+                          </span>
+                        </TableCell>
+
+{/* 
+                        {selectedCostView.includes("Plot Cost") && (
+
+                          <> */}
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                            {/* {row?.T_A} */}
+                            {Math.round(row?.T_A || 0).toLocaleString('en-IN')}
+
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+{/* 
+                          </>
+
+                   )} */}
+
+
+
+
+
+<TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       {row?.construct_area}
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                          ₹{row?.construct_price_sqft?.toLocaleString('en-IN')}
+
+
+
+
+
+
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+
+
+
+
+
+
+                        {/* {selectedCostView.includes("Construction Cost") && (
+
+
+                         <> */}
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+                         {/* </>
+
+
+
+
+
+
+)} */}
+
+                        {/* <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       Ageing
+
+
+                          </span>
+                        </TableCell> */}
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                       NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                           NA
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                           NA
+
+
+                          </span>
+                        </TableCell>
+
+
+                        <TableCell
+                          align="left"
+                          style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
+                          padding='none'
+                        >
+
+
+
+                          <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
+                           NA
+
+
+                          </span>
+                        </TableCell>
+
+
+
+
+
+
+
+
+
+
+
         {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap',  fontSize: '13px', paddingRight: '6px', color: '#0ea5e9',    '& span': {
       display: 'inline-block',
       borderBottom: '1px solid transparent',
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4',
     } }} padding="none">
           <span
 
@@ -2385,7 +3112,7 @@ className='max-h-[30px] overflow-y-auto
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4',
     }  }} padding="none">
 
   <span
@@ -2399,7 +3126,7 @@ className='max-h-[30px] overflow-y-auto
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4',
     } }} padding="none">
           <span>₹{row?.T_C?.toLocaleString('en-IN')}</span>
         </TableCell>)} {viewUnitStatusA.includes('Cost Split') && (  <TableCell align="right" sx={{ width: '142px',whiteSpace: 'nowrap',  paddingRight: '6px',color: '#0ea5e9',borderLeft: '1px solid #e0e0e0' ,fontSize: '13px',    '& span': {
@@ -2408,23 +3135,12 @@ className='max-h-[30px] overflow-y-auto
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4',
     } }} padding="none">
           <span>₹{row?.T_D?.toLocaleString('en-IN')}</span>
         </TableCell>)}
 
-        {/* {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
-        ₹{infraCharges?.toLocaleString('en-IN')}
-        </TableCell>)}
-       {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
-        ₹{clubHouseCharges?.toLocaleString('en-IN')}
-        </TableCell>)}
-        {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px' }} padding="none">
-        ₹{maintenanceCharges?.toLocaleString('en-IN')}
-        </TableCell>)}
-        {viewUnitStatusA.includes('Cost Split') && (<TableCell align="right" sx={{ whiteSpace: 'nowrap', background: "#d1d1fb", paddingRight: '6px'  }} padding="none">
-        ₹{legalCharge?.toLocaleString('en-IN')}
-        </TableCell>)} */}
+
        <TableCell align="right" sx={{width: '142px', whiteSpace: 'nowrap', background: "#fff",  paddingRight: '6px', fontSize: '13px' }} padding="none" >
         ₹{row?.T_total?.toLocaleString('en-IN')}
         </TableCell>
@@ -2444,7 +3160,7 @@ className='max-h-[30px] overflow-y-auto
       borderBottom: '0.5px solid transparent',
       transition: 'border-bottom 0.3s ease',
     }, '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4',
     } }} padding="none">
         ₹{row?.T_balance?.toLocaleString('en-IN')}
         </TableCell>
@@ -2454,7 +3170,7 @@ className='max-h-[30px] overflow-y-auto
       transition: 'border-bottom 0.3s ease',
     },
     '& span:hover': {
-      borderBottom: '0.2px solid #e7e5e4', // Apply border on hover
+      borderBottom: '0.2px solid #e7e5e4',
     } }} padding="none">
           ₹{row?.T_E?.toLocaleString('en-IN')}
         </TableCell>)}
@@ -2472,9 +3188,7 @@ className='max-h-[30px] overflow-y-auto
                             sx={{ whiteSpace: 'nowrap',  paddingRight: '8px' , paddingLeft: '8px', background: "#d1d1fb",fontSize: '13px'  }}
                           >
                             <>
-                              {/* <span className="font-bodyLato">
-                          {prettyDate(row?.stsUpT || row.Date).toLocaleString()}
-                        </span> */}
+
                               <span className="px- py-[1px]  min-w-[100px] inline-flex text-xs leading-5 tracking-wide  rounded-full  text-green-800">
                                 {Math.abs(
                                   getDifferenceInMinutes(
@@ -2500,7 +3214,6 @@ className='max-h-[30px] overflow-y-auto
                                     (row?.leadUpT || row?.stsUpT),
                                     ''
                                   )) || 0} Min`}{' '}
-                                  {/* in above line I have added 0 to take Nan value */}
                                 {getDifferenceInMinutes(
                                   (row?.leadUpT || row?.stsUpT),
                                   ''
@@ -2518,9 +3231,7 @@ className='max-h-[30px] overflow-y-auto
                           sx={{ whiteSpace: 'nowrap',  paddingRight: '8px' , paddingLeft: '8px', background: "#d1d1fb", fontSize: '13px' }}
                         >
                           <>
-                            {/* <span className="font-bodyLato">
-                          {prettyDate(row?.stsUpT || row.Date).toLocaleString()}
-                        </span> */}
+
                             <span className="px- py-[1px]  min-w-[100px] inline-flex text-xs leading-5 tracking-wide  rounded-full  text-green-800">
                               {Math.abs(
                                 getDifferenceInMinutes(
@@ -2580,6 +3291,9 @@ className='max-h-[30px] overflow-y-auto
 
 </div>
 </div>
+
+
+
 
 
 

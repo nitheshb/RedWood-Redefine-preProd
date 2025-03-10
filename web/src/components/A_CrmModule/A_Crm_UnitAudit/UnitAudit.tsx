@@ -26,13 +26,9 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
     console.log('audit begin')
     setLoading(true)
 
-    // get the units with no data or invalid data and mark them as available
 
-    // make all invalid units as available
-    // await setInvalidUnitStatus()
     await setProjectComputedCounts()
-    // calculate the Unit Status
-    //  calculate the values
+
   }
 
   const setInvalidUnitStatus = async () => {
@@ -82,7 +78,6 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
       return unsubscribe
     }
 
-    // await console.log('leadsData', leadsData)
   }
 
   const getAllTransactionsUnit = async () => {
@@ -104,15 +99,12 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
     console.log('login role detials', user)
     const { access, uid } = user
 
-    //  get all transactions
 
     const transactoinsA = await getAllTransactionsUnit()
 
-    // compute and save the details in unit
 
     await computeAmoounts(transactoinsA)
 
-    // update for the unit by recalculating the values of all units
 
 
 
@@ -320,9 +312,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4   z-10">
-        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
+    
 
         <div className="flex flex-col ">
           <div className="mr-4 templateList flex flex-row">

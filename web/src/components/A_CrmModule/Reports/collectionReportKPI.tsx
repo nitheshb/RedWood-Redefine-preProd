@@ -40,7 +40,7 @@ import { Calendar, ChevronRight, TrendingUp } from 'lucide-react';
 
 
 {
-  /* frist capitalize all letters */
+
 }
 
 const capitalizeFirstLetter = (str) => {
@@ -48,7 +48,7 @@ const capitalizeFirstLetter = (str) => {
 }
 
 {
-  /* date */
+
 }
 const getDateForWeek = (weekNumber) => {
   const today = new Date()
@@ -64,7 +64,7 @@ const getDateForWeek = (weekNumber) => {
 }
 
 {
-  /* dummy data */
+
 }
 
 const styles = {
@@ -286,12 +286,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
     { day: 'Available', count: 0 },
     { day: 'Booked', count: 0 },
     { day: 'Blocked', count: 0 },
-    // { day: '8', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
-    // { day: '9', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
-    // { day: '10', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
-    // { day: '11', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
-    // { day: '12', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
-    // { day: '13', 'Available': 108, 'Sold': 165, 'Blocked': 52 },
+
   ]);
 
   useEffect(() => {
@@ -332,7 +327,6 @@ const CRMCollectionReportKPI = ({ projects }) => {
     setUnitStatusPayload(x)
   }, [leadsFetchedData]);
   function updateInventoryData(myDbDataIs) {
-    // Month mapping for easy lookup
     const monthNames = [
       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "July", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -340,48 +334,33 @@ const CRMCollectionReportKPI = ({ projects }) => {
   let x = []
   let y = {available: 0, booked: 0, blocked: 0}
     myDbDataIs.map((record, i) => {
-      // Convert the timestamp to a Date object
-      // const date = new Date(record.Date);
-      // // Get the month name
-      // const month = monthNames[date.getUTCMonth()];
-      // // Find the corresponding month in projectBookingsData
-      // const booking = projectBookingsData.find(entry => entry.time === month);
-      // if (booking) {
-      //   booking.value += 1; // Increment the value
-      // }
+
       console.log('project details are', record)
 
-      // y.day = record?.projectName;
-      // y.Available= record?.availableCount || 0;
-      // y.Sold= record?.bookUnitCount || 0;
-      // y.Blocked= record?.blockedUnitCount || 0;
+
 
       y.available += record?.availableCount || 0;
       y.booked += record?.bookUnitCount || 0;
       y.blocked += record?.blockedUnitCount || 0;
 
-      // x.push(y)
+
     });
     setInventoryPayload([{day: 'Available', count: y.available}, {day: 'Booked', count: y.booked}, {day: 'Blocked', count: y.blocked}])
     console.log('booking details values are',projectBookingsData )
     return projectBookingsData;
   }
   function updateBookingData(myDbDataIs) {
-    // Month mapping for easy lookup
     const monthNames = [
       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "July", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
 
     myDbDataIs.forEach(record => {
-      // Convert the timestamp to a Date object
       const date = new Date(record.Date);
-      // Get the month name
       const month = monthNames[date.getUTCMonth()];
-      // Find the corresponding month in projectBookingsData
       const booking = projectBookingsData.find(entry => entry.time === month);
       if (booking) {
-        booking.value += 1; // Increment the value
+        booking.value += 1;
       }
     });
     setProjectBookingsData(projectBookingsData)
@@ -389,7 +368,6 @@ const CRMCollectionReportKPI = ({ projects }) => {
     return projectBookingsData;
   }
   const boot = async () => {
-    // await getProjectsListFun()
     const unsubscribe = await getBookedUnitsByProject(
       orgId,
       async (querySnapshot) => {
@@ -404,9 +382,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
           }
           return x
         })
-        // setBoardData
-        // console.log('my Array data is ', usersListA, crmCustomersDBData)
-        // await serealizeData(usersListA)
+
         console.log('booking details values are', usersListA)
         await setUnitsFetchData(usersListA)
         await updateBookingData(usersListA)
@@ -506,10 +482,8 @@ const CRMCollectionReportKPI = ({ projects }) => {
               currentYear: month.currentYear,
             }
 
-            // Fetch projection sum asynchronously
             const totalReceivableValue = await gretProjectionSum(orgId, payload)
 
-            // Update month object with receivable value
             const updatedMonth = { ...month, receive: totalReceivableValue }
             console.log(
               'Value refreshed',
@@ -523,27 +497,17 @@ const CRMCollectionReportKPI = ({ projects }) => {
           })
         )
 
-        // Update project data with month array
         newProjectData.months = projectMonthArray
         insideValues.push(newProjectData)
       }
 
-      // After processing all projects, update state with updated project data
       setProjectWithValues(insideValues)
     } catch (error) {
       console.error('Error calculating monthly values:', error)
-      // Handle error
     } finally {
-      // Set loading state to false
       setLoaderIcon(false)
     }
   }
-
-
-
-
-  //const [selCat, setSelCat] = useState("project_collections");
-  //const [dataView, setDataView] = useState("monthly");
 
 
 
@@ -567,41 +531,33 @@ const CRMCollectionReportKPI = ({ projects }) => {
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
     <p className="text-2xl font-bold mb-2">  {unitsFetchData?.length?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span> */}
+
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
     <h3 className="text-gray-600 mb-2">Sales</h3>
-    <p className="text-2xl font-bold mb-2">₹ {totalSaleValue?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(totalSaleValue)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span> */}
+
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
 
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Recieved</h3>
-    <p className="text-2xl font-bold mb-2">₹ {totalReceived?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(totalReceived)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span> */}
+
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
 
   <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Balance</h3>
-    <p className="text-2xl font-bold mb-2">₹ {selTotalBalance?.toLocaleString('en-IN')}</p>
+    <p className="text-2xl font-bold mb-2">₹ {Math.round(selTotalBalance)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
-      {/* <ArrowDownRight size={20} /> */}
-      {/* <svg className="fill-current inline-block overflow-visible w-4 h-4 font-semibold text-orange-600" name="arrow-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13.006 16.465V5.286a.968.968 0 0 0-.287-.713.967.967 0 0 0-.713-.287.967.967 0 0 0-.712.287.968.968 0 0 0-.287.713v11.179l-4.9-4.902a.916.916 0 0 0-.7-.288c-.266.009-.5.113-.7.313-.182.2-.278.434-.287.7-.008.267.088.5.288.7l6.599 6.603c.1.1.208.17.325.212.116.042.241.063.374.063.134 0 .259-.021.375-.063a.877.877 0 0 0 .325-.212l6.599-6.603a.933.933 0 0 0 .275-.687 1.02 1.02 0 0 0-.275-.713c-.2-.2-.437-.3-.712-.3-.275 0-.513.1-.713.3l-4.874 4.877Z"></path></svg>
-      <span>50%</span> */}
+
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>

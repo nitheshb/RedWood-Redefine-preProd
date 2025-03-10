@@ -103,15 +103,7 @@ const ExpenseChart = () => {
               tickFormatter={(value) => `$ ${value}`}
               ticks={[0, 50, 100, 150, 200, 250]}
             />
-            {/* <Tooltip 
-              formatter={(value) => [`$ ${value}`, '']}
-              contentStyle={{
-                backgroundColor: 'white',
-                border: '1px solid #e2e8f0',
-                borderRadius: '6px',
-                padding: '8px'
-              }}
-            /> */}
+
 
             <Tooltip content={customTooltip} />
 

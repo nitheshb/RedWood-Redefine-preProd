@@ -12,15 +12,9 @@ const HeadSideBarDetailView = ({
   setViewable,
   viewable,
 }) => {
-  // projectsScreen leadsScreen
 
-  // const showSideView = () => {
-  //   console.log('iam clicked', showSideBar)
-  //   setShowSideBar1()
-  // }
   const { user } = useAuth()
-  // const { access } = user
-  // const access = user?.access
+
   console.log('user i youy===>>>>>>>.', user)
   const [access, setUserAccess] = useState([])
   useEffect(() => {
@@ -39,40 +33,7 @@ console.log(viewable)
       <div className="bg-[#f0f3ff] overflow-auto no-scrollbar">
         <div className="pl-4 mr-6 border-l h-screen ">
           <ul className="mt-6 pt-4">
-            {/* <li className="relative">
-              <span
-                className={
-                  'flex items-center text-sm py-1  h-9 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
-                  (pgName === 'home' ? 'bg-gray-300' : '')
-                }
-                onClick={() => {
-                  showSideView1()
-                }}
-              >
-                <span className="flex items-center">
-                  <span style={{ color: '#058527' }}>
-                    <svg width="24" height="24" viewBox="0 0 24 24">
-                      <g fill="currentColor" fillRule="nonzero">
-                        <path
-                          d="M10 14.5a2 2 0 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z"
-                          opacity="0.1"
-                        ></path>
-                        <path d="M8.062 4h7.876a2 2 0 011.94 1.515l2.062 8.246a2 2 0 01.06.485V18a2 2 0 01-2 2H6a2 2 0 01-2-2v-3.754a2 2 0 01.06-.485l2.06-8.246A2 2 0 018.061 4zm0 1a1 1 0 00-.97.757L5.03 14.004a1 1 0 00-.03.242V18a1 1 0 001 1h12a1 1 0 001-1v-3.754a1 1 0 00-.03-.242l-2.06-8.247A1 1 0 0015.94 5H8.061zM12 17.25A2.75 2.75 0 019.295 15H7a.5.5 0 110-1h2.75a.5.5 0 01.5.5 1.75 1.75 0 003.5 0 .5.5 0 01.5-.5H17a.5.5 0 110 1h-2.295A2.75 2.75 0 0112 17.25z"></path>
-                      </g>
-                    </svg>
-                  </span>
-                  <span className="text-sm pl-1">All</span>
-                </span>
-                <span className="flex ml-auto items-bottom">
-                  <span
-                    // style={{ color: '#058527' }}
-                    className="flex ml-auto items-bottom text-xs mt-2"
-                  >
-                    27
-                  </span>
-                </span>
-              </span>
-            </li> */}
+         
             {sourceLink != 'projectsScreen' && (
               <>
                 <span
@@ -86,7 +47,6 @@ console.log(viewable)
                   </span>
                   <span className="flex ml-auto items-bottom">
                     <span
-                      // style={{ color: '#058527' }}
                       className="flex ml-auto items-bottom text-xs mt-2"
                     ></span>
                   </span>
@@ -135,43 +95,6 @@ console.log(viewable)
                   </span>
                 </li>
 
-                {/* <li className="relative">
-                  <span
-                    className={
-                      'flex items-center text-sm py-1  h-9  overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
-                      (viewable === 'Upcoming'
-                        ? 'text-blue-600 text-md font-semibold '
-                        : '')
-                    }
-                    onClick={() => setViewable('Upcoming')}
-                  >
-                    <span className="flex items-center">
-                      <span style={{ color: '#692fc2' }}>
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g fill="currentColor" fillRule="nonzero">
-                            <path
-                              d="M6 4.5h12A1.5 1.5 0 0119.5 6v2.5h-15V6A1.5 1.5 0 016 4.5z"
-                              opacity="0.1"
-                            ></path>
-                            <path d="M6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2zm0 1a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1H6zm10 12a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm8-4a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zm-4 0a1 1 0 110-2 1 1 0 010 2zM7 8h10a.5.5 0 110 1H7a.5.5 0 010-1z"></path>
-                          </g>
-                        </svg>
-                      </span>
-                      <span className="text-sm pl-1">Upcoming</span>
-                    </span>
-                    <span className="flex ml-auto items-bottom">
-                      <span
-                        // style={{ color: '#058527' }}
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
-                    </span>
-                  </span>
-                </li> */}
               </>
             )}
             {['crmModule'].includes(sourceLink) && (
@@ -297,7 +220,6 @@ console.log(viewable)
                     </span>
                     <span className="flex ml-auto items-bottom">
                       <span
-                        // style={{ color: '#058527' }}
                         className="flex ml-auto items-bottom text-xs mt-2"
                       ></span>
                     </span>
@@ -391,7 +313,6 @@ console.log(viewable)
                     </span>
                     <span className="flex ml-auto items-bottom">
                       <span
-                        // style={{ color: '#058527' }}
                         className="flex ml-auto items-bottom text-xs mt-2"
                       ></span>
                     </span>
@@ -486,7 +407,6 @@ console.log(viewable)
                     </span>
                     <span className="flex ml-auto items-bottom">
                       <span
-                        // style={{ color: '#058527' }}
                         className="flex ml-auto items-bottom text-xs mt-2"
                       ></span>
                     </span>
@@ -558,182 +478,13 @@ console.log(viewable)
                       </span>
                       <span className="text-sm pl-1">Hold</span>
                     </span>
-                    {/* <span className="flex ml-auto items-bottom">
-                      <span
-                        // style={{ color: '#058527' }}
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
-                    </span> */}
+ 
                   </span>
                 </li>
               </>
             )}
-            {/* {sourceLink === 'leadsScreen' && access.includes('manage_leads') && (
-              <>
-                <span
-                  className={
-                    'flex items-center text-sm py-1  h-9 mt-4 overflow-hidden  border-b text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer '
-                  }
-                  onClick={() => setViewable('inProgress')}
-                >
-                  <span className="flex items-center ml-">
-                    <span className="text-md font-bold pl-1 ">
-                      Team Schedule
-                    </span>
-                  </span>
-                  <span className="flex ml-auto items-bottom">
-                    <span
-                      // style={{ color: '#058527' }}
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
-                  </span>
-                </span>
-                <li className="relative ">
-                  <span
-                    className={
-                      'flex items-center text-sm py-1 h-9  overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
-                      (viewable === 'Today1Team'
-                        ? 'text-blue-600 text-md font-semibold '
-                        : '')
-                    }
-                    onClick={() => setViewable('Today1Team')}
-                  >
-                    <span className="flex items-center">
-                      <span style={{ color: '#058527' }}>
-                        <svg width="24" height="24" viewBox="0 0 24 24">
-                          <g fill="currentColor" fillRule="evenodd">
-                            <path
-                              fillRule="nonzero"
-                              d="M6 4.5h12A1.5 1.5 0 0 1 19.5 6v2.5h-15V6A1.5 1.5 0 0 1 6 4.5z"
-                              opacity=".1"
-                            ></path>
-                            <path
-                              fillRule="nonzero"
-                              d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6zm1 3h10a.5.5 0 1 1 0 1H7a.5.5 0 0 1 0-1z"
-                            ></path>
-                            <text
-                              fontFamily="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
-                              fontSize="9"
-                              transform="translate(4 2)"
-                              fontWeight="500"
-                            >
-                              <tspan x="8" y="15" textAnchor="middle">
-                                28
-                              </tspan>
-                            </text>
-                          </g>
-                        </svg>
-                      </span>
-                      <span className="text-sm pl-1">Team Tasks</span>
-                    </span>
-                    <span className="flex ml-auto items-bottom">
-                      <span
-                        // style={{ color: '#058527' }}
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
-                    </span>
-                  </span>
-                </li>
-
-              </>
-            )} */}
-            {/* {sourceLink != 'hrModule' && (
-              <li className="relative">
-                <span
-                  className={
-                    'flex items-center text-sm py-1  h-9 mt-4 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
-                    (pgName === 'home' ? 'bg-gray-300' : '')
-                  }
-                  onClick={() => setViewable('inProgress')}
-                >
-                  <span className="flex items-center ml-1">
-                    <span style={{ color: '#692fc2' }}>
-                      <svg width="16" height="16" viewBox="0 0 16 16">
-                        <g transform="translate(-266, -17)" fill="#777777">
-                          <path d="M280,22.7581818 L279.1564,22 L273.9922,26.506 L273.4414,26.0254545 L273.4444,26.0281818 L268.8562,22.0245455 L268,22.7712727 C269.2678,23.878 272.8084,26.9674545 273.9922,28 C274.8718,27.2330909 274.0144,27.9809091 280,22.7581818"></path>
-                        </g>
-                      </svg>
-                    </span>
-                    <span className="text-md font-bold pl-2 ">Projects</span>
-                  </span>
-                  <span className="flex ml-auto items-bottom">
-                    <span
-                      // style={{ color: '#058527' }}
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
-                  </span>
-                </span>
-                <ul className="px-1">
-                  {' '}
-                  <li className="relative">
-                    <Link
-                      className={
-                        'flex items-center text-sm py-1  h-9 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
-                        (pgName === 'home' ? 'bg-gray-300' : '')
-                      }
-                      to={routes.home()}
-                    >
-                      <span className="flex items-center">
-                        <span style={{ color: '#058527' }}>
-                          <svg width="24" height="24" viewBox="0 0 24 24">
-                            <g fill="currentColor" fillRule="nonzero">
-                              <path
-                                d="M10 14.5a2 2 0adfaf 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z"
-                                opacity="0.1"
-                              ></path>
-                              <path d="M8.062 adfafafafa4h7.876a2 2 0 011.94 1.515l2.062 8.246a2 2 0 01.06.485V18a2 2 0 01-2 2H6a2 2 0 01-2-2v-3.754a2 2 0 01.06-.485l2.06-8.246A2 2 0 018.061 4zm0 1a1 1 0 00-.97.757L5.03 14.004a1 1 0 00-.03.242V18a1 1 0 001 1h12a1 1 0 001-1v-3.754a1 1 0 00-.03-.242l-2.06-8.247A1 1 0 0015.94 5H8.061zM12 17.25A2.75 2.75 0 019.295 15H7a.5.5 0 110-1h2.75a.5.5 0 01.5.5 1.75 1.75 0 003.5 0 .5.5 0 01.5-.5H17a.5.5 0 110 1h-2.295A2.75 2.75 0 0112 17.25z"></path>
-                            </g>
-                          </svg>
-                        </span>
-                        <span className="text-sm pl-[1px]">
-                          Nakashatra Township
-                        </span>
-                      </span>
-                      <span className="flex ml-auto items-bottom">
-                        <span
-                          // style={{ color: '#058527' }}
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        >
-                          27
-                        </span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li className="relative">
-                    <Link
-                      className={
-                        'flex items-center text-sm py-1  h-9 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
-                        (pgName === 'home' ? 'bg-gray-300' : '')
-                      }
-                      to={routes.home()}
-                    >
-                      <span className="flex items-center">
-                        <span style={{ color: '#058527' }}>
-                          <svg width="24" height="24" viewBox="0 0 24 24">
-                            <g fill="currentColor" fillRule="nonzero">
-                              <path
-                                d="M10 14.5a2 2 0adfaf 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z"
-                                opacity="0.1"
-                              ></path>
-                              <path d="M8.062 adfafafafa4h7.876a2 2 0 011.94 1.515l2.062 8.246a2 2 0 01.06.485V18a2 2 0 01-2 2H6a2 2 0 01-2-2v-3.754a2 2 0 01.06-.485l2.06-8.246A2 2 0 018.061 4zm0 1a1 1 0 00-.97.757L5.03 14.004a1 1 0 00-.03.242V18a1 1 0 001 1h12a1 1 0 001-1v-3.754a1 1 0 00-.03-.242l-2.06-8.247A1 1 0 0015.94 5H8.061zM12 17.25A2.75 2.75 0 019.295 15H7a.5.5 0 110-1h2.75a.5.5 0 01.5.5 1.75 1.75 0 003.5 0 .5.5 0 01.5-.5H17a.5.5 0 110 1h-2.295A2.75 2.75 0 0112 17.25z"></path>
-                            </g>
-                          </svg>
-                        </span>
-                        <span className="text-sm pl-[1px]">Esparanza</span>
-                      </span>
-                      <span className="flex ml-auto items-bottom">
-                        <span
-                          // style={{ color: '#058527' }}
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        >
-                          6
-                        </span>
-                      </span>
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-            )} */}
+          
+        
             {sourceLink === 'leadsScreen' && (
               <>
                 <li className="relative">
@@ -754,7 +505,6 @@ console.log(viewable)
                     </span>
                     <span className="flex ml-auto items-bottom">
                       <span
-                        // style={{ color: '#058527' }}
                         className="flex ml-auto items-bottom text-xs mt-2"
                       ></span>
                     </span>
@@ -772,11 +522,7 @@ console.log(viewable)
                                 : '')
                             }
                             onClick={() => {
-                              // data === 'In Progress'
-                              //   ? setViewable('inProgress')
-                              //   : data === 'Archive'
-                              //   ? setViewable('archieveLeads')
-                              //   : setViewable('booked')
+              
 
                               switch (data) {
                                 case 'In Progress':
@@ -808,7 +554,6 @@ console.log(viewable)
                             </span>
                             <span className="flex ml-auto items-bottom">
                               <span
-                                // style={{ color: '#058527' }}
                                 className="flex ml-auto items-bottom text-xs mt-2"
                               ></span>
                             </span>
@@ -833,7 +578,6 @@ console.log(viewable)
                     </span>
                     <span className="flex ml-auto items-bottom">
                       <span
-                        // style={{ color: '#058527' }}
                         className="flex ml-auto items-bottom text-xs mt-2"
                       ></span>
                     </span>
@@ -930,7 +674,6 @@ console.log(viewable)
                     </span>
                     <span className="flex ml-auto items-bottom">
                       <span
-                        // style={{ color: '#058527' }}
                         className="flex ml-auto items-bottom text-xs mt-2"
                       ></span>
                     </span>
@@ -970,7 +713,6 @@ console.log(viewable)
                           </span>
                           <span className="flex ml-auto items-bottom">
                             <span
-                              // style={{ color: '#058527' }}
                               className="flex ml-auto items-bottom text-xs mt-2"
                             ></span>
                           </span>
@@ -995,7 +737,6 @@ console.log(viewable)
                     </span>
                     <span className="flex ml-auto items-bottom">
                       <span
-                        // style={{ color: '#058527' }}
                         className="flex ml-auto items-bottom text-xs mt-2"
                       ></span>
                     </span>
@@ -1091,7 +832,6 @@ console.log(viewable)
                     </span>
                     <span className="flex ml-auto items-bottom">
                       <span
-                        // style={{ color: '#058527' }}
                         className="flex ml-auto items-bottom text-xs mt-2"
                       ></span>
                     </span>
@@ -1131,7 +871,6 @@ console.log(viewable)
                           </span>
                           <span className="flex ml-auto items-bottom">
                             <span
-                              // style={{ color: '#058527' }}
                               className="flex ml-auto items-bottom text-xs mt-2"
                             ></span>
                           </span>
@@ -1156,7 +895,6 @@ console.log(viewable)
                     </span>
                     <span className="flex ml-auto items-bottom">
                       <span
-                        // style={{ color: '#058527' }}
                         className="flex ml-auto items-bottom text-xs mt-2"
                       ></span>
                     </span>
@@ -1199,68 +937,7 @@ console.log(viewable)
                 </li>
               </>
             )}
-            {/* {sourceLink === 'leadsScreen' && access.includes('manage_leads') && (
-              <li className="relative">
-                <span
-                  className={
-                    'flex items-center text-sm py-1  h-9 mt-4 overflow-hidden  border-b text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
-                    (pgName === 'home' ? 'bg-gray-300' : '')
-                  }
-                  onClick={() => setViewable('inProgress')}
-                >
-                  <span className="flex items-center ml-">
-                    <span className="text-md font-bold pl-1 ">Team Leads</span>
-                  </span>
-                  <span className="flex ml-auto items-bottom">
-                    <span
-                      // style={{ color: '#058527' }}
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
-                  </span>
-                </span>
-                <ul className="px-1 pt-2">
-                  {' '}
-                  {['Lead Management', 'Booked', 'Archive'].map((data, inx) => (
-                    <li className="relative" key={inx}>
-                      <span
-                        className={
-                          'flex items-center text-sm py-1  h-9 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
-                          (pgName === 'home' ? 'bg-gray-300' : '')
-                        }
-                        onClick={() =>
-                          data === 'Lead Management'
-                            ? setViewable('inProgress')
-                            : data === 'Archive'
-                            ? setViewable('archieveLeads')
-                            : setViewable('booked')
-                        }
-                      >
-                        <span className="flex items-center">
-                          <span style={{ color: '#058527' }}>
-                            <svg width="24" height="24" viewBox="0 0 24 24">
-                              <g fill="currentColor" fillRule="nonzero">
-                                <path
-                                  d="M10 14.5a2 2 0 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z"
-                                  opacity="0.1"
-                                ></path>
-                                <path d="M8.062 4h7.876a2 2 0 011.94 1.515l2.062 8.246a2 2 0 01.06.485V18a2 2 0 01-2 2H6a2 2 0 01-2-2v-3.754a2 2 0 01.06-.485l2.06-8.246A2 2 0 018.061 4zm0 1a1 1 0 00-.97.757L5.03 14.004a1 1 0 00-.03.242V18a1 1 0 001 1h12a1 1 0 001-1v-3.754a1 1 0 00-.03-.242l-2.06-8.247A1 1 0 0015.94 5H8.061zM12 17.25A2.75 2.75 0 019.295 15H7a.5.5 0 110-1h2.75a.5.5 0 01.5.5 1.75 1.75 0 003.5 0 .5.5 0 01.5-.5H17a.5.5 0 110 1h-2.295A2.75 2.75 0 0112 17.25z"></path>
-                              </g>
-                            </svg>
-                          </span>
-                          <span className="text-sm pl-[4px]">{data}</span>
-                        </span>
-                        <span className="flex ml-auto items-bottom">
-                          <span
-                            // style={{ color: '#058527' }}
-                            className="flex ml-auto items-bottom text-xs mt-2"
-                          ></span>
-                        </span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            )} */}
+          
             {[
               'crmModule',
               'leadsScreen',
@@ -1274,14 +951,12 @@ console.log(viewable)
                     'flex items-center text-sm py-1  h-9 mt-4 overflow-hidden border-b text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
                     (pgName === 'home' ? 'bg-gray-300' : '')
                   }
-                  // to={routes.home()}
                 >
                   <span className="flex items-center ml-1">
                     <span className="text-md font-bold pl-1 ">Inventory</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
                     <span
-                      // style={{ color: '#058527' }}
                       className="flex ml-auto items-bottom text-xs mt-2"
                     ></span>
                   </span>
@@ -1329,7 +1004,6 @@ console.log(viewable)
                       </span>
                       <span className="flex ml-auto items-bottom">
                         <span
-                          // style={{ color: '#058527' }}
                           className="flex ml-auto items-bottom text-xs mt-1"
                         ></span>
                       </span>
@@ -1345,14 +1019,12 @@ console.log(viewable)
                     'flex items-center text-sm py-1  h-9 mt-4 overflow-hidden border-b text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
                     (pgName === 'home' ? 'bg-gray-300' : '')
                   }
-                  // to={routes.home()}
                 >
                   <span className="flex items-center ml-1">
                     <span className="text-md font-bold pl-1 ">Add-ons</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
                     <span
-                      // style={{ color: '#058527' }}
                       className="flex ml-auto items-bottom text-xs mt-2"
                     ></span>
                   </span>
@@ -1451,7 +1123,6 @@ console.log(viewable)
                       </span>
                     </span>
                   </li>
-                  {/* Virtual Accounts */}
                   <li className="relative">
                     <span
                       className={
@@ -1462,15 +1133,7 @@ console.log(viewable)
                     >
                       <span className="flex items-center">
                         <span style={{ color: '#058527' }}>
-                          {/* <svg width="24" height="24" viewBox="0 0 24 24">
-                            <g fill="currentColor" fillRule="nonzero">
-                              <path
-                                d="M10 14.5a2 2 0adfaf 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z"
-                                opacity="0.1"
-                              ></path>
-                              <path d="M8.062 adfafafafa4h7.876a2 2 0 011.94 1.515l2.062 8.246a2 2 0 01.06.485V18a2 2 0 01-2 2H6a2 2 0 01-2-2v-3.754a2 2 0 01.06-.485l2.06-8.246A2 2 0 018.061 4zm0 1a1 1 0 00-.97.757L5.03 14.004a1 1 0 00-.03.242V18a1 1 0 001 1h12a1 1 0 001-1v-3.754a1 1 0 00-.03-.242l-2.06-8.247A1 1 0 0015.94 5H8.061zM12 17.25A2.75 2.75 0 019.295 15H7a.5.5 0 110-1h2.75a.5.5 0 01.5.5 1.75 1.75 0 003.5 0 .5.5 0 01.5-.5H17a.5.5 0 110 1h-2.295A2.75 2.75 0 0112 17.25z"></path>
-                            </g>
-                          </svg> */}
+       
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-6"
@@ -1509,7 +1172,6 @@ console.log(viewable)
                     'flex items-center text-sm py-1  h-9 mt-4 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
                     (pgName === 'home' ? 'bg-gray-300' : '')
                   }
-                  // to={routes.home()}
                 >
                   <span className="flex items-center ml-1">
                     <span style={{ color: '#692fc2' }}>
@@ -1539,7 +1201,6 @@ console.log(viewable)
                   </span>
                   <span className="flex ml-auto items-bottom">
                     <span
-                      // style={{ color: '#058527' }}
                       className="flex ml-auto items-bottom text-xs mt-2"
                     ></span>
                   </span>
@@ -1611,14 +1272,12 @@ console.log(viewable)
                         'flex items-center text-sm py-1  h-9 mt-4 overflow-hidden   border-b text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
                         (pgName === 'home' ? 'bg-gray-300' : '')
                       }
-                      // to={routes.home()}
                     >
                       <span className="flex items-center ml-">
                         <span className="text-md font-bold pl-1 ">Reports</span>
                       </span>
                       <span className="flex ml-auto items-bottom">
                         <span
-                          // style={{ color: '#058527' }}
                           className="flex ml-auto items-bottom text-xs mt-2"
                         ></span>
                       </span>
@@ -1705,104 +1364,19 @@ console.log(viewable)
                     'flex items-center text-sm py-1  h-9 mt-4 overflow-hidden border-b text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
                     (pgName === 'home' ? 'bg-gray-300' : '')
                   }
-                  // to={routes.home()}
                 >
                   <span className="flex items-center ml-1">
                     <span className="text-md font-bold pl-1 ">HR</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
                     <span
-                      // style={{ color: '#058527' }}
                       className="flex ml-auto items-bottom text-xs mt-2"
                     ></span>
                   </span>
                 </Link>
                 <ul className="px-1">
                   {' '}
-                  {/* <li className="relative">
-                    <span
-                      className={
-                        'flex items-center text-sm py-1  h-9 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
-                        (pgName === 'home' ? 'bg-gray-300' : '')
-                      }
-                      onClick={() => setViewable('Attendance')}
-                    >
-                      <span className="flex items-center">
-                        <span style={{ color: '#eb8909' }}>
-                          <svg
-                            width="24"
-                            height="24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              opacity="0.1"
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M13 6.5A1.5 1.5 0 0114.5 5h3A1.5 1.5 0 0119 6.5v3a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 0113 9.5v-3zM6.5 13A1.5 1.5 0 005 14.5v3A1.5 1.5 0 006.5 19h3a1.5 1.5 0 001.5-1.5v-3A1.5 1.5 0 009.5 13h-3zm8 0a1.5 1.5 0 00-1.5 1.5v3a1.5 1.5 0 001.5 1.5h3a1.5 1.5 0 001.5-1.5v-3a1.5 1.5 0 00-1.5-1.5h-3zm-8-8A1.5 1.5 0 005 6.5v3A1.5 1.5 0 006.5 11h3A1.5 1.5 0 0011 9.5v-3A1.5 1.5 0 009.5 5h-3z"
-                              fill="currentColor"
-                            ></path>
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M17.5 6h-3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5zm-3-1A1.5 1.5 0 0013 6.5v3a1.5 1.5 0 001.5 1.5h3A1.5 1.5 0 0019 9.5v-3A1.5 1.5 0 0017.5 5h-3zm-8 9h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zm-1.5.5A1.5 1.5 0 016.5 13h3a1.5 1.5 0 011.5 1.5v3A1.5 1.5 0 019.5 19h-3A1.5 1.5 0 015 17.5v-3zm9.5-.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zm-1.5.5a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5v3a1.5 1.5 0 01-1.5 1.5h-3a1.5 1.5 0 01-1.5-1.5v-3zM6.5 6h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zM5 6.5A1.5 1.5 0 016.5 5h3A1.5 1.5 0 0111 6.5v3A1.5 1.5 0 019.5 11h-3A1.5 1.5 0 015 9.5v-3z"
-                              fill="currentColor"
-                            ></path>
-                          </svg>
-                        </span>
-
-                        <span className="text-sm pl-[6px]">Attendance</span>
-                      </span>
-                      <span className="flex ml-auto items-bottom">
-                        <span
-                          // style={{ color: '#058527' }}
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
-                      </span>
-                    </span>
-                  </li> */}
-                  {/* <li className="relative">
-                    <span
-                      className={
-                        'flex items-center text-sm py-1  h-9 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
-                        (pgName === 'home' ? 'bg-gray-300' : '')
-                      }
-                      onClick={() => setViewable('Pay')}
-                    >
-                      <span className="flex items-center">
-                        <span style={{ color: '#eb8909' }}>
-                          <svg
-                            width="24"
-                            height="24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              opacity="0.1"
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M13 6.5A1.5 1.5 0 0114.5 5h3A1.5 1.5 0 0119 6.5v3a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 0113 9.5v-3zM6.5 13A1.5 1.5 0 005 14.5v3A1.5 1.5 0 006.5 19h3a1.5 1.5 0 001.5-1.5v-3A1.5 1.5 0 009.5 13h-3zm8 0a1.5 1.5 0 00-1.5 1.5v3a1.5 1.5 0 001.5 1.5h3a1.5 1.5 0 001.5-1.5v-3a1.5 1.5 0 00-1.5-1.5h-3zm-8-8A1.5 1.5 0 005 6.5v3A1.5 1.5 0 006.5 11h3A1.5 1.5 0 0011 9.5v-3A1.5 1.5 0 009.5 5h-3z"
-                              fill="currentColor"
-                            ></path>
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M17.5 6h-3a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5zm-3-1A1.5 1.5 0 0013 6.5v3a1.5 1.5 0 001.5 1.5h3A1.5 1.5 0 0019 9.5v-3A1.5 1.5 0 0017.5 5h-3zm-8 9h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zm-1.5.5A1.5 1.5 0 016.5 13h3a1.5 1.5 0 011.5 1.5v3A1.5 1.5 0 019.5 19h-3A1.5 1.5 0 015 17.5v-3zm9.5-.5h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zm-1.5.5a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5v3a1.5 1.5 0 01-1.5 1.5h-3a1.5 1.5 0 01-1.5-1.5v-3zM6.5 6h3a.5.5 0 01.5.5v3a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5zM5 6.5A1.5 1.5 0 016.5 5h3A1.5 1.5 0 0111 6.5v3A1.5 1.5 0 019.5 11h-3A1.5 1.5 0 015 9.5v-3z"
-                              fill="currentColor"
-                            ></path>
-                          </svg>
-                        </span>
-
-                        <span className="text-sm pl-[6px]">My Incentives</span>
-                      </span>
-                      <span className="flex ml-auto items-bottom">
-                        <span
-                          // style={{ color: '#058527' }}
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
-                      </span>
-                    </span>
-                  </li> */}
+                 
                   <li className="relative">
                     <span
                       className={
@@ -1881,7 +1455,6 @@ console.log(viewable)
                       </span>
                       <span className="flex ml-auto items-bottom">
                         <span
-                          // style={{ color: '#058527' }}
                           className="flex ml-auto items-bottom text-xs mt-1"
                         ></span>
                       </span>
@@ -1897,7 +1470,6 @@ console.log(viewable)
                     'flex items-center text-sm py-1  h-9 mt-4 overflow-hidden border-b text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer ' +
                     (pgName === 'home' ? 'bg-gray-300' : '')
                   }
-                  // to={routes.home()}
                 >
                   <span className="flex items-center ml-1">
                     <span style={{ color: '#eb8909' }}>
@@ -1926,7 +1498,6 @@ console.log(viewable)
                   </span>
                   <span className="flex ml-auto items-bottom">
                     <span
-                      // style={{ color: '#058527' }}
                       className="flex ml-auto items-bottom text-xs mt-2"
                     ></span>
                   </span>
@@ -1943,15 +1514,7 @@ console.log(viewable)
                     >
                       <span className="flex items-center">
                         <span style={{ color: '#058527' }}>
-                          {/* <svg width="24" height="24" viewBox="0 0 24 24">
-                            <g fill="currentColor" fillRule="nonzero">
-                              <path
-                                d="M10 14.5a2 2 0adfaf 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z"
-                                opacity="0.1"
-                              ></path>
-                              <path d="M8.062 adfafafafa4h7.876a2 2 0 011.94 1.515l2.062 8.246a2 2 0 01.06.485V18a2 2 0 01-2 2H6a2 2 0 01-2-2v-3.754a2 2 0 01.06-.485l2.06-8.246A2 2 0 018.061 4zm0 1a1 1 0 00-.97.757L5.03 14.004a1 1 0 00-.03.242V18a1 1 0 001 1h12a1 1 0 001-1v-3.754a1 1 0 00-.03-.242l-2.06-8.247A1 1 0 0015.94 5H8.061zM12 17.25A2.75 2.75 0 019.295 15H7a.5.5 0 110-1h2.75a.5.5 0 01.5.5 1.75 1.75 0 003.5 0 .5.5 0 01.5-.5H17a.5.5 0 110 1h-2.295A2.75 2.75 0 0112 17.25z"></path>
-                            </g>
-                          </svg> */}
+        
                           <svg
                             width="24"
                             height="24"
@@ -1991,15 +1554,7 @@ console.log(viewable)
                     >
                       <span className="flex items-center">
                         <span style={{ color: '#058527' }}>
-                          {/* <svg width="24" height="24" viewBox="0 0 24 24">
-                            <g fill="currentColor" fillRule="nonzero">
-                              <path
-                                d="M10 14.5a2 2 0adfaf 104 0h5.5V18a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 18v-3.5H10z"
-                                opacity="0.1"
-                              ></path>
-                              <path d="M8.062 adfafafafa4h7.876a2 2 0 011.94 1.515l2.062 8.246a2 2 0 01.06.485V18a2 2 0 01-2 2H6a2 2 0 01-2-2v-3.754a2 2 0 01.06-.485l2.06-8.246A2 2 0 018.061 4zm0 1a1 1 0 00-.97.757L5.03 14.004a1 1 0 00-.03.242V18a1 1 0 001 1h12a1 1 0 001-1v-3.754a1 1 0 00-.03-.242l-2.06-8.247A1 1 0 0015.94 5H8.061zM12 17.25A2.75 2.75 0 019.295 15H7a.5.5 0 110-1h2.75a.5.5 0 01.5.5 1.75 1.75 0 003.5 0 .5.5 0 01.5-.5H17a.5.5 0 110 1h-2.295A2.75 2.75 0 0112 17.25z"></path>
-                            </g>
-                          </svg> */}
+
                           <svg
                             width="24"
                             height="24"
@@ -2023,7 +1578,6 @@ console.log(viewable)
                       </span>
                       <span className="flex ml-auto items-bottom">
                         <span
-                          // style={{ color: '#058527' }}
                           className="flex ml-auto items-bottom text-xs mt-1"
                         ></span>
                       </span>
@@ -2041,5 +1595,4 @@ console.log(viewable)
 
 export default HeadSideBarDetailView
 
-// ExecutiveHomePage
-//  <HeadSideBar pgName={'executiveHome'} />
+

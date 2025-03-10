@@ -116,291 +116,142 @@ const EmailForm = ({
   }
   const validateSchema = Yup.object({
     customerName1: Yup.string().required('Required'),
-    // co_Name1: Yup.string().required('Required'),
     panNo1: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
-    // panNo2: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
-    // panDocUrl1: Yup.string().required('Required'),
     aadharNo1: Yup.string().test(
       'aadhar',
       'Invalid Aadhar card number',
       isValidAadhar
     ),
-    // aadharNo2: Yup.string().test(
-    //   'aadhar',
-    //   'Invalid Aadhar card number',
-    //   isValidAadhar
-    // ),
-    // aadharUrl1: Yup.string().required('Required'),
-    // occupation1: Yup.string().required('Required'),
-    // phoneNo1: Yup.string().required('Required'),
-    // email1: Yup.string().email('Email is invalid'),
-    // email2: Yup.string().email('Email is invalid'),
-    // aggrementAddress: Yup.string().required('Required'),
+
   })
   const uid = selUnitDetails?.uid || selUnitDetails?.id
   const datee = new Date().getTime()
   const initialState = {
     customerName1:
-      // leadPayload?.customerDetailsObj?.customerName1 ||
-      // selUnitDetails?.customerDetailsObj?.customerName1 ||
       customerInfo?.customerName1 ||
-      // leadPayload?.Name ||
       '',
-    // customerName2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.customerName2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.customerName2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.customerName2 ||
-    //   '',
+
     relation1:
-    //  leadPayload?.customerDetailsObj?.relation1 ||
       selUnitDetails?.customerDetailsObj?.relation1 ||
       customerInfo?.relation1 || {
         label: 'S/O',
         value: 'S/O',
       },
 
-    // relation2: customerInfo?.secondaryCustomerDetailsObj?.relation2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.relation2 ||
-    //   leadPayload?.secondaryCustomerDetailsObj?.relation2 || {
-    //     label: 'S/O',
-    //     value: 'S/O',
-    //   },
+
 
     co_Name1:
-      // leadPayload?.customerDetailsObj?.co_Name1 ||
       selUnitDetails?.customerDetailsObj?.co_Name1 ||
       customerInfo?.co_Name1 ||
       '',
-    // co_Name2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.co_Name2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.co_Name2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.co_Name2 ||
-    //   '',
+
     leadPhNo:
 leadPayload?.Mobile ||
       '',
     phoneNo1:
-      // leadPayload?.customerDetailsObj?.phoneNo1 ||
       selUnitDetails?.customerDetailsObj?.phoneNo1 ||
       customerInfo?.phoneNo1 ||
-      // leadPayload?.Mobile ||
       '',
     phoneNo3:
-      // leadPayload?.customerDetailsObj?.phoneNo3 ||
       selUnitDetails?.customerDetailsObj?.phoneNo3 ||
       customerInfo?.phoneNo3 ||
-      // leadPayload?.Mobile ||
       '',
-    // phoneNo2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.phoneNo2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.phoneNo2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.phoneNo2 ||
-    //   '',
 
-    // phoneNo4:
-    //   leadPayload?.secondaryCustomerDetailsObj?.phoneNo4 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.phoneNo4 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.phoneNo4 ||
-    //   '',
 
     email1:
-      // leadPayload?.customerDetailsObj?.email1 ||
       selUnitDetails?.customerDetailsObj?.email1 ||
       customerInfo?.email1 ||
-      // leadPayload?.Email ||
       '',
-    // email2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.email2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.email2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.email2 ||
-    //   '',
+
     dob1: isValidDate(customerInfo?.dob1 )
       ? customerInfo?.dob1
       : isValidDate(leadPayload?.customerDetailsObj?.dob1) ? leadPayload?.customerDetailsObj?.dob1 : datee,
-    // dob2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.dob2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.dob2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.dob2 ||
-    //   datee,
+
     marital1:
-    // leadPayload?.customerDetailsObj?.marital1 ||
       selUnitDetails?.customerDetailsObj?.marital1 ||
       customerInfo?.marital1 || {
         label: 'Single',
         value: 'Single',
       },
-    // marital2: leadPayload?.secondaryCustomerDetailsObj?.marital2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.marital2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.marital2 || {
-    //     label: 'Single',
-    //     value: 'Single',
-    //   },
+
     address1:
-      // leadPayload?.customerDetailsObj?.address1 ||
       selUnitDetails?.customerDetailsObj?.address1 ||
       customerInfo?.address1 ||
       '',
-    // address2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.address2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.address2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.address2 ||
-    //   '',
+
     city1:
-      // leadPayload?.customerDetailsObj?.city1 ||
       selUnitDetails?.customerDetailsObj?.city1 ||
       customerInfo?.city1 ||
       '',
 
     countryName1:
-      // leadPayload?.customerDetailsObj?.countryName1 ||
       selUnitDetails?.customerDetailsObj?.countryName1 ||
       customerInfo?.countryName1 ||
       '',
 
     pincode1:
-      // leadPayload?.customerDetailsObj?.pincode1 ||
       selUnitDetails?.customerDetailsObj?.pincode1 ||
       customerInfo?.pincode1 ||
       '',
 
     countryCode1:
-      // leadPayload?.customerDetailsObj?.countryCode1 ||
       selUnitDetails?.customerDetailsObj?.countryCode1 ||
       customerInfo?.countryCode1 ||
       '',
 
-    // countryCode2:
-    //   leadPayload?.customerDetailsObj?.countryCode2 ||
-    //   selUnitDetails?.customerDetailsObj?.countryCode2 ||
-    //   customerInfo?.countryCode2 ||
-    //   '',
 
-    // city2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.city2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.city2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.city2 ||
-    //   '',
 
-    // countryName2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.countryName2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.countryName2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.countryName2 ||
-    //   '',
 
-    // pincode2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.pincode2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.pincode2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.pincode2 ||
-    //   '',
 
-    // countryCode3:
-    //   leadPayload?.secondaryCustomerDetailsObj?.countryCode3 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.countryCode3 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.countryCode3 ||
-    //   '',
-
-    // countryCode4:
-    //   leadPayload?.secondaryCustomerDetailsObj?.countryCode4 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.countryCode4 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.countryCode4 ||
-    //   '',
 
     state1:
-    // leadPayload?.customerDetailsObj?.state1 ||
       selUnitDetails?.customerDetailsObj?.state1 ||
       customerInfo?.state1 || {
         value: 'KA',
         label: 'Karnataka',
       },
-    // state2: leadPayload?.secondaryCustomerDetailsObj?.state2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.state2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.state2 || {
-    //     value: 'KA',
-    //     label: 'Karnataka',
-    //   },
+
 
     panNo1:
-      // leadPayload?.customerDetailsObj?.panNo1 ||
       selUnitDetails?.customerDetailsObj?.panNo1 ||
       customerInfo?.panNo1 ||
       '',
-    // panNo2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.panNo2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.panNo2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.panNo2 ||
-    //   '',
+
     panDocUrl1:
-      // leadPayload?.customerDetailsObj?.panDocUrl1 ||
       selUnitDetails?.customerDetailsObj?.panDocUrl1 ||
       customerInfo?.panDocUrl1 ||
       '',
 
-    // panDocUrl2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.panDocUrl2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.panDocUrl2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.panDocUrl2 ||
-    //   '',
+
     aadharNo1:
-      // leadPayload?.customerDetailsObj?.aadharNo1 ||
       selUnitDetails?.customerDetailsObj?.aadharNo1 ||
       customerInfo?.aadharNo1 ||
       '',
-    // aadharNo2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.aadharNo2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.aadharNo2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.aadharNo2 ||
-    //   '',
+
     aadharUrl1:
-      // leadPayload?.customerDetailsObj?.aadharUrl1 ||
       selUnitDetails?.customerDetailsObj?.aadharUrl1 ||
       customerInfo?.aadharUrl1 ||
       '',
-    // aadharUrl2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.aadharUrl2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.aadharUrl2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.aadharUrl2 ||
-    //   '',
+
     occupation1:
-      // leadPayload?.customerDetailsObj?.occupation1 ||
       selUnitDetails?.customerDetailsObj?.occupation1 ||
       customerInfo?.occupation1 ||
       '',
-    // occupation2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.occupation2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.occupation2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.occupation2 ||
-    //   '',
+
     companyName1:
-      // leadPayload?.customerDetailsObj?.companyName1 ||
       selUnitDetails?.customerDetailsObj?.companyName1 ||
       customerInfo?.companyName1 ||
       '',
     designation1:
-      // leadPayload?.customerDetailsObj?.designation1 ||
       selUnitDetails?.customerDetailsObj?.designation1 ||
       customerInfo?.designation1 ||
       '',
-    // designation2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.designation2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.designation2 ||
-    //   customerInfo?.designation2 ||
-    //   '',
+
     annualIncome1:
-      // leadPayload?.customerDetailsObj?.annualIncome1 ||
       selUnitDetails?.customerDetailsObj?.annualIncome1 ||
       customerInfo?.annualIncome1  ||
       '',
-    // annualIncome2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.annualIncome2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.annualIncome2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.annualIncome2 ||
-    //   '',
 
-    // companyName2:
-    //   leadPayload?.secondaryCustomerDetailsObj?.companyName2 ||
-    //   selUnitDetails?.secondaryCustomerDetailsObj?.companyName2 ||
-    //   customerInfo?.secondaryCustomerDetailsObj?.companyName2 ||
-    //   '',
 
     aggrementAddress:
       leadPayload?.aggrementDetailsObj?.aggrementAddress ||
@@ -421,9 +272,7 @@ leadPayload?.Mobile ||
       leadPayload?.Status === 'booked'
         ? leadPayload[`${uid}_otherInfo`]?.purpose
         : '',
-    // leadSource: "",
-    // sourceOfPay: "",
-    // purpose: "",
+
     bookingSource: leadPayload?.bookingSource || '',
     bookedBy: leadPayload?.bookedBy || leadPayload?.assignedToObj?.label || '',
     purchasePurpose: leadPayload?.purchasePurpose || '',
@@ -446,18 +295,14 @@ leadPayload?.Mobile ||
         return response.blob();
     })
     .then(blob => {
-        // Create a Blob URL
         const blobUrl = URL.createObjectURL(blob);
 
-        // Create a temporary link element
         const link = document.createElement('a');
         link.href = blobUrl;
         link.download = filename || 'download';
 
-        // Trigger the download
         link.click();
 
-        // Clean up by revoking the Blob URL
         URL.revokeObjectURL(blobUrl);
     })
     .catch(error => {
@@ -467,26 +312,19 @@ leadPayload?.Mobile ||
     fetch(imageUrl)
       .then((response) => response.blob())
       .then((blob) => {
-        // Create a temporary anchor element
         const url = window.URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = url
 
-        // Extract the filename from the URL
-        // const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
 
-        // Set the download attribute and filename
         link.setAttribute('download', 'filename.pdf')
         document.body.appendChild(link)
         console.log('fetcher url ', filename)
-        // Simulate a click on the anchor element to start the download
         link.click()
 
-        // Clean up the temporary anchor element
         link.parentNode.removeChild(link)
 
-        // Set the downloaded image URL to display on the page
-        // setImageUrl(url)
+    
       })
       .catch((error) => {
         console.error('Error downloading image:', error)
@@ -507,26 +345,19 @@ leadPayload?.Mobile ||
           const prog =
             Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
 
-          // setProgress(prog)
           file.isUploading = false
         },
         (err) => console.log(err),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            // createAttach(orgId, url, by, file.name, id, attachType)
             file.url = url
-            // setFiles([...files, file])
             if (type === 'panCard1') {
-              // setPanCard1(url)
               formik.setFieldValue('panDocUrl1', url)
             } else if (type === 'panCard2') {
-              // setPanCard2(url)
               formik.setFieldValue('panDocUrl2', url)
             } else if (type === 'aadharNo1Url') {
-              // setAadharUrl1(url)
               formik.setFieldValue('aadharUrl1', url)
             } else if (type === 'aadharNo2Url') {
-              // setAadharUrl2(url)
               formik.setFieldValue('aadharUrl2', url)
             }
             console.log(
@@ -538,7 +369,6 @@ leadPayload?.Mobile ||
               aadhrUrl1
             )
             return url
-            //  save this doc as a new file in spark_leads_doc
           })
         }
       )
@@ -569,7 +399,6 @@ leadPayload?.Mobile ||
       formik.setFieldValue('customerName1', x?.Name)
       }
       console.log('customerName1', foundLength, x)
-      // formik.setFieldValue('co_Name1', x?.Name)
       if(x?.Mobile){
         formik.setFieldValue('customerName1', x?.Name)
       formik.setFieldValue('phoneNo1', x?.Mobile)}
@@ -577,18 +406,12 @@ leadPayload?.Mobile ||
         formik.setFieldValue('customerName1', x?.Name)
       formik.setFieldValue('email1', x?.Email)
       }
-      // formik.setFieldValue('address1', x?.Address)
-      // formik.setFieldValue('city1', x?.City)
-      // formik.setFieldValue('state1', x?.State)
-      // formik.setFieldValue('countryName1', x?.Country)
-      // formik.setFieldValue('pincode1', x?.Pincode)
-      // formik.setFieldValue('countryCode1', x?.CountryCode)
+
 
       setFetchedLeadsObj(foundLength[0])
 
       setLeadLink(true)
     }
-    // formik.setFieldValue('customerName1', 'New1')
 
     }
 
@@ -611,7 +434,6 @@ leadPayload?.Mobile ||
       onSubmit={(values, { resetForm }) => {
         console.log('submitted ==>', income)
 
-        //  values.annualIncome1 = Number(values.annualIncome1.replace(/,/g, ''))
       const fullData = values
       console.log('testing link',leadLink,fetchedLeadsObj )
 
@@ -622,25 +444,15 @@ leadPayload?.Mobile ||
       {(formik) => (
         <Form className="space-y-4">
           <div>
-            {/* <Field
-            as={Input}
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            className="w-full"
-          /> */}
-            {/* <TextField label="Customer Name*" name="email" type="text" />
-            <ErrorMessage name="email" className="text-red-500" /> */}
+ 
             <section
               className="   bg-[#fff] rounded-[20px] border pb-4 "
               style={{ boxShadow: '0 1px 12px #f2f2f2' }}
             >
               <div
                 className="w-full bg-[#EDEDED] flex flex-row justify-between mb-2 p-4 bg-white-100 rounded-t-[20px]"
-                // style={bgImgStyle}
               >
                 <section className="flex flex-row">
-                  {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
                   <div className="w-full flex flex-col">
                     <div className="  flex flex-row gap-2 ">
                       <div>
@@ -655,15 +467,12 @@ leadPayload?.Mobile ||
                           careful what you record.
                         </div>
 
-                        {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
                       </div>
 
                       <div></div>
                     </div>
 
-                    {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
-                                            Details of applicant is mandatory
-                                          </div> */}
+                
                   </div>
                 </section>
               </div>
@@ -680,7 +489,6 @@ leadPayload?.Mobile ||
                             className=" ml- text-[13px] cursor-pointer  rounded-full px-2  text-[#0ea5e9] underline"
                             onClick={() => setShowLeadLink(!showLeadLink)}
                           >
-                            {/* <LinkIcon className="w-3 h-3 cursor-pointer ml-1 mb-[3px] mr-1 inline-block text-[#0ea5e9]  rounded-[16px] " /> */}
                             Auto fill & link with lead
                           </div>}
 
@@ -688,12 +496,11 @@ leadPayload?.Mobile ||
                             className=" ml- text-[13px] cursor-pointer  rounded-full px-2  text-orange-500 underline"
                             onClick={() => setShowLeadLink(!showLeadLink)}
                           >
-                            {/* <LinkIcon className="w-3 h-3 cursor-pointer ml-1 mb-[3px] mr-1 inline-block text-[#0ea5e9]  rounded-[16px] " /> */}
                             Applicant Linked to Lead
                           </div>}
                   </span>
                 </section>
-{/* auto fill section */}
+
                 {showLeadLink && (
                 <div className="bg-[#DCD7FF] rounded-xl p-2 mt-2 flex-col">
                   <label className='text-[14px] '>Auto fill from matched Leads Phone No </label>
@@ -703,16 +510,12 @@ leadPayload?.Mobile ||
                       <PhoneNoField
                         label="Lead Phone No"
                         name="leadPhNo1"
-                        // type="text"
                         value={givenPhNo1}
                         onChange={(value) => {
-                          // formik.setFieldValue('mobileNo', value.value)
                           console.log('value is ', value.value)
-                          //
-                          // formik.setFieldValue('leadPhNo', value.value)
+                      
                           searchPhoneNoFun(value.value)
                         }}
-                        // value={formik.values.mobileNo}
                         options={{}}
                         labelSize="text-[11px]"
                         textSize="text-[12px]"
@@ -777,6 +580,10 @@ leadPayload?.Mobile ||
                                   {
                                     label: 'W/O',
                                     value: 'W/O',
+                                  },
+                                  {
+                                    label: 'C/O',
+                                    value: 'C/O',
                                   },
                                 ]}
                               />
@@ -850,7 +657,6 @@ leadPayload?.Mobile ||
                             setHours(setMinutes(d, 5), 12),
                             setHours(setMinutes(d, 59), 23),
                           ]}
-                          //dateFormat="d-MMMM-yyyy"
                           dateFormat="MMM dd, yyyy"
                         />
                       </span>
@@ -928,7 +734,6 @@ leadPayload?.Mobile ||
                       name="panNo1"
                       type="text"
                       value={formik.values.panNo1}
-                      // onChange={formik.handleChange}
 
                       onChange={(e) => {
                         let value = e.target.value;
@@ -1034,7 +839,6 @@ leadPayload?.Mobile ||
                       name="aadharNo1"
                       type="text"
                       value={formik.values.aadharNo1}
-                      // onChange={formik.handleChange}
                       onChange={(e) => {
                         const value = e.target.value.replace(/[^0-9]/g, '');
                         if (value.length <= 12) {
@@ -1103,14 +907,11 @@ leadPayload?.Mobile ||
 
                           <PhoneNoField
                             name="phoneNo1"
-                            // type="text"
                             value={formik.values.phoneNo1}
                             customStyles={customPhoneNoFieldStyles}
                             onChange={(value) => {
-                              // formik.setFieldValue('mobileNo', value.value)
                               formik.setFieldValue('phoneNo1', value.value)
                             }}
-                            // value={formik.values.mobileNo}
                             options={{}}
                             labelSize="text-[11px]"
                             textSize="text-[12px]"
@@ -1122,16 +923,7 @@ leadPayload?.Mobile ||
                     </div>
                   </div>
 
-                  {/*
-                                        <div className="w-full lg:w-3/12 pl-4">
-                                          <div className="relative w-full mt-2">
-                                            <TextField
-                                              label="Email"
-                                              name="email2"
-                                              type="text"
-                                            />
-                                          </div>
-                                        </div> */}
+
 
                   <div className="w-full lg:w-3/12 pl-4">
                     <div className="relative w-full mt-2">
@@ -1320,7 +1112,6 @@ leadPayload?.Mobile ||
 
 
                           formik.setFieldValue('annualIncome1', rawValue)
-                          // handleIncomeChange(rawValue)
                         }
                         }
                       />
@@ -1347,13 +1138,7 @@ leadPayload?.Mobile ||
       <button onClick={handleClone} className="mb-4  md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Save & Add New Applicant</button>
       {index !=0 && <button onClick={()=>setIsDialogOpen(true)} className="mb-4  md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Delete</button>}
 
-            {/* <button
-              type="button"
-              onClick={() => onSave(values)}
-              disabled={isSubmitting}
-            >
-              Save
-            </button> */}
+
 
 
 
@@ -1436,10 +1221,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
     index
   ) => {
     setTimeout(() => {
-      // alert(JSON.stringify(values, null, 2))
-      // setSubmitting(false)
-      // resetForm()
-      // Remove the form from saved forms if it was there
+    
       setSavedForms((prev) => {
         const { [formId]: _, ...rest } = prev
         return rest
@@ -1468,13 +1250,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
       x.custObj4 = values
     }
 
-    // add to array
-
-    // console.log('customer info', values)
-    // let a1 = customerInfo
-    // a1[index] = values
-    // console.log('customer info', a1)
-    // setCustomerInfo(a1)
+  
     console.log('uploading values are', x.leadId)
     updateUnitCustomerDetailsTo(
       orgId,
@@ -1505,8 +1281,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
   return (
     <div className="space-y-8">
       {forms.map((form, i) => (
-        <div key={form.id} className="border p-4 rounded-lg">
-          {/* <h2 className="text-lg font-semibold mb-4">Applicant {i + 1}</h2> */}
+        <div key={form.id} className="border p-2 rounded-lg">
           <EmailForm
             onSubmitFun={(values, formikBag) =>
               handleSubmit(values, formikBag, form.id, i)
@@ -1517,7 +1292,6 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
             handleClone={handleClone}
             handleDelete={()=>handleDelete(form.id)}
             index={i}
-            // customerInfo={}
           />
           {savedForms[form.id] && (
             <span className="mt-4">

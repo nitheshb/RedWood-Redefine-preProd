@@ -47,7 +47,6 @@ const StyledTableCell = styled(TableCell)(() => ({
 const StickyTableCell = styled(TableCell)(({ theme }) => ({
   minWidth: '50px',
   left: 0,
-  //position: 'sticky',
   zIndex: theme.zIndex.appBar + 1,
   borderBottom: 0,
   backgroundColor: '#F5F5F5',
@@ -56,7 +55,6 @@ const StickyTableCell = styled(TableCell)(({ theme }) => ({
 const StickyHeaderCell = styled(TableCell)(({ theme }) => ({
   minWidth: '50px',
   left: 0,
-  //position: 'sticky',
   zIndex: theme.zIndex.appBar + 2,
   borderBottom: 0,
   backgroundColor: '#F5F5F5',
@@ -66,7 +64,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(even)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
     backgroundColor: '#F5F5F5',
@@ -209,21 +206,14 @@ const UserAccessTable = ({showCompletedTasks}) => {
 
       <div className="flex-1 mb-10 border rounded-lg shadow-sm overflow-hidden bg-white">
       <div className="h-full overflow-auto">
-          {/* Table structure with fixed header and first column */}
           <table className="w-full border-collapse table-fixed">
             <thead>
               <tr>
-                {/* Fixed header for Roles column */}
                 <th className="sticky left-0 top-0 z-20 w-40 bg-gray-50 p-4 text-left font-semibold text-[11px] text-gray-900 border-b border-r">
                   Roles
                 </th>
-                {/* Other header cells */}
                 {
-  //               [
-  //   { id: 1, name: 'Manage Leads' },
-  //   { id: 2, name: 'Display Leads' },
-  //   { id: 3, name: 'Approve Documents' },
-  // ]
+
   filterData?.[4]?.access.map(({ name, key })  => (
                   <th
                     key={key}
@@ -237,25 +227,13 @@ const UserAccessTable = ({showCompletedTasks}) => {
             </thead>
             <tbody className="divide-y">
               {
-  //             [
-  //   { id: 1, name: 'Admin' },
-  //   { id: 2, name: 'Manager' },
-  //   { id: 3, name: 'Team Lead' },
-  //   { id: 4, name: 'Employee' },
-  //   { id: 5, name: 'Intern' },
-  //   { id: 2, name: 'Manager' },
-  //   { id: 3, name: 'Team Lead' },
-  //   { id: 4, name: 'Employee' },
-  //   { id: 5, name: 'Intern' },
-  // ]
+
   filterData
   .map(item => (
                 <tr key={item.uid} className="hover:bg-gray-50">
-                  {/* Fixed first column */}
                   <td className="sticky left-0 z-10 bg-white p-4 text-[12px] text-gray-900 border-r">
                     {item.type}
                   </td>
-                  {/* Permission cells */}
                   {
   item?.access.map(element => (
                     <td
@@ -264,7 +242,6 @@ const UserAccessTable = ({showCompletedTasks}) => {
                     >
                       <div className="flex items-center justify-center">
                         <button
-                          // onClick={() => togglePermission(role.id, permission.id)}
                           onClick={() => onRoleChangeListener(item, element)}
                           className={`w-5 h-5 rounded flex items-center justify-center ${
                             element.checked
@@ -276,10 +253,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
                             <Check className="w-4 h-4" />
                           )}
                         </button>
-                         {/* <StyledCheckBox
-                      defaultChecked={element.checked}
-                      onChange={() => onRoleChangeListener(item, element)}
-                    /> */}
+        
                       </div>
                     </td>
                   ))}

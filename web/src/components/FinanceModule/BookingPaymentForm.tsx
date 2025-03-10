@@ -223,34 +223,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
 
     const { partBPayload, costSheetA } = selUnitDetails
 
-    // const partBTotal = partBPayload?.reduce(
-    //   (partialSum, obj) =>
-    //     partialSum +
-    //     Number(
-    //       computeTotal(
-    //         obj,
-    //         selUnitDetails?.super_built_up_area ||
-    //           selUnitDetails?.area?.toString()?.replace(',', '')
-    //       )
-    //     ),
-    //   0
-    // )
-    // const partATotal = newPlotCostSheetA?.reduce(
-    //   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-    //   0
-    // )
-    // const partBTotal = newAdditonalChargesObj?.reduce(
-    //   (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
-    //   0
-    // )
-    // const T_total = partATotal + partBTotal
-    // console.log(
-    //   'total Cost test',
-    //   T_total,
-    //   '==> ',
-    //   newPlotCostSheetA,
-    //   newAdditonalChargesObj
-    // )
+
     const T_total = bookingPayloadFinal?.T_total
 
     const categorizedNewPlotPS = newPlotPS?.map((item) => ({
@@ -345,29 +318,12 @@ console.log('customer details are', customerInfo, selUnitDetails)
     }
     await capturePayment_log(data, txId, resetForm)
 
-    // return
     const s1 = await bookCompSteps
     await s1.push('payment_captured')
     await setBookCompSteps(s1)
 
     await setBookCurentStep(['CS_updated', 'customer_created'])
-    // get booking details, leadId, unitDetails,
-    //  from existing object send values of
-    //  booking
-    // copy unit data as it is
-    // copy lead data as it is
-    //  unit details
 
-    // 1)Make an entry to finance Table {source: ''}
-    // 2)Create new record in Customer Table
-    // 3)Update unit record with customer record and mark it as booked
-    // 4)update lead status to book
-
-    //   const x = await addDoc(collection(db, 'spark_leads'), data)
-    // await console.log('x value is', x, x.id)
-
-    // I) createNewCustoreSupa
-    // const foundLength = await checkIfLeadAlreadyExists('spark_leads', phoneNo1)
     const foundLength = []
     const leadData = {
       Date: Timestamp.now().toMillis(),
@@ -398,15 +354,12 @@ console.log('customer details are', customerInfo, selUnitDetails)
       )
       leadData.id = await createResp?.id || ''
     }
-    // const { id, purpose,  } =
-    //   leadDetailsObj2
-    // check if lead already exists
+
     const { id } = leadData
-    // proceed to copy
+
 
     const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
 
-    // 1)Make an entry to finance Table {source: ''}
     console.log(
       'secondary value si s',
       customerDetailsObj,
@@ -485,13 +438,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
       data.assignedTo
     )
 
-    // create task in finance
-    // create task for crm
-    // create whatsApp Alert
-    // create task to project manager for cost sheet approval
 
-    // add phaseNo , projName to selUnitDetails
-    // 2)Create('')
 
 
 
@@ -499,17 +446,14 @@ console.log('customer details are', customerInfo, selUnitDetails)
       orgId,
       uid,
       {
-        // leadId: id,
         projectName: leadDetailsObj2?.Project || projectDetails?.projectName,
         ProjectId: leadDetailsObj2?.ProjectId || selUnitDetails?.pId,
-        // ...customerDetailsObj,
         Name: customerDetailsObj?.customerName1 || primaryCustomerName,
         Mobile: customerDetailsObj?.phoneNo1 || phoneNo,
         Email: customerDetailsObj?.email1 || '',
         secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
         assets: arrayUnion(uid),
-        // [`${uid}_cs`]: leadDetailsObj2[`${uid}_cs`],
-        // [`${uid}_ps`]: phase?.paymentScheduleObj || {},
+
         [`${uid}_unitDetails`]: selUnitDetails || {},
         [`${uid}_plotCS`]: newPlotCostSheetA,
         [`${uid}_AddChargesCS`]: newAdditonalChargesObj,
@@ -548,13 +492,11 @@ console.log('customer details are', customerInfo, selUnitDetails)
     const unitUpdate = {
       leadId: id || '',
       status: 'booked',
-      // customerDetailsObj: customerDetailsObj || {},
-      // secondaryCustomerDetailsObj: secondaryCustomerDetailsObj || {},
+   
       booked_on: data?.dated,
       ct: Timestamp.now().toMillis(),
       Date: Timestamp.now().toMillis(),
-      // ...otherData,
-      // T_total: newTotal,
+
       T_balance: T_balance,
       T_received: data['T_received'] || 0,
       T_elgible: T_elgible,
@@ -563,22 +505,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
       T_transaction: data['T_received'] || 0,
 
       T_review: 0,
-      // T_A: partATotal,
-      // T_B: partBTotal,
-      // T_C: partCTotal,
-      // T_D: partDTotal,
-      // T_E: partETotal,
-      // plotCS: [...x],
-      // constructCS: [...constructionCS],
-      // addChargesCS: partB1,
-      // constAdditionalChargesCS: partD,
-      // possessionAdditionalCostCS: partE,
-      // plotPS: plotPs,
-      // constructPS: constructPs,
-      // fullPs: fullPs1,
-      // plc_per_sqft: data['plc_per_sqft'],
-      // sqft_rate: data['sqft_rate'],
-      // construct_price_sqft: data['construct_price_sqft'],
+
       ats_date: data['ats_date'] || '',
       atb_date: data['atb_date'] || '',
       sd_date: data['sd_date'] || '',
@@ -666,13 +593,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
   }
 
   const validateSchema = Yup.object({
-    // date: Yup.string().required('Bank Required'),
-    // amount: Yup.string().required('Required'),
-    // payto: Yup.string().required('Required'),
-    // mode: Yup.string().required('Bank Required'),
-    // drawnonbank: Yup.string().required('Required'),
-    // chequeno: Yup.string().required('Required'),
-    // dated: Yup.string().required('Required'),
+
   })
 
   const submitFormFun = (formik) => {
@@ -685,11 +606,8 @@ console.log('customer details are', customerInfo, selUnitDetails)
       style={{ height: `calc(100vh - 120px)` }}
     >
       <div className=" w-full  flex flex-row justify-between mb-0 p-4 pb-0 bg-white-100 rounded-t-md">
-        {/* <Dialog.Title className=" font-semibold text-xl mr-auto ml-3 text-[#053219]">
-          {title}
-        </Dialog.Title> */}
+
         <section className="flex flex-row">
-          {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
           <div className="w-full flex flex-col">
             <div className=" flex flex-row justify-between gap-2 ">
               <div>
@@ -702,7 +620,6 @@ console.log('customer details are', customerInfo, selUnitDetails)
                   Unit will be allocated on manager approval.
                 </div>
 
-                {/* <div className="border-t-4 rounded-xl w-16 mt-[5px] mb-3 border-[#8b5cf6]"></div> */}
               </div>
 
               <div className="flex flex-col">
@@ -713,9 +630,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
               </div>
             </div>
 
-            {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
-                                            Details of applicant is mandatory
-                                          </div> */}
+
           </div>
         </section>
       </div>

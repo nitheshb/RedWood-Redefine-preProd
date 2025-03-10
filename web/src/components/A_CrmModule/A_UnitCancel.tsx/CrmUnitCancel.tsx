@@ -322,27 +322,7 @@ export default function UnitBookingCancelCRM({
     if (fet === 'appoint') {
       return
     }
-    //  else if (fet === 'ph') {
-    //   const unsubscribe = steamLeadPhoneLog(orgId,
-    //     (doc) => {
-    //       console.log('my total fetched list is yo yo 1', doc.data())
-    //       const usersList = doc.data()
-    //       const usersListA = []
 
-    //       Object.entries(usersList).forEach((entry) => {
-    //         const [key, value] = entry
-    //         usersListA.push(value)
-    //         console.log('my total fetched list is 3', `${key}: ${value}`)
-    //       })
-    //       console.log('my total fetched list is', usersListA.length)
-    //       // setLeadsFetchedActivityData(usersListA)
-    //     },
-    //     {
-    //       uid: id,
-    //     },
-    //     (error) => setLeadsFetchedActivityData([])
-    //   )
-    // }
     else {
       leadsActivityFetchedData.map((data) => {
         console.log('value of filtered feature count before', data)
@@ -488,7 +468,6 @@ export default function UnitBookingCancelCRM({
       'on_lead_assign',
       'wa',
       'customer',
-      // 'ProjectId',
       ProjectId,
       receiverDetails,
       msgPayload
@@ -498,17 +477,13 @@ export default function UnitBookingCancelCRM({
   const setNewProject = (leadDocId, value) => {
     console.log('sel pROJECT DETAILS ', value)
 
-    // setProjectName(value.projectName)
-    // setProjectId(value.uid)
-    // save assigner Details in db
-    // projectName
+
     const x = {
       Project: value.projectName,
       ProjectId: value.uid,
     }
     setSelProjectIs(value)
     updateLeadProject(orgId, leadDocId, x)
-    // updateLeadAssigTo(leadDocId, value, by)
   }
 
   const setStatusFun = async (leadDocId, newStatus) => {
@@ -545,7 +520,7 @@ export default function UnitBookingCancelCRM({
         dataObj.T_elgible_new = sum
         updateUnitStatus(
           orgId,
-          selCustomerPayload?.id,
+          selCustomerPayload,
           dataObj,
           user.email,
           enqueueSnackbar
@@ -559,7 +534,7 @@ export default function UnitBookingCancelCRM({
         setUnitStatus(newStatus)
         updateUnitStatus(
           orgId,
-          selCustomerPayload?.id,
+          selCustomerPayload,
           dataObj,
           user.email,
           enqueueSnackbar
@@ -620,9 +595,7 @@ export default function UnitBookingCancelCRM({
       setTakTitle(' ')
     }
 
-    //
-    // updateLeadStatus(leadDocId, newStatus)
-    // toast.success('status Updated Successfully')
+
   }
 
   const downloadFile = (url) => {
@@ -642,12 +615,7 @@ export default function UnitBookingCancelCRM({
           usersListA.push(value)
           console.log('my total fetched list is 3', `${key}: ${value}`)
         })
-        // for (const key in usersList) {
-        //   if (usersList.hasOwnProperty(key)) {
-        //     console.log(`${key} : ${usersList[key]}`)
-        //     console.log(`my total fetched list is 2 ${usersList[key]}`)
-        //   }
-        // }
+
 
         console.log('my total fetched list is', usersListA.length)
         setLeadsFetchedActivityData(usersListA)
@@ -658,7 +626,6 @@ export default function UnitBookingCancelCRM({
       (error) => setLeadsFetchedActivityData([])
     )
 
-    //  lead Schedule list
     steamLeadScheduleLog(
       orgId,
       (doc) => {
@@ -682,18 +649,10 @@ export default function UnitBookingCancelCRM({
             }
           } else {
             usersListA.push(value)
-            // console.log(
-            //   'my total fetched list is 3',
-            //   `${key}: ${JSON.stringify(value)}`
-            // )
+  
           }
         })
-        // for (const key in usersList) {
-        //   if (usersList.hasOwnProperty(key)) {
-        //     console.log(`${key} : ${usersList[key]}`)
-        //     console.log(`my total fetched list is 2 ${usersList[key]}`)
-        //   }
-        // }
+
 
         console.log('my total fetched list is', usersListA.length)
         usersListA.sort((a, b) => {
@@ -756,7 +715,6 @@ export default function UnitBookingCancelCRM({
     console.log('new one ', schStsA, x)
     x.push('pending')
     setschStsA(x)
-    // addSchedulerLog(id, data)
     console.log('new one ', schStsA)
     await addLeadScheduler(orgId, id, data, schStsA, '')
     if (status != tempLeadStatus) {
@@ -768,7 +726,6 @@ export default function UnitBookingCancelCRM({
   const cancelResetStatusFun = () => {
     setAddSch(false)
     setAddNote(false)
-    // if its not edit mode ignore it
     setLeadStatus(status)
     setLoader(false)
   }
@@ -893,22 +850,6 @@ export default function UnitBookingCancelCRM({
       <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F8E7E3]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full   ">
-            {/* <div className="">
-                <div className="font-semibold text-[#053219]  text-sm  mt-3 mb-1  tracking-wide font-bodyLato">
-                  <span className="mb-[4px] text-xl uppercase">{Name}</span>
-
-                  <div className="mt-1">
-                    <div className="font-md text-sm text-gray-500 mb-[2] tracking-wide">
-                      <MailIcon className="w-3 h-3 inline text-[#058527] " />{' '}
-                      {Email}
-                    </div>
-                    <div className="font-md text-sm text-gray-500 mb-[2] tracking-wide ">
-                      <DeviceMobileIcon className="w-3 h-3 inline text-[#058527] " />{' '}
-                      {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}
-                    </div>
-                  </div>
-                </div>
-              </div> */}
 
             <div className="flex flex-col justify-between">
               <section className="flex flex-row justify-between bg-[#F8E7E3] px-3 py-1 border border-[#e5e7f8] rounded-md ">

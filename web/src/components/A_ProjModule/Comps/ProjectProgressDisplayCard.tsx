@@ -36,11 +36,9 @@ function CompactCard({ param, setExpanded }) {
           value={param.barValue}
           text={`${param.barValue}%`}
         />
-        {/* <span>{param.title}</span> */}
         <span style={{ fontSize: '12px' }}>120,000 sft</span>
       </div>
       <div className="detail">
-        {/* <Png /> */}
         <span className="flex flex-col text-center mt-4 text-xl">
           72 <span className="text-xs">Available Units</span>
         </span>

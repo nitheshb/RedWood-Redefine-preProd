@@ -68,7 +68,6 @@ const CrmEmployeeAnalytics = () => {
       monthly: 'April',
       week: 'Week 15'
     },
-    // Add more dummy data as needed
   ];
 
   const [employees, setEmployees] = useState(dummyData);
@@ -144,7 +143,6 @@ const CrmEmployeeAnalytics = () => {
         </div>
       </div>
 
-      {/* Employee table */}
       <div className="shadow-md bg-white rounded-lg">
         <table className="text-sm text-left text-black dark:text-gray-400 w-full">
           <thead className="text-sm  text-black bg-gray-200">
