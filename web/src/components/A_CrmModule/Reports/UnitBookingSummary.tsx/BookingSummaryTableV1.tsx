@@ -62,6 +62,7 @@ import { getAllProjects, getBookedUnitsByProject, getUnitsAgreeByProject } from 
 import { Download, Filter } from 'lucide-react'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import PdfBookingSummaryReport from './PdfBookingSummaryReport'
+import PdfBookingConstructionSummaryReport from './PdfBookingConstructionSummaryReport'
 
 
 
@@ -2197,10 +2198,33 @@ const customTooltip = ({ payload, label }) => {
 
   {/* <Download className="w-4 h-4 text-gray-500" />
   <span className="text-gray-700 text-sm"> */}
-  <PdfBookingSummaryReport/>
+  {/* <PdfBookingSummaryReport/> */}
   {/* </span> */}
 
 
+  <PdfBookingSummaryReport
+  user={user || {}}
+  // selUnitDetails={selUnitDetails}
+  // streamUnitDetails={streamUnitDetails}
+  // myBookingPayload={myBookingPayload}
+  // myObj={myObj}
+  // newPlotPS={newPlotPS}
+  // myAdditionalCharges={myAdditionalCharges}
+  // netTotal={netTotal}
+  // setNetTotal={setNetTotal}
+  // partATotal={partATotal}
+  // partBTotal={partBTotal}
+  // project={project}
+  // setPartATotal={setPartATotal}
+  // setPartBTotal={setPartBTotal}
+  // projectDetails={projectDetails}
+  // selCustomerPayload={selCustomerPayload}
+  // leadDetailsObj1={leadDetailsObj1}
+  // possessAdditionalCS={possessAdditionalCS}
+  // possessionAdditionalCostCS={possessionAdditionalCostCS}
+  // custObj1={custObj1}
+  tableData={filLeadsA || {}}
+/>
 
 
 
@@ -2208,6 +2232,29 @@ const customTooltip = ({ payload, label }) => {
     Download
   </span>
 </button>
+
+{/* <button
+  className="relative flex items-center gap-2  rounded-md border border-gray-300 hover:bg-gray-100 transition"
+>
+
+
+<PdfBookingConstructionSummaryReport
+
+user={user || {}}
+
+
+tableData={filLeadsA || {}}
+
+/>
+
+
+
+
+
+  <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 px-2 py-1 text-xs text-white bg-black rounded-md opacity-0 group-hover:opacity-100 transition">
+    Construction Download
+  </span>
+</button> */}
 
 
 
@@ -2767,7 +2814,7 @@ const customTooltip = ({ payload, label }) => {
 
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
-                            {row?.sqft_rate}
+                          ₹{row?.sqft_rate?.toLocaleString('en-IN')}
 
 
                           </span>
@@ -2790,7 +2837,7 @@ const customTooltip = ({ payload, label }) => {
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
                             {/* {row?.T_A} */}
-                            {Math.round(row?.T_A)}
+                            {Math.round(row?.T_A || 0).toLocaleString('en-IN')}
 
 
 
@@ -2867,7 +2914,7 @@ const customTooltip = ({ payload, label }) => {
 
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
-                          {row?.construct_price_sqft}
+                          ₹{row?.construct_price_sqft?.toLocaleString('en-IN')}
 
 
 
