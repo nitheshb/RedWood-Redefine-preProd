@@ -944,7 +944,7 @@ transition
                                       
                                       >
                                  
-                                        <span>Save & Next new</span>
+                                        <span>Save & Next</span>
                                       </button>
                                     )}
                                     </section>
