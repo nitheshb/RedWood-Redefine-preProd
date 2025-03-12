@@ -31,7 +31,7 @@ const LegalDocsHome = ({ project }) => {
 
   const [filteredUnits, setFilteredUnits] = useState([])
   const [filStatus, setFilStatus] = useState(['available', 'booked', 'blocked'])
-  const [formats, setFormats] = React.useState('list')
+  const [formats, setFormats] = React.useState('grid')
 
   // interface files{
   //   name:string
@@ -158,7 +158,7 @@ const LegalDocsHome = ({ project }) => {
                       <span className="sr-only">Search</span>
                     </button>
                   </div>
-    
+
 
 
                   <section className="absolute top-0 right-0  flex flex-row   ">
@@ -171,7 +171,7 @@ const LegalDocsHome = ({ project }) => {
                       selProjectIs={projectDetails}
                       dropDownItemsA={projects}
                     />
-          
+
                   </section>
                 </div>
               </div>
@@ -184,6 +184,15 @@ const LegalDocsHome = ({ project }) => {
               // onChange={()=>{console.log(formats)}}
               aria-label="text formatting"
             >
+               <ToggleButton
+                value="grid"
+                aria-label="Grid"
+                onClick={() => {
+                  setFormats('grid')
+                }}
+              >
+                <AppsIcon />
+              </ToggleButton>
               <ToggleButton
                 value="list"
                 aria-label="List"
@@ -193,15 +202,7 @@ const LegalDocsHome = ({ project }) => {
               >
                 <SortIcon />
               </ToggleButton>
-              <ToggleButton
-                value="grid"
-                aria-label="Grid"
-                onClick={() => {
-                  setFormats('grid')
-                }}
-              >
-                <AppsIcon />
-              </ToggleButton>
+
             </ToggleButtonGroup>
           </div>
 
@@ -247,7 +248,7 @@ const LegalDocsHome = ({ project }) => {
                     height: 80,
                     border: 1,
                     borderColor: '#EDEFF1',
-                    
+
 
                     width: '99.5%',
                     // borderRight:1,
@@ -261,7 +262,7 @@ const LegalDocsHome = ({ project }) => {
                     // border: 1,
                     width: '99.5%',
                     marginBottom: 2,
-                  
+
                     // borderTop: 1,
                     boxShadow: 2,
                     backgroundColor: '#F4F6F8',
