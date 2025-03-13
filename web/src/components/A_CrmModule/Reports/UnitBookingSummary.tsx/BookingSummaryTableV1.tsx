@@ -924,10 +924,6 @@ const headCells = [
     align: 'center',
     label: 'Booked',
   },
-
-
-
-
   {
     id: 'AssignedOn',
     numeric: false,

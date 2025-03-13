@@ -103,7 +103,7 @@ const CostBreakUpPdf = ({
       setNewPS([...updatedRows, ...psConstructPayload])
     }
     if(type == 'plotPs'){
-      const updatedRows = [...newPlotPS]
+      const updatedRows = [...psPayload]
       updatedRows[index].schDate = newDate
       setPSPayload(updatedRows)
       setNewPS([...updatedRows, ...psConstructPayload])
@@ -1214,7 +1214,7 @@ const CostBreakUpPdf = ({
                                           'en-IN'
                                         )}
 
-                                         { ((role.includes('sales') && projectDetails?.allowSalesExCsEdit) || (role.includes('admin')) ||  (role.includes('crm')) || false) 
+                                         { ((role.includes('sales') && projectDetails?.allowSalesExCsEdit) || (role.includes('admin')) ||  (role.includes('crm')) || false)
                                    && <TextFieldFlat
                                               label=""
                                               className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
