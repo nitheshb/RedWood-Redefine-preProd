@@ -825,7 +825,7 @@ const CostBreakUpPdf = ({
           >
             {' '}
 
-            <section className="flex bg-[#EDEDED] p-4 rounded-t-[20px] flex-row">
+            <section className="flex bg-[#EDEDED] p-4 rounded-t-[20px]  flex-row">
                 {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
                 <div className="w-full flex flex-col">
                   <div className=" flex flex-row gap-2 ">

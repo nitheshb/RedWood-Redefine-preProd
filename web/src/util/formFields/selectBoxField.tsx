@@ -40,6 +40,7 @@ export const CustomSelect = ({
   name,
   label,
   className,
+  labelClassName = "text-gray-700",
 
 }) => {
   const defaultValue = (options, value) => {
@@ -52,7 +53,10 @@ export const CustomSelect = ({
     <label>
       <div className={className}>
         {(label != '' || label != 'Assigned To') && (
-          <label className="label font-regular text-[12px] block pb-1 text-gray-700">{label}</label>
+          // <label className="label font-regular text-[12px] block pb-1 text-gray-700">
+          <label className={`label font-regular text-[12px] block pb-1 ${labelClassName}`}>
+
+            {label}</label>
         )}
         <label>
           <Select

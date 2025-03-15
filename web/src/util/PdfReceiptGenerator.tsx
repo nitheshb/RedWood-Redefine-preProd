@@ -586,7 +586,7 @@ const MyDocument = ({
 
 
             <Text style={{ fontSize: 11, marginBottom: 5 }}>
-              Owner Name: {selUnitDetails?.customerDetailsObj?.customerName1}
+              Name: {selUnitDetails?.customerDetailsObj?.customerName1}
             </Text>
             <Text style={{ fontSize: 12, marginBottom: 5 }}>
               Phone: {selUnitDetails?.customerDetailsObj?.countryCode1} {selUnitDetails?.customerDetailsObj?.phoneNo1}

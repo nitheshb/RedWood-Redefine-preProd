@@ -36,6 +36,11 @@ import UnitTransactionForm from './UnitBillTransactionForm'
 import { Dialog } from '@headlessui/react'
 import PdfSummaryGenerator from 'src/util/PdfSummaryGenerator'
 
+
+import bookingpng from '../../../web/public/bookingpng.png'
+
+
+
 const CostBreakUpSheet = ({
   title,
   leadDetailsObj1,
@@ -524,87 +529,12 @@ console.log('customer info', myBookingPayload)
       <section className="  bg-black">
         <div className="max-w-5xl mx-auto py-  bg-white">
           <article className="overflow-hidden">
-            <div className=" rounded-b-md">
-              <section className="flex flex-row-reverse">
-                {['unitBookingMode', 'unitBlockMode'].includes(actionMode) && (
-                  <div className="flex flex-col  w-[350px]  h-screen">
-                    <img className='rounded-[0px] h-[100px]' src="https://cdn.shopify.com/shopifycloud/shopify/assets/admin/home/onboarding/guides/pg_SetupGuide-56362e0c1a71e80bd572f85c30f0e202203a42a2e79ed40e0ea3906cc0aedce8.png"></img>
-
-                   <section className="bg-white pt-4 mx-2 px-2 ">
-                    <div className="mt-1">
-                      <div className="flex flex-row align-middle justify-between  mb-1">
-                        <h6 className="font-bodyLato font-semibold text-sm">
-                          {'Unit Booking'}
-                        </h6>
-                        <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
-                        preview
-                        </span>
-                      </div>
-                      <LinearProgress
-                        variant="determinate"
-                        color="warning"
-                        value={stepIndx * 16.666}
-                        sx={{
-                          backgroundColor: '#e5eaf2',
-                          borderRadius: '6px',
-                          height: '7px',
-                          '& .MuiLinearProgress-bar': {
-                            backgroundColor: '#8B5CF6', 
-                          },
-                        }}
-                        style={{
-                          backgroundColor: '#E5EAF2',
-                          borderRadius: '6px',
-                          height: '7px',
-                        }}
-                      />
-                         <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
-                          {stepIndx} of {StatusListA?.length} completed!
-                        </span>
-                    </div>
-                    <section className='flex flex-col mt-4'>
-                    {StatusListA?.map((statusFlowObj, i) => {
-                        return (<section key={i} className={`flex flex-row mt-2 cursor-pointer bg-[#F3F3F3] p-2 py-3 rounded-md border ${onStep != statusFlowObj.value ?' border-white': 'border-violet-300'}`}
-                          onClick={() => setStatusFun(i, statusFlowObj.value)}
-                        >
-
-<span className=" flex items-center justify-center w-7 h-7 bg-[#DDD6FE] rounded-full  mt-[px] ">
-                              <span className="text-[11px] font-bold">
-                                {i==4 ?  <EyeIcon className=" w-3 h-3  text-gray-500" />: (i + 1)}
-
-                              </span>
-
-                            </span>
-
-                            <div className="ml-2 w-full ">
-                              <span className="text-[12px]  font-bold    -[2px] rounded-lg flex flex-row text-[#000] justify-between ">
-                                {statusFlowObj.label}
-                                {(onStep != statusFlowObj.value) ?
-                                 i==5 ? <SparklesIcon className=" w-4 h-4 mt-[2px] ml-2 text-gray-400" />: <MinusCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-gray-400" />
-                                 : (
-                                  <CheckCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-green-500" />
-                                )}
-                              </span>
-                              <p className=" text-[9px]">
-                               {statusFlowObj?.text}{i==5 && `${streamUnitDetails.customerDetailsObj
-        ?.customerName1 }` }
-                              </p>
-
-                            </div>
-
-                        </section>)})}
-                    </section>
+            <div className=" rounded-b-md ">
 
 
-
-                    {/* <ScrollHighlightNabbar navHeader={reviewLinks} /> */}
-                    </section>
-                  </div>
-                )}
-                <div className="w-full">
-                <div className="px-3 pt-2 z-10 flex items-center justify-between ">
+            <div className="px-3 pt-2 z-10 flex items-center justify-between ">
         <Dialog.Title className=" font-semibold text-xl mr-auto  text-[#053219] w-full">
-          <div className="flex flex-row justify-between mb-1">
+          <div className="flex flex-row   justify-between mb-1">
 <section  className="flex flex-row">
             <div className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
             <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
@@ -800,11 +730,100 @@ console.log('customer info', myBookingPayload)
                       </section>
                     </div>
                   )}
+              <section className="flex flex-row-reverse">
+                {['unitBookingMode', 'unitBlockMode'].includes(actionMode) && (
+                  <div className="flex flex-col   w-[350px]  h-screen">
+                    {/* <img className='rounded-[0px] h-[100px]' src="https://cdn.shopify.com/shopifycloud/shopify/assets/admin/home/onboarding/guides/pg_SetupGuide-56362e0c1a71e80bd572f85c30f0e202203a42a2e79ed40e0ea3906cc0aedce8.png"></img> */}
+
+                   <section className="bg-white  pt-4 mx-2 px-2 ">
+                    <div className="mt-1">
+                      <div className="flex flex-row align-middle justify-between  mb-1">
+                        <h6 className="font-bodyLato font-semibold text-sm">
+                          {'Unit Booking'}
+                        </h6>
+                        <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
+                        Preview
+                        </span>
+                      </div>
+                      <LinearProgress
+                        variant="determinate"
+                        color="warning"
+                        value={stepIndx * 16.666}
+                        sx={{
+                          backgroundColor: '#e5eaf2',
+                          borderRadius: '6px',
+                          height: '7px',
+                          '& .MuiLinearProgress-bar': {
+                            backgroundColor: '#8B5CF6', 
+                          },
+                        }}
+                        style={{
+                          backgroundColor: '#E5EAF2',
+                          borderRadius: '6px',
+                          height: '7px',
+                        }}
+                      />
+                         <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
+                          {stepIndx} of {StatusListA?.length} completed!
+                        </span>
+                    </div>
+
+
+                    <section className='flex flex-col mt-4'>
+                    {StatusListA?.map((statusFlowObj, i) => {
+                        return (<section key={i} className={`flex flex-row mt-2 cursor-pointer bg-[#F3F3F3] p-2 py-3 rounded-md border ${onStep != statusFlowObj.value ?' border-white': 'border-violet-300'}`}
+                          onClick={() => setStatusFun(i, statusFlowObj.value)}
+                        >
+
+<span className=" flex items-center justify-center w-7 h-7 bg-[#DDD6FE] rounded-full  mt-[px] ">
+                              <span className="text-[11px] font-bold">
+                                {i==4 ?  <EyeIcon className=" w-3 h-3  text-gray-500" />: (i + 1)}
+
+                              </span>
+
+                            </span>
+
+                            <div className="ml-2 w-full ">
+                              <span className="text-[12px]  font-bold    -[2px] rounded-lg flex flex-row text-[#000] justify-between ">
+                                {statusFlowObj.label}
+                                {(onStep != statusFlowObj.value) ?
+                                 i==5 ? <SparklesIcon className=" w-4 h-4 mt-[2px] ml-2 text-gray-400" />: <MinusCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-gray-400" />
+                                 : (
+                                  <CheckCircleIcon className=" w-3 h-3 mt-[2px] ml-2 text-green-500" />
+                                )}
+                              </span>
+                              <p className=" text-[9px]">
+                               {statusFlowObj?.text}{i==5 && `${streamUnitDetails.customerDetailsObj
+        ?.customerName1 }` }
+                              </p>
+
+                            </div>
+
+                        </section>)})}
+                    </section>
+
+                    {/* <section className='h-full mt-4"'>
+                     <img className='rounded-[0px] w-full h-full  ' src={bookingpng}></img>
+                     </section> */}
+
+
+
+                    {/* <ScrollHighlightNabbar navHeader={reviewLinks} /> */}
+                    </section>
+
+            
+
+                  </div>
+                )}
+
+                
+                <div className="w-full ">
+  
                   {['costsheet', 'allsheets', 'payment_schedule'].includes(
                     onStep
                   ) && (
                     <div className="">
-                      <div className="flex flex-col rounded-md  border mx-0 bg-[#F8FAFC] ">
+                      <div className="flex flex-col rounded-[12px]  border mx-0  ">
                         <div className="">
                           <Formik
                             enableReinitialize={true}
@@ -1080,9 +1099,14 @@ transition
                   {['Detail View'].includes(onStep) && <UnitTransactionForm />}
                  
                 </div>
+
+
               
               </section>
             </div>
+
+            
+
           </article>
         </div>
       </section>
