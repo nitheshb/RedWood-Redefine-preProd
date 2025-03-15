@@ -60,7 +60,8 @@ const CostBreakUpPdf = ({
   const d = new window.Date()
 
   const { user } = useAuth()
-  const { orgId } = user
+  const { orgId, role } = user
+
   const { enqueueSnackbar } = useSnackbar()
   const ref = createRef()
 
@@ -102,7 +103,7 @@ const CostBreakUpPdf = ({
       setNewPS([...updatedRows, ...psConstructPayload])
     }
     if(type == 'plotPs'){
-      const updatedRows = [...newPlotPS]
+      const updatedRows = [...psPayload]
       updatedRows[index].schDate = newDate
       setPSPayload(updatedRows)
       setNewPS([...updatedRows, ...psConstructPayload])
@@ -933,10 +934,10 @@ const CostBreakUpPdf = ({
                                         {d1?.component?.label}
                                       </th>
                                       <td className="w-[15%]  px-2 text-[12px] text-right  ">
-                                      {!(projectDetails?.allowSalesExCsEdit || false) && Number(d1?.charges)?.toLocaleString(
+                                      {!((role.includes('sales') && projectDetails?.allowSalesExCsEdit) || (role.includes('admin')) ||  (role.includes('crm')) || false) && Number(d1?.charges)?.toLocaleString(
                                           'en-IN'
                                         )}
-                                     {(projectDetails?.allowSalesExCsEdit || false) &&   <TextFieldFlat
+                                     {((role.includes('sales') && projectDetails?.allowSalesExCsEdit) || (role.includes('admin')) ||  (role.includes('crm'))|| false) &&   <TextFieldFlat
                                           label=""
                                           className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
                                           name="ratePerSqft"
@@ -1209,11 +1210,11 @@ const CostBreakUpPdf = ({
                                             {d1?.component?.label}
                                           </th>
                                           <td className="w-[15%]  px-2 text-[12px] text-right  ">
-                                          {!(projectDetails?.allowSalesExCsEdit || false) && Number(d1?.charges)?.toLocaleString(
+                                          {!((role.includes('sales') && projectDetails?.allowSalesExCsEdit) || (role.includes('admin')) ||  (role.includes('crm')) || false)  && Number(d1?.charges)?.toLocaleString(
                                           'en-IN'
                                         )}
 
-                                         { (projectDetails?.allowSalesExCsEdit || false)
+                                         { ((role.includes('sales') && projectDetails?.allowSalesExCsEdit) || (role.includes('admin')) ||  (role.includes('crm')) || false)
                                    && <TextFieldFlat
                                               label=""
                                               className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"

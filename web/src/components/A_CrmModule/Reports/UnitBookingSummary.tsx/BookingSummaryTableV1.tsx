@@ -821,7 +821,7 @@ useEffect(() => {
   filteredData = filterByUnitType(filteredData, selectedUnitType);
   console.log("Filtered by Unit Type:", filteredData);
 
-  
+
   setTableData(filteredData);
 }, [selectedFilters, selectedUnitType, unitsFetchData, customDate]);
 
@@ -843,7 +843,7 @@ const toggleUnitType = (item: string) => {
 
 const filterByUnitType = (data, selectedUnitType) => {
   if (selectedUnitType.length === 0) {
-    return data; 
+    return data;
   }
 
   return data.filter((row) => selectedUnitType.includes(row.unit_type));
@@ -924,16 +924,12 @@ const headCells = [
     align: 'center',
     label: 'Booked',
   },
-
-
-
-
   {
     id: 'AssignedOn',
     numeric: false,
     disablePadding: false,
     align: 'center',
-    label: 'Faceing',
+    label: 'Facing',
   },
 
   {
@@ -955,7 +951,7 @@ const headCells = [
   },
 
 
-  
+
   {
     id: 'releasestatus',
     numeric: false,
@@ -1318,14 +1314,14 @@ const headCells = [
 
   const bookingOptions = ["This Week", "This Month", "Last 6 Months", "Custom Date"];
 
- 
+
 
 
   const toggleFilter = (item) => {
     setSelectedFilters((prev) =>
       prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
     );
-  
+
     if (item === "Custom Date") {
       setShowDatePicker(true);
     } else {
@@ -1336,52 +1332,52 @@ const headCells = [
 
 
   const filterByBookingDate = (data, selectedFilters) => {
-    const currentDate = new Date(); 
-  
+    const currentDate = new Date();
+
     return data.filter((row) => {
-      const bookedDate = new Date(row.booked_on); 
-  
-  
+      const bookedDate = new Date(row.booked_on);
+
+
       if (selectedFilters.includes("This Week")) {
         const startOfWeek = new Date(currentDate);
-        startOfWeek.setDate(currentDate.getDate() - currentDate.getDay()); 
+        startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
         return bookedDate >= startOfWeek && bookedDate <= currentDate;
       }
-  
+
       if (selectedFilters.includes("This Month")) {
-        const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1); 
+        const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
         return bookedDate >= startOfMonth && bookedDate <= currentDate;
       }
-  
+
       if (selectedFilters.includes("Last 6 Months")) {
         const sixMonthsAgo = new Date(currentDate);
-        sixMonthsAgo.setMonth(currentDate.getMonth() - 6); 
+        sixMonthsAgo.setMonth(currentDate.getMonth() - 6);
         return bookedDate >= sixMonthsAgo && bookedDate <= currentDate;
       }
-  
+
       if (selectedFilters.includes("Custom Date") && customDate) {
         const customDateObj = new Date(customDate);
-        return bookedDate.toDateString() === customDateObj.toDateString(); 
+        return bookedDate.toDateString() === customDateObj.toDateString();
       }
-  
-      return true; 
+
+      return true;
     });
   };
 
 
   useEffect(() => {
     let filteredData = unitsFetchData;
-  
+
 
     if (selectedFilters.length > 0) {
       filteredData = filteredData.filter((dat) =>
         selectedFilters.includes(dat.projName)
       );
     }
-  
-  
+
+
     filteredData = filterByBookingDate(filteredData, selectedFilters);
-  
+
 
     setTableData(filteredData);
   }, [selectedFilters, unitsFetchData, customDate]);
@@ -1902,49 +1898,26 @@ const customTooltip = ({ payload, label }) => {
           <h2 className="text-[#6A6A6A] text-[19px] ml-4">Sales Trend</h2>
           <div className="flex items-center gap-3 mt-1 mb-2 ml-4">
             <span className="text-[30px] text-[#000000] font-semibold"> {unitsFetchData?.length?.toLocaleString('en-IN')}</span>
-            <div className="flex items-center text-[#00A236]">
+            {/* <div className="flex items-center text-[#00A236]">
               <TrendingUp className="w-5 h-5 mx-3" />
               <span className="text-[18px]">23%</span>
-            </div>
+            </div> */}
           </div>
         </div>
 
-        <span className=" ml-8 py-1 px-1 mb-4 gap-2 text-gray-600 bg-[#f1f1f1] rounded-full  w-[240px] flex items-center justify-between">
-      <span className={`px-4  rounded-full cursor-pointer text-sm ${timeLine === 'W' ? 'bg-blue-100' : '}'}`} onClick={() => setTimeLine('W')}>Week</span>
-      <span className={`px-4  rounded-full cursor-pointer text-sm ${timeLine === 'M' ? 'bg-blue-100' : 'bg-[#f1f1f1]'}`} onClick={() => setTimeLine('M')}>Month</span>
-      <span className={`px-4  rounded-full cursor-pointer text-sm ${timeLine === 'Y' ? 'bg-blue-100' : 'bg-[#f1f1f1]'}`} onClick={() => setTimeLine('Y')}>Year</span>
-
-
-
-    </span>
 
     <div className="flex ml-8  py-2 mb-4 gap-2 text-gray-600">
       <Calendar className="w-5 h-5" />
-      <span>Jun 07, 2024</span>
+      <span>Jan 01, 2024</span>
       <ChevronRight className="w-5 h-5" />
       <i data-lucide="arrow-right"></i>
-      <span>Jun 13, 2024</span>
+      <span>Dec 31, 2024</span>
     </div>
 
 
 
 
-    <div className="flex ml-7 gap-4 mb-6 flex-row">
 
-
-<button className="flex items-center px-6 py-2 rounded-lg bg-gray-100 text-sm text-gray-600 relative">
-          <div className="flex items-center pl-3">
-            <div className="w-7 h-[2px] bg-[#29AAE3] mr-2"></div>
-            Nov 18, 2024
-          </div>
-        </button>
-        <button className="flex items-center px-6 py-2 rounded-lg bg-gray-100 text-sm text-gray-600 relative">
-          <div className="flex items-center pl-3">
-            <div className="w-7 h-[2px] border-t-4 font-medium border-[#CCCCCC] border-dotted mr-2"></div>
-            Nov 17, 2024
-          </div>
-        </button>
-      </div>
 
 
         <div className="h-80 px-4">
@@ -2029,13 +2002,6 @@ const customTooltip = ({ payload, label }) => {
 
       </div>
 
-      <div className="flex items-center gap-2 mt-4 text-gray-600">
-        <Calendar className="w-5 h-5" />
-        <span>Jun 07, 2024</span>
-        <ChevronRight className="w-5 h-5" />
-        <i data-lucide="arrow-right"></i>
-        <span>Jun 13, 2024</span>
-      </div>
     </div>
 
     <div className="flex gap-6 mb-6">
@@ -2285,18 +2251,18 @@ tableData={filLeadsA || {}}
 
 
 <div className="flex flex-wrap gap-2 mt-2">
-  {amenities.slice(0, showMore ? amenities.length : 6).map((item) => (
+  {projectList.slice(0, showMore ? projectList.length : 6).map((item) => (
     <button
-      key={item}
+      key={item.id}
       className={`relative px-3 py-1 border rounded-full text-[12px] text-gray-700 hover:bg-gray-100 border-gray-300 ${
-        selectedFilters.includes(item) ? "bg-gray-200" : ""
+        selectedFilters.includes(item.projectName) ? "bg-gray-200" : ""
       }`}
-      onClick={() => toggleFilter(item)}
+      onClick={() => toggleFilter(item.projectName)}
     >
-      {selectedFilters.includes(item) && (
+      {selectedFilters.includes(item.projectName) && (
         <span className="absolute top-[-2px] left-1 w-2 h-2 bg-[#38BDF8] rounded-full"></span>
       )}
-      {item}
+      {item.projectName}
     </button>
   ))}
 </div>
@@ -2820,7 +2786,7 @@ tableData={filLeadsA || {}}
                           </span>
                         </TableCell>
 
-{/* 
+{/*
                         {selectedCostView.includes("Plot Cost") && (
 
                           <> */}
@@ -2880,7 +2846,7 @@ tableData={filLeadsA || {}}
 
                           </span>
                         </TableCell>
-{/* 
+{/*
                           </>
 
                    )} */}
