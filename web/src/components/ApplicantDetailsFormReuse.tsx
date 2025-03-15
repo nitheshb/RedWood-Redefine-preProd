@@ -733,7 +733,7 @@ leadPayload?.Mobile ||
                             position="end"
                             style={{ height: '32px' }}
                           >
-                            <div className="flex flex-row-reverse">
+                            <div className="flex   flex-row-reverse">
                               <label
                                 htmlFor="formFile3"
                                 className="form-label cursor-pointer inline-block   font-regular text-xs  rounded-2xl px-1 py-1  "
