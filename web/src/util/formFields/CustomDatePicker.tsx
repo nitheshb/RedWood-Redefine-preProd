@@ -5,7 +5,7 @@ import range from 'lodash/range'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-const CustomDatePicker = ({ selected, onChange, ...props }) => {
+const CustomDatePicker = ({ selected, onChange,  width = "100%", ...props }) => {
   let leadYear = 1;
   if(props?.leadYears){
     leadYear = props?.leadYears
@@ -46,6 +46,7 @@ const CustomDatePicker = ({ selected, onChange, ...props }) => {
             padding: '5px',
             background: '#f2f2f2',
             borderRadius: '5px',
+          
           }}
         >
           <button
