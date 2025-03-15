@@ -733,7 +733,7 @@ leadPayload?.Mobile ||
                             position="end"
                             style={{ height: '32px' }}
                           >
-                            <div className="flex flex-row-reverse">
+                            <div className="flex   flex-row-reverse">
                               <label
                                 htmlFor="formFile3"
                                 className="form-label cursor-pointer inline-block   font-regular text-xs  rounded-2xl px-1 py-1  "
@@ -1396,10 +1396,15 @@ leadPayload?.Mobile ||
               </section>
             </section>
           </div>
+<<<<<<< HEAD
 
           
           <div className=" flex    flex-row-reverse">
             <button type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save</button>
+=======
+          <div className=" flex flex-row-reverse">
+            <button   type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save box</button>
+>>>>>>> a340da95493893feecd8250208420043944a729e
 
       <button onClick={handleClone} className="mb-4  md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Save & Add New Applicant</button>
       {index !=0 && <button onClick={()=>setIsDialogOpen(true)} className="mb-4  md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Delete</button>}
