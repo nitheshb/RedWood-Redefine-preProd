@@ -3,13 +3,15 @@ import React from 'react'
 import { ErrorMessage, useField } from 'formik'
 // import { InputField, Label } from '@redwoodjs/forms'
 
-export const TextField = ({ label, ...props }) => {
+export const TextField = ({ label,labelClassName = "text-gray-700", ...props }) => {
   const [field, meta] = useField(props)
   return (
     <div className="mb-2 w-full">
       <label
         htmlFor={field.name}
-        className="label font-regular text-[12px] block mb-1 text-gray-700"
+        // className="label font-regular text-[12px] block mb-1 text-gray-700"
+        className={`label font-regular text-[12px] block mb-1 ${labelClassName}`}
+
       >
         {label}
       </label>

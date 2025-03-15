@@ -37,6 +37,7 @@ const EmailForm = ({
   handleDelete,
   setShowApplicantEdit,
   index,
+  applicantDetailsA,
 }) => {
   const d = new window.Date()
   const { user } = useAuth()
@@ -200,13 +201,45 @@ leadPayload?.Mobile ||
       '',
 
 
+      address2p:
+      selUnitDetails?.customerDetailsObj?.address2p ||
+      customerInfo?.address2p ||
+      '',
 
 
+
+      
+    city2p:
+    selUnitDetails?.customerDetailsObj?.city2p ||
+    customerInfo?.city2p ||
+    '',
+
+  countryName2p:
+    selUnitDetails?.customerDetailsObj?.countryName2p ||
+    customerInfo?.countryName2p ||
+    '',
+
+  pincode2p:
+    selUnitDetails?.customerDetailsObj?.pincode2p ||
+    customerInfo?.pincode2p ||
+    '',
+
+  countryCode2p:
+    selUnitDetails?.customerDetailsObj?.countryCode2p ||
+    customerInfo?.countryCode2p ||
+    '',
 
 
     state1:
       selUnitDetails?.customerDetailsObj?.state1 ||
       customerInfo?.state1 || {
+        value: 'KA',
+        label: 'Karnataka',
+      },
+
+      state2p:
+      selUnitDetails?.customerDetailsObj?.state2p ||
+      customerInfo?.state2p || {
         value: 'KA',
         label: 'Karnataka',
       },
@@ -446,7 +479,7 @@ leadPayload?.Mobile ||
           <div>
  
             <section
-              className="   bg-[#fff] rounded-[20px] border pb-4 "
+              className="  bg-[#fff] rounded-[20px] border pb-4 "
               style={{ boxShadow: '0 1px 12px #f2f2f2' }}
             >
               <div
@@ -477,27 +510,38 @@ leadPayload?.Mobile ||
                 </section>
               </div>
 
-              <section className="mt-1 px-4 mx-4 rounded-lg bg-white border border-gray-100 shadow">
+              <section className="mt-1 px-4 mx-4 rounded-lg bg-white border border-gray-200 shadow inset-shadow-2xs">
                 <section className="flex flex-row  pt-2 mt-1 ">
-                  <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
-                  <span className="ml-1 leading-[15px] flex flex-row ">
-                    <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
+                  {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
+                  <span className=" leading-[15px] flex flex-row   justify-between w-full">
+                    <label className="font-semibold text-[#053219]    text-[14px] leading-[15px] mb-1  ">
                       Personal Details
                       <abbr title="required"></abbr>
+                      {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
+                      <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+
                     </label>
-                   {!leadLink && <div
-                            className=" ml- text-[13px] cursor-pointer  rounded-full px-2  text-[#0ea5e9] underline"
+
+
+                   
+
+
+                    <div className=' rounded-lg'>
+                    {!leadLink && <div
+                            className="  text-[10px] cursor-pointer  bg-[#F5F5F5] border border-gray-300 p-1 px-2 rounded-lg  text-[#7A7A7A] "
                             onClick={() => setShowLeadLink(!showLeadLink)}
                           >
                             Auto fill & link with lead
                           </div>}
 
                           {leadLink && <div
-                            className=" ml- text-[13px] cursor-pointer  rounded-full px-2  text-orange-500 underline"
+                            className=" ml- text-[10px] cursor-pointer  rounded-full px-2  text-orange-500 "
                             onClick={() => setShowLeadLink(!showLeadLink)}
                           >
                             Applicant Linked to Lead
                           </div>}
+                    </div>
+ 
                   </span>
                 </section>
 
@@ -532,18 +576,19 @@ leadPayload?.Mobile ||
                 </div>
               )}
                 {/* row 1 */}
-                <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-4 ">
+                <div className="md:flex flex-row md:space-x-4 w-full text-sm mt-4 ">
                   <div className="space-y-2 w-full text-xs mt-">
                     <TextField
                       label="Customer Name*"
                       name="customerName1"
                       type="text"
-                    />
+                      labelClassName="text-gray-500"
+                       />
                   </div>
 
                   <div className=" space-y-2 w-full text-xs mt-">
                     <div className="relative ">
-                      <label className="label font-regular text-[12px] block mb-1 mt- text-gray-700">
+                      <label className="label font-regular text-[12px] block mb-1 mt- text-gray-500">
                         Son/Daughter/Wife of{' '}
                       </label>
                       <MuiTextField
@@ -607,6 +652,8 @@ leadPayload?.Mobile ||
                         <CustomSelect
                           name="MaritualStatus"
                           label="Status"
+                          labelClassName="text-black" 
+
                           className="input"
                           onChange={(value) => {
                             formik.setFieldValue('marital1', value)
@@ -637,14 +684,12 @@ leadPayload?.Mobile ||
                     </section>
                   </div>
 
-                  <div className=" space-y-2 w-full text-xs mt-">
-                    <div className="relative flex flex-col  ">
-                      <label className="text-gray-500 text-[10px] mb-2">
-                        Date Of Birth
-                      </label>
-                      <span className="inline">
-                        <CustomDatePicker
-                          className="h-8 outline-none border-radius rounded-md  px-2 border-[#cccccc] border-gray-500 text-sm mt-[-4px] pb-1  w-[90%] inline   flex bg-grey-lighter text-grey-darker border border-gray-500 "
+                  <div className="space-y-2 w-full text-xs mt-">
+                    <section className="">
+                      <div className="w-full mt-5 flex flex-col">
+
+                      <CustomDatePicker
+                          className="h-8 outline-none border-radius rounded-md  border border-[#cccccc]  px-2  text-sm w-full  flex bg-grey-lighter text-grey-darker  "
                           label="Dated"
                           name="dob1"
                           selected={formik.values.dob1}
@@ -659,14 +704,19 @@ leadPayload?.Mobile ||
                           ]}
                           dateFormat="MMM dd, yyyy"
                         />
-                      </span>
-                    </div>
+      
+                
+                      </div>
+                    </section>
                   </div>
+
+    
                 </div>
+                
                 {/* row 3 */}
                 <div className="flex flex-row justify-between pt-2 mb-2">
                   <section className="w-12/12 w-full">
-                    <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
+                    <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-500">
                       PAN No{' '}
                     </label>
                     <MuiTextField
@@ -683,7 +733,7 @@ leadPayload?.Mobile ||
                             position="end"
                             style={{ height: '32px' }}
                           >
-                            <div className="flex flex-row-reverse">
+                            <div className="flex   flex-row-reverse">
                               <label
                                 htmlFor="formFile3"
                                 className="form-label cursor-pointer inline-block   font-regular text-xs  rounded-2xl px-1 py-1  "
@@ -766,7 +816,7 @@ leadPayload?.Mobile ||
       )}
                   </section>
                   <section className="w-full ml-4">
-                    <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-700">
+                    <label className="label font-regular text-[12px] block mb-1 mt-1 text-gray-500">
                       Aadhar No{' '}
                     </label>
                     <MuiTextField
@@ -854,23 +904,30 @@ leadPayload?.Mobile ||
                 </div>
               </section>
               {/* section-2 */}
-              <section className="mt-2 px-4 mx-4 rounded-lg bg-white border border-gray-100 shadow pb-2">
+              <section className="mt-2 px-4 mx-4 rounded-lg bg-white border border-gray-200 shadow inset-shadow-2xs pb-2">
                 <section className="flex flex-row  pt-2 mt-1 ">
-                  <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
-                  <span className="ml-1 leading-[15px] ">
-                    <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
+                  {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
+                  <span className=" leading-[15px] ">
+                    <label className="font-semibold text-[#053219]  text-[14px] leading-[15px] mb-1  ">
                       Contact Details
                       <abbr title="required"></abbr>
+                      {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
+
+                      <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+
                     </label>
                   </span>
                 </section>
                 {/* row 1 */}
-                <div className="w-full  flex flex-row lg:w-12/12 mt-2">
-                  <div className="w-full lg:w-3/12 mb-2 ">
+                <div className="w-full flex-col lg:w-12/12 mt-2">
+
+                <div className='flex'>
+
+                  <div className="w-full  mb-2 ">
                     <div className="relative w-full mt-2">
                       <div className="space-y-1 w-full text-xs">
-                        <label htmlFor="countryCode" className="inline-block">
-                          Primary Phone No
+                        <label htmlFor="countryCode" className="inline-block text-gray-500">
+                        Primary Phone No
                         </label>
 
                         <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
@@ -925,11 +982,11 @@ leadPayload?.Mobile ||
 
 
 
-                  <div className="w-full lg:w-3/12 pl-4">
+                  <div className="w-full  pl-4">
                     <div className="relative w-full mt-2">
                       <div className="space-y-1 w-full text-xs">
-                        <label htmlFor="countryCode" className="inline-block">
-                          Alternate Phone No
+                        <label htmlFor="countryCode" className="inline-block text-gray-500">
+                        Secondary Phone No
                         </label>
 
                         <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
@@ -977,35 +1034,231 @@ leadPayload?.Mobile ||
                     </div>
                   </div>
 
-                  <div className="w-full lg:w-6/12 pl-4">
+                  </div>
+
+
+
+                   
+
+
+                  <div className="w-full ">
                     <div className="relative w-full mt-2">
-                      <TextField label="Email" name="email1" type="text" />
+                      <TextField   label="Email" labelClassName="text-[#000000]" name="email1" type="text" />
                     </div>
                   </div>
+
+
+
                 </div>
               </section>
-              {/* section-3 */}
-              <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border border-gray-100 shadow">
-                <section className="flex flex-row  mt-1 ">
-                  <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
-                  <span className="ml-1 leading-[15px] ">
-                    <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
-                      Address
+
+                            {/* section-3-B */}
+                            <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border-gray-200 shadow inset-shadow-2xs shadow">
+
+                              <section className='flex justify-between'>
+
+                              <section className="flex flex-row  mt-1 ">
+                  {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
+                  <span className=" leading-[15px] ">
+                    <label className="font-semibold text-[#053219]  text-[14px] leading-[15px] mb-1  ">
+                    Current Address
                       <abbr title="required"></abbr>
+                      {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
+                      <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+
                     </label>
                   </span>
                 </section>
+
+                {/* Add Checkbox Here */}
+
+
+                {/* <section>
+                {index > 0 && (
+  <div className="flex items-center mt-2">
+    <input
+      type="checkbox"
+      id="copyAddress"
+      name="copyAddress"
+      onChange={(e) => {
+        if (e.target.checked) {
+          formik.setFieldValue('address2p', applicantDetailsA[0]?.address2p || '');
+          formik.setFieldValue('pincode2p', applicantDetailsA[0]?.pincode2p || '');
+          formik.setFieldValue('city2p', applicantDetailsA[0]?.city2p || '');
+          formik.setFieldValue('state2p', applicantDetailsA[0]?.state2p || '');
+          formik.setFieldValue('countryName2p', applicantDetailsA[0]?.countryName2p || '');
+
+          formik.setFieldValue('address1', applicantDetailsA[0]?.address1 || '');
+          formik.setFieldValue('pincode1', applicantDetailsA[0]?.pincode1 || '');
+          formik.setFieldValue('city1', applicantDetailsA[0]?.city1 || '');
+          formik.setFieldValue('state1', applicantDetailsA[0]?.state1 || '');
+          formik.setFieldValue('countryName1', applicantDetailsA[0]?.countryName1 || '');
+        }
+      }}
+    />
+    <label htmlFor="copyAddress" className="ml-2 text-sm text-gray-700">
+      Copy Current & Permanent Address from Applicant 1
+    </label>
+  </div>
+)}
+
+                </section> */}
+
+
+                              </section>
+   
+
+
+
+
+
+
                 {/* row 1 */}
                 <div className="w-full lg:w-12/12 ">
                   <div className="relative w-full mb-3 mt-2">
-                    <TextField label="Address" name="address1" type="text" />
+                    <TextField label="Address"    labelClassName="text-gray-500" name="address2p" type="text" />
                   </div>
                 </div>
                 <div className="w-full  flex flex-row lg:w-12/12 mt-1">
                 <div className="w-full lg:w-12/12 ">
                     {/* Pincode 2 */}
                     <div className="relative w-full mb-3 ">
-                      <TextField label="Pincodes" name="pincode1" type="text"
+                      <TextField label="Pincode"   labelClassName="text-gray-500" name="pincode2p" type="text"
+                      onChange={(e)=>{
+                        formik.setFieldValue('pincode2p', e.target.value)
+                        if(e.target.value.length == 6){
+
+                          fetch(
+                            `https://api.postalpincode.in/pincode/${e.target.value}`)
+                          .then(res => res.json())
+                          .then(data => {
+                            console.log('data is', data)
+                            if(data.length > 0){
+                              formik.setFieldValue('city2p', data[0]?.PostOffice[0]?.Block)
+                              if(data[0]?.PostOffice[0]?.State){
+                                let fil=  statesListA.filter((d)=> d.label == data[0]?.PostOffice[0]?.State)
+                                formik.setFieldValue('state2p', fil[0].value)}
+                              formik.setFieldValue('countryName2p', data[0]?.PostOffice[0]?.Country)
+                            }
+                          })
+                        }
+      }}/>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-12/12 px- pl-4">
+                    <div className="relative w-full mb-3 mt-">
+                      <TextField label="City" labelClassName="text-gray-500" name="city2p" type="text" />
+                    </div>
+                  </div>
+
+                </div>
+
+                <div className="w-full flex flex-row lg:w-12/12 mt-">
+                <div className="w-full lg:w-12/12 ">
+                    <div className="relative w-full mb-3 mt-">
+                      <div className="w-full flex flex-col mb-3 mt-2">
+                        <CustomSelect
+                          name="state2p"
+                          label="State"
+                          className="input"
+                          labelClassName="text-gray-500"
+                          onChange={(value) => {
+                            console.log('value is ', value.value)
+                            formik.setFieldValue('state2p', value.value)
+                          }}
+                          value={formik.values.state2p}
+                          options={statesListA}
+                        />
+                        <p
+                          className="text-sm text-red-500 hidden mt-3"
+                          id="error"
+                        >
+                          Please fill out this field.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-12/12  pl-4">
+                    {/* Country Name 2 */}
+                    <div className="relative w-full mb-3 mt-2">
+                      <TextField
+                        label="Country Name"
+                        name="countryName2p"
+                        type="text"
+                        labelClassName="text-gray-500"
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                          formik.setFieldValue('countryName2p', value);
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                </div>
+              </section>
+
+
+
+
+
+              {/* section-3 */}
+              <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border-gray-200 shadow inset-shadow-2xs shadow">
+
+                <section className='flex justify-between'>
+                <section className="flex flex-row  mt-1 ">
+                  {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
+                  <span className=" leading-[15px] ">
+                    <label className="font-semibold text-[#053219]  text-[14px] leading-[15px] mb-1  ">
+                    Permanent Address
+                      <abbr title="required"></abbr>
+                      {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
+                      <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+
+                    </label>
+                  </span>
+                </section>
+
+
+                <section>
+<div className="flex items-center mt-2">
+
+<label htmlFor="copyCurrentToPermanent" className="ml-2 mr-2 text-sm text-[#B3B3B3]">
+  same as current address
+  </label>
+  <input
+    type="checkbox"
+    id="copyCurrentToPermanent"
+    name="copyCurrentToPermanent"
+    onChange={(e) => {
+      if (e.target.checked) {
+        formik.setFieldValue('address1', formik.values.address2p || '');
+        formik.setFieldValue('pincode1', formik.values.pincode2p || '');
+        formik.setFieldValue('city1', formik.values.city2p || '');
+        formik.setFieldValue('state1', formik.values.state2p || '');
+        formik.setFieldValue('countryName1', formik.values.countryName2p || '');
+      }
+    }}
+  />
+ 
+</div>
+                </section>
+
+                </section>
+  
+
+
+
+                {/* row 1 */}
+                <div className="w-full lg:w-12/12 ">
+                  <div className="relative w-full mb-3 mt-2">
+                    <TextField label="Address"    labelClassName="text-[#000000]" name="address1" type="text" />
+                  </div>
+                </div>
+                <div className="w-full  flex flex-row lg:w-12/12 mt-1">
+                <div className="w-full lg:w-12/12 ">
+                    {/* Pincode 2 */}
+                    <div className="relative w-full mb-3 ">
+                      <TextField label="Pincode"   labelClassName="text-[#000000]" name="pincode1" type="text"
                       onChange={(e)=>{
                         formik.setFieldValue('pincode1', e.target.value)
                         if(e.target.value.length == 6){
@@ -1029,7 +1282,7 @@ leadPayload?.Mobile ||
                   </div>
                   <div className="w-full lg:w-12/12 px- pl-4">
                     <div className="relative w-full mb-3 mt-">
-                      <TextField label="City" name="city1" type="text" />
+                      <TextField label="City" labelClassName="text-gray-500" name="city1" type="text" />
                     </div>
                   </div>
 
@@ -1043,6 +1296,7 @@ leadPayload?.Mobile ||
                           name="state1"
                           label="State"
                           className="input"
+                          labelClassName="text-gray-500"
                           onChange={(value) => {
                             console.log('value is ', value.value)
                             formik.setFieldValue('state1', value.value)
@@ -1066,6 +1320,7 @@ leadPayload?.Mobile ||
                         label="Country Name"
                         name="countryName1"
                         type="text"
+                        labelClassName="text-gray-500"
                         onChange={(e) => {
                           const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
                           formik.setFieldValue('countryName1', value);
@@ -1076,17 +1331,24 @@ leadPayload?.Mobile ||
 
                 </div>
               </section>
+
               {/* section-4 */}
-              <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border border-gray-100 shadow">
+              <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border-gray-200 shadow inset-shadow-2xs shadow">
                 <section className="flex flex-row  px- mt-1 ">
-                  <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div>
-                  <span className="ml-1 leading-[15px] ">
-                    <label className="font-semibold text-[#053219]  text-[13px] leading-[15px] mb-1  ">
+                  {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
+                  <span className=" leading-[15px] ">
+                    <label className="font-semibold text-[#053219]  text-[14px] leading-[15px] mb-1  ">
                       Other Details
                       <abbr title="required"></abbr>
+                      {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
+                      <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+
                     </label>
                   </span>
                 </section>
+
+
+
                 {/* row 1 */}
                 <div className="w-full  flex flex-row lg:w-12/12 ">
                   <div className="w-full lg:w-12/12 px- ">
@@ -1095,6 +1357,7 @@ leadPayload?.Mobile ||
                         label="Occupation"
                         name="occupation1"
                         type="text"
+                        labelClassName="text-gray-500"
                       />
                     </div>
                   </div>
@@ -1104,6 +1367,7 @@ leadPayload?.Mobile ||
                         label="Annual Income"
                         name="annualIncome1"
                         type="text"
+                        labelClassName="text-gray-500"
                         value={
                         formik.values.annualIncome1.toLocaleString('en-IN')
                         }
@@ -1132,8 +1396,15 @@ leadPayload?.Mobile ||
               </section>
             </section>
           </div>
-          <div className=" flex flex-row-reverse">
+<<<<<<< HEAD
+
+          
+          <div className=" flex    flex-row-reverse">
             <button type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save</button>
+=======
+          <div className=" flex flex-row-reverse">
+            <button   type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save box</button>
+>>>>>>> a340da95493893feecd8250208420043944a729e
 
       <button onClick={handleClone} className="mb-4  md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Save & Add New Applicant</button>
       {index !=0 && <button onClick={()=>setIsDialogOpen(true)} className="mb-4  md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Delete</button>}
@@ -1281,7 +1552,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
   return (
     <div className="space-y-8">
       {forms.map((form, i) => (
-        <div key={form.id} className="border p-2 rounded-lg">
+        <div key={form.id} className=" p-2 rounded-lg">
           <EmailForm
             onSubmitFun={(values, formikBag) =>
               handleSubmit(values, formikBag, form.id, i)
@@ -1292,6 +1563,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
             handleClone={handleClone}
             handleDelete={()=>handleDelete(form.id)}
             index={i}
+            applicantDetailsA={applicantDetailsA} 
           />
           {savedForms[form.id] && (
             <span className="mt-4">

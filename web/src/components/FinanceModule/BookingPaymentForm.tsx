@@ -623,8 +623,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
               </div>
 
               <div className="flex flex-col">
-                <div>{selUnitDetails.customerDetailsObj
-        ?.customerName1 }</div>
+                <div>{selUnitDetails.customerDetailsObj?.customerName1 }</div>
                 <div>Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}</div>
                 <div>Balance: {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}</div>
               </div>

@@ -112,6 +112,7 @@ const useStyles = () =>
         mT4: { marginTop: 40 },
         mT1: { marginTop: 10 },
         ml1: { marginLeft: 5 },
+        ml7: { marginLeft: 7 },
         ml2: { marginLeft: 10 },
         ml3: { marginLeft: 15 },
 
@@ -330,6 +331,48 @@ const useStyles = () =>
           width: '15%',
        
         },
+
+
+        tableCell_p0: {
+          width: '3%',
+        },
+
+
+
+        tableCell_p1: {
+          width: '9%',
+        },
+
+        
+        tableCell_p2: {
+          width: '30%',
+        },
+
+
+        
+        tableCell_p3: {
+          width: '9%',
+        },
+
+
+
+        
+        tableCell_p4: {
+          width: '20%',
+        },
+
+
+        
+        tableCell_p5: {
+          width: '9%',
+        },
+
+
+        tableCell_p6: {
+          width: '20%',
+        },
+
+
 
         
         tableCell_150: {
@@ -3725,7 +3768,7 @@ style={[
       style={[
         // styles.subtitle1,
         styles.mb5,
-        styles.col,
+        // styles.col,
         styles.smallFitter,
         styles.ml1,
         {color: '#6A6A6A'}
@@ -3954,8 +3997,19 @@ style={[
                 >
 
 
-                  <View style={[styles.tableCell_10, styles.p12, { marginLeft:'14px' }]}>
-                    <Text style={styles.subtitle2}>
+
+<View style={[styles.tableCell_p0, ]}>
+                    <Text style={[styles.subtitle2,]}>
+
+                    
+
+                      
+                    </Text>
+                  </View>
+
+
+                  <View style={[styles.tableCell_p1,]}>
+                    <Text style={[styles.subtitle2,  styles.ml7 ]}>
 
                       Paid On
 
@@ -3963,13 +4017,21 @@ style={[
                     </Text>
                   </View>
 
+
+                  
+                  <View
+                    style={[styles.tableCell_p2, styles.alignCenter,  ]}
+                  >
+                    <Text style={styles.subtitle2}>Accounts</Text>
+                  </View>
+
                   <View
                     style={[
-                      styles.tableCell_10,
+                      styles.tableCell_p3,
                       styles.alignRight,
-                      styles.p12,
-                      styles.pr4,
-                      styles.ml1,
+                      // styles.p12,
+                      // styles.pr4,
+                      // styles.ml1,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Mode</Text>
@@ -3979,11 +4041,11 @@ style={[
 
                   <View
                     style={[
-                      styles.tableCell_20,
+                      styles.tableCell_p4,
                       styles.alignCenter,
-                      styles.p12,
-                      styles.pr8,
-                      styles.ml2,
+                      // styles.p12,
+                      // styles.pr8,
+                      // styles.ml2,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Bank Ref Id
@@ -3991,44 +4053,46 @@ style={[
                   </View>
 
 
-                  <View
-                    style={[
-                      styles.tableCell_20,
-                      styles.alignCenter,
-                      styles.p12,
-                      styles.pr8,
-                      styles.ml2,
-                    ]}
-                  >
-                    <Text style={styles.subtitle2}>Amount</Text>
-                  </View>
+
 
                   <View
                     style={[
-                      styles.tableCell_10,
+                      styles.tableCell_p5,
                       styles.alignCenter,
-                      styles.p12,
-                      styles.pr8,
-                      styles.ml2,
+                      // styles.p12,
+                      // styles.pr8,
+                      // styles.ml2,
                     ]}
                   >
                     <Text style={styles.subtitle2}>Status</Text>
                   </View>
 
+
+
+
+
                   <View
-                    style={[styles.tableCell_150, styles.alignCenter, styles.p12, styles.pr8, ]}
+                    style={[
+                      styles.tableCell_p6,
+                      styles.alignCenter,
+                      // styles.pr8,
+                      // styles.p12,
+                      // styles.pr8,
+                      // styles.pl2,
+                    ]}
                   >
-                    <Text style={styles.subtitle2}>Accounts</Text>
+                    <Text style={[styles.subtitle2, styles.pl2]}>Amount</Text>
                   </View>
 
 
-                  <View
+
+                  {/* <View
                     style={[styles.tableCell_150, styles.alignRight, styles.p12, styles.pr8, ]}
                   >
                     <Text style={styles.subtitle2}>
                     Reviewer
                     </Text>
-                  </View>
+                  </View> */}
 
                 </View>
               </View>
@@ -4062,13 +4126,22 @@ style={[
                       <Text>{inx + 1}</Text>
                     </View>
 
-                    <View style={[styles.tableCell_10]}>
+                    <View style={[styles.tableCell_p1]}>
                       <Text style={styles.subtitle2}>
                       {prettyDate(d1?.txt_dated ||d1?.dated) }
                       </Text>
                     </View>
 
-                    <View style={[styles.tableCell_10, styles.alignRight]}>
+
+
+                    <View style={[styles.tableCell_p2, styles.alignCenter]}>
+                      <Text>
+                      {d1?.towards ||d1?.builderName}
+                     {d1?.customerName}
+                      </Text>
+                    </View>
+
+                    <View style={[styles.tableCell_p3, styles.alignRight]}>
                       <Text>
                         {d1?.mode}
                       </Text>
@@ -4076,7 +4149,7 @@ style={[
 
                     <View
                       style={[
-                        styles.tableCell_20,
+                        styles.tableCell_p4,
                         styles.alignCenter,
                         
                       ]}
@@ -4088,14 +4161,8 @@ style={[
 
 
 
-                    <View style={[styles.tableCell_20, styles.alignCenter]}>
-                      <Text>
-                      ₹{d1?.totalAmount?.toLocaleString('en-IN') || d1?.amount?.toLocaleString('en-IN')}
-
-                      </Text>
-                    </View>
-
-                    <View style={[styles.tableCell_10, styles.alignCenter]}>
+   
+                    <View style={[styles.tableCell_p5, styles.alignCenter]}>
                       <Text>
                       {d1?.status}
                       </Text>
@@ -4104,20 +4171,24 @@ style={[
                 
 
 
-                    <View style={[styles.tableCell_150, styles.alignCenter]}>
+
+
+
+                    <View style={[styles.tableCell_p6, styles.alignCenter]}>
                       <Text>
-                      {d1?.towards ||d1?.builderName}
-                     {d1?.customerName}
+                      ₹{d1?.totalAmount?.toLocaleString('en-IN') || d1?.amount?.toLocaleString('en-IN')}
+
                       </Text>
                     </View>
 
 
-                    <View style={[styles.tableCell_1500, styles.alignCenter]}>
+
+                    {/* <View style={[styles.tableCell_1500, styles.alignCenter]}>
                       <Text>
                       {d1?.Reviewer || "NA"}
 
                       </Text>
-                    </View>
+                    </View> */}
 
 
                   </View>

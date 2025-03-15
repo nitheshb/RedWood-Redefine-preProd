@@ -914,7 +914,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
    },[customerInfo])
   return (
     <>
-      <div className="flex flex-col mx-0 bg-[#F8FAFC]  rounded-md overflow-y-scroll no-scrollbar" style={{ height: `calc(100vh - 120px)` }}>
+      <div className="flex flex-col  border border-gary-200 rounded-[12px]  mx-0 bg-[#F8FAFC]  overflow-y-scroll no-scrollbar" style={{ height: `calc(100vh - 120px)` }}>
         <div className="z-10">
       
         </div>
