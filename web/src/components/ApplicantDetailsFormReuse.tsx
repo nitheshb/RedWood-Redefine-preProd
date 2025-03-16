@@ -208,7 +208,7 @@ leadPayload?.Mobile ||
 
 
 
-      
+
     city2p:
     selUnitDetails?.customerDetailsObj?.city2p ||
     customerInfo?.city2p ||
@@ -357,7 +357,7 @@ leadPayload?.Mobile ||
 
         link.parentNode.removeChild(link)
 
-    
+
       })
       .catch((error) => {
         console.error('Error downloading image:', error)
@@ -477,7 +477,7 @@ leadPayload?.Mobile ||
       {(formik) => (
         <Form className="space-y-4">
           <div>
- 
+
             <section
               className="  bg-[#fff] rounded-[20px] border pb-4 "
               style={{ boxShadow: '0 1px 12px #f2f2f2' }}
@@ -505,7 +505,7 @@ leadPayload?.Mobile ||
                       <div></div>
                     </div>
 
-                
+
                   </div>
                 </section>
               </div>
@@ -523,7 +523,7 @@ leadPayload?.Mobile ||
                     </label>
 
 
-                   
+
 
 
                     <div className=' rounded-lg'>
@@ -541,7 +541,7 @@ leadPayload?.Mobile ||
                             Applicant Linked to Lead
                           </div>}
                     </div>
- 
+
                   </span>
                 </section>
 
@@ -557,7 +557,7 @@ leadPayload?.Mobile ||
                         value={givenPhNo1}
                         onChange={(value) => {
                           console.log('value is ', value.value)
-                      
+
                           searchPhoneNoFun(value.value)
                         }}
                         options={{}}
@@ -652,7 +652,7 @@ leadPayload?.Mobile ||
                         <CustomSelect
                           name="MaritualStatus"
                           label="Status"
-                          labelClassName="text-black" 
+                          labelClassName="text-black"
 
                           className="input"
                           onChange={(value) => {
@@ -704,15 +704,15 @@ leadPayload?.Mobile ||
                           ]}
                           dateFormat="MMM dd, yyyy"
                         />
-      
-                
+
+
                       </div>
                     </section>
                   </div>
 
-    
+
                 </div>
-                
+
                 {/* row 3 */}
                 <div className="flex flex-row justify-between pt-2 mb-2">
                   <section className="w-12/12 w-full">
@@ -1038,7 +1038,7 @@ leadPayload?.Mobile ||
 
 
 
-                   
+
 
 
                   <div className="w-full ">
@@ -1106,7 +1106,7 @@ leadPayload?.Mobile ||
 
 
                               </section>
-   
+
 
 
 
@@ -1239,12 +1239,12 @@ leadPayload?.Mobile ||
       }
     }}
   />
- 
+
 </div>
                 </section>
 
                 </section>
-  
+
 
 
 
@@ -1485,7 +1485,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
     index
   ) => {
     setTimeout(() => {
-    
+
       setSavedForms((prev) => {
         const { [formId]: _, ...rest } = prev
         return rest
@@ -1514,7 +1514,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
       x.custObj4 = values
     }
 
-  
+
     console.log('uploading values are', x.leadId)
     updateUnitCustomerDetailsTo(
       orgId,
@@ -1556,7 +1556,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
             handleClone={handleClone}
             handleDelete={()=>handleDelete(form.id)}
             index={i}
-            applicantDetailsA={applicantDetailsA} 
+            applicantDetailsA={applicantDetailsA}
           />
           {savedForms[form.id] && (
             <span className="mt-4">
