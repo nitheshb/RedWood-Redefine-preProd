@@ -23,7 +23,7 @@ export default function BankSelectionSwitchDrop({ type, setStatusFun }) {
     <div className="text-right inline-block  mt-[px]">
       <Menu as="div" className="relative inline-block text-left">
         <div className='container'>
-          <Menu.Button className="min-w-[210%] inline-flex w-full justify-between px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-slate-400/10 dark:highlight-white/5 flex font-semibold hover:bg-slate-400/20 items-center leading-5 px-3 py-1 rounded-full space-x-2 text-xs px-2.5 py-1.5 ">
+          <Menu.Button className="min-w-[170%] inline-flex w-full justify-between px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-slate-400/10 dark:highlight-white/5 flex font-semibold hover:bg-slate-400/20 items-center leading-5 px-3 py-1 rounded-full space-x-2 text-xs px-2.5 py-1.5 ">
             <span className=" w-[300px] min-w-[] text-[12px] leading-[10px] tracking-wide text-[#0091ae]  ">
               <span className="flex flex-row ">
                 <span>{`${type?.bName || 'Select Bank'} `} </span>{' '}

@@ -17,12 +17,19 @@ import 'flowbite'
 import DropDownSearchBar from '../dropDownSearchBar'
 import 'src/styles/myStyles.css'
 import FloordetailsSearch from '../Floordetails/FloordetailsInSearch'
+
+import A_Crm_Map from '../A_CrmModule/A_Crm_Map'
+
+
+
+
 const UnitsInventoryHome = ({ project }) => {
   const { user } = useAuth()
 
   const { orgId } = user
   const [customerRawData, setCustomerRawData] = useState([])
   const [phases, setPhases] = useState([])
+  const [filteredUnits, setFilteredUnits] = useState([])
 
   const [isOpenSideView, setIsOpenSideView] = useState(false)
   const [selPhaseName, setSelPhaseName] = useState('')
@@ -586,6 +593,11 @@ const UnitsInventoryHome = ({ project }) => {
             </div>
           </div>
         </div>
+
+
+        {/* <div>
+          <A_Crm_Map filteredUnits={filteredUnits} />
+        </div> */}
         {projectDetails == undefined && (
           <div className="py-8 px-8 mt-10 flex flex-col items-center bg-red-100 rounded">
             <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
@@ -613,6 +625,8 @@ const UnitsInventoryHome = ({ project }) => {
               phaseFeed={phases}
               unitsFeedA={unitsFeedA}
               filUnitsFeedA={filUnitsFeedA}
+              filteredUnits={filteredUnits}
+              setFilteredUnits = {setFilteredUnits}
               BlockFeed={blocks}
               selBlock={selBlock}
               setSelBlock={setSelBlock}

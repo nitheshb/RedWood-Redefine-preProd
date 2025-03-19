@@ -1,574 +1,700 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-// import { useState } from 'react'
-// import ProjectStatsCard from '../ProjectStatsCard/ProjectStatsCard'
-// import PhaseDetailsCard from '../PhaseDetailsCard/PhaseDetailsCard'
-import { useState, useEffect } from 'react'
-import AppsIcon from '@mui/icons-material/Apps'
-import SortIcon from '@mui/icons-material/Sort'
-import { Card } from '@mui/material'
-import ToggleButton from '@mui/material/ToggleButton'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import DropDownSearchBar from 'src/components/dropDownSearchBar'
-import SiderForm from 'src/components/SiderForm/SiderForm'
-import { LegalFolders } from 'src/constants/projects'
-import { getAllProjects } from 'src/context/dbQueryFirebase'
-import { useAuth } from 'src/context/firebase-auth-context'
-import 'flowbite'
+import { useState, useEffect } from 'react';
+import { Link } from '@redwoodjs/router';
+import {
+  getAllProjects,
+  getBlocksByPhase,
+  getPhasesByProject,
+  getUnits,
+} from 'src/context/dbQueryFirebase';
+import { useAuth } from 'src/context/firebase-auth-context';
+import 'flowbite';
+import 'src/styles/myStyles.css';
+import { SearchIcon } from '@heroicons/react/outline';
+import FileUpload from 'src/components/A_TaskMan/FileUpload';
+import { addDoc, collection, serverTimestamp, query, where, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { db, storage } from 'src/context/firebaseConfig';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const LegalDocsHome = ({ project }) => {
-  const { projectName } = project
-  const { user } = useAuth()
+  const { user } = useAuth();
+  const { orgId } = user;
 
-  const { orgId } = user
-  const [projects, setProjects] = useState([])
-  const [isOpenSideView, setIsOpenSideView] = useState(false)
-  const [isDocViewOpenSideView, setIsDocViewOpenSideView] = useState(false)
-  const [projectDetails, setProjectDetails] = useState({})
-  const [viewDocData, setViewDocData] = useState({})
+  const [projects, setProjects] = useState([]);
+  const [phases, setPhases] = useState([]);
+  const [blocks, setBlocks] = useState([]);
+  const [units, setUnits] = useState([]);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedBlock, setSelectedBlock] = useState(null);
+  const [selectedUnit, setSelectedUnit] = useState(null);
+  const [currentFolder, setCurrentFolder] = useState('projects');
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [selectedFilterProject, setSelectedFilterProject] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [viewType, setViewType] = useState('list');
+  const [folderFiles, setFolderFiles] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
 
-  const [filteredUnits, setFilteredUnits] = useState([])
-  const [filStatus, setFilStatus] = useState(['available', 'booked', 'blocked'])
-  const [formats, setFormats] = React.useState('grid')
+  // Fetch projects
+  useEffect(() => {
+    let isMounted = true;
 
-  // interface files{
-  //   name:string
-  //   size:string,
-  //   type:string,
-  //   modified:string,
-  //   shared:string[],
-  //   id:number
-  // }
+    const fetchProjects = async () => {
+      const unsubscribe = getAllProjects(
+        orgId,
+        (querySnapshot) => {
+          if (isMounted) {
+            const projectsData = querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+            setProjects(projectsData);
+            setFilteredProjects(projectsData);
+          }
+        },
+        (error) => {
+          console.error('Error fetching projects:', error);
+        }
+      );
+      return unsubscribe;
+    };
 
-  const columns: GridColDef[] = [
-    {
-      field: 'name',
-      //headerName: 'Name',
-      headerName: <span style={{ fontWeight: 'bold' }}>Name</span>,
-      width: 340,
-      renderCell: (params) => (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img
-            src={params.row.img}
-            style={{ width: 35, height: 40, marginRight: 10 }}
-          />
-          {params.row.name}
-        </div>
-      ),
-    },
-    { field: 'size', headerName:  <span style={{ fontWeight: 'bold' }}>Size</span>,  width: 130 , headerClassName: 'bold-header', },
-    { field: 'type', headerName:  <span style={{ fontWeight: 'bold' }}>Type</span>, width: 130 },
-    { field: 'modified', headerName: <span style={{ fontWeight: 'bold' }}>Modified</span>, width: 140 },
-    { field: 'shared', type: 'string[]', headerName: <span style={{ fontWeight: 'bold' }}>Shared</span>, width: 120 },
-  ]
+    fetchProjects();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [orgId]);
+
+  // Fetch phases for selected project
+  useEffect(() => {
+    let isMounted = true;
+
+    if (selectedProject) {
+      const fetchPhases = async () => {
+        const unsubscribe = getPhasesByProject(
+          orgId,
+          selectedProject.uid,
+          (querySnapshot) => {
+            if (isMounted) {
+              const phasesData = querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+              setPhases(phasesData);
+            }
+          },
+          (error) => {
+            console.error('Error fetching phases:', error);
+          }
+        );
+        return unsubscribe;
+      };
+      fetchPhases();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedProject, orgId]);
 
   useEffect(() => {
-    getProjects()
-  }, [])
-  const LegalTab = [
-    { lab: 'Name', val: 'name' },
-    { lab: 'Size', val: 'size ' },
-    { lab: 'Type', val: 'type' },
-    { lab: 'Modified', val: 'modified' },
-    { lab: 'Shared', val: 'shared' },
-  ]
-  const getProjects = async () => {
-    const unsubscribe = getAllProjects(
-      orgId,
-      (querySnapshot) => {
-        const projects = querySnapshot.docs.map((docSnapshot) =>
-          docSnapshot.data()
-        )
-        projects.map((user) => {
-          user.label = user?.projectName
-          user.value = user?.uid
-        })
-        setProjects([...projects])
-        console.log('project are ', projects)
-      },
-      () => setProjects([])
-    )
-    return unsubscribe
-  }
-  const selProjctFun = (project) => {
-    setIsOpenSideView(!isOpenSideView)
-    setProjectDetails(project)
-  }
+    let isMounted = true;
 
-  const dispDoc = (docData) => {
-    setViewDocData(docData)
-    setIsDocViewOpenSideView(!isDocViewOpenSideView)
-  }
+    if (selectedProject && phases.length > 0) {
+      const fetchBlocks = async () => {
+        const unsubscribe = getBlocksByPhase(
+          orgId,
+          { projectId: selectedProject.uid, phaseId: phases[0].uid },
+          (querySnapshot) => {
+            if (isMounted) {
+              const blocksData = querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+              setBlocks(blocksData);
+            }
+          },
+          (error) => {
+            console.error('Error fetching blocks:', error);
+          }
+        );
+        return unsubscribe;
+      };
+      fetchBlocks();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedProject, phases, orgId]);
+
+  // Fetch units for selected block
+  useEffect(() => {
+    let isMounted = true;
+
+    if (selectedBlock) {
+      const fetchUnits = async () => {
+        const unsubscribe = getUnits(
+          orgId,
+          (querySnapshot) => {
+            if (isMounted) {
+              const unitsData = querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+              setUnits(unitsData);
+            }
+          },
+          { pId: selectedProject.uid, blockId: selectedBlock.uid, type: 'today' },
+          (error) => {
+            console.error('Error fetching units:', error);
+          }
+        );
+        return unsubscribe;
+      };
+      fetchUnits();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedBlock, selectedProject, orgId]);
+
+  // Fetch files for selected unit
+  useEffect(() => {
+    if (selectedUnit) {
+      const fetchFiles = async () => {
+        const files = await fetchFilesForFolder(orgId, selectedUnit.uid);
+        setFolderFiles((prev) => ({
+          ...prev,
+          [selectedUnit.uid]: files,
+        }));
+      };
+      fetchFiles();
+    }
+  }, [selectedUnit, orgId]);
+
+  // Upload file to Firebase Storage
+  const uploadFileToStorage = async (file) => {
+    const storageRef = ref(storage, `files/${file.name}`);
+    await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(storageRef);
+    return { name: file.name, url: downloadURL, size: file.size, type: file.type };
+  };
+
+  // Save file metadata to Firestore
+  const saveFilesToFirestore = async (orgId, folderId, files, userId) => {
+    if (!folderId) {
+      console.error('Folder ID is undefined');
+      return;
+    }
+
+    try {
+      const filesCollectionRef = collection(db, `${orgId}_legal_documents`);
+      const payload = {
+        folderId,
+        files,
+        orgId,
+        userId,
+        createdAt: serverTimestamp(),
+      };
+      const docRef = await addDoc(filesCollectionRef, payload);
+      console.log('Files saved successfully with ID:', docRef.id);
+      return docRef.id;
+    } catch (error) {
+      console.error('Error saving files to Firestore:', error);
+      throw error;
+    }
+  };
+
+
+  const fetchFilesForFolder = async (orgId, folderId) => {
+    const filesQuery = query(
+      collection(db, `${orgId}_legal_documents`),
+      where('folderId', '==', folderId)
+    );
+    const querySnapshot = await getDocs(filesQuery);
+    const files = querySnapshot.docs.map((doc) => doc.data());
+    return files;
+  };
+
+
+  const deleteFileFromFirestore = async (orgId, docId) => {
+    const docRef = doc(db, `${orgId}_legal_documents`, docId);
+    await deleteDoc(docRef);
+    console.log('File deleted successfully:', docId);
+  };
+
+
+  const updateFileInFirestore = async (orgId, docId, updatedFile) => {
+    const docRef = doc(db, `${orgId}_legal_documents`, docId);
+    await updateDoc(docRef, updatedFile);
+    console.log('File updated successfully:', docId);
+  };
+
+
+  const saveFilesToDatabase = async (folderId) => {
+    if (isSaving || !folderId) return;
+
+    setIsSaving(true);
+
+    try {
+      const files = folderFiles[folderId] || [];
+      const uniqueFiles = files.filter(
+        (file, index, self) =>
+          index === self.findIndex((f) => f.name === file.name && f.url === file.url)
+      );
+
+      await saveFilesToFirestore(orgId, folderId, uniqueFiles, user.uid);
+      console.log('Files saved successfully:', uniqueFiles);
+    } catch (error) {
+      console.error('Error saving files:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+
+  const handleFileUpload = async (files) => {
+    const uploadedFiles = await Promise.all(
+      files.map(async (file) => {
+        const fileMetadata = await uploadFileToStorage(file);
+        return fileMetadata;
+      })
+    );
+
+    setFolderFiles((prev) => ({
+      ...prev,
+      [selectedUnit.uid]: [...(prev[selectedUnit.uid] || []), ...uploadedFiles],
+    }));
+  };
+
+
+  const removeFile = async (folderId, fileName) => {
+    const fileToDelete = folderFiles[folderId].find((file) => file.name === fileName);
+    if (fileToDelete && fileToDelete.id) {
+      await deleteFileFromFirestore(orgId, fileToDelete.id);
+    }
+    setFolderFiles((prev) => ({
+      ...prev,
+      [folderId]: prev[folderId].filter((file) => file.name !== fileName),
+    }));
+  };
+
+
+  const renderProjects = () => {
+    const filteredItems = filterItems(filteredProjects, searchTerm);
+
+    switch (viewType) {
+      case 'list':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((project, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
+                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
+              >
+                <span className="text-2xl">📂</span>
+                <h3 className="font-semibold">{project.projectName}</h3>
+              </div>
+            ))}
+          </div>
+        );
+      case 'small':
+        return (
+          <div className="grid grid-cols-4 gap-4">
+            {filteredItems.map((project, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
+                className="p-4 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-2"
+              >
+                <span className="text-2xl">📂</span>
+                <h3 className="font-semibold text-sm text-center">{project.projectName}</h3>
+              </div>
+            ))}
+          </div>
+        );
+      case 'large':
+        return (
+          <div className="grid grid-cols-2 gap-4">
+            {filteredItems.map((project, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
+                className="p-6 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-3"
+              >
+                <span className="text-4xl">📂</span>
+                <h3 className="font-semibold text-lg text-center">{project.projectName}</h3>
+              </div>
+            ))}
+          </div>
+        );
+      case 'details':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((project, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
+                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">📂</span>
+                  <h3 className="font-semibold">{project.projectName}</h3>
+                </div>
+                <div className="text-sm text-gray-500">
+                  <p>Created: {project.createdAt}</p>
+                  <p>Updated: {project.updatedAt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  // Render blocks
+  const renderBlocks = () => {
+    const filteredItems = filterItems(blocks, searchTerm);
+
+    switch (viewType) {
+      case 'list':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((block, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
+                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
+              >
+                <span className="text-2xl">📦</span>
+                <h3 className="font-semibold">{block.blockName}</h3>
+              </div>
+            ))}
+          </div>
+        );
+      case 'small':
+        return (
+          <div className="grid grid-cols-4 gap-4">
+            {filteredItems.map((block, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
+                className="p-4 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-2"
+              >
+                <span className="text-2xl">📦</span>
+                <h3 className="font-semibold text-sm text-center">{block.blockName}</h3>
+              </div>
+            ))}
+          </div>
+        );
+      case 'large':
+        return (
+          <div className="grid grid-cols-2 gap-4">
+            {filteredItems.map((block, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
+                className="p-6 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-3"
+              >
+                <span className="text-4xl">📦</span>
+                <h3 className="font-semibold text-lg text-center">{block.blockName}</h3>
+              </div>
+            ))}
+          </div>
+        );
+      case 'details':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((block, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
+                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">📦</span>
+                  <h3 className="font-semibold">{block.blockName}</h3>
+                </div>
+                <div className="text-sm text-gray-500">
+                  <p>Created: {block.createdAt}</p>
+                  <p>Updated: {block.updatedAt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  // Render units
+  const renderUnits = () => {
+    const filteredItems = filterItems(units, searchTerm);
+
+    switch (viewType) {
+      case 'list':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((unit, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
+                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
+              >
+                <span className="text-2xl">📁</span>
+                <h3 className="font-semibold">{unit.unit_no}</h3>
+              </div>
+            ))}
+          </div>
+        );
+      case 'small':
+        return (
+          <div className="grid grid-cols-4 gap-4">
+            {filteredItems.map((unit, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
+                className="p-4 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-2"
+              >
+                <span className="text-2xl">📁</span>
+                <h3 className="font-semibold text-sm text-center">{unit.unit_no}</h3>
+              </div>
+            ))}
+          </div>
+        );
+      case 'large':
+        return (
+          <div className="grid grid-cols-2 gap-4">
+            {filteredItems.map((unit, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
+                className="p-6 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-3"
+              >
+                <span className="text-4xl">📁</span>
+                <h3 className="font-semibold text-lg text-center">{unit.unit_no}</h3>
+              </div>
+            ))}
+          </div>
+        );
+      case 'details':
+        return (
+          <div className="space-y-2">
+            {filteredItems.map((unit, index) => (
+              <div
+                key={index}
+                onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
+                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">📁</span>
+                  <h3 className="font-semibold">{unit.unit_no}</h3>
+                </div>
+                <div className="text-sm text-gray-500">
+                  <p>Created: {unit.createdAt}</p>
+                  <p>Updated: {unit.updatedAt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  // Render file upload section
+  const renderFileUploadSection = (folderId) => {
+    if (!folderId) {
+      return <div>No folder selected</div>;
+    }
+
+    const files = folderFiles[folderId] || [];
+
+    return (
+      <div className="mt-4">
+        <FileUpload
+          files={files}
+          setFiles={handleFileUpload}
+          removeFile={(fileName) => removeFile(folderId, fileName)}
+        />
+        <div className="mt-4">
+          {files.map((file, index) => (
+            <div key={index} className="flex items-center justify-between p-2 border rounded-lg mb-2">
+              <span>{file.name}</span>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => window.open(file.url, '_blank')}
+                  className="text-blue-500 hover:text-blue-700"
+                >
+                  View
+                </button>
+                <button
+                  onClick={() => handleDownload(file.url, file.name)}
+                  className="text-green-500 hover:text-green-700"
+                >
+                  Download
+                </button>
+                <button
+                  onClick={() => removeFile(folderId, file.name)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={() => saveFilesToDatabase(folderId)}
+          disabled={isSaving}
+          className={`mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 ${
+            isSaving ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+        >
+          {isSaving ? 'Saving...' : 'Save Files'}
+        </button>
+      </div>
+    );
+  };
+
+  // Handle back navigation
+  const handleBack = () => {
+    if (currentFolder === 'blocks') {
+      setCurrentFolder('projects');
+      setSelectedProject(null);
+    } else if (currentFolder === 'units') {
+      setCurrentFolder('blocks');
+      setSelectedBlock(null);
+    } else if (currentFolder === 'documents') {
+      setCurrentFolder('units');
+      setSelectedUnit(null);
+    }
+  };
+
+  // Handle filter project change
+  const handleFilterProjectChange = (e) => {
+    const selectedProjectName = e.target.value;
+    setSelectedFilterProject(selectedProjectName);
+
+    if (selectedProjectName === '') {
+      setFilteredProjects(projects);
+    } else {
+      const filtered = projects.filter((project) => project.projectName === selectedProjectName);
+      setFilteredProjects(filtered);
+    }
+  };
+
+  // Handle search change
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Handle view change
+  const handleViewChange = (e) => {
+    setViewType(e.target.value);
+  };
+
+  // Filter items based on search term
+  const filterItems = (items, searchTerm) => {
+    return items.filter((item) =>
+      item.projectName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.blockName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.unit_no?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
+  // Handle file download
+  const handleDownload = (fileUrl, fileName) => {
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
-    <div>
-      <section className=" mt-1 mb-8 leading-7 text-gray-900 bg-white sm:py-12 md:py-16 lg:py-18 mx-1 pr-10 rounded-lg px-6  w-[1430px]">
-        <div className="  mx-auto border-solid sm:px-6 md:px-6 px-6  ">
-          {/* <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
-            <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-2">
-              <Link
-                className="flex items-center"
-                // to={routes.projectEdit({ uid })}
-              >
-                <span className="relative z-10 flex items-center w-auto text-3xl font-bold leading-none pl-0 mt-[18px]">
-                  Documents
-                </span>
-              </Link>
-            </div>
-          </div> */}
-          <span className="relative z-10 flex items-center w-auto text-lg font-bold leading-none pl-0 mt-[18px]">
-            Documents
-          </span>
-          <div className=" mt-2">
-            <form className="">
-              <div className="flex">
-                <div className="relative w-full ">
-
-
-                  <div className='flex'>
-                  <input
-                    type="search"
-                    id="search-dropdown"
-                    className="block p-2.5 w-1/4 z-20 text-sm text-gray-900 bg-gray-50  rounded-l-lg border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder={` Search Documents,Categories, Agreements...`}
-                    required
-                  />
-
-                     <button
-                      type="submit"
-                      className="p-2.5 px-8 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        ></path>
-                      </svg>
-                      <span className="sr-only">Search</span>
-                    </button>
-                  </div>
-
-
-
-                  <section className="absolute top-0 right-0  flex flex-row   ">
-                    <DropDownSearchBar
-                      type={'All Projects'}
-                      id={'id'}
-                      setStatusFun={{}}
-                      viewUnitStatusA={filteredUnits}
-                      pickCustomViewer={selProjctFun}
-                      selProjectIs={projectDetails}
-                      dropDownItemsA={projects}
-                    />
-
-                  </section>
-                </div>
-              </div>
-            </form>
+    <section className="mt-2 py-6 mb-8 leading-7 text-gray-900 bg-white rounded-lg">
+      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full">
+        <div className="flex flex-col leading-7 text-gray-900 border-0 border-gray-200 justify-center items-center">
+          <div className="flex items-center flex-shrink-0 px-0 pl-0 mb-1">
+            <Link className="flex items-center">
+              <span className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0">
+                Legal Documents
+              </span>
+            </Link>
           </div>
-          <div className="mt-4">
-            {' '}
-            <ToggleButtonGroup
-              value={formats}
-              // onChange={()=>{console.log(formats)}}
-              aria-label="text formatting"
-            >
-               <ToggleButton
-                value="grid"
-                aria-label="Grid"
-                onClick={() => {
-                  setFormats('grid')
-                }}
-              >
-                <AppsIcon />
-              </ToggleButton>
-              <ToggleButton
-                value="list"
-                aria-label="List"
-                onClick={() => {
-                  setFormats('list')
-                }}
-              >
-                <SortIcon />
-              </ToggleButton>
-
-            </ToggleButtonGroup>
-          </div>
-
-          {/* <ul className="">
-              <li className="py-2">
-                <div className='border border-green rounded-xl mt-10 ml-2 mr-2 bg-gray-100 w-[1318px] h-16'>
-                <section className="mt-2 flex flex-row ">
-                  {LegalTab?.map((d, i) => (
-
-                    <>
-                      <div className={`text-md pt-3 ml-32 text-gray-700 leading-normal ${
-                        d.lab==="Name"? "mr-80"
-                        :""
-                      }` } key={i}>{`${d.lab} `}
-                      </div>
-                    </>
-                  ))}
-                </section>
-                </div>
-              </li>
-            </ul> */}
-
-          {formats === 'list' ? (
-            <div style={{ width: '98%' }} className="mt-16 h-auto">
-              <DataGrid
-                rows={LegalFolders}
-                columns={columns}
-                rowHeight={75}
-                sx={{
-                  fontWeight: 400,
-                  // width:300,
-                  // height:"820px",
-                  fontSize: 14,
-                  borderRadius: 3,
-                  marginTop: 5,
-                  paddingTop: 10,
-                  padding: 5,
-                  // borderColor:"#FFFFFF",
-
-                  // marginRight:5,
-                  paddingRight: 5,
-                  '& .MuiDataGrid-row': {
-                    height: 80,
-                    border: 1,
-                    borderColor: '#EDEFF1',
-
-
-                    width: '99.5%',
-                    // borderRight:1,
-                    // marginRight:1,
-
-                    marginTop: 2,
-                    // paddingRight:5,
-                    borderRadius: 3,
-                  },
-                  '& .MuiDataGrid-columnHeaders': {
-                    // border: 1,
-                    width: '99.5%',
-                    marginBottom: 2,
-
-                    // borderTop: 1,
-                    boxShadow: 2,
-                    backgroundColor: '#F4F6F8',
-                    borderRadius: 3,
-                  },
-                  '& .MuiDataGrid-footerContainer': {
-                    // border: 1
-                  },
-                  // "& .MuiDataGrid-columnHeader--field-name": {
-                  //   fontWeight: "bold",
-                  // },
-                  '& .MuiTablePagination-selectLabel': {
-                    color: 'rgba(0, 54, 101, 0.6)',
-                  },
-                  '& .MuiSelect-select': {
-                    color: '#003665',
-                  },
-                  '& .MuiTablePagination-displayedRows': {
-                    color: '#003665',
-                  },
-                  '& .MuiSvgIcon-root': {
-                    color: '#003665',
-                  },
-                  '&>.MuiDataGrid-main': {
-                    // '&>.MuiDataGrid-columnHeaders': {
-                    //     borderBottom: 'none'
-                    // },
-
-                    '& div div div div >.MuiDataGrid-cell': {
-                      borderBottom: 'none',
-                    },
-                  },
-                }}
-                initialState={{
-                  pagination: {
-                    paginationModel: { pageSize: 10 },
-                  },
-                }}
-                pageSizeOptions={[5, 10]}
-                checkboxSelection
-              />
-            </div>
-          ) : null}
-          {formats === 'grid' ? (
-            <div style={{ width: '98%' }} className="mt-16 h-auto">
-              <div className="ml-3 mt-5 font-bold">Master Documents</div>
-              <ul className="">
-                <li className="py-2">
-                  <section className="flex flex-row mt-5 grid grid-cols-5 ">
-                    {LegalFolders?.map((project, i) => (
-                      // <span key={i}>{project?.projectName}</span>
-                      <>
-                        {project.type === 'folder' ? (
-                          <>
-                            <div
-                              key={i}
-                              className=" cursor-pointer relative mx-auto break-words bg-white  mb-6  rounded-xl  transition duration-300 ease-in-out  "
-                              onClick={() => dispDoc(project)}
-                            >
-                              {/* <FileCardAnim projectDetails={project} /> */}
-                              <Card
-                                sx={{
-                                  borderRadius: 4,
-                                }}
-                                variant="outlined"
-                                className="w-[230px] m-3 p-3"
-                              >
-                                <img
-                                  alt=""
-                                  className="h-12 w-10 bg-white "
-                                  src={project.img}
-                                />
-                                <div className="font-semibold	">
-                                  {project.name}
-                                </div>
-                                <div className="text-xs">{project.size}</div>
-                                <div className="text-xs">{project.shared}</div>
-                              </Card>
-                            </div>
-                          </>
-                        ) : null}
-                      </>
-
-                      // <ProjectsMHomeBody
-                      //   key={project.uid}
-                      //   project={project}
-                      //   onSliderOpen={() => {
-                      //     // setProject(project)
-                      //     // setIsEditProjectOpen(true)
-                      //   }}
-                      //   isEdit={false}
-                      // />
-                    ))}
-                  </section>
-                </li>
-              </ul>
-
-              <div className="ml-2 mt-5 font-bold">Unit Wise Documents</div>
-              <ul className="">
-                <li className="py-2">
-                  <section className="flex flex-row mt-5 grid grid-cols-5 ">
-                    {LegalFolders?.map((project, i) => (
-                      // <span key={i}>{project?.projectName}</span>
-                      <>
-                        {project.type !== 'folder' ? (
-                          <>
-                            <div
-                              key={i}
-                              className=" cursor-pointer relative mx-auto break-words bg-white  mb-2  rounded-xl  transition duration-300 ease-in-out  "
-                              onClick={() => dispDoc(project)}
-                            >
-                              {/* <FileCardAnim projectDetails={project} /> */}
-                              <Card
-                                sx={{
-                                  borderRadius: 4,
-                                }}
-                                variant="outlined"
-                                className="w-[230px] m-3 p-3"
-                              >
-                                <img
-                                  alt=""
-                                  className="h-12 w-10 bg-white "
-                                  src={project.img}
-                                />
-                                <div className="font-semibold	">
-                                  {project.name}
-                                </div>
-                                <div className="text-xs">{project.size}</div>
-                                <div className="text-xs">{project.shared}</div>
-                              </Card>
-                            </div>
-                          </>
-                        ) : null}
-                      </>
-
-                      // <ProjectsMHomeBody
-                      //   key={project.uid}
-                      //   project={project}
-                      //   onSliderOpen={() => {
-                      //     // setProject(project)
-                      //     // setIsEditProjectOpen(true)
-                      //   }}
-                      //   isEdit={false}
-                      // />
-                    ))}
-                  </section>
-                </li>
-              </ul>
-            </div>
-          ) : null}
-
-          <section className=" flex">
-            {/* <div
-              className="cursor-pointer  z-10 flex flex-col  max-w-md p-2 my-0  mx-4 rounded-sm inline-block  min-h-[50px]  min-w-[100px] border border-dotted border-black rounded-md"
-              onClick={() => {
-                setSliderInfo({
-                  open: true,
-                  title: ['Apartments'].includes(
-                    projectDetails?.projectType?.name
-                  )
-                    ? 'Import Units'
-                    : 'Import Apartment Units',
-                  sliderData: {
-                    phase: {},
-                    block: {},
-                  },
-                  widthClass: 'max-w-6xl',
-                })
-              }}
-            >
-
-              <div
-                className="flex flex-col items-center justify-between"
-                onClick={() => setIsOpenSideView(!isOpenSideView)}
-              >
-                <PlusIcon className="h-8 w-8 mr-1 mt-14" aria-hidden="true" />
-                <h3 className="m-0  text-sm  mt-1 font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 text-xl ">
-                  Upload Document
-                </h3>
-              </div>
-              <div className="flex flex-row justify-between px-2">
-                <span className="flex flex-row items-center justify-between mr-2">
-                  <span className="text-sm font-"></span>
-                </span>
-              </div>
-            </div> */}
-
-            {/* <ul className="">
-              <li className="py-2"> */}
-            {/* <section className="flex flex-col"> */}
-            {/* {projects?.map((project, i) => (
-                    // <span key={i}>{project?.projectName}</span>
-                    <>
-                      <div
-                        key={i}
-                        // className=" cursor-pointer relative max-w-md mx-auto md:max-w-2xl  min-w-0 break-words bg-white w-full mb-6  rounded-xl  mr-8 transition duration-300 ease-in-out  "
-                        onClick={() => dispDoc(project)}
-                      >
-                        <FileCardAnim projectDetails={project} />
-                      </div>
-                    </>
-
-                    // <ProjectsMHomeBody
-                    //   key={project.uid}
-                    //   project={project}
-                    //   onSliderOpen={() => {
-                    //     // setProject(project)
-                    //     // setIsEditProjectOpen(true)
-                    //   }}
-                    //   isEdit={false}
-                    // />
-                  ))} */}
-            {/* </section> */}
-            {/* </li>
-            </ul> */}
-          </section>
-          {/* <div className="grid grid-cols-1 gap-7 mt-10">
-            <span>
-              <div
-                className="drop-shadow-md min-w-full z-10 flex flex-col  max-w-md p-4 mx-auto my-0 rounded-lg "
-                style={{ backgroundColor: '#f3f5ff' }}
-              >
-                <div className="flex items-center flex-row px-0  pl-0 mb-2 ">
-                  <div className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 ">
-                    {'Payslips'}
-                  </div>
-                </div>
-
-                <div className="relative z-10 flex items-center w-auto text-md  text-gray-500 leading-none pl-0 ml-1 mt-1 ">
-                  {'This gets generated after 10 days of salary credit'}
-                </div>
-                <ul className="flex-1 p-0 mt-8 ml-2 mr-2  border   rounded-md leading-7 text-gray-900  border-gray-200">
-                  {valueFeedData.map((data, i) => {
-                    return (
-                      <li
-                        key={i}
-                        className="flex justify-between px-4 py-1 w-full mb-2  font-semibold text-left border-dotted border-b border-gray-300 "
-                      >
-                        <span className="inline-flex">
-                          <span className="text-[16px]    text-blue-900">
-                            {' '}
-                            {data.k}
-                          </span>
-                        </span>
-
-                        <div
-                          className="relative flex flex-col items-center group"
-                          style={{ alignItems: 'end' }}
-                        >
-                          <div
-                            className="absolute bottom-0 flex flex-col items-center hidden mb-6 group-hover:flex"
-                            style={{ alignItems: 'end', width: '300px' }}
-                          >
-                            <span
-                              className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-                              style={{
-                                color: 'black',
-                                background: '#e2c062',
-                                maxWidth: '300px',
-                              }}
-                            ></span>
-                            <div
-                              className="w-3 h-3  -mt-2 rotate-45 bg-black"
-                              style={{
-                                background: '#e2c062',
-                                marginRight: '12px',
-                              }}
-                            ></div>
-                          </div>
-                          <span className="text-[16px] font-medium text-gray-900">
-                            <DownloadIcon
-                              className="h-5 w-5 mr-1 mt-1"
-                              aria-hidden="true"
-                            />
-                          </span>
-                        </div>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            </span>
-          </div> */}
         </div>
-      </section>
-      <SiderForm
-        open={isOpenSideView}
-        setOpen={setIsOpenSideView}
-        title={'upload_legal_docs'}
-        projectDetails={projectDetails}
-        unitsViewMode={false}
-        widthClass="max-w-2xl"
-        projectsList={projects}
-      />
-      <SiderForm
-        open={isDocViewOpenSideView}
-        setOpen={setIsDocViewOpenSideView}
-        title={'disp_legal_docs'}
-        projectDetails={projectDetails}
-        unitsViewMode={false}
-        widthClass="max-w-xl"
-        projectsList={projects}
-        viewLegalDocData={viewDocData}
-      />
-    </div>
-  )
-}
+        <div className="mt-4">
+          {currentFolder !== 'projects' && (
+            <button
+              onClick={handleBack}
+              className="mb-4 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+            >
+              Back
+            </button>
+          )}
+          <div className="mb-4 flex justify-between">
+            <div className="relative w-1/2">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="px-4 py-2 border rounded-lg w-full pl-10"
+              />
+              <SearchIcon className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
+            <select
+              value={viewType}
+              onChange={handleViewChange}
+              className="px-4 py-2 border rounded-lg"
+            >
+              <option value="small">Small Icons</option>
+              <option value="list">List View</option>
+              <option value="large">Large Icons</option>
+              <option value="details">Details</option>
+            </select>
+          </div>
+          {currentFolder === 'projects' && (
+            <div>
+              <h2 className="text-lg font-bold mb-4">Projects</h2>
+              <div className="mb-4">
+                <label htmlFor="projectFilter" className="mr-2">Filter by Project:</label>
+                <select
+                  id="projectFilter"
+                  value={selectedFilterProject}
+                  onChange={handleFilterProjectChange}
+                  className="px-4 py-2 border rounded-lg"
+                >
+                  <option value="">All Projects</option>
+                  {projects.map((project, index) => (
+                    <option key={index} value={project.projectName}>
+                      {project.projectName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {renderProjects()}
+            </div>
+          )}
+          {currentFolder === 'blocks' && (
+            <div>
+              <h2 className="text-lg font-bold mb-4">Blocks</h2>
+              {renderBlocks()}
+            </div>
+          )}
+          {currentFolder === 'units' && (
+            <div>
+              <h2 className="text-lg font-bold mb-4">Units</h2>
+              {renderUnits()}
+            </div>
+          )}
+          {currentFolder === 'documents' && selectedUnit && (
+            <div>
+              <h2 className="text-lg font-bold mb-4">Documents</h2>
+              {renderFileUploadSection(selectedUnit.uid)}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
 
-export default LegalDocsHome
+export default LegalDocsHome;
