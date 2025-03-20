@@ -451,8 +451,8 @@ const HomePage = () => {
                   </div>
 
                   <div className='ml-1'>
-                    <section className="w-full py-8 mb-8 leading-7 text-gray-900 bg-white sm:py-12 md:py-16 lg:py-18 rounded-lg">
-                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl mx-auto px-6 py-8 ">
+                    <section className="w-full  mb-8 leading-7 text-gray-900 bg-white  rounded-lg">
+                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-16 max-w-8xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
                           <div className="flex items-center flex-shrink-0  px-0  pl-0 border-b border-grey  mb-2">
                             <span className="flex items-center">
@@ -465,7 +465,7 @@ const HomePage = () => {
                                 {viewable}
                               </span>
                             </span>
-                            <section className="flex ml-auto mt-[18px]">
+                            {/* <section className="flex ml-auto mt-[18px]">
                               <button>
                                 <span className="flex ml-2 items-center h-7 px-3  text-xs font-medium text-[#fff] bg-[#0891B2] rounded-full">
                                   <PencilIcon
@@ -475,7 +475,7 @@ const HomePage = () => {
                                   Edit
                                 </span>
                               </button>
-                            </section>
+                            </section> */}
                           </div>
                           <AllBankDetailsView  title={'Bank Accounts'} />
                         </div>

@@ -128,10 +128,10 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
   return (
     <>
-      <div className="w-full  mt-10 flex flex-row">
-        <div className="lg:col-span-2 mr-10">
+      <div className="mr-10 mt-4">
+        <div className="max-w-7xl">
           <section className="flex flex-row justify-between items-center p-4">
-            <h2 className="text-md  text-md font-semibold ml-5 mb-4">{title}</h2>
+            <h2 className="text-md  text-md font-semibold ml-5 mb-4"></h2>
 
             <button
                  className="flex items-center"
@@ -146,7 +146,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
               >
                 {bankDetialsA.length > 0 && (
                   <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                    <span className="text-[#0891B2] p-4 rounded-lg hover:bg-[#E4E0E1] flex items-center">
+                    <span className="text-[#0891B2] p-4  rounded-lg  flex items-center">
                       {' '}
                       <PlusCircleIcon
                         className="h-4 w-4 mr-1  inline"
@@ -157,15 +157,11 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                   </time>
                 )}
               </button>
-
-
-
-
           </section>
 
 
           
-          <div className="">
+          <div className="p-4">
             {bankDetialsA.map((bankDe, i) => {
               return (
                 <section className="m-4 inline-block" key={i}>
@@ -181,7 +177,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                           >
                             <TrashIcon
                              onClick={() => openDeleteDialog(bankDe)}
-                              className="h-4 w-4 mr-1  mt-3 inline"
+                              className="h-4 w-4 mr-1  mt-3 inline cursor-pointer text-red-500 hover:text-red-700"
                               aria-hidden="true"
                             />
                           </span>
