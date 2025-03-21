@@ -24,7 +24,7 @@ const SlimSideMenuBar = (props) => {
         'legalModule',
       ].includes(sourceLink) && (
         <a
-          className="flex items-center justify-center flex-shrink-0 w-full py-[18px]   border-b mt-[4px] pt-[10px]"
+          className="flex items-center justify-center flex-shrink-0 w-full py-[18px]    border-b mt-[4px] pt-[10px]"
           href="#"
         >
         
@@ -39,6 +39,7 @@ const SlimSideMenuBar = (props) => {
 
 
         </a>
+       
       )}
       <section className="mb-4"></section>
       {['crmModule'].includes(sourceLink) && (

@@ -108,7 +108,7 @@ const CustomersSearchHome2 = ({ project }) => {
 
   return (
     <div className="">
-      <div className="flex flex-col mt-2 rounded-lg bg-white py-4 border-b border-gray-200">
+      <div className="flex flex-col mt-1 rounded-lg bg-white py-4 border-b border-gray-200">
         <span className="px-4 font-bold mb-3">Customers</span>
         <div className="-my-2 overflow-x-auto ">
           <div className="py-2 align-middle inline-block min-w-full ">

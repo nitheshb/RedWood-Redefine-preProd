@@ -953,7 +953,7 @@ console.log(viewable)
                   }
                 >
                   <span className="flex items-center ml-1">
-                    <span className="text-md font-bold pl-1 ">Inventory box</span>
+                    <span className="text-md font-bold pl-1 ">Inventory</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
                     <span

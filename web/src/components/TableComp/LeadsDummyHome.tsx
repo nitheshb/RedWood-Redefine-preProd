@@ -201,7 +201,7 @@ const LeadsDummyHome = ({ leadsTyper }) => {
             <div className="flex items-center justify-between py-2 px-6 bg-white ">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 leading-light py-2 ">
-                  Leads Management Dummy
+                  Leads Management
                 </h2>
               </div>
               <div className="flex px-6">

@@ -74,7 +74,7 @@ export default function ProfileSummary() {
   }
 
   return (
-    <div className="m-2">
+    <div className="m-1">
       <div className="bg-white  border-neutral-300 rounded-lg shadow-lg p-5">
         <figure>
           <svg

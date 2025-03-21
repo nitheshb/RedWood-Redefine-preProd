@@ -388,7 +388,7 @@ const CrmHomePage = () => {
                 {viewable === 'crmSpace' && <CrmRepHomePageView1 />}
               </div>
 
-              <div className="px-3">
+              <div className="px-1">
                 {(viewable === 'CrmTasks' || viewable === 'Home') && (
                   <CrmHome leadsTyper={undefined} />
                 )}
