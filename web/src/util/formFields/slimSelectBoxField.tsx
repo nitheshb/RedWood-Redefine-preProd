@@ -9,8 +9,8 @@ import CustomDatePicker from './CustomDatePicker'
 const customStyles = {
   control: (base) => ({
     ...base,
-    height: 36,
-    minHeight: 34,
+    height: 30,
+    minHeight: 30,
     padding: 0,
   }),
   valueContainer: (base) => ({

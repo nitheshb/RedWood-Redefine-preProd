@@ -64,6 +64,7 @@ export default function FileUpload  ({ files, setFiles, removeFile }) {
         <p className="main">Supported files</p>
         <p className="info">PDF, JPG, PNG</p>
       </div>
+      
     </>
   )
 }

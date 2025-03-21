@@ -1051,7 +1051,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
 
 
-      <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900 bg-white ">
+      <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900 bg-white mt-1 mx-1 rounded-lg ">
         
 
         
