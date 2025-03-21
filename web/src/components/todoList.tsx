@@ -409,9 +409,9 @@ const TodoListView = ({
 
   return (
     <>
-      <Box pb={4} className="font-sanF">
+      <div className="mb-4 font-sanF">
         <div className=" w-full font-sanF">
-          <div className="bg-white py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded">
+          <div className="bg-white py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded-lg">
             <div className="flex flex-row justify-between border-gray-200 border-b">
               <ul
                 className="flex w-full  rounded-t-lg  mx-"
@@ -438,7 +438,7 @@ const TodoListView = ({
                       >
                         <section className="flex flex-row text-[15px] h-[24px]  mb-0">
                           {' '}
-           
+
                           {/* 🏆 */}
                           {d.val === 'dept_tasks' && (
                             <>
@@ -505,7 +505,7 @@ const TodoListView = ({
                           )}
                         </section>
 
-                      
+
                       </button>
                     </li>
                   )
@@ -579,7 +579,7 @@ const TodoListView = ({
                     onChange={(value) => {
                       console.log('sel valu s', value)
                       setSelPriority(value.value)
-        
+
                     }}
                     value={selPriority}
                     options={[
@@ -620,7 +620,7 @@ const TodoListView = ({
                     Show Only Completed
                   </label>
                 </div>
-   
+
               </div>
               <span style={{ display: '' }}>
                 <CSVDownloader
@@ -836,9 +836,9 @@ const TodoListView = ({
                             <td>
                               <div className="ml-5">
                                 <div className="rounded-sm h-5 w-5 flex flex-shrink-0 justify-center items-center relative">
-                 
+
                                   {i + 1}
-                                
+
                                 </div>
                               </div>
                             </td>
@@ -853,7 +853,7 @@ const TodoListView = ({
                                       {dat?.leadUser?.Project?.toUpperCase()}
                                     </p>
 
-                              
+
                                     <p className="text-[9px]  leading-none text-red-800  mt-[6px] font-sanF  py-[4px]  rounded-full   mb-1 mr-4  ">
                                       {dat?.leadUser?.Status?.toUpperCase()}
                                     </p>
@@ -871,11 +871,11 @@ const TodoListView = ({
                                     </p>
                                   </div>
                                 </div>
-   
+
                               </div>
                             </td>
                             <td className="pl-24">
-                           
+
                             </td>
                             <td className="pl-5">
                               <div className="flex flex-col">
@@ -885,14 +885,14 @@ const TodoListView = ({
                                 <p className="text-[11px] leading-none text-gray-600 ml-2 mt-2">
                                   {dat?.leadUser?.Name}
                                 </p>
-                               
+
                                 <p className="text-sm leading-none text-gray-600 ml-2">
                                 </p>
                               </div>
                             </td>
                             <td className="pl-5">
                               <div className="flex flex-row">
-                               
+
                                 <button className="py-3 px-3 text-[13px] focus:outline-none leading-none text-red-700 rounded">
                                   {Math.abs(
                                     getDifferenceInMinutes(dat['schTime'], '')
@@ -925,7 +925,7 @@ const TodoListView = ({
                                 </button>
                               </div>
                             </td>
-                          
+
                           </tr>
                         ))
                     }
@@ -1164,8 +1164,8 @@ const TodoListView = ({
                               </button>
                             </div>
                           </td>
-                         
-                       
+
+
                         </tr>
                       ))}
 
@@ -1410,8 +1410,8 @@ const TodoListView = ({
               )}
           </div>
         </div>
-       
-      </Box>
+
+      </div>
       <SiderForm
         open={isImportLeadsOpen1}
         setOpen={setisImportLeadsOpen1}

@@ -16,7 +16,7 @@ const RecentActivity = ({ title, userTodayPerfA }) => {
     }
   }, [userTodayPerfA])
   return (
-    <section className="bg-white rounded  flex flex-col p-4 w-100 ">
+    <section className="bg-white rounded-lg  flex flex-col p-4 w-100 ">
       <h5 className="font-bodyLato text-md">{t(title)}</h5>
       <section className="mt-3">
         {recActA.length < 1 && (

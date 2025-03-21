@@ -6,7 +6,7 @@ const TaskProgress = ({ userTodayPerfA }) => {
   const { user } = useAuth()
 
   return (
-    <section className="bg-white rounded  flex flex-col p-4 w-100 ">
+    <section className="bg-white rounded-lg  flex flex-col p-4 w-100 ">
       <h5>{t('Task Progress')}</h5>
 
       <Box mt={2}>
