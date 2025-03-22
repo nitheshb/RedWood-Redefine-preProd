@@ -516,7 +516,7 @@ const UnitsInventoryHome = ({ project }) => {
   }
 
   return (
-    <section className=" mt-1  py-6 mb-8 leading-7 text-gray-900 bg-white  rounded-lg ">
+    <section className=" mt-1  py-6 mb-8 leading-7 text-gray-900 bg-white  rounded-lg  ">
       <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full  ">
         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 flex flex-col justify-center items-center ">
           <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-1">
@@ -530,7 +530,7 @@ const UnitsInventoryHome = ({ project }) => {
             </Link>
           </div>
         </div>
-        <div className="mt-1 ">
+        <div className=" ">
           {/* <form className=""> */}
           <div className="flex justify-center items-center  flex flex-col">
             <div className="relative  p-2.5 pb-6">
@@ -545,7 +545,7 @@ const UnitsInventoryHome = ({ project }) => {
                   selProjectIs={projectDetails}
                   dropDownItemsA={customerRawData}
                 />
-    
+
                 <DropDownSearchBar
                   label={'Availablity'}
                   type={'All Status'}

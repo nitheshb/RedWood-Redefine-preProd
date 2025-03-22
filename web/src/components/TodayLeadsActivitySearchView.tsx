@@ -661,14 +661,14 @@ export default function TodayLeadsActivitySearchView({
         {/* <Header /> */}
         <div className="flex justify-center items-center text-gray-900"></div>
         <div className=" justify-center items-center text-gray-900">
-          
-       
+
+
           {
             schLoading &&
               [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((data, i) => (
                 <LogSkelton key={i} />
               ))
-          
+
           }
 
 
@@ -693,7 +693,7 @@ export default function TodayLeadsActivitySearchView({
                     />
                   </div>
                     <div className="w-2/12 flex flex-col">
-                    <section className="bg-white rounded  flex flex-col p-4 ml-1 mb-1 w-100 ">
+                    <section className="bg-white rounded-lg  flex flex-col p-4 ml-1 mb-1 w-100 ">
                       <h5 className="text-sm">{greet}...!🖐</h5>
                       <h2 className="text-md font-semibold text-black leading-light font-Playfair pb-1">
                         {user?.displayName?.toLocaleUpperCase()}
@@ -724,16 +724,16 @@ export default function TodayLeadsActivitySearchView({
           )}
 
 
-          
-
-          
 
 
 
 
 
 
-          
+
+
+
+
 
 
 
@@ -859,13 +859,13 @@ export default function TodayLeadsActivitySearchView({
                             selUserProfileF('User Profile', leadUser)
                           }}
                         >
-        
+
 
                           <div className="flex  w-full mx-4 py-2 border-b mt-4 ">
                             <label className="font-semibold text-[#053219] px-4 py-[4px] bg-green-100  text-2xl  mb-1 mr-2  ">
                               {index + 1}
                             </label>
-                            
+
                             <section className="mt-2">
                               <span className="inline-flex mr-4">
                                 <span className="text-sm  font-light  font text-gray-700 ">
