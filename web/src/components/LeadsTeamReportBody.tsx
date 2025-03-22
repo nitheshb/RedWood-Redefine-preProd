@@ -91,7 +91,7 @@ const MycalculatePercentage = (total, count) => {
   return Math.ceil(isNaN(per) ? 0 * 100 : per * 100)
 }
 const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
-  
+
   const sourceDropDown = () => {
     return (
       <SlimSelectBox
@@ -214,7 +214,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     showAllEmpTodayActivity()
   }, [usersCleanList])
 
- 
+
 
   useEffect(() => {
     if (selProjectIs?.value === 'allprojects') {
@@ -429,7 +429,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   }
   const setEmpTaskFun = async () => {
     const x = await serialEmployeeTaskLeadData(usersCleanList)
-  
+
     const z = Promise.all(x).then(function (results) {
       console.log('master one', results)
       setTaskEmployeeListTuned(results)
@@ -636,7 +636,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
       }
     })
     await setResettingEmpValues(false)
-    
+
     return
     const unsubscribe = steamUsersListByRole(
       orgId,
@@ -844,7 +844,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     console.log('whole is ', name, whole)
   }
   const updateLeadsLastUpdatetimeFun = async () => {
-  
+
 
     getTodayTodoLeadsData(
       orgId,
@@ -860,11 +860,11 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           y = staDA
 
           if (y.length > 0 && y[indi]) {
-          
+
 
             const { comments, ct, schTime } = x[y[indi]]
             if (comments) {
-            
+
             } else if (ct) {
               try {
                 updateLeadLastUpdateTime(orgId, docSnapshot.id, ct, schTime)
@@ -885,7 +885,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     )
   }
   const updateProjectNameInlogs = async () => {
-  
+
 
     const steamLeadLogs = await streamLeadLogdWithNullProj(
       orgId,
@@ -1047,46 +1047,57 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
 
 
-      
+
 
 
 
       <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900 bg-white mt-1 mx-1 rounded-lg ">
-        
 
-        
-        
+
+
+
         <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
-          
-          
-          
-          
+
+
+
+
           <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
-            
+
 
           <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl mt-2 font-semibold mb-2">Sales Reports</h1>
-            <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p>
+
+            <section className='flex flex-row mt-3'>
+                <img className="w-12 h-12" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/payments-subscriptions.svg'}></img>
+
+                <h2 className="ml-2 mt-2 text-md font-semibold text-black leading-light font-Playfair">
+                Sales Reports
+                </h2>
+                {/* <h1 className="text-2xl mt-2 font-semibold mb-2">
+                Sales Reports
+                </h1> */}
+                </section>
+            {/* <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p> */}
           </div>
 
         </div>
- 
+
 
 
             <div className="flex items-center space-x-1 mb-6 border-b">
           {[
 
-{ label: 'Booking Performance', value: 'booking_perf' },
 { label: 'Leads Performance', value: 'lead_perf' },
 { label: 'Source Performance', value: 'source_perf' },
 { label: 'Site Visits', value: 'site_visits' },
 { label: 'Employee Performance', value: 'emp_tasks' },
-{ label: 'Home', value: 'sale_report_home' },
-{ label: 'Marketing', value: 'marketing_Dashboard' },
+{ label: 'Booking Performance', value: 'booking_perf' },
 
-{ label: 'Top Bar', value: 'bar_tasks' },
-{ label: 'Profile', value: 'profile_tasks' },
+// { label: 'Home', value: 'sale_report_home' },
+// { label: 'Marketing', value: 'marketing_Dashboard' },
+
+// { label: 'Top Bar', value: 'bar_tasks' },
+// { label: 'Profile', value: 'profile_tasks' },
 
 
 
@@ -1113,7 +1124,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             </button>
           ))}
         </div>
-           
+
           </div>
           {selCat === 'lead_perf' && (
             <div className="flex flex-col  mt-2 drop-shadow-md rounded-lg  px-4">
@@ -1157,7 +1168,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   sourceDateRange === startOfDay(d).getTime()
                                         ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF]  '
                                   : 'text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  border border-[#4C0053]  bg-[#fff]  '
-                    
+
                                 }rounded-full`}
                               >
                                 <EyeIcon
@@ -1222,7 +1233,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
                                   ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF]  '
                                   : ' bg-white border border-[#4C0053] text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  rounded-full '
-  
+
                               }rounded-full`}
                             >
                               <CalendarIcon
@@ -1241,7 +1252,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
                                   ? 'font-semibol text-[#4C0053] border border-[#4C0053] bg-[#E0E3FF]  '
                                   : ' bg-white border border-[#4C0053] text-[#4C0053] hover:bg-[#E0E3FF] active:bg-[#E0E3FF]  rounded-full '
- 
+
                                   } rounded-full`}
                                   onClick={() => {
                                     setIsOpened(true)
@@ -1314,7 +1325,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             />
                           </span>
                         </section>
-   
+
                       </div>
                     </div>
                     <LeadsCoversionGraphs
@@ -1375,7 +1386,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             </span>
                           </button>
 
-   
+
                         </div>
                       </section>
                     </div>
@@ -1400,7 +1411,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             { label: 'Visit Fixed', id: 'visitfixed' },
                             { label: 'Visit Done', id: 'visitdone' },
                             { label: 'Visit Cancel', id: 'visitCancel' },
-                  
+
                             { label: 'Negotiations', id: 'negotiation' },
                             { label: 'Others', id: 'others' },
                           ].map((d, i) => (
@@ -1464,7 +1475,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                 {data?.visitCancel_comp || 0}/{' '}
                                 {data?.visitCancel || 0}
                               </td>
-      
+
                               <td className="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
                                 {data?.negotiation_comp || 0}/
                                 {data?.negotiation || 0}
@@ -1481,7 +1492,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             Total
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-     
+
                             {}
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
@@ -1547,7 +1558,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           {selCat === 'edit_table' && <TableEdit />}
 
-      
+
 
           {selCat === 'bar_tasks' && <CampaingsTopBarsComponent />}
 
@@ -1603,7 +1614,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                   sourceDateRange === startOfDay(d).getTime()
                                    ? 'font-semibol text-[#4C0053] bg-[#E0E3FF] '
                                   : 'text-[#020B97] bg-[#C4FECB] '
-                            
+
                                 }rounded-full`}
                               >
                                 <EyeIcon
@@ -1738,7 +1749,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                     onClear={() => {
                                       console.log('am i cleared')
                                     }}
-                           
+
                                     dateFormat="MMM dd, yyyy"
                                   />
                                 </span>
@@ -1754,11 +1765,11 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                 )
                               }
                             >
-                              
+
                             </button>
                           )}
                         </section>
-                  
+
                       </section>
                       <SiteVisitM
                         leadLogsRawData={leadLogsRawData}
@@ -2464,7 +2475,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             </span>
                           </div>
                         </div>
-                     
+
 
                         <section className="flex flex-row justify-between mt-[18px]">
                           <section className="flex">
@@ -2612,7 +2623,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                                       onClear={() => {
                                         console.log('am i cleared')
                                       }}
-                                 
+
                                       dateFormat="MMM dd, yyyy"
                                     />
                                   </span>
@@ -3922,7 +3933,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                             Alert Tasks Counts
                           </span>
                         </button>
-                      
+
                       </div>
                     </section>
                     <table className="min-w-full  font-semibold text-center mt-6">
@@ -4037,7 +4048,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
             </div>
           )}
 
-        
+
           <ReportSideWindow
             open={isOpenSideForm}
             setOpen={setReportSideForm}

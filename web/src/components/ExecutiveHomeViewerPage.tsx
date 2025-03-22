@@ -640,13 +640,13 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           <div className=" bg-white rounded-lg ">
             <div className="bg-white rounded-lg  ">
               <div className="flex   items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
-        <div className=" bg-white mb-10 rounded-md mt-1 mx-1  z-10">
-          <div className=" bg-white rounded-lg">
-            <div className="bg-white rounded-lg ">
-              <div className="flex items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
-                <h2 className="text-md font-semibold text-black leading-light font-Playfair">
+                <section className='flex flex-row'>
+                <img className="w-10 h-10" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/tickets.svg'}></img>
+
+                <h2 className="ml-2 mt-2 text-md font-semibold text-black leading-light font-Playfair">
                   Leads Management
                 </h2>
+                </section>
 
                 <div className="flex">
                   <div className=" flex flex-col mr-5   w-40">
