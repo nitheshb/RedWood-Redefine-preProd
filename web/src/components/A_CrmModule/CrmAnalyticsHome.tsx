@@ -59,11 +59,7 @@ const CrmAnalyticsHome = ({ project }) => {
   }
 
   return (
-<<<<<<< HEAD
-    <div className='bg-white  border-[40px] border-white p-4 mx-1 mt-1'>
-=======
     <div className='bg-white rounded-md border-[40px] border-white mx-1 mt-1'>
->>>>>>> 5eb404f7e8bed5cc56d1c9e92056523881e9979b
 
 <div className='flex    w-[100%]  flex-row justify-between border-b '>
       <ul
@@ -127,11 +123,7 @@ const CrmAnalyticsHome = ({ project }) => {
               </ul>
               </div>
       {selCat === 'proj_summary' && (
-<<<<<<< HEAD
-        <section className=" mt-1 mr-1 py-8 mb-2 leading-7 text-gray-900 bg-[#fff]  rounded-lg  ">
-=======
         <section className="  py-4 mb-2 leading-7 text-gray-900 bg-white  rounded-lg  ">
->>>>>>> 5eb404f7e8bed5cc56d1c9e92056523881e9979b
 
 
           <div className="">

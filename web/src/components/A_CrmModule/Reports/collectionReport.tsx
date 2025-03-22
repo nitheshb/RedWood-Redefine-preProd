@@ -256,11 +256,7 @@ const CrmCollectionReport = ({ projects, unitsFetchData }) => {
 
 
   return (
-<<<<<<< HEAD
-    <div className="  bg-[#fff] ">
-=======
     <div className="bg-white ">
->>>>>>> 5eb404f7e8bed5cc56d1c9e92056523881e9979b
 
 
 

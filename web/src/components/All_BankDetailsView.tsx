@@ -164,8 +164,8 @@ const AllBankDetailsView = ({ title, pId, data }) => {
     <>
       <div className="mr-10 mt-4">
         <div className="max-w-7xl">
-          <section className="flex flex-row justify-between items-center p-4 bg-gradient-to-r from-indigo-600 to-blue-500 rounded-lg mb-6">
-            <h2 className="text-lg font-semibold ml-5 text-white">{title}</h2>
+          <section className="flex flex-row justify-between items-center p-4  rounded-lg mb-6">
+            <h2 className="text-lg font-semibold ml-5 text-white"></h2>
 
             <button
                  className="flex items-center bg-white hover:bg-gray-100 text-indigo-700 px-4 py-2 rounded-lg transition duration-200 shadow-sm"

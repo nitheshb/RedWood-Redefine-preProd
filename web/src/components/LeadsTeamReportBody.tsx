@@ -1066,13 +1066,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           <div className="flex justify-between items-center mb-6">
           <div>
-<<<<<<< HEAD
-            <h1 className="text-2xl mt-2 font-semibold mb-2">Sales Reports  box</h1>
-            <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p>
-          </div>
-
-        </div>
-=======
 
             <section className='flex flex-row mt-3'>
                 <img className="w-12 h-12" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/payments-subscriptions.svg'}></img>
@@ -1091,7 +1084,6 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
 
 
->>>>>>> 5eb404f7e8bed5cc56d1c9e92056523881e9979b
             <div className="flex items-center space-x-1 mb-6 border-b">
           {[
 
