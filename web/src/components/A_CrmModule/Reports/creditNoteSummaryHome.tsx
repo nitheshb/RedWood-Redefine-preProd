@@ -119,7 +119,7 @@ const CreditNoteSummaryHomePage = ({
           }
           return x
         })
-  
+
         console.log('values are',usersListA )
         await setUnitsFetchData(usersListA)
 
@@ -247,7 +247,7 @@ const triggerCollectionsAudit = async () => {
 
   return (
     <>
-      <div className="bg-white rounded-xl mt-1">
+      <div className="bg-white rounded-xl">
         <div className="">
           <div
             className="
@@ -257,7 +257,7 @@ const triggerCollectionsAudit = async () => {
 
 
 
-            <div className="p-4 w-full max-w-7xl mx-auto">
+            <div className=" w-full max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-medium text-gray-800">Credit Note Summary</h1>
 

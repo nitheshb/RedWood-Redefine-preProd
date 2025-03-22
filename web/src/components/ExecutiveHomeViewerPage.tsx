@@ -236,7 +236,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
             x.id = docSnapshot.id
             return x
           })
-  
+
           console.log('my valus are ', usersListA)
           await setLeadsFetchedRawData(usersListA)
           await serealizeData(usersListA)
@@ -250,9 +250,9 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                   'unassigned',
                   'visitfixed',
                   '',
-             
+
                   'negotiation',
-              
+
                 ]
               : leadsTyper === 'booked'
               ? ['booked']
@@ -392,7 +392,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                   'visitdone',
                   'visitcancel',
                   'negotiation',
-              
+
                 ]
               : leadsTyper === 'booked'
               ? ['booked']
@@ -413,7 +413,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           })
 
           await getUnassignedLeads(usersListA)
-   
+
         },
         {
           status:
@@ -636,9 +636,9 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   return (
     <>
       <div className=" fixed w-[95%]  h-[100%]  mb-10 ">
-        <div className=" bg-white mb-10 rounded-md mt-1 mx-1 z-10">
-          <div className=" bg-white">
-            <div className="bg-white  ">
+        <div className=" bg-white mb-10 rounded-lg mt-1 mx-1 z-10">
+          <div className=" bg-white rounded-lg ">
+            <div className="bg-white rounded-lg  ">
               <div className="flex   items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
                 <h2 className="text-md font-semibold text-black leading-light font-Playfair">
                   Leads Management
@@ -712,7 +712,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                           startDate={startDate}
                           endDate={endDate}
                           isClearable={true}
-          
+
                           dateFormat="MMM dd, yyyy"
                         />
                       </span>
@@ -766,7 +766,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         </span>
                       </button>
                     )}
-                
+
                   </>
                 </div>
               </div>

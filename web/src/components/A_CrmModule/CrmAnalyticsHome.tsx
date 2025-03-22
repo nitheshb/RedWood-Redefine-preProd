@@ -59,7 +59,7 @@ const CrmAnalyticsHome = ({ project }) => {
   }
 
   return (
-    <div className='bg-[#F1F1F1] rounded-md border-[40px] border-white p-4 mx-1 mt-1'>
+    <div className='bg-white rounded-md border-[40px] border-white mx-1 mt-1'>
 
 <div className='flex max-w-7xl mx-auto bg-white border-b border rounded-xl w-[100%] border-gray-200 flex-row justify-between shadow'>
       <ul
@@ -121,10 +121,10 @@ const CrmAnalyticsHome = ({ project }) => {
               </ul>
               </div>
       {selCat === 'proj_summary' && (
-        <section className=" mt-1 mr-1 py-8 mb-2 leading-7 text-gray-900 bg-[#F1F1F1]  rounded-lg  ">
+        <section className="  py-4 mb-2 leading-7 text-gray-900 bg-white  rounded-lg  ">
 
 
-          <div className="px-2 mt-2">
+          <div className="">
             {projects.map((project) => (
               <CrmAnalyticsUnitHome
                 key={project.uid}
@@ -177,7 +177,7 @@ const CrmAnalyticsHome = ({ project }) => {
         </div>
       )}
       {selCat === 'collection_performance' && (
-        <div className=" bg-[#F1F1F1]">
+        <div className=" bg-white">
           <CrmCollectionReport projects={projects} />
 
           {projects.length === 0 && <DummyBodyLayout />}

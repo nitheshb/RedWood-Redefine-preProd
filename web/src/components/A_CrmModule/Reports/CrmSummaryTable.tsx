@@ -228,80 +228,22 @@ const CrmInventorySummaryTable = ({ projects }) => {
 
 
 
-  const timeSeriesData = [
-    { time: '12', value: 5, prevValue: 5 },
-    { time: '13', value: 5, prevValue: 5 },
-    { time: '14', value: 20, prevValue: 5 },
-    { time: '15', value: 5, prevValue: 5 },
-    { time: '16', value: 5, prevValue: 5 },
-    { time: '17', value: 90, prevValue: 30 },
-    { time: '18', value: 5, prevValue: 5 },
-  ];
+
 
   const channelData = [
     { name: 'Make an offer', value1: 80, value2: 120, value3: 0 },
     { name: 'Online store', value1: 20, value2: 0, value3: 0 },
   ];
 
-  const customScale = scaleLinear()
-    .domain([5, 10, 50, 100])
-    .range([0, 50, 75, 100]);
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    const options = [
-      { label: "Option 1", value: "option1" },
-      { label: "Option 2", value: "option2" },
-      { label: "Option 3", value: "option3" },
-    ];
-
-    const toggleDropdown = () => {
-      setIsOpen(!isOpen);
-    };
-
-    const handleOptionClick = (option) => {
-      setSelectedOption(option.label);
-      setIsOpen(false);
-    };
 
 
-const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    const time = payload[0].payload.time;
-
-    return (
-      <div className="bg-white p-3 rounded-md">
-        <p className="text-black">Time: {time}</p>
-
-        {payload.map((entry, index) => {
-          const { value, prevValue } = entry.payload;
-          const strokeColor = entry.stroke;
 
 
-          return (
-            <div key={index} className="flex items-center gap-2">
 
-              <div
-                style={{ backgroundColor: strokeColor }}
-                className="w-4 h-4 "
-              ></div>
 
-              <p className="text-black">
-                {entry.dataKey === "value"
-                  ? `Current Value: ${value}`
-                  : entry.dataKey === "prevValue"
-                  ? `Previous Value: ${prevValue}`
-                  : null}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
 
-  return null;
-};
+
+
 
 
 const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
@@ -351,9 +293,9 @@ const handleSort = (key) => {
 
 
   return (
-    <div className="bg-[#F1F1F1] ">
+    <div className="bg-white ">
 
-<div className='max-w-7xl mx-auto mt-6'>
+<div className='max-w-7xl mx-auto mt-4'>
 <div className="grid grid-cols-4 gap-6 mb-8">
   <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
@@ -585,7 +527,7 @@ const handleSort = (key) => {
 
 
 
-   <div className='border-2 rounded-[30px] border-[#f1f1f1] p-4'>
+   <div className='border-2 rounded-[30px] border-white p-4'>
 
 
 <div className="w-full max-w-7xl mx-auto">

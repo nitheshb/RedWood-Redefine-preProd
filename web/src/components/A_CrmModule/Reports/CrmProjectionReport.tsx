@@ -245,25 +245,25 @@ const CrmProjectionReport = ({ projects }) => {
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      const time = payload[0].payload.time; 
-  
+      const time = payload[0].payload.time;
+
       return (
         <div className="bg-white p-3 rounded-md">
           <p className="text-black">Time: {time}</p>
-  
+
           {payload.map((entry, index) => {
-            const { value, prevValue } = entry.payload; 
-            const strokeColor = entry.stroke; 
-  
-        
+            const { value, prevValue } = entry.payload;
+            const strokeColor = entry.stroke;
+
+
             return (
               <div key={index} className="flex items-center gap-2">
-              
+
                 <div
                   style={{ backgroundColor: strokeColor }}
                   className="w-4 h-4 "
                 ></div>
-            
+
                 <p className="text-black">
                   {entry.dataKey === "value"
                     ? `Current Value: ${value}`
@@ -277,7 +277,7 @@ const CrmProjectionReport = ({ projects }) => {
         </div>
       );
     }
-  
+
     return null;
   };
 
@@ -312,7 +312,7 @@ const CrmProjectionReport = ({ projects }) => {
   // Custom Legend Component
   const CustomLegend = ({ payload }) => {
     if (!payload.length) return null;
-    
+
     return (
 
       <>
@@ -321,14 +321,14 @@ const CrmProjectionReport = ({ projects }) => {
     );
   };
 
-   
 
 
 
 
 
 
-  
+
+
   const CustomTooltipone = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -336,7 +336,7 @@ const CrmProjectionReport = ({ projects }) => {
           <p className="font-bold text-gray-800">{label}</p>
           {payload.map((item, index) => (
             <div key={index} className="flex items-center mt-2">
-            
+
               <div
                 className="w-4 h-4  mr-2"
                 style={{ backgroundColor: item.stroke }}
@@ -356,7 +356,7 @@ const CrmProjectionReport = ({ projects }) => {
 
 
   const [sortConfig, setSortConfig] = useState({
-    key: 'projectName', 
+    key: 'projectName',
     direction: 'ascending',
   });
 
@@ -383,7 +383,7 @@ const CrmProjectionReport = ({ projects }) => {
       return 0;
     });
   }, [projectAValues, sortConfig]);
-  
+
 
 
 
@@ -401,15 +401,15 @@ const CrmProjectionReport = ({ projects }) => {
 
 
   return (
-    <div className="bg-[#F1F1F1]">
+    <div className="bg-white">
 
 
 
 
 
 
-            
-<div className='max-w-7xl mx-auto mt-6'>
+
+<div className='max-w-7xl mx-auto mt-4'>
 <div className="grid grid-cols-4 gap-6 mb-8">
   <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
@@ -465,7 +465,7 @@ const CrmProjectionReport = ({ projects }) => {
 
 
         <div className="grid grid-cols-2 gap-6 h-full items-end">
-      
+
           <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
             <div className="pt-6 px-4">
               <h2 className="text-[#000000] text-[19px] ml-4">Booking Trend</h2>
@@ -498,7 +498,7 @@ const CrmProjectionReport = ({ projects }) => {
                   />
 
 
-             
+
                   {/* <Tooltip contentStyle={{ backgroundColor: '#333333', color: 'white' }} /> */}
 
 
@@ -525,7 +525,7 @@ const CrmProjectionReport = ({ projects }) => {
             </div>
           </div>
 
-        
+
           <div className="flex flex-col rounded-[30px] py-5 h-full bg-white shadow">
 
           <div className="w-full max-w-4xl p-6 relative">
@@ -538,10 +538,10 @@ const CrmProjectionReport = ({ projects }) => {
           <Download className="w-5 h-5 text-gray-600" />
         </button>
       </div>
-      
+
       <div className="h-[400px] relative">
         <ResponsiveContainer width="100%" height="100%">
- 
+
 
 
 <LineChart
@@ -565,32 +565,32 @@ const CrmProjectionReport = ({ projects }) => {
     tick={{ fill: '#6B7280', fontSize: 14 }}
     domain={[0, 100000]}
     ticks={[1000, 10000, 50000, 100000]}
-    
+
   />
 
 
-    
+
     <Tooltip content={<CustomTooltipone />} />
     <Legend content={<CustomLegend payload={undefined} />} />
 
   <Line
     type="monotone"
     dataKey="current"
-    stroke="#2196F3" 
+    stroke="#2196F3"
     strokeWidth={2}
-    dot={false} 
-    activeDot={{ r: 6 }}  
+    dot={false}
+    activeDot={{ r: 6 }}
     name="current"
   />
 
   <Line
     type="monotone"
     dataKey="previous"
-    stroke="#E5E7EB"  
+    stroke="#E5E7EB"
     strokeWidth={2}
-    strokeDasharray="5 5" 
-    dot={false}  
-    activeDot={{ r: 6 }}  
+    strokeDasharray="5 5"
+    dot={false}
+    activeDot={{ r: 6 }}
     name="previous"
   />
 </LineChart>
@@ -687,7 +687,7 @@ const CrmProjectionReport = ({ projects }) => {
 
 
         <section className="rounded-t-[30px]  my-3  overflow-x-auto">
-     
+
           <table className="min-w-full  bg-white ">
             <thead className=''>
               <tr
@@ -772,7 +772,7 @@ const CrmProjectionReport = ({ projects }) => {
                 <th className="text-right p-1 font-medium text-[#000000] whitespace-nowrap "
                 onClick={() => handleSort('totalAmount')}
                 >
-                  Total Amount 
+                  Total Amount
 
                   <span className="inline-block ml-2">
   {sortConfig.key === 'totalAmount' ? (
@@ -786,7 +786,7 @@ const CrmProjectionReport = ({ projects }) => {
   )}
 </span>
 
- 
+
                 </th>
                 {dataView === 'monthly' ? (
                   <>
@@ -922,7 +922,7 @@ const CrmProjectionReport = ({ projects }) => {
 
         </div>
 
-        
+
       </section>
     </div>
   )
