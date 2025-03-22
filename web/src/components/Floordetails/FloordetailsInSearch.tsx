@@ -27,6 +27,8 @@ const FloordetailsSearch = ({
   BlockFeed,
   unitsFeedA,
   filUnitsFeedA,
+  filteredUnits,
+  setFilteredUnits,
   selBlock,
   setSelBlock,
   selFloor,
@@ -107,7 +109,6 @@ const FloordetailsSearch = ({
   const [reportFeed, setReportFeed] = useState(unitStatsData)
   const [blocksViewFeature, setBlocksViewFeature] = useState('Units')
   const [unitShrink, setUnitShrink] = useState(true)
-  const [filteredUnits, setFilteredUnits] = useState([])
   const [filStatus, setFilStatus] = useState(['available', 'booked', 'blocked'])
   const [filBedRooms, setFilBedRooms] = useState([1, 2, 3, 4])
   const [filBathrooms, setFilBathrooms] = useState([1, 2, 3, 4])
@@ -740,7 +741,7 @@ const FloordetailsSearch = ({
               </section>
               <section className="text-sm mt-1  pr-2 font-blue text-[13px] italic flex flex-row ">
 
-                <span className="font-blue text-[13px] italic">showing </span>
+                <span className="font-blue text-[13px] italic">Showing </span>
                 {'   '}
                 <span className="font-semibold font-blue mx-1">
                   {filteredUnits.length}

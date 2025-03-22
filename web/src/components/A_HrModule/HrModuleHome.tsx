@@ -176,7 +176,7 @@ const HrModuleHome = ({ setisImportLeadsOpen, selUserProfileF, taskType }) => {
   return (
     <div className="flex  flex-row  text-gray-700">
       <div className="flex-1 overflow-auto">
-        <div className="p-1 ">
+        <div className="px-1">
           <TodayLeadsActivitySearchView
             moduleName={"Admin"}
             data={filterTable}

@@ -113,11 +113,11 @@ export default function LeadsLakeHomeComponent({ todaySch, schLoading }) {
         {/* <Header /> */}
         <div className="flex justify-center items-center text-gray-900 h-1"></div>
         <div className=" justify-center items-center text-gray-900">
-          <div className="flex flex-row justify-between pb-3">
+          {/* <div className="flex flex-row justify-between pb-3">
             <section>
-              <h2 className="text-md text-gray-800 ">Leads Bank</h2>
+              <h2 className="text-md text-gray-800 ">Leads Bank box</h2>
             </section>
-          </div>
+          </div> */}
 
           {schLoading &&
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((data, i) => (

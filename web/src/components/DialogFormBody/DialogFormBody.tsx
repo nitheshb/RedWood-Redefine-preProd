@@ -355,7 +355,7 @@ const DialogFormBody = ({
 
   })
   return (
-    <div className=" lg:col-span-10 border w-full bg-[#F0F1FF] ">
+    <div className=" lg:col-span-10 mb-19 border w-full bg-[#F0F1FF] ">
 
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col">

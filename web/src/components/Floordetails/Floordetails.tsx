@@ -751,7 +751,7 @@ const Floordetails = ({
                 )}
                 <section className="text-sm  pr-2 font-blue text-[13px] italic flex flex-row ml-5 ">
 
-                  <span className="font-blue text-[13px] italic">showing </span>
+                  <span className="font-blue text-[13px] italic">Showing </span>
                   {'   '}
                   <span className="font-semibold font-blue mx-1">
                     {filteredUnits.length}

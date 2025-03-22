@@ -435,7 +435,7 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                         <section className="mt-1 px-4 rounded-lg bg-[#f8f9fa] border border-gray-100 ">
                           <section className="flex flex-row mt-3">
                             <label className="label mt-3 w-[92px] font-regular text-[12px] block mb-1 text-gray-700">
-                              {'Responsible person*'}
+                              {'Responsible Person*'}
                             </label>
 
                           
