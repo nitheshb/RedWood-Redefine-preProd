@@ -30,6 +30,13 @@ import PdfReceiptGenerator from 'src/util/PdfReceiptGenerator'
 import RupeeInWords from 'src/util/rupeeWords'
 import Loader from '../Loader/Loader'
 import { validate_capturePayment, validate_captureWalletPayment } from '../Schemas'
+import sendEmail from 'src/util/sendEmail'
+
+// import sendEmail from '../../../../web/src/util/sendEmail'
+
+
+
+
 
 
 const CaptureUnitPayment = ({
@@ -91,18 +98,6 @@ const CaptureUnitPayment = ({
     useEffect(() => {
       getProjectDetails(selUnitDetails?.pId)
     }, [selUnitDetails])
-
-
-
-
-
-
-
-
-
-
-
-
    const formatIndianNumber = function (num) {
     const [integerPart, decimalPart] = num.toString().replace(/,/g, '').split('.');
     const lastThree = integerPart.slice(-3);
@@ -111,26 +106,18 @@ const CaptureUnitPayment = ({
     const result = formattedNumber + (formattedNumber ? ',' : '') + lastThree;
     return decimalPart ? `${result}.${decimalPart}` : result;
   }
-
-
-
-
   const [startDate, setStartDate] = useState(d)
-
   const [paymentModex, setPaymentModex] = useState('cheque')
   const [payementDetails, setPayementDetails] = useState([])
   const [files, setFiles] = useState([])
-
   const [commentAttachUrl, setCommentAttachUrl] = useState({})
   const [selWalletCustomer, setSelWalletCustomer] = useState({})
   const [cmntFileType, setCmntFileType] = useState('')
   const [amount, setAmount] = useState(0)
-
   const { enqueueSnackbar } = useSnackbar()
   const { uid } = useParams()
   const bankData = {}
   const confettiRef = useRef(null)
-
   const handleClick = () => {
     console.log(' projectDetails', projectDetails, selUnitDetails)
     confettiRef.current.fire()
@@ -300,7 +287,29 @@ if(data?.fileUploader){
 
     await confettiRef?.current?.fire()
 
-    return
+
+
+
+  try {
+    const emailData = {
+      email: customerInfo?.email,
+      userFirstname: customerInfo?.name, 
+      resetPasswordLink: "https://yourdomain.com/reset-password", 
+    };
+
+    await sendEmail(emailData.email, emailData.userFirstname, emailData.resetPasswordLink);
+    console.log('Email sent successfully!');
+  } catch (error) {
+    console.error('Failed to send email:', error);
+  }
+
+
+
+
+
+
+  return;
+
 
 
     const { uid } = selUnitDetails
@@ -332,7 +341,6 @@ if(data?.fileUploader){
     )
 
   }
-
 
 
   const datee = new Date().getTime()
@@ -1207,3 +1215,7 @@ if(data?.fileUploader){
 }
 
 export default CaptureUnitPayment
+// function triggerBookingEmail(email: any, userFirstname: any, resetPasswordLink: string) {
+//   throw new Error('Function not implemented.')
+// }
+

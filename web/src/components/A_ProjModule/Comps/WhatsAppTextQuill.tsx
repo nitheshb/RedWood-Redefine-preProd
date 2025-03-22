@@ -168,9 +168,9 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
   }
 
   return (
-    <div className="h-full flex flex-col py-6 bg-white shadow-xl">
+    <div className="h-full flex flex-col pt-6 bg-white shadow-xl">
       <section className="flex flex-row ml-4">
-        <div className=" flex flex-col   mr-5 w-40">
+        <div className=" flex flex-col  mr-5 w-40">
           <SlimSelectBox
             name="project"
             label=""
@@ -189,12 +189,12 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
           />
         </div>
       </section>
-      <span className="text-gray-600 text-xs mt-3 ml-5 mb-3">
+      <span className="text-gray-600 text-xs mt-3 ml-4 mb-3">
         Filling below fields & see these values will be replaced in testing
         message
       </span>
       <section className="flex flex-row">
-        <span className="text-gray-300 text-xs mt-3 ml-2 ml-5 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
+        <span className="text-gray-300 text-xs mt-3 ml-2 ml-4 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
           <input
             type="text"
             id="tstPhKey"
@@ -205,7 +205,7 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
             className=" ml-3 w-[200px] bg-transparent focus:border-transparent focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none text-sm leading-7 text-gray-900  relative"
           />
         </span>
-        <span className="text-gray-300 text-xs mt-3 ml-2 ml-5 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
+        <span className="text-gray-300 text-xs mt-3 ml-2 ml-4 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
           <input
             type="text"
             id="tstPhKey"
@@ -218,7 +218,7 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
         </span>
       </section>
       <section className="flex flex-row">
-        <span className="text-gray-300 text-xs mt-3 ml-2 ml-5 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
+        <span className="text-gray-300 text-xs mt-3 ml-2 ml-4 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
           <input
             type="text"
             id="tstPhKey"
@@ -230,7 +230,7 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
           />
         </span>
 
-        <span className="text-gray-300 text-xs mt-3 ml-5 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
+        <span className="text-gray-300 text-xs mt-3 ml-4 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
           <input
             type="text"
             id="tstPhKey"
@@ -243,7 +243,7 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
         </span>
       </section>
       <section className="flex flex-row">
-        <span className="text-gray-300 text-xs mt-3 ml-2 ml-5 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
+        <span className="text-gray-300 text-xs mt-3 ml-2 ml-4 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
           <input
             type="text"
             id="tstPhKey"
@@ -255,7 +255,7 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
           />
         </span>
 
-        <span className="text-gray-300 text-xs mt-3 ml-5 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
+        <span className="text-gray-300 text-xs mt-3 ml-4 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
           <input
             type="text"
             id="tstPhKey"
@@ -268,7 +268,7 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
         </span>
       </section>
       <section className="flex flex-row">
-        <span className="text-gray-300 text-xs mt-3 ml-2 ml-5 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
+        <span className="text-gray-300 text-xs mt-3 ml-2 ml-4 bg-gray-50 border border-gray-300 border-solid box-border w-[200px] rounded-md flex">
           <input
             type="text"
             id="tstPhKey"
@@ -280,7 +280,7 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
           />
         </span>
       </section>
-      <section className="bg-teal-50 h-[400px] m-5 rounded-md">
+      <section className="bg-teal-50 mt-2 h-[400px]  rounded-md">
 
 
         <ReactQuill
@@ -289,7 +289,12 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
           onChange={setEditorState}
         />
 
-        <div className="mt-5 mt-8 text-right md:space-x-3 md:block flex flex-col-reverse">
+
+      </section>
+
+      <div className="sticky bottom-0 bg-white p-4 shadow-lg z-10">
+      <div className="flex justify-end space-x-3">
+
           <button
             className="mb-2 md:mb-0 bg-green-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
             onClick={() => checkIt()}
@@ -302,8 +307,8 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
           >
             Test
           </button>
+          </div>
         </div>
-      </section>
     </div>
   )
 }

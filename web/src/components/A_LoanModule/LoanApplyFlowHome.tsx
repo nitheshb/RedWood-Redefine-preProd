@@ -213,7 +213,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                 <div className="rounded-full font-bold bg-gradient-to-r from-violet-200 to-pink-200 h-7 w-7 flex items-center justify-center mr-2">
                   <span className="text-[14px] mb-[2px]">1</span>
                 </div>
-                <p className="mt- pb-2 font-semibold text-gray-600  mt-[4px] mb-2 border-b w-full">
+                <p className="mt- pb-2 font-semibold text-gray-600  mt-[4px] mb-2 border-b ">
                   Start your Loan journey by picking a bank
                 </p>
               </section>

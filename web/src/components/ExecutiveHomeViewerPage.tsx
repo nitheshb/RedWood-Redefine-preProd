@@ -640,6 +640,10 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           <div className=" bg-white rounded-lg ">
             <div className="bg-white rounded-lg  ">
               <div className="flex   items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
+        <div className=" bg-white mb-10 rounded-md mt-1 mx-1  z-10">
+          <div className=" bg-white rounded-lg">
+            <div className="bg-white rounded-lg ">
+              <div className="flex items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
                 <h2 className="text-md font-semibold text-black leading-light font-Playfair">
                   Leads Management
                 </h2>

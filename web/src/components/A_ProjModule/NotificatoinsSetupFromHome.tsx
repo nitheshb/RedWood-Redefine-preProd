@@ -7,8 +7,8 @@ const NotificationsSetupForm = ({ title, projectDetails, wbPayload }) => {
   const { enqueueSnackbar } = useSnackbar()
 console.log('am insidenofof')
   return (
-    <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
-      <div className="px-4 sm:px-6  z-10 ">
+    <div className="h-full flex flex-col pt-6 bg-white shadow-xl overflow-y-scroll">
+      <div className="px-4 sm:px-4  z-10 ">
         <Dialog.Title className=" font-semibold text-xl mr-auto  text-[#053219]">
           {title}
         </Dialog.Title>

@@ -841,7 +841,7 @@ const FinanceHomePagePage = () => {
                                 {viewable}
                               </span>
                             </span>
-                            <section className="flex ml-auto mt-[18px]">
+                            {/* <section className="flex ml-auto mt-[18px]">
                               <button>
                                 <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200  rounded-full">
                                   <PencilIcon
@@ -851,7 +851,7 @@ const FinanceHomePagePage = () => {
                                   Edit
                                 </span>
                               </button>
-                            </section>
+                            </section> */}
                           </div>
                           <AllBankDetailsView title={viewable} />
                         </div>

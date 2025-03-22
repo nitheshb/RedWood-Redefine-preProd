@@ -20,6 +20,7 @@ import {
   arrayUnion,
   deleteField,
   arrayRemove,
+  serverTimestamp,
 } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -76,6 +77,7 @@ export const steamUsersListByRole = (orgId, snapshot, error) => {
   )
   return onSnapshot(itemsQuery, snapshot, error)
 }
+
 // get users list by Dept
 export const steamUsersListByDept = (orgId, dept, snapshot, error) => {
   const itemsQuery = query(
@@ -448,6 +450,159 @@ export const streamGetAllUnitTransactions = async (
   return lead_logs
   // return onSnapshot(itemsQuery, snapshot, error)
 }
+
+
+
+// start-1
+
+
+export const fetchBrokerageDetails = async (orgId, projectId, unitId) => {
+  try {
+    const unitRef = doc(db, `${orgId}_projects`, projectId, 'units', unitId);
+    console.log('Fetching document from path:', unitRef.path);
+
+    const unitDoc = await getDoc(unitRef);
+    console.log('Document data:', unitDoc.data());
+
+    if (unitDoc.exists() && unitDoc.data().brokerageDetails) {
+      console.log('Brokerage details found:', unitDoc.data().brokerageDetails);
+      return unitDoc.data().brokerageDetails;
+    } else {
+      console.log('No brokerage details found.');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching brokerage details:', error);
+    throw error;
+  }
+};
+
+
+
+export const updateBrokerageDetails = async (
+  orgId,
+  projectId,
+  unitId,
+  brokerageDetails,
+  updatedBy,
+  enqueueSnackbar,
+  resetForm
+) => {
+  try {
+    const unitRef = doc(db, `${orgId}_projects`, projectId, 'units', unitId);
+    console.log('Updating document at path:', unitRef.path);
+    console.log('New brokerage details:', brokerageDetails);
+
+    await updateDoc(unitRef, {
+      brokerageDetails: {
+        ...brokerageDetails,
+        updatedBy,
+        updatedAt: new Date().toISOString(),
+      },
+    });
+
+    console.log('Brokerage details updated successfully!');
+
+    enqueueSnackbar('Brokerage details updated successfully!', {
+      variant: 'success',
+    });
+
+    resetForm();
+  } catch (error) {
+    console.error('Error updating brokerage details:', error);
+
+    enqueueSnackbar('Failed to update brokerage details.', {
+      variant: 'error',
+    });
+
+    throw error;
+  }
+};
+
+
+
+
+
+
+
+export const saveFilesToFirestore = async (orgId, folderId, files, userId) => {
+  try {
+    const filesCollectionRef = collection(db, `${orgId}_legal_documents`);
+    const payload = {
+      folderId,
+      files,
+      orgId,
+      userId,
+      createdAt: serverTimestamp(),
+    };
+    const docRef = await addDoc(filesCollectionRef, payload);
+    console.log('Files saved successfully with ID:', docRef.id);
+    return docRef.id;
+  } catch (error) {
+    console.error('Error saving files to Firestore:', error);
+    throw error;
+  }
+};
+
+
+
+
+export const fetchFilesForFolder = async (orgId, folderId) => {
+  const filesQuery = query(
+    collection(db, `${orgId}_legal_documents`),
+    where('folderId', '==', folderId)
+  );
+  const querySnapshot = await getDocs(filesQuery);
+  const files = querySnapshot.docs.map((doc) => doc.data());
+  return files;
+};
+
+export const deleteFileFromFirestore = async (orgId, docId) => {
+  const docRef = doc(db, `${orgId}_legal_documents`, docId);
+  await deleteDoc(docRef);
+  console.log('File deleted successfully:', docId);
+};
+
+export const updateFileInFirestore = async (orgId, docId, updatedFile) => {
+  const docRef = doc(db, `${orgId}_legal_documents`, docId);
+  await updateDoc(docRef, updatedFile);
+  console.log('File updated successfully:', docId);
+};
+
+
+
+
+
+// export const fetchFilesForFolder = async (orgId, folderId) => {
+//   const filesQuery = query(
+//     collection(db, `${orgId}_legal_documents`),
+//     where('folderId', '==', folderId)
+//   );
+//   const querySnapshot = await getDocs(filesQuery);
+//   const files = querySnapshot.docs.map((doc) => doc.data());
+//   return files;
+// };
+
+
+// export const deleteFileFromFirestore = async (orgId, docId) => {
+//   const docRef = doc(db, `${orgId}_legal_documents`, docId);
+//   await deleteDoc(docRef);
+//   console.log('File deleted successfully:', docId);
+// };
+
+
+// export const updateFileInFirestore = async (orgId, docId, updatedFile) => {
+//   const docRef = doc(db, `${orgId}_legal_documents`, docId);
+//   await updateDoc(docRef, updatedFile);
+//   console.log('File updated successfully:', docId);
+// };
+
+
+
+
+//end -1
+
+
 export const streamGetAllProjectTransactions = async (
   orgId,
   snapshot,

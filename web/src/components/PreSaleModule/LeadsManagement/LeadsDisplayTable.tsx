@@ -101,7 +101,13 @@ const LeadsDisplayTable = ({
 
   return (
     <Box pb={4}>
-      <div className=" w-full">
+      <div className=" w-full bg-white rounded-lg">
+        <div className='flex items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3'>
+          <h2 className="text-md font-semibold text-black leading-light font-Playfair">
+          Leads Bank
+          </h2>
+        </div>
+
         <div className="bg-white py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded">
           <div className="sm:flex items-center justify-between">
             <div className="flex items-center">

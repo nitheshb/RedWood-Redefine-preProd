@@ -330,7 +330,229 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
         </div>
       )}
 
-      {selCat === 'CRM_status' && (
+
+{selCat === 'CRM_status' && (
+        <div className="w-full   flex-row">
+          <section className="m-4 inline-block">
+            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+              <h2 className="text-sm font-semibold pb-2 border-b border-grey">
+                {'CRM Notifications'}
+              </h2>
+              <table className="w-full whitespace-nowrap">
+                <thead>
+                  <tr className="border-b">
+                    <th></th>
+                    <th className="text-left p-[10px] pr-[12px] pl-0 text-xs text-green-800 ">
+                      Event
+                    </th>
+                    <th className="text-center p-[10px] pl-[20px] text-xs text-green-800">
+                      {' '}
+                      CRM Customer
+                    </th>
+                    <th className="text-center p-[10px] text-xs text-green-800">
+                      CRM Executive
+                    </th>
+                    <th className="text-center p-[10px] text-xs text-green-800">
+                      CRM Manager
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    // {
+                    //   btnTxt: 'On Enquiry',
+                    //   target: 'customer',
+                    //   event: 'on_enquiry',
+                    // },
+                    // {
+                    //   btnTxt: 'Lead Assigned',
+                    //   target: 'customer',
+                    //   event: 'on_lead_assign',
+                    // },
+                    // {
+                    //   btnTxt: 'Lead Re-Assigned',
+                    //   target: 'customer',
+                    //   event: 'on_reassign',
+                    // },
+                    // {
+                    //   btnTxt: 'On Site Visit fix',
+                    //   target: 'customer',
+                    //   event: 'on_sitevisit_fix',
+                    // },
+                    // {
+                    //   btnTxt: 'On Site Visit Reschedule',
+                    //   target: 'customer',
+                    //   event: 'on_sitevisit_reschedule',
+                    // },
+                    // {
+                    //   btnTxt: 'On Site Visit Cancellation',
+                    //   target: 'customer',
+                    //   event: 'on_sitevisit_cancel',
+                    // },
+                    // {
+                    //   btnTxt: 'On Site Visit Completion',
+                    //   target: 'customer',
+                    //   event: 'on_sitevisit_done',
+                    // },
+                    // {
+                    //   btnTxt: 'On Lead Not-Interested',
+                    //   target: 'customer',
+                    //   event: 'on_not_interested',
+                    // },
+                    // {
+                    //   btnTxt: 'On Booking',
+                    //   target: 'customer',
+                    //   event: 'on_booking',
+                    // },
+
+                    {
+                      btnTxt: 'On Booking',
+                      target: 'customer',
+                      event: 'on_booking',
+                    },
+
+                    {
+                      btnTxt: 'On Payment',
+                      target: 'customer',
+                      event: 'on_payment',
+                    },
+                    {
+                      btnTxt: 'On Customer Assign',
+                      target: 'customer',
+                      event: 'on_customer_assign',
+                    },
+                    {
+                      btnTxt: 'On Construction Update',
+                      target: 'customer',
+                      event: 'on_construction_update',
+                    },
+                    {
+                      btnTxt: 'On Payment Approval',
+                      target: 'customer',
+                      event: 'on_payment_approval',
+                    },
+                    {
+                      btnTxt: 'On Payment Rejected',
+                      target: 'customer',
+                      event: 'on_payment_rejected',
+                    },
+
+
+                    {
+                      btnTxt: 'On Payment Request',
+                      target: 'customer',
+                      event: 'on_payment_request',
+                    },
+                    {
+                      btnTxt: 'On Payment Receival',
+                      target: 'customer',
+                      event: 'on_payment_receival',
+                    },
+                    {
+                      btnTxt: 'On Payment Accepted',
+                      target: 'customer',
+                      event: 'on_payment_accepted',
+                    },
+                    {
+                      btnTxt: 'On CostSheet Approval',
+                      target: 'customer',
+                      event: 'on_costsheet_approval',
+                    },
+                    {
+                      btnTxt: 'On Deletion',
+                      target: 'customer',
+                      event: 'on_deletion',
+                    },
+                  ].map((data, i) => (
+                    <tr key={i} className="mt-4">
+                      <td className=" w-[34px]">
+                        <div className="ml-5">
+                          <div className="rounded-sm h-5 w-5 flex flex-shrink-0 justify-center items-center text-xs relative">
+                            {i + 1}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-2 pr-2  font-medium text-xs leading-6  whitespace-nowrap">
+                        {data.btnTxt}
+                      </td>
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   console.log('iw as clicked')
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      )}
+
+
+      
+
+      {/* {selCat === 'CRM_status' && (
         <div className="w-full  flex flex-row">
           <div className="lg:col-span-2 mr-4">
             <div>
@@ -502,10 +724,232 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
             <div></div>
           </div>
         </div>
+      )} */}
+
+
+
+{selCat === 'Finance_status' && (
+        <div className="w-full   flex-row">
+          <section className="m-4 inline-block">
+            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+              <h2 className="text-sm font-semibold pb-2 border-b border-grey">
+                {'Finance Notifications'}
+              </h2>
+              <table className="w-full whitespace-nowrap">
+                <thead>
+                  <tr className="border-b">
+                    <th></th>
+                    <th className="text-left p-[10px] pr-[12px] pl-0 text-xs text-green-800 ">
+                      Event
+                    </th>
+                    <th className="text-center p-[10px] pl-[20px] text-xs text-green-800">
+                      {' '}
+                      Legal Team 
+                    </th>
+                    <th className="text-center p-[10px] text-xs text-green-800">
+                    Finance  Executive
+                    </th>
+                    <th className="text-center p-[10px] text-xs text-green-800">
+                    Finance  Manager
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    // {
+                    //   btnTxt: 'On Enquiry',
+                    //   target: 'customer',
+                    //   event: 'on_enquiry',
+                    // },
+                    // {
+                    //   btnTxt: 'Lead Assigned',
+                    //   target: 'customer',
+                    //   event: 'on_lead_assign',
+                    // },
+                    // {
+                    //   btnTxt: 'Lead Re-Assigned',
+                    //   target: 'customer',
+                    //   event: 'on_reassign',
+                    // },
+                    // {
+                    //   btnTxt: 'On Site Visit fix',
+                    //   target: 'customer',
+                    //   event: 'on_sitevisit_fix',
+                    // },
+                    // {
+                    //   btnTxt: 'On Site Visit Reschedule',
+                    //   target: 'customer',
+                    //   event: 'on_sitevisit_reschedule',
+                    // },
+                    // {
+                    //   btnTxt: 'On Site Visit Cancellation',
+                    //   target: 'customer',
+                    //   event: 'on_sitevisit_cancel',
+                    // },
+                    // {
+                    //   btnTxt: 'On Site Visit Completion',
+                    //   target: 'customer',
+                    //   event: 'on_sitevisit_done',
+                    // },
+                    // {
+                    //   btnTxt: 'On Lead Not-Interested',
+                    //   target: 'customer',
+                    //   event: 'on_not_interested',
+                    // },
+                    // {
+                    //   btnTxt: 'On Booking',
+                    //   target: 'customer',
+                    //   event: 'on_booking',
+                    // },
+
+                    {
+                      btnTxt: 'On Enquiry Receival',
+                      target: 'customer',
+                      event: 'on_enquiry_receival',
+                    },
+                    {
+                      btnTxt: 'On Sales Agent Assign',
+                      target: 'customer',
+                      event: 'on_sales_agent_assign',
+                    },
+                    {
+                      btnTxt: 'Finance Customer',
+                      target: 'customer',
+                      event: 'on_finance_customer',
+                    },
+                    {
+                      btnTxt: 'On Site Visit Fix',
+                      target: 'customer',
+                      event: 'on_site_visit_fix',
+                    },
+                    {
+                      btnTxt: 'On Site Visit Completion',
+                      target: 'customer',
+                      event: 'on_site_visit_completion',
+                    },
+                    {
+                      btnTxt: 'On Not Interested',
+                      target: 'customer',
+                      event: 'on_not_interested',
+                    },
+                    {
+                      btnTxt: 'On Booking',
+                      target: 'customer',
+                      event: 'on_booking',
+                    },
+                    {
+                      btnTxt: 'On Payment Request',
+                      target: 'customer',
+                      event: 'on_payment_request',
+                    },
+                    {
+                      btnTxt: 'On Payment Receival',
+                      target: 'customer',
+                      event: 'on_payment_receival',
+                    },
+                    {
+                      btnTxt: 'On Payment Accepted',
+                      target: 'customer',
+                      event: 'on_payment_accepted',
+                    },
+                    {
+                      btnTxt: 'On CostSheet Approval',
+                      target: 'customer',
+                      event: 'on_costsheet_approval',
+                    },
+                  ].map((data, i) => (
+                    <tr key={i} className="mt-4">
+                      <td className=" w-[34px]">
+                        <div className="ml-5">
+                          <div className="rounded-sm h-5 w-5 flex flex-shrink-0 justify-center items-center text-xs relative">
+                            {i + 1}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-2 pr-2  font-medium text-xs leading-6  whitespace-nowrap">
+                        {data.btnTxt}
+                      </td>
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   console.log('iw as clicked')
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
       )}
 
+
+
+
+
+
       {/* Finance Block  */}
-      {selCat === 'Finance_status' && (
+      {/* {selCat === 'Finance_status' && (
         <div className="w-full  flex flex-row">
           <div className="lg:col-span-2 mr-4">
             <div>
@@ -736,8 +1180,184 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
           </div>
         </div>
       )}
+ */}
+
+
+
+
+{selCat === 'Legal_status' && (
+        <div className="w-full   flex-row">
+          <section className="m-4 inline-block">
+            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+              <h2 className="text-sm font-semibold pb-2 border-b border-grey">
+                {'Legal Notifications'}
+              </h2>
+              <table className="w-full whitespace-nowrap">
+                <thead>
+                  <tr className="border-b">
+                    <th></th>
+                    <th className="text-left p-[10px] pr-[12px] pl-0 text-xs text-green-800 ">
+                      Event
+                    </th>
+                    <th className="text-center p-[10px] pl-[20px] text-xs text-green-800">
+                      {' '}
+                      Customer
+                    </th>
+                    <th className="text-center p-[10px] text-xs text-green-800">
+                    Manager
+                    </th>
+                    <th className="text-center p-[10px] text-xs text-green-800">
+                    Sales Executive
+                    </th>
+                    <th className="text-center p-[10px] text-xs text-green-800">
+                    Administrator
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                     { btnTxt: 'On Booking', target: 'customer', event: 'on_booking' },
+                     { btnTxt: 'On Payment', target: 'customer', event: 'on_payment' },
+                     { btnTxt: 'On Testing', target: 'customer', event: 'on_testing' },
+                     { btnTxt: 'On Lead Assign', target: 'customer', event: 'on_lead_assign' },
+                     { btnTxt: 'On Creation', target: 'customer', event: 'on_creation' },
+                     { btnTxt: 'On Assignment', target: 'customer', event: 'on_assignment' },
+                     { btnTxt: 'On Transfer', target: 'customer', event: 'on_transfer' },
+                     { btnTxt: 'On De-assignment', target: 'customer', event: 'on_de_assignment' },
+                     { btnTxt: 'On Next Follow Up', target: 'customer', event: 'on_next_follow_up' },
+                     { btnTxt: 'On Delete Follow Up', target: 'customer', event: 'on_delete_follow_up' },
+                     { btnTxt: 'On Cancel', target: 'customer', event: 'on_cancel' },
+                     { btnTxt: 'On Complete', target: 'customer', event: 'on_complete' },
+                     { btnTxt: 'On Update', target: 'customer', event: 'on_update' },
+                     { btnTxt: 'On Transfer Charge', target: 'customer', event: 'on_transfer_charge' },
+                     { btnTxt: 'On Block', target: 'customer', event: 'on_block' },
+                     { btnTxt: 'On Payment Request', target: 'customer', event: 'on_payment_request' },
+                     { btnTxt: 'On Payment Receival', target: 'customer', event: 'on_payment_receival' },
+                     { btnTxt: 'On Delete Info', target: 'customer', event: 'on_delete_info' },
+                     { btnTxt: 'On Status Change', target: 'customer', event: 'on_status_change' },
+                     { btnTxt: 'On Re-assignment', target: 'customer', event: 'on_re_assignment' },
+                     { btnTxt: 'On First Follow Up', target: 'customer', event: 'on_first_follow_up' },
+                     { btnTxt: 'On Dead Status', target: 'customer', event: 'on_dead_status' },
+                     { btnTxt: 'Bring To Live', target: 'customer', event: 'bring_to_live' },
+                     { btnTxt: 'On Delete Booking', target: 'customer', event: 'on_delete_booking' },
+                     { btnTxt: 'On Cancel Booking', target: 'customer', event: 'on_cancel_booking' },
+                     { btnTxt: 'On Initialize Approve Reject', target: 'customer', event: 'on_initialize_approve_reject' },
+                     { btnTxt: 'On Delete', target: 'customer', event: 'on_delete' },
+                     { btnTxt: 'On Refund Pay', target: 'customer', event: 'on_refund_pay' },
+                     { btnTxt: 'On Prepone', target: 'customer', event: 'on_prepone' },
+                     { btnTxt: 'On Postpone', target: 'customer', event: 'on_postpone' },
+                     { btnTxt: 'On Delete Payment', target: 'customer', event: 'on_delete_payment' },
+                     { btnTxt: 'On Refund Delete', target: 'customer', event: 'on_refund_delete' }
+                  ].map((data, i) => (
+                    <tr key={i} className="mt-4">
+                      <td className=" w-[34px]">
+                        <div className="ml-5">
+                          <div className="rounded-sm h-5 w-5 flex flex-shrink-0 justify-center items-center text-xs relative">
+                            {i + 1}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-2 pr-2  font-medium text-xs leading-6  whitespace-nowrap">
+                        {data.btnTxt}
+                      </td>
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   console.log('iw as clicked')
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      )}
+
+
       {/* Legal_status */}
-      {selCat === 'Legal_status' && (
+      {/* {selCat === 'Legal_status' && (
         <div className="w-full  flex flex-row">
           <div className="lg:col-span-2 mr-4">
             <div>
@@ -1022,7 +1642,143 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
             </div>
           </section>
         </div>
+      )} */}
+
+
+
+{selCat === 'hr_status' && (
+        <div className="w-full   flex-row">
+          <section className="m-4 inline-block">
+            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+              <h2 className="text-sm font-semibold pb-2 border-b border-grey">
+                {'Hr Notifications'}
+              </h2>
+              <table className="w-full whitespace-nowrap">
+                <thead>
+                  <tr className="border-b">
+                    <th></th>
+                    <th className="text-left p-[10px] pr-[12px] pl-0 text-xs text-green-800 ">
+                      Event
+                    </th>
+                    <th className="text-center p-[10px] pl-[20px] text-xs text-green-800">
+                      {' '}
+                      Employee
+                    </th>
+                    <th className="text-center p-[10px] text-xs text-green-800">
+                    HR Manager
+                    </th>
+                    <th className="text-center p-[10px] text-xs text-green-800">
+                    Department Head
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                   { btnTxt: 'On Assignment', target: 'hr_team', event: 'on_assignment' },
+                   { btnTxt: 'On Re-assignment', target: 'hr_team', event: 'on_re_assignment' },
+                   { btnTxt: 'On Probation Completion', target: 'hr_team', event: 'on_probation_complete' },
+                   { btnTxt: 'On Resignation', target: 'hr_team', event: 'on_resignation' },
+                   { btnTxt: 'On Termination', target: 'hr_team', event: 'on_termination' },
+                   { btnTxt: 'On Leave Request', target: 'hr_team', event: 'on_leave_request' },
+                   { btnTxt: 'On Leave Approval', target: 'hr_team', event: 'on_leave_approval' },
+                   { btnTxt: 'On Leave Rejection', target: 'hr_team', event: 'on_leave_rejection' },
+                   { btnTxt: 'On Dead Status', target: 'hr_team', event: 'on_dead_status' },
+                   { btnTxt: 'On Salary Processed', target: 'hr_team', event: 'on_salary_processed' },
+                   { btnTxt: 'On Bonus/Incentive Approval', target: 'hr_team', event: 'on_bonus_approval' },
+                   { btnTxt: 'On Expense Reimbursement', target: 'hr_team', event: 'on_expense_reimbursement' },
+                   { btnTxt: 'On Training Assignment', target: 'hr_team', event: 'on_training_assignment' },
+                   { btnTxt: 'On Compliance Review', target: 'hr_team', event: 'on_compliance_review' },
+                  ].map((data, i) => (
+                    <tr key={i} className="mt-4">
+                      <td className=" w-[34px]">
+                        <div className="ml-5">
+                          <div className="rounded-sm h-5 w-5 flex flex-shrink-0 justify-center items-center text-xs relative">
+                            {i + 1}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-2 pr-2  font-medium text-xs leading-6  whitespace-nowrap">
+                        {data.btnTxt}
+                      </td>
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   console.log('iw as clicked')
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+                      <td className="ml-2 pl-6">
+                        <span
+                          className=" ml-2 items-center cursor-pointer text-xs  text-green-800"
+                          // onClick={() => {
+                          //   triggerWhatsAppFun(data)
+                          // }}
+                        >
+                          <img
+                            className="w-[25px] h-[25px] inline mr-"
+                            alt=""
+                            src="/wa3.png"
+                          />
+                        </span>
+                        <span className=" items-center cursor-pointer h-6 px-3 text-xs  text-green-800">
+                          <img
+                            className="w-[20px] h-[20px] inline mr-2"
+                            alt=""
+                            src="/g1.png"
+                          />
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
       )}
+
+
+
+
+
+
       <SiderForm
         open={isOpenSideView}
         setOpen={setIsOpenSideView}
