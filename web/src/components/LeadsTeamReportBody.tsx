@@ -1066,14 +1066,11 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
           <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl mt-2 font-semibold mb-2">Sales Reports</h1>
+            <h1 className="text-2xl mt-2 font-semibold mb-2">Sales Reports  box</h1>
             <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p>
           </div>
 
         </div>
- 
-
-
             <div className="flex items-center space-x-1 mb-6 border-b">
           {[
 

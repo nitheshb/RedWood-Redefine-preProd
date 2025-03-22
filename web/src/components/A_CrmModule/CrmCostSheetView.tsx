@@ -207,20 +207,20 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
 
                   <table className="w-[100%] rounded-3xl">
                     <thead className='  '>
-                      <tr className=" h-8 border-b-[0.2px] bg-[#EDEDED]  rounded-lg w-[100%]">
-                        <th className="min-w-[35%] text-[12px] text-left text-[#3D3D3D]   rounded-tl-[10px]  bg-[#EDEDED]  tracking-wide  px-2">
+                      <tr className=" h-8 border-b-[0.2px] bg-[#E8E6FE]  rounded-lg w-[100%]">
+                        <th className="min-w-[35%] text-[12px] text-left text-[#0D027D]   rounded-tl-[10px]  bg-[#E8E6FE]  tracking-wide  px-2">
                           Charges
                         </th>
-                        <th className="w-[15%] text-[12px] text-right  text-[#3D3D3D] bg-[#EDEDED] tracking-wide">
+                        <th className="w-[15%] text-[12px] text-right  text-[#0D027D] bg-[#E8E6FE] tracking-wide">
                           Rate/Sqft
                         </th>
-                        <th className="w-[15%] text-[12px] text-right  text-[#3D3D3D] bg-[#EDEDED] tracking-wide ">
+                        <th className="w-[15%] text-[12px] text-right  text-[#0D027D] bg-[#E8E6FE] tracking-wide ">
                           Sale Value
                         </th>
-                        <th className="w-[15%] text-[12px] text-right  text-[#3D3D3D] bg-[#EDEDED]  tracking-wide px-2">
+                        <th className="w-[15%] text-[12px] text-right  text-[#0D027D] bg-[#E8E6FE]  tracking-wide px-2">
                           GST
                         </th>
-                        <th className="w-[15%] text-[12px] text-right  text-[#3D3D3D] bg-[#EDEDED] rounded-tr-[10px] tracking-wide px-2 ">
+                        <th className="w-[15%] text-[12px] text-right  text-[#0D027D] bg-[#E8E6FE] rounded-tr-[10px] tracking-wide px-2 ">
                           Total
                         </th>
                       </tr>
@@ -230,7 +230,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                       {selCustomerPayload?.plotCS?.map((d1, inx) => (
                         <tr
                           key={inx}
-                          className="border-b-[0.05px] border-[#cccccc] h-[32px]"
+                          className="border-b border-dashed h-[32px]"
                         >
                           <th className="w-[40%] text-[12px] text-left text-[#6A6A6A] bg-[#fff] px-2">
                             {d1?.component?.label}
@@ -251,7 +251,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           </td>
                         </tr>
                       ))}
-                      <tr className="border-b-[0.05px] border-gray-300 h-[32px]">
+                      <tr className=" h-[32px]">
                         <th className="w-[40%] text-[10px] text-left text-gray-800 "></th>
                         <td className="w-[15%] font-bold text-[10px] text-right text-gray-800  "></td>
                         <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800   "></td>
@@ -269,19 +269,19 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                   <table className="w-full mt-2">
                   <thead>
                         <tr className=" h-8 border-b-[0.2px]  w-[100%]">
-                          <th className="min-w-[35%] text-[12px] text-left text-[#3D3D3D] bg-[#EDEDED]   rounded-tl-[10px]  tracking-wide  px-2">
+                          <th className="min-w-[35%] text-[12px] text-left text-[#0D027D] bg-[#E8E6FE]    tracking-wide  px-2">
                             Additional Charges
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  tracking-wide">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE]  tracking-wide">
                             Rate/Sqft
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  tracking-wide ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE]  tracking-wide ">
                             Sale Value
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]   tracking-wide px-2">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE]   tracking-wide px-2">
                             GST
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  rounded-tr-[10px]   tracking-wide px-2 ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE]     tracking-wide px-2 ">
                             Total
                           </th>
                         </tr>
@@ -290,7 +290,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                       {selCustomerPayload?.addChargesCS?.map((d1, inx) => (
                         <tr
                           key={inx}
-                          className="border-b-[0.05px] border-gray-300 border-t-0 h-[32px]"
+                          className="border-b border-dashed border-t-0 h-[32px]"
                         >
                           <th className=" text-[12px] w-[40%] text-left text-[#6A6A6A] px-2 bg-[#fff]">
                             {d1?.component?.label}
@@ -321,7 +321,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           </td>
                         </tr>
                       ))}
-                      <tr className="border-b-[0.05px] border-gray-300 h-[32px]  ">
+                      <tr className=" h-[32px]  ">
                         <th className="w-[40%] text-[10px] text-left text-gray-800 "></th>
                         <td className="w-[15%] font-bold text-[10px] text-right text-gray-800  "></td>
                         <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800   "></td>
@@ -338,20 +338,20 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                   {selCustomerPayload?.constructCS?.length > 0 && (
                     <table className="w-[100%] mt-2">
                       <thead>
-                        <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
-                          <th className="min-w-[35%] text-[12px] text-left text-[#3D3D3D]   rounded-tl-[10px]  bg-[#EDEDED]  tracking-wide  px-2">
+                        <tr className=" h-8  w-[100%]">
+                          <th className="min-w-[35%] text-[12px] text-left text-[#0D027D]     bg-[#E8E6FE]  tracking-wide  px-2">
                             Construction Charges
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED] tracking-wide">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE] tracking-wide">
                              Rate/Sqft
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED] tracking-wide ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE] tracking-wide ">
                             Sale Value
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED] tracking-wide px-2">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE] tracking-wide px-2">
                             GST
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  rounded-tr-[10px]  tracking-wide px-2 ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE]    tracking-wide px-2 ">
                             Total
                           </th>
                         </tr>
@@ -361,7 +361,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                         {selCustomerPayload?.constructCS?.map((d1, inx) => (
                           <tr
                             key={inx}
-                            className="border-b-[0.05px] border-gray-300 h-[32px]"
+                            className="border-b border-dashed h-[32px]"
                           >
                             <th className="w-[40%] text-[12px] text-left text-[#6A6A6A] bg-[#fff]  px-2">
                               {d1?.component?.label}
@@ -384,7 +384,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             </td>
                           </tr>
                         ))}
-                        <tr className="border-b-[0.05px] border-gray-300 h-[32px]">
+                        <tr className=" h-[32px]">
                           <th className="w-[40%] text-[10px] text-left text-gray-800 "></th>
                           <td className="w-[15%] font-bold text-[10px] text-right text-gray-800  "></td>
                           <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800   "></td>
@@ -403,20 +403,20 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                   {selCustomerPayload?.constAdditionalChargesCS?.length > 0 && (
                     <table className="w-[100%]">
                       <thead>
-                        <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
-                          <th className="min-w-[35%] text-[12px] text-left text-[#04050b] bg-[#EDEDED] rounded-tl-[10px]   tracking-wide  px-2">
+                        <tr className=" h-8  w-[100%]">
+                          <th className="min-w-[35%] text-[12px] text-left text-[#04050b] bg-[#E8E6FE]    tracking-wide  px-2">
                           Construction Additional Charges
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#04050b] bg-[#EDEDED] tracking-wide">
+                          <th className="w-[15%] text-[12px] text-right text-[#04050b] bg-[#E8E6FE] tracking-wide">
                              Rate/Sqft
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#04050b] bg-[#EDEDED] tracking-wide ">
+                          <th className="w-[15%] text-[12px] text-right text-[#04050b] bg-[#E8E6FE] tracking-wide ">
                             Sale Value
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#04050b] bg-[#EDEDED]  tracking-wide px-2">
+                          <th className="w-[15%] text-[12px] text-right text-[#04050b] bg-[#E8E6FE]  tracking-wide px-2">
                             GST
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#04050b] bg-[#EDEDED] rounded-tr-[10px] tracking-wide px-2 ">
+                          <th className="w-[15%] text-[12px] text-right text-[#04050b] bg-[#E8E6FE]  tracking-wide px-2 ">
                             Total
                           </th>
                         </tr>
@@ -427,7 +427,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           (d1, inx) => (
                             <tr
                               key={inx}
-                              className="border-b-[0.05px] border-gray-300 h-[32px]"
+                              className="border-b border-dashed h-[32px]"
                             >
                               <th className="w-[40%] text-[12px] text-left text-gray-700 bg-[#fff] px-2">
                                 {d1?.component?.label} {d1?.purpose}
@@ -451,7 +451,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             </tr>
                           )
                         )}
-                        <tr className="border-b-[0.05px] border-gray-300 h-[32px]">
+                        <tr className=" h-[32px]">
                           <th className="w-[40%] text-[10px] text-left text-gray-800 "></th>
                           <td className="w-[15%] font-bold text-[10px] text-right text-gray-800  "></td>
                           <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800   "></td>
@@ -470,20 +470,20 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
 {selCustomerPayload?.possessionAdditionalCostCS?.length > 0 && (
                     <table className="w-[100%] mt-2">
                       <thead>
-                        <tr className=" h-8 border-b-[0.2px] border-gray-300 w-[100%]">
-                          <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#EDEDED]  rounded-tl-[10px]  tracking-wide  px-2">
+                        <tr className=" h-8  w-[100%]">
+                          <th className="min-w-[35%] text-[10px] text-left text-[#04050b] bg-[#E8E6FE]    tracking-wide  px-2">
                             Possession Charges
                           </th>
-                          <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#EDEDED] tracking-wide">
+                          <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#E8E6FE] tracking-wide">
                             Rate/Sqft
                           </th>
-                          <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#EDEDED] tracking-wide ">
+                          <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#E8E6FE] tracking-wide ">
                             Sale Value
                           </th>
-                          <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#EDEDED]  tracking-wide px-2">
+                          <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#E8E6FE]  tracking-wide px-2">
                             GST
                           </th>
-                          <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#EDEDED]  rounded-tr-[10px]  tracking-wide px-2 ">
+                          <th className="w-[15%] text-[10px] text-right text-[#04050b] bg-[#E8E6FE]    tracking-wide px-2 ">
                             Total
                           </th>
                         </tr>
@@ -494,7 +494,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           (d1, inx) => (
                             <tr
                               key={inx}
-                              className="border-b-[0.05px] border-gray-300 h-[32px]"
+                              className="border-b border-dashed h-[32px]"
                             >
                               <th className="w-[40%] text-[12px] text-left text-gray-700 bg-[#fff] px-2">
                                 {d1?.component?.label}
@@ -518,10 +518,10 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             </tr>
                           )
                         )}
-                        <tr className="border-b-[0.05px] border-gray-300 h-[32px]">
+                        <tr className=" h-[32px]">
                           <th className="w-[40%] text-[10px] text-left text-gray-800 "></th>
                           <td className="w-[15%] font-bold text-[10px] text-right text-gray-800  "></td>
-                          <td className="w-[15%] font-bold  text-[10px] text-right text-gray-800   "></td>
+                          <td className="w-[5%] font-bold  text-[10px] text-right text-gray-800   "></td>
                           <td className="w-[15%] font-semibold text-[#6A6A6A] text-[12px]  text-right pr-2  ">
                             {' '}
                             Possession Charges
@@ -547,20 +547,20 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
 <table className="w-full mt-2">
                   <thead>
                         <tr className=" h-8 border-b-[0.2px]  w-[100%]">
-                          <th className="min-w-[35%] text-[12px] text-left text-[#3D3D3D] bg-[#EDEDED]   rounded-tl-[10px]  tracking-wide  px-2">
+                          <th className="min-w-[35%] text-[12px] text-left text-[#0D027D] bg-[#E8E6FE]   rounded-tl-[10px]  tracking-wide  px-2">
                           Modifications
                           </th>
 
-                          <th className="w-[15%] text-[12px] text-left text-[#3D3D3D] bg-[#EDEDED]   tracking-wide px-2">
+                          <th className="w-[15%] text-[12px] text-left text-[#0D027D] bg-[#E8E6FE]   tracking-wide px-2">
                           Comment
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  tracking-wide">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE]  tracking-wide">
                           Sale Value
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]  tracking-wide">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE]  tracking-wide">
                           GST
                           </th>
-                          <th className="w-[15%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED] rounded-tr-[10px]  tracking-wide pr-2 ">
+                          <th className="w-[15%] text-[12px] text-right text-[#0D027D] bg-[#E8E6FE] rounded-tr-[10px]  tracking-wide pr-2 ">
                           Total
                           </th>
 

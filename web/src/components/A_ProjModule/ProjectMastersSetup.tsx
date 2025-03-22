@@ -50,7 +50,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
     <>
        <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl font-semibold mb-2">Masters Setup</h1>
+            <h1 className="text-2xl text-[#33475B]  font-semibold mb-2">Masters Setup</h1>
             <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p>
           </div>
 

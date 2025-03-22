@@ -14,7 +14,7 @@ const SourceAddTemplate = ({ phase, source }) => {
 
 
   return (
-    <div className="lg:col-span-10 border w-full ">
+    <div className="lg:col-span-10 border   rounded-xl w-full ">
 
 
       <ModularProjectMetrics

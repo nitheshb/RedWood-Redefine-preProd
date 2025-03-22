@@ -108,61 +108,61 @@ const CustomersSearchHome2 = ({ project }) => {
 
   return (
     <div className="">
-      <div className="flex flex-col mt-1 rounded-lg bg-white py-4 border-b border-gray-200">
-        <span className="px-4 font-bold mb-3">Customers</span>
+      <div className="flex flex-col mt-1 rounded-lg bg-white py-4 border-b  border-dashed">
+        <span className="px-4 font-bold mb-3  text-[#33475B]">Customers</span>
         <div className="-my-2 overflow-x-auto ">
           <div className="py-2 align-middle inline-block min-w-full ">
             <div className="shadow overflow-hidden   bg-white pb-4  px-2   ">
-              <table className="min-w-full divide-y divide-gray-200 ">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y rounded-lg divide-gray-200 ">
+                <thead className="bg-[#E8E6FE] ">
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider"
+                      className="px-6 py-3 rounded-tl-lg text-left text-xs font-semibold text-[#0D027D]  tracking-wider"
                     >
-                      Customer Name
+                      Customer Name box
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-semibold text-[#0D027D]  tracking-wider"
                     >
                       KYC
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider  text-right"
+                      className="px-6 py-3 text-left text-xs font-semibold text-[#0D027D]  tracking-wider  text-right"
                     >
                       Wallet
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider  text-right"
+                      className="px-6 py-3 text-left text-xs font-semibold text-[#0D027D]  tracking-wider  text-right"
                     >
                       Review
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider  text-right"
+                      className="px-6 py-3 text-left text-xs font-semibold text-[#0D027D]  tracking-wider  text-right"
                     >
                       Utilised
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-semibold text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-semibold text-[#0D027D]  tracking-wider"
                     >
                       Units
                     </th> <th
                       scope="col"
-                      className="px-6 py-3 text-center text-xs font-semibold text-gray-500  tracking-wider"
+                      className="px-6 py-3 text-center rounded-tr-lg  text-xs font-semibold text-[#0D027D]  tracking-wider"
                     >
                       Action
                     </th>
 
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white">
                   {customerRawData.map((person, i) => (
-                    <motion.tr key={i} onClick={() => dispDoc(person)} className='cursor-pointer'>
+                    <motion.tr key={i} onClick={() => dispDoc(person)} className='cursor-pointer  border-b border-dashed'>
                       <td
                         className="px-6 py-4 whitespace-nowrap"
 

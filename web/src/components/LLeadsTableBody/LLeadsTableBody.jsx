@@ -315,6 +315,8 @@ const [headers, setHeaders] = React.useState(headCells)
                 height: '10px',
                 maxHeight: '10px',
                 lineHeight: '7px',
+                borderLeft: 'none',
+                borderRight: 'none', 
 
                 display: displayHeadersFun(headCell.id)
               }}

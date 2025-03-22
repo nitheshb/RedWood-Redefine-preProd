@@ -103,35 +103,35 @@ const CrmUnitFinanceHistory = ({
               <thead>
                 {' '}
                 <tr className=" h-8 border-b-[0.2px] border-gray-300 ">
-                  <th className="w-[12%] text-[12px]  text-left text-[#3D3D3D]   rounded-tl-[10px]  bg-[#EDEDED]  tracking-wide  pl-2 ">
+                  <th className="w-[12%] text-[12px]  text-left text-[#3D3D3D]   rounded-tl-[10px]  bg-[#E8E6FE]  tracking-wide  pl-2 ">
                     Paid On
                   </th>
-                  <th className="w-[8%] text-[12px] text-center text-[#3D3D3D] bg-[#EDEDED]  tracking-wide  ">
+                  <th className="w-[8%] text-[12px] text-center text-[#3D3D3D] bg-[#E8E6FE]  tracking-wide  ">
                     Mode
                   </th>
-                  <th className="w-[15%] text-[12px] text-center text-[#3D3D3D] bg-[#EDEDED]   tracking-wide  ">
+                  <th className="w-[15%] text-[12px] text-center text-[#3D3D3D] bg-[#E8E6FE]   tracking-wide  ">
                     Bank Ref Id
                   </th>
-                  <th className="w-[10%] text-[12px] text-right text-[#3D3D3D] bg-[#EDEDED]   tracking-wide ">
+                  <th className="w-[10%] text-[12px] text-right text-[#3D3D3D] bg-[#E8E6FE]   tracking-wide ">
                     Amount
                   </th>
     
-                  <th className="w-[10%] text-[12px] text-center text-[#3D3D3D] bg-[#EDEDED]   tracking-wide  ">
+                  <th className="w-[10%] text-[12px] text-center text-[#3D3D3D] bg-[#E8E6FE]   tracking-wide  ">
                     Status
                   </th>
 
 
-                  <th className="w-[15%] text-[12px] text text-[#3D3D3D] bg-[#EDEDED]   tracking-wide  ">
+                  <th className="w-[15%] text-[12px] text text-[#3D3D3D] bg-[#E8E6FE]   tracking-wide  ">
                     Accounts
                   </th>
                   {/* <th className="w-[15%] text-[10px] text-center text-gray-400 text-[#8993a4] font-bodyLato tracking-wide uppercase ">
                     Tx Id
                   </th> */}
-                  <th className="w-[15%] text-[12px] text-center text-[#3D3D3D] bg-[#EDEDED]  tracking-wide  ">
+                  <th className="w-[15%] text-[12px] text-center text-[#3D3D3D] bg-[#E8E6FE]  tracking-wide  ">
                     Reviewer
                   </th>
 
-                  <th className="w-[15%] text-[12px] text-center text-[#3D3D3D]  rounded-tr-[10px] bg-[#EDEDED]  tracking-wide  ">
+                  <th className="w-[15%] text-[12px] text-center text-[#3D3D3D]  rounded-tr-[10px] bg-[#E8E6FE]  tracking-wide  ">
                     
                   </th>
                 </tr>

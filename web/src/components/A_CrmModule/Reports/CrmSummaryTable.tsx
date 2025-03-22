@@ -351,7 +351,7 @@ const handleSort = (key) => {
 
 
   return (
-    <div className="bg-[#F1F1F1] ">
+    <div className="bg-[#fff] ">
 
 <div className='max-w-7xl mx-auto mt-6'>
 <div className="grid grid-cols-4 gap-6 mb-8">
