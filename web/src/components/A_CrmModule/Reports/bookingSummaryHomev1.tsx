@@ -293,8 +293,12 @@ const UnitBookingSummaryHomePage1 = ({
       <div className="bg-white max-w-7xl mx-auto ">
         <div className="">
           <div
+<<<<<<< HEAD
             className="
              py-2 bg-[#fff]"
+=======
+           
+>>>>>>> 5eb404f7e8bed5cc56d1c9e92056523881e9979b
           >
 
             {!ready && (

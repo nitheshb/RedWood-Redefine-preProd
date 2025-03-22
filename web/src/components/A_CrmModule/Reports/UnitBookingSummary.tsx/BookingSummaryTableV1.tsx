@@ -1843,7 +1843,7 @@ const customTooltip = ({ payload, label }) => {
 
 <div className='max-w-7xl  mt-4 mx-auto'>
 <div className="grid grid-cols-4 gap-6 mb-8">
-  <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
+  <div className="bg-white rounded-xl p-6  shadow-sm  border-[1px] border-[#E1E8F1]">
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
     <p className="text-2xl font-bold mb-2">  {unitsFetchData?.length?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
@@ -1851,7 +1851,7 @@ const customTooltip = ({ payload, label }) => {
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
+  <div className="bg-white rounded-xl p-6 shadow-sm border-[1px] border-[#E1E8F1] ">
     <h3 className="text-gray-600 mb-2">Sales</h3>
     <p className="text-2xl font-bold mb-2">₹ {Math.round(totalSaleValue)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
@@ -1860,7 +1860,7 @@ const customTooltip = ({ payload, label }) => {
     </div>
   </div>
 
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
+  <div className="bg-white rounded-xl p-6 shadow-sm border-[1px] border-[#E1E8F1]">
     <h3 className="text-gray-600 mb-2">Recieved</h3>
     <p className="text-2xl font-bold mb-2">₹ {Math.round(totalReceived)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
@@ -1869,7 +1869,7 @@ const customTooltip = ({ payload, label }) => {
     </div>
   </div>
 
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
+  <div className="bg-white rounded-xl p-6 shadow-sm border-[1px] border-[#E1E8F1]">
     <h3 className="text-gray-600 mb-2">Balance</h3>
     <p className="text-2xl font-bold mb-2">₹ {Math.round(selTotalBalance)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
@@ -2114,7 +2114,7 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-<div className='p-4 mt-6 rounded-t-[30px] bg-white  rounded-[30px]'>
+<div className=' mt-6 rounded-t-[30px] bg-white  rounded-[30px]'>
 <div className='border-2 rounded-[30px] border-[#f1f1f1] p-4'>
 
 

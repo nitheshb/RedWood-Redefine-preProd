@@ -1084,13 +1084,13 @@ return
     }
     return null;
   };
-  
+
 
 
 const CustomTooltiptwo = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white p-2 shadow-lg rounded-md text-sm border border-gray-200">
+     <div classNam e="bg-white p-2 shadow-lg rounded-md text-sm border border-gray-200">
         <p className="text-gray-700 font-medium">
           {payload[0]?.name}: ₹{payload[0]?.value?.toLocaleString('en-IN') ?? '0'}
         </p>
@@ -1233,7 +1233,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                             setAssigner={setStatusFun}
                             usersList={StatusListA}
                             align={undefined}
-                          
+
                           />
                         </div>
                       )}
@@ -1289,7 +1289,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
             </div>
           </div>
         )}
-     
+
         {timeHide && (
           <>
             <div className="w-full border-b border-[#ebebeb]"></div>
@@ -1357,7 +1357,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
         >
           <Cell fill="#E3BDFF" />
           <Cell fill="#E5E7EB" />
-         
+
 
         </Pie>
         <Tooltip content={<CustomTooltip />} />

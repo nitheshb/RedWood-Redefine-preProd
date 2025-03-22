@@ -69,8 +69,8 @@ const CrmAnalyticsUnitHome = ({ project }) => {
     <div>
 
 
-      <div className="bg-[#E3E9EF] mt- mr-1 py-2 mb-2 leading-7 text-gray-900  rounded-lg flex flex-row justify-between">
-        <div className="bg-white h-[422px] w-[20%] ml-3 rounded-lg flex flex-col">
+      <div className="   mb-2 leading-7 text-gray-900  rounded-lg flex flex-row justify-between">
+        <div className="bg-white h-[422px] w-[20%]  rounded-lg flex flex-col">
           <div className="bg-[#023E8A] h-[24%] w-full rounded-t-lg px-2 py-3 flex flex-col">
             <div className="flex flex-row">
               <svg
@@ -338,7 +338,7 @@ const CrmAnalyticsUnitHome = ({ project }) => {
     </div>
         </section>
         {/* section - 3 */}
-        <div className="bg-white h-[300px] w-[20%] mr-3 rounded-lg">
+        <div className="bg-white h-[300px] w-[20%] rounded-lg">
           <div className="bg-[#023E8A] h-[24%] w-full rounded-t-lg px-2 py-3 flex flex-col">
             <div className="flex flex-row">
               <svg

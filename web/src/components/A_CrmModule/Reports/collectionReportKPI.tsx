@@ -523,7 +523,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
 
 
   return (
-    <div className="  bg-[#fff] ">
+    <div className="  bg-white ">
 
 <div className='max-w-7xl  mt-4 mx-auto'>
 <div className="grid grid-cols-4 gap-6 mb-8">

@@ -105,30 +105,30 @@ const CrmMortgageSummaryTable = ({ projects }) => {
 
 
 
-  
+
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
-  
+
     const sortedData = useMemo(() => {
       if (!sortConfig.key) return fetchMortUnitsList;
-  
+
       return [...fetchMortUnitsList].sort((a, b) => {
         const aValue = a[sortConfig.key];
         const bValue = b[sortConfig.key];
-  
+
         if (typeof aValue === 'number' && typeof bValue === 'number') {
           return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
         }
-  
+
         if (typeof aValue === 'string' && typeof bValue === 'string') {
           return sortConfig.direction === 'asc'
             ? aValue.localeCompare(bValue)
             : bValue.localeCompare(aValue);
         }
-  
+
         return 0;
       });
     }, [fetchMortUnitsList, sortConfig]);
-  
+
     const handleSort = (key) => {
       setSortConfig((prev) => ({
         key,
@@ -140,11 +140,11 @@ const CrmMortgageSummaryTable = ({ projects }) => {
   return (
 
 
-    <div className='bg-[#fff]'>
+    <div>
 
 
 
-<div className='max-w-7xl mx-auto mt-6'>
+<div className='max-w-7xl mx-auto mt-4'>
 <div className="grid grid-cols-4 gap-6 mb-8">
   <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
@@ -200,12 +200,12 @@ const CrmMortgageSummaryTable = ({ projects }) => {
 
           <div className=" bg-white  rounded-[30px] w-full max-w-7xl mx-auto">
 
-            
+
       <div className="">
         <div className="">
-         
 
-       
+
+
 
 
 
@@ -238,7 +238,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
               className="mr-2 bg-gray-100"
               value={selectedOption}
               onChange={handleOptionChange}
-              
+
             >
               <option value="All">Project Name</option>
 
@@ -262,7 +262,7 @@ const CrmMortgageSummaryTable = ({ projects }) => {
 
       </div>
 
-      
+
 
       <div className="w-full bg-white rounded-t-[30px] overflow-hidden shadow-md">
         <div className="bg-[#F8F9FC] p-4 rounded-t-[30px]">

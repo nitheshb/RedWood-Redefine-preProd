@@ -242,7 +242,7 @@ const HomePage = () => {
                                       <span className="text-slate-600 text-lg font-medium">
                                         Projects
                                       </span>
-                                      <div className="w-[299.02px] h-[0px] border border-stone-300 mt-2"></div>
+                                      <div className="w-[299.02px] h-[0px] border-[0.5px] border-stone-200 mt-2"></div>
                                       <section className="flex flex-row">
                                         <div className="text-sky-950 text-5xl font-semibold font-['Manrope'] leading-[80px]">
                                           {/* {projects?.length} */}
@@ -318,7 +318,7 @@ const HomePage = () => {
                                       <span className="text-slate-600 text-lg font-medium ">
                                         Units
                                       </span>
-                                      <div className="w-[299.02px] h-[0px] border border-stone-300 mt-2"></div>
+                                      <div className="w-[299.02px] h-[0px] border-[0.5px] border-stone-200 mt-2 "></div>
                                       <section className="flex flex-row">
                                         <div className="text-sky-950 text-5xl font-semibold font-['Manrope'] leading-[80px]">
                                           <CountUpComp
@@ -412,7 +412,7 @@ const HomePage = () => {
                                       <span className="text-slate-600 text-lg font-medium ">
                                       Inventory
                                       </span>
-                                      <div className="w-[299.02px] h-[0px] border border-stone-300 mt-2"></div>
+                                      <div className="w-[299.02px] h-[0px] border-[0.5px] border-stone-200 mt-2"></div>
                                       <section className="flex flex-row">
                                         <div className="text-sky-950 text-5xl font-semibold font-['Manrope'] leading-[80px]">
                                           <CountUpComp
@@ -494,7 +494,7 @@ const HomePage = () => {
                                       <span className="text-slate-600 text-lg font-medium ">
                                         Portfolio
                                       </span>
-                                      <div className="w-[299.02px] h-[0px] border border-stone-300 mt-2"></div>
+                                      <div className="w-[299.02px] h-[0px] border-[0.5px] border-stone-200 mt-2"></div>
                                       <section className="flex flex-row">
                                         <div className="text-sky-950 text-5xl font-semibold font-['Manrope'] leading-[80px]">
                                         <CountUpComp

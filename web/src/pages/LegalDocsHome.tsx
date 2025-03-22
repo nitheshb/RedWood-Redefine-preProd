@@ -283,7 +283,8 @@ const LegalDocsHome = ({ project }) => {
                 onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
                 className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
               >
-                <span className="text-2xl">📂</span>
+              <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
+
                 <h3 className="font-semibold">{project.projectName}</h3>
               </div>
             ))}
@@ -298,7 +299,7 @@ const LegalDocsHome = ({ project }) => {
                 onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
                 className="p-4 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-2"
               >
-                <span className="text-2xl">📂</span>
+                <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
                 <h3 className="font-semibold text-sm text-center">{project.projectName}</h3>
               </div>
             ))}
@@ -313,7 +314,8 @@ const LegalDocsHome = ({ project }) => {
                 onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
                 className="p-6 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-3"
               >
-                <span className="text-4xl">📂</span>
+
+                <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
                 <h3 className="font-semibold text-lg text-center">{project.projectName}</h3>
               </div>
             ))}
@@ -329,7 +331,7 @@ const LegalDocsHome = ({ project }) => {
                 className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">📂</span>
+                <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
                   <h3 className="font-semibold">{project.projectName}</h3>
                 </div>
                 <div className="text-sm text-gray-500">
@@ -609,15 +611,16 @@ const LegalDocsHome = ({ project }) => {
   };
 
   return (
-    <section className="mt-2 py-6 mb-8 leading-7 text-gray-900 bg-white rounded-lg">
+    <section className="mt-2 py-6 mb-8 mx-1 leading-7 text-gray-900 bg-white rounded-lg">
       <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full">
-        <div className="flex flex-col leading-7 text-gray-900 border-0 border-gray-200 justify-center items-center">
-          <div className="flex items-center flex-shrink-0 px-0 pl-0 mb-1">
-            <Link className="flex items-center">
-              <span className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0">
+        <div className="flex flex-col leading-7 text-gray-900 border-0 border-gray-200 border-b-[1px]  py-[20px] pb-[10px]  border-[cbd6e2] ">
+          <div className="flex  flex-shrink-0 px-0 pl-0 mb-1">
+            <section className="flex flex-row ">
+              <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
+              <span className="relative z-10 ml-2 flex items-center w-auto text-lg font-bold leading-none pl-0 text-[#33475b]">
                 Legal Documents
               </span>
-            </Link>
+            </section>
           </div>
         </div>
         <div className="mt-4">
