@@ -61,7 +61,7 @@ const CrmAnalyticsHome = ({ project }) => {
   return (
     <div className='bg-white rounded-md border-[40px] border-white mx-1 mt-1'>
 
-<div className='flex max-w-7xl mx-auto bg-white border-b border rounded-xl w-[100%] border-gray-200 flex-row justify-between shadow'>
+<div className='flex    w-[100%]  flex-row justify-between border-b '>
       <ul
                 className="flex flex-wrap -mb-px "
                 id="myTab"
@@ -88,13 +88,14 @@ const CrmAnalyticsHome = ({ project }) => {
                       textColor="secondary"
                       indicatorColor="secondary"
                       aria-label="secondary tabs example"
+
                     >
                       <li key={i} className="mr-3 ml-3" role="presentation">
                         <button
-                          className={`inline-block py-4 px-4 h-16 text-sm  text-center text-[#6e6e6e] rounded-t-lg border-b-[3px]  hover:text-gray-600 hover:border-black hover:border-b-[3px] dark:text-gray-400 dark:hover:text-gray-300  ${
+                          className={`px-4 py-2  ${
                             selCat === d.value
-                              ? 'border-[#144264] text-[#144264] '
-                              : 'border-transparent'
+                              ? 'border-b-2 border-black text-black '
+                              : 'text-gray-500 hover:text-black'
                           }`}
                           type="button"
                           role="tab"
@@ -102,17 +103,18 @@ const CrmAnalyticsHome = ({ project }) => {
                             setSelCat(d.value)
                           }}
                         >
-                          <span
-                            className={`font-bold font-semibold text-gray-500 ${
-                              selCat === d.value
-                                ? 'text-[#0080ff] text-gray-800 '
-                                : ''
-                            }`}
-                          >
-                            {' '}
-                            {`${d.label}`}
 
-                          </span>
+<span
+                  className={`flex items-center   text-sm   ${
+                    selCat === d.value
+                      ? 'font-semibold text-green-800 '
+                      : 'font-medium text-black-100 '
+                  }  rounded-full`}
+                >
+                  <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
+                  {d?.label}
+                </span>
+
                         </button>
                       </li>
                     </ul>

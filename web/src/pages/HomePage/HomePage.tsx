@@ -116,22 +116,40 @@ const HomePage = () => {
                   </div>
                 </>
               )}
-                 {viewable === 'Marketing' && (
-                <>
-                {/*Sales Executive Notifications border */}
-                  <div className="mt-1 mx-1">
-                    <section className="w-full py-4  leading-7 text-gray-900 bg-white  rounded-md">
-                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl mx-auto px-6 py-8 ">
-                        <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
-                          <MarkeingMessagesList
-                            title={'WhatsApp Message Templates'}
-                          />
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </>
-              )}
+      
+
+
+
+{viewable === 'Marketing' && (
+  <>
+    <div className="relative mt-1 mx-1  overflow-hidden">
+      <section className="relative w-full py-4 leading-7 text-gray-900 bg-white rounded-md overflow-hidden">
+        <svg
+          className="absolute right-0 top-0 h-full w-[250px] md:w-[300px] lg:w-[400px] xl:w-[500px] pointer-events-none"
+          preserveAspectRatio="none"
+          viewBox="0 0 510 832"
+        >
+          <path
+            d="M365.868 0.000541687C481.144 -73.4421 715.868 0.000541687 715.868 0.000541687V850.001C715.868 850.001 119.675 1044.5 26.3676 850.001C-66.94 655.501 105.429 503.664 261.73 442.481C415.319 382.36 216.15 95.3857 365.868 0.000541687Z"
+            fill="#F5F8FA"
+          ></path>
+        </svg>
+
+        <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-7xl py-8 relative">
+          <div className="flex flex-col leading-7 text-gray-900 border-0 border-gray-200">
+            <MarkeingMessagesList title={'WhatsApp Message Templates'} />
+          </div>
+        </div>
+      </section>
+    </div>
+  </>
+)}
+
+
+
+
+
+
               {viewable === 'projectReports' && (
                 <>
                   <div className="mt-1 mx-1">
@@ -161,19 +179,19 @@ const HomePage = () => {
 
                   <div className='ml-1'>
                     <section className="w-full  mb-8 leading-7 text-gray-900 bg-white  rounded-lg">
-                      <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-16 max-w-8xl mx-auto px-6 py-8 ">
+                      <div className="box-border px-4 w-full border-solid sm:px-6 md:px-6 lg:px-16 max-w-8xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
-                          <div className="flex items-center flex-shrink-0  px-0  pl-0 border-b border-grey  mb-2">
-                            <span className="flex items-center">
+                          <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-2">
+                            {/* <span className="flex items-center">
                               <img
                                 className="w-16 h-16"
                                 alt=""
-                                src="/apart.svg"
+                                src="/paymentsbank.svg"
                               ></img>
                               <span className="relative z-10 flex items-center w-auto text-4xl font-bold leading-none pl-0 mt-[18px]">
                                 {viewable}
                               </span>
-                            </span>
+                            </span> */}
                             {/* <section className="flex ml-auto mt-[18px]">
                               <button>
                                 <span className="flex ml-2 items-center h-7 px-3  text-xs font-medium text-[#fff] bg-[#0891B2] rounded-full">

@@ -73,7 +73,7 @@ const CrmUnitPsHome = ({
               htmlFor="area"
               className="label font-regular text-sm font-bodyLato"
             >
-              Bank Split
+            
             </label>
           </div>
         </section>

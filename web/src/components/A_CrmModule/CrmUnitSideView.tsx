@@ -1247,7 +1247,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                     </div>
                   </section>
                 { (user?.role.includes('crm-manager') || user?.role.includes('crm-executive') || user?.role.includes('admin'))&&  <button
-                    className="text-[10px]  rounded-2xl ml-2 bg-[#E3BDFF] px-5 border    border-[#E3BDFF] text-gray-800"
+                    className="text-[10px]  rounded-2xl ml-2 bg-[#E8E6FE] px-5 border    border-[#E3BDFF] text-gray-800"
                     onClickCapture={() => {
                       openPaymentFun()
                     }}
@@ -1458,7 +1458,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
       </section>
       <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
-        <div className="bg-[#E3BDFF] h-7 rounded-full w-1/3"></div>
+        <div className="bg-[#E8E6FE] h-7 rounded-full w-1/3"></div>
       </div>
       <div className="text-sm text-gray-500 mb-2">Total Cost</div>
       <div className="font-bold">₹ {((selCustomerPayload?.T_total || 0)

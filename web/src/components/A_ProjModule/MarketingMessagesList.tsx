@@ -48,13 +48,58 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
   return (
     <>
 
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-2xl font-semibold mb-2">Masters Setup</h1>
-            <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p>
-          </div>
 
-        </div>
+<div className=''>
+{/* 
+<div className="fixed top-1 right-0 w-full h-full overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+        <svg
+          className="absolute right-0 top-0 h-full w-[400px]"
+          preserveAspectRatio="none"
+          viewBox="0 0 510 832"
+        >
+          <path
+            d="M365.868 0.000541687C481.144 -73.4421 715.868 0.000541687 715.868 0.000541687V850.001C715.868 850.001 119.675 1044.5 26.3676 850.001C-66.94 655.501 105.429 503.664 261.73 442.481C415.319 382.36 216.15 95.3857 365.868 0.000541687Z"
+            fill="#FCF4EB"
+          ></path>
+        </svg>
+      </div> */}
+
+<div className="relative overflow-hidden">
+
+
+
+
+
+
+
+
+<div className="relative z-10">
+
+
+<div className="flex justify-between items-center mb-6">
+  <div className="flex flex-col">
+  
+    <div className="flex items-center gap-2">
+      <img
+        src="/iconheading.svg"
+        alt="Icon Heading"
+        width={30} 
+        height={30}
+      />
+      <h1 className="text-2xl text-[#33475B] font-semibold">
+        Masters Setup
+      </h1>
+    </div>
+
+
+    <p className="text-gray-600 ml-10">
+      This area is usually used to set up values for the dropdowns and other reusable options.
+    </p>
+  </div>
+</div>
+
+
+
 
 
       <div className="flex items-center space-x-1 mb-6 border-b">
@@ -95,8 +140,8 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
       {selCat === 'source' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
-              <h2 className="text-sm font-semibold pb-2 border-b border-grey">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200">
+              <h2 className="text-sm font-semibold pb-2  border-grey">
                 {'Source List'}
               </h2>
               <SourceAddTemplate phase={{}} source={sourceListItems} />
@@ -172,9 +217,12 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
         </div>
       )}
       {selCat === 'enquiry_journey_status' && (
-        <div className="w-full   flex-row">
+
+        <>
+
+<div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {'Sales Executive Notifications'}
               </h2>
@@ -328,13 +376,29 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
             </div>
           </section>
         </div>
+
+
+
+
+ 
+        
+        
+        </>
+
+
+
+
+
+
+
+
       )}
 
 
 {selCat === 'CRM_status' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {'CRM Notifications'}
               </h2>
@@ -359,51 +423,7 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
                 </thead>
                 <tbody>
                   {[
-                    // {
-                    //   btnTxt: 'On Enquiry',
-                    //   target: 'customer',
-                    //   event: 'on_enquiry',
-                    // },
-                    // {
-                    //   btnTxt: 'Lead Assigned',
-                    //   target: 'customer',
-                    //   event: 'on_lead_assign',
-                    // },
-                    // {
-                    //   btnTxt: 'Lead Re-Assigned',
-                    //   target: 'customer',
-                    //   event: 'on_reassign',
-                    // },
-                    // {
-                    //   btnTxt: 'On Site Visit fix',
-                    //   target: 'customer',
-                    //   event: 'on_sitevisit_fix',
-                    // },
-                    // {
-                    //   btnTxt: 'On Site Visit Reschedule',
-                    //   target: 'customer',
-                    //   event: 'on_sitevisit_reschedule',
-                    // },
-                    // {
-                    //   btnTxt: 'On Site Visit Cancellation',
-                    //   target: 'customer',
-                    //   event: 'on_sitevisit_cancel',
-                    // },
-                    // {
-                    //   btnTxt: 'On Site Visit Completion',
-                    //   target: 'customer',
-                    //   event: 'on_sitevisit_done',
-                    // },
-                    // {
-                    //   btnTxt: 'On Lead Not-Interested',
-                    //   target: 'customer',
-                    //   event: 'on_not_interested',
-                    // },
-                    // {
-                    //   btnTxt: 'On Booking',
-                    //   target: 'customer',
-                    //   event: 'on_booking',
-                    // },
+
 
                     {
                       btnTxt: 'On Booking',
@@ -552,186 +572,12 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
 
       
 
-      {/* {selCat === 'CRM_status' && (
-        <div className="w-full  flex flex-row">
-          <div className="lg:col-span-2 mr-4">
-            <div>
-              <section className="m-4 inline-block">
-                <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 w-96">
-                  <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                    {'Customer Notifications'}
-                  </h2>
-
-                  <div className=" justify-between mb-4">
-                    {[
-                      { btnTxt: 'On Payment', target: 'CRM Customer' },
-                      { btnTxt: 'On Customer Assign', target: 'CRM Customer' },
-                      {
-                        btnTxt: 'On Construction Update',
-                        target: 'CRM Customer',
-                      },
-                      { btnTxt: 'On Payment Approval', target: 'CRM Customer' },
-                      { btnTxt: 'On Payment Rejected', target: 'CRM Customer' },
-                      { btnTxt: 'On Payment', target: 'CRM Customer' },
-                      { btnTxt: 'On Payment', target: 'CRM Customer' },
-                      { btnTxt: 'On Deletion', target: 'CRM Customer' },
-                      { btnTxt: 'On Booking', target: 'CRM Customer' },
-                      { btnTxt: 'On Payment Request', target: 'CRM Customer' },
-                    ].map((data, i) => (
-                      <section key={i}>
-                        <div className="flex flex-row justify-between">
-                          <section className="flex  mt-[18px]">
-                            <button>
-                              <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                                <PencilIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                {data?.btnTxt}
-                              </span>
-                            </button>
-                          </section>
-
-                          <section className="flex  mt-[18px]">
-                            <span className="flex ml-2 items-center h-6 px-3 text-xs  text-green-800">
-                              {data?.target}
-                            </span>
-                          </section>
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            </div>
-            <div></div>
-          </div>
-
-          <div className="lg:col-span-2 mr-4">
-            <div>
-              <section className="m-4 inline-block">
-                <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 w-96">
-                  <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                    {'CRM Executive Notifications'}
-                  </h2>
-
-                  <div className=" justify-between mb-4">
-                    {[
-                      { btnTxt: 'On Payment', target: 'CRM Executive' },
-                      { btnTxt: 'On Customer Assign', target: 'CRM Executive' },
-                      {
-                        btnTxt: 'On Construction Update',
-                        target: 'CRM Executive',
-                      },
-                      {
-                        btnTxt: 'On Payment Approval',
-                        target: 'CRM Executive',
-                      },
-                      {
-                        btnTxt: 'On Payment Rejected',
-                        target: 'CRM Executive',
-                      },
-                      { btnTxt: 'On Booking', target: 'CRM Customer' },
-                      { btnTxt: 'On Payment Request', target: 'CRM Executive' },
-                      {
-                        btnTxt: 'On Payment Receival',
-                        target: 'CRM Executive',
-                      },
-                      { btnTxt: 'On Payment Accepted', target: 'CRM Customer' },
-                      {
-                        btnTxt: 'On CostSheet Approval',
-                        target: 'CRM Executive',
-                      },
-                    ].map((data, i) => (
-                      <section key={i}>
-                        <div className="flex flex-row justify-between">
-                          <section className="flex  mt-[18px]">
-                            <button>
-                              <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                                <PencilIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                {data?.btnTxt}
-                              </span>
-                            </button>
-                          </section>
-
-                          <section className="flex  mt-[18px]">
-                            <span className="flex ml-2 items-center h-6 px-3 text-xs  text-green-800">
-                              {data?.target}
-                            </span>
-                          </section>
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            </div>
-            <div></div>
-          </div>
-          <div className="lg:col-span-2 mr-4">
-            <div>
-              <section className="m-4 inline-block">
-                <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 w-96">
-                  <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                    {'CRM Manager Notifications'}
-                  </h2>
-
-                  <div className=" justify-between mb-4">
-                    {[
-                      { btnTxt: 'On Payment', target: 'CRM Manager' },
-                      { btnTxt: 'On Customer Assign', target: 'CRM Manager' },
-                      {
-                        btnTxt: 'On Construction Update',
-                        target: 'CRM Manager',
-                      },
-                      { btnTxt: 'On Payment Approval', target: 'CRM Manager' },
-                      { btnTxt: 'On Payment Rejected', target: 'CRM Manager' },
-                      { btnTxt: 'On Payment', target: 'CRM Manager' },
-                      { btnTxt: 'On Booking', target: 'CRM Manager' },
-                      { btnTxt: 'On Payment Receival', target: 'CRM Manager' },
-                      { btnTxt: 'On Payment Accepted', target: 'CRM Manager' },
-                      { btnTxt: 'On Payment Request', target: 'CRM Manager' },
-                    ].map((data, i) => (
-                      <section key={i}>
-                        <div className="flex flex-row justify-between">
-                          <section className="flex  mt-[18px]">
-                            <button>
-                              <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                                <PencilIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                {data?.btnTxt}
-                              </span>
-                            </button>
-                          </section>
-
-                          <section className="flex  mt-[18px]">
-                            <span className="flex ml-2 items-center h-6 px-3 text-xs  text-green-800">
-                              {data?.target}
-                            </span>
-                          </section>
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            </div>
-            <div></div>
-          </div>
-        </div>
-      )} */}
-
-
+   
 
 {selCat === 'Finance_status' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {'Finance Notifications'}
               </h2>
@@ -756,52 +602,7 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
                 </thead>
                 <tbody>
                   {[
-                    // {
-                    //   btnTxt: 'On Enquiry',
-                    //   target: 'customer',
-                    //   event: 'on_enquiry',
-                    // },
-                    // {
-                    //   btnTxt: 'Lead Assigned',
-                    //   target: 'customer',
-                    //   event: 'on_lead_assign',
-                    // },
-                    // {
-                    //   btnTxt: 'Lead Re-Assigned',
-                    //   target: 'customer',
-                    //   event: 'on_reassign',
-                    // },
-                    // {
-                    //   btnTxt: 'On Site Visit fix',
-                    //   target: 'customer',
-                    //   event: 'on_sitevisit_fix',
-                    // },
-                    // {
-                    //   btnTxt: 'On Site Visit Reschedule',
-                    //   target: 'customer',
-                    //   event: 'on_sitevisit_reschedule',
-                    // },
-                    // {
-                    //   btnTxt: 'On Site Visit Cancellation',
-                    //   target: 'customer',
-                    //   event: 'on_sitevisit_cancel',
-                    // },
-                    // {
-                    //   btnTxt: 'On Site Visit Completion',
-                    //   target: 'customer',
-                    //   event: 'on_sitevisit_done',
-                    // },
-                    // {
-                    //   btnTxt: 'On Lead Not-Interested',
-                    //   target: 'customer',
-                    //   event: 'on_not_interested',
-                    // },
-                    // {
-                    //   btnTxt: 'On Booking',
-                    //   target: 'customer',
-                    //   event: 'on_booking',
-                    // },
-
+                  
                     {
                       btnTxt: 'On Enquiry Receival',
                       target: 'customer',
@@ -948,239 +749,7 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
 
 
 
-      {/* Finance Block  */}
-      {/* {selCat === 'Finance_status' && (
-        <div className="w-full  flex flex-row">
-          <div className="lg:col-span-2 mr-4">
-            <div>
-              <section className="m-4 inline-block">
-                <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 w-96">
-                  <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                    {'Legal Team Notifications'}
-                  </h2>
-
-                  <div className=" justify-between mb-4">
-                    {[
-                      {
-                        btnTxt: 'On Enquiry Receival',
-                        target: 'Finance Customer',
-                      },
-                      {
-                        btnTxt: 'On Sales Agent Assign',
-                        target: 'Finance Customer',
-                      },
-                      {
-                        btnTxt: 'On Site Visit fix',
-                        target: 'Finance Customer',
-                      },
-                      {
-                        btnTxt: 'On Site Visit Completion',
-                        target: 'Finance Customer',
-                      },
-                      {
-                        btnTxt: 'On NotInterested',
-                        target: 'Finance Customer',
-                      },
-                      { btnTxt: 'On Booking', target: 'Finance Customer' },
-                      {
-                        btnTxt: 'On Payment Request',
-                        target: 'Finance Customer',
-                      },
-                      {
-                        btnTxt: 'On Payment Receival',
-                        target: 'Finance Customer',
-                      },
-                      {
-                        btnTxt: 'On Payament Accepted',
-                        target: 'Finance Customer',
-                      },
-                      {
-                        btnTxt: 'On CostSheet Approval',
-                        target: 'Finance Customer',
-                      },
-                    ].map((data, i) => (
-                      <section key={i}>
-                        <div className="flex flex-row justify-between">
-                          <section className="flex  mt-[18px]">
-                            <button>
-                              <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                                <PencilIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                {data?.btnTxt}
-                              </span>
-                            </button>
-                          </section>
-
-                          <section className="flex  mt-[18px]">
-                            <span className="flex ml-2 items-center h-6 px-3 text-xs  text-green-800">
-                              {data?.target}
-                            </span>
-                          </section>
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            </div>
-            <div></div>
-          </div>
-
-          <div className="lg:col-span-2 mr-4">
-            <div>
-              <section className="m-4 inline-block">
-                <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 w-96">
-                  <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                    {'Finance Executive Notifications'}
-                  </h2>
-
-                  <div className=" justify-between mb-4">
-                    {[
-                      {
-                        btnTxt: 'On Enquiry Receival',
-                        target: 'Finance Executive',
-                      },
-                      {
-                        btnTxt: 'On Sales Agent Assign',
-                        target: 'Finance Executive',
-                      },
-                      {
-                        btnTxt: 'On Site Visit fix',
-                        target: 'Finance Executive',
-                      },
-                      {
-                        btnTxt: 'On Site Visit Completion',
-                        target: 'Finance Executive',
-                      },
-                      {
-                        btnTxt: 'On NotInterested',
-                        target: 'Finance Executive',
-                      },
-                      { btnTxt: 'On Booking', target: 'Finance Executive' },
-                      {
-                        btnTxt: 'On Payment Request',
-                        target: 'Finance Executive',
-                      },
-                      {
-                        btnTxt: 'On Payment Receival',
-                        target: 'Finance Executive',
-                      },
-                      {
-                        btnTxt: 'On Payament Accepted',
-                        target: 'Finance Executive',
-                      },
-                      {
-                        btnTxt: 'On CostSheet Approval',
-                        target: 'Finance Executive',
-                      },
-                    ].map((data, i) => (
-                      <section key={i}>
-                        <div className="flex flex-row justify-between">
-                          <section className="flex  mt-[18px]">
-                            <button>
-                              <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                                <PencilIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                {data?.btnTxt}
-                              </span>
-                            </button>
-                          </section>
-
-                          <section className="flex  mt-[18px]">
-                            <span className="flex ml-2 items-center h-6 px-3 text-xs  text-green-800">
-                              {data?.target}
-                            </span>
-                          </section>
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            </div>
-            <div></div>
-          </div>
-
-          <div className="lg:col-span-2 mr-4">
-            <div>
-              <section className="m-4 inline-block">
-                <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 w-96">
-                  <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                    {'Finace Manager Notifications'}
-                  </h2>
-
-                  <div className=" justify-between mb-4">
-                    {[
-                      {
-                        btnTxt: 'On Enquiry Receival',
-                        target: 'Finance Manager',
-                      },
-                      {
-                        btnTxt: 'On Sales Agent Assign',
-                        target: 'Finance Manager',
-                      },
-                      {
-                        btnTxt: 'On Site Visit fix',
-                        target: 'Finance Manager',
-                      },
-                      {
-                        btnTxt: 'On Site Visit Completion',
-                        target: 'Finance Manager',
-                      },
-                      { btnTxt: 'On NotInterested', target: 'Finance Manager' },
-                      { btnTxt: 'On Booking', target: 'Finance Manager' },
-                      {
-                        btnTxt: 'On Payment Request',
-                        target: 'Finance Manager',
-                      },
-                      {
-                        btnTxt: 'On Payment Receival',
-                        target: 'Finance Manager',
-                      },
-                      {
-                        btnTxt: 'On Payament Accepted',
-                        target: 'Finance Manager',
-                      },
-                      {
-                        btnTxt: 'On CostSheet Approval',
-                        target: 'Finance Manager',
-                      },
-                    ].map((data, i) => (
-                      <section key={i}>
-                        <div className="flex flex-row justify-between">
-                          <section className="flex  mt-[18px]">
-                            <button>
-                              <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                                <PencilIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                {data?.btnTxt}
-                              </span>
-                            </button>
-                          </section>
-
-                          <section className="flex  mt-[18px]">
-                            <span className="flex ml-2 items-center h-6 px-3 text-xs  text-green-800">
-                              {data?.target}
-                            </span>
-                          </section>
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            </div>
-            <div></div>
-          </div>
-        </div>
-      )}
- */}
+    
 
 
 
@@ -1188,7 +757,7 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
 {selCat === 'Legal_status' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {'Legal Notifications'}
               </h2>
@@ -1356,300 +925,14 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
       )}
 
 
-      {/* Legal_status */}
-      {/* {selCat === 'Legal_status' && (
-        <div className="w-full  flex flex-row">
-          <div className="lg:col-span-2 mr-4">
-            <div>
-              <section className="m-4 inline-block">
-                <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 w-96">
-                  <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                    {'Sales Templates'}
-                  </h2>
 
-                  <div className=" justify-between mb-4">
-                    {[
-                      { btnTxt: 'On Payment', target: 'Sales Executive' },
-                      { btnTxt: 'On testing', target: 'Executive' },
-                      { btnTxt: 'On Lead Assign', target: 'Sales Executive' },
-                      { btnTxt: 'On Creation', target: 'Customer' },
-                      { btnTxt: 'On Creation', target: 'Sales Executive' },
-                      { btnTxt: 'On Creation', target: 'Manager' },
-                      { btnTxt: 'On Creation', target: 'Administrator' },
-                      { btnTxt: 'On Assignment', target: 'Customer' },
-                      { btnTxt: 'On Assignment', target: 'Sales Executive' },
-                      { btnTxt: 'On Assignment', target: 'Manager' },
-                      { btnTxt: 'On Assignment', target: 'Administrator' },
-                      { btnTxt: 'On Transfer', target: 'Customer' },
-                      { btnTxt: 'On Transfer', target: 'Sales Executive' },
-                      { btnTxt: 'On Transfer', target: 'Manager' },
-                      { btnTxt: 'On Transfer', target: 'Administrator' },
-                      { btnTxt: 'On De-assignment', target: 'Customer' },
-
-                      { btnTxt: 'On De-assignment', target: 'Sales Executive' },
-
-                      { btnTxt: 'On De-assignment', target: 'Manager' },
-
-                      { btnTxt: 'On De-assignment', target: 'Administrator' },
-                      { btnTxt: 'On Next Follow Up', target: 'Customer' },
-                      {
-                        btnTxt: 'On Next Follow Up',
-                        target: 'Sales Executive',
-                      },
-                      { btnTxt: 'On Next Follow Up', target: 'Manager' },
-                      { btnTxt: 'On Next Follow Up', target: 'Administrator' },
-                      { btnTxt: 'On Delete Follow Up', target: 'Customer' },
-                      {
-                        btnTxt: 'On Delete Follow Up',
-                        target: 'Sales Executive',
-                      },
-                      { btnTxt: 'On Delete Follow Up', target: 'Manager' },
-                      {
-                        btnTxt: 'On Delete Follow Up',
-                        target: 'Administrator',
-                      },
-                      { btnTxt: 'On Cancel', target: 'Customer' },
-                      { btnTxt: 'On Cancel', target: 'Sales Executive' },
-                      { btnTxt: 'On Cancel', target: 'Manager' },
-                      { btnTxt: 'On Cancel', target: 'Administrator' },
-                      { btnTxt: 'On Complete', target: 'Customer' },
-                      { btnTxt: 'On Complete', target: 'Sales Executive' },
-                      { btnTxt: 'On Complete', target: 'Manager' },
-                      { btnTxt: 'On Complete', target: 'Administrator' },
-                      { btnTxt: 'On Creation', target: 'Customer' },
-                      { btnTxt: 'On Creation', target: 'Sales Executive' },
-                      { btnTxt: 'On Creation', target: 'Manager' },
-                      { btnTxt: 'On Creation', target: 'Administrator' },
-                      { btnTxt: 'On Update', target: 'Customer' },
-                      { btnTxt: 'On Update', target: 'Sales Executive' },
-                      { btnTxt: 'On Update', target: 'Manager' },
-                      { btnTxt: 'On Update', target: 'Administrator' },
-                      { btnTxt: 'On Transfer Charge', target: 'Customer' },
-                      {
-                        btnTxt: 'On Transfer Charge',
-                        target: 'Sales Executive',
-                      },
-                      { btnTxt: 'On Transfer Charge', target: 'Manager' },
-                      { btnTxt: 'On Transfer Charge', target: 'Administrator' },
-                      { btnTxt: 'On Block', target: 'Customer' },
-                      { btnTxt: 'On Block', target: 'Sales Executive' },
-                      { btnTxt: 'On Block', target: 'Manager' },
-                      { btnTxt: 'On Block', target: 'Administrator' },
-                    ].map((data, i) => (
-                      <section>
-                        <div className="flex flex-row justify-between">
-                          <section className="flex  mt-[18px]">
-                            <button>
-                              <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                                <PencilIcon
-                                  className="h-3 w-3 mr-1"
-                                  aria-hidden="true"
-                                />
-                                {data?.btnTxt}
-                              </span>
-                            </button>
-                          </section>
-
-                          <section className="flex  mt-[18px]">
-                            <span className="flex ml-2 items-center h-6 px-3 text-xs  text-green-800">
-                              {data?.target}
-                            </span>
-                          </section>
-                        </div>
-                      </section>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            </div>
-            <div></div>
-          </div>
-          <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 w-96">
-              <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                {'CRM Templates'}
-              </h2>
-
-              <div className=" justify-between mb-4">
-                {[
-                  { btnTxt: 'On Booking', target: 'CRM Customer' },
-                  { btnTxt: 'On Payment Request', target: 'CRM Customer' },
-                  ,
-                  { btnTxt: 'On Payment Receival', target: 'CRM Customer' },
-                  { btnTxt: 'On Payment Receival', target: 'Customer' },
-                  { btnTxt: 'On Creation', target: 'Customer' },
-                  { btnTxt: 'On Creation', target: 'Sales Executive' },
-                  { btnTxt: 'On Creation', target: 'Manager' },
-                  { btnTxt: 'On Creation', target: 'Administrator' },
-                  { btnTxt: 'On Update', target: 'Customer' },
-                  { btnTxt: 'On Update', target: 'Sales Executive' },
-                  { btnTxt: 'On Update', target: 'Manager' },
-                  { btnTxt: 'On Update', target: 'Administrator' },
-                  { btnTxt: 'On Delete Info', target: 'Customer' },
-                  { btnTxt: 'On Delete Info', target: 'Sales Executive' },
-                  { btnTxt: 'On Delete Info', target: 'Manager' },
-                  { btnTxt: 'On Delete Info', target: 'Administrator' },
-                  { btnTxt: 'On Status Change', target: 'Customer' },
-                  { btnTxt: 'On Status Change', target: 'Sales Executive' },
-                  { btnTxt: 'On Status Change', target: 'Manager' },
-                  { btnTxt: 'On Status Change', target: 'Administrator' },
-                  { btnTxt: 'On Re-assignment', target: 'Customer' },
-                  { btnTxt: 'On Re-assignment', target: 'Sales Executive' },
-                  { btnTxt: 'On Re-assignment', target: 'Manager' },
-                  { btnTxt: 'On Re-assignment', target: 'Administrator' },
-                  { btnTxt: 'On First Follow Up', target: 'Customer' },
-                  { btnTxt: 'On First Follow Up', target: 'Sales Executive' },
-                  { btnTxt: 'On First Follow Up', target: 'Manager' },
-                  { btnTxt: 'On First Follow Up', target: 'Administrator' },
-
-                  { btnTxt: 'On Dead Status', target: 'Customer' },
-
-                  { btnTxt: 'On Dead Status', target: 'Sales Executive' },
-
-                  { btnTxt: 'On Dead Status', target: 'Manager' },
-
-                  { btnTxt: 'On Dead Status', target: 'Administrative' },
-                  { btnTxt: 'Bring To Live', target: 'Customer' },
-                  { btnTxt: 'Bring To Live', target: 'Sales Executive' },
-                  { btnTxt: 'Bring To Live', target: 'Manager' },
-                  { btnTxt: 'Bring To Live', target: 'Administrator' },
-                  { btnTxt: 'On Delete Booking', target: 'Customer' },
-                  { btnTxt: 'On Delete Booking', target: 'Sales Executive' },
-                  { btnTxt: 'On Delete Booking', target: 'Manager' },
-                  { btnTxt: 'On Delete Booking', target: 'Administrator' },
-                  { btnTxt: 'On Cancel Booking', target: 'Customer' },
-                  { btnTxt: 'On Cancel Booking', target: 'Sales Executive' },
-                  { btnTxt: 'On Cancel Booking', target: 'Manager' },
-                  { btnTxt: 'On Cancel Booking', target: 'Administrator' },
-                  {
-                    btnTxt: 'On Initialize Approve Reject',
-                    target: 'Customer',
-                  },
-                  {
-                    btnTxt: 'On Initialize Approve Reject',
-                    target: 'Sales Executive',
-                  },
-                  { btnTxt: 'On Initialize Approve Reject', target: 'Manager' },
-                  {
-                    btnTxt: 'On Initialize Approve Reject',
-                    target: 'Administrator',
-                  },
-                ].map((data, i) => (
-                  <section>
-                    <div className="flex flex-row justify-between">
-                      <section className="flex  mt-[18px]">
-                        <button>
-                          <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                            <PencilIcon
-                              className="h-3 w-3 mr-1"
-                              aria-hidden="true"
-                            />
-                            {data?.btnTxt}
-                          </span>
-                        </button>
-                      </section>
-
-                      <section className="flex  mt-[18px]">
-                        <span className="flex ml-2 items-center h-6 px-3 text-xs  text-green-800">
-                          {data?.target}
-                        </span>
-                      </section>
-                    </div>
-                  </section>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 w-96">
-              <h2 className="text-sm font-semibold pb-2 border-b border-grey">
-                {'Finance Templates'}
-              </h2>
-
-              <div className=" justify-between mb-4">
-                {[
-                  { btnTxt: 'On Payment', target: 'Sales Executive' },
-                  { btnTxt: 'On Payment', target: 'Customer' },
-                  { btnTxt: 'On Payment', target: 'Manager' },
-                  { btnTxt: 'On Payment', target: 'Sales Executive' },
-                  { btnTxt: 'On Payment', target: 'Administrator' },
-                  { btnTxt: 'On Delete', target: 'Customer' },
-                  { btnTxt: 'On Delete', target: 'Sales Executive' },
-                  { btnTxt: 'On Delete', target: 'Manager' },
-                  { btnTxt: 'On Delete', target: 'Administrator' },
-                  { btnTxt: 'On Refund Pay', target: 'Customer' },
-                  { btnTxt: 'On Refund Pay', target: 'Sales Executive' },
-                  { btnTxt: 'On Refund Pay', target: 'Manager' },
-                  { btnTxt: 'On Refund Pay', target: 'Administrator' },
-                  { btnTxt: 'On Booking', target: 'Customer' },
-                  { btnTxt: 'On Booking', target: 'Sales Executive' },
-                  { btnTxt: 'On Booking', target: 'Manager' },
-                  { btnTxt: 'On Booking', target: 'Administrator' },
-                  { btnTxt: 'On Prepone', target: 'Customer' },
-                  { btnTxt: 'On Prepone', target: 'Sales Executive' },
-                  { btnTxt: 'On Prepone', target: 'Manager' },
-                  { btnTxt: 'On Prepone', target: 'Administrator' },
-                  { btnTxt: 'On Postpone', target: 'Customer' },
-                  { btnTxt: 'On Postpone', target: 'Sales Executive' },
-                  { btnTxt: 'On Postpone', target: 'Manager' },
-                  { btnTxt: 'On Postpone', target: 'Administrator' },
-                  { btnTxt: 'On Payment', target: 'Customer' },
-                  { btnTxt: 'On Payment', target: 'Sales Executive' },
-                  { btnTxt: 'On Payment', target: 'Manager' },
-                  { btnTxt: 'On Payment', target: 'Administrator' },
-
-                  { btnTxt: 'On Delete Payment', target: 'Customer' },
-                  { btnTxt: 'On Delete Payment', target: 'Sales Executive' },
-                  { btnTxt: 'On Delete Payment', target: 'Manager' },
-                  { btnTxt: 'On Delete Payment', target: 'Administrator' },
-                  { btnTxt: 'On Refund Pay', target: 'Customer' },
-                  { btnTxt: 'On Refund Pay', target: 'Sales Executive' },
-                  { btnTxt: 'On Refund Pay', target: 'Manager' },
-                  { btnTxt: 'On Refund Pay', target: 'Administrator' },
-                  { btnTxt: 'On Refund Delete', target: 'Customer' },
-                  { btnTxt: 'On Refund Delete', target: 'Sales Executive' },
-                  { btnTxt: 'On Refund Delete', target: 'Manager' },
-                  { btnTxt: 'On Refund Delete', target: 'Administrator' },
-                  { btnTxt: 'On Refund Pay', target: 'Customer' },
-                  { btnTxt: 'On Refund Pay', target: 'Sales Executive' },
-                  { btnTxt: 'On Refund Pay', target: 'Manager' },
-                  { btnTxt: 'On Refund Pay', target: 'Administrator' },
-                ].map((data, i) => (
-                  <section>
-                    <div className="flex flex-row justify-between">
-                      <section className="flex  mt-[18px]">
-                        <button>
-                          <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                            <PencilIcon
-                              className="h-3 w-3 mr-1"
-                              aria-hidden="true"
-                            />
-                            {data?.btnTxt}
-                          </span>
-                        </button>
-                      </section>
-
-                      <section className="flex  mt-[18px]">
-                        <span className="flex ml-2 items-center h-6 px-3 text-xs  text-green-800">
-                          {data?.target}
-                        </span>
-                      </section>
-                    </div>
-                  </section>
-                ))}
-              </div>
-            </div>
-          </section>
-        </div>
-      )} */}
 
 
 
 {selCat === 'hr_status' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {'Hr Notifications'}
               </h2>
@@ -1774,7 +1057,7 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
         </div>
       )}
 
-
+</div>
 
 
 
@@ -1786,7 +1069,15 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
         widthClass="max-w-2xl"
         wbPayload={wbSelPayload}
       />
+      </div>
+
+</div>
+
+
+
     </>
+     
+
   )
 }
 
