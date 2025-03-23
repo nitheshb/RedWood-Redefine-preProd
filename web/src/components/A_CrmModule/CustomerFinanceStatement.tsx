@@ -29,7 +29,7 @@ const CrmUnitPsHome = ({
 
   return (
     <>
-      <div className=" border-gray-800 flex flex-row justify-between bg-[#F6F7FE]">
+      <div className=" border-b border-gray-300  flex flex-row justify-between ">
         <ul
           className="flex justify-  rounded-t-lg  ml-2"
           id="myTab"
@@ -48,25 +48,25 @@ const CrmUnitPsHome = ({
           ].map((d, i) => {
             return (
               <li key={i} className="mr-2 font-bodyLato" role="presentation">
-                <button
-                  className={`inline-block py-3 mr-4 text-sm font-medium text-center rounded-t-lg border-b-2  hover:text-blue hover:border-gray-300   ${
-                    financeMode === d.val
-                      ? 'border-[#1B97F2] border-b-3'
-                      : 'border-transparent'
-                  }`}
-                  type="button"
-                  role="tab"
-                  onClick={() => setFinanceMode(d.val)}
-                >
-                  {`${d.lab} `}
+  
 
-                </button>
+<button
+            className={`flex items-center gap-2 py-3 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 hover:text-blue  ${
+              financeMode === d.val ? 'border-black text-black' : 'border-transparent'
+            }`}
+            type="button"
+            role="tab"
+            onClick={() => setFinanceMode(d.val)}
+          >
+            <img alt="" src="/temp2.png" className="h-5 w-5" />
+            <span>{d.lab}</span>
+          </button>
               </li>
             )
           })}
         </ul>
 
-        <section className="flex flex-row bg-[#F6F7FE]">
+        <section className="flex flex-row">
   
           <div className="w-full flex items-center mt-3 mr-3 ">
             <label

@@ -120,7 +120,7 @@ const CustomersSearchHome2 = ({ project }) => {
                       scope="col"
                       className="px-6 py-3 rounded-tl-lg text-left text-xs font-semibold text-[#0D027D]  tracking-wider"
                     >
-                      Customer Name box
+                      Customer Name
                     </th>
                     <th
                       scope="col"

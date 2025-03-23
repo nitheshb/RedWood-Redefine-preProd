@@ -1062,9 +1062,11 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     </div>
                                     <div className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide">
                                       ₹
-                                      {finData?.T_elgible?.toLocaleString(
+                                      {/* {finData?.T_elgible?.toLocaleString(
                                         'en-IN'
-                                      )}
+                                      )} */}
+                                      {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
+
                                     </div>
                                   </section>
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full">
@@ -1095,10 +1097,8 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       Balance
                                     </div>
                                     <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
-                                      ₹
-                                      {finData?.T_elgible_balance <0 ? 0:finData?.T_elgible_balance?.toLocaleString(
-                                        'en-IN'
-                                      )}
+                                    ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
+
                                     </div>
                                   </section>
                                 </div>
@@ -1128,9 +1128,8 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
                                         Unit Cost: ₹
                                         <div>
-                                          {(
-                                            finData?.T_total || finData?.T_Total
-                                          )?.toLocaleString('en-IN')}
+                                        {Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
+
                                         </div>
                                       </p>
 
@@ -1138,19 +1137,16 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         Paid: ₹
                                         <div>
                                           {' '}
-                                          {(
-                                            (finData?.T_review || 0) +
-                                            (finData?.T_approved || 0)
-                                          ).toLocaleString('en-IN') || 0}
+                                          {Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+
                                         </div>
                                       </div>
 
                                       <div className="text-zinc-800 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
                                         Balance:₹
                                         <div className="text-zinc-900 text-[11px] font-bold  tracking-wide">
-                                          {finData?.T_balance?.toLocaleString(
-                                            'en-IN'
-                                          )}
+                                        {Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
+
                                         </div>
                                       </div>
                                     </section>

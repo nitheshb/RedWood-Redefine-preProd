@@ -50,7 +50,7 @@ const UsersAdminPage = () => {
     <>
       <MetaTags title="UsersAdmin" description="UsersAdmin page" />
 
-      <div className="flex w-screen h-screen text-gray-700">
+      <div className="flex overflow-y-hidden flex-row overflow-auto h-[100vh]   text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
         <SlimSideMenuBar
           pgName={'hrModule'}
           sourceLink={'hrModule'}
@@ -59,10 +59,12 @@ const UsersAdminPage = () => {
           viewable={viewable}
         />
 
-        <div className="flex flex-col flex-grow">
+        <div className="flex-grow   items-center overflow-y-auto no-scrollbar  h-[98%]  px-300  pt-300">
           {/* <HeadNavBar /> */}
           <HeadNavBar2 selModule={selModule} setSelModule={setSelModule} setViewable={setViewable} />
-          <div className="flex-grow  overflow-auto no-scrollbar  text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
+          <div className='mt-1 mx-1 rou'>
+
+          <div className="flex-grow overflow-hidden overflow-auto no-scrollbar bg-white rounded-lg  text-gray-700 ">
             <div className="flex flex-row justify-between items-center flex-shrink-0  px-0  pl-0  ">
               {/* <h1 className="text-lg font-medium">redefine.</h1> */}
 
@@ -238,6 +240,9 @@ const UsersAdminPage = () => {
         widthClass="max-w-4xl"
       />
           </div>
+
+          </div>
+  
         </div>
       </div>
     </>
