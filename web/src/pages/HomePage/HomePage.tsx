@@ -181,17 +181,17 @@ const HomePage = () => {
                     <section className="w-full  mb-8 leading-7 text-gray-900 bg-white  rounded-lg">
                       <div className="box-border px-4 w-full border-solid sm:px-6 md:px-6 lg:px-16 max-w-8xl mx-auto px-6 py-8 ">
                         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
-                          <div className="flex items-center flex-shrink-0  px-0  pl-0 border-b border-grey  mb-2">
-                            <span className="flex items-center">
+                          <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-2">
+                            {/* <span className="flex items-center">
                               <img
                                 className="w-16 h-16"
                                 alt=""
-                                src="/apart.svg"
+                                src="/paymentsbank.svg"
                               ></img>
                               <span className="relative z-10 flex items-center w-auto text-4xl font-bold leading-none pl-0 mt-[18px]">
                                 {viewable}
                               </span>
-                            </span>
+                            </span> */}
                             {/* <section className="flex ml-auto mt-[18px]">
                               <button>
                                 <span className="flex ml-2 items-center h-7 px-3  text-xs font-medium text-[#fff] bg-[#0891B2] rounded-full">

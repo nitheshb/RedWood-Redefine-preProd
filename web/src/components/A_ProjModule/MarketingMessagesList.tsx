@@ -74,78 +74,16 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
 
 
 <div className="relative z-10">
-{/* 
-        <div className="flex justify-between items-center mb-6">
 
-          <div>
-          <img
-          src="/iconheading.svg" // Use path from 'public'
-          alt="Icon Heading"
-          width={40} // Adjust size
-          height={40}
-        />
-        <div>
-
-        <h1 className="text-2xl text-[#33475B] font-semibold mb-2">Masters Setup</h1>
-        <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p>
-
-        </div>
-       
-          </div>
-
-        </div> */}
-
-
-{/* <div className="flex justify-between items-center mb-6">
-  <div>
-
-    <div className="flex items-center gap-2">
-      <img
-        src="/iconheading.svg" // Use path from 'public'
-        alt="Icon Heading"
-        width={40} // Adjust size
-        height={40}
-      />
-      <h1 className="text-2xl text-[#33475B] font-semibold">
-        Masters Setup
-      </h1>
-    </div>
-
-
-    <p className="text-gray-600">
-      This area is usually used to set up values for the dropdowns and other reusable options.
-    </p>
-  </div>
-</div> */}
-
-{/* <div className="flex justify-between items-center mb-6">
-  <div className="flex items-center gap-x-3">
-    <img
-      src="/iconheading.svg"
-      alt="Icon Heading"
-      width={40}
-      height={40}
-    />
-
-    <div>
-      <h2 className="text-2xl text-[#33475B] font-semibold">
-        Masters Setup
-      </h2>
-      <p className="text-gray-600">
-        This area is usually used to set up values for the dropdowns and other reusable options.
-      </p>
-    </div>
-  </div>
-</div> */}
 
 <div className="flex justify-between items-center mb-6">
   <div className="flex flex-col">
-    {/* Icon + Masters Setup Text in a Row */}
+  
     <div className="flex items-center gap-2">
       <img
-        src="/iconheading.svg" // Use path from 'public'
+        src="/iconheading.svg"
         alt="Icon Heading"
-        width={30} // Adjust size
+        width={30} 
         height={30}
       />
       <h1 className="text-2xl text-[#33475B] font-semibold">
@@ -153,7 +91,7 @@ const MarkeingMessagesList = ({ title, pId, data }) => {
       </h1>
     </div>
 
-    {/* Description starts directly under "Masters Setup" */}
+
     <p className="text-gray-600 ml-10">
       This area is usually used to set up values for the dropdowns and other reusable options.
     </p>

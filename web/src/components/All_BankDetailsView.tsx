@@ -165,10 +165,30 @@ const AllBankDetailsView = ({ title, pId, data }) => {
       <div className="mr-10 mt-4">
         <div className="max-w-7xl">
           <section className="flex flex-row justify-between items-center p-4  rounded-lg mb-6">
-            <h2 className="text-lg font-semibold ml-5 text-white"></h2>
+            {/* <h2 className="text-lg font-semibold ml-5 text-black">{title}</h2> */}
+              {/* <span className="flex gap-2 items-center">
+                              <img
+                                className="w-12 h-12"
+                                alt=""
+                                src="/paymentsbank.svg"
+                              ></img>
+                              <span className="relative z-10 flex items-center w-auto text-2xl font-bold leading-none pl-0 mt-[18px]">
+                                {title}
+                              </span>
+              </span> */}
+
+                 <section className='flex flex-row'>
+                <img className="w-11 h-11" alt=""                    
+                src="/paymentsbank.svg"
+                ></img>
+
+                <h2 className="ml-2 mt-2  text-2xl text-[#33475B] font-semibold leading-light font-Playfair">
+                  {title}
+                </h2>
+                </section>
 
             <button
-                 className="flex items-center bg-white hover:bg-gray-100 text-indigo-700 px-4 py-2 rounded-lg transition duration-200 shadow-sm"
+                 className="flex items-center  bg-[#E5E7EB] hover:bg-gray-100 text-black px-4 py-2 rounded-lg transition duration-200 shadow-sm"
                 onClick={() => {
                   setSliderInfo({
                     open: true,
@@ -195,11 +215,11 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
 
           
-          <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {bankDetialsA.map((bankDe, i) => {
               return (
                 <section className="inline-block" key={i}>
-                  <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-gray-100">
+                  <div className="bg-[#F5F8FA] p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-gray-100">
                     <div className=" justify-between mb-4">
                       <div>
                         <div className="flex flex-row justify-between items-center border-b pb-3">
@@ -221,9 +241,9 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
 
                           <div className="flex items-center">
-                            <span className="bg-green-50 text-green-700 px-2 py-1 text-xs rounded-full mr-2">
+                            {/* <span className="bg-green-50 text-green-700 px-2 py-1 text-xs rounded-full mr-2">
                               {bankDe?.preferredtype || 'Standard'}
-                            </span>
+                            </span> */}
                             <TrashIcon
                               onClick={() => openDeleteDialog(bankDe)}
                               className="h-5 w-5 text-gray-400 hover:text-red-500 cursor-pointer transition-colors"
@@ -261,6 +281,22 @@ const AllBankDetailsView = ({ title, pId, data }) => {
   
                     <div className="space-y-4 py-3">
                       <div className="grid grid-cols-2 gap-4">
+
+                        
+
+                      <div>
+                        <span className="">
+                       
+                            </span>
+                        </div>
+
+
+                        <div>
+                        <span className="bg-green-50 text-green-700 px-2 py-1 text-xs rounded-full mr-2">
+                              {bankDe?.preferredtype || 'Standard'}
+                            </span>
+                        </div>
+
                         <div>
                           <p className="text-xs text-gray-500 mb-1">Account No</p>
                           {/* <p className="text-sm text-neutral-600 group-hover:text-red-600 duration-150">
@@ -285,6 +321,9 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                             </button>
                           </div>
                         </div>
+
+
+
                         <div>
                           <p className="text-xs text-gray-500 mb-1">IFSC Code</p>
                           <p className="text-sm font-medium text-gray-700">
