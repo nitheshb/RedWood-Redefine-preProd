@@ -52,13 +52,11 @@ export default function FileUpload  ({ files, setFiles, removeFile }) {
 
   return (
     <>
-      <div className="file-card">
+      <div className="file-card ">
         <div className="file-inputs">
           <input type="file" onChange={uploadHandler} />
-          <button>
-            {/* <i>
-              <FontAwesomeIcon icon={faPlus} />
-            </i> */}
+          <button className=''>
+
             Upload
           </button>
         </div>
@@ -66,6 +64,7 @@ export default function FileUpload  ({ files, setFiles, removeFile }) {
         <p className="main">Supported files</p>
         <p className="info">PDF, JPG, PNG</p>
       </div>
+      
     </>
   )
 }

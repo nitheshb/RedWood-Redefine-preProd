@@ -134,8 +134,12 @@ const UserAccessTable = ({showCompletedTasks}) => {
   return (
 
     <>
-    <div className="h-screen w-full p-4 flex flex-col">
-  <Box className="flex  mb-[0.5px] bg-white py-4">
+
+    <div className='p-1 rounded-lg '>
+
+
+    <div className="h-screen w-full bg-white rounded-lg  flex flex-col">
+  {/* <Box className="flex  mb-[0.5px] bg-white rounded-lg  py-4">
         <StyledButton
           variant="outlined"
           size="small"
@@ -202,9 +206,44 @@ const UserAccessTable = ({showCompletedTasks}) => {
         >
           Admin Team
         </StyledButton>
-      </Box>
+      </Box> */}
 
-      <div className="flex-1 mb-10 border rounded-lg shadow-sm overflow-hidden bg-white">
+
+<Box className="flex items-center mb-[0.5px] bg-white border border-gray-300 rounded-lg py-4 px-2">
+
+
+
+  {[
+    { key: 'all', label: 'All', icon: <EyeIcon className="h-5 w-5 mr-1" /> },
+    { key: 'admin', label: 'ADMIN' },
+    { key: 'crm', label: 'CRM' },
+    { key: 'hr', label: 'HR' },
+    { key: 'legal', label: 'LEGAL' },
+    { key: 'project', label: 'PROJECT' },
+    { key: 'sales', label: 'SALES' },
+    { key: 'admin-team', label: 'Admin Team' },
+  ].map(({ key, label, icon }) => (
+    <StyledButton
+      key={key}
+      variant="outlined"
+      size="small"
+      isCategoryMatched={category === key}
+      onClick={() => setCategory(key)}
+      className={`px-3 py-1 mx-1 ${
+        // category === key ? 'border-b-2 border-blue-500' : ''
+        category === key ? 'border-b-2 border-blue-500' : 'border-none'
+      }`}
+    >
+      {/* {icon} */}
+      <img alt="" src="/temp2.png" className="h-5 w-5 mr-2" />
+
+      {label}
+    </StyledButton>
+  ))}
+</Box>
+
+
+      <div className="flex-1 mb-10 border  shadow-sm overflow-hidden bg-white">
       <div className="h-full overflow-auto">
           <table className="w-full border-collapse table-fixed">
             <thead>
@@ -264,6 +303,10 @@ const UserAccessTable = ({showCompletedTasks}) => {
         </div>
       </div>
     </div>
+
+    </div>
+
+
 
     </>
   )

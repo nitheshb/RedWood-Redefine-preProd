@@ -216,22 +216,22 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                 <thead>
                   {' '}
                   <tr className="  h-8 ">
-                    <th className="w-[40%] text-[12px] px-3 text-left   tracking-wide   text-[#3D3D3D]   rounded-tl-[10px]  bg-[#EDEDED] ">
+                    <th className="w-[40%] text-[12px] px-3 text-left   tracking-wide   text-[#3D3D3D]   rounded-tl-[10px]  bg-[#E8E6FE] ">
                     Charges
                     </th>
                     {/* <th className="w-[10%] text-[10px] text-right text-gray-400  text-[#823d00]  tracking-wide uppercase">
                       Payment Timeline
                     </th> */}
-                    <th className="w-[15%] text-[12px] text-center  tracking-wide   text-[#3D3D3D]     bg-[#EDEDED] ">
+                    <th className="w-[15%] text-[12px] text-center  tracking-wide   text-[#3D3D3D]     bg-[#E8E6FE] ">
                       Eligible
                     </th>
-                    <th className="w-[15%] text-[12px]  px-2  text-right tracking-wide    text-[#3D3D3D]     bg-[#EDEDED] ">
+                    <th className="w-[15%] text-[12px]  px-2  text-right tracking-wide    text-[#3D3D3D]     bg-[#E8E6FE] ">
                       Total inc GST
                     </th>
-                    <th className="w-[15%] text-[12px]  px-2 text-right    tracking-wide    text-[#3D3D3D]     bg-[#EDEDED] ">
+                    <th className="w-[15%] text-[12px]  px-2 text-right    tracking-wide    text-[#3D3D3D]     bg-[#E8E6FE] ">
                       Received
                     </th>
-                    <th className="w-[15%] text-[12px]  px-2 text-right  tracking-wide    text-[#3D3D3D] rounded-tr-[10px]     bg-[#EDEDED]  ">
+                    <th className="w-[15%] text-[12px]  px-2 text-right  tracking-wide    text-[#3D3D3D] rounded-tr-[10px]     bg-[#E8E6FE]  ">
                       Balance
                     </th>
 

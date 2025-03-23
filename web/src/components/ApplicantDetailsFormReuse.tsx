@@ -208,7 +208,7 @@ leadPayload?.Mobile ||
 
 
 
-      
+
     city2p:
     selUnitDetails?.customerDetailsObj?.city2p ||
     customerInfo?.city2p ||
@@ -357,7 +357,7 @@ leadPayload?.Mobile ||
 
         link.parentNode.removeChild(link)
 
-    
+
       })
       .catch((error) => {
         console.error('Error downloading image:', error)
@@ -477,7 +477,7 @@ leadPayload?.Mobile ||
       {(formik) => (
         <Form className="space-y-4">
           <div>
- 
+
             <section
               className="  bg-[#fff] rounded-[20px] border pb-4 "
               style={{ boxShadow: '0 1px 12px #f2f2f2' }}
@@ -505,7 +505,7 @@ leadPayload?.Mobile ||
                       <div></div>
                     </div>
 
-                
+
                   </div>
                 </section>
               </div>
@@ -523,7 +523,7 @@ leadPayload?.Mobile ||
                     </label>
 
 
-                   
+
 
 
                     <div className=' rounded-lg'>
@@ -541,7 +541,7 @@ leadPayload?.Mobile ||
                             Applicant Linked to Lead
                           </div>}
                     </div>
- 
+
                   </span>
                 </section>
 
@@ -557,7 +557,7 @@ leadPayload?.Mobile ||
                         value={givenPhNo1}
                         onChange={(value) => {
                           console.log('value is ', value.value)
-                      
+
                           searchPhoneNoFun(value.value)
                         }}
                         options={{}}
@@ -652,7 +652,7 @@ leadPayload?.Mobile ||
                         <CustomSelect
                           name="MaritualStatus"
                           label="Status"
-                          labelClassName="text-black" 
+                          labelClassName="text-black"
 
                           className="input"
                           onChange={(value) => {
@@ -704,15 +704,15 @@ leadPayload?.Mobile ||
                           ]}
                           dateFormat="MMM dd, yyyy"
                         />
-      
-                
+
+
                       </div>
                     </section>
                   </div>
 
-    
+
                 </div>
-                
+
                 {/* row 3 */}
                 <div className="flex flex-row justify-between pt-2 mb-2">
                   <section className="w-12/12 w-full">
@@ -1038,7 +1038,7 @@ leadPayload?.Mobile ||
 
 
 
-                   
+
 
 
                   <div className="w-full ">
@@ -1106,7 +1106,7 @@ leadPayload?.Mobile ||
 
 
                               </section>
-   
+
 
 
 
@@ -1239,12 +1239,12 @@ leadPayload?.Mobile ||
       }
     }}
   />
- 
+
 </div>
                 </section>
 
                 </section>
-  
+
 
 
 
@@ -1396,15 +1396,8 @@ leadPayload?.Mobile ||
               </section>
             </section>
           </div>
-<<<<<<< HEAD
-
-          
-          <div className=" flex    flex-row-reverse">
-            <button type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save</button>
-=======
           <div className=" flex flex-row-reverse">
-            <button   type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save box</button>
->>>>>>> a340da95493893feecd8250208420043944a729e
+            <button   type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save</button>
 
       <button onClick={handleClone} className="mb-4  md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Save & Add New Applicant</button>
       {index !=0 && <button onClick={()=>setIsDialogOpen(true)} className="mb-4  md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 mb-4 mr-2">Delete</button>}
@@ -1492,7 +1485,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
     index
   ) => {
     setTimeout(() => {
-    
+
       setSavedForms((prev) => {
         const { [formId]: _, ...rest } = prev
         return rest
@@ -1521,7 +1514,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
       x.custObj4 = values
     }
 
-  
+
     console.log('uploading values are', x.leadId)
     updateUnitCustomerDetailsTo(
       orgId,
@@ -1563,7 +1556,7 @@ const CloneableEmailForm = ({ selUnitDetails, customerInfo, setCustomerInfo, lea
             handleClone={handleClone}
             handleDelete={()=>handleDelete(form.id)}
             index={i}
-            applicantDetailsA={applicantDetailsA} 
+            applicantDetailsA={applicantDetailsA}
           />
           {savedForms[form.id] && (
             <span className="mt-4">

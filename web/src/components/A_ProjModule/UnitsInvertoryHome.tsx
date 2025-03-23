@@ -17,12 +17,19 @@ import 'flowbite'
 import DropDownSearchBar from '../dropDownSearchBar'
 import 'src/styles/myStyles.css'
 import FloordetailsSearch from '../Floordetails/FloordetailsInSearch'
+
+import A_Crm_Map from '../A_CrmModule/A_Crm_Map'
+
+
+
+
 const UnitsInventoryHome = ({ project }) => {
   const { user } = useAuth()
 
   const { orgId } = user
   const [customerRawData, setCustomerRawData] = useState([])
   const [phases, setPhases] = useState([])
+  const [filteredUnits, setFilteredUnits] = useState([])
 
   const [isOpenSideView, setIsOpenSideView] = useState(false)
   const [selPhaseName, setSelPhaseName] = useState('')
@@ -509,7 +516,7 @@ const UnitsInventoryHome = ({ project }) => {
   }
 
   return (
-    <section className=" mt-2  py-6 mb-8 leading-7 text-gray-900 bg-white  rounded-lg  ">
+    <section className=" mt-1  py-6 mb-8 leading-7 text-gray-900 bg-white  rounded-lg  ">
       <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full  ">
         <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 flex flex-col justify-center items-center ">
           <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-1">
@@ -523,7 +530,7 @@ const UnitsInventoryHome = ({ project }) => {
             </Link>
           </div>
         </div>
-        <div className="mt-1 ">
+        <div className=" ">
           {/* <form className=""> */}
           <div className="flex justify-center items-center  flex flex-col">
             <div className="relative  p-2.5 pb-6">
@@ -538,7 +545,7 @@ const UnitsInventoryHome = ({ project }) => {
                   selProjectIs={projectDetails}
                   dropDownItemsA={customerRawData}
                 />
-    
+
                 <DropDownSearchBar
                   label={'Availablity'}
                   type={'All Status'}
@@ -586,6 +593,13 @@ const UnitsInventoryHome = ({ project }) => {
             </div>
           </div>
         </div>
+
+
+        {/* <div>
+          <A_Crm_Map filteredUnits={filteredUnits} />
+        </div> */}
+
+
         {projectDetails == undefined && (
           <div className="py-8 px-8 mt-10 flex flex-col items-center bg-red-100 rounded">
             <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
@@ -613,6 +627,8 @@ const UnitsInventoryHome = ({ project }) => {
               phaseFeed={phases}
               unitsFeedA={unitsFeedA}
               filUnitsFeedA={filUnitsFeedA}
+              filteredUnits={filteredUnits}
+              setFilteredUnits = {setFilteredUnits}
               BlockFeed={blocks}
               selBlock={selBlock}
               setSelBlock={setSelBlock}

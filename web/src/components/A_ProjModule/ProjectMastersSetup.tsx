@@ -49,10 +49,30 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
   return (
     <>
        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-2xl font-semibold mb-2">Masters Setup</h1>
+          {/* <div>
+            <h1 className="text-2xl text-[#33475B]  font-semibold mb-2">Masters Setup</h1>
             <p className="text-gray-600">This area is usually used to setting up values for the dropdowns and other resuable options</p>
-          </div>
+          </div> */}
+
+<div className="flex flex-col">
+  
+  <div className="flex items-center gap-2">
+    <img
+      src="/iconheading.svg"
+      alt="Icon Heading"
+      width={30} 
+      height={30}
+    />
+    <h1 className="text-2xl text-[#33475B] font-semibold">
+      Masters Setup
+    </h1>
+  </div>
+
+
+  <p className="text-gray-600 ml-10">
+    This area is usually used to set up values for the dropdowns and other reusable options.
+  </p>
+</div>
 
         </div>
 

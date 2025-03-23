@@ -60,6 +60,7 @@ import units4 from '../../../public/units4.png'
 
 
 import Dimensions from '../../../public/Dimensions.png'
+import BrokerageDetails from './A_BrokerageDetails/BrokerageDetails'
 
 
 
@@ -1712,6 +1713,16 @@ export default function UnitFullSummary({
       )}
 
       {selFeature === 'legal_info' && <></>}
+
+
+      {selFeature === 'brokerage_info' && <>
+
+<BrokerageDetails openUserProfile={openUserProfile} selUnitDetails={selCustomerPayload} /> </>}
+
+
+
+
+
       {selFeature === 'cancel_booking' && <>
 
       <CancelUnitForm openUserProfile={openUserProfile} selUnitDetails={selCustomerPayload} /> </>}
@@ -1754,7 +1765,7 @@ export default function UnitFullSummary({
                 <path d="M8.64453 17.868H12.6445M8.64453 12.4513H16.6445" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
 
-                    ), lab: 'Applicant details', val: 'applicant_info' },
+                    ), lab: 'Applicant Details', val: 'applicant_info' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.6465 6.53467H21.6465" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -1764,7 +1775,7 @@ export default function UnitFullSummary({
                 <path d="M3.64648 18.9276C3.64648 18.9276 4.64648 19.5794 5.14648 20.5347C5.14648 20.5347 6.64648 16.7847 8.64648 15.5347" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
 
-                    ), lab: 'Unit details', val: 'unit_information' },
+                    ), lab: 'Unit Details', val: 'unit_information' },
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20.6625 2.53467C19.5491 2.53467 18.6465 5.22096 18.6465 8.53467H20.6625C21.6341 8.53467 22.1199 8.53467 22.4206 8.19922C22.7214 7.86376 22.669 7.422 22.5643 6.53848C22.2879 4.2061 21.5408 2.53467 20.6625 2.53467Z" stroke="currentColor" stroke-width="1.5"/>
@@ -1792,7 +1803,7 @@ export default function UnitFullSummary({
                 <path d="M15.8965 14.5347C15.8965 15.5012 15.113 16.2847 14.1465 16.2847C13.18 16.2847 12.3965 15.5012 12.3965 14.5347C12.3965 13.5682 13.18 12.7847 14.1465 12.7847C15.113 12.7847 15.8965 13.5682 15.8965 14.5347Z"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
 
-                    ), lab: 'Loan details', val: 'loan_info' },
+                    ), lab: 'Loan Details', val: 'loan_info' },
 
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1801,7 +1812,7 @@ export default function UnitFullSummary({
                 <path d="M15.929 19.5391C15.87 18.6504 15.7645 17.7005 15.3282 16.6264C14.956 15.7103 15.0597 13.5552 17.1465 13.5552C19.2333 13.5552 19.3129 15.7103 18.9407 16.6264C18.5043 17.7005 18.423 18.6504 18.364 19.5391M21.6465 22.5347H12.6465V21.289C12.6465 20.8425 12.9129 20.4501 13.2993 20.3275L15.5541 19.6117C15.7149 19.5606 15.8813 19.5347 16.0486 19.5347H18.2444C18.4117 19.5347 18.5781 19.5606 18.7389 19.6117L20.9937 20.3275C21.3801 20.4501 21.6465 20.8425 21.6465 21.289V22.5347Z"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
 
-                    ), lab: 'Brokerage  details', val: 'brokerage_info' },
+                    ), lab: 'Brokerage Details', val: 'brokerage_info' },
 
                     { icon: (
                       <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1084,13 +1084,13 @@ return
     }
     return null;
   };
-  
+
 
 
 const CustomTooltiptwo = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white p-2 shadow-lg rounded-md text-sm border border-gray-200">
+     <div classNam e="bg-white p-2 shadow-lg rounded-md text-sm border border-gray-200">
         <p className="text-gray-700 font-medium">
           {payload[0]?.name}: ₹{payload[0]?.value?.toLocaleString('en-IN') ?? '0'}
         </p>
@@ -1233,7 +1233,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                             setAssigner={setStatusFun}
                             usersList={StatusListA}
                             align={undefined}
-                          
+
                           />
                         </div>
                       )}
@@ -1247,7 +1247,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                     </div>
                   </section>
                 { (user?.role.includes('crm-manager') || user?.role.includes('crm-executive') || user?.role.includes('admin'))&&  <button
-                    className="text-[10px]  rounded-2xl ml-2 bg-[#E3BDFF] px-5 border    border-[#E3BDFF] text-gray-800"
+                    className="text-[10px]  rounded-2xl ml-2 bg-[#E8E6FE] px-5 border    border-[#E3BDFF] text-gray-800"
                     onClickCapture={() => {
                       openPaymentFun()
                     }}
@@ -1289,7 +1289,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
             </div>
           </div>
         )}
-     
+
         {timeHide && (
           <>
             <div className="w-full border-b border-[#ebebeb]"></div>
@@ -1357,7 +1357,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
         >
           <Cell fill="#E3BDFF" />
           <Cell fill="#E5E7EB" />
-         
+
 
         </Pie>
         <Tooltip content={<CustomTooltip />} />
@@ -1458,7 +1458,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
       </section>
       <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
-        <div className="bg-[#E3BDFF] h-7 rounded-full w-1/3"></div>
+        <div className="bg-[#E8E6FE] h-7 rounded-full w-1/3"></div>
       </div>
       <div className="text-sm text-gray-500 mb-2">Total Cost</div>
       <div className="font-bold">₹ {((selCustomerPayload?.T_total || 0)

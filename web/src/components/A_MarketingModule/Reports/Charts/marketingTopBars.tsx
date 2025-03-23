@@ -1,4 +1,5 @@
 import React from 'react'
+import Home from '../Home'
 
 const CampaingsTopBarsComponent = () => {
   return (
@@ -182,6 +183,9 @@ const CampaingsTopBarsComponent = () => {
       <div className="p-4 text-center">
         Your overall performance is 98% higher than average.
       </div>
+
+
+      {/* <Home/> */}
 
 
 

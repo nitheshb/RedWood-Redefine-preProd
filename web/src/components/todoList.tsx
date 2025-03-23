@@ -409,9 +409,9 @@ const TodoListView = ({
 
   return (
     <>
-      <Box pb={4} className="font-sanF">
+      <div className="mb-4 font-sanF">
         <div className=" w-full font-sanF">
-          <div className="bg-white py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded">
+          <div className="bg-white py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded-lg">
             <div className="flex flex-row justify-between border-gray-200 border-b">
               <ul
                 className="flex w-full  rounded-t-lg  mx-"
@@ -438,22 +438,22 @@ const TodoListView = ({
                       >
                         <section className="flex flex-row text-[15px] h-[24px]  mb-0">
                           {' '}
-           
+
                           {/* 🏆 */}
                           {d.val === 'dept_tasks' && (
                             <>
                               <svg
-                                width="11"
-                                height="11"
+                                width="12"
+                                height="12"
                                 viewBox="0 0 15 15"
                                 className="fill-current mt-[4px] mr-1 text-purple-500"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path d="M14.1755 7.88376L11.9493 9.56253L12.7948 12.266C12.9314 12.6853 12.9331 13.1389 12.7997 13.5593C12.6663 13.9797 12.4049 14.3444 12.0544 14.5988C11.7099 14.8615 11.2925 15.0022 10.8643 15C10.436 14.9978 10.02 14.8528 9.67807 14.5866L7.50125 12.9323L5.3238 14.5846C4.97996 14.8458 4.56476 14.9876 4.13792 14.9898C3.71108 14.9919 3.29457 14.8542 2.94827 14.5966C2.60197 14.3389 2.34373 13.9745 2.21066 13.5557C2.0776 13.1369 2.07657 12.6854 2.20772 12.266L3.05318 9.56253L0.826957 7.88376C0.483556 7.62452 0.22828 7.25987 0.0975914 6.84188C-0.0330973 6.4239 -0.0325136 5.97396 0.0992584 5.55633C0.23103 5.13871 0.487251 4.77476 0.831323 4.51648C1.17539 4.25819 1.58972 4.11878 2.01511 4.11815H4.74974L5.57957 1.44762C5.71006 1.02726 5.96649 0.660548 6.31187 0.400372C6.65724 0.140196 7.07372 0 7.50125 0C7.92878 0 8.34526 0.140196 8.69064 0.400372C9.03601 0.660548 9.29244 1.02726 9.42293 1.44762L10.2528 4.11815H12.9849C13.4103 4.11878 13.8246 4.25819 14.1687 4.51648C14.5127 4.77476 14.769 5.13871 14.9007 5.55633C15.0325 5.97396 15.0331 6.4239 14.9024 6.84188C14.7717 7.25987 14.5164 7.62452 14.173 7.88376H14.1755Z"></path>
                               </svg>
-                              {`${d.lab} `}
 
-                              <span className="text-[#606c82] ml-1 text-[11px]  border border-[#dfe1e6] text-gray-800 px-1  rounded-full ml-[4px] text-[10px]">
+                             <span className='mt-[1px]'> {`${d.lab} `}</span>
+                             <span className="text-[#606c82] ml-1 text-[11px]  border border-[#dfe1e6] text-gray-800 px-1  rounded-full ml-[4px] text-[10px]">
                                 {
                                   taskListA?.filter(
                                     (d) =>
@@ -466,17 +466,11 @@ const TodoListView = ({
                           )}{' '}
                           {d.val === 'personal_tasks' && (
                             <>
-                              <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 15 20"
-                                className="fill-current mt-[5px] mr-1 text-purple-500"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M10.8692 11.6667H4.13085C3.03569 11.668 1.98576 12.1036 1.21136 12.878C0.436961 13.6524 0.00132319 14.7023 0 15.7975V20H15.0001V15.7975C14.9987 14.7023 14.5631 13.6524 13.7887 12.878C13.0143 12.1036 11.9644 11.668 10.8692 11.6667Z"></path>
-                                <path d="M7.49953 10C10.261 10 12.4995 7.76145 12.4995 5.00002C12.4995 2.23858 10.261 0 7.49953 0C4.7381 0 2.49951 2.23858 2.49951 5.00002C2.49951 7.76145 4.7381 10 7.49953 10Z"></path>
-                              </svg>
-                              {`${d.lab} `}
+
+                              <img className="w-6 h-6 mr-1" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/meetings.svg'}></img>
+
+<span className='mt-[1px]'> {`${d.lab} `}</span>
+
                               <span className="text-[#606c82] ml-1 text-[11px]  border border-[#dfe1e6] text-gray-800 px-1  rounded-full ml-[4px] text-[10px]">
                                 {personalData_F.length}
                               </span>
@@ -484,20 +478,9 @@ const TodoListView = ({
                           )}
                           {d.val === 'business_tasks' && (
                             <>
-                              <svg
-                                className="fill-current mt-[5px] mr-1 text-purple-500"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="12"
-                                height="12"
-                                viewBox="0 0 16 16"
-                                fill="blue"
-                              >
-                                <path d="M0.800781 2.60005V7.40005H7.40078V0.800049H2.60078C2.12339 0.800049 1.66555 0.989691 1.32799 1.32726C0.990424 1.66482 0.800781 2.12266 0.800781 2.60005H0.800781Z"></path>
-                                <path d="M13.4016 0.800049H8.60156V7.40005H15.2016V2.60005C15.2016 2.12266 15.0119 1.66482 14.6744 1.32726C14.3368 0.989691 13.879 0.800049 13.4016 0.800049V0.800049Z"></path>
-                                <path d="M0.800781 13.4001C0.800781 13.8775 0.990424 14.3353 1.32799 14.6729C1.66555 15.0105 2.12339 15.2001 2.60078 15.2001H7.40078V8.6001H0.800781V13.4001Z"></path>
-                                <path d="M8.60156 15.2001H13.4016C13.879 15.2001 14.3368 15.0105 14.6744 14.6729C15.0119 14.3353 15.2016 13.8775 15.2016 13.4001V8.6001H8.60156V15.2001Z"></path>
-                              </svg>
-                              {`${d.lab} `}
+                              <img className="w-6 h-6 mr-1" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/deal-pipeline-properties.svg'}></img>
+
+                              <span className='mt-[1px]'> {`${d.lab} `}</span>
                               <span className="text-[#606c82] ml-1 text-[11px]  border border-[#dfe1e6] text-gray-800 px-1  rounded-full ml-[4px] text-[10px]">
                                 {businessData_F.length}
                               </span>
@@ -505,7 +488,7 @@ const TodoListView = ({
                           )}
                         </section>
 
-                      
+
                       </button>
                     </li>
                   )
@@ -579,7 +562,7 @@ const TodoListView = ({
                     onChange={(value) => {
                       console.log('sel valu s', value)
                       setSelPriority(value.value)
-        
+
                     }}
                     value={selPriority}
                     options={[
@@ -620,7 +603,7 @@ const TodoListView = ({
                     Show Only Completed
                   </label>
                 </div>
-   
+
               </div>
               <span style={{ display: '' }}>
                 <CSVDownloader
@@ -836,9 +819,9 @@ const TodoListView = ({
                             <td>
                               <div className="ml-5">
                                 <div className="rounded-sm h-5 w-5 flex flex-shrink-0 justify-center items-center relative">
-                 
+
                                   {i + 1}
-                                
+
                                 </div>
                               </div>
                             </td>
@@ -853,7 +836,7 @@ const TodoListView = ({
                                       {dat?.leadUser?.Project?.toUpperCase()}
                                     </p>
 
-                              
+
                                     <p className="text-[9px]  leading-none text-red-800  mt-[6px] font-sanF  py-[4px]  rounded-full   mb-1 mr-4  ">
                                       {dat?.leadUser?.Status?.toUpperCase()}
                                     </p>
@@ -871,11 +854,11 @@ const TodoListView = ({
                                     </p>
                                   </div>
                                 </div>
-   
+
                               </div>
                             </td>
                             <td className="pl-24">
-                           
+
                             </td>
                             <td className="pl-5">
                               <div className="flex flex-col">
@@ -885,14 +868,14 @@ const TodoListView = ({
                                 <p className="text-[11px] leading-none text-gray-600 ml-2 mt-2">
                                   {dat?.leadUser?.Name}
                                 </p>
-                               
+
                                 <p className="text-sm leading-none text-gray-600 ml-2">
                                 </p>
                               </div>
                             </td>
                             <td className="pl-5">
                               <div className="flex flex-row">
-                               
+
                                 <button className="py-3 px-3 text-[13px] focus:outline-none leading-none text-red-700 rounded">
                                   {Math.abs(
                                     getDifferenceInMinutes(dat['schTime'], '')
@@ -925,7 +908,7 @@ const TodoListView = ({
                                 </button>
                               </div>
                             </td>
-                          
+
                           </tr>
                         ))
                     }
@@ -1164,8 +1147,8 @@ const TodoListView = ({
                               </button>
                             </div>
                           </td>
-                         
-                       
+
+
                         </tr>
                       ))}
 
@@ -1410,8 +1393,8 @@ const TodoListView = ({
               )}
           </div>
         </div>
-       
-      </Box>
+
+      </div>
       <SiderForm
         open={isImportLeadsOpen1}
         setOpen={setisImportLeadsOpen1}

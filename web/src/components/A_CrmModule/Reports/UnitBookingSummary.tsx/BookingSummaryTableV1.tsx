@@ -964,7 +964,7 @@ const headCells = [
     id: 'AssignedOn',
     numeric: false,
     disablePadding: false,
-    align: 'center',
+    align:"right",
     label: 'Plot Area',
   },
 
@@ -974,7 +974,7 @@ const headCells = [
     id: 'ratesqft',
     numeric: false,
     disablePadding: false,
-    align: 'center',
+    align:"right",
     label: 'Rate/sqft',
   },
 
@@ -987,21 +987,21 @@ const headCells = [
          id: 'PlotCost',
          numeric: false,
          disablePadding: false,
-         align: 'center',
+         align:"right",
          label: 'Plot Cost',
        },
        {
          id: 'PlotCollected',
          numeric: false,
          disablePadding: false,
-         align: 'center',
+         align:"right",
          label: 'Plot Collected',
        },
        {
          id: 'PlotDue',
          numeric: false,
          disablePadding: false,
-         align: 'center',
+         align:"right",
          label: 'Plot Due',
        },
   //    ]
@@ -1012,14 +1012,14 @@ const headCells = [
     id: 'BUA',
     numeric: false,
     disablePadding: false,
-    align: 'center',
+    align:"right",
     label: 'BUA',
   },
   {
     id: 'ConstRateSqft',
     numeric: false,
     disablePadding: false,
-    align: 'center',
+    align:"right",
     label: 'Const. Rate/Sqft',
   },
 
@@ -1032,21 +1032,21 @@ const headCells = [
          id: 'ConstructionCost',
          numeric: false,
          disablePadding: false,
-         align: 'center',
+         align:"right",
          label: 'Construction Cost',
        },
        {
          id: 'ConstCollected',
          numeric: false,
          disablePadding: false,
-         align: 'center',
+         align:"right",
          label: 'Const Collected',
        },
        {
          id: 'ConstDue',
          numeric: false,
          disablePadding: false,
-         align: 'center',
+         align:"right",
          label: 'Const Due',
        },
   //    ]
@@ -1131,7 +1131,7 @@ const headCells = [
     id: 'Age',
     numeric: false,
     disablePadding: false,
-    align: 'center',
+    align:"right",
     label: 'Ageing',
   },
 
@@ -1843,7 +1843,7 @@ const customTooltip = ({ payload, label }) => {
 
 <div className='max-w-7xl  mt-4 mx-auto'>
 <div className="grid grid-cols-4 gap-6 mb-8">
-  <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
+  <div className="bg-white rounded-xl p-6  shadow-sm  border-[1px] border-[#E1E8F1]">
     <h3 className="text-gray-600 mb-2">Sold Units</h3>
     <p className="text-2xl font-bold mb-2">  {unitsFetchData?.length?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
@@ -1851,7 +1851,7 @@ const customTooltip = ({ payload, label }) => {
       <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
     </div>
   </div>
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
+  <div className="bg-white rounded-xl p-6 shadow-sm border-[1px] border-[#E1E8F1] ">
     <h3 className="text-gray-600 mb-2">Sales</h3>
     <p className="text-2xl font-bold mb-2">₹ {Math.round(totalSaleValue)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
@@ -1860,7 +1860,7 @@ const customTooltip = ({ payload, label }) => {
     </div>
   </div>
 
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
+  <div className="bg-white rounded-xl p-6 shadow-sm border-[1px] border-[#E1E8F1]">
     <h3 className="text-gray-600 mb-2">Recieved</h3>
     <p className="text-2xl font-bold mb-2">₹ {Math.round(totalReceived)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
@@ -1869,7 +1869,7 @@ const customTooltip = ({ payload, label }) => {
     </div>
   </div>
 
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
+  <div className="bg-white rounded-xl p-6 shadow-sm border-[1px] border-[#E1E8F1]">
     <h3 className="text-gray-600 mb-2">Balance</h3>
     <p className="text-2xl font-bold mb-2">₹ {Math.round(selTotalBalance)?.toLocaleString('en-IN')}</p>
     <div className="flex items-center gap-2 text-red-500">
@@ -2114,7 +2114,7 @@ const customTooltip = ({ payload, label }) => {
 
 
 
-<div className='p-4 mt-6 rounded-t-[30px] bg-white  rounded-[30px]'>
+<div className=' mt-6 rounded-t-[30px] bg-white  rounded-[30px]'>
 <div className='border-2 rounded-[30px] border-[#f1f1f1] p-4'>
 
 
@@ -2752,7 +2752,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -2772,7 +2772,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -2794,7 +2794,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -2816,7 +2816,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -2833,7 +2833,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -2856,7 +2856,7 @@ tableData={filLeadsA || {}}
 
 
 <TableCell
-                          align="left"
+                          align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -2872,7 +2872,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -2880,7 +2880,8 @@ tableData={filLeadsA || {}}
 
 
                           <span className="font-bodyLato" style={{width: '142px',maxHeight: '40px', textOverflow: 'ellipsis', fontSize: '13px' }}>
-                          ₹{row?.construct_price_sqft?.toLocaleString('en-IN')}
+                          ₹{Math.round(row?.construct_price_sqft || 0).toLocaleString('en-IN')}
+
 
 
 
@@ -2910,7 +2911,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -2927,7 +2928,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -2946,7 +2947,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -2986,7 +2987,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="center"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -3003,7 +3004,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="center"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -3019,7 +3020,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                          align="center"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >
@@ -3035,7 +3036,7 @@ tableData={filLeadsA || {}}
 
 
                         <TableCell
-                          align="left"
+                        align="right"
                           style={{ width: '142px',maxWidth:'80px', maxHeight: '40px',   textOverflow: 'ellipsis',  whiteSpace: 'nowrap', overflow: 'hidden', paddingRight: '8px' , paddingLeft: '8px', paddingTop: '4px', paddingBottom:'4px', background: "#fff",}}
                           padding='none'
                         >

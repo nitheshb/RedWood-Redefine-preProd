@@ -502,43 +502,39 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
   }
   return (
     <>
-      <div className="flex overflow-x-auto ml-2 border-b pb-2">
-        <section className="mt-4">Templates</section>
-        {[
-          { label: 'Task Man', value: 'enquiry_journey_status' },
-          { label: 'Project Finance', value: 'CRM_status' },
-          { label: 'Sale Projections', value: 'Legal_status' },
-          { label: 'Home', value: 'project_home' },
-        ].map((data, i) => {
-          return (
-            <section
-              key={i}
-              className="flex  mt-[18px]"
-              onClick={() => {
-                console.log('am i clicked', data.value)
-                setSelCat(data.value)
-              }}
-            >
-              <button>
-                <span
-                  className={`flex ml-2 items-center h-[30] py-1 px-3 text-sm  ${
-                    selCat === data.value
-                      ? 'font-semibold text-green-800 bg-[#FFEDEA]'
-                      : 'font-medium text-black-100 bg-[#f0f8ff]'
-                  }  rounded-full`}
-                >
-                  <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
-                  {data?.label}
-                </span>
-              </button>
-            </section>
-          )
-        })}
-      </div>
+
+
+<div className="flex overflow-x-auto ml-2 border-b border-gray-300">
+  {[
+    { label: 'Task Man', value: 'enquiry_journey_status' },
+    { label: 'Project Finance', value: 'CRM_status' },
+    { label: 'Sale Projections', value: 'Legal_status' },
+    { label: 'Home', value: 'project_home' },
+  ].map((data, i) => {
+    return (
+      <button
+        key={i}
+        className={`flex items-center py-2 px-4 text-sm border-b-2 ${
+          selCat === data.value
+            ? 'font-semibold text-green-800 border-black'
+            : 'font-medium text-gray-500 border-transparent'
+        }`}
+        onClick={() => {
+          console.log('am i clicked', data.value);
+          setSelCat(data.value);
+        }}
+      >
+        <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
+        {data.label}
+      </button>
+    );
+  })}
+</div>
+
       {selCat === 'enquiry_journey_status' && (
         <div className="w-full flex  flex-row">
           <section className="m-2 w-[200px] min-h-[400px]">
-            <div className="bg-[#FFEDEA] p-4 px-2 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 px-2 rounded-xl shadow-md shadow-neutral-200 ">
               <div className="flex flex-row justify-between pb-2 border-b border-grey px-2">
                 {' '}
                 <h2 className="text-sm font-semibold">{'Employees'}</h2>
@@ -713,7 +709,7 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
 
           {/* row 2 */}
           <section className="m-2 mx-0 w-full">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <section className="flex flex-row justify-between">
                 <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                   {`${selUserObj?.name || selUserObj?.displayName} Tasks`}
@@ -786,7 +782,7 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
                   <div className="overflow-x-auto mt-2 rounded-xl">
                     <table className="w-full whitespace-nowrap">
                       <thead className="">
-                        <tr className="tabHeader bg-[#FFEDEA]">
+                        <tr className="tabHeader bg-[#F5F8FA]">
                           <th className="text-left pl-[1rem]">
                             {' '}
                             <span

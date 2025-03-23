@@ -94,14 +94,24 @@ const LeadsDisplayTable = ({
               return b.cT - a.cT
             })
         )
-       
+
       }
     }
   }, [leadsRawList, searchKey, selProjectIs])
 
   return (
     <Box pb={4}>
-      <div className=" w-full">
+      <div className=" w-full bg-white rounded-lg">
+        <div className='flex items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md'>
+          <section className='flex flex-row'>
+                <img className="w-10 h-10" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/categories-color.svg'}></img>
+
+                <h2 className="ml-2 mt-2 text-md font-semibold text-black leading-light font-Playfair">
+                Leads Bank
+                </h2>
+                </section>
+        </div>
+
         <div className="bg-white py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded">
           <div className="sm:flex items-center justify-between">
             <div className="flex items-center">
@@ -216,7 +226,7 @@ const LeadsDisplayTable = ({
             <table className="w-full whitespace-nowrap">
               <tbody>
                 {
-      
+
                   sortedList.map((dat, i) => {
                     const {
                       comments,
@@ -238,7 +248,7 @@ const LeadsDisplayTable = ({
                         key={i}
                         onClick={() => {
                           console.log('macho 1', dat?.leadUser, dat)
-                    
+
                           selUserProfileF('User Profile', dat)
                         }}
                       >
