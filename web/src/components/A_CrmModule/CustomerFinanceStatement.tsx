@@ -58,7 +58,7 @@ const CrmUnitPsHome = ({
             role="tab"
             onClick={() => setFinanceMode(d.val)}
           >
-            <img alt="" src="/temp2.png" className="h-5 w-5" />
+            {/* <img alt="" src="/temp2.png" className="h-5 w-5" /> */}
             <span>{d.lab}</span>
           </button>
               </li>

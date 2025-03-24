@@ -1512,8 +1512,8 @@ export default function UnitFullSummary({
           alt=""
         />
         <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
-          Dates
-        </h1>
+          Dates        
+          </h1>
       </div>
 
       <div className="relative col-span-12 pl-6 space-y-2 sm:col-span-9 mt-1">
@@ -1535,7 +1535,7 @@ export default function UnitFullSummary({
                 <div className="hidden sm:flex w-full bg-[#E5E7EB] h-0.5"></div>
               </div>
 
-              <div className="mt-3 sm:pe-8 bg-white p-3 rounded-lg mr-2">
+              <div className="mt-3 sm:pe-8 bg-white shadow-md p-3 rounded-lg mr-2">
                 <h4 className="text-gray-900 text-[13px]">
                   {d.event}
                 </h4>
@@ -1661,12 +1661,18 @@ export default function UnitFullSummary({
 
 
       {selFeature === 'loan_info' && <LoanApplyFlowHome customerDetails={customerDetails} />}
+
       {selFeature === 'agreement_info' && (
         <section className="bg-white w-full mx-2 rounded-lg border border-gray-100 h-[100%] md:px-10 md:mb-20">
           <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
+
+
+        
+
+
             <div className="flex p-4 items-center justify-between">
               <div className="flex flex-row">
-                <h2 className="font-medium flex-grow">Unit Document</h2>
+              <h2 className="text-xl font-semibold text-[#213343]">Unit Documents</h2>
                 <span
                   className=" ml-2 text-blue-500 hover:underline"
                   onClick={() => {
@@ -1680,7 +1686,6 @@ export default function UnitFullSummary({
                 >
                 </span>
               </div>
-              <p className="mr4">Date Created</p>
             </div>
           </div>
           {[
@@ -1724,6 +1729,12 @@ export default function UnitFullSummary({
           ))}
         </section>
       )}
+
+
+
+
+
+      
 
       {selFeature === 'legal_info' && <></>}
 

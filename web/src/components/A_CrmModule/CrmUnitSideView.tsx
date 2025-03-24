@@ -8,6 +8,10 @@ import {
 } from '@heroicons/react/solid'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
+import { ToWords } from 'to-words'
+const toWords = new ToWords({
+  localeCode: 'en-IN',
+})
 import {
   addLeadScheduler,
   deleteSchLog,
@@ -58,6 +62,17 @@ const data = [
 ];
 
 
+
+
+function formatIndianNumber(num) {
+  if (num >= 1_00_00_00_000) return (num / 1_00_00_00_000).toFixed(1) + 'Lcr+';
+  if (num >= 1_00_00_000) return (num / 1_00_00_000).toFixed(1) + 'Cr+';
+  if (num >= 1_00_000) return (num / 1_00_000).toFixed(1) + 'L+';
+  if (num >= 1_000) return (num / 1_000).toFixed(1) + 'K+';
+  return num.toString();
+}
+
+console.log(formatIndianNumber(25000000));
 
 
 // interface iToastInfo {
@@ -1379,8 +1394,42 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
     <section className="flex flex-row justify-between mx-2">
     <div className="text-center">
       <div className="text-[12px] text-gray-500">Elgible Cost</div>
-      <div className="font-bold text-[14px]">
+
+      <div
+                className="relative flex flex-col items-center group"
+                style={{ alignItems: 'start' }}
+              >
+                <div
+                  className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                  style={{ alignItems: 'start', width: '300px' }}
+                >
+                  <span
+                    className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                    style={{
+                      color: 'white',
+                      background: '#213343',
+                      maxWidth: '300px',
+                    }}
+                  >
+                    <span className="italic">
+                      {formatIndianNumber?.(Math.round(selCustomerPayload?.T_elgible || 0))}
+
+                    </span>
+                  </span>
+                  <div
+                    className="w-3 h-3 ml-1  -mt-2 rotate-45 bg-black"
+                    style={{ background: '#213343', marginRight: '12px' }}
+                  ></div>
+                </div>
+                <span className="text-[14px] font-bold text-gray-900">
       ₹ {Math.round(selCustomerPayload?.T_elgible || 0).toLocaleString('en-IN')}
+                  
+
+                </span>
+      </div>
+
+
+      <div className="font-bold text-[14px]">
 
 
                                             
@@ -1388,17 +1437,94 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
     </div>
     <div className="text-center">
       <div className="text-[12px] text-gray-500">Paid</div>
-      <div className="font-bold text-[14px]">      
+      {/* <div className="font-bold text-[14px]"> 
+
       ₹{Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
         
-        </div>
+        </div> */}
+
+        <div
+                className="relative flex flex-col items-center group"
+                style={{ alignItems: 'start' }}
+              >
+                <div
+                  className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                  style={{ alignItems: 'start', width: '300px' }}
+                >
+                  <span
+                    className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                    style={{
+                      color: 'white',
+                      background: '#213343',
+                      maxWidth: '300px',
+                    }}
+                  >
+                    <span className="italic">
+                      {/* {toWords?.convert(Math.round(selCustomerPayload?.T_elgible || 0))} */}
+
+                      {/* {toWords?.convert(Math.round(selCustomerPayload?.T_elgible || 0))} */}
+
+                      {formatIndianNumber?.(Math.round(selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0))}
+
+
+                    </span>
+                  </span>
+                  <div
+                    className="w-3 h-3 ml-1  -mt-2 rotate-45 bg-black"
+                    style={{ background: '#213343', marginRight: '12px' }}
+                  ></div>
+                </div>
+                <span className="text-[14px] font-bold ">
+      {/* ₹ {Math.round(selCustomerPayload?.T_elgible || 0).toLocaleString('en-IN')} */}
+
+      ₹{Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
+
+                  
+
+                </span>
+      </div>
+
+
+
+
+
+
     </div>
     <div className="text-center">
       <div className="text-[12px] text-gray-500">Balance</div>
-      <div className="font-bold text-[14px]">
+      {/* <div className="font-bold text-[14px]">
       ₹ {Math.round(Math.max(selCustomerPayload?.T_elgible_balance || 0, 0)).toLocaleString('en-IN')}
 
-        </div>
+        </div> */}
+
+
+<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+  <div
+    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+    style={{ alignItems: 'start', width: '300px' }}
+  >
+    <span
+      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+      style={{
+        color: 'white',
+        background: '#213343',
+        maxWidth: '300px',
+      }}
+    >
+      <span className="italic">
+        {formatIndianNumber?.(Math.round(Math.max(selCustomerPayload?.T_elgible_balance || 0, 0)))}
+      </span>
+    </span>
+    <div
+      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+      style={{ background: '#213343', marginRight: '12px' }}
+    ></div>
+  </div>
+  <span className="text-[14px] font-bold">
+    ₹{Math.round(Math.max(selCustomerPayload?.T_elgible_balance || 0, 0)).toLocaleString('en-IN')}
+  </span>
+</div>
+
     </div>
     </section>
   </div>

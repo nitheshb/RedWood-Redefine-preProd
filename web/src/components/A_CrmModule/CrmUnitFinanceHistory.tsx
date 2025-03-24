@@ -56,7 +56,7 @@ const CrmUnitFinanceHistory = ({
 
 
       <div className="mt-2">
-        <section className="mr-2 flex flex-col   bg-white p-3 rounded-md ">
+        <section className="mr-2 flex flex-col border border-[#e5e7f8]  bg-white p-3 rounded-md ">
           <div>
             <div className="flex flex-row px-3 justify-between items-center ">
 

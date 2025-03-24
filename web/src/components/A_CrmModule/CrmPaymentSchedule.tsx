@@ -186,12 +186,9 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
               <div className=" flex flex-row px-3 justify-between items-center">
 
                 <div className='flex items-center'>
-                <img
-                  src="https://static.ambitionbox.com/static/benefits/JobTraining.svg"
-                  alt=""
-                />
+          
                 <h1 className=" text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-1 ml-1">
-                  Payment Schedule box
+                  Payment Schedule
                 </h1>
                 </div>
 

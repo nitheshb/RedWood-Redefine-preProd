@@ -313,12 +313,12 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
   return (
    
 
-<div className="h-full flex bg-white mx-2 rounded-lg border border-gray-100 flex-col py-6 bg-gray-50 overflow-y-scroll">
+<div className="h-full flex bg-white mx-2 rounded-lg border border-gray-100 flex-col py-6 bg-gray-50 ">
   <div className="px-6 max-w-5xl mx-auto w-full">
     <div className="flex flex-col space-y-4">
       
    
-      <h2 className="text-xl font-semibold text-gray-800">Unit Information</h2>
+      {/* <h2 className="text-xl font-semibold text-[#213343]">Unit Information</h2> */}
 
       <div className="grid gap-8 grid-cols-1">
         <div className="flex flex-col bg-white p-6 rounded-lg shadow-sm border border-gray-200">
@@ -327,7 +327,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
               Review and recalculate unit details to ensure all data is accurate and up-to-date.
             </p>
             <button
-              className="bg-[#00ADB4] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-white rounded-lg hover:shadow-md hover:bg-green-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center justify-center"
+              className="bg-[#E8E6FE] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-black hover:text-white rounded-lg hover:shadow-md hover:bg-[#E3BDFF] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center justify-center"
               type="submit"
               onClick={() => auditFun()}
               disabled={loading}
