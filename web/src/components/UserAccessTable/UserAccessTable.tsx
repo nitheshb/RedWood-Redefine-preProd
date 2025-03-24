@@ -142,7 +142,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
 
     <div className="flex flex-row mt-3 ml-6">
         <div className="flex flex-row mt-1 mr-2">
-          <span className="text-[14px] font-extrabold mt-1  mr-1">Module Access Control Matrix          </span>
+          <span className="text-[14px] font-extrabold mt-1  mr-1">Feature Access Control     </span>
           {/* Access Control Table */}
         </div>
      </div>
