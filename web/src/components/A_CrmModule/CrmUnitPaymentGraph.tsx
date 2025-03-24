@@ -82,33 +82,31 @@ const CrmUnitPaymentGraph = ({ selCustomerPayload }) => {
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-[61%] ">
                                     <section className="flex flex-col  w-full mt-">
                                     <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Unit Cost: ₹
+                                        Unit Cost:
                                         <div>
-                                          {(
-                                            selCustomerPayload?.T_total || selCustomerPayload?.T_Total
-                                          )?.toLocaleString('en-IN')}
+
+                                        ₹ {Math.round(Number(selCustomerPayload?.T_total || selCustomerPayload?.T_Total) || 0).toLocaleString('en-IN')}
+
+               
 
                                 
                                         </div>
                                       </p>
 
                                       <div className="text-zinc-500 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Paid: ₹
+                                        Paid: 
                                         <div>
                                           {' '}
-                                          {(
-                                            (selCustomerPayload?.T_review || 0) +
-                                            (selCustomerPayload?.T_approved || 0)
-                                          ).toLocaleString('en-IN') || 0}
+
+                                          ₹ {Math.round(Number(selCustomerPayload?.T_review || 0) + Number(selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
+        
                                         </div>
                                       </div>
 
                                       <div className="text-zinc-800 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Balance:₹
+                                        Balance:
                                         <div className="text-zinc-900 text-[11px] font-bold  tracking-wide">
-                                          {selCustomerPayload?.T_balance?.toLocaleString(
-                                            'en-IN'
-                                          )}
+                                        ₹ {Math.round(Number(selCustomerPayload?.T_balance || 0)).toLocaleString('en-IN')}
                                         </div>
                                       </div>
                                     </section>

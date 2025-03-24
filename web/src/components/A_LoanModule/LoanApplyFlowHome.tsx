@@ -173,9 +173,25 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
 
 
   return (
-    <div className='flex flex-row bg-white'>
-    <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px]  h-[100vh]   overflow-y-scroll">
+    <div className='flex flex-row bg-white mx-2 rounded-lg border border-gray-100 h-[100%]'>
+
+
+    <section className="bg-white w-full  md:px-10 md:mb-20 pb-[250px]  h-[100vh]  overflow-y-scroll">
+
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
+{/* 
+      <div>
+        <section className='flex flex-row'>
+
+                <h2 className="ml-2 mt-2 text-md font-semibold text-black leading-light font-Playfair">
+                Loan Approval
+                </h2>
+                </section>
+        </div> */}
+
+
+
+    
 
         <div className="mt-1">
           <div className="p-2  bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">

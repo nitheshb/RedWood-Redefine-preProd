@@ -84,9 +84,9 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
   }
   return (
     <div className="flex flex-col">
-      <div className="-my-2 px-1 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div className="-my-2 px-1 overflow-x-auto   sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <section className="flex ml-auto mt-[18px]  bg-white  border-gray-100 py-4 rounded-t-xl px-5 ">
+          <section className="flex ml-auto mt-[18px]  bg-white  py-4 rounded-t-xl px-3 ">
             {[
               { label: 'All', val: 'all' },
               { label: 'Super User', val: 'admin' },
@@ -102,21 +102,26 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
             ].map((dat, index) => (
               <a
                 key={index}
-                className={`rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 ml-2 focus:ring-indigo-800 mx-1`}
+                className={``}
                 onClick={() => showOnlyDept(dat.val)}
               >
                 <div
-                  className={`py-1 px-8 rounded-full font-semibold	  hover:text-[#0ABC31] hover:bg-indigo-100  ${
+                  className={`py-1 px-6  flex border-b  whitespace-nowrap    ${
                     selDept.includes(dat.val)
-                      ? 'bg-indigo-100 text-[#0ABC31]'
-                      : 'text-gray-600'
+                      ? 'border-b-2 border-black text-green-800'
+                      : 'text-gray-500 hover:text-black'
                   }`}
                 >
+
+<img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
+
                   {dat.label}
                 </div>
               </a>
             ))}
           </section>
+
+
           <WarningModel
                         type={'Danger'}
                         open={open}
@@ -128,49 +133,53 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                         }
                         actionBtnTxt={'Delete User'}
                       />
-          <div className="shadow overflow-hidden border-b border-gray-200  bg-white pb-4  px-2  xl:px-10">
-            <table className="min-w-full divide-y divide-gray-200 ">
-              <thead className="bg-gray-50">
+          <div className="shadow overflow-hidden border-b border-gray-200  bg-white pb-4  px-4">
+            <table className="min-w-full  divide-y divide-gray-200 table-fixed ">
+              <thead className="bg-[#E8E6FE] ">
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left rounded-tl-md text-xs font-semibold text-[#0D027D]  capitalize tracking-wider"
                   >
                     Name
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-semibold text-[#0D027D]  capitalize tracking-wider"
                   >
                     Emp Id
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-semibold text-[#0D027D] capitalize tracking-wider"
                   >
                     Dept
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-semibold text-[#0D027D]  capitalize tracking-wider"
                   >
                     Role
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-semibold text-[#0D027D] capitalize tracking-wider"
                   >
                     Status
                   </th>
-                  <th scope="col" className="relative px-6 py-3">
+                  {/* <th scope="col" className="relative px-6 rounded-tr-md  py-3">
                     <span className="sr-only">Edit</span>
-                  </th>
+                  </th> */}
+                  <th scope="col" className="px-6 py-3 text-right text-xs font-semibold text-[#0D027D] capitalize tracking-wider rounded-tr-md">
+                    Edit
+                   </th>
+
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-200 ">
                 {filterData.map((person) => (
-                  <motion.tr key={person.email}>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                  <motion.tr key={person.email} className="border-b border-dashed">
+                    <td className="px-6 py-1 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
                           <img

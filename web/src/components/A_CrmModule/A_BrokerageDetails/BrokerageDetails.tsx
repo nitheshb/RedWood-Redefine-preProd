@@ -82,11 +82,11 @@ const BrokerageDetails = ({ selUnitDetails }) => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-white mx-2 rounded-lg border border-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+      <div className=" w-[540px] mx-auto">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="p-6 border-b border-gray-200">
-            <h1 className="text-2xl font-medium text-[#000000]">
+            <h1 className="text-[20px] font-medium text-[#000000]    mb-[2px] ">
               {existingBrokerage ? 'Edit Brokerage Details' : 'Add Brokerage Details'}
             </h1>
           </div>
@@ -102,10 +102,11 @@ const BrokerageDetails = ({ selUnitDetails }) => {
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                       <div>
-                        <label className="block text-sm font-medium text-[#6A6A6A]">
+                        <label className="block text-[10px] font-medium text-[#6A6A6A]">
                           Broker Name
                         </label>
                         <TextField2
+                        
                           name="brokerName"
                           type="text"
                            className="mt-1 block w-full border-0 border-b border-gray-400 focus:border-gray-400 focus:ring-0 focus:outline-none sm:text-sm"
@@ -121,7 +122,7 @@ const BrokerageDetails = ({ selUnitDetails }) => {
 
 
                       <div>
-                        <label className="block text-sm font-medium text-[#6A6A6A]">
+                        <label className="block text-[10px] font-medium text-[#6A6A6A]">
                           Brokerage Type
                         </label>
                         <select
@@ -140,7 +141,7 @@ const BrokerageDetails = ({ selUnitDetails }) => {
                     </div>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                       <div>
-                        <label className="block text-sm font-medium text-[#6A6A6A]">
+                        <label className="block text-[10px] font-medium text-[#6A6A6A]">
                           Brokerage Amount
                         </label>
                         <TextField2
@@ -151,7 +152,7 @@ const BrokerageDetails = ({ selUnitDetails }) => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-[#6A6A6A]">
+                        <label className="block text-[10px] font-medium text-[#6A6A6A]">
                           Transaction Date
                         </label>
                         <CustomDatePicker
@@ -169,7 +170,7 @@ const BrokerageDetails = ({ selUnitDetails }) => {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#E3BDFF] hover:bg-[#E3BDFF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-[#00ADB4] hover:bg-[#00ADB4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       >
                         {loading ? (
                           <Loader className="w-5 h-5 mr-2" />
@@ -224,7 +225,7 @@ const BrokerageDetails = ({ selUnitDetails }) => {
                 <h2 className="text-xl font-medium text-[#000000]  mb-4">
                   No Brokerage Details Found
                 </h2>
-                <p className="text-sm text-[#6A6A6A]">
+                <p className="text-[#6A6A6A] font-normal  mt-2 text-[12px]">
                   No brokerage details have been added yet. Use the form above to add details.
                 </p>
               </div>

@@ -138,7 +138,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
     }
   return (
     <>
-      <section className="bg-blueGray-50 mt-3">
+      <section className="bg-blueGray-50 min-h-screen bg-white mx-2 rounded-lg border border-gray-100 ">
         <div className="w-full  mx-auto ">
             <div className="mx-2 o my-10 mt-4 ">
               <div className="bg-white p-10 rounded-xl">
@@ -324,7 +324,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
               </div>
             </div>
 
-            {bookingProgress && (
+            {/* {bookingProgress && (
               <section className="mb-3">
                 <div className="mx-auto flex mt-6 flex-row  ">
                   <section className="ml-3 w-[300px]">
@@ -346,7 +346,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                       </span>
                     </div>
                   </section>
-                  {/*  */}
+            
                   <section className="ml-3 w-[300px]">
                     <div className="flex items-center">
                       {bookCompSteps?.includes('CS_updated') && (
@@ -383,7 +383,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                       </span>
                     </div>
                   </section>
-                  {/*  */}
+              
                   <section className="ml-3 w-[300px]">
                     <div className="flex items-center">
                       {bookCompSteps?.includes('customer_created') && (
@@ -424,7 +424,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                       </span>
                     </div>
                   </section>
-                  {/*  */}
+                  
                   <section className="ml-4 w-[300px]">
                     <div className="flex items-center">
                       {bookCompSteps?.includes('notify_to_manager') && (
@@ -446,7 +446,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                   </section>
                 </div>
               </section>
-            )}
+            )} */}
 
         </div>
       </section>

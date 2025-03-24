@@ -186,10 +186,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
               <div className=" flex flex-row px-3 justify-between items-center">
 
                 <div className='flex items-center'>
-                <img
-                  src="https://static.ambitionbox.com/static/benefits/JobTraining.svg"
-                  alt=""
-                />
+          
                 <h1 className=" text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-1 ml-1">
                   Payment Schedule
                 </h1>
@@ -245,7 +242,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                     return (
                       <tr
                         key={inx}
-                        className={`border-b-[0.05px] border-gray-300 py-3 h-[51px] ${
+                        className={`border-b border-dashed py-3 h-[51px] ${
                           !d1?.elgible ? '' : ''
                         } `}
                       >
@@ -293,15 +290,15 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                           </span>
                         </td>
                         <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
-                          ₹{d1?.value?.toLocaleString('en-IN')}
+                        ₹ {Math.round(Number(d1?.value) || 0).toLocaleString('en-IN')}
                         </td>
 
                         <td className="text-[12px] text-right text-green-600 bg-[#fff] px-2 font-bold">
 
-                          ₹{d1?.amt?.toLocaleString('en-IN')}
+                        ₹ {Math.round(Number(d1?.amt) || 0).toLocaleString('en-IN')}
                         </td>
                         <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
-                          {d1?.outStanding?.toLocaleString('en-IN')}
+                        ₹ {Math.round(Number(d1?.outStanding) || 0).toLocaleString('en-IN')}
                         </td>
                       </tr>
                     )
@@ -314,12 +311,12 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
                       <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px]leading-none px-2 ">
-                        ₹{selCustomerPayload?.T_total?.toLocaleString('en-IN')}
+                      ₹ {Math.round(Number(selCustomerPayload?.T_total) || 0).toLocaleString('en-IN')}
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
                       <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px] leading-none px-2 ">
-                        ₹{unitReceivedTotal?.toLocaleString('en-IN')}
+                      ₹ {Math.round(Number(unitReceivedTotal) || 0).toLocaleString('en-IN')}
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">

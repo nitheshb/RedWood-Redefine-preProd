@@ -957,7 +957,9 @@ export default function UnitFullSummary({
             </div>
           )}
           {selFeature === 'tasks' && (
-            <div className="py-8 px-8 flex flex-col items-center">
+
+
+<div className="py-8 px-8  flex flex-col items-center">
               <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
                 <img
                   className="w-[200px] h-[200px] inline"
@@ -972,6 +974,8 @@ export default function UnitFullSummary({
                 Sitback & Relax <span className="text-blue-600">Add Task</span>
               </time>
             </div>
+
+       
           )}
 
           {selFeature === 'timeline' && (
@@ -1097,7 +1101,7 @@ export default function UnitFullSummary({
 {selFeature === 'applicant_info' && (
   <>
     {!openApplicantEdit && (
-      <div className="mt-2 pb-[250px] overflow-auto no-scrollbar h-[100%] overflow-y-scroll">
+      <div className="pb-[250px] overflow-auto m-2 mt-[1px] rounded-lg border border-gray-100  no-scrollbar h-[100%] overflow-y-scroll">
         <ShowCustomerDetails
           source="fromBookedUnit"
           title="Booking Form"
@@ -1135,8 +1139,13 @@ export default function UnitFullSummary({
    )}
 
       {selFeature === 'unit_information' && (
+
         <>
-          <div className="">
+        
+        <div className=' m-2 mt-[1px] rounded-lg border border-gray-100'>
+
+
+        <div className="">
             <div className="">
 
 
@@ -1204,7 +1213,7 @@ export default function UnitFullSummary({
 
 
 
-          <div className="h-[68%]  mx-4 bg-[#f0f1ff] grid grid-cols-3 gap-2 rounded-lg border border-gray-100 p-4">
+          <div className="h-[68%]  bg-[#fff] grid grid-cols-3 gap-2 p-4">
 
 
 
@@ -1496,15 +1505,15 @@ export default function UnitFullSummary({
 
 
 
-<div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 mx-4">
+<div className="flex flex-col bg-[#fff] rounded-lg p-3 mt-2 mx-4">
       <div className="flex flex-row">
         <img
           src="https://static.ambitionbox.com/static/benefits/WFH.svg"
           alt=""
         />
         <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
-          Dates
-        </h1>
+          Dates        
+          </h1>
       </div>
 
       <div className="relative col-span-12 pl-6 space-y-2 sm:col-span-9 mt-1">
@@ -1526,7 +1535,7 @@ export default function UnitFullSummary({
                 <div className="hidden sm:flex w-full bg-[#E5E7EB] h-0.5"></div>
               </div>
 
-              <div className="mt-3 sm:pe-8 bg-white p-3 rounded-lg mr-2">
+              <div className="mt-3 sm:pe-8 bg-white shadow-md p-3 rounded-lg mr-2">
                 <h4 className="text-gray-900 text-[13px]">
                   {d.event}
                 </h4>
@@ -1585,6 +1594,10 @@ export default function UnitFullSummary({
 
 
 
+        </div>
+
+
+
 
 
 
@@ -1608,7 +1621,7 @@ export default function UnitFullSummary({
       {selFeature === 'summary' && (
 
 
-        <div className=" pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
+        <div className="   no-scrollbar  h-[100%] overflow-y-scroll">
           <CrmUnitSummary
             selCustomerPayload={selCustomerPayload}
             assets={selCustomerPayload?.assets}
@@ -1628,7 +1641,7 @@ export default function UnitFullSummary({
 
       {['finance_info'].includes(selFeature) && (
         <>
-          <div className="py-3 px-3 pb-[250px] m-4 mt-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll">
+          <div className="py-3 px-3  mx-2 rounded-lg border border-gray-100 h-[100%] overflow-y-scroll">
             <CrmUnitPsHome
               financeMode={financeMode}
               setFinanceMode={setFinanceMode}
@@ -1648,12 +1661,18 @@ export default function UnitFullSummary({
 
 
       {selFeature === 'loan_info' && <LoanApplyFlowHome customerDetails={customerDetails} />}
+
       {selFeature === 'agreement_info' && (
-        <section className="bg-white w-full md:px-10 md:mb-20">
+        <section className="bg-white w-full mx-2 rounded-lg border border-gray-100 h-[100%] md:px-10 md:mb-20">
           <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
+
+
+        
+
+
             <div className="flex p-4 items-center justify-between">
               <div className="flex flex-row">
-                <h2 className="font-medium flex-grow">Unit Document</h2>
+              <h2 className="text-xl font-semibold text-[#213343]">Unit Documents</h2>
                 <span
                   className=" ml-2 text-blue-500 hover:underline"
                   onClick={() => {
@@ -1667,7 +1686,6 @@ export default function UnitFullSummary({
                 >
                 </span>
               </div>
-              <p className="mr4">Date Created</p>
             </div>
           </div>
           {[
@@ -1712,12 +1730,23 @@ export default function UnitFullSummary({
         </section>
       )}
 
+
+
+
+
+      
+
       {selFeature === 'legal_info' && <></>}
 
 
       {selFeature === 'brokerage_info' && <>
 
-<BrokerageDetails openUserProfile={openUserProfile} selUnitDetails={selCustomerPayload} /> </>}
+        <div className="">
+        <BrokerageDetails openUserProfile={openUserProfile} selUnitDetails={selCustomerPayload} />
+
+          </div>
+
+ </>}
 
 
 
