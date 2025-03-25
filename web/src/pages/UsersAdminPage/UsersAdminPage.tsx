@@ -70,10 +70,11 @@ const UsersAdminPage = () => {
 
 
               {viewable === 'User Management' && (
-                <div className="flex flex-row mt-3 ml-6">
+                <div className="flex justify-between flex-row mt-3  w-full mr-6   ml-6">
                   <div className="flex flex-row mt-2 mr-2">
-                    <span className="text-[14px] font-extrabold mt-1  mr-1">Show InActive</span>
-                    <Switch
+                    <span className="ml-2  text-md font-semibold text-black leading-none font-Playfair">Active - Inactive</span>
+                     <div className='ml-2'>
+                     <Switch
                       checked={showCompletedTasks}
                       onChange={changeFun}
                       className={`${
@@ -86,6 +87,7 @@ const UsersAdminPage = () => {
                         } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                       />
                     </Switch>
+                     </div>
                   </div>
 
                   <button
@@ -133,10 +135,11 @@ const UsersAdminPage = () => {
                 </div>
               )}
               {viewable === 'AssetsManagement' && (
-                <div className="flex flex-row mt-3 ml-6">
-                  <div className="flex flex-row mt-2 mr-2">
-                    <span className="text-[14px] font-extrabold mt-1 mr-1">Show InActive</span>
-                    <Switch
+                <div className="flex flex-row justify-between mt-3 w-full mr-6   ml-6">
+                  <div className="flex flex-row mt-2  mr-2">
+                    <span className="ml-2 text-md font-semibold text-black leading-none font-Playfair">Active - Inactive</span>
+                     <div className='ml-2'>
+                     <Switch
                       checked={showCompletedTasks}
                       onChange={changeFun}
                       className={`${
@@ -149,6 +152,7 @@ const UsersAdminPage = () => {
                         } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                       />
                     </Switch>
+                     </div>
                   </div>
 
                   <button

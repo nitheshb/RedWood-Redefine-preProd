@@ -77,6 +77,7 @@ export const SlimSelectBox = ({
   label,
   placeholder,
   className,
+ 
 }) => {
   const defaultValue = (options, value) => {
     return (
@@ -170,6 +171,7 @@ export const SmartCalendarSelect = ({
   // name,
   label,
   placeholder,
+  defaultForTeamLeads = false,
   // className,
 }) => {
   {
@@ -181,9 +183,27 @@ export const SmartCalendarSelect = ({
   //     )
   //   }
   // console.log(options,'opt')
-  const [dateRange, setDateRange] = useState([null, null])
-  const [startDate, endDate] = dateRange
+
+
+
+
+
+  // const [dateRange, setDateRange] = useState([null, null])
+
   const d = new window.Date()
+
+
+  // const d = new Date()
+  const teamLeadDefault = [subMonths(startOfMonth(d), 6), endOfDay(d)]
+  const normalDefault = [startOfDay(d), endOfDay(d)]
+  
+  const [dateRange, setDateRange] = useState(
+    defaultForTeamLeads ? teamLeadDefault : normalDefault
+  )
+  
+
+  const [startDate, endDate] = dateRange
+
   const [options, setOptions] = useState([
     {
       label: 'All Dates',
@@ -201,10 +221,11 @@ export const SmartCalendarSelect = ({
       label: 'This Month',
       value: [startOfMonth(d), endOfMonth(d)],
     },
-    {
-      label: 'Last 6 months',
-      value: [subMonths(startOfMonth(d), 6), endOfDay(d)],
-    },
+    // {
+    //   label: 'Last 6 months',
+    //   value: [subMonths(startOfMonth(d), 6), endOfDay(d)],
+    // },
+    { label: 'Last 6 months', value: teamLeadDefault },
     {
       label: 'Custome Range',
       value: [startDate, endDate],
@@ -217,6 +238,22 @@ export const SmartCalendarSelect = ({
       onChange([startDate, endDate])
     }
   }, [dateRange])
+
+
+ 
+
+
+  useEffect(() => {
+    if (defaultForTeamLeads) {
+      setValue('Last 6 months')
+      onChange(teamLeadDefault)
+    } else {
+      setValue('Today')
+      onChange(normalDefault)
+    }
+  }, [defaultForTeamLeads])
+
+
 
   useEffect(() => {
     if (label === startOfDay(d).getTime()) {
