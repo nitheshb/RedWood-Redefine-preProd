@@ -237,17 +237,16 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           </th>
 
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#fff]">
-                            ₹ {d1?.charges?.toLocaleString('en-IN')}
+                          ₹ {Math.round(d1?.charges || 0).toLocaleString('en-IN')}
                           </td>
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#fff] ">
-                            ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
+                          ₹ {Math.round(d1?.TotalSaleValue || 0).toLocaleString('en-IN')}
                           </td>
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] px-2 bg-[#fff]">
-                            ₹{d1?.gstValue?.toLocaleString('en-IN')}
+                          ₹ {Math.round(d1?.gstValue || 0).toLocaleString('en-IN')}
                           </td>
                           <td className="w-[15%] text-[12px] text-right  text-[#6A6A6A] bg-[#fff] px-2">
-                            ₹
-                            {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
+                          ₹ {Math.round(d1?.TotalNetSaleValueGsT || 0).toLocaleString('en-IN')}
                           </td>
                         </tr>
                       ))}
@@ -260,7 +259,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                            Cost:
                         </td>
                         <td className="w-[15%] font-semibold  text-[12px] text-right text-[#6A6A6A]  px-2">
-                          ₹{partATotal?.toLocaleString('en-IN')}
+                        ₹ {Math.round(partATotal || 0).toLocaleString('en-IN')}
                         </td>
                       </tr>
                     </tbody>
@@ -297,18 +296,18 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           </th>
                           <td className="text-[12px] w-[15%] text-right text-[#6A6A6A] px-2 bg-[#fff]">
                             {/* ₹{Number(d1?.charges)?.toLocaleString('en-IN')} */}
-                            {d1?.units.value==='fixedcost' ? 'Fixed': <>₹ {d1?.charges?.toLocaleString('en-IN')}</>}
+                            {d1?.units.value === 'fixedcost' ? 'Fixed' : <>₹ {Math.round(d1?.charges || 0).toLocaleString('en-IN')}</>}
                           </td>
 
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#fff] ">
-                            ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
+                          ₹ {Math.round(d1?.TotalSaleValue || 0).toLocaleString('en-IN')}
                           </td>
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] px-2 bg-[#fff]">
-                            ₹{d1?.gstValue?.toLocaleString('en-IN')}
+                          ₹ {Math.round(d1?.gstValue || 0).toLocaleString('en-IN')}
                           </td>
 
                           <td className="text-[12px] w-[15%] text-right text-[#6A6A6A] bg-[#fff] px-2">
-                            ₹
+                            
                             {/* {Number(
                               computeTotal(
                                 d1,
@@ -317,7 +316,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                                   ?.replace(',', '')
                               )
                             )?.toLocaleString('en-IN')} */}
-                            {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
+                            ₹ {Math.round(d1?.TotalNetSaleValueGsT || 0).toLocaleString('en-IN')}
                           </td>
                         </tr>
                       ))}
@@ -330,7 +329,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           Additional Charges:
                         </td>
                         <td className="text-[12px] text-right font-semibold text-[#6A6A6A]  px-2">
-                          ₹{partBTotal?.toLocaleString('en-IN')}
+                        ₹ {Math.round(partBTotal || 0).toLocaleString('en-IN')}
                         </td>
                       </tr>
                     </tbody>
@@ -368,19 +367,16 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             </th>
 
                             <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#fff] ">
-                              ₹{d1?.charges?.toLocaleString('en-IN')}
+                            ₹ {Math.round(d1?.charges || 0).toLocaleString('en-IN')}
                             </td>
                             <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#fff]  ">
-                              ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
+                            ₹ {Math.round(d1?.TotalSaleValue || 0).toLocaleString('en-IN')}
                             </td>
                             <td className="w-[15%] text-[12px] text-right  px-2 text-[#6A6A6A] bg-[#fff] ">
-                              ₹{d1?.gstValue?.toLocaleString('en-IN')}
+                            ₹ {Math.round(d1?.gstValue || 0).toLocaleString('en-IN')}
                             </td>
                             <td className="w-[15%] text-[12px] text-right  text-[#6A6A6A] bg-[#fff]  px-2">
-                              ₹
-                              {d1?.TotalNetSaleValueGsT?.toLocaleString(
-                                'en-IN'
-                              )}
+                            ₹ {Math.round(d1?.TotalNetSaleValueGsT || 0).toLocaleString('en-IN')}
                             </td>
                           </tr>
                         ))}
@@ -393,7 +389,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             Construction Cost:
                           </td>
                           <td className="w-[15%]  text-[12px] text-right font-semibold text-[#6A6A6A]   px-2">
-                            ₹{constructTotalA?.toLocaleString('en-IN')}
+                          ₹ {Math.round(constructTotalA || 0).toLocaleString('en-IN')}
                           </td>
                         </tr>
                       </tbody>
@@ -434,19 +430,20 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                               </th>
 
                               <td className="w-[15%] text-[12px] text-right text-gray-700 bg-[#fff]">
-                                {d1?.units.value==='fixedcost' ? 'Fixed': <>₹ {d1?.charges?.toLocaleString('en-IN')}</>}
+                              {d1?.units.value === 'fixedcost' 
+  ? 'Fixed' 
+  : <>₹ {Math.round(d1?.charges || 0).toLocaleString('en-IN')}</>
+}
+
                               </td>
                               <td className="w-[15%] text-[12px] text-right text-gray-700 bg-[#fff] ">
-                                ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
+                              ₹ {Math.round(d1?.TotalSaleValue || 0).toLocaleString('en-IN')}
                               </td>
                               <td className="w-[15%] text-[12px] text-right text-gray-700 px-2 bg-[#fff]">
-                                ₹{d1?.gstValue?.toLocaleString('en-IN')}
+                              ₹ {Math.round(d1?.gstValue || 0).toLocaleString('en-IN')}
                               </td>
                               <td className="w-[15%] text-[12px] text-right  text-gray-800 bg-[#fff] px-2">
-                                ₹
-                                {d1?.TotalNetSaleValueGsT?.toLocaleString(
-                                  'en-IN'
-                                )}
+                              ₹ {Math.round(d1?.TotalNetSaleValueGsT || 0).toLocaleString('en-IN')}
                               </td>
                             </tr>
                           )
@@ -460,7 +457,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             Construction Additonal Charges:
                           </td>
                           <td className="w-[15%] font-bold  text-[12px] text-right text-gray-800  px-2">
-                            ₹{constructTotalB?.toLocaleString('en-IN')}
+                          ₹ {Math.round(constructTotalB || 0).toLocaleString('en-IN')}
                           </td>
                         </tr>
                       </tbody>
@@ -501,19 +498,21 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                               </th>
 
                               <td className="w-[15%] text-[12px] text-right text-gray-700 bg-[#fff]">
-                              {d1?.units.value==='fixedcost' ? 'Fixed': <>₹ {d1?.charges?.toLocaleString('en-IN')}</>}
+                              {d1?.units.value === 'fixedcost' 
+  ? 'Fixed' 
+  : <>₹ {Math.round(d1?.charges || 0).toLocaleString('en-IN')}</>
+}
+
                               </td>
                               <td className="w-[15%] text-[12px] text-right text-gray-700 bg-[#fff] ">
-                                ₹{d1?.TotalSaleValue?.toLocaleString('en-IN')}
+                              ₹ {Math.round(d1?.TotalSaleValue || 0).toLocaleString('en-IN')}
                               </td>
                               <td className="w-[15%] text-[12px] text-right text-gray-700 px-2 bg-[#fff]">
-                                ₹{d1?.gstValue?.toLocaleString('en-IN')}
+                              ₹ {Math.round(d1?.gstValue || 0).toLocaleString('en-IN')}
                               </td>
                               <td className="w-[15%] text-[12px] text-right  text-gray-800 bg-[#fff] px-2">
-                                ₹
-                                {d1?.TotalNetSaleValueGsT?.toLocaleString(
-                                  'en-IN'
-                                )}
+                              ₹ {Math.round(d1?.TotalNetSaleValueGsT || 0).toLocaleString('en-IN')}
+         
                               </td>
                             </tr>
                           )
@@ -527,7 +526,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                             Possession Charges
                           </td>
                           <td className="w-[15%] font-bold  text-[12px] text-right text-gray-800  px-2">
-                            ₹{possessionTotal?.toLocaleString('en-IN')}
+                          ₹ {Math.round(possessionTotal || 0).toLocaleString('en-IN')}
                           </td>
                         </tr>
                       </tbody>
@@ -581,22 +580,26 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           {d1?.description}
                           </td>
                           <td className="text-[12px] w-[15%] text-right text-[#6A6A6A] px-2 bg-[#fff]">
-                          ₹{Number(d1?.charges)?.toLocaleString('en-IN')}
+                          ₹ {Math.round(Number(d1?.charges) || 0).toLocaleString('en-IN')}
                          </td>
                          <td className="text-[12px] w-[15%] text-right text-[#6A6A6A] px-2 bg-[#fff]">
-                          ₹{Number(d1?.gstValue)?.toLocaleString('en-IN')}
+                         ₹ {Math.round(Number(d1?.gstValue) || 0).toLocaleString('en-IN')}
                          </td>
 
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#fff] pr-2 ">
+
+
                           ₹{' '}
-                              {Number(
-                                computeTotal(
-                                  d1,
-                                  selCustomerPayload?.area
-                                    ?.toString()
-                                    ?.replace(',', '')
-                                )
-                              )?.toLocaleString('en-IN')}
+{Math.round(
+  Number(
+    computeTotal(
+      d1,
+      selCustomerPayload?.area?.toString()?.replace(',', '')
+    )
+  ) || 0
+).toLocaleString('en-IN')}
+
+         
                           </td>
 
 
@@ -612,7 +615,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                          Total Addons:
                         </td>
                         <td className="text-[12px] text-right font-semibold text-[#6A6A6A]  px-2">
-                        ₹{addOnTotal?.toLocaleString('en-IN')}
+                        ₹ {Math.round(Number(addOnTotal) || 0).toLocaleString('en-IN')}
                         </td>
                       </tr>
                     </tbody>
@@ -647,7 +650,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                   <section className="flex flex-row mt-1">
 
                     <section className="px-2 d-md font-bold text-[14px] text-[#000000e6] leading-none mr-1">
-                      ₹{grossUnitTotal?.toLocaleString('en-IN')}
+                    ₹ {Math.round(Number(grossUnitTotal) || 0).toLocaleString('en-IN')}
                     </section>
                   </section>
                 </div>

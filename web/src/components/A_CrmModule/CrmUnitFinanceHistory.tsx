@@ -56,7 +56,7 @@ const CrmUnitFinanceHistory = ({
 
 
       <div className="mt-2">
-        <section className="mr-2 flex flex-col   bg-white p-3 border border-[#e5e7f8] rounded-md ">
+        <section className="mr-2 flex flex-col border border-[#e5e7f8]  bg-white p-3 rounded-md ">
           <div>
             <div className="flex flex-row px-3 justify-between items-center ">
 
@@ -102,7 +102,7 @@ const CrmUnitFinanceHistory = ({
             <table className="w-full mb-10 mt-2">
               <thead>
                 {' '}
-                <tr className=" h-8 border-b-[0.2px] border-gray-300 ">
+                <tr className=" h-8 ">
                   <th className="w-[12%] text-[12px]  text-left text-[#3D3D3D]   rounded-tl-[10px]  bg-[#E8E6FE]  tracking-wide  pl-2 ">
                     Paid On
                   </th>
@@ -142,7 +142,7 @@ const CrmUnitFinanceHistory = ({
                   totalIs = 0
                     // selCustomerPayload?.[`${assets[0]}_T_review`] - d1?.value
                   return (
-                    <tr key={inx} className={`border-b-[0.05px] border-gray-300 h-[45px] ${inx%2 === 0 ? '': ' '}`}>
+                    <tr key={inx} className={` border-b border-dashed h-[45px] ${inx%2 === 0 ? '': ' '}`}>
                       <th className=" text-[12px] text-left text-blue-700  pl-2">
                         {prettyDate(d1?.txt_dated ||d1?.dated) }
                       </th>

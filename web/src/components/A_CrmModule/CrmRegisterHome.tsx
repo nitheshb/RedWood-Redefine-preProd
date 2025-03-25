@@ -31,6 +31,17 @@ import DoughnutChartWithRoundedSegments from '../A_SalesModule/Reports/charts/pi
 import CrmSiderForm from '../SiderForm/CRM_SideForm'
 import SiderForm from '../SiderForm/SiderForm'
 import RoundedProgressBar from '../A_SalesModule/Reports/charts/horizontalProgressBar'
+import { ToWords } from 'to-words'
+import IndianCurrencyTooltip from '../A_CRMcomp/IndianCurrencyTooltip'
+
+
+
+
+
+const toWords = new ToWords({
+  localeCode: 'en-IN',
+})
+
 
 const agreementItems = [
   {
@@ -227,6 +238,7 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
   const bootFun = async () => {
     await getProjectsListFun()
   }
+
 
 
 
@@ -460,6 +472,29 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
     setisUnitDetailsOpen(!isUnitDetailsOpen)
     setSelUnitDetails(docData)
   }
+
+
+
+  function formatIndianNumber(num) {
+    if (num >= 1_00_00_00_000) return (num / 1_00_00_00_000).toFixed(1) + 'Lcr+';
+    if (num >= 1_00_00_000) return (num / 1_00_00_000).toFixed(1) + 'Cr+';
+    if (num >= 1_00_000) return (num / 1_00_000).toFixed(1) + 'L+';
+    if (num >= 1_000) return (num / 1_000).toFixed(1) + 'K+';
+    return num.toString();
+}
+
+console.log(formatIndianNumber(25000000));
+
+
+  
+
+
+
+
+
+
+
+
   return (
     <>
       <div className=" font-rubikF mt-1 py-2 bg-white rounded-t-lg ">
@@ -1060,12 +1095,53 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
                                       Stage Cost
                                     </div>
-                                    <div className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide">
+
+
+
+
+                                    <div
+                className="relative flex flex-col items-center group"
+                style={{ alignItems: 'start' }}
+              >
+                <div
+                  className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                  style={{ alignItems: 'start', width: '300px' }}
+                >
+                  <span
+                    className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                    style={{
+                      color: 'white',
+                      background: '#213343',
+                      maxWidth: '300px',
+                    }}
+                  >
+                    <span className="italic">
+
+                      { formatIndianNumber?.(Math.round(finData?.T_elgible || 0))}
+                    </span>
+                  </span>
+                  <div
+                    className="w-3 h-3 ml-1  -mt-2 rotate-45 bg-black"
+                    style={{ background: '#213343', marginRight: '12px' }}
+                  ></div>
+                </div>
+                <span className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide ">
+      ₹ {Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
+                </span>
+      </div>
+
+
+
+
+
+                                    {/* <div className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide">
                                       ₹
                                       {finData?.T_elgible?.toLocaleString(
                                         'en-IN'
                                       )}
-                                    </div>
+                                      {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
+
+                                    </div> */}
                                   </section>
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full">
                                     <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
@@ -1081,13 +1157,42 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                         <InformationCircleIcon className="h-4 w-4 inline text-zinc-400" />
                                       </span>
                                     </div>
-                                    <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
+                                    {/* <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
                                       ₹
                                       {(
                                         (finData?.T_review || 0) +
                                         (finData?.T_approved || 0)
                                       )?.toLocaleString('en-IN')}
-                                    </div>
+                                    </div> */}
+
+
+<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+  <div
+    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+    style={{ alignItems: 'start', width: '300px' }}
+  >
+    <span
+      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+      style={{
+        color: 'white',
+        background: '#213343',
+        maxWidth: '300px',
+      }}
+    >
+      <span className="italic">
+        {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
+      </span>
+    </span>
+    <div
+      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+      style={{ background: '#213343', marginRight: '12px' }}
+    ></div>
+  </div>
+  <span className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
+    ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+  </span>
+</div>
+
                                   </section>
                                   {/* section- 3 */}
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full">
@@ -1095,10 +1200,13 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                       Balance
                                     </div>
                                     <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
-                                      ₹
-                                      {finData?.T_elgible_balance <0 ? 0:finData?.T_elgible_balance?.toLocaleString(
-                                        'en-IN'
-                                      )}
+                                    {/* ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')} */}
+
+                                    <IndianCurrencyTooltip amount={(finData?.T_elgible_balance < 0 ? 0 : finData?.T_elgible_balance)?.toLocaleString("en-IN")} />
+
+
+
+
                                     </div>
                                   </section>
                                 </div>
@@ -1127,31 +1235,111 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
                                     <section className="flex flex-col  w-full mt-">
                                     <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
                                         Unit Cost: ₹
-                                        <div>
-                                          {(
-                                            finData?.T_total || finData?.T_Total
-                                          )?.toLocaleString('en-IN')}
-                                        </div>
+                                        {/* <div>
+                                        {Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
+
+                                        </div> */}
+
+<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+  <div
+    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+    style={{ alignItems: 'start', width: '300px' }}
+  >
+    <span
+      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+      style={{
+        color: 'white',
+        background: '#213343',
+        maxWidth: '300px',
+      }}
+    >
+      <span className="italic">
+        {formatIndianNumber?.(Math.round(finData?.T_total || finData?.T_Total || 0))}
+      </span>
+    </span>
+    <div
+      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+      style={{ background: '#213343', marginRight: '12px' }}
+    ></div>
+  </div>
+  <span className="text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
+    {Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
+  </span>
+</div>
+
                                       </p>
 
                                       <div className="text-zinc-500 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
                                         Paid: ₹
-                                        <div>
+                                        {/* <div>
                                           {' '}
-                                          {(
-                                            (finData?.T_review || 0) +
-                                            (finData?.T_approved || 0)
-                                          ).toLocaleString('en-IN') || 0}
-                                        </div>
+                                          {Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+
+                                        </div> */}
+
+<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+  <div
+    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+    style={{ alignItems: 'start', width: '300px' }}
+  >
+    <span
+      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+      style={{
+        color: 'white',
+        background: '#213343',
+        maxWidth: '300px',
+      }}
+    >
+      <span className="italic">
+        {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
+      </span>
+    </span>
+    <div
+      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+      style={{ background: '#213343', marginRight: '12px' }}
+    ></div>
+  </div>
+  <span className="text-[11px] font-normal font-['Lato'] tracking-wide">
+    {Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+  </span>
+</div>
+
                                       </div>
 
                                       <div className="text-zinc-800 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
                                         Balance:₹
-                                        <div className="text-zinc-900 text-[11px] font-bold  tracking-wide">
-                                          {finData?.T_balance?.toLocaleString(
-                                            'en-IN'
-                                          )}
-                                        </div>
+                                        {/* <div className="text-zinc-900 text-[11px] font-bold  tracking-wide">
+                                        {Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
+
+                                        </div> */}
+
+<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+  <div
+    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+    style={{ alignItems: 'start', width: '300px' }}
+  >
+    <span
+      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+      style={{
+        color: 'white',
+        background: '#213343',
+        maxWidth: '300px',
+      }}
+    >
+      <span className="italic">
+        {formatIndianNumber?.(Math.round(finData?.T_balance || 0))}
+      </span>
+    </span>
+    <div
+      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+      style={{ background: '#213343', marginRight: '12px' }}
+    ></div>
+  </div>
+  <span className="text-zinc-900 text-[11px] font-bold  tracking-wide">
+    {Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
+  </span>
+</div>
+
                                       </div>
                                     </section>
                                   </section>

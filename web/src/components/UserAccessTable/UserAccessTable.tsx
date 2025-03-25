@@ -139,6 +139,15 @@ const UserAccessTable = ({showCompletedTasks}) => {
 
 
     <div className="h-screen w-full bg-white rounded-lg  flex flex-col">
+
+    <div className="flex flex-row mt-3 ml-6">
+        <div className="flex flex-row mt-1 mr-2">
+          <span className="text-[14px] font-extrabold mt-1  mr-1">Feature Access Control     </span>
+          {/* Access Control Table */}
+        </div>
+     </div>
+            
+
   {/* <Box className="flex  mb-[0.5px] bg-white rounded-lg  py-4">
         <StyledButton
           variant="outlined"
@@ -209,99 +218,113 @@ const UserAccessTable = ({showCompletedTasks}) => {
       </Box> */}
 
 
-<Box className="flex items-center mb-[0.5px] bg-white border border-gray-300 rounded-lg py-4 px-2">
+      <div className='mt-10'>
+
+      <Box className="flex items-center mb-[0.5px] bg-white border-b rounded-lg ">
 
 
 
-  {[
-    { key: 'all', label: 'All', icon: <EyeIcon className="h-5 w-5 mr-1" /> },
-    { key: 'admin', label: 'ADMIN' },
-    { key: 'crm', label: 'CRM' },
-    { key: 'hr', label: 'HR' },
-    { key: 'legal', label: 'LEGAL' },
-    { key: 'project', label: 'PROJECT' },
-    { key: 'sales', label: 'SALES' },
-    { key: 'admin-team', label: 'Admin Team' },
-  ].map(({ key, label, icon }) => (
-    <StyledButton
-      key={key}
-      variant="outlined"
-      size="small"
-      isCategoryMatched={category === key}
-      onClick={() => setCategory(key)}
-      className={`px-3 py-1 mx-1 ${
-        // category === key ? 'border-b-2 border-blue-500' : ''
-        category === key ? 'border-b-2 border-blue-500' : 'border-none'
-      }`}
-    >
-      {/* {icon} */}
-      <img alt="" src="/temp2.png" className="h-5 w-5 mr-2" />
+{[
+  { key: 'all', label: 'All', icon: <EyeIcon className="h-5 w-5 mr-1" /> },
+  { key: 'admin', label: 'Admin' },
+  { key: 'crm', label: 'Crm' },
+  { key: 'hr', label: 'Hr' },
+  { key: 'legal', label: 'Legal' },
+  { key: 'project', label: 'Project' },
+  { key: 'sales', label: 'Sales' },
+  { key: 'admin-team', label: 'Admin Team' },
+].map(({ key, label, icon }) => (
+  <a
+    key={key}
+    // variant="outlined"
+    // size="small"
+    // isCategoryMatched={category === key}
+    onClick={() => setCategory(key)}
+    className={`px-3 py-1 mx-1 capitalize flex items-center text-sm font-medium ${
+      // category === key ? 'border-b-2 border-blue-500' : ''
+      category === key ? 'border-b-2 border-black text-green-800' : 'text-gray-500 hover:text-black'
+    }transition-all duration-200 hover:text-grey-500`}
+  >
+    {/* {icon} */}
+    <img alt="" src="/temp2.png" className="h-5 w-5 mr-2" />
 
-      {label}
-    </StyledButton>
-  ))}
+    {/* {label} */}
+    <span className="whitespace-nowrap">{label}</span>
+
+  </a>
+))}
 </Box>
 
 
-      <div className="flex-1 mb-10 border  shadow-sm overflow-hidden bg-white">
-      <div className="h-full overflow-auto">
-          <table className="w-full border-collapse table-fixed">
-            <thead>
-              <tr>
-                <th className="sticky left-0 top-0 z-20 w-40 bg-gray-50 p-4 text-left font-semibold text-[11px] text-gray-900 border-b border-r">
-                  Roles
-                </th>
-                {
-
-  filterData?.[4]?.access.map(({ name, key })  => (
-                  <th
-                    key={key}
-                    className="sticky top-0 z-10 bg-gray-50 p-4 text-center font-semibold text-[11px] text-gray-900 border-b min-w-[200px]"
-                  >
-                    {name}
-                  </th>
-                ))}
-
-              </tr>
-            </thead>
-            <tbody className="divide-y">
+    <div className="flex-1 mb-10 mt-4  shadow-sm bg-white">
+    <div className="h-full ">
+        <table className="w-full border-collapse table-fixed  whitespace-nowrap ">
+          <thead className='bg-[#E8E6FE] '>
+            <tr>
+              <th className="sticky left-0 top-0 z-20 w-40  px-4 py-2 text-left font-semibold text-[11px] text-gray-900 border-b border-r">
+                Roles
+              </th>
               {
 
-  filterData
-  .map(item => (
-                <tr key={item.uid} className="hover:bg-gray-50">
-                  <td className="sticky left-0 z-10 bg-white p-4 text-[12px] text-gray-900 border-r">
-                    {item.type}
-                  </td>
-                  {
-  item?.access.map(element => (
-                    <td
-                      key={element.key}
-                      className="p-4"
-                    >
-                      <div className="flex items-center justify-center">
-                        <button
-                          onClick={() => onRoleChangeListener(item, element)}
-                          className={`w-5 h-5 rounded flex items-center justify-center ${
-                            element.checked
-                              ? 'bg-blue-500 text-white'
-                              : 'border border-gray-300'
-                          }`}
-                        >
-                          {element.checked && (
-                            <Check className="w-4 h-4" />
-                          )}
-                        </button>
-        
-                      </div>
-                    </td>
-                  ))}
-                </tr>
+filterData?.[4]?.access.map(({ name, key })  => (
+                <th
+                  key={key}
+                  className="sticky top-0 z-10  px-4 py-2 text-center font-semibold text-[11px] text-gray-900 border-b min-w-[200px]"
+                >
+                  {name}
+                </th>
               ))}
-            </tbody>
-          </table>
-        </div>
+
+            </tr>
+          </thead>
+          <tbody className="divide-y">
+            {
+
+filterData
+.map(item => (
+              <tr key={item.uid} className="hover:bg-gray-50">
+                <td className="sticky left-0 z-10 bg-white px-4 py-2 text-[12px] text-gray-900 border-r">
+                  {item.type}
+                </td>
+                {
+item?.access.map(element => (
+                  <td
+                    key={element.key}
+                    className=""
+                  >
+                    <div className="flex items-center justify-center">
+                      <button
+                        onClick={() => onRoleChangeListener(item, element)}
+                        className={`w-5 h-5 rounded flex items-center justify-center ${
+                          element.checked
+                            ? 'bg-blue-500 text-white'
+                            : 'border border-gray-300'
+                        }`}
+                      >
+                        {element.checked && (
+                          <Check className="w-4 h-4" />
+                        )}
+                      </button>
+      
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+    </div>
+
+
+      </div>
+
+
+
+
+
+
+
     </div>
 
     </div>

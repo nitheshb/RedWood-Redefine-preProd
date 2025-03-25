@@ -121,37 +121,37 @@ const StackedBarChart = () => {
               <div className="w-3 h-3 mt-2 mr-3 rounded-full bg-[#8884d8]">
                 {' '}
               </div>{' '}
-              <div>{`Total Leads: ${payload[5].value}`}</div>
+              <div>{`Total Leads: ${payload[5]?.value}`}</div>
             </div>
             <div className="flex flex-row">
               <div className="w-3 h-3 mt-2 mr-3 rounded-full bg-[#2562EB]">
                 {' '}
               </div>{' '}
-              <div>{`Booked: ${payload[1].value}`}</div>
+              <div>{`Booked: ${payload[1]?.value}`}</div>
             </div>{' '}
             <div className="flex flex-row">
               <div className="w-3 h-3 mt-2 mr-3 rounded-full bg-[#E1D9F7]">
                 {' '}
               </div>{' '}
-              <div>{`InProgress: ${payload[0].value}`}</div>
+              <div>{`InProgress: ${payload[0]?.value}`}</div>
             </div>
             <div className="flex flex-row">
               <div className="w-3 h-3 mt-2 mr-3 rounded-full bg-[#8884d8]">
                 {' '}
               </div>{' '}
-              <div>{`Junk: ${payload[2].value}`}</div>
+              <div>{`Junk: ${payload[2]?.value}`}</div>
             </div>
             <div className="flex flex-row">
               <div className="w-3 h-3 mt-2 mr-3 rounded-full bg-[#D2F2FA]">
                 {' '}
               </div>{' '}
-              <div>{`NotInterested: ${payload[3].value}`}</div>
+              <div>{`NotInterested: ${payload[3]?.value}`}</div>
             </div>
             <div className="flex flex-row">
               <div className="w-3 h-3 mt-2 mr-3 rounded-full bg-[#F7F6B9]">
                 {' '}
               </div>{' '}
-              <div>{`Revisited: ${payload[4].value}`}</div>
+              <div>{`Revisited: ${payload[4]?.value}`}</div>
             </div>
           </section>
         </div>
