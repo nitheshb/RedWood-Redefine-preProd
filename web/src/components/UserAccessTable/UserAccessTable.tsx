@@ -142,7 +142,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
 
     <div className="flex flex-row mt-3 ml-6">
         <div className="flex flex-row mt-1 mr-2">
-          <span className="text-[14px] font-extrabold mt-1  mr-1">Feature Access Control     </span>
+          <span className="ml-2 text-md font-semibold text-black leading-none font-Playfair">Feature Access Control     </span>
           {/* Access Control Table */}
         </div>
      </div>
@@ -242,7 +242,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
     onClick={() => setCategory(key)}
     className={`px-3 py-1 mx-1 capitalize flex items-center text-sm font-medium ${
       // category === key ? 'border-b-2 border-blue-500' : ''
-      category === key ? 'border-b-2 border-black text-green-800' : 'text-gray-500 hover:text-black'
+      category === key ? 'border-b-2 border-black text-green-800 font-semibold' : 'text-gray-500 hover:text-black'
     }transition-all duration-200 hover:text-grey-500`}
   >
     {/* {icon} */}

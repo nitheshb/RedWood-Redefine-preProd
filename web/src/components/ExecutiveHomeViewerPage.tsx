@@ -121,6 +121,14 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
   //   getLeadsDataFun()
   // }, [])
 
+
+  
+
+
+
+
+
+
   useEffect(() => {
     setFetchLeadsLoader(true)
     if (selLeadsOf?.value == 'myleads') {
@@ -690,13 +698,16 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                       />
                     </div>
                   )}
+
                   <SmartCalendarSelect
                     onChange={async (value) => {
                       console.log(value, 'ksdvnlfkjv')
                       setShortDateRange(value)
                     }}
                     label="All Dates"
+                    defaultForTeamLeads={selLeadsOf?.value === 'teamleads'}
                   />
+
                   <span className="hidden max-h-[42px] mt-[2px] ml-3 bg-white pl-[2px] rounded-[4px] h-[19px] ">
 
                     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}

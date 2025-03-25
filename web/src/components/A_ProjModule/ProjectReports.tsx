@@ -554,7 +554,7 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
                     key={i}
                     className={` cursor-pointer flex flex-row ${
                       selUserId === data?.uid
-                        ? 'bg-red-800 text-white rounded-xl'
+                        ? 'bg-[#E3BDFF] text-white rounded-xl'
                         : ''
                     }`}
                     onClick={() => {
@@ -782,7 +782,7 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
                   <div className="overflow-x-auto mt-2 rounded-xl">
                     <table className="w-full whitespace-nowrap">
                       <thead className="">
-                        <tr className="tabHeader bg-[#F5F8FA]">
+                        <tr className="tabHeader bg-[#E8E6FE]">
                           <th className="text-left pl-[1rem]">
                             {' '}
                             <span
@@ -831,7 +831,7 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
                         {businessSection_D?.map((dat, i) => (
                           <tr
                             tabIndex={0}
-                            className="focus:outline-none h-16 border border-gray-100 rounded"
+                            className="focus:outline-none h-16 border border-gray-100 bg-[#fff] rounded"
                             key={i}
                             onClick={() => {
                               setisViewTaskMan(true)

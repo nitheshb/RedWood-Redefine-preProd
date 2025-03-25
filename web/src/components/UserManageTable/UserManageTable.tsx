@@ -108,7 +108,7 @@ const UserManageTable = ({ editEmployeeFun, showCompletedTasks }) => {
                 <div
                   className={`py-1 px-6  flex border-b  whitespace-nowrap    ${
                     selDept.includes(dat.val)
-                      ? 'border-b-2 border-black text-green-800'
+                      ? 'border-b-2 border-black text-green-800 font-semibold'
                       : 'text-gray-500 hover:text-black'
                   }`}
                 >
