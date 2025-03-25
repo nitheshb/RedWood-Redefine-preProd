@@ -699,7 +699,6 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                     </div>
                   )}
 
-
                   <SmartCalendarSelect
                     onChange={async (value) => {
                       console.log(value, 'ksdvnlfkjv')
@@ -708,8 +707,6 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                     label="All Dates"
                     defaultForTeamLeads={selLeadsOf?.value === 'teamleads'}
                   />
-
-
 
                   <span className="hidden max-h-[42px] mt-[2px] ml-3 bg-white pl-[2px] rounded-[4px] h-[19px] ">
 

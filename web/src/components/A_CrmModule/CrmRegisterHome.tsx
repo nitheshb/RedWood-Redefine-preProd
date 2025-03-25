@@ -1202,12 +1202,43 @@ console.log(formatIndianNumber(25000000));
                                     <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
                                     {/* ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')} */}
 
-                                    <IndianCurrencyTooltip amount={(finData?.T_elgible_balance < 0 ? 0 : finData?.T_elgible_balance)?.toLocaleString("en-IN")} />
+                                    {/* <IndianCurrencyTooltip amount={(finData?.T_elgible_balance < 0 ? 0 : finData?.T_elgible_balance)?.toLocaleString("en-IN")} /> */}
 
 
 
 
                                     </div>
+
+                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+  <div
+    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+    style={{ alignItems: 'start', width: '300px' }}
+  >
+    <span
+      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+      style={{
+        color: 'white',
+        background: '#213343',
+        maxWidth: '300px',
+      }}
+    >
+      <span className="italic">
+        {/* {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))} */}
+        {formatIndianNumber(finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance))}
+
+      </span>
+    </span>
+    <div
+      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+      style={{ background: '#213343', marginRight: '12px' }}
+    ></div>
+  </div>
+  <span className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
+  ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
+
+
+  </span>
+</div>
                                   </section>
                                 </div>
                                 <div className="flex flex-row mx-1 pt-">

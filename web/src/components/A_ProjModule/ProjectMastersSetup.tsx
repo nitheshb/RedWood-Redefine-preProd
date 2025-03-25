@@ -114,7 +114,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
       {selCat === 'Apartment' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
@@ -126,7 +126,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
        {selCat === 'TermsConditions' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Setup`}
               </h2>
@@ -138,7 +138,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
        {selCat === 'Masters' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Setup`}
               </h2>
@@ -150,7 +150,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
       {selCat === 'Plots' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
@@ -162,7 +162,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
         {selCat === 'Villas' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
@@ -174,7 +174,7 @@ const ProjectMastersSetupHome = ({ title, pId, data }) => {
       {selCat === 'WeekendVillas' && (
         <div className="w-full   flex-row">
           <section className="m-4 inline-block">
-            <div className="bg-[#FFEDEA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
+            <div className="bg-[#F5F8FA] p-4 rounded-xl shadow-md shadow-neutral-200 ">
               <h2 className="text-sm font-semibold pb-2 border-b border-grey">
                 {`${selCat} Cost Setup Templete`}
               </h2>
