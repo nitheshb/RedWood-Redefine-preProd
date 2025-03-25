@@ -242,7 +242,7 @@ const UserAccessTable = ({showCompletedTasks}) => {
     onClick={() => setCategory(key)}
     className={`px-3 py-1 mx-1 capitalize flex items-center text-sm font-medium ${
       // category === key ? 'border-b-2 border-blue-500' : ''
-      category === key ? 'border-b-2 border-black text-green-800' : 'text-gray-500 hover:text-black'
+      category === key ? 'border-b-2 border-black text-green-800 font-semibold' : 'text-gray-500 hover:text-black'
     }transition-all duration-200 hover:text-grey-500`}
   >
     {/* {icon} */}

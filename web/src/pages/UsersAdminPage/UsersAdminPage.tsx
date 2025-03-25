@@ -70,9 +70,9 @@ const UsersAdminPage = () => {
 
 
               {viewable === 'User Management' && (
-                <div className="flex flex-row mt-3 ml-6">
+                <div className="flex justify-between flex-row mt-3  w-full mr-6   ml-6">
                   <div className="flex flex-row mt-2 mr-2">
-                    <span className="text-[14px] font-extrabold mt-1  mr-1">Show InActive</span>
+                    <span className="text-[14px] font-extrabold mt-1  mr-1">Active InActive</span>
                     <Switch
                       checked={showCompletedTasks}
                       onChange={changeFun}
@@ -133,9 +133,9 @@ const UsersAdminPage = () => {
                 </div>
               )}
               {viewable === 'AssetsManagement' && (
-                <div className="flex flex-row mt-3 ml-6">
+                <div className="flex flex-row justify-between mt-3 w-full mr-6   ml-6">
                   <div className="flex flex-row mt-2 mr-2">
-                    <span className="text-[14px] font-extrabold mt-1 mr-1">Show InActive</span>
+                    <span className="text-[14px] font-extrabold mt-1 mr-1">Active InActive</span>
                     <Switch
                       checked={showCompletedTasks}
                       onChange={changeFun}
