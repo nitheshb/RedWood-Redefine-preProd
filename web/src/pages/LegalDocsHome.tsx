@@ -697,6 +697,8 @@ const LegalDocsHome = ({ project }) => {
         </div>
       </div>
     </section>
+
+  
   );
 };
 

@@ -536,7 +536,7 @@ const FloordetailsSearch = ({
   }
 
   return (
-    <div className="lg:col-span-10  ">
+    <div className=" ">
       {blocksViewFeature === 'Report' && (
         <>
           {' '}

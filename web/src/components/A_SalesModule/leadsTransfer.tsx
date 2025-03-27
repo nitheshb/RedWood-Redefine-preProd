@@ -281,7 +281,6 @@ const LeadsTransferHome = ({ project }) => {
             <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-1">
               <Link
                 className="flex items-center"
-         
               >
                 <span className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0">
                   Leads Transfer
