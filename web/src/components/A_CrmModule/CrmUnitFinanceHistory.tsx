@@ -172,7 +172,7 @@ const CrmUnitFinanceHistory = ({
                   src="https://static.ambitionbox.com/static/benefits/JobTraining.svg"
                   alt=""
                 /> */}
-                <h1 className=" text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-1 ml-1">
+                <h1 className="  text-left text-[#606062]  uppercase font-outfit font-medium text-[12px] mb-2 mt-1 ml-1">
                 Payment History
                 </h1>
               </div> 

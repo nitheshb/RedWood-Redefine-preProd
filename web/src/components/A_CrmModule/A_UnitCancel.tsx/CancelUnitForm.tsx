@@ -138,7 +138,23 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
     }
   return (
     <>
-      <section className=" min-h-screen rounded-lg border border-gray-100 ">
+
+
+
+<div className=' overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
+
+<div>
+<img  alt="" src="/bgcrm.svg"></img>
+</div>
+
+
+
+
+
+
+
+
+<section className=" min-h-screen rounded-lg border border-gray-100 ">
         <div className="w-full  ">
             <div className=" ">
               <div className="">
@@ -185,7 +201,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                                               </label>
                                             </div> */}
                                             <div>
-                                            <h2 className='text-[#000000] font-outfit font-semibold  text-[16px]'>Refund amount will be added to customer wallet for withdrawal.</h2>
+                                            <h2 className='text-[#000000] font-outfit font-medium  text-[16px]'>Refund amount will be added to customer wallet for withdrawal.</h2>
                                           </div>
                                           </div>
                                         </section>
@@ -450,6 +466,14 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
         </div>
       </section>
+
+</div>
+
+
+
+
+
+
     </>
   )
 }

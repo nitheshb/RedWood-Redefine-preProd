@@ -164,7 +164,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                   src="https://static.ambitionbox.com/static/benefits/WFH.svg"
                   alt=""
                 /> */}
-                <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
+                <h1 className="font-outfit uppercase text-left text-[#606062] font-medium text-[12px] mb-2 mt-3 ml-1">
                   Cost Sheet
                 </h1>
                 </div>

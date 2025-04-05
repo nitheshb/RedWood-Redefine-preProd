@@ -154,7 +154,7 @@ const CrmUnitPsHome = ({
   </div>
 
   <div className="relative z-10 text-center">
-    <h1 className="text-2xl font-bold">Total Unit Cost</h1>
+    <h1 className="text-2xl font-medium">Total Unit Cost</h1>
 
 
 <CountUpComp value={Math.round(Number(grossUnitTotal)) || 0} />

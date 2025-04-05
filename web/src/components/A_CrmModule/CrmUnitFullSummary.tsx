@@ -872,7 +872,7 @@ export default function UnitFullSummary({
     <div
       className={`bg-[#F6F5F8]  mb-10 h-screen      `}
     >
-<section className="flex flex-row-reverse	">
+<section className="flex ml-6 	">
     <div className='w-full'>
       <div className="rounded-t  mb-0">
         <>
@@ -888,7 +888,7 @@ export default function UnitFullSummary({
                       src="/empty-dashboard.svg"
                     />
                   </div>
-                  <h3 className="mb-1 text-xs font-semibold text-gray-900 ">
+                  <h3 className="mb-1 text-xsfont-medium text-gray-900 ">
                     No Attachments
                   </h3>
                   <button onClick={() => showAddAttachF()}>
@@ -970,7 +970,7 @@ export default function UnitFullSummary({
               {docsList.length > 0 && (
                 <div className="py-8">
                   <div className="flex justify-between">
-                    <h2 className="text-xl font-semibold leading-tight">
+                    <h2 className="text-xlfont-medium leading-tight">
                       Customer attachments
                     </h2>
                     <button onClick={() => showAddAttachF()}>
@@ -984,14 +984,14 @@ export default function UnitFullSummary({
                       <table className="min-w-full leading-normal">
                         <thead>
                           <tr>
-                            <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xsfont-medium text-gray-700 uppercase tracking-wider">
                               Name
                             </th>
 
-                            <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xsfont-medium text-gray-700 uppercase tracking-wider">
                               Created On / By
                             </th>
-                            <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xsfont-medium text-gray-700 uppercase tracking-wider">
                               Status
                             </th>
                           </tr>
@@ -1058,7 +1058,7 @@ export default function UnitFullSummary({
                   src="/all-complete.svg"
                 />
               </div>
-              <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+              <h3 className="mb-1 text-smfont-medium text-gray-900 ">
                 You are clean
               </h3>
               <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
@@ -1103,7 +1103,7 @@ export default function UnitFullSummary({
             //           src="/templates.svg"
             //         />
             //       </div>
-            //       <h3 className="mb-1 text-xs font-semibold text-gray-900 ">
+            //       <h3 className="mb-1 text-xsfont-medium text-gray-900 ">
             //         Timeline is Empty box1
             //       </h3>
             //       <time className="block mb-2 text-xs font-normal leading-none text-gray-400 ">
@@ -1341,18 +1341,27 @@ export default function UnitFullSummary({
       {selFeature === 'unit_information' && (
 
         <>
+
+
+
+
+
+
         
         <div className=' m-2 mt-[1px]   rounded-lg border border-gray-100  overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
 
+        <div>
+        <img  alt="" src="/bgcrm.svg"></img>
+        </div>
 
 
     <div className="w-full max-w-4xl  p-8 rounded-2xl shadow-md bg-white font-sans">
-      {/* UNIT DETAILS */}
+
       <section className="mb-8">
         <h2 className="text-[12px] text-gray-600 font-medium mb-6">UNIT DETAILS</h2>
         
         <div className="flex flex-wrap">
-          {/* Unit No */}
+         
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1362,14 +1371,14 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px] ">Unit No</div>
-              <div className="text-base font-outfit font-semibold">{selCustomerPayload?.unit_no}</div>
+              <div className="text-base font-outfitfont-medium">{selCustomerPayload?.unit_no}</div>
             </div>
           </div>
           
-          {/* Divider */}
+    
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* Facing */}
+         
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1383,16 +1392,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px] ">Facing</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.facing}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+       
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* Size */}
+     
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
@@ -1406,16 +1415,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px] ">Size (sqft)</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.area?.toLocaleString('en-IN')}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+       
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* BUA */}
+   
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
@@ -1431,7 +1440,7 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px] ">BUA (sqft)</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.builtup_area?.toLocaleString('en-IN') || selCustomerPayload?.construct_area?.toLocaleString('en-IN')}
               </div>
             </div>
@@ -1442,7 +1451,7 @@ export default function UnitFullSummary({
 
 
 
-   {/* start */}
+
 
 
    {(customerDetails?.projectType?.name === 'Villas' || customerDetails?.projectType?.name === 'Apartment') && (
@@ -1465,7 +1474,7 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px] ">BedRooms</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.Bedrooms_D}
               </div>
             </div>
@@ -1485,7 +1494,7 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px] ">Bathrooms</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.BathRooms_D?.toLocaleString('en-IN')}
               </div>
             </div>
@@ -1503,7 +1512,7 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">Car Parking</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
               </div>
             </div>
@@ -1521,7 +1530,7 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">Carpet Area Sqft</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
               </div>
             </div>
@@ -1535,15 +1544,12 @@ export default function UnitFullSummary({
 
 
 
-      {/* end */}
-
-      
-      {/* DIMENSIONS */}
+ 
       <section className="mb-8">
         <h2 className="text-[12px] text-gray-600 font-medium mb-4">DIMENSIONS</h2>
         
         <div className="flex flex-wrap">
-          {/* East */}
+
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
               
@@ -1555,16 +1561,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">East</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.east_d?.toLocaleString('en-IN')}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+     
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* West */}
+       
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1575,16 +1581,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">West</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.west_d?.toLocaleString('en-IN')}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* North */}
+       
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1595,16 +1601,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">North</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.north_d?.toLocaleString('en-IN')}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* South */}
+  
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1615,7 +1621,7 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">South</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.south_d?.toLocaleString('en-IN')}
               </div>
             </div>
@@ -1623,12 +1629,12 @@ export default function UnitFullSummary({
         </div>
       </section>
       
-      {/* STATUS */}
+
       <section className="mb-8">
         <h2 className="text-[12px] text-gray-600 font-medium mb-4">STATUS</h2>
         
         <div className="flex flex-wrap">
-          {/* Unit Status */}
+  
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1642,16 +1648,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">Unit Status</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.status}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+      
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* West */}
+      
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1663,16 +1669,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">Status</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.release_status?.toLocaleString('en-IN')}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* Mortgage */}
+    
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1684,16 +1690,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">Mortgage</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.mortgage_type}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+ 
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* Sharing */}
+
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1708,7 +1714,7 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">Sharing</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.sharing}
               </div>
             </div>
@@ -1716,12 +1722,12 @@ export default function UnitFullSummary({
         </div>
       </section>
       
-      {/* SCHEDULE */}
+  
       <section className="mb-8">
         <h2 className="text-[12px] text-gray-600 font-medium mb-4">SCHEDULE</h2>
         
         <div className="flex flex-wrap">
-          {/* East by */}
+  
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
@@ -1735,16 +1741,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">East by</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+        
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* West by */}
+    
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
            
@@ -1760,16 +1766,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">West by</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+    
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* North by */}
+         
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
              
@@ -1784,16 +1790,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">North by</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+ 
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* South by */}
+
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
               
@@ -1809,20 +1815,19 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">South by</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}
               </div>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* ADDITIONAL DETAILS */}
+
       <section className="mb-8">
         <h2 className="text-[12px] text-gray-600 font-medium mb-4">ADDITIONAL DETAILS</h2>
         
         <div className="flex flex-wrap">
-          {/* Survey No */}
+
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1839,16 +1844,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">Survey No</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.survey_no}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+      
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* PID No */}
+ 
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1865,16 +1870,16 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">PID No</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.PID_no}
               </div>
             </div>
           </div>
           
-          {/* Divider */}
+      
           <div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
           
-          {/* Katha No */}
+     
           <div className="flex items-center p-2 flex-1 min-w-48">
             <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1888,13 +1893,13 @@ export default function UnitFullSummary({
             </div>
             <div>
               <div className="text-[#606062] font-medium text-[12px]">Katha No</div>
-              <div className="text-base font-outfit font-semibold">
+              <div className="text-base font-outfitfont-medium">
               {selCustomerPayload?.Katha_no}
               </div>
             </div>
           </div>
           
-          {/* Empty fourth column to maintain grid layout */}
+  
           <div className="flex-1 min-w-48"></div>
         </div>
       </section>
@@ -1921,7 +1926,7 @@ export default function UnitFullSummary({
           src="https://static.ambitionbox.com/static/benefits/WFH.svg"
           alt=""
         />
-        <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
+        <h1 className="text-bodyLato text-left text-[#1E223C]font-medium text-[14px] mb-2 mt-3 ml-1">
           Dates        
           </h1>
       </div>
@@ -2182,78 +2187,100 @@ export default function UnitFullSummary({
 
         <>
 
+    
+
+
+
+         
+<div className=' m-2 mt-[1px]   rounded-lg border border-gray-100  overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
+
+<div className=''>
+<img  alt="" src="/bgcrm.svg"></img>
+</div>
 
 
 
 
+<div className=''>
 
-<h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-4">Unit Documents</h1>
+
+<h1 className="text-[#606062] t tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-4">Unit Documents</h1>
+
+
+</div>
+
         
-        <section className="bg-white max-w-3xl p-4 mt-2 rounded-2xl">
+
+
+<div className="">
+
+<section className="bg-white max-w-3xl p-4 mt-2 rounded-2xl">
         
-          <div className="">
-            <div className="  ">
-              <div className="">
-             
-                <span
-                  className=""
-                  onClick={() => {
-                    setSliderInfo({
-                      open: true,
-                      title: 'legal_doc_upload',
-                      sliderData: {},
-                      widthClass: 'max-w-xl',
-                    })
-                  }}
-                >
-                </span>
-              </div>
+        <div className="">
+          <div className="  ">
+            <div className="">
+           
+              <span
+                className=""
+                onClick={() => {
+                  setSliderInfo({
+                    open: true,
+                    title: 'legal_doc_upload',
+                    sliderData: {},
+                    widthClass: 'max-w-xl',
+                  })
+                }}
+              >
+              </span>
             </div>
           </div>
-          {[
-            { id: 1234, name: 'EC', time: '22-Nov-2022' },
-            {
-              id: 1235,
-              name: 'Agreement',
-              time: '24-Nov-2022',
-            },
-            {
-              id: 1236,
-              name: 'Register Doc',
-              time: '2-Dec-2022',
-            },
-          ].length === 0 ? (
-            <div className="w-full text-center py-5">No documents</div>
-          ) : (
-            ''
-          )}
-          {[
-            { id: 1234, name: 'EC',type: 'ec',time: customerDetails?.ecDocUpDate, url: customerDetails?.ecDocUrl , filName: customerDetails?.ecFilName },
-            {
-              id: 1235,
-              name: 'Agreement',
-              type: 'agree',
-              time: customerDetails?.agreeDocUpDate, url: customerDetails?.agreeDocUrl , filName: customerDetails?.agreeFilName,
-            },
-            {
-              id: 1236,
-              name: 'Register Doc',
-              type: 'reg',
-              time: customerDetails?.regDocUpDate, url: customerDetails?.regDocUrl , filName: customerDetails?.regFilName,
-            },
-          ]?.map((doc, i) => (
-            <section
-              key={i}
+        </div>
+        {[
+          { id: 1234, name: 'EC', time: '22-Nov-2022' },
+          {
+            id: 1235,
+            name: 'Agreement',
+            time: '24-Nov-2022',
+          },
+          {
+            id: 1236,
+            name: 'Register Doc',
+            time: '2-Dec-2022',
+          },
+        ].length === 0 ? (
+          <div className="w-full text-center py-5">No documents</div>
+        ) : (
+          ''
+        )}
+        {[
+          { id: 1234, name: 'EC',type: 'ec',time: customerDetails?.ecDocUpDate, url: customerDetails?.ecDocUrl , filName: customerDetails?.ecFilName },
+          {
+            id: 1235,
+            name: 'Agreement',
+            type: 'agree',
+            time: customerDetails?.agreeDocUpDate, url: customerDetails?.agreeDocUrl , filName: customerDetails?.agreeFilName,
+          },
+          {
+            id: 1236,
+            name: 'Register Doc',
+            type: 'reg',
+            time: customerDetails?.regDocUpDate, url: customerDetails?.regDocUrl , filName: customerDetails?.regFilName,
+          },
+        ]?.map((doc, i) => (
+          <section
+            key={i}
 
-              className='px-4'
+            className='px-4'
 
-            
+          
 
-            >
-              <DocRow  key={i} data={doc} id={customerDetails?.id} fileName={doc?.name} date={doc?.time}  />
-            </section>
-          ))}
-        </section>
+          >
+            <DocRow  key={i} data={doc} id={customerDetails?.id} fileName={doc?.name} date={doc?.time}  />
+          </section>
+        ))}
+      </section>
+  </div>
+   
 
 
 
@@ -2271,6 +2298,18 @@ export default function UnitFullSummary({
 
 
         
+
+
+
+</div>
+
+
+
+
+
+
+
+
 
 
 

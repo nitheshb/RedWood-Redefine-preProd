@@ -574,23 +574,39 @@ const ShowCustomerDetails = ({
 
   return (
     <>
-      <div className='overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
-<div className=" min-h-screen relative">
+
+
+
+     
+
+
+
+      <div className='overflow-y-scroll w-full  items-center justify-center mx-auto max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
+
+
+
+      <div>
+        <img  alt="" src="/bgcrm.svg"></img>
+        </div>
+
+
+
+<div className=" min-h-screen flex w-full  mx-auto  items-center justify-center ">
       {/* Page Background Grid */}
       {/* <div className="absolute inset-0" style={gridBgStyle}></div> */}
       
       <div className="relative z-10">
         <h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px] mb-4">APPLICANT DETAILS</h1>
         
-        {/* PRIMARY CARD */}
-        <div className="mb-10 w-[70%] relative">
+     
+        <div className="mb-10 w-[70%] relative   flex justify-center">
           {/* Badge */}
           {/* <div className="absolute top-8  right-0 rounded-xl -rotate-6  z-20">
             
            <div>
            <div className='border-2 border-blue-900 rounded-xl'>
 
-<div className="relative bg-purple-200   text-blue-900 font-bold px-8 py-4 rounded-xl transform rotate-3 shadow-sm ">
+<div className="relative bg-purple-200   text-blue-900 font-medium px-8 py-4 rounded-xl transform rotate-3 shadow-sm ">
   PRIMARY
 
 
@@ -698,7 +714,7 @@ const ShowCustomerDetails = ({
 
                 
                 <div>
-                  <div className="flex items-center text-2xl font-bold">
+                  <div className="flex items-center text-2xl font-medium">
                   {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
                     leadDetailsObj2?.Name ||
                     '?'}
@@ -757,46 +773,46 @@ const ShowCustomerDetails = ({
             <div className="p-6 grid grid-cols-4 gap-4">
   <div className="pr-2 col-span-1">
     <div className="text-gray-500 text-sm mb-1">S/O</div>
-    <div className="font-semibold text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
+    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
       {leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
     </div>
 
     <div className="text-gray-500 text-sm mb-1">Martial Status</div>
-    <div className="font-semibold text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
+    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
       {leadDetailsObj2?.customerDetailsObj?.marital1?.value}
     </div>
 
     <div className="text-gray-500 text-sm mb-1">DOB</div>
-    <div className="font-semibold text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
+    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
       {prettyDate(leadDetailsObj2?.customerDetailsObj?.dob1 || datee)}
     </div>
   </div>
 
   <div className="px-4 border-l border-r border-gray-200 col-span-1">
     <div className="text-gray-500 text-sm mb-1">PAN Card</div>
-    <div className="font-semibold text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
+    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
       {leadDetailsObj2?.customerDetailsObj?.panNo1 || '?'}
     </div>
 
     <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
-    <div className="font-semibold text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
+    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
       {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}
     </div>
 
     <div className="text-gray-500 text-sm mb-1">Secondary No</div>
-    <div className="font-semibold text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
+    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
       {leadDetailsObj2?.customerDetailsObj?.phoneNo3 || '?'}
     </div>
   </div>
 
   <div className="pl-4 col-span-2">
     <div className="text-gray-500 text-sm mb-1">Current Address</div>
-    <div className="font-semibold text-[#0E0A1F] tracking-[0.06em] text-[14px] mb-4 font-outfit  break-words whitespace-pre-wrap">
+    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[14px] mb-4 font-outfit  break-words whitespace-pre-wrap">
       {leadDetailsObj2?.customerDetailsObj?.address1 || '?'}
     </div>
 
     <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
-    <div className="font-semibold text-[#0E0A1F] tracking-[0.06em]  text-[14px]  font-outfit break-words whitespace-pre-wrap">
+    <div className="font-medium text-[#0E0A1F] tracking-[0.06em]  text-[14px]  font-outfit break-words whitespace-pre-wrap">
       {leadDetailsObj2?.customerDetailsObj?.address2p || '?'}
     </div>
   </div>
@@ -823,10 +839,9 @@ const ShowCustomerDetails = ({
 
 
         
+
+        <div className="mb-10 w-[70%] flex justify-center  relative">
         
-        {/* SECONDARY CARD */}
-        <div className="mb-10 w-[70%]  relative">
-          {/* Badge */}
 
 
 
@@ -871,7 +886,7 @@ const ShowCustomerDetails = ({
                 {/* <div className="w-24 h-24 rounded-full overflow-hidden mr-6">
                 {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
     leadDetailsObj2?.Name ? (
-      <span className="text-[30px] font-bold text-gray-700">
+      <span className="text-[30px] font-medium text-gray-700">
         {(
           leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 ||
           leadDetailsObj2?.Name ||
@@ -889,7 +904,7 @@ const ShowCustomerDetails = ({
 <div className="w-24 h-24 rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
   {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
   leadDetailsObj2?.Name ? (
-    <span className="text-[30px] font-bold text-gray-700">
+    <span className="text-[30px] font-medium text-gray-700">
       {(
         leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 ||
         leadDetailsObj2?.Name ||
@@ -906,7 +921,7 @@ const ShowCustomerDetails = ({
 
                 
                 <div>
-                  <div className="flex items-center font-outfit font-[#0E0A1F] text-2xl font-bold">
+                  <div className="flex items-center font-outfit font-[#0E0A1F] text-2xl font-medium">
                   {leadDetailsObj2?.secondaryCustomerDetailsObj
                     ?.customerName1 || '?'}
                     <span className="ml-2 text-gray-500">
@@ -965,46 +980,46 @@ const ShowCustomerDetails = ({
             <div className="p-6 grid grid-cols-4 gap-4">
   <div className="pr-2 col-span-1">
     <div className="text-gray-500 text-sm mb-1">S/O</div>
-    <div className="font-bold font-outfit tracking-[0.06em] font-[#0E0A1F] text-[14px] mb-4">
+    <div className="font-medium font-outfit tracking-[0.06em] font-[#0E0A1F] text-[14px] mb-4">
       {leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || '?'}
     </div>
 
     <div className="text-gray-500 text-sm mb-1">Martial Status</div>
-    <div className="font-bold font-outfit tracking-[0.06em] font-[#0E0A1F] text-[14px] mb-4">
+    <div className="font-medium font-outfit tracking-[0.06em] font-[#0E0A1F] text-[14px] mb-4">
       {leadDetailsObj2?.secondaryCustomerDetailsObj?.marital1?.value}
     </div>
 
     <div className="text-gray-500 text-sm mb-1">DOB</div>
-    <div className="font-bold font-outfit tracking-[0.06em] font-[#0E0A1F] text-[14px]">
+    <div className="font-medium font-outfit tracking-[0.06em] font-[#0E0A1F] text-[14px]">
       {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob1 || datee)}
     </div>
   </div>
 
   <div className="px-4 border-l border-r border-gray-200 col-span-1">
     <div className="text-gray-500 text-sm mb-1">PAN Card</div>
-    <div className="font-bold font-outfit font-[#0E0A1F] text-[14px] tracking-[0.06em] mb-4">
+    <div className="font-medium font-outfit font-[#0E0A1F] text-[14px] tracking-[0.06em] mb-4">
       {leadDetailsObj2?.secondaryCustomerDetailsObj?.panNo1 || '?'}
     </div>
 
     <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
-    <div className="font-bold text-[14px] font-[#0E0A1F] tracking-[0.06em] font-outfit mb-4">
+    <div className="font-medium text-[14px] font-[#0E0A1F] tracking-[0.06em] font-outfit mb-4">
       {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || '?'}
     </div>
 
     <div className="text-gray-500 text-sm mb-1">Secondary No</div>
-    <div className="font-bold font-outfit font-[#0E0A1F] tracking-[0.06em] text-[14px]">
+    <div className="font-medium font-outfit font-[#0E0A1F] tracking-[0.06em] text-[14px]">
       {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo3 || '?'}
     </div>
   </div>
 
   <div className="pl-4 col-span-2">
     <div className="text-gray-500 text-sm mb-1">Current Address</div>
-    <div className="font-bold text-black font-outfit text-[14px] mb-4 tracking-[0.06em] font-[#0E0A1F] break-words whitespace-pre-wrap">
+    <div className="font-medium text-black font-outfit text-[14px] mb-4 tracking-[0.06em] font-[#0E0A1F] break-words whitespace-pre-wrap">
       {leadDetailsObj2?.secondaryCustomerDetailsObj?.address1 || '?'}
     </div>
 
     <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
-    <div className="font-bold text-black font-outfit text-[14px] tracking-[0.06em] font-[#0E0A1F] break-words whitespace-pre-wrap">
+    <div className="font-medium text-black font-outfit text-[14px] tracking-[0.06em] font-[#0E0A1F] break-words whitespace-pre-wrap">
       {leadDetailsObj2?.secondaryCustomerDetailsObj?.address2p || '?'}
     </div>
   </div>

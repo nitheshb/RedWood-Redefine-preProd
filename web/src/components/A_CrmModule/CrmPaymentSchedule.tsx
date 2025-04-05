@@ -187,7 +187,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
 
                 <div className='flex items-center'>
           
-                <h1 className=" text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-1 ml-1">
+                <h1 className=" font-outfit text-left text-[#606062] font-medium text-[12px] mb-2 mt-1 ml-1">
                   Payment Schedule
                 </h1>
                 </div>
