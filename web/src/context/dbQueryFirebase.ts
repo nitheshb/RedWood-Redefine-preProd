@@ -32,6 +32,8 @@ import { getWeekMonthNo, prettyDateTime } from 'src/util/dateConverter'
 import { db } from './firebaseConfig'
 import { supabase } from './supabase'
 import LeadTaskFooter from 'src/components/Comp_CustomerProfileSideView/LeadTaskFooter'
+import { firebase } from '@redwoodjs/auth/dist/authClients/firebase'
+// import { admin } from './adnim'
 
 // import { userAccessRoles } from 'src/constants/userAccess'
 
@@ -2414,6 +2416,184 @@ export const getPaymentSchedule = async (
   )
   return onSnapshot(getAllPaymentSchedule, snapshot, error)
 }
+
+
+
+
+
+
+
+// // Get FCM token
+// const getFCMToken = async () => {
+//   try {
+//     const messaging = firebase.messaging();
+//     const currentToken = await messaging.getToken({
+//       vapidKey: 'YOUR_VAPID_KEY_HERE'
+//     });
+    
+//     if (currentToken) {
+//       // Save the token to your user's document in Firestore
+//       await updateDoc(doc(db, 'users', userId), {
+//         fcmTokens: arrayUnion(currentToken)
+//       });
+//       console.log('Token registered successfully');
+//       return currentToken;
+//     } else {
+//       console.log('No registration token available. Request permission to generate one.');
+//       return null;
+//     }
+//   } catch (error) {
+//     console.error('An error occurred while retrieving token:', error);
+//     return null;
+//   }
+// };
+
+
+// // Function to send call notification to a user
+// export const sendCallNotification = async (orgId, recipientUserId, callerName, callDetails) => {
+//   try {
+//     // Get the recipient's FCM tokens
+//     const userDoc = await getDoc(doc(db, 'users', recipientUserId));
+    
+//     if (!userDoc.exists() || !userDoc.data().fcmTokens) {
+//       console.error('User not found or has no FCM tokens');
+//       return false;
+//     }
+    
+//     const fcmTokens = userDoc.data().fcmTokens;
+    
+//     // Create call log entry
+//     await addDoc(collection(db, `${orgId}_call_logs`), {
+//       callerName,
+//       recipientId: recipientUserId,
+//       callDetails,
+//       status: 'initiated',
+//       timestamp: serverTimestamp()
+//     });
+    
+//     // This would typically be handled by a server-side function
+//     // You'll need a cloud function or backend API to send the actual notification
+//     console.log('Call notification ready for sending to tokens:', fcmTokens);
+    
+//     return true;
+//   } catch (error) {
+//     console.error('Error sending call notification:', error);
+//     return false;
+//   }
+// };
+
+// export const sendCallNotificationToMobile = async (orgId, payload) => {
+//   try {
+//     const { leadId, mobileNumber, leadName, salesExecutive } = payload;
+
+//     // 1. Get the sales executive's device token
+//     const userDeviceRef = doc(db, `${orgId}_userDevices`, salesExecutive);
+//     const userDeviceDoc = await getDoc(userDeviceRef);
+    
+//     if (!userDeviceDoc.exists() || !userDeviceDoc.data().fcmToken) {
+//       throw new Error('Device not registered with FCM token');
+//     }
+
+//     // 2. Call Cloud Function to send notification
+//     const sendNotification = httpsCallable(functions, 'sendCallNotification');
+//     const response = await sendNotification({
+//       token: userDeviceDoc.data().fcmToken,
+//       notification: {
+//         title: `Call Request: ${leadName}`,
+//         body: `Tap to call ${mobileNumber}`
+//       },
+//       data: {
+//         type: 'call_prompt',
+//         leadId,
+//         phoneNumber: mobileNumber,
+//         leadName,
+//         click_action: 'FLUTTER_NOTIFICATION_CLICK'
+//       }
+//     });
+
+//     // 3. Log the notification in Firestore
+//     const notificationRef = doc(collection(db, `${orgId}_notifications`));
+//     await setDoc(notificationRef, {
+//       userId: salesExecutive,
+//       type: 'call_request',
+//       leadId,
+//       phoneNumber: mobileNumber,
+//       leadName,
+//       status: 'sent',
+//       timestamp: serverTimestamp()
+//     });
+
+//     return { 
+//       success: true, 
+//       messageId: response.data.messageId 
+//     };
+//   } catch (error) {
+//     console.error('Notification error:', error);
+//     throw error;
+//   }
+// };
+
+
+
+
+export const sendCallNotification = async (orgId, payload) => {
+  try {
+    const { leadId, mobileNumber, leadName, salesExecutive } = payload;
+
+    const userDeviceRef = doc(db, `users`, salesExecutive);
+    const userDeviceDoc = await getDoc(userDeviceRef);
+    
+    console.log("Fetched Device Doc:", userDeviceDoc.exists() ? userDeviceDoc.data() : "Document does not exist");
+
+    if (!userDeviceDoc.exists() || !userDeviceDoc.data().user_fcmtoken) {
+      console.error("Error: Device not registered. No FCM Token found.");
+      throw new Error('Device not registered');
+    }
+
+    const fcmToken = userDeviceDoc.data().user_fcmtoken;
+    
+    const message = {
+      notification: {
+        title: `Call Request: ${leadName}`,
+        body: `Tap to call ${mobileNumber}`,
+      },
+      data: {
+        type: 'call_prompt',
+        leadId,
+        phoneNumber: mobileNumber,
+        leadName,
+        click_action: 'FLUTTER_NOTIFICATION_CLICK'
+      },
+      token: fcmToken
+    };
+
+    
+    const response = await admin.messaging().send(message);
+    
+    const notificationRef = doc(collection(db, `${orgId}_notifications`));
+    await setDoc(notificationRef, {
+      userId: salesExecutive,
+      type: 'call_request',
+      leadId,
+      data: {
+        phoneNumber: mobileNumber,
+        leadName
+      },
+      status: 'sent',
+      timestamp: serverTimestamp()
+    });
+
+    return {
+      success: true,
+      messageId: response,
+      notificationId: notificationRef.id
+    };
+  } catch (error) {
+    console.error('Notification error:', error);
+    throw error;
+  }
+};
+
 
 export const getAdditionalCharges = async (
   { projectId, phaseId },

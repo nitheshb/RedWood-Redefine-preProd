@@ -116,8 +116,8 @@ console.log('account records', selUnitPayload?.id, orgId)
     }
   }, [selUnitPayload])
   return (
-    <div className="rounded w-[420px] ml-2 py-3 flex flex-col overflow-y-scroll" style={{ height: `calc(100vh - 60px)` }}>
-    <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 ">
+    <div className="rounded w-[420px]  flex flex-col overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300" style={{ height: `calc(100vh - 60px)` }}>
+    <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3">
     <div className="flex flex-row ">
           <img
             src="https://static.ambitionbox.com/static/benefits/WFH.svg"

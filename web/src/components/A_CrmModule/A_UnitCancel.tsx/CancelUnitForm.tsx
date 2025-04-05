@@ -138,19 +138,19 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
     }
   return (
     <>
-      <section className="bg-blueGray-50 min-h-screen bg-white mx-2 rounded-lg border border-gray-100 ">
-        <div className="w-full  mx-auto ">
-            <div className="mx-2 o my-10 mt-4 ">
-              <div className="bg-white p-10 rounded-xl">
-                <h1 className="text-center text-xl text-gray-500">
-                  Are you Sure to Canel this booking?
-                </h1>
+      <section className=" min-h-screen rounded-lg border border-gray-100 ">
+        <div className="w-full  ">
+            <div className=" ">
+              <div className="">
+                <h2 className="text-[#606062] uppercase  tracking-[0.06em] text-[12px]">
+                Cancel booking
+                </h2>
                 <div className="h-screen">
-      <div className="flex items-center justify-center">
+      <div className="flex ">
         <div
           id="bg-img"
-          className="flex h-[664px] w-full flex-col  h-screen">
-          <div className="relative top-6 mx-auto max-h-[65%] shadow-lg  border-gray-200 border rounded-xl  ">
+          className="flex h-full max-w-2xl  flex-col  h-screen">
+          <div className="relative top-6  shadow-lg   rounded-2xl  ">
             <div className="grid gap-8 grid-cols-1">
               <div className="flex flex-col ">
                 <div className="mt-0">
@@ -171,21 +171,21 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                         <div className="form">
                           <section className=" ">
                             <div className="w-full mx-auto ">
-                              <div className="relative flex flex-col min-w-0 break-words w-full mb-6  rounded-lg bg-white ">
+                              <div className="relative flex flex-col min-w-0 break-words w-full  rounded-lg bg-white ">
                                 <div className=" flex flex-row px-2 py-2  overflow-y-scroll overflow-auto no-scrollbar">
                                   <section className=" p-4 rounded-md w-[540px]">
-                                    <article className="mt-5">
+                                    <article className="">
                                       <div className="flex flex-row justify-between">
                                         <section className="flex flex-row">
                                           <div className="inline">
-                                            <div className="mt-[7px]">
+                                            {/* <div className="mt-[7px]">
                                               <label className="text-[20px] font-medium text-[#000000]    mb-[2px]  ">
                                                 Cancel Booking
                                                 <abbr title="required"></abbr>
                                               </label>
-                                            </div>
+                                            </div> */}
                                             <div>
-                                            <p className='text-[#6A6A6A] font-normal  mt-2 text-[12px]'>Refund amount will be added to customer wallet for withdrawal.</p>
+                                            <h2 className='text-[#000000] font-outfit font-semibold  text-[16px]'>Refund amount will be added to customer wallet for withdrawal.</h2>
                                           </div>
                                           </div>
                                         </section>
@@ -224,7 +224,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
       </label>
                                               <span className="inline">
                                                 <CustomDatePicker
-                                                  className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-[#cccccc]  border-solid mt-[-4px]   min-w-[125px]  inline  text-[#0091ae]   lg:w-4/12 w-full flex bg-grey-lighter text-grey-darker border  "
+                                                  className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-[#cccccc]  border-solid mt-[-4px]   min-w-[125px]  inline  text-[#DBD3FD] font-semibold   lg:w-4/12 w-full flexs border  "
                                                   label="Dated"
                                                   name="dated"
                                                   // selected={startDate}
@@ -276,11 +276,11 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
                                     <div className="text-center space-x-4 mt-6">
                                       <button
-                                        className="bg-[#00ADB4] translate-y-1 text-[#fff]  text-[12px]  py-2.5 px-6  font-medium  rounded-full inline-flex items-center"
+                                        className="bg-[#EDE9FE] translate-y-1 text-[#0E0A1F]  text-[12px]  py-2.5 px-6  font-semibold  rounded-md inline-flex items-center shadow-sm font-medium tracking-wider text-black hover:text-black rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400"
                                         type="submit"
                                         disabled={loading}
                                       >
-                                        <svg
+                                        {/* <svg
                                           xmlns="http://www.w3.org/2000/svg"
                                           viewBox="0 0 24 24"
                                           fill="currentColor"
@@ -291,7 +291,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                                             d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
                                             clipRule="evenodd"
                                           />
-                                        </svg>
+                                        </svg> */}
                                         &nbsp; &nbsp;
                                         <span>
                                           {' '}

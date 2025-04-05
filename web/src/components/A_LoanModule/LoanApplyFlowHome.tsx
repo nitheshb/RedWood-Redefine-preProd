@@ -173,32 +173,25 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
 
 
   return (
-    <div className='flex flex-row bg-white mx-2 rounded-lg border border-gray-100 h-[100%]'>
+    <div className='flex flex-row  rounded-lg border border-gray-100 h-[100%]'>
+<section className=" pr-6 w-full max-w-4xl mx-auto pb-[40px]  h-[100vh] overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
 
 
-    <section className="bg-white w-full  md:px-10 md:mb-20 pb-[250px]  h-[100vh]  overflow-y-scroll">
+    {/* <section className="bg-white w-full pb-[40px]  h-[100vh] overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300"> */}
 
-      <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
-{/* 
-      <div>
-        <section className='flex flex-row'>
+      <div className=" text-sm text-gray-700">
 
-                <h2 className="ml-2 mt-2 text-md font-semibold text-black leading-light font-Playfair">
-                Loan Approval
-                </h2>
-                </section>
-        </div> */}
 
 
 
     
 
         <div className="mt-1">
-          <div className="p-2  bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
-            <h2 className="font-medium flex-grow">Loan Approval</h2>
-            <p className="text-md text-[10px] flex-grow text-right">
+          <div className="p-2 mb-3 bg-[#FDF7E6] border  border-[#EAB300] rounded-md flex flex-row justify-between">
+            <h2 className="font-medium flex-grow text-[#000000]">Loan Approval:</h2>
+            <p className="text-md text-[10px] flex-grow text-[#EAB300] text-right">
             
-
+                
               <div>
              {customerDetails?.loan_rejection_reason && (
              <p>Pre Rejection Reason: {customerDetails.loan_rejection_reason}</p>
@@ -216,31 +209,36 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                      )}
 
                       </div>
+                      
 
             </p>
           </div>
         </div>
       </div>
-      <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
-        <section className="flex flex-col">
+
+
+      <div className=" text-sm mb-3 text-gray-700">
+        <section className="flex flex-col rounded-2xl p-4 bg-[#FFFFFF]">
           <section className=" ">
             <section className="flex flex-row justify-between">
-              <section className="flex flex-row w-full">
-                <div className="rounded-full font-bold bg-gradient-to-r from-violet-200 to-pink-200 h-7 w-7 flex items-center justify-center mr-2">
-                  <span className="text-[14px] mb-[2px]">1</span>
-                </div>
-                <p className="mt- pb-2 font-semibold text-gray-600  mt-[4px] mb-2 border-b ">
-                  Start your Loan journey by picking a bank
-                </p>
-              </section>
+       
+              <section className="flex flex-row w-full items-center">
+  <div className="flex items-center justify-center">
+    <span className="text-[14px] font-medium text-[#000000]">1.</span>
+  </div>
+  <p className="pl-2 font-medium text-[#000000]">
+    Start your Loan journey by picking a bank
+  </p>
+</section>
+
               {!S1 && (
-                <p className="mt- pb-2 font-semibold text-blue-600  mt-[4px] mb-2 mr-2 border-b w-[300px] text-right">
+                <p className="mt- pb-2 font-semibold text-[#DBD3FD]  mt-[4px] mb-2 mr-2 border-b w-[300px] text-right">
                   {selLoanBank?.bName || 'NA'}
                 </p>
               )}
               {S1 && (
                 <ArrowUpIcon
-                  className="w-[14px] h-[14px]  mt-[8px] text-blue-600"
+                  className="w-[14px] h-[14px]  mt-[8px] text-[#DBD3FD]"
                   onClick={() => setS1(!S1)}
                 />
               )}
@@ -253,7 +251,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
             </section>
           </section>
           {S1 && (
-            <section className="mt-1 ml-9 container">
+            <section className="mt-1 w-full">
               <BankSelectionSwitchDrop
                 type={selLoanBank}
                 setStatusFun={setLoanBank}
@@ -262,14 +260,17 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
           )}
         </section>
       </div>
-      <div className="max-w-3xl mx-auto py-3 text-sm text-gray-700">
-        <section className="flex flex-col">
+
+
+
+      <div className=" text-sm text-gray-700">
+        <section className="flex flex-col rounded-2xl p-4 bg-[#FFFFFF]">
           <section className=" ">
             <section className="flex flex-row ">
-              <div className="rounded-full font-bold bg-gradient-to-r from-violet-200 to-pink-200 h-7 w-7 flex items-center justify-center mr-2">
-                <span className="text-[14px] mb-[2px]">2</span>
+              <div className=" flex items-center justify-center mr-2">
+                <span className="text-[14px] mb-[2px]">2.</span>
               </div>
-              <section className=" w-full border-b">
+              <section className=" w-full">
                 <section className="flex flex-row justify-between">
                   <section className="flex flex-row w-full">
                     <p className="mt- pb-2 font-semibold text-gray-600  mt-[4px]   w-full">
@@ -277,13 +278,13 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     </p>
                   </section>
                   {!S2 && (
-                    <p className="mt- pb-2 font-semibold text-blue-600  mt-[4px]  mr-2  w-[300px] text-right">
+                    <p className="mt- pb-2 font-semibold text-[#DBD3FD]  mt-[4px]  mr-2  w-[300px] text-right">
                       {'0 Docs Uploaded'}
                     </p>
                   )}
                   {S2 && (
                     <ArrowUpIcon
-                      className="w-[14px] h-[14px]  mt-[6px] text-blue-600"
+                      className="w-[14px] h-[14px]  mt-[6px] text-[#DBD3FD]"
                       onClick={() => setS2(!S2)}
                     />
                   )}
@@ -298,7 +299,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
             </section>
           </section>
           {S2 && (
-            <section className="mt-1 ml-5 container">
+            <section className="mt-1 container">
               {[
                 { id: 1234764, name: 'EC', time: '22-Nov-2022' },
                 {
@@ -368,14 +369,18 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
           )}
         </section>
       </div>
-      <div className="max-w-3xl mx-auto py-3 text-sm text-gray-700">
-        <section className="flex flex-col">
+
+
+
+
+      <div className=" py-3 text-sm text-gray-700">
+        <section className="flex flex-col rounded-2xl p-4 bg-[#FFFFFF]">
           <section className=" ">
             <section className="flex flex-row ">
-              <div className="rounded-full font-bold bg-gradient-to-r from-violet-200 to-pink-200 h-7 w-7 flex items-center justify-center mr-2">
-                <span className="text-[14px] mb-[2px]">3</span>
+              <div className="flex items-center justify-center mr-2">
+                <span className="text-[14px] mb-[2px]">3.</span>
               </div>
-              <section className=" w-full border-b">
+              <section className=" w-full ">
                 <section className="flex flex-row justify-between">
                   <section className="flex flex-row w-full">
                     <p className="mt- pb-2 font-semibold text-gray-600  mt-[4px]   w-full">
@@ -383,13 +388,13 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     </p>
                   </section>
                   {!S3 && (
-                    <p className="mt- pb-2 font-semibold text-blue-600  mt-[4px]  mr-2  w-[300px] text-right">
+                    <p className="mt- pb-2 font-semibold text-[#DBD3FD]  mt-[4px]  mr-2  w-[300px] text-right">
                       {preSanctionReview}
                     </p>
                   )}
                   {S3 && (
                     <ArrowUpIcon
-                      className="w-[14px] h-[14px]  mt-[6px] text-blue-600"
+                      className="w-[14px] h-[14px]  mt-[6px] text-[#DBD3FD]"
                       onClick={() => setS3(!S3)}
                     />
                   )}
@@ -404,12 +409,12 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
             </section>
           </section>
           {S3 && (
-            <section className="mt-3 ml-9 container">
+            <section className="mt-3 container">
               <div className="flex flex-row">
                 <div
                   className={`border border-gray-200  group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
                     preSanctionReview === 'In-Review'
-                      ? 'bg-gradient-to-r from-violet-100 to-pink-100'
+                      ? 'bg-[#EDE9FE]'
                       : ''
                   }`}
                   onClick={() => {
@@ -426,9 +431,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     }  `}
                   >
                     <OfficeBuildingIcon
-                      className={`h-6 w-6 text-gray-600 group-hover:text-indigo-600 ${
+                      className={`h-6 w-6 text-gray-600 group-hover:text-[#0E0A1F] ${
                         preSanctionReview === 'In-Review'
-                          ? 'text-indigo-600'
+                          ? 'text-[#0E0A1F]'
                           : ''
                       }`}
                       aria-hidden="true"
@@ -438,9 +443,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     <a
                       className={`block font-semibold text-gray-900 ${
                         preSanctionReview === 'In-Review'
-                          ? 'text-indigo-600'
+                          ? 'text-[#0E0A1F]'
                           : ''
-                      } group-hover:text-indigo-600`}
+                      } group-hover:text-[#0E0A1F]`}
                     >
                       {'In-Review'}
                       <span className="absolute inset-0" />
@@ -452,7 +457,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                 <div
                   className={`border border-gray-200 ml-2  group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
                     preSanctionReview === 'Approved'
-                      ? 'bg-gradient-to-r from-violet-100 to-pink-100'
+                      ? 'bg-[#EDE9FE]'
                       : ''
                   }`}
                   onClick={() => {
@@ -467,9 +472,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     }  `}
                   >
                     <OfficeBuildingIcon
-                      className={`h-6 w-6 text-gray-600 group-hover:text-indigo-600 ${
+                      className={`h-6 w-6 text-gray-600 group-hover:text-[#0E0A1F] ${
                         preSanctionReview === 'Approved'
-                          ? 'text-indigo-600'
+                          ? 'text-[#0E0A1F]'
                           : ''
                       }`}
                       aria-hidden="true"
@@ -479,9 +484,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     <a
                       className={`block font-semibold text-gray-900 ${
                         preSanctionReview === 'Approved'
-                          ? 'text-indigo-600'
+                          ? 'text-[#0E0A1F]'
                           : ''
-                      } group-hover:text-indigo-600`}
+                      } group-hover:text-[#0E0A1F]`}
                     >
                       {'Approved'}
                       <span className="absolute inset-0" />
@@ -492,7 +497,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                 <div
                   className={`border border-gray-200 ml-2 group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
                     preSanctionReview === 'Rejected'
-                      ? 'bg-gradient-to-r from-violet-100 to-pink-100'
+                      ? 'bg-[#EDE9FE]'
                       : ''
                   }`}
                   onClick={() => {
@@ -509,9 +514,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     }  `}
                   >
                     <OfficeBuildingIcon
-                      className={`h-6 w-6 text-gray-600 group-hover:text-indigo-600 ${
+                      className={`h-6 w-6 text-gray-600 group-hover:text-[#0E0A1F] ${
                         preSanctionReview === 'Rejected'
-                          ? 'text-indigo-600'
+                          ? 'text-[#0E0A1F]'
                           : ''
                       }`}
                       aria-hidden="true"
@@ -529,9 +534,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     <a
                       className={`block font-semibold text-gray-900 ${
                         preSanctionReview === 'Rejected'
-                          ? 'text-indigo-600'
+                          ? 'text-[#0E0A1F]'
                           : ''
-                      } group-hover:text-indigo-600`}
+                      } group-hover:text-[#0E0A1F]`}
                     >
                       {'Rejected'}
                       <span className="absolute inset-0" />
@@ -542,7 +547,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
               </div>
               {preSanctionReview === 'In-Review' && (
                 <div className="mt-2">
-                  <div className="p-4 bg-gray-200 rounded-md">
+                  <div className="p-4  rounded-md">
                     Ideal Bank review time is 32 working days
                   </div>
                 </div>
@@ -609,14 +614,16 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
           )}
         </section>
       </div>
+
+
       {preSanctionReview === 'Approved' && (
-        <div className="max-w-3xl mx-auto py-3 text-sm text-gray-700">
-          <section className="flex flex-col">
+        <div className=" text-sm  text-gray-700">
+          <section className="flex flex-col rounded-2xl p-4 bg-[#FFFFFF]">
             <section className="flex flex-row ">
-              <div className="rounded-full font-bold bg-gradient-to-r from-violet-200 to-pink-200 h-7 w-7 flex items-center justify-center mr-2">
-                <span className="text-[14px] mb-[2px]">4</span>
+              <div className=" flex items-center justify-center mr-2">
+                <span className="text-[14px] mb-[2px]">4.</span>
               </div>
-              <section className=" w-full border-b">
+              <section className=" w-full">
                 <section className="flex flex-row justify-between">
                   <section className="flex flex-row w-full">
                     <p className="mt- pb-2 font-semibold text-gray-600  mt-[4px]   w-full">
@@ -624,13 +631,13 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                     </p>
                   </section>
                   {!S4 && (
-                    <p className="mt- pb-2 font-semibold text-blue-600  mt-[4px]  mr-2  w-[300px] text-right">
+                    <p className="mt- pb-2 font-semibold text-[#DBD3FD]  mt-[4px]  mr-2  w-[300px] text-right">
                       {'0 Docs Uploaded'}
                     </p>
                   )}
                   {S4 && (
                     <ArrowUpIcon
-                      className="w-[14px] h-[14px]  mt-[6px] text-blue-600"
+                      className="w-[14px] h-[14px]  mt-[6px] text-[#DBD3FD]"
                       onClick={() => setS4(!S4)}
                     />
                   )}
@@ -644,7 +651,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
               </section>
             </section>
             {S4 && (
-              <section className="mt-1 ml-5 container">
+              <section className="mt-1 container">
                 {[
                   {
                     id: 1235,
@@ -706,15 +713,15 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
         </div>
       )}
       {preSanctionReview === 'Approved' && (
-        <div className="max-w-3xl mx-auto py-3 text-sm text-gray-700">
-          <section className="flex flex-col">
+        <div className=" text-sm mt-3 text-gray-700">
+          <section className="flex flex-col rounded-2xl p-4 bg-[#FFFFFF]">
             <section className=" ">
               <section className=" ">
                 <section className="flex flex-row ">
-                  <div className="rounded-full font-bold bg-gradient-to-r from-violet-200 to-pink-200 h-7 w-7 flex items-center justify-center mr-2">
-                    <span className="text-[14px] mb-[2px]">5</span>
+                  <div className=" flex items-center justify-center mr-2">
+                    <span className="text-[14px] mb-[2px]">5.</span>
                   </div>
-                  <section className=" w-full border-b">
+                  <section className=" w-full ">
                     <section className="flex flex-row justify-between">
                       <section className="flex flex-row w-full">
                         <p className="mt- pb-2 font-semibold text-gray-600  mt-[4px]   w-full">
@@ -722,13 +729,13 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                         </p>
                       </section>
                       {!S5 && (
-                        <p className="mt- pb-2 font-semibold text-blue-600  mt-[4px]  mr-2  w-[300px] text-right">
+                        <p className="mt- pb-2 font-semibold text-[#DBD3FD]  mt-[4px]  mr-2  w-[300px] text-right">
                           {postSanctionReview}
                         </p>
                       )}
                       {S5 && (
                         <ArrowUpIcon
-                          className="w-[14px] h-[14px]  mt-[6px] text-blue-600"
+                          className="w-[14px] h-[14px]  mt-[6px] text-[#DBD3FD]"
                           onClick={() => setS5(!S5)}
                         />
                       )}
@@ -744,12 +751,12 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
               </section>
             </section>
             {S5 && (
-              <section className="mt-1 ml-9 container">
+              <section className="mt-1  container">
                 <div className="flex flex-row">
                   <div
                     className={`border border-gray-200  group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
                       postSanctionReview === 'In-Review'
-                        ? 'bg-gradient-to-r from-violet-100 to-pink-100'
+                        ? 'bg-[#EDE9FE]'
                         : ''
                     }`}
                     onClick={() => {
@@ -764,9 +771,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                       }  `}
                     >
                       <OfficeBuildingIcon
-                        className={`h-6 w-6 text-gray-600 group-hover:text-indigo-600 ${
+                        className={`h-6 w-6 text-gray-600 group-hover:text-[#0E0A1F] ${
                           postSanctionReview === 'In-Review'
-                            ? 'text-indigo-600'
+                            ? 'text-[#0E0A1F]'
                             : ''
                         }`}
                         aria-hidden="true"
@@ -776,9 +783,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                       <a
                         className={`block font-semibold text-gray-900 ${
                           postSanctionReview === 'In-Review'
-                            ? 'text-indigo-600'
+                            ? 'text-[#0E0A1F]'
                             : ''
-                        } group-hover:text-indigo-600`}
+                        } group-hover:text-[#0E0A1F]`}
                       >
                         {'In-Review'}
                         <span className="absolute inset-0" />
@@ -790,7 +797,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                   <div
                     className={`border border-gray-200 ml-2  group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
                       postSanctionReview === 'Approved'
-                        ? 'bg-gradient-to-r from-violet-100 to-pink-100'
+                        ? 'bg-[#EDE9FE]'
                         : ''
                     }`}
                     onClick={() => {
@@ -805,9 +812,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                       }  `}
                     >
                       <OfficeBuildingIcon
-                        className={`h-6 w-6 text-gray-600 group-hover:text-indigo-600 ${
+                        className={`h-6 w-6 text-gray-600 group-hover:text-[#0E0A1F] ${
                           postSanctionReview === 'Approved'
-                            ? 'text-indigo-600'
+                            ? 'text-[#0E0A1F]'
                             : ''
                         }`}
                         aria-hidden="true"
@@ -817,9 +824,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                       <a
                         className={`block font-semibold text-gray-900 ${
                           postSanctionReview === 'Approved'
-                            ? 'text-indigo-600'
+                            ? 'text-[#0E0A1F]'
                             : ''
-                        } group-hover:text-indigo-600`}
+                        } group-hover:text-[#0E0A1F]`}
                       >
                         {'Approved'}
                         <span className="absolute inset-0" />
@@ -830,7 +837,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                   <div
                     className={`border border-gray-200 ml-2 group relative flex items-center gap-x-2 rounded-lg p-1 pr-4  text-sm leading-6 hover:bg-gray-50 ${
                       postSanctionReview === 'Rejected'
-                        ? 'bg-gradient-to-r from-violet-100 to-pink-100'
+                        ? 'bg-[#EDE9FE]'
                         : ''
                     }`}
                     onClick={() => {
@@ -845,9 +852,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                       }  `}
                     >
                       <OfficeBuildingIcon
-                        className={`h-6 w-6 text-gray-600 group-hover:text-indigo-600 ${
+                        className={`h-6 w-6 text-gray-600 group-hover:text-[#0E0A1F] ${
                           postSanctionReview === 'Rejected'
-                            ? 'text-indigo-600'
+                            ? 'text-[#0E0A1F]'
                             : ''
                         }`}
                         aria-hidden="true"
@@ -857,9 +864,9 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                       <a
                         className={`block font-semibold text-gray-900 ${
                           postSanctionReview === 'Rejected'
-                            ? 'text-indigo-600'
+                            ? 'text-[#0E0A1F]'
                             : ''
-                        } group-hover:text-indigo-600`}
+                        } group-hover:text-[#0E0A1F]`}
                       >
                         {'Rejected'}
                         <span className="absolute inset-0" />
@@ -905,7 +912,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
         <div className="mt-4">
           <button
             onClick={handleSaveLoanDetails}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            className=" text-[#000000] px-4 py-2 rounded-md bg-[#EDE9FE]"
           >
             Save Loan Details
           </button>
@@ -946,7 +953,7 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
                       ))}
                     </div>
                     <div className="mt-4">
-                      <div className="p-4 bg-gradient-to-r from-violet-100 to-pink-100 rounded-md">
+                      <div className="p-4 rounded-md">
                         {'Congrulations on Loan Approval  :-)'}
                       </div>
                     </div>

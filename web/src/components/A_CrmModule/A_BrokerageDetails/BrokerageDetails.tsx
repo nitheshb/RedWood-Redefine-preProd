@@ -82,7 +82,7 @@ const BrokerageDetails = ({ selUnitDetails }) => {
   });
 
   return (
-    <div className="min-h-screen bg-white mx-2 rounded-lg border border-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen  mx-2  py-8 px-4 sm:px-6 lg:px-8">
       <div className=" w-[540px] mx-auto">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="p-6 border-b border-gray-200">
@@ -170,7 +170,7 @@ const BrokerageDetails = ({ selUnitDetails }) => {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-[#00ADB4] hover:bg-[#00ADB4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="inline-flex items-center px-6 py-3 border border-transparent text-base font-semibold rounded-full shadow-sm text-Black  bg-[#E8E6FE] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-black hover:text-black rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center justify-center"
                       >
                         {loading ? (
                           <Loader className="w-5 h-5 mr-2" />

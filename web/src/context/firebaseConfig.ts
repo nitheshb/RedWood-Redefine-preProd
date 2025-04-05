@@ -41,32 +41,32 @@ const messaging = getMessaging(app)
 
 
 
-// export const generateToken = async () => {
-//   try {
-//     const permission = await Notification.requestPermission();
-//     console.log("Notification Permission:", permission);
+export const generateToken = async () => {
+  try {
+    const permission = await Notification.requestPermission();
+    console.log("Notification Permission:", permission);
 
-//     if (permission === 'granted') {
-//       const token = await getToken(messaging, {
-//         // vapidKey: "BD1_XkIVsHKlmeLmu389JEmo21shxxEDEKyGOh1lAeG9ruBBPzZlJdqKtI75dzRIZUo7LZILoBY3zDqhKW5Zrqw",
-//       });
+    if (permission === 'granted') {
+      const token = await getToken(messaging, {
+        vapidKey: "BCL02xokFwnyTqraN8ddYs01EzFNjJ2XCNPTpJjOPXipf8GANNmAuW08L7gGf-12JibqI0ASzkDzkd1zZDC0qzc",
+      });
       
-//       if (token) {
-//         console.log("FCM Token:", token);
-//         return token;
-//       } else {
-//         console.log("Failed to get FCM token.");
-//         return null;
-//       }
-//     } else {
-//       console.warn("Permission denied for notifications.");
-//       return null;
-//     }
-//   } catch (error) {
-//     console.error("Error generating FCM token:", error);
-//     return null;
-//   }
-// };
+      if (token) {
+        console.log("FCM Token:", token);
+        return token;
+      } else {
+        console.log("Failed to get FCM token.");
+        return null;
+      }
+    } else {
+      console.warn("Permission denied for notifications.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error generating FCM token:", error);
+    return null;
+  }
+};
 
 
 
@@ -81,3 +81,5 @@ const auth = getAuth()
 const analytics = getAnalytics(app)
 
 export { auth, db, storage, messaging, getToken, }
+
+

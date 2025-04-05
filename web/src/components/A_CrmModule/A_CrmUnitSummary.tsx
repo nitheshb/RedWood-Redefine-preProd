@@ -12,6 +12,10 @@ import CrmPaymentSummary from './CrmPaymentSummary'
 import CrmUnitPaymentGraph from './CrmUnitPaymentGraph'
 import { crmActivieLogNamer } from 'src/util/CrmActivityLogHelper'
 import PdfUniteSummary from 'src/util/PdfUniteSummary'
+import { BellIcon, ChevronDownIcon } from 'lucide-react'
+import { Cell, Pie, PieChart } from 'recharts'
+import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
+import { calculatePercentages } from 'src/util/areaConverter'
 
 const CrmUnitSummary = ({
   selCustomerPayload: selUnitPayload,
@@ -167,13 +171,318 @@ const CrmUnitSummary = ({
 
   return (
     <PDFExport paperSize="A4" margin="1cm" ref={pdfUnitSummaryComp}>
-      <div className="py-1 px-1 m-2 mt-[1px] rounded-lg border border-gray-100  overflow-y-scroll" style={{ height: `calc(100vh - 120px)` }}>
+      <div className=" rounded-lg  border border-gray-100   overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300" style={{  }}>
+            {/* <div className="py-1 px-1 m-2 mt-[1px] rounded-lg border border-gray-100  overflow-y-scroll" style={{ height: `calc(100vh - 120px)` }}> */}
 
         <div className="flex flex-row">
           <div className="w-full">
             <div className="flex flex-row justify-between text-end items-end mr-2">
 
 
+            </div>
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+            
+
+
+            <div>
+              <div className='  rounded-lg'>
+              
+              <div className="grid   rounded-lg grid-cols-2 gap-4 mb-3">
+                <div className="bg-[#FFFFFF] p-4 rounded-lg">
+                  <div className="flex justify-between ">
+                    <span className="font-medium">Stage Balance</span>
+                    <span className='font-semibold'>...</span>
+                  </div>
+                  <div className="relative flex justify-center items-center">
+                    <PieChart width={250} height={250}>
+                      <Pie
+                        data={[  { name: 'Paid', value:  calculatePercentages((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ), selCustomerPayload?.T_elgible).paidPercentage},
+                        { name: 'Remaining', value:  calculatePercentages((selCustomerPayload?.T_review || 0) +(selCustomerPayload?.T_approved || 0 ), selCustomerPayload?.T_elgible).unpaidPercentage}]}
+                        cx={125}
+                        cy={125}
+                        innerRadius={70}
+                        outerRadius={95}
+                        startAngle={90}
+                        endAngle={-270}
+                        dataKey="value"
+                      >
+                        <Cell fill="#DBD3FD" />
+                        <Cell fill="#E5E7EB" />
+              
+              
+                      </Pie>
+                      {/* <Tooltip content={<CustomTooltip />} /> */}
+              
+                    </PieChart>
+              
+                    <div className="absolute text-center">
+                      <div className="text-xs text-gray-500">Balance</div>
+                      <div className="font-bold">  
+                      ₹{selCustomerPayload?.T_elgible_balance < 0 
+                ? 0 
+                : Math.round(selCustomerPayload?.T_elgible_balance)?.toLocaleString('en-IN')}
+                        
+                      </div>
+                    </div>
+                  </div>
+              
+              
+                  <section className="flex flex-row justify-between mx-2">
+                  <div className="text-center">
+                    <div className="text-[12px] text-gray-500">Elgible Cost</div>
+              
+                    <div
+                              className="relative flex flex-col items-center group"
+                              style={{ alignItems: 'start' }}
+                            >
+                              <div
+                                className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                                style={{ alignItems: 'start', width: '300px' }}
+                              >
+                                <span
+                                  className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                                  style={{
+                                    color: 'white',
+                                    background: '#213343',
+                                    maxWidth: '300px',
+                                  }}
+                                >
+                                  <span className="italic">
+                                    {formatIndianNumber?.(Math.round(selCustomerPayload?.T_elgible || 0))}
+              
+                                  </span>
+                                </span>
+                                <div
+                                  className="w-3 h-3 ml-1  -mt-2 rotate-45 bg-black"
+                                  style={{ background: '#213343', marginRight: '12px' }}
+                                ></div>
+                              </div>
+                              <span className="text-[14px] font-bold text-gray-900">
+                    ₹ {Math.round(selCustomerPayload?.T_elgible || 0).toLocaleString('en-IN')}
+                                
+              
+                              </span>
+                    </div>
+              
+              
+                    <div className="font-bold text-[14px]">
+              
+              
+                                                          
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-[12px] text-gray-500">Paid</div>
+                    {/* <div className="font-bold text-[14px]"> 
+              
+                    ₹{Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
+                      
+                      </div> */}
+              
+                      <div
+                              className="relative flex flex-col items-center group"
+                              style={{ alignItems: 'start' }}
+                            >
+                              <div
+                                className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                                style={{ alignItems: 'start', width: '300px' }}
+                              >
+                                <span
+                                  className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                                  style={{
+                                    color: 'white',
+                                    background: '#213343',
+                                    maxWidth: '300px',
+                                  }}
+                                >
+                                  <span className="italic">
+                                    {/* {toWords?.convert(Math.round(selCustomerPayload?.T_elgible || 0))} */}
+              
+                                    {/* {toWords?.convert(Math.round(selCustomerPayload?.T_elgible || 0))} */}
+              
+                                    {formatIndianNumber?.(Math.round(selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0))}
+              
+              
+                                  </span>
+                                </span>
+                                <div
+                                  className="w-3 h-3 ml-1  -mt-2 rotate-45 bg-black"
+                                  style={{ background: '#213343', marginRight: '12px' }}
+                                ></div>
+                              </div>
+                              <span className="text-[14px] font-bold ">
+                    {/* ₹ {Math.round(selCustomerPayload?.T_elgible || 0).toLocaleString('en-IN')} */}
+              
+                    ₹{Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
+              
+                                
+              
+                              </span>
+                    </div>
+              
+              
+              
+              
+              
+              
+                  </div>
+                  <div className="text-center">
+                    <div className="text-[12px] text-gray-500">Balance</div>
+                    {/* <div className="font-bold text-[14px]">
+                    ₹ {Math.round(Math.max(selCustomerPayload?.T_elgible_balance || 0, 0)).toLocaleString('en-IN')}
+              
+                      </div> */}
+              
+              
+              <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+                <div
+                  className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                  style={{ alignItems: 'start', width: '300px' }}
+                >
+                  <span
+                    className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                    style={{
+                      color: 'white',
+                      background: '#213343',
+                      maxWidth: '300px',
+                    }}
+                  >
+                    <span className="italic">
+                      {formatIndianNumber?.(Math.round(Math.max(selCustomerPayload?.T_elgible_balance || 0, 0)))}
+                    </span>
+                  </span>
+                  <div
+                    className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+                    style={{ background: '#213343', marginRight: '12px' }}
+                  ></div>
+                </div>
+                <span className="text-[14px] font-bold">
+                  ₹{Math.round(Math.max(selCustomerPayload?.T_elgible_balance || 0, 0)).toLocaleString('en-IN')}
+                </span>
+              </div>
+              
+                  </div>
+                  </section>
+                </div>
+              
+                <div className="bg-[#FFFFFF]  p-4 rounded-lg">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Unit Cost</span>
+                    <ChevronDownIcon size={16} className="ml-2" />
+                  </div>
+                  <div className="relative flex justify-center items-center">
+                    <PieChart width={250} height={250}>
+                      <Pie
+                        data={[  { name: 'Paid', value:  calculatePercentages(  (selCustomerPayload?.T_review || 0) +
+                        (selCustomerPayload?.T_approved || 0), selCustomerPayload?.T_total || selCustomerPayload?.T_Total).paidPercentage},
+                        { name: 'Remaining', value:  calculatePercentages(  (selCustomerPayload?.T_review || 0) +
+                        (selCustomerPayload?.T_approved || 0), selCustomerPayload?.T_total || selCustomerPayload?.T_Total).unpaidPercentage}]}
+                        cx={125}
+                        cy={125}
+                        innerRadius={70}
+                        outerRadius={95}
+                        startAngle={90}
+                        endAngle={-270}
+                        dataKey="value"
+                      >
+                        <Cell fill="#DBD3FD" />
+                        <Cell fill="#E5E7EB" />
+                      </Pie>
+                      {/* <Tooltip content={<CustomTooltiptwo />} /> */}
+              
+                    </PieChart>
+              
+                    <div className="absolute text-center">
+                      <div className="text-xs text-gray-500">Balance</div>
+                      <div className="font-bold">
+                      ₹ {Math.round(selCustomerPayload?.T_balance || 0).toLocaleString('en-IN')}
+              
+              
+                                                        
+                                                        </div>
+                    </div>
+                  </div>
+                  <section className="flex flex-row justify-between mx-2">
+                  <div className="text-center">
+                    <div className="text-[12px] text-gray-500">Unit Cost</div>
+                    <div className="font-bold text-[14px]">
+                    ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
+              
+                                                          
+                                                          </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-[12px] text-gray-500">Paid</div>
+                    <div className="font-bold text-[14px]">₹ {((selCustomerPayload?.T_review || 0) +
+                                                          (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN')}</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-[12px] text-gray-500">Balance</div>
+                    <div className="font-bold text-[14px]">
+                    ₹ {Math.round(selCustomerPayload?.T_balance || 0).toLocaleString('en-IN')}
+              
+                                                          
+                                                          
+                                                          </div>
+                  </div>
+                  </section>
+                </div>
+              
+                <div className="bg-[#FFFFFF] p-4 rounded-lg">
+              
+                  <div className="flex justify-between items-center">
+                <span className="font-medium">Unit Payments</span>
+                <BellIcon size={16} className="ml-2" />
+              </div>
+              
+                  <div className="flex flex-col items-center mt-8">
+                    <section className='flex flex-row justify-between'>
+                      <div className=''>
+                    <div className="text-sm text-gray-500 mb-2">Total Paid</div>
+                    <div className="font-bold mb-4">
+                    ₹ {Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
+              
+                                                          </div>
+                                                          </div>
+              
+                    </section>
+                    <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
+                      <div className="bg-[#DBD3FD] h-7 rounded-full w-1/3"></div>
+                    </div>
+                    <div className="text-sm text-gray-500 mb-2">Total Cost</div>
+                    <div className="font-bold">
+                    ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
+              
+              
+                                                          </div>
+                  </div>
+                </div>
+              
+              
+              
+              </div>
+              
+              
+              </div>
             </div>
 
             <div>
@@ -192,7 +501,7 @@ const CrmUnitSummary = ({
         </div>
           </div>
 
-          <div className="rounded w-[300px] ml-2 py-3 flex flex-col">
+          <div className="rounded w-[300px] mx-6 flex flex-col">
 
           <div className="flex flex-col bg-[#f0f1ff] mb-2 rounded-lg p-3 ">
 
