@@ -503,9 +503,9 @@ const CrmUnitSummary = ({
 
           <div className="rounded w-[300px] mx-6 flex flex-col">
 
-          <div className="flex flex-col bg-[#f0f1ff] mb-2 rounded-lg p-3 ">
+          <div className="flex flex-col bg-[#EDE9FE] rounded-xl mb-2 p-3 ">
 
-          <div className="flex flex-row  bg-white shadow rounded-xl my-1  px-2 py-2 min-w-[260px]">
+          <div className="flex flex-row  bg-white  rounded-xl my-1  px-2 py-2 min-w-[260px]">
 
 
 
@@ -560,7 +560,7 @@ const CrmUnitSummary = ({
 
 
 
-          <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 ">
+          <div className="flex flex-col bg-[#EDE9FE] rounded-lg p-3 ">
           <div className="flex flex-row ">
                 <img
                   src="https://static.ambitionbox.com/static/benefits/WFH.svg"
@@ -584,7 +584,7 @@ const CrmUnitSummary = ({
                 </div>
 
               </div>
-              <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3 mt-2 ">
+              <div className="flex flex-col bg-[#EDE9FE] rounded-lg p-3 mt-2 ">
           <div className="flex flex-row ">
                 <img
                   src="https://static.ambitionbox.com/static/benefits/WFH.svg"

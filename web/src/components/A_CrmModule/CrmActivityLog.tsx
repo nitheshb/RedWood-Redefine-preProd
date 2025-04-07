@@ -117,13 +117,13 @@ console.log('account records', selUnitPayload?.id, orgId)
   }, [selUnitPayload])
   return (
     <div className="rounded w-[420px]  flex flex-col overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300" style={{ height: `calc(100vh - 60px)` }}>
-    <div className="flex flex-col bg-[#f0f1ff] rounded-lg p-3">
+    <div className="flex flex-col bg-[#EDE9FE] rounded-lg p-3">
     <div className="flex flex-row ">
           <img
             src="https://static.ambitionbox.com/static/benefits/WFH.svg"
             alt=""
           />
-          <h1 className="text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-3 ml-1">
+          <h1 className="text-bodyLato text-left text-[#1E223C] font-medium text-[14px] mb-2 mt-3 ml-1">
             {title}
           </h1>
         </div>
@@ -138,10 +138,10 @@ console.log('account records', selUnitPayload?.id, orgId)
                 src="/templates.svg"
               />
             </div>
-            <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+            <h3 className="mb-1 text-sm font-medium text-gray-900 ">
               Timeline is Empty
             </h3>
-            <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+            <time className="block mb-2 text-[11px] font-normal leading-none text-gray-400 ">
               This scenario is very rare to view
             </time>
           </div>

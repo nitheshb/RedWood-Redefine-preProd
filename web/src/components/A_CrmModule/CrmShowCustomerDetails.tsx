@@ -556,505 +556,302 @@ const ShowCustomerDetails = ({
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <>
 
 
 
+<div className="overflow-y-scroll min-h-screen mx-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+  <div className="relative min-h-screen">
+  
+    {/* <div className="">
+      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+    </div> */}
+
+
+
+   
+        <div className="relative z-0">
+
+
+
+<h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+APPLICANT DETAILS
+  </h1>
+  
+  
+  <img
+    alt="CRM Background"
+    src="/bgcrm.svg"
+    className="w-full h-auto object-cover"
+  />
+
+
+  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+    <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
+      <div className="text-center">
+        <h2 className="text-sm font-semibold">Column 1</h2>
+        <p className="text-xs text-gray-600">Some info here</p>
+      </div>
+      <div className="text-center">
+        <h2 className="text-sm font-semibold">Column 2</h2>
+        <p className="text-xs text-gray-600">More info here</p>
+      </div>
+      <div className="text-center">
+        <h2 className="text-sm font-semibold">Column 3</h2>
+        <p className="text-xs text-gray-600">Even more info</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <div className="w-full  flex justify-center -mt-20 z-10 absolute">
+
+    <div className='w-full max-w-4xl px-4 mx-auto'>
+  {/* <h1 className="text-[#606062] tracking-[0.06em] font-heading font-medium text-[12px] mb-4">APPLICANT DETAILS</h1> */}
+ 
+  <div className="mb-10 w-full relative flex justify-center">
+    <div className="bg-white rounded-2xl  mb-10 overflow-hidden w-full relative">
      
 
+<div
+    className="w-[80px] h-[80px] bg-contain bg-no-repeat absolute z-30"
+    style={{ backgroundImage: "url('/pri01.svg')", right: "-5px", top: "-5px" }}
+  />
 
+  
+      <div className="p-6 pb-5 mb-0 relative">
+     
+        <div className="absolute inset-0" style={gridBgStyle}></div>
 
-      <div className='overflow-y-scroll w-full  items-center justify-center mx-auto max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
-
-
-
-      <div>
-        <img  alt="" src="/bgcrm.svg"></img>
+        <div className="flex items-center relative z-10">
+          <div className="w-24 h-24 rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
+            {leadDetailsObj2?.customerDetailsObj?.customerName1 || leadDetailsObj2?.Name ? (
+              <span className="text-[30px] font-outfit font-medium text-gray-700">
+                {(leadDetailsObj2?.customerDetailsObj?.customerName1 || leadDetailsObj2?.Name || '?').charAt(0)}
+              </span>
+            ) : (
+              <img alt="Profile" className="w-20 h-20 rounded-full object-cover" />
+            )}
+          </div>
+          
+          <div>
+            <div className="flex items-center text-2xl font-medium">
+              {leadDetailsObj2?.customerDetailsObj?.customerName1 || leadDetailsObj2?.Name || '?'}
+              <span className="ml-2 text-gray-500">
+                <button onClick={() => setShowApplicantEdit(true)} className="p-2 rounded-full">
+                  <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.666992" y="0.5" width="24" height="24" rx="12" fill="white"/>
+                    <path d="M13.8152 8.00589C14.2279 7.55874 14.4343 7.33517 14.6535 7.20476C15.1826 6.89009 15.8341 6.88031 16.3721 7.17895C16.595 7.30272 16.8077 7.52 17.2331 7.95456C17.6585 8.38911 17.8712 8.60639 17.9923 8.83413C18.2847 9.38364 18.2751 10.0492 17.9671 10.5897C17.8394 10.8136 17.6205 11.0244 17.1828 11.446L11.9748 16.4622C11.1453 17.2612 10.7305 17.6607 10.2122 17.8631C9.69383 18.0656 9.12398 18.0507 7.98429 18.0209L7.82922 18.0168C7.48226 18.0078 7.30878 18.0032 7.20794 17.8888C7.1071 17.7743 7.12086 17.5976 7.1484 17.2442L7.16335 17.0523C7.24085 16.0575 7.2796 15.5602 7.47385 15.1131C7.66809 14.666 8.00316 14.303 8.67329 13.5769L13.8152 8.00589Z" stroke="#191B1C" strokeWidth="0.830746" strokeLinejoin="round"/>
+                    <path d="M13.2209 8.06934L17.0978 11.9462" stroke="#191B1C" strokeWidth="0.830746" strokeLinejoin="round"/>
+                    <path d="M13.7751 18.0383L18.2058 18.0383" stroke="#191B1C" strokeWidth="0.830746" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </span>
+            </div>
+            
+            <div className="flex mt-2">
+              <div className="flex font-outfit items-center mr-6">
+                <span className="mr-1">
+                  <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.51833 8.46161C1.88632 7.35958 1.58115 6.45969 1.39714 5.54752C1.125 4.19843 1.74779 2.88058 2.77951 2.03969C3.21555 1.6843 3.71541 1.80572 3.97325 2.26831L4.55537 3.31265C5.01678 4.14042 5.24748 4.5543 5.20172 4.9931C5.15596 5.4319 4.84483 5.78928 4.22257 6.50404L2.51833 8.46161ZM2.51833 8.46161C3.79759 10.6922 5.80514 12.7009 8.03835 13.9816M8.03835 13.9816C9.14038 14.6136 10.0403 14.9188 10.9524 15.1028C12.3015 15.375 13.6194 14.7522 14.4603 13.7205C14.8157 13.2844 14.6942 12.7846 14.2317 12.5267L13.1873 11.9446C12.3595 11.4832 11.9457 11.2525 11.5069 11.2982C11.0681 11.344 10.7107 11.6551 9.99591 12.2774L8.03835 13.9816Z" stroke="#0E0A1F" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                {leadDetailsObj2?.customerDetailsObj?.phoneNo1 || leadDetailsObj2?.Mobile || '?'}
+              </div>
+              
+              <div className="flex font-outfit items-center">
+                <span className="mr-1">
+                  <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.33325 4.5L5.94193 7.11131C7.64098 8.07401 8.35885 8.07401 10.0579 7.11131L14.6666 4.5" stroke="#141B34" strokeLinejoin="round"/>
+                    <path d="M1.34376 9.48379C1.38735 11.5275 1.40914 12.5493 2.16322 13.3063C2.91731 14.0632 3.96681 14.0896 6.0658 14.1423C7.35946 14.1748 8.64038 14.1748 9.93404 14.1423C12.033 14.0896 13.0825 14.0632 13.8366 13.3063C14.5907 12.5493 14.6125 11.5275 14.6561 9.48379C14.6701 8.82667 14.6701 8.17342 14.6561 7.5163C14.6125 5.47261 14.5907 4.45077 13.8366 3.69382C13.0825 2.93686 12.033 2.91049 9.93404 2.85775C8.64038 2.82525 7.35946 2.82525 6.0658 2.85775C3.9668 2.91048 2.91731 2.93685 2.16322 3.69381C1.40913 4.45076 1.38734 5.4726 1.34376 7.51629C1.32975 8.17342 1.32975 8.82666 1.34376 9.48379Z" stroke="#141B34" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                {leadDetailsObj2?.customerDetailsObj?.email1 || '?'}
+              </div>
+            </div>
+          </div>
         </div>
-
-
-
-<div className=" min-h-screen flex w-full  mx-auto  items-center justify-center ">
-      {/* Page Background Grid */}
-      {/* <div className="absolute inset-0" style={gridBgStyle}></div> */}
+      </div>
       
-      <div className="relative z-10">
-        <h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px] mb-4">APPLICANT DETAILS</h1>
-        
-     
-        <div className="mb-10 w-[70%] relative   flex justify-center">
-          {/* Badge */}
-          {/* <div className="absolute top-8  right-0 rounded-xl -rotate-6  z-20">
-            
-           <div>
-           <div className='border-2 border-blue-900 rounded-xl'>
+  
+      <div className="p-6 grid grid-cols-4 gap-4">
+        <div className="pr-2 col-span-1">
+          <div className="text-gray-500 text-sm mb-1">S/O</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
+            {leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
+          </div>
 
-<div className="relative bg-purple-200   text-blue-900 font-medium px-8 py-4 rounded-xl transform rotate-3 shadow-sm ">
-  PRIMARY
+          <div className="text-gray-500 text-sm mb-1">Martial Status</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
+            {leadDetailsObj2?.customerDetailsObj?.marital1?.value}
+          </div>
 
-
-  <div className="absolute -bottom-2 right-3 w-4 h-8 bg-purple-200 rotate-45 skew-x-12 skew-y-6"></div>
-
-</div>
-
-</div>
-
-
-<div className="absolute top-0 left-1/4 transform -translate-x-1/4 -translate-y-full flex items-center justify-center">
-<div className="relative w-24 h-8">
-
-
-<div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-2.5 h-2.5 bg-blue-900 rounded-full z-10"></div>
-
-
-<svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 50" preserveAspectRatio="none">
-
-<path d="M 50 0 Q 40 25 30 50" stroke="#1e3a8a" strokeWidth="2" fill="none" />
-
-<path d="M 50 0 Q 60 25 70 50" stroke="#1e3a8a" strokeWidth="2" fill="none" />
-</svg>
-
-</div>
-</div>
-           </div>
-
-          </div> */}
-
-
-<div className="absolute top-7 -right-5 rounded-lg rotate-12 z-20">
-  <div>
-    <div className="border border-blue-900 rounded-md w-fit">
-      <div className="relative bg-purple-200 text-blue-900 font-medium px-2 py-2.5 rounded-md transform rotate-3 shadow-sm text-xs w-[70px] text-center leading-tight">
-        PRIMARY
-
-        {/* Tail point */}
-        <div className="absolute -bottom-1 right-1 w-2 h-5 bg-purple-200 rotate-45 skew-x-12 skew-y-6"></div>
-      </div>
-    </div>
-
-    {/* Dotted connector */}
-    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full flex items-center justify-center">
-      <div className="relative w-10 h-6">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-blue-900 rounded-full z-10"></div>
-
-        <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 50" preserveAspectRatio="none">
-          <path d="M 50 0 Q 44 25 38 50" stroke="#1e3a8a" strokeWidth="1.5" fill="none" />
-          <path d="M 50 0 Q 56 25 62 50" stroke="#1e3a8a" strokeWidth="1.5" fill="none" />
-        </svg>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-          
-
-          
-          <div className="bg-white rounded-2xl shadow-md border border-gray-200 mb-10 overflow-hidden">
-            {/* Profile Section with Grid Background */}
-            <div className="p-6 pb-5 mb-0  relative">
-              {/* Grid Background only in top section */}
-              <div className="absolute inset-0" style={gridBgStyle}></div>
-              
-              <div className="flex items-center relative z-10">
-                {/* <div className="w-24 h-24 rounded-full overflow-hidden mr-6">
-
-
-                {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-    leadDetailsObj2?.Name ? (
-      <span className="text-[30px] font-medium text-gray-700">
-        {(
-          leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-          leadDetailsObj2?.Name ||
-          '?'
-        ).charAt(0)}
-      </span>
-    ) : (
-      <img
-        alt="Profile"
-        className="w-20 h-20 rounded-full object-cover"
-      />
-    )}
-             
-                </div> */}
-
-<div className="w-24 h-24 rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
-  {leadDetailsObj2?.customerDetailsObj?.customerName1 || leadDetailsObj2?.Name ? (
-    <span className="text-[30px] font-outfit font-medium text-gray-700">
-      {(
-        leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-        leadDetailsObj2?.Name ||
-        '?'
-      ).charAt(0)}
-    </span>
-  ) : (
-    <img
-      alt="Profile"
-      className="w-20 h-20 rounded-full object-cover"
-    />
-  )}
-</div>
-
-                
-                <div>
-                  <div className="flex items-center text-2xl font-medium">
-                  {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-                    leadDetailsObj2?.Name ||
-                    '?'}
-                    <span className="ml-2 text-gray-500">
-
-
-
-
-<button
-        onClick={() => setShowApplicantEdit(true)}
-        className="p-2  rounded-full">
-                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="0.666992" y="0.5" width="24" height="24" rx="12" fill="white"/>
-<path d="M13.8152 8.00589C14.2279 7.55874 14.4343 7.33517 14.6535 7.20476C15.1826 6.89009 15.8341 6.88031 16.3721 7.17895C16.595 7.30272 16.8077 7.52 17.2331 7.95456C17.6585 8.38911 17.8712 8.60639 17.9923 8.83413C18.2847 9.38364 18.2751 10.0492 17.9671 10.5897C17.8394 10.8136 17.6205 11.0244 17.1828 11.446L11.9748 16.4622C11.1453 17.2612 10.7305 17.6607 10.2122 17.8631C9.69383 18.0656 9.12398 18.0507 7.98429 18.0209L7.82922 18.0168C7.48226 18.0078 7.30878 18.0032 7.20794 17.8888C7.1071 17.7743 7.12086 17.5976 7.1484 17.2442L7.16335 17.0523C7.24085 16.0575 7.2796 15.5602 7.47385 15.1131C7.66809 14.666 8.00316 14.303 8.67329 13.5769L13.8152 8.00589Z" stroke="#191B1C" stroke-width="0.830746" stroke-linejoin="round"/>
-<path d="M13.2209 8.06934L17.0978 11.9462" stroke="#191B1C" stroke-width="0.830746" stroke-linejoin="round"/>
-<path d="M13.7751 18.0383L18.2058 18.0383" stroke="#191B1C" stroke-width="0.830746" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-        </button>
-
-                    </span>
-                  </div>
-                  
-                  <div className="flex mt-2">
-                    <div className="flex font-outfit items-center mr-6">
-                      <span className="mr-1">
-                      <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M2.51833 8.46161C1.88632 7.35958 1.58115 6.45969 1.39714 5.54752C1.125 4.19843 1.74779 2.88058 2.77951 2.03969C3.21555 1.6843 3.71541 1.80572 3.97325 2.26831L4.55537 3.31265C5.01678 4.14042 5.24748 4.5543 5.20172 4.9931C5.15596 5.4319 4.84483 5.78928 4.22257 6.50404L2.51833 8.46161ZM2.51833 8.46161C3.79759 10.6922 5.80514 12.7009 8.03835 13.9816M8.03835 13.9816C9.14038 14.6136 10.0403 14.9188 10.9524 15.1028C12.3015 15.375 13.6194 14.7522 14.4603 13.7205C14.8157 13.2844 14.6942 12.7846 14.2317 12.5267L13.1873 11.9446C12.3595 11.4832 11.9457 11.2525 11.5069 11.2982C11.0681 11.344 10.7107 11.6551 9.99591 12.2774L8.03835 13.9816Z" stroke="#0E0A1F" stroke-linejoin="round"/>
-</svg>
-
-                      </span>
-                      
-                      {leadDetailsObj2?.customerDetailsObj?.phoneNo1 ||
-                    leadDetailsObj2?.Mobile ||
-                    '?'}
-                    </div>
-                    
-                    <div className="flex font-outfit items-center">
-                      <span className="mr-1">
-                      <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.33325 4.5L5.94193 7.11131C7.64098 8.07401 8.35885 8.07401 10.0579 7.11131L14.6666 4.5" stroke="#141B34" stroke-linejoin="round"/>
-<path d="M1.34376 9.48379C1.38735 11.5275 1.40914 12.5493 2.16322 13.3063C2.91731 14.0632 3.96681 14.0896 6.0658 14.1423C7.35946 14.1748 8.64038 14.1748 9.93404 14.1423C12.033 14.0896 13.0825 14.0632 13.8366 13.3063C14.5907 12.5493 14.6125 11.5275 14.6561 9.48379C14.6701 8.82667 14.6701 8.17342 14.6561 7.5163C14.6125 5.47261 14.5907 4.45077 13.8366 3.69382C13.0825 2.93686 12.033 2.91049 9.93404 2.85775C8.64038 2.82525 7.35946 2.82525 6.0658 2.85775C3.9668 2.91048 2.91731 2.93685 2.16322 3.69381C1.40913 4.45076 1.38734 5.4726 1.34376 7.51629C1.32975 8.17342 1.32975 8.82666 1.34376 9.48379Z" stroke="#141B34" stroke-linejoin="round"/>
-</svg>
-
-                      </span>
-                      {leadDetailsObj2?.customerDetailsObj?.email1 || '?'}
-
-
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Details Grid - 3 column layout (no grid background) */}
-            <div className="p-6 grid grid-cols-4 gap-4">
-  <div className="pr-2 col-span-1">
-    <div className="text-gray-500 text-sm mb-1">S/O</div>
-    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
-      {leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
-    </div>
-
-    <div className="text-gray-500 text-sm mb-1">Martial Status</div>
-    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
-      {leadDetailsObj2?.customerDetailsObj?.marital1?.value}
-    </div>
-
-    <div className="text-gray-500 text-sm mb-1">DOB</div>
-    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
-      {prettyDate(leadDetailsObj2?.customerDetailsObj?.dob1 || datee)}
-    </div>
-  </div>
-
-  <div className="px-4 border-l border-r border-gray-200 col-span-1">
-    <div className="text-gray-500 text-sm mb-1">PAN Card</div>
-    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
-      {leadDetailsObj2?.customerDetailsObj?.panNo1 || '?'}
-    </div>
-
-    <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
-    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
-      {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}
-    </div>
-
-    <div className="text-gray-500 text-sm mb-1">Secondary No</div>
-    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
-      {leadDetailsObj2?.customerDetailsObj?.phoneNo3 || '?'}
-    </div>
-  </div>
-
-  <div className="pl-4 col-span-2">
-    <div className="text-gray-500 text-sm mb-1">Current Address</div>
-    <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[14px] mb-4 font-outfit  break-words whitespace-pre-wrap">
-      {leadDetailsObj2?.customerDetailsObj?.address1 || '?'}
-    </div>
-
-    <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
-    <div className="font-medium text-[#0E0A1F] tracking-[0.06em]  text-[14px]  font-outfit break-words whitespace-pre-wrap">
-      {leadDetailsObj2?.customerDetailsObj?.address2p || '?'}
-    </div>
-  </div>
-</div>
-
+          <div className="text-gray-500 text-sm mb-1">DOB</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
+            {prettyDate(leadDetailsObj2?.customerDetailsObj?.dob1 || datee)}
           </div>
         </div>
 
+        <div className="px-4 border-l border-r border-gray-200 col-span-1">
+          <div className="text-gray-500 text-sm mb-1">PAN Card</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
+            {leadDetailsObj2?.customerDetailsObj?.panNo1 || '?'}
+          </div>
 
+          <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
+            {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}
+          </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        <div className="mb-10 w-[70%] flex justify-center  relative">
-        
-
-
-
-          <div className="absolute top-7 -right-10 rounded-md rotate-12 z-20">
-  <div>
-    <div className="border border-blue-900 rounded-lg w-fit">
-      <div className="relative bg-purple-200 text-blue-900 font-medium px-4 py-2 rounded-md transform rotate-3 shadow-sm text-xs text-center leading-tight whitespace-nowrap">
-      SECONDARY
-
-        {/* Tail point */}
-        <div className="absolute -bottom-1 right-2 w-2 h-5 bg-purple-200 rotate-45 skew-x-12 skew-y-6"></div>
-      </div>
-    </div>
-
-    {/* Dotted connector */}
-    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full flex items-center justify-center">
-      <div className="relative w-10 h-6">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-blue-900 rounded-full z-10"></div>
-
-        <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 50" preserveAspectRatio="none">
-          <path d="M 50 0 Q 44 25 38 50" stroke="#1e3a8a" strokeWidth="1.5" fill="none" />
-          <path d="M 50 0 Q 56 25 62 50" stroke="#1e3a8a" strokeWidth="1.5" fill="none" />
-        </svg>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-          
-
-
-          
-          <div className="bg-white  rounded-2xl shadow-md border border-gray-200 overflow-hidden">
-            {/* Profile Section with Grid Background */}
-            <div className="p-6 pb-5 mb-0  relative">
-              {/* Grid Background only in top section */}
-              <div className="absolute inset-0" style={gridBgStyle}></div>
-              
-              <div className="flex items-center relative z-10">
-                {/* <div className="w-24 h-24 rounded-full overflow-hidden mr-6">
-                {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-    leadDetailsObj2?.Name ? (
-      <span className="text-[30px] font-medium text-gray-700">
-        {(
-          leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 ||
-          leadDetailsObj2?.Name ||
-          '?'
-        ).charAt(0)}
-      </span>
-    ) : (
-      <img
-        alt="Profile"
-        className="w-20 h-20 rounded-full object-cover"
-      />
-    )}
-                </div> */}
-
-<div className="w-24 h-24 rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
-  {leadDetailsObj2?.customerDetailsObj?.customerName1 ||
-  leadDetailsObj2?.Name ? (
-    <span className="text-[30px] font-medium text-gray-700">
-      {(
-        leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 ||
-        leadDetailsObj2?.Name ||
-        '?'
-      ).charAt(0)}
-    </span>
-  ) : (
-    <img
-      alt="Profile"
-      className="w-20 h-20 rounded-full object-cover"
-    />
-  )}
-</div>
-
-                
-                <div>
-                  <div className="flex items-center font-outfit font-[#0E0A1F] text-2xl font-medium">
-                  {leadDetailsObj2?.secondaryCustomerDetailsObj
-                    ?.customerName1 || '?'}
-                    <span className="ml-2 text-gray-500">
-
-
-                    <button
-        onClick={() => setShowApplicantEdit(true)}
-        className="p-2  rounded-full">
-                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="0.666992" y="0.5" width="24" height="24" rx="12" fill="white"/>
-<path d="M13.8152 8.00589C14.2279 7.55874 14.4343 7.33517 14.6535 7.20476C15.1826 6.89009 15.8341 6.88031 16.3721 7.17895C16.595 7.30272 16.8077 7.52 17.2331 7.95456C17.6585 8.38911 17.8712 8.60639 17.9923 8.83413C18.2847 9.38364 18.2751 10.0492 17.9671 10.5897C17.8394 10.8136 17.6205 11.0244 17.1828 11.446L11.9748 16.4622C11.1453 17.2612 10.7305 17.6607 10.2122 17.8631C9.69383 18.0656 9.12398 18.0507 7.98429 18.0209L7.82922 18.0168C7.48226 18.0078 7.30878 18.0032 7.20794 17.8888C7.1071 17.7743 7.12086 17.5976 7.1484 17.2442L7.16335 17.0523C7.24085 16.0575 7.2796 15.5602 7.47385 15.1131C7.66809 14.666 8.00316 14.303 8.67329 13.5769L13.8152 8.00589Z" stroke="#191B1C" stroke-width="0.830746" stroke-linejoin="round"/>
-<path d="M13.2209 8.06934L17.0978 11.9462" stroke="#191B1C" stroke-width="0.830746" stroke-linejoin="round"/>
-<path d="M13.7751 18.0383L18.2058 18.0383" stroke="#191B1C" stroke-width="0.830746" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-        </button>
-
-
-                    </span>
-                  </div>
-                  
-                  <div className="flex font-outfit mt-2">
-                    <div className="flex items-center mr-6">
-                      <span className="mr-1">
-                      <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M2.51833 8.46161C1.88632 7.35958 1.58115 6.45969 1.39714 5.54752C1.125 4.19843 1.74779 2.88058 2.77951 2.03969C3.21555 1.6843 3.71541 1.80572 3.97325 2.26831L4.55537 3.31265C5.01678 4.14042 5.24748 4.5543 5.20172 4.9931C5.15596 5.4319 4.84483 5.78928 4.22257 6.50404L2.51833 8.46161ZM2.51833 8.46161C3.79759 10.6922 5.80514 12.7009 8.03835 13.9816M8.03835 13.9816C9.14038 14.6136 10.0403 14.9188 10.9524 15.1028C12.3015 15.375 13.6194 14.7522 14.4603 13.7205C14.8157 13.2844 14.6942 12.7846 14.2317 12.5267L13.1873 11.9446C12.3595 11.4832 11.9457 11.2525 11.5069 11.2982C11.0681 11.344 10.7107 11.6551 9.99591 12.2774L8.03835 13.9816Z" stroke="#0E0A1F" stroke-linejoin="round"/>
-</svg>
-
-                      </span>
-                      
-{leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo1 ||
-                    '?'}
-                    </div>
-                    
-                    <div className="flex font-outfit  items-center">
-                      <span className="mr-1">
-
-                      <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.33325 4.5L5.94193 7.11131C7.64098 8.07401 8.35885 8.07401 10.0579 7.11131L14.6666 4.5" stroke="#141B34" stroke-linejoin="round"/>
-<path d="M1.34376 9.48379C1.38735 11.5275 1.40914 12.5493 2.16322 13.3063C2.91731 14.0632 3.96681 14.0896 6.0658 14.1423C7.35946 14.1748 8.64038 14.1748 9.93404 14.1423C12.033 14.0896 13.0825 14.0632 13.8366 13.3063C14.5907 12.5493 14.6125 11.5275 14.6561 9.48379C14.6701 8.82667 14.6701 8.17342 14.6561 7.5163C14.6125 5.47261 14.5907 4.45077 13.8366 3.69382C13.0825 2.93686 12.033 2.91049 9.93404 2.85775C8.64038 2.82525 7.35946 2.82525 6.0658 2.85775C3.9668 2.91048 2.91731 2.93685 2.16322 3.69381C1.40913 4.45076 1.38734 5.4726 1.34376 7.51629C1.32975 8.17342 1.32975 8.82666 1.34376 9.48379Z" stroke="#141B34" stroke-linejoin="round"/>
-</svg>
-
-
-
-                      </span>
-                      {leadDetailsObj2?.secondaryCustomerDetailsObj?.email1 ||
-                    '?'}
-
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Details Grid - 3 column layout (no grid background) */}
-            <div className="p-6 grid grid-cols-4 gap-4">
-  <div className="pr-2 col-span-1">
-    <div className="text-gray-500 text-sm mb-1">S/O</div>
-    <div className="font-medium font-outfit tracking-[0.06em] font-[#0E0A1F] text-[14px] mb-4">
-      {leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || '?'}
-    </div>
-
-    <div className="text-gray-500 text-sm mb-1">Martial Status</div>
-    <div className="font-medium font-outfit tracking-[0.06em] font-[#0E0A1F] text-[14px] mb-4">
-      {leadDetailsObj2?.secondaryCustomerDetailsObj?.marital1?.value}
-    </div>
-
-    <div className="text-gray-500 text-sm mb-1">DOB</div>
-    <div className="font-medium font-outfit tracking-[0.06em] font-[#0E0A1F] text-[14px]">
-      {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob1 || datee)}
-    </div>
-  </div>
-
-  <div className="px-4 border-l border-r border-gray-200 col-span-1">
-    <div className="text-gray-500 text-sm mb-1">PAN Card</div>
-    <div className="font-medium font-outfit font-[#0E0A1F] text-[14px] tracking-[0.06em] mb-4">
-      {leadDetailsObj2?.secondaryCustomerDetailsObj?.panNo1 || '?'}
-    </div>
-
-    <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
-    <div className="font-medium text-[14px] font-[#0E0A1F] tracking-[0.06em] font-outfit mb-4">
-      {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || '?'}
-    </div>
-
-    <div className="text-gray-500 text-sm mb-1">Secondary No</div>
-    <div className="font-medium font-outfit font-[#0E0A1F] tracking-[0.06em] text-[14px]">
-      {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo3 || '?'}
-    </div>
-  </div>
-
-  <div className="pl-4 col-span-2">
-    <div className="text-gray-500 text-sm mb-1">Current Address</div>
-    <div className="font-medium text-black font-outfit text-[14px] mb-4 tracking-[0.06em] font-[#0E0A1F] break-words whitespace-pre-wrap">
-      {leadDetailsObj2?.secondaryCustomerDetailsObj?.address1 || '?'}
-    </div>
-
-    <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
-    <div className="font-medium text-black font-outfit text-[14px] tracking-[0.06em] font-[#0E0A1F] break-words whitespace-pre-wrap">
-      {leadDetailsObj2?.secondaryCustomerDetailsObj?.address2p || '?'}
-    </div>
-  </div>
-</div>
-
+          <div className="text-gray-500 text-sm mb-1">Secondary No</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
+            {leadDetailsObj2?.customerDetailsObj?.phoneNo3 || '?'}
           </div>
         </div>
 
+        <div className="pl-4 col-span-2">
+          <div className="text-gray-500 text-sm mb-1">Current Address</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[16px] mb-4 font-outfit break-words whitespace-pre-wrap">
+            {leadDetailsObj2?.customerDetailsObj?.address1 || '?'}
+          </div>
 
-
-
-
-
-
+          <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[16px] font-outfit break-words whitespace-pre-wrap">
+            {leadDetailsObj2?.customerDetailsObj?.address2p || '?'}
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
 
+  <div className="mb-10 w-full flex justify-center relative">
+    <div className="bg-white rounded-2xl  mb-10 overflow-hidden w-full relative">
+      
+      <div
+        className="w-[80px] h-[80px] bg-contain bg-no-repeat absolute  z-30"
+        style={{ backgroundImage: "url('/secondary2.svg')",  right: "-5px", top: "-5px"  }}
+      />
+   
+      <div className="p-6 pb-5 mb-0 relative">
+        <div className="absolute inset-0" style={gridBgStyle}></div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-        
+        <div className="flex items-center relative z-10">
+          <div className="w-24 h-24 rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 || leadDetailsObj2?.Name ? (
+              <span className="text-[30px] font-medium text-gray-700">
+                {(leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 || leadDetailsObj2?.Name || '?').charAt(0)}
+              </span>
+            ) : (
+              <img alt="Profile" className="w-20 h-20 rounded-full object-cover" />
+            )}
+          </div>    
+                
+          <div>
+            <div className="flex items-center font-outfit text-2xl font-medium">
+              {leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 || '?'}
+              <span className="ml-2 text-gray-500">
+                <button onClick={() => setShowApplicantEdit(true)} className="p-2 rounded-full">
+                  <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.666992" y="0.5" width="24" height="24" rx="12" fill="white"/>
+                    <path d="M13.8152 8.00589C14.2279 7.55874 14.4343 7.33517 14.6535 7.20476C15.1826 6.89009 15.8341 6.88031 16.3721 7.17895C16.595 7.30272 16.8077 7.52 17.2331 7.95456C17.6585 8.38911 17.8712 8.60639 17.9923 8.83413C18.2847 9.38364 18.2751 10.0492 17.9671 10.5897C17.8394 10.8136 17.6205 11.0244 17.1828 11.446L11.9748 16.4622C11.1453 17.2612 10.7305 17.6607 10.2122 17.8631C9.69383 18.0656 9.12398 18.0507 7.98429 18.0209L7.82922 18.0168C7.48226 18.0078 7.30878 18.0032 7.20794 17.8888C7.1071 17.7743 7.12086 17.5976 7.1484 17.2442L7.16335 17.0523C7.24085 16.0575 7.2796 15.5602 7.47385 15.1131C7.66809 14.666 8.00316 14.303 8.67329 13.5769L13.8152 8.00589Z" stroke="#191B1C" strokeWidth="0.830746" strokeLinejoin="round"/>
+                    <path d="M13.2209 8.06934L17.0978 11.9462" stroke="#191B1C" strokeWidth="0.830746" strokeLinejoin="round"/>
+                    <path d="M13.7751 18.0383L18.2058 18.0383" stroke="#191B1C" strokeWidth="0.830746" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </span>
+            </div>
+            
+            <div className="flex font-outfit mt-2">
+              <div className="flex items-center mr-6">
+                <span className="mr-1">
+                  <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.51833 8.46161C1.88632 7.35958 1.58115 6.45969 1.39714 5.54752C1.125 4.19843 1.74779 2.88058 2.77951 2.03969C3.21555 1.6843 3.71541 1.80572 3.97325 2.26831L4.55537 3.31265C5.01678 4.14042 5.24748 4.5543 5.20172 4.9931C5.15596 5.4319 4.84483 5.78928 4.22257 6.50404L2.51833 8.46161ZM2.51833 8.46161C3.79759 10.6922 5.80514 12.7009 8.03835 13.9816M8.03835 13.9816C9.14038 14.6136 10.0403 14.9188 10.9524 15.1028C12.3015 15.375 13.6194 14.7522 14.4603 13.7205C14.8157 13.2844 14.6942 12.7846 14.2317 12.5267L13.1873 11.9446C12.3595 11.4832 11.9457 11.2525 11.5069 11.2982C11.0681 11.344 10.7107 11.6551 9.99591 12.2774L8.03835 13.9816Z" stroke="#0E0A1F" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo1 || '?'}
+              </div>
+              
+              <div className="flex font-outfit items-center">
+                <span className="mr-1">
+                  <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.33325 4.5L5.94193 7.11131C7.64098 8.07401 8.35885 8.07401 10.0579 7.11131L14.6666 4.5" stroke="#141B34" strokeLinejoin="round"/>
+                    <path d="M1.34376 9.48379C1.38735 11.5275 1.40914 12.5493 2.16322 13.3063C2.91731 14.0632 3.96681 14.0896 6.0658 14.1423C7.35946 14.1748 8.64038 14.1748 9.93404 14.1423C12.033 14.0896 13.0825 14.0632 13.8366 13.3063C14.5907 12.5493 14.6125 11.5275 14.6561 9.48379C14.6701 8.82667 14.6701 8.17342 14.6561 7.5163C14.6125 5.47261 14.5907 4.45077 13.8366 3.69382C13.0825 2.93686 12.033 2.91049 9.93404 2.85775C8.64038 2.82525 7.35946 2.82525 6.0658 2.85775C3.9668 2.91048 2.91731 2.93685 2.16322 3.69381C1.40913 4.45076 1.38734 5.4726 1.34376 7.51629C1.32975 8.17342 1.32975 8.82666 1.34376 9.48379Z" stroke="#141B34" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                {leadDetailsObj2?.secondaryCustomerDetailsObj?.email1 || '?'}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      
+
+      <div className="p-6 grid grid-cols-4 gap-4">
+        <div className="pr-2 col-span-1">
+          <div className="text-gray-500 text-sm mb-1">S/O</div>
+          <div className="font-medium font-outfit tracking-[0.06em] text-[#0E0A1F] text-[14px] mb-4">
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || '?'}
+          </div>
+
+          <div className="text-gray-500 text-sm mb-1">Martial Status</div>
+          <div className="font-medium font-outfit tracking-[0.06em] text-[#0E0A1F] text-[14px] mb-4">
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.marital1?.value}
+          </div>
+
+          <div className="text-gray-500 text-sm mb-1">DOB</div>
+          <div className="font-medium font-outfit tracking-[0.06em] text-[#0E0A1F] text-[14px]">
+            {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob1 || datee)}
+          </div>
+        </div>
+
+        <div className="px-4 border-l border-r border-gray-200 col-span-1">
+          <div className="text-gray-500 text-sm mb-1">PAN Card</div>
+          <div className="font-medium font-outfit text-[#0E0A1F] text-[14px] tracking-[0.06em] mb-4">
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.panNo1 || '?'}
+          </div>
+
+          <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
+          <div className="font-medium text-[14px] text-[#0E0A1F] tracking-[0.06em] font-outfit mb-4">
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || '?'}
+          </div>
+
+          <div className="text-gray-500 text-sm mb-1">Secondary No</div>
+          <div className="font-medium font-outfit text-[#0E0A1F] tracking-[0.06em] text-[14px]">
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo3 || '?'}
+          </div>
+        </div>
+
+        <div className="pl-4 col-span-2">
+          <div className="text-gray-500 text-sm mb-1">Current Address</div>
+          <div className="font-medium text-[#0E0A1F] font-outfit text-[14px] mb-4 tracking-[0.06em] break-words whitespace-pre-wrap">
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.address1 || '?'}
+          </div>
+
+          <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
+          <div className="font-medium text-[#0E0A1F] font-outfit text-[14px] tracking-[0.06em] break-words whitespace-pre-wrap">
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.address2p || '?'}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
+
+
+  
+</div>
+
+
+</div>
+
+
+  </div>
+</div>
 
 
     </>

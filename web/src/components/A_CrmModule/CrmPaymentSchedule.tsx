@@ -187,7 +187,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
 
                 <div className='flex items-center'>
           
-                <h1 className=" font-outfit text-left text-[#606062] font-medium text-[12px] mb-2 mt-1 ml-1">
+                <h1 className=" font-outfit text-left uppercase text-[#606062] font-medium text-[12px] mb-2 mt-1 ml-1">
                   Payment Schedule
                 </h1>
                 </div>
@@ -209,7 +209,7 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
        />
                 </div>
               </div>
-              <table className="w-full drop-shadow-md rounded-2xl  overflow-hidden ">
+              <table className="w-full  rounded-2xl  overflow-hidden ">
                 <thead className='ml-2'>
                   {' '}
                   <tr className="   h-9 ">

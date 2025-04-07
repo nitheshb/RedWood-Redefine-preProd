@@ -311,17 +311,68 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
     })
   }
   return (
-   
 
-<div className="h-full flex    flex-col ">
-  <div className=" max-w-5xl pr-6 mx-auto w-full">
-    <div className="flex flex-col space-y-4">
+
+
+
+
+    <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+  <div className="relative min-h-screen">
+    {/* Background image */}
+    {/* <div className="">
+      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+    </div> */}
+
+
+
+        <div className="relative z-0">
+
+
+
+<h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+    Unit Documents
+  </h1>
+  
+
+  <img
+    alt="CRM Background"
+    src="/bgcrm.svg"
+    className="w-full h-auto object-cover"
+  />
+
+
+  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+    <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
+      <div className="text-center">
+        <h2 className="text-sm font-semibold">Column 1</h2>
+        <p className="text-xs text-gray-600">Some info here</p>
+      </div>
+      <div className="text-center">
+        <h2 className="text-sm font-semibold">Column 2</h2>
+        <p className="text-xs text-gray-600">More info here</p>
+      </div>
+      <div className="text-center">
+        <h2 className="text-sm font-semibold">Column 3</h2>
+        <p className="text-xs text-gray-600">Even more info</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <div className="w-full h-full flex justify-center -mt-20 z-10 relative">
+  <div className=" max-w-4xl mx-auto px-4 w-full">
+
+  {/* <h1 className="text-[#606062] tracking-[0.06em]  font-medium text-[12px] uppercase  pl-4">Unit Analysis  </h1> */}
+
+    <div className="flex flex-col mt-2 space-y-4">
       
    
       {/* <h2 className="text-xl font-semibold text-[#213343]">Unit Information</h2> */}
 
       <div className="grid gap-8 grid-cols-1">
-        <div className="flex flex-col bg-[#FFFFFF] p-6 rounded-lg   drop-shadow-lg  ">
+        <div className="flex flex-col bg-[#FFFFFF] p-6 rounded-2xl  ">
           <div className="mt-0">
             <p className="text-gray-700">
               Review and recalculate unit details to ensure all data is accurate and up-to-date.
@@ -341,6 +392,13 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
     </div>
   </div>
 </div>
+
+
+  </div>
+</div>
+   
+
+
 
 
   )
