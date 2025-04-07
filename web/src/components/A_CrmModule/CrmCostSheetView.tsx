@@ -136,22 +136,6 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
 
   return (
     <>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <div className="  ">
         <section className=" mb-6 flex flex-row  ">
           <div className="w-full   ">
@@ -198,10 +182,6 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
 
     />
 </div>
-
-
-
-
               </div>
               <div className="grid  grid-row-2  gap-x-2   ">
                 <div className=" p-[4px]">
@@ -546,17 +526,8 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                       </tbody>
                     </table>
                   )}
-
-
                                 {selCustomerPayload?.addOnCS?.length > 0 && (
-
                                   <>
-
-
-
-
-
-
 <table className="w-full  mt-5  rounded-2xl overflow-hidden">
                   <thead>
                         <tr className=" h-9 border-b-[0.2px]  w-[100%]">
@@ -576,8 +547,6 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] bg-[#EDE9FE] rounded-tr-[10px]  tracking-wide pr-2 ">
                           Total
                           </th>
-
-
                         </tr>
                       </thead>
                     <tbody>
@@ -601,8 +570,6 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                          </td>
 
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#FCFCFD] pr-2 ">
-
-
                           ₹{' '}
 {Math.round(
   Number(
@@ -612,12 +579,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
     )
   ) || 0
 ).toLocaleString('en-IN')}
-
-         
                           </td>
-
-
-
                         </tr>
                       ))}
                       <tr className="border-b-[0.05px] border-gray-300 h-[32px]   bg-[#FCFCFD]">
@@ -638,28 +600,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                     </tbody>
                   </table>
                                   </>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   )}
-
-
-
-
 <section className="flex bg-[#FCFCFD] flex-row-reverse justify-between w-full  rounded-2xl overflow-hidden mt-5 rounded-b-2xl px-3">
                 <div className="flex  flex-row mt-2 text-bodyLato text-left text-gray-800  text-[14px] mb-2 ">
                   Total Unit Cost:
@@ -671,25 +612,11 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                   </section>
                 </div>
               </section>
-
-
-
-
-
-
                 </div>
               </div>
-
-
-
-
-
             </div>
           </div>
         </section>
-
-
-
         {/* <CrmUnitFinanceHistory
         selCustomerPayload={selCustomerPayload}
         assets={assets}

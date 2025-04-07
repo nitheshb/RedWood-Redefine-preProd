@@ -1525,6 +1525,19 @@ async function handleCallButtonClick(uid, name, number) {
                         <div className=" text-sm  ml-[4px]  px-[3px] pt-[px] rounded  text-[#FF8C02] ">
                           {currentStatusDispFun(leadDetailsObj?.Status)}{' '}
                         </div>
+
+
+                        
+<button
+  onClick={() => {
+    console.log('Call button clicked for lead:', Name, Mobile);
+    handleCallButtonClick(assignedTo, Name, Mobile);
+  }}
+  className=" rounded-md text-[10px] bg-[#0891B2] px-2  text-white"
+  title="Call"
+>
+  Call
+</button>
                       </div>
                       <div className="flex flex-row">
                         <div className="font-md text-sm text-gray-500 mb-[2] tracking-wide ">
@@ -1536,31 +1549,6 @@ async function handleCallButtonClick(uid, name, number) {
                             )}
                           </span>
                         </div>
-
-
-
-
-{/* <button
-  onClick={() => handleCallButtonClick(assignedTo, Name, Mobile)}
-  className="flex items-center justify-center p-2 bg-green-500 text-white rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-  title="Call"
->
-  <PhoneIcon className="w-5 h-5" />
-</button> */}
-
-
-<button
-  onClick={() => {
-    console.log('Call button clicked for lead:', Name, Mobile);
-    handleCallButtonClick(assignedTo, Name, Mobile);
-  }}
-  className="flex items-center justify-center p-2 bg-green-500 text-white rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-  title="Call"
->
-  <PhoneIcon className="w-5 h-5" />
-</button>
-
-
 
                         <div className="font-md text-sm text-gray-500 mb-[2] ml-[6px] tracking-wide">
                           <MailIcon className="w-3 h-3 inline text-[#058527] " />{' '}
