@@ -495,7 +495,7 @@ const FloordetailsSearch = ({
       return (
 
         Status.includes(da?.Status)
-   
+
       )
     })
     await setFilteredUnits(y)
@@ -548,13 +548,13 @@ const FloordetailsSearch = ({
                   style={{ backgroundColor: '#EBF9F9' }}
                 >
                   <div className="flex items-center flex-row px-0  pl-0 mb-2 ">
-             
+
                     <div className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 mt-4 ">
                       {selBlock?.blockName} Report
                     </div>
                   </div>
 
-     
+
                   <section className="flex ml-auto mt-[18px]">
                     {true && (
                       <span className="flex ml-2 items-center h-6 px-3 text-xs font-semibold text-pink-800 bg-pink-200 rounded-full">
@@ -591,7 +591,7 @@ const FloordetailsSearch = ({
                         style={{ minWidth: '30%' }}
                         onClick={() => selReportFun(unitStatsData)}
                       >
-  
+
 
                         <div
                           className="drop-shadow-md min-w-full z-10 flex flex-col  max-w-md p-4 mx-auto my-0 rounded-lg "
@@ -699,7 +699,7 @@ const FloordetailsSearch = ({
       {blocksViewFeature === 'Units' && (
         <>
           <section className="bg-white">
-         
+
             <section className="flex flex-row px-6 py-1 pl-0 justify-between">
             <section className="flex flex-row">
               {['Apartment', 'Villas' , 'WeekendVillas'].includes(
@@ -716,7 +716,7 @@ const FloordetailsSearch = ({
 
                   />
                 )}
-             
+
                 <section className="flex">
                   <button
                     onClick={() => {
@@ -793,7 +793,7 @@ const FloordetailsSearch = ({
                                       setSelUnitDetails1(data)
 
                                       return
-               
+
                                     }
                                   }}
                                 >
@@ -915,6 +915,7 @@ const FloordetailsSearch = ({
                                             'booked',
                                             'allotment',
                                             'agreement_pipeline',
+                                            'ATS',
                                             'agreement',
                                             'registered',
                                             'possession',
@@ -929,7 +930,7 @@ const FloordetailsSearch = ({
                                                 >
                                                   Details
                                                 </h3>
-                        
+
                                               </div>
                                               <div className="flex flex-row justify-between items-right">
                                                 <h3
@@ -951,7 +952,7 @@ const FloordetailsSearch = ({
                                                 >
                                                   Cancel
                                                 </h3>
-                            
+
                                               </div>
                                             </div>
                                           )}
@@ -1062,7 +1063,7 @@ const FloordetailsSearch = ({
                                       setSelUnitDetails1(data)
 
                                       return
-             
+
                                     }
                                   }}
                                 >
@@ -1184,6 +1185,7 @@ const FloordetailsSearch = ({
                                             'booked',
                                             'allotment',
                                             'agreement_pipeline',
+                                            'ATS',
                                             'agreement',
                                             'registered',
                                             'possession',
@@ -1227,7 +1229,7 @@ const FloordetailsSearch = ({
                                                 >
                                                   Cancel
                                                 </h3>
-                         
+
                                               </div>
                                             </div>
                                           )}
@@ -1307,7 +1309,7 @@ const FloordetailsSearch = ({
               <ul className="">
                 <li className="py-2">
                   <section>
-           
+
                     <div className=" px-4 mt-">
                       {filteredUnits
                         .map((data, index) => {
@@ -1334,7 +1336,7 @@ const FloordetailsSearch = ({
                                   setSelUnitDetails1(data)
 
                                   return
-       
+
                                 }
                               }}
                             >
@@ -1456,6 +1458,7 @@ const FloordetailsSearch = ({
                                             'booked',
                                             'allotment',
                                             'agreement_pipeline',
+                                            'ATS',
                                             'agreement',
                                             'registered',
                                             'possession',
@@ -1499,7 +1502,7 @@ const FloordetailsSearch = ({
                                                 >
                                                   Cancel
                                                 </h3>
-                            
+
                                               </div>
                                             </div>
                                           )}
@@ -1578,7 +1581,7 @@ const FloordetailsSearch = ({
               <ul className="">
                 <li className="py-2">
                   <section>
-           
+
                     <div className=" px-4 mt-">
                       {filteredUnits
                         .map((data, index) => {
@@ -1635,7 +1638,7 @@ const FloordetailsSearch = ({
                   <div
                     className=" cursor-pointer  z-10 flex flex-col  max-w-md p-2 my-0 mx-3 rounded-sm inline-block min-h-[50px]  min-w-[100px] border border-dotted border-black"
                     onClick={() => {
-       
+
                       const { uid, floorA } = selBlock
                       updateBlock_AddFloor(
                         orgId,
@@ -1651,7 +1654,7 @@ const FloordetailsSearch = ({
                       <h3 className="m-0 mt-1 text-sm font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
                         Add Floor
                       </h3>
-         
+
                     </div>
                     <div className="flex flex-row justify-between px-2">
                       <span className="flex flex-row items-center justify-between mr-2">
@@ -1680,7 +1683,7 @@ const FloordetailsSearch = ({
                     <h3 className="m-0 mt-1 text-sm font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
                       Add Unit
                     </h3>
-    
+
                   </div>
                   <div className="flex flex-row justify-between px-2">
                     <span className="flex flex-row items-center justify-between mr-2">
@@ -1689,7 +1692,7 @@ const FloordetailsSearch = ({
                   </div>
                 </div>
                 {/* 2 */}
-             
+
                 <div
                   className="cursor-pointer  z-10 flex flex-col  max-w-md p-2 my-0  mx-4 rounded-sm inline-block  min-h-[50px]  min-w-[100px] border border-dotted border-black rounded-md"
                   onClick={() => {
@@ -1717,7 +1720,7 @@ const FloordetailsSearch = ({
                     <h3 className="m-0  text-sm  mt-1 font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
                       Import Units
                     </h3>
-     
+
                   </div>
                   <div className="flex flex-row justify-between px-2">
                     <span className="flex flex-row items-center justify-between mr-2">
