@@ -208,7 +208,7 @@ const CrmUnitFinanceHistory = ({
 
           
               </div>
-            <table className="w-full mb-10 mt-2 drop-shadow-md rounded-2xl overflow-hidden">
+            <table className="w-full mb-10 mt-2  rounded-2xl overflow-hidden">
               <thead className=''>
                 {' '}
                 <tr className=" h-9 ">

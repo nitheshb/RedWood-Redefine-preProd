@@ -141,32 +141,71 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
 
 
-<div className=' overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
-
-<div>
-<img  alt="" src="/bgcrm.svg"></img>
-</div>
+<div className='overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
 
 
 
 
+<div className="relative min-h-screen">
+    {/* Background image */}
+    {/* <div className="">
+      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+    </div> */}
 
 
 
+    <div className="relative z-0">
 
-<section className=" min-h-screen rounded-lg border border-gray-100 ">
+
+
+    <h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+    Unit Analysis
+      </h1>
+      
+
+      <img
+        alt="CRM Background"
+        src="/bgcrm.svg"
+        className="w-full h-auto object-cover"
+      />
+
+      <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
+          <div className="text-center">
+            <h2 className="text-sm font-semibold">Column 1</h2>
+            <p className="text-xs text-gray-600">Some info here</p>
+          </div>
+          <div className="text-center">
+            <h2 className="text-sm font-semibold">Column 2</h2>
+            <p className="text-xs text-gray-600">More info here</p>
+          </div>
+          <div className="text-center">
+            <h2 className="text-sm font-semibold">Column 3</h2>
+            <p className="text-xs text-gray-600">Even more info</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+      <div className="w-full h-full items-center justify-center  flex -mt-20 z-10 relative">
+              
+         
+
+    <section className=" min-h-screen rounded-lg border border-gray-100 ">
         <div className="w-full  ">
             <div className=" ">
               <div className="">
-                <h2 className="text-[#606062] uppercase  tracking-[0.06em] text-[12px]">
+                {/* <h2 className="text-[#606062] uppercase  tracking-[0.06em] text-[12px]">
                 Cancel booking
-                </h2>
+                </h2> */}
                 <div className="h-screen">
       <div className="flex ">
         <div
           id="bg-img"
           className="flex h-full max-w-2xl  flex-col  h-screen">
-          <div className="relative top-6  shadow-lg   rounded-2xl  ">
+          <div className="relative mt-2 rounded-2xl  ">
             <div className="grid gap-8 grid-cols-1">
               <div className="flex flex-col ">
                 <div className="mt-0">
@@ -466,6 +505,23 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
         </div>
       </section>
+
+
+
+            </div>
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
 
 </div>
 

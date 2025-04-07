@@ -15,6 +15,7 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import SiderForm from './SiderForm/SiderForm'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
+import TaskManagementDashboard from './A_CrmModule/ToDoList'
 const AllBankDetailsView = ({ title, pId, data }) => {
   const { user } = useAuth()
   const { orgId } = user
@@ -457,6 +458,14 @@ const AllBankDetailsView = ({ title, pId, data }) => {
           </div>
         )}
       </div>
+
+
+
+{/* 
+      <TaskManagementDashboard/> */}
+
+
+
       <SiderForm
         open={sliderInfo.open}
         setOpen={handleSliderClose}

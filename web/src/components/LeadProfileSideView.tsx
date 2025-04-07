@@ -1420,144 +1420,14 @@ export default function LeadProfileSideView({
 
 
 
-
-
-  // async function sendNotification() {
-  //   const fcmToken = "cqG2llvqQ5W0ooXRtdPMri:APA91bGOPmzykOfFGeEiJ0axtnvOuGGUv_aQIURRSLBu7vmgiMAltl5cX5osmVX0OudHMY1UViavEGtQOXnz-llB7f-EVZEM5kN8bqgAirGshmQRNT-gpbI";
-  //   const serverKey = "AAAAu40SEOU:APA91bGOizFLorP1WdQSJSDotrKCpdCOPsJNa_N350JSpc07MeBdhl7vM8XJqBnX2lU0paRww1jILVxaArXjEyjDBpqbX--oR9Mo7NZwJY7TxaUy6OdWtrPHc0DO0EdEXBp3fCX4boZB";
-
-  //   const message = {
-  //     to: fcmToken,
-  //     notification: {
-  //       title: "Incoming Call",
-  //       body: `Call from ${Name}`,
-  //     },
-  //   };
-
-  //   try {
-  //     const response = await fetch("https://fcm.googleapis.com/fcm/send", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Authorization": `key=${serverKey}`,
-  //       },
-  //       body: JSON.stringify(message),
-  //     });
-
-  //     const result = await response.json();
-  //     console.log("FCM Response:", result);
-  //   } catch (error) {
-  //     console.error("FCM Error:", error);
-  //   }
-  // }
-
-
-
-
-
-// const sendNotification = async () => {
+// async function handleCallButtonClick(uid, leadName, mobileNumber) {
 //   try {
-//     // Get current user's ID (sales executive)
-//     const salesExecutive = user?.uid; // Assuming you have access to the current user
-    
-//     await sendCallNotificationToMobile(orgId, {
-//       leadId: id, // The lead's ID
-//       mobileNumber: Mobile,
-//       leadName: Name,
-//       salesExecutive
-//     });
-    
-//     alert('Call request sent to your mobile app!');
-//   } catch (error) {
-//     console.error('Failed to send notification:', error);
-    
-//     // Fallback to direct call if notification fails
-//     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-//       window.location.href = `tel:${Mobile}`;
-//     } else {
-//       alert(`Please call ${Name} at ${Mobile}`);
-//     }
-//   }
-// };
-
-
-
-
-// const handleCallNotification = async (mobileNumber: string) => {
-//   try {
-//     const response = await fetch('/api/send-call-notification', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ mobile: mobileNumber }),
+//     console.log('Call button clicked with data:', {
+//       uid,
+//       leadName,
+//       mobileNumber
 //     });
 
-//     if (response.ok) {
-//       console.log('Call notification sent successfully!');
-//     } else {
-//       console.error('Failed to send notification');
-//     }
-//   } catch (error) {
-//     console.error('Error sending call notification:', error);
-//   }
-// };
-
-
-
-
-// const handleCallClick = async () => {
-//   try {
-//     setTimeout(async () => {
-//       if (!document.hidden) {
-//         try {
-         
-//           const userRef = doc(db, `users`, user.uid);
-//           const userDoc = await getDoc(userRef);
-          
-//           if (!userDoc.exists() || !userDoc.data().user_fcmtoken) {
-   
-//             handleFallbackCalling();
-//             return;
-//           }
-          
-    
-//           await sendCallNotification(orgId, {
-//             leadId: id,
-//             mobileNumber: Mobile,
-//             leadName: Name,
-//             salesExecutive: user.uid
-//           });
-          
-//           alert('Call request sent to your mobile app!');
-//         } catch (error) {
-//           console.error('Error sending notification:', error);
-//           handleFallbackCalling();
-//         }
-//       }
-//     }, 250);
-//   } catch (error) {
-//     console.error('Error in call handling:', error);
-//     handleFallbackCalling();
-//   }
-// };
-
-
-// const handleFallbackCalling = () => {
-//   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-//     window.location.href = `tel:${Mobile}`;
-//   } else {
-//     alert(`Please call ${Name} at ${Mobile}`);
-//   }
-// };
-
-
-
-
-
-
-// async function handleCallButtonClick(uid, name, number) {
-//   try {
 //     // Step 1: Get user's fcmToken from Firestore
 //     const userRef = doc(db, "users", uid);
 //     const userSnap = await getDoc(userRef);
@@ -1567,7 +1437,10 @@ export default function LeadProfileSideView({
 //       return;
 //     }
 
-//     const fcmToken = userSnap.data().fcmToken;
+//     const userData = userSnap.data();
+//     console.log('Retrieved user data:', userData);
+
+//     const { fcmToken } = userData;
 
 //     if (!fcmToken) {
 //       console.error("FCM Token not found for user!");
@@ -1575,19 +1448,54 @@ export default function LeadProfileSideView({
 //     }
 
 //     // Step 2: Add a new call document
-//     await addDoc(collection(db, "calls"), {
-//       name: name,
-//       number: number,
-//       fcmToken: fcmToken,
-//       timestamp: new Date()
-//     });
+//     const callData = {
+//       leadName,
+//       mobileNumber,
+//       fcmToken,
+//       timestamp: Timestamp.now()
+//     };
 
-//     console.log("Call document added successfully!");
+//     console.log('Creating call document with:', callData);
+    
+//     const docRef = await addDoc(collection(db, "calls"), callData);
+//     console.log("Call document added successfully with ID:", docRef.id);
 
 //   } catch (error) {
 //     console.error("Error in call trigger:", error);
 //   }
 // }
+
+
+
+async function handleCallButtonClick(uid, name, number) {
+  try {
+    const userRef = doc(db, "users", uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      console.error("User not found!");
+      return;
+    }
+
+    const { fcmToken } = userSnap.data();
+
+    if (!fcmToken) {
+      console.error("FCM Token not found for user!");
+      return;
+    }
+
+    await addDoc(collection(db, "calls"), {
+      name,
+      number,
+      fcmToken,
+      // timestamp: Timestamp.now()
+    });
+
+    console.log("Call document added successfully!");
+  } catch (error) {
+    console.error("Error in call trigger:", error);
+  }
+}
 
 
   return (
@@ -1617,6 +1525,19 @@ export default function LeadProfileSideView({
                         <div className=" text-sm  ml-[4px]  px-[3px] pt-[px] rounded  text-[#FF8C02] ">
                           {currentStatusDispFun(leadDetailsObj?.Status)}{' '}
                         </div>
+
+
+                        
+<button
+  onClick={() => {
+    console.log('Call button clicked for lead:', Name, Mobile);
+    handleCallButtonClick(assignedTo, Name, Mobile);
+  }}
+  className=" rounded-md text-[10px] bg-[#0891B2] px-2  text-white"
+  title="Call"
+>
+  Call
+</button>
                       </div>
                       <div className="flex flex-row">
                         <div className="font-md text-sm text-gray-500 mb-[2] tracking-wide ">
@@ -1628,16 +1549,6 @@ export default function LeadProfileSideView({
                             )}
                           </span>
                         </div>
-
-                        {/* <button
-  // onClick={handleCallButtonClick}
-  onClick={() => handleCallButtonClick(uid, leadname, leadnumber)}
-  className="flex items-center justify-center p-2 bg-green-500 text-white rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-  title="Call"
->
-  <PhoneIcon className="w-5 h-5" />
-</button> */}
-
 
                         <div className="font-md text-sm text-gray-500 mb-[2] ml-[6px] tracking-wide">
                           <MailIcon className="w-3 h-3 inline text-[#058527] " />{' '}

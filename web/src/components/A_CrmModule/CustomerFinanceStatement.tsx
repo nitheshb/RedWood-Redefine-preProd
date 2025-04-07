@@ -201,9 +201,12 @@ const CrmUnitPsHome = ({
 </div> 
 
 
+    <div className='w-full h-full flex justify-center -mt-20 z-10 relative'>
+    
 
+    <div className="w-full max-w-5xl px-4">
 
-      {financeMode === 'schedule' && (
+    {financeMode === 'schedule' && (
         <>
           <PDFExport paperSize="A4" margin="1cm" ref={pdfPaymentScheduleComp}>
 
@@ -273,10 +276,10 @@ const CrmUnitPsHome = ({
         </>
       )}
 
+
       </div>
-
-
- 
+    </div>
+      </div>
     </div>
 
     </>

@@ -173,13 +173,17 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
 
 
   return (
-    <div className='flex flex-row  rounded-lg border border-gray-100 h-[100%]'>
+
+
+
+
+<div className='flex flex-row  h-[100%]'>
 <section className=" pr-6 w-full max-w-4xl mx-auto pb-[40px]  h-[100vh] overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
 
 
     {/* <section className="bg-white w-full pb-[40px]  h-[100vh] overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300"> */}
 
-      <div className=" text-sm text-gray-700">
+      <div className="  text-sm text-gray-700">
 
 
 
@@ -1005,9 +1009,17 @@ setRejectionReason(customerDetails?.loan_rejection_reason || '')
           </section>
         </div>
       )}
+
+
+
     </section>
     <CrmActivityLog selUnitPayload={customerDetails} title="Loan Activity" type={['loan_approval']}/>
 
 </div>
+
+
+
+
+
   )
 }

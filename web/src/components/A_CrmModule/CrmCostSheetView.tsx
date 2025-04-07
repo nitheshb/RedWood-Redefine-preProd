@@ -136,22 +136,6 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
 
   return (
     <>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <div className="  ">
         <section className=" mb-6 flex flex-row  ">
           <div className="w-full   ">
@@ -198,15 +182,11 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
 
     />
 </div>
-
-
-
-
               </div>
               <div className="grid  grid-row-2  gap-x-2   ">
                 <div className=" p-[4px]">
 
-                  <table className="w-[100%] drop-shadow-md rounded-2xl overflow-hidden">
+                  <table className="w-[100%]  rounded-2xl overflow-hidden">
                     <thead className=' '>
                       <tr className=" h-9 border-b-[0.2px] bg-[#EDE9FE]    w-[100%]">
                         
@@ -271,7 +251,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                     </tbody>
                   </table>
 
-                  <table className="w-full mt-5 drop-shadow-md rounded-2xl overflow-hidden">
+                  <table className="w-full mt-5  rounded-2xl overflow-hidden">
                   <thead>
                         <tr className=" h-9 border-b-[0.2px]  w-[100%]">
                           <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F] bg-[#EDE9FE]     tracking-wide  pl-6">
@@ -343,7 +323,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                     </tbody>
                   </table>
                   {selCustomerPayload?.constructCS?.length > 0 && (
-                    <table className="w-[100%]  mt-5 drop-shadow-md rounded-2xl overflow-hidden">
+                    <table className="w-[100%]  mt-5  rounded-2xl overflow-hidden">
                       <thead>
                         <tr className=" h-9  w-[100%]">
                           <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F]     bg-[#EDE9FE]  tracking-wide  pl-6">
@@ -407,7 +387,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                   )}
 
                   {selCustomerPayload?.constAdditionalChargesCS?.length > 0 && (
-                    <table className="w-[100%]  mt-5 drop-shadow-md rounded-2xl overflow-hidden">
+                    <table className="w-[100%]  mt-5  rounded-2xl overflow-hidden">
                       <thead>
                         <tr className=" h-9  w-[100%]">
                           <th className="min-w-[35%] text-[12px] text-left text-[#04050b] bg-[#EDE9FE]  pl-6  tracking-wide  px-2">
@@ -477,7 +457,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                   )}
 
 {selCustomerPayload?.possessionAdditionalCostCS?.length > 0 && (
-                    <table className="w-[100%]  mt-5 drop-shadow-md rounded-2xl overflow-hidden">
+                    <table className="w-[100%]  mt-5  rounded-2xl overflow-hidden">
                       <thead>
                         <tr className=" h-9  w-[100%]">
                           <th className="min-w-[35%] text-[12px] text-left text-[#04050b] bg-[#EDE9FE]    tracking-wide  pl-6">
@@ -546,18 +526,9 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                       </tbody>
                     </table>
                   )}
-
-
                                 {selCustomerPayload?.addOnCS?.length > 0 && (
-
                                   <>
-
-
-
-
-
-
-<table className="w-full  mt-5 drop-shadow-md rounded-2xl overflow-hidden">
+<table className="w-full  mt-5  rounded-2xl overflow-hidden">
                   <thead>
                         <tr className=" h-9 border-b-[0.2px]  w-[100%]">
                           <th className="min-w-[35%] text-[12px] text-left text-[#0E0A1F] bg-[#EDE9FE]   rounded-tl-[10px]  tracking-wide  px-2">
@@ -576,8 +547,6 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                           <th className="w-[15%] text-[12px] text-right text-[#0E0A1F] bg-[#EDE9FE] rounded-tr-[10px]  tracking-wide pr-2 ">
                           Total
                           </th>
-
-
                         </tr>
                       </thead>
                     <tbody>
@@ -601,8 +570,6 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                          </td>
 
                           <td className="w-[15%] text-[12px] text-right text-[#6A6A6A] bg-[#FCFCFD] pr-2 ">
-
-
                           ₹{' '}
 {Math.round(
   Number(
@@ -612,12 +579,7 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
     )
   ) || 0
 ).toLocaleString('en-IN')}
-
-         
                           </td>
-
-
-
                         </tr>
                       ))}
                       <tr className="border-b-[0.05px] border-gray-300 h-[32px]   bg-[#FCFCFD]">
@@ -638,29 +600,8 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                     </tbody>
                   </table>
                                   </>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   )}
-
-
-
-
-<section className="flex bg-[#FCFCFD] flex-row-reverse justify-between w-full drop-shadow-md rounded-2xl overflow-hidden mt-5 rounded-b-2xl px-3">
+<section className="flex bg-[#FCFCFD] flex-row-reverse justify-between w-full  rounded-2xl overflow-hidden mt-5 rounded-b-2xl px-3">
                 <div className="flex  flex-row mt-2 text-bodyLato text-left text-gray-800  text-[14px] mb-2 ">
                   Total Unit Cost:
                   <section className="flex flex-row mt-1">
@@ -671,25 +612,11 @@ const CrmUnitCostSheetView = ({ selCustomerPayload,
                   </section>
                 </div>
               </section>
-
-
-
-
-
-
                 </div>
               </div>
-
-
-
-
-
             </div>
           </div>
         </section>
-
-
-
         {/* <CrmUnitFinanceHistory
         selCustomerPayload={selCustomerPayload}
         assets={assets}
