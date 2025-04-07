@@ -390,7 +390,7 @@ const ShowCustomerDetails = ({
       'Invalid Aadhar card number',
       isValidAadhar
     ),
- 
+
     email1: Yup.string().email('Email is invalid'),
     email2: Yup.string().email('Email is invalid'),
 
@@ -474,7 +474,7 @@ const ShowCustomerDetails = ({
     }
 
     const xData = {}
-    xData[`${uid}${'_source_of_pay'}`] = { self: 20, bank: 80 } 
+    xData[`${uid}${'_source_of_pay'}`] = { self: 20, bank: 80 }
     xData[`${uid}${'_otherInfo'}`] = { leadSource, sourceOfPay, purpose }
 
     const updateDoc = {
@@ -563,14 +563,14 @@ const ShowCustomerDetails = ({
 
 <div className="overflow-y-scroll min-h-screen mx-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
   <div className="relative min-h-screen">
-  
+
     {/* <div className="">
       <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
     </div> */}
 
 
 
-   
+
         <div className="relative z-0">
 
 
@@ -578,8 +578,8 @@ const ShowCustomerDetails = ({
 <h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 APPLICANT DETAILS
   </h1>
-  
-  
+
+
   <img
     alt="CRM Background"
     src="/bgcrm.svg"
@@ -587,19 +587,19 @@ APPLICANT DETAILS
   />
 
 
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+        <h2 className="text-sm font-semibold">2</h2>
+        <p className="text-xs text-gray-600">Applicants</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
-        <p className="text-xs text-gray-600">More info here</p>
+        <h2 className="text-sm font-semibold">NA</h2>
+        <p className="text-xs text-gray-600">KYC Pendings</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+        <h2 className="text-sm font-semibold">0</h2>
+        <p className="text-xs text-gray-600">Current Balance</p>
       </div>
     </div>
   </div>
@@ -607,39 +607,39 @@ APPLICANT DETAILS
 
 
 
-    <div className="w-full  flex justify-center -mt-20 z-10 absolute">
+    <div className="w-full  flex justify-center mt-[-110px] z-10 absolute">
 
     <div className='w-full max-w-4xl px-4 mx-auto'>
   {/* <h1 className="text-[#606062] tracking-[0.06em] font-heading font-medium text-[12px] mb-4">APPLICANT DETAILS</h1> */}
- 
-  <div className="mb-10 w-full relative flex justify-center">
-    <div className="bg-white rounded-2xl  mb-10 overflow-hidden w-full relative">
-     
+
+  <div className=" w-full relative flex justify-center">
+    <div className="bg-white rounded-2xl  mb-6 overflow-hidden w-full relative">
+
 
 <div
     className="w-[80px] h-[80px] bg-contain bg-no-repeat absolute z-30"
     style={{ backgroundImage: "url('/pri01.svg')", right: "-5px", top: "-5px" }}
   />
 
-  
+
       <div className="p-6 pb-5 mb-0 relative">
-     
+
         <div className="absolute inset-0" style={gridBgStyle}></div>
 
         <div className="flex items-center relative z-10">
-          <div className="w-24 h-24 rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
+          <div className="w-[70px] h-[70px] rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
             {leadDetailsObj2?.customerDetailsObj?.customerName1 || leadDetailsObj2?.Name ? (
               <span className="text-[30px] font-outfit font-medium text-gray-700">
-                {(leadDetailsObj2?.customerDetailsObj?.customerName1 || leadDetailsObj2?.Name || '?').charAt(0)}
+                {(leadDetailsObj2?.customerDetailsObj?.customerName1 || leadDetailsObj2?.Name || 'No Data').charAt(0)}
               </span>
             ) : (
               <img alt="Profile" className="w-20 h-20 rounded-full object-cover" />
             )}
           </div>
-          
+
           <div>
-            <div className="flex items-center text-2xl font-medium">
-              {leadDetailsObj2?.customerDetailsObj?.customerName1 || leadDetailsObj2?.Name || '?'}
+            <div className="flex items-center text-lg font-medium">
+              {leadDetailsObj2?.customerDetailsObj?.customerName1 || leadDetailsObj2?.Name || 'No Data'}
               <span className="ml-2 text-gray-500">
                 <button onClick={() => setShowApplicantEdit(true)} className="p-2 rounded-full">
                   <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -651,17 +651,17 @@ APPLICANT DETAILS
                 </button>
               </span>
             </div>
-            
-            <div className="flex mt-2">
+
+            <div className="flex">
               <div className="flex font-outfit items-center mr-6">
                 <span className="mr-1">
                   <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2.51833 8.46161C1.88632 7.35958 1.58115 6.45969 1.39714 5.54752C1.125 4.19843 1.74779 2.88058 2.77951 2.03969C3.21555 1.6843 3.71541 1.80572 3.97325 2.26831L4.55537 3.31265C5.01678 4.14042 5.24748 4.5543 5.20172 4.9931C5.15596 5.4319 4.84483 5.78928 4.22257 6.50404L2.51833 8.46161ZM2.51833 8.46161C3.79759 10.6922 5.80514 12.7009 8.03835 13.9816M8.03835 13.9816C9.14038 14.6136 10.0403 14.9188 10.9524 15.1028C12.3015 15.375 13.6194 14.7522 14.4603 13.7205C14.8157 13.2844 14.6942 12.7846 14.2317 12.5267L13.1873 11.9446C12.3595 11.4832 11.9457 11.2525 11.5069 11.2982C11.0681 11.344 10.7107 11.6551 9.99591 12.2774L8.03835 13.9816Z" stroke="#0E0A1F" strokeLinejoin="round"/>
                   </svg>
                 </span>
-                {leadDetailsObj2?.customerDetailsObj?.phoneNo1 || leadDetailsObj2?.Mobile || '?'}
+                {leadDetailsObj2?.customerDetailsObj?.phoneNo1 || leadDetailsObj2?.Mobile || 'No Data'}
               </div>
-              
+
               <div className="flex font-outfit items-center">
                 <span className="mr-1">
                   <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -669,19 +669,19 @@ APPLICANT DETAILS
                     <path d="M1.34376 9.48379C1.38735 11.5275 1.40914 12.5493 2.16322 13.3063C2.91731 14.0632 3.96681 14.0896 6.0658 14.1423C7.35946 14.1748 8.64038 14.1748 9.93404 14.1423C12.033 14.0896 13.0825 14.0632 13.8366 13.3063C14.5907 12.5493 14.6125 11.5275 14.6561 9.48379C14.6701 8.82667 14.6701 8.17342 14.6561 7.5163C14.6125 5.47261 14.5907 4.45077 13.8366 3.69382C13.0825 2.93686 12.033 2.91049 9.93404 2.85775C8.64038 2.82525 7.35946 2.82525 6.0658 2.85775C3.9668 2.91048 2.91731 2.93685 2.16322 3.69381C1.40913 4.45076 1.38734 5.4726 1.34376 7.51629C1.32975 8.17342 1.32975 8.82666 1.34376 9.48379Z" stroke="#141B34" strokeLinejoin="round"/>
                   </svg>
                 </span>
-                {leadDetailsObj2?.customerDetailsObj?.email1 || '?'}
+                {leadDetailsObj2?.customerDetailsObj?.email1 || 'No Data'}
               </div>
             </div>
           </div>
         </div>
       </div>
-      
-  
+
+
       <div className="p-6 grid grid-cols-4 gap-4">
         <div className="pr-2 col-span-1">
           <div className="text-gray-500 text-sm mb-1">S/O</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
-            {leadDetailsObj2?.customerDetailsObj?.co_Name1 || '?'}
+            {leadDetailsObj2?.customerDetailsObj?.co_Name1 || 'No Data'}
           </div>
 
           <div className="text-gray-500 text-sm mb-1">Martial Status</div>
@@ -698,29 +698,29 @@ APPLICANT DETAILS
         <div className="px-4 border-l border-r border-gray-200 col-span-1">
           <div className="text-gray-500 text-sm mb-1">PAN Card</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
-            {leadDetailsObj2?.customerDetailsObj?.panNo1 || '?'}
+            {leadDetailsObj2?.customerDetailsObj?.panNo1 || 'No Data'}
           </div>
 
           <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
-            {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || '?'}
+            {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || 'No Data'}
           </div>
 
           <div className="text-gray-500 text-sm mb-1">Secondary No</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
-            {leadDetailsObj2?.customerDetailsObj?.phoneNo3 || '?'}
+            {leadDetailsObj2?.customerDetailsObj?.phoneNo3 || 'No Data'}
           </div>
         </div>
 
         <div className="pl-4 col-span-2">
           <div className="text-gray-500 text-sm mb-1">Current Address</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[16px] mb-4 font-outfit break-words whitespace-pre-wrap">
-            {leadDetailsObj2?.customerDetailsObj?.address1 || '?'}
+            {leadDetailsObj2?.customerDetailsObj?.address1 || 'No Data'}
           </div>
 
           <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[16px] font-outfit break-words whitespace-pre-wrap">
-            {leadDetailsObj2?.customerDetailsObj?.address2p || '?'}
+            {leadDetailsObj2?.customerDetailsObj?.address2p || 'No Data'}
           </div>
         </div>
       </div>
@@ -730,29 +730,29 @@ APPLICANT DETAILS
 
   <div className="mb-10 w-full flex justify-center relative">
     <div className="bg-white rounded-2xl  mb-10 overflow-hidden w-full relative">
-      
+
       <div
-        className="w-[80px] h-[80px] bg-contain bg-no-repeat absolute  z-30"
+        className="w-[70px] h-[70px] bg-contain bg-no-repeat absolute  z-30"
         style={{ backgroundImage: "url('/secondary2.svg')",  right: "-5px", top: "-5px"  }}
       />
-   
+
       <div className="p-6 pb-5 mb-0 relative">
         <div className="absolute inset-0" style={gridBgStyle}></div>
 
         <div className="flex items-center relative z-10">
-          <div className="w-24 h-24 rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
+          <div className="w-[70px] h-[70px] rounded-full font-outfit overflow-hidden mr-6 flex items-center justify-center bg-gray-200">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 || leadDetailsObj2?.Name ? (
               <span className="text-[30px] font-medium text-gray-700">
-                {(leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 || leadDetailsObj2?.Name || '?').charAt(0)}
+                {(leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 || leadDetailsObj2?.Name || 'No Data').charAt(0)}
               </span>
             ) : (
               <img alt="Profile" className="w-20 h-20 rounded-full object-cover" />
             )}
-          </div>    
-                
+          </div>
+
           <div>
-            <div className="flex items-center font-outfit text-2xl font-medium">
-              {leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 || '?'}
+            <div className="flex items-center font-outfit text-lg font-medium">
+              {leadDetailsObj2?.secondaryCustomerDetailsObj?.customerName1 || 'No Data'}
               <span className="ml-2 text-gray-500">
                 <button onClick={() => setShowApplicantEdit(true)} className="p-2 rounded-full">
                   <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -764,17 +764,17 @@ APPLICANT DETAILS
                 </button>
               </span>
             </div>
-            
-            <div className="flex font-outfit mt-2">
+
+            <div className="flex font-outfit">
               <div className="flex items-center mr-6">
                 <span className="mr-1">
                   <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2.51833 8.46161C1.88632 7.35958 1.58115 6.45969 1.39714 5.54752C1.125 4.19843 1.74779 2.88058 2.77951 2.03969C3.21555 1.6843 3.71541 1.80572 3.97325 2.26831L4.55537 3.31265C5.01678 4.14042 5.24748 4.5543 5.20172 4.9931C5.15596 5.4319 4.84483 5.78928 4.22257 6.50404L2.51833 8.46161ZM2.51833 8.46161C3.79759 10.6922 5.80514 12.7009 8.03835 13.9816M8.03835 13.9816C9.14038 14.6136 10.0403 14.9188 10.9524 15.1028C12.3015 15.375 13.6194 14.7522 14.4603 13.7205C14.8157 13.2844 14.6942 12.7846 14.2317 12.5267L13.1873 11.9446C12.3595 11.4832 11.9457 11.2525 11.5069 11.2982C11.0681 11.344 10.7107 11.6551 9.99591 12.2774L8.03835 13.9816Z" stroke="#0E0A1F" strokeLinejoin="round"/>
                   </svg>
                 </span>
-                {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo1 || '?'}
+                {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo1 || 'No Data'}
               </div>
-              
+
               <div className="flex font-outfit items-center">
                 <span className="mr-1">
                   <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -782,19 +782,19 @@ APPLICANT DETAILS
                     <path d="M1.34376 9.48379C1.38735 11.5275 1.40914 12.5493 2.16322 13.3063C2.91731 14.0632 3.96681 14.0896 6.0658 14.1423C7.35946 14.1748 8.64038 14.1748 9.93404 14.1423C12.033 14.0896 13.0825 14.0632 13.8366 13.3063C14.5907 12.5493 14.6125 11.5275 14.6561 9.48379C14.6701 8.82667 14.6701 8.17342 14.6561 7.5163C14.6125 5.47261 14.5907 4.45077 13.8366 3.69382C13.0825 2.93686 12.033 2.91049 9.93404 2.85775C8.64038 2.82525 7.35946 2.82525 6.0658 2.85775C3.9668 2.91048 2.91731 2.93685 2.16322 3.69381C1.40913 4.45076 1.38734 5.4726 1.34376 7.51629C1.32975 8.17342 1.32975 8.82666 1.34376 9.48379Z" stroke="#141B34" strokeLinejoin="round"/>
                   </svg>
                 </span>
-                {leadDetailsObj2?.secondaryCustomerDetailsObj?.email1 || '?'}
+                {leadDetailsObj2?.secondaryCustomerDetailsObj?.email1 || 'No Data'}
               </div>
             </div>
           </div>
         </div>
       </div>
-      
+
 
       <div className="p-6 grid grid-cols-4 gap-4">
         <div className="pr-2 col-span-1">
           <div className="text-gray-500 text-sm mb-1">S/O</div>
           <div className="font-medium font-outfit tracking-[0.06em] text-[#0E0A1F] text-[14px] mb-4">
-            {leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || '?'}
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || 'No Data'}
           </div>
 
           <div className="text-gray-500 text-sm mb-1">Martial Status</div>
@@ -811,29 +811,29 @@ APPLICANT DETAILS
         <div className="px-4 border-l border-r border-gray-200 col-span-1">
           <div className="text-gray-500 text-sm mb-1">PAN Card</div>
           <div className="font-medium font-outfit text-[#0E0A1F] text-[14px] tracking-[0.06em] mb-4">
-            {leadDetailsObj2?.secondaryCustomerDetailsObj?.panNo1 || '?'}
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.panNo1 || 'No Data'}
           </div>
 
           <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
           <div className="font-medium text-[14px] text-[#0E0A1F] tracking-[0.06em] font-outfit mb-4">
-            {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || '?'}
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || 'No Data'}
           </div>
 
           <div className="text-gray-500 text-sm mb-1">Secondary No</div>
           <div className="font-medium font-outfit text-[#0E0A1F] tracking-[0.06em] text-[14px]">
-            {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo3 || '?'}
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo3 || 'No Data'}
           </div>
         </div>
 
         <div className="pl-4 col-span-2">
           <div className="text-gray-500 text-sm mb-1">Current Address</div>
           <div className="font-medium text-[#0E0A1F] font-outfit text-[14px] mb-4 tracking-[0.06em] break-words whitespace-pre-wrap">
-            {leadDetailsObj2?.secondaryCustomerDetailsObj?.address1 || '?'}
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.address1 || 'No Data'}
           </div>
 
           <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
           <div className="font-medium text-[#0E0A1F] font-outfit text-[14px] tracking-[0.06em] break-words whitespace-pre-wrap">
-            {leadDetailsObj2?.secondaryCustomerDetailsObj?.address2p || '?'}
+            {leadDetailsObj2?.secondaryCustomerDetailsObj?.address2p || 'No Data'}
           </div>
         </div>
       </div>
@@ -843,7 +843,7 @@ APPLICANT DETAILS
 
 
 
-  
+
 </div>
 
 
