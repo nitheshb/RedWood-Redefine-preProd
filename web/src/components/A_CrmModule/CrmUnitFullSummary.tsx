@@ -1245,7 +1245,7 @@ export default function UnitFullSummary({
 
 
     <h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
-        Unit Documents
+        Unit Timeline
       </h1>
       
 
@@ -1256,27 +1256,27 @@ export default function UnitFullSummary({
       />
 
 
-      <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+      <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
           <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 1</h2>
-            <p className="text-xs text-gray-600">Some info here</p>
+            <h2 className="text-sm font-semibold">No Data</h2>
+            <p className="text-xs text-gray-600">Last Activity</p>
           </div>
           <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 2</h2>
-            <p className="text-xs text-gray-600">More info here</p>
+            <h2 className="text-sm font-semibold">No Data</h2>
+            <p className="text-xs text-gray-600">Upcoming Milestone</p>
           </div>
           <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 3</h2>
-            <p className="text-xs text-gray-600">Even more info</p>
+            <h2 className="text-sm font-semibold">No Data</h2>
+            <p className="text-xs text-gray-600">Current Unit Status</p>
           </div>
         </div>
       </div>
     </div>
 
     
-    <div className="w-full h-full flex justify-center -mt-20 z-10 relative">
-      <div className="w-full max-w-5xl px-4"> 
+    <div className="w-full h-full flex justify-center mt-[-110px] z-10 relative">
+      <div className="w-full max-w-5xl"> 
         {/* <h1 className="text-[#606062] tracking-[0.06em] font-medium text-[12px] uppercase  pl-4">ACTIVITY LOG</h1> */}
      
         
@@ -1425,19 +1425,19 @@ export default function UnitFullSummary({
   />
 
 
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Booked On</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
-        <p className="text-xs text-gray-600">More info here</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Next Target  Date</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Premium Type</p>
       </div>
     </div>
   </div>
@@ -1449,7 +1449,7 @@ export default function UnitFullSummary({
 
 
           
-        <div className='absolute w-full flex justify-center -mt-20 z-10'>
+        <div className='absolute w-full flex justify-center mt-[-110px] z-10'>
 
 
        <div className='w-full max-w-4xl px-4 mx-auto'>
@@ -2230,25 +2230,25 @@ Loan details
   />
 
   
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Funding Type</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
-        <p className="text-xs text-gray-600">More info here</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Self Contribution</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Bank Contribution</p>
       </div>
     </div>
   </div>
 </div>
 
-        <div className="w-full max-w-4xl px-4 mx-auto  h-full items-center justify-center  flex -mt-20 z-10 relative">
+        <div className="w-full max-w-4xl px-4 mx-auto  h-full items-center justify-center  flex mt-[-110px] z-10 relative">
           <LoanApplyFlowHome customerDetails={customerDetails} />
         </div>
       </div>
@@ -2303,19 +2303,19 @@ Loan details
   />
 
 
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Total Documents</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
-        <p className="text-xs text-gray-600">More info here</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Uploaded By</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Pending Documents</p>
       </div>
     </div>
   </div>
@@ -2327,7 +2327,7 @@ Loan details
 
 
 
-    <div className='w-full h-full flex justify-center -mt-20 z-10 relative '>
+    <div className='w-full h-full flex justify-center mt-[-110px] z-10 relative '>
 
 
 <div className="w-full max-w-4xl px-4 flex flex-col">

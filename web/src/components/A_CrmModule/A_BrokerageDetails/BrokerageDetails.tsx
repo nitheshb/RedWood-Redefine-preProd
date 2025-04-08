@@ -112,19 +112,19 @@ Brokerage Details
   {/* Heading at very top of image */}
 
   {/* Centered 3-column grid inside image */}
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Eligible /Not</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
-        <p className="text-xs text-gray-600">More info here</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Payable amount</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Payable before</p>
       </div>
     </div>
   </div>
@@ -132,13 +132,13 @@ Brokerage Details
 
 
 
-    <div className="w-full h-full flex justify-center -mt-20 z-10 relative">
+    <div className="w-full h-full flex justify-center mt-[-110px] z-10 relative">
       
 
-    <div className="min-h-screen  mx-2  py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen  mx-2 ">
       <div className=" max-w-xl	mx-auto">
         <div className="bg-white rounded-2xl overflow-hidden">
-          <div className="p-6 border-b border-gray-200">
+          <div className="p-4 border-b border-gray-200">
             <h1 className="text-[20px] font-medium text-[#000000]    mb-[2px] ">
               {existingBrokerage ? 'Edit Brokerage Details' : 'Add Brokerage Details'}
             </h1>

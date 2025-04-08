@@ -159,7 +159,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
 
     <h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
-    Unit Analysis
+    Unit Cancellation
       </h1>
       
 
@@ -169,19 +169,19 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
         className="w-full h-auto object-cover"
       />
 
-      <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+      <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
           <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 1</h2>
-            <p className="text-xs text-gray-600">Some info here</p>
+            <h2 className="text-sm font-semibold">No Data</h2>
+            <p className="text-xs text-gray-600">Cancelled On</p>
           </div>
           <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 2</h2>
-            <p className="text-xs text-gray-600">More info here</p>
+            <h2 className="text-sm font-semibold">No Data</h2>
+            <p className="text-xs text-gray-600">Cancellation Reason</p>
           </div>
           <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 3</h2>
-            <p className="text-xs text-gray-600">Even more info</p>
+            <h2 className="text-sm font-semibold">No Data</h2>
+            <p className="text-xs text-gray-600">Cancelled By</p>
           </div>
         </div>
       </div>
@@ -189,11 +189,11 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
 
 
-      <div className="w-full h-full items-center justify-center  flex -mt-20 z-10 relative">
+      <div className="w-full h-full items-center justify-center  flex mt-[-110px] z-10 relative">
               
          
 
-    <section className=" min-h-screen rounded-lg border border-gray-100 ">
+    <section className=" rounded-lg border border-gray-100 ">
         <div className="w-full  ">
             <div className=" ">
               <div className="">
@@ -226,12 +226,12 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                         <div className="form">
                           <section className=" ">
                             <div className="w-full mx-auto ">
-                              <div className="relative flex flex-col min-w-0 break-words w-full  rounded-lg bg-white ">
-                                <div className=" flex flex-row px-2 py-2  overflow-y-scroll overflow-auto no-scrollbar">
-                                  <section className=" p-4 rounded-md w-[540px]">
+                              <div className="relative flex flex-col min-w-0 break-words w-full rounded-2xl bg-white  ">
+                                <div className=" flex flex-row   overflow-y-scroll overflow-auto no-scrollbar">
+                                  <section className="  rounded-md w-[540px]">
                                     <article className="">
-                                      <div className="flex flex-row justify-between">
-                                        <section className="flex flex-row">
+                                      <div className="flex flex-row   border-b border-gray-200 justify-between">
+                                        <section className="flex p-4 flex-row">
                                           <div className="inline">
                                             {/* <div className="mt-[7px]">
                                               <label className="text-[20px] font-medium text-[#000000]    mb-[2px]  ">
@@ -240,7 +240,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                                               </label>
                                             </div> */}
                                             <div>
-                                            <h2 className='text-[#000000] font-outfit font-medium  text-[16px]'>Refund amount will be added to customer wallet for withdrawal.</h2>
+                                            <h2 className='text-[#000000] font-outfit font-medium  text-[16px]'>Add Cancellation Details                                            </h2>
                                           </div>
                                           </div>
                                         </section>
@@ -249,7 +249,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                                       </div>
                                     </article>
                                     <section>
-                                        <div className="flex flex-wrap mt-10">
+                                        <div className="flex p-4 flex-wrap mt-10">
                                           <div className="w-full lg:w-4/12 pr-3 mt-[10px]">
                                           <div className="relative w-full mb-5">
                                               <TextField2
@@ -277,11 +277,12 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
        Cancellation Date
 
       </label>
-                                              <span className="inline">
+                                              <span className="inline z-50">
                                                 <CustomDatePicker
                                                   className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-[#cccccc]  border-solid mt-[-4px]   min-w-[125px]  inline  text-[#DBD3FD] font-semibold   lg:w-4/12 w-full flexs border  "
                                                   label="Dated"
                                                   name="dated"
+                                                  calendarClassName="z-[9999]" 
                                                   // selected={startDate}
                                                   selected={formik.values.dated}
                                                   onChange={(date) => {
@@ -329,7 +330,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                                       </section>
 
 
-                                    <div className="text-center space-x-4 mt-6">
+                                    <div className="text-center  p-4 ">
                                       <button
                                         className="bg-[#EDE9FE] translate-y-1 text-[#0E0A1F]  text-[12px]  py-2.5 px-6  font-semibold  rounded-md inline-flex items-center shadow-sm font-medium tracking-wider text-black hover:text-black rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400"
                                         type="submit"

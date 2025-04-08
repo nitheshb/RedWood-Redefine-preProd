@@ -330,7 +330,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
 
 
 <h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
-    Unit Documents
+unit analayes
   </h1>
   
 
@@ -341,19 +341,19 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
   />
 
 
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Last Modified</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
+        <h2 className="text-sm font-semibold">No Data</h2>
         <p className="text-xs text-gray-600">More info here</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+        <h2 className="text-sm font-semibold">No Data</h2>
+        <p className="text-xs text-gray-600">Audit Done By</p>
       </div>
     </div>
   </div>
@@ -361,7 +361,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
 
 
 
-    <div className="w-full h-full flex justify-center -mt-20 z-10 relative">
+    <div className="w-full h-full flex justify-center mt-[-110px] z-10 relative">
   <div className=" max-w-4xl mx-auto px-4 w-full">
 
   {/* <h1 className="text-[#606062] tracking-[0.06em]  font-medium text-[12px] uppercase  pl-4">Unit Analysis  </h1> */}
