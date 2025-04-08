@@ -590,16 +590,16 @@ APPLICANT DETAILS
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">2</h2>
-        <p className="text-xs text-gray-600">Applicants</p>
+        <h2 className="text-sm font-medium">2</h2>
+        <p  className="text-gray-500 text-xs ">Applicants</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">NA</h2>
-        <p className="text-xs text-gray-600">KYC Pendings</p>
+        <h2 className="text-sm font-medium">NA</h2>
+        <p  className="text-gray-500 text-xs ">KYC Pendings</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">0</h2>
-        <p className="text-xs text-gray-600">Current Balance</p>
+        <h2 className="text-sm font-medium">0</h2>
+        <p  className="text-[12px] text-gray-500">Current Balance</p>
       </div>
     </div>
   </div>
@@ -679,47 +679,59 @@ APPLICANT DETAILS
 
       <div className="p-6 grid grid-cols-4 gap-4">
         <div className="pr-2 col-span-1">
-          <div className="text-gray-500 text-sm mb-1">S/O</div>
+          <div className="text-gray-500 text-xs  mb-1">S/O</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
             {leadDetailsObj2?.customerDetailsObj?.co_Name1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Martial Status</div>
+          <div className="text-gray-500 text-xs  mb-1">Martial Status</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
             {leadDetailsObj2?.customerDetailsObj?.marital1?.value}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">DOB</div>
+          <div className="text-gray-500 text-xs  mb-1">DOB</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
             {prettyDate(leadDetailsObj2?.customerDetailsObj?.dob1 || datee)}
           </div>
         </div>
 
-        <div className="px-4 border-l border-r border-gray-200 col-span-1">
-          <div className="text-gray-500 text-sm mb-1">PAN Card</div>
+        <div className="col-span-1">
+          <div className='border-l border-r px-4  border-gray-200'>
+
+          <div className="text-gray-500 text-xs  mb-1">PAN Card</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
             {leadDetailsObj2?.customerDetailsObj?.panNo1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
+          </div>
+
+
+          <div className='border-l border-r px-4  border-gray-200'>
+          <div className="text-gray-500 text-xs  mb-1">Aadhar Card</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
             {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || 'No Data'}
           </div>
+         </div>
 
-          <div className="text-gray-500 text-sm mb-1">Secondary No</div>
+         <div className='border-l border-r px-4  border-gray-200'>
+         <div className="text-gray-500 text-xs  mb-1">Secondary No</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
             {leadDetailsObj2?.customerDetailsObj?.phoneNo3 || 'No Data'}
           </div>
+         </div>
+    
+
+    
         </div>
 
         <div className="pl-4 col-span-2">
-          <div className="text-gray-500 text-sm mb-1">Current Address</div>
-          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[16px] mb-4 font-outfit break-words whitespace-pre-wrap">
+          <div className="text-gray-500 text-xs  mb-1">Current Address</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[14px] mb-4 font-outfit break-words whitespace-pre-wrap">
             {leadDetailsObj2?.customerDetailsObj?.address1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
-          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[16px] font-outfit break-words whitespace-pre-wrap">
+          <div className="text-gray-500 text-xs  mb-1">Permanent Address</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[14px] font-outfit break-words whitespace-pre-wrap">
             {leadDetailsObj2?.customerDetailsObj?.address2p || 'No Data'}
           </div>
         </div>
@@ -792,46 +804,63 @@ APPLICANT DETAILS
 
       <div className="p-6 grid grid-cols-4 gap-4">
         <div className="pr-2 col-span-1">
-          <div className="text-gray-500 text-sm mb-1">S/O</div>
+          <div className="text-gray-500 text-xs  mb-1">S/O</div>
           <div className="font-medium font-outfit tracking-[0.06em] text-[#0E0A1F] text-[14px] mb-4">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Martial Status</div>
+          <div className="text-gray-500 text-xs  mb-1">Martial Status</div>
           <div className="font-medium font-outfit tracking-[0.06em] text-[#0E0A1F] text-[14px] mb-4">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.marital1?.value}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">DOB</div>
+          <div className="text-gray-500 text-xs  mb-1">DOB</div>
           <div className="font-medium font-outfit tracking-[0.06em] text-[#0E0A1F] text-[14px]">
             {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob1 || datee)}
           </div>
         </div>
 
-        <div className="px-4 border-l border-r border-gray-200 col-span-1">
-          <div className="text-gray-500 text-sm mb-1">PAN Card</div>
+        <div className=" col-span-1">
+
+          <div className='px-4 border-l border-r border-gray-200'>
+          <div className="text-gray-500 text-xs  mb-1">PAN Card</div>
           <div className="font-medium font-outfit text-[#0E0A1F] text-[14px] tracking-[0.06em] mb-4">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.panNo1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
+          </div>
+
+
+
+
+          <div className='px-4 border-l border-r border-gray-200'>
+          <div className="text-gray-500 text-xs  mb-1">Aadhar Card</div>
           <div className="font-medium text-[14px] text-[#0E0A1F] tracking-[0.06em] font-outfit mb-4">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Secondary No</div>
+</div>
+
+ 
+
+          <div className='px-4 border-l border-r border-gray-200'>
+          <div className="text-gray-500 text-xs  mb-1">Secondary No</div>
           <div className="font-medium font-outfit text-[#0E0A1F] tracking-[0.06em] text-[14px]">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo3 || 'No Data'}
           </div>
+
+</div>
+
+ 
         </div>
 
         <div className="pl-4 col-span-2">
-          <div className="text-gray-500 text-sm mb-1">Current Address</div>
+          <div className="text-gray-500 text-xs  mb-1">Current Address</div>
           <div className="font-medium text-[#0E0A1F] font-outfit text-[14px] mb-4 tracking-[0.06em] break-words whitespace-pre-wrap">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.address1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
+          <div className="text-gray-500 text-xs  mb-1">Permanent Address</div>
           <div className="font-medium text-[#0E0A1F] font-outfit text-[14px] tracking-[0.06em] break-words whitespace-pre-wrap">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.address2p || 'No Data'}
           </div>

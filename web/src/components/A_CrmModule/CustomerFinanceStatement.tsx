@@ -122,15 +122,15 @@ const CrmUnitPsHome = ({
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
+        <h2 className="text-sm font-medium">No Data</h2>
         <p className="text-xs text-gray-600">Paid</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
+        <h2 className="text-sm font-medium">No Data</h2>
         <p className="text-xs text-gray-600">Unit Cost</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
+        <h2 className="text-sm font-medium">No Data</h2>
         <p className="text-xs text-gray-600">Total Due</p>
       </div>
     </div>

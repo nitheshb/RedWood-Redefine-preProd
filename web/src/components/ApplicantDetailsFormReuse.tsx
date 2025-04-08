@@ -1060,7 +1060,7 @@ leadPayload?.Mobile ||
                               <section className="flex flex-row  mt-1 ">
                   {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
                   <span className=" leading-[15px] ">
-                    <label className="font-semibold text-[#053219]  text-[14px] leading-[15px] mb-1  ">
+                    <label className="font-semibold text-[#053219]  text-[14px]  leading-[15px] mb-1  ">
                     Current Address
                       <abbr title="required"></abbr>
                       {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}

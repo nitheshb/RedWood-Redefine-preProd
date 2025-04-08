@@ -127,6 +127,12 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
    }
   return (
     <>
+    
+
+
+
+
+
     <div className="flex justify-between max-w-3xl items-center py-4 rounded-lg cursor-pointer text-gray-700 text-sm">
 
         {/* <DocumentTextIcon className="w-4 h-4 text-blue-500" /> */}
@@ -224,3 +230,6 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
 }
 
 export default DocRow
+
+
+

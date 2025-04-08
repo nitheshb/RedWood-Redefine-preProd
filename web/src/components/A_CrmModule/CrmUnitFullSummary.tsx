@@ -64,6 +64,7 @@ import BrokerageDetails from './A_BrokerageDetails/BrokerageDetails'
 import ToDoList from './ToDoList'
 import ProjectTasks from './ToDoList'
 import TaskManagementDashboard from './ToDoList'
+import DocumentManagement from '../LegalModule/Docu_row'
 
 
 
@@ -1259,15 +1260,15 @@ export default function UnitFullSummary({
       <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
           <div className="text-center">
-            <h2 className="text-sm font-semibold">No Data</h2>
+            <h2 className="text-sm font-medium">No Data</h2>
             <p className="text-xs text-gray-600">Last Activity</p>
           </div>
           <div className="text-center">
-            <h2 className="text-sm font-semibold">No Data</h2>
+            <h2 className="text-sm font-medium">No Data</h2>
             <p className="text-xs text-gray-600">Upcoming Milestone</p>
           </div>
           <div className="text-center">
-            <h2 className="text-sm font-semibold">No Data</h2>
+            <h2 className="text-sm font-medium">No Data</h2>
             <p className="text-xs text-gray-600">Current Unit Status</p>
           </div>
         </div>
@@ -1428,15 +1429,15 @@ export default function UnitFullSummary({
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
+        <h2 className="text-sm font-medium">No Data</h2>
         <p className="text-xs text-gray-600">Booked On</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
+        <h2 className="text-sm font-medium">No Data</h2>
         <p className="text-xs text-gray-600">Next Target  Date</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
+        <h2 className="text-sm font-medium">No Data</h2>
         <p className="text-xs text-gray-600">Premium Type</p>
       </div>
     </div>
@@ -2233,15 +2234,15 @@ Loan details
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
+        <h2 className="text-sm font-medium">No Data</h2>
         <p className="text-xs text-gray-600">Funding Type</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
+        <h2 className="text-sm font-medium">No Data</h2>
         <p className="text-xs text-gray-600">Self Contribution</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
+        <h2 className="text-sm font-medium">No Data</h2>
         <p className="text-xs text-gray-600">Bank Contribution</p>
       </div>
     </div>
@@ -2306,16 +2307,16 @@ Loan details
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
-        <p className="text-xs text-gray-600">Total Documents</p>
+        <h2 className="text-sm font-medium">No Data</h2>
+        <p className="text-[12px] text-gray-500">Total Documents</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
-        <p className="text-xs text-gray-600">Uploaded By</p>
+        <h2 className="text-sm font-medium">No Data</h2>
+        <p className="text-[12px] text-gray-500">Uploaded By</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-semibold">No Data</h2>
-        <p className="text-xs text-gray-600">Pending Documents</p>
+        <h2 className="text-sm font-medium">No Data</h2>
+        <p className="text-[12px] text-gray-500">Pending Documents</p>
       </div>
     </div>
   </div>
@@ -2397,6 +2398,7 @@ Loan details
 
           >
             <DocRow  key={i} data={doc} id={customerDetails?.id} fileName={doc?.name} date={doc?.time}  />
+            {/* <DocumentManagement/> */}
           </section>
         ))}
       </section>
