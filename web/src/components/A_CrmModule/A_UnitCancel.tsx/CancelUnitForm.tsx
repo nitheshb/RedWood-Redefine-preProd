@@ -158,10 +158,14 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
 
 
-    <h1 className="text-[#606062]  max-w-3xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+    {/* <h1 className="text-[#606062] font-outfit  max-w-3xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Cancellation
       </h1>
-      
+       */}
+
+<h1 className="text-[#606062] font-outfit  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+Unit Cancellation
+  </h1>
 
       <img
         alt="CRM Background"
@@ -171,17 +175,18 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
       <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-          <div className="text-center">
-            <h2 className="text-sm font-medium">No Data</h2>
-            <p className="text-xs text-gray-600">Cancelled On</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancelled On</p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
           </div>
-          <div className="text-center">
-            <h2 className="text-sm font-medium">No Data</h2>
-            <p className="text-xs text-gray-600">Cancellation Reason</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancellation Reason</p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
           </div>
-          <div className="text-center">
-            <h2 className="text-sm font-medium">No Data</h2>
-            <p className="text-xs text-gray-600">Cancelled By</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancelled By</p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+
           </div>
         </div>
       </div>
@@ -257,13 +262,13 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
   <div className="flex flex-col md:flex-row gap-8 mb-4">
 
     <div className="w-full ">
-    <label className="block text-xs text-[#6A6A6A] mb-1">Cancellation Amount</label>
+    <label className="block text-[#616162] font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] mb-1">Cancellation Amount</label>
 
       <TextField2
         // label="Cancellation Amount"
         name="amount"
         type="text"
-        className="w-full h-8 border-0 border-b-[1.6px] border-[#E7E7E9] focus:border-[#E7E7E9] focus:ring-0 focus:outline-none sm:text-sm "
+        className="w-full h-10 border-0 border-b-[1.6px] border-[#E7E7E9] focus:border-[#E7E7E9] focus:ring-0 focus:outline-none sm:text-sm "
         value={formik?.values?.amount?.toLocaleString('en-IN')}
         onChange={(e) => {
           const value = e.target.value.replace(/,/g, '')
@@ -276,7 +281,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
     </div>
 
     <div className="w-full">
-      <label className="text-xs text-[#6A6A6A]">Cancellation Date</label>
+      <label className="text-xs text-[#616162]  font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em]">Cancellation Date</label>
       <div className="relative w-full">
         <CustomDatePicker
           className="w-full h-8  px-2 py-2 outline-none border-t-0 border-l-0 border-r-0 border-0 border-b-[1.6px] border-[#E7E7E9] border-solid text-[#DBD3FD] font-semibold"
@@ -294,22 +299,35 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
   </div>
 
 
-  <div className="w-full text-xs text-[#6A6A6A] mb-4">
+  {/* <div className="w-full text-xs text-[#6A6A6A] mb-4">
     <TextField2
       label="Reason"
       name="payReason"
       type="text"
     />
-  </div>
+  </div> */}
+
+
+<div className="w-full text-xs text-[#6A6A6A] mb-4">
+  <label className="block text-[#616162] font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] mb-1">Reason</label>
+  <TextField2
+    name="payReason"
+    type="text"
+    className="w-full h-8  px-2 py-2 outline-none border-t-0 border-l-0 border-r-0 border-0 border-b-[1.6px] border-[#E7E7E9] border-solid text-[#DBD3FD] font-semibold"
+
+  
+  />
+</div>
+
 
 
   <div className="text-center py-4">
     <button
-      className="bg-[#EDE9FE] text-[#0E0A1F] text-sm py-2.5 px-6 font-semibold rounded-md inline-flex items-center shadow-sm hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400"
+      className="bg-[#EDE9FE] text-[#0E0A1F] text-sm py-2.5 px-24 font-semibold rounded-md inline-flex items-center shadow-sm hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400"
       type="submit"
       disabled={loading}
     >
-      <span>Cancel Booking</span>
+      <span className='text-[16px] font-outfit '>Cancel Booking</span>
     </button>
   </div>
 </div>

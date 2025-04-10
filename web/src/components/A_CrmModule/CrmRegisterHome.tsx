@@ -504,7 +504,7 @@ useEffect(() => {
 
   return (
     <>
-      <div className=" font-rubikF mt-1 py-2 bg-[#F6F5F8] rounded-t-lg ">
+      <div className=" font-outfit mt-1 py-2 bg-[#F6F5F8] rounded-t-lg ">
         <div className=" max-w-8xl px-6 mx-auto">
           <div
             className="
@@ -559,7 +559,7 @@ useEffect(() => {
 
               <div className=" border-gray-900 flex items-center flex-row justify-between">
                 <ul
-                  className="flex   rounded-t-lg "
+                  className="flex  gap-x-4  rounded-t-lg "
                   id="myTab"
                   data-tabs-toggle="#myTabContent"
                   role="tablist"
@@ -578,13 +578,13 @@ useEffect(() => {
                       <li
                         key={b}
                         // className="mr-2 ml-2 text-sm font-bodyLato"
-                        className={`ml-2 text-sm font-bodyLato flex items-center h-4 ${
+                        className={`ml-2 text-sm font-bodyLato flex  items-center  h-4 ${
                           b !== arr.length - 1 ? 'border-r border-gray-300' : ''
                         }`}
                         role="presentation"
                       >
                         <button
-                          className={`inline-block py-2 mr-3 px-1 text-sm font-medium  font-rubikF text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
+                          className={`inline-block py-2 mr-3 px-1 text-[16px] font-medium  font-outfit text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
                             selCategory === d.val
                               ? 'text-black border-black'
                               : 'text-gray-500  border-transparent'
@@ -594,7 +594,7 @@ useEffect(() => {
                           onClick={() => setSelCategory(d.val)}
                         >
                           {`${d.lab} `}
-                          <span className=" bg-[#E5E7EB] text-gray-800 px-1.5 py-1.5 rounded-full ml-[4px] text-[10px] ">
+                          <span className=" bg-[#E5E7EB] text-gray-800 px-1.5 py-1.5 rounded-full ml-[4px] text-[12px] ">
                             {d.val === 'booked' && (
                               <span>{bookingReviewCo}</span>
                             )}

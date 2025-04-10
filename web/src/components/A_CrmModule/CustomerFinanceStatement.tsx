@@ -121,17 +121,17 @@ const CrmUnitPsHome = ({
 
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-      <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
-        <p className="text-xs text-gray-600">Paid</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Paid</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
-        <p className="text-xs text-gray-600">Unit Cost</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Unit Cost</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
-        <p className="text-xs text-gray-600">Total Due</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Total Due</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
     </div>
   </div>

@@ -1293,17 +1293,17 @@ export default function UnitFullSummary({
 
       <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-          <div className="text-center">
-            <h2 className="text-sm font-medium">No Data</h2>
-            <p className="text-xs text-gray-600">Last Activity</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Last Activity</p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
           </div>
-          <div className="text-center">
-            <h2 className="text-sm font-medium">No Data</h2>
-            <p className="text-xs text-gray-600">Upcoming Milestone</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Upcoming Milestone</p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
           </div>
-          <div className="text-center">
-            <h2 className="text-sm font-medium">No Data</h2>
-            <p className="text-xs text-gray-600">Current Unit Status</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Current Unit Status</p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
           </div>
         </div>
       </div>
@@ -1462,17 +1462,20 @@ export default function UnitFullSummary({
 
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-      <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
-        <p className="text-xs text-gray-600">Booked On</p>
+      <div className="text-center space-y-2">
+      <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Booked On</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+       
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
-        <p className="text-xs text-gray-600">Next Target  Date</p>
+      <div className="text-center space-y-2">
+      <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Next Target  Date</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+   
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
-        <p className="text-xs text-gray-600">Premium Type</p>
+      <div className="text-center space-y-2">
+      <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Premium Type</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+  
       </div>
     </div>
   </div>
@@ -1503,7 +1506,7 @@ export default function UnitFullSummary({
 
 
 <section className="mb-8">
-<h2 className="text-[12px] text-gray-600 font-medium mb-6">UNIT DETAILS</h2>
+<h2 className="font-outfit text-[#606062] font-medium text-[12px] leading-[100%] tracking-normal uppercase mb-6">UNIT DETAILS</h2>
 
 <div className="flex flex-wrap">
 
@@ -1515,8 +1518,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">Unit No</div>
-<div className="text-base font-outfitfont-medium">{selCustomerPayload?.unit_no}</div>
+<div className="text-[#606062] font-medium text-[12px] font-outfit ">Unit No</div>
+<div className="text-base font-outfit font-medium">{selCustomerPayload?.unit_no}</div>
 </div>
 </div>
 
@@ -1536,8 +1539,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">Facing</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit ">Facing</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.facing}
 </div>
 </div>
@@ -1559,8 +1562,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">Size (sqft)</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit ">Size (sqft)</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.area?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1584,8 +1587,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">BUA (sqft)</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px]  font-outfit">BUA (sqft)</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.builtup_area?.toLocaleString('en-IN') || selCustomerPayload?.construct_area?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1618,8 +1621,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">BedRooms</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit ">BedRooms</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.Bedrooms_D}
 </div>
 </div>
@@ -1638,8 +1641,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">Bathrooms</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px]  font-outfit">Bathrooms</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.BathRooms_D?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1656,8 +1659,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Car Parking</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Car Parking</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1674,8 +1677,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Carpet Area Sqft</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Carpet Area Sqft</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1691,7 +1694,7 @@ export default function UnitFullSummary({
 
 
 <section className="mb-8">
-<h2 className="text-[12px] text-gray-600 font-medium mb-4">DIMENSIONS</h2>
+<h2 className="text-[12px] text-gray-600 font-medium mb-4 font-outfit">DIMENSIONS</h2>
 
 <div className="flex flex-wrap">
 
@@ -1705,8 +1708,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">East</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">East</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.east_d?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1725,8 +1728,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">West</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">West</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.west_d?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1745,8 +1748,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">North</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">North</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.north_d?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1765,8 +1768,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">South</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">South</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.south_d?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1776,7 +1779,7 @@ export default function UnitFullSummary({
 
 
 <section className="mb-8">
-<h2 className="text-[12px] text-gray-600 font-medium mb-4">STATUS</h2>
+<h2 className="text-[12px] text-gray-600 font-medium mb-4 font-outfit">STATUS</h2>
 
 <div className="flex flex-wrap">
 
@@ -1792,8 +1795,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Unit Status</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Unit Status</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.status}
 </div>
 </div>
@@ -1813,8 +1816,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Status</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Status</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.release_status?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1834,8 +1837,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Mortgage</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Mortgage</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.mortgage_type}
 </div>
 </div>
@@ -1858,8 +1861,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Sharing</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Sharing</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.sharing}
 </div>
 </div>
@@ -1869,7 +1872,7 @@ export default function UnitFullSummary({
 
 
 <section className="mb-8">
-<h2 className="text-[12px] text-gray-600 font-medium mb-4">SCHEDULE</h2>
+<h2 className="text-[12px] text-gray-600 font-medium mb-4 font-outfit">SCHEDULE</h2>
 
 <div className="flex flex-wrap">
 
@@ -1885,8 +1888,8 @@ export default function UnitFullSummary({
 </svg>
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">East by</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">East by</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1910,8 +1913,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">West by</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">West by</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1934,8 +1937,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">North by</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">North by</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1959,8 +1962,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">South by</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">South by</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1988,8 +1991,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Survey No</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Survey No</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.survey_no}
 </div>
 </div>
@@ -2014,8 +2017,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">PID No</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">PID No</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.PID_no}
 </div>
 </div>
@@ -2037,8 +2040,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Katha No</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Katha No</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.Katha_no}
 </div>
 </div>
@@ -2057,13 +2060,13 @@ export default function UnitFullSummary({
 <div className="flex flex-col  mr-4 rounded-lg  mb-10 mt-2 ">
 <div className="flex flex-row">
 
-  <h1 className="text-bodyLato text-left uppercase text-[#606062] font-medium text-[14px] mb-2 mt-3 ml-1">
+  <h1 className="font-outfit text-left uppercase text-[#606062] font-medium text-[12px] mb-2 mt-3 ml-1">
     Dates        
     </h1>
 </div>
 
-<div className="relative bg-white  max-w-5xl rounded-2xl p-8 col-span-12 'w-full  mx-auto  space-y-2 sm:col-span-9 mt-1">
-  <ol className="items-center sm:flex">
+<div className="relative bg-white font-outfit  max-w-5xl rounded-2xl p-8 col-span-12 'w-full  mx-auto  space-y-2 sm:col-span-9 mt-1">
+  <ol className="items-center font-outfit sm:flex">
     {events.map((d, i) => (
       <li key={i} className="relative mb-6 sm:mb-0">
 
@@ -2267,17 +2270,17 @@ Loan details
   
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-      <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
-        <p className="text-xs text-gray-600">Funding Type</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Funding Type</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
-        <p className="text-xs text-gray-600">Self Contribution</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Self Contribution</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
-        <p className="text-xs text-gray-600">Bank Contribution</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Bank Contribution</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
     </div>
   </div>
@@ -2326,7 +2329,7 @@ Loan details
 
 
 
-<h1 className="text-[#606062]  max-w-4xl  mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit  max-w-4xl  mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Documents
   </h1>
   
@@ -2340,17 +2343,20 @@ Loan details
 
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-      <div className="text-center">
-        <h2 className="text-sm font-medium"> {totalUploadedDocs}</h2>
-        <p className="text-[12px] text-gray-500">Total Documents</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Total Documents</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]"> {totalUploadedDocs}</h2>
+
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
-        <p className="text-[12px] text-gray-500">Uploaded By</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Uploaded By</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-medium">{pendingDocs}</h2>
-        <p className="text-[12px] text-gray-500">Pending Documents</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Pending Documents</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">{pendingDocs}</h2>
+
       </div>
     </div>
   </div>
@@ -2565,8 +2571,8 @@ Loan details
               })}
             </span>
             <button
-              className={`ml-3  py-1 text-sm font-medium text-center rounded-lg border-b-2 hover:text-[#484848] border-transparent ${
-                selFeature === d.val ? 'text-[#484848] font-bold' : 'text-[#A6A6A6]'
+              className={`ml-3 font-outfit  py-1 text-[14px] font-medium text-center rounded-lg border-b-2 hover:text-[##0E0A1F] border-transparent ${
+                selFeature === d.val ? 'text-[#0E0A1F]  font-medium' : 'text-[#606062]'
               }`}
               type="button"
               role="tab"

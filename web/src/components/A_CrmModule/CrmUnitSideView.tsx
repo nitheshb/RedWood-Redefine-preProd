@@ -1224,7 +1224,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                                       </div>
 
                                       <span
-                                        className={`items-center h-6   text-xs font-semibold text-gray-500  rounded-full
+                                        className={`items-center h-6   font-outfit text-xs font-semibold text-gray-500  rounded-full
                       `}
                                       >
                                         Unit No
@@ -1237,10 +1237,10 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
     <div className="flex flex-col">
       {/* Customer Name & Phone Number */}
       <div>
-        <p className="text-[16px] font-semibold text-[#000000]">
+        <p className="text-[16px] font-outfit font-semibold text-[#000000]">
           {selCustomerPayload?.customerDetailsObj?.customerName1 || 'NA'}
         </p>
-        <p className="text-[12px] text-[#606062] font-medium">
+        <p className="text-[12px] font-outfit text-[#606062] font-medium">
           {selCustomerPayload?.customerDetailsObj?.phoneNo1}
         </p>
       </div>
@@ -1258,18 +1258,18 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
       Floor: {selCustomerPayload?.floor_no?.toLocaleString('en-IN')}
     </span>
   )}
-  <h2 className="text-[12px] text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+  <h2 className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
     Size: {selCustomerPayload?.area?.toLocaleString('en-IN')} sqft
   </h2>
   {selCustomerPayload?.construct_area !== undefined && (
-    <h2 className="text-[12px] text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+    <h2 className="text-[12px]  font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
       BUA: {selCustomerPayload?.construct_area?.toLocaleString('en-IN')} sqft
     </h2>
   )}
-  <span className="text-[12px] text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+  <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
     Facing: {selCustomerPayload?.facing}
   </span>
-  <span className="text-[12px] text-[#606062] font-medium py-1 rounded-md">
+  <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md">
     Booked: {prettyDate(selCustomerPayload?.booked_on || 0)}
   </span>
 </section>

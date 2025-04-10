@@ -128,7 +128,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
 
   return (
     <>
-    <div className=" justify-between max-w-3xl items-center py-2 rounded-lg cursor-pointer text-gray-700 text-sm">
+    <div className=" justify-between max-w-3xl items-center  rounded-lg cursor-pointer text-gray-700 text-sm">
 
         {/* <DocumentTextIcon className="w-4 h-4 text-blue-500" /> */}
 
@@ -195,7 +195,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
       src="/IconSetsdoc.svg"
       className="w-5 h-5"
     />
-    <p className="text-[#0E0A1F] text-xs font-semibold">
+    <p className="text-[#0E0A1F] text-[14px] font-medium  font-outfit">
       {fileName}
     </p>
   </div>
@@ -204,7 +204,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
   <div className="flex items-center gap-3">
 
     {uploadedCount > 0 && (
-      <span className="text-[12px] text-gray-800">
+      <span className="text-[12px] font-outfit text-[#606062]">
         {uploadedCount} Documents
       </span>
     )}
@@ -242,7 +242,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
 </div>
 
 
-<div className='mt-1'>
+<div className='my-4'>
 {showDropdown && (
 
 <div className=' w-[100%] flex justify-between items-center  bg-[#FFFFFF] rounded-md p-4'>
@@ -268,7 +268,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
       {prettyDate(data?.time) || 'NA'}
     </p>
 {uploading && <Loader className="w-4 h-4 mr-2" />}
-<p className="pr-3 text-xs truncate text-green-800">{data?.filName}</p>
+<p className="pr-3 font-medium  truncate font-outfit text-[14px] text-[#0E0A1F]">{data?.filName}</p>
   </div>
 
 </div>
