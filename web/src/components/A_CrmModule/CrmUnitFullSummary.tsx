@@ -865,8 +865,42 @@ export default function UnitFullSummary({
   };
 
 
+  const documentTypes = [
+    { 
+      id: 1234, 
+      name: 'EC', 
+      type: 'ec', 
+      time: customerDetails?.ecDocUpDate, 
+      url: customerDetails?.ecDocUrl, 
+      filName: customerDetails?.ecFilName,
+      uploadedCount: customerDetails?.ecDocUrl ? 1 : 0 
+    },
+    { 
+      id: 1235, 
+      name: 'Agreement', 
+      type: 'agree', 
+      time: customerDetails?.agreeDocUpDate, 
+      url: customerDetails?.agreeDocUrl, 
+      filName: customerDetails?.agreeFilName,
+      uploadedCount: customerDetails?.agreeDocUrl ? 1 : 0
 
+    },
+    { 
+      id: 1236, 
+      name: 'Register Doc', 
+      type: 'reg', 
+      time: customerDetails?.regDocUpDate, 
+      url: customerDetails?.regDocUrl, 
+      filName: customerDetails?.regFilName,
+      uploadedCount: customerDetails?.regDocUrl ? 1 : 0
 
+    },
+  ];
+  
+  const totalUploadedDocs = documentTypes.filter(doc => doc.url).length;
+  
+
+  const pendingDocs = documentTypes.length - totalUploadedDocs; 
 
 
   return (
@@ -2307,7 +2341,7 @@ Loan details
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
+        <h2 className="text-sm font-medium"> {totalUploadedDocs}</h2>
         <p className="text-[12px] text-gray-500">Total Documents</p>
       </div>
       <div className="text-center">
@@ -2315,7 +2349,7 @@ Loan details
         <p className="text-[12px] text-gray-500">Uploaded By</p>
       </div>
       <div className="text-center">
-        <h2 className="text-sm font-medium">No Data</h2>
+        <h2 className="text-sm font-medium">{pendingDocs}</h2>
         <p className="text-[12px] text-gray-500">Pending Documents</p>
       </div>
     </div>
@@ -2334,74 +2368,28 @@ Loan details
 <div className="w-full max-w-4xl px-4 flex flex-col">
 
 
+      <section className="w-full max-w-4xl p-4 mt-2 rounded-2xl">
+    {/* <div className="text-right text-sm text-gray-500 mb-2">
+      {totalUploadedDocs} of {documentTypes.length}
+    </div> */}
 
+    {documentTypes.length === 0 ? (
+      <div className="w-full text-center py-5">No documents</div>
+    ) : (
+      documentTypes.map((doc, i) => (
+        <section key={i} className="px-4">
+          <DocRow 
+            data={doc} 
+            id={customerDetails?.id} 
+            fileName={doc?.name} 
+            date={doc?.time}   
+            uploadedCount={doc.uploadedCount} 
 
-<section className="bg-white w-full max-w-4xl p-4 mt-2 rounded-2xl">
-        
-        <div className="">
-          <div className="  ">
-            <div className="">
-           
-              <span
-                className=""
-                onClick={() => {
-                  setSliderInfo({
-                    open: true,
-                    title: 'legal_doc_upload',
-                    sliderData: {},
-                    widthClass: 'max-w-xl',
-                  })
-                }}
-              >
-              </span>
-            </div>
-          </div>
-        </div>
-        {[
-          { id: 1234, name: 'EC', time: '22-Nov-2022' },
-          {
-            id: 1235,
-            name: 'Agreement',
-            time: '24-Nov-2022',
-          },
-          {
-            id: 1236,
-            name: 'Register Doc',
-            time: '2-Dec-2022',
-          },
-        ].length === 0 ? (
-          <div className="w-full text-center py-5">No documents</div>
-        ) : (
-          ''
-        )}
-        {[
-          { id: 1234, name: 'EC',type: 'ec',time: customerDetails?.ecDocUpDate, url: customerDetails?.ecDocUrl , filName: customerDetails?.ecFilName },
-          {
-            id: 1235,
-            name: 'Agreement',
-            type: 'agree',
-            time: customerDetails?.agreeDocUpDate, url: customerDetails?.agreeDocUrl , filName: customerDetails?.agreeFilName,
-          },
-          {
-            id: 1236,
-            name: 'Register Doc',
-            type: 'reg',
-            time: customerDetails?.regDocUpDate, url: customerDetails?.regDocUrl , filName: customerDetails?.regFilName,
-          },
-        ]?.map((doc, i) => (
-          <section
-            key={i}
-
-            className='px-4'
-
-          
-
-          >
-            <DocRow  key={i} data={doc} id={customerDetails?.id} fileName={doc?.name} date={doc?.time}  />
-            {/* <DocumentManagement/> */}
-          </section>
-        ))}
-      </section>
+          />
+        </section>
+      ))
+    )}
+  </section>
   </div>
 
 </div>
