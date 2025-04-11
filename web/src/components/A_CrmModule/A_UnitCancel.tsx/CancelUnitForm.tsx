@@ -146,10 +146,10 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
 
 
-<div className="relative min-h-screen">
+<div className="relative min-h-screen mr-6">
     {/* Background image */}
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -158,30 +158,35 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
 
 
-    <h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
-    Unit Analysis
+    {/* <h1 className="text-[#606062] font-outfit  max-w-3xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+    Unit Cancellation
       </h1>
-      
+       */}
+
+<h1 className="text-[#606062] font-outfit mb-1   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+Unit Cancellation
+  </h1>
 
       <img
         alt="CRM Background"
-        src="/bgcrm.svg"
+        src="/bgimgcrm.svg"
         className="w-full h-auto object-cover"
       />
 
-      <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+      <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-          <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 1</h2>
-            <p className="text-xs text-gray-600">Some info here</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancelled On</p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
           </div>
-          <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 2</h2>
-            <p className="text-xs text-gray-600">More info here</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancellation Reason</p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
           </div>
-          <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 3</h2>
-            <p className="text-xs text-gray-600">Even more info</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancelled By</p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+
           </div>
         </div>
       </div>
@@ -189,11 +194,11 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
 
 
-      <div className="w-full h-full items-center justify-center  flex -mt-20 z-10 relative">
+      <div className="w-full h-full items-center justify-center  flex mt-[-70px] z-10 relative">
               
          
 
-    <section className=" min-h-screen rounded-lg border border-gray-100 ">
+    <section className=" rounded-lg border border-gray-100 ">
         <div className="w-full  ">
             <div className=" ">
               <div className="">
@@ -226,12 +231,12 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                         <div className="form">
                           <section className=" ">
                             <div className="w-full mx-auto ">
-                              <div className="relative flex flex-col min-w-0 break-words w-full  rounded-lg bg-white ">
-                                <div className=" flex flex-row px-2 py-2  overflow-y-scroll overflow-auto no-scrollbar">
-                                  <section className=" p-4 rounded-md w-[540px]">
+                              <div className="relative flex flex-col min-w-0 break-words w-full rounded-2xl bg-white  ">
+                                <div className=" flex flex-row  ">
+                                  <section className="  rounded-md w-[540px]">
                                     <article className="">
-                                      <div className="flex flex-row justify-between">
-                                        <section className="flex flex-row">
+                                      <div className="flex flex-row   border-b border-gray-200 justify-between">
+                                        <section className="flex p-4 flex-row">
                                           <div className="inline">
                                             {/* <div className="mt-[7px]">
                                               <label className="text-[20px] font-medium text-[#000000]    mb-[2px]  ">
@@ -240,120 +245,96 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
                                               </label>
                                             </div> */}
                                             <div>
-                                            <h2 className='text-[#000000] font-outfit font-medium  text-[16px]'>Refund amount will be added to customer wallet for withdrawal.</h2>
+                                            <h2 className='text-[#000000] font-outfit font-medium  text-[16px]'>Add Cancellation Details                                            </h2>
                                           </div>
                                           </div>
                                         </section>
-                                        <section className="flex flex-row justify-between">
-                                        </section>
+                                        
                                       </div>
                                     </article>
-                                    <section>
-                                        <div className="flex flex-wrap mt-10">
-                                          <div className="w-full lg:w-4/12 pr-3 mt-[10px]">
-                                          <div className="relative w-full mb-5">
-                                              <TextField2
-                                                label="Cancellation Amount"
-                                                name="amount"
-                                                type="text"
-                                                value={
-                                                  formik?.values?.amount?.toLocaleString('en-IN')
-                                                  }
-                                                  onChange={(e) =>{
-                                                  const value = e.target.value.replace(/,/g, '')
-                                                    if(!isNaN(value)){
-                                                    const rawValue = Number(e.target.value.replace(/,/g, ''))?.toLocaleString('en-IN')
-                                                    formik.setFieldValue('amount', rawValue)}
-                                                  }}
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className="w-full  lg:w-4/12 pl-3 ">
-                                            <div className="relative w-full mb-5 mt-[-1px] ">
-                                            <label
-
-        className="  text-xs text-[#6A6A6A] "
-      >
-       Cancellation Date
-
-      </label>
-                                              <span className="inline">
-                                                <CustomDatePicker
-                                                  className="h-8 outline-none border-t-0 border-l-0 border-r-0 border-b border-[#cccccc]  border-solid mt-[-4px]   min-w-[125px]  inline  text-[#DBD3FD] font-semibold   lg:w-4/12 w-full flexs border  "
-                                                  label="Dated"
-                                                  name="dated"
-                                                  // selected={startDate}
-                                                  selected={formik.values.dated}
-                                                  onChange={(date) => {
-                                                    // setFieldValue('dated')
-                                                    formik.setFieldValue(
-                                                      'dated',
-                                                      date.getTime()
-                                                    )
-                                                    // setStartDate(date)
-                                                    console.log(startDate)
-                                                  }}
-                                                  timeFormat="HH:mm"
-                                                  injectTimes={[
-                                                    setHours(
-                                                      setMinutes(d, 1),
-                                                      0
-                                                    ),
-                                                    setHours(
-                                                      setMinutes(d, 5),
-                                                      12
-                                                    ),
-                                                    setHours(
-                                                      setMinutes(d, 59),
-                                                      23
-                                                    ),
-                                                  ]}
-                                                  //dateFormat="MMM d, yyyy"
-                                                  dateFormat="MMM dd, yyyy"
-                                                />
-                                              </span>
-                                            </div>
-                                          </div>
-                                          <div className="w-full  ">
-                                            <div className="relative w-full mb-3">
-                                              <TextField2
-                                                label="Reason"
-                                                name="payReason"
-                                                type="text"
-                                              />
-                                            </div>
-
-                                          </div>
-                                        </div>
-
-                                      </section>
 
 
-                                    <div className="text-center space-x-4 mt-6">
-                                      <button
-                                        className="bg-[#EDE9FE] translate-y-1 text-[#0E0A1F]  text-[12px]  py-2.5 px-6  font-semibold  rounded-md inline-flex items-center shadow-sm font-medium tracking-wider text-black hover:text-black rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                        type="submit"
-                                        disabled={loading}
-                                      >
-                                        {/* <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          fill="currentColor"
-                                          className="w-5 h-5"
-                                        >
-                                          <path
-                                            fillRule="evenodd"
-                                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
-                                            clipRule="evenodd"
-                                          />
-                                        </svg> */}
-                                        &nbsp; &nbsp;
-                                        <span>
-                                          {' '}
-                                         Cancel Booking
-                                        </span>
-                                      </button>
-                                    </div>
+
+
+
+                                    <div className="p-5">
+
+  <div className="flex flex-col md:flex-row gap-8 mb-4">
+
+    <div className="w-full ">
+    <label className="block text-[#616162] font-normal text-[12px] leading-[100%] tracking-[0.06em] mb-1">Cancellation Amount</label>
+
+      <TextField2
+        // label="Cancellation Amount"
+        name="amount"
+        type="text"
+        className="w-full h-10 border-0 border-b-[1.6px] border-[#E7E7E9] focus:border-[#E7E7E9] focus:ring-0 focus:outline-none sm:text-sm "
+        value={formik?.values?.amount?.toLocaleString('en-IN')}
+        onChange={(e) => {
+          const value = e.target.value.replace(/,/g, '')
+          if (!isNaN(value)) {
+            const rawValue = Number(value)
+            formik.setFieldValue('amount', rawValue)
+          }
+        }}
+      />
+    </div>
+
+    <div className="w-full">
+      <label className="text-xs text-[#616162]  font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em]">Cancellation Date</label>
+      <div className="relative w-full">
+        <CustomDatePicker
+          className="w-full h-8  px-2 py-2 outline-none border-t-0 border-l-0 border-r-0 border-0 border-b-[1.6px] border-[#E7E7E9] border-solid text-[#191B1C] font-medium"
+          label="Dated"
+          name="dated"
+          calendarClassName="z-[9999]"
+          selected={formik.values.dated}
+          onChange={(date) => {
+            formik.setFieldValue('dated', date.getTime())
+          }}
+          dateFormat="MMM dd, yyyy"
+        />
+      </div>
+    </div>
+  </div>
+
+
+  {/* <div className="w-full text-xs text-[#6A6A6A] mb-4">
+    <TextField2
+      label="Reason"
+      name="payReason"
+      type="text"
+    />
+  </div> */}
+
+
+<div className="w-full text-xs text-[#6A6A6A] mb-4">
+  <label className="block text-[#616162] font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] mb-1">Reason</label>
+  <TextField2
+    name="payReason"
+    type="text"
+    className="w-full h-8  px-2 py-2 outline-none border-t-0 border-l-0 border-r-0 border-0 border-b-[1.6px] border-[#E7E7E9] border-solid text-[#DBD3FD] font-semibold"
+
+  
+  />
+</div>
+
+
+
+  <div className="text-center py-4">
+    <button
+      className="bg-[#EDE9FE] text-[#0E0A1F] text-sm py-2.5 px-24 font-semibold rounded-md inline-flex items-center shadow-sm hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none "
+      type="submit"
+      disabled={loading}
+    >
+      <span className='text-[16px] font-outfit '>Cancel Booking</span>
+    </button>
+  </div>
+</div>
+
+
+
+                            
 
 
                                   </section>
@@ -372,8 +353,6 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
         </div>
       </div>
     </div>
-
-
 
 
               </div>
@@ -505,29 +484,9 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
         </div>
       </section>
-
-
-
             </div>
-
-
-
   </div>
-
-
-
-
-
-
-
-
-
-
 </div>
-
-
-
-
 
 
     </>

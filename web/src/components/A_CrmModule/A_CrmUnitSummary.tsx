@@ -169,38 +169,225 @@ const CrmUnitSummary = ({
     setNetTotal(partATotal + partBTotal)
   }
 
+
+
+
+
+
+
+
+  const documents = [
+    { category: "EC", count: 2 },
+    { category: "Agreement", count: 2 },
+    { category: "Registration", count: 2 },
+    { category: "Others", count: 2 }
+  ];
+
+  const loanDetails = [
+    { type: "Pay slip", count: 2 },
+    { type: "Pay slip", count: 2 },
+    { type: "Pay slip", count: 2 },
+    { type: "Pay slip", count: 2 }
+  ];
+
+
+
+
+
+
+  const DocumentIcon = () => (
+    <div className=''>
+<img
+    alt="CRM Background"
+    src="/IconSetsdoc.svg"
+    className="w-5 h-5"
+  />
+
+    </div>
+ 
+
+  );
+
+
+
+
+
   return (
     <PDFExport paperSize="A4" margin="1cm" ref={pdfUnitSummaryComp}>
       <div className=" rounded-lg  border border-gray-100   overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300" style={{  }}>
             {/* <div className="py-1 px-1 m-2 mt-[1px] rounded-lg border border-gray-100  overflow-y-scroll" style={{ height: `calc(100vh - 120px)` }}> */}
 
+          
+
+
+            <div className="min-h-screen mr-6">
+  <div className="max-w-5xl mx-auto space-y-4">
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <div className="bg-white rounded-2xl p-6">
+        <div>
+          <div className="flex justify-between overflow-visible items-center mb-4">
+            <div className="flex items-center overflow-visible">
+              <img src="/su5.svg" alt="Transaction" className="w-[30px] h-[29px] mr-2 object-cover" />
+              <h2 className="text-gray-600 font-medium text-[12px] uppercase tracking-wide">
+                LAST TRANSACTION
+              </h2>
+            </div>
+            <div className="inline-block border border-green-600 text-green-600 rounded-md px-4 py-1 text-sm">
+              Success
+            </div>
+          </div>
+          <div className="flex justify-between items-center">
+            <div className="space-y-1">
+              <p className="text-gray-500 text-sm">On 27 Mar 2025</p>
+              <p className="text-[#0E0A1F] text-[14px] font-medium ">Brother Builder pvt</p>
+            </div>
+            <div className="text-right">
+              <p className="text-gray-500 text-sm">Check</p>
+              <p className="text-[#0E0A1F] text-[14px] font-medium ">₹ 22,76,36,500</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div className="bg-white rounded-2xl p-6">
+        <div>
+          <div className="flex items-center  mb-4 overflow-visible">
+            <img src="/su6.svg" alt="Applicant" className="w-[30px] h-[29px] mr-2 object-contain" />
+            <h2 className="text-[#606062] font-medium text-[12px] uppercase tracking-wide">
+              APPLICANT DETAILS
+            </h2>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <div className="flex -space-x-3">
+                <div className="w-10 h-10 rounded-full bg-blue-500 border-2 border-white overflow-hidden">
+                  <div className="w-full h-full bg-gray-300"></div>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-blue-500 border-2 border-white overflow-hidden">
+                  <div className="w-full h-full bg-gray-300"></div>
+                </div>
+              </div>
+              <span className="ml-5 text-[16px] text-[#0E0A1F] font-medium">2 applicants</span>
+            </div>
+            <div className="h-6 w-px bg-gray-300 mx-4"></div>
+            <div className="text-[#960000] text-[14px] font-medium text-right whitespace-nowrap">
+              1 KYC Pending
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <div className="bg-white rounded-2xl  p-6">
+        <div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center mb-4 ">
+              <img src="/su2.svg" alt="Activity" className="w-[30px] h-[29px] mr-2 object-contain" />
+              <h2 className="text-[#606062] font-medium text-[12px] uppercase tracking-wide">
+                LAST ACTIVITY
+              </h2>
+            </div>
+            <div className="flex items-center mb-2 text-[#960000]">
+              <span className="text-[12px]">Deleted Doc</span>
+              <span className="ml-2 p-1">
+                <img src="/DeleteIcon.svg" alt="Delete" className="h-5 w-5" />
+              </span>
+            </div>
+          </div>
+          <div className="space-y-1">
+            <p className="text-gray-500 text-[12px]">24 Mar 25, 10:57 am</p>
+            <div className="flex justify-between items-center">
+              <p className="text-[#0E0A1F] text-[14px] font-medium">Vishal@gmail.com</p>
+              <p className="text-[#0E0A1F] text-[12px] font-medium">Sale Agreement</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+ 
+      <div className="bg-white rounded-2xl overflow-visible p-6">
+        <div>
+          <div className="flex items-center overflow-visible mb-4">
+            <img src="/su3.svg" alt="Calendar" className="w-[30px] h-[29px] mr-2 object-contain" />
+            <h2 className="text-[#606062] font-medium text-[12px] uppercase tracking-wide">
+              UPCOMING EVENTS
+            </h2>
+          </div>
+          <div className="space-y-1">
+            <p className="text-gray-500 text-[12px]">On 27 Mar 2025</p>
+            <div className="flex justify-between items-center">
+              <p className="text-[#0E0A1F] text-[14px] font-medium">
+                Before Execution of Construction Agreement
+              </p>
+              <p className="text-[#0E0A1F] text-[14px] font-medium">
+                ₹ 22,76,36,500
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <div className="bg-white border border-gray-100 rounded-2xl p-6">
+        <div className="flex items-center mb-6">
+          <img src="/su1.svg" alt="Documents" className="h-5 w-5 mr-2" />
+          <h2 className="text-[12px] font-medium text-[#606062]">DOCUMENTS</h2>
+        </div>
+        <div className="space-y-4">
+          {documents.map((doc, index) => (
+            <div key={index} className="flex items-center justify-between py-3 border-b border-gray-200">
+              <div className="flex items-center gap-3">
+                <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5 object-contain" />
+                <span className="font-medium">{doc.category}</span>
+              </div>
+              <span className="text-gray-600">{doc.count} Documents</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-white border border-gray-100 rounded-2xl p-6">
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center">
+            <img src="/su1.svg" alt="Loan" className="h-5 w-5 mr-2" />
+            <h2 className="text-[12px] font-medium text-[#606062]">LOAN DETAILS</h2>
+          </div>
+          <div className="px-4 py-1 rounded-md border border-yellow-400 text-yellow-500">
+            In-Review
+          </div>
+        </div>
+        <div className="space-y-4">
+          {loanDetails.map((detail, index) => (
+            <div key={index} className="flex items-center justify-between py-3 border-b border-gray-200">
+              <div className="flex items-center gap-3">
+                <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5 object-contain" />
+                <span className="font-medium">{detail.type}</span>
+              </div>
+              <span className="text-gray-600">{detail.count} Documents</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+        
         <div className="flex flex-row">
           <div className="w-full">
             <div className="flex flex-row justify-between text-end items-end mr-2">
 
 
             </div>
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-            
 
 
             <div>
@@ -485,6 +672,20 @@ const CrmUnitSummary = ({
               </div>
             </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div>
               <CrmUnitCostSheetView
                 selCustomerPayload={selUnitPayload}
@@ -499,6 +700,25 @@ const CrmUnitSummary = ({
             totalIs={totalIs}
           />
         </div>
+
+
+
+
+        
+   
+
+
+
+
+
+     
+
+
+
+
+
+
+
           </div>
 
           <div className="rounded w-[300px] mx-6 flex flex-col">
@@ -653,6 +873,46 @@ const CrmUnitSummary = ({
           </div>
           </div>
         </div>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
     </PDFExport>
   )

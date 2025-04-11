@@ -26,6 +26,7 @@ import {
   streamGetAllUnitTransactions,
   updateUnitStatus,
   updateUnitStatusDates,
+  steamUnitActivityLog,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { db, storage } from 'src/context/firebaseConfig'
@@ -64,6 +65,9 @@ import BrokerageDetails from './A_BrokerageDetails/BrokerageDetails'
 import ToDoList from './ToDoList'
 import ProjectTasks from './ToDoList'
 import TaskManagementDashboard from './ToDoList'
+import DocumentManagement from '../LegalModule/Docu_row'
+import { computeTotal } from 'src/util/computeCsTotals'
+import { crmActivieLogNamer } from 'src/util/CrmActivityLogHelper'
 
 
 
@@ -154,6 +158,8 @@ export default function UnitFullSummary({
   selSubMenu2,
   source,
   selectedUnitId,
+  selCustomerPayload: selUnitPayload,
+
 
 }) {
   const { user } = useAuth()
@@ -864,6 +870,201 @@ export default function UnitFullSummary({
   };
 
 
+  const documentTypes = [
+    { 
+      id: 1234, 
+      name: 'EC', 
+      type: 'ec', 
+      time: customerDetails?.ecDocUpDate, 
+      url: customerDetails?.ecDocUrl, 
+      filName: customerDetails?.ecFilName,
+      uploadedCount: customerDetails?.ecDocUrl ? 1 : 0 
+    },
+    { 
+      id: 1235, 
+      name: 'Agreement', 
+      type: 'agree', 
+      time: customerDetails?.agreeDocUpDate, 
+      url: customerDetails?.agreeDocUrl, 
+      filName: customerDetails?.agreeFilName,
+      uploadedCount: customerDetails?.agreeDocUrl ? 1 : 0
+
+    },
+    { 
+      id: 1236, 
+      name: 'Register Doc', 
+      type: 'reg', 
+      time: customerDetails?.regDocUpDate, 
+      url: customerDetails?.regDocUrl, 
+      filName: customerDetails?.regFilName,
+      uploadedCount: customerDetails?.regDocUrl ? 1 : 0
+
+    },
+  ];
+  
+  const totalUploadedDocs = documentTypes.filter(doc => doc.url).length;
+  
+
+  const pendingDocs = documentTypes.length - totalUploadedDocs; 
+
+
+
+
+  const [netTotal, setNetTotal] = useState(0)
+  const [partATotal, setPartATotal] = useState(0)
+  const [partBTotal, setPartBTotal] = useState(0)
+  const [unitFetchedActivityData, setUnitFetchedActivityData] = useState([])
+
+
+    // const boot = async () => {
+    //   const unsubscribe = steamUnitActivityLog(orgId, {
+    //     uid: selUnitPayload?.id,
+    //     pId: selUnitPayload?.pId,
+    //   })
+  
+
+
+
+
+
+    //   const y = await unsubscribe
+    //   setUnitFetchedActivityData(y)
+    //   await console.log('new setup ', unitFetchedActivityData)
+    //   await console.log('new setup ', y)
+    // }
+
+
+    useEffect(() => {
+      console.log('unit dta is ', selUnitPayload, selUnitPayload?.id)
+      boot()
+      setTotalFun()
+      const subscription = supabase
+        .from(`${orgId}_unit_logs`)
+        .on('*', (payload) => {
+          console.log('account records', payload)
+          const updatedData = payload.new
+          const { uid } = payload.old
+          const eventType = payload.eventType
+          console.log('account records', updatedData.Uuid, selUnitPayload?.id)
+  
+          if (updatedData.Uuid === selUnitPayload?.id) {
+            if (updatedData.Uuid === selUnitPayload?.id) {
+              console.log('account records', updatedData.Uuid, selUnitPayload?.id)
+              setUnitFetchedActivityData((prevLogs) => {
+                const existingLog = prevLogs.find((log) => log.uid === uid)
+                console.log(
+                  'account records',
+                  prevLogs,
+                  existingLog,
+                  uid,
+                  payload.old,
+                  uid
+                )
+                if (existingLog) {
+                  console.log('Existing record found!')
+                  if (payload.new.status === 'Done') {
+                    const updatedLogs = prevLogs.filter((log) => log.uid != uid)
+                    return [...updatedLogs]
+                  } else {
+                    const updatedLogs = prevLogs.map((log) =>
+                      log.uid === uid ? payload.new : log
+                    )
+                    return [...updatedLogs]
+                  }
+                } else {
+                  console.log('New record added!')
+                  return [payload.new,...prevLogs]
+                }
+              })
+            } else {
+              if (
+                updatedData.by_uid === user?.uid ||
+                updatedData?.to_uid === user?.uid
+              ) {
+                setUnitFetchedActivityData((prevLogs) => {
+                  const existingLog = prevLogs.find((log) => log.uid === uid)
+  
+                  if (existingLog) {
+                    console.log('Existing record found!')
+                    if (payload.new.status === 'Done') {
+                      const updatedLogs = prevLogs.filter((log) => log.uid != uid)
+                      return [...updatedLogs]
+                    } else {
+                      const updatedLogs = prevLogs.map((log) =>
+                        log.id === uid ? payload.new : log
+                      )
+                      return [...updatedLogs]
+                    }
+                  } else {
+                    console.log('New record added!')
+                    return [payload.new,...prevLogs]
+                  }
+                })
+              }
+            }
+          }
+        })
+        .subscribe()
+  
+      // Clean up the subscription when the component unmounts
+      return () => {
+        supabase.removeSubscription(subscription)
+      }
+    }, [])
+
+
+
+
+
+
+
+
+      const boot = async () => {
+        const unsubscribe = steamUnitActivityLog(orgId, {
+          uid: selUnitPayload?.id,
+          pId: selUnitPayload?.pId,
+        })
+    
+        const y = await unsubscribe
+        setUnitFetchedActivityData(y)
+        await console.log('new setup ', unitFetchedActivityData)
+        await console.log('new setup ', y)
+      }
+      const setTotalFun = async () => {
+        const partBTotal = selUnitPayload?.additonalChargesObj?.reduce(
+          (partialSum, obj) =>
+            partialSum +
+            Number(
+              computeTotal(
+                obj,
+                selUnitPayload?.super_built_up_area || selUnitPayload?.area?.toString()?.replace(',', '')
+              )
+            ),
+          0
+        )
+    
+        const partATotal = selUnitPayload?.plotCS?.reduce(
+          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+          0
+        )
+    
+        console.log('myObj', partATotal)
+    
+        setPartBTotal(partBTotal)
+        setPartATotal(partATotal)
+        setNetTotal(partATotal + partBTotal)
+      }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1224,73 +1425,62 @@ export default function UnitFullSummary({
              */}
 
 
-
-
-
-
-
-
-
 <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-  <div className="relative min-h-screen">
-
-    {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
-    </div> */}
-
-
-
+  <div className="relative min-h-screen mr-6">
     <div className="relative z-0">
-
-
-
-    <h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
-        Unit Documents
+      <h1 className="text-[#606062] mx-auto w-full mb-1 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+        Unit Timeline
       </h1>
       
-
       <img
         alt="CRM Background"
-        src="/bgcrm.svg"
+        src="/bgimgcrm.svg"
         className="w-full h-auto object-cover"
       />
 
-
-      <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-          <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 1</h2>
-            <p className="text-xs text-gray-600">Some info here</p>
+      <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
+              Last Activity
+            </p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
+              {unitFetchedActivityData[0]?.type || 'No Data'}
+            </h2>
           </div>
-          <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 2</h2>
-            <p className="text-xs text-gray-600">More info here</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
+              Upcoming Milestone
+            </p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
+              {unitFetchedActivityData.find(act => act.status === 'pending')?.type || 'No Data'}
+            </h2>
           </div>
-          <div className="text-center">
-            <h2 className="text-sm font-semibold">Column 3</h2>
-            <p className="text-xs text-gray-600">Even more info</p>
+          <div className="text-center space-y-2">
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
+              Current Unit Status
+            </p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
+              {unitFetchedActivityData[0]?.status || 'No Data'}
+            </h2>
           </div>
         </div>
       </div>
     </div>
 
-    
-    <div className="w-full h-full flex justify-center -mt-20 z-10 relative">
-      <div className="w-full max-w-5xl px-4"> 
-        {/* <h1 className="text-[#606062] tracking-[0.06em] font-medium text-[12px] uppercase  pl-4">ACTIVITY LOG</h1> */}
-     
-        
-        <section className="p-4 mt-2 rounded-2xl ">
+    <div className="w-full h-full flex justify-center mt-[-90px] z-10 relative">
+      <div className="w-full max-w-5xl">
+        <section className="p-4 mt-2 rounded-2xl">
           <table className="w-full rounded-2xl overflow-hidden">
             <thead>
               <tr className="h-9">
-                <th className="w-[30%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
+                <th className="w-[25%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
                   User
                 </th>
                 <th className="w-[25%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
                   Date/Time
                 </th>
-                <th className="w-[25%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
+                <th className="w-[30%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
                   Activity
                 </th>
                 <th className="w-[20%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
@@ -1300,29 +1490,47 @@ export default function UnitFullSummary({
             </thead>
 
             <tbody className="bg-[#fff]">
-              {unitTransactionsA?.map((d1, inx) => {
-                return (
+              {unitFetchedActivityData?.length === 0 ? (
+                <tr>
+                  <td colSpan="4" className="text-center py-8 text-gray-500">
+                    No activity data available
+                  </td>
+                </tr>
+              ) : (
+                unitFetchedActivityData?.map((activity, index) => (
                   <tr
-                    key={inx}
-                    className={`border-b border-dashed h-[45px] ${inx % 2 === 0 ? 'bg-gray-50' : ''}`}
+                    key={index}
+                    className={`border-b border-dashed h-[45px] ${
+                      index % 2 === 0 ? 'bg-[#FCFCFD]' : 'bg-[#FCFCFD]'
+                    }`}
                   >
-                    <td className="text-[12px] text-center text-gray-800">{d1.user || 'System'}</td>
-                    <td className="text-[13px] text-center text-gray-800 font-bold">
-                      {new Date(d1.timestamp).toLocaleString()}
-                    </td>
-                    <td className="text-[12px] text-center text-gray-800">{d1.activity}</td>
                     <td className="text-[12px] text-center text-gray-800">
-                      <span className={`px-2 py-1 rounded-full ${
-                        d1.status === "Completed" ? "bg-green-100 text-green-800" :
-                        d1.status === "Pending" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-red-100 text-red-800"
-                      }`}>
-                        {d1.status}
+                      {activity.by || 'System'}
+                    </td>
+                    <td className="text-[12px] text-center text-gray-800">
+                      {activity.type === 'ph'
+                        ? timeConv(Number(activity.time)).toLocaleString()
+                        : timeConv(activity.T).toLocaleString()}
+                    </td>
+                    <td className="text-[12px] text-center text-gray-800">
+                      {crmActivieLogNamer(activity)}
+                    </td>
+                    <td className="text-[12px] text-center">
+                      <span
+                        className={`px-2 py-1 rounded-full ${
+                          activity.status === 'Done'
+                            ? 'bg-green-100 text-green-800'
+                            : activity.status === 'In Progress'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-red-100 text-red-800'
+                        }`}
+                      >
+                        {activity.status || 'Pending'}
                       </span>
                     </td>
                   </tr>
-                );
-              })}
+                ))
+              )}
             </tbody>
           </table>
         </section>
@@ -1351,7 +1559,7 @@ export default function UnitFullSummary({
 {selFeature === 'applicant_info' && (
   <>
     {!openApplicantEdit && (
-      <div className=" overflow-auto m-2 mt-[1px] rounded-lg border border-gray-100  no-scrollbar h-[100%] overflow-y-scroll">
+      <div className=" w-full items-center justify-center  mx-auto min-h-screen">
         <ShowCustomerDetails
           source="fromBookedUnit"
           title="Booking Form"
@@ -1362,7 +1570,7 @@ export default function UnitFullSummary({
       </div>
     )}
     {openApplicantEdit && (
-      <div className="mt-2 h-full flex flex-col justify-between overflow-auto no-scrollbar">
+      <div className="mt-2 h-full flex flex-col justify-between overflow-y-scroll scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
         <div className="flex-1 overflow-y-auto">
           <AddApplicantDetails
             source="fromBookedUnit"
@@ -1399,13 +1607,13 @@ export default function UnitFullSummary({
         
         {/* <div className='overflow-y-scroll w-full items-center justify-center mx-auto max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'> */}
 
-         <div className='relative min-h-screen'>
+         <div className='relative min-h-screen mr-6'>
 {/* 
          <h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px]    mb-4">UNIT FEATURES</h1>
 
           
       
-        <img  alt="" src="/bgcrm.svg" className='w-full'></img> */}
+        <img  alt="" src="/bgimgcrm.svg" className='w-full'></img> */}
 
 
 
@@ -1413,31 +1621,34 @@ export default function UnitFullSummary({
 
 
 
-<h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] mb-1  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Features
   </h1>
   
 
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
 
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+      <div className="text-center space-y-2">
+      <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Booked On</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+       
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
-        <p className="text-xs text-gray-600">More info here</p>
+      <div className="text-center space-y-2">
+      <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Next Target  Date</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+   
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+      <div className="text-center space-y-2">
+      <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Premium Type</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+  
       </div>
     </div>
   </div>
@@ -1449,7 +1660,7 @@ export default function UnitFullSummary({
 
 
           
-        <div className='absolute w-full flex justify-center -mt-20 z-10'>
+        <div className='absolute w-full flex justify-center mt-[-70px] z-10'>
 
 
        <div className='w-full max-w-4xl px-4 mx-auto'>
@@ -1464,15 +1675,19 @@ export default function UnitFullSummary({
 
 <div className="p-8 rounded-2xl  bg-white w-full">
 
+
+
+  
+
  
 
 
 <section className="mb-8">
-<h2 className="text-[12px] text-gray-600 font-medium mb-6">UNIT DETAILS</h2>
+<h2 className="font-outfit text-[#606062] font-medium text-[12px] leading-[100%] tracking-normal uppercase mb-6">UNIT DETAILS</h2>
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.725 2.56357C3.94557 2.70853 3.37194 2.96493 2.91843 3.41843C2.46493 3.87194 2.20853 4.44557 2.06357 5.225M13.275 2.56357C14.0544 2.70853 14.6281 2.96493 15.0816 3.41843C15.5351 3.87194 15.7915 4.44557 15.9364 5.225M10.425 2.37872C9.98669 2.375 9.51293 2.375 9 2.375C8.48707 2.375 8.0133 2.375 7.57499 2.37872M16.1213 8.075C16.125 8.51331 16.125 8.98707 16.125 9.5C16.125 10.0129 16.125 10.4867 16.1213 10.9251M1.87872 8.075C1.875 8.51331 1.875 8.98707 1.875 9.5C1.875 10.0129 1.875 10.4867 1.87872 10.9251M2.06357 13.775C2.20853 14.5544 2.46493 15.1281 2.91843 15.5816C3.37194 16.0351 3.94557 16.2915 4.725 16.4364M15.9364 13.775C15.7915 14.5544 15.5351 15.1281 15.0816 15.5816C14.6281 16.0351 14.0544 16.2915 13.275 16.4364M10.425 16.6213C9.98669 16.625 9.51293 16.625 9 16.625C8.48712 16.625 8.0134 16.625 7.57512 16.6213" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1480,16 +1695,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">Unit No</div>
-<div className="text-base font-outfitfont-medium">{selCustomerPayload?.unit_no}</div>
+<div className="text-[#606062] font-medium text-[12px] font-outfit ">Unit No</div>
+<div className="text-base font-outfit font-medium">{selCustomerPayload?.unit_no}</div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden pr-4 md:block w-px bg-gray-200 self-stretch"></div> */}
+
+{/* <div className="hidden mr-4 md:block w-px bg-gray-200 h-4 self-stretch pt-2 pb-6"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center  flex-1 border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.2911 10.7911C10.5782 10.5039 10.7423 10.121 11.0705 9.35522L12.2379 6.63128C12.3552 6.35758 12.4139 6.22073 12.3466 6.15342C12.2793 6.08611 12.1424 6.14476 11.8687 6.26207L9.14478 7.42947C8.379 7.75766 7.99612 7.92175 7.70893 8.20893M10.2911 10.7911C10.0039 11.0782 9.621 11.2423 8.85522 11.5705L6.13128 12.7379C5.85758 12.8552 5.72073 12.9139 5.65342 12.8466C5.58611 12.7793 5.64476 12.6424 5.76207 12.3687L6.92947 9.64478C7.25766 8.879 7.42175 8.49612 7.70893 8.20893M10.2911 10.7911L7.70893 8.20893" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1501,18 +1718,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">Facing</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit ">Facing</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.facing}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center  flex-1 border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1524,18 +1741,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">Size (sqft)</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit ">Size (sqft)</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.area?.toLocaleString('en-IN')}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center flex-1   flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1549,8 +1766,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">BUA (sqft)</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px]  font-outfit">BUA (sqft)</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.builtup_area?.toLocaleString('en-IN') || selCustomerPayload?.construct_area?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1573,7 +1790,7 @@ export default function UnitFullSummary({
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1583,18 +1800,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">BedRooms</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit ">BedRooms</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.Bedrooms_D}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8.25 14L4.90012 9.98014C4.7088 9.75056 4.61314 9.63577 4.61314 9.5C4.61314 9.36423 4.7088 9.24944 4.90012 9.01986L8.25 5" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1603,16 +1820,16 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px] ">Bathrooms</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px]  font-outfit">Bathrooms</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.BathRooms_D?.toLocaleString('en-IN')}
 </div>
 </div>
 </div>
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.5 9.125L8.49321 5.46456C8.73382 5.244 8.85413 5.13371 9 5.13371C9.14587 5.13371 9.26618 5.244 9.50679 5.46456L13.5 9.125" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1621,16 +1838,16 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Car Parking</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Car Parking</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
 </div>
 </div>
 </div>
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.5 9.875L8.49321 13.5354C8.73382 13.756 8.85413 13.8663 9 13.8663C9.14587 13.8663 9.26618 13.756 9.50679 13.5354L13.5 9.875" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1639,8 +1856,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Carpet Area Sqft</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Carpet Area Sqft</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.Carpet_Area_D?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1656,11 +1873,11 @@ export default function UnitFullSummary({
 
 
 <section className="mb-8">
-<h2 className="text-[12px] text-gray-600 font-medium mb-4">DIMENSIONS</h2>
+<h2 className="text-[12px] text-gray-600 font-medium mb-4 font-outfit">DIMENSIONS</h2>
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center   border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1670,18 +1887,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">East</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">East</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.east_d?.toLocaleString('en-IN')}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8.25 14L4.90012 9.98014C4.7088 9.75056 4.61314 9.63577 4.61314 9.5C4.61314 9.36423 4.7088 9.24944 4.90012 9.01986L8.25 5" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1690,18 +1907,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">West</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">West</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.west_d?.toLocaleString('en-IN')}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.5 9.125L8.49321 5.46456C8.73382 5.244 8.85413 5.13371 9 5.13371C9.14587 5.13371 9.26618 5.244 9.50679 5.46456L13.5 9.125" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1710,18 +1927,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">North</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">North</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.north_d?.toLocaleString('en-IN')}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center   flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.5 9.875L8.49321 13.5354C8.73382 13.756 8.85413 13.8663 9 13.8663C9.14587 13.8663 9.26618 13.756 9.50679 13.5354L13.5 9.875" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1730,8 +1947,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">South</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">South</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.south_d?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1741,11 +1958,11 @@ export default function UnitFullSummary({
 
 
 <section className="mb-8">
-<h2 className="text-[12px] text-gray-600 font-medium mb-4">STATUS</h2>
+<h2 className="text-[12px] text-gray-600 font-medium mb-4 font-outfit">STATUS</h2>
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11.25 6.125C11.25 6.125 11.625 6.125 12 6.875C12 6.875 13.1912 5 14.25 4.625" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1757,18 +1974,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Unit Status</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Unit Status</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.status}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M3 11H4.79611C5.01673 11 5.23431 11.0497 5.43163 11.1452L6.96311 11.8862C7.16043 11.9816 7.37801 12.0313 7.59862 12.0313H8.38059C9.1369 12.0313 9.75 12.6246 9.75 13.3565C9.75 13.3861 9.72973 13.4121 9.70034 13.4202L7.79466 13.9471C7.4528 14.0416 7.08675 14.0087 6.76875 13.8548L5.13158 13.0627" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1778,18 +1995,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Status</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Status</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.release_status?.toLocaleString('en-IN')}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.3125 14.1875C11.2026 15.0776 12.375 15.9821 12.375 15.9821L13.9821 14.375C13.9821 14.375 13.0776 13.2026 12.1875 12.3125C11.2974 11.4224 10.125 10.5179 10.125 10.5179L8.51786 12.125C8.51786 12.125 9.42239 13.2974 10.3125 14.1875ZM10.3125 14.1875L7.5 17M14.25 14.1071L12.1071 16.25M10.3929 10.25L8.25 12.3929" stroke="#141B34" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1799,18 +2016,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Mortgage</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Mortgage</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.mortgage_type}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1.5 17H16.5" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round"/>
@@ -1823,9 +2040,9 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Sharing</div>
-<div className="text-base font-outfitfont-medium">
-{selCustomerPayload?.sharing}
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Sharing</div>
+<div className="text-base font-outfit font-medium">
+{selCustomerPayload?.sharing || 'No Data'}
 </div>
 </div>
 </div>
@@ -1834,11 +2051,11 @@ export default function UnitFullSummary({
 
 
 <section className="mb-8">
-<h2 className="text-[12px] text-gray-600 font-medium mb-4">SCHEDULE</h2>
+<h2 className="text-[12px] text-gray-600 font-medium mb-4 font-outfit">SCHEDULE</h2>
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1850,18 +2067,18 @@ export default function UnitFullSummary({
 </svg>
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">East by</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">East by</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.east_sch_by?.toLocaleString('en-IN')}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1875,18 +2092,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">West by</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">West by</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.west_sch_by?.toLocaleString('en-IN')}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1899,18 +2116,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">North by</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">North by</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.north_sch_by?.toLocaleString('en-IN')}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center   flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 
@@ -1924,8 +2141,8 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">South by</div>
-<div className="text-base font-outfitfont-medium">
+<div className="text-[#606062] font-medium text-[12px] font-outfit">South by</div>
+<div className="text-base font-outfit font-medium">
 {selCustomerPayload?.south_sch_by?.toLocaleString('en-IN')}
 </div>
 </div>
@@ -1938,7 +2155,7 @@ export default function UnitFullSummary({
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1.5 5C1.5 4.29289 1.5 3.93934 1.71967 3.71967C1.93934 3.5 2.29289 3.5 3 3.5C3.70711 3.5 4.06066 3.5 4.28033 3.71967C4.5 3.93934 4.5 4.29289 4.5 5V6.5C4.5 7.20711 4.5 7.56066 4.28033 7.78033C4.06066 8 3.70711 8 3 8C2.29289 8 1.93934 8 1.71967 7.78033C1.5 7.56066 1.5 7.20711 1.5 6.5V5Z" stroke="#0E0A1F" stroke-width="1.125"/>
@@ -1953,18 +2170,18 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Survey No</div>
-<div className="text-base font-outfitfont-medium">
-{selCustomerPayload?.survey_no}
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Survey No</div>
+<div className="text-base font-outfit font-medium">
+{selCustomerPayload?.survey_no || 'No Data'}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1.5 5C1.5 4.29289 1.5 3.93934 1.71967 3.71967C1.93934 3.5 2.29289 3.5 3 3.5C3.70711 3.5 4.06066 3.5 4.28033 3.71967C4.5 3.93934 4.5 4.29289 4.5 5V6.5C4.5 7.20711 4.5 7.56066 4.28033 7.78033C4.06066 8 3.70711 8 3 8C2.29289 8 1.93934 8 1.71967 7.78033C1.5 7.56066 1.5 7.20711 1.5 6.5V5Z" stroke="#0E0A1F" stroke-width="1.125"/>
@@ -1979,18 +2196,20 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">PID No</div>
-<div className="text-base font-outfitfont-medium">
-{selCustomerPayload?.PID_no}
+<div className="text-[#606062] font-medium text-[12px] font-outfit">PID No</div>
+<div className="text-base font-outfit font-medium">
+{selCustomerPayload?.PID_no || 'No Data'}
 </div>
 </div>
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+{/* <div className="flex items-center   flex-1 min-w-42">
+<div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4"> */}
+<div className="flex items-center border border-r  border-0  border-transparent mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8.64706 17H7.85294C4.85814 17 3.36073 17 2.43037 16.1213C1.5 15.2426 1.5 13.8284 1.5 11L1.5 8C1.5 5.17157 1.5 3.75736 2.43037 2.87868C3.36073 2 4.85814 2 7.85294 2L8.64706 2C11.6419 2 13.1393 2 14.0696 2.87868C15 3.75736 15 5.17157 15 8V8.375" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round"/>
@@ -2002,15 +2221,15 @@ export default function UnitFullSummary({
 
 </div>
 <div>
-<div className="text-[#606062] font-medium text-[12px]">Katha No</div>
-<div className="text-base font-outfitfont-medium">
-{selCustomerPayload?.Katha_no}
+<div className="text-[#606062] font-medium text-[12px] font-outfit">Katha No</div>
+<div className="text-base font-outfit font-medium">
+{selCustomerPayload?.Katha_no || 'No Data'}
 </div>
 </div>
 </div>
 
 
-<div className="flex-1 min-w-48"></div>
+<div className="flex-1 items-center min-w-48"></div>
 </div>
 </section>
 </div>
@@ -2022,13 +2241,13 @@ export default function UnitFullSummary({
 <div className="flex flex-col  mr-4 rounded-lg  mb-10 mt-2 ">
 <div className="flex flex-row">
 
-  <h1 className="text-bodyLato text-left uppercase text-[#606062] font-medium text-[14px] mb-2 mt-3 ml-1">
+  <h1 className="font-outfit text-left uppercase text-[#606062] font-medium text-[12px] mb-2 mt-3 ml-1">
     Dates        
     </h1>
 </div>
 
-<div className="relative bg-white  max-w-5xl rounded-2xl p-8 col-span-12 'w-full  mx-auto  space-y-2 sm:col-span-9 mt-1">
-  <ol className="items-center sm:flex">
+<div className="relative bg-white font-outfit  max-w-5xl rounded-2xl p-8 col-span-12 'w-full  mx-auto  space-y-2 sm:col-span-9 mt-1">
+  <ol className="items-center font-outfit sm:flex">
     {events.map((d, i) => (
       <li key={i} className="relative mb-6 sm:mb-0">
 
@@ -2208,10 +2427,10 @@ className="w-4 h-4"
 {selFeature === 'loan_info' && (
   <>
     <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-      <div className="relative min-h-screen">
+      <div className="relative min-h-screen mr-6">
         {/* Background image */}
         {/* <div>
-          <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+          <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
         </div> */}
 
 
@@ -2219,36 +2438,36 @@ className="w-4 h-4"
 
 
 
-<h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] mb-1   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 Loan details
   </h1>
 
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
   
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Funding Type</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
-        <p className="text-xs text-gray-600">More info here</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Self Contribution</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Bank Contribution</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
     </div>
   </div>
 </div>
 
-        <div className="w-full max-w-4xl px-4 mx-auto  h-full items-center justify-center  flex -mt-20 z-10 relative">
+        <div className="w-full max-w-5xl px-4 mx-auto  h-full items-center justify-center  flex mt-[-70px] z-10 relative">
           <LoanApplyFlowHome customerDetails={customerDetails} />
         </div>
       </div>
@@ -2277,10 +2496,10 @@ Loan details
 
 {/* <h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-4">Unit Documents</h1> */}
 
-  <div className="relative min-h-screen">
+  <div className="relative min-h-screen mr-6">
   
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -2291,31 +2510,34 @@ Loan details
 
 
 
-<h1 className="text-[#606062]  max-w-4xl  mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit mb-1    mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Documents
   </h1>
   
  
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
 
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Total Documents</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]"> {totalUploadedDocs}</h2>
+
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
-        <p className="text-xs text-gray-600">More info here</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Uploaded By</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Pending Documents</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">{pendingDocs}</h2>
+
       </div>
     </div>
   </div>
@@ -2327,79 +2549,34 @@ Loan details
 
 
 
-    <div className='w-full h-full flex justify-center -mt-20 z-10 relative '>
+    <div className='w-full h-full items-center flex justify-center mt-[-90px] z-10 relative '>
 
 
-<div className="w-full max-w-4xl px-4 flex flex-col">
+<div className="w-full max-w-3xl px-4 flex flex-col">
 
 
+      <section className="w-full max-w-3xl mx-auto  mt-2 rounded-2xl">
+    {/* <div className="text-right text-sm text-gray-500 mb-2">
+      {totalUploadedDocs} of {documentTypes.length}
+    </div> */}
 
+    {documentTypes.length === 0 ? (
+      <div className="w-full text-center py-5">No documents</div>
+    ) : (
+      documentTypes.map((doc, i) => (
+        <section key={i} className="px-4">
+          <DocRow 
+            data={doc} 
+            id={customerDetails?.id} 
+            fileName={doc?.name} 
+            date={doc?.time}   
+            uploadedCount={doc.uploadedCount} 
 
-<section className="bg-white w-full max-w-4xl p-4 mt-2 rounded-2xl">
-        
-        <div className="">
-          <div className="  ">
-            <div className="">
-           
-              <span
-                className=""
-                onClick={() => {
-                  setSliderInfo({
-                    open: true,
-                    title: 'legal_doc_upload',
-                    sliderData: {},
-                    widthClass: 'max-w-xl',
-                  })
-                }}
-              >
-              </span>
-            </div>
-          </div>
-        </div>
-        {[
-          { id: 1234, name: 'EC', time: '22-Nov-2022' },
-          {
-            id: 1235,
-            name: 'Agreement',
-            time: '24-Nov-2022',
-          },
-          {
-            id: 1236,
-            name: 'Register Doc',
-            time: '2-Dec-2022',
-          },
-        ].length === 0 ? (
-          <div className="w-full text-center py-5">No documents</div>
-        ) : (
-          ''
-        )}
-        {[
-          { id: 1234, name: 'EC',type: 'ec',time: customerDetails?.ecDocUpDate, url: customerDetails?.ecDocUrl , filName: customerDetails?.ecFilName },
-          {
-            id: 1235,
-            name: 'Agreement',
-            type: 'agree',
-            time: customerDetails?.agreeDocUpDate, url: customerDetails?.agreeDocUrl , filName: customerDetails?.agreeFilName,
-          },
-          {
-            id: 1236,
-            name: 'Register Doc',
-            type: 'reg',
-            time: customerDetails?.regDocUpDate, url: customerDetails?.regDocUrl , filName: customerDetails?.regFilName,
-          },
-        ]?.map((doc, i) => (
-          <section
-            key={i}
-
-            className='px-4'
-
-          
-
-          >
-            <DocRow  key={i} data={doc} id={customerDetails?.id} fileName={doc?.name} date={doc?.time}  />
-          </section>
-        ))}
-      </section>
+          />
+        </section>
+      ))
+    )}
+  </section>
   </div>
 
 </div>
@@ -2575,8 +2752,8 @@ Loan details
               })}
             </span>
             <button
-              className={`ml-3  py-1 text-sm font-medium text-center rounded-lg border-b-2 hover:text-[#484848] border-transparent ${
-                selFeature === d.val ? 'text-[#484848] font-bold' : 'text-[#A6A6A6]'
+              className={`ml-3 font-outfit  py-1 text-[14px] font-medium text-center rounded-lg border-b-2 hover:text-[##0E0A1F] border-transparent ${
+                selFeature === d.val ? 'text-[#0E0A1F]  font-medium' : 'text-[#606062]'
               }`}
               type="button"
               role="tab"

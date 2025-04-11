@@ -317,10 +317,10 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
 
 
     <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-  <div className="relative min-h-screen">
+  <div className="relative min-h-screen mr-6">
     {/* Background image */}
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -329,31 +329,32 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
 
 
 
-<h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
-    Unit Documents
+<h1 className="text-[#606062] font-outfit mb-1  mx-auto w-full tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+unit analayes
   </h1>
   
 
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
 
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Last Modified</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
-        <p className="text-xs text-gray-600">More info here</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">More info here</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Audit Done By</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+
       </div>
     </div>
   </div>
@@ -361,7 +362,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
 
 
 
-    <div className="w-full h-full flex justify-center -mt-20 z-10 relative">
+    <div className="w-full h-full flex justify-center mt-[-70px] z-10 relative">
   <div className=" max-w-4xl mx-auto px-4 w-full">
 
   {/* <h1 className="text-[#606062] tracking-[0.06em]  font-medium text-[12px] uppercase  pl-4">Unit Analysis  </h1> */}
@@ -374,7 +375,7 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
       <div className="grid gap-8 grid-cols-1">
         <div className="flex flex-col bg-[#FFFFFF] p-6 rounded-2xl  ">
           <div className="mt-0">
-            <p className="text-gray-700">
+            <p className="text-gray-700 font-outfit">
               Review and recalculate unit details to ensure all data is accurate and up-to-date.
             </p>
             <button

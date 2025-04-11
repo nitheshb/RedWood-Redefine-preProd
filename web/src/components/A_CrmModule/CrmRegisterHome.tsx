@@ -33,6 +33,7 @@ import SiderForm from '../SiderForm/SiderForm'
 import RoundedProgressBar from '../A_SalesModule/Reports/charts/horizontalProgressBar'
 import { ToWords } from 'to-words'
 import IndianCurrencyTooltip from '../A_CRMcomp/IndianCurrencyTooltip'
+import { USER_ROLES } from 'src/constants/userRoles'
 
 
 
@@ -125,7 +126,7 @@ const modifyItems = [
     status: 'pending',
   },
 ]
-const CrmRegisterModeHome = ({ leadsTyper }) => {
+const CrmRegisterModeHome = ({ leadsTyper,customerDetails }) => {
   const d = new window.Date()
   const { t } = useTranslation()
   const { user } = useAuth()
@@ -160,6 +161,9 @@ const CrmRegisterModeHome = ({ leadsTyper }) => {
 
   const [selSubMenu1, setSelSubMenu1] = useState('summary')
   const [unitTotal, setUnitTotal] = useState(0)
+
+
+  const [assignerName, setAssignerName] = useState('')
 
   const DocumentationHeadA = [
     { lab: 'All Transactions', val: 'all' },
@@ -488,7 +492,10 @@ console.log(formatIndianNumber(25000000));
 
   
 
-
+useEffect(() => {
+   
+  setAssignerName(customerDetails?.assignedToObj?.label)
+}, [customerDetails])
 
 
 
@@ -497,13 +504,13 @@ console.log(formatIndianNumber(25000000));
 
   return (
     <>
-      <div className=" font-rubikF mt-1 py-2 bg-white rounded-t-lg ">
-        <div className=" max-w-7xl mx-auto">
+      <div className=" font-outfit mt-1 py-2 bg-[#F6F5F8] rounded-t-lg ">
+        <div className=" max-w-8xl px-6 mx-auto">
           <div
             className="
             "
           >
-            <div className="flex items-center flex-row flex-wrap justify-between py-1 pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
+            <div className="flex items-center flex-row flex-wrap justify-between py-1 pb-5  px-3 py-3 ">
               <h2 className="text-md font-semibold text-black leading-light font-Playfair">
                 CRM
               </h2>
@@ -548,11 +555,11 @@ console.log(formatIndianNumber(25000000));
                 )}
               </div>
             </div>
-            <div className="items-center justify-between  my-1 bg-white rounded-lg  ">
+            <div className="  flex-col justify-between flex  my-4  ">
 
-              <div className=" border-gray-900  bg-[#F1F5F9] rounded-t-lg flex flex-row justify-between">
+              <div className=" border-gray-900 flex items-center flex-row justify-between">
                 <ul
-                  className="flex   rounded-t-lg "
+                  className="flex  gap-x-4  rounded-t-lg "
                   id="myTab"
                   data-tabs-toggle="#myTabContent"
                   role="tablist"
@@ -566,25 +573,30 @@ console.log(formatIndianNumber(25000000));
                     { lab: 'Possession', val: 'possession' },
                     { lab: 'Unassigned', val: 'unAssigned_crm' },
                     { lab: 'Queries', val: 'queries' },
-                  ].map((d, b) => {
+                  ].map((d, b, arr) => {
                     return (
                       <li
                         key={b}
-                        className="mr-2 ml-2 text-sm font-bodyLato"
+                        // className="mr-2 ml-2 text-sm font-bodyLato"
+                        className={`ml-2 text-sm font-bodyLato flex  items-center  h-4 ${
+                          b !== arr.length - 1 ? 'border-r border-gray-300' : ''
+                        }`}
                         role="presentation"
                       >
                         <button
-                          className={`inline-block py-3 mr-3 px-1 text-sm font-medium  font-rubikF text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
+                          className={`inline-block py-2 mr-3 px-1 text-[16px] font-medium  font-outfit text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
                             selCategory === d.val
-                              ? 'border-black text-black'
-                              : 'border-transparent'
+                              ? 'text-black border-black '
+                              : 'text-gray-500  border-transparent'
                           }`}
                           type="button"
                           role="tab"
                           onClick={() => setSelCategory(d.val)}
                         >
                           {`${d.lab} `}
-                          <span className="border border-gray-300 text-gray-800 px-1 py-1 rounded-full ml-[4px] text-[10px] ">
+                          {/* <span className=" bg-[#E5E7EB] text-gray-800 px-1.5 py-1.5 rounded-full ml-[4px] text-[12px] "> */}
+                          <span className={` ${selCategory === d.val ? 'bg-[#EDE9FE] text-[#0E0A1F]' : 'bg-[#E5E7EB] text-[#606062]'} px-1.5 py-1.5 rounded-full ml-[4px] text-[12px] `}>
+
                             {d.val === 'booked' && (
                               <span>{bookingReviewCo}</span>
                             )}
@@ -636,7 +648,7 @@ console.log(formatIndianNumber(25000000));
                 } flex flex-row py-2 justify-between `}
               >
                 <div className="flex flex-row w-full">
-                  <span className="flex ml-2 mr-2 h-[34px] bg-gray-50 border border-gray-300 border-solid box-border w-1/3 rounded-md">
+                  <span className="flex ml-2 mr-2 h-[34px]  border border-gray-300 border-solid box-border w-1/3 rounded-md">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4  mt-[9px] mx-2"
@@ -767,7 +779,7 @@ console.log(formatIndianNumber(25000000));
                                 )
                               }
                             >
-                              <div className="m-1 pt- pb-3 bg-white rounded-lg border border-gray-200">
+                              <div className="m-1  py-1 pb-3 bg-white rounded-lg border border-gray-200">
                                 <section className="flex flex-row px-3  pt-2 justify-between">
                                   <div className="flex flex-row">
                                     <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1">
@@ -811,15 +823,15 @@ console.log(formatIndianNumber(25000000));
                                 <div className="flex flex-row justify-between px-4 pt-4">
                                   <section className="flex flex-col ">
                                     <div className="flex flex-row">
-                                      <div className="self-stretch text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
+                                      <div className="self-stretch text-[#0E0A1F] text-sm font-medium font-outfit tracking-wide">
                                         Unit Cost
                                       </div>
                                       <div className="px-1  h-[19px] rounded justify-center items-center gap-2 flex">
                                         <div className="text-right">
-                                          <span className="text-emerald-600 text-xs font-medium font-['Lato'] tracking-wide">
+                                          <span className="text-emerald-600 text-xs font-medium font-outfit tracking-wide">
                                             ▴{' '}
                                           </span>
-                                          <span className="text-emerald-600 text-[9px] font-bold font-['Lato'] tracking-wide">
+                                          <span className="text-emerald-600 text-[9px] font-bold font-outfit tracking-wide">
                                             ₹{' '}
                                             {finData?.sqft_rate?.toLocaleString(
                                               'en-IN'
@@ -830,7 +842,7 @@ console.log(formatIndianNumber(25000000));
                                       </div>
                                     </div>
                                     <div className="self-stretch justify-start items-center gap-3 inline-flex">
-                                      <div className="text-zinc-800 text-[20px] font-bold font-['Lato'] tracking-wide">
+                                      <div className="text-zinc-800 text-[20px] font-bold font-outfit tracking-wide">
                                         ₹
                                         {(
                                           (finData?.plotCS?.reduce(function (
@@ -862,13 +874,13 @@ console.log(formatIndianNumber(25000000));
                                   </section>
 
                                   <section className="flex flex-col mt-3">
-                                    <div className=" text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
+                                    <div className=" text-[#0E0A1F] text-[12px]  font-normal font-outfit tracking-wide">
                                       Balance ₹
                                       {finData?.T_elgible_balance <0 ? 0: finData?.T_elgible_balance?.toLocaleString(
                                         'en-IN'
                                       )}
                                     </div>
-                                    <div className="text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
+                                    <div className="text-[#0E0A1F] text-[11px] font-normal font-outfit tracking-wide">
                                       Paid: ₹
                                       {(
                                         (finData?.T_review || 0) +
@@ -955,7 +967,7 @@ console.log(formatIndianNumber(25000000));
                                         : finData?.man_cs_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
+                                    }  px-1 py-1 mx-1 inline-block self-end`}
                                     style={{
                                       display: 'inline-block',
                                       alignSelf: 'flex-end',
@@ -979,7 +991,7 @@ console.log(formatIndianNumber(25000000));
                                         : finData?.kyc_status == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
+                                    }  px-1 py-1 mx-1 inline-block self-end`}
                                     style={{
                                       display: 'inline-block',
                                       alignSelf: 'flex-end',
@@ -990,7 +1002,7 @@ console.log(formatIndianNumber(25000000));
                                       setIsSubTopic('crm_KYC')
                                     }}
                                   >
-                                    <div className="self-stretch h-4 text-center text-zinc-800 text-xs font-medium font-['Lato'] tracking-wide">
+                                    <div className="self-stretch h-4 text-center text-zinc-800 text-xs font-medium font-outfit tracking-wide">
                                       KYC
                                     </div>
                                   </div>
@@ -1021,12 +1033,16 @@ console.log(formatIndianNumber(25000000));
                         projName,
                       } = finData
                       return (
-                        <section key={c} className="border border-b-0 ">
-                          <section className="flex flex-row bg-gradient-to-r from-[#Fff] to-[#fff]">
-                            <div className="w-[387px]">
+                        <section key={c} className=" bg-[#F6F5F8] ">
+
+
+
+                          <section className="flex  flex-row items-center justify-center bg-[#FFFFFF] py-2 mb-2  rounded-2xl">
+
+                            <div className="border-r border-[#E7E7E9] w-[23%] ">
                               <div className="flex flex-row   ">
                                 <div
-                                  className="flex flex-col bg-gradient-to-r text-black  py-1 rounded-sm w-[437px] "
+                                  className="flex flex-col  text-black  py-1 rounded-sm  "
                                   onClick={() =>
                                     viewTransaction(
                                       finData,
@@ -1035,64 +1051,120 @@ console.log(formatIndianNumber(25000000));
                                     )
                                   }
                                 >
-                                  <section className="font-rubikF flex flex-row w-[100%] justify-between">
-                                    <section className="flex flex-col ml-2 mt-[3px] w-[100%]">
+                                  <section className="font-outfit flex flex-row w-[100%] justify-between">
+                                    <section className="flex flex-col ml-4  w-[100%]">
                                       <section className="flex flex-row justify-between">
 
                                         <div className="flex flex-row w-full">
-                                          <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 min-w-[100px]">
+                                          <section className="bg-[#EDE9FE] items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 min-w-[90px]">
                                             <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
                                               {unit_no}
                                             </div>
                                             <span
-                                              className={`items-center h-6   text-xs font-semibold text-gray-500  rounded-full
-                      `}
+                                              className={`items-center h-6   text-xs font-medium text-gray-500  rounded-full`}
                                             >
                                               Unit No
                                             </span>
                                           </section>
                                           <div className="flex flex-col w-full  ml-2 item-right  px-2  mr-2 rounded-lg">
                                             <span
-                                              className={`items-center h-1 mt-[6px] mb-2  text-xs font-semibold text-green-600
-                      `}
+                                              className={`text-[14px] font-semibold text-[#000000]`}
                                             >
                                               {customerDetailsObj?.customerName1 ||
                                                 'NA'}
                                             </span>
-                                            <div className="font text-[12px] text-gray-500 tracking-wide overflow-ellipsis overflow-hidden ">
+                                            <div className="text-[12px] text-gray-500">
                                               {projName}
                                             </div>
-                                            <section className="flex flex-row justify-between">
-                                              <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5]  py-[2px] rounded-xl mr-1 ">
+                                            <section className="flex flex-col justify-between">
+                                              {/* <span className="text-green-600 text-xs mt-1">
                                                 {finData?.customerDetailsObj?.phoneNo1?.toLocaleString(
                                                   'en-IN'
                                                 )}{' '}
-                                              </span>
+                                              </span> */}
+                                              <div className='flex gap-1 items-center text-green-600 text-[12px] mt-1'>
+                                              <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.6605 13.1667H12.6668M12.6605 13.1667C12.2454 13.5783 11.493 13.4758 10.9655 13.4758C10.3178 13.4758 10.006 13.6025 9.54378 14.0647C9.15023 14.4583 8.62265 15.1667 8.00018 15.1667C7.37769 15.1667 6.85011 14.4583 6.45654 14.0647C5.99435 13.6025 5.68249 13.4758 5.03487 13.4758C4.50728 13.4758 3.75495 13.5783 3.33982 13.1667C2.92137 12.7517 3.02435 11.9963 3.02435 11.4653C3.02435 10.7943 2.8776 10.4857 2.39975 10.0079C1.68892 9.29709 1.33351 8.94164 1.3335 8.49999C1.3335 8.05835 1.68891 7.70294 2.39973 6.99212C2.8263 6.56555 3.02435 6.14286 3.02435 5.53471C3.02435 5.00711 2.92183 4.25477 3.3335 3.83964C3.74845 3.4212 4.5039 3.52418 5.03488 3.52418C5.64301 3.52418 6.06571 3.32615 6.49226 2.89959C7.20309 2.18876 7.55851 1.83334 8.00016 1.83334C8.44182 1.83334 8.79723 2.18876 9.50806 2.89959C9.93453 3.32605 10.3571 3.52418 10.9654 3.52418C11.493 3.52418 12.2454 3.42166 12.6605 3.83334C13.079 4.2483 12.976 5.00374 12.976 5.53471C12.976 6.20573 13.1227 6.51426 13.6006 6.99212C14.3114 7.70294 14.6668 8.05835 14.6668 8.49999C14.6668 8.94164 14.3114 9.29709 13.6006 10.0079C13.1227 10.4857 12.976 10.7943 12.976 11.4653C12.976 11.9963 13.079 12.7517 12.6605 13.1667Z" stroke="#1B6600"/>
+<path d="M6 9.09525L7.2 10.1667L10 6.83334" stroke="#1B6600" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
 
-                                              <span className="  text-[10px] h-[20px] text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                                Booked:{' '}
+<span>
+                                              Booked On:{' '}
                                                 {prettyDate(
                                                   finData?.booked_on ||
                                                     finData?.ct ||
                                                     0
                                                 )}
                                               </span>
+                                              </div>   
                                             </section>
                                           </div>
                                         </div>
                                       </section>
-
                                     </section>
                                   </section>
                                 </div>
                               </div>
                             </div>
 
-                            <div>
-                              <div className="flex flex-col  border rounded-lg my-1  px-2  pb-4 min-w-[340px] justify-between mr-1">
+                            <div className='border-r border-[#E7E7E9] w-[25%] '>
+                              <div className="flex flex-col  my-1  px-4   justify-between mr-1">
                                 <div className="flex flex-row justify-between mx- mb-1">
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full">
-                                    <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
+                              
+                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
+                                    <div className="text-[12px] font-medium">
+                                      Paid
+                                      <span
+                                        title={`₹ ${(
+                                          finData?.T_review || 0
+                                        )?.toLocaleString(
+                                          'en-IN'
+                                        )} is in accounts review`}
+                                        className="ml-2 "
+                                      >
+                                        <InformationCircleIcon className="h-4 w-4 inline text-zinc-400" />
+                                      </span>
+                                    </div>
+                                    {/* <div className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
+                                      ₹
+                                      {(
+                                        (finData?.T_review || 0) +
+                                        (finData?.T_approved || 0)
+                                      )?.toLocaleString('en-IN')}
+                                    </div> */}
+
+
+<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+  <div
+    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+    style={{ alignItems: 'start', width: '300px' }}
+  >
+    <span
+      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+      style={{
+        color: 'white',
+        background: '#213343',
+        maxWidth: '300px',
+      }}
+    >
+      <span className="italic">
+        {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
+      </span>
+    </span>
+    <div
+      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+      style={{ background: '#213343', marginRight: '12px' }}
+    ></div>
+  </div>
+  <span className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
+    ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+  </span>
+</div>
+
+                                  </section>
+
+                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
+                                    <div className="text-[12px] font-medium">
                                       Stage Cost
                                     </div>
 
@@ -1125,8 +1197,8 @@ console.log(formatIndianNumber(25000000));
                     style={{ background: '#213343', marginRight: '12px' }}
                   ></div>
                 </div>
-                <span className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide ">
-      ₹ {Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
+                <span className="text-zinc-800 text-[12px]  font-outfit tracking-wide ">
+      ₹{Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
                 </span>
       </div>
 
@@ -1134,7 +1206,7 @@ console.log(formatIndianNumber(25000000));
 
 
 
-                                    {/* <div className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide">
+                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
                                       ₹
                                       {finData?.T_elgible?.toLocaleString(
                                         'en-IN'
@@ -1143,63 +1215,12 @@ console.log(formatIndianNumber(25000000));
 
                                     </div> */}
                                   </section>
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full">
-                                    <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
-                                      Paid
-                                      <span
-                                        title={`₹ ${(
-                                          finData?.T_review || 0
-                                        )?.toLocaleString(
-                                          'en-IN'
-                                        )} is in accounts review`}
-                                        className="ml-2 "
-                                      >
-                                        <InformationCircleIcon className="h-4 w-4 inline text-zinc-400" />
-                                      </span>
-                                    </div>
-                                    {/* <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
-                                      ₹
-                                      {(
-                                        (finData?.T_review || 0) +
-                                        (finData?.T_approved || 0)
-                                      )?.toLocaleString('en-IN')}
-                                    </div> */}
-
-
-<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
-  <div
-    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-    style={{ alignItems: 'start', width: '300px' }}
-  >
-    <span
-      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-      style={{
-        color: 'white',
-        background: '#213343',
-        maxWidth: '300px',
-      }}
-    >
-      <span className="italic">
-        {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
-      </span>
-    </span>
-    <div
-      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-      style={{ background: '#213343', marginRight: '12px' }}
-    ></div>
-  </div>
-  <span className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
-    ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
-  </span>
-</div>
-
-                                  </section>
                                   {/* section- 3 */}
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full">
-                                    <div className="mb-[2px] text-zinc-500 text-sm font-medium font-['Lato'] tracking-wide">
+                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
+                                    <div className="text-[12px] font-outfit font-medium">
                                       Balance
                                     </div>
-                                    <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
+                                    <div className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
                                     {/* ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')} */}
 
                                     {/* <IndianCurrencyTooltip amount={(finData?.T_elgible_balance < 0 ? 0 : finData?.T_elgible_balance)?.toLocaleString("en-IN")} /> */}
@@ -1233,8 +1254,8 @@ console.log(formatIndianNumber(25000000));
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
-  ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
+  <span className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
+  ₹{finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
 
 
   </span>
@@ -1246,32 +1267,34 @@ console.log(formatIndianNumber(25000000));
                                       (((finData?.T_review || 0) +
                                       (finData?.T_approved || 0) )/ finData?.T_elgible) *
                                       100
-                                    }/>
+                                    }
+                                    showLabels={true}
+                                    />
 
                                 </div>
                               </div>
                             </div>
 
                             {/* other one */}
-                            <div>
-                              <div className="flex flex-col border rounded-xl my-1  px-2  py-2 pb-4 min-w-[140px] h-[75px] w-[240px] justify-between mx-">
-                                <div className="flex flex-row justify-between mx- mb-2">
-                                  <DoughnutChartWithRoundedSegments
+                            <div className='border-r border-[#E7E7E9] w-[25%] '>
+                              <div className="flex flex-col  my-1  px-4  justify-between mr-1">
+                                <div className="flex flex-row justify-between mx- mb-1">
+                                  {/* <DoughnutChartWithRoundedSegments
                                     progress={
                                       (finData?.T_approved / finData?.T_total) *
                                       100
                                     }
-                                  />
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-[61%] ">
-                                    <section className="flex flex-col  w-full mt-">
-                                    <p className="flex flex-row justify-between text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Unit Cost: ₹
-                                        {/* <div>
-                                        {Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
+                                  /> */}
 
-                                        </div> */}
 
-<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+
+<section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
+                                    <div className="text-[12px] font-medium text-[#606062]">
+                                    Unit Cost
+                                    </div>
+
+
+                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
   <div
     className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
     style={{ alignItems: 'start', width: '300px' }}
@@ -1285,30 +1308,47 @@ console.log(formatIndianNumber(25000000));
       }}
     >
       <span className="italic">
-        {formatIndianNumber?.(Math.round(finData?.T_total || finData?.T_Total || 0))}
-      </span>
+      {formatIndianNumber?.(Math.round(finData?.T_total || finData?.T_Total || 0))}
+
+        </span>
     </span>
     <div
       className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-500 text-[11px] font-normal font-['Lato'] tracking-wide">
-    {Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
+  <span className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
+  ₹{Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
   </span>
 </div>
 
-                                      </p>
 
-                                      <div className="text-zinc-500 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Paid: ₹
-                                        {/* <div>
-                                          {' '}
-                                          {Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
 
-                                        </div> */}
 
-<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+
+
+
+
+
+                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
+                                      ₹
+                                      {finData?.T_elgible?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                      {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
+
+                                    </div> */}
+                                  </section>
+
+                           
+
+                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
+                                    <div className="text-[12px] font-medium">
+                                    Paid:
+                                    </div>
+
+
+                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
   <div
     className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
     style={{ alignItems: 'start', width: '300px' }}
@@ -1330,20 +1370,38 @@ console.log(formatIndianNumber(25000000));
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-[11px] font-normal font-['Lato'] tracking-wide">
-    {Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+  <span className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
+  ₹{Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
   </span>
 </div>
 
-                                      </div>
 
-                                      <div className="text-zinc-800 flex flex-row justify-between text-[11px] font-normal font-['Lato'] tracking-wide">
-                                        Balance:₹
-                                        {/* <div className="text-zinc-900 text-[11px] font-bold  tracking-wide">
-                                        {Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
 
-                                        </div> */}
 
+
+
+
+
+
+                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
+                                      ₹
+                                      {finData?.T_elgible?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                      {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
+
+                                    </div> */}
+                                  </section>
+                                  {/* section- 3 */}
+                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
+                                    <div className="text-[12px] font-medium">
+                                    Balance
+                                    </div>
+
+
+
+
+                                    
 <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
   <div
     className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
@@ -1366,45 +1424,127 @@ console.log(formatIndianNumber(25000000));
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-900 text-[11px] font-bold  tracking-wide">
-    {Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
+  <span className="text-zinc-900 text-[12px] font-bold  tracking-wide">
+  ₹{Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
   </span>
 </div>
+                      
 
-                                      </div>
-                                    </section>
                                   </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              
                                 </div>
+
+                                <div className="flex flex-row mx-1 pt-">
+
+
+
+<RoundedProgressBar
+  progress={
+      (finData?.T_approved / finData?.T_total) *
+       100
+      }
+
+      showLabels={true}
+  />
+  </div>
                               </div>
                             </div>
-                            <div className="w-2/4  ">
-                              <div className="flex flex-col   rounded-md  py-1 ">
-                                <div className="flex flex-row  px-1">
+
+
+    <div className=' w-[12%] border-r border-[#E7E7E9] '>
+
+    <div className="flex flex-col  my-3  px-4   justify-between mr-1 ">
+
+<div className="flex flex-col">
+
+<div className="text-xs font-medium text-gray-500 mb-1">
+    CRM
+  </div>
+
+
+
+</div>
+
+
+<div className="mr-3">
+<div className="relative flex items-center space-x-3">
+<div className="w-10 h-10 overflow-hidden rounded-full flex items-center justify-center">
+<img 
+   src={'/avatar_1.png'}
+  alt="User" 
+  className="w-full h-full object-cover"
+/>
+</div>
+<div className="text-sm font-medium text-gray-800">
+{/* {user?.role?.includes(USER_ROLES.CP_AGENT) && (
+  <span className="text-left text-sm">
+  {' '}
+  {assignerName}
+ </span>
+ )} */}
+
+ No Data
+</div>
+</div>
+</div>
+
+
+
+</div>
+
+    </div>
+
+
+
+
+                            
+                            <div className="w-[15%] ">
+                              <div className="flex  items-center justify-center  h-full rounded-md ">
+                                <div className="flex items-center justify-center   px-1">
                                   {/* section 2 */}
                                  {['booked', 'selCategory'].includes(selCategory) &&
-                                 <section>
+                                <section className="flex gap-2 items-center">
                                   {!(user?.role.includes('crm-executive')) && (
                                  <div
-                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                    className={` cursor-pointer  border  rounded-md ${
                                       finData?.man_cs_approval == 'approved'
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.man_cs_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
+                                        : 'bg-[#FFFFFF]'
+                                    }  px-2 py-2 mx-1 inline-block self-end`}
+                                    // style={{
+                                    //   display: 'inline-block',
+                                    //   alignSelf: 'flex-end',
+                                    // }}
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
                                       setIsSubTopic('crm_cs_approval')
                                     }}
                                   >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
-                                        <ChartPieIcon
+                                    <div className="flex  items-center justify-center gap-1">
+                                      <div className="flex items-center justify-center">
+                                        {/* <ChartPieIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.man_cs_approval ===
                                             'approved'
@@ -1412,37 +1552,47 @@ console.log(formatIndianNumber(25000000));
                                               : 'text-gray-600 '
                                           }`}
                                           aria-hidden="true"
-                                        />
+                                        /> */}
+<img
+    alt="CRM Background"
+    src="/manager.svg"
+    className="w-4 h-4"
+  />
+
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#000000] text-xs ">
                                         Manager
                                       </h6>
                                     </div>
                                   </div>
+                                   
+
+
+
                                   )}
 
                                   {/* section 3*/}
                                   <div
-                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                    className={` cursor-pointer  border   rounded-md ${
                                       finData?.kyc_status == 'approved'
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.kyc_status == 'rejected'
                                         ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
+                                        : 'bg-[#FFFFFF] '
+                                    }  px-2 py-2 mx-1 inline-block self-end`}
+                                    // style={{
+                                    //   display: 'inline-block',
+                                    //   alignSelf: 'flex-end',
+                                    // }}
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
                                       setIsSubTopic('crm_KYC')
                                     }}
                                   >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
+                                    <div className="flex  items-center justify-center gap-1">
+                                      <div className="flex items-center justify-center ">
+                                        {/* <NewspaperIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.kyc_status == 'approved'
                                               ? 'bg-[#CCC5F7]'
@@ -1452,36 +1602,43 @@ console.log(formatIndianNumber(25000000));
                                               : 'bg-[#F1F5F9] '
                                           }`}
                                           aria-hidden="true"
-                                        />
+                                        /> */}
+
+<img
+    alt="CRM Background"
+    src="/IconSets.svg"
+    className="w-4 h-4"
+  />
+
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#000000] text-xs">
                                         KYC
                                       </h6>
                                     </div>
                                   </div>
                                   </section>}
                                    {[ 'agreement_pipeline'].includes(selCategory) &&
-                                 <section>
+                                 <section className='flex gap-2 mt-2'>
                                  <div
-                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                    className={` cursor-pointer  border   rounded-md ${
                                       finData?.man_ats_approval == 'approved'
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.man_ats_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
+                                        : 'bg-[#FFFFFF]'
+                                    }  px-1 py-1 mx-1 inline-block self-end`}
+                                    // style={{
+                                    //   display: 'inline-block',
+                                    //   alignSelf: 'flex-end',
+                                    // }}
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
                                       setIsSubTopic('crm_ATS_Draft')
                                     }}
                                   >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
+                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                      <div className="flex flex-none items-center justify-center  group-hover:bg-white">
                                       <ChartPieIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.man_ats_approval ==
@@ -1495,31 +1652,43 @@ console.log(formatIndianNumber(25000000));
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1 text-center">
+                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1 text-center">
                                       ATS Draft
                                       </h6>
-                                    </div>
+                                    </div> */}
+                                      <div className="flex  items-center justify-center gap-1">
+    <div className="flex items-center justify-center  p-1">
+      <img
+        alt="CRM Background"
+        src="/manager.svg"
+        className="block"
+      />
+    </div>
+    <h6 className="font-bodyLato text-[#000000] text-xs">
+    ATS Draft
+    </h6>
+  </div>
                                   </div>
                                   {/* section 3*/}
                                   <div
-                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                    className={` cursor-pointer   border   rounded-xl ${
                                       finData?.kyc_status == 'approved'
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.kyc_status == 'rejected'
                                         ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
+                                        : 'bg-[#FFFFFF] '
+                                    }  px-1 py-1 mx-1 inline-block self-end`}
+                                    // style={{
+                                    //   display: 'inline-block',
+                                    //   alignSelf: 'flex-end',
+                                    // }}
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
                                       setIsSubTopic('crm_KYC')
                                     }}
                                   >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
                                       <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                         <NewspaperIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
@@ -1533,34 +1702,47 @@ console.log(formatIndianNumber(25000000));
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
                                         KYC
                                       </h6>
-                                    </div>
+                                    </div> */}
+
+<div className="flex  items-center justify-center gap-1">
+    <div className="flex items-center justify-center  p-1">
+      <img
+        alt="CRM Background"
+        src="/manager.svg"
+        className="block"
+      />
+    </div>
+    <h6 className="font-bodyLato text-[#000000] text-xs">
+    KYC
+    </h6>
+  </div>
                                   </div>
                                   </section>}
                                    {['agreement'].includes(selCategory) &&
-                                 <section>
+                                 <section className='flex gap-2 mt-2'>
                                  <div
-                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                    className={` cursor-pointer border   rounded-xl ${
                                       finData?.both_sd_approval == 'approved'
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.both_sd_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
+                                        : 'bg-[#FFFFFF] '
+                                    }  px-1 py-1 mx-1 inline-block self-end`}
+                                    // style={{
+                                    //   display: 'inline-block',
+                                    //   alignSelf: 'flex-end',
+                                    // }}
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
                                       setIsSubTopic('crm_SD_Approval')
                                     }}
                                   >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
+                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                      <div className="flex flex-none items-center justify-center  group-hover:bg-white">
                                         <ChartPieIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.both_sd_approval ===
@@ -1571,31 +1753,44 @@ console.log(formatIndianNumber(25000000));
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1 text-center">
+                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1 text-center">
                                         SD Approval
                                       </h6>
-                                    </div>
+                                    </div> */}
+
+<div className="flex  items-center justify-center gap-1">
+    <div className="flex items-center justify-center  p-1">
+      <img
+        alt="CRM Background"
+        src="/manager.svg"
+        className="block"
+      />
+    </div>
+    <h6 className="font-bodyLato text-[#000000] text-xs">
+    SD Approval
+    </h6>
+  </div>
                                   </div>
                                   {/* section 3*/}
                                   <div
-                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                    className={` cursor-pointer   border   rounded-xl ${
                                       finData?.LpostStatus == 'Approved'
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.LpostStatus == 'Rejected'
                                         ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
+                                        : 'bg-[#FFFFFF] '
+                                    }  px-1 py-1 mx-1 inline-block self-end`}
+                                    // style={{
+                                    //   display: 'inline-block',
+                                    //   alignSelf: 'flex-end',
+                                    // }}
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
                                       setIsSubTopic('crm_loan')
                                     }}
                                   >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
                                       <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                         <NewspaperIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
@@ -1609,34 +1804,46 @@ console.log(formatIndianNumber(25000000));
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
                                         Loan
                                       </h6>
-                                    </div>
+                                    </div> */}
+                                      <div className="flex  items-center justify-center gap-1">
+    <div className="flex items-center justify-center  p-1">
+      <img
+        alt="CRM Background"
+        src="/manager.svg"
+        className="block"
+      />
+    </div>
+    <h6 className="font-bodyLato text-[#000000] text-xs">
+    Loan
+    </h6>
+  </div>
                                   </div>
                                   </section>}
                                   {[ 'registered', 'possession'].includes(selCategory) &&
-                                 <section>
+                                 <section className='flex gap-2 mt-2'>
                                  <div
-                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                    className={` cursor-pointer   border   rounded-xl ${
                                       finData?.both_sd_approval == 'approved'
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.both_sd_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9]'
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
+                                        : 'bg-[#FFFFFF]'
+                                    }  px-1 py-1 mx-1 inline-block self-end`}
+                                    // style={{
+                                    //   display: 'inline-block',
+                                    //   alignSelf: 'flex-end',
+                                    // }}
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
                                       setIsSubTopic('crm_posession')
                                     }}
                                   >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-green-50 group-hover:bg-white">
+                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                      <div className="flex flex-none items-center justify-center  group-hover:bg-white">
                                         <ChartPieIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                             finData?.both_sd_approval ===
@@ -1647,31 +1854,43 @@ console.log(formatIndianNumber(25000000));
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
                                       Posession
                                       </h6>
-                                    </div>
+                                    </div> */}
+                                      <div className="flex  items-center justify-center gap-1">
+    <div className="flex items-center justify-center  p-1">
+      <img
+        alt="CRM Background"
+        src="/manager.svg"
+        className="block"
+      />
+    </div>
+    <h6 className="font-bodyLato text-[#000000] text-xs">
+    Posession
+    </h6>
+  </div>
                                   </div>
                                   {/* section 3*/}
                                   <div
-                                    className={` cursor-pointer  h-[73px] w-[75px] border   rounded-xl ${
+                                    className={` cursor-pointer   border   rounded-xl ${
                                       finData?.kyc_status == 'approved'
                                         ? 'bg-[#CCC5F7]'
                                         : finData?.kyc_status == 'rejected'
                                         ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#F1F5F9] '
-                                    }  p-3 rounded-md mx-1`}
-                                    style={{
-                                      display: 'inline-block',
-                                      alignSelf: 'flex-end',
-                                    }}
+                                        : 'bg-[#FFFFFF] '
+                                    }  px-1 py-1 mx-1 inline-block self-end`}
+                                    // style={{
+                                    //   display: 'inline-block',
+                                    //   alignSelf: 'flex-end',
+                                    // }}
                                     onClick={() => {
                                       setSelUnitDetails(finData)
                                       setIsSubTopicOpen(true)
                                       setIsSubTopic('crm_loan')
                                     }}
                                   >
-                                    <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
                                       <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                         <NewspaperIcon
                                           className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
@@ -1685,10 +1904,24 @@ console.log(formatIndianNumber(25000000));
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
                                         Loan
                                       </h6>
-                                    </div>
+                                    </div> */}
+
+
+<div className="flex  items-center justify-center gap-1">
+    <div className="flex items-center justify-center  p-1">
+      <img
+        alt="CRM Background"
+        src="/manager.svg"
+        className="block"
+      />
+    </div>
+    <h6 className="font-bodyLato text-[#000000] text-xs">
+    Loan
+    </h6>
+  </div>
                                   </div>
                                   </section>}
                                   {/* section 4*/}
@@ -1866,7 +2099,7 @@ console.log(formatIndianNumber(25000000));
                               <div className="flex flex-col bg-white shadow rounded-md my-1  px-2  py-2">
                                 <div className="flex flex-row justify-between px-1">
                                   <div
-                                    className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1"
+                                    className=" w-[100px] bg-[#F1F5F9] px-1 py-1 mx-1 inline-block self-end"
                                     style={{
                                       display: 'inline-block',
                                       alignSelf: 'flex-end',
@@ -1879,7 +2112,7 @@ console.log(formatIndianNumber(25000000));
                                           aria-hidden="true"
                                         />
                                       </div>
-                                      <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
                                         {'Payment'}
                                       </h6>
                                     </div>
@@ -1907,7 +2140,7 @@ console.log(formatIndianNumber(25000000));
                                     // },
                                   ].map((data, w) => (
                                     <div
-                                      className=" w-[100px] bg-[#F1F5F9] p-3 rounded-md mx-1"
+                                      className=" w-[100px] bg-[#F1F5F9] px-1 py-1 mx-1 inline-block self-end"
                                       style={{
                                         display: 'inline-block',
                                         alignSelf: 'flex-end',
@@ -1921,7 +2154,7 @@ console.log(formatIndianNumber(25000000));
                                             aria-hidden="true"
                                           />
                                         </div>
-                                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                        <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
                                           {data.item}
                                         </h6>
                                       </div>
@@ -1947,7 +2180,7 @@ console.log(formatIndianNumber(25000000));
                                     },
                                   ].map((data, a) => (
                                     <div
-                                      className=" w-[180px] bg-[#F1F5F9] p-3 rounded-md mx-1"
+                                      className=" w-[180px] bg-[#F1F5F9] px-1 py-1 mx-1 inline-block self-end"
                                       style={{
                                         display: 'inline-block',
                                         alignSelf: 'flex-end',
@@ -1961,7 +2194,7 @@ console.log(formatIndianNumber(25000000));
                                             aria-hidden="true"
                                           />
                                         </div>
-                                        <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                                        <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
                                           {data.item}
                                         </h6>
                                       </div>

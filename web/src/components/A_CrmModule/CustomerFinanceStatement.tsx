@@ -13,6 +13,7 @@ import PdfPaymentScheduleGenerator from 'src/util/PdfPaymentScheduleGenerator'
 import CrmUnitCostSheetView from './CrmCostSheetView'
 import { CountUpComp } from '../comps/countUpComp'
 
+
 const CrmUnitPsHome = ({
   // financeMode,
   // setFinanceMode,
@@ -38,13 +39,25 @@ const CrmUnitPsHome = ({
 
 
 
-    <div className='overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin  scrollbar-thumb-gray-300 '>
+<div className='overflow-y-scroll w-full items-center justify-center mx-auto min-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
 
 
-      <div className='mr-6'>
-      <div className="flex  flex-row justify-between ">
+
+
+
+
+
+      <div className="relative min-h-screen mr-6">
+
+
+
+      <div className="relative z-0">
+
+
+
+      <div className=" mx-auto w-full ">
         <ul
-          className="flex ml-2"
+          className="flex "
           id="myTab"
           data-tabs-toggle="#myTabContent"
           role="tablist"
@@ -64,7 +77,7 @@ const CrmUnitPsHome = ({
   
 
 <button
-            className={`flex items-center gap-2 py-3 px-4 text-sm font-medium text-center rounded-t-lg border-b-2 hover:text-blue  ${
+            className={`flex items-center gap-2  px-2 text-sm font-medium text-center rounded-t-lg border-b-2 hover:text-blue  ${
               financeMode === d.val ? 'border-black text-black' : 'border-transparent'
             }`}
             type="button"
@@ -72,7 +85,7 @@ const CrmUnitPsHome = ({
             onClick={() => setFinanceMode(d.val)}
           >
             {/* <img alt="" src="/temp2.png" className="h-5 w-5" /> */}
-            <span>{d.lab}</span>
+            <span className='text-[#606062] font-medium text-[12px] uppercase tracking-wide'>{d.lab}</span>
           </button>
               </li>
             )
@@ -81,7 +94,7 @@ const CrmUnitPsHome = ({
 
 
 
-
+{/* 
         <section className="flex flex-row">
   
           <div className="w-full flex items-center mt-3 mr-3 ">
@@ -92,119 +105,45 @@ const CrmUnitPsHome = ({
             
             </label>
           </div>
-        </section>
+        </section> */}
       </div>
 
 
 
-      
-<div className="relative w-full  h-[180px]  flex items-center justify-center  ">
-  <div className="absolute inset-0 pointer-events-none">
   
-    <div className="absolute inset-0">
-      {[...Array(4)].map((_, i) => (
-        <div
-          key={`h-line-${i}`}
-          className="relative w-full"
-          style={{
-            position: "absolute",
-            top: `${(i + 1) * (100 / 5)}%`,
-            height: "1px",
-          }}
-        >
-          <div
-            className="absolute w-full h-full"
-            style={{
-              background: `linear-gradient(to right, 
-                rgba(217,217,217,0.05) 0%, 
-                rgba(217,217,217,0.4) 10%, 
-                rgba(217,217,217,0.4) 90%, 
-                rgba(217,217,217,0.05) 100%)`,
-            }}
-          />
-        </div>
-      ))}
-    </div>
+
+  <img
+    alt="CRM Background"
+    src="/bgimgcrm.svg"
+    className="w-full h-auto object-cover"
+  />
 
 
-    <div className="absolute inset-0">
-      {[...Array(16)].map((_, i) => (
-        <div
-          key={`v-line-${i}`}
-          className="relative h-full"
-          style={{
-            position: "absolute",
-            left: `${(i + 1) * (100 / 17)}%`,
-            width: "1px",
-          }}
-        >
-          <div
-            className="absolute w-full h-full"
-            style={{
-              background: `linear-gradient(to bottom, 
-                rgba(217,217,217,0.05) 0%, 
-                rgba(217,217,217,0.4) 10%, 
-                rgba(217,217,217,0.4) 90%, 
-                rgba(217,217,217,0.05) 100%)`,
-            }}
-          />
-        </div>
-      ))}
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+    <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Paid</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+      </div>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Unit Cost</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+      </div>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Total Due</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+      </div>
     </div>
   </div>
-
-  <div className="relative z-10 text-center">
-    <h1 className="text-2xl font-medium">Total Unit Cost</h1>
-
-
-<CountUpComp value={Math.round(Number(grossUnitTotal)) || 0} />
-  </div>
+</div>
+        
 
 
 
-
-  {/* <div
-    className="absolute w-full flex justify-between px-6 text-gray-700 text-sm font-medium"
-    style={{
-      bottom: `${(1) * (100 / 5)}%`,
-      transform: "translateY(50%)", 
-    }}
-  >
-    <span className="mt-4 text-[#606062] text-[14px] font-medium">TRANSACTIONS</span>
-
-    <span>
-      <PdfTransactionsGenerator
-        user={user}
-        unitTransactionsA={unitTransactionsA}
-        selCustomerPayload={selCustomerPayload}
-        projectDetails={projectDetails}
-        selUnitDetails={undefined}
-        myObj={undefined}
-        newPlotPS={undefined}
-        myAdditionalCharges={undefined}
-        streamUnitDetails={undefined}
-        myBookingPayload={undefined}
-        netTotal={undefined}
-        setNetTotal={undefined}
-        partATotal={undefined}
-        partBTotal={undefined}
-        setPartATotal={undefined}
-        setPartBTotal={undefined}
-        leadDetailsObj1={undefined}
-        PSa={undefined}
-        totalIs={undefined}
-        custObj1={undefined}
-        customerDetails={undefined}
-      />
-    </span>
-  </div> */}
-</div> 
-
-
-    <div className='w-full h-full flex justify-center -mt-20 z-10 relative'>
+    <div className='absolute w-full flex justify-center mt-[-90px] z-10'>
     
 
-    <div className="w-full max-w-5xl px-4">
+    <div className="w-full max-w-4xl px-4 mx-auto">
 
     {financeMode === 'schedule' && (
         <>
@@ -279,7 +218,13 @@ const CrmUnitPsHome = ({
 
       </div>
     </div>
-      </div>
+
+
+  </div>
+
+
+
+
     </div>
 
     </>

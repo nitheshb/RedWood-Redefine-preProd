@@ -87,10 +87,10 @@ const BrokerageDetails = ({ selUnitDetails }) => {
 
     
 <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-  <div className="relative min-h-screen">
+  <div className="relative min-h-screen mr-6">
     {/* Background image */}
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -98,33 +98,35 @@ const BrokerageDetails = ({ selUnitDetails }) => {
 
 
 
-<h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit  mb-1  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 Brokerage Details
   </h1>
   
   {/* Background image */}
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
   {/* Heading at very top of image */}
 
   {/* Centered 3-column grid inside image */}
-  <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 1</h2>
-        <p className="text-xs text-gray-600">Some info here</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Eligible /Not</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 2</h2>
-        <p className="text-xs text-gray-600">More info here</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Payable amount</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">Column 3</h2>
-        <p className="text-xs text-gray-600">Even more info</p>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Payable before</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+
       </div>
     </div>
   </div>
@@ -132,13 +134,13 @@ Brokerage Details
 
 
 
-    <div className="w-full h-full flex justify-center -mt-20 z-10 relative">
+    <div className="w-full h-full flex justify-center mt-[-70px] z-10 relative">
       
 
-    <div className="min-h-screen  mx-2  py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen  mx-2 ">
       <div className=" max-w-xl	mx-auto">
         <div className="bg-white rounded-2xl overflow-hidden">
-          <div className="p-6 border-b border-gray-200">
+          <div className="p-4 border-b border-gray-200">
             <h1 className="text-[20px] font-medium text-[#000000]    mb-[2px] ">
               {existingBrokerage ? 'Edit Brokerage Details' : 'Add Brokerage Details'}
             </h1>
@@ -212,7 +214,7 @@ Brokerage Details
                     </div>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                       <div>
-                        <label className="block text-[12px] mb-3  font-outfit font-medium text-[#616162]">
+                        <label className="block text-[12px] mb-4  font-outfit font-medium text-[#616162]">
                           Brokerage Amount
                         </label>
                         <TextField2
@@ -258,7 +260,7 @@ Brokerage Details
                       <button
                         type="submit"
                         disabled={loading}
-                        className="inline-flex items-center px-6 py-3 border border-transparent text-base   shadow-sm text-Black  bg-[#E8E6FE] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-[#0E0A1F] hover:text-[#0E0A1F] rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none focus:ring-2  flex items-center justify-center"
+                        className="inline-flex items-center px-6 py-3 border border-transparent text-base   shadow-sm text-Black  bg-[#E8E6FE] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-[#0E0A1F] hover:text-[#0E0A1F] rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none  flex items-center justify-center"
                       >
                         {loading ? (
                           <Loader className="w-5 h-5 mr-2" />

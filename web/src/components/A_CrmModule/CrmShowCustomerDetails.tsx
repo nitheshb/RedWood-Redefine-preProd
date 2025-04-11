@@ -561,45 +561,40 @@ const ShowCustomerDetails = ({
 
 
 
-<div className="overflow-y-scroll min-h-screen mx-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-  <div className="relative min-h-screen">
+<div className="overflow-y-scroll  min-h-screen mx-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+  <div className="relative min-h-screen mr-6 ">
 
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
-
-
-
         <div className="relative z-0">
-
-
-
-<h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit mb-1  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 APPLICANT DETAILS
   </h1>
 
 
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
 
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">2</h2>
-        <p className="text-xs text-gray-600">Applicants</p>
+      <div className="text-center space-y-2">
+        <p  className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Applicants</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">2</h2>
+
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">NA</h2>
-        <p className="text-xs text-gray-600">KYC Pendings</p>
+      <div className="text-center space-y-2">
+        <p  className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">KYC Pendings</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">NA</h2>
       </div>
-      <div className="text-center">
-        <h2 className="text-sm font-semibold">0</h2>
-        <p className="text-xs text-gray-600">Current Balance</p>
+      <div className="text-center space-y-2">
+        <p  className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Current Balance</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">0</h2>
       </div>
     </div>
   </div>
@@ -607,7 +602,7 @@ APPLICANT DETAILS
 
 
 
-    <div className="w-full  flex justify-center mt-[-110px] z-10 absolute">
+    <div className="w-full  flex justify-center mt-[-70px] z-10 absolute">
 
     <div className='w-full max-w-4xl px-4 mx-auto'>
   {/* <h1 className="text-[#606062] tracking-[0.06em] font-heading font-medium text-[12px] mb-4">APPLICANT DETAILS</h1> */}
@@ -679,47 +674,59 @@ APPLICANT DETAILS
 
       <div className="p-6 grid grid-cols-4 gap-4">
         <div className="pr-2 col-span-1">
-          <div className="text-gray-500 text-sm mb-1">S/O</div>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">S/O</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
             {leadDetailsObj2?.customerDetailsObj?.co_Name1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Martial Status</div>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">Martial Status</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
             {leadDetailsObj2?.customerDetailsObj?.marital1?.value}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">DOB</div>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">DOB</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
             {prettyDate(leadDetailsObj2?.customerDetailsObj?.dob1 || datee)}
           </div>
         </div>
 
-        <div className="px-4 border-l border-r border-gray-200 col-span-1">
-          <div className="text-gray-500 text-sm mb-1">PAN Card</div>
+        <div className="col-span-1">
+          <div className='border-l border-r px-4  border-gray-200'>
+
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">PAN Card</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
             {leadDetailsObj2?.customerDetailsObj?.panNo1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
+          </div>
+
+
+          <div className='border-l border-r px-4  border-gray-200'>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">Aadhar Card</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px] mb-4">
             {leadDetailsObj2?.customerDetailsObj?.aadharNo1 || 'No Data'}
           </div>
+         </div>
 
-          <div className="text-gray-500 text-sm mb-1">Secondary No</div>
+         <div className='border-l border-r px-4  border-gray-200'>
+         <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">Secondary No</div>
           <div className="font-medium text-[#0E0A1F] tracking-[0.06em] font-outfit text-[14px]">
             {leadDetailsObj2?.customerDetailsObj?.phoneNo3 || 'No Data'}
           </div>
+         </div>
+    
+
+    
         </div>
 
         <div className="pl-4 col-span-2">
-          <div className="text-gray-500 text-sm mb-1">Current Address</div>
-          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[16px] mb-4 font-outfit break-words whitespace-pre-wrap">
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">Current Address</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[14px] mb-4 font-outfit break-words whitespace-pre-wrap">
             {leadDetailsObj2?.customerDetailsObj?.address1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
-          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[16px] font-outfit break-words whitespace-pre-wrap">
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">Permanent Address</div>
+          <div className="font-medium text-[#0E0A1F] tracking-[0.06em] text-[14px] font-outfit break-words whitespace-pre-wrap">
             {leadDetailsObj2?.customerDetailsObj?.address2p || 'No Data'}
           </div>
         </div>
@@ -792,46 +799,63 @@ APPLICANT DETAILS
 
       <div className="p-6 grid grid-cols-4 gap-4">
         <div className="pr-2 col-span-1">
-          <div className="text-gray-500 text-sm mb-1">S/O</div>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">S/O</div>
           <div className="font-medium font-outfit tracking-[0.06em] text-[#0E0A1F] text-[14px] mb-4">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.co_Name1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Martial Status</div>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">Martial Status</div>
           <div className="font-medium font-outfit tracking-[0.06em] text-[#0E0A1F] text-[14px] mb-4">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.marital1?.value}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">DOB</div>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">DOB</div>
           <div className="font-medium font-outfit tracking-[0.06em] text-[#0E0A1F] text-[14px]">
             {prettyDate(leadDetailsObj2?.secondaryCustomerDetailsObj?.dob1 || datee)}
           </div>
         </div>
 
-        <div className="px-4 border-l border-r border-gray-200 col-span-1">
-          <div className="text-gray-500 text-sm mb-1">PAN Card</div>
+        <div className=" col-span-1">
+
+          <div className='px-4 border-l border-r border-gray-200'>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">PAN Card</div>
           <div className="font-medium font-outfit text-[#0E0A1F] text-[14px] tracking-[0.06em] mb-4">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.panNo1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Aadhar Card</div>
+          </div>
+
+
+
+
+          <div className='px-4 border-l border-r border-gray-200'>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">Aadhar Card</div>
           <div className="font-medium text-[14px] text-[#0E0A1F] tracking-[0.06em] font-outfit mb-4">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.aadharNo1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Secondary No</div>
+</div>
+
+ 
+
+          <div className='px-4 border-l border-r border-gray-200'>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">Secondary No</div>
           <div className="font-medium font-outfit text-[#0E0A1F] tracking-[0.06em] text-[14px]">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.phoneNo3 || 'No Data'}
           </div>
+
+</div>
+
+ 
         </div>
 
         <div className="pl-4 col-span-2">
-          <div className="text-gray-500 text-sm mb-1">Current Address</div>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">Current Address</div>
           <div className="font-medium text-[#0E0A1F] font-outfit text-[14px] mb-4 tracking-[0.06em] break-words whitespace-pre-wrap">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.address1 || 'No Data'}
           </div>
 
-          <div className="text-gray-500 text-sm mb-1">Permanent Address</div>
+          <div className="font-outfit font-normal text-[12px] leading-[100%] mb-1 text-[#606062] tracking-[0.72px]">Permanent Address</div>
           <div className="font-medium text-[#0E0A1F] font-outfit text-[14px] tracking-[0.06em] break-words whitespace-pre-wrap">
             {leadDetailsObj2?.secondaryCustomerDetailsObj?.address2p || 'No Data'}
           </div>

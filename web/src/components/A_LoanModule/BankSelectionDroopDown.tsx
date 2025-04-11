@@ -15,22 +15,38 @@ import {
 import { USER_ROLES } from 'src/constants/userRoles'
 import { useAuth } from 'src/context/firebase-auth-context'
 
+
+
+
+
+const BankLogos = {
+  sbi: '/state_bank_of_india_symbol.svg',
+  icici: '/icici_bank_symbol.svg',
+  hdfc: '/hdfc_bank_logo.svg',
+  bankofbaroda: '/logos/bob-logo.png',
+  axisbank: '/axis_bank_symbol.svg',
+  punjabnationalbank: '/kotak_mahindra_bank_logo.svg',
+  tatacapital: '/logos/tata-capital-logo.png'
+}
+
+
+
 export default function BankSelectionSwitchDrop({ type, setStatusFun }) {
   const { user } = useAuth()
 
 
   return (
-    <div className="text-right inline-block  mt-[px]">
-      <Menu as="div" className="relative inline-block text-left">
-        <div className='container'>
-          <Menu.Button className=" inline-flex w-full justify-between px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-slate-400/10 dark:highlight-white/5 flex font-semibold hover:bg-slate-400/20 items-center leading-5 px-3 py-1 rounded-full space-x-2 text-xs px-2.5 py-1.5 ">
-            <span className=" w-[100%] text-[12px] leading-[10px] tracking-wide text-[#0091ae]  ">
+    <div className="text-right inline-block w-full  mt-[px]">
+      <Menu as="div" className="relative w-full text-left">
+        <div className='container px-4'>
+          <Menu.Button className=" inline-flex w-full border border-[#E7E7E9] justify-between px-0 py-0 text-sm font-medium text-black-500  rounded-md  hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75  dark:highlight-white/5 flex font-semibold  items-center leading-5 px-3 py-1 rounded-full space-x-2 text-xs px-2.5 py-1.5 ">
+            <span className=" w-[100%] text-[12px] leading-[10px] tracking-wide text-[#616162]  ">
               <span className="flex flex-row ">
                 <span>{`${type?.bName || 'Select Bank'} `} </span>{' '}
                 <span className="ml-[2px]"></span>
               </span>
             </span>
-            <ChevronDownIcon className="w-5 h-5 mr-3 mt-[2px] inline text-[#058527]" />
+            <ChevronDownIcon className="w-5 h-5 mr-3 mt-[2px] inline text-[#606062]" />
           </Menu.Button>
         </div>
         <Transition
@@ -45,7 +61,7 @@ export default function BankSelectionSwitchDrop({ type, setStatusFun }) {
           <Menu.Items
             className={`${
               ['Facing', 'show'].includes(type) ? 'right-0' : 'left-0'
-            }  absolute  w-[360px] mt-2 origin-top-left bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[9000]`}
+            }  absolute  w-full  mt-2 origin-top-left bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[9000]`}
    
           >
             <div className="px-1 py-1 ">
@@ -77,11 +93,15 @@ export default function BankSelectionSwitchDrop({ type, setStatusFun }) {
                             setStatusFun(data)
                           }}
                         >
-                          <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                          {/* <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                             <OfficeBuildingIcon
                               className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
                               aria-hidden="true"
                             />
+                          </div> */}
+
+<div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                            <img src={BankLogos[data.value]} className="h-6 w-6" alt={`${data.bName} logo`} />
                           </div>
                           <div className="flex-auto">
                             <a className="block font-semibold text-gray-900">

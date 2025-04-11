@@ -213,20 +213,20 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                 <thead className='ml-2'>
                   {' '}
                   <tr className="   h-9 ">
-                    <th className="w-[34%] text-[12px] px-3 text-left   tracking-wide   text-[#3D3D3D] pl-6    bg-[#E8E6FE] ">
+                    <th className="w-[34%] text-[12px] px-3 text-left   tracking-wide   text-[#0E0A1F] font-medium pl-6    bg-[#E8E6FE] ">
                     Charges
                     </th>
-                    <th className="w-[18%] text-[12px]  px-2  text-right tracking-wide    text-[#3D3D3D]     bg-[#E8E6FE] ">
+                    <th className="w-[18%] text-[12px]  px-2  text-right tracking-wide    text-[#0E0A1F] font-medium     bg-[#E8E6FE] ">
                       Total inc GST
                     </th>
-                    <th className="w-[18%] text-[12px]  px-2 text-right    tracking-wide    text-[#3D3D3D]     bg-[#E8E6FE] ">
+                    <th className="w-[18%] text-[12px]  px-2 text-right    tracking-wide    text-[#0E0A1F] font-medium     bg-[#E8E6FE] ">
                       Received
                     </th>
-                    <th className="w-[18%] text-[12px]  px-2 text-right  tracking-wide    text-[#3D3D3D]    bg-[#E8E6FE]  ">
+                    <th className="w-[18%] text-[12px]  px-2 text-right  tracking-wide    text-[#0E0A1F] font-medium    bg-[#E8E6FE]  ">
                       Balance
                     </th>
 
-                    <th className="w-[12%] text-[12px] text-center  tracking-wide   text-[#3D3D3D]  bg-[#E8E6FE] ">
+                    <th className="w-[12%] text-[12px] text-center  tracking-wide   text-[#0E0A1F] font-medium  bg-[#E8E6FE] ">
                       Eligible
                     </th>
                   </tr>
@@ -242,12 +242,12 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                           !d1?.elgible ? '' : ''
                         } `}
                       >
-                        <th className=" text-[12px] text-left text-[#6A6A6A] bg-[#fff] tracking-wide pl-6">
+                        <th className=" text-[12px] text-left font-normal  text-[#0E0A1F] bg-[#fff] tracking-wide pl-6">
                           <div>
                             {d1?.stage?.label}
-                            <div className="text-[9px] text-left text-[#6A6A6A] bg-[#fff] tracking-wider ">
+                            <div className="text-[9px] text-left font-normal  text-[#606062] bg-[#fff] tracking-wider ">
                               {' '}
-                              {d1?.description}-{prettyDate(d1?.schDate)}
+                              {d1?.description} {prettyDate(d1?.schDate)}
                             </div>
                             <ul>
                               {d1?.subA?.map((d2, inx) => {
@@ -305,22 +305,22 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                   <tr className=" py-3 h-[51px] ">
                     <td className="text-[10px] text-right text-gray-400  bg-[#fff]"></td>
                       <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
-                      <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px]leading-none px-2 ">
+                      <section className="py-1 d-md  font-medium text-[#0E0A1F] text-[12px]leading-none px-2 ">
                         Total Value:
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
-                      <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px]leading-none px-2 ">
+                      <section className="py-1 d-md  font-medium text-[#0E0A1F] text-[12px]leading-none px-2 ">
                       ₹ {Math.round(Number(selCustomerPayload?.T_total) || 0).toLocaleString('en-IN')}
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
-                      <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px] leading-none px-2 ">
+                      <section className="py-1 d-md  font-medium text-[#0E0A1F] text-[12px] leading-none px-2 ">
                       ₹ {Math.round(Number(unitReceivedTotal) || 0).toLocaleString('en-IN')}
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
-                      <section className="py-1 d-md font-semibold text-[#6A6A6A] text-[12px] leading-none px-2 ">
+                      <section className="py-1 d-md font-medium text-[#0E0A1F] text-[12px] leading-none px-2 ">
                       </section>
                     </th>
 
