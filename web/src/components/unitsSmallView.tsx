@@ -25,7 +25,7 @@ const UnitsSmallViewCard = ({ kind, feedData, bg,  setSelUnitDetails,
   useEffect(()=>{
     if(kind.status==="available"){
       setBgColor("#fff")
-    }else if(["booked", 'agreement_pipeline','ATS', 'agreement', 'allotment','possession', 'construction', 'registered'].includes(kind.status)){
+    }else if(["booked", 'agreement_pipeline','ATS', 'ATS', 'agreement', 'allotment','possession', 'construction', 'registered'].includes(kind.status)){
       setBgColor("#CCFBF1")
 
     }else if(["blocked", 'customer_blocked', 'management_blocked'].includes(kind.status)){
