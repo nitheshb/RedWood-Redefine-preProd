@@ -586,7 +586,7 @@ useEffect(() => {
                         <button
                           className={`inline-block py-2 mr-3 px-1 text-[16px] font-medium  font-outfit text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
                             selCategory === d.val
-                              ? 'text-black border-black'
+                              ? 'text-black border-black '
                               : 'text-gray-500  border-transparent'
                           }`}
                           type="button"
@@ -594,7 +594,9 @@ useEffect(() => {
                           onClick={() => setSelCategory(d.val)}
                         >
                           {`${d.lab} `}
-                          <span className=" bg-[#E5E7EB] text-gray-800 px-1.5 py-1.5 rounded-full ml-[4px] text-[12px] ">
+                          {/* <span className=" bg-[#E5E7EB] text-gray-800 px-1.5 py-1.5 rounded-full ml-[4px] text-[12px] "> */}
+                          <span className={` ${selCategory === d.val ? 'bg-[#EDE9FE] text-[#0E0A1F]' : 'bg-[#E5E7EB] text-[#606062]'} px-1.5 py-1.5 rounded-full ml-[4px] text-[12px] `}>
+
                             {d.val === 'booked' && (
                               <span>{bookingReviewCo}</span>
                             )}

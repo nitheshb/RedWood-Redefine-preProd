@@ -1428,7 +1428,7 @@ export default function UnitFullSummary({
 <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
   <div className="relative min-h-screen mr-6">
     <div className="relative z-0">
-      <h1 className="text-[#606062] mx-auto w-full tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+      <h1 className="text-[#606062] mx-auto w-full mb-1 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
         Unit Timeline
       </h1>
       
@@ -1501,7 +1501,7 @@ export default function UnitFullSummary({
                   <tr
                     key={index}
                     className={`border-b border-dashed h-[45px] ${
-                      index % 2 === 0 ? 'bg-gray-50' : ''
+                      index % 2 === 0 ? 'bg-[#FCFCFD]' : 'bg-[#FCFCFD]'
                     }`}
                   >
                     <td className="text-[12px] text-center text-gray-800">
@@ -1621,7 +1621,7 @@ export default function UnitFullSummary({
 
 
 
-<h1 className="text-[#606062]  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] mb-1  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Features
   </h1>
   
@@ -2042,7 +2042,7 @@ export default function UnitFullSummary({
 <div>
 <div className="text-[#606062] font-medium text-[12px] font-outfit">Sharing</div>
 <div className="text-base font-outfit font-medium">
-{selCustomerPayload?.sharing}
+{selCustomerPayload?.sharing || 'No Data'}
 </div>
 </div>
 </div>
@@ -2172,7 +2172,7 @@ export default function UnitFullSummary({
 <div>
 <div className="text-[#606062] font-medium text-[12px] font-outfit">Survey No</div>
 <div className="text-base font-outfit font-medium">
-{selCustomerPayload?.survey_no}
+{selCustomerPayload?.survey_no || 'No Data'}
 </div>
 </div>
 </div>
@@ -2198,7 +2198,7 @@ export default function UnitFullSummary({
 <div>
 <div className="text-[#606062] font-medium text-[12px] font-outfit">PID No</div>
 <div className="text-base font-outfit font-medium">
-{selCustomerPayload?.PID_no}
+{selCustomerPayload?.PID_no || 'No Data'}
 </div>
 </div>
 </div>
@@ -2223,7 +2223,7 @@ export default function UnitFullSummary({
 <div>
 <div className="text-[#606062] font-medium text-[12px] font-outfit">Katha No</div>
 <div className="text-base font-outfit font-medium">
-{selCustomerPayload?.Katha_no}
+{selCustomerPayload?.Katha_no || 'No Data'}
 </div>
 </div>
 </div>
@@ -2438,7 +2438,7 @@ className="w-4 h-4"
 
 
 
-<h1 className="text-[#606062]   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] mb-1   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 Loan details
   </h1>
 
@@ -2510,7 +2510,7 @@ Loan details
 
 
 
-<h1 className="text-[#606062] font-outfit    mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit mb-1    mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Documents
   </h1>
   

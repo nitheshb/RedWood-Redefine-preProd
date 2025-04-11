@@ -241,11 +241,11 @@ const CrmUnitSummary = ({
           <div className="flex justify-between items-center">
             <div className="space-y-1">
               <p className="text-gray-500 text-sm">On 27 Mar 2025</p>
-              <p className="text-gray-800 text-[14px] font-medium text-lg">Brother Builder pvt</p>
+              <p className="text-[#0E0A1F] text-[14px] font-medium ">Brother Builder pvt</p>
             </div>
             <div className="text-right">
               <p className="text-gray-500 text-sm">Check</p>
-              <p className="text-gray-800 text-[14px] font-medium text-lg">₹ 22,76,36,500</p>
+              <p className="text-[#0E0A1F] text-[14px] font-medium ">₹ 22,76,36,500</p>
             </div>
           </div>
         </div>
@@ -256,7 +256,7 @@ const CrmUnitSummary = ({
         <div>
           <div className="flex items-center  mb-4 overflow-visible">
             <img src="/su6.svg" alt="Applicant" className="w-[30px] h-[29px] mr-2 object-contain" />
-            <h2 className="text-gray-600 font-medium text-[12px] uppercase tracking-wide">
+            <h2 className="text-[#606062] font-medium text-[12px] uppercase tracking-wide">
               APPLICANT DETAILS
             </h2>
           </div>
@@ -270,7 +270,7 @@ const CrmUnitSummary = ({
                   <div className="w-full h-full bg-gray-300"></div>
                 </div>
               </div>
-              <span className="ml-5 text-[16px] text-gray-800 font-medium">2 applicants</span>
+              <span className="ml-5 text-[16px] text-[#0E0A1F] font-medium">2 applicants</span>
             </div>
             <div className="h-6 w-px bg-gray-300 mx-4"></div>
             <div className="text-[#960000] text-[14px] font-medium text-right whitespace-nowrap">
@@ -289,22 +289,22 @@ const CrmUnitSummary = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center mb-4 ">
               <img src="/su2.svg" alt="Activity" className="w-[30px] h-[29px] mr-2 object-contain" />
-              <h2 className="text-gray-600 font-medium text-[12px] uppercase tracking-wide">
+              <h2 className="text-[#606062] font-medium text-[12px] uppercase tracking-wide">
                 LAST ACTIVITY
               </h2>
             </div>
             <div className="flex items-center mb-2 text-[#960000]">
               <span className="text-[12px]">Deleted Doc</span>
               <span className="ml-2 p-1">
-                <img src="/icons/delete.png" alt="Delete" className="h-5 w-5" />
+                <img src="/DeleteIcon.svg" alt="Delete" className="h-5 w-5" />
               </span>
             </div>
           </div>
           <div className="space-y-1">
             <p className="text-gray-500 text-[12px]">24 Mar 25, 10:57 am</p>
             <div className="flex justify-between items-center">
-              <p className="text-gray-800 text-[14px] font-medium">Vishal@gmail.com</p>
-              <p className="text-gray-800 text-[12px] font-medium">Sale Agreement</p>
+              <p className="text-[#0E0A1F] text-[14px] font-medium">Vishal@gmail.com</p>
+              <p className="text-[#0E0A1F] text-[12px] font-medium">Sale Agreement</p>
             </div>
           </div>
         </div>
@@ -315,17 +315,17 @@ const CrmUnitSummary = ({
         <div>
           <div className="flex items-center overflow-visible mb-4">
             <img src="/su3.svg" alt="Calendar" className="w-[30px] h-[29px] mr-2 object-contain" />
-            <h2 className="text-gray-600 font-medium text-[12px] uppercase tracking-wide">
+            <h2 className="text-[#606062] font-medium text-[12px] uppercase tracking-wide">
               UPCOMING EVENTS
             </h2>
           </div>
           <div className="space-y-1">
             <p className="text-gray-500 text-[12px]">On 27 Mar 2025</p>
             <div className="flex justify-between items-center">
-              <p className="text-gray-800 text-[14px] font-medium">
+              <p className="text-[#0E0A1F] text-[14px] font-medium">
                 Before Execution of Construction Agreement
               </p>
-              <p className="text-gray-800 text-[14px] font-medium">
+              <p className="text-[#0E0A1F] text-[14px] font-medium">
                 ₹ 22,76,36,500
               </p>
             </div>

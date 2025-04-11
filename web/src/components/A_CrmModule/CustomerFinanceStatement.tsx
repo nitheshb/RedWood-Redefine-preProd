@@ -85,7 +85,7 @@ const CrmUnitPsHome = ({
             onClick={() => setFinanceMode(d.val)}
           >
             {/* <img alt="" src="/temp2.png" className="h-5 w-5" /> */}
-            <span>{d.lab}</span>
+            <span className='text-[#606062] font-medium text-[12px] uppercase tracking-wide'>{d.lab}</span>
           </button>
               </li>
             )

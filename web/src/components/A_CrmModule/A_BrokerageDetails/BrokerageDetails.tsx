@@ -98,7 +98,7 @@ const BrokerageDetails = ({ selUnitDetails }) => {
 
 
 
-<h1 className="text-[#606062] font-outfit   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit  mb-1  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 Brokerage Details
   </h1>
   
@@ -260,7 +260,7 @@ Brokerage Details
                       <button
                         type="submit"
                         disabled={loading}
-                        className="inline-flex items-center px-6 py-3 border border-transparent text-base   shadow-sm text-Black  bg-[#E8E6FE] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-[#0E0A1F] hover:text-[#0E0A1F] rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none focus:ring-2  flex items-center justify-center"
+                        className="inline-flex items-center px-6 py-3 border border-transparent text-base   shadow-sm text-Black  bg-[#E8E6FE] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-[#0E0A1F] hover:text-[#0E0A1F] rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none  flex items-center justify-center"
                       >
                         {loading ? (
                           <Loader className="w-5 h-5 mr-2" />
