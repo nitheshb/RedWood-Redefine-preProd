@@ -479,23 +479,23 @@ leadPayload?.Mobile ||
           <div>
 
             <section
-              className="  bg-[#fff] rounded-[20px] border pb-4 "
-              style={{ boxShadow: '0 1px 12px #f2f2f2' }}
+              className="   pb-4 "
+              // style={{ boxShadow: '0 1px 12px #f2f2f2' }}
             >
               <div
-                className="w-full bg-[#EDEDED] flex flex-row justify-between mb-2 p-4 bg-white-100 rounded-t-[20px]"
+                className="w-full   flex flex-row justify-between mb-2 p-4"
               >
                 <section className="flex flex-row">
                   <div className="w-full flex flex-col">
                     <div className="  flex flex-row gap-2 ">
                       <div>
                         <section className="flex flex-row">
-                          <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
+                          <h6 className="font-medium text-[#606062]    text-[12px] mt-[2px] ">
                             {index=== 0 ?'Primary Applicant' : `Applicant Details-${index+1}`}
                           </h6>
 
                         </section>
-                        <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
+                        <div className="w-[455.80px] opacity-50 text-blue-950  text-[#0E0A1F]  text-[12px] font-normal ">
                           These details will be used for registration.So be
                           careful what you record.
                         </div>
@@ -510,15 +510,15 @@ leadPayload?.Mobile ||
                 </section>
               </div>
 
-              <section className="mt-1 px-4 mx-4 rounded-lg bg-white border border-gray-200 shadow inset-shadow-2xs">
+              <section className="mt-1 px-4 mx-4 rounded-lg bg-white ">
                 <section className="flex flex-row  pt-2 mt-1 ">
                   {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
                   <span className=" leading-[15px] flex flex-row   justify-between w-full">
-                    <label className="font-semibold text-[#053219]    text-[14px] leading-[15px] mb-1  ">
+                    <label className="font-medium text-[#606062]    text-[12px] leading-[15px] mb-1  ">
                       Personal Details
                       <abbr title="required"></abbr>
-                      {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
-                      <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+               
+                      {/* <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div> */}
 
                     </label>
 
@@ -593,12 +593,14 @@ leadPayload?.Mobile ||
                       </label>
                       <MuiTextField
                         id="area"
-                        className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+                        className={`w-full bg-grey-lighter text-grey-darker border-0 border-b border-[#cccccc]  h-10 mt-1 p-0`}
                         size="small"
                         InputProps={{
+                          disableUnderline: true,
                           style: {
                             height: '2rem',
                             paddingLeft: '7px',
+                            borderBottom: '1px solid #cccccc',
                           },
                           startAdornment: (
                             <InputAdornment
@@ -721,13 +723,25 @@ leadPayload?.Mobile ||
                     </label>
                     <MuiTextField
                       id="area"
-                      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+                      className={`w-full bg-grey-lighter text-grey-darker  rounded-md h-10 mt-1 p-0`}
                       size="small"
                       InputProps={{
                         style: {
                           height: '2rem',
                           paddingLeft: '7px',
+                          border: '0 !important',
+                          borderBottom: '1px solid #cccccc !important',
+                          borderRadius: '0 !important',
+                          boxShadow: 'none !important',
+                          backgroundColor: 'transparent',
                         },
+            
+                        disableUnderline: true,
+                        classes: {
+                          root: 'border-b-only',
+                          focused: 'border-b-only-focused'
+                        },
+
                         endAdornment: (
                           <InputAdornment
                             position="end"
@@ -758,7 +772,7 @@ leadPayload?.Mobile ||
                                   {' '}
                                   {formik.values.panDocUrl1 === '' ||
                                   formik.values.panDocUrl1 == undefined ? (
-                                    <PlusIcon className="w-4 h-4 cursor-pointer ml-1  mb-[3px] mr-2 inline-block text-gray-400 border rounded-[16px] " />
+                                    <PlusIcon className="w-4 h-4 cursor-pointer ml-1  mb-[3px] mr-2 inline-block text-gray-400  rounded-[16px] " />
                                   ) : (
                                     <ArrowCircleDownIcon className="w-4 h-4 cursor-pointer ml-1 mb-[3px] mr-2 inline-block text-gray-400 " />
                                   )}
@@ -821,7 +835,7 @@ leadPayload?.Mobile ||
                     </label>
                     <MuiTextField
                       id="area"
-                      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+                      className={`w-full bg-grey-lighter text-grey-darker  rounded-md h-10 mt-1 p-0`}
                       size="small"
                       InputProps={{
                         style: {
@@ -902,9 +916,16 @@ leadPayload?.Mobile ||
       )}
                   </section>
                 </div>
+
+
+
+
+
+
+                
               </section>
               {/* section-2 */}
-              <section className="mt-2 px-4 mx-4 rounded-lg bg-white border border-gray-200 shadow inset-shadow-2xs pb-2">
+              <section className="mt-2 px-4 mx-4 rounded-lg bg-white  pb-2">
                 <section className="flex flex-row  pt-2 mt-1 ">
                   {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
                   <span className=" leading-[15px] ">
@@ -1053,7 +1074,7 @@ leadPayload?.Mobile ||
               </section>
 
                             {/* section-3-B */}
-                            <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border-gray-200 shadow inset-shadow-2xs shadow">
+                            <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white ">
 
                               <section className='flex justify-between'>
 
@@ -1202,7 +1223,7 @@ leadPayload?.Mobile ||
 
 
               {/* section-3 */}
-              <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border-gray-200 shadow inset-shadow-2xs shadow">
+              <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white ">
 
                 <section className='flex justify-between'>
                 <section className="flex flex-row  mt-1 ">
@@ -1333,7 +1354,7 @@ leadPayload?.Mobile ||
               </section>
 
               {/* section-4 */}
-              <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white border-gray-200 shadow inset-shadow-2xs shadow">
+              <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white ">
                 <section className="flex flex-row  px- mt-1 ">
                   {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
                   <span className=" leading-[15px] ">

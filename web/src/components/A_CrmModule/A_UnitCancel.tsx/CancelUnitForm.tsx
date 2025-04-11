@@ -146,10 +146,10 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
 
 
 
-<div className="relative min-h-screen">
+<div className="relative min-h-screen mr-6">
     {/* Background image */}
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -163,13 +163,13 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
       </h1>
        */}
 
-<h1 className="text-[#606062] font-outfit  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 Unit Cancellation
   </h1>
 
       <img
         alt="CRM Background"
-        src="/bgcrm.svg"
+        src="/bgimgcrm.svg"
         className="w-full h-auto object-cover"
       />
 
@@ -194,7 +194,7 @@ Unit Cancellation
 
 
 
-      <div className="w-full h-full items-center justify-center  flex mt-[-110px] z-10 relative">
+      <div className="w-full h-full items-center justify-center  flex mt-[-70px] z-10 relative">
               
          
 
@@ -262,7 +262,7 @@ Unit Cancellation
   <div className="flex flex-col md:flex-row gap-8 mb-4">
 
     <div className="w-full ">
-    <label className="block text-[#616162] font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] mb-1">Cancellation Amount</label>
+    <label className="block text-[#616162] font-normal text-[12px] leading-[100%] tracking-[0.06em] mb-1">Cancellation Amount</label>
 
       <TextField2
         // label="Cancellation Amount"
@@ -284,7 +284,7 @@ Unit Cancellation
       <label className="text-xs text-[#616162]  font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em]">Cancellation Date</label>
       <div className="relative w-full">
         <CustomDatePicker
-          className="w-full h-8  px-2 py-2 outline-none border-t-0 border-l-0 border-r-0 border-0 border-b-[1.6px] border-[#E7E7E9] border-solid text-[#DBD3FD] font-semibold"
+          className="w-full h-8  px-2 py-2 outline-none border-t-0 border-l-0 border-r-0 border-0 border-b-[1.6px] border-[#E7E7E9] border-solid text-[#191B1C] font-medium"
           label="Dated"
           name="dated"
           calendarClassName="z-[9999]"

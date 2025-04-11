@@ -821,15 +821,15 @@ useEffect(() => {
                                 <div className="flex flex-row justify-between px-4 pt-4">
                                   <section className="flex flex-col ">
                                     <div className="flex flex-row">
-                                      <div className="self-stretch text-[#0E0A1F] text-sm font-medium font-['Lato'] tracking-wide">
+                                      <div className="self-stretch text-[#0E0A1F] text-sm font-medium font-outfit tracking-wide">
                                         Unit Cost
                                       </div>
                                       <div className="px-1  h-[19px] rounded justify-center items-center gap-2 flex">
                                         <div className="text-right">
-                                          <span className="text-emerald-600 text-xs font-medium font-['Lato'] tracking-wide">
+                                          <span className="text-emerald-600 text-xs font-medium font-outfit tracking-wide">
                                             ▴{' '}
                                           </span>
-                                          <span className="text-emerald-600 text-[9px] font-bold font-['Lato'] tracking-wide">
+                                          <span className="text-emerald-600 text-[9px] font-bold font-outfit tracking-wide">
                                             ₹{' '}
                                             {finData?.sqft_rate?.toLocaleString(
                                               'en-IN'
@@ -840,7 +840,7 @@ useEffect(() => {
                                       </div>
                                     </div>
                                     <div className="self-stretch justify-start items-center gap-3 inline-flex">
-                                      <div className="text-zinc-800 text-[20px] font-bold font-['Lato'] tracking-wide">
+                                      <div className="text-zinc-800 text-[20px] font-bold font-outfit tracking-wide">
                                         ₹
                                         {(
                                           (finData?.plotCS?.reduce(function (
@@ -872,13 +872,13 @@ useEffect(() => {
                                   </section>
 
                                   <section className="flex flex-col mt-3">
-                                    <div className=" text-[#0E0A1F] text-[11px] font-normal font-['Lato'] tracking-wide">
+                                    <div className=" text-[#0E0A1F] text-[12px]  font-normal font-outfit tracking-wide">
                                       Balance ₹
                                       {finData?.T_elgible_balance <0 ? 0: finData?.T_elgible_balance?.toLocaleString(
                                         'en-IN'
                                       )}
                                     </div>
-                                    <div className="text-[#0E0A1F] text-[11px] font-normal font-['Lato'] tracking-wide">
+                                    <div className="text-[#0E0A1F] text-[11px] font-normal font-outfit tracking-wide">
                                       Paid: ₹
                                       {(
                                         (finData?.T_review || 0) +
@@ -1000,7 +1000,7 @@ useEffect(() => {
                                       setIsSubTopic('crm_KYC')
                                     }}
                                   >
-                                    <div className="self-stretch h-4 text-center text-zinc-800 text-xs font-medium font-['Lato'] tracking-wide">
+                                    <div className="self-stretch h-4 text-center text-zinc-800 text-xs font-medium font-outfit tracking-wide">
                                       KYC
                                     </div>
                                   </div>
@@ -1037,7 +1037,7 @@ useEffect(() => {
 
                           <section className="flex  flex-row items-center justify-center bg-[#FFFFFF] py-2 mb-2  rounded-2xl">
 
-                            <div className="border-r border-[#E7E7E9] w-[25%] ">
+                            <div className="border-r border-[#E7E7E9] w-[23%] ">
                               <div className="flex flex-row   ">
                                 <div
                                   className="flex flex-col  text-black  py-1 rounded-sm  "
@@ -1049,7 +1049,7 @@ useEffect(() => {
                                     )
                                   }
                                 >
-                                  <section className="font-rubikF flex flex-row w-[100%] justify-between">
+                                  <section className="font-outfit flex flex-row w-[100%] justify-between">
                                     <section className="flex flex-col ml-4  w-[100%]">
                                       <section className="flex flex-row justify-between">
 
@@ -1071,7 +1071,7 @@ useEffect(() => {
                                               {customerDetailsObj?.customerName1 ||
                                                 'NA'}
                                             </span>
-                                            <div className="text-sm text-gray-500">
+                                            <div className="text-[12px] text-gray-500">
                                               {projName}
                                             </div>
                                             <section className="flex flex-col justify-between">
@@ -1080,7 +1080,7 @@ useEffect(() => {
                                                   'en-IN'
                                                 )}{' '}
                                               </span> */}
-                                              <div className='flex gap-1 items-center text-green-600 text-xs mt-1'>
+                                              <div className='flex gap-1 items-center text-green-600 text-[12px] mt-1'>
                                               <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M12.6605 13.1667H12.6668M12.6605 13.1667C12.2454 13.5783 11.493 13.4758 10.9655 13.4758C10.3178 13.4758 10.006 13.6025 9.54378 14.0647C9.15023 14.4583 8.62265 15.1667 8.00018 15.1667C7.37769 15.1667 6.85011 14.4583 6.45654 14.0647C5.99435 13.6025 5.68249 13.4758 5.03487 13.4758C4.50728 13.4758 3.75495 13.5783 3.33982 13.1667C2.92137 12.7517 3.02435 11.9963 3.02435 11.4653C3.02435 10.7943 2.8776 10.4857 2.39975 10.0079C1.68892 9.29709 1.33351 8.94164 1.3335 8.49999C1.3335 8.05835 1.68891 7.70294 2.39973 6.99212C2.8263 6.56555 3.02435 6.14286 3.02435 5.53471C3.02435 5.00711 2.92183 4.25477 3.3335 3.83964C3.74845 3.4212 4.5039 3.52418 5.03488 3.52418C5.64301 3.52418 6.06571 3.32615 6.49226 2.89959C7.20309 2.18876 7.55851 1.83334 8.00016 1.83334C8.44182 1.83334 8.79723 2.18876 9.50806 2.89959C9.93453 3.32605 10.3571 3.52418 10.9654 3.52418C11.493 3.52418 12.2454 3.42166 12.6605 3.83334C13.079 4.2483 12.976 5.00374 12.976 5.53471C12.976 6.20573 13.1227 6.51426 13.6006 6.99212C14.3114 7.70294 14.6668 8.05835 14.6668 8.49999C14.6668 8.94164 14.3114 9.29709 13.6006 10.0079C13.1227 10.4857 12.976 10.7943 12.976 11.4653C12.976 11.9963 13.079 12.7517 12.6605 13.1667Z" stroke="#1B6600"/>
 <path d="M6 9.09525L7.2 10.1667L10 6.83334" stroke="#1B6600" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1106,7 +1106,7 @@ useEffect(() => {
                             </div>
 
                             <div className='border-r border-[#E7E7E9] w-[25%] '>
-                              <div className="flex flex-col  my-1  px-2   justify-between mr-1">
+                              <div className="flex flex-col  my-1  px-4   justify-between mr-1">
                                 <div className="flex flex-row justify-between mx- mb-1">
                               
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
@@ -1123,7 +1123,7 @@ useEffect(() => {
                                         <InformationCircleIcon className="h-4 w-4 inline text-zinc-400" />
                                       </span>
                                     </div>
-                                    {/* <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
+                                    {/* <div className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
                                       ₹
                                       {(
                                         (finData?.T_review || 0) +
@@ -1154,7 +1154,7 @@ useEffect(() => {
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
+  <span className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
     ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
   </span>
 </div>
@@ -1195,7 +1195,7 @@ useEffect(() => {
                     style={{ background: '#213343', marginRight: '12px' }}
                   ></div>
                 </div>
-                <span className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide ">
+                <span className="text-zinc-800 text-[12px]  font-outfit tracking-wide ">
       ₹{Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
                 </span>
       </div>
@@ -1204,7 +1204,7 @@ useEffect(() => {
 
 
 
-                                    {/* <div className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide">
+                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
                                       ₹
                                       {finData?.T_elgible?.toLocaleString(
                                         'en-IN'
@@ -1215,10 +1215,10 @@ useEffect(() => {
                                   </section>
                                   {/* section- 3 */}
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
-                                    <div className="text-[12px] font-medium">
+                                    <div className="text-[12px] font-outfit font-medium">
                                       Balance
                                     </div>
-                                    <div className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
+                                    <div className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
                                     {/* ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')} */}
 
                                     {/* <IndianCurrencyTooltip amount={(finData?.T_elgible_balance < 0 ? 0 : finData?.T_elgible_balance)?.toLocaleString("en-IN")} /> */}
@@ -1252,7 +1252,7 @@ useEffect(() => {
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-800 text-[12px] font-bold font-['Lato'] tracking-wide">
+  <span className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
   ₹{finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
 
 
@@ -1275,7 +1275,7 @@ useEffect(() => {
 
                             {/* other one */}
                             <div className='border-r border-[#E7E7E9] w-[25%] '>
-                              <div className="flex flex-col  my-1  px-2  justify-between mr-1">
+                              <div className="flex flex-col  my-1  px-4  justify-between mr-1">
                                 <div className="flex flex-row justify-between mx- mb-1">
                                   {/* <DoughnutChartWithRoundedSegments
                                     progress={
@@ -1315,7 +1315,7 @@ useEffect(() => {
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide">
+  <span className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
   ₹{Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
   </span>
 </div>
@@ -1328,7 +1328,7 @@ useEffect(() => {
 
 
 
-                                    {/* <div className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide">
+                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
                                       ₹
                                       {finData?.T_elgible?.toLocaleString(
                                         'en-IN'
@@ -1368,7 +1368,7 @@ useEffect(() => {
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide">
+  <span className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
   ₹{Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
   </span>
 </div>
@@ -1381,7 +1381,7 @@ useEffect(() => {
 
 
 
-                                    {/* <div className="text-zinc-800 text-[12px]  font-['Lato'] tracking-wide">
+                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
                                       ₹
                                       {finData?.T_elgible?.toLocaleString(
                                         'en-IN'
@@ -1393,7 +1393,7 @@ useEffect(() => {
                                   {/* section- 3 */}
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
                                     <div className="text-[12px] font-medium">
-                                    Balance:
+                                    Balance
                                     </div>
 
 
@@ -1422,7 +1422,7 @@ useEffect(() => {
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-900 text-[11px] font-bold  tracking-wide">
+  <span className="text-zinc-900 text-[12px] font-bold  tracking-wide">
   ₹{Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
   </span>
 </div>
@@ -1468,9 +1468,9 @@ useEffect(() => {
                             </div>
 
 
-    <div className='border-r border-[#E7E7E9] w-[10%] '>
+    <div className=' w-[12%] border-r border-[#E7E7E9] '>
 
-    <div className="flex  flex-col p-2 ">
+    <div className="flex flex-col  my-3  px-4   justify-between mr-1 ">
 
 <div className="flex flex-col">
 
@@ -1516,7 +1516,7 @@ useEffect(() => {
 
                             
                             <div className="w-[15%] ">
-                              <div className="flex  items-center justify-center  h-full rounded-md  py-1 ">
+                              <div className="flex  items-center justify-center  h-full rounded-md ">
                                 <div className="flex items-center justify-center   px-1">
                                   {/* section 2 */}
                                  {['booked', 'selCategory'].includes(selCategory) &&

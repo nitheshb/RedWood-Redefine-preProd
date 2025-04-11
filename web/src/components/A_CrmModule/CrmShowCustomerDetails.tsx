@@ -561,28 +561,22 @@ const ShowCustomerDetails = ({
 
 
 
-<div className="overflow-y-scroll min-h-screen mx-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-  <div className="relative min-h-screen">
+<div className="overflow-y-scroll  min-h-screen mx-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+  <div className="relative min-h-screen mr-6 ">
 
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
-
-
-
         <div className="relative z-0">
-
-
-
-<h1 className="text-[#606062] font-outfit max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 APPLICANT DETAILS
   </h1>
 
 
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
@@ -608,7 +602,7 @@ APPLICANT DETAILS
 
 
 
-    <div className="w-full  flex justify-center mt-[-110px] z-10 absolute">
+    <div className="w-full  flex justify-center mt-[-70px] z-10 absolute">
 
     <div className='w-full max-w-4xl px-4 mx-auto'>
   {/* <h1 className="text-[#606062] tracking-[0.06em] font-heading font-medium text-[12px] mb-4">APPLICANT DETAILS</h1> */}

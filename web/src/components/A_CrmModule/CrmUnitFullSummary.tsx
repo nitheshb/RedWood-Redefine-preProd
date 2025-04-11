@@ -1267,10 +1267,10 @@ export default function UnitFullSummary({
 
 
 <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-  <div className="relative min-h-screen">
+  <div className="relative min-h-screen mr-6">
 
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -1279,14 +1279,14 @@ export default function UnitFullSummary({
 
 
 
-    <h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+    <h1 className="text-[#606062]   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
         Unit Timeline
       </h1>
       
 
       <img
         alt="CRM Background"
-        src="/bgcrm.svg"
+        src="/bgimgcrm.svg"
         className="w-full h-auto object-cover"
       />
 
@@ -1310,7 +1310,7 @@ export default function UnitFullSummary({
     </div>
 
     
-    <div className="w-full h-full flex justify-center mt-[-110px] z-10 relative">
+    <div className="w-full h-full flex justify-center mt-[-90px] z-10 relative">
       <div className="w-full max-w-5xl"> 
         {/* <h1 className="text-[#606062] tracking-[0.06em] font-medium text-[12px] uppercase  pl-4">ACTIVITY LOG</h1> */}
      
@@ -1386,7 +1386,7 @@ export default function UnitFullSummary({
 {selFeature === 'applicant_info' && (
   <>
     {!openApplicantEdit && (
-      <div className=" overflow-auto m-2 mt-[1px] rounded-lg border border-gray-100  no-scrollbar h-[100%] overflow-y-scroll">
+      <div className=" w-full items-center justify-center  mx-auto min-h-screen">
         <ShowCustomerDetails
           source="fromBookedUnit"
           title="Booking Form"
@@ -1397,7 +1397,7 @@ export default function UnitFullSummary({
       </div>
     )}
     {openApplicantEdit && (
-      <div className="mt-2 h-full flex flex-col justify-between overflow-auto no-scrollbar">
+      <div className="mt-2 h-full flex flex-col justify-between overflow-y-scroll scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
         <div className="flex-1 overflow-y-auto">
           <AddApplicantDetails
             source="fromBookedUnit"
@@ -1434,13 +1434,13 @@ export default function UnitFullSummary({
         
         {/* <div className='overflow-y-scroll w-full items-center justify-center mx-auto max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'> */}
 
-         <div className='relative min-h-screen'>
+         <div className='relative min-h-screen mr-6'>
 {/* 
          <h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px]    mb-4">UNIT FEATURES</h1>
 
           
       
-        <img  alt="" src="/bgcrm.svg" className='w-full'></img> */}
+        <img  alt="" src="/bgimgcrm.svg" className='w-full'></img> */}
 
 
 
@@ -1448,14 +1448,14 @@ export default function UnitFullSummary({
 
 
 
-<h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062]  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Features
   </h1>
   
 
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
@@ -1487,7 +1487,7 @@ export default function UnitFullSummary({
 
 
           
-        <div className='absolute w-full flex justify-center mt-[-110px] z-10'>
+        <div className='absolute w-full flex justify-center mt-[-70px] z-10'>
 
 
        <div className='w-full max-w-4xl px-4 mx-auto'>
@@ -1502,6 +1502,10 @@ export default function UnitFullSummary({
 
 <div className="p-8 rounded-2xl  bg-white w-full">
 
+
+
+  
+
  
 
 
@@ -1510,7 +1514,7 @@ export default function UnitFullSummary({
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.725 2.56357C3.94557 2.70853 3.37194 2.96493 2.91843 3.41843C2.46493 3.87194 2.20853 4.44557 2.06357 5.225M13.275 2.56357C14.0544 2.70853 14.6281 2.96493 15.0816 3.41843C15.5351 3.87194 15.7915 4.44557 15.9364 5.225M10.425 2.37872C9.98669 2.375 9.51293 2.375 9 2.375C8.48707 2.375 8.0133 2.375 7.57499 2.37872M16.1213 8.075C16.125 8.51331 16.125 8.98707 16.125 9.5C16.125 10.0129 16.125 10.4867 16.1213 10.9251M1.87872 8.075C1.875 8.51331 1.875 8.98707 1.875 9.5C1.875 10.0129 1.875 10.4867 1.87872 10.9251M2.06357 13.775C2.20853 14.5544 2.46493 15.1281 2.91843 15.5816C3.37194 16.0351 3.94557 16.2915 4.725 16.4364M15.9364 13.775C15.7915 14.5544 15.5351 15.1281 15.0816 15.5816C14.6281 16.0351 14.0544 16.2915 13.275 16.4364M10.425 16.6213C9.98669 16.625 9.51293 16.625 9 16.625C8.48712 16.625 8.0134 16.625 7.57512 16.6213" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1524,10 +1528,12 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden pr-4 md:block w-px bg-gray-200 self-stretch"></div> */}
+
+{/* <div className="hidden mr-4 md:block w-px bg-gray-200 h-4 self-stretch pt-2 pb-6"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center  flex-1 border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.2911 10.7911C10.5782 10.5039 10.7423 10.121 11.0705 9.35522L12.2379 6.63128C12.3552 6.35758 12.4139 6.22073 12.3466 6.15342C12.2793 6.08611 12.1424 6.14476 11.8687 6.26207L9.14478 7.42947C8.379 7.75766 7.99612 7.92175 7.70893 8.20893M10.2911 10.7911C10.0039 11.0782 9.621 11.2423 8.85522 11.5705L6.13128 12.7379C5.85758 12.8552 5.72073 12.9139 5.65342 12.8466C5.58611 12.7793 5.64476 12.6424 5.76207 12.3687L6.92947 9.64478C7.25766 8.879 7.42175 8.49612 7.70893 8.20893M10.2911 10.7911L7.70893 8.20893" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1547,10 +1553,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center  flex-1 border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1570,10 +1576,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center flex-1   flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1611,7 +1617,7 @@ export default function UnitFullSummary({
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1629,10 +1635,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8.25 14L4.90012 9.98014C4.7088 9.75056 4.61314 9.63577 4.61314 9.5C4.61314 9.36423 4.7088 9.24944 4.90012 9.01986L8.25 5" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1648,9 +1654,9 @@ export default function UnitFullSummary({
 </div>
 </div>
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.5 9.125L8.49321 5.46456C8.73382 5.244 8.85413 5.13371 9 5.13371C9.14587 5.13371 9.26618 5.244 9.50679 5.46456L13.5 9.125" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1666,9 +1672,9 @@ export default function UnitFullSummary({
 </div>
 </div>
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.5 9.875L8.49321 13.5354C8.73382 13.756 8.85413 13.8663 9 13.8663C9.14587 13.8663 9.26618 13.756 9.50679 13.5354L13.5 9.875" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1698,7 +1704,7 @@ export default function UnitFullSummary({
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center   border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1716,10 +1722,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8.25 14L4.90012 9.98014C4.7088 9.75056 4.61314 9.63577 4.61314 9.5C4.61314 9.36423 4.7088 9.24944 4.90012 9.01986L8.25 5" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1736,10 +1742,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.5 9.125L8.49321 5.46456C8.73382 5.244 8.85413 5.13371 9 5.13371C9.14587 5.13371 9.26618 5.244 9.50679 5.46456L13.5 9.125" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1756,10 +1762,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center   flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.5 9.875L8.49321 13.5354C8.73382 13.756 8.85413 13.8663 9 13.8663C9.14587 13.8663 9.26618 13.756 9.50679 13.5354L13.5 9.875" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1783,7 +1789,7 @@ export default function UnitFullSummary({
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11.25 6.125C11.25 6.125 11.625 6.125 12 6.875C12 6.875 13.1912 5 14.25 4.625" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1803,10 +1809,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M3 11H4.79611C5.01673 11 5.23431 11.0497 5.43163 11.1452L6.96311 11.8862C7.16043 11.9816 7.37801 12.0313 7.59862 12.0313H8.38059C9.1369 12.0313 9.75 12.6246 9.75 13.3565C9.75 13.3861 9.72973 13.4121 9.70034 13.4202L7.79466 13.9471C7.4528 14.0416 7.08675 14.0087 6.76875 13.8548L5.13158 13.0627" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1824,10 +1830,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.3125 14.1875C11.2026 15.0776 12.375 15.9821 12.375 15.9821L13.9821 14.375C13.9821 14.375 13.0776 13.2026 12.1875 12.3125C11.2974 11.4224 10.125 10.5179 10.125 10.5179L8.51786 12.125C8.51786 12.125 9.42239 13.2974 10.3125 14.1875ZM10.3125 14.1875L7.5 17M14.25 14.1071L12.1071 16.25M10.3929 10.25L8.25 12.3929" stroke="#141B34" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1845,10 +1851,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1.5 17H16.5" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round"/>
@@ -1876,7 +1882,7 @@ export default function UnitFullSummary({
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1896,10 +1902,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1921,10 +1927,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1945,10 +1951,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center   flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 
 
@@ -1976,7 +1982,7 @@ export default function UnitFullSummary({
 
 <div className="flex flex-wrap">
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1.5 5C1.5 4.29289 1.5 3.93934 1.71967 3.71967C1.93934 3.5 2.29289 3.5 3 3.5C3.70711 3.5 4.06066 3.5 4.28033 3.71967C4.5 3.93934 4.5 4.29289 4.5 5V6.5C4.5 7.20711 4.5 7.56066 4.28033 7.78033C4.06066 8 3.70711 8 3 8C2.29289 8 1.93934 8 1.71967 7.78033C1.5 7.56066 1.5 7.20711 1.5 6.5V5Z" stroke="#0E0A1F" stroke-width="1.125"/>
@@ -1999,10 +2005,10 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+<div className="flex items-center border border-r border-gray-300 border-0 mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1.5 5C1.5 4.29289 1.5 3.93934 1.71967 3.71967C1.93934 3.5 2.29289 3.5 3 3.5C3.70711 3.5 4.06066 3.5 4.28033 3.71967C4.5 3.93934 4.5 4.29289 4.5 5V6.5C4.5 7.20711 4.5 7.56066 4.28033 7.78033C4.06066 8 3.70711 8 3 8C2.29289 8 1.93934 8 1.71967 7.78033C1.5 7.56066 1.5 7.20711 1.5 6.5V5Z" stroke="#0E0A1F" stroke-width="1.125"/>
@@ -2025,10 +2031,12 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="hidden md:block w-px bg-gray-200 self-stretch"></div>
+{/* <div className="hidden md:block w-px bg-gray-200 self-stretch"></div> */}
 
 
-<div className="flex items-center p-2 flex-1 min-w-48">
+{/* <div className="flex items-center   flex-1 min-w-42">
+<div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4"> */}
+<div className="flex items-center border border-r  border-0  border-transparent mr-4  flex-1 min-w-42">
 <div className="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 mr-4">
 <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8.64706 17H7.85294C4.85814 17 3.36073 17 2.43037 16.1213C1.5 15.2426 1.5 13.8284 1.5 11L1.5 8C1.5 5.17157 1.5 3.75736 2.43037 2.87868C3.36073 2 4.85814 2 7.85294 2L8.64706 2C11.6419 2 13.1393 2 14.0696 2.87868C15 3.75736 15 5.17157 15 8V8.375" stroke="#0E0A1F" stroke-width="1.125" stroke-linecap="round"/>
@@ -2048,7 +2056,7 @@ export default function UnitFullSummary({
 </div>
 
 
-<div className="flex-1 min-w-48"></div>
+<div className="flex-1 items-center min-w-48"></div>
 </div>
 </section>
 </div>
@@ -2246,10 +2254,10 @@ className="w-4 h-4"
 {selFeature === 'loan_info' && (
   <>
     <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-      <div className="relative min-h-screen">
+      <div className="relative min-h-screen mr-6">
         {/* Background image */}
         {/* <div>
-          <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+          <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
         </div> */}
 
 
@@ -2257,13 +2265,13 @@ className="w-4 h-4"
 
 
 
-<h1 className="text-[#606062]  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062]   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 Loan details
   </h1>
 
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
@@ -2286,7 +2294,7 @@ Loan details
   </div>
 </div>
 
-        <div className="w-full max-w-4xl px-4 mx-auto  h-full items-center justify-center  flex mt-[-110px] z-10 relative">
+        <div className="w-full max-w-5xl px-4 mx-auto  h-full items-center justify-center  flex mt-[-70px] z-10 relative">
           <LoanApplyFlowHome customerDetails={customerDetails} />
         </div>
       </div>
@@ -2315,10 +2323,10 @@ Loan details
 
 {/* <h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-4">Unit Documents</h1> */}
 
-  <div className="relative min-h-screen">
+  <div className="relative min-h-screen mr-6">
   
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -2329,14 +2337,14 @@ Loan details
 
 
 
-<h1 className="text-[#606062] font-outfit  max-w-4xl  mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit    mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Documents
   </h1>
   
  
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
@@ -2368,13 +2376,13 @@ Loan details
 
 
 
-    <div className='w-full h-full flex justify-center mt-[-110px] z-10 relative '>
+    <div className='w-full h-full items-center flex justify-center mt-[-90px] z-10 relative '>
 
 
-<div className="w-full max-w-4xl px-4 flex flex-col">
+<div className="w-full max-w-3xl px-4 flex flex-col">
 
 
-      <section className="w-full max-w-4xl p-4 mt-2 rounded-2xl">
+      <section className="w-full max-w-3xl mx-auto  mt-2 rounded-2xl">
     {/* <div className="text-right text-sm text-gray-500 mb-2">
       {totalUploadedDocs} of {documentTypes.length}
     </div> */}

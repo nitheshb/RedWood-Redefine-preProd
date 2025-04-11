@@ -47,7 +47,7 @@ const CrmUnitPsHome = ({
 
 
 
-      <div className="relative min-h-screen">
+      <div className="relative min-h-screen mr-6">
 
 
 
@@ -55,9 +55,9 @@ const CrmUnitPsHome = ({
 
 
 
-      <div className=" max-w-4xl mx-auto w-full ">
+      <div className=" mx-auto w-full ">
         <ul
-          className="flex ml-2"
+          className="flex "
           id="myTab"
           data-tabs-toggle="#myTabContent"
           role="tablist"
@@ -77,7 +77,7 @@ const CrmUnitPsHome = ({
   
 
 <button
-            className={`flex items-center gap-2  px-4 text-sm font-medium text-center rounded-t-lg border-b-2 hover:text-blue  ${
+            className={`flex items-center gap-2  px-2 text-sm font-medium text-center rounded-t-lg border-b-2 hover:text-blue  ${
               financeMode === d.val ? 'border-black text-black' : 'border-transparent'
             }`}
             type="button"
@@ -114,7 +114,7 @@ const CrmUnitPsHome = ({
 
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
@@ -140,7 +140,7 @@ const CrmUnitPsHome = ({
 
 
 
-    <div className='absolute w-full flex justify-center mt-[-140px] z-10'>
+    <div className='absolute w-full flex justify-center mt-[-90px] z-10'>
     
 
     <div className="w-full max-w-4xl px-4 mx-auto">

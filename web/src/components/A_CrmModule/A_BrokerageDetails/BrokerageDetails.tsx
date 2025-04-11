@@ -87,10 +87,10 @@ const BrokerageDetails = ({ selUnitDetails }) => {
 
     
 <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-  <div className="relative min-h-screen">
+  <div className="relative min-h-screen mr-6">
     {/* Background image */}
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -98,14 +98,14 @@ const BrokerageDetails = ({ selUnitDetails }) => {
 
 
 
-<h1 className="text-[#606062] font-outfit  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 Brokerage Details
   </h1>
   
   {/* Background image */}
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
@@ -134,7 +134,7 @@ Brokerage Details
 
 
 
-    <div className="w-full h-full flex justify-center mt-[-110px] z-10 relative">
+    <div className="w-full h-full flex justify-center mt-[-70px] z-10 relative">
       
 
     <div className="min-h-screen  mx-2 ">
@@ -214,7 +214,7 @@ Brokerage Details
                     </div>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                       <div>
-                        <label className="block text-[12px] mb-3  font-outfit font-medium text-[#616162]">
+                        <label className="block text-[12px] mb-4  font-outfit font-medium text-[#616162]">
                           Brokerage Amount
                         </label>
                         <TextField2

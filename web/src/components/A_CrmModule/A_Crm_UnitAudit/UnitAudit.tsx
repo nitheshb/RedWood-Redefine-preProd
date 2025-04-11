@@ -317,10 +317,10 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
 
 
     <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
-  <div className="relative min-h-screen">
+  <div className="relative min-h-screen mr-6">
     {/* Background image */}
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -329,14 +329,14 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
 
 
 
-<h1 className="text-[#606062] font-outfit  max-w-4xl mx-auto w-full px-4 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+<h1 className="text-[#606062] font-outfit  mx-auto w-full tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
 unit analayes
   </h1>
   
 
   <img
     alt="CRM Background"
-    src="/bgcrm.svg"
+    src="/bgimgcrm.svg"
     className="w-full h-auto object-cover"
   />
 
@@ -362,7 +362,7 @@ unit analayes
 
 
 
-    <div className="w-full h-full flex justify-center mt-[-110px] z-10 relative">
+    <div className="w-full h-full flex justify-center mt-[-70px] z-10 relative">
   <div className=" max-w-4xl mx-auto px-4 w-full">
 
   {/* <h1 className="text-[#606062] tracking-[0.06em]  font-medium text-[12px] uppercase  pl-4">Unit Analysis  </h1> */}
@@ -375,7 +375,7 @@ unit analayes
       <div className="grid gap-8 grid-cols-1">
         <div className="flex flex-col bg-[#FFFFFF] p-6 rounded-2xl  ">
           <div className="mt-0">
-            <p className="text-gray-700">
+            <p className="text-gray-700 font-outfit">
               Review and recalculate unit details to ensure all data is accurate and up-to-date.
             </p>
             <button

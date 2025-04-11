@@ -11,7 +11,7 @@ const CrmOwnershipTransfer = ({}) => {
           <div className="font-md text-xs text-gray-500  tracking-wide">
             Out Standing Balance
           </div>
-          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+          <div className="font-md text-xs tracking-wide font-medium text-slate-900 ">
             Rs{' '}
             {selCustomerPayload?.[`${assets[0]}_T_balance`]?.toLocaleString(
               'en-IN'
@@ -22,7 +22,7 @@ const CrmOwnershipTransfer = ({}) => {
           <div className="font-md text-xs text-gray-500  tracking-wide">
             Total Amount
           </div>
-          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+          <div className="font-md text-xs tracking-wide font-medium text-slate-900 ">
             Rs{' '}
             {selCustomerPayload?.[`${assets[0]}_T_balance`]?.toLocaleString(
               'en-IN'
@@ -33,7 +33,7 @@ const CrmOwnershipTransfer = ({}) => {
           <div className="font-md text-xs text-gray-500  tracking-wide">
             Total Review
           </div>
-          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+          <div className="font-md text-xs tracking-wide font-medium text-slate-900 ">
             Rs{' '}
             {selCustomerPayload?.[`${assets[0]}_T_review`]?.toLocaleString(
               'en-IN'
@@ -44,7 +44,7 @@ const CrmOwnershipTransfer = ({}) => {
           <div className="font-md text-xs text-gray-500  tracking-wide">
             Total Elgible
           </div>
-          <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
+          <div className="font-md text-xs tracking-wide font-medium text-slate-900 ">
             Rs{' '}
             {selCustomerPayload?.[`${assets[0]}_T_elgible`]?.toLocaleString(
               'en-IN'
@@ -56,7 +56,7 @@ const CrmOwnershipTransfer = ({}) => {
       <div className="mt-2">
         <section className="mr-2 flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
           <div>
-            <h1 className=" text-bodyLato text-left text-gray-800 font-semibold text-[12px] mb-2">
+            <h1 className=" text-bodyLato text-left text-gray-800 font-medium text-[12px] mb-2">
               Payment History
             </h1>
             <table className="w-full mb-10">
