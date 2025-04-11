@@ -476,8 +476,10 @@ leadPayload?.Mobile ||
     >
       {(formik) => (
         <Form className="space-y-4">
-          <div>
 
+
+
+          <div>
             <section
               className="   pb-4 "
               // style={{ boxShadow: '0 1px 12px #f2f2f2' }}
@@ -510,8 +512,11 @@ leadPayload?.Mobile ||
                 </section>
               </div>
 
-              <section className="mt-1 px-4 mx-4 rounded-lg bg-white ">
-                <section className="flex flex-row  pt-2 mt-1 ">
+               
+
+
+               <div className='py-3'>
+               <section className="flex flex-row mx-4  mt-1 ">
                   {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
                   <span className=" leading-[15px] flex flex-row   justify-between w-full">
                     <label className="font-medium text-[#606062]    text-[12px] leading-[15px] mb-1  ">
@@ -521,11 +526,6 @@ leadPayload?.Mobile ||
                       {/* <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div> */}
 
                     </label>
-
-
-
-
-
                     <div className=' rounded-lg'>
                     {!leadLink && <div
                             className="  text-[10px] cursor-pointer  bg-[#F5F5F5] border border-gray-300 p-1 px-2 rounded-lg  text-[#7A7A7A] "
@@ -575,6 +575,13 @@ leadPayload?.Mobile ||
                   </section>
                 </div>
               )}
+
+               </div>
+
+
+
+              <section className=" p-2 mx-4 rounded-lg bg-white ">
+  
                 {/* row 1 */}
                 <div className="md:flex flex-row md:space-x-4 w-full text-sm mt-4 ">
                   <div className="space-y-2 w-full text-xs mt-">
@@ -689,9 +696,8 @@ leadPayload?.Mobile ||
                   <div className="space-y-2 w-full text-xs mt-">
                     <section className="">
                       <div className="w-full mt-5 flex flex-col">
-
                       <CustomDatePicker
-                          className="h-8 outline-none border-radius rounded-md  border border-[#cccccc]  px-2  text-sm w-full  flex bg-grey-lighter text-grey-darker  "
+                          className="h-8 outline-none   border-0 border-b border-[#cccccc]  px-2  text-sm w-full  flex bg-grey-lighter text-grey-darker"
                           label="Dated"
                           name="dob1"
                           selected={formik.values.dob1}
@@ -916,17 +922,12 @@ leadPayload?.Mobile ||
       )}
                   </section>
                 </div>
-
-
-
-
-
-
-                
               </section>
               {/* section-2 */}
-              <section className="mt-2 px-4 mx-4 rounded-lg bg-white  pb-2">
-                <section className="flex flex-row  pt-2 mt-1 ">
+
+
+               <div className='py-3'>
+              <section className="flex flex-row  mx-4  pt-2 mt-1 ">
                   {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
                   <span className=" leading-[15px] ">
                     <label className="font-semibold text-[#053219]  text-[14px] leading-[15px] mb-1  ">
@@ -934,13 +935,15 @@ leadPayload?.Mobile ||
                       <abbr title="required"></abbr>
                       {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
 
-                      <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+                      {/* <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div> */}
 
                     </label>
                   </span>
                 </section>
+              <section className="mt-2 px-4 mx-4  rounded-lg bg-white ">
+
                 {/* row 1 */}
-                <div className="w-full flex-col lg:w-12/12 mt-2">
+                <div className="w-full flex-col p-3 lg:w-12/12">
 
                 <div className='flex'>
 
@@ -951,7 +954,7 @@ leadPayload?.Mobile ||
                         Primary Phone No
                         </label>
 
-                        <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
+                        <div className="flex border mb-6 mt-0 border-b border-0 border-[#cccccc] ">
                           <div className="inline-block">
                             <input
                               type="text"
@@ -1010,7 +1013,7 @@ leadPayload?.Mobile ||
                         Secondary Phone No
                         </label>
 
-                        <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md">
+                        <div className="flex mb-6 mt-0 border-0 border-b border-[#cccccc] ">
                           <div className="inline-block">
                             <input
                               type="text"
@@ -1073,23 +1076,31 @@ leadPayload?.Mobile ||
                 </div>
               </section>
 
-                            {/* section-3-B */}
-                            <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white ">
+               </div>
 
-                              <section className='flex justify-between'>
+                 
 
-                              <section className="flex flex-row  mt-1 ">
+
+                 <div className='py-3'>
+                 <section className="flex flex-row mx-4  mt-1 ">
                   {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
                   <span className=" leading-[15px] ">
                     <label className="font-semibold text-[#053219]  text-[14px]  leading-[15px] mb-1  ">
                     Current Address
                       <abbr title="required"></abbr>
                       {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
-                      <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+                      {/* <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div> */}
 
                     </label>
                   </span>
                 </section>
+
+                            {/* section-3-B */}
+                            <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white ">
+
+                              <section className='flex justify-between'>
+
+     
 
                 {/* Add Checkbox Here */}
 
@@ -1217,7 +1228,31 @@ leadPayload?.Mobile ||
 
                 </div>
               </section>
+             
+                 </div>
 
+
+ 
+               
+
+
+               <div className='py-3'>
+
+
+
+                
+              <section className="flex flex-row mx-4  mt-1 ">
+                  {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
+                  <span className=" leading-[15px] ">
+                    <label className="font-semibold text-[#053219]  text-[14px] leading-[15px] mb-1  ">
+                    Permanent Address
+                      <abbr title="required"></abbr>
+                      {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
+                      {/* <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div> */}
+
+                    </label>
+                  </span>
+                </section>
 
 
 
@@ -1226,18 +1261,7 @@ leadPayload?.Mobile ||
               <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white ">
 
                 <section className='flex justify-between'>
-                <section className="flex flex-row  mt-1 ">
-                  {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
-                  <span className=" leading-[15px] ">
-                    <label className="font-semibold text-[#053219]  text-[14px] leading-[15px] mb-1  ">
-                    Permanent Address
-                      <abbr title="required"></abbr>
-                      {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
-                      <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
 
-                    </label>
-                  </span>
-                </section>
 
 
                 <section>
@@ -1353,20 +1377,33 @@ leadPayload?.Mobile ||
                 </div>
               </section>
 
-              {/* section-4 */}
-              <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white ">
-                <section className="flex flex-row  px- mt-1 ">
+
+               </div>
+
+
+
+
+
+               <div className='py-3'>
+
+
+                
+              <section className="flex flex-row mx-4  mt-1  ">
                   {/* <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-[#8b5cf6]"></div> */}
                   <span className=" leading-[15px] ">
-                    <label className="font-semibold text-[#053219]  text-[14px] leading-[15px] mb-1  ">
+                    <label className="font-semibold mb-2 text-[#053219]  text-[14px] leading-[15px] mb-1  ">
                       Other Details
                       <abbr title="required"></abbr>
                       {/* <div className="border-b-2 border-[#8B5CF6] mt-[1px]"></div> */}
-                      <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div>
+                      {/* <div className="border-t-4 rounded-xl w-16 mt-1 mb-3 border-[#8b5cf6]"></div> */}
 
                     </label>
                   </span>
                 </section>
+
+              {/* section-4 */}
+              <section className="mt-2 px-4 mx-4 py-2 rounded-lg bg-white ">
+
 
 
 
@@ -1415,8 +1452,16 @@ leadPayload?.Mobile ||
           />
                 </div>
               </section>
+
+               </div>
+
+
+
+
+
             </section>
           </div>
+
           <div className=" flex flex-row-reverse">
             <button   type="submit" className="mb-2 md:mb-0 bg-[#8b5cf6] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 ">Save</button>
 

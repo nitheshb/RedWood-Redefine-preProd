@@ -227,8 +227,8 @@ const CrmUnitSummary = ({
 
       <div className="bg-white rounded-2xl p-6">
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <div className="flex items-center">
+          <div className="flex justify-between overflow-visible items-center mb-4">
+            <div className="flex items-center overflow-visible">
               <img src="/su5.svg" alt="Transaction" className="w-[30px] h-[29px] mr-2 object-cover" />
               <h2 className="text-gray-600 font-medium text-[12px] uppercase tracking-wide">
                 LAST TRANSACTION
@@ -254,8 +254,8 @@ const CrmUnitSummary = ({
 
       <div className="bg-white rounded-2xl p-6">
         <div>
-          <div className="flex items-center mb-4">
-            <img src="/su6.svg" alt="Applicant" className="w-[30px] h-[29px] mr-2 object-cover" />
+          <div className="flex items-center  mb-4 overflow-visible">
+            <img src="/su6.svg" alt="Applicant" className="w-[30px] h-[29px] mr-2 object-contain" />
             <h2 className="text-gray-600 font-medium text-[12px] uppercase tracking-wide">
               APPLICANT DETAILS
             </h2>
@@ -287,8 +287,8 @@ const CrmUnitSummary = ({
       <div className="bg-white rounded-2xl  p-6">
         <div>
           <div className="flex items-center justify-between">
-            <div className="flex items-center mb-4">
-              <img src="/su2.svg" alt="Activity" className="w-[30px] h-[29px] mr-2 object-cover" />
+            <div className="flex items-center mb-4 ">
+              <img src="/su2.svg" alt="Activity" className="w-[30px] h-[29px] mr-2 object-contain" />
               <h2 className="text-gray-600 font-medium text-[12px] uppercase tracking-wide">
                 LAST ACTIVITY
               </h2>
@@ -311,10 +311,10 @@ const CrmUnitSummary = ({
       </div>
 
  
-      <div className="bg-white rounded-2xl p-6">
+      <div className="bg-white rounded-2xl overflow-visible p-6">
         <div>
-          <div className="flex items-center mb-4">
-            <img src="/su3.svg" alt="Calendar" className="w-[30px] h-[29px] mr-2" />
+          <div className="flex items-center overflow-visible mb-4">
+            <img src="/su3.svg" alt="Calendar" className="w-[30px] h-[29px] mr-2 object-contain" />
             <h2 className="text-gray-600 font-medium text-[12px] uppercase tracking-wide">
               UPCOMING EVENTS
             </h2>
@@ -346,7 +346,7 @@ const CrmUnitSummary = ({
           {documents.map((doc, index) => (
             <div key={index} className="flex items-center justify-between py-3 border-b border-gray-200">
               <div className="flex items-center gap-3">
-                <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5" />
+                <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5 object-contain" />
                 <span className="font-medium">{doc.category}</span>
               </div>
               <span className="text-gray-600">{doc.count} Documents</span>
@@ -369,7 +369,7 @@ const CrmUnitSummary = ({
           {loanDetails.map((detail, index) => (
             <div key={index} className="flex items-center justify-between py-3 border-b border-gray-200">
               <div className="flex items-center gap-3">
-                <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5" />
+                <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5 object-contain" />
                 <span className="font-medium">{detail.type}</span>
               </div>
               <span className="text-gray-600">{detail.count} Documents</span>
