@@ -26,6 +26,7 @@ import {
   streamGetAllUnitTransactions,
   updateUnitStatus,
   updateUnitStatusDates,
+  steamUnitActivityLog,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { db, storage } from 'src/context/firebaseConfig'
@@ -65,6 +66,8 @@ import ToDoList from './ToDoList'
 import ProjectTasks from './ToDoList'
 import TaskManagementDashboard from './ToDoList'
 import DocumentManagement from '../LegalModule/Docu_row'
+import { computeTotal } from 'src/util/computeCsTotals'
+import { crmActivieLogNamer } from 'src/util/CrmActivityLogHelper'
 
 
 
@@ -155,6 +158,8 @@ export default function UnitFullSummary({
   selSubMenu2,
   source,
   selectedUnitId,
+  selCustomerPayload: selUnitPayload,
+
 
 }) {
   const { user } = useAuth()
@@ -903,6 +908,167 @@ export default function UnitFullSummary({
   const pendingDocs = documentTypes.length - totalUploadedDocs; 
 
 
+
+
+  const [netTotal, setNetTotal] = useState(0)
+  const [partATotal, setPartATotal] = useState(0)
+  const [partBTotal, setPartBTotal] = useState(0)
+  const [unitFetchedActivityData, setUnitFetchedActivityData] = useState([])
+
+
+    // const boot = async () => {
+    //   const unsubscribe = steamUnitActivityLog(orgId, {
+    //     uid: selUnitPayload?.id,
+    //     pId: selUnitPayload?.pId,
+    //   })
+  
+
+
+
+
+
+    //   const y = await unsubscribe
+    //   setUnitFetchedActivityData(y)
+    //   await console.log('new setup ', unitFetchedActivityData)
+    //   await console.log('new setup ', y)
+    // }
+
+
+    useEffect(() => {
+      console.log('unit dta is ', selUnitPayload, selUnitPayload?.id)
+      boot()
+      setTotalFun()
+      const subscription = supabase
+        .from(`${orgId}_unit_logs`)
+        .on('*', (payload) => {
+          console.log('account records', payload)
+          const updatedData = payload.new
+          const { uid } = payload.old
+          const eventType = payload.eventType
+          console.log('account records', updatedData.Uuid, selUnitPayload?.id)
+  
+          if (updatedData.Uuid === selUnitPayload?.id) {
+            if (updatedData.Uuid === selUnitPayload?.id) {
+              console.log('account records', updatedData.Uuid, selUnitPayload?.id)
+              setUnitFetchedActivityData((prevLogs) => {
+                const existingLog = prevLogs.find((log) => log.uid === uid)
+                console.log(
+                  'account records',
+                  prevLogs,
+                  existingLog,
+                  uid,
+                  payload.old,
+                  uid
+                )
+                if (existingLog) {
+                  console.log('Existing record found!')
+                  if (payload.new.status === 'Done') {
+                    const updatedLogs = prevLogs.filter((log) => log.uid != uid)
+                    return [...updatedLogs]
+                  } else {
+                    const updatedLogs = prevLogs.map((log) =>
+                      log.uid === uid ? payload.new : log
+                    )
+                    return [...updatedLogs]
+                  }
+                } else {
+                  console.log('New record added!')
+                  return [payload.new,...prevLogs]
+                }
+              })
+            } else {
+              if (
+                updatedData.by_uid === user?.uid ||
+                updatedData?.to_uid === user?.uid
+              ) {
+                setUnitFetchedActivityData((prevLogs) => {
+                  const existingLog = prevLogs.find((log) => log.uid === uid)
+  
+                  if (existingLog) {
+                    console.log('Existing record found!')
+                    if (payload.new.status === 'Done') {
+                      const updatedLogs = prevLogs.filter((log) => log.uid != uid)
+                      return [...updatedLogs]
+                    } else {
+                      const updatedLogs = prevLogs.map((log) =>
+                        log.id === uid ? payload.new : log
+                      )
+                      return [...updatedLogs]
+                    }
+                  } else {
+                    console.log('New record added!')
+                    return [payload.new,...prevLogs]
+                  }
+                })
+              }
+            }
+          }
+        })
+        .subscribe()
+  
+      // Clean up the subscription when the component unmounts
+      return () => {
+        supabase.removeSubscription(subscription)
+      }
+    }, [])
+
+
+
+
+
+
+
+
+      const boot = async () => {
+        const unsubscribe = steamUnitActivityLog(orgId, {
+          uid: selUnitPayload?.id,
+          pId: selUnitPayload?.pId,
+        })
+    
+        const y = await unsubscribe
+        setUnitFetchedActivityData(y)
+        await console.log('new setup ', unitFetchedActivityData)
+        await console.log('new setup ', y)
+      }
+      const setTotalFun = async () => {
+        const partBTotal = selUnitPayload?.additonalChargesObj?.reduce(
+          (partialSum, obj) =>
+            partialSum +
+            Number(
+              computeTotal(
+                obj,
+                selUnitPayload?.super_built_up_area || selUnitPayload?.area?.toString()?.replace(',', '')
+              )
+            ),
+          0
+        )
+    
+        const partATotal = selUnitPayload?.plotCS?.reduce(
+          (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
+          0
+        )
+    
+        console.log('myObj', partATotal)
+    
+        setPartBTotal(partBTotal)
+        setPartATotal(partATotal)
+        setNetTotal(partATotal + partBTotal)
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     //bg-[#F9F9FA]
     <div
@@ -1259,73 +1425,62 @@ export default function UnitFullSummary({
              */}
 
 
-
-
-
-
-
-
-
 <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
   <div className="relative min-h-screen mr-6">
-
-    {/* <div className="">
-      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
-    </div> */}
-
-
-
     <div className="relative z-0">
-
-
-
-    <h1 className="text-[#606062]   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+      <h1 className="text-[#606062] mx-auto w-full tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
         Unit Timeline
       </h1>
       
-
       <img
         alt="CRM Background"
         src="/bgimgcrm.svg"
         className="w-full h-auto object-cover"
       />
 
-
       <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="text-center space-y-2">
-            <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Last Activity</p>
-            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
+              Last Activity
+            </p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
+              {unitFetchedActivityData[0]?.type || 'No Data'}
+            </h2>
           </div>
           <div className="text-center space-y-2">
-            <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Upcoming Milestone</p>
-            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
+              Upcoming Milestone
+            </p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
+              {unitFetchedActivityData.find(act => act.status === 'pending')?.type || 'No Data'}
+            </h2>
           </div>
           <div className="text-center space-y-2">
-            <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Current Unit Status</p>
-            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+            <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">
+              Current Unit Status
+            </p>
+            <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">
+              {unitFetchedActivityData[0]?.status || 'No Data'}
+            </h2>
           </div>
         </div>
       </div>
     </div>
 
-    
     <div className="w-full h-full flex justify-center mt-[-90px] z-10 relative">
-      <div className="w-full max-w-5xl"> 
-        {/* <h1 className="text-[#606062] tracking-[0.06em] font-medium text-[12px] uppercase  pl-4">ACTIVITY LOG</h1> */}
-     
-        
-        <section className="p-4 mt-2 rounded-2xl ">
+      <div className="w-full max-w-5xl">
+        <section className="p-4 mt-2 rounded-2xl">
           <table className="w-full rounded-2xl overflow-hidden">
             <thead>
               <tr className="h-9">
-                <th className="w-[30%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
+                <th className="w-[25%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
                   User
                 </th>
                 <th className="w-[25%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
                   Date/Time
                 </th>
-                <th className="w-[25%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
+                <th className="w-[30%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
                   Activity
                 </th>
                 <th className="w-[20%] text-[12px] text-center text-[#0E0A1F] bg-[#EDE9FE] tracking-wide">
@@ -1335,29 +1490,47 @@ export default function UnitFullSummary({
             </thead>
 
             <tbody className="bg-[#fff]">
-              {unitTransactionsA?.map((d1, inx) => {
-                return (
+              {unitFetchedActivityData?.length === 0 ? (
+                <tr>
+                  <td colSpan="4" className="text-center py-8 text-gray-500">
+                    No activity data available
+                  </td>
+                </tr>
+              ) : (
+                unitFetchedActivityData?.map((activity, index) => (
                   <tr
-                    key={inx}
-                    className={`border-b border-dashed h-[45px] ${inx % 2 === 0 ? 'bg-gray-50' : ''}`}
+                    key={index}
+                    className={`border-b border-dashed h-[45px] ${
+                      index % 2 === 0 ? 'bg-gray-50' : ''
+                    }`}
                   >
-                    <td className="text-[12px] text-center text-gray-800">{d1.user || 'System'}</td>
-                    <td className="text-[13px] text-center text-gray-800 font-bold">
-                      {new Date(d1.timestamp).toLocaleString()}
-                    </td>
-                    <td className="text-[12px] text-center text-gray-800">{d1.activity}</td>
                     <td className="text-[12px] text-center text-gray-800">
-                      <span className={`px-2 py-1 rounded-full ${
-                        d1.status === "Completed" ? "bg-green-100 text-green-800" :
-                        d1.status === "Pending" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-red-100 text-red-800"
-                      }`}>
-                        {d1.status}
+                      {activity.by || 'System'}
+                    </td>
+                    <td className="text-[12px] text-center text-gray-800">
+                      {activity.type === 'ph'
+                        ? timeConv(Number(activity.time)).toLocaleString()
+                        : timeConv(activity.T).toLocaleString()}
+                    </td>
+                    <td className="text-[12px] text-center text-gray-800">
+                      {crmActivieLogNamer(activity)}
+                    </td>
+                    <td className="text-[12px] text-center">
+                      <span
+                        className={`px-2 py-1 rounded-full ${
+                          activity.status === 'Done'
+                            ? 'bg-green-100 text-green-800'
+                            : activity.status === 'In Progress'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-red-100 text-red-800'
+                        }`}
+                      >
+                        {activity.status || 'Pending'}
                       </span>
                     </td>
                   </tr>
-                );
-              })}
+                ))
+              )}
             </tbody>
           </table>
         </section>
