@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { Link } from '@redwoodjs/router';
 import {
   getAllProjects,
@@ -14,6 +14,7 @@ import FileUpload from 'src/components/A_TaskMan/FileUpload';
 import { addDoc, collection, serverTimestamp, query, where, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db, storage } from 'src/context/firebaseConfig';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useState, useEffect } from 'react';
 
 const LegalDocsHome = ({ project }) => {
   const { user } = useAuth();
@@ -30,7 +31,7 @@ const LegalDocsHome = ({ project }) => {
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [selectedFilterProject, setSelectedFilterProject] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [viewType, setViewType] = useState('list');
+  const [viewType, setViewType] = useState('small');
   const [folderFiles, setFolderFiles] = useState({});
   const [isSaving, setIsSaving] = useState(false);
 
@@ -195,7 +196,6 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-
   const fetchFilesForFolder = async (orgId, folderId) => {
     const filesQuery = query(
       collection(db, `${orgId}_legal_documents`),
@@ -206,20 +206,17 @@ const LegalDocsHome = ({ project }) => {
     return files;
   };
 
-
   const deleteFileFromFirestore = async (orgId, docId) => {
     const docRef = doc(db, `${orgId}_legal_documents`, docId);
     await deleteDoc(docRef);
     console.log('File deleted successfully:', docId);
   };
 
-
   const updateFileInFirestore = async (orgId, docId, updatedFile) => {
     const docRef = doc(db, `${orgId}_legal_documents`, docId);
     await updateDoc(docRef, updatedFile);
     console.log('File updated successfully:', docId);
   };
-
 
   const saveFilesToDatabase = async (folderId) => {
     if (isSaving || !folderId) return;
@@ -242,7 +239,6 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-
   const handleFileUpload = async (files) => {
     const uploadedFiles = await Promise.all(
       files.map(async (file) => {
@@ -257,7 +253,6 @@ const LegalDocsHome = ({ project }) => {
     }));
   };
 
-
   const removeFile = async (folderId, fileName) => {
     const fileToDelete = folderFiles[folderId].find((file) => file.name === fileName);
     if (fileToDelete && fileToDelete.id) {
@@ -269,27 +264,10 @@ const LegalDocsHome = ({ project }) => {
     }));
   };
 
-
   const renderProjects = () => {
     const filteredItems = filterItems(filteredProjects, searchTerm);
 
     switch (viewType) {
-      case 'list':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((project, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
-                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
-              >
-              <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
-
-                <h3 className="font-semibold">{project.projectName}</h3>
-              </div>
-            ))}
-          </div>
-        );
       case 'small':
         return (
           <div className="grid grid-cols-4 gap-4">
@@ -305,22 +283,6 @@ const LegalDocsHome = ({ project }) => {
             ))}
           </div>
         );
-      case 'large':
-        return (
-          <div className="grid grid-cols-2 gap-4">
-            {filteredItems.map((project, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
-                className="p-6 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-3"
-              >
-
-                <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
-                <h3 className="font-semibold text-lg text-center">{project.projectName}</h3>
-              </div>
-            ))}
-          </div>
-        );
       case 'details':
         return (
           <div className="space-y-2">
@@ -331,7 +293,7 @@ const LegalDocsHome = ({ project }) => {
                 className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
               >
                 <div className="flex items-center gap-3">
-                <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
+                  <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
                   <h3 className="font-semibold">{project.projectName}</h3>
                 </div>
                 <div className="text-sm text-gray-500">
@@ -347,26 +309,10 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-  // Render blocks
   const renderBlocks = () => {
     const filteredItems = filterItems(blocks, searchTerm);
 
     switch (viewType) {
-      case 'list':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((block, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
-                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
-              >
-                <span className="text-2xl">📦</span>
-                <h3 className="font-semibold">{block.blockName}</h3>
-              </div>
-            ))}
-          </div>
-        );
       case 'small':
         return (
           <div className="grid grid-cols-4 gap-4">
@@ -378,21 +324,6 @@ const LegalDocsHome = ({ project }) => {
               >
                 <span className="text-2xl">📦</span>
                 <h3 className="font-semibold text-sm text-center">{block.blockName}</h3>
-              </div>
-            ))}
-          </div>
-        );
-      case 'large':
-        return (
-          <div className="grid grid-cols-2 gap-4">
-            {filteredItems.map((block, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
-                className="p-6 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-3"
-              >
-                <span className="text-4xl">📦</span>
-                <h3 className="font-semibold text-lg text-center">{block.blockName}</h3>
               </div>
             ))}
           </div>
@@ -423,26 +354,10 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-  // Render units
   const renderUnits = () => {
     const filteredItems = filterItems(units, searchTerm);
 
     switch (viewType) {
-      case 'list':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((unit, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
-                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
-              >
-                <span className="text-2xl">📁</span>
-                <h3 className="font-semibold">{unit.unit_no}</h3>
-              </div>
-            ))}
-          </div>
-        );
       case 'small':
         return (
           <div className="grid grid-cols-4 gap-4">
@@ -454,21 +369,6 @@ const LegalDocsHome = ({ project }) => {
               >
                 <span className="text-2xl">📁</span>
                 <h3 className="font-semibold text-sm text-center">{unit.unit_no}</h3>
-              </div>
-            ))}
-          </div>
-        );
-      case 'large':
-        return (
-          <div className="grid grid-cols-2 gap-4">
-            {filteredItems.map((unit, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
-                className="p-6 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-3"
-              >
-                <span className="text-4xl">📁</span>
-                <h3 className="font-semibold text-lg text-center">{unit.unit_no}</h3>
               </div>
             ))}
           </div>
@@ -499,7 +399,6 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-  // Render file upload section
   const renderFileUploadSection = (folderId) => {
     if (!folderId) {
       return <div>No folder selected</div>;
@@ -554,7 +453,6 @@ const LegalDocsHome = ({ project }) => {
     );
   };
 
-  // Handle back navigation
   const handleBack = () => {
     if (currentFolder === 'blocks') {
       setCurrentFolder('projects');
@@ -568,7 +466,6 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-  // Handle filter project change
   const handleFilterProjectChange = (e) => {
     const selectedProjectName = e.target.value;
     setSelectedFilterProject(selectedProjectName);
@@ -581,17 +478,14 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-  // Handle search change
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  // Handle view change
   const handleViewChange = (e) => {
     setViewType(e.target.value);
   };
 
-  // Filter items based on search term
   const filterItems = (items, searchTerm) => {
     return items.filter((item) =>
       item.projectName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -600,7 +494,6 @@ const LegalDocsHome = ({ project }) => {
     );
   };
 
-  // Handle file download
   const handleDownload = (fileUrl, fileName) => {
     const link = document.createElement('a');
     link.href = fileUrl;
@@ -649,8 +542,6 @@ const LegalDocsHome = ({ project }) => {
               className="px-4 py-2 border rounded-lg"
             >
               <option value="small">Small Icons</option>
-              <option value="list">List View</option>
-              <option value="large">Large Icons</option>
               <option value="details">Details</option>
             </select>
           </div>
@@ -697,8 +588,6 @@ const LegalDocsHome = ({ project }) => {
         </div>
       </div>
     </section>
-
-  
   );
 };
 

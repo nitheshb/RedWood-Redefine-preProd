@@ -34,6 +34,9 @@ import RoundedProgressBar from '../A_SalesModule/Reports/charts/horizontalProgre
 import { ToWords } from 'to-words'
 import IndianCurrencyTooltip from '../A_CRMcomp/IndianCurrencyTooltip'
 import { USER_ROLES } from 'src/constants/userRoles'
+import PaymentDashboard from '../A_SalesModule/Reports/charts/PaymentDashboard'
+import StageCostChart from '../A_SalesModule/Reports/charts/StageCostChart'
+import HalfSemiCircleGauge from '../A_SalesModule/Reports/charts/GaugeChart'
 
 
 
@@ -515,8 +518,8 @@ useEffect(() => {
                 CRM
               </h2>
 
-              <div className="flex">
-                <div className=" flex flex-col mr-5  w-40">
+              <div className="flex  gap-2">
+                <div className=" flex flex-col gap-2  w-40">
                   <VerySlimSelectBox
                     name="project"
                     label=""
@@ -1160,17 +1163,12 @@ useEffect(() => {
     ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
   </span>
 </div>
-
                                   </section>
 
                                   <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
                                     <div className="text-[12px] font-medium">
                                       Stage Cost
                                     </div>
-
-
-
-
                                     <div
                 className="relative flex flex-col items-center group"
                 style={{ alignItems: 'start' }}
@@ -1272,6 +1270,24 @@ useEffect(() => {
                                     />
 
                                 </div>
+
+{/* 
+                                <PaymentDashboard
+                                progress={
+                                  (((finData?.T_review || 0) +
+                                  (finData?.T_approved || 0) )/ finData?.T_elgible) *
+                                  100
+                                }
+                                
+                                
+                                
+                                
+                                
+                                /> */}
+
+                                {/* <HalfSemiCircleGauge/> */}
+                                
+                                
                               </div>
                             </div>
 
