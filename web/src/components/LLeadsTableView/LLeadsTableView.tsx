@@ -94,6 +94,8 @@ const LLeadsTableView = ({
   const [followupA, setfollowupA] = useState([])
   const [mySelRows, setmySelRows] = useState([])
 
+
+
   const newStatus = []
   const followup = []
   const all = leadsFetchedData
@@ -335,10 +337,11 @@ const LLeadsTableView = ({
       >
         <Grid container>
           <Grid item xs={12}>
-            <div className="mb-1 border-b  border-[#e7eaee] ">
-              {/* bg-[#fdb7b7] */}
+
+
+            <div className="mb-1 border-b mx-4  border-[#e7eaee] ">
               <ul
-                className="flex flex-wrap  "
+                className="flex flex-wrap"
                 id="myTab"
                 data-tabs-toggle="#myTabContent"
                 role="tablist"
@@ -353,50 +356,12 @@ const LLeadsTableView = ({
                       aria-label="secondary tabs example"
                       key={i}
                     >
-                      <li key={i} className="mr-2" role="presentation">
-                        {/* <button
-                          className={`inline-block   pl-3  text-sm font-medium text-center text-gray-700 rounded-t-lg border-b-2   hover:text-gray-600 hover:border-black hover:border-b-2 dark:text-gray-400 dark:hover:text-gray-300  ${
-                            value === d.val
-                              ? 'border-black text-gray-900 '
-                              : 'border-transparent'
-                          }`}
-                          type="button"
-                          role="tab"
-                          onClick={() => {
-                            setFetchLeadsLoader(true)
-                            setValue(d.val)
-                            setFetchLeadsLoader(false)
-                            setmySelRows(rowsCounter(leadsFetchedData, d.val))
-                          }}
-                        >
-                          <span
-                            className={`font-PlayFair tems-center  flex  text-sm ${
-                              value === d.val
-                                ? 'font-semibold text-green-800'
-                                : ''
-                            }`}
-                          >
-                         <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
-
-                            {' '}
-                            {`${d.lab} `}
-                            <span
-                              className={`  text-zinc-900 border border-gray-400  text-[9px] p-1   rounded-full ml-[4px]  ${
-                                activeNeg === true
-                                  ? 'bg-gray-950  font-semibold '
-                                  : 'bg-gray-100 font-normal '
-                              } `}
-                            >
-                              {rowsCounter(leadsFetchedData, d.val).length}
-                            </span>
-                          </span>
-
-   
-                        </button> */}
-
+                      <li key={i} className=" flex items-center" role="presentation">
 <button
-  className={`inline-flex items-center space-x-1 px-3 py-1 text-sm font-medium text-gray-700 border-b-2 rounded-t-lg transition-all hover:text-gray-600 hover:border-black dark:text-gray-400 dark:hover:text-gray-300 ${
-    value === d.val ? 'border-black text-gray-900' : 'border-transparent'
+  className={`inline-flex items-center  py-2 text-sm font-medium transition-all border-b-2 ${
+    value === d.val
+     ? 'border-black text-gray-900 font-medium' 
+     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
   }`}
   type="button"
   role="tab"
@@ -405,32 +370,35 @@ const LLeadsTableView = ({
     setValue(d.val);
     setFetchLeadsLoader(false);
     setmySelRows(rowsCounter(leadsFetchedData, d.val));
+
   }}
 >
-  <img alt="" src="/temp2.png" className="h-4 w-4" />
   <span
-    className={`font-PlayFair text-sm ${
-      value === d.val ? 'font-semibold text-green-800' : ''
+    className={` mr-2  ${
+      value === d.val ? 'font-medium' : ''
     }`}
   >
     {d.lab}
   </span>
-  {/* <span
-    className={`text-[8px] px-1 py-0.5 rounded-full border ${
-      activeNeg ? 'bg-gray-950 text-white font-semibold' : 'bg-gray-100 text-zinc-900 font-normal'
-    }`}
-  >
-    {rowsCounter(leadsFetchedData, d.val).length}
-  </span> */}
-  <span
-  className={`flex items-center justify-center text-[9px] w-5 h-5 rounded-full border ${
-    activeNeg ? 'bg-gray-950 text-white font-semibold' : 'bg-gray-100 text-zinc-900 font-normal'
+
+
+
+<span
+  className={`flex items-center justify-center min-w-6 h-6 px-2 text-xs font-medium rounded-full ${
+    value === d.val
+      ? 'bg-[#EDE9FE] text-[#0E0A1F]'  
+      : 'bg-gray-200 text-gray-600'     
   }`}
 >
   {rowsCounter(leadsFetchedData, d.val).length}
 </span>
-
 </button>
+
+
+
+{i !== tabHeadFieldsA.length - 1 && (
+            <div className="w-px h-5 mx-4 bg-gray-200"></div>
+          )}
 
                       </li>
                     </ul>
@@ -439,6 +407,16 @@ const LLeadsTableView = ({
               </ul>
 
             </div>
+
+
+
+
+
+
+
+
+
+
 
 
             {fetchLeadsLoader &&

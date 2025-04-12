@@ -24,7 +24,7 @@ export const TextField = ({ label,labelClassName = "text-gray-700", ...props }) 
         className={` ${meta.touched && meta.error && 'is-invalid'} ${
           field.name === 'blockName' ? 'rounded-xs' : ' h-8  '
         }
-           w-full min-w-full flex bg-grey-lighter text-grey-darker  border-0 border-b border-[#cccccc] `}
+           w-full min-w-full flex bg-grey-lighter text-grey-darker  rounded-md px-1 border border-[#cccccc] `}
         {...field}
         {...props}
         autoComplete="off"

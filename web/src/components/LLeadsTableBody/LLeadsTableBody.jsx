@@ -445,7 +445,7 @@ React.useEffect(()=>{
   return (
     <section className="flex flex-row justify-between pb py-1 rounded px-3 bg-gray-50 mb-1">
       <span className="flex flex-row">
-        <span className="relative  p- border rounded h-7 mt-1">
+        <span className="relative  border rounded h-7 mt-1 px-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-3 w-3 absolute left-0 ml-1 mt-2"
@@ -465,7 +465,7 @@ React.useEffect(()=>{
             placeholder={`Search...${selStatus}`}
             onChange={searchKeyField}
             value={searchKey}
-            className="ml-6 bg-transparent w-[680px] text-xs focus:border-transparent  focus:ring-0 focus-visible:border-transparent focus-visible:ring-0 focus:outline-none"
+            className="pl-6 pr-2 bg-transparent text-xs focus:outline-none w-auto min-w-[180px] rounded-lg max-w-full"
           />
         </span>
 

@@ -22,6 +22,7 @@ const customStyles = {
     height: 31,
     minHeight: 30,
     padding: 0,
+    borderRadius: 8,
   }),
   valueContainer: (base) => ({
     ...base,
@@ -473,7 +474,7 @@ export const SmartCalendarSelect = ({
   }
 
   return (
-    <div style={{ width: '200px'}} className="ml-4">
+    <div style={{ width: '200px'}}>
       {!isDatePicker ? (
         <Select
           maxMenuHeight={150}
