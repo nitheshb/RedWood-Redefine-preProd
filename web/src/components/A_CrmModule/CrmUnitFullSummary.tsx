@@ -68,6 +68,7 @@ import TaskManagementDashboard from './ToDoList'
 import DocumentManagement from '../LegalModule/Docu_row'
 import { computeTotal } from 'src/util/computeCsTotals'
 import { crmActivieLogNamer } from 'src/util/CrmActivityLogHelper'
+import UnitDocsWidget from '../LegalModule/UnitDocsWidget'
 
 
 
@@ -88,30 +89,30 @@ const people = [
 
 
 const timelineItems = [
-  { 
-    status: 'Booked', 
-    date: 'Mar 20-2025', 
-    color: 'bg-green-100 text-green-800' 
+  {
+    status: 'Booked',
+    date: 'Mar 20-2025',
+    color: 'bg-green-100 text-green-800'
   },
-  { 
-    status: 'Allotment', 
-    date: 'Mar 20-2025', 
-    color: 'bg-gray-200 text-gray-700' 
+  {
+    status: 'Allotment',
+    date: 'Mar 20-2025',
+    color: 'bg-gray-200 text-gray-700'
   },
-  { 
-    status: 'Agreement', 
-    date: 'Mar 20-2025', 
-    color: 'bg-gray-200 text-gray-700' 
+  {
+    status: 'Agreement',
+    date: 'Mar 20-2025',
+    color: 'bg-gray-200 text-gray-700'
   },
-  { 
-    status: 'Registered', 
-    date: 'Mar 20-2025', 
-    color: 'bg-gray-200 text-gray-700' 
+  {
+    status: 'Registered',
+    date: 'Mar 20-2025',
+    color: 'bg-gray-200 text-gray-700'
   },
-  { 
-    status: 'Possession', 
-    date: 'Mar 20-2025', 
-    color: 'bg-gray-200 text-gray-700' 
+  {
+    status: 'Possession',
+    date: 'Mar 20-2025',
+    color: 'bg-gray-200 text-gray-700'
   }
 ];
 
@@ -781,28 +782,28 @@ export default function UnitFullSummary({
 
 
   const documents = [
-    { 
-      id: 1234, 
-      name: 'EC', 
+    {
+      id: 1234,
+      name: 'EC',
       type: 'ec',
-      time: customerDetails?.ecDocUpDate, 
-      url: customerDetails?.ecDocUrl, 
-      fileName: customerDetails?.ecFilName 
+      time: customerDetails?.ecDocUpDate,
+      url: customerDetails?.ecDocUrl,
+      fileName: customerDetails?.ecFilName
     },
     {
       id: 1235,
       name: 'Agreement',
       type: 'agree',
-      time: customerDetails?.agreeDocUpDate, 
-      url: customerDetails?.agreeDocUrl, 
+      time: customerDetails?.agreeDocUpDate,
+      url: customerDetails?.agreeDocUrl,
       fileName: customerDetails?.agreeFilName
     },
     {
       id: 1236,
       name: 'Register Doc',
       type: 'reg',
-      time: customerDetails?.regDocUpDate, 
-      url: customerDetails?.regDocUrl, 
+      time: customerDetails?.regDocUpDate,
+      url: customerDetails?.regDocUrl,
       fileName: customerDetails?.regFilName
     }
   ];
@@ -871,41 +872,43 @@ export default function UnitFullSummary({
 
 
   const documentTypes = [
-    { 
-      id: 1234, 
-      name: 'EC', 
-      type: 'ec', 
-      time: customerDetails?.ecDocUpDate, 
-      url: customerDetails?.ecDocUrl, 
-      filName: customerDetails?.ecFilName,
-      uploadedCount: customerDetails?.ecDocUrl ? 1 : 0 
+    {
+      id: 1235,
+      name: 'Agreement',
+      type: 'agree',
+      uploadedCount: customerDetails?.agree_doc_count || 0
     },
-    { 
-      id: 1235, 
-      name: 'Agreement', 
-      type: 'agree', 
-      time: customerDetails?.agreeDocUpDate, 
-      url: customerDetails?.agreeDocUrl, 
-      filName: customerDetails?.agreeFilName,
-      uploadedCount: customerDetails?.agreeDocUrl ? 1 : 0
-
+    {
+      id: 1236,
+      name: 'Register Doc',
+      type: 'reg',
+      uploadedCount: customerDetails?.reg_doc_count  || 0
     },
-    { 
-      id: 1236, 
-      name: 'Register Doc', 
-      type: 'reg', 
-      time: customerDetails?.regDocUpDate, 
-      url: customerDetails?.regDocUrl, 
-      filName: customerDetails?.regFilName,
-      uploadedCount: customerDetails?.regDocUrl ? 1 : 0
+    {
+      id: 1237,
+      name: 'Construction Gallery',
+      type: 'constructGallery',
+      uploadedCount: customerDetails?.constructGallery_doc_count || 0
+    },
+    {
+      id: 1238,
+      name: 'EC',
+      type: 'ec',
+      uploadedCount: customerDetails?.ec_doc_count || 0
+    },
+    {
+      id: 1239,
+      name: 'Others',
+      type: 'others',
+      uploadedCount: customerDetails?.others_doc_count || 0
 
     },
   ];
-  
-  const totalUploadedDocs = documentTypes.filter(doc => doc.url).length;
-  
 
-  const pendingDocs = documentTypes.length - totalUploadedDocs; 
+  const totalUploadedDocs = documentTypes.reduce((sum, doc) => sum + doc.uploadedCount, 0);
+
+
+  const pendingDocs = documentTypes.length - totalUploadedDocs;
 
 
 
@@ -921,7 +924,7 @@ export default function UnitFullSummary({
     //     uid: selUnitPayload?.id,
     //     pId: selUnitPayload?.pId,
     //   })
-  
+
 
 
 
@@ -946,7 +949,7 @@ export default function UnitFullSummary({
           const { uid } = payload.old
           const eventType = payload.eventType
           console.log('account records', updatedData.Uuid, selUnitPayload?.id)
-  
+
           if (updatedData.Uuid === selUnitPayload?.id) {
             if (updatedData.Uuid === selUnitPayload?.id) {
               console.log('account records', updatedData.Uuid, selUnitPayload?.id)
@@ -983,7 +986,7 @@ export default function UnitFullSummary({
               ) {
                 setUnitFetchedActivityData((prevLogs) => {
                   const existingLog = prevLogs.find((log) => log.uid === uid)
-  
+
                   if (existingLog) {
                     console.log('Existing record found!')
                     if (payload.new.status === 'Done') {
@@ -1005,7 +1008,7 @@ export default function UnitFullSummary({
           }
         })
         .subscribe()
-  
+
       // Clean up the subscription when the component unmounts
       return () => {
         supabase.removeSubscription(subscription)
@@ -1024,7 +1027,7 @@ export default function UnitFullSummary({
           uid: selUnitPayload?.id,
           pId: selUnitPayload?.pId,
         })
-    
+
         const y = await unsubscribe
         setUnitFetchedActivityData(y)
         await console.log('new setup ', unitFetchedActivityData)
@@ -1042,14 +1045,14 @@ export default function UnitFullSummary({
             ),
           0
         )
-    
+
         const partATotal = selUnitPayload?.plotCS?.reduce(
           (partialSum, obj) => partialSum + Number(obj?.TotalNetSaleValueGsT),
           0
         )
-    
+
         console.log('myObj', partATotal)
-    
+
         setPartBTotal(partBTotal)
         setPartATotal(partATotal)
         setNetTotal(partATotal + partBTotal)
@@ -1269,11 +1272,11 @@ export default function UnitFullSummary({
             </div> */}
 
 
-{/* 
+{/*
            <ToDoList
 
-            
-            
+
+
             />  */}
 
             {/* <TaskManagementDashboard/> */}
@@ -1293,7 +1296,7 @@ export default function UnitFullSummary({
 
 
 
-       
+
           )}
 
 
@@ -1304,7 +1307,7 @@ export default function UnitFullSummary({
             <>
 
 
-{/* 
+{/*
             <div>
             <div className="py-8 px-8  border bg-[#F6F7FF]">
               {filterData.length == 0 && (
@@ -1421,7 +1424,7 @@ export default function UnitFullSummary({
               </ol>
             </div>
             </div>
-            
+
              */}
 
 
@@ -1431,7 +1434,7 @@ export default function UnitFullSummary({
       <h1 className="text-[#606062] mx-auto w-full mb-1 tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
         Unit Timeline
       </h1>
-      
+
       <img
         alt="CRM Background"
         src="/bgimgcrm.svg"
@@ -1538,8 +1541,8 @@ export default function UnitFullSummary({
     </div>
   </div>
 </div>
-            
-            
+
+
             </>
           )}
 
@@ -1604,15 +1607,15 @@ export default function UnitFullSummary({
 
 <div className='overflow-y-scroll w-full items-center justify-center mx-auto min-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
 
-        
+
         {/* <div className='overflow-y-scroll w-full items-center justify-center mx-auto max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'> */}
 
          <div className='relative min-h-screen mr-6'>
-{/* 
+{/*
          <h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px]    mb-4">UNIT FEATURES</h1>
 
-          
-      
+
+
         <img  alt="" src="/bgimgcrm.svg" className='w-full'></img> */}
 
 
@@ -1624,7 +1627,7 @@ export default function UnitFullSummary({
 <h1 className="text-[#606062] mb-1  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Features
   </h1>
-  
+
 
   <img
     alt="CRM Background"
@@ -1638,28 +1641,28 @@ export default function UnitFullSummary({
       <div className="text-center space-y-2">
       <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Booked On</p>
         <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
-       
+
       </div>
       <div className="text-center space-y-2">
       <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Next Target  Date</p>
         <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
-   
+
       </div>
       <div className="text-center space-y-2">
       <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Premium Type</p>
         <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
-  
+
       </div>
     </div>
   </div>
 </div>
-        
 
 
-    
 
 
-          
+
+
+
         <div className='absolute w-full flex justify-center mt-[-70px] z-10'>
 
 
@@ -1670,16 +1673,16 @@ export default function UnitFullSummary({
 
 
 <div className='w-full flex justify-center'>
-  
+
 
 
 <div className="p-8 rounded-2xl  bg-white w-full">
 
 
 
-  
 
- 
+
+
 
 
 <section className="mb-8">
@@ -2242,7 +2245,7 @@ export default function UnitFullSummary({
 <div className="flex flex-row">
 
   <h1 className="font-outfit text-left uppercase text-[#606062] font-medium text-[12px] mb-2 mt-3 ml-1">
-    Dates        
+    Dates
     </h1>
 </div>
 
@@ -2289,7 +2292,7 @@ className="w-4 h-4"
   d="M5 13l4 4L19 7"
 />
 </svg>
-      
+
     </button>
     <button
       onClick={handleCancel}
@@ -2346,7 +2349,7 @@ className="w-4 h-4"
 </div>
         </div>
 
-                  
+
 
 
        </div>
@@ -2356,7 +2359,7 @@ className="w-4 h-4"
 
         </div>
 
-   
+
 
 
          </div>
@@ -2448,7 +2451,7 @@ Loan details
     className="w-full h-auto object-cover"
   />
 
-  
+
   <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center space-y-2">
@@ -2484,7 +2487,7 @@ Loan details
 
 
 
-      
+
 
       {selFeature === 'agreement_info' && (
 
@@ -2497,7 +2500,7 @@ Loan details
 {/* <h1 className="text-[#606062]  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-4">Unit Documents</h1> */}
 
   <div className="relative min-h-screen mr-6">
-  
+
     {/* <div className="">
       <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
     </div> */}
@@ -2505,7 +2508,7 @@ Loan details
 
 
 
-        
+
         <div className="relative z-0">
 
 
@@ -2513,8 +2516,8 @@ Loan details
 <h1 className="text-[#606062] font-outfit mb-1    mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Documents
   </h1>
-  
- 
+
+
   <img
     alt="CRM Background"
     src="/bgimgcrm.svg"
@@ -2526,7 +2529,7 @@ Loan details
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
       <div className="text-center space-y-2">
         <p className="font-outfit font-normal  text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Total Documents</p>
-        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]"> {totalUploadedDocs}</h2>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]"> { totalUploadedDocs || 0}</h2>
 
       </div>
       <div className="text-center space-y-2">
@@ -2556,21 +2559,20 @@ Loan details
 
 
       <section className="w-full max-w-3xl mx-auto  mt-2 rounded-2xl">
-    {/* <div className="text-right text-sm text-gray-500 mb-2">
-      {totalUploadedDocs} of {documentTypes.length}
-    </div> */}
+
 
     {documentTypes.length === 0 ? (
       <div className="w-full text-center py-5">No documents</div>
     ) : (
       documentTypes.map((doc, i) => (
         <section key={i} className="px-4">
-          <DocRow 
-            data={doc} 
-            id={customerDetails?.id} 
-            fileName={doc?.name} 
-            date={doc?.time}   
-            uploadedCount={doc.uploadedCount} 
+          <UnitDocsWidget
+            data={doc}
+            id={customerDetails?.id}
+            unitDetails={customerDetails}
+            fileName={doc?.name}
+            date={doc?.time}
+            uploadedCount={doc.uploadedCount}
 
           />
         </section>
@@ -2580,8 +2582,8 @@ Loan details
   </div>
 
 </div>
-     
-   
+
+
 
 
   </div>
@@ -2599,7 +2601,7 @@ Loan details
 
 
 
-      
+
 
       {selFeature === 'legal_info' && <></>}
 
@@ -2639,7 +2641,7 @@ Loan details
     <ul className="flex flex-col" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
       {[
         { icon: (<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.64648 6.53467C2.64648 4.64905 2.64648 3.70624 3.23227 3.12046C3.81805 2.53467 4.76086 2.53467 6.64648 2.53467C8.5321 2.53467 9.47491 2.53467 10.0607 3.12046C10.6465 3.70624 10.6465 4.64905 10.6465 6.53467V8.53467C10.6465 10.4203 10.6465 11.3631 10.0607 11.9489C9.47491 12.5347 8.5321 12.5347 6.64648 12.5347C4.76086 12.5347 3.81805 12.5347 3.23227 11.9489C2.64648 11.3631 2.64648 10.4203 2.64648 8.53467V6.53467Z" stroke="currentColor" stroke-width="1.5"/><path d="M2.64648 19.5347C2.64648 18.6028 2.64648 18.1369 2.79872 17.7693C3.00171 17.2793 3.39106 16.8899 3.88111 16.6869C4.24866 16.5347 4.7146 16.5347 5.64648 16.5347H7.64648C8.57836 16.5347 9.0443 16.5347 9.41185 16.6869C9.9019 16.8899 10.2913 17.2793 10.4942 17.7693C10.6465 18.1369 10.6465 18.6028 10.6465 19.5347C10.6465 20.4666 10.6465 20.9325 10.4942 21.3001C10.2913 21.7901 9.9019 22.1795 9.41185 22.3825C9.0443 22.5347 8.57836 22.5347 7.64648 22.5347H5.64648C4.7146 22.5347 4.24866 22.5347 3.88111 22.3825C3.39106 22.1795 3.00171 21.7901 2.79872 21.3001C2.64648 20.9325 2.64648 20.4666 2.64648 19.5347Z" stroke="currentColor" stroke-width="1.5"/><path d="M14.6465 16.5347C14.6465 14.6491 14.6465 13.7063 15.2323 13.1205C15.8181 12.5347 16.7609 12.5347 18.6465 12.5347C20.5321 12.5347 21.4749 12.5347 22.0607 13.1205C22.6465 13.7063 22.6465 14.6491 22.6465 16.5347V18.5347C22.6465 20.4203 22.6465 21.3631 22.0607 21.9489C21.4749 22.5347 20.5321 22.5347 18.6465 22.5347C16.7609 22.5347 15.8181 22.5347 15.2323 21.9489C14.6465 21.3631 14.6465 20.4203 14.6465 18.5347V16.5347Z" stroke="currentColor" stroke-width="1.5"/><path d="M14.6465 5.53467C14.6465 4.60279 14.6465 4.13685 14.7987 3.7693C15.0017 3.27925 15.3911 2.8899 15.8811 2.68691C16.2487 2.53467 16.7146 2.53467 17.6465 2.53467H19.6465C20.5784 2.53467 21.0443 2.53467 21.4119 2.68691C21.9019 2.8899 22.2913 3.27925 22.4943 3.7693C22.6465 4.13685 22.6465 4.60279 22.6465 5.53467C22.6465 6.46655 22.6465 6.93249 22.4943 7.30004C22.2913 7.79009 21.9019 8.17944 21.4119 8.38243C21.0443 8.53467 20.5784 8.53467 19.6465 8.53467H17.6465C16.7146 8.53467 16.2487 8.53467 15.8811 8.38243C15.3911 8.17944 15.0017 7.79009 14.7987 7.30004C14.6465 6.93249 14.6465 6.46655 14.6465 5.53467Z" stroke="currentColor" stroke-width="1.5"/></svg>), lab: 'Summary', val: 'summary' },
-       
+
 
         { icon: (
           <svg width="25" height="27" viewBox="0 0 25 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2762,7 +2764,7 @@ Loan details
             </button>
           </div>
         </li>
-    
+
       ))}
     </ul>
   </div>

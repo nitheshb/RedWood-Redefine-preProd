@@ -14,14 +14,15 @@ import {
   ref,
   getDownloadURL,
   uploadBytesResumable,
+  deleteObject
 } from 'firebase/storage'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { useSnackbar } from 'notistack'
-import { updateUnitDocs } from 'src/context/dbQueryFirebase'
+import { fetchFilesForUnits, AddUnitDocs, DeleteUnitDocs } from 'src/context/dbQueryFirebase'
 import { Timestamp } from 'firebase/firestore'
 import { ChevronDownIcon, ChevronUpIcon, Loader } from 'lucide-react'
 
-const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploadedCount  }) => {
+const UnitDocsWidget = ({ id, unitDetails,fileName, date, amount, status,data, key, totalDocs, uploadedCount  }) => {
   const { user } = useAuth()
   const { orgId } = user
   const [showModel, setShoModel] = useState(false)
@@ -33,6 +34,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
   const [imageUrl, setImageUrl] = useState(null)
   const [uploading, setUplaoding] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [docsList, setDocsList] = useState([])
 
   useEffect(() => {
     if (date) {
@@ -41,6 +43,35 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
       setDate('NA')
     }
   }, [date])
+  useEffect(()=>{
+    getLeadsDataFun()
+  },[])
+
+   const getLeadsDataFun = async () => {
+    // steaminactiveUsersList
+
+        const unsubscribe = fetchFilesForUnits(
+          orgId,
+          (querySnapshot) => {
+            const usersListA = querySnapshot.docs.map((docSnapshot) =>{
+
+            let x =  docSnapshot.data()
+            x.id = docSnapshot.id;
+            return x;
+            }
+            )
+            console.log('docs lists ', usersListA)
+            setDocsList(usersListA)
+          },
+          {
+            unitId: id,
+            cat: data?.type
+          },
+          () => setDocsList([])
+        )
+        return unsubscribe
+
+    }
 
   const handleFileUploadFun = async (file, type) => {
 
@@ -70,9 +101,10 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
             setCmntFileType(file.name.split('.').pop())
 
             console.log('data is ===>', file)
-            const x1 = {[`${type}DocUrl`] : url, [`${type}FilName`]: file.name,[`${type}DocUpDate`]: Timestamp.now().toMillis()}
-            console.log('data is ===> @@@', data?.type, type, x1)
-            updateUnitDocs(orgId,id,'Uploaded',fileName,x1,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
+            const x1 = {[`${type}Count`] : url, [`${type}FilName`]: file.name,[`${type}DocUpDate`]: Timestamp.now().toMillis(), unitId: id,}
+            const x2 = {url : url, name: file.name,uploadedOn: Timestamp.now().toMillis(), unitId: id,cat: type, by: user.email,}
+
+            AddUnitDocs(orgId,id,unitDetails,'Uploaded',fileName,x2,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
             setUplaoding(false)
             return url
 
@@ -108,11 +140,30 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
         console.error('Error downloading image:', error)
       })
   }
+// Function to safely extract the storage path
+function getPathFromUrl(url) {
+  try {
+    const decodedUrl = decodeURIComponent(url);
+    const matches = decodedUrl.match(/\/o\/(.*?)\?/);
+    return matches && matches[1] ? matches[1] : null;
+  } catch (e) {
+    console.error("URL decode error:", e);
+    return null;
+  }
+}
+  const deleteDoc = (docData) => {
+    console.log('delete', data?.url)
+    const path = getPathFromUrl(docData?.url);
+    const fileRef = ref(storage, path)
+    deleteObject(fileRef)
+    .then(() => {
 
-  const deleteDoc = () => {
-    console.log('delete')
-    const x= {[`${data?.type}DocUrl`] : '', [`${data?.type}FilName`]: '',[`${data?.type}DocUpDate`]: 0}
-        updateUnitDocs(orgId,id,'Deleted doc',fileName, x,user.email,'Doc Deleted Successfully','error',enqueueSnackbar)
+      DeleteUnitDocs(orgId,docData?.id, id,unitDetails,'Deleted doc',fileName, docData,user.email,'Doc Deleted Successfully','error',enqueueSnackbar)
+      console.log("✅ File deleted successfully");
+    })
+    .catch((error) => {
+      console.error("❌ Error deleting file:", error);
+    });
    }
 
 
@@ -203,12 +254,12 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
 
   <div className="flex items-center gap-3">
 
-    {uploadedCount > 0 && (
-      <span className="text-[12px] font-outfit text-[#606062]">
-        {uploadedCount} Documents
-      </span>
-    )}
 
+  {uploading && <Loader className="w-4 h-4 mr-2" />}
+
+<span className="text-[12px] font-outfit text-[#606062]">
+        {docsList.length} Documents
+      </span>
 
     <div className="flex items-center">
       <label
@@ -242,109 +293,81 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
 </div>
 
 
-<div className='my-4'>
+<div className='mb-4 '>
 {showDropdown && (
 
-<div className=' w-[100%] flex justify-between items-center  bg-[#FFFFFF] rounded-md p-4'>
-
-
-
-<div className='flex items-center gap-2 '>
-
-
-
-
-<img
-    alt="CRM Background"
-    src="/IconSetsdoc.svg"
-    className="w-5 h-5"
-  />
+<div className=' w-[100%] border-0 border-t flex flex-col justify-between items-center  bg-[#FFFFFF] rounded-md p-4'>
+    {docsList.map((doc, i)=> {
+        return(
+            <section key={i} className='flex flex-row w-full justify-between pb-2'>
+              <div className='flex items-center gap-2 '>
+              <img
+                  alt="CRM Background"
+                  src="/IconSetsdoc.svg"
+                  className="w-5 h-5"
+                />
 
 
 
 
-  <div className='flex-col'>
-  <p className="font-outfit font-medium text-[#606062] text-[12px]">
-      {prettyDate(data?.time) || 'NA'}
-    </p>
-{uploading && <Loader className="w-4 h-4 mr-2" />}
-<p className="pr-3 font-medium  truncate font-outfit text-[14px] text-[#0E0A1F]">{data?.filName}</p>
-  </div>
+                <div className='flex-col'>
+                <p className="font-outfit font-medium text-[#606062] text-[12px]">
+                    {prettyDate(doc?.uploadedOn) || 'NA'}
+                  </p>
+              {uploading && <Loader className="w-4 h-4 mr-2" />}
+              <p className="pr-3 font-medium  truncate font-outfit text-[14px] text-[#0E0A1F]">{doc?.name}</p>
+                </div>
+                {doc?.id || 'dd'}
 
-</div>
+              </div>
+              <div className=''>
 
-
-
-
-<div className=''>
-
-<div className='flex items-center'>
+              <div className='flex items-center'>
 
 
+              <button
+                color="gray"
+                className="border-0 block rounded ml-2"
+                onClick={() => { downloadImage(
+                  doc?.url,
+                  `${doc?.name}`
+                )}}
+              >
 
 
+              <img
+                  alt="CRM Background"
+                  src="/docd.svg"
+                  className="w-5 h-5"
+                />
 
-  <div>
-  <img
-    alt="CRM Background"
-    src="/docv.svg"
-    className="w-5 h-5"
-  />
-
-  </div>
-
-<button
-  color="gray"
-  className="border-0 block rounded ml-2"
-  onClick={() => { downloadImage(
-    data?.url,
-    `${data?.filName}`
-  )}}
->
-  {/* <DownloadIcon name="delete" className="w-4 mt-2 h-4" /> */}
-
-
-<img
-    alt="CRM Background"
-    src="/docd.svg"
-    className="w-5 h-5"
-  />
-
-</button>
+              </button>
 
 
 
-<button
-  color="gray"
-  className="border-0 block rounded ml-2"
-  onClick={() => {deleteDoc()}}
->
-  {/* <TrashIcon name="delete" className="w-4 h-4" /> */}
+              <button
+                color="gray"
+                className="border-0 block rounded ml-2"
+                onClick={() => {deleteDoc(doc)}}
+              >
+                {/* <TrashIcon name="delete" className="w-4 h-4" /> */}
 
 
-  <img
-    alt="CRM Background"
-    src="/docdd.svg"
-    className="w-5 h-5"
-  />
+                <img
+                  alt="CRM Background"
+                  src="/docdd.svg"
+                  className="w-5 h-5"
+                />
 
 
-</button>
+              </button>
 
-</div>
+              </div>
 
-</div>
-
-
-
-
-
-
-
-
-
-
-
+              </div>
+            </section>
+        )
+    })}
 </div>
 )}
 
@@ -375,7 +398,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
   )
 }
 
-export default DocRow
+export default UnitDocsWidget
 
 
 
