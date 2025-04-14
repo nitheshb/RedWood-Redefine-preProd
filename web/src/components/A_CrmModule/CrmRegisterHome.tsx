@@ -37,6 +37,8 @@ import { USER_ROLES } from 'src/constants/userRoles'
 import PaymentDashboard from '../A_SalesModule/Reports/charts/PaymentDashboard'
 import StageCostChart from '../A_SalesModule/Reports/charts/StageCostChart'
 import HalfSemiCircleGauge from '../A_SalesModule/Reports/charts/GaugeChart'
+import RadialChart from '../A_SalesModule/Reports/charts/RadialChart'
+import { PhoneCall } from 'lucide-react'
 
 
 
@@ -491,20 +493,10 @@ const CrmRegisterModeHome = ({ leadsTyper,customerDetails }) => {
 }
 
 console.log(formatIndianNumber(25000000));
-
-
-  
-
 useEffect(() => {
    
   setAssignerName(customerDetails?.assignedToObj?.label)
 }, [customerDetails])
-
-
-
-
-
-
   return (
     <>
       <div className=" font-outfit mt-1 py-2 bg-[#F6F5F8] rounded-t-lg ">
@@ -1038,11 +1030,9 @@ useEffect(() => {
                       return (
                         <section key={c} className=" bg-[#F6F5F8] ">
 
+                          <section className="flex  flex-row items-center justify-center bg-[#FFFFFF] py-2 px-4 mb-2  rounded-2xl">
 
-
-                          <section className="flex  flex-row items-center justify-center bg-[#FFFFFF] py-2 mb-2  rounded-2xl">
-
-                            <div className="border-r border-[#E7E7E9] w-[23%] ">
+                            <div className=" w-[23%] ">
                               <div className="flex flex-row   ">
                                 <div
                                   className="flex flex-col  text-black  py-1 rounded-sm  "
@@ -1055,7 +1045,7 @@ useEffect(() => {
                                   }
                                 >
                                   <section className="font-outfit flex flex-row w-[100%] justify-between">
-                                    <section className="flex flex-col ml-4  w-[100%]">
+                                    <section className="flex flex-col   w-[100%]">
                                       <section className="flex flex-row justify-between">
 
                                         <div className="flex flex-row w-full">
@@ -1110,13 +1100,84 @@ useEffect(() => {
                               </div>
                             </div>
 
-                            <div className='border-r border-[#E7E7E9] w-[25%] '>
-                              <div className="flex flex-col  my-1  px-4   justify-between mr-1">
-                                <div className="flex flex-row justify-between mx- mb-1">
+                            {/* divider */}
+                            <div className="h-12 border-r rounded-sm border-[#E7E7E9] mx-4"></div>
+
+                            <div className='w-[22%] items-center '>
+                              <div className="flex flex-row  my-1 items-center  justify-between mr-1">
+
+
+                                
+                              {/* <RadialChart
+  progress={
+    (((finData?.T_review || 0) + (finData?.T_approved || 0)) / finData?.T_elgible) * 100
+  }
+/> */}
+
+
+<RadialChart
+ progress={
+  (((finData?.T_review || 0) +
+  (finData?.T_approved || 0) )/ finData?.T_elgible) *
+  100
+}
+/>
+
+
+                                <div className="flex flex-col justify-between  mb-1">
+
+
+                                <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full ">
+                                    <div className="text-[12px] text-[#0E0A1F] font-normal">
+                                      Stage Cost:
+                                    </div>
+                                    <div
+                className="relative flex flex-col items-center group"
+                style={{ alignItems: 'start' }}
+              >
+                <div
+                  className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                  style={{ alignItems: 'start', width: '300px' }}
+                >
+                  <span
+                    className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                    style={{
+                      color: 'white',
+                      background: '#213343',
+                      maxWidth: '300px',
+                    }}
+                  >
+                    <span className="italic">
+
+                      { formatIndianNumber?.(Math.round(finData?.T_elgible || 0))}
+                    </span>
+                  </span>
+                  <div
+                    className="w-3 h-3 ml-1  -mt-2 rotate-45 bg-black"
+                    style={{ background: '#213343', marginRight: '12px' }}
+                  ></div>
+                </div>
+                <span className="text-[#0E0A1F] font-medium  text-[12px]  font-outfit tracking-wide ">
+      ₹{Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
+                </span>
+      </div>
+                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
+                                      ₹
+                                      {finData?.T_elgible?.toLocaleString(
+                                        'en-IN'
+                                      )}
+                                      {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
+
+                                    </div> */}
+                                  </section>
                               
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
-                                    <div className="text-[12px] font-medium">
-                                      Paid
+                                  <section className=" flex gap-2 justify-between font-semibold text-xs m-1 w-full  ">
+                                    <div className='flex'>
+
+                                    <div className="h-3 w-3 bg-purple-300 mr-2"></div>
+                                    <div className="text-[12px] text-[#0E0A1F] font-normal">
+                                   
+                                      Paid:
                                       <span
                                         title={`₹ ${(
                                           finData?.T_review || 0
@@ -1128,6 +1189,9 @@ useEffect(() => {
                                         <InformationCircleIcon className="h-4 w-4 inline text-zinc-400" />
                                       </span>
                                     </div>
+
+                                    </div>
+      
                                     {/* <div className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
                                       ₹
                                       {(
@@ -1159,65 +1223,24 @@ useEffect(() => {
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
+  <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
     ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
   </span>
 </div>
                                   </section>
 
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
-                                    <div className="text-[12px] font-medium">
-                                      Stage Cost
-                                    </div>
-                                    <div
-                className="relative flex flex-col items-center group"
-                style={{ alignItems: 'start' }}
-              >
-                <div
-                  className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-                  style={{ alignItems: 'start', width: '300px' }}
-                >
-                  <span
-                    className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-                    style={{
-                      color: 'white',
-                      background: '#213343',
-                      maxWidth: '300px',
-                    }}
-                  >
-                    <span className="italic">
 
-                      { formatIndianNumber?.(Math.round(finData?.T_elgible || 0))}
-                    </span>
-                  </span>
-                  <div
-                    className="w-3 h-3 ml-1  -mt-2 rotate-45 bg-black"
-                    style={{ background: '#213343', marginRight: '12px' }}
-                  ></div>
-                </div>
-                <span className="text-zinc-800 text-[12px]  font-outfit tracking-wide ">
-      ₹{Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
-                </span>
-      </div>
-
-
-
-
-
-                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
-                                      ₹
-                                      {finData?.T_elgible?.toLocaleString(
-                                        'en-IN'
-                                      )}
-                                      {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
-
-                                    </div> */}
-                                  </section>
                                   {/* section- 3 */}
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
-                                    <div className="text-[12px] font-outfit font-medium">
-                                      Balance
+                                  <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
+                                    <div className='flex'>
+                                    <div className="h-3 w-3 bg-gray-300 mr-2"></div>
+
+<div className="text-[12px] font-outfit text-[#0E0A1F] font-normal">
+  Balance:
+</div>
+
                                     </div>
+
                                     <div className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
                                     {/* ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')} */}
 
@@ -1252,7 +1275,7 @@ useEffect(() => {
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
+  <span className="text-[#0E0A1F] font-medium text-[12px] font-outfit tracking-wide">
   ₹{finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
 
 
@@ -1260,7 +1283,7 @@ useEffect(() => {
 </div>
                                   </section>
                                 </div>
-                                <div className="flex flex-row mx-1 pt-">
+                                {/* <div className="flex flex-row mx-1 pt-">
                                 <RoundedProgressBar progress={
                                       (((finData?.T_review || 0) +
                                       (finData?.T_approved || 0) )/ finData?.T_elgible) *
@@ -1269,8 +1292,7 @@ useEffect(() => {
                                     showLabels={true}
                                     />
 
-                                </div>
-
+                                </div> */}
 {/* 
                                 <PaymentDashboard
                                 progress={
@@ -1291,22 +1313,49 @@ useEffect(() => {
                               </div>
                             </div>
 
+
+                               {/* divider */}
+                               <div className="h-12 border-r  rounded-sm border-[#E7E7E9] mx-4"></div>
+
                             {/* other one */}
-                            <div className='border-r border-[#E7E7E9] w-[25%] '>
-                              <div className="flex flex-col  my-1  px-4  justify-between mr-1">
-                                <div className="flex flex-row justify-between mx- mb-1">
+                            <div className=' w-[22%]  items-center'>
+
+
+
+
+                            {/* <div className="flex flex-row mx-1 pt-">
+
+
+
+<RoundedProgressBar
+  progress={
+      (finData?.T_approved / finData?.T_total) *
+       100
+      }
+
+      showLabels={true}
+  />
+  </div> */}
+                              <div className="flex flex-row  my-1   items-center justify-between mr-1">
+
+                                                                  
+<DoughnutChartWithRoundedSegments
+                                    progress={
+                                      (finData?.T_approved / finData?.T_total) *
+                                      100
+                                    }
+                                  />
+
+                                <div className="flex  flex-col justify-between  mb-1">
                                   {/* <DoughnutChartWithRoundedSegments
                                     progress={
                                       (finData?.T_approved / finData?.T_total) *
                                       100
                                     }
                                   /> */}
-
-
-
-<section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
-                                    <div className="text-[12px] font-medium text-[#606062]">
-                                    Unit Cost
+<section className=" flex gap-2 justify-between font-semibold text-xs m-1 w-full  ">
+                                    <div className="text-[12px] text-[#0E0A1F] font-normal">
+                                    Unit Cost:
                                     </div>
 
 
@@ -1333,18 +1382,10 @@ useEffect(() => {
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
+  <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
   ₹{Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
   </span>
 </div>
-
-
-
-
-
-
-
-
 
                                     {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
                                       ₹
@@ -1358,10 +1399,18 @@ useEffect(() => {
 
                            
 
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
-                                    <div className="text-[12px] font-medium">
-                                    Paid:
+                                  <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
+
+                                    <div className='flex'>
+
+                                    <div className="h-3 w-3 bg-purple-300 mr-2"></div>
+
+<div className="text-[12px] text-[#0E0A1F] font-normal">
+Paid:
+</div>
+
                                     </div>
+
 
 
                                     <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
@@ -1386,18 +1435,10 @@ useEffect(() => {
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
+  <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
   ₹{Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
   </span>
 </div>
-
-
-
-
-
-
-
-
 
                                     {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
                                       ₹
@@ -1409,15 +1450,16 @@ useEffect(() => {
                                     </div> */}
                                   </section>
                                   {/* section- 3 */}
-                                  <section className="font-bodyLato font-semibold text-xs m-1 w-full pr-4 border-r border-[#E7E7E9] last:border-none">
-                                    <div className="text-[12px] font-medium">
-                                    Balance
+                                  <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
+
+                                    <div className='flex'>
+                                    <div className="h-3 w-3 bg-gray-300 mr-2"></div>
+
+<div className="text-[12px] text-[#0E0A1F] font-normal">
+Balance:
+</div>
                                     </div>
-
-
-
-
-                                    
+                          
 <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
   <div
     className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
@@ -1440,522 +1482,501 @@ useEffect(() => {
       style={{ background: '#213343', marginRight: '12px' }}
     ></div>
   </div>
-  <span className="text-zinc-900 text-[12px] font-bold  tracking-wide">
+  <span className="text-[#0E0A1F] font-medium text-[12px] font-bold  tracking-wide">
   ₹{Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
   </span>
 </div>
                       
 
                                   </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                               
                                 </div>
 
-                                <div className="flex flex-row mx-1 pt-">
 
-
-
-<RoundedProgressBar
-  progress={
-      (finData?.T_approved / finData?.T_total) *
-       100
-      }
-
-      showLabels={true}
-  />
-  </div>
                               </div>
                             </div>
-
-
-    <div className=' w-[12%] border-r border-[#E7E7E9] '>
-
-    <div className="flex flex-col  my-3  px-4   justify-between mr-1 ">
-
-<div className="flex flex-col">
-
-<div className="text-xs font-medium text-gray-500 mb-1">
-    CRM
-  </div>
-
-
-
-</div>
-
-
-<div className="mr-3">
-<div className="relative flex items-center space-x-3">
-<div className="w-10 h-10 overflow-hidden rounded-full flex items-center justify-center">
-<img 
-   src={'/avatar_1.png'}
-  alt="User" 
-  className="w-full h-full object-cover"
-/>
-</div>
-<div className="text-sm font-medium text-gray-800">
-{/* {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-  <span className="text-left text-sm">
-  {' '}
-  {assignerName}
- </span>
- )} */}
-
- No Data
-</div>
-</div>
-</div>
-
-
-
-</div>
-
-    </div>
-
-
-
-
                             
-                            <div className="w-[15%] ">
-                              <div className="flex  items-center justify-center  h-full rounded-md ">
-                                <div className="flex items-center justify-center   px-1">
-                                  {/* section 2 */}
-                                 {['booked', 'selCategory'].includes(selCategory) &&
-                                <section className="flex gap-2 items-center">
-                                  {!(user?.role.includes('crm-executive')) && (
-                                 <div
-                                    className={` cursor-pointer  border  rounded-md ${
-                                      finData?.man_cs_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.man_cs_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#FFFFFF]'
-                                    }  px-2 py-2 mx-1 inline-block self-end`}
-                                    // style={{
-                                    //   display: 'inline-block',
-                                    //   alignSelf: 'flex-end',
-                                    // }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_cs_approval')
-                                    }}
-                                  >
-                                    <div className="flex  items-center justify-center gap-1">
-                                      <div className="flex items-center justify-center">
-                                        {/* <ChartPieIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.man_cs_approval ===
-                                            'approved'
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        /> */}
+
+
+                               {/* divider */}
+                               <div className="h-12 border-r rounded-sm border-[#E7E7E9] mx-4"></div>
+
+                            <div className='w-[33%]'>
+                            <div className=' '>
+<div className="">
+    <div className="flex items-center justify-between ">
+      <div className='flex gap-2'>
+      <img src="/api/placeholder/40/40" alt="User avatar" className="rounded-full w-10 h-10 bg-blue-500" />
+      <div>
+        <div className="text-sm text-[#606062]">CRM</div>
+        <div className=" text-[#0E0A1F] font-medium text-[14px]">Rohit Kathri</div>
+      </div>
+      </div>
+
+
+      <div>
+        
+      <div className="flex">
+        <div className="flex items-center justify-center p-2">
+
+
+        <div>
+        <div className=" ">
+                          <div className="flex  items-center justify-center  h-full rounded-md ">
+                            <div className="flex items-center justify-center   px-1">
+                              {/* section 2 */}
+                             {['booked', 'selCategory'].includes(selCategory) &&
+                            <section className="flex gap-1 items-center">
+                              {!(user?.role.includes('crm-executive')) && (
+                             <div
+                                className={` cursor-pointer  border  rounded-md ${
+                                  finData?.man_cs_approval == 'approved'
+                                    ? 'text-green-700'
+                                    : finData?.man_cs_approval == 'rejected'
+                                    ? 'text-red-700'
+                                    : 'text-black'
+                                }  px-2 py-2  inline-block self-end`}
+                                // style={{
+                                //   display: 'inline-block',
+                                //   alignSelf: 'flex-end',
+                                // }}
+                                onClick={() => {
+                                  setSelUnitDetails(finData)
+                                  setIsSubTopicOpen(true)
+                                  setIsSubTopic('crm_cs_approval')
+                                }}
+                              >
+                                <div className="flex  items-center justify-center gap-1">
+                                  <div className="flex items-center justify-center">
+                                    {/* <ChartPieIcon
+                                      className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                        finData?.man_cs_approval ===
+                                        'approved'
+                                          ? 'text-green-900'
+                                          : 'text-gray-600 '
+                                      }`}
+                                      aria-hidden="true"
+                                    /> */}
 <img
-    alt="CRM Background"
-    src="/manager.svg"
-    className="w-4 h-4"
-  />
+alt="CRM Background"
+src="/manager.svg"
+className="w-4 h-4"
+/>
 
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#000000] text-xs ">
-                                        Manager
-                                      </h6>
-                                    </div>
                                   </div>
-                                   
-
-
-
-                                  )}
-
-                                  {/* section 3*/}
-                                  <div
-                                    className={` cursor-pointer  border   rounded-md ${
-                                      finData?.kyc_status == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.kyc_status == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#FFFFFF] '
-                                    }  px-2 py-2 mx-1 inline-block self-end`}
-                                    // style={{
-                                    //   display: 'inline-block',
-                                    //   alignSelf: 'flex-end',
-                                    // }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_KYC')
-                                    }}
-                                  >
-                                    <div className="flex  items-center justify-center gap-1">
-                                      <div className="flex items-center justify-center ">
-                                        {/* <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.kyc_status == 'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.kyc_status ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        /> */}
-
-<img
-    alt="CRM Background"
-    src="/IconSets.svg"
-    className="w-4 h-4"
-  />
-
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#000000] text-xs">
-                                        KYC
-                                      </h6>
-                                    </div>
-                                  </div>
-                                  </section>}
-                                   {[ 'agreement_pipeline'].includes(selCategory) &&
-                                 <section className='flex gap-2 mt-2'>
-                                 <div
-                                    className={` cursor-pointer  border   rounded-md ${
-                                      finData?.man_ats_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.man_ats_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#FFFFFF]'
-                                    }  px-1 py-1 mx-1 inline-block self-end`}
-                                    // style={{
-                                    //   display: 'inline-block',
-                                    //   alignSelf: 'flex-end',
-                                    // }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_ATS_Draft')
-                                    }}
-                                  >
-                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center  group-hover:bg-white">
-                                      <ChartPieIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.man_ats_approval ==
-                                            'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.man_ats_approval ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1 text-center">
-                                      ATS Draft
-                                      </h6>
-                                    </div> */}
-                                      <div className="flex  items-center justify-center gap-1">
-    <div className="flex items-center justify-center  p-1">
-      <img
-        alt="CRM Background"
-        src="/manager.svg"
-        className="block"
-      />
-    </div>
-    <h6 className="font-bodyLato text-[#000000] text-xs">
-    ATS Draft
-    </h6>
-  </div>
-                                  </div>
-                                  {/* section 3*/}
-                                  <div
-                                    className={` cursor-pointer   border   rounded-xl ${
-                                      finData?.kyc_status == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.kyc_status == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#FFFFFF] '
-                                    }  px-1 py-1 mx-1 inline-block self-end`}
-                                    // style={{
-                                    //   display: 'inline-block',
-                                    //   alignSelf: 'flex-end',
-                                    // }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_KYC')
-                                    }}
-                                  >
-                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.kyc_status == 'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.kyc_status ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
-                                        KYC
-                                      </h6>
-                                    </div> */}
-
-<div className="flex  items-center justify-center gap-1">
-    <div className="flex items-center justify-center  p-1">
-      <img
-        alt="CRM Background"
-        src="/manager.svg"
-        className="block"
-      />
-    </div>
-    <h6 className="font-bodyLato text-[#000000] text-xs">
-    KYC
-    </h6>
-  </div>
-                                  </div>
-                                  </section>}
-                                   {['agreement'].includes(selCategory) &&
-                                 <section className='flex gap-2 mt-2'>
-                                 <div
-                                    className={` cursor-pointer border   rounded-xl ${
-                                      finData?.both_sd_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.both_sd_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#FFFFFF] '
-                                    }  px-1 py-1 mx-1 inline-block self-end`}
-                                    // style={{
-                                    //   display: 'inline-block',
-                                    //   alignSelf: 'flex-end',
-                                    // }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_SD_Approval')
-                                    }}
-                                  >
-                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center  group-hover:bg-white">
-                                        <ChartPieIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.both_sd_approval ===
-                                            'approved'
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1 text-center">
-                                        SD Approval
-                                      </h6>
-                                    </div> */}
-
-<div className="flex  items-center justify-center gap-1">
-    <div className="flex items-center justify-center  p-1">
-      <img
-        alt="CRM Background"
-        src="/manager.svg"
-        className="block"
-      />
-    </div>
-    <h6 className="font-bodyLato text-[#000000] text-xs">
-    SD Approval
-    </h6>
-  </div>
-                                  </div>
-                                  {/* section 3*/}
-                                  <div
-                                    className={` cursor-pointer   border   rounded-xl ${
-                                      finData?.LpostStatus == 'Approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.LpostStatus == 'Rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#FFFFFF] '
-                                    }  px-1 py-1 mx-1 inline-block self-end`}
-                                    // style={{
-                                    //   display: 'inline-block',
-                                    //   alignSelf: 'flex-end',
-                                    // }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_loan')
-                                    }}
-                                  >
-                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.kyc_status == 'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.kyc_status ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
-                                        Loan
-                                      </h6>
-                                    </div> */}
-                                      <div className="flex  items-center justify-center gap-1">
-    <div className="flex items-center justify-center  p-1">
-      <img
-        alt="CRM Background"
-        src="/manager.svg"
-        className="block"
-      />
-    </div>
-    <h6 className="font-bodyLato text-[#000000] text-xs">
-    Loan
-    </h6>
-  </div>
-                                  </div>
-                                  </section>}
-                                  {[ 'registered', 'possession'].includes(selCategory) &&
-                                 <section className='flex gap-2 mt-2'>
-                                 <div
-                                    className={` cursor-pointer   border   rounded-xl ${
-                                      finData?.both_sd_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.both_sd_approval == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#FFFFFF]'
-                                    }  px-1 py-1 mx-1 inline-block self-end`}
-                                    // style={{
-                                    //   display: 'inline-block',
-                                    //   alignSelf: 'flex-end',
-                                    // }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_posession')
-                                    }}
-                                  >
-                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center  group-hover:bg-white">
-                                        <ChartPieIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.both_sd_approval ===
-                                            'approved'
-                                              ? 'text-green-900'
-                                              : 'text-gray-600 '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
-                                      Posession
-                                      </h6>
-                                    </div> */}
-                                      <div className="flex  items-center justify-center gap-1">
-    <div className="flex items-center justify-center  p-1">
-      <img
-        alt="CRM Background"
-        src="/manager.svg"
-        className="block"
-      />
-    </div>
-    <h6 className="font-bodyLato text-[#000000] text-xs">
-    Posession
-    </h6>
-  </div>
-                                  </div>
-                                  {/* section 3*/}
-                                  <div
-                                    className={` cursor-pointer   border   rounded-xl ${
-                                      finData?.kyc_status == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.kyc_status == 'rejected'
-                                        ? 'bg-[#ffdbdb]'
-                                        : 'bg-[#FFFFFF] '
-                                    }  px-1 py-1 mx-1 inline-block self-end`}
-                                    // style={{
-                                    //   display: 'inline-block',
-                                    //   alignSelf: 'flex-end',
-                                    // }}
-                                    onClick={() => {
-                                      setSelUnitDetails(finData)
-                                      setIsSubTopicOpen(true)
-                                      setIsSubTopic('crm_loan')
-                                    }}
-                                  >
-                                    {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
-                                      <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <NewspaperIcon
-                                          className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                            finData?.kyc_status == 'approved'
-                                              ? 'bg-[#CCC5F7]'
-                                              : finData?.kyc_status ==
-                                                'rejected'
-                                              ? 'bg-[#ffdbdb]'
-                                              : 'bg-[#F1F5F9] '
-                                          }`}
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                      <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
-                                        Loan
-                                      </h6>
-                                    </div> */}
-
-
-<div className="flex  items-center justify-center gap-1">
-    <div className="flex items-center justify-center  p-1">
-      <img
-        alt="CRM Background"
-        src="/manager.svg"
-        className="block"
-      />
-    </div>
-    <h6 className="font-bodyLato text-[#000000] text-xs">
-    Loan
-    </h6>
-  </div>
-                                  </div>
-                                  </section>}
-                                  {/* section 4*/}
+                                  <h6 className="font-bodyLato text-[#000000] text-xs ">
+                                    Manager
+                                  </h6>
                                 </div>
                               </div>
+                              )}
+
+                              {/* section 3*/}
+                              <div
+                                className={` cursor-pointer  border   rounded-md ${
+                                  finData?.kyc_status == 'approved'
+                                    ? 'text-green-700'
+                                    : finData?.kyc_status == 'rejected'
+                                    // ? 'bg-[#ffdbdb]'
+                                    // : 'bg-[#FFFFFF] '
+                                      ? 'text-red-700'
+                                    : 'text-black'
+                                }  px-2 py-2  inline-block self-end`}
+                                // style={{
+                                //   display: 'inline-block',
+                                //   alignSelf: 'flex-end',
+                                // }}
+                                onClick={() => {
+                                  setSelUnitDetails(finData)
+                                  setIsSubTopicOpen(true)
+                                  setIsSubTopic('crm_KYC')
+                                }}
+                              >
+                                <div className="flex  items-center justify-center gap-1">
+                                  <div className="flex items-center justify-center ">
+                                    {/* <NewspaperIcon
+                                      className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                        finData?.kyc_status == 'approved'
+                                          ? 'bg-[#CCC5F7]'
+                                          : finData?.kyc_status ==
+                                            'rejected'
+                                          ? 'bg-[#ffdbdb]'
+                                          : 'bg-[#F1F5F9] '
+                                      }`}
+                                      aria-hidden="true"
+                                    /> */}
+
+<img
+alt="CRM Background"
+src="/IconSets.svg"
+className="w-4 h-4"
+/>
+
+                                  </div>
+                                  <h6 className="font-bodyLato text-[#000000] text-xs">
+                                    KYC
+                                  </h6>
+                                </div>
+                              </div>
+                              </section>}
+                               {[ 'agreement_pipeline'].includes(selCategory) &&
+                             <section className='flex gap-2 mt-2'>
+                             <div
+                                className={` cursor-pointer  border   rounded-md ${
+                                  finData?.man_ats_approval == 'approved'
+                                    ? 'bg-[#CCC5F7]'
+                                    : finData?.man_ats_approval == 'rejected'
+                                    ? 'bg-[#ffdbdb]'
+                                    : 'bg-[#FFFFFF]'
+                                }  px-1 py-1  inline-block self-end`}
+                                // style={{
+                                //   display: 'inline-block',
+                                //   alignSelf: 'flex-end',
+                                // }}
+                                onClick={() => {
+                                  setSelUnitDetails(finData)
+                                  setIsSubTopicOpen(true)
+                                  setIsSubTopic('crm_ATS_Draft')
+                                }}
+                              >
+                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                  <div className="flex flex-none items-center justify-center  group-hover:bg-white">
+                                  <ChartPieIcon
+                                      className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                        finData?.man_ats_approval ==
+                                        'approved'
+                                          ? 'bg-[#CCC5F7]'
+                                          : finData?.man_ats_approval ==
+                                            'rejected'
+                                          ? 'bg-[#ffdbdb]'
+                                          : 'bg-[#F1F5F9] '
+                                      }`}
+                                      aria-hidden="true"
+                                    />
+                                  </div>
+                                  <h6 className="font-bodyLato text-[#000000] text-xs mt-1 text-center">
+                                  ATS Draft
+                                  </h6>
+                                </div> */}
+                                  <div className="flex  items-center justify-center gap-1">
+<div className="flex items-center justify-center  p-1">
+  <img
+    alt="CRM Background"
+    src="/manager.svg"
+    className="block"
+  />
+</div>
+<h6 className="font-bodyLato text-[#000000] text-xs">
+ATS Draft
+</h6>
+</div>
+                              </div>
+                              {/* section 3*/}
+                              <div
+                                className={` cursor-pointer   border   rounded-xl ${
+                                  finData?.kyc_status == 'approved'
+                                    ? 'bg-[#CCC5F7]'
+                                    : finData?.kyc_status == 'rejected'
+                                    ? 'bg-[#ffdbdb]'
+                                    : 'bg-[#FFFFFF] '
+                                }  px-1 py-1  inline-block self-end`}
+                                // style={{
+                                //   display: 'inline-block',
+                                //   alignSelf: 'flex-end',
+                                // }}
+                                onClick={() => {
+                                  setSelUnitDetails(finData)
+                                  setIsSubTopicOpen(true)
+                                  setIsSubTopic('crm_KYC')
+                                }}
+                              >
+                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                  <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                    <NewspaperIcon
+                                      className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                        finData?.kyc_status == 'approved'
+                                          ? 'bg-[#CCC5F7]'
+                                          : finData?.kyc_status ==
+                                            'rejected'
+                                          ? 'bg-[#ffdbdb]'
+                                          : 'bg-[#F1F5F9] '
+                                      }`}
+                                      aria-hidden="true"
+                                    />
+                                  </div>
+                                  <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
+                                    KYC
+                                  </h6>
+                                </div> */}
+
+<div className="flex  items-center justify-center gap-1">
+<div className="flex items-center justify-center  p-1">
+  <img
+    alt="CRM Background"
+    src="/manager.svg"
+    className="block"
+  />
+</div>
+<h6 className="font-bodyLato text-[#000000] text-xs">
+KYC
+</h6>
+</div>
+                              </div>
+                              </section>}
+                               {['agreement'].includes(selCategory) &&
+                             <section className='flex gap-2 mt-2'>
+                             <div
+                                className={` cursor-pointer border   rounded-xl ${
+                                  finData?.both_sd_approval == 'approved'
+                                    ? 'bg-[#CCC5F7]'
+                                    : finData?.both_sd_approval == 'rejected'
+                                    ? 'bg-[#ffdbdb]'
+                                    : 'bg-[#FFFFFF] '
+                                }  px-1 py-1 mx-1 inline-block self-end`}
+                                // style={{
+                                //   display: 'inline-block',
+                                //   alignSelf: 'flex-end',
+                                // }}
+                                onClick={() => {
+                                  setSelUnitDetails(finData)
+                                  setIsSubTopicOpen(true)
+                                  setIsSubTopic('crm_SD_Approval')
+                                }}
+                              >
+                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                  <div className="flex flex-none items-center justify-center  group-hover:bg-white">
+                                    <ChartPieIcon
+                                      className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                        finData?.both_sd_approval ===
+                                        'approved'
+                                          ? 'text-green-900'
+                                          : 'text-gray-600 '
+                                      }`}
+                                      aria-hidden="true"
+                                    />
+                                  </div>
+                                  <h6 className="font-bodyLato text-[#000000] text-xs mt-1 text-center">
+                                    SD Approval
+                                  </h6>
+                                </div> */}
+
+<div className="flex  items-center justify-center gap-1">
+<div className="flex items-center justify-center  p-1">
+  <img
+    alt="CRM Background"
+    src="/manager.svg"
+    className="block"
+  />
+</div>
+<h6 className="font-bodyLato text-[#000000] text-xs">
+SD Approval
+</h6>
+</div>
+                              </div>
+                              {/* section 3*/}
+                              <div
+                                className={` cursor-pointer   border   rounded-xl ${
+                                  finData?.LpostStatus == 'Approved'
+                                    ? 'bg-[#CCC5F7]'
+                                    : finData?.LpostStatus == 'Rejected'
+                                    ? 'bg-[#ffdbdb]'
+                                    : 'bg-[#FFFFFF] '
+                                }  px-1 py-1 mx-1 inline-block self-end`}
+                                // style={{
+                                //   display: 'inline-block',
+                                //   alignSelf: 'flex-end',
+                                // }}
+                                onClick={() => {
+                                  setSelUnitDetails(finData)
+                                  setIsSubTopicOpen(true)
+                                  setIsSubTopic('crm_loan')
+                                }}
+                              >
+                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                  <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                    <NewspaperIcon
+                                      className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                        finData?.kyc_status == 'approved'
+                                          ? 'bg-[#CCC5F7]'
+                                          : finData?.kyc_status ==
+                                            'rejected'
+                                          ? 'bg-[#ffdbdb]'
+                                          : 'bg-[#F1F5F9] '
+                                      }`}
+                                      aria-hidden="true"
+                                    />
+                                  </div>
+                                  <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
+                                    Loan
+                                  </h6>
+                                </div> */}
+                                  <div className="flex  items-center justify-center gap-1">
+<div className="flex items-center justify-center  p-1">
+  <img
+    alt="CRM Background"
+    src="/manager.svg"
+    className="block"
+  />
+</div>
+<h6 className="font-bodyLato text-[#000000] text-xs">
+Loan
+</h6>
+</div>
+                              </div>
+                              </section>}
+                              {[ 'registered', 'possession'].includes(selCategory) &&
+                             <section className='flex gap-2 mt-2'>
+                             <div
+                                className={` cursor-pointer   border   rounded-xl ${
+                                  finData?.both_sd_approval == 'approved'
+                                    ? 'bg-[#CCC5F7]'
+                                    : finData?.both_sd_approval == 'rejected'
+                                    ? 'bg-[#ffdbdb]'
+                                    : 'bg-[#FFFFFF]'
+                                }  px-1 py-1 mx-1 inline-block self-end`}
+                                // style={{
+                                //   display: 'inline-block',
+                                //   alignSelf: 'flex-end',
+                                // }}
+                                onClick={() => {
+                                  setSelUnitDetails(finData)
+                                  setIsSubTopicOpen(true)
+                                  setIsSubTopic('crm_posession')
+                                }}
+                              >
+                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                  <div className="flex flex-none items-center justify-center  group-hover:bg-white">
+                                    <ChartPieIcon
+                                      className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                        finData?.both_sd_approval ===
+                                        'approved'
+                                          ? 'text-green-900'
+                                          : 'text-gray-600 '
+                                      }`}
+                                      aria-hidden="true"
+                                    />
+                                  </div>
+                                  <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
+                                  Posession
+                                  </h6>
+                                </div> */}
+                                  <div className="flex  items-center justify-center gap-1">
+<div className="flex items-center justify-center  p-1">
+  <img
+    alt="CRM Background"
+    src="/manager.svg"
+    className="block"
+  />
+</div>
+<h6 className="font-bodyLato text-[#000000] text-xs">
+Posession
+</h6>
+</div>
+                              </div>
+                              {/* section 3*/}
+                              <div
+                                className={` cursor-pointer   border   rounded-xl ${
+                                  finData?.kyc_status == 'approved'
+                                    ? 'bg-[#CCC5F7]'
+                                    : finData?.kyc_status == 'rejected'
+                                    ? 'bg-[#ffdbdb]'
+                                    : 'bg-[#FFFFFF] '
+                                }  px-1 py-1 mx-1 inline-block self-end`}
+                                // style={{
+                                //   display: 'inline-block',
+                                //   alignSelf: 'flex-end',
+                                // }}
+                                onClick={() => {
+                                  setSelUnitDetails(finData)
+                                  setIsSubTopicOpen(true)
+                                  setIsSubTopic('crm_loan')
+                                }}
+                              >
+                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                  <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                    <NewspaperIcon
+                                      className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
+                                        finData?.kyc_status == 'approved'
+                                          ? 'bg-[#CCC5F7]'
+                                          : finData?.kyc_status ==
+                                            'rejected'
+                                          ? 'bg-[#ffdbdb]'
+                                          : 'bg-[#F1F5F9] '
+                                      }`}
+                                      aria-hidden="true"
+                                    />
+                                  </div>
+                                  <h6 className="font-bodyLato text-[#000000] text-xs mt-1">
+                                    Loan
+                                  </h6>
+                                </div> */}
+
+
+<div className="flex  items-center justify-center gap-1">
+<div className="flex items-center justify-center  p-1">
+  <img
+    alt="CRM Background"
+    src="/manager.svg"
+    className="block"
+  />
+</div>
+<h6 className="font-bodyLato text-[#000000] text-xs">
+Loan
+</h6>
+</div>
+                              </div>
+                              </section>}
+                              {/* section 4*/}
                             </div>
+                          </div>
+                        </div>
+        </div>
+
+
+        {/* <div className='flex items-center cursor-pointer border justify-center rounded-md'>
+           Call
+        </div> */}
+
+
+      </div>
+
+      {/* <div className="flex items-center cursor-pointer border justify-center py-[3px] px-2  rounded-md">
+          <PhoneCall className="h-4 w-4" />
+          <p className="ml-1 text-[12px]">Call</p>
+        </div> */}
+
+
+{/* 
+<div className="flex items-center cursor-pointer border border-blue-500 bg-blue-50 justify-center  rounded-md">
+  <PhoneCall className="h-3 w-3 text-blue-600" />
+  <p className="ml-1 text-[11px] text-blue-600 font-medium">Call</p>
+</div> */}
+        </div>
+      </div>
+    </div>
+    <div>
+      <div className="text-[12px]">
+        <span className="font-medium text-[#0E0A1F]">Comments:</span>
+        <span className="ml-2 text-[#0E0A1F] font-normal">Make a follow up call to Ram at 10am</span>
+        <span className="ml-2 h-2 w-2 rounded-full bg-green-500 inline-block"></span>
+      </div>
+      <div className="text-[12px]">
+        <span className="font-medium text-[#0E0A1F]">Last activity:</span>
+        <span className="ml-2 text-[#0E0A1F] font-normal">180 Days</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+                            </div>
+
+
 
 
                           </section>
                         </section>
                       )
                     })}
-
-
-
-
-
-
                   {selCategory === 'unAssigned_crm' &&
                     crmCustomersDBData.map((finData, t) => {
                       const {
