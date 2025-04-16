@@ -407,7 +407,7 @@ const CrmHomePage = () => {
                 )}
                 {viewable === 'crmSpace-II' && <CrmTaskList />}
                 {viewable === 'crmSpace-I' && <CrmRegisterModeHome />}
-                {viewable === 'units_inventory' && <CrmConstuctionModeHome />}
+                {viewable === 'constuction_view' && <CrmConstuctionModeHome />}
                 {viewable === 'MyCustomers' && (
                   <CustomersEventsHome
                     project={{
