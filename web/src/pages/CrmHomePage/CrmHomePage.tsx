@@ -392,7 +392,7 @@ const CrmHomePage = () => {
                 {(viewable === 'CrmTasks' || viewable === 'Home') && (
                   <CrmHome leadsTyper={undefined} />
                 )}
-               
+
 
                 {viewable === 'unitsInventory' && (
                   <ProjectsUnitInventory
@@ -407,7 +407,7 @@ const CrmHomePage = () => {
                 )}
                 {viewable === 'crmSpace-II' && <CrmTaskList />}
                 {viewable === 'crmSpace-I' && <CrmRegisterModeHome />}
-                {viewable === 'constuction_view' && <CrmConstuctionModeHome />}
+                {viewable === 'units_inventory' && <CrmConstuctionModeHome />}
                 {viewable === 'MyCustomers' && (
                   <CustomersEventsHome
                     project={{
