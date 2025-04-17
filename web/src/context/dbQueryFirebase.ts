@@ -653,7 +653,7 @@ export const streamGetAllTaskManTasks = async (
   const { uid, cutoffDate, statusVAl, showOnlyDone } = data
   // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
 
-  let query = supabase.from(`maahomes_TM_Tasks`).select('*')
+  let query = supabase.from(`${orgId}_TM_Tasks`).select('*')
   if (showOnlyDone) {
     query = query.eq('status', 'Done')
   } else if (!statusVAl) {
@@ -1933,14 +1933,11 @@ export const getTodayTodoLeadsData = (orgId, snapshot, data, error) => {
 }
 export const getCRMTeamTasks = (orgId, snapshot, data, error) => {
   const { type } = data
-
   // type: 'upcoming'
-
   const itemsQuery = query(
     collection(db, `${orgId}_crm_tasks`),
     where('staA', 'array-contains-any', ['pending', 'overdue'])
   )
-
   console.log('hello ', status, itemsQuery)
   return onSnapshot(itemsQuery, snapshot, error)
 }
