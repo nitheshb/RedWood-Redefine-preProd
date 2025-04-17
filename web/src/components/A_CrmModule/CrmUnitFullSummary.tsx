@@ -2344,44 +2344,13 @@ className="w-4 h-4"
 </div>
 </div>
         </div>
-
-
-
-
        </div>
-
-
-
-
         </div>
-
-
-
-
          </div>
-
-
         </div>
-
-
-
-
-
-
 
         </>
       )}
-
-
-
-
-
-
-
-
-
-
-
 
       {selFeature === 'summary' && (
 
@@ -2506,9 +2475,6 @@ Loan details
 
 
         <div className="relative z-0">
-
-
-
 <h1 className="text-[#606062] font-outfit mb-1    mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
     Unit Documents
   </h1>

@@ -355,17 +355,14 @@ const DialogFormBody = ({
 
   })
   return (
-    <div className=" lg:col-span-10 mb-19 border w-full bg-[#F0F1FF] ">
+    <div className=" lg:col-span-10 mb-19 w-full bg-[#F0F1FF] ">
 
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col">
-          <div className="bg-white">
+          <div className="bg-[#F6F5F8]">
 
 
-            <div className="flex flex-col mt-2  bg-white  m-2 pt-1 mb-0 ">
-              <div>
-                
-              </div>
+            <div className="flex flex-col bg-white mx-4 rounded-2xl my-4 ">
               <CustomRadioGroupProject
                 label="Type"
                 value={selected}
@@ -392,21 +389,21 @@ const DialogFormBody = ({
                   return (
                     <Form>
                       <div className="form m-4 mt-0 ">
-                        <div className="flex flex-col mt-0  bg-white pt-4 ">
-                          <div className="mb-4 mt-4">
+                        <div className="flex flex-col p-4  rounded-2xl bg-white  ">
+                          <div className="">
                             <div className="inline">
                               <div className="">
-                                <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+                                <label className="font-medium text-[12px] uppercase text-[#606062]">
                                   Details<abbr title="required"></abbr>
                                 </label>
                               </div>
 
-                              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+                              {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}
                             </div>
                           </div>
 
 
-                          <div className='grid grid-cols-4 gap-2 w-full'>
+                          <div className='grid grid-cols-5 gap-2  w-full items-center justify-center'>
 
 
                             <div className='col-span-1'>
@@ -419,7 +416,7 @@ const DialogFormBody = ({
 
 
 
-                          <div className='col-span-3 items-start'>
+                          <div className='col-span-4 items-start'>
 
 <TextField label="Project Name*"  name="projectName" type="text" />
 <section className="flex flex-row space-x-4 w-full text-xs mt-[14px]">
@@ -454,7 +451,7 @@ const DialogFormBody = ({
               type="button"
               style={{ marginRight: '-13px' }}
               onClick={onExtendClick}
-              className="border  font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
+              className="border  font-semibold text-3xl px-2 bg-[#D3F0F8] text-black  font-medium tracking-wider"
             >
               {openExtendFields ? (
                 <Remove />
@@ -530,7 +527,7 @@ const DialogFormBody = ({
               type="button"
               style={{ marginRight: '-13px' }}
               onClick={onAreaClick}
-              className="border bg-[#57c0d0] font-semibold text-3xl px-2 bg-[#57c0d0] shadow-sm font-medium tracking-wider text-white hover:shadow-lg hover:bg-[#57c0d0]"
+              className="border bg-[#57c0d0] font-semibold text-3xl px-2 bg-[#D3F0F8] text-black  font-medium tracking-wider "
             >
               {openAreaFields ? <Remove /> : <Add />}
             </button>
@@ -598,267 +595,273 @@ const DialogFormBody = ({
 
                         </div>
 
+                        <div>
 
                         <div className='grid grid-cols-2 gap-4' >
 
 
 
 
-                        <div className="flex flex-col mt-2   pt-2 ">
-                          
-                          <CustomRadioGroup
-                            label="Planning Authority Approval"
-                            value={planningApproval}
-                            options={chooseAuthorityApproval}
-                            onChange={setPlanningApproval}
-                          />
+<div className="flex flex-col mt-2   pt-2 ">
+  
+  <CustomRadioGroup
+    label="Planning Authority Approval"
+    value={planningApproval}
+    options={chooseAuthorityApproval}
+    onChange={setPlanningApproval}
+  />
 
-                          {planningApproval?.name === 'Yes' && (
-                            <>
-                            <div className=' bg-white shadow-md  mt-2 p-2 rounded-md '>
-                            <div className=" ">
-                                <CustomSelect
-                                  name="Planning Approval Authority"
-                                  label={
-                                    <label className="text-sm text-gray-800 font-medium">
-                                      Planning Authority
-                                    </label>
-                                  }
-                                  className="input mt-2"
-                                  onChange={({ value }) => {
-                                    formik.setFieldValue(
-                                      'PlanningApprovalAuthority',
-                                      value
-                                    )
-                                  }}
-                                  value={
-                                    formik.values.PlanningApprovalAuthority
-                                  }
-                                  options={approvalAuthorityA}
-                                />
-                              </div>
+  {planningApproval?.name === 'Yes' && (
+    <>
+    <div className=' bg-white shadow-md  mt-2 p-2 rounded-md '>
+    <div className=" ">
+        <CustomSelect
+          name="Planning Approval Authority"
+          label={
+            <label className="text-sm text-gray-800 font-medium">
+              Planning Authority
+            </label>
+          }
+          className="input mt-2"
+          onChange={({ value }) => {
+            formik.setFieldValue(
+              'PlanningApprovalAuthority',
+              value
+            )
+          }}
+          value={
+            formik.values.PlanningApprovalAuthority
+          }
+          options={approvalAuthorityA}
+        />
+      </div>
 
-                              <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
-                                <div className="mt-2 w-full">
-                                  <TextField
-                                    label={`${
-                                      formik.values.PlanningApprovalAuthority
-                                        .value || ''
-                                    }Approval No*`}
-                                    name="bmrdaNo"
-                                    type="text"
-                                  />
-                                </div>
-                                <div className="mt-2 w-full">
-             
-                                  <label className="label font-regular block mb-1">
-                                    Approval Date*
-                                  </label>
-                                  <CustomDatePicker
-                                    id="authorityStartDate"
-                                    name="authorityStartDate"
-                                    className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
-                                    selected={authorityStartDate}
-                                    onChange={(date) => {
-                                      formik.setFieldValue(
-                                        'authorityStartDate',
-                                        date.getTime()
-                                      )
-                                      setAuthorityStartDate(date)
-                                    }}
-                                    timeFormat="HH:mm"
-                                    injectTimes={[
-                                      setHours(setMinutes(d, 1), 0),
-                                      setHours(setMinutes(d, 5), 12),
-                                      setHours(setMinutes(d, 59), 23),
-                                    ]}
-                       
-                                    dateFormat="MMM dd, yyyy"
-                                  />
-                                </div>
+      <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
+        <div className="mt-2 w-full">
+          <TextField
+            label={`${
+              formik.values.PlanningApprovalAuthority
+                .value || ''
+            }Approval No*`}
+            name="bmrdaNo"
+            type="text"
+          />
+        </div>
+        <div className="mt-2 w-full">
+
+          <label className="label font-regular block mb-1">
+            Approval Date*
+          </label>
+          <CustomDatePicker
+            id="authorityStartDate"
+            name="authorityStartDate"
+            className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
+            selected={authorityStartDate}
+            onChange={(date) => {
+              formik.setFieldValue(
+                'authorityStartDate',
+                date.getTime()
+              )
+              setAuthorityStartDate(date)
+            }}
+            timeFormat="HH:mm"
+            injectTimes={[
+              setHours(setMinutes(d, 1), 0),
+              setHours(setMinutes(d, 5), 12),
+              setHours(setMinutes(d, 59), 23),
+            ]}
+
+            dateFormat="MMM dd, yyyy"
+          />
+        </div>
 
 
 
-                              </div>
-                            </div>
-                            </>
-                          )}
-                        </div>
+      </div>
+    </div>
+    </>
+  )}
+</div>
 
-                        <div className="flex flex-col mt-2 pt-2 ">
-                          <CustomRadioGroup
-                            label="Rera Approval"
-                            value={reraApproval}
-                            options={chooseReraApproval}
-                            onChange={setReraApproval}
-                          />
-                          {reraApproval?.name === 'Yes' && (
-                            <div className="md:flex md:flex-col pt-[10px] flex-col md:space-x-1 w-full text-xs">
+<div className="flex flex-col mt-2 pt-2 ">
+  <CustomRadioGroup
+    label="Rera Approval"
+    value={reraApproval}
+    options={chooseReraApproval}
+    onChange={setReraApproval}
+  />
+  {reraApproval?.name === 'Yes' && (
+    <div className="md:flex md:flex-col pt-[10px] flex-col md:space-x-1 w-full text-xs">
 
 <div className=' bg-white shadow-md  p-2 rounded-md '>
 
-                              <div className="mt-2 w-full">
-                                <TextField
-                                  label="RERA No*"
-                                  name="hdmaNo"
-                                  type="text"
-                                />
-                              </div>
+      <div className="mt-2 w-full">
+        <TextField
+          label="RERA No*"
+          name="hdmaNo"
+          type="text"
+        />
+      </div>
 
 
-                              <div className='flex flex-row gap-2 w-full  '>
+      <div className='flex flex-row gap-2 w-full  '>
 
-                              <div className="mt-1 mb-[6px] w-1/2 min-w-0">
+      <div className="mt-1 mb-[6px] w-1/2 min-w-0">
 
-                                <label className="label font-regular block mb-1">
-                                  Approval Date*
-                                </label>
-                                <DatePicker
-                                  id="hdmaStartDate"
-                                  name="hdmaStartDate"
-                                  className="px-2 h-8 rounded-md w-full text-[#0091ae] bg-grey-lighter text-grey-darker border border-[#cccccc]"
-                                  selected={startDate}
-                                  onChange={(date) => {
-                                    if (date.getTime() < endDate) {
-                                      formik.setFieldValue(
-                                        'hdmaStartDate',
-                                        date.getTime()
-                                      )
-                                      setStartDate(date)
-                                    }
-                                  }}
-                                  timeFormat="HH:mm"
-                                  injectTimes={[
-                                    setHours(setMinutes(new Date(), 1), 0),
-                                    setHours(setMinutes(new Date(), 5), 12),
-                                    setHours(setMinutes(new Date(), 59), 23),
-                                  ]}
-                                  dateFormat="d-MMMM-yyyy"
-                                />
-                              </div>
-                              <div className="mt-1 mb-[6px] w-1/2 min-w-0">
-     
+        <label className="label font-regular block mb-1">
+          Approval Date*
+        </label>
+        <DatePicker
+          id="hdmaStartDate"
+          name="hdmaStartDate"
+          className="px-2 h-8 rounded-md w-full text-[#0091ae] bg-grey-lighter text-grey-darker border border-[#cccccc]"
+          selected={startDate}
+          onChange={(date) => {
+            if (date.getTime() < endDate) {
+              formik.setFieldValue(
+                'hdmaStartDate',
+                date.getTime()
+              )
+              setStartDate(date)
+            }
+          }}
+          timeFormat="HH:mm"
+          injectTimes={[
+            setHours(setMinutes(new Date(), 1), 0),
+            setHours(setMinutes(new Date(), 5), 12),
+            setHours(setMinutes(new Date(), 59), 23),
+          ]}
+          dateFormat="d-MMMM-yyyy"
+        />
+      </div>
+      <div className="mt-1 mb-[6px] w-1/2 min-w-0">
 
-                                <label className="label font-regular block mb-1">
-                                  End Date*
-                                </label>
-                                <DatePicker
-                                  id="hdmaEndDate"
-                                  name="hdmaEndDate"
-                                  className="px-2 h-8 rounded-md w-full text-[#0091ae] bg-grey-lighter text-grey-darker border border-[#cccccc]"
-                                  selected={endDate}
-                                  onChange={(date) => {
-                                    console.log(
-                                      'date',
-                                      date.getTime(),
-                                      date,
-                                      formik.values.hdmaStartDate,
-                                      date.getTime() > startDate
-                                    )
-                                    if (date.getTime() > startDate) {
-                                      formik.setFieldValue(
-                                        'hdmaEndDate',
-                                        date.getTime()
-                                      )
-                                      setEndDate(date)
-                                    }
-                                  }}
-                                  timeFormat="HH:mm"
-                                  injectTimes={[
-                                    setHours(setMinutes(d, 1), 0),
-                                    setHours(setMinutes(d, 5), 12),
-                                    setHours(setMinutes(d, 59), 23),
-                                  ]}
-                                  dateFormat="d-MMMM-yyyy"
-                                />
-                              </div>
 
-                              </div>
+        <label className="label font-regular block mb-1">
+          End Date*
+        </label>
+        <DatePicker
+          id="hdmaEndDate"
+          name="hdmaEndDate"
+          className="px-2 h-8 rounded-md w-full text-[#0091ae] bg-grey-lighter text-grey-darker border border-[#cccccc]"
+          selected={endDate}
+          onChange={(date) => {
+            console.log(
+              'date',
+              date.getTime(),
+              date,
+              formik.values.hdmaStartDate,
+              date.getTime() > startDate
+            )
+            if (date.getTime() > startDate) {
+              formik.setFieldValue(
+                'hdmaEndDate',
+                date.getTime()
+              )
+              setEndDate(date)
+            }
+          }}
+          timeFormat="HH:mm"
+          injectTimes={[
+            setHours(setMinutes(d, 1), 0),
+            setHours(setMinutes(d, 5), 12),
+            setHours(setMinutes(d, 59), 23),
+          ]}
+          dateFormat="d-MMMM-yyyy"
+        />
+      </div>
 
-                              </div>
+      </div>
 
-                            </div>
-                          )}
+      </div>
+
+    </div>
+  )}
+</div>
+
+
+</div>
+
+
+
+
+
+<div className="flex flex-col mt-2 rounded-lg  pt-4 ">
+  <div className="mb-4 mt-2">
+    <div className="inline">
+      <div className="">
+        <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+          Add Bank Account*<abbr title="required"></abbr>
+        </label>
+      </div>
+
+      <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+    </div>
+  </div>
+
+
+  {bankAccounts.length > 0 && (
+    <div className="flex  space-x-2 w-full text-xs">
+      {bankAccounts.map((data, i) => (
+        <section
+          key={i}
+          className="border px-4 py-2 rounded-lg"
+        >
+          <div>{data?.aliasName}</div>
+          <div>{data?.accountName}</div>
+        </section>
+      ))}
+    </div>
+  )}
+
+  <div className="flex mt-1 mb-3 space-y-2 w-full text-xs">
+    <div className=" mt-2 mr-3 w-full">
+      <MultiSelectMultiLineField
+        label=""
+        name="builderBankDocId"
+        onChange={(payload) => {
+          console.log('changed value is ', payload)
+          const { value, id, accountName } = payload
+          console.log('selected value is ', payload)
+
+          const x = bankAccounts
+          const exists = bankAccounts.find(
+            (item) => item.id === payload.id
+          )
+          if (!exists && value != 'addNewOption') {
+            x.push(payload)
+            setBankAccounts(x)
+          }
+          if (value === 'addNewOption') {
+            setAddNewBankStuff(true)
+          }
+          formik.setFieldValue('builderBankDocId', '')
+        }}
+        value={formik.values.builderBankDocId}
+        options={bankDetailsA}
+        setAddNewBankStuff={setAddNewBankStuff}
+      />
+
+
+    </div>
+
+
+  </div>
+
+  {addNewBankStuff && (
+    <AddBankDetailsForm
+      title={'Add New Account'}
+      dialogOpen={closeAddNewFun}
+      phase={'data'}
+    />
+  )}
+
+</div>
+
                         </div>
 
 
-                        </div>
 
-
-
-
-
-                        <div className="flex flex-col mt-2 rounded-lg  pt-4 ">
-                          <div className="mb-4 mt-2">
-                            <div className="inline">
-                              <div className="">
-                                <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
-                                  Add Bank Account*<abbr title="required"></abbr>
-                                </label>
-                              </div>
-
-                              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
-                            </div>
-                          </div>
-    
-
-                          {bankAccounts.length > 0 && (
-                            <div className="flex  space-x-2 w-full text-xs">
-                              {bankAccounts.map((data, i) => (
-                                <section
-                                  key={i}
-                                  className="border px-4 py-2 rounded-lg"
-                                >
-                                  <div>{data?.aliasName}</div>
-                                  <div>{data?.accountName}</div>
-                                </section>
-                              ))}
-                            </div>
-                          )}
-
-                          <div className="flex mt-1 mb-3 space-y-2 w-full text-xs">
-                            <div className=" mt-2 mr-3 w-full">
-                              <MultiSelectMultiLineField
-                                label=""
-                                name="builderBankDocId"
-                                onChange={(payload) => {
-                                  console.log('changed value is ', payload)
-                                  const { value, id, accountName } = payload
-                                  console.log('selected value is ', payload)
-   
-                                  const x = bankAccounts
-                                  const exists = bankAccounts.find(
-                                    (item) => item.id === payload.id
-                                  )
-                                  if (!exists && value != 'addNewOption') {
-                                    x.push(payload)
-                                    setBankAccounts(x)
-                                  }
-                                  if (value === 'addNewOption') {
-                                    setAddNewBankStuff(true)
-                                  }
-                                  formik.setFieldValue('builderBankDocId', '')
-                                }}
-                                value={formik.values.builderBankDocId}
-                                options={bankDetailsA}
-                                setAddNewBankStuff={setAddNewBankStuff}
-                              />
-
-    
-                            </div>
-
-   
-                          </div>
-
-                          {addNewBankStuff && (
-                            <AddBankDetailsForm
-                              title={'Add New Account'}
-                              dialogOpen={closeAddNewFun}
-                              phase={'data'}
-                            />
-                          )}
-
-                        </div>
                         <div className="flex flex-col mt-2 rounded-lg pt-4 ">
                           <div className="mb-4 mt-2">
                             <div className="inline">

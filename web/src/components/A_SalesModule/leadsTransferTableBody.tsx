@@ -263,29 +263,49 @@ const LeadsTransferTableBody = ({
   const checkboxCount = selectedIds.length
 
   return (
-    <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
+    <div className="h-full flex flex-col ">
 
-      <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
+      <div className="z-10 flex flex-row justify-between">
 
         {'Leads'} ({leadsFilA.length || 0})
-        <section className="flex flex-row">
-          <button className="ml-2 px-3 py-1 rounded-lg bg-transparent text-blue-800 font-bold text-sm">
-            {checkboxCount} Selected
+        <section className="flex flex-row gap-2">
+          <button className=" text-[#0E0A1F]  font-normal text-sm">
+           ( {checkboxCount} Selected )
           </button>
-          <section className="flex flex-col border ml-2 py-1  px-4 text-xs  rounded-full">
+          <section className="flex flex-row items-center space-x-2">
             <AssigedToDropComp
               assignerName={selProjectIs?.label}
               id={'id'}
               align="right"
               setAssigner={setNewProject}
+              buttonClassName="  rounded-lg "
+              itemsWrapperClassName=" z-[9000] font-normal"
+              itemButtonClassName=" font-normal"
+              variant="special"
+              
               usersList={[
                 ...[{ label: 'All Projects', value: 'allprojects' }],
                 ...projectList,
               ]}
+
+              customStyles={{
+                control: (provided) => ({
+                  ...provided,
+                  backgroundColor: 'transparent',
+                  // borderColor: '#606062',
+                  // '&:hover': {
+                  //   borderColor: '#606062',
+                  // },
+                }),
+                menu: (provided) => ({
+                  ...provided,
+                  backgroundColor: '#FFFFFF',
+                }),
+              }}
             />
-            <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
+            {/* <div className="font-md text-xs text-gray-500 tracking-wide ">
               Project {}
-            </div>
+            </div> */}
           </section>
  
 
@@ -293,33 +313,34 @@ const LeadsTransferTableBody = ({
           <Tooltip title={`Download ${selectedIds.length} Row`}>
 
 
-            <CSVDownloader
+            {/* <CSVDownloader
               className="mr-6 h-[20px] w-[20px]"
               downloadRows={selectedIds}
               sourceTab="visitsReport"
               style={{ height: '20px', width: '20px' }}
-            />
+            /> */}
           </Tooltip>
         </section>
       </div>
 
       <div className="grid  gap-8 grid-cols-1">
-        <div className="flex flex-col m-4">
-          <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
+        <div className="flex flex-col">
+          <div className="flex flex-col rounded-lg ">
 
             {loadingIcon ? (
               <LogSkelton />
             ) : (
-              <table className="min-w-full text-center mt-6">
-                <thead className="border-b">
+              // <table className="min-w-full  rounded-lg  text-center mt-6">
+              <table className="min-w-full rounded-2xl overflow-hidden text-center mt-6" style={{ borderCollapse: 'separate', borderSpacing: 0 }}>
+                <thead className="rounded-2xl">
                   <tr>
                     <th
                       scope="col"
-                      className={`text-sm font-medium text-gray-900 px-6 py-4`}
+                      className="text-sm font-medium bg-[#EDE9FE] text-gray-900  "
                     >
                       <label
                         htmlFor="selectAllCheckbox"
-                        style={{ marginRight: '8px' }}
+                        // style={{ marginRight: '8px' }}
                       >
                         <input
                           id="selectAllCheckbox"
@@ -329,32 +350,36 @@ const LeadsTransferTableBody = ({
                             leadsFilA.length > 0
                           }
                           onChange={handleSelectAllChange}
+                          className='mx-auto accent-black'
                         />
                       </label>
                     </th>
 
                     {[
-                      { label: 'sNo', id: 'no' },
-                      { label: 'Project', id: 'label' },
-                      { label: 'Lead Ph', id: 'all' },
-                      { label: 'Status', id: 'new' },
+                             { label: 'sNo', id: 'no', align: 'left' },
+                             { label: 'Project', id: 'label', align: 'center' },
+                             { label: 'Lead Ph', id: 'all', align: 'center' },
+                             { label: 'Status', id: 'new', align: 'center' },
+                             { label: 'Source', id: 'new', align: 'center' },
+                             { label: 'Executive', id: 'all', align: 'center' },
+                             { label: 'Created on', id: 'all', align: 'center' },
 
-                      { label: 'Source', id: 'new' },
-
-                      { label: 'Executive', id: 'all' },
-                      { label: 'Created on', id: 'all' },
 
                     ].map((d, i) => (
                       <th
                         key={i}
                         scope="col"
-                        className={`text-sm font-medium text-gray-900 px-6 py-4 ${
-                          ['Project', 'Lead Name'].includes(d.label)
-                            ? 'text-left'
-                            : ''
+                        className={`text-sm font-medium text-[#000000] bg-[#EDE9FE] px-2 py-2 ${
+                          // ['Project', 'Lead Name'].includes(d.label)
+                          //   ? 'text-left'
+                          //   : ''
+                          d.align === 'left' ? 'text-left' : 'text-center'
+
                         }`}
                       >
-                        {d?.label?.toUpperCase()}
+                        {/* {d?.label?.toUpperCase()} */}
+                        {d?.label?.charAt(0).toUpperCase() + d?.label?.slice(1).toLowerCase()}
+
                       </th>
                     ))}
                   </tr>
@@ -366,14 +391,14 @@ const LeadsTransferTableBody = ({
                       <tr
                         className={`  ${
                           i % 2 === 0
-                            ? 'bg-white border-blue-200'
-                            : 'bg-gray-100'
+                            ? 'bg-white'
+                            : 'bg-white'
                         }`}
                         key={i}
                         onClick={() => selLeadFun(data)}
                       >
-                        <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left">
-                          <label>
+                        <td className="px-6 py-4 whitespace-nowrap w-12">
+                          <label className='flex   justify-center'>
                             <input
                               type="checkbox"
                               checked={idExists(selectedIds, data.id)}
@@ -381,16 +406,17 @@ const LeadsTransferTableBody = ({
                                 e.stopPropagation()
                                 handleCheckboxChange(data)
                               }}
+                              className='accent-black'
                             />
                           </label>
                         </td>
-                        <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left">
+                        <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap ">
                           {i + 1}
                         </td>
-                        <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left">
+                        <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap ">
                           {data?.Project}
                         </td>
-                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap text-left">
+                        <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
                           {data?.Mobile}
                         </td>
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
@@ -415,6 +441,7 @@ const LeadsTransferTableBody = ({
                   })}
                 </tbody>
               </table>
+
             )}
           </div>
           <div className="mt-0"></div>

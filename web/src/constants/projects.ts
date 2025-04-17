@@ -285,31 +285,31 @@ export const projectDetailFlow = [
   {
     name: 'Project Setup',
     value: 'projectDetails',
-    img: 'https://www.svgrepo.com/show/530258/medal.svg',
+    img: '/step-1.svg',
     indx: 0,
   },
   {
     name: 'Cost Setup',
     value: 'CostDetails',
-    img: 'https://www.svgrepo.com/show/530260/map.svg',
+    img: '/step-2.svg',
     indx: 1,
   },
   {
-    name: 'Payment Schedule',
+    name: 'Schedule',
     value: 'Payment Schedule',
-    img: 'https://www.svgrepo.com/show/530140/calendar.svg',
+    img: '/step-3.svg',
     indx: 2,
   },
   {
     name: 'Project Units',
     value: 'Blocks',
-    img: 'https://www.svgrepo.com/show/530256/calculator.svg',
+    img: '/step-4.svg',
     indx: 3,
   },
   {
     name: 'Access & Others',
     value: 'projectAccess',
-    img: 'https://www.svgrepo.com/show/530263/distributed.svg',
+    img: '/step-5.svg',
     indx: 4,
   },
 ]
@@ -435,33 +435,74 @@ export const chooseReraApproval = [
     img: '/cancel-64.png',
   },
 ]
+
+
+// export const paymentMode = [
+//   {
+//     value: 'cheque',
+//     label: 'Cheque',
+//   },
+
+//   {
+//     value: 'Rtgs',
+//     label: 'Neft/Rtgs',
+//   },
+//   {
+//     value: 'DD',
+//     label: 'DD',
+//   },
+//   {
+//     value: 'online',
+//     label: 'Imps/UPI',
+//   },
+//   {
+//     value: 'credit_note',
+//     label: 'Credit Note',
+//   },
+//   {
+//     value: 'wallet',
+//     label: 'Customer Wallet',
+//   },
+// ]
+
+
+
+
 export const paymentMode = [
   {
     value: 'cheque',
     label: 'Cheque',
+    img: '/ChequeIcon.Svg',
   },
-
   {
     value: 'Rtgs',
     label: 'Neft/Rtgs',
+    img: '/RtgsIcon.svg',
   },
   {
     value: 'DD',
     label: 'DD',
+    img: '/DDIcon.svg',
   },
   {
     value: 'online',
     label: 'Imps/UPI',
+    img: '/ChequeIcon.svg',
   },
   {
     value: 'credit_note',
     label: 'Credit Note',
+    img: '/CreditNoteIcon.svg',
   },
   {
     value: 'wallet',
     label: 'Customer Wallet',
+    img: '/WalletIcon.svg',
   },
-]
+];
+
+
+
 export const walletMode = [
   {
     value: 'cheque',

@@ -203,6 +203,18 @@ const formatOptionLabel = ({ value, label, customAbbreviation }) => (
     </div>
   </div>
 )
+
+
+
+
+
+
+
+
+
+
+
+
 export const MultiSelectMultiLineField = ({
   label,
   name,
@@ -210,6 +222,7 @@ export const MultiSelectMultiLineField = ({
   options,
   onChange,
   value,
+  customStyles,
 }) => {
   const placeholder = <span>{label}</span>
   const defaultValue = (options, value) => {
@@ -235,9 +248,8 @@ export const MultiSelectMultiLineField = ({
         components={{ Option: MyOption }}
         value={defaultValue(options, value)}
         valueComponent={GravatarValue}
-        className="text-sm  mt-1 border-none"
-
-
+        className="text-sm  mt-1"
+        styles={customStyles}
         // onChange={(selectedOption) => {
         //   console.log('Selected option is', selectedOption);
         //   onChange(selectedOption);

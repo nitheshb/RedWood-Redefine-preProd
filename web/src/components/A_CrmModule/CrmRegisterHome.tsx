@@ -10,7 +10,7 @@ import {
   NewspaperIcon,
   InformationCircleIcon,
 } from '@heroicons/react/solid'
-import {} from '@heroicons/react/solid'
+import { } from '@heroicons/react/solid'
 import { Box, LinearProgress } from '@mui/material'
 import { startOfDay } from 'date-fns'
 import { useTranslation } from 'react-i18next'
@@ -39,6 +39,7 @@ import StageCostChart from '../A_SalesModule/Reports/charts/StageCostChart'
 import HalfSemiCircleGauge from '../A_SalesModule/Reports/charts/GaugeChart'
 import RadialChart from '../A_SalesModule/Reports/charts/RadialChart'
 import { PhoneCall } from 'lucide-react'
+import SemicircleProgressChart from '../A_SalesModule/Reports/charts/SemiCircleProgress'
 
 
 
@@ -131,7 +132,7 @@ const modifyItems = [
     status: 'pending',
   },
 ]
-const CrmRegisterModeHome = ({ leadsTyper,customerDetails }) => {
+const CrmRegisterModeHome = ({ leadsTyper, customerDetails }) => {
   const d = new window.Date()
   const { t } = useTranslation()
   const { user } = useAuth()
@@ -412,23 +413,24 @@ const CrmRegisterModeHome = ({ leadsTyper,customerDetails }) => {
   const searchLogic = async (searchKey, fetchedArray) => {
     if (!searchKey) return setFilteredDataA(fetchedArray)
 
-      const lowerSearchKey = searchKey.toLowerCase()
+    const lowerSearchKey = searchKey.toLowerCase()
 
-      const z = fetchedArray.filter((item) => {
-        return (
-          (item?.customerDetailsObj?.customerName1 &&
-            item?.customerDetailsObj?.customerName1
-              ?.toLowerCase()
-              ?.includes(lowerSearchKey)) ||
-          (item?.unit_no &&
-            item?.unit_no?.toString()?.toLowerCase()?.includes(lowerSearchKey))
-        )
-      })
-      await setFilteredDataA(z)
+    const z = fetchedArray.filter((item) => {
+      return (
+        (item?.customerDetailsObj?.customerName1 &&
+          item?.customerDetailsObj?.customerName1 &&
+          item?.customerDetailsObj?.AssignedBy
+            ?.toLowerCase()
+            ?.includes(lowerSearchKey)) ||
+        (item?.unit_no &&
+          item?.unit_no?.toString()?.toLowerCase()?.includes(lowerSearchKey))
+      )
+    })
+    await setFilteredDataA(z)
   }
   const searchBar = async (searchKey) => {
 
-    if(selCategory === 'booked'){
+    if (selCategory === 'booked') {
       searchLogic(searchKey, queryResult)
     }
     else if (selCategory === 'agreement_pipeline') {
@@ -440,9 +442,9 @@ const CrmRegisterModeHome = ({ leadsTyper,customerDetails }) => {
     else if (selCategory === 'registered') {
       searchLogic(searchKey, registeredA)
     }
-     else if (selCategory === 'possession') {
+    else if (selCategory === 'possession') {
       searchLogic(searchKey, posessionA)
-     }
+    }
     else if (selCategory === 'unassigned') {
       // searchLogic(searchKey, unassignedA)
       searchLogic(searchKey, crmCustomersDBData)
@@ -490,13 +492,25 @@ const CrmRegisterModeHome = ({ leadsTyper,customerDetails }) => {
     if (num >= 1_00_000) return (num / 1_00_000).toFixed(1) + 'L+';
     if (num >= 1_000) return (num / 1_000).toFixed(1) + 'K+';
     return num.toString();
-}
+  }
 
-console.log(formatIndianNumber(25000000));
-useEffect(() => {
-   
-  setAssignerName(customerDetails?.assignedToObj?.label)
-}, [customerDetails])
+  console.log(formatIndianNumber(25000000));
+  useEffect(() => {
+
+    setAssignerName(customerDetails?.assignedToObj?.label)
+  }, [customerDetails])
+
+
+
+
+
+
+  console.log("Assigner Name:", assignerName);
+
+
+
+
+
   return (
     <>
       <div className=" font-outfit mt-1 py-2 bg-[#F6F5F8] rounded-t-lg ">
@@ -573,17 +587,15 @@ useEffect(() => {
                       <li
                         key={b}
                         // className="mr-2 ml-2 text-sm font-bodyLato"
-                        className={`ml-2 text-sm font-bodyLato flex  items-center  h-4 ${
-                          b !== arr.length - 1 ? 'border-r border-gray-300' : ''
-                        }`}
+                        className={`ml-2 text-sm font-bodyLato flex  items-center  h-4 ${b !== arr.length - 1 ? 'border-r border-gray-300' : ''
+                          }`}
                         role="presentation"
                       >
                         <button
-                          className={`inline-block py-2 mr-3 px-1 text-[16px] font-medium  font-outfit text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
-                            selCategory === d.val
-                              ? 'text-black border-black '
-                              : 'text-gray-500  border-transparent'
-                          }`}
+                          className={`inline-block py-2 mr-3 px-1 text-[16px] font-medium  font-outfit text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${selCategory === d.val
+                            ? 'text-black border-black '
+                            : 'text-gray-500  border-transparent'
+                            }`}
                           type="button"
                           role="tab"
                           onClick={() => setSelCategory(d.val)}
@@ -638,9 +650,8 @@ useEffect(() => {
                 </div>
               </div>
               <div
-                className={`${
-                  showSettings ? 'hidden' : ''
-                } flex flex-row py-2 justify-between `}
+                className={`${showSettings ? 'hidden' : ''
+                  } flex flex-row py-2 justify-between `}
               >
                 <div className="flex flex-row w-full">
                   <span className="flex ml-2 mr-2 h-[34px]  border border-gray-300 border-solid box-border w-1/3 rounded-md">
@@ -670,7 +681,7 @@ useEffect(() => {
                   </span>
 
 
-                  <span className="mt-2 ml-2 text-red-400 cursor-pointer text-xs" onClick={()=> setSearchKeyField('')}>
+                  <span className="mt-2 ml-2 text-red-400 cursor-pointer text-xs" onClick={() => setSearchKeyField('')}>
                     {' '}
                     Clear
                   </span>
@@ -687,9 +698,8 @@ useEffect(() => {
                 {leadsTyper == 'inProgress' && (
                   <span className="inline-flex p-1 border bg-gray-200 rounded-md">
                     <button
-                      className={`px-2 py-1  rounded ${
-                        ready ? 'bg-white shadow' : ''
-                      }`}
+                      className={`px-2 py-1  rounded ${ready ? 'bg-white shadow' : ''
+                        }`}
                       onClick={() => setReady(true)}
                     >
                       <svg
@@ -708,9 +718,8 @@ useEffect(() => {
                       </svg>
                     </button>
                     <button
-                      className={`px-2 py-1  rounded ${
-                        !ready ? 'bg-white shadow' : ''
-                      }`}
+                      className={`px-2 py-1  rounded ${!ready ? 'bg-white shadow' : ''
+                        }`}
                       onClick={() => setReady(false)}
                     >
                       <svg
@@ -751,6 +760,8 @@ useEffect(() => {
                             uid,
                             assets,
                             customerDetailsObj,
+                            selCustomerPayload,
+                            assignedBy,
                             customerName1,
                             phoneNo1,
                             unit_no,
@@ -848,21 +859,21 @@ useEffect(() => {
                                               _this + val.TotalNetSaleValueGsT
                                             )
                                           },
-                                          0) || 0) +
-                                            finData?.addChargesCS?.reduce(
-                                              (partialSum, obj) =>
-                                                partialSum +
-                                                Number(
-                                                  computeTotal(
-                                                    obj,
-                                                    finData?.super_built_up_area ||
-                                                      finData?.area
-                                                        ?.toString()
-                                                        ?.replace(',', '')
-                                                  )
-                                                ),
-                                              0
-                                            ) || 0
+                                            0) || 0) +
+                                          finData?.addChargesCS?.reduce(
+                                            (partialSum, obj) =>
+                                              partialSum +
+                                              Number(
+                                                computeTotal(
+                                                  obj,
+                                                  finData?.super_built_up_area ||
+                                                  finData?.area
+                                                    ?.toString()
+                                                    ?.replace(',', '')
+                                                )
+                                              ),
+                                            0
+                                          ) || 0
                                         )?.toLocaleString('en-IN')}
                                       </div>
                                     </div>
@@ -871,7 +882,7 @@ useEffect(() => {
                                   <section className="flex flex-col mt-3">
                                     <div className=" text-[#0E0A1F] text-[12px]  font-normal font-outfit tracking-wide">
                                       Balance ₹
-                                      {finData?.T_elgible_balance <0 ? 0: finData?.T_elgible_balance?.toLocaleString(
+                                      {finData?.T_elgible_balance < 0 ? 0 : finData?.T_elgible_balance?.toLocaleString(
                                         'en-IN'
                                       )}
                                     </div>
@@ -956,13 +967,12 @@ useEffect(() => {
 
                                 <div className="w-[253px] mx-4 left-[25px] mt-3 ml-4 justify-start items-center gap-2 inline-flex">
                                   <div
-                                    className={`grow shrink basis-0 px-2.5 py-1.5 rounded-[16px] flex-col justify-center items-center gap-2 inline-flex ${
-                                      finData?.man_cs_approval == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.man_cs_approval == 'rejected'
+                                    className={`grow shrink basis-0 px-2.5 py-1.5 rounded-[16px] flex-col justify-center items-center gap-2 inline-flex ${finData?.man_cs_approval == 'approved'
+                                      ? 'bg-[#CCC5F7]'
+                                      : finData?.man_cs_approval == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
-                                    }  px-1 py-1 mx-1 inline-block self-end`}
+                                      }  px-1 py-1 mx-1 inline-block self-end`}
                                     style={{
                                       display: 'inline-block',
                                       alignSelf: 'flex-end',
@@ -980,13 +990,12 @@ useEffect(() => {
                                     </div>
                                   </div>
                                   <div
-                                    className={`grow shrink basis-0 px-2.5 py-1.5 bg-gray-200 rounded-[16px] flex-col justify-center items-center gap-2 inline-flex ${
-                                      finData?.kyc_status == 'approved'
-                                        ? 'bg-[#CCC5F7]'
-                                        : finData?.kyc_status == 'rejected'
+                                    className={`grow shrink basis-0 px-2.5 py-1.5 bg-gray-200 rounded-[16px] flex-col justify-center items-center gap-2 inline-flex ${finData?.kyc_status == 'approved'
+                                      ? 'bg-[#CCC5F7]'
+                                      : finData?.kyc_status == 'rejected'
                                         ? 'bg-[#ffdbdb]'
                                         : 'bg-[#F1F5F9] '
-                                    }  px-1 py-1 mx-1 inline-block self-end`}
+                                      }  px-1 py-1 mx-1 inline-block self-end`}
                                     style={{
                                       display: 'inline-block',
                                       alignSelf: 'flex-end',
@@ -1009,13 +1018,15 @@ useEffect(() => {
                       </li>
                     </ul>
                   )}
-                  {['booked', 'agreement_pipeline', 'agreement', 'registered','construction', 'possession', 'unAssigned_crm', 'queries'].includes(selCategory) &&
+                  {['booked', 'agreement_pipeline', 'agreement', 'registered', 'construction', 'possession', 'unAssigned_crm', 'queries'].includes(selCategory) &&
                     !horizontalMode &&
                     filteredDataA.map((finData, c) => {
                       const {
                         uid,
                         assets,
                         customerDetailsObj,
+                        selCustomerPayload,
+                        assignedBy,
                         customerName1,
                         phoneNo1,
                         unit_no,
@@ -1076,20 +1087,20 @@ useEffect(() => {
                                                 )}{' '}
                                               </span> */}
                                               <div className='flex gap-1 items-center text-green-600 text-[12px] mt-1'>
-                                              <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12.6605 13.1667H12.6668M12.6605 13.1667C12.2454 13.5783 11.493 13.4758 10.9655 13.4758C10.3178 13.4758 10.006 13.6025 9.54378 14.0647C9.15023 14.4583 8.62265 15.1667 8.00018 15.1667C7.37769 15.1667 6.85011 14.4583 6.45654 14.0647C5.99435 13.6025 5.68249 13.4758 5.03487 13.4758C4.50728 13.4758 3.75495 13.5783 3.33982 13.1667C2.92137 12.7517 3.02435 11.9963 3.02435 11.4653C3.02435 10.7943 2.8776 10.4857 2.39975 10.0079C1.68892 9.29709 1.33351 8.94164 1.3335 8.49999C1.3335 8.05835 1.68891 7.70294 2.39973 6.99212C2.8263 6.56555 3.02435 6.14286 3.02435 5.53471C3.02435 5.00711 2.92183 4.25477 3.3335 3.83964C3.74845 3.4212 4.5039 3.52418 5.03488 3.52418C5.64301 3.52418 6.06571 3.32615 6.49226 2.89959C7.20309 2.18876 7.55851 1.83334 8.00016 1.83334C8.44182 1.83334 8.79723 2.18876 9.50806 2.89959C9.93453 3.32605 10.3571 3.52418 10.9654 3.52418C11.493 3.52418 12.2454 3.42166 12.6605 3.83334C13.079 4.2483 12.976 5.00374 12.976 5.53471C12.976 6.20573 13.1227 6.51426 13.6006 6.99212C14.3114 7.70294 14.6668 8.05835 14.6668 8.49999C14.6668 8.94164 14.3114 9.29709 13.6006 10.0079C13.1227 10.4857 12.976 10.7943 12.976 11.4653C12.976 11.9963 13.079 12.7517 12.6605 13.1667Z" stroke="#1B6600"/>
-<path d="M6 9.09525L7.2 10.1667L10 6.83334" stroke="#1B6600" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+                                                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                  <path d="M12.6605 13.1667H12.6668M12.6605 13.1667C12.2454 13.5783 11.493 13.4758 10.9655 13.4758C10.3178 13.4758 10.006 13.6025 9.54378 14.0647C9.15023 14.4583 8.62265 15.1667 8.00018 15.1667C7.37769 15.1667 6.85011 14.4583 6.45654 14.0647C5.99435 13.6025 5.68249 13.4758 5.03487 13.4758C4.50728 13.4758 3.75495 13.5783 3.33982 13.1667C2.92137 12.7517 3.02435 11.9963 3.02435 11.4653C3.02435 10.7943 2.8776 10.4857 2.39975 10.0079C1.68892 9.29709 1.33351 8.94164 1.3335 8.49999C1.3335 8.05835 1.68891 7.70294 2.39973 6.99212C2.8263 6.56555 3.02435 6.14286 3.02435 5.53471C3.02435 5.00711 2.92183 4.25477 3.3335 3.83964C3.74845 3.4212 4.5039 3.52418 5.03488 3.52418C5.64301 3.52418 6.06571 3.32615 6.49226 2.89959C7.20309 2.18876 7.55851 1.83334 8.00016 1.83334C8.44182 1.83334 8.79723 2.18876 9.50806 2.89959C9.93453 3.32605 10.3571 3.52418 10.9654 3.52418C11.493 3.52418 12.2454 3.42166 12.6605 3.83334C13.079 4.2483 12.976 5.00374 12.976 5.53471C12.976 6.20573 13.1227 6.51426 13.6006 6.99212C14.3114 7.70294 14.6668 8.05835 14.6668 8.49999C14.6668 8.94164 14.3114 9.29709 13.6006 10.0079C13.1227 10.4857 12.976 10.7943 12.976 11.4653C12.976 11.9963 13.079 12.7517 12.6605 13.1667Z" stroke="#1B6600" />
+                                                  <path d="M6 9.09525L7.2 10.1667L10 6.83334" stroke="#1B6600" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
 
-<span>
-                                              Booked On:{' '}
-                                                {prettyDate(
-                                                  finData?.booked_on ||
+                                                <span>
+                                                  Booked On:{' '}
+                                                  {prettyDate(
+                                                    finData?.booked_on ||
                                                     finData?.ct ||
                                                     0
-                                                )}
-                                              </span>
-                                              </div>   
+                                                  )}
+                                                </span>
+                                              </div>
                                             </section>
                                           </div>
                                         </div>
@@ -1103,64 +1114,259 @@ useEffect(() => {
                             {/* divider */}
                             <div className="h-12 border-r rounded-sm border-[#E7E7E9] mx-4"></div>
 
+
+
+                            <div className=' w-[22%]  items-center'>
+
+
+
+
+                              {/* <div className="flex flex-row mx-1 pt-">
+
+
+
+<RoundedProgressBar
+progress={
+(finData?.T_approved / finData?.T_total) *
+100
+}
+
+showLabels={true}
+/>
+</div> */}
+                              <div className="flex flex-row  my-1   items-center justify-between mr-1">
+
+
+                                {/* <DoughnutChartWithRoundedSegments
+        progress={
+          (finData?.T_approved / finData?.T_total) *
+          100
+        }
+      /> */}
+                                <SemicircleProgressChart
+                                  progress={
+                                    (finData?.T_approved / finData?.T_total) *
+                                    100
+                                  }
+
+                                />
+
+                                <div className="flex  flex-col justify-between  mb-1">
+                                  {/* <DoughnutChartWithRoundedSegments
+        progress={
+          (finData?.T_approved / finData?.T_total) *
+          100
+        }
+      /> */}
+                                  <section className=" flex gap-2 justify-between font-semibold text-xs m-1 w-full  ">
+                                    <div className="text-[12px] text-[#0E0A1F] font-normal">
+                                      Unit Cost:
+                                    </div>
+
+
+                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+                                      <div
+                                        className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                                        style={{ alignItems: 'start', width: '300px' }}
+                                      >
+                                        <span
+                                          className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                                          style={{
+                                            color: 'white',
+                                            background: '#213343',
+                                            maxWidth: '300px',
+                                          }}
+                                        >
+                                          <span className="italic">
+                                            {formatIndianNumber?.(Math.round(finData?.T_total || finData?.T_Total || 0))}
+
+                                          </span>
+                                        </span>
+                                        <div
+                                          className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+                                          style={{ background: '#213343', marginRight: '12px' }}
+                                        ></div>
+                                      </div>
+                                      <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
+                                        ₹{Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
+                                      </span>
+                                    </div>
+
+                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
+          ₹
+          {finData?.T_elgible?.toLocaleString(
+            'en-IN'
+          )}
+          {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
+
+        </div> */}
+                                  </section>
+
+
+
+                                  <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
+
+                                    <div className='flex'>
+
+                                      <div className="h-3 w-3 bg-purple-300 mr-2"></div>
+
+                                      <div className="text-[12px] text-[#0E0A1F] font-normal">
+                                        Paid:
+                                      </div>
+
+                                    </div>
+
+
+
+                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+                                      <div
+                                        className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                                        style={{ alignItems: 'start', width: '300px' }}
+                                      >
+                                        <span
+                                          className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                                          style={{
+                                            color: 'white',
+                                            background: '#213343',
+                                            maxWidth: '300px',
+                                          }}
+                                        >
+                                          <span className="italic">
+                                            {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
+                                          </span>
+                                        </span>
+                                        <div
+                                          className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+                                          style={{ background: '#213343', marginRight: '12px' }}
+                                        ></div>
+                                      </div>
+                                      <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
+                                        ₹{Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+                                      </span>
+                                    </div>
+
+                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
+          ₹
+          {finData?.T_elgible?.toLocaleString(
+            'en-IN'
+          )}
+          {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
+
+        </div> */}
+                                  </section>
+                                  {/* section- 3 */}
+                                  <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
+
+                                    <div className='flex'>
+                                      <div className="h-3 w-3 bg-gray-300 mr-2"></div>
+
+                                      <div className="text-[12px] text-[#0E0A1F] font-normal">
+                                        Balance:
+                                      </div>
+                                    </div>
+
+                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+                                      <div
+                                        className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                                        style={{ alignItems: 'start', width: '300px' }}
+                                      >
+                                        <span
+                                          className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                                          style={{
+                                            color: 'white',
+                                            background: '#213343',
+                                            maxWidth: '300px',
+                                          }}
+                                        >
+                                          <span className="italic">
+                                            {formatIndianNumber?.(Math.round(finData?.T_balance || 0))}
+                                          </span>
+                                        </span>
+                                        <div
+                                          className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+                                          style={{ background: '#213343', marginRight: '12px' }}
+                                        ></div>
+                                      </div>
+                                      <span className="text-[#0E0A1F] font-medium text-[12px] font-bold  tracking-wide">
+                                        ₹{Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
+                                      </span>
+                                    </div>
+
+
+                                  </section>
+
+                                </div>
+
+
+                              </div>
+                            </div>
+
+
+
+
+                            {/* divider */}
+                            <div className="h-12 border-r  rounded-sm border-[#E7E7E9] mx-4"></div>
+
+                            {/* other one */}
+
                             <div className='w-[22%] items-center '>
                               <div className="flex flex-row  my-1 items-center  justify-between mr-1">
 
 
-                                
-                              {/* <RadialChart
+
+                                {/* <RadialChart
   progress={
     (((finData?.T_review || 0) + (finData?.T_approved || 0)) / finData?.T_elgible) * 100
   }
 /> */}
 
 
-<RadialChart
- progress={
-  (((finData?.T_review || 0) +
-  (finData?.T_approved || 0) )/ finData?.T_elgible) *
-  100
-}
-/>
+                                <RadialChart
+                                  progress={
+                                    (((finData?.T_review || 0) +
+                                      (finData?.T_approved || 0)) / finData?.T_elgible) *
+                                    100
+                                  }
+                                />
 
 
                                 <div className="flex flex-col justify-between  mb-1">
 
 
-                                <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full ">
+                                  <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full ">
                                     <div className="text-[12px] text-[#0E0A1F] font-normal">
                                       Stage Cost:
                                     </div>
                                     <div
-                className="relative flex flex-col items-center group"
-                style={{ alignItems: 'start' }}
-              >
-                <div
-                  className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-                  style={{ alignItems: 'start', width: '300px' }}
-                >
-                  <span
-                    className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-                    style={{
-                      color: 'white',
-                      background: '#213343',
-                      maxWidth: '300px',
-                    }}
-                  >
-                    <span className="italic">
+                                      className="relative flex flex-col items-center group"
+                                      style={{ alignItems: 'start' }}
+                                    >
+                                      <div
+                                        className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                                        style={{ alignItems: 'start', width: '300px' }}
+                                      >
+                                        <span
+                                          className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                                          style={{
+                                            color: 'white',
+                                            background: '#213343',
+                                            maxWidth: '300px',
+                                          }}
+                                        >
+                                          <span className="italic">
 
-                      { formatIndianNumber?.(Math.round(finData?.T_elgible || 0))}
-                    </span>
-                  </span>
-                  <div
-                    className="w-3 h-3 ml-1  -mt-2 rotate-45 bg-black"
-                    style={{ background: '#213343', marginRight: '12px' }}
-                  ></div>
-                </div>
-                <span className="text-[#0E0A1F] font-medium  text-[12px]  font-outfit tracking-wide ">
-      ₹{Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
-                </span>
-      </div>
+                                            {formatIndianNumber?.(Math.round(finData?.T_elgible || 0))}
+                                          </span>
+                                        </span>
+                                        <div
+                                          className="w-3 h-3 ml-1  -mt-2 rotate-45 bg-black"
+                                          style={{ background: '#213343', marginRight: '12px' }}
+                                        ></div>
+                                      </div>
+                                      <span className="text-[#0E0A1F] font-medium  text-[12px]  font-outfit tracking-wide ">
+                                        ₹{Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
+                                      </span>
+                                    </div>
                                     {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
                                       ₹
                                       {finData?.T_elgible?.toLocaleString(
@@ -1170,28 +1376,28 @@ useEffect(() => {
 
                                     </div> */}
                                   </section>
-                              
+
                                   <section className=" flex gap-2 justify-between font-semibold text-xs m-1 w-full  ">
                                     <div className='flex'>
 
-                                    <div className="h-3 w-3 bg-purple-300 mr-2"></div>
-                                    <div className="text-[12px] text-[#0E0A1F] font-normal">
-                                   
-                                      Paid:
-                                      <span
-                                        title={`₹ ${(
-                                          finData?.T_review || 0
-                                        )?.toLocaleString(
-                                          'en-IN'
-                                        )} is in accounts review`}
-                                        className="ml-2 "
-                                      >
-                                        <InformationCircleIcon className="h-4 w-4 inline text-zinc-400" />
-                                      </span>
-                                    </div>
+                                      <div className="h-3 w-3 bg-purple-300 mr-2"></div>
+                                      <div className="text-[12px] text-[#0E0A1F] font-normal">
+
+                                        Paid:
+                                        <span
+                                          title={`₹ ${(
+                                            finData?.T_review || 0
+                                          )?.toLocaleString(
+                                            'en-IN'
+                                          )} is in accounts review`}
+                                          className="ml-2 "
+                                        >
+                                          <InformationCircleIcon className="h-4 w-4 inline text-zinc-400" />
+                                        </span>
+                                      </div>
 
                                     </div>
-      
+
                                     {/* <div className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
                                       ₹
                                       {(
@@ -1201,50 +1407,50 @@ useEffect(() => {
                                     </div> */}
 
 
-<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
-  <div
-    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-    style={{ alignItems: 'start', width: '300px' }}
-  >
-    <span
-      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-      style={{
-        color: 'white',
-        background: '#213343',
-        maxWidth: '300px',
-      }}
-    >
-      <span className="italic">
-        {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
-      </span>
-    </span>
-    <div
-      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-      style={{ background: '#213343', marginRight: '12px' }}
-    ></div>
-  </div>
-  <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
-    ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
-  </span>
-</div>
+                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
+                                      <div
+                                        className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                                        style={{ alignItems: 'start', width: '300px' }}
+                                      >
+                                        <span
+                                          className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                                          style={{
+                                            color: 'white',
+                                            background: '#213343',
+                                            maxWidth: '300px',
+                                          }}
+                                        >
+                                          <span className="italic">
+                                            {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
+                                          </span>
+                                        </span>
+                                        <div
+                                          className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+                                          style={{ background: '#213343', marginRight: '12px' }}
+                                        ></div>
+                                      </div>
+                                      <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
+                                        ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+                                      </span>
+                                    </div>
                                   </section>
 
 
                                   {/* section- 3 */}
                                   <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
                                     <div className='flex'>
-                                    <div className="h-3 w-3 bg-gray-300 mr-2"></div>
+                                      <div className="h-3 w-3 bg-gray-300 mr-2"></div>
 
-<div className="text-[12px] font-outfit text-[#0E0A1F] font-normal">
-  Balance:
-</div>
+                                      <div className="text-[12px] font-outfit text-[#0E0A1F] font-normal">
+                                        Balance:
+                                      </div>
 
                                     </div>
 
                                     <div className="text-zinc-800 text-[12px] font-bold font-outfit tracking-wide">
-                                    {/* ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')} */}
+                                      {/* ₹ {finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')} */}
 
-                                    {/* <IndianCurrencyTooltip amount={(finData?.T_elgible_balance < 0 ? 0 : finData?.T_elgible_balance)?.toLocaleString("en-IN")} /> */}
+                                      {/* <IndianCurrencyTooltip amount={(finData?.T_elgible_balance < 0 ? 0 : finData?.T_elgible_balance)?.toLocaleString("en-IN")} /> */}
 
 
 
@@ -1252,35 +1458,35 @@ useEffect(() => {
                                     </div>
 
                                     <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
-  <div
-    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-    style={{ alignItems: 'start', width: '300px' }}
-  >
-    <span
-      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-      style={{
-        color: 'white',
-        background: '#213343',
-        maxWidth: '300px',
-      }}
-    >
-      <span className="italic">
-        {/* {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))} */}
-        {formatIndianNumber(finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance))}
+                                      <div
+                                        className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
+                                        style={{ alignItems: 'start', width: '300px' }}
+                                      >
+                                        <span
+                                          className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
+                                          style={{
+                                            color: 'white',
+                                            background: '#213343',
+                                            maxWidth: '300px',
+                                          }}
+                                        >
+                                          <span className="italic">
+                                            {/* {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))} */}
+                                            {formatIndianNumber(finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance))}
 
-      </span>
-    </span>
-    <div
-      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-      style={{ background: '#213343', marginRight: '12px' }}
-    ></div>
-  </div>
-  <span className="text-[#0E0A1F] font-medium text-[12px] font-outfit tracking-wide">
-  ₹{finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
+                                          </span>
+                                        </span>
+                                        <div
+                                          className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
+                                          style={{ background: '#213343', marginRight: '12px' }}
+                                        ></div>
+                                      </div>
+                                      <span className="text-[#0E0A1F] font-medium text-[12px] font-outfit tracking-wide">
+                                        ₹{finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
 
 
-  </span>
-</div>
+                                      </span>
+                                    </div>
                                   </section>
                                 </div>
                                 {/* <div className="flex flex-row mx-1 pt-">
@@ -1293,7 +1499,7 @@ useEffect(() => {
                                     />
 
                                 </div> */}
-{/* 
+                                {/* 
                                 <PaymentDashboard
                                 progress={
                                   (((finData?.T_review || 0) +
@@ -1308,247 +1514,74 @@ useEffect(() => {
                                 /> */}
 
                                 {/* <HalfSemiCircleGauge/> */}
-                                
-                                
-                              </div>
-                            </div>
-
-
-                               {/* divider */}
-                               <div className="h-12 border-r  rounded-sm border-[#E7E7E9] mx-4"></div>
-
-                            {/* other one */}
-                            <div className=' w-[22%]  items-center'>
-
-
-
-
-                            {/* <div className="flex flex-row mx-1 pt-">
-
-
-
-<RoundedProgressBar
-  progress={
-      (finData?.T_approved / finData?.T_total) *
-       100
-      }
-
-      showLabels={true}
-  />
-  </div> */}
-                              <div className="flex flex-row  my-1   items-center justify-between mr-1">
-
-                                                                  
-<DoughnutChartWithRoundedSegments
-                                    progress={
-                                      (finData?.T_approved / finData?.T_total) *
-                                      100
-                                    }
-                                  />
-
-                                <div className="flex  flex-col justify-between  mb-1">
-                                  {/* <DoughnutChartWithRoundedSegments
-                                    progress={
-                                      (finData?.T_approved / finData?.T_total) *
-                                      100
-                                    }
-                                  /> */}
-<section className=" flex gap-2 justify-between font-semibold text-xs m-1 w-full  ">
-                                    <div className="text-[12px] text-[#0E0A1F] font-normal">
-                                    Unit Cost:
-                                    </div>
-
-
-                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
-  <div
-    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-    style={{ alignItems: 'start', width: '300px' }}
-  >
-    <span
-      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-      style={{
-        color: 'white',
-        background: '#213343',
-        maxWidth: '300px',
-      }}
-    >
-      <span className="italic">
-      {formatIndianNumber?.(Math.round(finData?.T_total || finData?.T_Total || 0))}
-
-        </span>
-    </span>
-    <div
-      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-      style={{ background: '#213343', marginRight: '12px' }}
-    ></div>
-  </div>
-  <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
-  ₹{Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
-  </span>
-</div>
-
-                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
-                                      ₹
-                                      {finData?.T_elgible?.toLocaleString(
-                                        'en-IN'
-                                      )}
-                                      {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
-
-                                    </div> */}
-                                  </section>
-
-                           
-
-                                  <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
-
-                                    <div className='flex'>
-
-                                    <div className="h-3 w-3 bg-purple-300 mr-2"></div>
-
-<div className="text-[12px] text-[#0E0A1F] font-normal">
-Paid:
-</div>
-
-                                    </div>
-
-
-
-                                    <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
-  <div
-    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-    style={{ alignItems: 'start', width: '300px' }}
-  >
-    <span
-      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-      style={{
-        color: 'white',
-        background: '#213343',
-        maxWidth: '300px',
-      }}
-    >
-      <span className="italic">
-        {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
-      </span>
-    </span>
-    <div
-      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-      style={{ background: '#213343', marginRight: '12px' }}
-    ></div>
-  </div>
-  <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
-  ₹{Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
-  </span>
-</div>
-
-                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
-                                      ₹
-                                      {finData?.T_elgible?.toLocaleString(
-                                        'en-IN'
-                                      )}
-                                      {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
-
-                                    </div> */}
-                                  </section>
-                                  {/* section- 3 */}
-                                  <section className="flex gap-2 justify-between font-semibold text-xs m-1 w-full">
-
-                                    <div className='flex'>
-                                    <div className="h-3 w-3 bg-gray-300 mr-2"></div>
-
-<div className="text-[12px] text-[#0E0A1F] font-normal">
-Balance:
-</div>
-                                    </div>
-                          
-<div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
-  <div
-    className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
-    style={{ alignItems: 'start', width: '300px' }}
-  >
-    <span
-      className="rounded italian relative mr-3 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-      style={{
-        color: 'white',
-        background: '#213343',
-        maxWidth: '300px',
-      }}
-    >
-      <span className="italic">
-        {formatIndianNumber?.(Math.round(finData?.T_balance || 0))}
-      </span>
-    </span>
-    <div
-      className="w-3 h-3 ml-1 -mt-2 rotate-45 bg-black"
-      style={{ background: '#213343', marginRight: '12px' }}
-    ></div>
-  </div>
-  <span className="text-[#0E0A1F] font-medium text-[12px] font-bold  tracking-wide">
-  ₹{Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
-  </span>
-</div>
-                      
-
-                                  </section>
-                              
-                                </div>
 
 
                               </div>
                             </div>
-                            
 
 
-                               {/* divider */}
-                               <div className="h-12 border-r rounded-sm border-[#E7E7E9] mx-4"></div>
+
+                            {/* divider */}
+                            <div className="h-12 border-r rounded-sm border-[#E7E7E9] mx-4"></div>
 
                             <div className='w-[33%]'>
-                            <div className=' '>
-<div className="">
-    <div className="flex items-center justify-between ">
-      <div className='flex gap-2'>
-      <img src="/api/placeholder/40/40" alt="User avatar" className="rounded-full w-10 h-10 bg-blue-500" />
-      <div>
-        <div className="text-sm text-[#606062]">CRM</div>
-        <div className=" text-[#0E0A1F] font-medium text-[14px]">Rohit Kathri</div>
-      </div>
-      </div>
+                              <div className=' '>
+                                <div className="">
+                                  <div className="flex items-center ">
+
+                                  <div className="flex items-center border border-[#E7E7E9] rounded-full px-3 py-1 w-fit">
+  {finData?.assignedToObj?.label ? (
+    // Show first letter of name
+    <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
+      {finData.assignedToObj.label.charAt(0).toUpperCase()}
+    </div>
+  ) : (
+    // Show empty avatar for unassigned
+    <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
+      NA
+    </div>
+  )}
+  <span className="text-[#0E0A1F] font-medium text-[14px] ml-2">
+    {finData?.assignedToObj?.label || finData?.assignedBy || 'Unassigned'}
+  </span>
+</div>
 
 
-      <div>
-        
-      <div className="flex">
-        <div className="flex items-center justify-center p-2">
 
 
-        <div>
-        <div className=" ">
-                          <div className="flex  items-center justify-center  h-full rounded-md ">
-                            <div className="flex items-center justify-center   px-1">
-                              {/* section 2 */}
-                             {['booked', 'selCategory'].includes(selCategory) &&
-                            <section className="flex gap-1 items-center">
-                              {!(user?.role.includes('crm-executive')) && (
-                             <div
-                                className={` cursor-pointer  border  rounded-md ${
-                                  finData?.man_cs_approval == 'approved'
-                                    ? 'text-green-700'
-                                    : finData?.man_cs_approval == 'rejected'
-                                    ? 'text-red-700'
-                                    : 'text-black'
-                                }  px-2 py-2  inline-block self-end`}
-                                // style={{
-                                //   display: 'inline-block',
-                                //   alignSelf: 'flex-end',
-                                // }}
-                                onClick={() => {
-                                  setSelUnitDetails(finData)
-                                  setIsSubTopicOpen(true)
-                                  setIsSubTopic('crm_cs_approval')
-                                }}
-                              >
-                                <div className="flex  items-center justify-center gap-1">
-                                  <div className="flex items-center justify-center">
-                                    {/* <ChartPieIcon
+
+                                    <div>
+
+                                      <div className="flex">
+                                        <div className="flex items-center justify-center">
+                                          <div>
+                                            <div className=" ">
+                                              <div className="flex  items-center justify-center  h-full rounded-md ">
+                                                <div className="flex items-center justify-center   px-1">
+                                                  {/* section 2 */}
+                                                  {['booked', 'selCategory'].includes(selCategory) &&
+                                                    <section className="flex gap-1 items-center">
+                                                      {!(user?.role.includes('crm-executive')) && (
+                                                        <div
+                                                          className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1 ${finData?.man_cs_approval == 'approved'
+                                                            ? 'text-green-700'
+                                                            : finData?.man_cs_approval == 'rejected'
+                                                              ? 'text-red-700'
+                                                              : 'text-black'
+                                                            } `}
+                                                          // style={{
+                                                          //   display: 'inline-block',
+                                                          //   alignSelf: 'flex-end',
+                                                          // }}
+                                                          onClick={() => {
+                                                            setSelUnitDetails(finData)
+                                                            setIsSubTopicOpen(true)
+                                                            setIsSubTopic('crm_cs_approval')
+                                                          }}
+                                                        >
+                                                          <div className="flex  items-center justify-center gap-1">
+                                                            <div className="flex items-center justify-center">
+                                                              {/* <ChartPieIcon
                                       className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                         finData?.man_cs_approval ===
                                         'approved'
@@ -1556,45 +1589,66 @@ Balance:
                                           : 'text-gray-600 '
                                       }`}
                                       aria-hidden="true"
-                                    /> */}
-<img
-alt="CRM Background"
-src="/manager.svg"
-className="w-4 h-4"
-/>
+                                    /> */}                                                              <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
+                                                                ? 'bg-[#DFF6E0]'
+                                                                : finData?.man_cs_approval == 'rejected'
+                                                                  ? 'bg-[#F5E6E6]'
+                                                                  : 'bg-gray-100'
+                                                                }`}>
 
-                                  </div>
-                                  <h6 className="font-bodyLato text-[#000000] text-xs ">
-                                    Manager
-                                  </h6>
-                                </div>
-                              </div>
-                              )}
 
-                              {/* section 3*/}
-                              <div
-                                className={` cursor-pointer  border   rounded-md ${
-                                  finData?.kyc_status == 'approved'
-                                    ? 'text-green-700'
-                                    : finData?.kyc_status == 'rejected'
-                                    // ? 'bg-[#ffdbdb]'
-                                    // : 'bg-[#FFFFFF] '
-                                      ? 'text-red-700'
-                                    : 'text-black'
-                                }  px-2 py-2  inline-block self-end`}
-                                // style={{
-                                //   display: 'inline-block',
-                                //   alignSelf: 'flex-end',
-                                // }}
-                                onClick={() => {
-                                  setSelUnitDetails(finData)
-                                  setIsSubTopicOpen(true)
-                                  setIsSubTopic('crm_KYC')
-                                }}
-                              >
-                                <div className="flex  items-center justify-center gap-1">
-                                  <div className="flex items-center justify-center ">
-                                    {/* <NewspaperIcon
+                                                                {/* <img
+                                                                  alt="CRM Background"
+                                                                  src="/timebox.svg"
+                                                                  className="w-4 h-4"
+                                                                /> */}
+
+
+                                                                <img
+                                                                  alt="CRM Status"
+                                                                  src={
+                                                                    finData?.man_cs_approval === 'approved'
+                                                                      ? '/crmc.svg'
+                                                                      : finData?.man_cs_approval === 'rejected'
+                                                                        ? '/crmw.svg'
+                                                                        : '/crmp.svg'
+                                                                  }
+                                                                  className="w-4 h-4"
+                                                                />
+                                                              </span>
+
+                                                            </div>
+
+                                                            <span className=" text-xs ">
+                                                              Manager
+                                                            </span>
+                                                          </div>
+                                                        </div>
+                                                      )}
+
+                                                      {/* section 3*/}
+                                                      <div
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1${finData?.kyc_status == 'approved'
+                                                          ? 'text-green-700'
+                                                          : finData?.kyc_status == 'rejected'
+                                                            // ? 'bg-[#ffdbdb]'
+                                                            // : 'bg-[#FFFFFF] '
+                                                            ? 'text-red-700'
+                                                            : 'text-black'
+                                                          } `}
+                                                        // style={{
+                                                        //   display: 'inline-block',
+                                                        //   alignSelf: 'flex-end',
+                                                        // }}
+                                                        onClick={() => {
+                                                          setSelUnitDetails(finData)
+                                                          setIsSubTopicOpen(true)
+                                                          setIsSubTopic('crm_KYC')
+                                                        }}
+                                                      >
+                                                        <div className="flex  items-center justify-center gap-1">
+                                                          <div className="flex items-center justify-center ">
+                                                            {/* <NewspaperIcon
                                       className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
                                         finData?.kyc_status == 'approved'
                                           ? 'bg-[#CCC5F7]'
@@ -1605,41 +1659,68 @@ className="w-4 h-4"
                                       }`}
                                       aria-hidden="true"
                                     /> */}
-
-<img
+                                                            {/* <img
 alt="CRM Background"
 src="/IconSets.svg"
 className="w-4 h-4"
-/>
+/> */}
 
-                                  </div>
-                                  <h6 className="font-bodyLato text-[#000000] text-xs">
-                                    KYC
-                                  </h6>
-                                </div>
-                              </div>
-                              </section>}
-                               {[ 'agreement_pipeline'].includes(selCategory) &&
-                             <section className='flex gap-2 mt-2'>
-                             <div
-                                className={` cursor-pointer  border   rounded-md ${
-                                  finData?.man_ats_approval == 'approved'
-                                    ? 'bg-[#CCC5F7]'
-                                    : finData?.man_ats_approval == 'rejected'
-                                    ? 'bg-[#ffdbdb]'
-                                    : 'bg-[#FFFFFF]'
-                                }  px-1 py-1  inline-block self-end`}
-                                // style={{
-                                //   display: 'inline-block',
-                                //   alignSelf: 'flex-end',
-                                // }}
-                                onClick={() => {
-                                  setSelUnitDetails(finData)
-                                  setIsSubTopicOpen(true)
-                                  setIsSubTopic('crm_ATS_Draft')
-                                }}
-                              >
-                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+
+
+                                                            <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
+                                                              ? 'bg-[#DFF6E0]'
+                                                              : finData?.man_cs_approval == 'rejected'
+                                                                ? 'bg-[#F5E6E6]'
+                                                                : 'bg-gray-100'
+                                                              }`}>
+
+
+                                                              {/* <img
+                                                                alt="CRM Background"
+                                                                src="/timebox.svg"
+                                                                className="w-4 h-4"
+                                                              /> */}
+
+                                                              <img
+                                                                alt="Status Icon"
+                                                                src={
+                                                                  finData?.man_cs_approval === 'approved'
+                                                                    ? '/crmc.svg'
+                                                                    : finData?.man_cs_approval === 'rejected'
+                                                                      ? '/crmw.svg'
+                                                                      : '/crmp.svg'
+                                                                }
+                                                                className="w-4 h-4"
+                                                              />
+                                                            </span>
+
+                                                          </div>
+                                                          <span className="text-xs">
+                                                            KYC
+                                                          </span>
+                                                        </div>
+                                                      </div>
+                                                    </section>}
+                                                  {['agreement_pipeline'].includes(selCategory) &&
+                                                    <section className='flex gap-2'>
+                                                      <div
+                                                        className={`cursor-pointer  border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1 ${finData?.man_ats_approval == 'approved'
+                                                          ? 'text-green-700'
+                                                          : finData?.man_ats_approval == 'rejected'
+                                                            ? 'text-red-700'
+                                                            : 'text-gray-600'
+                                                          } `}
+                                                        // style={{
+                                                        //   display: 'inline-block',
+                                                        //   alignSelf: 'flex-end',
+                                                        // }}
+                                                        onClick={() => {
+                                                          setSelUnitDetails(finData)
+                                                          setIsSubTopicOpen(true)
+                                                          setIsSubTopic('crm_ATS_Draft')
+                                                        }}
+                                                      >
+                                                        {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
                                   <div className="flex flex-none items-center justify-center  group-hover:bg-white">
                                   <ChartPieIcon
                                       className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
@@ -1658,39 +1739,59 @@ className="w-4 h-4"
                                   ATS Draft
                                   </h6>
                                 </div> */}
-                                  <div className="flex  items-center justify-center gap-1">
-<div className="flex items-center justify-center  p-1">
-  <img
-    alt="CRM Background"
-    src="/manager.svg"
-    className="block"
-  />
-</div>
-<h6 className="font-bodyLato text-[#000000] text-xs">
-ATS Draft
-</h6>
-</div>
-                              </div>
-                              {/* section 3*/}
-                              <div
-                                className={` cursor-pointer   border   rounded-xl ${
-                                  finData?.kyc_status == 'approved'
-                                    ? 'bg-[#CCC5F7]'
-                                    : finData?.kyc_status == 'rejected'
-                                    ? 'bg-[#ffdbdb]'
-                                    : 'bg-[#FFFFFF] '
-                                }  px-1 py-1  inline-block self-end`}
-                                // style={{
-                                //   display: 'inline-block',
-                                //   alignSelf: 'flex-end',
-                                // }}
-                                onClick={() => {
-                                  setSelUnitDetails(finData)
-                                  setIsSubTopicOpen(true)
-                                  setIsSubTopic('crm_KYC')
-                                }}
-                              >
-                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+                                                        <div className="flex  items-center justify-center gap-1">
+                                                          <div className="flex items-center justify-center ">
+
+                                                            <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
+                                                              ? 'bg-[#DFF6E0]'
+                                                              : finData?.man_cs_approval == 'rejected'
+                                                                ? 'bg-[#F5E6E6]'
+                                                                : 'bg-gray-100'
+                                                              }`}>
+                                                              {/* <img
+                                                                alt="CRM Background"
+                                                                src="/timebox.svg"
+                                                                className="w-4 h-4"
+                                                              /> */}
+
+                                                              <img
+                                                                alt="CRM Background"
+                                                                src={
+                                                                  finData?.man_cs_approval === 'approved'
+                                                                    ? '/crmc.svg'
+                                                                    : finData?.man_cs_approval === 'rejected'
+                                                                      ? '/crmw.svg'
+                                                                      : '/crmp.svg'
+                                                                }
+                                                                className="w-4 h-4"
+                                                              />
+                                                            </span>
+
+                                                          </div>
+                                                          <h6 className=" text-xs">
+                                                            ATS Draft
+                                                          </h6>
+                                                        </div>
+                                                      </div>
+                                                      {/* section 3*/}
+                                                      <div
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1${finData?.kyc_status == 'approved'
+                                                          ? 'text-green-700'
+                                                          : finData?.kyc_status == 'rejected'
+                                                            ? 'text-red-700'
+                                                            : 'text-gray-600'
+                                                          } `}
+                                                        // style={{
+                                                        //   display: 'inline-block',
+                                                        //   alignSelf: 'flex-end',
+                                                        // }}
+                                                        onClick={() => {
+                                                          setSelUnitDetails(finData)
+                                                          setIsSubTopicOpen(true)
+                                                          setIsSubTopic('crm_KYC')
+                                                        }}
+                                                      >
+                                                        {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
                                   <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                     <NewspaperIcon
                                       className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
@@ -1709,41 +1810,64 @@ ATS Draft
                                   </h6>
                                 </div> */}
 
-<div className="flex  items-center justify-center gap-1">
-<div className="flex items-center justify-center  p-1">
+                                                        <div className="flex  items-center justify-center gap-1">
+                                                          {/* <div className="flex items-center justify-center  p-1">
   <img
     alt="CRM Background"
     src="/manager.svg"
     className="block"
   />
-</div>
-<h6 className="font-bodyLato text-[#000000] text-xs">
-KYC
-</h6>
-</div>
-                              </div>
-                              </section>}
-                               {['agreement'].includes(selCategory) &&
-                             <section className='flex gap-2 mt-2'>
-                             <div
-                                className={` cursor-pointer border   rounded-xl ${
-                                  finData?.both_sd_approval == 'approved'
-                                    ? 'bg-[#CCC5F7]'
-                                    : finData?.both_sd_approval == 'rejected'
-                                    ? 'bg-[#ffdbdb]'
-                                    : 'bg-[#FFFFFF] '
-                                }  px-1 py-1 mx-1 inline-block self-end`}
-                                // style={{
-                                //   display: 'inline-block',
-                                //   alignSelf: 'flex-end',
-                                // }}
-                                onClick={() => {
-                                  setSelUnitDetails(finData)
-                                  setIsSubTopicOpen(true)
-                                  setIsSubTopic('crm_SD_Approval')
-                                }}
-                              >
-                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+</div> */}
+                                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
+                                                            ? 'bg-[#DFF6E0]'
+                                                            : finData?.man_cs_approval == 'rejected'
+                                                              ? 'bg-[#F5E6E6]'
+                                                              : 'bg-gray-100'
+                                                            }`}>
+                                                            {/* <img
+                                                              alt="CRM Background"
+                                                              src="/timebox.svg"
+                                                              className="w-4 h-4"
+                                                            /> */}
+
+                                                            <img
+                                                              alt="CRM Status"
+                                                              src={
+                                                                finData?.man_cs_approval === 'approved'
+                                                                  ? '/crmc.svg'
+                                                                  : finData?.man_cs_approval === 'rejected'
+                                                                    ? '/crmw.svg'
+                                                                    : '/crmp.svg'
+                                                              }
+                                                              className="w-4 h-4"
+                                                            />
+                                                          </span>
+                                                          <h6 className="font-bodyLato text-[#000000] text-xs">
+                                                            KYC
+                                                          </h6>
+                                                        </div>
+                                                      </div>
+                                                    </section>}
+                                                  {['agreement'].includes(selCategory) &&
+                                                    <section className='flex gap-2 '>
+                                                      <div
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1 ${finData?.both_sd_approval == 'approved'
+                                                          ? 'text-green-700'
+                                                          : finData?.both_sd_approval == 'rejected'
+                                                            ? 'text-red-700'
+                                                            : 'text-gray-600'
+                                                          } `}
+                                                        // style={{
+                                                        //   display: 'inline-block',
+                                                        //   alignSelf: 'flex-end',
+                                                        // }}
+                                                        onClick={() => {
+                                                          setSelUnitDetails(finData)
+                                                          setIsSubTopicOpen(true)
+                                                          setIsSubTopic('crm_SD_Approval')
+                                                        }}
+                                                      >
+                                                        {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
                                   <div className="flex flex-none items-center justify-center  group-hover:bg-white">
                                     <ChartPieIcon
                                       className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
@@ -1760,39 +1884,62 @@ KYC
                                   </h6>
                                 </div> */}
 
-<div className="flex  items-center justify-center gap-1">
-<div className="flex items-center justify-center  p-1">
+                                                        <div className="flex  items-center justify-center gap-1">
+                                                          {/* <div className="flex items-center justify-center  p-1">
   <img
     alt="CRM Background"
     src="/manager.svg"
     className="block"
   />
-</div>
-<h6 className="font-bodyLato text-[#000000] text-xs">
-SD Approval
-</h6>
-</div>
-                              </div>
-                              {/* section 3*/}
-                              <div
-                                className={` cursor-pointer   border   rounded-xl ${
-                                  finData?.LpostStatus == 'Approved'
-                                    ? 'bg-[#CCC5F7]'
-                                    : finData?.LpostStatus == 'Rejected'
-                                    ? 'bg-[#ffdbdb]'
-                                    : 'bg-[#FFFFFF] '
-                                }  px-1 py-1 mx-1 inline-block self-end`}
-                                // style={{
-                                //   display: 'inline-block',
-                                //   alignSelf: 'flex-end',
-                                // }}
-                                onClick={() => {
-                                  setSelUnitDetails(finData)
-                                  setIsSubTopicOpen(true)
-                                  setIsSubTopic('crm_loan')
-                                }}
-                              >
-                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+</div> */}
+                                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
+                                                            ? 'bg-[#DFF6E0]'
+                                                            : finData?.man_cs_approval == 'rejected'
+                                                              ? 'bg-[#F5E6E6]'
+                                                              : 'bg-gray-100'
+                                                            }`}>
+                                                            {/* <img
+                                                              alt="CRM Background"
+                                                              src="/timebox.svg"
+                                                              className="w-4 h-4"
+                                                            /> */}
+
+                                                            <img
+                                                              alt="CRM Status"
+                                                              src={
+                                                                finData?.man_cs_approval === 'approved'
+                                                                  ? '/crmc.svg'
+                                                                  : finData?.man_cs_approval === 'rejected'
+                                                                    ? '/crmw.svg'
+                                                                    : '/crmp.svg'
+                                                              }
+                                                              className="w-4 h-4"
+                                                            />
+                                                          </span>
+                                                          <h6 className="text-xs">
+                                                            SD Approval
+                                                          </h6>
+                                                        </div>
+                                                      </div>
+                                                      {/* section 3*/}
+                                                      <div
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1${finData?.LpostStatus == 'Approved'
+                                                          ? 'text-green-700'
+                                                          : finData?.LpostStatus == 'Rejected'
+                                                            ? 'text-red-700'
+                                                            : 'text-gray-600'
+                                                          }  `}
+                                                        // style={{
+                                                        //   display: 'inline-block',
+                                                        //   alignSelf: 'flex-end',
+                                                        // }}
+                                                        onClick={() => {
+                                                          setSelUnitDetails(finData)
+                                                          setIsSubTopicOpen(true)
+                                                          setIsSubTopic('crm_loan')
+                                                        }}
+                                                      >
+                                                        {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
                                   <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                     <NewspaperIcon
                                       className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
@@ -1810,41 +1957,66 @@ SD Approval
                                     Loan
                                   </h6>
                                 </div> */}
-                                  <div className="flex  items-center justify-center gap-1">
-<div className="flex items-center justify-center  p-1">
+                                                        <div className="flex  items-center justify-center gap-1">
+                                                          {/* <div className="flex items-center justify-center  p-1">
   <img
     alt="CRM Background"
     src="/manager.svg"
     className="block"
   />
-</div>
-<h6 className="font-bodyLato text-[#000000] text-xs">
-Loan
-</h6>
-</div>
-                              </div>
-                              </section>}
-                              {[ 'registered', 'possession'].includes(selCategory) &&
-                             <section className='flex gap-2 mt-2'>
-                             <div
-                                className={` cursor-pointer   border   rounded-xl ${
-                                  finData?.both_sd_approval == 'approved'
-                                    ? 'bg-[#CCC5F7]'
-                                    : finData?.both_sd_approval == 'rejected'
-                                    ? 'bg-[#ffdbdb]'
-                                    : 'bg-[#FFFFFF]'
-                                }  px-1 py-1 mx-1 inline-block self-end`}
-                                // style={{
-                                //   display: 'inline-block',
-                                //   alignSelf: 'flex-end',
-                                // }}
-                                onClick={() => {
-                                  setSelUnitDetails(finData)
-                                  setIsSubTopicOpen(true)
-                                  setIsSubTopic('crm_posession')
-                                }}
-                              >
-                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+</div> */}
+
+
+                                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
+                                                            ? 'bg-[#DFF6E0]'
+                                                            : finData?.man_cs_approval == 'rejected'
+                                                              ? 'bg-[#F5E6E6]'
+                                                              : 'bg-gray-100'
+                                                            }`}>
+                                                            {/* <img
+                                                              alt="CRM Background"
+                                                              src="/timebox.svg"
+                                                              className="w-4 h-4"
+                                                            /> */}
+
+                                                            <img
+                                                              alt="CRM Status"
+                                                              src={
+                                                                finData?.man_cs_approval === 'approved'
+                                                                  ? '/crmc.svg'
+                                                                  : finData?.man_cs_approval === 'rejected'
+                                                                    ? '/crmw.svg'
+                                                                    : '/crmp.svg'
+                                                              }
+                                                              className="w-4 h-4"
+                                                            />
+                                                          </span>
+                                                          <h6 className="font-bodyLato text-[#000000] text-xs">
+                                                            Loan
+                                                          </h6>
+                                                        </div>
+                                                      </div>
+                                                    </section>}
+                                                  {['registered', 'possession'].includes(selCategory) &&
+                                                    <section className='flex gap-2'>
+                                                      <div
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1${finData?.both_sd_approval == 'approved'
+                                                          ? 'text-green-700'
+                                                          : finData?.both_sd_approval == 'rejected'
+                                                            ? 'text-red-700'
+                                                            : 'text-gray-600'
+                                                          } `}
+                                                        // style={{
+                                                        //   display: 'inline-block',
+                                                        //   alignSelf: 'flex-end',
+                                                        // }}
+                                                        onClick={() => {
+                                                          setSelUnitDetails(finData)
+                                                          setIsSubTopicOpen(true)
+                                                          setIsSubTopic('crm_posession')
+                                                        }}
+                                                      >
+                                                        {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
                                   <div className="flex flex-none items-center justify-center  group-hover:bg-white">
                                     <ChartPieIcon
                                       className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
@@ -1860,39 +2032,64 @@ Loan
                                   Posession
                                   </h6>
                                 </div> */}
-                                  <div className="flex  items-center justify-center gap-1">
-<div className="flex items-center justify-center  p-1">
+                                                        <div className="flex  items-center justify-center gap-1">
+                                                          {/* <div className="flex items-center justify-center  p-1">
   <img
     alt="CRM Background"
     src="/manager.svg"
     className="block"
   />
-</div>
-<h6 className="font-bodyLato text-[#000000] text-xs">
-Posession
-</h6>
-</div>
-                              </div>
-                              {/* section 3*/}
-                              <div
-                                className={` cursor-pointer   border   rounded-xl ${
-                                  finData?.kyc_status == 'approved'
-                                    ? 'bg-[#CCC5F7]'
-                                    : finData?.kyc_status == 'rejected'
-                                    ? 'bg-[#ffdbdb]'
-                                    : 'bg-[#FFFFFF] '
-                                }  px-1 py-1 mx-1 inline-block self-end`}
-                                // style={{
-                                //   display: 'inline-block',
-                                //   alignSelf: 'flex-end',
-                                // }}
-                                onClick={() => {
-                                  setSelUnitDetails(finData)
-                                  setIsSubTopicOpen(true)
-                                  setIsSubTopic('crm_loan')
-                                }}
-                              >
-                                {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
+</div> */}
+
+
+                                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
+                                                            ? 'bg-[#DFF6E0]'
+                                                            : finData?.man_cs_approval == 'rejected'
+                                                              ? 'bg-[#F5E6E6]'
+                                                              : 'bg-gray-100'
+                                                            }`}>
+                                                            {/* <img
+                                                              alt="CRM Background"
+                                                              src="/timebox.svg"
+                                                              className="w-4 h-4"
+                                                            /> */}
+
+                                                            <img
+                                                              alt="CRM Status"
+                                                              src={
+                                                                finData?.man_cs_approval === 'approved'
+                                                                  ? '/crmc.svg'
+                                                                  : finData?.man_cs_approval === 'rejected'
+                                                                    ? '/crmw.svg'
+                                                                    : '/crmp.svg'
+                                                              }
+                                                              className="w-4 h-4"
+                                                            />
+                                                          </span>
+                                                          <h6 className="font-bodyLato text-[#000000] text-xs">
+                                                            Posession
+                                                          </h6>
+                                                        </div>
+                                                      </div>
+                                                      {/* section 3*/}
+                                                      <div
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1${finData?.kyc_status == 'approved'
+                                                          ? 'text-green-700'
+                                                          : finData?.kyc_status == 'rejected'
+                                                            ? 'text-red-700'
+                                                            : 'text-gray-600'
+                                                          } `}
+                                                        // style={{
+                                                        //   display: 'inline-block',
+                                                        //   alignSelf: 'flex-end',
+                                                        // }}
+                                                        onClick={() => {
+                                                          setSelUnitDetails(finData)
+                                                          setIsSubTopicOpen(true)
+                                                          setIsSubTopic('crm_loan')
+                                                        }}
+                                                      >
+                                                        {/* <div className="flex flex-col items-center justify-center mr-1  mb-1 mt-[5px]">
                                   <div className="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                     <NewspaperIcon
                                       className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
@@ -1912,62 +2109,105 @@ Posession
                                 </div> */}
 
 
-<div className="flex  items-center justify-center gap-1">
-<div className="flex items-center justify-center  p-1">
+                                                        <div className="flex  items-center justify-center gap-1">
+                                                          {/* <div className="flex items-center justify-center  p-1">
   <img
     alt="CRM Background"
     src="/manager.svg"
     className="block"
   />
-</div>
-<h6 className="font-bodyLato text-[#000000] text-xs">
-Loan
-</h6>
-</div>
-                              </div>
-                              </section>}
-                              {/* section 4*/}
-                            </div>
-                          </div>
-                        </div>
-        </div>
+</div> */}
+                                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
+                                                            ? 'bg-[#DFF6E0]'
+                                                            : finData?.man_cs_approval == 'rejected'
+                                                              ? 'bg-[#F5E6E6]'
+                                                              : 'bg-gray-100'
+                                                            }`}>
+                                                            {/* <img
+                                                              alt="CRM Background"
+                                                              src="/timebox.svg"
+                                                              className="w-4 h-4"
+                                                            /> */}
+
+                                                            <img
+                                                              alt="CRM Status"
+                                                              src={
+                                                                finData?.man_cs_approval === 'approved'
+                                                                  ? '/crmc.svg'
+                                                                  : finData?.man_cs_approval === 'rejected'
+                                                                    ? '/crmw.svg'
+                                                                    : '/crmp.svg'
+                                                              }
+                                                              className="w-4 h-4"
+                                                            />
+                                                          </span>
+                                                          <h6 className="font-bodyLato text-[#000000] text-xs">
+                                                            Loan
+                                                          </h6>
+                                                        </div>
+                                                      </div>
+                                                    </section>}
+                                                  {/* section 4*/}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
 
 
-        {/* <div className='flex items-center cursor-pointer border justify-center rounded-md'>
+                                          {/* <div className='flex items-center cursor-pointer border justify-center rounded-md'>
            Call
         </div> */}
 
 
-      </div>
+                                        </div>
 
-      {/* <div className="flex items-center cursor-pointer border justify-center py-[3px] px-2  rounded-md">
+                                        {/* <div className="flex items-center cursor-pointer border justify-center py-[3px] px-2  rounded-md">
           <PhoneCall className="h-4 w-4" />
           <p className="ml-1 text-[12px]">Call</p>
         </div> */}
 
 
-{/* 
+                                        <div
+                                          className="cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1"
+                                          onClick={() => {
+                                            setSelUnitDetails(finData);
+                                            setIsSubTopicOpen(true);
+                                            setIsSubTopic('crm_call');
+                                          }}
+                                        >
+                                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100">
+                                            <img
+                                              alt="CRM Background"
+                                              src="/timebox.svg"
+                                              className="w-4 h-4"
+                                            />
+                                          </span>
+                                          <span className="font-bodyLato text-xs">Call</span>
+                                        </div>
+
+
+                                        {/* 
 <div className="flex items-center cursor-pointer border border-blue-500 bg-blue-50 justify-center  rounded-md">
   <PhoneCall className="h-3 w-3 text-blue-600" />
   <p className="ml-1 text-[11px] text-blue-600 font-medium">Call</p>
 </div> */}
-        </div>
-      </div>
-    </div>
-    <div>
-      <div className="text-[12px]">
-        <span className="font-medium text-[#0E0A1F]">Comments:</span>
-        <span className="ml-2 text-[#0E0A1F] font-normal">Make a follow up call to Ram at 10am</span>
-        <span className="ml-2 h-2 w-2 rounded-full bg-green-500 inline-block"></span>
-      </div>
-      <div className="text-[12px]">
-        <span className="font-medium text-[#0E0A1F]">Last activity:</span>
-        <span className="ml-2 text-[#0E0A1F] font-normal">180 Days</span>
-      </div>
-    </div>
-  </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <div className="text-[12px]">
+                                      <span className="font-medium text-[#0E0A1F]">Comments:</span>
+                                      <span className="ml-2 text-[#0E0A1F] font-normal">Make a follow up call to Ram at 10am</span>
+                                      <span className="ml-2 h-2 w-2 rounded-full bg-green-500 inline-block"></span>
+                                    </div>
+                                    <div className="text-[12px]">
+                                      <span className="font-medium text-[#0E0A1F]">Last activity:</span>
+                                      <span className="ml-2 text-[#0E0A1F] font-normal">180 Days</span>
+                                    </div>
+                                  </div>
+                                </div>
 
-</div>
+                              </div>
                             </div>
 
 
@@ -1985,6 +2225,7 @@ Loan
                         customerDetailsObj,
                         customerName1,
                         phoneNo1,
+                        AssignedBy,
                         unit_no,
                         T_balance,
                         T_elgible,

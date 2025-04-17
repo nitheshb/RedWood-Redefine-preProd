@@ -11,12 +11,12 @@ export const CustomRadioGroup = ({ label, value, onChange, options }) => {
       <div className="mb-4  mt-2">
           <div className="inline">
             <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+              <label className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]  mb-1  ">
               {label}<abbr title="required"></abbr>
               </label>
             </div>
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+            {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}
           </div>
         </div>
 

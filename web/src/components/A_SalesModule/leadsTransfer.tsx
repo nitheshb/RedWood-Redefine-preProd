@@ -275,14 +275,14 @@ const LeadsTransferHome = ({ project }) => {
 
   return (
     <>
-      <section className=" mt-1 mx-1 py-6 mb-8 leading-7 text-gray-900 bg-white  rounded-lg  ">
+      <section className=" mt-1 mx-1 py-6 mb-8 leading-7 text-gray-900 bg-[#F6F5F8]  rounded-lg  ">
         <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
           <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
             <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-1">
               <Link
                 className="flex items-center"
               >
-                <span className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0">
+                <span className="relative z-10 flex items-center w-auto text-md font-medium leading-none pl-0">
                   Leads Transfer
                 </span>
               </Link>
@@ -292,15 +292,23 @@ const LeadsTransferHome = ({ project }) => {
           <div className="mt-2">
             <form className="">
               <div className="flex">
-                <div className="relative w-full p-2.5 pb-6 bg-red-100 rounded-lg">
-                  <section className="flex flex-row ">
-                    <article className="flex flex-col">
-                    <div className="font-semibold">Transfer From</div>
+                <div className="relative w-full  pb-6 rounded-lg">
+
+
+
+                  <div className="flex items-center justify-between">
+
+          
+                    <section className="flex gap-2 flex-row">
+
+                      <section>
+
+                      {/* <div className="font-semibold">Transfer From</div> */}
                     <VerySlimSelectBox
                       name="project"
                       label=""
-                      placeholder="Assigned To"
-                      className="input w-[30%] "
+                      placeholder="Transfer From"
+                      className="input w-[30%]  placeholder-black text-black "
                       onChange={(value) => {
                         console.log('changed value is ', value.value)
                         selProjctFun(value)
@@ -311,9 +319,88 @@ const LeadsTransferHome = ({ project }) => {
                         ...usersAllList,
                       ]}
                     />
-                    </article>
-                    <div className=" rounded px-1 mb-3 ml-3">
-                      <div className="font-semibold">Current Lead Status</div>
+
+                      </section>
+
+
+
+
+                      <section>
+                      {/* <div className="font-semibold">{'Transfer To'}</div> */}
+
+
+
+
+                    <VerySlimSelectBox
+                      name="project"
+                      label=""
+                      placeholder="Transfer To"
+                      className="input w-[30%] placeholder-black text-black  "
+                      onChange={(value) => {
+                        console.log('changed value is ', value.value)
+                        setSelLeadTransferTo(value)
+                      }}
+                      value={selLeadTransferTo?.value}
+                      options={[
+                        ...usersList,
+                      ]}
+                    />
+                    </section>
+                    </section>
+             
+                  
+                  <section>
+
+                    
+<section
+    className="text-[#0E0A1F] bg-[#EDE9FE]  text-[12px] rounded-md px-3 py-3 font-medium leading-[100%] "
+    onClick={() => tranferLeads()}
+  >
+    Apply Lead Transfer
+  </section>
+                    </section>
+
+
+
+                  </div>
+
+
+
+
+
+
+ 
+
+
+                </div>
+              </div>
+            </form>
+          </div>
+
+
+          {selLeadsOf == undefined && (
+            <div className="py-8 px-8 mt-10 flex flex-col items-center bg-red-100 rounded">
+              <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                <img
+                  className="w-[180px] h-[180px] inline"
+                  alt=""
+                  src="/templates.svg"
+                />
+              </div>
+              <h3 className="mb-1 text-sm font-semibold text-gray-900">
+                No Units Found
+              </h3>
+              <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                <span className="text-blue-600"></span>
+              </time>
+            </div>
+          )}
+
+          <div className="">
+
+            <div>
+            <div className=" rounded px-1 mb-3">
+                      {/* <div className="font-semibold">Current Lead Status</div> */}
                       <div className="sm:flex items-center justify-between rounded  ">
                         <div className="flex items-center">
                           {[
@@ -350,87 +437,65 @@ const LeadsTransferHome = ({ project }) => {
                             },
                           ].map((d, i) => {
                             return (
+                              // <a
+                              //   key={i}
+                              //   className=" focus:outline-none mr-2"
+                              //   href="javascript:void(0)"
+                              //   onClick={() => setCurrentStatus(d.match)}
+                              // >
+                              //   <div
+                              //     className={`px-3  pt-[2px] pb-[4px] text-[14px]  ${
+                              //       currentStatus.includes(d.val)
+                              //         ? 'border-b-2 border-black'
+                              //         : ''
+                              //     }`}
+                              //   >
+                              //     {d.lab}
+                              //   </div>
+
+                              //   <div className="h-12 border-r rounded-sm border-[#E7E7E9] mx-4 last:border-none"></div>
+
+                              // </a>
+
+
+                              <div key={i} className="flex items-center">
                               <a
-                                key={i}
-                                className="rounded-full focus:outline-none mr-2"
+                                className="focus:outline-none"
                                 href="javascript:void(0)"
                                 onClick={() => setCurrentStatus(d.match)}
                               >
                                 <div
-                                  className={`px-3 rounded-full pt-[2px] pb-[4px] text-[14px]  ${
+                                  className={` flex flex-col items-center ${
                                     currentStatus.includes(d.val)
-                                      ? 'bg-gradient-to-r from-violet-200 to-pink-200 scale-105  font-normal'
-                                      : 'hover:text-[#027576] hover:bg-[#E7DDFF] bg-[#F2F7FA] text-gray-800  hover:scale-95 font-light'
+                                      ? 'border-b-2 border-black text-[#0E0A1F]'
+                                      : 'text-[#606062]'
                                   }`}
                                 >
-                                  {d.lab}
+                                  <span className="text-sm font-normal">{d.lab}</span>
+                                  {/* <span className="text-xs mt-1">{d.count}</span> */}
                                 </div>
                               </a>
+                              {i !== 5 && (
+                                <div className="h-4 border-r mx-4 border-gray-200"></div>
+                              )}
+                            </div>
+
+                              
                             )
                           })}
                         </div>
+
+
+
                       </div>
                     </div>
                   
-
-
-                  </section>
-
-                  <div className="flex justify-between">
-                      <section>
-                      <div className="font-semibold">{'Transfer To'}</div>
-
-
-
-
-                    <VerySlimSelectBox
-                      name="project"
-                      label=""
-                      placeholder="New Assignee"
-                      className="input w-[30%]  "
-                      onChange={(value) => {
-                        console.log('changed value is ', value.value)
-                        setSelLeadTransferTo(value)
-                      }}
-                      value={selLeadTransferTo?.value}
-                      options={[
-                        ...usersList,
-                      ]}
-                    />
-                    </section>
-                    
-                    <section
-                        className="bg-transparent  text-[#000] font-bold py- px-4 rounded mt-7 mr-2 bg-gradient-to-r from-violet-200 to-pink-200 scale-105  font-normal rounded-full"
-                        onClick={() => tranferLeads()}
-                      >
-                        Apply Lead Transfer
-                      </section>
-                    </div>
-                </div>
-              </div>
-            </form>
-          </div>
-
-
-          {selLeadsOf == undefined && (
-            <div className="py-8 px-8 mt-10 flex flex-col items-center bg-red-100 rounded">
-              <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                <img
-                  className="w-[180px] h-[180px] inline"
-                  alt=""
-                  src="/templates.svg"
-                />
-              </div>
-              <h3 className="mb-1 text-sm font-semibold text-gray-900">
-                No Units Found
-              </h3>
-              <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                <span className="text-blue-600"></span>
-              </time>
             </div>
-          )}
 
-          <div className="">
+
+
+
+            <div>
             {!false && (
               <LeadsTransferBody
             leadAssignedTo={selLeadsOf?.value}
@@ -440,6 +505,14 @@ const LeadsTransferHome = ({ project }) => {
             selectedIds={selectedIds}
           />
             )}
+            </div>
+
+
+
+
+
+
+
           </div>
         </div>
       </section>

@@ -1064,7 +1064,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
   }
   return (
     <div>
-      <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900 bg-white ">
+      <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900">
         <div className="box-border  border-solid  ">
           <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
 
@@ -1081,7 +1081,7 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
               selectedIds={selectedIds}
             />
 
-            :        <div className="py-8 px-8 mt-2 flex flex-col items-center bg-red-50 rounded">
+            :        <div className="py-8 px-8 mt-2 flex flex-col items-center  rounded">
             <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
               <img
                 className="w-[180px] h-[180px] inline"

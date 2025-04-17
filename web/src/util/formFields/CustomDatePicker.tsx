@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 
 
-const CustomDatePicker = ({ selected, onChange,  width = "100%", ...props }) => {
+const CustomDatePicker = ({ selected, onChange,  customStyles = {},  width = "100%", ...props }) => {
   let leadYear = 1;
   if(props?.leadYears){
     leadYear = props?.leadYears
@@ -40,7 +40,11 @@ const CustomDatePicker = ({ selected, onChange,  width = "100%", ...props }) => 
         increaseMonth,
         prevMonthButtonDisabled,
         nextMonthButtonDisabled,
+        styles={customStyles}
       }) => (
+
+
+
         <div
           style={{
             display: 'flex',
@@ -50,6 +54,7 @@ const CustomDatePicker = ({ selected, onChange,  width = "100%", ...props }) => 
             padding: '5px',
             background: '#f2f2f2',
             borderRadius: '5px',
+            ...(customStyles?.container || {}),
           
           }}
         >
@@ -78,6 +83,7 @@ const CustomDatePicker = ({ selected, onChange,  width = "100%", ...props }) => 
               border: '1px solid #ccc',
               borderRadius: '3px',
               cursor: 'pointer',
+              
             }}
           >
             {months.map((option) => (
@@ -119,6 +125,8 @@ const CustomDatePicker = ({ selected, onChange,  width = "100%", ...props }) => 
             {'>'}
           </button>
         </div>
+
+
       )}
       selected={selected}
       onChange={onChange}
