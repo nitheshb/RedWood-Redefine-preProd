@@ -1137,27 +1137,18 @@ showLabels={true}
                               <div className="flex flex-row  my-1   items-center justify-between mr-1">
 
 
-                                {/* <DoughnutChartWithRoundedSegments
-        progress={
-          (finData?.T_approved / finData?.T_total) *
-          100
-        }
-      /> */}
-                                <SemicircleProgressChart
-                                  progress={
-                                    (finData?.T_approved / finData?.T_total) *
-                                    100
-                                  }
 
+
+                                 <RadialChart
+                                 progress={
+                                  (((finData?.T_review || 0) +
+                                  (finData?.T_approved || 0))  / finData?.T_total) *
+                                  100
+                                }
                                 />
 
                                 <div className="flex  flex-col justify-between  mb-1">
-                                  {/* <DoughnutChartWithRoundedSegments
-        progress={
-          (finData?.T_approved / finData?.T_total) *
-          100
-        }
-      /> */}
+
                                   <section className=" flex gap-2 justify-between font-semibold text-xs m-1 w-full  ">
                                     <div className="text-[12px] text-[#0E0A1F] font-normal">
                                       Unit Cost:
@@ -1178,7 +1169,7 @@ showLabels={true}
                                           }}
                                         >
                                           <span className="italic">
-                                            {formatIndianNumber?.(Math.round(finData?.T_total || finData?.T_Total || 0))}
+                                          ₹{Math.round(finData?.T_total  || 0).toLocaleString('en-IN')}
 
                                           </span>
                                         </span>
@@ -1188,18 +1179,9 @@ showLabels={true}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
-                                        ₹{Math.round(finData?.T_total || finData?.T_Total || 0).toLocaleString('en-IN')}
+                                        ₹{formatIndianNumber?.(Math.round(finData?.T_total || 0))}
                                       </span>
                                     </div>
-
-                                    {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
-          ₹
-          {finData?.T_elgible?.toLocaleString(
-            'en-IN'
-          )}
-          {finData?.T_elgible && Math.round(finData.T_elgible).toLocaleString('en-IN')}
-
-        </div> */}
                                   </section>
 
 
@@ -1232,7 +1214,7 @@ showLabels={true}
                                           }}
                                         >
                                           <span className="italic">
-                                            {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
+                                            ₹{Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
                                           </span>
                                         </span>
                                         <div
@@ -1241,7 +1223,7 @@ showLabels={true}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
-                                        ₹{Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+                                         ₹{formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
                                       </span>
                                     </div>
 
@@ -1279,7 +1261,7 @@ showLabels={true}
                                           }}
                                         >
                                           <span className="italic">
-                                            {formatIndianNumber?.(Math.round(finData?.T_balance || 0))}
+                                          ₹{Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
                                           </span>
                                         </span>
                                         <div
@@ -1288,7 +1270,7 @@ showLabels={true}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium text-[12px] font-bold  tracking-wide">
-                                        ₹{Math.round(finData?.T_balance || 0).toLocaleString('en-IN')}
+                                      ₹{formatIndianNumber?.(Math.round(finData?.T_balance || 0))}
                                       </span>
                                     </div>
 
@@ -1321,12 +1303,15 @@ showLabels={true}
 /> */}
 
 
-                                <RadialChart
+
+
+<SemicircleProgressChart
                                   progress={
                                     (((finData?.T_review || 0) +
                                       (finData?.T_approved || 0)) / finData?.T_elgible) *
                                     100
                                   }
+
                                 />
 
 
@@ -1354,8 +1339,7 @@ showLabels={true}
                                           }}
                                         >
                                           <span className="italic">
-
-                                            {formatIndianNumber?.(Math.round(finData?.T_elgible || 0))}
+                                          ₹{Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
                                           </span>
                                         </span>
                                         <div
@@ -1364,7 +1348,8 @@ showLabels={true}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium  text-[12px]  font-outfit tracking-wide ">
-                                        ₹{Math.round(finData?.T_elgible || 0).toLocaleString('en-IN')}
+                                      ₹{formatIndianNumber?.(Math.round(finData?.T_elgible || 0))}
+
                                       </span>
                                     </div>
                                     {/* <div className="text-zinc-800 text-[12px]  font-outfit tracking-wide">
@@ -1421,7 +1406,8 @@ showLabels={true}
                                           }}
                                         >
                                           <span className="italic">
-                                            {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
+                                        ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+
                                           </span>
                                         </span>
                                         <div
@@ -1430,7 +1416,7 @@ showLabels={true}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium text-[12px]  font-outfit tracking-wide">
-                                        ₹{((finData?.T_review || 0) + (finData?.T_approved || 0)).toLocaleString('en-IN')}
+                                      ₹{formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))}
                                       </span>
                                     </div>
                                   </section>
@@ -1472,7 +1458,7 @@ showLabels={true}
                                         >
                                           <span className="italic">
                                             {/* {formatIndianNumber?.(Math.round((finData?.T_review || 0) + (finData?.T_approved || 0)))} */}
-                                            {formatIndianNumber(finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance))}
+                                            ₹{finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
 
                                           </span>
                                         </span>
@@ -1482,8 +1468,8 @@ showLabels={true}
                                         ></div>
                                       </div>
                                       <span className="text-[#0E0A1F] font-medium text-[12px] font-outfit tracking-wide">
-                                        ₹{finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance).toLocaleString('en-IN')}
 
+                                      ₹{formatIndianNumber(finData?.T_elgible_balance < 0 ? 0 : Math.round(finData?.T_elgible_balance))}
 
                                       </span>
                                     </div>
@@ -1499,18 +1485,18 @@ showLabels={true}
                                     />
 
                                 </div> */}
-                                {/* 
+                                {/*
                                 <PaymentDashboard
                                 progress={
                                   (((finData?.T_review || 0) +
                                   (finData?.T_approved || 0) )/ finData?.T_elgible) *
                                   100
                                 }
-                                
-                                
-                                
-                                
-                                
+
+
+
+
+
                                 /> */}
 
                                 {/* <HalfSemiCircleGauge/> */}
@@ -1529,22 +1515,22 @@ showLabels={true}
                                 <div className="">
                                   <div className="flex items-center ">
 
-                                  <div className="flex items-center border border-[#E7E7E9] rounded-full px-3 py-1 w-fit">
-  {finData?.assignedToObj?.label ? (
-    // Show first letter of name
-    <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
-      {finData.assignedToObj.label.charAt(0).toUpperCase()}
-    </div>
-  ) : (
-    // Show empty avatar for unassigned
-    <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
-      NA
-    </div>
-  )}
-  <span className="text-[#0E0A1F] font-medium text-[14px] ml-2">
-    {finData?.assignedToObj?.label || finData?.assignedBy || 'Unassigned'}
-  </span>
-</div>
+                                    <div className="flex items-center border border-[#E7E7E9] rounded-full px-3 py-1 w-fit">
+                                      {finData?.assignedToObj?.label ? (
+                                        // Show first letter of name
+                                        <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
+                                          {finData.assignedToObj.label.charAt(0).toUpperCase()}
+                                        </div>
+                                      ) : (
+                                        // Show empty avatar for unassigned
+                                        <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
+                                          NA
+                                        </div>
+                                      )}
+                                      <span className="text-[#0E0A1F] font-medium text-[14px] ml-2">
+                                        {finData?.assignedToObj?.label || finData?.assignedBy || 'Unassigned'}
+                                      </span>
+                                    </div>
 
 
 
@@ -2186,7 +2172,7 @@ className="w-4 h-4"
                                         </div>
 
 
-                                        {/* 
+                                        {/*
 <div className="flex items-center cursor-pointer border border-blue-500 bg-blue-50 justify-center  rounded-md">
   <PhoneCall className="h-3 w-3 text-blue-600" />
   <p className="ml-1 text-[11px] text-blue-600 font-medium">Call</p>

@@ -2826,6 +2826,7 @@ export const addLegalClarificationTicket = async (orgId, dta, user) => {
     )
   })
   await console.log('data is ', data, error)
+
 }
 export const addCampaign = async (orgId, data, by, msg) => {
   try {

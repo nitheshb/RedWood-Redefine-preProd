@@ -198,32 +198,31 @@ const ToDoList = ({selUnitPayload}) => {
 </section>
 
 
-      <div className="flex flex-row ">
+      <div className="flex flex-row justify-between ">
                 <div className="flex flex-row bg-white rounded-xl border ">
                   <div
-                    className={` py-1 pr-4 pl-4 min-w-[62px] ${
+                    className={` py-1 pr-4 pl-4 pt-0 min-w-[62px] ${
                       selFilterVal === 'all' ? 'bg-[#c6fff0]' : ''
                     } rounded-xl rounded-r-none`}
                     onClick={() => setSelFilterVal('all')}
                   >
-                    <span className="mr-1 text-[10px] ">All</span>
+                    <span className="mr-1 text-[13px] ">All</span>
 
-                    {
+                    <span className="mr-1 text-[12px] ">{
                       leadSchFetchedData.filter((d) => d?.schTime != undefined)
                         .length
-                    }
+                    }</span>
                   </div>
                   <div
-                    className={` py-1 pr-4 pl-4 min-w-[62px] border-x ${
+                    className={` py-1 pr-4 pl-4  pt-0 min-w-[62px] border-x ${
                       selFilterVal === 'pending' ? 'bg-[#c6fff0]' : ''
                     } `}
                     onClick={() => setSelFilterVal('pending')}
                   >
-                    <CheckCircleIcon className="w-4 h-3  inline text-[#cdcdcd]" />
-                    <span className="mr-1 text-[10px] ">Pending</span>
+                    <CheckCircleIcon className="w-4 h-4  inline text-[#cdcdcd]" />
+                    <span className="mr-1 text-[13px] ">Pending</span>
                     <span
-                      className=" text-[11
-                              px] "
+                      className=" text-[12px] "
                     >
                       {' '}
                       {
@@ -233,20 +232,21 @@ const ToDoList = ({selUnitPayload}) => {
                     </span>
                   </div>
                   <div
-                    className={` py-1 pr-4 pl-4 min-w-[62px] ${
+                    className={` py-1 pr-4 pt-0 pl-4 min-w-[62px] ${
                       selFilterVal === 'completed' ? 'bg-[#c6fff0]' : ''
                     }  rounded-xl rounded-l-none`}
                     onClick={() => setSelFilterVal('completed')}
                   >
-                    <CheckCircleIcon className="w-4 h-3 inline text-[#058527]" />
-                    <span className="mr-1 text-[10px] ">Completed</span>
+                    <CheckCircleIcon className="w-4 h-4 inline text-[#058527]" />
+                    <span className="mr-1 text-[12px]  ">Completed</span>
 
-                    {
+                    <span className="mr-1 text-[12px] ">  {
                       leadSchFetchedData?.filter((d) => d?.sts === 'completed')
                         .length
-                    }
+                    }</span>
                   </div>
                 </div>
+                <section>
                 {!showAddTask && (
                   <span
                     className="ml-2 mt-1 text-blue-800 cursor-pointer "
@@ -267,10 +267,11 @@ const ToDoList = ({selUnitPayload}) => {
                     Close Task
                   </span>
                 )}
+                </section>
               </div>
 
       {showAddTask && (
-              <div className="flex flex-col pt-0 my-10  mt-[0px] ">
+              <div className="flex flex-col pt-0 my-10  mt-4 ">
                 <Formik
                   enableReinitialize={true}
                   initialValues={initialState}
@@ -279,20 +280,20 @@ const ToDoList = ({selUnitPayload}) => {
 
                     data.due_date = startDate
                     data.priorities = prior ? 'high' : 'medium'
-                    data.attachments = files
+                    // data.attachments = files
                     data.Uuid = selUnitPayload?.id
                     await addLegalClarificationTicket(orgId, data, user)
 
-
+                    setShowAddTask(false)
                     return
                   }}
                 >
                   {(formik) => (
                     <Form>
-                      <div className=" form outline-none border  py-4">
+                      <div className=" form outline-none border rounded-lg  py-4">
                         <section className=" px-4">
 
-                          <div className="text-xs font-bodyLato text-[#516f90]">
+                          <div className="text-xs font-bodyLato text-[#516f90] mb-[4px]">
                             Task Title
                             <ErrorMessage
                               component="div"
@@ -310,7 +311,7 @@ const ToDoList = ({selUnitPayload}) => {
                               setTitleFun(e)
                             }}
                             placeholder="Enter a short title"
-                            className="w-full h-full pb-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd] text-[33475b] bg-[#F2F5F8] "
+                            className="w-full h-full pb-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd] text-[33475b]  "
                           ></input>
                           <div className="flex flex-row ">
                             <div className="flex flex-row mt-3">
@@ -325,7 +326,7 @@ const ToDoList = ({selUnitPayload}) => {
                                 <div className="bg-green   pl-   flex flex-row ">
                                   <span className="inline">
                                     <CustomDatePicker
-                                      className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] bg-[#F2F5F8]"
+                                      className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] "
                                       selected={startDate}
                                       onChange={(date) => setStartDate(date)}
                                       showTimeSelect
@@ -383,14 +384,14 @@ const ToDoList = ({selUnitPayload}) => {
                             </div>
                           </div>
                         </section>
-                        <div className="flex flex-row mt-4 justify-between pr-4 border-t">
+                        <div className="flex flex-row mt-4 justify-between pr-4 border-t pt-1">
                           <section>
                             <span>{''}</span>
                           </section>
                           <section className="flex">
                             <button
                               type="submit"
-                              className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                              className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  bg-[#FF7A53] bg-[#ECE9FE] text-[#0E0A1F] rounded-lg hover:bg-gray-700 hover:text-white  `}
                             >
                               <span className="ml-1 ">
                                 Create{' '}
@@ -401,7 +402,7 @@ const ToDoList = ({selUnitPayload}) => {
                             </button>
                             <button
                               // onClick={() => cancelResetStatusFun()}
-                              className={`flex mt-2 ml-4 rounded items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
+                              className={`flex mt-2 ml-4 rounded-lg items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border text-[#0E0A1F]  hover:bg-gray-700 hover:text-white `}
                             >
                               <span className="ml-1 ">Cancel</span>
                             </button>
@@ -413,19 +414,21 @@ const ToDoList = ({selUnitPayload}) => {
                 </Formik>
               </div>
             )}
-             <div className="space-y-4">
+             <div className="">
         {unitFetchedActivityData.map(task => (
           <div key={task.id} className="p-4 border-b">
             <div className="flex items-start justify-between">
               <div className="flex-1">
 
-                <div className={`text-lg font-medium ${task?.completed ? 'line-through text-gray-400' : 'text-gray-800'}`}>
+                <div className={`text-md font-medium ${task?.completed ? 'line-through text-gray-400' : 'text-gray-800'}`}>
                   {task?.title}
                 </div>
-                <section className='flex flex-row'>
-                <div className="text-sm text-gray-500">Due:{prettyDateTime(task?.due_date)}</div>
-                <div className="text-sm ml-2 text-gray-500">CreatedBy:{task?.by_name || 'NA'}</div>
-                <div className="text-sm ml-2 text-gray-500">AssignedTo:{task?.to_name|| 'NA'}</div>
+                <section className='flex flex-row mt-[3px]'>
+                <div className="text-xs text-gray-500 ">Due:{prettyDateTime(task?.due_date)}</div>
+                <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+                <div className="text-xs  text-gray-500">CreatedBy:{task?.by_name || 'NA'}</div>
+                <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+                <div className="text-xs  text-gray-500">AssignedTo:{task?.to_name|| 'NA'}</div>
 
                 </section>
               </div>
@@ -462,59 +465,15 @@ const ToDoList = ({selUnitPayload}) => {
             </div>
           </div>
         ))}
-
-        {isAddingTask ? (
-          <div className="p-4 border-b">
-            <div className="mb-4">
-              <input
-                type="text"
-                className="w-full p-2 border rounded"
-                placeholder="Enter task"
-                value={newTaskText}
-                onChange={(e) => setNewTaskText(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && addNewTask()}
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
-              <div className="flex flex-wrap gap-2">
-                {priorityOptions.map(option => (
-                  <button
-                    key={option.value}
-                    className={`${option.color} px-3 py-1 rounded-full text-xs ${newTaskPriority === option.value ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
-                    onClick={() => setNewTaskPriority(option.value)}
-                  >
-                    {option.value}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="flex justify-end space-x-2">
-              <button
-                className="px-4 py-2 bg-gray-200 rounded"
-                onClick={() => setIsAddingTask(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-4 py-2 bg-[#EDE9FE] text-white rounded"
-                onClick={addNewTask}
-              >
-                Add Task
-              </button>
-            </div>
-          </div>
-        ) : (
-          <button
-            className="w-full p-3 border-2 border-dashed border-gray-300 text-gray-500 rounded flex items-center justify-center"
-            onClick={() => setIsAddingTask(true)}
+        {!showAddTask && (<button
+            className="w-full p-3 border mt-4 border-dashed border-gray-300 text-gray-500 rounded-lg flex items-center justify-center"
+            onClick={() =>setShowAddTask(true)}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
             </svg>
             Add New Task
-          </button>
-        )}
+          </button>)}
       </div>
 
     </div>
