@@ -27,7 +27,7 @@ const PaymentScheduleSetup = ({ phase, source }) => {
   }, [])
 
   return (
-    <div className="lg:col-span-10 border w-full bg-[#F0F1FF]   ">
+    <div className="lg:col-span-10  w-full   ">
    
 
       <PaymentScheduleForm

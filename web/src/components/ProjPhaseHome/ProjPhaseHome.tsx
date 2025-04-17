@@ -274,7 +274,7 @@ const ProjPhaseHome = ({
               {!showCostSheetWindow && (
                 <section
                   key={phase?.uid}
-                  className=" mb-8 leading-7 text-gray-900 bg-white  rounded-b-lg"
+                  className=" leading-7 text-gray-900 rounded-b-lg"
                 >
                   <div className="box-border mx-auto border-solid max-w-full ">
                     <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">

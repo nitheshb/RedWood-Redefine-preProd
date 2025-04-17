@@ -68,19 +68,21 @@ const BlockingUnitForm = ({
     <>
       <section className="bg-blueGray-50 ">
         <div className="w-full  mx-auto ">
-          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-[#F9FBFB] border-0 ">
-            <div className="rounded-t bg-[#F1F5F9] mb-0 px-3 py-2">
+          <div className="relative flex flex-col min-w-0 break-words w-full mb-6  rounded-2xl bg-[#F9FBFB] border-0 ">
+            {/* <div className="rounded-t bg-[#F1F5F9] mb-0 px-3 py-2">
               <div className="text-center flex justify-between">
                 <p className="text-xs font-extrabold tracking-tight uppercase font-body my-1">
                   Block Unit
                 </p>
               </div>
-            </div>
+            </div> */}
             <div className="mx-2 o my-10 mt-4 ">
               <div className="bg-white p-10 rounded-xl">
-                <h1 className="text-center text-xl font-semibold text-gray-500">
+                <h1 className="text-center text-[#000000s] font-outfit font-medium text-[18px] leading-[100%] tracking-[0em]">
                   How many days you want to block?
                 </h1>
+
+                <hr className="h-[1px] w-[300px] bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4 mx-auto" />
                 <div className="flex flex-wrap justify-center mt-10 space-x-3">
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((days, i) => (
                     <option
@@ -89,13 +91,13 @@ const BlockingUnitForm = ({
                       onMouseEnter={() => setSelDays(days)}
                       onClick={() => setSelDays(days)}
                       className={`${
-                        days === selDays ? 'bg-[#FFCD3E]  text-green-50 ' : ''
-                      } flex items-center justify-center w-10 h-10 bg-gray--100 text-gray-600 hover:bg-[#FFCD3E]  transition duration-150 rounded-full font-bold hover:text-green-50 cursor-pointer`}
+                        days === selDays ? 'bg-[#DBD3FD]  text-[] ' : ''
+                      } flex items-center   border  border-[#E7E7E9] justify-center w-10 h-10  text-[#606062]   hover:bg-[#DBD3FD] hover:text-[#000000]  transition duration-150 rounded-full font-medium  cursor-pointer`}
                     >
                       {days}
                     </option>
                   ))}
-                  <span className="mt-[12px] text-sm text-gray-700 ">days</span>
+                  {/* <span className="mt-[12px] text-sm text-gray-700 ">days</span> */}
                 </div>
                 <Formik
                   initialValues={initialState}
@@ -107,13 +109,15 @@ const BlockingUnitForm = ({
                   }}
                 >
                   {(formik) => (
-                    <Form className="mt-8">
-                      <div className="flex justify-center border-2 py-2 px-6 rounded-xl">
+                    <Form className="mt-8 ">
+
+
+                      <div className="flex justify-center gap-4">
                         <input
                           type="text"
                           name="blockReason"
                           placeholder="Write a blocking reason"
-                          className="w-full outline-none text-gray-700 text-lg"
+                          className="w-full h-10 outline-none  rounded-[12px] border border-[#616162] gap-[10px] p-1"
                           onChange={(e) => {
                             formik.setFieldValue('blockReason', e.target.value)
                             // handleFileUploadFun(
@@ -127,20 +131,26 @@ const BlockingUnitForm = ({
                           name={'blockReason'}
                           className="error-message text-red-700 text-xs p-1 mx-auto"
                         />
-                        <button
+
+
+<button
                           type="submit"
-                          className="bg-[#FFCD3E]  text-green-50 font-semibold px-6 py-2 rounded-xl text-md"
+                          className=" bg-[#EDE9FE] rounded-[8px] px-[5px] text-[12px] py-[8px] gap-[10px]  h-9 w-[70px]"
                         >
                           Block
                         </button>
+
+
                       </div>
-                      <span className="text-center block mt-6 text-gray-400 text-md font-semibold">
-                        Blocking unit for
-                        <span className="text-[#FFCD3E] ml-2 text-xl w-10 ">
-                          {selDays}
-                        </span>{' '}
-                        days
-                      </span>
+
+
+
+<div className="text-center mt-10">
+        <div className="inline-block border border-gray-200 text-center py-4 px-4  rounded-[10px] border-[#E7E7E9] block mt-6 font-outfit font-normal text-[14px] leading-[100%] tracking-[0.06em]">
+          <p className="text-[12px">Blocking Unit for {selDays} days</p>
+        </div>
+      </div>
+
                     </Form>
                   )}
                 </Formik>

@@ -11,6 +11,7 @@ const customStyles = {
     // borderRadius: '0',
     minHeight: '32px',
     height: '32px',
+    borderRadius: '6px',
     boxShadow: state.isFocused ? null : null,
   }),
 

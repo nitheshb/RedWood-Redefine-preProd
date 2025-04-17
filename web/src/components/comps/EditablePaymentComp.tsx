@@ -393,10 +393,10 @@ const EditablePaymentTable = ({
 
   return (
     <>
-      <div className=" m-2 p-4 bg-white rounded-xl">
+      <div className="py-2 px-4  rounded-2xl bg-[#FFFFFF]  mx-4 my-4">
         <div className="">
           <div className="py-2 pb-1 mb-1">
-            <p className="text-sm text-gray-800 font-medium">{title}</p>
+            <p className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">{title}</p>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <DragDropContext onDragEnd={onDragEnd}>
