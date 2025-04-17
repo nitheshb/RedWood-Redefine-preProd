@@ -35,6 +35,12 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
   const [bookingProgress, setBookingProgress] = useState(true)
   const [unitTransactionsA, setUnitTransactionsA] = useState([])
   const [startDate, setStartDate] = useState(d)
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [formValues, setFormValues] = useState(null)
+  const [resetFormFn, setResetFormFn] = useState(null)
+
+
+
 
   useEffect(() => {
     getAllTransactionsUnit()
@@ -136,6 +142,35 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
     x.cancelReason = data?.payReason
     cancelUnitDbFun(orgId, x, user,enqueueSnackbar)
     }
+
+
+
+
+
+    const handleConfirmationYes = () => {
+      setShowConfirmation(false)
+      if (formValues && resetFormFn) {
+        setBookingProgress(true)
+        onSubmitSupabase(formValues, resetFormFn)
+      }
+    }
+  
+    const handleConfirmationNo = () => {
+      setShowConfirmation(false)
+    }
+
+
+  const handleSubmit = (values, { resetForm }) => {
+    setFormValues(values)
+    setResetFormFn(() => resetForm)
+    setShowConfirmation(true)
+  }
+  
+
+
+
+
+
   return (
     <>
 
@@ -218,13 +253,14 @@ Unit Cancellation
                     enableReinitialize={false}
                     initialValues={initialState}
                     validationSchema={validate}
-                    onSubmit={(values, { resetForm }) => {
-                      console.log('values is', values)
+                    onSubmit={handleSubmit}
+                    // onSubmit={(values, { resetForm }) => {
+                    //   console.log('values is', values)
 
-                      setBookingProgress(true)
-                      onSubmitSupabase(values, resetForm)
-                      console.log(values)
-                    }}
+                    //   setBookingProgress(true)
+                    //   onSubmitSupabase(values, resetForm)
+                    //   console.log(values)
+                    // }}
                   >
                     {(formik, setFieldValue) => (
                       <Form>
@@ -253,16 +289,12 @@ Unit Cancellation
                                       </div>
                                     </article>
 
-
-
-
-
                                     <div className="p-5">
 
   <div className="flex flex-col md:flex-row gap-8 mb-4">
 
     <div className="w-full ">
-    <label className="block text-[#616162] font-normal text-[12px] leading-[100%] tracking-[0.06em] mb-1">Cancellation Amount</label>
+    <label className="block text-[#616162] font-normal text-[12px] leading-[100%] tracking-[0.06em] mb-1">Cancellation Charges</label>
 
       <TextField2
         // label="Cancellation Amount"
@@ -313,7 +345,7 @@ Unit Cancellation
   <TextField2
     name="payReason"
     type="text"
-    className="w-full h-8  px-2 py-2 outline-none border-t-0 border-l-0 border-r-0 border-0 border-b-[1.6px] border-[#E7E7E9] border-solid text-[#DBD3FD] font-semibold"
+    className="w-full h-8  px-2 py-2 outline-none border-t-0 border-l-0 border-r-0 border-0 border-b-[1.6px] border-[#E7E7E9] border-solid text-[#000000] font-semibold"
 
   
   />
@@ -331,12 +363,6 @@ Unit Cancellation
     </button>
   </div>
 </div>
-
-
-
-                            
-
-
                                   </section>
                                 </div>
                               </div>
@@ -353,8 +379,6 @@ Unit Cancellation
         </div>
       </div>
     </div>
-
-
               </div>
             </div>
 
@@ -481,12 +505,48 @@ Unit Cancellation
                 </div>
               </section>
             )} */}
-
         </div>
       </section>
             </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+{showConfirmation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+          <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4 relative z-10">
+            <div className="flex justify-center mb-4">
+              <div className="h-16 w-16 rounded-full bg-red-100 flex items-center justify-center">
+                <img src="/cancelpopup.svg" alt="" />
+              </div>
+            </div>
+            <h2 className="font-medium text-[20px] leading-none tracking-[0.06em]  text-center mb-4">Cancel Booking</h2>
+            <p className="text-center text-[#0E0A1F]  font-normal text-base leading-none tracking-normal mb-6">Are you sure you want to cancel Booking ?</p>
+            <div className="flex space-x-4">
+              <button 
+                onClick={handleConfirmationNo}
+                className="flex-1 py-3 bg-[#EDE9FE] hover:bg-gray-200 text-gray-800 rounded-md font-medium"
+              >
+                No
+              </button>
+              <button 
+                onClick={handleConfirmationYes}
+                className="flex-1 py-3 bg-white border border-[#0E0A1F] hover:bg-gray-50 text-gray-800 rounded-md font-medium"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
 
     </>

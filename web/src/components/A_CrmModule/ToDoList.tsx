@@ -192,9 +192,49 @@ const ToDoList = ({selUnitPayload}) => {
         .required('Task Title Required'),
     })
   return (
-    <div className="max-w-full mr-6 mx-auto p-6 bg-white rounded-2xl shadow-sm">
+
+
+ 
+
+
+    <div className='overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
+    <div className="relative min-h-screen mr-6">
+      <div className="relative z-0">
+        <h1 className="text-[#606062] font-outfit mb-1   mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+        Unit Tasks
+        </h1>
+
+        <img
+          alt="CRM Background"
+          src="/bgimgcrm.svg"
+          className="w-full h-auto object-cover"
+        />
+
+        <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
+            <div className="text-center space-y-2">
+              <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancelled On</p>
+              <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+            </div>
+            <div className="text-center space-y-2">
+              <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancellation Reason</p>
+              <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+            </div>
+            <div className="text-center space-y-2">
+              <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Cancelled By</p>
+              <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+<div className='relative w-full max-w-7xl mx-auto px-4 mt-[-70px] z-10'>
+
+<div className="bg-white rounded-2xl p-6">
       <section className='flex flex-row justify-between'>
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Unit Tasks</h1>
+      {/* <h1 className="text-2xl font-bold text-gray-800 mb-6">Unit Tasks</h1> */}
 </section>
 
 
@@ -477,6 +517,33 @@ const ToDoList = ({selUnitPayload}) => {
       </div>
 
     </div>
+
+</div>
+
+
+
+
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
   );
 };
 

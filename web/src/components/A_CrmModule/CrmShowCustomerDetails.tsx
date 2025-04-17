@@ -561,6 +561,11 @@ const ShowCustomerDetails = ({
 
 
 
+
+    
+
+
+
 <div className="overflow-y-scroll  min-h-screen mx-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
   <div className="relative min-h-screen mr-6 ">
 
