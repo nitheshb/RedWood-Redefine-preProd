@@ -418,12 +418,24 @@ const DialogFormBody = ({
 
                           <div className='col-span-4 items-start'>
 
-<TextField label="Project Name*"  name="projectName" type="text" />
+
+                          <div className="flex flex-col w-full mt-2">
+  <label htmlFor="projectName" className=" font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]  mb-1">
+    Project Name*
+  </label>
+  <TextField
+    id="projectName"
+    name="projectName"
+    type="text"
+  />
+</div>
+
+
 <section className="flex flex-row space-x-4 w-full text-xs mt-[14px]">
   <div className="mb-3 w-[50%]">
     <label
       htmlFor="extent"
-      className="label  text-xs text-[#374151] mb-2"
+      className=" font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]"
     >
       Project Extent*{' '}
       <span className="text-[11px] ">
@@ -440,6 +452,15 @@ const DialogFormBody = ({
       className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
       size="small"
       InputProps={{
+
+        sx: {
+          height: '32px',
+          fontSize: '0.875rem',
+          borderRadius: '6px',
+        },
+
+
+
         startAdornment: (
           <InputAdornment position="start">
             Sqmt
@@ -451,7 +472,7 @@ const DialogFormBody = ({
               type="button"
               style={{ marginRight: '-13px' }}
               onClick={onExtendClick}
-              className="border  font-semibold text-3xl px-2 bg-[#D3F0F8] text-black  font-medium tracking-wider"
+              className=" font-semibold text-[30px] px-1  text-black  font-medium tracking-wider"
             >
               {openExtendFields ? (
                 <Remove />
@@ -499,7 +520,7 @@ const DialogFormBody = ({
     )}
   </div>
   <div className="mb-3 w-[50%]">
-    <label htmlFor="area" className="label  text-xs text-[#374151] mb-2 pb-2 ">
+    <label htmlFor="area" className=" font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1 ">
       Saleable Area*{' '}
       <span className="text-[11px] ">
         (
@@ -515,7 +536,16 @@ const DialogFormBody = ({
       className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10  p-0`}
       size="small"
 
+     
+ 
       InputProps={{
+
+        sx: {
+          height: '32px',
+          fontSize: '0.875rem',
+          borderRadius: '6px',
+        },
+
         startAdornment: (
           <InputAdornment position="start">
             Sqmt
@@ -527,7 +557,7 @@ const DialogFormBody = ({
               type="button"
               style={{ marginRight: '-13px' }}
               onClick={onAreaClick}
-              className="border bg-[#57c0d0] font-semibold text-3xl px-2 bg-[#D3F0F8] text-black  font-medium tracking-wider "
+              className=" font-semibold text-3xl px-2  text-black  font-medium tracking-wider "
             >
               {openAreaFields ? <Remove /> : <Add />}
             </button>
@@ -576,18 +606,32 @@ const DialogFormBody = ({
 
 </section>
 
-
-
 <div className="grid grid-cols-2 gap-4 w-full">
-<div>
 
-<TextField label="Project Website URL" name="projectWebsiteurl" type="text" />
-</div>
-<div>
+  <div className="flex flex-col w-full">
+    <label htmlFor="projectWebsiteurl" className=" font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1">
+      Project Website URL
+    </label>
+    <TextField
+      id="projectWebsiteurl"
+      name="projectWebsiteurl"
+      type="text"
+    />
+  </div>
 
-<TextField label="Marketed By" name="marketedby" type="text" />
+
+  <div className="flex flex-col w-full">
+    <label htmlFor="marketedby" className=" font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1">
+      Marketed By
+    </label>
+    <TextField
+      id="marketedby"
+      name="marketedby"
+      type="text"
+    />
+  </div>
 </div>
-</div>
+
 
 
 </div>
@@ -595,14 +639,13 @@ const DialogFormBody = ({
 
                         </div>
 
-                        <div>
 
+
+
+
+                        <div className='py-2 px-4  rounded-2xl bg-white my-4'>
                         <div className='grid grid-cols-2 gap-4' >
-
-
-
-
-<div className="flex flex-col mt-2   pt-2 ">
+<div className="flex flex-col ">
   
   <CustomRadioGroup
     label="Planning Authority Approval"
@@ -613,12 +656,12 @@ const DialogFormBody = ({
 
   {planningApproval?.name === 'Yes' && (
     <>
-    <div className=' bg-white shadow-md  mt-2 p-2 rounded-md '>
+    <div className=' bg-white   mt-2 p-2 rounded-md '>
     <div className=" ">
         <CustomSelect
           name="Planning Approval Authority"
           label={
-            <label className="text-sm text-gray-800 font-medium">
+            <label className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
               Planning Authority
             </label>
           }
@@ -636,20 +679,22 @@ const DialogFormBody = ({
         />
       </div>
 
-      <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
-        <div className="mt-2 w-full">
-          <TextField
-            label={`${
-              formik.values.PlanningApprovalAuthority
-                .value || ''
-            }Approval No*`}
-            name="bmrdaNo"
-            type="text"
-          />
-        </div>
+      <div className="md:flex md:flex-row md:space-x-4 w-full ">
+
+      <div className="mt-2 w-full">
+  <label className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] block mb-1">
+    {formik.values.PlanningApprovalAuthority.value || ''} Approval No*
+  </label>
+  <TextField
+    name="bmrdaNo"
+    type="text"
+  />
+</div>
+
+
         <div className="mt-2 w-full">
 
-          <label className="label font-regular block mb-1">
+          <label className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] block mb-1">
             Approval Date*
           </label>
           <CustomDatePicker
@@ -683,7 +728,7 @@ const DialogFormBody = ({
   )}
 </div>
 
-<div className="flex flex-col mt-2 pt-2 ">
+<div className="flex flex-col">
   <CustomRadioGroup
     label="Rera Approval"
     value={reraApproval}
@@ -693,28 +738,31 @@ const DialogFormBody = ({
   {reraApproval?.name === 'Yes' && (
     <div className="md:flex md:flex-col pt-[10px] flex-col md:space-x-1 w-full text-xs">
 
-<div className=' bg-white shadow-md  p-2 rounded-md '>
+<div className=' bg-white p-2 rounded-md '>
 
-      <div className="mt-2 w-full">
-        <TextField
-          label="RERA No*"
-          name="hdmaNo"
-          type="text"
-        />
-      </div>
+<div className="mt-2 w-full">
+  <label className="block  font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]  mb-1">
+    RERA No*
+  </label>
+  <TextField
+    name="hdmaNo"
+    type="text"
+  />
+</div>
+
 
 
       <div className='flex flex-row gap-2 w-full  '>
 
       <div className="mt-1 mb-[6px] w-1/2 min-w-0">
 
-        <label className="label font-regular block mb-1">
+        <label className="label  font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]  block mb-1">
           Approval Date*
         </label>
         <DatePicker
           id="hdmaStartDate"
           name="hdmaStartDate"
-          className="px-2 h-8 rounded-md w-full text-[#0091ae] bg-grey-lighter text-grey-darker border border-[#cccccc]"
+          className="px-2 h-8 rounded-md w-full text-[#0091ae] bg-grey-lighter text-grey-darker border text-[12px] border-[#cccccc]"
           selected={startDate}
           onChange={(date) => {
             if (date.getTime() < endDate) {
@@ -737,7 +785,7 @@ const DialogFormBody = ({
       <div className="mt-1 mb-[6px] w-1/2 min-w-0">
 
 
-        <label className="label font-regular block mb-1">
+        <label className="label  font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]  block mb-1">
           End Date*
         </label>
         <DatePicker
@@ -778,24 +826,18 @@ const DialogFormBody = ({
     </div>
   )}
 </div>
-
-
 </div>
-
-
-
-
 
 <div className="flex flex-col mt-2 rounded-lg  pt-4 ">
   <div className="mb-4 mt-2">
     <div className="inline">
       <div className="">
-        <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+        <label className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1  ">
           Add Bank Account*<abbr title="required"></abbr>
         </label>
       </div>
 
-      <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+      {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}
     </div>
   </div>
 
@@ -815,7 +857,7 @@ const DialogFormBody = ({
   )}
 
   <div className="flex mt-1 mb-3 space-y-2 w-full text-xs">
-    <div className=" mt-2 mr-3 w-full">
+    <div className=" mt-2  w-full">
       <MultiSelectMultiLineField
         label=""
         name="builderBankDocId"
@@ -857,78 +899,120 @@ const DialogFormBody = ({
   )}
 
 </div>
-
                         </div>
 
+                           
 
+                          <div className='py-2 px-4  rounded-2xl bg-white my-4'>
 
-                        <div className="flex flex-col mt-2 rounded-lg pt-4 ">
+                          <div className="flex flex-col ">
                           <div className="mb-4 mt-2">
                             <div className="inline">
                               <div className="">
-                                <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+                                <label className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]  mb-1  ">
                                   Location Details<abbr title="required"></abbr>
                                 </label>
                               </div>
 
-                              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+                              {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}
                             </div>
                           </div>
+
+
 
                           <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
-                            <TextField
-                              label="Location*"
-                              name="location"
-                              type="text"
-                            />
-                            <TextField
-                              label="Pincode*"
-                              name="pincode"
-                              type="number"
-                              inputProps={{ maxLength: 6 }}
-                              onInput={(e) => {
-                                if (e.target.value.length > 6) {
-                                  e.target.value = e.target.value.slice(0, 6);
-                                }
-                              }}
-                            />
-                          </div>
-                          <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
-                            <div className="mt-2 w-full">
-                              <TextField
-                                label="City*"
-                                name="city"
-                                type="text"
-                                onInput={(e) => {
-                                  e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
-                                }}
-                              />
-                            </div>
-                            <div className="w-full">
-                              <CustomSelect
-                                name="state"
-                                label="State*"
-                                className="input mt-2"
-                                onChange={({ value }) => {
-                                  formik.setFieldValue('state', value)
-                                }}
-                                value={formik.values.state}
-                                options={statesListA}
+  <div className="flex flex-col w-full">
+    <label htmlFor="location" className=" font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1">
+      Location*
+    </label>
+    <TextField
+      id="location"
+      name="location"
+      type="text"
+    />
+  </div>
+
+  <div className="flex flex-col w-full">
+    <label htmlFor="pincode" className=" font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1">
+      Pincode*
+    </label>
+    <TextField
+      id="pincode"
+      name="pincode"
+      type="number"
+      inputProps={{ maxLength: 6 }}
+      onInput={(e) => {
+        if (e.target.value.length > 6) {
+          e.target.value = e.target.value.slice(0, 6);
+        }
+      }}
+    />
+  </div>
+</div>
 
 
-                              />
-     
-                            </div>
-                          </div>
-                          <div className="mt-2 w-full mb-10">
+
+<div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
+  {/* City Field */}
+  <div className="flex flex-col w-full mt-2">
+    <label htmlFor="city" className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1">
+      City*
+    </label>
+    <TextField
+      id="city"
+      name="city"
+      type="text"
+      onInput={(e) => {
+        e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+      }}
+    />
+  </div>
+
+  {/* State Select */}
+  <div className="flex flex-col w-full mt-2">
+    <label htmlFor="state" className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1">
+      State*
+    </label>
+    <CustomSelect
+      id="state"
+      name="state"
+      className="input"
+      onChange={({ value }) => {
+        formik.setFieldValue('state', value);
+      }}
+      value={formik.values.state}
+      options={statesListA}
+    />
+  </div>
+</div>
+
+
+
+
+                          {/* <div className="mt-2 w-full mb-10">
                             <TextAreaField
                               label="Address"
                               name="address"
                               ClassName="text-sm text-gray-800"
                               type="text"
                             />
-                          </div>
+                          </div> */}
+                          <div className="mt-2 w-full">
+  <label htmlFor="address" className=" font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1 block">
+    Address
+  </label>
+  <TextAreaField
+    name="address"
+    ClassName="text-sm text-gray-800"
+    type="text"
+  />
+</div>
+
                         </div>
+
+                          </div>
+
+                 
                       </div>
                       <div className="z-10 flex flex-row justify-between mt-4 pb-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
                         <div></div>

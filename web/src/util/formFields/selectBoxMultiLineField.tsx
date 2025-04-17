@@ -231,6 +231,65 @@ export const MultiSelectMultiLineField = ({
     return options ? options.find((option) => option?.value === value) : '';
 
   }
+
+
+
+
+
+  const selectStyles = {
+    control: (provided) => ({
+      ...provided,
+      minHeight: '32px',
+      height: '32px',
+      padding: '0px',
+      borderColor: '#cccccc',
+      fontSize: '0.875rem',
+      borderRadius: '6px',
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: '0px 6px',
+    }),
+    input: (provided) => ({
+      ...provided,
+      margin: '0px',
+      padding: '0px',
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      height: '32px',
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      padding: '4px',
+    }),
+    clearIndicator: (provided) => ({
+      ...provided,
+      padding: '4px',
+    }),
+    menu: (provided) => ({
+      ...provided,
+      fontSize: '0.875rem',
+    }),
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className="section">
       <label className="label font-regular text-sm mb-2">{label}</label>
@@ -249,7 +308,8 @@ export const MultiSelectMultiLineField = ({
         value={defaultValue(options, value)}
         valueComponent={GravatarValue}
         className="text-sm  mt-1"
-        styles={customStyles}
+        // styles={customStyles}
+        styles={customStyles || selectStyles}
         // onChange={(selectedOption) => {
         //   console.log('Selected option is', selectedOption);
         //   onChange(selectedOption);

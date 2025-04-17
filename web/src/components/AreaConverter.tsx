@@ -44,6 +44,7 @@ onChange={formik.handleChange}
             style: {
               height: '2rem',
               padding: '0px',
+              borderRadius: '6px',
             },
             endAdornment: (
               <InputAdornment
@@ -90,6 +91,7 @@ onChange={formik.handleChange}
               height: '2rem',
               padding: '0px',
               margin: '0px',
+              borderRadius: '6px',
         
             },
             endAdornment: (

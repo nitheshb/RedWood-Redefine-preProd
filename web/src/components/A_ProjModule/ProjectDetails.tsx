@@ -30,6 +30,9 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
   const [submitter, setSubmitter] = useState(0)
   const { enqueueSnackbar } = useSnackbar()
 
+  // const [selFlow, setSelFlow] = useState(projectDetailFlow[0])
+
+
   const [bankDetailsA, setBankDetailsA] = useState([])
   const [selFlow, setSelFlow] = useState({
     name: 'Project Details',
@@ -106,7 +109,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
     <>
 
 
-    <div className='flex flex-col h-screen relative overflow-hidden bg-[linear-gradient(to_bottom,_#D3F0F8,_#F6F5F8)]'>
+    <div className='flex flex-col h-screen relative overflow-hidden  bg-[#F6F5F8] '>
 
     <div className="sticky top-0 z-30 p-4 py-2 bg-[linear-gradient(to_bottom,_#D3F0F8,_#F6F5F8)]">
         <Dialog.Title className="font-medium text-[#0E0A1F] text-[16px] leading-[100%] tracking-[0.06em] uppercase py-4">
@@ -117,7 +120,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
           {projectDetailFlow.map((option) => (
             <>
               <div
-                className={`w-[200px] border  flex justify-between rounded-lg mx-1 py-2 px-2 ${
+                className={`w-[200px] h-[70px] border  flex justify-between rounded-[20px] mx-1 py-2 px-2 ${
                   selFlow.value === option.value ? '' : ''
                 } `}
                 onClick={() => {
@@ -176,12 +179,25 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
 
                     <div>
                         {option.img && (
+                          // <img
+                          //   className="w-[65px] h-auto inline"
+                          //   alt=""
+                          //   src={option.img}
+                          // ></img>
+
                           <img
-                            className="w-[65px] h-auto inline"
-                            alt=""
-                            src={option.img}
-                          ></img>
+                          className="w-[50px] h-[52px]"
+                          alt=""
+                          src={
+                            selFlow.value === option.value
+                              ? option.selectedImg
+                              : option.img
+                          }
+                        />
+         
                         )}
+
+
 
                         </div>
                   </div>
