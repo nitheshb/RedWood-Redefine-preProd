@@ -264,7 +264,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
   }
 
   return (
-    <div className="h-full w-full shadow-xl flex flex-col mb-2  rounded-t overflow-y-scroll">
+    <div className="h-full w-full  flex flex-col mb-2 ">
       <div className="">
         <EditablePaymentTable
           blocksViewFeature={'Plot_Payment_Schedule'}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { Link } from '@redwoodjs/router';
 import {
   getAllProjects,
@@ -9,11 +9,13 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context';
 import 'flowbite';
 import 'src/styles/myStyles.css';
-import { SearchIcon } from '@heroicons/react/outline';
+import { ArrowNarrowLeftIcon } from '@heroicons/react/outline';
 import FileUpload from 'src/components/A_TaskMan/FileUpload';
 import { addDoc, collection, serverTimestamp, query, where, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db, storage } from 'src/context/firebaseConfig';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useState, useEffect } from 'react';
+import UnitDocsWidget from 'src/components/LegalModule/UnitDocsWidget';
 
 const LegalDocsHome = ({ project }) => {
   const { user } = useAuth();
@@ -30,10 +32,42 @@ const LegalDocsHome = ({ project }) => {
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [selectedFilterProject, setSelectedFilterProject] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [viewType, setViewType] = useState('list');
+  const [viewType, setViewType] = useState('small');
   const [folderFiles, setFolderFiles] = useState({});
   const [isSaving, setIsSaving] = useState(false);
+  const documentTypes = [
+    {
+      id: 1235,
+      name: 'Agreement',
+      type: 'agree',
+      uploadedCount: selectedUnit?.agree_doc_count || 0
+    },
+    {
+      id: 1236,
+      name: 'Register Doc',
+      type: 'reg',
+       uploadedCount: selectedUnit?.reg_doc_count  || 0
 
+    },
+    {
+      id: 1237,
+      name: 'Construction Gallery',
+      type: 'constructGallery',
+      uploadedCount: selectedUnit?.constructGallery_doc_count || 0
+    },
+    {
+      id: 1238,
+      name: 'EC',
+      type: 'ec',
+      uploadedCount: selectedUnit?.ec_doc_count || 0
+    },
+    {
+      id: 1239,
+      name: 'Others',
+      type: 'others',
+      uploadedCount: selectedUnit?.others_doc_count || 0
+    },
+  ];
   // Fetch projects
   useEffect(() => {
     let isMounted = true;
@@ -195,7 +229,6 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-
   const fetchFilesForFolder = async (orgId, folderId) => {
     const filesQuery = query(
       collection(db, `${orgId}_legal_documents`),
@@ -206,20 +239,17 @@ const LegalDocsHome = ({ project }) => {
     return files;
   };
 
-
   const deleteFileFromFirestore = async (orgId, docId) => {
     const docRef = doc(db, `${orgId}_legal_documents`, docId);
     await deleteDoc(docRef);
     console.log('File deleted successfully:', docId);
   };
 
-
   const updateFileInFirestore = async (orgId, docId, updatedFile) => {
     const docRef = doc(db, `${orgId}_legal_documents`, docId);
     await updateDoc(docRef, updatedFile);
     console.log('File updated successfully:', docId);
   };
-
 
   const saveFilesToDatabase = async (folderId) => {
     if (isSaving || !folderId) return;
@@ -242,7 +272,6 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-
   const handleFileUpload = async (files) => {
     const uploadedFiles = await Promise.all(
       files.map(async (file) => {
@@ -257,7 +286,6 @@ const LegalDocsHome = ({ project }) => {
     }));
   };
 
-
   const removeFile = async (folderId, fileName) => {
     const fileToDelete = folderFiles[folderId].find((file) => file.name === fileName);
     if (fileToDelete && fileToDelete.id) {
@@ -269,292 +297,112 @@ const LegalDocsHome = ({ project }) => {
     }));
   };
 
-
   const renderProjects = () => {
     const filteredItems = filterItems(filteredProjects, searchTerm);
-
-    switch (viewType) {
-      case 'list':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((project, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
-                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
-              >
+    return (
+      <div className="space-y-2">
+        {filteredItems.map((project, index) => (
+          <div
+            key={index}
+            onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
+            className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
+          >
+            <div className="flex items-center gap-3">
               <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
+              <h3 className="font-semibold">{project.projectName}</h3>
+            </div>
+            <div className="text-sm text-gray-500">
+            <span className="text-[12px] font-outfit text-[#606062]">
+        {project?.all_doc_c || 0} Documents
+      </span>
+      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
+        {project?.public_doc_c || 0} Public
+      </span>
+      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
+        {project?.internal_doc_c || 0} Internal
+      </span>
+      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
+        {project?.customer_doc_c || 0} Customer
+      </span>
 
-                <h3 className="font-semibold">{project.projectName}</h3>
-              </div>
-            ))}
+            </div>
           </div>
-        );
-      case 'small':
-        return (
-          <div className="grid grid-cols-4 gap-4">
-            {filteredItems.map((project, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
-                className="p-4 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-2"
-              >
-                <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
-                <h3 className="font-semibold text-sm text-center">{project.projectName}</h3>
-              </div>
-            ))}
-          </div>
-        );
-      case 'large':
-        return (
-          <div className="grid grid-cols-2 gap-4">
-            {filteredItems.map((project, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
-                className="p-6 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-3"
-              >
+        ))}
+      </div>
+    );
 
-                <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
-                <h3 className="font-semibold text-lg text-center">{project.projectName}</h3>
-              </div>
-            ))}
-          </div>
-        );
-      case 'details':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((project, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedProject(project); setCurrentFolder('blocks'); }}
-                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
-              >
-                <div className="flex items-center gap-3">
-                <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
-                  <h3 className="font-semibold">{project.projectName}</h3>
-                </div>
-                <div className="text-sm text-gray-500">
-                  <p>Created: {project.createdAt}</p>
-                  <p>Updated: {project.updatedAt}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        );
-      default:
-        return null;
-    }
   };
 
-  // Render blocks
   const renderBlocks = () => {
     const filteredItems = filterItems(blocks, searchTerm);
-
-    switch (viewType) {
-      case 'list':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((block, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
-                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
-              >
-                <span className="text-2xl">📦</span>
-                <h3 className="font-semibold">{block.blockName}</h3>
-              </div>
-            ))}
-          </div>
-        );
-      case 'small':
-        return (
-          <div className="grid grid-cols-4 gap-4">
-            {filteredItems.map((block, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
-                className="p-4 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-2"
-              >
-                <span className="text-2xl">📦</span>
-                <h3 className="font-semibold text-sm text-center">{block.blockName}</h3>
-              </div>
-            ))}
-          </div>
-        );
-      case 'large':
-        return (
-          <div className="grid grid-cols-2 gap-4">
-            {filteredItems.map((block, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
-                className="p-6 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-3"
-              >
-                <span className="text-4xl">📦</span>
-                <h3 className="font-semibold text-lg text-center">{block.blockName}</h3>
-              </div>
-            ))}
-          </div>
-        );
-      case 'details':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((block, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
-                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">📦</span>
-                  <h3 className="font-semibold">{block.blockName}</h3>
-                </div>
-                <div className="text-sm text-gray-500">
-                  <p>Created: {block.createdAt}</p>
-                  <p>Updated: {block.updatedAt}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
-  // Render units
-  const renderUnits = () => {
-    const filteredItems = filterItems(units, searchTerm);
-
-    switch (viewType) {
-      case 'list':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((unit, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
-                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center gap-3"
-              >
-                <span className="text-2xl">📁</span>
-                <h3 className="font-semibold">{unit.unit_no}</h3>
-              </div>
-            ))}
-          </div>
-        );
-      case 'small':
-        return (
-          <div className="grid grid-cols-4 gap-4">
-            {filteredItems.map((unit, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
-                className="p-4 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-2"
-              >
-                <span className="text-2xl">📁</span>
-                <h3 className="font-semibold text-sm text-center">{unit.unit_no}</h3>
-              </div>
-            ))}
-          </div>
-        );
-      case 'large':
-        return (
-          <div className="grid grid-cols-2 gap-4">
-            {filteredItems.map((unit, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
-                className="p-6 border rounded-lg cursor-pointer hover:bg-gray-100 flex flex-col items-center gap-3"
-              >
-                <span className="text-4xl">📁</span>
-                <h3 className="font-semibold text-lg text-center">{unit.unit_no}</h3>
-              </div>
-            ))}
-          </div>
-        );
-      case 'details':
-        return (
-          <div className="space-y-2">
-            {filteredItems.map((unit, index) => (
-              <div
-                key={index}
-                onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
-                className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">📁</span>
-                  <h3 className="font-semibold">{unit.unit_no}</h3>
-                </div>
-                <div className="text-sm text-gray-500">
-                  <p>Created: {unit.createdAt}</p>
-                  <p>Updated: {unit.updatedAt}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
-  // Render file upload section
-  const renderFileUploadSection = (folderId) => {
-    if (!folderId) {
-      return <div>No folder selected</div>;
-    }
-
-    const files = folderFiles[folderId] || [];
-
     return (
-      <div className="mt-4">
-        <FileUpload
-          files={files}
-          setFiles={handleFileUpload}
-          removeFile={(fileName) => removeFile(folderId, fileName)}
-        />
-        <div className="mt-4">
-          {files.map((file, index) => (
-            <div key={index} className="flex items-center justify-between p-2 border rounded-lg mb-2">
-              <span>{file.name}</span>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => window.open(file.url, '_blank')}
-                  className="text-blue-500 hover:text-blue-700"
-                >
-                  View
-                </button>
-                <button
-                  onClick={() => handleDownload(file.url, file.name)}
-                  className="text-green-500 hover:text-green-700"
-                >
-                  Download
-                </button>
-                <button
-                  onClick={() => removeFile(folderId, file.name)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  Remove
-                </button>
-              </div>
+      <div className="space-y-2">
+        {filteredItems.map((block, index) => (
+          <div
+            key={index}
+            onClick={() => { setSelectedBlock(block); setCurrentFolder('units'); }}
+            className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">📦</span>
+              <h3 className="font-semibold">{block.blockName}</h3>
             </div>
-          ))}
-        </div>
-        <button
-          onClick={() => saveFilesToDatabase(folderId)}
-          disabled={isSaving}
-          className={`mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 ${
-            isSaving ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-        >
-          {isSaving ? 'Saving...' : 'Save Files'}
-        </button>
+            <div className="text-sm text-gray-500">
+            <span className="text-[12px] font-outfit text-[#606062]">
+        {block?.all_doc_c || 0} Documents
+      </span>
+      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
+        {block?.public_doc_c || 0} Public
+      </span>
+      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
+        {block?.internal_doc_c || 0} Internal
+      </span>
+      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
+        {block?.customer_doc_c || 0} Customer
+      </span>
+      </div>
+          </div>
+        ))}
       </div>
     );
   };
 
-  // Handle back navigation
+  const renderUnits = () => {
+    const filteredItems = filterItems(units, searchTerm);
+    return (
+      <div className="space-y-2">
+        {filteredItems.map((unit, index) => (
+          <div
+            key={index}
+            onClick={() => { setSelectedUnit(unit); setCurrentFolder('documents'); }}
+            className="p-2 border rounded-lg cursor-pointer hover:bg-gray-100 flex items-center justify-between gap-3"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">📁</span>
+              <h3 className="font-semibold">{unit.unit_no}</h3>
+            </div>
+            <div className="text-sm text-gray-500">
+            <span className="text-[12px] font-outfit text-[#606062]">
+        {unit?.all_doc_c || 0} Documents
+      </span>
+      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
+        {unit?.public_doc_c || 0} Public
+      </span>
+      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
+        {unit?.internal_doc_c || 0} Internal
+      </span>
+      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
+        {unit?.customer_doc_c || 0} Customer
+      </span>
+      </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+
+
   const handleBack = () => {
     if (currentFolder === 'blocks') {
       setCurrentFolder('projects');
@@ -568,7 +416,6 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-  // Handle filter project change
   const handleFilterProjectChange = (e) => {
     const selectedProjectName = e.target.value;
     setSelectedFilterProject(selectedProjectName);
@@ -581,17 +428,14 @@ const LegalDocsHome = ({ project }) => {
     }
   };
 
-  // Handle search change
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  // Handle view change
   const handleViewChange = (e) => {
     setViewType(e.target.value);
   };
 
-  // Filter items based on search term
   const filterItems = (items, searchTerm) => {
     return items.filter((item) =>
       item.projectName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -600,7 +444,6 @@ const LegalDocsHome = ({ project }) => {
     );
   };
 
-  // Handle file download
   const handleDownload = (fileUrl, fileName) => {
     const link = document.createElement('a');
     link.href = fileUrl;
@@ -611,7 +454,7 @@ const LegalDocsHome = ({ project }) => {
   };
 
   return (
-    <section className="mt-2 py-6 mb-8 mx-1 leading-7 text-gray-900 bg-white rounded-lg">
+    <section className="mt-1 py-6 mb-8 mx-1 leading-7 text-gray-900 bg-white rounded-lg">
       <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full">
         <div className="flex flex-col leading-7 text-gray-900 border-0 border-gray-200 border-b-[1px]  py-[20px] pb-[10px]  border-[cbd6e2] ">
           <div className="flex  flex-shrink-0 px-0 pl-0 mb-1">
@@ -624,36 +467,8 @@ const LegalDocsHome = ({ project }) => {
           </div>
         </div>
         <div className="mt-4">
-          {currentFolder !== 'projects' && (
-            <button
-              onClick={handleBack}
-              className="mb-4 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-            >
-              Back
-            </button>
-          )}
-          <div className="mb-4 flex justify-between">
-            <div className="relative w-1/2">
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                className="px-4 py-2 border rounded-lg w-full pl-10"
-              />
-              <SearchIcon className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            </div>
-            <select
-              value={viewType}
-              onChange={handleViewChange}
-              className="px-4 py-2 border rounded-lg"
-            >
-              <option value="small">Small Icons</option>
-              <option value="list">List View</option>
-              <option value="large">Large Icons</option>
-              <option value="details">Details</option>
-            </select>
-          </div>
+
+
           {currentFolder === 'projects' && (
             <div>
               <h2 className="text-lg font-bold mb-4">Projects</h2>
@@ -678,20 +493,83 @@ const LegalDocsHome = ({ project }) => {
           )}
           {currentFolder === 'blocks' && (
             <div>
-              <h2 className="text-lg font-bold mb-4">Blocks</h2>
+              <section className="flex items-center justify-between  mb-4">
+                <div className='flex flex-row items-center'>
+                <h2 className="text-lg font-bold">Blocks</h2>
+                <span className=" text-gray-800 rounded-lg px-2 pt-[2px] text-sm">
+                  {selectedProject?.projectName}
+                </span>
+                </div>
+                <button
+              onClick={handleBack}
+              className="mb-4 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+            >
+                            <ArrowNarrowLeftIcon className="w-4 h-4" />
+            </button>
+              </section>
               {renderBlocks()}
             </div>
           )}
           {currentFolder === 'units' && (
             <div>
-              <h2 className="text-lg font-bold mb-4">Units</h2>
+               <section className="flex items-center justify-between  mb-4">
+               <div className='flex flex-row items-center'>
+                <h2 className="text-lg font-bold">Units:</h2>
+                <span className=" text-gray-800 rounded-lg px-2 pt-[2px] text-sm">
+                  {selectedProject?.projectName}{'-'}{selectedBlock?.blockName}
+                </span>
+                </div>
+                <button
+              onClick={handleBack}
+              className="mb-4 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+            >
+              <ArrowNarrowLeftIcon className="w-4 h-4" />
+            </button>
+              </section>
               {renderUnits()}
             </div>
           )}
           {currentFolder === 'documents' && selectedUnit && (
             <div>
-              <h2 className="text-lg font-bold mb-4">Documents</h2>
-              {renderFileUploadSection(selectedUnit.uid)}
+               <section className="flex items-center justify-between  mb-4">
+               <div className='flex flex-row items-center'>
+                <h2 className="text-lg font-bold">Unit Documents:</h2>
+                <span className=" text-gray-800 rounded-lg px-2 pt-[2px] text-sm">
+                  <span className='border-b'>{selectedProject?.projectName}</span>{'-'}{selectedBlock?.blockName}{'-'}{selectedUnit?.unit_no}
+                </span>
+                </div>
+                <button
+              onClick={handleBack}
+              className="mb-4 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+            >
+              <ArrowNarrowLeftIcon className="w-4 h-4" />
+            </button>
+              </section>
+              <div className="w-full max-w-3xl px-4 flex flex-col">
+
+
+      <section className="w-full max-w-3xl mx-auto  mt-2 rounded-2xl">
+
+
+    {documentTypes.length === 0 ? (
+      <div className="w-full text-center py-5">No documents</div>
+    ) : (
+      documentTypes.map((doc, i) => (
+        <section key={i} className="px-4">
+          <UnitDocsWidget
+            data={doc}
+            id={selectedUnit?.id}
+            unitDetails={selectedUnit}
+            fileName={doc?.name}
+            date={doc?.time}
+            uploadedCount={doc.uploadedCount}
+
+          />
+        </section>
+      ))
+    )}
+  </section>
+  </div>
             </div>
           )}
         </div>

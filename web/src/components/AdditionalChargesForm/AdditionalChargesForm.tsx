@@ -730,14 +730,14 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
 
    
    
-      <div className=" ">
+      <div className="py-2 px-4  rounded-2xl bg-[#FFFFFF]  mx-4 my-4">
       <EditableTable  phase={data?.phase || {}}  partAData={partAData} fullCs= {fullCs} source={'project'} type={data?.phase?.projectType.name}/>
       </div>
 
  
 
  
-      <div className="h-full shadow-xl flex flex-col  mb-6 bg-[#F1F5F9] rounded-t overflow-y-scroll"></div>
+      {/* <div className="h-full shadow-xl flex flex-col  mb-6 bg-[#F1F5F9] rounded-t overflow-y-scroll"></div> */}
     </section>
   )
 }

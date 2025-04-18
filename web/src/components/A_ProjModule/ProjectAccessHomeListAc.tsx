@@ -286,7 +286,7 @@ const ProjectAccessHomeList = ({
     setIsAccessSideView(!isAccessSideView)
   }
   return (
-    <div className="h-full flex flex-col py-6 bg-white shadow-xl ">
+    <div className="h-full flex flex-col py-2  rounded-2xl bg-white mx-4 my-4 ">
       {/* documents page */}
       <div className="mx-4 my-2 py-2 rounded-md border border-[#E5EAF2] flex flex-col justify-between">
         <div className="ml-3 mt-1 font-bold">Project Documents</div>
@@ -364,7 +364,7 @@ const ProjectAccessHomeList = ({
           </li>
         </ul>
       </div>
-      <div className="mx-4 my-4 p-4 rounded-md border border-[#E5EAF2] flex flex-row justify-between">
+      <div className="mx-4 my-2 p-4 rounded-md border border-[#E5EAF2] flex flex-row justify-between">
         <section className="flex flex-col">
           <h2 className="text-xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
             Project Audit
@@ -404,7 +404,7 @@ const ProjectAccessHomeList = ({
           </button>
         </section>
       </div>
-      <div className="mx-4 my-4 p-4 rounded-md border border-[#E5EAF2] flex flex-row justify-between">
+      <div className="mx-4 mb-2 p-4 rounded-md border border-[#E5EAF2] flex flex-row justify-between">
         <section className="flex flex-col">
           <h2 className="text-xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
             Danger Zone

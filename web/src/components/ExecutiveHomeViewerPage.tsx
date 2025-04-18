@@ -656,12 +656,14 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                 </h2>
                 </section>
 
-                <div className="flex">
-                  <div className=" flex flex-col mr-5   w-40">
+                <div className="flex flex-row flex-wrap gap-2">
+
+
+                  <div className=" flex flex-col   w-40">
                     <VerySlimSelectBox
                       name="project"
                       label=""
-                      className="input "
+                      className="input rounded-lg"
                       onChange={(value) => {
                         console.log('changed value is ', value.value)
                         setSelProject(value)
@@ -673,13 +675,19 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                       ]}
                     />
                   </div>
+
+
+
+
+
+
                   {access?.includes('manage_leads') && (
-                    <div className=" flex flex-col   w-40">
+                    <div className=" flex flex-col w-40">
                       <VerySlimSelectBox
                         name="project"
                         label=""
                         placeholder="My Leads"
-                        className="input "
+                        className="input rounded-lg"
                         onChange={(value) => {
                           console.log('changed value is ', value.value)
                           setSelLeadsOf(value)
@@ -699,6 +707,9 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                     </div>
                   )}
 
+
+
+                  <div className='flex flex-col'>
                   <SmartCalendarSelect
                     onChange={async (value) => {
                       console.log(value, 'ksdvnlfkjv')
@@ -706,10 +717,16 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                     }}
                     label="All Dates"
                     defaultForTeamLeads={selLeadsOf?.value === 'teamleads'}
+                    
                   />
+                  </div>
 
-                  <span className="hidden max-h-[42px] mt-[2px] ml-3 bg-white pl-[2px] rounded-[4px] h-[19px] ">
 
+
+
+
+
+                  <div className="hidden max-h-[42px] mt-[2px] ml-3 bg-white pl-[2px] rounded-[4px] h-[19px] ">
                     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                     <label className="bg-green   pl-[2px] h-[28px]  flex flex-row cursor-pointer border border-[#ccc] rounded-[4px]">
                       <CalendarMonthTwoToneIcon className="mr-1 mt-[2px] h-4 w-4" />
@@ -727,17 +744,16 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                           startDate={startDate}
                           endDate={endDate}
                           isClearable={true}
-
                           dateFormat="MMM dd, yyyy"
                         />
                       </span>
                     </label>
-                  </span>
+                  </div>
 
-                  <>
+                
                     <button
                       onClick={() => fSetLeadsType('Add Lead')}
-                      className={`flex items-center ml-5 pl-2 pr-4  max-h-[30px] mt-[2px] text-sm font-medium text-balck border-solid border-2 border-[#0891B2] bg-[#0891B2] rounded-[4px] hover:bg-transparent  group`}
+                      className={`flex items-center px-2 rounded-lg  text-sm font-medium text-balck border-solid border-2 border-[#0891B2] bg-[#0891B2]  hover:bg-transparent  group`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -753,14 +769,14 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         />
                       </svg>
 
-                      <span className="ml-1 text-white group-hover:text-black">
+                      <span className="ml-1  text-white group-hover:text-black">
                         Add lead
                       </span>
                     </button>
                     {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                       <button
                         onClick={() => fSetLeadsType('Import Leads')}
-                        className={`flex items-center ml-5 pl-2 pr-4 py-1 max-h-[30px] mt-[2px] border-solid border-2 border-[#0891B2]  group text-sm font-medium text-black  rounded-[4px] hover:bg-[#0891B2]  `}
+                        className={`flex items-center rounded-lg  pl-2 pr-4 py-1  border-solid border-2 border-[#0891B2]  group text-sm font-medium text-black  rounded-lg hover:bg-[#0891B2]  `}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -781,8 +797,6 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         </span>
                       </button>
                     )}
-
-                  </>
                 </div>
               </div>
 

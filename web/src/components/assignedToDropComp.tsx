@@ -8,14 +8,35 @@ export default function AssigedToDropComp({
   setAssigner,
   usersList,
   align,
+  buttonClassName = '',       
+  itemsWrapperClassName = '',  
+  itemButtonClassName = '', 
+  variant = 'default', // NEW PROP
+  customStyles,
 }) {
+
+
+
+  const isSpecial = variant === 'special'
+
+  const buttonStyles = isSpecial
+    ? 'border border-[#e5e7eb] px-1 py-1 rounded-md'
+    : 'text-black-500 bg-white'
+
+  const chevronColor = isSpecial ? 'text-black' : 'text-black'
+
+
+
   return (
     <div className="text-right inline-block ">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center w-full px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          <Menu.Button className= {`inline-flex justify-center w-full px-0 py-0 text-sm font-semibold text-black-500 bg- rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75  ${buttonStyles} ${buttonClassName}`}
+          
+          
+          >
             {id === 'id' ? (
-              <span className="tracking-wide text-black-600 text-sm font-bold">
+              <span className="tracking-wide text-black-600 text-sm font-medium">
                 {assignerName}
               </span>
             ) : (
@@ -24,9 +45,9 @@ export default function AssigedToDropComp({
               </span>
             )}
             {id === 'id' ? (
-              <ChevronDownIcon className="w-5 h-5 mr-3 mt-[0px] inline text-[#058527]" />
+              <ChevronDownIcon className= {`w-5 h-5 mr-3 mt-[0px] inline text-[#058527] ${chevronColor} `}/>
             ) : (
-              <ChevronDownIcon className="w-5 h-5 mr-3 mt-[0px] inline text-[#058527]" />
+              <ChevronDownIcon className={`w-5 h-5 mr-3 mt-[0px] inline text-[#058527]  ${chevronColor} `} />
             )}
           </Menu.Button>
         </div>
@@ -44,7 +65,7 @@ export default function AssigedToDropComp({
               align === 'right'
                 ? 'right-0 origin-top-right'
                 : 'left-0 origin-top-left'
-            }  w-52 mt-2  bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[9000]`}
+            }  w-52 mt-2  bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[9000] max-h-60 overflow-auto  ${itemsWrapperClassName}`}
           >
             <div className="px-1 py-1 ">
               {usersList.map((dat, i) => {
@@ -54,7 +75,7 @@ export default function AssigedToDropComp({
                       <button
                         className={`${
                           active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                        } text-left group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                        } text-left group flex rounded-md items-center w-full px-2 py-2 text-sm  ${itemButtonClassName}`}
                         onClick={() => setAssigner(id, dat)}
                       >
                         {active ? (

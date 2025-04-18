@@ -30,6 +30,9 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
   const [submitter, setSubmitter] = useState(0)
   const { enqueueSnackbar } = useSnackbar()
 
+  // const [selFlow, setSelFlow] = useState(projectDetailFlow[0])
+
+
   const [bankDetailsA, setBankDetailsA] = useState([])
   const [selFlow, setSelFlow] = useState({
     name: 'Project Details',
@@ -102,9 +105,14 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
 
   }
   return (
-    <div className="h-full flex flex-col  py-6  shadow-xl overflow-y-scroll bg-gradient-to-r from-blue-300 to-cyan-300">
-      <div className="px-2 sm:px-6  z-10 absolute top-0  w-full  py-2 bg-gradient-to-r from-blue-300 to-cyan-300">
-        <Dialog.Title className=" font-semibold text-xl mr-auto    tracking-wider text-[14px]">
+
+    <>
+
+
+    <div className='flex flex-col h-screen relative overflow-hidden  bg-[#F6F5F8] '>
+
+    <div className="sticky top-0 z-30 p-4 py-2 bg-[linear-gradient(to_bottom,_#D3F0F8,_#F6F5F8)]">
+        <Dialog.Title className="font-medium text-[#0E0A1F] text-[16px] leading-[100%] tracking-[0.06em] uppercase py-4">
           Project Information
         </Dialog.Title>
 
@@ -112,8 +120,8 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
           {projectDetailFlow.map((option) => (
             <>
               <div
-                className={`w-[200px] border  flex justify-between rounded-lg px-2 py-2 mr-2 ${
-                  selFlow.value === option.value ? 'bg-blue-100' : ''
+                className={`w-[200px] h-[70px] border  flex justify-between rounded-[20px] mx-1 py-2 px-2 ${
+                  selFlow.value === option.value ? '' : ''
                 } `}
                 onClick={() => {
                   if (project?.uid) {
@@ -127,27 +135,30 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
                 }}
               >
                 <div className="w-full">
-                  <div className="text-sm">
+                  <div className="flex col-span-2 flex-row  justify-between items-center">
+
+        
                     <label
-                      className={`font-medium flex flex-col  ${
+                      className={`font-medium flex flex-col py-2   ${
                         selFlow.value == option.value
                           ? 'text-gray-900'
                           : 'text-gray-900'
                       }`}
                     >
-                      <section className=" col-span-2 flex flex-row justify-center ">
-                        {option.img && (
-                          <img
-                            className="w-7 h-7 inline"
-                            alt=""
-                            src={option.img}
-                          ></img>
-                        )}
-                        <div
+
+
+                      <div className='flex flex-col justify-between w-full '>
+                      <div className=" inline text-[#606062] font-[Outfit] mb-2 font-normal text-[12px] leading-[100%] tracking-[0%]">
+                        {option.name}
+                      </div>
+
+                      <section className="row-span-2 flex flex-row justify-between">
+
+                      <div
                           className={`${
                             selFlow.value == option.name
-                              ? 'flex-shrink-0 text-white ml-auto'
-                              : 'flex-shrink-0 text-black ml-auto'
+                              ? 'flex-shrink-0 text-white '
+                              : 'flex-shrink-0 text-black '
                           } mt-1 font-light`}
                         >
                           <ArrowRightIcon
@@ -160,10 +171,35 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
 
                         </div>
                       </section>{' '}
-                      <div className="mt-1 mr-2 inline text-sm text-b  ">
-                        {option.name}
                       </div>
+
+
+           
                     </label>
+
+                    <div>
+                        {option.img && (
+                          // <img
+                          //   className="w-[65px] h-auto inline"
+                          //   alt=""
+                          //   src={option.img}
+                          // ></img>
+
+                          <img
+                          className="w-[50px] h-[52px]"
+                          alt=""
+                          src={
+                            selFlow.value === option.value
+                              ? option.selectedImg
+                              : option.img
+                          }
+                        />
+         
+                        )}
+
+
+
+                        </div>
                   </div>
                 </div>
               </div>
@@ -172,115 +208,157 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
         </div>
       </div>
 
-      <div className="grid  gap-8 grid-cols-1">
-        <div className="flex flex-col ">
-          <div className="mt-[100px]">
-            {selFlow.value === 'projectDetails' && (
-              <DialogFormBody
-                ref={formikRef}
-  
-                title={'Create Project'}
-                // dialogOpen={(=>())}
-                moveNext={goToNext}
-                project={project}
-                bindSubmitForm={bindSubmitForm}
-                setSubmitter={setSub}
-                submitter={submitter}
-                loading1={loading}
-                setLoading1={setLoading1}
-                setProject={setProject}
-              />
-            )}
-            <ProjPhaseHome
-              projectDetails={project}
-              source="projectOnboard"
-              selFlow={selFlow.value}
-              ref={formikRef}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="z-10 flex flex-row justify-between   pr-6 bg-white shadow-lg absolute bottom-0  w-full">
-        <div className="mt-5  md:space-x-3 md:block ml-3 w-full">
-          <button
-            // onClick={() => dialogOpen(false)}
-            onClick={() => goToPrevious()}
-            type="button"
-            className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
-          >
-            <section className="flex flex-row">
-              <ArrowLeftIcon className={` w-4 h-4 mt-[2px] mr-1`} />
-              Back
-            </section>
-          </button>
-        </div>
-        <section className="w-[300px] mt-6 text-center flex flex-row text-red-400 ">
-          {selFlow?.indx + 1} of {projectDetailFlow.length} steps
-        </section>
 
-        <div className="mt-5 w-full text-right md:space-x-3 md:block flex flex-row mb-6 justify-between w-full ">
-          {selFlow.value === 'projectDetails' && (
-            <button
-              className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
-              type="submit"
-              onClick={
-                () => {
-                  setLoading(true)
-                  setSubmitter(1)
-                }
-  
-              }
-            >
-              {loading && <Loader />}
-              Save
-            </button>
-          )}
+
+
+
+
+
+
+      <div className="flex-1 overflow-y-auto  scroll-smooth scrollbar-thin scrollbar-thumb-gray-300 pb-2">
+
+<div className="grid  gap-8 grid-cols-1 ">
+<div className="flex flex-col ">
+<div className="">
+  {selFlow.value === 'projectDetails' && (
+    <DialogFormBody
+      ref={formikRef}
+
+      title={'Create Project'}
+      // dialogOpen={(=>())}
+      moveNext={goToNext}
+      project={project}
+      bindSubmitForm={bindSubmitForm}
+      setSubmitter={setSub}
+      submitter={submitter}
+      loading1={loading}
+      setLoading1={setLoading1}
+      setProject={setProject}
+    />
+  )}
+  <ProjPhaseHome
+    projectDetails={project}
+    source="projectOnboard"
+    selFlow={selFlow.value}
+    ref={formikRef}
+  />
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div className="sticky bottom-0 z-30 flex flex-row justify-between pr-6 bg-white  w-full">
+  <div className="mt-5  md:space-x-3 md:block ml-3 w-full">
+    <button
+      // onClick={() => dialogOpen(false)}
+      onClick={() => goToPrevious()}
+      type="button"
+      className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+    >
+      <section className="flex flex-row">
+        <ArrowLeftIcon className={` w-4 h-4 mt-[2px] mr-1`} />
+        Back
+      </section>
+    </button>
+  </div>
+  <section className="w-[300px] mt-6 text-center flex flex-row text-red-400 ">
+    {selFlow?.indx + 1} of {projectDetailFlow.length} steps
+  </section>
+
+  <div className="mt-5 w-full text-right md:space-x-3 md:block flex flex-row mb-6 justify-between w-full ">
+    {selFlow.value === 'projectDetails' && (
+      <button
+        className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
+        type="submit"
+        onClick={
+          () => {
+            setLoading(true)
+            setSubmitter(1)
+          }
+
+        }
+      >
+        {loading && <Loader />}
+        Save
+      </button>
+    )}
 
 
 
 {selFlow?.indx+1 === projectDetailFlow.length && (
-            <button
-              className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
-              type="submit"
+      <button
+        className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
+        type="submit"
 
 
-              onClick={
-                () => {
-                  dialogOpen(false)
-                }
+        onClick={
+          () => {
+            dialogOpen(false)
+          }
 
-              }
-            >
+        }
+      >
 
-              Close
-            </button>
-          )}
+        Close
+      </button>
+    )}
 
 
-          <button
-            className={` ${selFlow?.indx+1 === projectDetailFlow.length ? 'hidden': '' }   mb-2 md:mb-0  bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg `}
-            disabled={loading}
-            onClick={() => {
-              if (project?.uid) {
-                goToNext()
-              } else {
-                enqueueSnackbar('Please create project to proceed..!', {
-                  variant: 'warning',
-                })
-              }
-            }}
-          >
-            <section className="flex flex-row">
-              Next:
-              {selFlow.indx === projectDetailFlow.length - 1
-                ? projectDetailFlow[0]['name']
-                : projectDetailFlow[selFlow.indx + 1]['name']}
-              <ArrowRightIcon className={` w-4 h-4 mt-1 ml-1`} />
-            </section>
-          </button>
-        </div>
-      </div>
+    <button
+      className={` ${selFlow?.indx+1 === projectDetailFlow.length ? 'hidden': '' }   mb-2 md:mb-0  bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg `}
+      disabled={loading}
+      onClick={() => {
+        if (project?.uid) {
+          goToNext()
+        } else {
+          enqueueSnackbar('Please create project to proceed..!', {
+            variant: 'warning',
+          })
+        }
+      }}
+    >
+      <section className="flex flex-row">
+        Next:
+        {selFlow.indx === projectDetailFlow.length - 1
+          ? projectDetailFlow[0]['name']
+          : projectDetailFlow[selFlow.indx + 1]['name']}
+        <ArrowRightIcon className={` w-4 h-4 mt-1 ml-1`} />
+      </section>
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
     </div>
+
+
+
+
+     
+
+
+
+
+
+      
+
+    
+    </>
+
+
+
+
+
   )
 }
 

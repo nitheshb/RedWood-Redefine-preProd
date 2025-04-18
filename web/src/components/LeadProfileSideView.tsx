@@ -8,6 +8,7 @@ import {
   PencilIcon,
   DeviceMobileIcon,
   MailIcon,
+  PhoneIcon,
 } from '@heroicons/react/outline'
 import {
   CheckCircleIcon,
@@ -19,7 +20,7 @@ import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
 import { Slider } from '@mui/material'
 import { setHours, setMinutes } from 'date-fns'
-import { Timestamp } from 'firebase/firestore'
+import { addDoc, collection, doc, getDoc, Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { ErrorMessage, Form, Formik, useFormik } from 'formik'
 import { v4 as uuidv4 } from 'uuid'
@@ -51,9 +52,10 @@ import {
   IncrementTastCompletedCount,
   IncrementTastTotalCount,
   decreCountOnResheduleOtherDay,
+  sendCallNotification,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
-import { storage } from 'src/context/firebaseConfig'
+import { db, storage } from 'src/context/firebaseConfig'
 import { prettyDate, prettyDateTime, timeConv } from 'src/util/dateConverter'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
 
@@ -1412,6 +1414,90 @@ export default function LeadProfileSideView({
         'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2216px%22%20height%3D%2232px%22%20viewBox%3D%220%200%2016%2032%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cdefs%3E%3Cpath%20d%3D%22M0%2C2.99610022%20C0%2C1.34139976%201.3355407%2C0%202.99805158%2C0%20L6.90478569%2C0%20C8.56056385%2C0%2010.3661199%2C1.25756457%2010.9371378%2C2.80757311%20L16%2C16.5505376%20L11.0069874%2C29.2022189%20C10.3971821%2C30.7473907%208.56729657%2C32%206.90478569%2C32%20L2.99805158%2C32%20C1.34227341%2C32%200%2C30.6657405%200%2C29.0038998%20L0%2C2.99610022%20Z%22%20id%3D%22Bg%22/%3E%3C/defs%3E%3Cg%20id%3D%22Bar%22%20stroke%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cmask%20fill%3D%22white%22%20id%3D%22mask%22%3E%3Cuse%20xlink%3Ahref%3D%22%23Bg%22/%3E%3C/mask%3E%3Cuse%20fill%3D%22%2347E4C2%22%20xlink%3Ahref%3D%22%23Bg%22/%3E%3Cpolygon%20id%3D%22Ln%22%20fill%3D%22%2347E4C2%22%20mask%3D%22url%28%23mask%29%22%20points%3D%220%2030%2016%2030%2016%2032%200%2032%22/%3E%3C/g%3E%3C/svg%3E") 3 10 3 3 fill / 1 / 0 repeat',
     },
   }
+
+
+
+
+
+
+// async function handleCallButtonClick(uid, leadName, mobileNumber) {
+//   try {
+//     console.log('Call button clicked with data:', {
+//       uid,
+//       leadName,
+//       mobileNumber
+//     });
+
+//     // Step 1: Get user's fcmToken from Firestore
+//     const userRef = doc(db, "users", uid);
+//     const userSnap = await getDoc(userRef);
+
+//     if (!userSnap.exists()) {
+//       console.error("User not found!");
+//       return;
+//     }
+
+//     const userData = userSnap.data();
+//     console.log('Retrieved user data:', userData);
+
+//     const { fcmToken } = userData;
+
+//     if (!fcmToken) {
+//       console.error("FCM Token not found for user!");
+//       return;
+//     }
+
+//     // Step 2: Add a new call document
+//     const callData = {
+//       leadName,
+//       mobileNumber,
+//       fcmToken,
+//       timestamp: Timestamp.now()
+//     };
+
+//     console.log('Creating call document with:', callData);
+    
+//     const docRef = await addDoc(collection(db, "calls"), callData);
+//     console.log("Call document added successfully with ID:", docRef.id);
+
+//   } catch (error) {
+//     console.error("Error in call trigger:", error);
+//   }
+// }
+
+
+
+async function handleCallButtonClick(uid, name, number) {
+  try {
+    const userRef = doc(db, "users", uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      console.error("User not found!");
+      return;
+    }
+
+    const { fcmToken } = userSnap.data();
+
+    if (!fcmToken) {
+      console.error("FCM Token not found for user!");
+      return;
+    }
+
+    await addDoc(collection(db, "calls"), {
+      name,
+      number,
+      fcmToken,
+      // timestamp: Timestamp.now()
+    });
+
+    console.log("Call document added successfully!");
+  } catch (error) {
+    console.error("Error in call trigger:", error);
+  }
+}
+
+
   return (
     <>
     <div
@@ -1425,6 +1511,7 @@ export default function LeadProfileSideView({
               <div className="">
                 <div className="font-semibold text-[#053219]  text-sm  mt-3 mb-1  tracking-wide font-bodyLato">
                   <div className="flex flex-row">
+                    
                     <div className="flex flex-col ml-[6px]">
                       <div className=" flex flex-row">
                         <span className="  text-[16px] uppercase">{Name}</span>
@@ -1438,6 +1525,19 @@ export default function LeadProfileSideView({
                         <div className=" text-sm  ml-[4px]  px-[3px] pt-[px] rounded  text-[#FF8C02] ">
                           {currentStatusDispFun(leadDetailsObj?.Status)}{' '}
                         </div>
+
+
+                        
+<button
+  onClick={() => {
+    console.log('Call button clicked for lead:', Name, Mobile);
+    handleCallButtonClick(assignedTo, Name, Mobile);
+  }}
+  className=" rounded-md text-[10px] bg-[#0891B2] px-2  text-white"
+  title="Call"
+>
+  Call
+</button>
                       </div>
                       <div className="flex flex-row">
                         <div className="font-md text-sm text-gray-500 mb-[2] tracking-wide ">
@@ -1449,12 +1549,87 @@ export default function LeadProfileSideView({
                             )}
                           </span>
                         </div>
+
                         <div className="font-md text-sm text-gray-500 mb-[2] ml-[6px] tracking-wide">
                           <MailIcon className="w-3 h-3 inline text-[#058527] " />{' '}
                           {Email}
                         </div>
                       </div>
-                    </div>
+                    </div> 
+ 
+ 
+ 
+ 
+                     {/* <div className="flex flex-col ml-[6px]">
+      <div className="flex flex-row">
+        <span className="text-[16px] uppercase">{Name}</span>
+        <PencilIcon
+          className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer"
+          onClick={() => setisImportLeadsOpen(true)}
+        />
+        <div className="text-sm ml-[4px] px-[3px] pt-[1px] rounded text-[#FF8C02]">
+          {leadDetailsObj?.Status}
+        </div>
+      </div>
+
+      <div className="flex flex-row">
+        <div className="font-md text-sm text-gray-500 tracking-wide">
+          <DeviceMobileIcon className="w-3 h-3 inline text-[#058527]" />{" "}
+          <span className="mr-[2px] text-[12px]">
+            {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")}
+          </span>
+        </div>
+        <div className="font-md text-sm text-gray-500 ml-[6px] tracking-wide">
+          <MailIcon className="w-3 h-3 inline text-[#058527]" /> {Email}
+        </div>
+      </div>
+
+  
+      <button
+        onClick={sendNotification}
+        className="mt-2 flex items-center px-3 py-1 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition"
+      >
+        <PhoneIcon className="w-4 h-4 mr-2" /> Call
+      </button>
+    </div> */}
+{/* 
+<div className="flex flex-col ml-[6px]">
+  <div className="flex flex-row">
+    <span className="text-[16px] uppercase">{Name}</span>
+    <PencilIcon
+      className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer"
+      onClick={() => setisImportLeadsOpen(true)}
+    />
+    <div className="text-sm ml-[4px] px-[3px] pt-[1px] rounded text-[#FF8C02]">
+      {leadDetailsObj?.Status}
+    </div>
+  </div>
+
+  <div className="flex flex-row">
+    <div className="font-md text-sm text-gray-500 tracking-wide">
+      <DeviceMobileIcon className="w-3 h-3 inline text-[#058527]" />{" "}
+      <span className="mr-[2px] text-[12px]">
+        {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")}
+      </span>
+    </div>
+    <div className="font-md text-sm text-gray-500 ml-[6px] tracking-wide">
+      <MailIcon className="w-3 h-3 inline text-[#058527]" /> {Email}
+    </div>
+  </div>
+
+  <button
+    onClick={sendNotification}
+    className="mt-2 flex items-center px-3 py-1 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition"
+  >
+    <PhoneIcon className="w-4 h-4 mr-2" /> 
+    {isSending ? 'Sending...' : 'Call via App'}
+  </button>
+</div> */}
+
+
+
+
+  
                   </div>
                 </div>
               </div>

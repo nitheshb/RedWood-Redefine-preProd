@@ -89,13 +89,13 @@ const ProjectLogoUploader = ({projectId, projectLogoURL}) => {
   return (
     <div className="flex flex-col items-start">
       <div className="relative">
-        <div className=" text-[#374151] text-xs">
+        {/* <div className=" text-[#374151] text-xs">
           <p>Logo</p>
-        </div>
+        </div> */}
 
         <div
           onClick={handleUploadClick}
-          className="h-[175px] w-[165px] bg-gray-200 flex items-center justify-center rounded-[25px] border border-gray-300 cursor-pointer"
+          className="h-[121px] w-[120px] bg-gray-200 flex items-center justify-center rounded-full border border-gray-300 cursor-pointer"
         >
           {imageUrl ? (
             <img
@@ -105,7 +105,7 @@ const ProjectLogoUploader = ({projectId, projectLogoURL}) => {
             />
           ) : (
             <span className="text-gray-500">
-              <svg
+              {/* <svg
                 width="100"
                 height="100"
                 viewBox="0 0 150 144"
@@ -116,7 +116,7 @@ const ProjectLogoUploader = ({projectId, projectLogoURL}) => {
                   d="M0 143.891V38.2844H50V23.1977L75 0.567657L100 23.1977V68.4577H150V143.891H0ZM16.6667 128.804H33.3333V113.718H16.6667V128.804ZM16.6667 98.6311H33.3333V83.5444H16.6667V98.6311ZM16.6667 68.4577H33.3333V53.371H16.6667V68.4577ZM66.6667 128.804H83.3333V113.718H66.6667V128.804ZM66.6667 98.6311H83.3333V83.5444H66.6667V98.6311ZM66.6667 68.4577H83.3333V53.371H66.6667V68.4577ZM66.6667 38.2844H83.3333V23.1977H66.6667V38.2844ZM116.667 128.804H133.333V113.718H116.667V128.804ZM116.667 98.6311H133.333V83.5444H116.667V98.6311Z"
                   fill="#57C0D0"
                 />
-              </svg>
+              </svg> */}
             </span>
           )}
         </div>

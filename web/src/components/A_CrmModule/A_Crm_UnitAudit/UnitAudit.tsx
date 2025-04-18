@@ -311,23 +311,75 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
     })
   }
   return (
-   
 
-<div className="h-full flex bg-white mx-2 rounded-lg border border-gray-100 flex-col py-6 bg-gray-50 ">
-  <div className="px-6 max-w-5xl mx-auto w-full">
-    <div className="flex flex-col space-y-4">
+
+
+
+
+    <div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+  <div className="relative min-h-screen mr-6">
+    {/* Background image */}
+    {/* <div className="">
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
+    </div> */}
+
+
+
+        <div className="relative z-0">
+
+
+
+<h1 className="text-[#606062] font-outfit mb-1  mx-auto w-full tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+unit analayes
+  </h1>
+  
+
+  <img
+    alt="CRM Background"
+    src="/bgimgcrm.svg"
+    className="w-full h-auto object-cover"
+  />
+
+
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+    <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Last Modified</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+      </div>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">More info here</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+      </div>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Audit Done By</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <div className="w-full h-full flex justify-center mt-[-70px] z-10 relative">
+  <div className=" max-w-4xl mx-auto px-4 w-full">
+
+  {/* <h1 className="text-[#606062] tracking-[0.06em]  font-medium text-[12px] uppercase  pl-4">Unit Analysis  </h1> */}
+
+    <div className="flex flex-col mt-2 space-y-4">
       
    
       {/* <h2 className="text-xl font-semibold text-[#213343]">Unit Information</h2> */}
 
       <div className="grid gap-8 grid-cols-1">
-        <div className="flex flex-col bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="flex flex-col bg-[#FFFFFF] p-6 rounded-2xl  ">
           <div className="mt-0">
-            <p className="text-gray-700">
+            <p className="text-gray-700 font-outfit">
               Review and recalculate unit details to ensure all data is accurate and up-to-date.
             </p>
             <button
-              className="bg-[#E8E6FE] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-black hover:text-white rounded-lg hover:shadow-md hover:bg-[#E3BDFF] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center justify-center"
+              className="bg-[#E8E6FE] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-black hover:text-black rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 flex items-center justify-center"
               type="submit"
               onClick={() => auditFun()}
               disabled={loading}
@@ -341,6 +393,13 @@ const UnitAudit = ({ title, dialogOpen, data, selUnitDetails }) => {
     </div>
   </div>
 </div>
+
+
+  </div>
+</div>
+   
+
+
 
 
   )

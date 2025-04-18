@@ -1120,16 +1120,19 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
   return (
     <div
-      className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} overflow-y-scroll overflow-x-hidden `}
+      className={`bg-[#F6F5F8]  max-h-screen ${openUserProfile ? 'hidden' : ''} overflow-y-scroll overflow-x-hidden `}
     >
-      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F9F9FA]">
+      <div className=" pb-[2px] px-3 pb-30 mt-0 rounded-xs  bg-[#F6F5F8]">
+      {/* <hr className="pb-[2px] px-3 mt-0 rounded-md bg-[#000] relative overflow-hidden border border-b border-transparent before:absolute before:inset-0 before:rounded-md before:border-[1px] before:border-transparent before:bg-gradient-to-r before:from-transparent before:via-gray-300 before:to-transparent before:pointer-events-none"/> */}
+
+
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full   ">
 
 
              <div className="flex flex-col justify-between">
-              <section className="flex flex-row justify-between bg-[#F9F9FA] px-3 py-1  rounded-md ">
-                <section>
+              <section className="flex flex-row justify-between bg-[#F6F5F8] px-3 py-1  rounded-md ">
+                {/* <section>
                 <section className="flex flex-row   pt-2 justify-between">
                                   <div className="flex flex-row">
                                     <section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
@@ -1145,54 +1148,53 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                                       </span>
                                     </section>
                                     <div className="flex flex-col ml-2 item-right">
-                                      <span
-                                        className={`items-center h-1 mt-[6px] mb-2  text-xs font-semibold text-green-600
-                      `}
-                                      >
-                                        {selCustomerPayload?.customerDetailsObj?.customerName1 ||
-                                          'NA'}
-                                      </span>
-                                      <p className="text-xs tracking-tight  font-body my-[2px]">
-                    <span className="">
-                      {selCustomerPayload?.customerDetailsObj?.phoneNo1}
-                    </span>
 
-                  </p>
-                                      <div className="font text-[12px] text-gray-500 tracking-wide overflow-ellipsis overflow-hidden ">
-                                      {selCustomerPayload?.projName}
-                                      </div>
+
+                                    <div className="flex flex-col gap-1 ml-2 item-right">
+  <div>
+    <p className="items-center h-1 mt-[6px] mb-1 text-[16px] font-semibold text-[#000000]">
+      {selCustomerPayload?.customerDetailsObj?.customerName1 || 'NA'}
+    </p>
+  </div>
+  <div>
+    <p className="mt-1 text-[14px] text-[#000000]">
+      <span>{selCustomerPayload?.customerDetailsObj?.phoneNo1}</span>
+    </p>
+  </div>
+</div>
+
                                       <section>
-                                       {selCustomerPayload?.block_no!= undefined &&  <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                          Block:{selCustomerPayload?.block_no?.toLocaleString(
+                                       {selCustomerPayload?.block_no!= undefined &&  <span className="  text-[12px] h-[20px]  text-[#606062] font-outfit font-medium mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px]  mr-1 ">
+                                          Block: {selCustomerPayload?.block_no?.toLocaleString(
                                             'en-IN'
                                           )}{' '}
 
                                         </span>}
-                                        {selCustomerPayload?.floor_no!= undefined && <span className="  text-[10px] h-[20px]  text-[#005E36] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                          floor:{selCustomerPayload?.floor_no?.toLocaleString(
+                                        {selCustomerPayload?.floor_no!= undefined && <span className="  text-[12px] h-[20px]  text-[#606062] font-outfit font-medium mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px]  mr-1 ">
+                                          floor: {selCustomerPayload?.floor_no?.toLocaleString(
                                             'en-IN'
                                           )}{' '}
 
                                         </span>}
-                                        <span className="  text-[10px] h-[20px]  text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5]  py-[2px] rounded-xl mr-1 ">
-                                        Size:{selCustomerPayload?.area?.toLocaleString(
+                                        <span className="  text-[12px]   text-[#606062] font-outfit font-medium mt-[2px]   py-[2px] mr-1 ">
+                                        Size: {selCustomerPayload?.area?.toLocaleString(
                                             'en-IN'
                                           )}{' '}
                                           sqft
                                         </span>
-                                        <span className="  text-[10px] h-[20px]  text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                        BUA:{  selCustomerPayload?.construct_area!= undefined && <>{selCustomerPayload?.construct_area?.toLocaleString(
+                                        <span className="  text-[12px]  text-[#606062] font-outfit font-medium mt-[2px]  px-[6px] py-[2px]  mr-1 ">
+                                        BUA: {  selCustomerPayload?.construct_area!= undefined && <>{selCustomerPayload?.construct_area?.toLocaleString(
                                             'en-IN'
                                           )}{' '}
                                           sqft</>}
                                         </span>
 
-                                        <span className="  text-[10px] h-[20px] text-[#176600] font-bodyLato font-[600] mt-[2px] border border-[#ECFDF5] px-[6px] py-[2px] rounded-xl mr-1 ">
-                                        Facing:{selCustomerPayload?.facing}
+                                        <span className="  text-[12px]  text-[#606062] font-outfit font-medium mt-[2px]  px-[6px] py-[2px] rounded-xl mr-1 ">
+                                        Facing: {selCustomerPayload?.facing}
                                         </span>
 
-                                         <span className=" text-[10px]  text-[#824605] font-bodyLato font-[600] mt-[2px] bg-[#fff0c7] px-[14px] py-[8px] rounded-xl mr-1 ">
-                        Booked : {prettyDate(selCustomerPayload?.booked_on || 0)}
+                                         <span className=" text-[12px]  text-[#606062] font-outfit font-medium mt-[2px]  px-[6px] py-[2px] rounded-xl mr-1 ">
+                        Booked: {prettyDate(selCustomerPayload?.booked_on || 0)}
                       </span>
                                       </section>
                                     </div>
@@ -1201,18 +1203,92 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
 
 
-                </section>
+                </section> */}
+
+<section className="flex flex-row pt-2 justify-between items-start">
+  <div className="flex flex-row items-start gap-2">
+    {/* Unit Number Box */}
+    {/* <section className="bg-[#EDE9FE]  flex flex-col p-4 py-2 min-w-[50px] max-w-fit   items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
+  <div className="font-semibold text-[#0E0A1F] text-[22px] tracking-wide">
+    {selCustomerPayload?.unit_no}
+  </div>
+  <span className="text-xs font-medium text-[#0E0A1F]  mt-1">Unit No</span>
+
+</section> */}
+
+
+
+<section className="bg-violet-100  items-center rounded-2xl shadow-xs flex flex-col px-2 py-1 shadow">
+                                      <div className="font-semibold text-[#053219]  text-[22px]  mb-[1] tracking-wide">
+                                        {selCustomerPayload?.unit_no}
+                                      </div>
+
+                                      <span
+                                        className={`items-center h-6   font-outfit text-xs font-semibold text-gray-500  rounded-full
+                      `}
+                                      >
+                                        Unit No
+                                      </span>
+                                    </section>
+
+
+
+    {/* Customer & Property Details */}
+    <div className="flex flex-col">
+      {/* Customer Name & Phone Number */}
+      <div>
+        <p className="text-[16px] font-outfit font-semibold text-[#000000]">
+          {selCustomerPayload?.customerDetailsObj?.customerName1 || 'NA'}
+        </p>
+        <p className="text-[12px] font-outfit text-[#606062] font-medium">
+          {selCustomerPayload?.customerDetailsObj?.phoneNo1}
+        </p>
+      </div>
+
+      {/* Property Details */}
+
+      <section className="flex flex-wrap items-center">
+  {selCustomerPayload?.block_no !== undefined && (
+    <h2 className="text-[12px] text-[#606062] font-medium border border-[#ECFDF5] py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+      Block: {selCustomerPayload?.block_no?.toLocaleString('en-IN')}
+    </h2>
+  )}
+  {selCustomerPayload?.floor_no !== undefined && (
+    <span className="text-[12px] text-[#606062] font-medium border border-[#ECFDF5] py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+      Floor: {selCustomerPayload?.floor_no?.toLocaleString('en-IN')}
+    </span>
+  )}
+  <h2 className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+    Size: {selCustomerPayload?.area?.toLocaleString('en-IN')} sqft
+  </h2>
+  {selCustomerPayload?.construct_area !== undefined && (
+    <h2 className="text-[12px]  font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+      BUA: {selCustomerPayload?.construct_area?.toLocaleString('en-IN')} sqft
+    </h2>
+  )}
+  <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md relative after:content-['|'] after:mx-2 after:text-[#606062] last:after:content-none">
+    Facing: {selCustomerPayload?.facing}
+  </span>
+  <span className="text-[12px] font-outfit text-[#606062] font-medium py-1 rounded-md">
+    Booked: {prettyDate(selCustomerPayload?.booked_on || 0)}
+  </span>
+</section>
+
+  
+    </div>
+  </div>
+</section>
+
                 <section className="flex flex-row  h-[28px] mt-6">
                   <section
-                    style={{ padding: '12px 16px' }}
+                    style={{ padding: '14px 10px' }}
 
-                   className="flex group  flow-row justify-between bg-white  py-[15px]  mr-2   text-black rounded-3xl items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]">
-                    <div className="font-medium text-sm text-gray-700 tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
+                   className="flex group  flow-row justify-between bg-white  py-[15px]  mr-2   border border-[#E7E7E9]  text-black rounded-lg items-center align-middle text-xs cursor-pointer  hover:bg-[#E5E7EB]">
+                    <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[1px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
 
-                    {/* <div className="font-medium	 text-sm   text-gray-700 tracking-wide border-r-[1.5px] border-gray-500 pr-2  h-2 mr-1"> */}
                       CRM Owner
                     </div>
-                    <div className="font-md ml-2 text-xs tracking-wide font-semibold text-slate-900 ">
+                    <div className="font-md ml-2 text-xs tracking-wide font-semibold text-[#000000] ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                         <div className=''>
                           <AssigedToDropCompCrm
@@ -1232,13 +1308,15 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                       )}
                     </div>
                   </section>
-                  <section className="flex group flow-row justify-between  py-[15px] mr-2    px-[15px] bg-white text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]">
-                  <div className="font-medium text-sm text-gray-700 tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
+                  <section 
+                  style={{ padding: '14px 10px' }}
+                  
+                  className="flex group flow-row justify-between  py-[15px] mr-2   border border-[#E7E7E9]   px-[15px] bg-white text-black rounded-lg items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]">
+                  <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
 
-                    {/* <div className="font-medium		 text-sm text-gray-700 tracking-wide   border-r-[1.5px] border-gray-500 pr-2 mr-1"> */}
                       Status
                     </div>
-                    <div className="font-md  ml-2  text-xs tracking-wide font-semibold text-slate-900 ">
+                    <div className="font-md  ml-2  text-xs tracking-wide font-semibold text-[#000000] ">
                       {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                         <div className=''>
                           <AssigedToDropCompCrm
@@ -1262,21 +1340,21 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                     </div>
                   </section>
                 { (user?.role.includes('crm-manager') || user?.role.includes('crm-executive') || user?.role.includes('admin'))&&  <button
-                    className="text-[10px]  rounded-2xl ml-2 bg-[#E8E6FE] px-5 border    border-[#E3BDFF] text-gray-800"
+                    className="text-[12px]  rounded-lg ml-2 bg-[#EDE9FE] px-5 border font-semibold  capitalize  border-[#E3BDFF] text-[#0E0A1F]"
                     onClickCapture={() => {
                       openPaymentFun()
                     }}
                   >
-                    CAPTURE PAYMENT
+                    Capture Payment
                   </button>}
 
                   {customerDetails?.man_cs_approval==="approved" &&<button
-                    className=" text-[10px]  rounded-2xl ml-2 bg-white px-5 border  border-[#E3BDFF]"
+                    className=" text-[12px]  rounded-lg ml-2 bg-white px-5 border font-semibold capitalize  border-[#E3BDFF] "
                     onClickCapture={() => {
                       openDemandFun()
                     }}
                   >
-                    MODIFICATIONS
+                    Modifications
                   </button>}
 
                 </section>
@@ -1349,12 +1427,26 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
 
 
+      <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4" />
+
+
+      {/* <hr className="h-[1px] bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4" /> */}
+
+
+
+
+
+
+
+{/* 
+changed her */}
+{/* 
 <div className='bg-[#F9F9FA] p-8  rounded-lg'>
 
 <div className="grid bg-[#F9F9FA]  rounded-lg grid-cols-3 gap-4 mb-3">
   <div className="bg-white p-4 rounded-lg">
     <div className="flex justify-between ">
-      <span className="font-medium">Stage Balance</span>
+      <span className="font-medium">Stage Balance box1</span>
       <span className='font-semibold'>...</span>
     </div>
     <div className="relative flex justify-center items-center">
@@ -1375,7 +1467,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
 
         </Pie>
-        {/* <Tooltip content={<CustomTooltip />} /> */}
+        <Tooltip content={<CustomTooltip />} />
 
       </PieChart>
 
@@ -1437,11 +1529,11 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
     </div>
     <div className="text-center">
       <div className="text-[12px] text-gray-500">Paid</div>
-      {/* <div className="font-bold text-[14px]"> 
+      <div className="font-bold text-[14px]"> 
 
       ₹{Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
         
-        </div> */}
+        </div>
 
         <div
                 className="relative flex flex-col items-center group"
@@ -1460,9 +1552,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                     }}
                   >
                     <span className="italic">
-                      {/* {toWords?.convert(Math.round(selCustomerPayload?.T_elgible || 0))} */}
 
-                      {/* {toWords?.convert(Math.round(selCustomerPayload?.T_elgible || 0))} */}
 
                       {formatIndianNumber?.(Math.round(selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0))}
 
@@ -1475,7 +1565,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                   ></div>
                 </div>
                 <span className="text-[14px] font-bold ">
-      {/* ₹ {Math.round(selCustomerPayload?.T_elgible || 0).toLocaleString('en-IN')} */}
+
 
       ₹{Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
 
@@ -1492,10 +1582,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
     </div>
     <div className="text-center">
       <div className="text-[12px] text-gray-500">Balance</div>
-      {/* <div className="font-bold text-[14px]">
-      ₹ {Math.round(Math.max(selCustomerPayload?.T_elgible_balance || 0, 0)).toLocaleString('en-IN')}
 
-        </div> */}
 
 
 <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
@@ -1531,7 +1618,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
   <div className="bg-white  p-4 rounded-lg">
     <div className="flex justify-between items-center">
-      <span className="font-medium">Unit Cost</span>
+      <span className="font-medium">Unit Cost box1</span>
       <ChevronDownIcon size={16} className="ml-2" />
     </div>
     <div className="relative flex justify-center items-center">
@@ -1552,7 +1639,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
           <Cell fill="#E3BDFF" />
           <Cell fill="#E5E7EB" />
         </Pie>
-        {/* <Tooltip content={<CustomTooltiptwo />} /> */}
+  
 
       </PieChart>
 
@@ -1568,7 +1655,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
     </div>
     <section className="flex flex-row justify-between mx-2">
     <div className="text-center">
-      <div className="text-[12px] text-gray-500">Unit Cost</div>
+      <div className="text-[12px] text-gray-500">Unit Cost box1</div>
       <div className="font-bold text-[14px]">
       ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
 
@@ -1595,7 +1682,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
   <div className="bg-white p-4 rounded-lg">
 
     <div className="flex justify-between items-center">
-  <span className="font-medium">Unit Payments</span>
+  <span className="font-medium">Unit Payments box1</span>
   <BellIcon size={16} className="ml-2" />
 </div>
 
@@ -1627,7 +1714,9 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 </div>
 
 
-</div>
+</div> */}
+
+{/* changed her end */}
 
 
       <UnitFullSummary

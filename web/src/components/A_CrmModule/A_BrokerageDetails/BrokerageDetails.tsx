@@ -82,10 +82,65 @@ const BrokerageDetails = ({ selUnitDetails }) => {
   });
 
   return (
-    <div className="min-h-screen bg-white mx-2 rounded-lg border border-gray-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div className=" w-[540px] mx-auto">
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="p-6 border-b border-gray-200">
+
+
+
+    
+<div className="overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+  <div className="relative min-h-screen mr-6">
+    {/* Background image */}
+    {/* <div className="">
+      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
+    </div> */}
+
+
+<div className="relative z-0">
+
+
+
+<h1 className="text-[#606062] font-outfit  mb-1  mx-auto w-full  tracking-[0.06em] font-heading font-medium text-[12px] uppercase mb-0">
+Brokerage Details
+  </h1>
+  
+  {/* Background image */}
+  <img
+    alt="CRM Background"
+    src="/bgimgcrm.svg"
+    className="w-full h-auto object-cover"
+  />
+
+  {/* Heading at very top of image */}
+
+  {/* Centered 3-column grid inside image */}
+  <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full px-4 z-10">
+    <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4  ">
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Eligible /Not</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+      </div>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Payable amount</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+
+      </div>
+      <div className="text-center space-y-2">
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.72px] text-[#606062]">Payable before</p>
+        <h2 className="font-outfit font-medium text-[22px] leading-[100%] tracking-[1.32px]">No Data</h2>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <div className="w-full h-full flex justify-center mt-[-70px] z-10 relative">
+      
+
+    <div className="min-h-screen  mx-2 ">
+      <div className=" max-w-xl	mx-auto">
+        <div className="bg-white rounded-2xl overflow-hidden">
+          <div className="p-4 border-b border-gray-200">
             <h1 className="text-[20px] font-medium text-[#000000]    mb-[2px] ">
               {existingBrokerage ? 'Edit Brokerage Details' : 'Add Brokerage Details'}
             </h1>
@@ -102,14 +157,14 @@ const BrokerageDetails = ({ selUnitDetails }) => {
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                       <div>
-                        <label className="block text-[10px] font-medium text-[#6A6A6A]">
+                        <label className="block text-[12px] mb-3 font-outfit font-medium text-[#616162]">
                           Broker Name
                         </label>
                         <TextField2
                         
                           name="brokerName"
                           type="text"
-                           className="mt-1 block w-full border-0 border-b border-gray-400 focus:border-gray-400 focus:ring-0 focus:outline-none sm:text-sm"
+                           className="mt-1 block w-full border-0 border-b-[1.6px] border-[#E7E7E9] focus:border-[#E7E7E9] focus:ring-0 focus:outline-none sm:text-sm"
                         />
                       </div>
 
@@ -118,59 +173,94 @@ const BrokerageDetails = ({ selUnitDetails }) => {
 
 
 
+                      <div className='flex flex-col'>
 
+                      <label className="block text-[12px]   font-outfit font-medium text-[#616162]  mb-1">
+  Brokerage Type
+</label>
+<div className="flex space-x-2">
+  <button
+    type="button"
+    onClick={() => formik.setFieldValue('brokerageType', 'percentage')}
+    className={`px-6 py-1  rounded-md text-sm border ${
+      formik.values.brokerageType === 'percentage'
+        ? 'bg-[#E8E6FE] text-[##0E0A1F] font-medium border-[#A59EFF] border-2'
+        : 'bg-white text-[#0E0A1F] font-medium border-[#0E0A1F] border-2'
+    }`}
+  >
+    Percentage
+  </button>
+  <button
+    type="button"
+    onClick={() => formik.setFieldValue('brokerageType', 'fixed')}
+    className={`px-6 py-1  rounded-md text-sm border ${
+      formik.values.brokerageType === 'fixed'
+        ? 'bg-[#E8E6FE] text-black font-medium border-[#A59EFF] border-2'
+        : 'bg-white text-[#0E0A1F] font-medium border-[#0E0A1F] border-2'
+    }`}
+  >
+    Fixed
+  </button>
+</div>
 
-
-                      <div>
-                        <label className="block text-[10px] font-medium text-[#6A6A6A]">
-                          Brokerage Type
-                        </label>
-                        <select
-                          name="brokerageType"
-                        //   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        className="mt-1.5 block w-full border-0 border-b border-gray-400 focus:border-gray-400 focus:ring-0 focus:outline-none sm:text-sm"
-
-                          onChange={(e) =>
-                            formik.setFieldValue('brokerageType', e.target.value)
-                          }
-                        >
-                          <option value="percentage">Percentage</option>
-                          <option value="fixed">Fixed Amount</option>
-                        </select>
                       </div>
+
+
+
+
+
+
+
                     </div>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                       <div>
-                        <label className="block text-[10px] font-medium text-[#6A6A6A]">
+                        <label className="block text-[12px] mb-4  font-outfit font-medium text-[#616162]">
                           Brokerage Amount
                         </label>
                         <TextField2
                           name="brokerageAmount"
                           type="number"
                         //   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        className="mt-1 block w-full border-0 border-b border-gray-400 focus:border-gray-400 focus:ring-0 focus:outline-none sm:text-sm"
+                        className="mt-1 block w-full border-0 border-b-[1.6px] border-[#E7E7E9] focus:border-[#E7E7E9] focus:ring-0 focus:outline-none sm:text-sm"
                         />
                       </div>
-                      <div>
+                      {/* <div>
                         <label className="block text-[10px] font-medium text-[#6A6A6A]">
                           Transaction Date
                         </label>
                         <CustomDatePicker
                           selected={formik.values.transactionDate}
+                          
                           onChange={(date) => {
                             formik.setFieldValue('transactionDate', date.getTime());
                           }}
-                        //   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         className="mt-1 block w-full border-0 border-b border-gray-400 focus:border-gray-400 focus:ring-0 focus:outline-none sm:text-sm"
                           dateFormat="MMM dd, yyyy"
                         />
-                      </div>
+                      </div> */}
+
+<div>
+  <label className="block text-[12px] mb-3 font-medium text-[#616162]  font-outfit">
+    Transaction Date
+  </label>
+  <div className="relative w-full border-0 border-b-[1.6px] border-[#E7E7E9]   focus-within:border-[#E7E7E9]">
+    <CustomDatePicker
+      selected={formik.values.transactionDate}
+      onChange={(date) => {
+        formik.setFieldValue('transactionDate', date.getTime());
+      }}
+      className="w-full bg-transparent outline-none text-sm"
+      dateFormat="MMM dd, yyyy"
+    />
+  </div>
+</div>
+
                     </div>
                     <div className="text-center">
                       <button
                         type="submit"
                         disabled={loading}
-                        className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-[#00ADB4] hover:bg-[#00ADB4] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="inline-flex items-center px-6 py-3 border border-transparent text-base   shadow-sm text-Black  bg-[#E8E6FE] px-6 py-2 mt-4 text-sm shadow-sm font-medium tracking-wider text-[#0E0A1F] hover:text-[#0E0A1F] rounded-lg hover:shadow-md hover:bg-[#DBD3FD] transition-all duration-200 focus:outline-none  flex items-center justify-center"
                       >
                         {loading ? (
                           <Loader className="w-5 h-5 mr-2" />
@@ -188,7 +278,7 @@ const BrokerageDetails = ({ selUnitDetails }) => {
             {/* Display Saved Data Section */}
             {existingBrokerage ? (
               <div className="mt-10">
-                <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                <h2 className="text-xl  font-outfit font-semibold text-gray-800 mb-4">
                   Saved Brokerage Details
                 </h2>
                 <div className="bg-gray-50 p-6 rounded-lg">
@@ -222,10 +312,10 @@ const BrokerageDetails = ({ selUnitDetails }) => {
               </div>
             ) : (
               <div className="mt-10">
-                <h2 className="text-xl font-medium text-[#000000]  mb-4">
+                <h2 className="text-xl  font-outfit font-medium text-[#000000]  mb-4">
                   No Brokerage Details Found
                 </h2>
-                <p className="text-[#6A6A6A] font-normal  mt-2 text-[12px]">
+                <p className="text-[#6A6A6A]  font-outfit font-normal  mt-2 text-[12px]">
                   No brokerage details have been added yet. Use the form above to add details.
                 </p>
               </div>
@@ -234,6 +324,22 @@ const BrokerageDetails = ({ selUnitDetails }) => {
         </div>
       </div>
     </div>
+
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+    
+
+
+
+
   );
 };
 

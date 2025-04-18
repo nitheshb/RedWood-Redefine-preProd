@@ -601,7 +601,7 @@ const UnitsInventoryHome = ({ project }) => {
 
 
         {projectDetails == undefined && (
-          <div className="py-8 px-8 mt-10 flex flex-col items-center bg-red-100 rounded">
+          <div className="py-8 px-8 mt-10 flex flex-col  items-center bg-red-100 rounded">
             <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
               <img
                 className="w-[180px] h-[180px] inline"
@@ -619,7 +619,7 @@ const UnitsInventoryHome = ({ project }) => {
         )}
 
         {projectDetails != undefined && (
-          <div className="mt-4">
+          <div className="mt-4 ">
 
               <FloordetailsSearch
               pId={projectDetails?.uid}

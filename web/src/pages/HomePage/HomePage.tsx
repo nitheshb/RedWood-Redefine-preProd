@@ -988,7 +988,7 @@ const HomePage = () => {
 
                                         </div>
                                       </div>
-                                      <section className="mx-2 rounded-xl bg-white shadow p-2">
+                                      <section className="mx-2 rounded-xl bg-[#F6F5F8] shadow p-2">
                                         {projects
                                             .filter(project =>
                                               selectedFilter === 'All'

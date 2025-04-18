@@ -8,15 +8,18 @@ export const CustomRadioGroupProject = ({ label, value, onChange, options }) => 
         {label}
         <abbr title="required"></abbr>
       </label> */}
-      <div className="mb-4  ml-2 mt-2">
+
+      <div className='py-2 px-2'>
+
+      <div className="mb-1 mx-1">
           <div className="inline">
             <div className="">
-              <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+              <label className="font-medium text-[12px] uppercase text-[#606062]">
               {label}<abbr title="required"></abbr>
               </label>
             </div>
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div>
+            {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#57C0D0]"></div> */}
           </div>
         </div>
 
@@ -34,7 +37,7 @@ export const CustomRadioGroupProject = ({ label, value, onChange, options }) => 
                 }
 ${
   value.name == option.name
-    ? 'ring-1  ring-[#57c0d0] border bg-opacity-75   text-black'
+    ? 'ring-1  ring-[#0E0A1F] border bg-opacity-75   text-black'
     : 'bg-white'
 }
 relative rounded-lg px-5 py-2 cursor-pointer flex border border-[#E5E7EB] col-span-2`
@@ -42,26 +45,34 @@ relative rounded-lg px-5 py-2 cursor-pointer flex border border-[#E5E7EB] col-sp
             >
               {() => (
                 <>
-                  <div className="w-[156px]  flex justify-between ">
+                  <div className="w-[152px]  flex justify-between ">
                     <div className="w-full">
                       <div className="text-sm">
                         <RadioGroup.Label
                           as="p"
-                          className={`font-medium flex flex-col  ${
-                            value.name == option.name
-                              ? 'text-gray-900'
-                              : 'text-gray-900'
+                          // className={`font-medium flex flex-row gap-2  ${
+                          //   value.name == option.name
+                          //     ? 'text-gray-900'
+                          //     : 'text-gray-900'
+                          // }`}
+                          className={`font-medium flex flex-row gap-2 ${
+                            value.name === option.name ? 'text-gray-900' : 'text-gray-500'
                           }`}
+                          
                         >
                           <section className=" col-span-4 flex flex-row justify-center ">
                             {option.img && (
                               <img
-                                className="w-5 h-5 inline"
+                                // className="w-5 h-5 inline"
+                                className={`w-5 h-5 inline transition duration-200 ${
+                                  value.name === option.name ? 'grayscale-0' : 'grayscale'
+                                }`}
+                                
                                 alt=""
                                 src={option.img}
                               ></img>
                             )}
-                            <div
+                            {/* <div
                               className={`${
                                 option.name == value.name
                                   ? 'flex-shrink-0 text-white ml-auto'
@@ -91,9 +102,9 @@ relative rounded-lg px-5 py-2 cursor-pointer flex border border-[#E5E7EB] col-sp
                                   strokeLinejoin="round"
                                 />
                               </svg>
-                            </div>
+                            </div> */}
                           </section>{' '}
-                          <div className="mt-1 mr-2 inline  text-sm text-b font-light ">
+                          <div className=" mr-2 inline  text-sm text-b font-light ">
                             {option.name}
                           </div>
                         </RadioGroup.Label>
@@ -106,6 +117,10 @@ relative rounded-lg px-5 py-2 cursor-pointer flex border border-[#E5E7EB] col-sp
           ))}
         </div>
       </RadioGroup>
+
+      </div>
+
+
     </>
   )
 }

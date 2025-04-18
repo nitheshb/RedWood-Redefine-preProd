@@ -19,9 +19,9 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { useSnackbar } from 'notistack'
 import { updateUnitDocs } from 'src/context/dbQueryFirebase'
 import { Timestamp } from 'firebase/firestore'
-import { Loader } from 'lucide-react'
+import { ChevronDownIcon, ChevronUpIcon, Loader } from 'lucide-react'
 
-const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
+const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploadedCount  }) => {
   const { user } = useAuth()
   const { orgId } = user
   const [showModel, setShoModel] = useState(false)
@@ -32,18 +32,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
   const { enqueueSnackbar } = useSnackbar()
   const [imageUrl, setImageUrl] = useState(null)
   const [uploading, setUplaoding] = useState(false)
-
-
-
-
-
-
   const [progress, setProgress] = useState(0)
-
-
-
-
-
 
   useEffect(() => {
     if (date) {
@@ -86,7 +75,7 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
             updateUnitDocs(orgId,id,'Uploaded',fileName,x1,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
             setUplaoding(false)
             return url
-  
+
           })
         }
       )
@@ -125,18 +114,53 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
     const x= {[`${data?.type}DocUrl`] : '', [`${data?.type}FilName`]: '',[`${data?.type}DocUpDate`]: 0}
         updateUnitDocs(orgId,id,'Deleted doc',fileName, x,user.email,'Doc Deleted Successfully','error',enqueueSnackbar)
    }
+
+
+
+   const [showDropdown, setShowDropdown] = useState(false)
+
+
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown)
+  }
+
+
   return (
     <>
-      <div className="flex max-w-3xl mx-auto items-center p-4 rounded-lg hover:bg-gray-300 cursor-pointer text-gray-700 text-sm">
-        <DocumentTextIcon className="w-4 h-4 text-blue-500" />
-        <p className="flex-grow pl-2 pr-10">{fileName}</p>
-        <p className="pr-3 text-xs truncate text-green-800">{data?.filName}</p>
-        <p className="mr-3 px-2 py-1 rounded-2xl text-xs truncate bg-green-200 text-green-900">{status}</p>
-        {uploading && <Loader className="w-4 h-4 mr-2" />}
+    <div className=" justify-between max-w-3xl items-center  rounded-lg cursor-pointer text-gray-700 text-sm">
 
-        <p className="pr-3 text-xs truncate">{prettyDate(data?.time) || 'NA'}</p>
-        {data?.type}
+        {/* <DocumentTextIcon className="w-4 h-4 text-blue-500" /> */}
+
+
+{/*
+        <div className='flex gap-1  flex-col'>
+
+          <div>
+
+
+        <p className=" font-outfit font-medium font-[#606062] font-[12px]">{prettyDate(data?.time) || 'NA'}</p>
+        <p className="flex-grow  font-[#0E0A1F] font-[12px]  font-semibold  ">{fileName}</p>
+
+          </div>
+
+
+
+
+
         <div>
+        <button onClick={toggleDropdown}>
+      {showDropdown ? (
+        <ChevronUpIcon className="w-4 h-4" />
+      ) : (
+        <ChevronDownIcon className="w-4 h-4" />
+      )}
+    </button>
+        </div>
+
+
+        <div>
+        <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1">
                       <label
                         htmlFor={data?.id}
                         className="form-label cursor-pointer inline-block mt-  font-regular text-xs rounded-2xl  py-1 "
@@ -155,26 +179,196 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
                         }}
                       />
                     </div>
+        </div>
+        </div>
+       */}
 
 
-        <button
-          color="gray"
-          className="border-0 block rounded ml-2"
-          onClick={() => { downloadImage(
-            data?.url,
-            `${data?.filName}`
-          )}}
-        >
-          <DownloadIcon name="delete" className="w-4 h-4" />
-        </button>
 
-        <button
-          color="gray"
-          className="border-0 block rounded ml-2"
-          onClick={() => {deleteDoc()}}
-        >
-          <TrashIcon name="delete" className="w-4 h-4" />
-        </button>
+
+
+<div className="flex items-center justify-between bg-white rounded-md p-3 w-full">
+
+  <div className="flex items-center gap-2">
+    <img
+      alt="Document icon"
+      src="/IconSetsdoc.svg"
+      className="w-5 h-5"
+    />
+    <p className="text-[#0E0A1F] text-[14px] font-medium  font-outfit">
+      {fileName}
+    </p>
+  </div>
+
+
+  <div className="flex items-center gap-3">
+
+    {uploadedCount > 0 && (
+      <span className="text-[12px] font-outfit text-[#606062]">
+        {uploadedCount} Documents
+      </span>
+    )}
+
+
+    <div className="flex items-center">
+      <label
+        htmlFor={data?.id}
+        className="cursor-pointer"
+      >
+        <img
+          alt="Add document"
+          src="/docplus.svg"
+          className="w-5 h-5"
+        />
+      </label>
+      <input
+        type="file"
+        className="hidden"
+        id={data?.id}
+        onChange={(e) => {
+          handleFileUploadFun(e.target.files[0], data.type);
+        }}
+      />
+    </div>
+
+    <button onClick={toggleDropdown} className="flex items-center justify-center">
+      {showDropdown ? (
+        <ChevronUpIcon className="w-4 h-4" />
+      ) : (
+        <ChevronDownIcon className="w-4 h-4" />
+      )}
+    </button>
+  </div>
+</div>
+
+
+<div className='my-4'>
+{showDropdown && (
+
+<div className=' w-[100%] flex justify-between items-center  bg-[#FFFFFF] rounded-md p-4'>
+
+
+
+<div className='flex items-center gap-2 '>
+
+
+
+
+<img
+    alt="CRM Background"
+    src="/IconSetsdoc.svg"
+    className="w-5 h-5"
+  />
+
+
+
+
+  <div className='flex-col'>
+  <p className="font-outfit font-medium text-[#606062] text-[12px]">
+      {prettyDate(data?.time) || 'NA'}
+    </p>
+{uploading && <Loader className="w-4 h-4 mr-2" />}
+<p className="pr-3 font-medium  truncate font-outfit text-[14px] text-[#0E0A1F]">{data?.filName}</p>
+  </div>
+
+</div>
+
+
+
+
+<div className=''>
+
+<div className='flex items-center'>
+
+
+
+
+
+  <div>
+  <img
+    alt="CRM Background"
+    src="/docv.svg"
+    className="w-5 h-5"
+  />
+
+  </div>
+
+<button
+  color="gray"
+  className="border-0 block rounded ml-2"
+  onClick={() => { downloadImage(
+    data?.url,
+    `${data?.filName}`
+  )}}
+>
+  {/* <DownloadIcon name="delete" className="w-4 mt-2 h-4" /> */}
+
+
+<img
+    alt="CRM Background"
+    src="/docd.svg"
+    className="w-5 h-5"
+  />
+
+</button>
+
+
+
+<button
+  color="gray"
+  className="border-0 block rounded ml-2"
+  onClick={() => {deleteDoc()}}
+>
+  {/* <TrashIcon name="delete" className="w-4 h-4" /> */}
+
+
+  <img
+    alt="CRM Background"
+    src="/docdd.svg"
+    className="w-5 h-5"
+  />
+
+
+</button>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+)}
+
+</div>
+
+
+
+
+
+        {/* <p className="mr-3 px-2 py-1 rounded-2xl text-xs truncate bg-green-200 text-green-900">{status}</p> */}
+
+
+
+
+
+
+        {/* {data?.type} */}
+
+
+
+
+
+
+
       </div>
 
     </>
@@ -182,3 +376,6 @@ const DocRow = ({ id, fileName, date, amount, status,data, key }) => {
 }
 
 export default DocRow
+
+
+
