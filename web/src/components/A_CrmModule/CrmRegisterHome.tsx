@@ -1515,7 +1515,7 @@ showLabels={true}
                                 <div className="">
                                   <div className="flex items-center ">
 
-                                    <div className="flex items-center border border-[#E7E7E9] rounded-full px-3 py-1 w-fit">
+                                    <div className="flex items-center border border-[#E7E7E9] rounded-full p-[2px] pr-[7px] w-fit">
                                       {finData?.assignedToObj?.label ? (
                                         // Show first letter of name
                                         <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
@@ -1549,7 +1549,7 @@ showLabels={true}
                                                     <section className="flex gap-1 items-center">
                                                       {!(user?.role.includes('crm-executive')) && (
                                                         <div
-                                                          className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1 ${finData?.man_cs_approval == 'approved'
+                                                          className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1 ${finData?.man_cs_approval == 'approved'
                                                             ? 'text-green-700'
                                                             : finData?.man_cs_approval == 'rejected'
                                                               ? 'text-red-700'
@@ -1690,7 +1690,7 @@ className="w-4 h-4"
                                                   {['agreement_pipeline'].includes(selCategory) &&
                                                     <section className='flex gap-2'>
                                                       <div
-                                                        className={`cursor-pointer  border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1 ${finData?.man_ats_approval == 'approved'
+                                                        className={`cursor-pointer  border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1 ${finData?.man_ats_approval == 'approved'
                                                           ? 'text-green-700'
                                                           : finData?.man_ats_approval == 'rejected'
                                                             ? 'text-red-700'
@@ -1761,7 +1761,7 @@ className="w-4 h-4"
                                                       </div>
                                                       {/* section 3*/}
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1${finData?.kyc_status == 'approved'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1${finData?.kyc_status == 'approved'
                                                           ? 'text-green-700'
                                                           : finData?.kyc_status == 'rejected'
                                                             ? 'text-red-700'
@@ -1837,7 +1837,7 @@ className="w-4 h-4"
                                                   {['agreement'].includes(selCategory) &&
                                                     <section className='flex gap-2 '>
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1 ${finData?.both_sd_approval == 'approved'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1 ${finData?.both_sd_approval == 'approved'
                                                           ? 'text-green-700'
                                                           : finData?.both_sd_approval == 'rejected'
                                                             ? 'text-red-700'
@@ -1909,7 +1909,7 @@ className="w-4 h-4"
                                                       </div>
                                                       {/* section 3*/}
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1${finData?.LpostStatus == 'Approved'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1${finData?.LpostStatus == 'Approved'
                                                           ? 'text-green-700'
                                                           : finData?.LpostStatus == 'Rejected'
                                                             ? 'text-red-700'
@@ -1986,7 +1986,7 @@ className="w-4 h-4"
                                                   {['registered', 'possession'].includes(selCategory) &&
                                                     <section className='flex gap-2'>
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1${finData?.both_sd_approval == 'approved'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1${finData?.both_sd_approval == 'approved'
                                                           ? 'text-green-700'
                                                           : finData?.both_sd_approval == 'rejected'
                                                             ? 'text-red-700'
@@ -2059,7 +2059,7 @@ className="w-4 h-4"
                                                       </div>
                                                       {/* section 3*/}
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1${finData?.kyc_status == 'approved'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1${finData?.kyc_status == 'approved'
                                                           ? 'text-green-700'
                                                           : finData?.kyc_status == 'rejected'
                                                             ? 'text-red-700'
