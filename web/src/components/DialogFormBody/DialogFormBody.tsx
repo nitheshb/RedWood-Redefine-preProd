@@ -447,22 +447,25 @@ const DialogFormBody = ({
         sqft)
       </span>
     </label>
+    <span className='my-2'></span>
     <MuiTextField
       id="extent"
-      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1  p-0`}
       size="small"
       InputProps={{
 
         sx: {
           height: '32px',
           fontSize: '0.875rem',
-          borderRadius: '6px',
+          borderRadius: '8px',
+
+      
         },
 
 
 
         startAdornment: (
-          <InputAdornment position="start">
+          <InputAdornment position="start"  sx={{ fontSize: '12px' }}>
             Sqmt
           </InputAdornment>
         ),
@@ -543,11 +546,14 @@ const DialogFormBody = ({
         sx: {
           height: '32px',
           fontSize: '0.875rem',
-          borderRadius: '6px',
+          borderRadius: '8px',
+          
+  
+      
         },
 
         startAdornment: (
-          <InputAdornment position="start">
+          <InputAdornment position="start"  sx={{ fontSize: '12px' }}>
             Sqmt
           </InputAdornment>
         ),

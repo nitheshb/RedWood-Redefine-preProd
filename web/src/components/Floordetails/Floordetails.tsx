@@ -1734,7 +1734,7 @@ const Floordetails = ({
                 >
                   <div className="flex flex-col items-center justify-between">
                     <PlusIcon className="h-3 w-3 mr-1" aria-hidden="true" />
-                    <h3 className="m-0 mt-1 text-sm font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
+                    <h3 className="m-0 mt-1 text-sm font-medium  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
                       Add Unit
                     </h3>
       
@@ -1776,7 +1776,7 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
                 >
                   <div className="flex flex-col items-center justify-between">
                     <PlusIcon className="h-3 w-3 mr-1" aria-hidden="true" />
-                    <h3 className="m-0  text-sm  mt-1 font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
+                    <h3 className="m-0  text-sm  mt-1 font-medium  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
                       Import Units
                     </h3>
        
@@ -1820,7 +1820,7 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
                 >
                   <div className="flex flex-col items-center justify-between">
                     <PlusIcon className="h-3 w-3 mr-1" aria-hidden="true" />
-                    <h3 className="m-0  text-sm  mt-1 font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
+                    <h3 className="m-0  text-sm  mt-1 font-medium  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
                       Import Booked Units
                     </h3>
 
@@ -1853,7 +1853,7 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
                 >
                   <div className="flex flex-col items-center justify-between">
                     <PlusIcon className="h-3 w-3 mr-1" aria-hidden="true" />
-                    <h3 className="m-0  text-sm  mt-1 font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
+                    <h3 className="m-0  text-sm  mt-1 font-medium  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
                       Upload Mortgage Details
                     </h3>
 
@@ -1883,7 +1883,7 @@ console.log('selected type is', ['Apartments', 'Apartment'].includes(
                 >
                   <div className="flex flex-col items-center justify-between">
                     <PlusIcon className="h-3 w-3 mr-1" aria-hidden="true" />
-                    <h3 className="m-0  text-sm  mt-1 font-semibold  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
+                    <h3 className="m-0  text-sm  mt-1 font-medium  leading-tight tracking-tight text-black border-0 border-gray-200 sm:text-1xl md:text-1xl ">
                       Upload Unit Transactions
                     </h3>
    

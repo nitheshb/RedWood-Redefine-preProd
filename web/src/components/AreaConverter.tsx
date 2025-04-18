@@ -26,7 +26,7 @@ export const AreaConverter = ({ formik, hideField, fieldName,textPrimaryName, te
 
   return (
     <div className="mt-3 mb-6">
-      <label htmlFor="area" className="label font-regular text-sm">
+      <label htmlFor="area" className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] ">
         Sqmt Converter
       </label>
       <div className="">
@@ -44,7 +44,8 @@ onChange={formik.handleChange}
             style: {
               height: '2rem',
               padding: '0px',
-              borderRadius: '6px',
+              borderRadius: '8px',
+              // paddingTop: '4px',
             },
             endAdornment: (
               <InputAdornment
@@ -54,6 +55,7 @@ onChange={formik.handleChange}
                   background: '#E5E7EB',
                   paddingLeft: '5px',
                   marginRight: '0px',
+                  // paddingTop: '4px',
                 }}
               >
                 <NoBorderDropDown

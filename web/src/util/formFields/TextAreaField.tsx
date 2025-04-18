@@ -16,7 +16,7 @@ export const TextAreaField = ({ label, ...props }) => {
       /> */}
       <textarea
         className={` ${meta.touched && meta.error && 'is-invalid'}
-           w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md px-4 mt-1`}
+           w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc]  text-[12px] rounded-md px-2 mt-1`}
         {...field}
         {...props}
         autoComplete="off"

@@ -286,10 +286,10 @@ const ProjectAccessHomeList = ({
     setIsAccessSideView(!isAccessSideView)
   }
   return (
-    <div className="h-full flex flex-col py-2  rounded-2xl bg-white mx-4 my-4 ">
+    <div className="h-full flex flex-col py-2  rounded-2xl  mx-4 my-4 ">
       {/* documents page */}
-      <div className="mx-4 my-2 py-2 rounded-md border border-[#E5EAF2] flex flex-col justify-between">
-        <div className="ml-3 mt-1 font-bold">Project Documents</div>
+      <div className="mx-4 my-4 py-2  bg-white  rounded-2xl flex flex-col justify-between">
+        <div className="ml-3 my-2 font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">Project Documents</div>
         <ul className="">
           <li className="">
             <section className="flex flex-row mt- grid grid-cols-4 ">
@@ -326,8 +326,8 @@ const ProjectAccessHomeList = ({
           </li>
         </ul>
       </div>
-      <div className="mx-4 my- py-2 rounded-md border border-[#E5EAF2] flex flex-col justify-between">
-        <div className="ml-3 mt-1 font-bold">Module Access Management</div>
+      <div className="mx-4   py-2 bg-white rounded-2xl flex flex-col justify-between">
+        <div className="ml-3 my-2 font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">Module Access Management</div>
         <ul className="">
           <li className="">
             <section className="flex flex-row mt- grid grid-cols-4 ">
@@ -364,9 +364,9 @@ const ProjectAccessHomeList = ({
           </li>
         </ul>
       </div>
-      <div className="mx-4 my-2 p-4 rounded-md border border-[#E5EAF2] flex flex-row justify-between">
+      <div className="mx-4 my-4 p-4 rounded-2xl  bg-white flex flex-row justify-between">
         <section className="flex flex-col">
-          <h2 className="text-xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+          <h2 className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">
             Project Audit
           </h2>
 
@@ -404,9 +404,9 @@ const ProjectAccessHomeList = ({
           </button>
         </section>
       </div>
-      <div className="mx-4 mb-2 p-4 rounded-md border border-[#E5EAF2] flex flex-row justify-between">
+      <div className="mx-4 mb-2 p-4 rounded-2xl bg-white  flex flex-row justify-between">
         <section className="flex flex-col">
-          <h2 className="text-xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+          <h2 className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">
             Danger Zone
           </h2>
 

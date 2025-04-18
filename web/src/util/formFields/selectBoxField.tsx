@@ -9,16 +9,17 @@ const customStyles = {
     // border: '0',
     // borderBottom: '1px solid #9e9e9e',
     // borderRadius: '0',
-    minHeight: '32px',
-    height: '32px',
-    borderRadius: '6px',
+    minHeight: '28px',
+    height: '28px',
+    borderRadius: '8px',
     boxShadow: state.isFocused ? null : null,
   }),
 
   valueContainer: (provided, state) => ({
     ...provided,
-    height: '30px',
-    padding: '0 6px'
+    height: '28px',
+    padding: '0 6px',
+    fontSize: '12px',
   }),
 
   input: (provided, state) => ({
@@ -30,7 +31,7 @@ const customStyles = {
   }),
   indicatorsContainer: (provided, state) => ({
     ...provided,
-    height: '30px',
+    height: '28px',
   }),
   menu: (provided) => ({ ...provided, zIndex: 9999 }),
 }
