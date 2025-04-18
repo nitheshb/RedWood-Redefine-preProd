@@ -842,14 +842,14 @@ export default function UnitBookingUnblockCRM({
     <div
       className={`bg-white   h-screen    } `}
     >
-      <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F8E7E3]">
+      <div className=" pb-[2px] px-3  ">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
-          <div className="w-full   ">
+          <div className="w-full">
 
 
             <div className="flex flex-col justify-between">
-              <section className="flex flex-row justify-between bg-[#F8E7E3] px-3 py-1 border border-[#e5e7f8] rounded-md ">
-                <section>
+              <section className="flex flex-row justify-between bg-white px-3 py-1 h-[50px] ">
+                {/* <section>
                   <section className="flex flex-row">
                     <img
                       src="https://static.ambitionbox.com/static/benefits/WFH.svg"
@@ -949,7 +949,7 @@ export default function UnitBookingUnblockCRM({
                       )}
                     </div>
                   </section>
-                </section>
+                </section> */}
               </section>
             </div>
           </div>

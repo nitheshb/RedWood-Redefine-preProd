@@ -102,21 +102,24 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
   }
   return (
     <>
-      <section className="bg-blueGray-50 ">
-        <div className="w-full  mx-auto ">
-          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-[#F9FBFB] border-0 ">
-            <div className="rounded-t bg-[#F1F5F9] mb-0 px-3 py-2">
+      <section className="mt-8">
+        <div className="w-full  mx-auto mx-4  my-4 ">
+          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-2xl bg-white border-0 ">
+            {/* <div className="rounded-t bg-[#F1F5F9] mb-0 px-3 py-2">
               <div className="text-center flex justify-between">
                 <p className="text-xs font-extrabold tracking-tight uppercase font-body my-1">
                   UnBlock Unit
                 </p>
               </div>
-            </div>
+            </div> */}
             <div className="mx-2 o my-10 mt-4 ">
               <div className="bg-white p-10 rounded-xl">
-                <h1 className="text-center text-xl font-semibold text-gray-500">
+                <h1 className="text-center text-[#000000s] font-outfit font-medium text-[18px] leading-[100%] tracking-[0em]">
                   Are you Sure to Unblock this unit?
                 </h1>
+
+                <hr className="h-[1px] w-[300px] bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4 mx-auto" />
+
 
                 <Formik
                   initialValues={initialState}
@@ -129,12 +132,12 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
                 >
                   {(formik) => (
                     <Form className="mt-8">
-                      <div className="flex justify-center border-2 py-2 px-6 rounded-xl">
+                      <div className="flex justify-center gap-4">
                         <input
                           type="text"
                           name="blockReason"
                           placeholder="Write Unblock Reason"
-                          className="w-full outline-none text-gray-700 text-lg"
+                          className="w-full h-10 outline-none  rounded-[12px] border border-[#616162] gap-[10px] p-1"
                           onChange={(e) => {
                             formik.setFieldValue('blockReason', e.target.value)
                           }}
@@ -146,7 +149,7 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
                         />
                         <button
                           type="submit"
-                          className="bg-[#FFCD3E]  text-green-50 font-semibold px-6 py-2 rounded-xl text-md"
+                          className=" bg-[#EDE9FE] rounded-[8px] px-[5px] text-[12px] py-[8px] gap-[10px]  h-9 w-[120px]"
                         >
                           Unblock Unit
                         </button>
@@ -158,8 +161,8 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
             </div>
 
             {bookingProgress && (
-              <section className="mb-3">
-                <div className="mx-auto flex mt-6 flex-row  ">
+              <section className="mb-3 border rounded-[12px] mx-4  mb-4 border-[#E7E7E9] ">
+                <div className="mx-auto flex mt-4 flex-row  ">
                   <section className="ml-3 w-[300px]">
                     <div className="flex items-center">
                       {bookCompSteps?.includes('payment_captured') && (
@@ -174,7 +177,7 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
                       {bookCurentStep?.includes('payment_captured') && (
                         <Loader />
                       )}
-                      <span className="ml-2 text-md font-bold text-navy-700 ">
+                      <span className="ml-2 font-outfit font-normal text-[16px] leading-[100%] tracking-[0em]">
                         Revert Payment
                       </span>
                     </div>
@@ -192,7 +195,7 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
                           <ExclamationCircleIcon className="w-6 h-6 cursor-pointer ml-1 mb-[3px] mr-2 inline-block text-gray-400 " />
                         )}
                       {bookCurentStep?.includes('CS_updated') && <Loader />}
-                      <span className="ml-4 text-md font-bold text-navy-700 ">
+                      <span className="ml-4 font-outfit font-normal text-[16px] leading-[100%] tracking-[0em] ">
                         Reset Unit Booking Info
                       </span>
                     </div>
@@ -211,7 +214,7 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
                           <ExclamationCircleIcon className="w-6 h-6 cursor-pointer ml-1 mb-[3px] mr-2 inline-block text-gray-400 " />
                         )}
                       {bookCurentStep?.includes('unit_booked') && <Loader />}
-                      <span className="ml-2 text-md font-bold text-navy-700 ">
+                      <span className="ml-2 font-outfit font-normal text-[16px] leading-[100%] tracking-[0em] ">
                         Update Payment Projections
                       </span>
                     </div>
@@ -231,7 +234,7 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
                       {bookCurentStep?.includes('customer_created') && (
                         <Loader />
                       )}
-                      <span className="ml-2 text-md font-bold text-navy-700 ">
+                      <span className="ml-2 font-outfit font-normal text-[16px] leading-[100%] tracking-[0em]">
                         Deattch Asset from Customer
                       </span>
                     </div>
@@ -252,7 +255,7 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
                       {bookCurentStep?.includes('customer_email_send') && (
                         <Loader />
                       )}
-                      <span className="ml-2 text-md font-bold text-navy-700 ">
+                      <span className="ml-2 font-outfit font-normal text-[16px] leading-[100%] tracking-[0em] ">
                         Send Canellation E-mail
                       </span>
                     </div>
@@ -272,7 +275,7 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
                       {bookCurentStep?.includes('notify_to_manager') && (
                         <Loader />
                       )}
-                      <span className="ml-2 text-md font-bold text-navy-700 ">
+                      <span className="ml-2 font-outfit font-normal text-[16px] leading-[100%] tracking-[0em]">
                         Notified to Manager
                       </span>
                     </div>

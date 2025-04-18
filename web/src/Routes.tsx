@@ -11,6 +11,7 @@ import { messaging, getToken  } from 'src/context/firebaseConfig'
 import FinanceHomePagePage from './pages/FinanceHomePagePage/FinanceHomePagePage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage/PrivacyPolicyPage'
 import Profile from './pages/Profile/Profile'
+import { useEffect } from 'react'
 
 const defaultRoutes = () => {
   return (
@@ -39,25 +40,62 @@ const defaultRoutes = () => {
 }
 const Routes = () => {
   const { user } = useAuth()
+
+
+
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/firebase-messaging-sw.js')
+        .then((registration) => {
+          console.log('Service Worker registered:', registration)
+  
+          Notification.requestPermission().then((permission) => {
+            if (permission === 'granted') {
+              getToken(messaging, { serviceWorkerRegistration: registration })
+                .then((token) => {
+                  console.log('FCM Token:', token)
+                })
+                .catch((err) => {
+                  console.error('FCM token error:', err)
+                })
+            }
+          })
+        })
+        .catch((error) => {
+          console.error('Service Worker registration failed:', error)
+        })
+    }
+  }, [])
+  
+
+
+
+
+
+
+
+
   console.log('user yo yo is ', user)
 
   // Request permission and get the token
 
 
-  //   Notification.requestPermission()
-  // .then((permission) => {
-  //   if (permission === 'granted') {
-  //     return getToken(messaging);
-  //   } else {
-  //     throw new Error('Notification permission denied');
-  //   }
-  // })
-  // .then((token) => {
-  //   console.log('FCM Token:', token);
-  // })
-  // .catch((error) => {
-  //   console.log('Error:', error);
-  // });
+    Notification.requestPermission()
+  .then((permission) => {
+    if (permission === 'granted') {
+      return getToken(messaging);
+    } else {
+      throw new Error('Notification permission denied');
+    }
+  })
+  .then((token) => {
+    console.log('FCM Token:', token);
+  })
+  .catch((error) => {
+    console.log('Error:', error);
+  });
   let UpdatedRoutes = defaultRoutes()
   if (user?.role == null) {
     console.log('user yo yo is it is ', user)

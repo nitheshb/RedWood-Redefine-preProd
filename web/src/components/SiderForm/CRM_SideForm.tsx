@@ -140,7 +140,11 @@ const CrmSiderForm = ({
                   <Cs_customerKyc title={title} dialogOpen={setOpen} selUnitPayload={customerDetails} />
                 )}
                 {title === 'crm_loan' && (
+                    <div className="bg-white pl-6">
+
                   <LoanApplyFlowHome customerDetails={customerDetails} setCustomerDetails={setCustomerDetails}  />
+                  </div>
+
                 )}
                 {title === 'crm_legal_clarity' && (
                   <Crm_legal_Clarity title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />

@@ -32,6 +32,8 @@ import { getWeekMonthNo, prettyDateTime } from 'src/util/dateConverter'
 import { db } from './firebaseConfig'
 import { supabase } from './supabase'
 import LeadTaskFooter from 'src/components/Comp_CustomerProfileSideView/LeadTaskFooter'
+import { firebase } from '@redwoodjs/auth/dist/authClients/firebase'
+// import { admin } from './adnim'
 
 // import { userAccessRoles } from 'src/constants/userAccess'
 
@@ -544,7 +546,18 @@ export const saveFilesToFirestore = async (orgId, folderId, files, userId) => {
   }
 };
 
+export const fetchFilesForUnits = async (orgId,snapshot, data, error) => {
 
+
+    const itemsQuery = query(
+      collection(db, `${orgId}_unit_docs`),
+      where('unitId', '==', data?.unitId),
+      where('cat', '==', data?.cat),
+    )
+    console.log('orgname is ====>', orgId)
+    return onSnapshot(itemsQuery, snapshot, error)
+
+};
 
 
 export const fetchFilesForFolder = async (orgId, folderId) => {
@@ -640,7 +653,7 @@ export const streamGetAllTaskManTasks = async (
   const { uid, cutoffDate, statusVAl, showOnlyDone } = data
   // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
 
-  let query = supabase.from(`maahomes_TM_Tasks`).select('*')
+  let query = supabase.from(`${orgId}_TM_Tasks`).select('*')
   if (showOnlyDone) {
     query = query.eq('status', 'Done')
   } else if (!statusVAl) {
@@ -1920,14 +1933,11 @@ export const getTodayTodoLeadsData = (orgId, snapshot, data, error) => {
 }
 export const getCRMTeamTasks = (orgId, snapshot, data, error) => {
   const { type } = data
-
   // type: 'upcoming'
-
   const itemsQuery = query(
     collection(db, `${orgId}_crm_tasks`),
     where('staA', 'array-contains-any', ['pending', 'overdue'])
   )
-
   console.log('hello ', status, itemsQuery)
   return onSnapshot(itemsQuery, snapshot, error)
 }
@@ -2415,6 +2425,184 @@ export const getPaymentSchedule = async (
   return onSnapshot(getAllPaymentSchedule, snapshot, error)
 }
 
+
+
+
+
+
+
+// // Get FCM token
+// const getFCMToken = async () => {
+//   try {
+//     const messaging = firebase.messaging();
+//     const currentToken = await messaging.getToken({
+//       vapidKey: 'YOUR_VAPID_KEY_HERE'
+//     });
+
+//     if (currentToken) {
+//       // Save the token to your user's document in Firestore
+//       await updateDoc(doc(db, 'users', userId), {
+//         fcmTokens: arrayUnion(currentToken)
+//       });
+//       console.log('Token registered successfully');
+//       return currentToken;
+//     } else {
+//       console.log('No registration token available. Request permission to generate one.');
+//       return null;
+//     }
+//   } catch (error) {
+//     console.error('An error occurred while retrieving token:', error);
+//     return null;
+//   }
+// };
+
+
+// // Function to send call notification to a user
+// export const sendCallNotification = async (orgId, recipientUserId, callerName, callDetails) => {
+//   try {
+//     // Get the recipient's FCM tokens
+//     const userDoc = await getDoc(doc(db, 'users', recipientUserId));
+
+//     if (!userDoc.exists() || !userDoc.data().fcmTokens) {
+//       console.error('User not found or has no FCM tokens');
+//       return false;
+//     }
+
+//     const fcmTokens = userDoc.data().fcmTokens;
+
+//     // Create call log entry
+//     await addDoc(collection(db, `${orgId}_call_logs`), {
+//       callerName,
+//       recipientId: recipientUserId,
+//       callDetails,
+//       status: 'initiated',
+//       timestamp: serverTimestamp()
+//     });
+
+//     // This would typically be handled by a server-side function
+//     // You'll need a cloud function or backend API to send the actual notification
+//     console.log('Call notification ready for sending to tokens:', fcmTokens);
+
+//     return true;
+//   } catch (error) {
+//     console.error('Error sending call notification:', error);
+//     return false;
+//   }
+// };
+
+// export const sendCallNotificationToMobile = async (orgId, payload) => {
+//   try {
+//     const { leadId, mobileNumber, leadName, salesExecutive } = payload;
+
+//     // 1. Get the sales executive's device token
+//     const userDeviceRef = doc(db, `${orgId}_userDevices`, salesExecutive);
+//     const userDeviceDoc = await getDoc(userDeviceRef);
+
+//     if (!userDeviceDoc.exists() || !userDeviceDoc.data().fcmToken) {
+//       throw new Error('Device not registered with FCM token');
+//     }
+
+//     // 2. Call Cloud Function to send notification
+//     const sendNotification = httpsCallable(functions, 'sendCallNotification');
+//     const response = await sendNotification({
+//       token: userDeviceDoc.data().fcmToken,
+//       notification: {
+//         title: `Call Request: ${leadName}`,
+//         body: `Tap to call ${mobileNumber}`
+//       },
+//       data: {
+//         type: 'call_prompt',
+//         leadId,
+//         phoneNumber: mobileNumber,
+//         leadName,
+//         click_action: 'FLUTTER_NOTIFICATION_CLICK'
+//       }
+//     });
+
+//     // 3. Log the notification in Firestore
+//     const notificationRef = doc(collection(db, `${orgId}_notifications`));
+//     await setDoc(notificationRef, {
+//       userId: salesExecutive,
+//       type: 'call_request',
+//       leadId,
+//       phoneNumber: mobileNumber,
+//       leadName,
+//       status: 'sent',
+//       timestamp: serverTimestamp()
+//     });
+
+//     return {
+//       success: true,
+//       messageId: response.data.messageId
+//     };
+//   } catch (error) {
+//     console.error('Notification error:', error);
+//     throw error;
+//   }
+// };
+
+
+
+
+export const sendCallNotification = async (orgId, payload) => {
+  try {
+    const { leadId, mobileNumber, leadName, salesExecutive } = payload;
+
+    const userDeviceRef = doc(db, `users`, salesExecutive);
+    const userDeviceDoc = await getDoc(userDeviceRef);
+
+    console.log("Fetched Device Doc:", userDeviceDoc.exists() ? userDeviceDoc.data() : "Document does not exist");
+
+    if (!userDeviceDoc.exists() || !userDeviceDoc.data().user_fcmtoken) {
+      console.error("Error: Device not registered. No FCM Token found.");
+      throw new Error('Device not registered');
+    }
+
+    const fcmToken = userDeviceDoc.data().user_fcmtoken;
+
+    const message = {
+      notification: {
+        title: `Call Request: ${leadName}`,
+        body: `Tap to call ${mobileNumber}`,
+      },
+      data: {
+        type: 'call_prompt',
+        leadId,
+        phoneNumber: mobileNumber,
+        leadName,
+        click_action: 'FLUTTER_NOTIFICATION_CLICK'
+      },
+      token: fcmToken
+    };
+
+
+    const response = await admin.messaging().send(message);
+
+    const notificationRef = doc(collection(db, `${orgId}_notifications`));
+    await setDoc(notificationRef, {
+      userId: salesExecutive,
+      type: 'call_request',
+      leadId,
+      data: {
+        phoneNumber: mobileNumber,
+        leadName
+      },
+      status: 'sent',
+      timestamp: serverTimestamp()
+    });
+
+    return {
+      success: true,
+      messageId: response,
+      notificationId: notificationRef.id
+    };
+  } catch (error) {
+    console.error('Notification error:', error);
+    throw error;
+  }
+};
+
+
 export const getAdditionalCharges = async (
   { projectId, phaseId },
   snapshot,
@@ -2638,6 +2826,7 @@ export const addLegalClarificationTicket = async (orgId, dta, user) => {
     )
   })
   await console.log('data is ', data, error)
+
 }
 export const addCampaign = async (orgId, data, by, msg) => {
   try {
@@ -6428,7 +6617,138 @@ let payload= status==='approved'? approveBody: rejectBody
   }
   return
 }
+export const AddUnitDocs = async (
+  orgId,
+  unitId,
+  unitDetails,
+  action,
+  docName,
+  data,
+  by,
+  msg,
+  color,
+  enqueueSnackbar
+) => {
+  try {
+    const filesCollectionRef = collection(db, `${orgId}_unit_docs`);
+    await updateDoc(doc(db, `${orgId}_projects`, unitDetails?.pId), {
+      [`${data?.cat}_doc_count`]: increment(1),
+      [`all_doc_c`]: increment(1),
+      [`internal_doc_c`]: increment(1),
+    })
+    await updateDoc(doc(db, `${orgId}_blocks`, unitDetails?.blockId), {
+      [`${data?.cat}_doc_count`]: increment(1),
+      [`all_doc_c`]: increment(1),
+      [`internal_doc_c`]: increment(1),
+    })
+    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+      [`${data?.cat}_doc_count`]: increment(1),
+      [`all_doc_c`]: increment(1),
+      [`internal_doc_c`]: increment(1),
+    })
 
+    const docRef = await addDoc(filesCollectionRef, data);
+
+    const { data: data4, error: error4 } = await supabase
+      .from(`${orgId}_unit_logs`)
+      .insert([
+        {
+          type: 'document',
+          subtype: action,
+          T: Timestamp.now().toMillis(),
+          Uuid: unitId,
+          by,
+          payload: {},
+          from: 'docUploaded',
+          to: docName,
+        },
+      ])
+      enqueueSnackbar(msg, {
+        variant: color,
+      })
+console.log('data is ===> @@@', data)
+  } catch (error) {
+    console.log('Doc Uplaod failed', error,unitId, {
+      ...data,
+    })
+    console.log('data is ===> @@@', unitId)
+    enqueueSnackbar('Doc Upload Failed.', {
+      variant: 'error',
+    })
+  }
+  return
+}
+export const DeleteUnitDocs = async (
+  orgId,
+  docId,
+  unitId,
+  unitDetails,
+  action,
+  docName,
+  data,
+  by,
+  msg,
+  color,
+  enqueueSnackbar
+) => {
+  try {
+
+    // remove the doc(url) from storage
+    // update record in units_docs table
+    // update record in units table
+    // update record in blocks table
+    // update record in projects table
+    // insert record in unit_logs table
+
+    const filesCollectionRef = collection(db, `${orgId}_unit_docs`);
+    await deleteDoc(doc(db, `${orgId}_unit_docs`, docId))
+    await updateDoc(doc(db, `${orgId}_projects`, unitDetails?.pId), {
+      [`${data?.cat}_doc_count`]: increment(-1),
+      [`all_doc_c`]: increment(-1),
+      [`internal_doc_c`]: increment(-1),
+    })
+    await updateDoc(doc(db, `${orgId}_blocks`, unitDetails?.blockId), {
+      [`${data?.cat}_doc_count`]: increment(-1),
+      [`all_doc_c`]: increment(-1),
+      [`internal_doc_c`]: increment(-1),
+    })
+    await updateDoc(doc(db, `${orgId}_units`, unitId), {
+      [`${data?.cat}_doc_count`]: increment(-1),
+      [`all_doc_c`]: increment(-1),
+      [`internal_doc_c`]: increment(-1),
+    })
+
+
+
+    const { data: data4, error: error4 } = await supabase
+      .from(`${orgId}_unit_logs`)
+      .insert([
+        {
+          type: 'document',
+          subtype: action,
+          T: Timestamp.now().toMillis(),
+          Uuid: unitId,
+          by,
+          payload: {},
+          from: 'docDeleted',
+          to: docName,
+        },
+      ])
+      enqueueSnackbar(msg, {
+        variant: color,
+      })
+console.log('data is ===> @@@', data)
+  } catch (error) {
+    console.log('Doc Deletion failed', error,unitId, {
+      ...data,
+    })
+    console.log('data is ===> @@@', unitId)
+    enqueueSnackbar('Doc Deletion Failed.', {
+      variant: 'error',
+    })
+  }
+  return
+}
 
 
 export const updateUnitDocs = async (

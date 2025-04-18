@@ -41,7 +41,7 @@ const CRMHomeList = ({
   })
 
   return (
-    <div className="h-full flex flex-col  bg-[#F0F1FF] shadow-xl ">
+    <div className="h-full flex flex-col">
       <div className="">
         <div className="flex flex-row ">
          {source=== 'projectManagement' &&  <div className="mr-4 templateList">

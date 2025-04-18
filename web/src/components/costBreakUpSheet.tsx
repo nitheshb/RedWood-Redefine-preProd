@@ -738,7 +738,7 @@ console.log('customer info', myBookingPayload)
                    <section className="bg-white  pt-4 mx-2 px-2 ">
                     <div className="mt-1">
                       <div className="flex flex-row align-middle justify-between  mb-1">
-                        <h6 className="font-bodyLato font-semibold text-sm">
+                        <h6 className="font-medium text-sm">
                           {'Unit Booking'}
                         </h6>
                         <span className="font-bodyLato text-[12px] text-[#94A4C4] ml-1 mt-[1px]">
@@ -771,7 +771,7 @@ console.log('customer info', myBookingPayload)
 
                     <section className='flex flex-col mt-4'>
                     {StatusListA?.map((statusFlowObj, i) => {
-                        return (<section key={i} className={`flex flex-row mt-2 cursor-pointer bg-[#F3F3F3] p-2 py-3 rounded-md border ${onStep != statusFlowObj.value ?' border-white': 'border-violet-300'}`}
+                        return (<section key={i} className={`flex flex-row mt-2 cursor-pointer bg-[#F3F3F3] p-2 py-3 rounded-[12px] font-medium border ${onStep != statusFlowObj.value ?' border-white': 'border-violet-300'}`}
                           onClick={() => setStatusFun(i, statusFlowObj.value)}
                         >
 

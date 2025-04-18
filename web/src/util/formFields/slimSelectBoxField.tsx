@@ -12,6 +12,7 @@ const customStyles = {
     height: 30,
     minHeight: 30,
     padding: 0,
+    borderRadius: 8,
   }),
   valueContainer: (base) => ({
     ...base,
@@ -29,12 +30,23 @@ const customStyles = {
   }),
   menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999 }),
 }
+
+
+
+
+
+
+
+
+
+
 const customStylesVerySmall = {
   control: (base) => ({
     ...base,
     height: 30,
     minHeight: 30,
     padding: 0,
+    borderRadius: 8,
   }),
   valueContainer: (base) => ({
     ...base,
@@ -135,7 +147,7 @@ export const VerySlimSelectBox = ({
           onChange(value)
         }}
         options={options}
-        className={`text-sm font-semibold mt-0  ${
+        className={`text-sm font-semibold  mt-0  ${
           label != '' ? '' : ''
         } border-transparent p-0`}
         classNamePrefix="react-select"

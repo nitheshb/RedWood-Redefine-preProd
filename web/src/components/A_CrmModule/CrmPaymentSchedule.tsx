@@ -182,12 +182,12 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
       <div className="mt-2">
         <section className="flex flex-col  ">
           <div>
-            <div className="border border-[#e5e7f8] bg-[#fff] rounded-md p-3 pb-4">
+            <div className=" rounded-md  pb-4">
               <div className=" flex flex-row px-3 justify-between items-center">
 
                 <div className='flex items-center'>
           
-                <h1 className=" text-bodyLato text-left text-[#1E223C] font-semibold text-[14px] mb-2 mt-1 ml-1">
+                <h1 className=" font-outfit text-left uppercase text-[#606062] font-medium text-[12px] mb-2 mt-1 ml-1">
                   Payment Schedule
                 </h1>
                 </div>
@@ -209,36 +209,32 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
        />
                 </div>
               </div>
-              <table className="w-full mb- ">
-                <thead>
+              <table className="w-full  rounded-2xl  overflow-hidden ">
+                <thead className='ml-2'>
                   {' '}
-                  <tr className="  h-8 ">
-                    <th className="w-[40%] text-[12px] px-3 text-left   tracking-wide   text-[#3D3D3D]   rounded-tl-[10px]  bg-[#E8E6FE] ">
+                  <tr className="   h-9 ">
+                    <th className="w-[34%] text-[12px] px-3 text-left   tracking-wide   text-[#0E0A1F] font-medium pl-6    bg-[#E8E6FE] ">
                     Charges
                     </th>
-                    {/* <th className="w-[10%] text-[10px] text-right text-gray-400  text-[#823d00]  tracking-wide uppercase">
-                      Payment Timeline
-                    </th> */}
-                    <th className="w-[15%] text-[12px] text-center  tracking-wide   text-[#3D3D3D]     bg-[#E8E6FE] ">
-                      Eligible
-                    </th>
-                    <th className="w-[15%] text-[12px]  px-2  text-right tracking-wide    text-[#3D3D3D]     bg-[#E8E6FE] ">
+                    <th className="w-[18%] text-[12px]  px-2  text-right tracking-wide    text-[#0E0A1F] font-medium     bg-[#E8E6FE] ">
                       Total inc GST
                     </th>
-                    <th className="w-[15%] text-[12px]  px-2 text-right    tracking-wide    text-[#3D3D3D]     bg-[#E8E6FE] ">
+                    <th className="w-[18%] text-[12px]  px-2 text-right    tracking-wide    text-[#0E0A1F] font-medium     bg-[#E8E6FE] ">
                       Received
                     </th>
-                    <th className="w-[15%] text-[12px]  px-2 text-right  tracking-wide    text-[#3D3D3D] rounded-tr-[10px]     bg-[#E8E6FE]  ">
+                    <th className="w-[18%] text-[12px]  px-2 text-right  tracking-wide    text-[#0E0A1F] font-medium    bg-[#E8E6FE]  ">
                       Balance
                     </th>
 
+                    <th className="w-[12%] text-[12px] text-center  tracking-wide   text-[#0E0A1F] font-medium  bg-[#E8E6FE] ">
+                      Eligible
+                    </th>
                   </tr>
                 </thead>
 
-                <tbody>
+                <tbody >
                   {PSa?.map((d1, inx) => {
                     totalIs = selCustomerPayload?.T_review
-
                     return (
                       <tr
                         key={inx}
@@ -246,12 +242,12 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                           !d1?.elgible ? '' : ''
                         } `}
                       >
-                        <th className=" text-[12px] text-left text-[#6A6A6A] bg-[#fff] tracking-wide pl-3 ">
+                        <th className=" text-[12px] text-left font-normal  text-[#0E0A1F] bg-[#fff] tracking-wide pl-6">
                           <div>
                             {d1?.stage?.label}
-                            <div className="text-[9px] text-left text-[#6A6A6A] bg-[#fff] tracking-wider ">
+                            <div className="text-[9px] text-left font-normal  text-[#606062] bg-[#fff] tracking-wider ">
                               {' '}
-                              {d1?.description}-{prettyDate(d1?.schDate)}
+                              {d1?.description} {prettyDate(d1?.schDate)}
                             </div>
                             <ul>
                               {d1?.subA?.map((d2, inx) => {
@@ -261,17 +257,24 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                                   </li>
                                 )
                               })}
-
                             </ul>
                           </div>
                         </th>
+                        <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
+                        ₹ {Math.round(Number(d1?.value) || 0).toLocaleString('en-IN')}
+                        </td>
 
+                        <td className="text-[12px] text-right text-green-600 bg-[#fff] px-2 font-bold">
+                        ₹ {Math.round(Number(d1?.amt) || 0).toLocaleString('en-IN')}
+                        </td>
+                        <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
+                        ₹ {Math.round(Number(d1?.outStanding) || 0).toLocaleString('en-IN')}
+                        </td>
                         <td className="text-[10px] text-center  font-bold text-[#6A6A6A] bg-[#fff]">
                           <span
-
                           >
                             <div className="">
-                              <Switch
+                              {/* <Switch
                                 checked={d1?.elgible}
                                 onChange={() => triggerPaymentScheudlefun(d1)}
                                 className={`${
@@ -285,20 +288,15 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
                                       : 'translate-x-1'
                                   } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                                 />
-                              </Switch>
+                              </Switch> */}
+                                          <input
+              type="checkbox"
+              checked={d1?.elgible}
+              onChange={() => triggerPaymentScheudlefun(d1)}
+              className="h-5 w-5 text-black accent-black  border-gray-300 rounded focus:ring-black"
+            />
                             </div>
                           </span>
-                        </td>
-                        <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
-                        ₹ {Math.round(Number(d1?.value) || 0).toLocaleString('en-IN')}
-                        </td>
-
-                        <td className="text-[12px] text-right text-green-600 bg-[#fff] px-2 font-bold">
-
-                        ₹ {Math.round(Number(d1?.amt) || 0).toLocaleString('en-IN')}
-                        </td>
-                        <td className="text-[12px] text-right text-[#6A6A6A] bg-[#fff] px-2 ">
-                        ₹ {Math.round(Number(d1?.outStanding) || 0).toLocaleString('en-IN')}
                         </td>
                       </tr>
                     )
@@ -306,27 +304,36 @@ const CrmUnitPaymentSchedule = ({ selCustomerPayload,  assets, project, totalIs 
 
                   <tr className=" py-3 h-[51px] ">
                     <td className="text-[10px] text-right text-gray-400  bg-[#fff]"></td>
-                    <th className="text-[12px] text-left font-semibold text-[#6A6A6A]  ">
-                      Total Value:
+                      <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
+                      <section className="py-1 d-md  font-medium text-[#0E0A1F] text-[12px]leading-none px-2 ">
+                        Total Value:
+                      </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
-                      <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px]leading-none px-2 ">
+                      <section className="py-1 d-md  font-medium text-[#0E0A1F] text-[12px]leading-none px-2 ">
                       ₹ {Math.round(Number(selCustomerPayload?.T_total) || 0).toLocaleString('en-IN')}
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
-                      <section className="py-1 d-md  font-semibold text-[#6A6A6A] text-[12px] leading-none px-2 ">
+                      <section className="py-1 d-md  font-medium text-[#0E0A1F] text-[12px] leading-none px-2 ">
                       ₹ {Math.round(Number(unitReceivedTotal) || 0).toLocaleString('en-IN')}
                       </section>
                     </th>
                     <th className="text-[10px] text-right text-gray-800 bg-[#fff] ">
-                      <section className="py-1 d-md font-semibold text-[#6A6A6A] text-[12px] leading-none px-2 ">
+                      <section className="py-1 d-md font-medium text-[#0E0A1F] text-[12px] leading-none px-2 ">
                       </section>
                     </th>
 
                   </tr>
                 </tbody>
               </table>
+
+
+
+              
+
+
+   
             </div>
           </div>
         </section>

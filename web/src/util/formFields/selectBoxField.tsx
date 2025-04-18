@@ -6,8 +6,12 @@ const customStyles = {
     ...provided,
     background: '#fff',
     // borderColor: '#9e9e9e',
+    // border: '0',
+    // borderBottom: '1px solid #9e9e9e',
+    // borderRadius: '0',
     minHeight: '32px',
     height: '32px',
+    borderRadius: '6px',
     boxShadow: state.isFocused ? null : null,
   }),
 

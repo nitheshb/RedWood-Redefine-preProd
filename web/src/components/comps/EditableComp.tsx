@@ -767,24 +767,24 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
 
   return (
     <>
-      <div className=" m-2 p-4 bg-white rounded-xl">
+      <div className="">
        {source != 'Masters' &&
 <>
        <div className="mb-4 ">
           <div className="inline">
             <div className="">
-              <label className="font-semibold	 text-[#053219]  text-sm  mb-1  ">
+              <label className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062] mb-1  ">
                 Unit Pricing Details<abbr title="required"></abbr>
               </label>
             </div>
 
-            <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
+            {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div> */}
           </div>
         </div>
-        <section className="flex flex-row space-x-4 mx-">
+        <section className="flex flex-row space-x-4">
           <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
             <div className="mb-3 w-[172px] mr-4">
-              <label htmlFor="area" className="label  text-sm">
+              <label htmlFor="area" className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] ">
                 Base {type === 'Apartment' ? 'Flat ' : 'Plot '}Price per sqft*
               </label>
               <div className="flex w-[140px]">
@@ -804,7 +804,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
             </div>
 
             <div className="ml-2 mb-3 w-[140px]">
-              <label htmlFor="area" className="label text-sm">
+              <label htmlFor="area" className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
                 Standard Tax Rate*
               </label>
               <div className="flex w-[140px]">
@@ -828,7 +828,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           {type === 'Villas' && (
             <section className="border border-[#E5EAF2] flex flex-row p-4 rounded-xl">
               <div className="mb-3 w-[220px] ">
-                <label htmlFor="area" className="label  text-sm">
+                <label htmlFor="area" className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
                   Base Const Price per sqft*
                 </label>
                 <div className="flex w-[140px]">
@@ -846,7 +846,7 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
                 </div>
               </div>
               <div className="mb-3 ">
-                <label htmlFor="area" className="label text-sm">
+                <label htmlFor="area" className="label font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
                   Standard Tax Rate*
                 </label>
                 <div className="flex w-[140px]">
@@ -885,12 +885,12 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
           <div className="mb-4 mt-2">
             <div className="inline">
               <div className="">
-                <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+                <label className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]  mb-1  ">
                   More Charges<abbr title="required"></abbr>
                 </label>
               </div>
 
-              <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
+              {/* <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div> */}
             </div>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">

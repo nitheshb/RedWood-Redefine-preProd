@@ -579,7 +579,6 @@ export default function CustomerSideViewCRM({
         customerDetails={selCustomerPayload}
         selCustomerPayload={selCustomerPayload}
       />
-
       )}
 
       {selFeature === 'legal_info' && <></>}

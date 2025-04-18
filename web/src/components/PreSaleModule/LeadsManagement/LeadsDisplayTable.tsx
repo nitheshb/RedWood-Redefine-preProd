@@ -168,7 +168,7 @@ const LeadsDisplayTable = ({
                 className="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800"
               ></p>
 
-              <section className="flex flex-row">
+              <section className="flex gap-2 flex-row">
                 <SlimDateSelectBox
                   onChange={async (value) => {
                     console.log(value, 'ksdvnlfkjv')
@@ -176,7 +176,7 @@ const LeadsDisplayTable = ({
                   }}
                   label="This Month"
                 />
-                <div className=" flex flex-col   ml-5 mt-1 w-40">
+                <div className=" flex flex-col mt-1 w-40">
                   <SlimSelectBox
                     name="project"
                     label=""

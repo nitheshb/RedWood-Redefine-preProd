@@ -704,11 +704,11 @@ const Floordetails = ({
       )}
       {blocksViewFeature === 'Units' && (
         <>
-          <section className="bg-white">
+          <section className="py-2  rounded-2xl bg-[#FFFFFF]  mx-4 my-4">
 
 
             <section
-              className={`flex flex-row px- py- justify-between ${
+              className={`flex flex-row justify-between ${
                 ['Apartment', 'Villas', 'Plots'].includes(
                   projectDetails?.projectType?.name
                 )

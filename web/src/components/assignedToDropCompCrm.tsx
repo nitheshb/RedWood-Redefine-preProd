@@ -19,14 +19,14 @@ export default function AssigedToDropCompCrm({
                 {assignerName}
               </span>
             ) : (
-              <span className="font-medium tracking-wide text-[14px] text-[#053219] text-left">
+              <span className="font-medium tracking-wide text-[14px] text-[#053219] ">
                 {assignerName}
               </span>
             )}
             {id === 'id' ? (
-              <ChevronDownIcon className="w-5 h-5 mr-3  mb-[12px]  mt-[0px] inline text-[#E3BDFF]" />
+              <ChevronDownIcon className="w-5 h-5 mr-3  mb-[12px]  mt-[0px] inline " />
             ) : (
-              <ChevronDownIcon className="w-5 h-5  mb-[12px] mt-[0px] inline text-[#E3BDFF]" />
+              <ChevronDownIcon className="w-5 h-5  mb-[12px] mt-[0px] inline " />
             )}
           </Menu.Button>
         </div>
