@@ -85,6 +85,7 @@ import '../styles/myStyles.css'
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import SiderForm from './SiderForm/SiderForm'
+import Stepper from './A_SalesModule/stepper'
 
 // interface iToastInfo {
 //   open: boolean
@@ -1501,7 +1502,7 @@ async function handleCallButtonClick(uid, name, number) {
   return (
     <>
     <div
-      className={`bg-white   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`bg-[#FFFFFF]   h-screen    ${openUserProfile ? 'hidden' : ''} `}
     >
 
       <div className="h-screen overflow-y-auto">
@@ -1539,19 +1540,17 @@ async function handleCallButtonClick(uid, name, number) {
   Call
 </button>
                       </div>
-                      <div className="flex flex-row">
-                        <div className="font-md text-sm text-gray-500 mb-[2] tracking-wide ">
-                          <DeviceMobileIcon className="w-3 h-3 inline text-[#058527] " />{' '}
-                          <span className="mr-[2px] mt-[1px] text-[12px]">
-                            {Mobile?.replace(
-                              /(\d{3})(\d{3})(\d{4})/,
-                              '$1-$2-$3'
-                            )}
-                          </span>
-                        </div>
+                      <div className="flex mt-2 gap-2 flex-row">
+                      <div className="font-outfit font-normal text-[14px] leading-[100%] tracking-[0.06em] mb-[2px] ">
+  <DeviceMobileIcon className="w-3 h-3 inline text-[#0E0A1F] " />{' '}
+  <span className="mr-[2px] mt-[1px] text-[14px] ">
+    {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}
+  </span>
+</div>
 
-                        <div className="font-md text-sm text-gray-500 mb-[2] ml-[6px] tracking-wide">
-                          <MailIcon className="w-3 h-3 inline text-[#058527] " />{' '}
+
+                        <div className="font-outfit font-normal text-[14px] leading-[100%] tracking-[6%]">
+                          <MailIcon className="w-3 h-3 inline text-[#141B34] " />{' '}
                           {Email}
                         </div>
                       </div>
@@ -1634,11 +1633,13 @@ async function handleCallButtonClick(uid, name, number) {
                 </div>
               </div>
             </div>
-            <div className=" px-1 mt-[10px] mb-1 bg-white rounded shadow pl-3 py-2 ">
-              <div className="flex flex-row ">
-                <section>
+            <div className='mt-4'>
+
+            <div className=" ml-2 ">
+              <div className="flex flex-row bg-white rounded-2xl p-4 ">
+                {/* <section>
                   <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
-                    Assigned To {}
+                    Assigned To box {}
                   </div>
                   {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                     <div>
@@ -1648,18 +1649,55 @@ async function handleCallButtonClick(uid, name, number) {
                         setAssigner={setAssigner}
                         usersList={usersList}
                         align={undefined}
+                        classNames={{
+                          container: 'text-left',
+                          button: 'bg-[#f4f4f4] text-black border border-gray-300',
+                          item: 'hover:bg-blue-100',
+                          chevron: 'text-blue-600',
+                          menuItems: 'shadow-xl',
+                        }}
+                  
+             
                       />
                     </div>
                   )}
                   {user?.role?.includes(USER_ROLES.CP_AGENT) && (
                     <span className="text-left text-sm"> {assignerName}</span>
                   )}
-                </section>
+                </section> */}
+                <section>
+  <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
+    <label htmlFor="assignedTo" className="block text-sm font-semibold text-gray-700">
+      Assigned To
+    </label>
+  </div>
+  {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
+                      <div className="font-semibold text-sm text-slate-900 tracking-wide overflow-ellipsis">
+
+      <AssigedToDropComp
+        assignerName={assignerName}
+        id={id}
+        setAssigner={setAssigner}
+        usersList={usersList}
+        align={undefined}
+    
+ 
+      />
+    </div>
+  )}
+  {user?.role?.includes(USER_ROLES.CP_AGENT) && (
+    <span className="text-left text-sm"> {assignerName}</span>
+  )}
+</section>
+
                 <section className=" ml-2">
                   <div className="flex flex-row ">
-                    <div className="font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4">
+                    {/* <div className="font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4">
                       Project {}
-                    </div>
+                    </div> */}
+                        <label htmlFor="assignedTo" className="block text-sm font-semibold text-gray-700">
+                        Project 
+    </label>
                   </div>
                   <div className="font-semibold text-sm text-slate-900 tracking-wide overflow-ellipsis">
          
@@ -1669,6 +1707,7 @@ async function handleCallButtonClick(uid, name, number) {
                       align="right"
                       setAssigner={setNewProject}
                       usersList={projectList}
+                      
                     />
                   </div>
                 </section>
@@ -1676,7 +1715,7 @@ async function handleCallButtonClick(uid, name, number) {
                   <div>
                     <div className="text-center items-center mr-2 mt-[1px]">
                       <div
-                        className="text-center p-[10px] bg-gradient-to-r from-violet-200 to-pink-200 text-black rounded-3xl items-center align-middle text-xs cursor-pointer hover:underline"
+                        className="text-center bg-[#7BD2EA]  rounded-[8px] px-2 py-2 ml-1 items-center align-middle text-xs cursor-pointe"
                         onClickCapture={() => {
                           setUnitsViewMode(!unitsViewMode)
                         }}
@@ -1684,13 +1723,13 @@ async function handleCallButtonClick(uid, name, number) {
                         {selProjectIs?.uid?.length > 4 &&
                           (unitsViewMode ? (
             
-                            <span className="px-[3px]   text-black  text-[10px] text-[#] font-semibold whitespace-nowrap">
+                            <span className="   text-black  text-[10px] text-[#] font-semibold whitespace-nowrap">
                               {' '}
                               Show Lead
                             </span>
                           ) : (
                
-                            <span className="px-[3px]   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
+                            <span className="   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
                               {' '}
                               Show Units
                             </span>
@@ -1701,9 +1740,17 @@ async function handleCallButtonClick(uid, name, number) {
                 </section>
               </div>
             </div>
+
+            </div>
+    
           </div>
+
+          <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4" />
+
+
+
           <div className="flex flex-row justify-between">
-            <div className=" py-2 flex flex-row  text-xs  border-t border-[#ebebeb] font-thin   font-bodyLato text-[12px]  py-[6px] ">
+            <div className=" py-2 flex flex-row  text-xs font-thin  text-[12px]  py-[6px] ">
               Recent Comments:{' '}
               <span className="text-[#867777] ml-1 ">
                 {' '}
@@ -1808,6 +1855,77 @@ async function handleCallButtonClick(uid, name, number) {
           )}
         </div>
 
+
+
+
+
+<div className=' my-1'>
+  <div className="flex flex-row justify-between pb-3 pt-5 mb-0  bg-[#F2F5F8] relative">
+    {StatusListA.map((statusFlowObj, i) => (
+      <div key={i} className="flex-1 flex flex-col items-center relative">
+        <div 
+          className={`w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-200 mb-1 z-10 ${
+            streamCoveredA.includes(statusFlowObj.value)
+              ? 'bg-[#dff1fb] border-[#dff1fb] text-[#2ca4da]'
+              : statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus
+                ? 'bg-white border-black text-black' 
+                : 'bg-white border-gray-300 text-gray-300' 
+          }`}
+          onClick={() => setStatusFun(id, statusFlowObj.value)}
+          onMouseEnter={() => {
+            hoverEffectFun(i);
+            setHover(true);
+          }}
+          onMouseLeave={() => {
+            hoverEffectFun(1000);
+            setHover(false);
+          }}
+          style={{
+            ...(hover && hoverId === i ? { boxShadow: '0 0 0 3px rgba(44, 164, 218, 0.2)' } : {}),
+            cursor: 'pointer',
+          }}
+        >
+          {streamCoveredA.includes(statusFlowObj.value) ? (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          ) : statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus ? (
+            <div className="h-1.5 w-1.5 bg-black rounded-full" />
+          ) : i >= StatusListA.length - 2 ? null : ( 
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          )}
+        </div>
+
+        <span className="font-bodyLato text-[11px] text-black font-normal px-2 py-1 z-10 text-center">
+          {statusFlowObj.label}
+        </span>
+
+        {i < StatusListA.length - 1 && (
+          <div 
+            className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${
+              streamCoveredA.includes(StatusListA[i + 1].value)
+                ? 'bg-[#0E0A1F]' 
+                : 'bg-gray-300' 
+            }`}
+            style={{ transform: 'translateY(-50%)' }}
+          />
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+{/* 
         <div
           className="flex flex-row justify-between   py-3 px-3  mt-[0.5px] mb-0 rounded-xs bg-[#F2F5F8]"
           style={{ flex: '4 0 100%' }}
@@ -1848,7 +1966,7 @@ async function handleCallButtonClick(uid, name, number) {
             </span>
           ))}
         </div>
-       
+        */}
 
        
         {unitsViewMode && (
@@ -1869,7 +1987,7 @@ async function handleCallButtonClick(uid, name, number) {
                  
                   <div className="flex flex-row justify-between border-gray-200">
                     <ul
-                      className="flex   rounded-t-lg border-b mx-2"
+                      className="flex rounded-t-lg  mx-2"
                       id="myTab"
                       data-tabs-toggle="#myTabContent"
                       role="tablist"
@@ -1877,17 +1995,18 @@ async function handleCallButtonClick(uid, name, number) {
                       {[
                         { lab: 'Tasks', val: 'appointments' },
                         { lab: 'Notes', val: 'notes' },
-                    
                         { lab: 'Email', val: 'email' },
                         { lab: 'Activity Log', val: 'timeline' },
-                      ].map((d, i) => {
+                      ].map((d, i, array) => {
                         return (
-                          <li key={i} className="mr-4" role="presentation">
+
+                          <div key={i} className="flex items-center">
+                                  <li className="" role="presentation">
                             <button
-                              className={`inline-block pb-1 mr-3 text-sm font-medium text-center text-black rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
+                              className={`inline-block pb-1 text-sm font-medium text-center text-[#606062] rounded-t-lg border-b-2  hover:text-black hover:border-gray-300   ${
                                 selFeature === d.val
-                                  ? 'border-black'
-                                  : 'border-transparent'
+                                  ? 'border-black text-black'
+                                  : 'text-[#606062] border-none'
                               }`}
                               type="button"
                               role="tab"
@@ -1897,23 +2016,28 @@ async function handleCallButtonClick(uid, name, number) {
                             
                             </button>
                           </li>
+                          {i !== array.length - 1 && (
+          <div className="w-px mx-4 h-5 bg-[#E7E7E9]"></div>
+        )}
+                          </div>
+                    
                         )
                       })}
                     </ul>
                     {selFeature != 'lead_strength' && (
                       <span
-                        className="font-bodyLato text-xs text-blue-400 mr-2 mt-2 cursor-pointer"
+                        className="rounded-[8px] px-[10px] py-[11px] gap-[8px] border text-[#000000] font-outfit font-normal text-[14px] leading-[100%] tracking-[0%] cursor-pointer"
                         onClick={() => setFeature('lead_strength')}
                       >
-                        LEAD STRENGTH
+                        Lead Strength
                       </span>
                     )}
                     {selFeature == 'lead_strength' && (
                       <span
-                        className="font-bodyLato text-xs text-red-400 mr-2 mt-2 cursor-pointer"
+                        className="rounded-[8px] px-[10px] py-[11px] gap-[8px] border text-[#000000] font-outfit font-normal text-[14px] leading-[100%] tracking-[0%] cursor-pointer"
                         onClick={() => setFeature('appointments')}
                       >
-                        CLOSE
+                        Close
                       </span>
                     )}
                   </div>
