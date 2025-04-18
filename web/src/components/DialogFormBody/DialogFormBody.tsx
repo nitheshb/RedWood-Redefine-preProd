@@ -834,11 +834,11 @@ const DialogFormBody = ({
 </div>
 </div>
 
-<div className="flex flex-col mt-2 rounded-lg  pt-4 ">
-  <div className="mb-4 mt-2">
+<div className="flex flex-col  rounded-lg ">
+  <div className="mb-1">
     <div className="inline">
       <div className="">
-        <label className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1  ">
+        <label className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]  ">
           Add Bank Account*<abbr title="required"></abbr>
         </label>
       </div>

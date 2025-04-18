@@ -299,7 +299,7 @@ const ProjectAccessHomeList = ({
                     <>
                       <div
                         key={i}
-                        className=" cursor-pointer relative mx-auto break-words bg-white  mb-2  rounded-xl  transition duration-300 ease-in-out  "
+                        className=" cursor-pointer relative mx-auto break-words bg-white  mb-2  rounded-2xl  transition duration-300 ease-in-out  "
                         onClick={() => dispDoc(project, project.category)}
                       >
                         <Card
@@ -337,7 +337,7 @@ const ProjectAccessHomeList = ({
                     <>
                       <div
                         key={i}
-                        className=" cursor-pointer relative mx-auto break-words bg-white  mb-4  rounded-xl  transition duration-300 ease-in-out  "
+                        className=" cursor-pointer relative mx-auto break-words bg-white  mb-4  rounded-2xl  transition duration-300 ease-in-out  "
                         onClick={() => dispAccess(project, project.category)}
                       >
                         <Card
