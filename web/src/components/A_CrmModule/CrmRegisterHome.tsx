@@ -1517,24 +1517,20 @@ showLabels={true}
                             <div className='w-[33%]'>
                               <div className=' '>
                                 <div className="">
-                                  <div className="flex items-center ">
-
-                                    <div className="flex items-center border border-[#E7E7E9] rounded-full p-[2px] pr-[7px] w-fit">
-                                      {finData?.assignedToObj?.label ? (
-                                        // Show first letter of name
-                                        <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
-                                          {finData.assignedToObj.label.charAt(0).toUpperCase()}
-                                        </div>
-                                      ) : (
-                                        // Show empty avatar for unassigned
-                                        <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
-                                          NA
-                                        </div>
-                                      )}
-                                      <span className="text-[#0E0A1F] font-medium text-[14px] ml-2">
-                                        {finData?.assignedToObj?.label || finData?.assignedBy || 'Unassigned'}
-                                      </span>
+                                <div className=' '>
+                                    <div className="text-[12px]">
+                                      <span className="font-medium text-[#0E0A1F]">Comments:</span>
+                                      <span className="ml-2 text-[#0E0A1F] font-normal">Make a follow up call to Ram at 10am</span>
+                                      <span className="ml-2 h-2 w-2 rounded-full bg-green-500 inline-block"></span>
                                     </div>
+                                    {/* <div className="text-[12px]">
+                                      <span className="font-medium text-[#0E0A1F]">Last activity:</span>
+                                      <span className="ml-2 text-[#0E0A1F] font-normal">180 Days</span>
+                                    </div> */}
+                                  </div>
+                                  <div className="flex items-center mt-3  ">
+
+
 
 
 
@@ -1547,13 +1543,13 @@ showLabels={true}
                                           <div>
                                             <div className=" ">
                                               <div className="flex  items-center justify-center  h-full rounded-md ">
-                                                <div className="flex items-center justify-center   px-1">
+                                                <div className="flex items-center justify-center   pr-1">
                                                   {/* section 2 */}
                                                   {['booked', 'selCategory'].includes(selCategory) &&
                                                     <section className="flex gap-1 items-center">
                                                       {!(user?.role.includes('crm-executive')) && (
                                                         <div
-                                                          className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1 ${finData?.man_cs_approval == 'approved'
+                                                          className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1 ${finData?.man_cs_approval == 'approved'
                                                             ? 'text-green-700'
                                                             : finData?.man_cs_approval == 'rejected'
                                                               ? 'text-red-700'
@@ -1618,7 +1614,7 @@ showLabels={true}
 
                                                       {/* section 3*/}
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1${finData?.kyc_status == 'approved'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px]  p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1${finData?.kyc_status == 'approved'
                                                           ? 'text-green-700'
                                                           : finData?.kyc_status == 'rejected'
                                                             // ? 'bg-[#ffdbdb]'
@@ -1694,7 +1690,7 @@ className="w-4 h-4"
                                                   {['agreement_pipeline'].includes(selCategory) &&
                                                     <section className='flex gap-2'>
                                                       <div
-                                                        className={`cursor-pointer  border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1 ${finData?.man_ats_approval == 'approved'
+                                                        className={`cursor-pointer  border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1 ${finData?.man_ats_approval == 'approved'
                                                           ? 'text-green-700'
                                                           : finData?.man_ats_approval == 'rejected'
                                                             ? 'text-red-700'
@@ -1765,7 +1761,7 @@ className="w-4 h-4"
                                                       </div>
                                                       {/* section 3*/}
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1${finData?.kyc_status == 'approved'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1${finData?.kyc_status == 'approved'
                                                           ? 'text-green-700'
                                                           : finData?.kyc_status == 'rejected'
                                                             ? 'text-red-700'
@@ -1841,7 +1837,7 @@ className="w-4 h-4"
                                                   {['agreement'].includes(selCategory) &&
                                                     <section className='flex gap-2 '>
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1 ${finData?.both_sd_approval == 'approved'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1 ${finData?.both_sd_approval == 'approved'
                                                           ? 'text-green-700'
                                                           : finData?.both_sd_approval == 'rejected'
                                                             ? 'text-red-700'
@@ -1913,7 +1909,7 @@ className="w-4 h-4"
                                                       </div>
                                                       {/* section 3*/}
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1${finData?.LpostStatus == 'Approved'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1${finData?.LpostStatus == 'Approved'
                                                           ? 'text-green-700'
                                                           : finData?.LpostStatus == 'Rejected'
                                                             ? 'text-red-700'
@@ -1990,7 +1986,7 @@ className="w-4 h-4"
                                                   {['registered', 'possession'].includes(selCategory) &&
                                                     <section className='flex gap-2'>
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pr-[7px] inline-flex items-center gap-1${finData?.both_sd_approval == 'approved'
+                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1${finData?.both_sd_approval == 'approved'
                                                           ? 'text-green-700'
                                                           : finData?.both_sd_approval == 'rejected'
                                                             ? 'text-red-700'
@@ -2158,7 +2154,7 @@ className="w-4 h-4"
 
 
                                         <div
-                                          className="cursor-pointer border border-[#E7E7E9] rounded-[36px] px-2 py-1 inline-flex items-center gap-1"
+                                          className="cursor-pointer border border-[#E7E7E9] rounded-[36px] p-[2px] pl-[3px] pr-[7px]  inline-flex items-center gap-1"
                                           onClick={() => {
                                             setSelUnitDetails(finData);
                                             setIsSubTopicOpen(true);
@@ -2183,18 +2179,25 @@ className="w-4 h-4"
 </div> */}
                                       </div>
                                     </div>
-                                  </div>
-                                  <div>
-                                    <div className="text-[12px]">
-                                      <span className="font-medium text-[#0E0A1F]">Comments:</span>
-                                      <span className="ml-2 text-[#0E0A1F] font-normal">Make a follow up call to Ram at 10am</span>
-                                      <span className="ml-2 h-2 w-2 rounded-full bg-green-500 inline-block"></span>
+
+                                    <div className="flex items-center border border-[#E7E7E9] rounded-full p-[2px] pr-[7px] w-fit ml-1">
+                                      {finData?.assignedToObj?.label ? (
+                                        // Show first letter of name
+                                        <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
+                                          {finData.assignedToObj.label.charAt(0).toUpperCase()}
+                                        </div>
+                                      ) : (
+                                        // Show empty avatar for unassigned
+                                        <div className="w-6 h-6 bg-[#ccc] rounded-full flex items-center justify-center text-white text-xs font-medium">
+                                          NA
+                                        </div>
+                                      )}
+                                      <span className="text-[#0E0A1F] font-medium text-[14px] ml-2 min-w-[80px]">
+                                        {finData?.assignedToObj?.label || finData?.assignedBy || 'Unassigned'}
+                                      </span>
                                     </div>
-                                    <div className="text-[12px]">
-                                      <span className="font-medium text-[#0E0A1F]">Last activity:</span>
-                                      <span className="ml-2 text-[#0E0A1F] font-normal">180 Days</span>
-                                    </div>
                                   </div>
+
                                 </div>
 
                               </div>

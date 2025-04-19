@@ -6,7 +6,7 @@ import {
   CloudUploadIcon,
   EyeIcon,
 } from '@heroicons/react/outline'
-import { prettyDate } from 'src/util/dateConverter'
+import { prettyDate, prettyDateTime } from 'src/util/dateConverter'
 import { AttachFile } from '@mui/icons-material'
 import { v4 as uuidv4 } from 'uuid'
 import { storage } from 'src/context/firebaseConfig'
@@ -96,7 +96,7 @@ const UnitDocsWidget = ({ id, unitDetails,fileName, date, amount, status,data, k
           setUplaoding(false)
           console.log(err)},
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
             file.url = url
             setCmntFileType(file.name.split('.').pop())
 
@@ -104,8 +104,8 @@ const UnitDocsWidget = ({ id, unitDetails,fileName, date, amount, status,data, k
             const x1 = {[`${type}Count`] : url, [`${type}FilName`]: file.name,[`${type}DocUpDate`]: Timestamp.now().toMillis(), unitId: id,}
             const x2 = {url : url, name: file.name,uploadedOn: Timestamp.now().toMillis(), unitId: id,cat: type, by: user.email,}
 
-            AddUnitDocs(orgId,id,unitDetails,'Uploaded',fileName,x2,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
-            setUplaoding(false)
+           await AddUnitDocs(orgId,id,unitDetails,'Uploaded',fileName,x2,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
+            await setUplaoding(false)
             return url
 
           })
@@ -311,13 +311,20 @@ function getPathFromUrl(url) {
 
 
                 <div className='flex-col'>
-                <p className="font-outfit font-medium text-[#606062] text-[12px]">
-                    {prettyDate(doc?.uploadedOn) || 'NA'}
-                  </p>
+
               {uploading && <Loader className="w-4 h-4 mr-2" />}
               <p className="pr-3 font-medium  truncate font-outfit text-[14px] text-[#0E0A1F]">{doc?.name}</p>
+              <section className='flex flex-row'>
+                <p className="font-outfit font-medium text-[#606062] text-[12px] ">
+                      {prettyDateTime(doc?.uploadedOn) || 'NA'}
+                    </p>
+                    <div className='w-[2px] h-[9px] mt-[5px] bg-gray-300 rounded-full mx-2'></div>
+                    <p className="font-outfit font-medium text-[#606062] text-[12px]">
+                      Uplaoded by:{doc?.by}
+                    </p>
+                  </section>
                 </div>
-                {doc?.id || 'dd'}
+
 
               </div>
               <div className=''>

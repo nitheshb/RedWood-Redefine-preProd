@@ -176,18 +176,38 @@ const CrmUnitSummary = ({
     setNetTotal(partATotal + partBTotal)
   }
 
-
-
-
-
-
-
-
   const documents = [
-    { category: "EC", count: 2 },
-    { category: "Agreement", count: 2 },
-    { category: "Registration", count: 2 },
-    { category: "Others", count: 2 }
+    {
+      id: 1235,
+      name: 'Agreement',
+      type: 'agree',
+      uploadedCount: selCustomerPayload?.agree_doc_count || 0
+    },
+    {
+      id: 1236,
+      name: 'Register Doc',
+      type: 'reg',
+      uploadedCount: selCustomerPayload?.reg_doc_count  || 0
+    },
+    {
+      id: 1237,
+      name: 'Construction Gallery',
+      type: 'constructGallery',
+      uploadedCount: selCustomerPayload?.constructGallery_doc_count || 0
+    },
+    {
+      id: 1238,
+      name: 'EC',
+      type: 'ec',
+      uploadedCount: selCustomerPayload?.ec_doc_count || 0
+    },
+    {
+      id: 1239,
+      name: 'Others',
+      type: 'others',
+      uploadedCount: selCustomerPayload?.others_doc_count || 0
+
+    },
   ];
 
   const loanDetails = [
@@ -224,7 +244,7 @@ const CrmUnitSummary = ({
     { id: 4, text: "Review Agreement with Lawyer", svg: "📄" },
     { id: 5, text: "Site Visit Tomorrow", svg: "📍" },
   ];
-  
+
   const cardTwoTasks = [
     { id: 1, date: "27 Mar 2025", text: "Legal Clarification", svg: "📑", dot: "bg-blue-500" },
     { id: 2, date: "27 Mar 2025", text: "Payment Reminder", svg: "₹", dot: "bg-red-600" },
@@ -556,15 +576,26 @@ const CrmUnitSummary = ({
           <img src="/su1.svg" alt="Documents" className="h-5 w-5 mr-2" />
           <h2 className="text-[12px] font-medium text-[#606062]">DOCUMENTS</h2>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-0">
           {documents.map((doc, index) => (
-            <div key={index} className="flex items-center justify-between py-3 border-b border-gray-200">
-              <div className="flex items-center gap-3">
-                <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5 object-contain" />
-                <span className="font-medium">{doc.category}</span>
+              <div key={index} className="py-2 border-b border-gray-200 last:border-b-0">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                 <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5 object-contain" />
+                 <span className="font-normal text-[14px] leading-[100%] tracking-[0%] font-outfit">{doc.name}</span>
+                </div>
+                <span className="font-normal text-[14px] leading-[100%] tracking-[0%] font-outfit">{doc.uploadedCount}
+                   Document
+                </span>
               </div>
-              <span className="text-gray-600">{doc.count} Documents</span>
             </div>
+            // <div key={index} className="flex items-center justify-between py-3 border-b border-gray-200">
+            //   <div className="flex items-center gap-3">
+            //     <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5 object-contain" />
+            //     <span className="font-medium">{doc.name}</span>
+            //   </div>
+            //   <span className="text-gray-600">{doc.uploadedCount} Document</span>
+            // </div>
           ))}
         </div>
       </div>
@@ -920,12 +951,17 @@ const CrmUnitSummary = ({
                       </Pie>
                       {/* <Tooltip content={<CustomTooltiptwo />} /> */}
 
+
                     </PieChart>
+
 
                     <div className="absolute text-center">
                       <div className="text-xs text-gray-500">Balance</div>
                       <div className="font-bold">
                       ₹ {Math.round(selCustomerPayload?.T_balance || 0).toLocaleString('en-IN')}
+
+
+
 
 
 
@@ -937,6 +973,8 @@ const CrmUnitSummary = ({
                     <div className="text-[12px] text-gray-500">Unit Cost</div>
                     <div className="font-bold text-[14px]">
                     ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
+
+
 
 
                                                           </div>
@@ -953,17 +991,23 @@ const CrmUnitSummary = ({
 
 
 
+
+
+
                                                           </div>
                   </div>
                   </section>
                 </div>
 
+
                 <div className="bg-[#FFFFFF] p-4 rounded-lg">
+
 
                   <div className="flex justify-between items-center">
                 <span className="font-medium">Unit Payments</span>
                 <BellIcon size={16} className="ml-2" />
               </div>
+
 
                   <div className="flex flex-col items-center mt-8">
                     <section className='flex flex-row justify-between'>
@@ -972,8 +1016,10 @@ const CrmUnitSummary = ({
                     <div className="font-bold mb-4">
                     ₹ {Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
 
+
                                                           </div>
                                                           </div>
+
 
                     </section>
                     <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
@@ -984,13 +1030,20 @@ const CrmUnitSummary = ({
                     ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
 
 
+
+
                                                           </div>
                   </div>
                 </div>
 
 
 
+
+
+
               </div>
+
+
 
 
               </div>
@@ -1024,6 +1077,9 @@ const CrmUnitSummary = ({
             totalIs={totalIs}
           />
         </div>
+
+
+
 
 
 
@@ -1085,6 +1141,7 @@ const CrmUnitSummary = ({
 
     projectDetails={projectDetails}
     leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined}
+
 
     />
 </div>
@@ -1197,6 +1254,8 @@ const CrmUnitSummary = ({
           </div>
           </div>
         </div>
+
+
 
 
 

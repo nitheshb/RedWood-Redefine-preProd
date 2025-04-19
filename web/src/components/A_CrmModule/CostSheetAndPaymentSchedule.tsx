@@ -32,7 +32,6 @@ export default function CostSheetAndPaymentSchedule() {
 
   return (
     <div className="flex flex-col md:flex-row gap-4 ">
-
       <div className="w-full md:w-1/2 bg-white p-6 rounded-2xl">
         <div className="flex items-center mb-8">
           <div className="w-8 h-8 mr-2 text-gray-400">
@@ -170,7 +169,7 @@ export default function CostSheetAndPaymentSchedule() {
                 <div className="flex items-center gap-4">
                   <span className="font-normal text-[12px] leading-[100%] text-[#960000] tracking-[0%] ">₹ 6,500/sqft</span>
                   <span className="font-normal text-[12px] leading-[100%] text-[#1B6600] tracking-[0%] ">₹ 6,500/sqft</span>
-                  <div 
+                  <div
                     className="relative w-4 h-4 border border-gray-300 rounded cursor-pointer"
                     onClick={() => handleCheckboxChange(item.id)}
                   >
