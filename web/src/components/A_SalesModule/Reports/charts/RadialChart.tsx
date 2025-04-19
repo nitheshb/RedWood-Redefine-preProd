@@ -63,7 +63,7 @@ const RadialChart: React.FC<RadialChartProps> = ({
           );
         })}
       </svg>
-      <div className="absolute text-[15px] font-bold text-gray-800">
+      <div className="absolute text-[15px] font-medium text-[#000000]">
         {clampedPercentage.toFixed(0)}%
       </div>
     </div>

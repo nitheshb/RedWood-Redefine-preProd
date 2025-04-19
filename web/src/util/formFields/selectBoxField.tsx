@@ -9,15 +9,15 @@ const customStyles = {
     // border: '0',
     // borderBottom: '1px solid #9e9e9e',
     // borderRadius: '0',
-    minHeight: '28px',
-    height: '28px',
+    minHeight: '32px',
+    height: '32px',
     borderRadius: '8px',
     boxShadow: state.isFocused ? null : null,
   }),
 
   valueContainer: (provided, state) => ({
     ...provided,
-    height: '28px',
+    height: '32px',
     padding: '0 6px',
     fontSize: '12px',
   }),
@@ -31,7 +31,7 @@ const customStyles = {
   }),
   indicatorsContainer: (provided, state) => ({
     ...provided,
-    height: '28px',
+    height: '32px',
   }),
   menu: (provided) => ({ ...provided, zIndex: 9999 }),
 }

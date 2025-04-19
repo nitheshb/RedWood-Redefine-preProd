@@ -21,7 +21,7 @@ export const CustomRadioGroup = ({ label, value, onChange, options }) => {
         </div>
 
       <RadioGroup value={value} onChange={onChange}>
-        <div className="grid grid-cols-4 bg-white  p-2 rounded-md gap-4">
+        <div className="grid grid-cols-4 bg-white  py-2 gap-2 rounded-md ">
           {options.map((option) => (
             <RadioGroup.Option
               key={option.name}

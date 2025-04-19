@@ -239,8 +239,8 @@ export const MultiSelectMultiLineField = ({
   const selectStyles = {
     control: (provided) => ({
       ...provided,
-      minHeight: '28px',
-      height: '28px',
+      minHeight: '32px',
+      height: '32px',
       padding: '0px',
       borderColor: '#cccccc',
       fontSize: '12px',
@@ -257,7 +257,7 @@ export const MultiSelectMultiLineField = ({
     }),
     indicatorsContainer: (provided) => ({
       ...provided,
-      height: '28px',
+      height: '32px',
     }),
     dropdownIndicator: (provided) => ({
       ...provided,

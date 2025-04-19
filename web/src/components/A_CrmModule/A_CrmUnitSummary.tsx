@@ -215,6 +215,25 @@ const CrmUnitSummary = ({
 
 
 
+
+
+  const cardOneTasks = [
+    { id: 1, text: "Payment Reminder for Plastering", svg: "₹" },
+    { id: 2, text: "Collect Loan documents from owner", svg: "📄" },
+    { id: 3, text: "Call to Bank regarding loan details", svg: "📞" },
+    { id: 4, text: "Review Agreement with Lawyer", svg: "📄" },
+    { id: 5, text: "Site Visit Tomorrow", svg: "📍" },
+  ];
+  
+  const cardTwoTasks = [
+    { id: 1, date: "27 Mar 2025", text: "Legal Clarification", svg: "📑", dot: "bg-blue-500" },
+    { id: 2, date: "27 Mar 2025", text: "Payment Reminder", svg: "₹", dot: "bg-red-600" },
+    { id: 3, date: "27 Mar 2025", text: "Call to Customer", svg: "📞", dot: "bg-green-600" },
+    { id: 4, date: "27 Mar 2025", text: "Collect Booking Form", svg: "📄", dot: "bg-yellow-400" },
+    { id: 5, date: "27 Mar 2025", text: "Review Site Plan", svg: "📍", dot: "bg-purple-400" },
+  ];
+
+
   
   return (
     <PDFExport paperSize="A4" margin="1cm" ref={pdfUnitSummaryComp}>
