@@ -90,7 +90,6 @@ setComingSoonState(x)
           </div>
         </label>
       </div>
-{getDifferenceInHours(data?.schTime, '')}
       {data?.sts != 'completed' && (
         <section className="flex flex-row">
           <span
