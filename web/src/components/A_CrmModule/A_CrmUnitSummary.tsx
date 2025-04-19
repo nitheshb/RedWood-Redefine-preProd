@@ -17,6 +17,12 @@ import { Cell, Pie, PieChart } from 'recharts'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import { calculatePercentages } from 'src/util/areaConverter'
 import CostSheetAndPaymentSchedule from './CostSheetAndPaymentSchedule'
+import RadialChart from '../A_SalesModule/Reports/charts/RadialChartone'
+import RadialCharttwo from '../A_SalesModule/Reports/charts/RadialCharttwo'
+import SemicircleProgressChart from '../A_SalesModule/Reports/charts/SemiCircleProgress'
+import FinancialSemicircleChart from '../A_SalesModule/Reports/charts/FinancialSemicircleChart'
+import FinanceBarChart from '../A_SalesModule/Reports/charts/FinanceBarChart'
+import UnitPaymentsWithFinance from '../A_SalesModule/Reports/charts/FinanceBarChart'
 
 const CrmUnitSummary = ({
   selCustomerPayload: selUnitPayload,
@@ -602,56 +608,137 @@ const CrmUnitSummary = ({
 
 
 
-<div className="relative bg-gray-50 p-6 rounded-lg mb-6">
-        <div className="text-gray-600 font-medium mb-4">UNIT COST</div>
-        <div className="flex justify-between">
-          <div className="w-3/5 relative">
-            {/* Custom radial chart with thin segments */}
-            <div className="relative h-40 flex items-center justify-center">
-              <svg className="w-full h-full" viewBox="0 0 200 200">
-                {/* Create individual segments around the circle */}
-                {Array.from({ length: 60 }).map((_, i) => {
-                  // const angle = (i * 6) * (Math.PI / 180);
-                  const angle = (i * 6) * (Math.PI / 180);
-                  const innerRadius = 45;
-                  const outerRadius = 85;
-                  const x1 = 100 + innerRadius * Math.cos(angle);
-                  const y1 = 100 + innerRadius * Math.sin(angle);
-                  const x2 = 100 + outerRadius * Math.cos(angle);
-                  const y2 = 100 + outerRadius * Math.sin(angle);
-          
-                  const color = i < 27 ? "#e0d4ff" : "#e5e7eb";
-                  return (
-                    <line
-                      key={i}
-                      x1={x1}
-                      y1={y1}
-                      x2={x2}
-                      y2={y2}
-                      stroke={color}
-                      strokeWidth="6"
-                      strokeLinecap="round"
-                    />
-                  );
-                })}
-              </svg>
-              <div className="absolute text-3xl font-bold">45%</div>
-            </div>
-          </div>
-          <div className="flex items-center justify-end w-2/5">
-            <svg className="w-32 h-32 opacity-10" viewBox="0 0 100 100">
-              <path 
-                d="M20,20 C50,50 50,50 80,20 M20,80 C50,50 50,50 80,80" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1" 
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
+
+
+
+
+
+
+
+
+<div className="flex items-center justify-between bg-white shadow-lg rounded-2xl p-6 w-full max-w-[500px] mx-auto">
+  {/* Left Side: Title + Chart */}
+  <div className="flex flex-col items-center w-1/3">
+    <div className="text-gray-600 font-semibold mb-2">Stage Cost</div>
+
+
+
+    <FinancialSemicircleChart
+         paidValue={(selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)}
+         remainingValue={selCustomerPayload?.T_elgible - ((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0))}
+         balance={selCustomerPayload?.T_elgible_balance < 0 ? 0 : selCustomerPayload?.T_elgible_balance}
+         filledColor="#DBD3FD"
+         emptyColor="#E5E7EB"
+         showPercentage={true}
+         showBalance={false}
+                  
+    
+                                    />
+    
+  </div>
+
+  {/* Right Side: Amount Breakdown */}
+  <div className="w-[250px] pl-2 flex flex-col justify-center space-y-2">
+    <div className="flex items-center justify-between text-gray-700 text-sm">
+      <span className="flex items-center gap-2">
+        <span className="text-gray-500">Unit Cost:</span>
+      </span>
+      <span className="text-gray-900 font-semibold text-base">
+        ₹ {selCustomerPayload?.T_elgible?.toLocaleString('en-IN') || '0'}
+      </span>
+    </div>
+    <div className="flex items-center justify-between text-sm">
+      <span className="flex items-center gap-2">
+        <span className="w-3 h-3 rounded-sm bg-purple-300"></span>
+        <span className="text-gray-500">Paid:</span>
+      </span>
+      <span className="text-gray-900 font-medium">
+        ₹ {((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN')}
+      </span>
+    </div>
+    <div className="flex items-center justify-between text-sm">
+      <span className="flex items-center gap-2">
+        <span className="w-3 h-3 rounded-sm bg-gray-300"></span>
+        <span className="text-gray-500">Balance:</span>
+      </span>
+      <span className="text-gray-900 font-medium">
+        ₹ {selCustomerPayload?.T_elgible_balance < 0 
+           ? 0 
+           : Math.round(selCustomerPayload?.T_elgible_balance)?.toLocaleString('en-IN')}
+      </span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+{/* <UnitPaymentsWithFinance selCustomerPayload={{ T_review: 3000000, T_approved: 4000000, T_total: 10000000 }} /> */}
+
+
+
+
+
+
+
+
+
+<div className="flex items-center justify-between bg-white shadow-lg rounded-2xl p-6 w-full max-w-[500px] mx-auto">
+  {/* Left Side: Title + Chart */}
+  <div className="flex flex-col items-center w-1/3">
+    <div className="text-gray-600 font-semibold mb-2">Unit cost</div>
+    <RadialCharttwo 
+        paid={(selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)}
+        total={selCustomerPayload?.T_total || selCustomerPayload?.T_Total || 0}
+        balance={selCustomerPayload?.T_balance || 0}
+      />
+  </div>
+
+  {/* Right Side: Amount Breakdown */}
+  <div className="w-[250px] pl-2 flex flex-col justify-center space-y-2">
+    <div className="flex items-center justify-between text-gray-700 text-sm">
+      <span className="flex items-center gap-2">
+        <span className="text-gray-500">Unit Cost:</span>
+      </span>
+      <span className="text-gray-900 font-semibold text-base">
+      ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
+      </span>
+    </div>
+    <div className="flex items-center justify-between text-sm">
+      <span className="flex items-center gap-2">
+        <span className="w-3 h-3 rounded-sm bg-purple-300"></span>
+        <span className="text-gray-500">Paid:</span>
+      </span>
+      <span className="text-gray-900 font-medium">
+        ₹ {((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0))?.toLocaleString('en-IN')}
+      </span>
+    </div>
+    <div className="flex items-center justify-between text-sm">
+      <span className="flex items-center gap-2">
+        <span className="w-3 h-3 rounded-sm bg-gray-300"></span>
+        <span className="text-gray-500">Balance:</span>
+      </span>
+      <span className="text-gray-900 font-medium">
+      ₹{Math.round(selCustomerPayload?.T_balance || 0).toLocaleString('en-IN')}
+
+  
+      </span>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
       
-      {/* Finance Balance */}
+      
       <div className="relative bg-gray-50 p-6 rounded-lg">
         <div className="text-gray-600 font-medium mb-4">FINANCE BALANCE</div>
         <div className="flex justify-between">
@@ -681,17 +768,14 @@ const CrmUnitSummary = ({
           </div>
         </div>
       </div>
+
 </div>
 
         
         <div className="flex flex-row">
           <div className="w-full">
             <div className="flex flex-row justify-between text-end items-end mr-2">
-
-
             </div>
-
-
             <div>
               <div className='  rounded-lg'>
               
@@ -935,7 +1019,20 @@ const CrmUnitSummary = ({
                   </div>
                   </section>
                 </div>
-              
+
+
+
+
+
+
+
+
+
+     
+
+
+
+ 
                 <div className="bg-[#FFFFFF] p-4 rounded-lg">
               
                   <div className="flex justify-between items-center">
