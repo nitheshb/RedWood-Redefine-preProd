@@ -741,7 +741,7 @@ export default function LeadProfileSideView({
         const { staA, staDA } = usersList
         setschStsA(staA)
         setschStsMA(staDA)
-     
+
         Object.entries(usersList).forEach((entry) => {
           const [key, value] = entry
           if (['staA', 'staDA'].includes(key)) {
@@ -750,7 +750,7 @@ export default function LeadProfileSideView({
             }
           } else {
             usersListA.push(value)
-   
+
           }
         })
 
@@ -1076,7 +1076,7 @@ export default function LeadProfileSideView({
       (d) => d?.schTime != undefined && d?.sts === 'pending'
     )
     pendingTaskAObj?.map(async (pendObj) => {
-     
+
       pendObj.comments = [
         {
           c: closingComments,
@@ -1377,7 +1377,7 @@ export default function LeadProfileSideView({
       color: ' bg-violet-500',
     },
   ]
- 
+
   const hoverEffectFun = (id) => {
     setHoverID(id)
   }
@@ -1457,7 +1457,7 @@ export default function LeadProfileSideView({
 //     };
 
 //     console.log('Creating call document with:', callData);
-    
+
 //     const docRef = await addDoc(collection(db, "calls"), callData);
 //     console.log("Call document added successfully with ID:", docRef.id);
 
@@ -1502,17 +1502,17 @@ async function handleCallButtonClick(uid, name, number) {
   return (
     <>
     <div
-      className={`bg-[#FFFFFF]   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`bg-[#e7f6fa]   h-screen    ${openUserProfile ? 'hidden' : ''} `}
     >
 
       <div className="h-screen overflow-y-auto">
-        <div className=" pb-[2px] px-3  mt-0 rounded-xs  bg-[#F2F5F8]">
+        <div className=" pb-[2px] px-3  mt-0 rounded-xs  bg-[#e7f6fa]">
           <div className="-mx-3 flex  sm:-mx-4 px-3 flex justify-between">
             <div className="w-full pl-1 pt-[2px] xl:w-4/12  ">
               <div className="">
                 <div className="font-semibold text-[#053219]  text-sm  mt-3 mb-1  tracking-wide font-bodyLato">
                   <div className="flex flex-row">
-                    
+
                     <div className="flex flex-col ml-[6px]">
                       <div className=" flex flex-row">
                         <span className="  text-[16px] uppercase">{Name}</span>
@@ -1528,25 +1528,26 @@ async function handleCallButtonClick(uid, name, number) {
                         </div>
 
 
-                        
+
 <button
   onClick={() => {
     console.log('Call button clicked for lead:', Name, Mobile);
     handleCallButtonClick(assignedTo, Name, Mobile);
   }}
-  className=" rounded-md text-[10px] bg-[#0891B2] px-2  text-white"
+  className=" rounded-md text-[10px]  px-2 border border-[#7bd2ea]  text-black"
   title="Call"
 >
   Call
 </button>
                       </div>
                       <div className="flex mt-2 gap-2 flex-row">
-                      <div className="font-outfit font-normal text-[14px] leading-[100%] tracking-[0.06em] mb-[2px] ">
-  <DeviceMobileIcon className="w-3 h-3 inline text-[#0E0A1F] " />{' '}
-  <span className="mr-[2px] mt-[1px] text-[14px] ">
+                      <div className="font-outfit font-normal text-[14px] leading-[100%] tracking-[0.06em] mb-[2px] border-0 border-r-2 border-red pr-1 ">
+  <DeviceMobileIcon className="w-3 h-3 inline text-[#0E0A1F] mb-[2px] " />{' '}
+  <span className="mr-[2px]  text-[14px] ">
     {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}
   </span>
 </div>
+
 
 
                         <div className="font-outfit font-normal text-[14px] leading-[100%] tracking-[6%]">
@@ -1554,11 +1555,11 @@ async function handleCallButtonClick(uid, name, number) {
                           {Email}
                         </div>
                       </div>
-                    </div> 
- 
- 
- 
- 
+                    </div>
+
+
+
+
                      {/* <div className="flex flex-col ml-[6px]">
       <div className="flex flex-row">
         <span className="text-[16px] uppercase">{Name}</span>
@@ -1583,7 +1584,7 @@ async function handleCallButtonClick(uid, name, number) {
         </div>
       </div>
 
-  
+
       <button
         onClick={sendNotification}
         className="mt-2 flex items-center px-3 py-1 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition"
@@ -1591,7 +1592,7 @@ async function handleCallButtonClick(uid, name, number) {
         <PhoneIcon className="w-4 h-4 mr-2" /> Call
       </button>
     </div> */}
-{/* 
+{/*
 <div className="flex flex-col ml-[6px]">
   <div className="flex flex-row">
     <span className="text-[16px] uppercase">{Name}</span>
@@ -1620,7 +1621,7 @@ async function handleCallButtonClick(uid, name, number) {
     onClick={sendNotification}
     className="mt-2 flex items-center px-3 py-1 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition"
   >
-    <PhoneIcon className="w-4 h-4 mr-2" /> 
+    <PhoneIcon className="w-4 h-4 mr-2" />
     {isSending ? 'Sending...' : 'Call via App'}
   </button>
 </div> */}
@@ -1628,15 +1629,15 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
-  
+
                   </div>
                 </div>
               </div>
             </div>
-            <div className='mt-4'>
+            <div className='mt-3'>
 
             <div className=" ml-2 ">
-              <div className="flex flex-row bg-white rounded-2xl p-4 ">
+              <div className="flex flex-row  bg-[#e7f6fa] border rounded-xl p-4 py-2 ">
                 {/* <section>
                   <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
                     Assigned To box {}
@@ -1656,8 +1657,8 @@ async function handleCallButtonClick(uid, name, number) {
                           chevron: 'text-blue-600',
                           menuItems: 'shadow-xl',
                         }}
-                  
-             
+
+
                       />
                     </div>
                   )}
@@ -1667,7 +1668,7 @@ async function handleCallButtonClick(uid, name, number) {
                 </section> */}
                 <section>
   <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
-    <label htmlFor="assignedTo" className="block text-sm font-semibold text-gray-700">
+    <label htmlFor="assignedTo" className="block text-[12px]  text-gray-700">
       Assigned To
     </label>
   </div>
@@ -1680,8 +1681,8 @@ async function handleCallButtonClick(uid, name, number) {
         setAssigner={setAssigner}
         usersList={usersList}
         align={undefined}
-    
- 
+
+
       />
     </div>
   )}
@@ -1695,40 +1696,40 @@ async function handleCallButtonClick(uid, name, number) {
                     {/* <div className="font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4">
                       Project {}
                     </div> */}
-                        <label htmlFor="assignedTo" className="block text-sm font-semibold text-gray-700">
-                        Project 
+                        <label htmlFor="assignedTo" className="block text-[12px] text-gray-700">
+                        Project
     </label>
                   </div>
                   <div className="font-semibold text-sm text-slate-900 tracking-wide overflow-ellipsis">
-         
+
                     <AssigedToDropComp
                       assignerName={selProjectIs?.projectName || Project}
                       id={id}
                       align="right"
                       setAssigner={setNewProject}
                       usersList={projectList}
-                      
+
                     />
                   </div>
                 </section>
                 <section>
                   <div>
-                    <div className="text-center items-center mr-2 mt-[1px]">
+                    <div className="text-center items-center  mt-[1px]">
                       <div
-                        className="text-center bg-[#7BD2EA]  rounded-[8px] px-2 py-2 ml-1 items-center align-middle text-xs cursor-pointe"
+                        className="text-center border border-[#7BD2EA] text-[#5198ab]  rounded-[8px] px-2 py-2 ml-1 items-center align-middle text-xs cursor-pointe"
                         onClickCapture={() => {
                           setUnitsViewMode(!unitsViewMode)
                         }}
                       >
                         {selProjectIs?.uid?.length > 4 &&
                           (unitsViewMode ? (
-            
+
                             <span className="   text-black  text-[10px] text-[#] font-semibold whitespace-nowrap">
                               {' '}
                               Show Lead
                             </span>
                           ) : (
-               
+
                             <span className="   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
                               {' '}
                               Show Units
@@ -1742,15 +1743,15 @@ async function handleCallButtonClick(uid, name, number) {
             </div>
 
             </div>
-    
+
           </div>
 
-          <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4" />
+          {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-3" /> */}
 
 
 
           <div className="flex flex-row justify-between">
-            <div className=" py-2 flex flex-row  text-xs font-thin  text-[12px]  py-[6px] ">
+            <div className=" py-0 flex flex-row  text-xs font-thin  text-[12px]  py-[6px] px-2 ">
               Recent Comments:{' '}
               <span className="text-[#867777] ml-1 ">
                 {' '}
@@ -1785,7 +1786,7 @@ async function handleCallButtonClick(uid, name, number) {
               </div>
               <div className=" flex flex-row ">
                 <span className="font-bodyLato text-[#867777] text-xs mt-2">
-          
+
 
                   {Source?.toString() || 'NA'}
                 </span>
@@ -1858,18 +1859,18 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
-
-<div className=' my-1'>
-  <div className="flex flex-row justify-between pb-3 pt-5 mb-0  bg-[#F2F5F8] relative">
+          {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 py-[1px]" /> */}
+<div className='mt-[1px] bg-white'>
+  <div className="flex flex-row justify-between pb-3 pt-5 mb-0   bg-white relative">
     {StatusListA.map((statusFlowObj, i) => (
       <div key={i} className="flex-1 flex flex-col items-center relative">
-        <div 
+        <div
           className={`w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-200 mb-1 z-10 ${
             streamCoveredA.includes(statusFlowObj.value)
-              ? 'bg-[#dff1fb] border-[#dff1fb] text-[#2ca4da]'
+              ? 'bg-[#058527] border-[#dff1fb] text-white'
               : statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus
-                ? 'bg-white border-black text-black' 
-                : 'bg-white border-gray-300 text-gray-300' 
+                ? 'bg-white border-black text-black'
+                : 'bg-white border-gray-300 text-gray-300'
           }`}
           onClick={() => setStatusFun(id, statusFlowObj.value)}
           onMouseEnter={() => {
@@ -1890,24 +1891,24 @@ async function handleCallButtonClick(uid, name, number) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           ) : statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus ? (
-            <div className="h-1.5 w-1.5 bg-black rounded-full" />
-          ) : i >= StatusListA.length - 2 ? null : ( 
+            <div className="h-2 w-2 bg-black  rounded-full" />
+          ) : i >= StatusListA.length - 2 ? null : (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           )}
         </div>
 
-        <span className="font-bodyLato text-[11px] text-black font-normal px-2 py-1 z-10 text-center">
+        <span className={`font-bodyLato text-[11px] text-black font-normal px-2 py-1 z-10 text-center ${statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus ? 'text-[13px]': 'text-[11px]'}`}>
           {statusFlowObj.label}
         </span>
 
         {i < StatusListA.length - 1 && (
-          <div 
+          <div
             className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${
               streamCoveredA.includes(StatusListA[i + 1].value)
-                ? 'bg-[#0E0A1F]' 
-                : 'bg-gray-300' 
+                ? 'bg-[#0E0A1F]'
+                : 'bg-gray-300'
             }`}
             style={{ transform: 'translateY(-50%)' }}
           />
@@ -1925,7 +1926,7 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
-{/* 
+{/*
         <div
           className="flex flex-row justify-between   py-3 px-3  mt-[0.5px] mb-0 rounded-xs bg-[#F2F5F8]"
           style={{ flex: '4 0 100%' }}
@@ -1935,7 +1936,7 @@ async function handleCallButtonClick(uid, name, number) {
               key={i}
               className="font-bodyLato text-sm font-normal px-[2px] py-[1px] mr-1 "
               onClick={() => setStatusFun(id, statusFlowObj.value)}
-              
+
               style={{
                 ...styleO.normal,
                 ...(statusFlowObj.value === streamCurrentStatus
@@ -1968,7 +1969,7 @@ async function handleCallButtonClick(uid, name, number) {
         </div>
         */}
 
-       
+
         {unitsViewMode && (
           <>
             <ProjPhaseHome
@@ -1981,11 +1982,11 @@ async function handleCallButtonClick(uid, name, number) {
         )}
         {!unitsViewMode && (
           <>
-            <section className=" pb-8 pt-1 px-2 mt-[0.5px] rounded-xs bg-[#F2F5F8]">
+            <section className=" pb-8 pt-1 px-2  rounded-xs  bg-white mt-1 mx-2 rounded-lg">
               <div className="">
                 <div className="">
-                 
-                  <div className="flex flex-row justify-between border-gray-200">
+
+                  <div className="flex flex-row justify-between border-gray-200 mt-2">
                     <ul
                       className="flex rounded-t-lg  mx-2"
                       id="myTab"
@@ -2013,14 +2014,14 @@ async function handleCallButtonClick(uid, name, number) {
                               onClick={() => setFeature(d.val)}
                             >
                               {`${d.lab} `}
-                            
+
                             </button>
                           </li>
                           {i !== array.length - 1 && (
           <div className="w-px mx-4 h-5 bg-[#E7E7E9]"></div>
         )}
                           </div>
-                    
+
                         )
                       })}
                     </ul>
@@ -2045,12 +2046,12 @@ async function handleCallButtonClick(uid, name, number) {
                     <>
                       <Formik
                         enableReinitialize={true}
-                      
+
                         initialValues={{
                           assetPossesed: {},
                         }}
                         onSubmit={(values, { resetForm }) => {
-                       
+
                         }}
                       >
                         {(formik) => (
@@ -2069,7 +2070,7 @@ async function handleCallButtonClick(uid, name, number) {
                               />
                             </div>
                             <div className="grid grid-cols-2 gap-8 pt-3 mx-3  mt-2">
-       
+
                               <div className="mt-2">
                                 <div className="flex justify-between w-11.7/12 m-auto">
                                   <div>Any Existing Banglore Assets ?*</div>
@@ -2100,7 +2101,7 @@ async function handleCallButtonClick(uid, name, number) {
                                   label="Purchase Reason"
                                   className="input"
                                   onChange={(value) => {
-               
+
                                     setoptionvalues({
                                       ...optionvalues,
                                       purchase: value.value,
@@ -2210,7 +2211,7 @@ async function handleCallButtonClick(uid, name, number) {
                           {(formik1) => (
                             <Form>
                               <div className=" form flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
-            
+
 
                                 <div className="  outline-none border  rounded p-4 mt-4">
                                   <ErrorMessage
@@ -2284,7 +2285,7 @@ async function handleCallButtonClick(uid, name, number) {
                             {leadNotesFetchedData.map((data, i) => (
                               <section key={i} className="">
                                 <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
-                   
+
                                   <DocumentIcon className=" w-3 h-3" />
                                 </span>
                                 <div className="text-gray-600  m-3 ml-6">
@@ -2405,7 +2406,7 @@ async function handleCallButtonClick(uid, name, number) {
                             {leadNotesFetchedData.map((data, i) => (
                               <section key={i} className="">
                                 <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
-        
+
                                   <DocumentIcon className=" w-3 h-3" />
                                 </span>
                                 <div className="text-gray-600  m-3 ml-6">
@@ -2579,7 +2580,7 @@ async function handleCallButtonClick(uid, name, number) {
                                     </td>
                                     <td className="px-5 py-5 bg-white text-sm">
                                       <>
-               
+
 
                                         <DownloadIcon
                                           onClick={() => downloadFile(dat.url)}
@@ -2694,10 +2695,10 @@ async function handleCallButtonClick(uid, name, number) {
                 <>
                   <Formik
                     initialValues={initialState1}
-       
+
                   >
                     {(formik2) => (
-                      <div className=" h-screen ">
+                      <div className=" h-screen bg-white rounded-xl mt-2 ">
                         {(showNotInterested ||
                           showVisitFeedBackStatus ||
                           showJunk) &&
@@ -2788,13 +2789,13 @@ async function handleCallButtonClick(uid, name, number) {
                           )}
 
                         <div className="font-md font-medium text-xs  ml-2 text-gray-800 flex flex-row justify-between mr-4 py-2">
-                          <section className="flex flex-row py-1">
-                           
+                          {/* <section className="flex flex-row py-1">
 
-     
-                          </section>
+
+
+                          </section> */}
                           <div className="flex flex-row ">
-               
+
 
                             <div className="flex flex-row bg-white rounded-xl border ">
                               <div
@@ -2814,12 +2815,12 @@ async function handleCallButtonClick(uid, name, number) {
                               <div
                                 className={` py-1 pr-4 pl-4 min-w-[62px] border-x ${
                                   selFilterVal === 'pending'
-                                    ? 'bg-[#c6fff0]'
+                                    ? 'bg-[#7BD2EA]'
                                     : ''
                                 } `}
                                 onClick={() => setSelFilterVal('pending')}
                               >
-                                <CheckCircleIcon className="w-4 h-3  inline text-[#cdcdcd]" />
+                                <CheckCircleIcon className="w-4 h-3  inline text-black" />
                                 <span className="mr-1 text-[10px] ">
                                   Pending
                                 </span>
@@ -2860,14 +2861,14 @@ async function handleCallButtonClick(uid, name, number) {
                         {loader && (
                           <div
                             id="toast-success"
-                            className="flex items-center w-[95%] mx-4  p-2 text-white
+                            className="flex items-center w-[96.4%] mx-4 rounded-t-lg p-2 text-white
                      bg-[#516F90]"
                             role="alert"
                           >
 
 
-                            <div className=" text-sm font-normal font-bodyLato tight-wider">
-            
+                            <div className=" text-sm font-normal font-bodyLato  tight-wider">
+
                               Hey, Plan your{' '}
                               <span className="text-xs  tight-wider ">
                                 {tempLeadStatus.toLocaleUpperCase()}{' '}
@@ -2910,7 +2911,7 @@ async function handleCallButtonClick(uid, name, number) {
                                 <Form>
                                   <div className=" form outline-none border  py-4">
                                     <section className=" px-4">
-   
+
                                       <div className="text-xs font-bodyLato text-[#516f90]">
                                         Task Title
                                         <ErrorMessage
@@ -2932,7 +2933,7 @@ async function handleCallButtonClick(uid, name, number) {
                                           setTitleFun(e)
                                         }}
                                         placeholder="Enter a short title"
-                                        className="w-full h-full pb-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd] text-[33475b] bg-[#F2F5F8] "
+                                        className="w-full h-full pb-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd] text-[33475b]  "
                                       ></input>
                                       <div className="flex flex-row mt-3">
                                         <section>
@@ -2948,7 +2949,7 @@ async function handleCallButtonClick(uid, name, number) {
                                           <div className="bg-green   pl-   flex flex-row ">
                                             <span className="inline">
                                               <CustomDatePicker
-                                                className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] bg-[#F2F5F8]"
+                                                className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] "
                                                 selected={startDate}
                                                 onChange={(date) =>
                                                   setStartDate(date)
@@ -2980,7 +2981,7 @@ async function handleCallButtonClick(uid, name, number) {
                                       <section className="flex">
                                         <button
                                           type="submit"
-                                          className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                                          className={`flex mt-2 cursor-pointer rounded-lg text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  bg-[#FF7A53] bg-[#7bd2ea] text-black hover:bg-gray-700  `}
                                         >
                                           <span className="ml-1 ">
                                             Create{' '}
@@ -3004,7 +3005,7 @@ async function handleCallButtonClick(uid, name, number) {
                             </Formik>
                           </div>
                         )}
-                      
+
 
                         {leadSchLoading &&
                           [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
@@ -3039,7 +3040,7 @@ async function handleCallButtonClick(uid, name, number) {
                             {leadSchFilteredData.map((data, i) => (
                               <section
                                 key={i}
-                                className=" mx-2 bg-[#FFF] mb-[1px]  px-3 py-3"
+                                className=" mx-2 bg-[#FFF] mb-[1px]  px-3 py-3 border-b"
                                 onMouseEnter={() => {
                                   hoverEffectTaskFun(data?.ct)
                                 }}
@@ -3072,7 +3073,7 @@ async function handleCallButtonClick(uid, name, number) {
                                     }
                                   />
                                   {addTaskCommentObj?.ct === data?.ct && (
-             
+
                                     <AddLeadTaskComment
                                       closeTask={closeTask}
                                       data={data}

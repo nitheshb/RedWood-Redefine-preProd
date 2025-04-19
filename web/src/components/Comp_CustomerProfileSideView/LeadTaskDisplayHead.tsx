@@ -73,17 +73,17 @@ export default function LeadTaskDisplayHead({
 
 
             <span
-          className="font-thin text-[#e91313] cursor-pointer text-[12px]  font-bodyLato text-[10px] ml-2  border-b hover:border-[#0091ae]  "
+          className="font-thin text-[#e91313] w-20 cursor-pointer text-[12px]  font-bodyLato text-[10px] ml-2  hover:border-[#0091ae]  "
         >
-          Comment
+          Add Comment
         </span>
           </span>
           {data?.stsType === 'visitfixed' && data?.sts != 'completed' && (
             <span
-              className=" mt-[3px]  ml-4 text-green-900 font-semibold hover:border-[#7BD500] text-[12px] ml-2 cursor-pointer"
+              className=" mt-[3px] w-[58px] h-[18px] ml-4 text-[#0091ae] border-b border-[#7bd2ea] font-semibold hover:border-[#7BD500] text-[12px] ml-2 cursor-pointer"
               onClick={() => setShowVisitFeedBackStatusFun(data, 'visitdone')}
             >
-              VISITDONE
+              Visit Done
             </span>
           )}
         </section>
