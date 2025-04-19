@@ -209,7 +209,7 @@ const CrmUnitSummary = ({
 
 
 
-  
+
   return (
     <PDFExport paperSize="A4" margin="1cm" ref={pdfUnitSummaryComp}>
       <div className=" rounded-lg  border border-gray-100   overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300" style={{  }}>
@@ -289,7 +289,7 @@ const CrmUnitSummary = ({
 
       <div className="bg-white rounded-2xl p-6">
         <div>
-          
+
 
           <div className="flex items-center gap-2  mb-4 overflow-visible">
           <div>
@@ -376,7 +376,7 @@ const CrmUnitSummary = ({
       <div className="bg-white rounded-2xl  p-6">
         <div>
           <div className="flex items-center justify-between">
-            <div className="flex items-center mb-4 ">
+            <div className="flex items-center gap-2 mb-4 ">
               {/* <img src="/su2.svg" alt="Activity" className="w-[30px] h-[29px] mr-2 object-contain" /> */}
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0.150879 2.40428V21.7649L15.3244 21.4459L15.5012 2.12979L0.150879 2.40428Z" fill="white"/>
@@ -442,7 +442,7 @@ const CrmUnitSummary = ({
         </div>
       </div>
 
- 
+
       <div className="bg-white rounded-2xl overflow-visible p-6">
         <div>
           <div className="flex items-center gap-2 overflow-visible mb-4">
@@ -569,7 +569,7 @@ const CrmUnitSummary = ({
 
 
 
- 
+
 
 
 
@@ -619,7 +619,7 @@ const CrmUnitSummary = ({
                   const y1 = 100 + innerRadius * Math.sin(angle);
                   const x2 = 100 + outerRadius * Math.cos(angle);
                   const y2 = 100 + outerRadius * Math.sin(angle);
-          
+
                   const color = i < 27 ? "#e0d4ff" : "#e5e7eb";
                   return (
                     <line
@@ -640,17 +640,17 @@ const CrmUnitSummary = ({
           </div>
           <div className="flex items-center justify-end w-2/5">
             <svg className="w-32 h-32 opacity-10" viewBox="0 0 100 100">
-              <path 
-                d="M20,20 C50,50 50,50 80,20 M20,80 C50,50 50,50 80,80" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1" 
+              <path
+                d="M20,20 C50,50 50,50 80,20 M20,80 C50,50 50,50 80,80"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
               />
             </svg>
           </div>
         </div>
       </div>
-      
+
       {/* Finance Balance */}
       <div className="relative bg-gray-50 p-6 rounded-lg">
         <div className="text-gray-600 font-medium mb-4">FINANCE BALANCE</div>
@@ -683,7 +683,7 @@ const CrmUnitSummary = ({
       </div>
 </div>
 
-        
+
         <div className="flex flex-row">
           <div className="w-full">
             <div className="flex flex-row justify-between text-end items-end mr-2">
@@ -694,7 +694,7 @@ const CrmUnitSummary = ({
 
             <div>
               <div className='  rounded-lg'>
-              
+
               <div className="grid   rounded-lg grid-cols-2 gap-4 mb-3">
                 <div className="bg-[#FFFFFF] p-4 rounded-lg">
                   <div className="flex justify-between ">
@@ -716,29 +716,29 @@ const CrmUnitSummary = ({
                       >
                         <Cell fill="#DBD3FD" />
                         <Cell fill="#E5E7EB" />
-              
-              
+
+
                       </Pie>
                       {/* <Tooltip content={<CustomTooltip />} /> */}
-              
+
                     </PieChart>
-              
+
                     <div className="absolute text-center">
                       <div className="text-xs text-gray-500">Balance</div>
-                      <div className="font-bold">  
-                      ₹{selCustomerPayload?.T_elgible_balance < 0 
-                ? 0 
+                      <div className="font-bold">
+                      ₹{selCustomerPayload?.T_elgible_balance < 0
+                ? 0
                 : Math.round(selCustomerPayload?.T_elgible_balance)?.toLocaleString('en-IN')}
-                        
+
                       </div>
                     </div>
                   </div>
-              
-              
+
+
                   <section className="flex flex-row justify-between mx-2">
                   <div className="text-center">
                     <div className="text-[12px] text-gray-500">Elgible Cost</div>
-              
+
                     <div
                               className="relative flex flex-col items-center group"
                               style={{ alignItems: 'start' }}
@@ -757,7 +757,7 @@ const CrmUnitSummary = ({
                                 >
                                   <span className="italic">
                                     {formatIndianNumber?.(Math.round(selCustomerPayload?.T_elgible || 0))}
-              
+
                                   </span>
                                 </span>
                                 <div
@@ -767,26 +767,26 @@ const CrmUnitSummary = ({
                               </div>
                               <span className="text-[14px] font-bold text-gray-900">
                     ₹ {Math.round(selCustomerPayload?.T_elgible || 0).toLocaleString('en-IN')}
-                                
-              
+
+
                               </span>
                     </div>
-              
-              
+
+
                     <div className="font-bold text-[14px]">
-              
-              
-                                                          
+
+
+
                     </div>
                   </div>
                   <div className="text-center">
                     <div className="text-[12px] text-gray-500">Paid</div>
-                    {/* <div className="font-bold text-[14px]"> 
-              
+                    {/* <div className="font-bold text-[14px]">
+
                     ₹{Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
-                      
+
                       </div> */}
-              
+
                       <div
                               className="relative flex flex-col items-center group"
                               style={{ alignItems: 'start' }}
@@ -805,12 +805,12 @@ const CrmUnitSummary = ({
                                 >
                                   <span className="italic">
                                     {/* {toWords?.convert(Math.round(selCustomerPayload?.T_elgible || 0))} */}
-              
+
                                     {/* {toWords?.convert(Math.round(selCustomerPayload?.T_elgible || 0))} */}
-              
+
                                     {formatIndianNumber?.(Math.round(selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0))}
-              
-              
+
+
                                   </span>
                                 </span>
                                 <div
@@ -820,28 +820,28 @@ const CrmUnitSummary = ({
                               </div>
                               <span className="text-[14px] font-bold ">
                     {/* ₹ {Math.round(selCustomerPayload?.T_elgible || 0).toLocaleString('en-IN')} */}
-              
+
                     ₹{Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
-              
-                                
-              
+
+
+
                               </span>
                     </div>
-              
-              
-              
-              
-              
-              
+
+
+
+
+
+
                   </div>
                   <div className="text-center">
                     <div className="text-[12px] text-gray-500">Balance</div>
                     {/* <div className="font-bold text-[14px]">
                     ₹ {Math.round(Math.max(selCustomerPayload?.T_elgible_balance || 0, 0)).toLocaleString('en-IN')}
-              
+
                       </div> */}
-              
-              
+
+
               <div className="relative flex flex-col items-center group" style={{ alignItems: 'start' }}>
                 <div
                   className="absolute bottom-0 flex-col items-center hidden mb-6 flex group-hover:flex"
@@ -868,11 +868,11 @@ const CrmUnitSummary = ({
                   ₹{Math.round(Math.max(selCustomerPayload?.T_elgible_balance || 0, 0)).toLocaleString('en-IN')}
                 </span>
               </div>
-              
+
                   </div>
                   </section>
                 </div>
-              
+
                 <div className="bg-[#FFFFFF]  p-4 rounded-lg">
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Unit Cost</span>
@@ -897,16 +897,16 @@ const CrmUnitSummary = ({
                         <Cell fill="#E5E7EB" />
                       </Pie>
                       {/* <Tooltip content={<CustomTooltiptwo />} /> */}
-              
+
                     </PieChart>
-              
+
                     <div className="absolute text-center">
                       <div className="text-xs text-gray-500">Balance</div>
                       <div className="font-bold">
                       ₹ {Math.round(selCustomerPayload?.T_balance || 0).toLocaleString('en-IN')}
-              
-              
-                                                        
+
+
+
                                                         </div>
                     </div>
                   </div>
@@ -915,8 +915,8 @@ const CrmUnitSummary = ({
                     <div className="text-[12px] text-gray-500">Unit Cost</div>
                     <div className="font-bold text-[14px]">
                     ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
-              
-                                                          
+
+
                                                           </div>
                   </div>
                   <div className="text-center">
@@ -928,31 +928,31 @@ const CrmUnitSummary = ({
                     <div className="text-[12px] text-gray-500">Balance</div>
                     <div className="font-bold text-[14px]">
                     ₹ {Math.round(selCustomerPayload?.T_balance || 0).toLocaleString('en-IN')}
-              
-                                                          
-                                                          
+
+
+
                                                           </div>
                   </div>
                   </section>
                 </div>
-              
+
                 <div className="bg-[#FFFFFF] p-4 rounded-lg">
-              
+
                   <div className="flex justify-between items-center">
                 <span className="font-medium">Unit Payments</span>
                 <BellIcon size={16} className="ml-2" />
               </div>
-              
+
                   <div className="flex flex-col items-center mt-8">
                     <section className='flex flex-row justify-between'>
                       <div className=''>
                     <div className="text-sm text-gray-500 mb-2">Total Paid</div>
                     <div className="font-bold mb-4">
                     ₹ {Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
-              
+
                                                           </div>
                                                           </div>
-              
+
                     </section>
                     <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
                       <div className="bg-[#DBD3FD] h-7 rounded-full w-1/3"></div>
@@ -960,17 +960,17 @@ const CrmUnitSummary = ({
                     <div className="text-sm text-gray-500 mb-2">Total Cost</div>
                     <div className="font-bold">
                     ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
-              
-              
+
+
                                                           </div>
                   </div>
                 </div>
-              
-              
-              
+
+
+
               </div>
-              
-              
+
+
               </div>
             </div>
 
@@ -1006,14 +1006,14 @@ const CrmUnitSummary = ({
 
 
 
-        
-   
 
 
 
 
 
-     
+
+
+
 
 
 
@@ -1063,7 +1063,7 @@ const CrmUnitSummary = ({
 
     projectDetails={projectDetails}
     leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined}
-  
+
     />
 </div>
 
@@ -1183,7 +1183,6 @@ const CrmUnitSummary = ({
 
 
 
-  
 
 
 
@@ -1196,7 +1195,8 @@ const CrmUnitSummary = ({
 
 
 
-     
+
+
 
 
 
