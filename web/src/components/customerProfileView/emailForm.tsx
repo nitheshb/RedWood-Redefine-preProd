@@ -17,9 +17,11 @@ const EmailForm = () => {
     },
   })
 
+
+
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="w-[90%] flex flex-col gap-4  rounded-sm bg-[#f3f3f3]">
+      <div className="w-[100%] flex flex-col gap-4  pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
         {/* from */}
         <div className=" flex  border-b-[1.5px] border-gray-300 flex-row gap-4">
           <label className="text-gray-400">From:</label>
@@ -83,10 +85,11 @@ const EmailForm = () => {
           <span>
             <button
               type="submit"
-              className="w-[8rem] bg-[#47E4C2] h-8 rounded text-center "
+              className="w-[4rem] h-[36px] mt-2 rounded-lg text-sm font-medium text-black bg-[#7bd2ea] hover:bg-gray-700 hover:text-white flex items-center justify-center"
             >
-              Send
+              Send 
             </button>
+
           </span>
         </div>
       </div>

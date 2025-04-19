@@ -1463,7 +1463,7 @@ export default function CrmUnitSideView({
                 )}
 
                 {selFeature === 'notes' && (
-                  <div className="flex flex-col justify-between border pt-6">
+                  <div className="flex flex-col justify-between  pt-6">
                     {leadNotesFetchedData.length === 0 && !addNote && (
                       <div className="py-8 px-8 flex flex-col items-center mt-5">
                         <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">

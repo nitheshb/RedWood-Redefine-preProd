@@ -86,6 +86,7 @@ import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import SiderForm from './SiderForm/SiderForm'
 import Stepper from './A_SalesModule/stepper'
+import RoundedProgressBar from './A_SalesModule/Reports/charts/horizontalProgressBar'
 
 // interface iToastInfo {
 //   open: boolean
@@ -1982,7 +1983,7 @@ async function handleCallButtonClick(uid, name, number) {
         )}
         {!unitsViewMode && (
           <>
-            <section className=" pb-8 pt-1 px-2  rounded-xs  bg-white mt-1 mx-2 rounded-lg">
+            <section className=" pb-8 pt-1 px-2   rounded-xs  bg-white mt-1 mx-2 rounded-lg">
               <div className="">
                 <div className="">
 
@@ -2056,7 +2057,7 @@ async function handleCallButtonClick(uid, name, number) {
                         }}
                       >
                         {(formik) => (
-                          <div className="flex flex-col pt-0 my-10 mt-[30px] rounded bg-[#d1d8e7] mx-4 p-4">
+                          <div className="flex flex-col pt-0 my-10 mt-[30px] rounded  mx-4 p-4">
                             <div className="border border-red-100 mt-2 mt-4 bg-white rounded-md p-4 font-bold">
                               <div className="flex justify-between w-full ">
                                 <div>Total Lead Strength</div>
@@ -2075,7 +2076,22 @@ async function handleCallButtonClick(uid, name, number) {
                               <div className="mt-2">
                                 <div className="flex justify-between w-11.7/12 m-auto">
                                   <div>Any Existing Banglore Assets ?*</div>
-                                  <div> {`${optionvalues.asstr}%`}</div>
+
+                                  <div className="flex items-center">
+  <div className="w-16 mr-2">
+    <RoundedProgressBar 
+      progress={optionvalues.asstr} 
+      height={8}
+      fillColor="#7BD2EA"
+      showLabels={false}
+    />
+  </div>
+  <span className="text-xs font-medium">{`${optionvalues.asstr}%`}</span>
+</div>
+
+                                  
+
+                          
                                 </div>
                                 <CustomSelect
                                   name="assetPossesed"
@@ -2095,7 +2111,19 @@ async function handleCallButtonClick(uid, name, number) {
                               <div className="mt-2">
                                 <div className="flex justify-between w-11.7/12 m-auto">
                                   <div>Reason For Purchase ?*</div>
-                                  <div> {`${optionvalues.pstr}%`}</div>
+
+                                  <div className="flex items-center">
+  <div className="w-16 mr-2">
+    <RoundedProgressBar 
+      progress={optionvalues.pstr} 
+      height={8}
+      fillColor="#7BD2EA"
+      showLabels={false}
+    />
+  </div>
+  <span className="text-xs font-medium">{`${optionvalues.pstr}%`}</span>
+</div>
+                                  {/* <div> {`${optionvalues.pstr}%`}</div> */}
                                 </div>
                                 <CustomSelect
                                   name="reasonPurchase"
@@ -2116,7 +2144,18 @@ async function handleCallButtonClick(uid, name, number) {
                               <div className="mt-2">
                                 <div className="flex justify-between w-11.7/12 m-auto">
                                   <div>Preferred Area ?*</div>
-                                  <div> {`${optionvalues.astr}%`}</div>
+                                  <div className="flex items-center">
+  <div className="w-16 mr-2">
+    <RoundedProgressBar 
+      progress={optionvalues.astr} 
+      height={8}
+      fillColor="#7BD2EA"
+      showLabels={false}
+    />
+  </div>
+  <span className="text-xs font-medium">{`${optionvalues.astr}%`}</span>
+</div>
+                                  {/* <div> {`${optionvalues.astr}%`}</div> */}
                                 </div>
                                 <CustomSelect
                                   name="preferredArea"
@@ -2139,14 +2178,14 @@ async function handleCallButtonClick(uid, name, number) {
                               <section className="flex flex-row">
                                 <button
                                   onClick={() => fAddNotes()}
-                                  className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-teal-900  hover:bg-teal-700  `}
+                                  className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  bg-[#7bd2ea] text-black hover:bg-gray-700 hover:text-white   `}
                                 >
                                   <span className="ml-1 ">Save</span>
                                 </button>
 
                                 <button
                                   onClick={() => setFeature('appointments')}
-                                  className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-teal-900 hover:text-white  `}
+                                  className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  text-black hover:bg-gray-700 hover:text-white  `}
                                 >
                                   <span className="ml-1 ">Cancel</span>
                                 </button>
@@ -2163,7 +2202,7 @@ async function handleCallButtonClick(uid, name, number) {
                     </>
                   )}
                   {selFeature === 'notes' && (
-                    <div className="flex flex-col justify-between border pt-6">
+                    <div className="flex flex-col justify-between  pt-6">
                       {leadNotesFetchedData.length === 0 && !addNote && (
                         <div className="py-8 px-8 flex flex-col items-center mt-5">
                           <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
@@ -2211,7 +2250,7 @@ async function handleCallButtonClick(uid, name, number) {
                         >
                           {(formik1) => (
                             <Form>
-                              <div className=" form flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
+                              <div className=" form flex flex-col pt-0 my-10 mt-[10px] rounded bg-white mx-4 p-4">
 
 
                                 <div className="  outline-none border  rounded p-4 mt-4">
@@ -2235,20 +2274,20 @@ async function handleCallButtonClick(uid, name, number) {
                                       setNotesTitle(e.target.value)
                                     }}
                                     placeholder="Type & make a notes"
-                                    className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFF9F2] "
+                                    className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
                                   ></textarea>
                                 </div>
                                 <div className="flex flex-row mt-1">
                                   <button
                                     type="submit"
-                                    className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                                    className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-black  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white  `}
                                   >
                                     <span className="ml-1 ">Save</span>
                                   </button>
                                   <button
                                     onClick={() => cancelResetStatusFun()}
                                     type="submit"
-                                    className={`flex mt-2 ml-4 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                                    className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-black  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
                                   >
                                     <span className="ml-1 ">
                                       Save & Whats App
@@ -2320,7 +2359,7 @@ async function handleCallButtonClick(uid, name, number) {
                   )}
 
                   {selFeature === 'visitDoneNotes' && (
-                    <div className="flex flex-col justify-between border pt-6">
+                    <div className="flex flex-col justify-between  pt-6">
                       {leadNotesFetchedData.length === 0 && !addNote && (
                         <div className="py-8 px-8 flex flex-col items-center mt-5">
                           <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
@@ -2342,7 +2381,7 @@ async function handleCallButtonClick(uid, name, number) {
                         </div>
                       )}
                       {addNote && (
-                        <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
+                        <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
                           <div className="w-full flex flex-col mb-3 mt-2">
                             <CustomSelect
                               name="source"
@@ -2362,19 +2401,19 @@ async function handleCallButtonClick(uid, name, number) {
                               value={takNotes}
                               onChange={(e) => setNotesTitle(e.target.value)}
                               placeholder="Type & make a notes *"
-                              className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFF9F2] "
+                              className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
                             ></textarea>
                           </div>
                           <div className="flex flex-row mt-1">
                             <button
                               onClick={() => fAddNotes()}
-                              className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                              className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
                             >
                               <span className="ml-1 ">Save</span>
                             </button>
                             <button
                               onClick={() => fAddNotes()}
-                              className={`flex mt-2 ml-4 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                              className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-black  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white  `}
                             >
                               <span className="ml-1 ">Save & Whats App</span>
                             </button>
@@ -2466,7 +2505,7 @@ async function handleCallButtonClick(uid, name, number) {
 
                   {attach && (
                     <div className="flex justify-center mt-4">
-                      <div className="mb-3 w-96 px-10 bg-[#FFF9F2] rounded-md py-3 pb-6">
+                      <div className="mb-3 w-96 px-10 bg-[#FFFFFF] rounded-md py-3 pb-6">
                         <div className="w-full flex flex-col mb-3 mt-2">
                           <CustomSelect
                             name="source"
@@ -2508,7 +2547,7 @@ async function handleCallButtonClick(uid, name, number) {
                           <div className="flex flex-row mt-3">
                             <button
                               type="submit"
-                              className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                              className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white  bg-[#7bd2ea]  hover:bg-gray-700  `}
                             >
                               <span className="ml-1 ">Upload</span>
                             </button>
@@ -3016,7 +3055,7 @@ async function handleCallButtonClick(uid, name, number) {
                           showVisitFeedBackStatus ||
                           showJunk) &&
                           selSchGrpO?.ct === undefined && (
-                            <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
+                            <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
                               {showNotInterested && (
                                 <div className="w-full flex flex-col mb-3 mt-2">
                                   <CustomSelect
@@ -3072,20 +3111,20 @@ async function handleCallButtonClick(uid, name, number) {
                                       setNotesTitle(e.target.value)
                                     }
                                     placeholder="Type & make a notes"
-                                    className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFF9F2] "
+                                    className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
                                   ></textarea>
                                 </div>
                               )}
                               <div className="flex flex-row mt-1">
                                 <button
                                   onClick={() => notInterestedFun()}
-                                  className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                                  className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white  `}
                                 >
                                   <span className="ml-1 ">Save</span>
                                 </button>
                                 <button
                                   onClick={() => notInterestedFun()}
-                                  className={`flex mt-2 ml-4 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                                  className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
                                 >
                                   <span className="ml-1 ">
                                     Save & Whats App
@@ -3093,7 +3132,7 @@ async function handleCallButtonClick(uid, name, number) {
                                 </button>
                                 <button
                                   onClick={() => cancelResetStatusFun()}
-                                  className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
+                                  className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
                                 >
                                   <span className="ml-1 ">Cancel</span>
                                 </button>
@@ -3175,7 +3214,7 @@ async function handleCallButtonClick(uid, name, number) {
                           <div
                             id="toast-success"
                             className="flex items-center w-[96.4%] mx-4 rounded-t-lg p-2 text-white
-                     bg-[#516F90]"
+                     bg-[#7bd2ea]"
                             role="alert"
                           >
 
@@ -3294,7 +3333,7 @@ async function handleCallButtonClick(uid, name, number) {
                                       <section className="flex">
                                         <button
                                           type="submit"
-                                          className={`flex mt-2 cursor-pointer rounded-lg text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  bg-[#FF7A53] bg-[#7bd2ea] text-black hover:bg-gray-700  `}
+                                          className={`flex mt-2 cursor-pointer rounded-lg text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium   bg-[#7bd2ea] bg-[#7bd2ea] text-black hover:bg-gray-700 hover:text-white  `}
                                         >
                                           <span className="ml-1 ">
                                             Create{' '}
@@ -3306,7 +3345,7 @@ async function handleCallButtonClick(uid, name, number) {
                                         </button>
                                         <button
                                           onClick={() => cancelResetStatusFun()}
-                                          className={`flex mt-2 ml-4 rounded items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
+                                          className={`flex mt-2 ml-4 rounded-lg items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
                                         >
                                           <span className="ml-1 ">Cancel</span>
                                         </button>
@@ -3455,7 +3494,7 @@ async function handleCallButtonClick(uid, name, number) {
                                   {(showNotInterested ||
                                     showVisitFeedBackStatus) &&
                                     selSchGrpO?.ct === data?.ct && (
-                                      <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
+                                      <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFFFFF] mx-2">
                                         {showNotInterested && (
                                           <div className="w-full flex flex-col mb-3 mt-2">
                                             <SelectDropDownComp
@@ -3492,7 +3531,7 @@ async function handleCallButtonClick(uid, name, number) {
                                               setfbNotes(e.target.value)
                                             }
                                             placeholder="Type & make a notes *"
-                                            className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFF9F2] "
+                                            className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFFFFF] "
                                           ></textarea>
                                         </div>
                                         <div className="flex flex-row mt-1">
@@ -3514,7 +3553,7 @@ async function handleCallButtonClick(uid, name, number) {
                                                 )
                                               }
                                             }}
-                                            className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                                            className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
                                           >
                                             <span className="ml-1 ">Save</span>
                                           </button>
@@ -3538,7 +3577,7 @@ async function handleCallButtonClick(uid, name, number) {
                                                 msgPayload
                                               )
                                             }}
-                                            className={`flex mt-2 ml-4 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                                            className={`flex mt-2 ml-4 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
                                           >
                                             <span className="ml-1 ">
                                               Save & Whats App
@@ -3548,7 +3587,7 @@ async function handleCallButtonClick(uid, name, number) {
                                             onClick={() =>
                                               cancelResetStatusFun()
                                             }
-                                            className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
+                                            className={`flex mt-2 ml-4  rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
                                           >
                                             <span className="ml-1 ">
                                               Cancel
@@ -3579,7 +3618,7 @@ async function handleCallButtonClick(uid, name, number) {
                 </>
               )}
               {selFeature === 'timeline' && (
-                <div className="py-8 px-8  border">
+                <div className="py-8 mx-4">
                   {filterData?.length == 0 && (
                     <div className="py-8 px-8 flex flex-col items-center">
                       <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
@@ -3597,15 +3636,28 @@ async function handleCallButtonClick(uid, name, number) {
                       </time>
                     </div>
                   )}
-                  <div className="font-md font-medium text-xs mb-4 text-gray-800">
+             
+
+             <div className="text-gray-600 font-medium mr-6 text-[12px] uppercase tracking-wide mb-4 ">
                     Timeline
                   </div>
-                  <ol className="relative border-l border-gray-200 ">
+
+                  <div className='mx-4'>
+
+
+     
+
+
+
+                  <ol className="col-span-12 space-y-2 relative pl-4 sm:col-span-8  sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-200">
+
+                    
+
                     {filterData?.map((data, i) => (
-                      <section key={i} className=" mx-2 bg-white mb-2">
+                      <section key={i} className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-[#7BD2EA] bg-white  rounded-lg">
                         <a
                           href="#"
-                          className="block items-center px-3 sm:flex hover:bg-gray-100 "
+                          className="block items-center px-3 sm:flex "
                         >
                           {data?.type == 'status' && (
                             <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ring-white  ">
@@ -3671,20 +3723,20 @@ async function handleCallButtonClick(uid, name, number) {
                             <div className="text-gray-600 font-bodyLato mx-3 my-1">
                               <div className="text-base font-normal">
                                 {data?.type === 'sts_change' && (
-                                  <span className="text-xs text-red-900 ">
+                                  <span className="text-sm font-medium text-gray-800 ">
                                     {data?.from?.toUpperCase()} {'  '}
                                   </span>
                                 )}
-                                <span className="text-sm text-green-900 mx-2 ">
+                                <span className="text-sm font-normal text-gray-800 mx-2 ">
                                   {activieLogNamer(data)}
                                 </span>{' '}
                                 {data?.type === 'sts_change' && (
-                                  <span className="text-xs text-red-900 ">
+                                  <span className="text-sm font-medium text-gray-800 ">
                                     {'  '} {data?.to?.toUpperCase()}
                                   </span>
                                 )}
                                 {data?.type === 'assign_change' && (
-                                  <span className="text-xs text-red-900 ">
+                                  <span className="text-xs  text-gray-500 ">
                                     {'  '} {empNameSetter(data?.to)}
                                   </span>
                                 )}
@@ -3693,17 +3745,17 @@ async function handleCallButtonClick(uid, name, number) {
                                 {data?.txt}
                               </div>
                               <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-                                <ClockIcon className=" w-3 h-3 text-gray-300" />
+                                <ClockIcon className=" w-3 h-3   text-gray-500" />
 
-                                <span className="text-gray-400 ml-1 mr-4">
+                                <span className="text-xs  text-gray-500 ml-1 mr-4">
                                   {data?.type == 'ph'
                                     ? timeConv(
                                         Number(data?.time)
                                       ).toLocaleString()
                                     : timeConv(data?.T).toLocaleString()}
                                 </span>
-                                <span className="text-green-900 ml-2">by:</span>
-                                <span className="text-gray-400 ml-1 mr-4">
+                                <span className="text-xs  text-gray-500  ml-2">by:</span>
+                                <span className="text-xs  text-gray-500 ml-1 mr-4">
                                   {data?.by}
                                 </span>
                               </span>
@@ -3713,6 +3765,12 @@ async function handleCallButtonClick(uid, name, number) {
                       </section>
                     ))}
                   </ol>
+
+                  </div>
+
+             
+
+                  
                 </div>
               )}
             </section>
