@@ -40,6 +40,7 @@ import HalfSemiCircleGauge from '../A_SalesModule/Reports/charts/GaugeChart'
 import RadialChart from '../A_SalesModule/Reports/charts/RadialChart'
 import { PhoneCall } from 'lucide-react'
 import SemicircleProgressChart from '../A_SalesModule/Reports/charts/SemiCircleProgress'
+import RadialChartSemi from '../A_SalesModule/Reports/charts/RadialChartSemi'
 
 
 
@@ -1305,14 +1306,17 @@ showLabels={true}
 
 
 
-<SemicircleProgressChart
+
+ 
+<RadialChartSemi
                                   progress={
                                     (((finData?.T_review || 0) +
                                       (finData?.T_approved || 0)) / finData?.T_elgible) *
                                     100
                                   }
+      />
 
-                                />
+
 
 
                                 <div className="flex flex-col justify-between  mb-1">

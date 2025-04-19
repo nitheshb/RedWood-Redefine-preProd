@@ -447,22 +447,25 @@ const DialogFormBody = ({
         sqft)
       </span>
     </label>
+    <span className='my-2'></span>
     <MuiTextField
       id="extent"
-      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1 p-0`}
+      className={`w-full bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-10 mt-1  p-0`}
       size="small"
       InputProps={{
 
         sx: {
           height: '32px',
           fontSize: '0.875rem',
-          borderRadius: '6px',
+          borderRadius: '8px',
+
+      
         },
 
 
 
         startAdornment: (
-          <InputAdornment position="start">
+          <InputAdornment position="start"  sx={{ fontSize: '12px' }}>
             Sqmt
           </InputAdornment>
         ),
@@ -543,11 +546,14 @@ const DialogFormBody = ({
         sx: {
           height: '32px',
           fontSize: '0.875rem',
-          borderRadius: '6px',
+          borderRadius: '8px',
+          
+  
+      
         },
 
         startAdornment: (
-          <InputAdornment position="start">
+          <InputAdornment position="start"  sx={{ fontSize: '12px' }}>
             Sqmt
           </InputAdornment>
         ),
@@ -828,11 +834,11 @@ const DialogFormBody = ({
 </div>
 </div>
 
-<div className="flex flex-col mt-2 rounded-lg  pt-4 ">
-  <div className="mb-4 mt-2">
+<div className="flex flex-col  rounded-lg ">
+  <div className="mb-1">
     <div className="inline">
       <div className="">
-        <label className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162] mb-1  ">
+        <label className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]  ">
           Add Bank Account*<abbr title="required"></abbr>
         </label>
       </div>

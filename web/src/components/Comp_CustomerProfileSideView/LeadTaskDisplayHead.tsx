@@ -1,6 +1,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { CheckCircleIcon } from '@heroicons/react/solid'
+import { use } from 'i18next'
+import { useState, useEffect } from 'react'
+import { getDifferenceInDays, getDifferenceInHours, getDifferenceInMinutes } from 'src/util/dateConverter'
 
 export default function LeadTaskDisplayHead({
   data,
@@ -10,7 +13,33 @@ export default function LeadTaskDisplayHead({
   undoFun,
   setShowVisitFeedBackStatusFun,
 }) {
+  const [comingSoonState, setComingSoonState] = useState(false)
+  useEffect(() => {
+let x = Math.abs(getDifferenceInHours(data?.schTime, ''))<=24 && Math.abs(getDifferenceInHours(data?.schTime, ''))>=0 ? true : false
+setComingSoonState(x)
+  }, [data])
   return (
+    <div>
+       {(data?.sts != 'completed' || Math.abs(
+                                                                    getDifferenceInHours(data?.schTime, '')
+                                                                  )<=24)  && <span className={` px-2 py-1 ml-6 mb-2 ${ comingSoonState  ? 'bg-green-400': 'bg-red-400'}  text-white text-[12px] text-center`}>
+                                                            {comingSoonState
+                                                              ? 'Starts in'
+                                                              : 'Delayed by'}{' '}
+                                                            {'  '}
+                                                            {Math.abs(getDifferenceInMinutes(data?.schTime, '')) > 60
+                                                              ? Math.abs(getDifferenceInMinutes(data?.schTime, '')) >
+                                                                8640
+                                                                ? `${Math.abs(
+                                                                    getDifferenceInDays(data?.schTime, '')
+                                                                  )} Days `
+                                                                : `${Math.abs(
+                                                                    getDifferenceInHours(data?.schTime, '')
+                                                                  )} Hours `
+                                                              : `${Math.abs(
+                                                                  getDifferenceInMinutes(data?.schTime, '')
+                                                                )} Min`}{' '}
+                                                          </span>}
     <section className="flex flex-row justify-between">
       <div
         className={`${
@@ -50,7 +79,7 @@ export default function LeadTaskDisplayHead({
           <div
             className={`${
               data?.sts === 'completed' ? 'line-through' : 'cursor-pointer'
-            }  ml-2 text-[14px] inline font-bodyLato font-brand tracking-wider text-[#0091ae]`}
+            }  ml-2 text-[16px] inline font-bodyLato font-brand tracking-wider text-[#0091ae] text-[#0E0A1F]`}
             onClick={() => {
               if (data?.sts === 'pending') {
                 setAddTaskCommentObj(data)
@@ -61,33 +90,33 @@ export default function LeadTaskDisplayHead({
           </div>
         </label>
       </div>
-
       {data?.sts != 'completed' && (
         <section className="flex flex-row">
           <span
             onClick={() => {
               setAddTaskCommentObj(data)
             }}
-            className="inline-flex  placeholder:font-thin text-[#0091ae]  cursor-pointer font-bodyLato text-[12px] ml-2 pt-1 text-[#867777] hover:text-green-900"
+            className="inline-flex  placeholder:font-thin text-[#0091ae]  cursor-pointer font-bodyLato text-[12px] ml-2 pt-1  hover:text-green-900"
           >
 
 
             <span
-          className="font-thin text-[#e91313] cursor-pointer text-[12px]  font-bodyLato text-[10px] ml-2  border-b hover:border-[#0091ae]  "
+          className=" text-[#0091ae] border-b border-[#0091ae] font-medium w-20 cursor-pointer text-[12px]   ml-2 h-[18px]  hover:border-[#0091ae]  "
         >
-          Comment
+          Add Comment
         </span>
           </span>
           {data?.stsType === 'visitfixed' && data?.sts != 'completed' && (
             <span
-              className=" mt-[3px]  ml-4 text-green-900 font-semibold hover:border-[#7BD500] text-[12px] ml-2 cursor-pointer"
+              className=" mt-1 w-[58px] h-[18px] ml-4 text-[#0091ae] border-b border-[#0091ae] font-medium hover:border-[#7BD500] text-[12px] ml-2 cursor-pointer "
               onClick={() => setShowVisitFeedBackStatusFun(data, 'visitdone')}
             >
-              VISITDONE
+              Visit Done
             </span>
           )}
         </section>
       )}
     </section>
+    </div>
   )
 }

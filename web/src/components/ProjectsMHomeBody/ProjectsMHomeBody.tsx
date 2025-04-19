@@ -216,7 +216,7 @@ const ProjectsMHomeBody = ({
             </div>
           </div> */}
 
-           <div className='w-[25%] px-2 py-4 '>
+           <div className='w-[25%] px-2 py-4 pl-4 '>
 
                             {/* Right - Property Details */}
       <div className="flex flex-col gap-2">

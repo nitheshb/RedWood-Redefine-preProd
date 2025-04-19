@@ -17,6 +17,12 @@ import { Cell, Pie, PieChart } from 'recharts'
 import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 import { calculatePercentages } from 'src/util/areaConverter'
 import CostSheetAndPaymentSchedule from './CostSheetAndPaymentSchedule'
+import RadialChart from '../A_SalesModule/Reports/charts/RadialChartone'
+import RadialCharttwo from '../A_SalesModule/Reports/charts/RadialCharttwo'
+import SemicircleProgressChart from '../A_SalesModule/Reports/charts/SemiCircleProgress'
+import FinancialSemicircleChart from '../A_SalesModule/Reports/charts/FinancialSemicircleChart'
+import FinanceBarChart from '../A_SalesModule/Reports/charts/FinanceBarChart'
+import UnitPaymentsWithFinance from '../A_SalesModule/Reports/charts/FinanceBarChart'
 
 const CrmUnitSummary = ({
   selCustomerPayload: selUnitPayload,
@@ -230,6 +236,25 @@ const CrmUnitSummary = ({
 
 
 
+
+  const cardOneTasks = [
+    { id: 1, text: "Payment Reminder for Plastering", svg: "₹" },
+    { id: 2, text: "Collect Loan documents from owner", svg: "📄" },
+    { id: 3, text: "Call to Bank regarding loan details", svg: "📞" },
+    { id: 4, text: "Review Agreement with Lawyer", svg: "📄" },
+    { id: 5, text: "Site Visit Tomorrow", svg: "📍" },
+  ];
+
+  const cardTwoTasks = [
+    { id: 1, date: "27 Mar 2025", text: "Legal Clarification", svg: "📑", dot: "bg-blue-500" },
+    { id: 2, date: "27 Mar 2025", text: "Payment Reminder", svg: "₹", dot: "bg-red-600" },
+    { id: 3, date: "27 Mar 2025", text: "Call to Customer", svg: "📞", dot: "bg-green-600" },
+    { id: 4, date: "27 Mar 2025", text: "Collect Booking Form", svg: "📄", dot: "bg-yellow-400" },
+    { id: 5, date: "27 Mar 2025", text: "Review Site Plan", svg: "📍", dot: "bg-purple-400" },
+  ];
+
+
+
   return (
     <PDFExport paperSize="A4" margin="1cm" ref={pdfUnitSummaryComp}>
       <div className=" rounded-lg  border border-gray-100   overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300" style={{  }}>
@@ -396,7 +421,7 @@ const CrmUnitSummary = ({
       <div className="bg-white rounded-2xl  p-6">
         <div>
           <div className="flex items-center justify-between">
-            <div className="flex items-center mb-4 ">
+            <div className="flex items-center gap-2 mb-4 ">
               {/* <img src="/su2.svg" alt="Activity" className="w-[30px] h-[29px] mr-2 object-contain" /> */}
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0.150879 2.40428V21.7649L15.3244 21.4459L15.5012 2.12979L0.150879 2.40428Z" fill="white"/>
@@ -712,17 +737,14 @@ const CrmUnitSummary = ({
           </div>
         </div>
       </div>
+
 </div>
 
 
         <div className="flex flex-row">
           <div className="w-full">
             <div className="flex flex-row justify-between text-end items-end mr-2">
-
-
             </div>
-
-
             <div>
               <div className='  rounded-lg'>
 
@@ -929,12 +951,17 @@ const CrmUnitSummary = ({
                       </Pie>
                       {/* <Tooltip content={<CustomTooltiptwo />} /> */}
 
+
                     </PieChart>
+
 
                     <div className="absolute text-center">
                       <div className="text-xs text-gray-500">Balance</div>
                       <div className="font-bold">
                       ₹ {Math.round(selCustomerPayload?.T_balance || 0).toLocaleString('en-IN')}
+
+
+
 
 
 
@@ -946,6 +973,8 @@ const CrmUnitSummary = ({
                     <div className="text-[12px] text-gray-500">Unit Cost</div>
                     <div className="font-bold text-[14px]">
                     ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
+
+
 
 
                                                           </div>
@@ -962,17 +991,23 @@ const CrmUnitSummary = ({
 
 
 
+
+
+
                                                           </div>
                   </div>
                   </section>
                 </div>
 
+
                 <div className="bg-[#FFFFFF] p-4 rounded-lg">
+
 
                   <div className="flex justify-between items-center">
                 <span className="font-medium">Unit Payments</span>
                 <BellIcon size={16} className="ml-2" />
               </div>
+
 
                   <div className="flex flex-col items-center mt-8">
                     <section className='flex flex-row justify-between'>
@@ -981,8 +1016,10 @@ const CrmUnitSummary = ({
                     <div className="font-bold mb-4">
                     ₹ {Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
 
+
                                                           </div>
                                                           </div>
+
 
                     </section>
                     <div className="w-full bg-gray-200 h-7 rounded-full mb-6">
@@ -993,13 +1030,20 @@ const CrmUnitSummary = ({
                     ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
 
 
+
+
                                                           </div>
                   </div>
                 </div>
 
 
 
+
+
+
               </div>
+
+
 
 
               </div>
@@ -1033,6 +1077,9 @@ const CrmUnitSummary = ({
             totalIs={totalIs}
           />
         </div>
+
+
+
 
 
 
@@ -1094,6 +1141,7 @@ const CrmUnitSummary = ({
 
     projectDetails={projectDetails}
     leadDetailsObj1={leadDetailsObj1} setPartATotal={undefined} setPartBTotal={undefined} custObj1={undefined}
+
 
     />
 </div>
@@ -1206,6 +1254,8 @@ const CrmUnitSummary = ({
           </div>
           </div>
         </div>
+
+
 
 
 

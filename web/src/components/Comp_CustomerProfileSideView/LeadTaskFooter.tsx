@@ -18,9 +18,9 @@ export default function LeadTaskFooter({
   return (
     <section className="flex flex-row justify-between mt-[2px]">
       <section className="flex flex-row">
-        <span className="text-xs font-bodyLato  font-normal text-[#b03d32] text-gray-500 ml-6 ">
+        <span className="text-xs  font-normal text-[#b03d32] text-gray-500 ml-6 ">
           {data?.sts === 'completed' && (
-            <span className="text-[#4c1d95] flex flex-row">
+            <span className="text-xs  text-gray-500  flex flex-row">
               <div className="relative flex flex-col  group">
                 <div
                   className="absolute bottom-0 right-0 flex-col items-center hidden mb-6 group-hover:flex"
@@ -97,8 +97,8 @@ export default function LeadTaskFooter({
                 <span className="font-bodyLato">
 
 
-                  <span className="text-green-900 ml-2">
-                    <CheckIcon className="w-4 h-4 inline text-[#058527]" />{' '}
+                  <span className="text-xs  text-gray-500 ml-2">
+                    <CheckIcon className="w-4 h-4 inline text-gray-500" />{' '}
                     {'   '}
                     {prettyDateTime(data?.comT)}{' '}
                   </span>
@@ -114,7 +114,7 @@ export default function LeadTaskFooter({
               >
                 <div
                   className="absolute bottom-0 flex-col items-center hidden mb-6 group-hover:flex z-100000"
-      
+
                 >
                   <span
                     className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
@@ -141,8 +141,8 @@ export default function LeadTaskFooter({
                 <span
                   className={`font-bodyLato flex flex-row ${
                     getDifferenceInMinutes(data?.schTime, '') >= 0
-                      ? 'text-violet-900'
-                      : 'text-[#b03d32]'
+                      ? 'text-xs  text-gray-500'
+                      : 'text-xs  text-gray-500'
                   }`}
                 >
 
@@ -166,24 +166,7 @@ export default function LeadTaskFooter({
                       {prettyDateTime(data?.schTime)}
                     </div>
                   </div>
-                  <span className="italic">
-                    {getDifferenceInMinutes(data?.schTime, '') >= 0
-                      ? 'Complete in'
-                      : 'Delayed by'}{' '}
-                    {'  '}
-                    {Math.abs(getDifferenceInMinutes(data?.schTime, '')) > 60
-                      ? Math.abs(getDifferenceInMinutes(data?.schTime, '')) >
-                        8640
-                        ? `${Math.abs(
-                            getDifferenceInDays(data?.schTime, '')
-                          )} Days `
-                        : `${Math.abs(
-                            getDifferenceInHours(data?.schTime, '')
-                          )} Hours `
-                      : `${Math.abs(
-                          getDifferenceInMinutes(data?.schTime, '')
-                        )} Min`}{' '}
-                  </span>
+             
                 </span>
               </div>
             </div>
@@ -215,7 +198,7 @@ export default function LeadTaskFooter({
             ></div>
           </div>
 
-          <span className="font-thin text-[#867777]   font-bodyLato text-[12px]  ml-2">
+          <span className="text-xs  text-gray-500  ml-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="12"
@@ -254,7 +237,7 @@ export default function LeadTaskFooter({
               />
             </svg>
           </span>
-      
+
         </section>
       )}
     </section>

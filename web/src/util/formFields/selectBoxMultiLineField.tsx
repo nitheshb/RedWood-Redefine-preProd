@@ -243,8 +243,8 @@ export const MultiSelectMultiLineField = ({
       height: '32px',
       padding: '0px',
       borderColor: '#cccccc',
-      fontSize: '0.875rem',
-      borderRadius: '6px',
+      fontSize: '12px',
+      borderRadius: '8px',
     }),
     valueContainer: (provided) => ({
       ...provided,
@@ -253,7 +253,7 @@ export const MultiSelectMultiLineField = ({
     input: (provided) => ({
       ...provided,
       margin: '0px',
-      padding: '0px',
+      padding: '0 6px',
     }),
     indicatorsContainer: (provided) => ({
       ...provided,

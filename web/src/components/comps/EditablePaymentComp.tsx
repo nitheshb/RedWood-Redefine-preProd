@@ -395,7 +395,7 @@ const EditablePaymentTable = ({
     <>
       <div className="py-2 px-4  rounded-2xl bg-[#FFFFFF]  mx-4 my-4">
         <div className="">
-          <div className="py-2 pb-1 mb-1">
+          <div className="py-2 pb-1 mb-4">
             <p className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">{title}</p>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -410,7 +410,7 @@ const EditablePaymentTable = ({
                     <th className=" p-1 pl-2 text-center">Amount/Percentage</th>
                     <th className=" p-1 pl-2 text-center">Timeline</th>
                     <th className=" p-1 pl-2 text-center">Description</th>
-                    <th className=" p-1 pl-2 text-center">Action</th>
+                    <th className=" p-1 pr-2 text-center">Action</th>
                   </tr>
                 </thead>
                 <Droppable droppableId="table">

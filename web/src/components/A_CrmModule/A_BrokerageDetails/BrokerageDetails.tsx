@@ -90,7 +90,7 @@ const BrokerageDetails = ({ selUnitDetails }) => {
   <div className="relative min-h-screen mr-6">
     {/* Background image */}
     {/* <div className="">
-      <img alt="CRM Background" src="/bgimgcrm.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/bgcrmnew.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -105,7 +105,7 @@ Brokerage Details
   {/* Background image */}
   <img
     alt="CRM Background"
-    src="/bgimgcrm.svg"
+    src="/bgcrmnew.svg"
     className="w-full h-auto object-cover"
   />
 

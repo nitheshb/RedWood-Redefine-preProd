@@ -278,10 +278,11 @@ const LeadsTransferTableBody = ({
               id={'id'}
               align="right"
               setAssigner={setNewProject}
-              buttonClassName="  rounded-lg "
-              itemsWrapperClassName=" z-[9000] font-normal"
-              itemButtonClassName=" font-normal"
-              variant="special"
+              // buttonClassName="  rounded-lg "
+              // itemsWrapperClassName=" z-[9000] font-normal"
+              // itemButtonClassName=" font-normal"
+              // variant="special"
+              label="Projects"
               
               usersList={[
                 ...[{ label: 'All Projects', value: 'allprojects' }],

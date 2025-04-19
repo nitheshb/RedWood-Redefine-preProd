@@ -1,27 +1,33 @@
 
 import React from 'react';
 
-interface RadialChartProps {
-  progress: number;
+interface RadialCharttwoProps {
+  paid: number;
+  total: number;
+  balance: number;
   totalSegments?: number;
   filledColor?: string;
   emptyColor?: string;
-  innerWidth?: number;  
-  outerWidth?: number;   
-  segmentHeight?: number; 
-  baseRadius?: number;    
+  innerWidth?: number;
+  outerWidth?: number;
+  segmentHeight?: number;
+  baseRadius?: number;
 }
 
-const RadialChart: React.FC<RadialChartProps> = ({
-  progress,
+const RadialCharttwo: React.FC<RadialCharttwoProps> = ({
+  paid,
+  total,
+  balance,
   totalSegments = 50,
-  filledColor = '#e0d4ff',
-  emptyColor = '#e5e7eb',
+  filledColor = '#DBD3FD',
+  emptyColor = '#E5E7EB',
   innerWidth = 4,
   outerWidth = 8,
   segmentHeight = 40,
   baseRadius = 50,
 }) => {
+
+  const progress = total > 0 ? (paid / total) * 100 : 0;
   const clampedPercentage = Math.min(100, Math.max(0, progress));
   const activeSegments = Math.round((clampedPercentage / 100) * totalSegments);
   const angleStep = 360 / totalSegments;
@@ -31,7 +37,7 @@ const RadialChart: React.FC<RadialChartProps> = ({
   const center = 100;
 
   return (
-    <div className="relative w-[90px] h-[80px] flex items-center justify-center">
+    <div className="relative w-[120px] h-[120px] flex items-center justify-center">
       <svg className="w-full h-full" viewBox="0 0 200 200">
         {Array.from({ length: totalSegments }).map((_, i) => {
           const angle = i * angleStep;
@@ -63,11 +69,13 @@ const RadialChart: React.FC<RadialChartProps> = ({
           );
         })}
       </svg>
-      <div className="absolute text-[15px] font-medium text-[#000000]">
-        {clampedPercentage.toFixed(0)}%
+      <div className="absolute flex flex-col items-center justify-center">
+        <div className="text-[14px] font-bold text-gray-800">
+          {clampedPercentage.toFixed(0)}%
+        </div>
       </div>
     </div>
   );
 };
 
-export default RadialChart;
+export default RadialCharttwo;

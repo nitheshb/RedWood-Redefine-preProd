@@ -8,7 +8,7 @@ export const CustomRadioGroup = ({ label, value, onChange, options }) => {
         {label}
         <abbr title="required"></abbr>
       </label> */}
-      <div className="mb-4  mt-2">
+      <div className="mb-1  mt-2">
           <div className="inline">
             <div className="">
               <label className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]  mb-1  ">
@@ -21,7 +21,7 @@ export const CustomRadioGroup = ({ label, value, onChange, options }) => {
         </div>
 
       <RadioGroup value={value} onChange={onChange}>
-        <div className="grid grid-cols-4 bg-white  p-2 rounded-md gap-4">
+        <div className="grid grid-cols-4 bg-white  py-2 gap-2 rounded-md ">
           {options.map((option) => (
             <RadioGroup.Option
               key={option.name}

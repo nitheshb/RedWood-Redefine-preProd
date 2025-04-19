@@ -112,9 +112,9 @@ const LeadsDisplayTable = ({
                 </section>
         </div>
 
-        <div className="bg-white py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded">
-          <div className="sm:flex items-center justify-between">
-            <div className="flex items-center">
+        <div className="bg-white  py-4 md:py-7 px-4 md:px-4 xl:px-6 rounded">
+          <div className="sm:flex items-center  justify-between">
+            {/* <div className="flex items-center">
               <a
                 className={`rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800`}
                 onClick={() => setSearchKey(['all'])}
@@ -161,7 +161,53 @@ const LeadsDisplayTable = ({
                   <p>Bin</p>
                 </div>
               </a>
-            </div>
+            </div> */}
+
+<div className="flex items-center">
+  <a
+    className={` border-b-2 focus:outline-none ${searchKey.includes('all') ? '' : 'border-transparent text-gray-600'}`}
+    onClick={() => setSearchKey(['all'])}
+  >
+    <div
+      className={` px-2  hover:text-indigo-700  ${searchKey.includes('all') ? '' : ''}`}
+    >
+      All
+    </div>
+  </a>
+
+
+  <div className="w-px h-5 mx-4 bg-gray-200"></div>
+
+
+  <a
+    className={` border-b-2 focus:outline-none   ${searchKey.includes('unassigned') && searchKey.length === 1 ? '' : 'border-transparent text-gray-600'}`}
+    href="javascript:void(0)"
+    onClick={() => setSearchKey(['unassigned'])}
+  >
+    <div
+      className={` px-2  hover:text-indigo-700   ${searchKey.includes('unassigned') && searchKey.length === 1 ? '' : ''}`}
+    >
+      <p>Unassigned</p>
+    </div>
+  </a>
+
+
+  <div className="w-px h-5 mx-4 bg-gray-200"></div>
+
+
+  <a
+    className={` border-b-2 focus:outline-none   ${searchKey.includes('DUPLICATE_ENTRY') && searchKey.length === 1 ? '' : 'border-transparent text-gray-600'}`}
+    href="javascript:void(0)"
+    onClick={() => setSearchKey(['DUPLICATE_ENTRY'])}
+  >
+    <div
+      className={` px-2  hover:text-indigo-700 ${searchKey.includes('DUPLICATE_ENTRY') && searchKey.length === 1 ? '' : ''}`}
+    >
+      <p>Bin</p>
+    </div>
+  </a>
+</div>
+
             <div className="flex items-center justify-between">
               <p
                 tabIndex={0}
@@ -194,14 +240,14 @@ const LeadsDisplayTable = ({
                     ]}
                   />
                 </div>
-                <Tooltip title={`Download ${leadsRawList?.length} Row`}>
+                {/* <Tooltip title={`Download ${leadsRawList?.length} Row`}>
                   <CSVDownloader
                     className="mr-6 h-[20px] w-[20px]"
                     downloadRows={leadsRawList}
                     style={{ height: '20px', width: '20px' }}
                     fromLeadsBank={true}
                   />
-                </Tooltip>
+                </Tooltip> */}
               </section>
             </div>
           </div>
@@ -383,6 +429,9 @@ const LeadsDisplayTable = ({
             </table>
           </div>
         </div>
+
+
+        
       </div>
     </Box>
   )
