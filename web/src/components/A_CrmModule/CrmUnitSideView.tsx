@@ -1234,7 +1234,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
 
     {/* Customer & Property Details */}
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-1">
       {/* Customer Name & Phone Number */}
       <div>
         <p className="text-[16px] font-outfit font-semibold text-[#000000]">
@@ -1274,7 +1274,7 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
   </span>
 </section>
 
-  
+
     </div>
   </div>
 </section>
@@ -1308,9 +1308,9 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
                       )}
                     </div>
                   </section>
-                  <section 
+                  <section
                   style={{ padding: '14px 10px' }}
-                  
+
                   className="flex group flow-row justify-between  py-[15px] mr-2   border border-[#E7E7E9]   px-[15px] bg-white text-black rounded-lg items-center align-middle text-xs cursor-pointer hover:bg-[#E5E7EB]">
                   <div className="font-medium text-sm text-[#000000] tracking-wide pr-2 mr-1 relative after:content-[''] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[0.8px] after:h-[10px] after:bg-gray-300 group-hover:after:bg-white">
 
@@ -1438,9 +1438,9 @@ const CustomTooltiptwo = ({ active, payload }: any) => {
 
 
 
-{/* 
+{/*
 changed her */}
-{/* 
+{/*
 <div className='bg-[#F9F9FA] p-8  rounded-lg'>
 
 <div className="grid bg-[#F9F9FA]  rounded-lg grid-cols-3 gap-4 mb-3">
@@ -1473,11 +1473,11 @@ changed her */}
 
       <div className="absolute text-center">
         <div className="text-xs text-gray-500">Balance</div>
-        <div className="font-bold">  
-        ₹{selCustomerPayload?.T_elgible_balance < 0 
-  ? 0 
+        <div className="font-bold">
+        ₹{selCustomerPayload?.T_elgible_balance < 0
+  ? 0
   : Math.round(selCustomerPayload?.T_elgible_balance)?.toLocaleString('en-IN')}
-          
+
         </div>
       </div>
     </div>
@@ -1515,7 +1515,7 @@ changed her */}
                 </div>
                 <span className="text-[14px] font-bold text-gray-900">
       ₹ {Math.round(selCustomerPayload?.T_elgible || 0).toLocaleString('en-IN')}
-                  
+
 
                 </span>
       </div>
@@ -1524,15 +1524,15 @@ changed her */}
       <div className="font-bold text-[14px]">
 
 
-                                            
+
       </div>
     </div>
     <div className="text-center">
       <div className="text-[12px] text-gray-500">Paid</div>
-      <div className="font-bold text-[14px]"> 
+      <div className="font-bold text-[14px]">
 
       ₹{Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
-        
+
         </div>
 
         <div
@@ -1569,7 +1569,7 @@ changed her */}
 
       ₹{Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)).toLocaleString('en-IN')}
 
-                  
+
 
                 </span>
       </div>
@@ -1639,7 +1639,7 @@ changed her */}
           <Cell fill="#E3BDFF" />
           <Cell fill="#E5E7EB" />
         </Pie>
-  
+
 
       </PieChart>
 
@@ -1649,7 +1649,7 @@ changed her */}
         ₹ {Math.round(selCustomerPayload?.T_balance || 0).toLocaleString('en-IN')}
 
 
-                                          
+
                                           </div>
       </div>
     </div>
@@ -1659,7 +1659,7 @@ changed her */}
       <div className="font-bold text-[14px]">
       ₹ {Math.round(selCustomerPayload?.T_total || 0).toLocaleString('en-IN')}
 
-                                            
+
                                             </div>
     </div>
     <div className="text-center">
@@ -1672,8 +1672,8 @@ changed her */}
       <div className="font-bold text-[14px]">
       ₹ {Math.round(selCustomerPayload?.T_balance || 0).toLocaleString('en-IN')}
 
-                                            
-                                            
+
+
                                             </div>
     </div>
     </section>
