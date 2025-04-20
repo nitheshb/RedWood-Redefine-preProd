@@ -5,7 +5,7 @@ import { steamUnitActivityLog } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { supabase } from 'src/context/supabase'
 import { computeTotal } from 'src/util/computeCsTotals'
-import { timeConv } from 'src/util/dateConverter'
+import { prettyDate, prettyDateTime, timeConv } from 'src/util/dateConverter'
 import CrmUnitCostSheetView from './CrmCostSheetView'
 import CrmUnitPaymentSchedule from './CrmPaymentSchedule'
 import CrmPaymentSummary from './CrmPaymentSummary'
@@ -23,6 +23,8 @@ import SemicircleProgressChart from '../A_SalesModule/Reports/charts/SemiCircleP
 import FinancialSemicircleChart from '../A_SalesModule/Reports/charts/FinancialSemicircleChart'
 import FinanceBarChart from '../A_SalesModule/Reports/charts/FinanceBarChart'
 import UnitPaymentsWithFinance from '../A_SalesModule/Reports/charts/FinanceBarChart'
+import LogSkelton from '../shimmerLoaders/logSkelton'
+import SmallSkelton from '../shimmerLoaders/smallSkeleton'
 
 const CrmUnitSummary = ({
   selCustomerPayload: selUnitPayload,
@@ -44,11 +46,19 @@ const CrmUnitSummary = ({
   myBookingPayload,
   customerDetails,
   selUnitDetails,
+  setFeature,
 }) => {
   const { user } = useAuth()
   const pdfUnitSummaryComp = useRef(null)
   const { orgId } = user
   const [unitFetchedActivityData, setUnitFetchedActivityData] = useState([])
+  const [recentActivityObj, setRecentActivityObj] = useState({})
+  const [recentActivitySkeleton, setRecentActivitySkeleton] = useState(true)
+
+  const [upcomingMileStoneObj, setUpcomingMileStoneObj] = useState({})
+  const [paymentScheduleTuned, setPaymentScheduleTuned] = useState([])
+  const [upcomingMileStoneSkeleton, setUpcomingMileStoneSkeleton] = useState(true)
+
   const [newPlotCostSheetA, setNewPlotCostSheetA] = useState([])
   const [newPlotCsObj, setNewPlotCsObj] = useState([])
   const [newPlotPS, setNewPlotPS] = useState([])
@@ -104,6 +114,7 @@ const CrmUnitSummary = ({
                 return [payload.new,...prevLogs]
               }
             })
+            setRecentActivitySkeleton(false)
           } else {
             if (
               updatedData.by_uid === user?.uid ||
@@ -128,6 +139,7 @@ const CrmUnitSummary = ({
                   return [payload.new,...prevLogs]
                 }
               })
+              setRecentActivitySkeleton(false)
             }
           }
         }
@@ -139,7 +151,36 @@ const CrmUnitSummary = ({
       supabase.removeSubscription(subscription)
     }
   }, [])
+useEffect(() => {
+  if(unitFetchedActivityData.length > 0){
+  setRecentActivityObj(unitFetchedActivityData[0])
+console.log('recent activity obj is ', recentActivityObj)
+}
+}, [unitFetchedActivityData])
+useEffect(() => {
+  const paidAmount = (selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)
+  let bal = 0
+  let leftOver = paidAmount
+  let newPaidAmount = paidAmount
+  let outStanding = 0
+  const z = selCustomerPayload?.fullPs?.map((d1, inx) => {
+    console.log('left over stuff',inx, leftOver, d1.value)
+    bal = leftOver >= d1?.value ? d1?.value : leftOver
 
+    leftOver = newPaidAmount - d1?.value > 0 ? newPaidAmount - d1?.value : 0
+    newPaidAmount = newPaidAmount - d1?.value
+    outStanding =  d1?.value - bal
+    return { ...d1, amt: bal, leftOver, outStanding }
+  })
+  setPaymentScheduleTuned(z)
+  if(selCustomerPayload?.fullPs?.length > 0){
+   let x = z?.filter((data) => data?.elgible ===true)
+let y = x.at(-1)|| {};
+    setUpcomingMileStoneObj(y)
+
+console.log('recent milestone obj is ', upcomingMileStoneObj, selCustomerPayload)
+}
+}, [selCustomerPayload])
   const boot = async () => {
     const unsubscribe = steamUnitActivityLog(orgId, {
       uid: selUnitPayload?.id,
@@ -148,6 +189,7 @@ const CrmUnitSummary = ({
 
     const y = await unsubscribe
     setUnitFetchedActivityData(y)
+    setRecentActivitySkeleton(false)
     await console.log('new setup ', unitFetchedActivityData)
     await console.log('new setup ', y)
   }
@@ -237,21 +279,6 @@ const CrmUnitSummary = ({
 
 
 
-  const cardOneTasks = [
-    { id: 1, text: "Payment Reminder for Plastering", svg: "₹" },
-    { id: 2, text: "Collect Loan documents from owner", svg: "📄" },
-    { id: 3, text: "Call to Bank regarding loan details", svg: "📞" },
-    { id: 4, text: "Review Agreement with Lawyer", svg: "📄" },
-    { id: 5, text: "Site Visit Tomorrow", svg: "📍" },
-  ];
-
-  const cardTwoTasks = [
-    { id: 1, date: "27 Mar 2025", text: "Legal Clarification", svg: "📑", dot: "bg-blue-500" },
-    { id: 2, date: "27 Mar 2025", text: "Payment Reminder", svg: "₹", dot: "bg-red-600" },
-    { id: 3, date: "27 Mar 2025", text: "Call to Customer", svg: "📞", dot: "bg-green-600" },
-    { id: 4, date: "27 Mar 2025", text: "Collect Booking Form", svg: "📄", dot: "bg-yellow-400" },
-    { id: 5, date: "27 Mar 2025", text: "Review Site Plan", svg: "📍", dot: "bg-purple-400" },
-  ];
 
 
 
@@ -332,10 +359,10 @@ const CrmUnitSummary = ({
       </div>
 
 
-      <div className="bg-white rounded-2xl p-6">
+      <div className="bg-white rounded-2xl p-6 cursor-pointer" onClick={() => setFeature('applicant_info')}>
         <div>
 
-
+<section className='flex flex-row justify-between items-center mb-4'>
           <div className="flex items-center gap-2  mb-4 overflow-visible">
           <div>
           {/* <img src="/su66.svg" alt="Applicant" className="w-[30px] h-[30px] mr-2 object-contain" /> */}
@@ -390,10 +417,13 @@ const CrmUnitSummary = ({
 </svg>
 
           </div>
+
             <h2 className="text-[#606062] font-medium text-[12px] uppercase tracking-wide">
-              APPLICANT DETAILS
+              APPLICANT DETAILs
             </h2>
           </div>
+          <svg width="19" height="8" viewBox="0 0 32 12" fill="black" xmlns="http://www.w3.org/2000/svg" className="mb-[13px]"><path d="M2 4.87494H0.875L0.875 7.12494H2L2 4.87494ZM2 7.12494L30.5 7.12494V4.87494L2 4.87494L2 7.12494ZM25.0685 4.7589e-08C25.0685 3.89997 28.1374 7.125 32 7.125L32 4.875C29.449 4.875 27.3185 2.72744 27.3185 -4.7589e-08L25.0685 4.7589e-08ZM32 4.875C28.1374 4.875 25.0684 8.09999 25.0684 12H27.3184C27.3184 9.27259 29.4489 7.125 32 7.125V4.875Z" fill="black"></path></svg>
+          </section>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <div className="flex -space-x-3">
@@ -408,7 +438,8 @@ const CrmUnitSummary = ({
             </div>
             <div className="h-6 w-px bg-gray-300 mx-4"></div>
             <div className="text-[#960000] text-[14px] font-medium text-right whitespace-nowrap">
-              1 KYC Pending
+                KYC {selCustomerPayload?.kyc_status === 'approved' ? 'Completed': 'Pending'}
+
             </div>
           </div>
         </div>
@@ -418,9 +449,10 @@ const CrmUnitSummary = ({
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-      <div className="bg-white rounded-2xl  p-6">
+      <div className="bg-white rounded-2xl  p-6 cursor-pointer" onClick={() => setFeature('timeline')}>
         <div>
-          <div className="flex items-center justify-between">
+
+          <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2 mb-4 ">
               {/* <img src="/su2.svg" alt="Activity" className="w-[30px] h-[29px] mr-2 object-contain" /> */}
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -467,32 +499,45 @@ const CrmUnitSummary = ({
 </svg>
 
               <h2 className="text-[#606062] font-medium text-[12px] uppercase tracking-wide">
-                LAST ACTIVITY
+                RECENT ACTIVITY ({unitFetchedActivityData.length})
               </h2>
             </div>
-            <div className="flex items-center mb-2 text-[#960000]">
-              <span className="text-[12px]">Deleted Doc</span>
-              <span className="ml-2 p-1">
-                <img src="/DeleteIcon.svg" alt="Delete" className="h-5 w-5" />
-              </span>
-            </div>
+
+         <section className='flex flex-row'>
+         <span className="text-[#606062] font-medium text-[12px] mb-[13px]"> {unitFetchedActivityData.length} more</span>
+          {/* <svg width="19" height="8" viewBox="0 0 32 12" fill="black" xmlns="http://www.w3.org/2000/svg" className="mb-[13px]"><path d="M2 4.87494H0.875L0.875 7.12494H2L2 4.87494ZM2 7.12494L30.5 7.12494V4.87494L2 4.87494L2 7.12494ZM25.0685 4.7589e-08C25.0685 3.89997 28.1374 7.125 32 7.125L32 4.875C29.449 4.875 27.3185 2.72744 27.3185 -4.7589e-08L25.0685 4.7589e-08ZM32 4.875C28.1374 4.875 25.0684 8.09999 25.0684 12H27.3184C27.3184 9.27259 29.4489 7.125 32 7.125V4.875Z" fill="black"></path></svg> */}
+
+         </section>
           </div>
-          <div className="space-y-1">
-            <p className="text-gray-500 text-[12px]">24 Mar 25, 10:57 am</p>
+
+         { !recentActivitySkeleton &&<div className="space-y-1">
             <div className="flex justify-between items-center">
-              <p className="text-[#0E0A1F] text-[14px] font-medium">Vishal@gmail.com</p>
-              <p className="text-[#0E0A1F] text-[12px] font-medium">Sale Agreement</p>
+              <p className="text-[#0E0A1F] text-[14px] font-medium">{crmActivieLogNamer(recentActivityObj)}</p>
+              <p className="text-[#960000] text-[12px] font-medium">{recentActivityObj?.subtype}</p>
+
             </div>
-          </div>
+            <section className='flex flex-row'>
+              <p className="text-gray-500 text-[12px]">{prettyDateTime(recentActivityObj?.T) || 'NA'}</p>
+              <p className="text-gray-500 text-[12px]">
+                {recentActivityObj?.by || 'NA'}
+              </p>
+
+
+            </section>
+
+          </div>}
+         {recentActivitySkeleton && <SmallSkelton />}
         </div>
       </div>
 
 
-      <div className="bg-white rounded-2xl overflow-visible p-6">
+      <div className="bg-white rounded-2xl overflow-visible p-6 cursor-pointer" onClick={() => setFeature('finance_info')}>
         <div>
+          <section className='flex flex-row justify-between items-center mb-3'>
           <div className="flex items-center gap-2 overflow-visible mb-4">
             {/* <img src="/su3.svg" alt="Calendar" className="w-[30px] h-[29px] mr-2 object-contain" /> */}
             <div>
+
             <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M23.0796 7.92288C16.3593 7.32996 9.58247 7.39395 2.87519 8.1132C1.95733 8.21157 0.932205 8.40066 0.545139 9.23878C0.0729561 10.2621 0.957268 11.4357 1.96273 11.9445C3.50457 12.7246 5.30031 12.777 7.02833 12.7847C12.1925 12.8073 17.3824 12.5689 22.4459 11.5492C22.6427 11.5096 22.8601 11.4537 22.9616 11.2814C23.0341 11.1617 23.0299 11.0136 23.0217 10.8744C22.9802 9.92241 22.9367 8.96997 23.0796 7.92288Z" fill="white"/>
 <path d="M13.955 7.70091C10.2581 7.70091 6.56156 7.89766 2.89428 8.29094C1.95695 8.39138 1.04324 8.58502 0.706502 9.31442C0.291271 10.2138 1.077 11.2984 2.04311 11.7872C3.51454 12.5317 5.24112 12.6002 7.02899 12.6081C13.2985 12.6346 18.0451 12.2554 22.4108 11.3761C22.5702 11.3442 22.7463 11.3009 22.8105 11.192C22.8519 11.1197 22.8519 11.0095 22.8457 10.8838C22.8042 9.99328 22.7628 9.07625 22.8788 8.08487C19.9173 7.8289 16.9351 7.70091 13.955 7.70091ZM7.65401 12.9647C7.4467 12.9647 7.23795 12.9643 7.02733 12.9635C5.19535 12.9554 3.42321 12.8837 1.88261 12.1042C0.76946 11.5409 -0.120234 10.2573 0.383842 9.1653C0.794931 8.2752 1.81509 8.04925 2.85617 7.93762C9.56511 7.21817 16.3739 7.15418 23.0942 7.7471C23.1439 7.75145 23.1874 7.77547 23.2184 7.81316C23.2495 7.85127 23.2619 7.90014 23.2557 7.94819C23.1149 8.9785 23.1584 9.93799 23.1998 10.8658C23.206 11.0093 23.2164 11.2034 23.1149 11.3728C22.9658 11.6271 22.651 11.6904 22.4812 11.7244C18.2377 12.5791 13.6422 12.9647 7.65401 12.9647Z" fill="#2F2F2F"/>
@@ -550,42 +595,56 @@ const CrmUnitSummary = ({
 
             </div>
             <h2 className="text-[#606062] font-medium text-[12px] uppercase tracking-wide">
-              UPCOMING EVENTS
+              ACTIVE MILESTONE ({selCustomerPayload?.fullPs?.length})
             </h2>
           </div>
+          <svg width="19" height="8" viewBox="0 0 32 12" fill="black" xmlns="http://www.w3.org/2000/svg" className="mb-[13px]"><path d="M2 4.87494H0.875L0.875 7.12494H2L2 4.87494ZM2 7.12494L30.5 7.12494V4.87494L2 4.87494L2 7.12494ZM25.0685 4.7589e-08C25.0685 3.89997 28.1374 7.125 32 7.125L32 4.875C29.449 4.875 27.3185 2.72744 27.3185 -4.7589e-08L25.0685 4.7589e-08ZM32 4.875C28.1374 4.875 25.0684 8.09999 25.0684 12H27.3184C27.3184 9.27259 29.4489 7.125 32 7.125V4.875Z" fill="black"></path></svg>
+        </section>
           <div className="space-y-1">
-            <p className="text-gray-500 text-[12px]">On 27 Mar 2025</p>
+
             <div className="flex justify-between items-center">
+              <section className="flex flex-col">
               <p className="text-[#0E0A1F] text-[14px] font-medium">
-                Before Execution of Construction Agreement
+                {upcomingMileStoneObj?.label}
+              </p>
+
+
+            <p className="text-gray-500 text-[12px]">{prettyDate(upcomingMileStoneObj?.elgFrom)}</p>
+</section>
+<section className='flex flex-col text-right'>
+              <p className="text-[#0E0A1F] text-[14px] font-medium">
+               Cost: ₹ {upcomingMileStoneObj?.value?.toLocaleString('en-IN')}
               </p>
               <p className="text-[#0E0A1F] text-[14px] font-medium">
-                ₹ 22,76,36,500
+               Balance: ₹ {upcomingMileStoneObj?.outStanding?.toLocaleString('en-IN')}
               </p>
-            </div>
+              </section>
+</div>
           </div>
         </div>
       </div>
     </div>
 
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 cursor-pointer" onClick={() => setFeature('agreement_info')}>
 
       <div className="bg-white border border-gray-100 rounded-2xl p-6">
+        <section className='flex flex-row justify-between items-center'>
         <div className="flex items-center mb-6">
           <img src="/su1.svg" alt="Documents" className="h-5 w-5 mr-2" />
           <h2 className="text-[12px] font-medium text-[#606062]">DOCUMENTS</h2>
         </div>
+        <svg width="19" height="8" viewBox="0 0 32 12" fill="black" xmlns="http://www.w3.org/2000/svg" className="mb-[13px]"><path d="M2 4.87494H0.875L0.875 7.12494H2L2 4.87494ZM2 7.12494L30.5 7.12494V4.87494L2 4.87494L2 7.12494ZM25.0685 4.7589e-08C25.0685 3.89997 28.1374 7.125 32 7.125L32 4.875C29.449 4.875 27.3185 2.72744 27.3185 -4.7589e-08L25.0685 4.7589e-08ZM32 4.875C28.1374 4.875 25.0684 8.09999 25.0684 12H27.3184C27.3184 9.27259 29.4489 7.125 32 7.125V4.875Z" fill="black"></path></svg>
+        </section>
         <div className="space-y-0">
           {documents.map((doc, index) => (
-              <div key={index} className="py-2 border-b border-gray-200 last:border-b-0">
+              <div key={index} className="py-4 border-b border-gray-200 last:border-b-0">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
                  <img src="/IconSetsdoc.svg" alt="Document" className="h-5 w-5 object-contain" />
                  <span className="font-normal text-[14px] leading-[100%] tracking-[0%] font-outfit">{doc.name}</span>
                 </div>
-                <span className="font-normal text-[14px] leading-[100%] tracking-[0%] font-outfit">{doc.uploadedCount}
-                   Document
+                <span className="font-normal text-[14px] leading-[100%] tracking-[0%] font-outfit">{doc.uploadedCount} Document
                 </span>
               </div>
             </div>
@@ -600,7 +659,7 @@ const CrmUnitSummary = ({
         </div>
       </div>
 
-      <div className="bg-white border border-gray-100 rounded-2xl p-6">
+      <div className="bg-white border border-gray-100 rounded-2xl p-6" onClick={() => setFeature('agreement_info')}>
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
             <img src="/su1.svg" alt="Loan" className="h-5 w-5 mr-2" />
@@ -634,7 +693,7 @@ const CrmUnitSummary = ({
 
 
     <div>
-  <CostSheetAndPaymentSchedule/>
+  <CostSheetAndPaymentSchedule selUnitDetails={selUnitPayload} paymentScheduleTuned={paymentScheduleTuned} setFeature={setFeature}/>
   </div>
 
   </div>

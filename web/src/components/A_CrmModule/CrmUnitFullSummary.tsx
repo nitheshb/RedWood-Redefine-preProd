@@ -2361,6 +2361,7 @@ className="w-4 h-4"
             assets={selCustomerPayload?.assets}
             totalIs={totalIs}
             unitTransactionsA={unitTransactionsA}
+            setFeature={setFeature}
 
           />
         </div>

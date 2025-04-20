@@ -20,6 +20,8 @@ export const crmActivieLogNamer = (dat) => {
       return (tex = `Payment`)
     case 'assign_change':
       return (tex = `Lead Assigned To`)
+    case 'legal':
+        return (tex = `Legal document is ${dat?.from || 'created'}`)
     default:
       return (tex = subtype)
   }

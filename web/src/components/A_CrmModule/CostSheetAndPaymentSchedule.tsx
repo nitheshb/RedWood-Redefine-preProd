@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { prettyDate } from 'src/util/dateConverter';
 
-export default function CostSheetAndPaymentSchedule() {
+export default function CostSheetAndPaymentSchedule({selUnitDetails, setFeature, paymentScheduleTuned}) {
+  const [costSheetItems, setCostSheetItems] = useState([]);
+  const [psItems, setPSItems] = useState([]);
+
   const [checkedItems, setCheckedItems] = useState({
     unitCost: false,
     plc: false,
@@ -15,12 +19,12 @@ export default function CostSheetAndPaymentSchedule() {
     });
   };
 
-  const costSheetItems = [
-    { label: "Charge Cost", value: "₹ 22,76,36,500" },
-    { label: "Additional Charges", value: "₹ 22,76,36,500" },
-    { label: "Construction Cost", value: "₹ 22,76,36,500" },
-    { label: "Construction Additional Cost", value: "₹ 22,76,36,500" },
-    { label: "Possession Charges", value: "₹ 22,76,36,500" }
+  let costSheetDummy = [
+    { label: "Charge Cost", value: selUnitDetails?.T_A },
+    { label: "Additional Charges", value: selUnitDetails?.T_B },
+    { label: "Construction Cost", value: selUnitDetails?.T_C },
+    { label: "Construction Additional Cost", value: selUnitDetails?.T_D },
+    { label: "Possession Charges", value: selUnitDetails?.T_E }
   ];
 
   const paymentScheduleItems = [
@@ -30,9 +34,18 @@ export default function CostSheetAndPaymentSchedule() {
     { id: "bescom", label: "BESCOM", date: "Mar-20-2025" }
   ];
 
+
+  useEffect(() => {
+    setCostSheetItems(costSheetDummy)
+  }, [selUnitDetails]);
+  useEffect(() => {
+    setPSItems(paymentScheduleTuned)
+    console.log('cost sheet items is', paymentScheduleTuned)
+  }, [paymentScheduleTuned]);
   return (
     <div className="flex flex-col md:flex-row gap-4 ">
-      <div className="w-full md:w-1/2 bg-white p-6 rounded-2xl">
+      <div className="w-full md:w-1/2 bg-white p-6 rounded-2xl cursor-pointer" onClick={() => setFeature('finance_info')}>
+      <section className='flex flex-row justify-between items-center'>
         <div className="flex items-center mb-8">
           <div className="w-8 h-8 mr-2 text-gray-400">
 
@@ -89,20 +102,23 @@ export default function CostSheetAndPaymentSchedule() {
           </div>
           <h2 className="font-medium text-[12px] leading-[100%] tracking-[6%]  text-[#606062]">COST SHEET</h2>
         </div>
+        <svg width="19" height="8" viewBox="0 0 32 12" fill="black" xmlns="http://www.w3.org/2000/svg" className="mb-[25px]"><path d="M2 4.87494H0.875L0.875 7.12494H2L2 4.87494ZM2 7.12494L30.5 7.12494V4.87494L2 4.87494L2 7.12494ZM25.0685 4.7589e-08C25.0685 3.89997 28.1374 7.125 32 7.125L32 4.875C29.449 4.875 27.3185 2.72744 27.3185 -4.7589e-08L25.0685 4.7589e-08ZM32 4.875C28.1374 4.875 25.0684 8.09999 25.0684 12H27.3184C27.3184 9.27259 29.4489 7.125 32 7.125V4.875Z" fill="black"></path></svg>
+      </section>
 
         <div className="space-y-0">
           {costSheetItems.map((item, index) => (
             <div key={index} className="py-4 border-b border-gray-200 last:border-b-0">
               <div className="flex justify-between items-center">
-                <span className="font-normal text-[14px] leading-[100%] tracking-[0%] font-outfit">{item.label}</span>
-                <span className="font-normal text-[14px] leading-[100%] tracking-[0%] font-outfit">{item.value}</span>
+                <span className="font-medium text-[14px] leading-[100%] tracking-[0%] font-outfit">{item?.label}</span>
+                <span className="font-normal text-[12px] leading-[100%] tracking-[0%] font-outfit">₹ {item?.value?.toLocaleString('en-IN')}</span>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="w-full md:w-1/2 bg-white p-6 rounded-2xl">
+      <div className="w-full md:w-1/2 bg-white p-6 rounded-2xl cursor-pointer" onClick={() => setFeature('finance_info')}>
+      <section className='flex flex-row justify-between items-center'>
         <div className="flex items-center mb-8">
           <div className="w-8 h-8 mr-2 text-gray-400">
 
@@ -159,19 +175,21 @@ export default function CostSheetAndPaymentSchedule() {
           </div>
           <h2 className="font-medium text-[12px] leading-[100%] tracking-[6%]  text-[#606062]">PAYMENT SCHEDULE</h2>
         </div>
+        <svg width="19" height="8" viewBox="0 0 32 12" fill="black" xmlns="http://www.w3.org/2000/svg" className="mb-[25px]"><path d="M2 4.87494H0.875L0.875 7.12494H2L2 4.87494ZM2 7.12494L30.5 7.12494V4.87494L2 4.87494L2 7.12494ZM25.0685 4.7589e-08C25.0685 3.89997 28.1374 7.125 32 7.125L32 4.875C29.449 4.875 27.3185 2.72744 27.3185 -4.7589e-08L25.0685 4.7589e-08ZM32 4.875C28.1374 4.875 25.0684 8.09999 25.0684 12H27.3184C27.3184 9.27259 29.4489 7.125 32 7.125V4.875Z" fill="black"></path></svg>
+</section>
 
         <div className="space-y-0">
-          {paymentScheduleItems.map((item) => (
-            <div key={item.id} className="py-4 border-b border-gray-200 last:border-b-0">
-              <div className="font-normal text-[12px] leading-[100%] text-[#606062] tracking-[0%] font-outfit">{item.date}</div>
+          {psItems?.map((item, i) => (
+            <div key={i} className="py-4 border-b border-gray-200 last:border-b-0">
+              <div className="font-normal text-[12px] leading-[100%] text-[#606062] tracking-[0%] font-outfit">{prettyDate(item?.elgFrom)}</div>
               <div className="flex justify-between items-center">
-                <span className="font-normal text-[14px] leading-[100%] tracking-[0%] font-outfit">{item.label}</span>
+                <span className="font-normal text-[14px] leading-[100%] tracking-[0%] font-outfit">{item?.label}</span>
                 <div className="flex items-center gap-4">
-                  <span className="font-normal text-[12px] leading-[100%] text-[#960000] tracking-[0%] ">₹ 6,500/sqft</span>
-                  <span className="font-normal text-[12px] leading-[100%] text-[#1B6600] tracking-[0%] ">₹ 6,500/sqft</span>
+                  <span className="font-normal text-[12px] leading-[100%] text-[#960000] tracking-[0%] "> ₹ {item?.outStanding?.toLocaleString('en-IN')}</span>
+                  <span className="font-normal text-[12px] leading-[100%] text-[#1B6600] tracking-[0%] ">₹ {item?.value?.toLocaleString('en-IN')}</span>
                   <div
                     className="relative w-4 h-4 border border-gray-300 rounded cursor-pointer"
-                    onClick={() => handleCheckboxChange(item.id)}
+                    onClick={() => handleCheckboxChange(item?.id)}
                   >
                     {checkedItems[item.id] && (
                       <svg className="absolute inset-0 w-full h-full text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
