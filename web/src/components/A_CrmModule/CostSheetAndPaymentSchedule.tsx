@@ -40,7 +40,6 @@ export default function CostSheetAndPaymentSchedule({selUnitDetails, setFeature,
   }, [selUnitDetails]);
   useEffect(() => {
     setPSItems(paymentScheduleTuned)
-    console.log('cost sheet items is', paymentScheduleTuned)
   }, [paymentScheduleTuned]);
   return (
     <div className="flex flex-col md:flex-row gap-4 ">

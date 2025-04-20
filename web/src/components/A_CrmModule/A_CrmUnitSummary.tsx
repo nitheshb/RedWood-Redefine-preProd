@@ -190,8 +190,7 @@ console.log('recent milestone obj is ', upcomingMileStoneObj, selCustomerPayload
     const y = await unsubscribe
     setUnitFetchedActivityData(y)
     setRecentActivitySkeleton(false)
-    await console.log('new setup ', unitFetchedActivityData)
-    await console.log('new setup ', y)
+  
   }
   const setTotalFun = async () => {
     const partBTotal = selUnitPayload?.additonalChargesObj?.reduce(
