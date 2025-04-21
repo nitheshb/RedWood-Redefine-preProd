@@ -264,7 +264,7 @@ export const steamAllLeadsActivity = async (orgId, snapshot, data, error) => {
   const { uid, cutoffDate, dateRange } = data
   console.log('logs range data is', dateRange, cutoffDate)
 
-  const { data: lead_logs_visit_fixed, error2 } = await supabase
+  const { data: lead_logs_visit_fixed,  error:error1 } = await supabase
     .from(`${orgId}_lead_logs`)
     .select('projectId, type,subtype,T, by, from, to, uid, Luid, payload')
     //.eq('Luid', uid)
@@ -272,7 +272,7 @@ export const steamAllLeadsActivity = async (orgId, snapshot, data, error) => {
     .eq('to', 'visitfixed')
   // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
   if (dateRange?.[0] == null) {
-    const { data: lead_logs, error1 } = await supabase
+    const { data: lead_logs,  error:error1 } = await supabase
       .from(`${orgId}_lead_logs`)
       .select('projectId, type,subtype,T, by, from, to, uid, Luid, payload')
       //.eq('Luid', uid)
@@ -306,7 +306,7 @@ export const steamAllLeadsActivity = async (orgId, snapshot, data, error) => {
     console.log('value is result', result)
     return result
   } else if (dateRange?.[1] != null) {
-    const { data: lead_logs, error1 } = await supabase
+    const { data: lead_logs,  error:error1 } = await supabase
       .from(`${orgId}_lead_logs`)
       .select('projectId, type,subtype,T, by, from, to, uid, Luid, payload')
       //.eq('Luid', uid)
@@ -337,7 +337,7 @@ export const steamAllLeadsActivity = async (orgId, snapshot, data, error) => {
     )
     return result
   } else {
-    const { data: lead_logs, error1 } = await supabase
+    const { data: lead_logs,  error:error1 } = await supabase
       .from(`${orgId}_lead_logs`)
       .select('projectId, type,subtype,T, by, from, to, uid, Luid, payload')
       //.eq('Luid', uid)
@@ -386,7 +386,7 @@ export const streamLeadLogdWithNullProj = async (
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
   const { uid, cutoffDate } = data
   // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
-  const { data: lead_logs, error1: countError } = await supabase
+  const { data: lead_logs, error: countError } = await supabase
     .from(`${orgId}_lead_logs`)
     .select('projectId, type,subtype,T, by, from, to, uid, Luid, payload')
     .eq('type', 'sts_change')
@@ -957,7 +957,7 @@ export const updateTodaySourceStatsDB = async (
   const records = []
   const getAllProjectsQuery = await query(
     collection(db, `${'maahomes'}_leads_lake`),
-    where('cT', '>=')
+    // where('cT', '>=')
   )
   const counter = 0
 
@@ -1387,7 +1387,7 @@ export const AddCommentTaskManData = async (orgId, dta, user) => {
 export const steamLeadActivityLog = async (orgId, snapshot, data, error) => {
   const { uid } = data
   console.log('is uid g', data, uid)
-  const { data: lead_logs, error1 } = await supabase
+  const { data: lead_logs,  error:error1 } = await supabase
     .from(`${orgId}_lead_logs`)
     .select('type,subtype,T, by, from, to ')
     .eq('Luid', uid)
@@ -1397,7 +1397,7 @@ export const steamLeadActivityLog = async (orgId, snapshot, data, error) => {
 export const streamSalesActitvityReport = async (orgId, data) => {
   const { pId, startTime, endTime } = data
 
-  const { data: lead_logs, error1 } = await supabase
+  const { data: lead_logs,  error:error1 } = await supabase
     .from(`${orgId}_lead_logs`)
     .select('type,subtype,T, by, from, to ')
     .eq('by', pId)
@@ -1411,7 +1411,7 @@ export const streamSalesActitvityReport = async (orgId, data) => {
 export const streamSalesActitvityLogReportData = async (orgId, data) => {
   const { pId, startTime, endTime } = data
 
-  const { data: lead_logs, error1 } = await supabase
+  const { data: lead_logs,  error:error1 } = await supabase
     .from(`${orgId}_lead_logs`)
     .select('*')
     .eq('by', pId)
@@ -1427,7 +1427,7 @@ export const steamUnitActivityLog = async (orgId, data) => {
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
   const { uid } = data
   console.log('is uid g', data, uid)
-  const { data: lead_logs, error1 } = await supabase
+  const { data: lead_logs, error:error1 } = await supabase
     .from(`${orgId}_unit_logs`)
     .select('*')
     .eq('Uuid', uid)
@@ -1439,7 +1439,7 @@ export const steamUnitSubTypeActivityLog = async (orgId, data) => {
   // const itemsQuery = query(doc(db, `${orgId}_leads_log', 'W6sFKhgyihlsKmmqDG0r'))
   const { uid, subtype } = data
   console.log('is uid g', data, uid)
-  const { data: lead_logs, error1 } = await supabase
+  const { data: lead_logs,  error:error1 } = await supabase
     .from(`${orgId}_unit_logs`)
     .select('*')
     .eq('Uuid', uid)
@@ -2654,7 +2654,7 @@ export const addNotificationSupabase = async (payload, enqueueSnackbar) => {
 
   const { data, error } = await supabase
     .from('maahomes_notifyTemplates')
-    .upsert([{ ...payload }], { upsert: true })
+    .upsert([...payload])
 
   console.log('created stuff is ', error, data)
   enqueueSnackbar('Notification updated Successful', {
@@ -2868,7 +2868,7 @@ export const addLead = async (orgId, data, by, msg) => {
   if(Name){
 
 
-    const { data3, errorx } = await supabase.from(`${orgId}_lead_logs`).insert([
+    const { data:data3, error:errorx } = await supabase.from(`${orgId}_lead_logs`).insert([
       {
         type: 'l_ctd',
         subtype: intype,
@@ -2948,7 +2948,7 @@ export const addCpLead = async (orgId, data, by, msg) => {
   const x = await addDoc(collection(db, `${orgId}_leads_cp`), data)
   await console.log('add Lead value is ', x, x.id, data)
   const { intype, Name, Mobile, assignedTo, Project, assignedToObj } = data
-  const { data3, errorx } = await supabase.from(`${orgId}_lead_logs`).insert([
+  const { data:data3, error:errorx } = await supabase.from(`${orgId}_lead_logs`).insert([
     {
       type: 'l_ctd',
       subtype: intype,
@@ -5324,7 +5324,7 @@ export const updateLeadAssigTo = async (
     assignedTo: value,
   })
 
-  const { data1, error1 } = await supabase.from(`${orgId}_lead_logs`).insert([
+  const { data:data1,  error:error1 } = await supabase.from(`${orgId}_lead_logs`).insert([
     {
       type: 'assign_change',
       subtype: oldOwnerId,
@@ -5518,7 +5518,7 @@ export const createNewCustomerS = async (
     //   },
     // ])
 
-    console.log('chek if ther is any erro in supa', data1, error1)
+
     enqueueSnackbar(`Status Updated to ${newStatus}`, {
       variant: 'success',
     })
@@ -5551,7 +5551,7 @@ export const insertPSS = async (
       order,
     } = paylaod
 
-    const { datax, errorx } = await supabase.from(`${orgId}_ps_list`).insert([
+    const { data:datax, error:errorx } = await supabase.from(`${orgId}_ps_list`).insert([
       {
         projectId,
         unitId,
@@ -7360,7 +7360,7 @@ export const uploadBookedUnitToDb = async (
       area:data?.area || 0}
   const y = await updateProjectComputedData(orgId, projectId, yo)
 
-    const { data1, error1 } = await supabase.from(`${orgId}_unit_logs`).insert([
+    const { data:data1, error:error1 } = await supabase.from(`${orgId}_unit_logs`).insert([
       {
         type: 'sts_change',
         subtype: data?.status || 'booked',
@@ -7399,7 +7399,7 @@ export const updateUnitAsBooked = async (
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       ...data,
     })
-    const { data1, error1 } = await supabase.from(`${orgId}_unit_logs`).insert([
+    const { data:data1, error:error1 } = await supabase.from(`${orgId}_unit_logs`).insert([
       {
         type: 'sts_change',
         subtype: data?.status || 'booked',
@@ -7452,7 +7452,7 @@ export const updateUnitAsBlocked = async (
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       ...data,
     })
-    const { data1, error1 } = await supabase.from(`${orgId}_unit_logs`).insert([
+    const { data:data1, error:error1 } = await supabase.from(`${orgId}_unit_logs`).insert([
       {
         type: 'sts_change',
         subtype: 'customer_blocked',
@@ -7500,7 +7500,7 @@ export const updateLeadRemarks_NotIntrested = async (
     await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
       ...data,
     })
-    const { data1, error1 } = await supabase.from(`${orgId}_lead_logs`).insert([
+    const { data:data1, error:error1 } = await supabase.from(`${orgId}_lead_logs`).insert([
       {
         type: 'sts_change',
         subtype: Status,
@@ -7569,7 +7569,7 @@ export const updateLeadRemarks_VisitDone = async (
     await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
       ...data,
     })
-    const { data1, error1 } = await supabase.from(`${orgId}_lead_logs`).insert([
+    const { data:data1, error:error1 } = await supabase.from(`${orgId}_lead_logs`).insert([
       {
         type: 'sts_change',
         subtype: Status,
@@ -8245,7 +8245,7 @@ export const steamLeadsVsSources = async (orgId, snapshot, data, error) => {
   const { uid } = data
   console.log('is uid g', data, uid)
   // return onSnapshot(doc(db, `${orgId}_leads_log`, uid), snapshot, error)
-  const { data: lead_logs, error1 } = await supabase
+  const { data: lead_logs, error:error1 } = await supabase
     .from(`spark_sales_leads_source_daily_logs`)
     .select('*')
 

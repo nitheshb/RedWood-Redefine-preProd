@@ -86,9 +86,19 @@ export default function BookingPaymentFlow({
     return
   }
   const streamTransactions = () => {
-    const subscription = supabase
-      .from(`${orgId}_accounts`)
-      .on('*', (payload) => {
+     const channel = supabase
+        .channel('accounts-channel')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: `${orgId}_accounts`,
+          },
+          (payload) => {
+    // const subscription = supabase
+    //   .from(`${orgId}_accounts`)
+    //   .on('*', (payload) => {
         console.log('account records', payload)
         const updatedData = payload.new
         const { id } = payload.old
@@ -115,7 +125,7 @@ export default function BookingPaymentFlow({
       .subscribe()
 
     return () => {
-      supabase.removeSubscription(subscription)
+      supabase.removeChannel(channel)
     }
   }
   const paymentCaptureFun = async (data, resetForm) => {
@@ -289,7 +299,7 @@ export default function BookingPaymentFlow({
                     {'All Demands'}
                     <span className="absolute inset-0" />
                   </a>
-     
+
                 </div>
               </div>
               <div
@@ -325,7 +335,7 @@ export default function BookingPaymentFlow({
                     {'Active Demand'}
                     <span className="absolute inset-0" />
                   </a>
-    
+
                 </div>
               </div>
               <div
@@ -359,7 +369,7 @@ export default function BookingPaymentFlow({
                     {'Add Modification'}
                     <span className="absolute inset-0" />
                   </a>
-             
+
                 </div>
               </div>
             </div>
@@ -504,7 +514,7 @@ export default function BookingPaymentFlow({
                     {'All Payments'}
                     <span className="absolute inset-0" />
                   </a>
-        
+
                 </div>
               </div>
               <div
@@ -540,7 +550,7 @@ export default function BookingPaymentFlow({
                     {'Active Payments'}
                     <span className="absolute inset-0" />
                   </a>
-         
+
                 </div>
               </div>
               <div
@@ -574,7 +584,7 @@ export default function BookingPaymentFlow({
                     {'New Payment'}
                     <span className="absolute inset-0" />
                   </a>
-      
+
                 </div>
               </div>
             </div>

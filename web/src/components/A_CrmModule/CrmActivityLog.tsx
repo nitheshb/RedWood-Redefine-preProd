@@ -42,10 +42,19 @@ console.log('account records', selUnitPayload?.id)
   useEffect(() => {
     boot()
 console.log('account records', selUnitPayload?.id, orgId)
-
-    const subscription = supabase
-      .from(`${orgId}_unit_logs`)
-      .on('*', (payload) => {
+    const channel = supabase
+        .channel('unit-logs-channel')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: `${orgId}_unit_logs`,
+          },
+          (payload) => {
+    // const subscription = supabase
+    //   .from(`${orgId}_unit_logs`)
+    //   .on('*', (payload) => {
         console.log('account records', payload)
         const updatedData = payload.new
         const { uid } = payload.old
@@ -112,7 +121,7 @@ console.log('account records', selUnitPayload?.id, orgId)
       .subscribe()
 
     return () => {
-      supabase.removeSubscription(subscription)
+      supabase.removeChannel(channel)
     }
   }, [selUnitPayload])
   return (

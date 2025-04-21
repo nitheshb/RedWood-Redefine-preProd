@@ -219,9 +219,19 @@ export default function Crm_legal_Clarity({
   useEffect(() => {
     console.log('unit dta is ', selUnitPayload, selUnitPayload?.id)
     boot()
-    const subscription = supabase
-      .from(`${orgId}_unit_tasks`)
-      .on('*', (payload) => {
+    const channel = supabase
+        .channel('unit-tasks-channel')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: `${orgId}_unit_tasks`,
+          },
+          (payload) => {
+    // const subscription = supabase
+    //   .from(`${orgId}_unit_tasks`)
+    //   .on('*', (payload) => {
         console.log('account records', payload)
         const updatedData = payload.new
         const { id } = payload.old
@@ -289,7 +299,7 @@ export default function Crm_legal_Clarity({
 
     // Clean up the subscription when the component unmounts
     return () => {
-      supabase.removeSubscription(subscription)
+      supabase.removeChannel(channel)
     }
   }, [])
   const boot = async () => {
@@ -1139,7 +1149,7 @@ export default function Crm_legal_Clarity({
                     data.Uuid = selUnitPayload?.id
                     await addLegalClarificationTicket(orgId, data, user)
 
-  
+
                     return
                   }}
                 >
@@ -1381,7 +1391,7 @@ export default function Crm_legal_Clarity({
                         }
                       />
                       {addTaskCommentObj?.ct === data?.ct && (
-           
+
                         <AddLeadTaskComment
                           closeTask={closeTask}
                           data={data}

@@ -76,9 +76,16 @@ const CrmUnitSummary = ({
     console.log('unit dta is ', selUnitPayload, selUnitPayload?.id)
     boot()
     setTotalFun()
-    const subscription = supabase
-      .from(`${orgId}_unit_logs`)
-      .on('*', (payload) => {
+     const channel = supabase
+        .channel('unit-logs-channel')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: `${orgId}_unit_logs`,
+          },
+          (payload) => {
         console.log('account records', payload)
         const updatedData = payload.new
         const { uid } = payload.old
@@ -148,7 +155,7 @@ const CrmUnitSummary = ({
 
     // Clean up the subscription when the component unmounts
     return () => {
-      supabase.removeSubscription(subscription)
+      supabase.removeChannel(channel)
     }
   }, [])
 useEffect(() => {
@@ -190,7 +197,7 @@ console.log('recent milestone obj is ', upcomingMileStoneObj, selCustomerPayload
     const y = await unsubscribe
     setUnitFetchedActivityData(y)
     setRecentActivitySkeleton(false)
-  
+
   }
   const setTotalFun = async () => {
     const partBTotal = selUnitPayload?.additonalChargesObj?.reduce(

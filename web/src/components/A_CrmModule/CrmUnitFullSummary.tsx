@@ -407,9 +407,19 @@ export default function UnitFullSummary({
     return unsubscribe
   }
   useEffect(() => {
-    const subscription = supabase
-      .from(`${orgId}_accounts`)
-      .on('*', (payload) => {
+       const channel = supabase
+        .channel('unit-accounts-channel')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: `${orgId}_accounts`,
+          },
+          (payload) => {
+    // const subscription = supabase
+    //   .from(`${orgId}_accounts`)
+    //   .on('*', (payload) => {
         console.log('account records', payload)
         const updatedData = payload.new
         const { id } = payload.old
@@ -435,7 +445,7 @@ export default function UnitFullSummary({
       .subscribe()
 
     return () => {
-      supabase.removeSubscription(subscription)
+      supabase.removeChannel(channel)
     }
   }, [])
   useEffect(() => {
@@ -941,9 +951,19 @@ export default function UnitFullSummary({
       console.log('unit dta is ', selUnitPayload, selUnitPayload?.id)
       boot()
       setTotalFun()
-      const subscription = supabase
-        .from(`${orgId}_unit_logs`)
-        .on('*', (payload) => {
+        const channel = supabase
+          .channel('unit-logs-channel')
+          .on(
+            'postgres_changes',
+            {
+              event: '*',
+              schema: 'public',
+              table: `${orgId}_unit_logs`,
+            },
+            (payload) => {
+      // const subscription = supabase
+      //   .from(`${orgId}_unit_logs`)
+      //   .on('*', (payload) => {
           console.log('account records', payload)
           const updatedData = payload.new
           const { uid } = payload.old
@@ -1011,7 +1031,7 @@ export default function UnitFullSummary({
 
       // Clean up the subscription when the component unmounts
       return () => {
-        supabase.removeSubscription(subscription)
+        supabase.removeChannel(channel)
       }
     }, [])
 

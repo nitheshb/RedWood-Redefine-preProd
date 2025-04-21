@@ -91,9 +91,19 @@ const ProjectReportsBody = ({ title, pId, data }) => {
     getTasksDataFun()
 
     // Subscribe to real-time changes in the `${orgId}_accounts` table
-    const subscription = supabase
-      .from(`maahomes_TM_Tasks`)
-      .on('*', (payload) => {
+    const channel = supabase
+        .channel('org-TM-Tasks-channel')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: `${orgId}_TM_Tasks`,
+          },
+          (payload) => {
+    // const subscription = supabase
+    //   .from(`maahomes_TM_Tasks`)
+    //   .on('*', (payload) => {
         // When a change occurs, update the 'leadLogs' state with the latest data
         console.log('account records', payload)
         // Check if the updated data has the id 12
@@ -154,7 +164,7 @@ const ProjectReportsBody = ({ title, pId, data }) => {
       .subscribe()
 
     return () => {
-      supabase.removeSubscription(subscription)
+      supabase.removeChannel(channel)
     }
   }, [])
   useEffect(() => {

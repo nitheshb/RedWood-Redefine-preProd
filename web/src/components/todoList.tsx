@@ -89,9 +89,17 @@ const TodoListView = ({
     getTasksDataFun()
 
     // Subscribe to real-time changes in the `${user?.orgId}_accounts` table
-    const subscription = supabase
-      .from(`maahomes_TM_Tasks`)
-      .on('*', (payload) => {
+    const channel = supabase
+    .channel('maahomes-tasks-channel')
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'maahomes_TM_Tasks',
+      },
+      (payload) => {
+      // .on('*', (payload) => {
         // When a change occurs, update the 'leadLogs' state with the latest data
         console.log('account records', payload)
         // Check if the updated data has the id 12
@@ -181,7 +189,7 @@ const TodoListView = ({
 
     // Clean up the subscription when the component unmounts
     return () => {
-      supabase.removeSubscription(subscription)
+      supabase.removeChannel(channel)
     }
   }, [])
   useEffect(() => {

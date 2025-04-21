@@ -48,9 +48,16 @@ const ToDoList = ({selUnitPayload}) => {
   ];
   useEffect(() => {
     boot()
-    const subscription = supabase
-      .from(`${orgId}_unit_tasks`)
-      .on('*', (payload) => {
+    const channel = supabase
+    .channel('unit-tasks-channel')
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: `${orgId}_unit_tasks`,
+      },
+      (payload) => {
         console.log('account records', payload)
         const updatedData = payload.new
         const { id } = payload.old
@@ -118,7 +125,7 @@ const ToDoList = ({selUnitPayload}) => {
 
     // Clean up the subscription when the component unmounts
     return () => {
-      supabase.removeSubscription(subscription)
+      supabase.removeChannel(channel)
     }
   }, [])
    const boot = async () => {
@@ -194,7 +201,7 @@ const ToDoList = ({selUnitPayload}) => {
   return (
 
 
- 
+
 
 
     <div className='overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
@@ -543,7 +550,7 @@ const ToDoList = ({selUnitPayload}) => {
 
 
 
-   
+
   );
 };
 

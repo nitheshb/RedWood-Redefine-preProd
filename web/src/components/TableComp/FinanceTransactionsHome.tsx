@@ -114,9 +114,19 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
   useEffect(() => {
     // Subscribe to real-time changes in the `${orgId}_accounts` table
-    const subscription = supabase
-      .from(`${orgId}_accounts`)
-      .on('*', (payload) => {
+      const channel = supabase
+        .channel('accounts-channel')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: `${orgId}_accounts`,
+          },
+          (payload) => {
+    // const subscription = supabase
+    //   .from(`${orgId}_accounts`)
+    //   .on('*', (payload) => {
         // When a change occurs, update the 'leadLogs' state with the latest data
         console.log('account records', payload)
         // Check if the updated data has the id 12
@@ -143,7 +153,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
     // Clean up the subscription when the component unmounts
     return () => {
-      supabase.removeSubscription(subscription)
+      supabase.removeChannel(channel)
     }
   }, [])
 
@@ -163,7 +173,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
 
   }
 
- 
+
 
   const getLeadsDataFun = async () => {
     const { access, uid } = user
@@ -214,7 +224,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
             "
           >
             <div className="items-center justify-between  py-2 px-2  pl-[1%] ">
-   
+
               <div className="flex flex-row items-center">
                 <section className="min-w-[150px]">
                   <div className="flex flex-col ml-3">
@@ -223,7 +233,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                   </div>
                 </section>
                 <div className="flex flex-col">
- 
+
                   <section className="flex flex-row justify-between">
                     <section className="flex flex-row mt-2 mr-1  mb-1 leading-7 text-gray-900  rounded-lg  ">
                       {[
@@ -382,13 +392,13 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                   {`${fieldHead.lab} `}
                                 </span>
                                 <span className="border border-[#E06349] text-gray-800 px-1 py-1 rounded-full ml-[4px] text-[10px] ">
-                          
+
                                   {
                                     rowsCounter(finFetchedData, fieldHead?.val)
                                       ?.length
                                   }
                                 </span>
-      
+
                               </button>
                             </li>
                           )
@@ -462,7 +472,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                         label=""
                         className="input "
                         onChange={(value) => {
-                        
+
                         }}
                         value={'alltransactions'}
                         options={[
@@ -546,7 +556,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                 <div className="flex justify-center text-right items-center rounded-md w-2 h-8 app-bg-yellow-2 app-color-yellow-1 text-xs font-semibold">
                                   {i + 1}
                                 </div>
-      
+
                               </td>
                               <td>
                                 <div className="flex flex-row py-2 ml-4">
