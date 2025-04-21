@@ -311,21 +311,27 @@ const LegalDocsHome = ({ project }) => {
               <img className="w-8 h-8" alt="" src={'https://static.hsappstatic.net/ui-images/static-2.758/optimized/documents.svg'}></img>
               <h3 className="font-semibold">{project.projectName}</h3>
             </div>
-            <div className="text-sm text-gray-500">
-            <span className="text-[12px] font-outfit text-[#606062]">
-        {project?.all_doc_c || 0} Documents
-      </span>
-      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
-        {project?.public_doc_c || 0} Public
-      </span>
-      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
-        {project?.internal_doc_c || 0} Internal
-      </span>
-      <span className="text-[12px] ml-2 font-outfit text-[#606062]">
-        {project?.customer_doc_c || 0} Customer
-      </span>
 
-            </div>
+
+            <div className="text-sm flex text-gray-500 justify-center items-center">
+  <span className="text-[12px] min-w-[4rem] text-left inline-block font-outfit text-[#606062]">
+    {project?.all_doc_c || 0} Documents
+  </span>
+  <div className="w-[2px] mx-2 h-[8px] border-0 border-r flex items-center justify-center"></div>
+  <span className="text-[12px] min-w-[3rem] inline-block text-left font-outfit text-[#606062]">
+    {project?.public_doc_c || 0} Public
+  </span>
+  <div className="w-[2px] mx-2 h-[8px] border-0 border-r flex items-center justify-center"></div>
+  <span className="text-[12px] min-w-[3rem] inline-block text-left font-outfit text-[#606062]">
+    {project?.internal_doc_c || 0} Internal
+  </span>
+  <div className="w-[2px] mx-2 h-[8px] border-0 border-r flex items-center justify-center"></div>
+  <span className="text-[12px] min-w-[3rem] inline-block text-right font-outfit text-[#606062]">
+    {project?.customer_doc_c || 0} Customer
+  </span>
+</div>
+
+
           </div>
         ))}
       </div>
@@ -347,16 +353,24 @@ const LegalDocsHome = ({ project }) => {
               <span className="text-2xl">📦</span>
               <h3 className="font-semibold">{block.blockName}</h3>
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm flex items-center   text-gray-500">
             <span className="text-[12px] font-outfit text-[#606062]">
         {block?.all_doc_c || 0} Documents
       </span>
+      <div className="w-[2px] mx-2 h-[8px] border-0 border-r flex items-center justify-center"></div>
+
       <span className="text-[12px] ml-2 font-outfit text-[#606062]">
         {block?.public_doc_c || 0} Public
       </span>
+      <div className="w-[2px] mx-2 h-[8px] border-0 border-r flex items-center justify-center"></div>
+
+
       <span className="text-[12px] ml-2 font-outfit text-[#606062]">
         {block?.internal_doc_c || 0} Internal
       </span>
+      <div className="w-[2px] mx-2 h-[8px] border-0 border-r flex items-center justify-center"></div>
+
+
       <span className="text-[12px] ml-2 font-outfit text-[#606062]">
         {block?.customer_doc_c || 0} Customer
       </span>
@@ -381,16 +395,22 @@ const LegalDocsHome = ({ project }) => {
               <span className="text-2xl">📁</span>
               <h3 className="font-semibold">{unit.unit_no}</h3>
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm flex items-center text-gray-500">
             <span className="text-[12px] font-outfit text-[#606062]">
         {unit?.all_doc_c || 0} Documents
       </span>
+      <div className="w-[2px] mx-2 h-[8px] border-0 border-r flex items-center justify-center"></div>
+
       <span className="text-[12px] ml-2 font-outfit text-[#606062]">
         {unit?.public_doc_c || 0} Public
       </span>
+      <div className="w-[2px] mx-2 h-[8px] border-0 border-r flex items-center justify-center"></div>
+
       <span className="text-[12px] ml-2 font-outfit text-[#606062]">
         {unit?.internal_doc_c || 0} Internal
       </span>
+      <div className="w-[2px] mx-2 h-[8px] border-0 border-r flex items-center justify-center"></div>
+
       <span className="text-[12px] ml-2 font-outfit text-[#606062]">
         {unit?.customer_doc_c || 0} Customer
       </span>

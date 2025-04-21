@@ -114,7 +114,7 @@ const CrmUnitPsHome = ({
 
   <img
     alt="CRM Background"
-    src="/bgcrmnew.svg"
+    src="/crmfinal.svg"
     className="w-full h-auto object-cover"
   />
 

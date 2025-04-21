@@ -482,7 +482,7 @@ const CaptureUnitPayment = ({
                                             <div className="">
                                               <label className="text-[24px] font-semibold text-[#053219]  text-sm   ">
                                                 {title === 'capturePayment'
-                                                  ? 'Capture Payment box'
+                                                  ? 'Capture Payment'
                                                   : 'Booking Confirmation'}
                                                 <abbr title="required"></abbr>
                                               </label>

@@ -1486,6 +1486,9 @@ async function handleCallButtonClick(uid, name, number) {
       return;
     }
 
+    console.log("FCM Token:", fcmToken);
+
+
     await addDoc(collection(db, "calls"), {
       name,
       number,
@@ -2341,9 +2344,10 @@ async function handleCallButtonClick(uid, name, number) {
                                     <ClockIcon className=" w-3 h-3" />
 
                                     <span className="ml-1">added on:</span>
-                                    <span className="text-red-900 ml-1 mr-4">
+                                    <span className="text-red-900 ml-1 mr-2">
                                       {prettyDateTime(data?.ct)}
                                     </span>
+                                    <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
                                     <span className="ml-2">added by:</span>
                                     <span className="text-red-900 ml-1 mr-4">
                                       {data?.by}
@@ -2465,6 +2469,7 @@ async function handleCallButtonClick(uid, name, number) {
                                     <span className="text-red-900 ml-1 mr-4">
                                       {prettyDateTime(data?.ct)}
                                     </span>
+                                    <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
                                     <span className="ml-2">added by:</span>
                                     <span className="text-red-900 ml-1 mr-4">
                                       {data?.by}
@@ -3754,6 +3759,12 @@ async function handleCallButtonClick(uid, name, number) {
                                       ).toLocaleString()
                                     : timeConv(data?.T).toLocaleString()}
                                 </span>
+
+
+                                <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+
+
+                                
                                 <span className="text-xs  text-gray-500  ml-2">by:</span>
                                 <span className="text-xs  text-gray-500 ml-1 mr-4">
                                   {data?.by}
