@@ -216,6 +216,38 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     setTransactionData(docData)
     setOpenTransactionDetails(!openTransactionDetails)
   }
+
+
+
+
+
+
+  
+  function formatIndianNumber(num) {
+    if (num >= 1_00_00_00_000) return (num / 1_00_00_00_000).toFixed(1) + 'Lcr+';
+    if (num >= 1_00_00_000) return (num / 1_00_00_000).toFixed(1) + 'Cr+';
+    if (num >= 1_00_000) return (num / 1_00_000).toFixed(1) + 'L+';
+    if (num >= 1_000) return (num / 1_000).toFixed(1) + 'K+';
+    return num.toString();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <>
       <div className=" ">
@@ -304,7 +336,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
     </div>
 
     <h3 className="font-outfit font-medium text-[24px] leading-[100%] tracking-[2%]">₹<CountUpComp value={totalAmountCounter(finFetchedData, dat?.val)} /></h3>
-<p className="font-outfit font-normal text-[12px] leading-[1] tracking-[0]">InWord: 100cr</p>
+<p className="font-outfit font-normal text-[12px] leading-[1] tracking-[0]">InWord: ₹{formatIndianNumber(totalAmountCounter(finFetchedData, dat?.val))}</p>
   </div>
   <div className="h-12 w-12 flex items-center justify-center">
     {/* <svg 
@@ -455,7 +487,7 @@ const FinanceTransactionsHome = ({ leadsTyper }) => {
                                 <span className={`px-1 py-1   ml-[4px] text-[14px] ${
       value === fieldHead?.val
         ? 'text-[#0E0A1F]'
-        : 'text-gray-800'
+        : 'text-gray-500'
     }`}>
       {rowsCounter(finFetchedData, fieldHead?.val)?.length}
     </span>
