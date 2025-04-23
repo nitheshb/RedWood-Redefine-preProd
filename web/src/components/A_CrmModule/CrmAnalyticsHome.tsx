@@ -25,6 +25,7 @@ import CrmProjectionReport from './Reports/CrmProjectionReport'
 import CrmInventorySummaryTable from './Reports/CrmSummaryTable'
 import CrmMortgageSummaryTable from './Reports/CrmMortgageSummary'
 import UnitBookingSummaryHomePage1 from './Reports/bookingSummaryHomev1'
+import Chatbot from '../comps/aichat/Chatbot'
 
 const CrmAnalyticsHome = ({ project }) => {
   const theme = useTheme()
@@ -60,6 +61,8 @@ const CrmAnalyticsHome = ({ project }) => {
 
   return (
     <div className='bg-white rounded-md border-[40px] border-white mx-1 mt-1'>
+
+      <Chatbot/>
 
 <div className='flex    w-[100%]  flex-row justify-between border-b '>
       <ul

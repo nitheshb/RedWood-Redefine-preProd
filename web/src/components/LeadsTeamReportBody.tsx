@@ -54,6 +54,7 @@ import { serialMyData } from './LeadsTeamReport/SourceLeads'
 import ReportSideWindow from './SiderForm/ReportSideView'
 import SiderForm from './SiderForm/SiderForm'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
+import Chatbot from './comps/aichat/Chatbot'
 
 
 
@@ -1052,6 +1053,9 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
 
 
       <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900 bg-white mt-1 mx-1 rounded-lg ">
+
+
+        <Chatbot/>
 
 
 
