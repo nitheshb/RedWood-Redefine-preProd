@@ -517,9 +517,9 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
 <div className="flex overflow-x-auto ml-2 border-b border-gray-300">
   {[
     { label: 'Task Man', value: 'enquiry_journey_status' },
-    { label: 'Project Finance', value: 'CRM_status' },
-    { label: 'Sale Projections', value: 'Legal_status' },
-    { label: 'Home', value: 'project_home' },
+    // { label: 'Project Finance', value: 'CRM_status' },
+    // { label: 'Sale Projections', value: 'Legal_status' },
+    // { label: 'Home', value: 'project_home' },
   ].map((data, i) => {
     return (
       <button
@@ -965,9 +965,9 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
       )}
 
 
-{selCat === 'project_home' && (
+{/* {selCat === 'project_home' && (
             <ProjectSummaryReport/>
-          )}
+          )} */}
 
 
 

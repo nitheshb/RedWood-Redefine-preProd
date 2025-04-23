@@ -10,7 +10,7 @@ interface SemicircleProgressChartProps {
 
 const SemicircleProgressChart: React.FC<SemicircleProgressChartProps> = ({
   progress = 0,
-  size = 90,
+  size = 130,
   strokeWidth = 10,
   filledColor = '#DBD3FD', 
   emptyColor = '#e5e7eb', 
