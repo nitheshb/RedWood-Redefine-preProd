@@ -18,7 +18,7 @@ import {
 } from '@heroicons/react/solid'
 import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
-import { Slider } from '@mui/material'
+import { Box, Slider, Typography } from '@mui/material'
 import { setHours, setMinutes } from 'date-fns'
 import { addDoc, collection, doc, getDoc, Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
@@ -88,7 +88,7 @@ import SiderForm from './SiderForm/SiderForm'
 import Stepper from './A_SalesModule/stepper'
 import RoundedProgressBar from './A_SalesModule/Reports/charts/horizontalProgressBar'
 import ProjectManagement from './A_SalesModule/ProjectManagement'
-import { ChevronDown, ChevronRight, ChevronUp, Plus, PlusCircle } from 'lucide-react'
+import { ChevronDown, ChevronRight, ChevronUp, Clock, IndianRupee, MessageSquare, Phone, Plus, PlusCircle } from 'lucide-react'
 import SemicircleProgressChart from './A_SalesModule/Reports/charts/SemiCircleProgress'
 
 // interface iToastInfo {
@@ -1599,11 +1599,25 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
 
 
 
 
 
+
+  const RupeeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+      <path d="M18 4H8a4 4 0 0 0-4 4"></path>
+      <path d="M6 12h12"></path>
+      <path d="M6 12a4 4 0 0 0 4 4h4"></path>
+      <path d="M14 20l-4-8"></path>
+    </svg>
+  );
 
 
 
@@ -1616,301 +1630,104 @@ async function handleCallButtonClick(uid, name, number) {
   return (
     <>
     <div
-      className={`bg-[#FFFFFF]   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+
+      style={{ background: 'linear-gradient(to left, #EEF0F9, #E1F2F2, #DBE6F0)' }}
     >
 
-      <div className="h-screen overflow-y-auto">
-        <div className=" pb-[2px] px-3  mt-0 rounded-xs  ">
-          <div className=" flex flex justify-between">
-            <div className="w-full pl-1 pt-[2px]  ">
-              <div className="">
-                <div className="font-semibold text-[#053219]  text-sm  mt-3 mb-1  tracking-wide">
-                  <div className="flex flex-row">
+      <div className="h-screen overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+        <div className=" pb-[2px] px-3  mt-0 rounded-xs">
+        <div className="flex  justify-between">
+  <div className="w-full pl-1 pt-[2px]">
+    <div className="">
+      <div className="font-semibold text-[#053219] text-sm mt-3 mb-1 tracking-wide">
+        <div className="flex gap-4 flex-row">
+          <div>
+          <span className="w-12 h-12 bg-[#D3D7F8] rounded-full flex items-center justify-center font-semibold text-[#5B5FC7] uppercase text-[21px]">
+                  {Name?.[0]}
+                </span>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
+   
+                <span className="text-[16px] uppercase">{Name}</span>
+              </div>
+              <img
+                src="/edit-02.svg"
+                alt="edit"
+                className="w-5 h-5 cursor-pointer"
+                onClick={() => setisImportLeadsOpen(true)}
+              />
+              {/* <div className="text-sm ml-1 px-1 rounded text-[#FF8C02]">
+                {currentStatusDispFun(leadDetailsObj?.Status)}
+              </div> */}
+            </div>
 
-                    <div className="flex flex-col">
-         
+            <div className="flex mt-2 flex-row">
+              <div className="flex items-center gap-2">
+                <img src="/phone.svg" className="w-4 h-4" alt="Phone Icon" />
+                <span className='font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]'>
+                  {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}
+                </span>
+              </div>
 
+              <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
 
-
-                      <div className="flex items-center gap-1">
-
-
-  <div className="flex items-center gap-2">
-    <span className="w-8 h-8 bg-[#E0E0E0] rounded-full flex items-center justify-center font-semibold text-[#4B4B4B] uppercase text-sm">
-      {Name?.[0]}
-    </span>
-    <span className="text-[16px] uppercase">{Name}</span>
-  </div>
-
-
-  <img
-    src="/edit-02.svg"
-    alt="edit"
-    className="w-5 h-5 cursor-pointer"
-    onClick={() => setisImportLeadsOpen(true)}
-  />
-
-
-  <div className="text-sm ml-1 px-1 rounded text-[#FF8C02]">
-    {currentStatusDispFun(leadDetailsObj?.Status)}
-  </div>
-
-</div>
-
-
-
-                      <div className="flex mt-2  flex-row">
- 
-  <div className="flex items-center gap-2">
-    <img src="/phone.svg" className="w-4 h-4" alt="Phone Icon" />
-    <span className='font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]'>{Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}</span>
-  </div>
-
-
-
-  <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
-
-
-
-
-
-  <div className="flex items-center gap-2">
-    <img src="/mail.svg" className="w-4 h-4" alt="Mail Icon" />
-    <span className='font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]'>{Email}</span>
-  </div>
-</div>
-
-
-
-                    </div>
-
-
-
-
-                     {/* <div className="flex flex-col ml-[6px]">
-      <div className="flex flex-row">
-        <span className="text-[16px] uppercase">{Name}</span>
-        <PencilIcon
-          className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer"
-          onClick={() => setisImportLeadsOpen(true)}
-        />
-        <div className="text-sm ml-[4px] px-[3px] pt-[1px] rounded text-[#FF8C02]">
-          {leadDetailsObj?.Status}
+              <div className="flex items-center gap-2">
+                <img src="/mail.svg" className="w-4 h-4" alt="Mail Icon" />
+                <span className='font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]'>{Email}</span>
+              </div>
+            </div>
+            
+          </div>
         </div>
       </div>
-
-      <div className="flex flex-row">
-        <div className="font-md text-sm text-gray-500 tracking-wide">
-          <DeviceMobileIcon className="w-3 h-3 inline text-[#058527]" />{" "}
-          <span className="mr-[2px] text-[12px]">
-            {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")}
-          </span>
-        </div>
-        <div className="font-md text-sm text-gray-500 ml-[6px] tracking-wide">
-          <MailIcon className="w-3 h-3 inline text-[#058527]" /> {Email}
-        </div>
-      </div>
-
-
-      <button
-        onClick={sendNotification}
-        className="mt-2 flex items-center px-3 py-1 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition"
-      >
-        <PhoneIcon className="w-4 h-4 mr-2" /> Call
-      </button>
-    </div> */}
-{/*
-<div className="flex flex-col ml-[6px]">
-  <div className="flex flex-row">
-    <span className="text-[16px] uppercase">{Name}</span>
-    <PencilIcon
-      className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer"
-      onClick={() => setisImportLeadsOpen(true)}
-    />
-    <div className="text-sm ml-[4px] px-[3px] pt-[1px] rounded text-[#FF8C02]">
-      {leadDetailsObj?.Status}
     </div>
   </div>
-
-  <div className="flex flex-row">
-    <div className="font-md text-sm text-gray-500 tracking-wide">
-      <DeviceMobileIcon className="w-3 h-3 inline text-[#058527]" />{" "}
-      <span className="mr-[2px] text-[12px]">
-        {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")}
-      </span>
-    </div>
-    <div className="font-md text-sm text-gray-500 ml-[6px] tracking-wide">
-      <MailIcon className="w-3 h-3 inline text-[#058527]" /> {Email}
-    </div>
-  </div>
-
-  <button
-    onClick={sendNotification}
-    className="mt-2 flex items-center px-3 py-1 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition"
-  >
-    <PhoneIcon className="w-4 h-4 mr-2" />
-    {isSending ? 'Sending...' : 'Call via App'}
-  </button>
-</div> */}
-
-
-
-
-
-                  </div>
+  
+  <div className="mt-3">
+    <div className="ml-2">
+      <div className="flex flex-row p-4 py-2">
+        <section>
+          <div className="flex flex-col items-center  justify-center bg-white px-2.5 py-3 rounded-[14px] mx-auto">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center cursor-pointer">
+                <div 
+                  className="bg-purple-100 p-2 rounded-lg flex items-center justify-center"
+                  onClick={() => {
+                    console.log('Call button clicked for lead:', Name, Mobile);
+                    handleCallButtonClick(assignedTo, Name, Mobile);
+                  }}
+                >
+                  <img 
+                    src="/call.svg" 
+                    alt="Call Icon" 
+                    className="w-[18px] h-[18px] min-w-[18px]"
+                  />
                 </div>
               </div>
-            </div>
-            <div className='mt-3'>
 
-            <div className=" ml-2 ">
-              <div className="flex flex-row  p-4 py-2 ">
-                {/* <section>
-                  <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
-                    Assigned To box {}
-                  </div>
-                  {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                    <div>
-                      <AssigedToDropComp
-                        assignerName={assignerName}
-                        id={id}
-                        setAssigner={setAssigner}
-                        usersList={usersList}
-                        align={undefined}
-                        classNames={{
-                          container: 'text-left',
-                          button: 'bg-[#f4f4f4] text-black border border-gray-300',
-                          item: 'hover:bg-blue-100',
-                          chevron: 'text-blue-600',
-                          menuItems: 'shadow-xl',
-                        }}
-
-
-                      />
-                    </div>
-                  )}
-                  {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                    <span className="text-left text-sm"> {assignerName}</span>
-                  )}
-                </section> */}
-                {/* <section>
-  <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
-    <label htmlFor="assignedTo" className="block text-[12px]  text-gray-700">
-      Assigned To
-    </label>
-  </div>
-  {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                      <div className="font-semibold text-sm text-slate-900 tracking-wide overflow-ellipsis">
-
-      <AssigedToDropComp
-        assignerName={assignerName}
-        id={id}
-        setAssigner={setAssigner}
-        usersList={usersList}
-        align={undefined}
-
-
-      />
-    </div>
-  )}
-  {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-    <span className="text-left text-sm"> {assignerName}</span>
-  )}
-</section> */}
-
-                <section className=" ml-2">
-                  <div className="flex flex-row ">
-                    {/* <div className="font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4">
-                      Project {}
-                    </div> */}
-                        <label htmlFor="assignedTo" className="block text-[12px] text-gray-700">
-                        Project
-    </label>
-                  </div>
-                  <div className="font-semibold text-sm text-slate-900 tracking-wide overflow-ellipsis">
-
-                    <AssigedToDropComp
-                      assignerName={selProjectIs?.projectName || Project}
-                      id={id}
-                      align="right"
-                      setAssigner={setNewProject}
-                      usersList={projectList}
-
-                    />
-                  </div>
-                </section>
-                <section>
-                  <div>
-                    <div className="text-center items-center  mt-[1px]">
-                      <div
-                        className="text-center border border-[#7BD2EA] text-[#5198ab]  rounded-[8px] px-2 py-2 ml-1 items-center align-middle text-xs cursor-pointe"
-                        onClickCapture={() => {
-                          setUnitsViewMode(!unitsViewMode)
-                        }}
-                      >
-                        {selProjectIs?.uid?.length > 4 &&
-                          (unitsViewMode ? (
-
-                            <span className="   text-black  text-[10px] text-[#] font-semibold whitespace-nowrap">
-                              {' '}
-                              Show Lead
-                            </span>
-                          ) : (
-
-                            <span className="   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
-                              {' '}
-                              Show Units
-                            </span>
-                          ))}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-
-                <section>
-                <div className="flex flex-col items-center justify-center bg-white p-2 rounded-lg   mx-auto">
-      <div className="flex items-center gap-2">
-
-      <div className="flex items-center">
-      <div className="bg-purple-100 p-1.5 rounded-lg "
-      
-      onClick={() => {
-        console.log('Call button clicked for lead:', Name, Mobile);
-        handleCallButtonClick(assignedTo, Name, Mobile);
-      }}
-      
-      >
-        <img src="/call.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
-      </div>
-    </div>
-
-    <div>
-    <h2 className="text-[14px] font-semibold text-gray-800">Negotiation</h2>
-
-<p className="text-[12px] text-gray-600"
->
-  Starts in 3min
-</p>
-    </div>
-
-      </div>
- 
-    </div>
-                </section>
-
+              <div >
+                <h2 className="font-semibold text-[14px] leading-[100%] tracking-[6%] mb-1 text-[#696990]">Negotiation</h2>
+                <p className="font-normal text-[12px] leading-[100%]  cursor-pointer text-[#960000] decoration-solid">
+                  Starts in 3min
+                </p>
               </div>
             </div>
-
-            </div>
-
           </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
 
           {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-3" /> */}
 
 
 
-          <div className="flex flex-row justify-between">
+          {/* <div className="flex flex-row justify-between">
             <div className=" py-0 flex flex-row  text-xs font-thin  text-[12px]  py-[6px] px-2 ">
               Recent Comments:{' '}
               <span className="text-[#867777] ml-1 ">
@@ -2013,15 +1830,17 @@ async function handleCallButtonClick(uid, name, number) {
                 </section>
               </div>
             </>
-          )}
+          )} */}
+
+
         </div>
 
 
 
 
           {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 py-[1px]" /> */}
-<div className='mt-[1px]  bg-[#FFFFFF] mx-2 rounded-lg '>
-  <div className="flex flex-row justify-between pb-3 pt-5 mb-0   bg-white relative rounded-lg">
+<div className='mt-[1px]   '>
+  <div className="flex flex-row justify-between pb-3 pt-5 mb-0   relative rounded-lg">
     {StatusListA.map((statusFlowObj, i) => (
       <div key={i} className="flex-1 flex flex-col items-center relative">
         <div
@@ -2042,12 +1861,12 @@ async function handleCallButtonClick(uid, name, number) {
             setHover(false);
           }}
           style={{
-            ...(hover && hoverId === i ? { boxShadow: '0 0 0 3px rgba(44, 164, 218, 0.2)' } : {}),
+            ...(hover && hoverId === i ? { boxShadow: '' } : {}),
             cursor: 'pointer',
           }}
         >
           {streamCoveredA.includes(statusFlowObj.value) ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-[#0E0A1F] " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white " fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           ) : statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus ? (
@@ -2067,7 +1886,7 @@ async function handleCallButtonClick(uid, name, number) {
           <div
             className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${
               streamCoveredA.includes(StatusListA[i + 1].value)
-                ? 'bg-[#0E0A1F]'
+                ? 'bg-[#5B5FC7]'
                 : 'bg-gray-300'
             }`}
             style={{ transform: 'translateY(-50%)' }}
@@ -2143,7 +1962,7 @@ async function handleCallButtonClick(uid, name, number) {
         )}
         {!unitsViewMode && (
           <>
-            <section className=" pb-8 pt-1 px-2   rounded-xs  bg-white mt-1 mx-2 rounded-lg">
+            <section className=" pb-8 px-5 py-2  rounded-xs  bg-white">
               <div className="">
                 <div className="">
 
@@ -2189,15 +2008,15 @@ async function handleCallButtonClick(uid, name, number) {
                     </ul>
                     {selFeature != 'lead_strength' && (
                       <span
-                        className="rounded-[8px] px-[10px] py-[11px] gap-[8px] border text-[#000000] font-outfit font-normal text-[14px] leading-[100%] tracking-[0%] cursor-pointer"
+                        className=" px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] text-[#5B5FC7] cursor-pointer"
                         onClick={() => setFeature('lead_strength')}
                       >
-                        Lead Strength
-                      </span>
+                        Lead requirement                 
+                             </span>
                     )}
                     {selFeature == 'lead_strength' && (
                       <span
-                        className="rounded-[8px] px-[10px] py-[11px] gap-[8px] border text-[#000000] font-outfit font-normal text-[14px] leading-[100%] tracking-[0%] cursor-pointer"
+                        className="px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] text-[#5B5FC7] cursor-pointer"
                         onClick={() => setFeature('appointments')}
                       >
                         Close
@@ -3214,57 +3033,100 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
-        <div className='grid grid-cols-1 lg:grid-cols-1 gap-4 p-4'>
+        <div className='grid grid-cols-1 lg:grid-cols-1 gap-4 '>
 
 
-            <div>
-            <div className=" bg-[#F9F9FB] rounded-lg p-6 ">
-      <div className="flex items-center mb-4">
-      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
-        <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
+            <div className=" bg-[#F9F9FB] rounded-[16px] p-4  border border-[#E7E7E9] flex flex-col gap-3"
+            
 
-      </div>
+            // style={{
+            //   transition: 'transform 200ms ease-in-out',
+            //   cursor: 'pointer'
+            // }}
+            // onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.01)'}
+            // onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            
+            >
 
-        <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">UPCOMING TASK</span>
-      </div>
-      
-      <h2 className="font-medium text-[16px]  text-[#0E0A1F] font-outfit">Get into Introduction Call with customer</h2>
-      
-      <div className="flex flex-wrap text-gray-600 mt-2 mb-4">
-        <div className="flex items-center mr-6 mb-2">
-          <span className='font-normal text-[14px] text-[#606062] font-outfit'>
-          {CT != undefined
-                        ? prettyDateTime(CT)
-                        : prettyDateTime(Date)}
-          </span>
-          <span className="mx-3 text-gray-300">|</span>
-        </div>
-        
-        <div className="flex items-center mr-6 mb-2">
-          <span className='font-normal text-[14px]  text-[#606062] font-outfit'>Assigned to: <span className="font-normal text-[14px] text-[#606062] font-outfit">vishal@gmail.com</span></span>
-          <span className="mx-3 text-gray-300">|</span>
-        </div>
-        
-        <div className="flex items-center mb-2">
-          <span className='font-normal text-[14px]  text-[#606062] font-outfit'>Created by: Vishal Kumar</span>
+              <div>
+
+              <div className="flex items-center justify-between">
+        <h2 className="font-[Outfit] font-medium text-[16px] leading-[100%] tracking-[0%] text-[#0E0A1F]">Get into Introduction Call with customer</h2>
+        <div className="bg-white border border-red-700 text-red-700 rounded-full px-3 py-1 flex items-center gap-1">
+          <Phone size={14} />
+          <span className="font-medium text-[12px] leading-[100%] tracking-[0%]">Starts in 3min</span>
         </div>
       </div>
       
-      <div className="flex items-start">
-        <div className="text-gray-400 mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-1.008c-.417.18-.875.327-1.356.43A.75.75 0 013.75 16.5v-2.87c0-.642.225-1.255.635-1.725A6.922 6.922 0 003 10c0-3.866 3.582-7 8-7s8 3.134 8 7z" clipRule="evenodd" />
-          </svg>
+      <div className="flex items-center gap-2">
+        <div className="text-gray-500">
+  
+          <img src="/comment.svg" alt="" className='w-5 h-5' />
         </div>
-        <div className="font-normal text-[14px]  text-[#606062] font-outfit">
-          <span className="font-medium">Recent Comments:</span>{' '} {leadDetailsObj?.Remarks || 'NA'}
+        <div className="flex items-center gap-2">
+          <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#0E0A1F]">Recent Comments:</span>
+          <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">{' '} {leadDetailsObj?.Remarks || 'NA'}</span>
+          <span className="font-[Outfit] font-normal text-[10px] leading-[100%] tracking-[0%] text-[#606062] ml-2">27 Mar 2025, 11:30 am</span>
         </div>
       </div>
+
+              </div>
+
     </div>
-            </div>
 
 
+
+ 
+
+    <div className="flex flex-col md:flex-row rounded-[16px]  bg-[#F9F9FB] overflow-visible border border-[#E7E7E9]">
+  {/* Section 1 - Project Dropdown */}
+  <div className="relative flex-1 p-3  border-b md:border-b-0 flex flex-col justify-center items-center text-center z-[20]">
+    <span className="hidden md:block absolute top-2 bottom-2 right-0 w-px bg-gray-200" />
+    <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Project</p>
+    <div className="font-[Outfit] font-semibold text-[14px] text-[#0E0A1F] tracking-wide overflow-visible relative">
+      <AssigedToDropComp
+        assignerName={selProjectIs?.projectName || Project}
+        id={id}
+        align="right"
+        setAssigner={setNewProject}
+        usersList={projectList}
+        className="z-[999]" 
+      />
+    </div>
+  </div>
+
+  {/* Section 2 - Assigned To (Dynamically integrated) */}
+  <div className="relative flex-1 p-3  border-b md:border-b-0 flex flex-col justify-center items-center text-center">
+    <span className="hidden md:block absolute top-2 bottom-2 right-0 w-px bg-gray-200" />
+    <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Assigned to</p>
+    {!user?.role?.includes(USER_ROLES.CP_AGENT) ? (
+      <div className="font-[Outfit] font-semibold text-[14px] text-[#0E0A1F] tracking-wide overflow-ellipsis">
+        <AssigedToDropComp
+          assignerName={assignerName}
+          id={id}
+          setAssigner={setAssigner}
+          usersList={usersList}
+          align={undefined}
+        />
+      </div>
+    ) : (
+      <span className="text-[14px] text-[#0E0A1F] font-[Outfit]">{assignerName}</span>
+    )}
+  </div>
+
+  {/* Section 3 - Lead Created */}
+  <div className="relative flex-1 p-3  border-b md:border-b-0 flex flex-col justify-center items-center text-center">
+    <span className="hidden md:block absolute top-2 bottom-2 right-0 w-px bg-gray-200" />
+    <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Lead Created</p>
+    <p className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#0E0A1F]">27 Mar 2025, 11:30 am</p>
+  </div>
+
+  {/* Section 4 - Source */}
+  <div className="flex-1 p-3 flex flex-col justify-center items-center text-center">
+    <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Source</p>
+    <p className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#0E0A1F]">{Source?.toString() || 'NA'}</p>
+  </div>
+</div>
 
 
 
@@ -3281,11 +3143,219 @@ async function handleCallButtonClick(uid, name, number) {
 {/* Left Column */}
 <div className="space-y-4">
 
-      {/* Lead Strength Card */}
-      <div className="bg-[#F9F9FB] p-3 rounded-lg shadow-sm">
-    <div className="flex items-center mb-2">
+
+
+
+
+
+
+<div className=" rounded-[16px] p-4  bg-[#F9F9FB]  border border-[#E7E7E9]  max-w-lg">
+      <div className="flex items-center mb-8">
       <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
         {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+        <img src="/fire.svg" alt="" className='w-[18px] h-[18px]' />
+
+      </div>
+     
+        <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">LEAD STRENGTH</span>
+      </div>
+      
+
+      {/* <div className="relative h-3 bg-gray-100 rounded-full mb-6">
+        <div 
+          className="absolute top-0 left-0 h-full bg-indigo-500 rounded-full"
+          style={{ width: '50%' }}
+        >
+        </div>
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+          <span className="text-xs font-medium text-white z-10">50%</span>
+        </div>
+      </div> */}
+
+
+
+<div className="mb-6">
+    {/* <Slider
+      onChange={(e) => setopstr(e.target.value)} // Use the same handler to set value
+      value={opstr}
+      defaultValue={opstr}
+      aria-label="Lead Strength Slider"
+      valueLabelDisplay="auto"
+      min={0}
+      max={100}
+    /> */}
+
+
+
+<Box sx={{ position: 'relative', width: '100%' }}>
+      <Slider
+        value={opstr}
+        min={0}
+        max={100}
+        onChange={(e) => setopstr(e.target.value)}
+        aria-label="Lead Strength Slider"
+        sx={{
+          height: 20,
+          paddingRight: 0,
+          '& .MuiSlider-track': {
+            // backgroundColor: '#5a5acc',
+            // height: 20,
+            // borderRadius: 10,
+            backgroundColor: '#5a5acc',
+            height: 20,
+            borderRadius: 10,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#fff', // optional, for visibility
+            fontSize: 12,  // optional
+          },
+          '& .MuiSlider-rail': {
+            backgroundColor: '#cfd0ff',
+            height: 20,
+            borderRadius: 10,
+          },
+          // '& .MuiSlider-thumb': {
+          //   display: 'none', // Hide the thumb
+          // },
+          '& .MuiSlider-thumb': {
+            width: 24,
+            height: 24,
+            backgroundColor: '#5B5FC7',
+            // border: '2px solid #5a5acc',
+            
+            '&:hover, &.Mui-focusVisible': {
+              boxShadow: '0px 0px 0px 8px rgba(90, 90, 204, 0.16)',
+            },
+          },
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: `${opstr}%`,
+          transform: 'translateX(-100%)',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          pr: 1,
+        }}
+      >
+        <Typography
+          variant="caption"
+          sx={{ color: '#fff', fontWeight: 'bold', fontSize: '0.75rem' }}
+        >
+          {opstr}%
+        </Typography>
+      </Box>
+    </Box>
+
+  </div>
+
+
+
+{/* 
+
+<div className="mb-6 relative">
+  <Slider
+    onChange={(e) => setopstr(e.target.value)} 
+    value={opstr}
+    defaultValue={opstr}
+    aria-label="Lead Strength Slider"
+    valueLabelDisplay="auto"
+    min={20}
+    max={100}
+    sx={{
+      height: '14px', 
+      '& .MuiSlider-rail': {
+        backgroundColor: '#e0e0e0',
+      },
+      '& .MuiSlider-track': {
+        backgroundColor: '#3f51b5',
+      },
+      '& .MuiSlider-thumb': {
+        width: 20,  
+        height: 20,
+        backgroundColor: '#3f51b5', 
+      }
+    }}
+  />
+
+  <div
+    className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
+    style={{
+      width: `${opstr}%`, 
+    }}
+  >
+    <span className="text-xs font-medium text-white">{`${opstr}%`}</span>
+  </div>
+
+
+  <div className="flex justify-between mt-2">
+    <span className="text-xs font-medium text-[#606062]">0%</span>
+    <span className="text-xs font-medium text-[#606062]">100%</span>
+  </div>
+</div> */}
+
+
+
+      
+  
+      <div className="flex justify-between items-center mb-6">
+        <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">Requirement : 10/12</div>
+        <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">Updated : 27 Mar, 4:30 pm</div>
+      </div>
+      
+  
+      <div className="flex flex-wrap gap-3">
+
+        <div className="bg-white rounded-[4px] border border-[#E7E7E9]  px-2 py-1 flex items-center">
+          {/* <Clock className="w-5 h-5 mr-2 text-gray-600" /> */}
+          <img src="/costR.svg" alt="" className='w-5 h-5' />
+          <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Shuba Ecosone Ph 2</span>
+        </div>
+        
+  
+        <div className="bg-white rounded-[4px] border border-[#E7E7E9] px-2 py-1 flex items-center">
+        <img src="/costR.svg" alt="" className='w-5 h-5' />
+          <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Min: 2.12cr</span>
+        </div>
+        
+       
+        <div className="bg-white rounded-[4px] border border-[#E7E7E9] px-2 py-1 flex items-center">
+        <img src="/costR.svg" alt="" className='w-5 h-5' />
+          <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Max: 5.12cr</span>
+        </div>
+        
+ 
+
+{[1, 2, 3, 4, 5].map((index) => (
+  <div 
+    key={index} 
+    className="bg-white border border-[#E7E7E9] rounded-[4px] px-2 py-1 flex items-center h-[28px]"
+  >
+    <img src="/costR.svg" alt="" className='w-5 h-5 mr-1' />
+    <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Call</span>
+  </div>
+))}
+        
+        {/* Add button */}
+        <div className="border border-indigo-500 rounded-md p-1 flex items-center justify-center">
+          <Plus className="w-5 h-5 text-[#5B5FC7]" />
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+      {/* Lead Strength Card */}
+      {/* <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-3 rounded-[16px]">
+    <div className="flex items-center mb-2">
+      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+        <Clock className="text-purple-500 w-5 h-5" />
         <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
 
       </div>
@@ -3297,66 +3367,110 @@ async function handleCallButtonClick(uid, name, number) {
         <p className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Total Questions: 2/3</p>
         <p className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">Last Updated: 27 Mar, 4:30 pm</p>
       </div>
-      {/* <div className="relative w-20 h-20">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl font-bold">50%</span>
-        </div>
-        <svg className="w-full h-full transform -rotate-90">
-          <circle
-            cx="40"
-            cy="40"
-            r="36"
-            fill="none"
-            stroke="#e6e6f0"
-            strokeWidth="8"
-          />
-          <circle
-            cx="40"
-            cy="40"
-            r="36"
-            fill="none"
-            stroke="#6366f1"
-            strokeWidth="8"
-            strokeDasharray="226"
-            strokeDashoffset="113"
-          />
-        </svg>
-      </div> */}
+
 
       <div>
           <SemicircleProgressChart progress={0}/>
       </div>
     </div>
-  </div>
+  </div> */}
 
 
-  {/* Site Visit Section */}
-  <div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
-    <div className="flex items-center mb-4">
+
+  <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-3 rounded-[16px]">
+
+
+
+<div className='flex justify-between'>
+
+
+<div className="flex flex-col ">
+
+<div className="flex items-center mb-4">
       <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-        {/* <Clock className="text-purple-600" size={20} /> */}
-        <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
+
+        <img src="/location.svg" alt="" className='w-[18px] h-[18px]' />
 
       </div>
       <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">SITE VISIT ({projectData.siteVisit.count})</span>
     </div>
     
-    <div className="flex justify-between items-center">
-      <div className='flex gap-2 flex-col'>
-        <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">Visit Date: {projectData.siteVisit.date}</div>
-        <div className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">Site In-charge: {projectData.siteVisit.inCharge}</div>
-      </div>
-      <button className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F]">Review emoji</button>
+  <div>
+    <p className="font-normal text-[14px] text-[#606062]">Visit Date: {projectData.siteVisit.date}</p>
+    <p className="font-normal text-[14px] text-[#606062]">Site In-charge: {projectData.siteVisit.inCharge}</p>
+  </div>
+
+
+</div>
+
+
+
+<div className="flex flex-col items-center font-semibold text-[14px] text-[#0E0A1F]">
+    <img src="/good.svg" alt="icon" className="mb-1 w-16 h-16" />
+    Good
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+{/* 
+  <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px]">
+  <div className="flex items-center mb-4">
+    <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+      <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
     </div>
+    <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">SITE VISIT (4)</span>
   </div>
 
 
 
-{/* Task Logs Section */}
-<div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
+
+  <div className="grid grid-cols-2 items-center gap-4">
+  <div className="flex gap-2 flex-col">
+    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
+      Visit Date: {projectData.siteVisit.date}
+    </div>
+    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
+      Site In-charge: {projectData.siteVisit.inCharge}
+    </div>
+  </div>
+
+  <div className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F] flex flex-col items-center">
+    <img src="/good.svg" alt="icon" className="mb-1 w-16 h-16" />
+    Good
+  </div>
+</div>
+
+  
+
+</div> */}
+
+
+
+
+
+
+
+
+
+
+
+<div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px] cursor-pointer">
   <div className="flex items-center mb-4">
     <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-      <img src="/quill_clock.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
+      <img src="/target-sale.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
     </div>
     <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
       TASK LOGS
@@ -3416,8 +3530,99 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
+<div className=" rounded-[16px] p-4  bg-[#F9F9FB]  border border-[#E7E7E9]  max-w-lg">
+      <div className="flex items-center mb-4">
+        {/* <div className="bg-purple-50 p-3 rounded-full mr-3">
+          <Clock className="text-purple-600 w-5 h-5" />
+        </div> */}
+            <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+      <img src="/folder-library.svg" alt="" className='w-[18px] h-[18px]' />
+    </div>
+        <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">PROJECT</span>
+      </div>
+      
+      <div className="mb-4">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="font-medium text-base leading-tight tracking-normal text-[#404040]">Shuba Ecosone Ph 2</h2>
+          <a href="#" className="font-medium text-xs leading-tight tracking-normal text-[#7746E0] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto">View Units (24/100)</a>
+        </div>
+        
+        <div className="flex flex-wrap gap-2">
+          <div className="border bg-white rounded-lg py-1 px-2 flex items-center">
+            <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F]">Planning Approval</span>
+            <div className="">
+              {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg> */}
+              <img src="/yes1.svg" alt="" className='w-5 h-5' />
+            </div>
+          </div>
+          
+          <div className="border bg-white rounded-lg py-1 px-2 flex items-center">
+            <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F]">Rera Approval</span>
+            <div className=" ">
+              {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg> */}
+            <img src="/yes1.svg" alt="" className='w-5 h-5' />
+
+            </div>
+          </div>
+          
+          <div className="border bg-white rounded-lg py-1 px-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F] flex items-center justify-center">
+  +21 Amenities
+</div>
+
+        </div>
+      </div>
+      
+      {isExpanded && (
+        <div className="mt-4 pt-4 border-t">
+          <h3 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-2">Additional Information</h3>
+          <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+            This is the second phase of the Shuba Ecosone development featuring eco-friendly design, 
+            sustainable materials, and energy-efficient construction. The project includes studio, 
+            1 BHK, and 2 BHK apartments with modern amenities.
+          </p>
+          <div className="mt-3">
+            <h4 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-1">Key Features:</h4>
+            <ul className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+              <li>Solar-powered common areas</li>
+              <li>Rainwater harvesting</li>
+              <li>Organic waste composting</li>
+              <li>EV charging stations</li>
+            </ul>
+          </div>
+        </div>
+      )}
+      
+      <button 
+        onClick={toggleExpand} 
+        className="mt-4 font-medium text-xs leading-tight tracking-normal text-[#7746E0] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto flex items-center"
+      >
+        View {isExpanded ? 'less' : 'more'}
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="20" 
+          height="20" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+          className={`ml-1 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+    </div>
+
+
+
+
       {/* Projects Card */}
-      <div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
+      <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px] ">
     {!isProjectsExpanded && (
       <div>
         <div className="flex items-center mb-4">
@@ -3457,7 +3662,7 @@ async function handleCallButtonClick(uid, name, number) {
     {isProjectsExpanded && (
       <div>
         <div className="flex items-center mb-4">
-          <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+          <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-1.5 rounded-[16px] mr-3">
             {/* <Clock className="text-purple-600" size={20} /> */}
             <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
 
@@ -3495,7 +3700,7 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
-  <div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
+  <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px] ">
   <div className="flex items-center mb-4">
     <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
       <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
@@ -3576,11 +3781,11 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 {/* Call Activity Card */}
-<div className="bg-[#F9F9FB] p-4 rounded-lg shadow-sm">
+<div className="border border-[#E7E7E9] bg-[#F9F9FB] cursor-pointer p-4 rounded-[16px] ">
   <div className="flex items-center justify-between mb-6">
     <div className="flex items-center">
       <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
-        <img src="/quill_clock.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
+        <img src="/call.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
       </div>
       <h2 className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">CALL ACTIVITY</h2>
     </div>
@@ -3624,6 +3829,75 @@ async function handleCallButtonClick(uid, name, number) {
   </div>
 </div>
 
+
+
+
+
+<div className="border border-[#E7E7E9] bg-[#F9F9FB] cursor-pointer p-4 rounded-[16px] ">
+  <div className="flex items-center justify-between mb-6">
+    <div className="flex items-center">
+      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+        <img src="/quill_clock.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
+      </div>
+      <h2 className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+        Dates
+      </h2>
+    </div>
+    <img src="/arrowright.svg" alt="Arrow Icon" className="w-5 h-5" />
+  </div>
+
+  <div className="space-y-4 px-4">
+    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
+      <div className="flex items-center">
+        <div className="mr-3">
+          <img src="/fileicon.svg" alt="Icon" className="w-5 h-5" />
+        </div>
+        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+        Created On
+        </p>
+      </div>
+      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+      {CT != undefined
+          ? prettyDateTime(CT)
+          : prettyDateTime(Date)}
+      </p>
+    </div>
+
+    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
+      <div className="flex items-center">
+        <div className="mr-3">
+          <img src="/fileicon.svg" alt="Icon" className="w-5 h-5" />
+        </div>
+        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+        Updated On :
+        </p>
+      </div>
+      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+      {stsUpT === undefined
+          ? 'NA'
+          : prettyDateTime(stsUpT) || 'NA'}
+      </p>
+    </div>
+
+    <div className="flex justify-between items-center">
+      <div className="flex items-center">
+        <div className="mr-3">
+          <img src="/fileicon.svg" alt="Icon" className="w-5 h-5" />
+        </div>
+        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+        Assigned On
+        </p>
+      </div>
+      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+      {assignT != undefined
+          ? prettyDateTime(assignT)
+          : prettyDateTime(Date)}
+      </p>
+    </div>
+  </div>
+</div>
+
+
 </div>
 </div>
 
@@ -3632,31 +3906,6 @@ async function handleCallButtonClick(uid, name, number) {
 
 
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
