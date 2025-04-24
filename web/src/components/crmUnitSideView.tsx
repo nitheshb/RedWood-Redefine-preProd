@@ -497,7 +497,7 @@ export default function CrmUnitSideView({
       <div className="flex flex-row justify-between">
         <div className="p-3">
           <span className="text-md flex mt-1 font-semibold text-xl mr-auto ml-1 text-[#053219] tracking-wide">
-            Unit Summary box
+            Unit Summary
           </span>
 
           {/* <XIcon className="w-5 h-5 mt-[2px]" /> */}

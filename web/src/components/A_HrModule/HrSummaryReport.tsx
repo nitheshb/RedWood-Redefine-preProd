@@ -135,7 +135,7 @@ const HrSummaryReport = () => {
           <div className="flex flex-col gap-4">
             <div className="flex flex-row flex-wrap">
               <div className="bg-[#fff] rounded-lg shadow-xl  ">
-                {/* Block 1 */}
+              
                 <div className="flex flex-col h-full">
                   <div className="card-block1 flex justify-between mb-8">
                     <div className="flex-1 mr-4  p-4">
@@ -163,7 +163,7 @@ const HrSummaryReport = () => {
                     </div>
                   </div>
 
-                  {/*  card-block2 */}
+               
                   <div className=" flex flex-wrap">
                     {avgGrowingData.map((data, index) => (
                       <div

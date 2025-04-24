@@ -522,8 +522,10 @@ console.log('recent milestone obj is ', upcomingMileStoneObj, selCustomerPayload
               <p className="text-[#960000] text-[12px] font-medium">{recentActivityObj?.subtype}</p>
 
             </div>
-            <section className='flex flex-row'>
+            <section className='flex flex-row items-center'>
               <p className="text-gray-500 text-[12px]">{prettyDateTime(recentActivityObj?.T) || 'NA'}</p>
+              <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+
               <p className="text-gray-500 text-[12px]">
                 {recentActivityObj?.by || 'NA'}
               </p>

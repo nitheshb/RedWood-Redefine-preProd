@@ -165,11 +165,11 @@ const LeadsDisplayTable = ({
 
 <div className="flex items-center">
   <a
-    className={` border-b-2 focus:outline-none ${searchKey.includes('all') ? '' : 'border-transparent text-gray-600'}`}
+    className={` border-b-2 focus:outline-none ${searchKey.includes('all') ? ' border-b-2 border-[#0E0A1F] ' : 'border-transparent text-gray-600'}`}
     onClick={() => setSearchKey(['all'])}
   >
     <div
-      className={` px-2  hover:text-indigo-700  ${searchKey.includes('all') ? '' : ''}`}
+      className={` px-2 mb-1  hover:text-[#0E0A1F]  ${searchKey.includes('all') ? '' : ''}`}
     >
       All
     </div>
@@ -180,12 +180,12 @@ const LeadsDisplayTable = ({
 
 
   <a
-    className={` border-b-2 focus:outline-none   ${searchKey.includes('unassigned') && searchKey.length === 1 ? '' : 'border-transparent text-gray-600'}`}
+    className={` border-b-2 focus:outline-none   ${searchKey.includes('unassigned') && searchKey.length === 1 ? 'border-b-2 border-[#0E0A1F]' : 'border-transparent text-gray-600'}`}
     href="javascript:void(0)"
     onClick={() => setSearchKey(['unassigned'])}
   >
     <div
-      className={` px-2  hover:text-indigo-700   ${searchKey.includes('unassigned') && searchKey.length === 1 ? '' : ''}`}
+      className={` px-4 mb-1  hover:text-[#0E0A1F]   ${searchKey.includes('unassigned') && searchKey.length === 1 ? '' : ''}`}
     >
       <p>Unassigned</p>
     </div>
@@ -196,12 +196,12 @@ const LeadsDisplayTable = ({
 
 
   <a
-    className={` border-b-2 focus:outline-none   ${searchKey.includes('DUPLICATE_ENTRY') && searchKey.length === 1 ? '' : 'border-transparent text-gray-600'}`}
+    className={` border-b-2 focus:outline-none   ${searchKey.includes('DUPLICATE_ENTRY') && searchKey.length === 1 ? 'border-b-2 border-[#0E0A1F]' : 'border-transparent text-gray-600'}`}
     href="javascript:void(0)"
     onClick={() => setSearchKey(['DUPLICATE_ENTRY'])}
   >
     <div
-      className={` px-2  hover:text-indigo-700 ${searchKey.includes('DUPLICATE_ENTRY') && searchKey.length === 1 ? '' : ''}`}
+      className={` px-2 mb-1  hover:text-[#0E0A1F] ${searchKey.includes('DUPLICATE_ENTRY') && searchKey.length === 1 ? '' : ''}`}
     >
       <p>Bin</p>
     </div>

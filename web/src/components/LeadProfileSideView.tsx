@@ -18,7 +18,7 @@ import {
 } from '@heroicons/react/solid'
 import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
-import { Slider } from '@mui/material'
+import { Box, Slider, Typography } from '@mui/material'
 import { setHours, setMinutes } from 'date-fns'
 import { addDoc, collection, doc, getDoc, Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
@@ -87,6 +87,9 @@ import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import SiderForm from './SiderForm/SiderForm'
 import Stepper from './A_SalesModule/stepper'
 import RoundedProgressBar from './A_SalesModule/Reports/charts/horizontalProgressBar'
+import ProjectManagement from './A_SalesModule/ProjectManagement'
+import { ChevronDown, ChevronRight, ChevronUp, Clock, IndianRupee, MessageSquare, Phone, Plus, PlusCircle } from 'lucide-react'
+import SemicircleProgressChart from './A_SalesModule/Reports/charts/SemiCircleProgress'
 
 // interface iToastInfo {
 //   open: boolean
@@ -1486,6 +1489,9 @@ async function handleCallButtonClick(uid, name, number) {
       return;
     }
 
+    console.log("FCM Token:", fcmToken);
+
+
     await addDoc(collection(db, "calls"), {
       name,
       number,
@@ -1500,258 +1506,228 @@ async function handleCallButtonClick(uid, name, number) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const [isProjectsExpanded, setIsProjectsExpanded] = useState(false);
+  const [isAssignedExpanded, setIsAssignedExpanded] = useState(false);
+  
+
+  const projectData = {
+    projects: [
+      {
+        name: "Shuba Ecoston Ph 2",
+        date: "Apr 22, 2025"
+      },
+      {
+        name: "Shuba Ecoston Ph 2",
+        date: "Apr 22, 2025"
+      },
+      {
+        name: "Shuba Ecoston Ph 2",
+        date: "Apr 22, 2025"
+      },
+      {
+        name: "Shuba Ecoston Ph 2",
+        date: "Apr 22, 2025"
+      },
+      {
+        name: "Shuba Ecoston Ph 2",
+        date: "Apr 22, 2025"
+      }
+    ],
+    assignedTo: [
+      {
+        name: "Vishal Kumar",
+        date: "Apr 22, 2025",
+        isActive: true
+      },
+      {
+        name: "Priya Sharma",
+        date: "Apr 21, 2025",
+        isActive: false
+      },
+      {
+        name: "Rajiv Mehta",
+        date: "Apr 20, 2025",
+        isActive: false
+      },
+      {
+        name: "Deepak Gupta",
+        date: "Apr 18, 2025",
+        isActive: false
+      }
+    ],
+    siteVisit: {
+      date: "27 Mar 2025",
+      inCharge: "Chaithanya",
+      count: 4
+    },
+    taskLogs: {
+      priceQuotations: 1,
+      completedTasks: 12,
+      totalComments: 10
+    }
+  };
+
+  const toggleProjectsExpand = () => {
+    setIsProjectsExpanded(!isProjectsExpanded);
+  };
+
+  const toggleAssignedExpand = () => {
+    setIsAssignedExpanded(!isAssignedExpanded);
+  };
+
+
+
+
+
+
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+
+
+
+
+
+  const RupeeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+      <path d="M18 4H8a4 4 0 0 0-4 4"></path>
+      <path d="M6 12h12"></path>
+      <path d="M6 12a4 4 0 0 0 4 4h4"></path>
+      <path d="M14 20l-4-8"></path>
+    </svg>
+  );
+
+
+
+
+
+
+
+
+
   return (
     <>
     <div
-      className={`bg-[#e7f6fa]   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+      className={`   h-screen    ${openUserProfile ? 'hidden' : ''} `}
+
+      style={{ background: 'linear-gradient(to left, #EEF0F9, #E1F2F2, #DBE6F0)' }}
     >
 
-      <div className="h-screen overflow-y-auto">
-        <div className=" pb-[2px] px-3  mt-0 rounded-xs  bg-[#e7f6fa]">
-          <div className="-mx-3 flex  sm:-mx-4 px-3 flex justify-between">
-            <div className="w-full pl-1 pt-[2px] xl:w-4/12  ">
-              <div className="">
-                <div className="font-semibold text-[#053219]  text-sm  mt-3 mb-1  tracking-wide font-bodyLato">
-                  <div className="flex flex-row">
+      <div className="h-screen overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
+        <div className=" pb-[2px] px-3  mt-0 rounded-xs">
+        <div className="flex  justify-between">
+  <div className="w-full pl-1 pt-[2px]">
+    <div className="">
+      <div className="font-semibold text-[#053219] text-sm mt-3 mb-1 tracking-wide">
+        <div className="flex gap-4 flex-row">
+          <div>
+          <span className="w-12 h-12 bg-[#D3D7F8] rounded-full flex items-center justify-center font-semibold text-[#5B5FC7] uppercase text-[21px]">
+                  {Name?.[0]}
+                </span>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
+   
+                <span className="text-[16px] uppercase">{Name}</span>
+              </div>
+              <img
+                src="/edit-02.svg"
+                alt="edit"
+                className="w-5 h-5 cursor-pointer"
+                onClick={() => setisImportLeadsOpen(true)}
+              />
+              {/* <div className="text-sm ml-1 px-1 rounded text-[#FF8C02]">
+                {currentStatusDispFun(leadDetailsObj?.Status)}
+              </div> */}
+            </div>
 
-                    <div className="flex flex-col ml-[6px]">
-                      <div className=" flex flex-row">
-                        <span className="  text-[16px] uppercase">{Name}</span>
-                        <PencilIcon
-                          className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer "
-                          onClick={() => {
-                            setisImportLeadsOpen(true)
+            <div className="flex mt-2 flex-row">
+              <div className="flex items-center gap-2">
+                <img src="/phone.svg" className="w-4 h-4" alt="Phone Icon" />
+                <span className='font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]'>
+                  {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}
+                </span>
+              </div>
 
-                          }}
-                        />{' '}
-                        <div className=" text-sm  ml-[4px]  px-[3px] pt-[px] rounded  text-[#FF8C02] ">
-                          {currentStatusDispFun(leadDetailsObj?.Status)}{' '}
-                        </div>
+              <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
 
-
-
-<button
-  onClick={() => {
-    console.log('Call button clicked for lead:', Name, Mobile);
-    handleCallButtonClick(assignedTo, Name, Mobile);
-  }}
-  className=" rounded-md text-[10px]  px-2 border border-[#7bd2ea]  text-black"
-  title="Call"
->
-  Call
-</button>
-                      </div>
-                      <div className="flex mt-2 gap-2 flex-row">
-                      <div className="font-outfit font-normal text-[14px] leading-[100%] tracking-[0.06em] mb-[2px] border-0 border-r-2 border-red pr-1 ">
-  <DeviceMobileIcon className="w-3 h-3 inline text-[#0E0A1F] mb-[2px] " />{' '}
-  <span className="mr-[2px]  text-[14px] ">
-    {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}
-  </span>
-</div>
-
-
-
-                        <div className="font-outfit font-normal text-[14px] leading-[100%] tracking-[6%]">
-                          <MailIcon className="w-3 h-3 inline text-[#141B34] " />{' '}
-                          {Email}
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-                     {/* <div className="flex flex-col ml-[6px]">
-      <div className="flex flex-row">
-        <span className="text-[16px] uppercase">{Name}</span>
-        <PencilIcon
-          className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer"
-          onClick={() => setisImportLeadsOpen(true)}
-        />
-        <div className="text-sm ml-[4px] px-[3px] pt-[1px] rounded text-[#FF8C02]">
-          {leadDetailsObj?.Status}
+              <div className="flex items-center gap-2">
+                <img src="/mail.svg" className="w-4 h-4" alt="Mail Icon" />
+                <span className='font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]'>{Email}</span>
+              </div>
+            </div>
+            
+          </div>
         </div>
       </div>
-
-      <div className="flex flex-row">
-        <div className="font-md text-sm text-gray-500 tracking-wide">
-          <DeviceMobileIcon className="w-3 h-3 inline text-[#058527]" />{" "}
-          <span className="mr-[2px] text-[12px]">
-            {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")}
-          </span>
-        </div>
-        <div className="font-md text-sm text-gray-500 ml-[6px] tracking-wide">
-          <MailIcon className="w-3 h-3 inline text-[#058527]" /> {Email}
-        </div>
-      </div>
-
-
-      <button
-        onClick={sendNotification}
-        className="mt-2 flex items-center px-3 py-1 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition"
-      >
-        <PhoneIcon className="w-4 h-4 mr-2" /> Call
-      </button>
-    </div> */}
-{/*
-<div className="flex flex-col ml-[6px]">
-  <div className="flex flex-row">
-    <span className="text-[16px] uppercase">{Name}</span>
-    <PencilIcon
-      className="w-3 h-3 ml-2 mt-1 inline text-[#058527] cursor-pointer"
-      onClick={() => setisImportLeadsOpen(true)}
-    />
-    <div className="text-sm ml-[4px] px-[3px] pt-[1px] rounded text-[#FF8C02]">
-      {leadDetailsObj?.Status}
     </div>
   </div>
-
-  <div className="flex flex-row">
-    <div className="font-md text-sm text-gray-500 tracking-wide">
-      <DeviceMobileIcon className="w-3 h-3 inline text-[#058527]" />{" "}
-      <span className="mr-[2px] text-[12px]">
-        {Mobile?.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")}
-      </span>
-    </div>
-    <div className="font-md text-sm text-gray-500 ml-[6px] tracking-wide">
-      <MailIcon className="w-3 h-3 inline text-[#058527]" /> {Email}
-    </div>
-  </div>
-
-  <button
-    onClick={sendNotification}
-    className="mt-2 flex items-center px-3 py-1 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition"
-  >
-    <PhoneIcon className="w-4 h-4 mr-2" />
-    {isSending ? 'Sending...' : 'Call via App'}
-  </button>
-</div> */}
-
-
-
-
-
-                  </div>
+  
+  <div className="mt-3">
+    <div className="ml-2">
+      <div className="flex flex-row p-4 py-2">
+        <section>
+          <div className="flex flex-col items-center  justify-center bg-white px-2.5 py-3 rounded-[14px] mx-auto">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center cursor-pointer">
+                <div 
+                  className="bg-purple-100 p-2 rounded-lg flex items-center justify-center"
+                  onClick={() => {
+                    console.log('Call button clicked for lead:', Name, Mobile);
+                    handleCallButtonClick(assignedTo, Name, Mobile);
+                  }}
+                >
+                  <img 
+                    src="/call.svg" 
+                    alt="Call Icon" 
+                    className="w-[18px] h-[18px] min-w-[18px]"
+                  />
                 </div>
               </div>
-            </div>
-            <div className='mt-3'>
 
-            <div className=" ml-2 ">
-              <div className="flex flex-row  bg-[#e7f6fa] border rounded-xl p-4 py-2 ">
-                {/* <section>
-                  <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
-                    Assigned To box {}
-                  </div>
-                  {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                    <div>
-                      <AssigedToDropComp
-                        assignerName={assignerName}
-                        id={id}
-                        setAssigner={setAssigner}
-                        usersList={usersList}
-                        align={undefined}
-                        classNames={{
-                          container: 'text-left',
-                          button: 'bg-[#f4f4f4] text-black border border-gray-300',
-                          item: 'hover:bg-blue-100',
-                          chevron: 'text-blue-600',
-                          menuItems: 'shadow-xl',
-                        }}
-
-
-                      />
-                    </div>
-                  )}
-                  {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                    <span className="text-left text-sm"> {assignerName}</span>
-                  )}
-                </section> */}
-                <section>
-  <div className="font-md text-xs text-gray-500 mb-[px] tracking-wide mr-4">
-    <label htmlFor="assignedTo" className="block text-[12px]  text-gray-700">
-      Assigned To
-    </label>
-  </div>
-  {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
-                      <div className="font-semibold text-sm text-slate-900 tracking-wide overflow-ellipsis">
-
-      <AssigedToDropComp
-        assignerName={assignerName}
-        id={id}
-        setAssigner={setAssigner}
-        usersList={usersList}
-        align={undefined}
-
-
-      />
-    </div>
-  )}
-  {user?.role?.includes(USER_ROLES.CP_AGENT) && (
-    <span className="text-left text-sm"> {assignerName}</span>
-  )}
-</section>
-
-                <section className=" ml-2">
-                  <div className="flex flex-row ">
-                    {/* <div className="font-md text-xs text-gray-500 mb-[2px] tracking-wide mr-4">
-                      Project {}
-                    </div> */}
-                        <label htmlFor="assignedTo" className="block text-[12px] text-gray-700">
-                        Project
-    </label>
-                  </div>
-                  <div className="font-semibold text-sm text-slate-900 tracking-wide overflow-ellipsis">
-
-                    <AssigedToDropComp
-                      assignerName={selProjectIs?.projectName || Project}
-                      id={id}
-                      align="right"
-                      setAssigner={setNewProject}
-                      usersList={projectList}
-
-                    />
-                  </div>
-                </section>
-                <section>
-                  <div>
-                    <div className="text-center items-center  mt-[1px]">
-                      <div
-                        className="text-center border border-[#7BD2EA] text-[#5198ab]  rounded-[8px] px-2 py-2 ml-1 items-center align-middle text-xs cursor-pointe"
-                        onClickCapture={() => {
-                          setUnitsViewMode(!unitsViewMode)
-                        }}
-                      >
-                        {selProjectIs?.uid?.length > 4 &&
-                          (unitsViewMode ? (
-
-                            <span className="   text-black  text-[10px] text-[#] font-semibold whitespace-nowrap">
-                              {' '}
-                              Show Lead
-                            </span>
-                          ) : (
-
-                            <span className="   text-white-300  text-[10px] text-[#] font-semibold whitespace-nowrap">
-                              {' '}
-                              Show Units
-                            </span>
-                          ))}
-                      </div>
-                    </div>
-                  </div>
-                </section>
+              <div >
+                <h2 className="font-semibold text-[14px] leading-[100%] tracking-[6%] mb-1 text-[#696990]">Negotiation</h2>
+                <p className="font-normal text-[12px] leading-[100%]  cursor-pointer text-[#960000] decoration-solid">
+                  Starts in 3min
+                </p>
               </div>
             </div>
-
-            </div>
-
           </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
 
           {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-3" /> */}
 
 
 
-          <div className="flex flex-row justify-between">
+          {/* <div className="flex flex-row justify-between">
             <div className=" py-0 flex flex-row  text-xs font-thin  text-[12px]  py-[6px] px-2 ">
               Recent Comments:{' '}
               <span className="text-[#867777] ml-1 ">
@@ -1854,21 +1830,23 @@ async function handleCallButtonClick(uid, name, number) {
                 </section>
               </div>
             </>
-          )}
+          )} */}
+
+
         </div>
 
 
 
 
           {/* <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 py-[1px]" /> */}
-<div className='mt-[1px] bg-white mx-2 rounded-lg '>
-  <div className="flex flex-row justify-between pb-3 pt-5 mb-0   bg-white relative rounded-lg">
+<div className='mt-[1px]   '>
+  <div className="flex flex-row justify-between pb-3 pt-5 mb-0   relative rounded-lg">
     {StatusListA.map((statusFlowObj, i) => (
       <div key={i} className="flex-1 flex flex-col items-center relative">
         <div
           className={`w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-200 mb-1 z-10 ${
             streamCoveredA.includes(statusFlowObj.value)
-              ? 'bg-[#7BD2EA] border-[#dff1fb] text-white shadow-[0_0_0_3px_rgba(44,164,218,0.2)]'
+              ? 'bg-[#5B5FC7]  text-white '
               : statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus
                 ? 'bg-white border-black text-black'
                 : 'bg-white border-gray-300 text-gray-300'
@@ -1883,12 +1861,12 @@ async function handleCallButtonClick(uid, name, number) {
             setHover(false);
           }}
           style={{
-            ...(hover && hoverId === i ? { boxShadow: '0 0 0 3px rgba(44, 164, 218, 0.2)' } : {}),
+            ...(hover && hoverId === i ? { boxShadow: '' } : {}),
             cursor: 'pointer',
           }}
         >
           {streamCoveredA.includes(statusFlowObj.value) ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-[#0E0A1F] " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white " fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           ) : statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus ? (
@@ -1908,7 +1886,7 @@ async function handleCallButtonClick(uid, name, number) {
           <div
             className={`absolute top-3 left-[calc(50%+0.5rem)] h-[1px] w-[calc(100%-1rem)] ${
               streamCoveredA.includes(StatusListA[i + 1].value)
-                ? 'bg-[#0E0A1F]'
+                ? 'bg-[#5B5FC7]'
                 : 'bg-gray-300'
             }`}
             style={{ transform: 'translateY(-50%)' }}
@@ -1922,6 +1900,7 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
+<hr/>
 
 
 
@@ -1983,7 +1962,7 @@ async function handleCallButtonClick(uid, name, number) {
         )}
         {!unitsViewMode && (
           <>
-            <section className=" pb-8 pt-1 px-2   rounded-xs  bg-white mt-1 mx-2 rounded-lg">
+            <section className=" pb-8 px-5 py-2  rounded-xs  bg-white">
               <div className="">
                 <div className="">
 
@@ -2029,15 +2008,15 @@ async function handleCallButtonClick(uid, name, number) {
                     </ul>
                     {selFeature != 'lead_strength' && (
                       <span
-                        className="rounded-[8px] px-[10px] py-[11px] gap-[8px] border text-[#000000] font-outfit font-normal text-[14px] leading-[100%] tracking-[0%] cursor-pointer"
+                        className=" px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] text-[#5B5FC7] cursor-pointer"
                         onClick={() => setFeature('lead_strength')}
                       >
-                        Lead Strength
-                      </span>
+                        Lead requirement                 
+                             </span>
                     )}
                     {selFeature == 'lead_strength' && (
                       <span
-                        className="rounded-[8px] px-[10px] py-[11px] gap-[8px] border text-[#000000] font-outfit font-normal text-[14px] leading-[100%] tracking-[0%] cursor-pointer"
+                        className="px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] text-[#5B5FC7] cursor-pointer"
                         onClick={() => setFeature('appointments')}
                       >
                         Close
@@ -2341,11 +2320,12 @@ async function handleCallButtonClick(uid, name, number) {
                                     <ClockIcon className=" w-3 h-3" />
 
                                     <span className="ml-1">added on:</span>
-                                    <span className="text-red-900 ml-1 mr-4">
+                                    <span className="text-gray-500 ml-1">
                                       {prettyDateTime(data?.ct)}
                                     </span>
-                                    <span className="ml-2">added by:</span>
-                                    <span className="text-red-900 ml-1 mr-4">
+                                    <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+                                    <span className="">added by:</span>
+                                    <span className="text-gray-500 ml-1 ">
                                       {data?.by}
                                     </span>
                                   </span>
@@ -2465,6 +2445,7 @@ async function handleCallButtonClick(uid, name, number) {
                                     <span className="text-red-900 ml-1 mr-4">
                                       {prettyDateTime(data?.ct)}
                                     </span>
+                                    <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
                                     <span className="ml-2">added by:</span>
                                     <span className="text-red-900 ml-1 mr-4">
                                       {data?.by}
@@ -2735,13 +2716,12 @@ async function handleCallButtonClick(uid, name, number) {
 
 <div className="max-w-5xl mx-auto space-y-4 mt-4">
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+{/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
   <div className="bg-white rounded-2xl shadow-lg p-6">
     <div>
       <div className="flex justify-between overflow-visible items-center mb-4">
         <div className="flex items-center gap-2 overflow-visible">
-          {/* <img src="/su5.svg" alt="Transaction" className="w-[30px] h-[29px] mr-2 object-cover" /> */}
           <div>
           <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M23.6104 8.91158C20.9426 8.7905 18.0674 8.80569 15.3803 8.88988C15.3731 10.8167 15.4503 12.7437 15.7156 14.682C18.299 14.5884 20.8823 14.5137 23.5212 14.4879C23.5212 15.4544 23.5212 16.4209 23.5404 17.3966C25.6148 15.5448 27.6893 13.6933 29.7926 11.7077C27.8147 9.76957 25.7596 7.9096 23.6345 6.11766C23.6321 7.05403 23.6104 8.00705 23.6104 8.91158Z" fill="#2F2F2F"/>
@@ -2811,7 +2791,6 @@ async function handleCallButtonClick(uid, name, number) {
 
       <div className="flex items-center gap-2  mb-4 overflow-visible">
       <div>
-      {/* <img src="/su66.svg" alt="Applicant" className="w-[30px] h-[30px] mr-2 object-contain" /> */}
       <svg width="30" height="27" viewBox="0 0 30 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11.1248 5.29233C10.9532 4.50175 10.8586 3.67949 11.0078 2.88415C11.1571 2.0888 11.5758 1.31847 12.2556 0.879473C12.9485 0.432137 13.8141 0.374253 14.6378 0.32971C15.2752 0.295171 15.9124 0.260392 16.5498 0.225853C17.4874 0.174878 18.5207 0.153203 19.2503 0.744172C20.0468 1.38921 20.1957 2.5259 20.2855 3.54705C20.3331 4.08538 20.3753 4.65467 20.1397 5.14108C19.9041 5.62771 19.2832 5.97096 18.8077 5.7137C18.3625 5.47241 18.2758 4.87143 18.3199 4.36693C18.3637 3.86243 18.4788 3.3241 18.2515 2.87152C17.8714 2.11429 16.8252 2.07022 15.9801 2.13263C15.533 2.16574 15.0859 2.19862 14.6388 2.23172C14.109 2.27079 13.5021 2.35344 13.2132 2.79959C12.8361 3.38222 13.2532 4.18447 13.0286 4.84142C12.8897 5.24779 12.4893 5.55077 12.0605 5.57364C11.6318 5.59675 11.2012 5.33854 11.1248 5.29233Z" fill="white"/>
 <path d="M16.4899 1.90868C17.241 1.90868 18.0723 2.06185 18.4329 2.78001C18.6487 3.2102 18.5975 3.6785 18.5477 4.13179C18.5384 4.21659 18.5291 4.30067 18.522 4.38404C18.4984 4.65511 18.4884 5.30968 18.9043 5.53477C19.0763 5.62791 19.2554 5.60099 19.3752 5.5624C19.616 5.48475 19.8442 5.28467 19.9569 5.05242C20.1746 4.60247 20.126 4.05104 20.0831 3.56464C19.9926 2.53753 19.844 1.48612 19.1225 0.90158C18.4682 0.371827 17.5373 0.375159 16.5607 0.428277L14.6487 0.532135C13.8907 0.573343 13.0313 0.620029 12.3655 1.04998C11.7819 1.42657 11.3599 2.10877 11.2073 2.92126C11.088 3.55654 11.1187 4.27042 11.3044 5.16104C11.4706 5.2518 11.7684 5.38614 12.0494 5.37042C12.3939 5.35208 12.7247 5.10196 12.8364 4.77539C12.9229 4.52171 12.8977 4.23016 12.8707 3.92146C12.8343 3.50247 12.7967 3.06895 13.0427 2.68878C13.3671 2.18761 13.9943 2.07542 14.6239 2.02897L15.9649 1.92988C16.13 1.91749 16.3075 1.90868 16.4899 1.90868ZM19.1618 6.00378C19.002 6.00378 18.8483 5.96615 18.7109 5.89207C18.269 5.65268 18.0527 5.09029 18.1173 4.34902C18.1247 4.26256 18.1344 4.17538 18.144 4.08748C18.1892 3.67492 18.2321 3.28523 18.0699 2.96247C17.8119 2.44868 17.1526 2.2493 15.9949 2.33482L14.6537 2.43391C14.1646 2.47012 13.6232 2.53967 13.3836 2.90959C13.2133 3.1728 13.2435 3.51938 13.2754 3.88597C13.3047 4.22325 13.335 4.57197 13.2207 4.90688C13.0551 5.39138 12.5825 5.74867 12.0713 5.77607C11.6431 5.79917 11.2287 5.59194 11.0198 5.46617C10.9718 5.43735 10.9379 5.38971 10.9261 5.33516C10.7121 4.34831 10.6745 3.55749 10.8081 2.84647C10.9811 1.92488 11.4685 1.14573 12.1452 0.708637C12.9017 0.220331 13.8581 0.168405 14.6267 0.126482L16.5388 0.0226312C17.5551 -0.0321546 18.612 -0.0340624 19.3781 0.585968C20.2232 1.27031 20.3897 2.41509 20.4878 3.52891C20.5329 4.04127 20.5891 4.67869 20.3225 5.2294C20.1615 5.56169 19.8464 5.83752 19.4998 5.94924C19.3867 5.98568 19.2728 6.00378 19.1618 6.00378Z" fill="#2F2F2F"/>
@@ -2886,16 +2865,15 @@ async function handleCallButtonClick(uid, name, number) {
       </div>
     </div>
   </div>
-</div>
+</div> */}
 
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+{/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
 
-  <div className="bg-white rounded-2xl shadow-lg  p-6">
+  {/* <div className="bg-white rounded-2xl shadow-lg  p-6">
     <div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 mb-4 ">
-          {/* <img src="/su2.svg" alt="Activity" className="w-[30px] h-[29px] mr-2 object-contain" /> */}
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0.150879 2.40428V21.7649L15.3244 21.4459L15.5012 2.12979L0.150879 2.40428Z" fill="white"/>
 <path d="M0.300844 2.55233V21.6118L15.1757 21.2993L15.3497 2.28308L0.300844 2.55233ZM0.150815 21.9154C0.111601 21.9154 0.0737874 21.9001 0.0456025 21.8725C0.0167172 21.8443 0.000610352 21.8056 0.000610352 21.7654V2.40475C0.000610352 2.32282 0.0660864 2.25612 0.148015 2.25455L15.4985 1.98005C15.5389 1.9811 15.5782 1.99511 15.6069 2.02364C15.6357 2.052 15.6517 2.09122 15.6513 2.13165L15.4747 21.4478C15.4738 21.529 15.4087 21.5949 15.3276 21.5966L0.153965 21.9154H0.150815Z" fill="#2F2F2F"/>
@@ -2958,13 +2936,12 @@ async function handleCallButtonClick(uid, name, number) {
         </div>
       </div>
     </div>
-  </div>
+  </div> */}
 
-
+{/* 
   <div className="bg-white rounded-2xl shadow-lg overflow-visible p-6">
     <div>
       <div className="flex items-center gap-2 overflow-visible mb-4">
-        {/* <img src="/su3.svg" alt="Calendar" className="w-[30px] h-[29px] mr-2 object-contain" /> */}
         <div>
         <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M23.0796 7.92288C16.3593 7.32996 9.58247 7.39395 2.87519 8.1132C1.95733 8.21157 0.932205 8.40066 0.545139 9.23878C0.0729561 10.2621 0.957268 11.4357 1.96273 11.9445C3.50457 12.7246 5.30031 12.777 7.02833 12.7847C12.1925 12.8073 17.3824 12.5689 22.4459 11.5492C22.6427 11.5096 22.8601 11.4537 22.9616 11.2814C23.0341 11.1617 23.0299 11.0136 23.0217 10.8744C22.9802 9.92241 22.9367 8.96997 23.0796 7.92288Z" fill="white"/>
@@ -3038,8 +3015,915 @@ async function handleCallButtonClick(uid, name, number) {
         </div>
       </div>
     </div>
+  </div> */}
+{/* </div> */}
+
+
+
+
+
+
+
+
+
+
+
+    <div>
+
+
+
+
+        <div className='grid grid-cols-1 lg:grid-cols-1 gap-4 '>
+
+
+            <div className=" bg-[#F9F9FB] rounded-[16px] p-4  border border-[#E7E7E9] flex flex-col gap-3"
+            
+
+            // style={{
+            //   transition: 'transform 200ms ease-in-out',
+            //   cursor: 'pointer'
+            // }}
+            // onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.01)'}
+            // onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            
+            >
+
+              <div>
+
+              <div className="flex items-center justify-between">
+        <h2 className="font-[Outfit] font-medium text-[16px] leading-[100%] tracking-[0%] text-[#0E0A1F]">Get into Introduction Call with customer</h2>
+        <div className="bg-white border border-red-700 text-red-700 rounded-full px-3 py-1 flex items-center gap-1">
+          <Phone size={14} />
+          <span className="font-medium text-[12px] leading-[100%] tracking-[0%]">Starts in 3min</span>
+        </div>
+      </div>
+      
+      <div className="flex items-center gap-2">
+        <div className="text-gray-500">
+  
+          <img src="/comment.svg" alt="" className='w-5 h-5' />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#0E0A1F]">Recent Comments:</span>
+          <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">{' '} {leadDetailsObj?.Remarks || 'NA'}</span>
+          <span className="font-[Outfit] font-normal text-[10px] leading-[100%] tracking-[0%] text-[#606062] ml-2">27 Mar 2025, 11:30 am</span>
+        </div>
+      </div>
+
+              </div>
+
+    </div>
+
+
+
+ 
+
+    <div className="flex flex-col md:flex-row rounded-[16px]  bg-[#F9F9FB] overflow-visible border border-[#E7E7E9]">
+  {/* Section 1 - Project Dropdown */}
+  <div className="relative flex-1 p-3  border-b md:border-b-0 flex flex-col justify-center items-center text-center z-[20]">
+    <span className="hidden md:block absolute top-2 bottom-2 right-0 w-px bg-gray-200" />
+    <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Project</p>
+    <div className="font-[Outfit] font-semibold text-[14px] text-[#0E0A1F] tracking-wide overflow-visible relative">
+      <AssigedToDropComp
+        assignerName={selProjectIs?.projectName || Project}
+        id={id}
+        align="right"
+        setAssigner={setNewProject}
+        usersList={projectList}
+        className="z-[999]" 
+      />
+    </div>
+  </div>
+
+  {/* Section 2 - Assigned To (Dynamically integrated) */}
+  <div className="relative flex-1 p-3  border-b md:border-b-0 flex flex-col justify-center items-center text-center">
+    <span className="hidden md:block absolute top-2 bottom-2 right-0 w-px bg-gray-200" />
+    <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Assigned to</p>
+    {!user?.role?.includes(USER_ROLES.CP_AGENT) ? (
+      <div className="font-[Outfit] font-semibold text-[14px] text-[#0E0A1F] tracking-wide overflow-ellipsis">
+        <AssigedToDropComp
+          assignerName={assignerName}
+          id={id}
+          setAssigner={setAssigner}
+          usersList={usersList}
+          align={undefined}
+        />
+      </div>
+    ) : (
+      <span className="text-[14px] text-[#0E0A1F] font-[Outfit]">{assignerName}</span>
+    )}
+  </div>
+
+  {/* Section 3 - Lead Created */}
+  <div className="relative flex-1 p-3  border-b md:border-b-0 flex flex-col justify-center items-center text-center">
+    <span className="hidden md:block absolute top-2 bottom-2 right-0 w-px bg-gray-200" />
+    <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Lead Created</p>
+    <p className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#0E0A1F]">27 Mar 2025, 11:30 am</p>
+  </div>
+
+  {/* Section 4 - Source */}
+  <div className="flex-1 p-3 flex flex-col justify-center items-center text-center">
+    <p className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Source</p>
+    <p className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#0E0A1F]">{Source?.toString() || 'NA'}</p>
   </div>
 </div>
+
+
+
+
+            <div>
+
+
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
+
+
+
+
+{/* Left Column */}
+<div className="space-y-4">
+
+
+
+
+
+
+
+<div className=" rounded-[16px] p-4  bg-[#F9F9FB]  border border-[#E7E7E9]  max-w-lg">
+      <div className="flex items-center mb-8">
+      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+        {/* <Clock className="text-purple-500 w-5 h-5" /> */}
+        <img src="/fire.svg" alt="" className='w-[18px] h-[18px]' />
+
+      </div>
+     
+        <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">LEAD STRENGTH</span>
+      </div>
+      
+
+      {/* <div className="relative h-3 bg-gray-100 rounded-full mb-6">
+        <div 
+          className="absolute top-0 left-0 h-full bg-indigo-500 rounded-full"
+          style={{ width: '50%' }}
+        >
+        </div>
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+          <span className="text-xs font-medium text-white z-10">50%</span>
+        </div>
+      </div> */}
+
+
+
+<div className="mb-6">
+    {/* <Slider
+      onChange={(e) => setopstr(e.target.value)} // Use the same handler to set value
+      value={opstr}
+      defaultValue={opstr}
+      aria-label="Lead Strength Slider"
+      valueLabelDisplay="auto"
+      min={0}
+      max={100}
+    /> */}
+
+
+
+<Box sx={{ position: 'relative', width: '100%' }}>
+      <Slider
+        value={opstr}
+        min={0}
+        max={100}
+        onChange={(e) => setopstr(e.target.value)}
+        aria-label="Lead Strength Slider"
+        sx={{
+          height: 20,
+          paddingRight: 0,
+          '& .MuiSlider-track': {
+            // backgroundColor: '#5a5acc',
+            // height: 20,
+            // borderRadius: 10,
+            backgroundColor: '#5a5acc',
+            height: 20,
+            borderRadius: 10,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#fff', // optional, for visibility
+            fontSize: 12,  // optional
+          },
+          '& .MuiSlider-rail': {
+            backgroundColor: '#cfd0ff',
+            height: 20,
+            borderRadius: 10,
+          },
+          // '& .MuiSlider-thumb': {
+          //   display: 'none', // Hide the thumb
+          // },
+          '& .MuiSlider-thumb': {
+            width: 24,
+            height: 24,
+            backgroundColor: '#5B5FC7',
+            // border: '2px solid #5a5acc',
+            
+            '&:hover, &.Mui-focusVisible': {
+              boxShadow: '0px 0px 0px 8px rgba(90, 90, 204, 0.16)',
+            },
+          },
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: `${opstr}%`,
+          transform: 'translateX(-100%)',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          pr: 1,
+        }}
+      >
+        <Typography
+          variant="caption"
+          sx={{ color: '#fff', fontWeight: 'bold', fontSize: '0.75rem' }}
+        >
+          {opstr}%
+        </Typography>
+      </Box>
+    </Box>
+
+  </div>
+
+
+
+{/* 
+
+<div className="mb-6 relative">
+  <Slider
+    onChange={(e) => setopstr(e.target.value)} 
+    value={opstr}
+    defaultValue={opstr}
+    aria-label="Lead Strength Slider"
+    valueLabelDisplay="auto"
+    min={20}
+    max={100}
+    sx={{
+      height: '14px', 
+      '& .MuiSlider-rail': {
+        backgroundColor: '#e0e0e0',
+      },
+      '& .MuiSlider-track': {
+        backgroundColor: '#3f51b5',
+      },
+      '& .MuiSlider-thumb': {
+        width: 20,  
+        height: 20,
+        backgroundColor: '#3f51b5', 
+      }
+    }}
+  />
+
+  <div
+    className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
+    style={{
+      width: `${opstr}%`, 
+    }}
+  >
+    <span className="text-xs font-medium text-white">{`${opstr}%`}</span>
+  </div>
+
+
+  <div className="flex justify-between mt-2">
+    <span className="text-xs font-medium text-[#606062]">0%</span>
+    <span className="text-xs font-medium text-[#606062]">100%</span>
+  </div>
+</div> */}
+
+
+
+      
+  
+      <div className="flex justify-between items-center mb-6">
+        <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">Requirement : 10/12</div>
+        <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">Updated : 27 Mar, 4:30 pm</div>
+      </div>
+      
+  
+      <div className="flex flex-wrap gap-3">
+
+        <div className="bg-white rounded-[4px] border border-[#E7E7E9]  px-2 py-1 flex items-center">
+          {/* <Clock className="w-5 h-5 mr-2 text-gray-600" /> */}
+          <img src="/costR.svg" alt="" className='w-5 h-5' />
+          <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Shuba Ecosone Ph 2</span>
+        </div>
+        
+  
+        <div className="bg-white rounded-[4px] border border-[#E7E7E9] px-2 py-1 flex items-center">
+        <img src="/costR.svg" alt="" className='w-5 h-5' />
+          <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Min: 2.12cr</span>
+        </div>
+        
+       
+        <div className="bg-white rounded-[4px] border border-[#E7E7E9] px-2 py-1 flex items-center">
+        <img src="/costR.svg" alt="" className='w-5 h-5' />
+          <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Max: 5.12cr</span>
+        </div>
+        
+ 
+
+{[1, 2, 3, 4, 5].map((index) => (
+  <div 
+    key={index} 
+    className="bg-white border border-[#E7E7E9] rounded-[4px] px-2 py-1 flex items-center h-[28px]"
+  >
+    <img src="/costR.svg" alt="" className='w-5 h-5 mr-1' />
+    <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Call</span>
+  </div>
+))}
+        
+        {/* Add button */}
+        <div className="border border-indigo-500 rounded-md p-1 flex items-center justify-center">
+          <Plus className="w-5 h-5 text-[#5B5FC7]" />
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+      {/* Lead Strength Card */}
+      {/* <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-3 rounded-[16px]">
+    <div className="flex items-center mb-2">
+      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+        <Clock className="text-purple-500 w-5 h-5" />
+        <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
+
+      </div>
+      <h2 className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">LEAD STRENGTH</h2>
+    </div>
+
+    <div className="flex justify-between items-center">
+      <div className='flex flex-col gap-2'>
+        <p className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062] mb-1">Total Questions: 2/3</p>
+        <p className="font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">Last Updated: 27 Mar, 4:30 pm</p>
+      </div>
+
+
+      <div>
+          <SemicircleProgressChart progress={0}/>
+      </div>
+    </div>
+  </div> */}
+
+
+
+  <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-3 rounded-[16px]">
+
+
+
+<div className='flex justify-between'>
+
+
+<div className="flex flex-col ">
+
+<div className="flex items-center mb-4">
+      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+
+        <img src="/location.svg" alt="" className='w-[18px] h-[18px]' />
+
+      </div>
+      <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">SITE VISIT ({projectData.siteVisit.count})</span>
+    </div>
+    
+  <div>
+    <p className="font-normal text-[14px] text-[#606062]">Visit Date: {projectData.siteVisit.date}</p>
+    <p className="font-normal text-[14px] text-[#606062]">Site In-charge: {projectData.siteVisit.inCharge}</p>
+  </div>
+
+
+</div>
+
+
+
+<div className="flex flex-col items-center font-semibold text-[14px] text-[#0E0A1F]">
+    <img src="/good.svg" alt="icon" className="mb-1 w-16 h-16" />
+    Good
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+{/* 
+  <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px]">
+  <div className="flex items-center mb-4">
+    <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+      <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
+    </div>
+    <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">SITE VISIT (4)</span>
+  </div>
+
+
+
+
+  <div className="grid grid-cols-2 items-center gap-4">
+  <div className="flex gap-2 flex-col">
+    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
+      Visit Date: {projectData.siteVisit.date}
+    </div>
+    <div className="font-normal text-[14px] tracking-[0%] text-[#606062]">
+      Site In-charge: {projectData.siteVisit.inCharge}
+    </div>
+  </div>
+
+  <div className="font-semibold text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F] flex flex-col items-center">
+    <img src="/good.svg" alt="icon" className="mb-1 w-16 h-16" />
+    Good
+  </div>
+</div>
+
+  
+
+</div> */}
+
+
+
+
+
+
+
+
+
+
+
+<div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px] cursor-pointer">
+  <div className="flex items-center mb-4">
+    <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+      <img src="/target-sale.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
+    </div>
+    <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
+      TASK LOGS
+    </span>
+    <div className="ml-auto">
+      <img src="/arrowright.svg" alt="Arrow Right Icon" className="w-5 h-5" />
+    </div>
+  </div>
+
+
+  <div className='space-y-4 px-4'>
+
+
+  {[
+    {
+      label: 'Price Quotations',
+      value: projectData.taskLogs.priceQuotations,
+    },
+    {
+      label: 'Completed Tasks',
+      value: projectData.taskLogs.completedTasks,
+    },
+    {
+      label: 'Total Comments',
+      value: projectData.taskLogs.totalComments,
+    },
+  ].map((item, index, array) => (
+    <div
+      key={item.label}
+      className={`${index !== array.length - 1 ? 'border-b pb-3 mb-3' : ''}`}
+    >
+      <div className="flex justify-between  items-center">
+        <div className="flex gap-2 items-center">
+          <img src="/fileicon.svg" alt="File Icon" className="w-5 h-5" />
+          <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+            {item.label}
+          </span>
+        </div>
+        <span className="font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
+          {item.value}
+        </span>
+      </div>
+    </div>
+  ))}
+
+  </div>
+
+
+</div>
+
+
+</div>
+
+{/* Right Column */}
+<div className="space-y-4">
+
+
+
+
+<div className=" rounded-[16px] p-4  bg-[#F9F9FB]  border border-[#E7E7E9]  max-w-lg">
+      <div className="flex items-center mb-4">
+        {/* <div className="bg-purple-50 p-3 rounded-full mr-3">
+          <Clock className="text-purple-600 w-5 h-5" />
+        </div> */}
+            <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+      <img src="/folder-library.svg" alt="" className='w-[18px] h-[18px]' />
+    </div>
+        <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">PROJECT</span>
+      </div>
+      
+      <div className="mb-4">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="font-medium text-base leading-tight tracking-normal text-[#404040]">Shuba Ecosone Ph 2</h2>
+          <a href="#" className="font-medium text-xs leading-tight tracking-normal text-[#7746E0] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto">View Units (24/100)</a>
+        </div>
+        
+        <div className="flex flex-wrap gap-2">
+          <div className="border bg-white rounded-lg py-1 px-2 flex items-center">
+            <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F]">Planning Approval</span>
+            <div className="">
+              {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg> */}
+              <img src="/yes1.svg" alt="" className='w-5 h-5' />
+            </div>
+          </div>
+          
+          <div className="border bg-white rounded-lg py-1 px-2 flex items-center">
+            <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F]">Rera Approval</span>
+            <div className=" ">
+              {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg> */}
+            <img src="/yes1.svg" alt="" className='w-5 h-5' />
+
+            </div>
+          </div>
+          
+          <div className="border bg-white rounded-lg py-1 px-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F] flex items-center justify-center">
+  +21 Amenities
+</div>
+
+        </div>
+      </div>
+      
+      {isExpanded && (
+        <div className="mt-4 pt-4 border-t">
+          <h3 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-2">Additional Information</h3>
+          <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+            This is the second phase of the Shuba Ecosone development featuring eco-friendly design, 
+            sustainable materials, and energy-efficient construction. The project includes studio, 
+            1 BHK, and 2 BHK apartments with modern amenities.
+          </p>
+          <div className="mt-3">
+            <h4 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-1">Key Features:</h4>
+            <ul className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+              <li>Solar-powered common areas</li>
+              <li>Rainwater harvesting</li>
+              <li>Organic waste composting</li>
+              <li>EV charging stations</li>
+            </ul>
+          </div>
+        </div>
+      )}
+      
+      <button 
+        onClick={toggleExpand} 
+        className="mt-4 font-medium text-xs leading-tight tracking-normal text-[#7746E0] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto flex items-center"
+      >
+        View {isExpanded ? 'less' : 'more'}
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="20" 
+          height="20" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+          className={`ml-1 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+    </div>
+
+
+
+
+      {/* Projects Card */}
+      <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px] ">
+    {!isProjectsExpanded && (
+      <div>
+        <div className="flex items-center mb-4">
+          <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+            {/* <Clock className="text-purple-600" size={20} /> */}
+            <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
+          </div>
+          <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">PROJECTS (3)</span>
+          <div className="ml-auto">
+            <button className="bg-[#5B5FC7] p-1 rounded-lg text-white">
+              <Plus size={20} />
+            </button>
+          </div>
+        </div>
+        
+        <div className="mb-2">
+          <div className="flex justify-between items-center">
+            <div>
+              <span className="font-medium text-[12px] leading-[100%] tracking-normal text-[#404040]">{projectData.projects[0].name}</span>
+              <span className="font-normal text-[12px] leading-[100%] tracking-normal text-[#666666] ml-2">{projectData.projects[0].date}</span>
+            </div>
+            <div className="flex items-center ml-auto">
+              <button className="font-outfit text-[#7746E0] font-normal text-[12px] leading-[100%] tracking-[0em] underline decoration-solid decoration-[0px] underline-offset-[0%]">View units</button>
+            </div>
+          </div>
+        </div>
+
+        <button 
+          onClick={toggleProjectsExpand} 
+          className="flex items-center font-medium text-[12px] leading-[100%] tracking-[0em] text-[#7746E0] mt-2"
+        >
+          +7 more <ChevronDown size={16} className="ml-1" />
+        </button>
+      </div>
+    )}
+    {/* Expanded View */}
+    {isProjectsExpanded && (
+      <div>
+        <div className="flex items-center mb-4">
+          <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-1.5 rounded-[16px] mr-3">
+            {/* <Clock className="text-purple-600" size={20} /> */}
+            <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
+
+          </div>
+          <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">PROJECTS (3)</span>
+          <div className="ml-auto">
+            <button className="bg-[#EDE9FE] p-2 rounded-lg text-white">
+              <PlusCircle size={20} />
+            </button>
+          </div>
+        </div>
+        
+        {projectData.projects.map((project, index) => (
+          <div key={index} className="mb-4">
+            <div className="flex justify-between items-center">
+              <div>
+                <div className="text-gray-800 font-medium">{project.name}</div>
+                <div className="text-gray-500 text-sm">{project.date}</div>
+              </div>
+              <ChevronRight size={20} className="text-gray-400" />
+            </div>
+          </div>
+        ))}
+
+        <button 
+          onClick={toggleProjectsExpand} 
+          className="flex items-center text-purple-600 mt-2 font-medium"
+        >
+          Less <ChevronUp size={16} className="ml-1" />
+        </button>
+      </div>
+    )}
+  </div>
+
+
+
+
+  <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px] ">
+  <div className="flex items-center mb-4">
+    <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+      <img src="/quill_clock.svg" alt="" className='w-[18px] h-[18px]' />
+    </div>
+    <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">
+      ASSIGNED TO
+    </span>
+  </div>
+
+  <div className="flex flex-col gap-2">
+    <div className="flex justify-between items-center cursor-pointer" onClick={toggleAssignedExpand}>
+      {!user?.role?.includes(USER_ROLES.CP_AGENT) ? (
+        <div className="font-semibold text-sm text-slate-900 tracking-wide w-full">
+          <AssigedToDropComp
+            assignerName={assignerName}
+            id={id}
+            setAssigner={setAssigner}
+            usersList={usersList}
+            align={undefined}
+          />
+        </div>
+      ) : (
+        <span className="text-left text-sm font-medium text-[#404040]">
+          {assignerName}
+        </span>
+      )}
+      
+      {isAssignedExpanded ? (
+        <ChevronUp size={20} className="text-gray-500" />
+      ) : (
+        <ChevronDown size={20} className="text-gray-500" />
+      )}
+    </div>
+
+    {/* Date display - shown for all users */}
+    <div className="font-normal text-[12px] leading-[100%] tracking-[0em] text-[#666666]">
+    {assignT != undefined
+                        ? prettyDateTime(assignT)
+                        : prettyDateTime(Date)}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  {/* More Details Card */}
+  {/* <div className="bg-white p-6 rounded-lg shadow-sm">
+    <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center">
+        <div className="bg-purple-100 p-2 rounded-full mr-3">
+          <Clock className="text-purple-500 w-5 h-5" />
+        </div>
+        <h2 className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">MORE DETAILS</h2>
+      </div>
+      <ChevronRight className="text-gray-400" />
+    </div>
+
+    <div className="flex justify-between">
+      <div>
+        <p className="font-outfit font-normal text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F] mb-4">updated on : 27 Mar 2025</p>
+        <p className="font-outfit font-normal text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F]">Assigned on : 27 Mar 2025</p>
+      </div>
+      <div>
+        <p className="font-outfit font-normal text-[14px] leading-[100%] tracking-[0em] text-[#0E0A1F] text-right">Created on: 27 Mar 2025</p>
+      </div>
+    </div>
+  </div> */}
+
+
+
+{/* Call Activity Card */}
+<div className="border border-[#E7E7E9] bg-[#F9F9FB] cursor-pointer p-4 rounded-[16px] ">
+  <div className="flex items-center justify-between mb-6">
+    <div className="flex items-center">
+      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+        <img src="/call.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
+      </div>
+      <h2 className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">CALL ACTIVITY</h2>
+    </div>
+    <img src="/arrowright.svg" alt="Arrow Icon" className="w-5 h-5" />
+  </div>
+
+  <div className="space-y-4 px-4">
+    {[
+      {
+        label: "Total Talk time",
+        value: "102 hrs, 32 mins",
+      },
+      {
+        label: "No of time Contacted",
+        value: "30 times",
+      },
+      {
+        label: "RNR",
+        value: "20 times",
+      },
+    ].map((item, index, array) => (
+      <div
+        key={item.label}
+        className={`flex justify-between items-center ${
+          index !== array.length - 1 ? 'pb-3 border-b border-gray-200' : ''
+        }`}
+      >
+        <div className="flex items-center">
+          <div className="mr-3">
+            <img src="/fileicon.svg" alt="Icon" className="w-5 h-5" />
+          </div>
+          <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+            {item.label}
+          </p>
+        </div>
+        <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+          {item.value}
+        </p>
+      </div>
+    ))}
+  </div>
+</div>
+
+
+
+
+
+<div className="border border-[#E7E7E9] bg-[#F9F9FB] cursor-pointer p-4 rounded-[16px] ">
+  <div className="flex items-center justify-between mb-6">
+    <div className="flex items-center">
+      <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
+        <img src="/quill_clock.svg" alt="Clock Icon" className="w-[18px] h-[18px]" />
+      </div>
+      <h2 className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">
+        Dates
+      </h2>
+    </div>
+    <img src="/arrowright.svg" alt="Arrow Icon" className="w-5 h-5" />
+  </div>
+
+  <div className="space-y-4 px-4">
+    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
+      <div className="flex items-center">
+        <div className="mr-3">
+          <img src="/fileicon.svg" alt="Icon" className="w-5 h-5" />
+        </div>
+        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+        Created On
+        </p>
+      </div>
+      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+      {CT != undefined
+          ? prettyDateTime(CT)
+          : prettyDateTime(Date)}
+      </p>
+    </div>
+
+    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
+      <div className="flex items-center">
+        <div className="mr-3">
+          <img src="/fileicon.svg" alt="Icon" className="w-5 h-5" />
+        </div>
+        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+        Updated On :
+        </p>
+      </div>
+      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+      {stsUpT === undefined
+          ? 'NA'
+          : prettyDateTime(stsUpT) || 'NA'}
+      </p>
+    </div>
+
+    <div className="flex justify-between items-center">
+      <div className="flex items-center">
+        <div className="mr-3">
+          <img src="/fileicon.svg" alt="Icon" className="w-5 h-5" />
+        </div>
+        <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
+        Assigned On
+        </p>
+      </div>
+      <p className="font-outfit font-normal text-[12px] leading-[100%] tracking-[0em] text-[#616162]">
+      {assignT != undefined
+          ? prettyDateTime(assignT)
+          : prettyDateTime(Date)}
+      </p>
+    </div>
+  </div>
+</div>
+
+
+</div>
+</div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
                               </>)}
@@ -3747,15 +4631,21 @@ async function handleCallButtonClick(uid, name, number) {
                               <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
                                 <ClockIcon className=" w-3 h-3   text-gray-500" />
 
-                                <span className="text-xs  text-gray-500 ml-1 mr-4">
+                                <span className="text-xs  text-gray-500 ml-1">
                                   {data?.type == 'ph'
                                     ? timeConv(
                                         Number(data?.time)
                                       ).toLocaleString()
                                     : timeConv(data?.T).toLocaleString()}
                                 </span>
-                                <span className="text-xs  text-gray-500  ml-2">by:</span>
-                                <span className="text-xs  text-gray-500 ml-1 mr-4">
+
+
+                                <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
+
+
+                                
+                                <span className="text-xs  text-gray-500">by:</span>
+                                <span className="text-xs  text-gray-500 ml-1 ">
                                   {data?.by}
                                 </span>
                               </span>

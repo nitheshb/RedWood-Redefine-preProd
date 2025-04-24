@@ -74,7 +74,7 @@ const AdministrationTeamPage = (props) => {
               )}
                        {viewable === 'Team Lead Report' && (
                 <>
-                <AdminSummaryReport/>
+                {/* <AdminSummaryReport/> */}
                   {/* <ReportMain /> */}
                   {/* <LeadsTeamReportBody
                     project={{

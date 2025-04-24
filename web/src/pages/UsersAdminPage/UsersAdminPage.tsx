@@ -211,11 +211,11 @@ const UsersAdminPage = () => {
             )}
 
 
-            {viewable === 'projectReports' && (
+            {/* {viewable === 'projectReports' && (
               <>
               <HrSummaryReport/>
               </>
-            )}
+            )} */}
 
 
 

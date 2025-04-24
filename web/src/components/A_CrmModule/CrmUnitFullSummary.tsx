@@ -1453,7 +1453,7 @@ export default function UnitFullSummary({
 
       <img
         alt="CRM Background"
-        src="/bgcrmnew.svg"
+        src="/crmfinal.svg"
         className="w-full h-auto object-cover"
       />
 
@@ -1632,7 +1632,7 @@ export default function UnitFullSummary({
 
 
 
-        <img  alt="" src="/bgcrmnew.svg" className='w-full'></img> */}
+        <img  alt="" src="/crmfinal.svg" className='w-full'></img> */}
 
 
 
@@ -1647,7 +1647,7 @@ export default function UnitFullSummary({
 
   <img
     alt="CRM Background"
-    src="/bgcrmnew.svg"
+    src="/crmfinal.svg"
     className="w-full h-auto object-cover"
   />
 
@@ -2419,7 +2419,7 @@ className="w-4 h-4"
       <div className="relative min-h-screen mr-6">
         {/* Background image */}
         {/* <div>
-          <img alt="CRM Background" src="/bgcrmnew.svg" className="w-full h-auto" />
+          <img alt="CRM Background" src="/crmfinal.svg" className="w-full h-auto" />
         </div> */}
 
 
@@ -2433,7 +2433,7 @@ Loan details
 
   <img
     alt="CRM Background"
-    src="/bgcrmnew.svg"
+    src="/crmfinal.svg"
     className="w-full h-auto object-cover"
   />
 
@@ -2488,7 +2488,7 @@ Loan details
   <div className="relative min-h-screen mr-6">
 
     {/* <div className="">
-      <img alt="CRM Background" src="/bgcrmnew.svg" className="w-full h-auto" />
+      <img alt="CRM Background" src="/crmfinal.svg" className="w-full h-auto" />
     </div> */}
 
 
@@ -2503,7 +2503,7 @@ Loan details
 
   <img
     alt="CRM Background"
-    src="/bgcrmnew.svg"
+    src="/crmfinal.svg"
     className="w-full h-auto object-cover"
   />
 
