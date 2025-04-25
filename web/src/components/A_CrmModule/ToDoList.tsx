@@ -23,7 +23,7 @@ const ToDoList = ({selUnitPayload}) => {
     { id: 6, text: 'Need to call contractor and update about Plastering and budget', date: '20 Mar 2025', priority: 'High Priority', completed: false },
   ]);
 
-  const [startDate, setStartDate] = useState(d.getTime() + 60000)
+  const [startDate, setStartDate] = useState(new Date(d.getTime() + 60000))
   const [activeTab, setActiveTab] = useState('ALL');
   const [newTaskText, setNewTaskText] = useState('');
   const [newTaskPriority, setNewTaskPriority] = useState('High Priority');
@@ -249,20 +249,20 @@ const ToDoList = ({selUnitPayload}) => {
                 <div className="flex flex-row bg-white rounded-xl border ">
                   <div
                     className={` py-1 pr-4 pl-4 pt-0 min-w-[62px] ${
-                      selFilterVal === 'all' ? 'bg-[#c6fff0]' : ''
+                      selFilterVal === 'all' ? 'bg-[#EDE9FE]' : ''
                     } rounded-xl rounded-r-none`}
                     onClick={() => setSelFilterVal('all')}
                   >
                     <span className="mr-1 text-[13px] ">All</span>
 
                     <span className="mr-1 text-[12px] ">{
-                      leadSchFetchedData.filter((d) => d?.schTime != undefined)
+                      unitFetchedActivityData.filter((d) => d?.due_date != undefined)
                         .length
                     }</span>
                   </div>
                   <div
                     className={` py-1 pr-4 pl-4  pt-0 min-w-[62px] border-x ${
-                      selFilterVal === 'pending' ? 'bg-[#c6fff0]' : ''
+                      selFilterVal === 'pending' ? 'bg-[#EDE9FE]' : ''
                     } `}
                     onClick={() => setSelFilterVal('pending')}
                   >
@@ -273,14 +273,14 @@ const ToDoList = ({selUnitPayload}) => {
                     >
                       {' '}
                       {
-                        leadSchFetchedData?.filter((d) => d?.sts === 'pending')
+                        unitFetchedActivityData?.filter((d) => d?.status === 'InProgress')
                           .length
                       }
                     </span>
                   </div>
                   <div
                     className={` py-1 pr-4 pt-0 pl-4 min-w-[62px] ${
-                      selFilterVal === 'completed' ? 'bg-[#c6fff0]' : ''
+                      selFilterVal === 'completed' ? 'bg-[#EDE9FE]' : ''
                     }  rounded-xl rounded-l-none`}
                     onClick={() => setSelFilterVal('completed')}
                   >
@@ -288,7 +288,7 @@ const ToDoList = ({selUnitPayload}) => {
                     <span className="mr-1 text-[12px]  ">Completed</span>
 
                     <span className="mr-1 text-[12px] ">  {
-                      leadSchFetchedData?.filter((d) => d?.sts === 'completed')
+                      unitFetchedActivityData?.filter((d) => d?.status === 'completed')
                         .length
                     }</span>
                   </div>
@@ -296,7 +296,7 @@ const ToDoList = ({selUnitPayload}) => {
                 <section>
                 {!showAddTask && (
                   <span
-                    className="ml-2 mt-1 text-blue-800 cursor-pointer "
+                    className="ml-2 mt-1 text-[#0091ae] cursor-pointer "
                     onClick={() => {
                       setShowAddTask(!showAddTask)
                     }}
@@ -306,7 +306,7 @@ const ToDoList = ({selUnitPayload}) => {
                 )}
                 {showAddTask && (
                   <span
-                    className="ml-2 mt-1 text-blue-800 cursor-pointer"
+                    className="ml-2 mt-1 text-[#0091ae]cursor-pointer"
                     onClick={() => {
                       setShowAddTask(!showAddTask)
                     }}
@@ -325,7 +325,7 @@ const ToDoList = ({selUnitPayload}) => {
                   validationSchema={validateSchema}
                   onSubmit={async (data, { resetForm }) => {
 
-                    data.due_date = startDate
+                    data.due_date = startDate?.getTime()
                     data.priorities = prior ? 'high' : 'medium'
                     // data.attachments = files
                     data.Uuid = selUnitPayload?.id
@@ -365,8 +365,8 @@ const ToDoList = ({selUnitPayload}) => {
                               <section>
                                 <span className="text-xs font-bodyLato text-[#516f90]">
                                   <span className="">
-                                    {tempLeadStatus.charAt(0).toUpperCase() +
-                                      tempLeadStatus.slice(1)}{' '}
+                                    {tempLeadStatus?.charAt(0)?.toUpperCase() +
+                                      tempLeadStatus?.slice(1)}{' '}
                                   </span>
                                   Due Date
                                 </span>
@@ -438,7 +438,7 @@ const ToDoList = ({selUnitPayload}) => {
                           <section className="flex">
                             <button
                               type="submit"
-                              className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  bg-[#FF7A53] bg-[#ECE9FE] text-[#0E0A1F] rounded-lg hover:bg-gray-700 hover:text-white  `}
+                              className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  bg-[#EDE9FE]  text-[#0E0A1F] rounded-lg hover:bg-gray-700 hover:text-white  `}
                             >
                               <span className="ml-1 ">
                                 Create{' '}
@@ -448,7 +448,9 @@ const ToDoList = ({selUnitPayload}) => {
                               </span>
                             </button>
                             <button
-                              // onClick={() => cancelResetStatusFun()}
+                              onClick={() => {
+                                setShowAddTask(false)
+                              }}
                               className={`flex mt-2 ml-4 rounded-lg items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border text-[#0E0A1F]  hover:bg-gray-700 hover:text-white `}
                             >
                               <span className="ml-1 ">Cancel</span>
@@ -461,9 +463,9 @@ const ToDoList = ({selUnitPayload}) => {
                 </Formik>
               </div>
             )}
-             <div className="">
+             <div className="mt-3">
         {unitFetchedActivityData.map(task => (
-          <div key={task.id} className="p-4 border-b">
+          <div key={task.id} className="py-4 px-2 border-b">
             <div className="flex items-start justify-between">
               <div className="flex-1">
 
