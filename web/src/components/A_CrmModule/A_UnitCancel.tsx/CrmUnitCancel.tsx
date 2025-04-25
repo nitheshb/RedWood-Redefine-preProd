@@ -1021,6 +1021,7 @@ export default function UnitBookingCancelCRM({
         selCustomerPayload={selCustomerPayload}
         source={"cancelBooking"}
         selSubMenu={"cancel_booking"}
+        // unitsViewMode={true}
       />
 
       {selFeature === 'legal_info' && <></>}

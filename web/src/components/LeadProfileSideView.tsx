@@ -3054,7 +3054,7 @@ async function handleCallButtonClick(uid, name, number) {
         <h2 className="font-[Outfit] font-medium text-[16px] leading-[100%] tracking-[0%] text-[#0E0A1F]">Get into Introduction Call with customer</h2>
         <div className="bg-white border border-red-700 text-red-700 rounded-full px-3 py-1 flex items-center gap-1">
           <Phone size={14} />
-          <span className="font-medium text-[12px] leading-[100%] tracking-[0%]">Starts in 3min</span>
+          <span className="font-medium text-[12px] leading-[100%] cursor-pointer tracking-[0%]">Starts in 3min</span>
         </div>
       </div>
       

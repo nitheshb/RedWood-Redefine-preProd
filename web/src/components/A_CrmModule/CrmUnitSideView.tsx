@@ -55,6 +55,7 @@ import { BellIcon } from 'lucide-react';
 import { ChevronDownIcon } from "lucide-react";
 import { calculatePercentages } from 'src/util/areaConverter'
 import AssigedToDropCompCrm from '../assignedToDropCompCrm'
+import { ToastBar, useToaster } from 'react-hot-toast'
 
 const data = [
   { name: 'Paid', value: 10 },
@@ -180,6 +181,8 @@ export default function UnitSideViewCRM({
   const { user } = useAuth()
   console.log('my user is ', user)
   const { enqueueSnackbar } = useSnackbar()
+
+  const { toast } = useToaster
 
   const { orgId } = user
   const [fetchedUsersList, setfetchedUsersList] = useState([])
@@ -531,7 +534,9 @@ export default function UnitSideViewCRM({
       selCustomerPayload?.id,
       value,
       user.email,
-      enqueueSnackbar
+      // enqueueSnackbar
+      ToastBar
+
     )
     selCustomerPayload?.fullPs.map((ps) => {
       console.log('my values are', ps)

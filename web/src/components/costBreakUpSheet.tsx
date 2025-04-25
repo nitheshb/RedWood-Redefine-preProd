@@ -38,6 +38,7 @@ import PdfSummaryGenerator from 'src/util/PdfSummaryGenerator'
 
 
 import bookingpng from '../../../web/public/bookingpng.png'
+import { ToastBar } from 'react-hot-toast'
 
 
 
@@ -476,7 +477,8 @@ console.log('customer info', myBookingPayload)
         id,
         xData,
         'nitheshreddy.email@gmail.com',
-        enqueueSnackbar,
+        // enqueueSnackbar,
+        ToastBar,
         resetForm
       )
     } else {
@@ -485,7 +487,8 @@ console.log('customer info', myBookingPayload)
         selUnitDetails?.uid,
         xData,
         user?.email,
-        enqueueSnackbar,
+        // enqueueSnackbar,
+        ToastBar,
         resetForm
       )
     }

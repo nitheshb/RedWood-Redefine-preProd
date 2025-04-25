@@ -15,6 +15,7 @@ import { TextFieldFlat } from './formFields/TextFieldFlatType'
 import '../styles/myStyles.css'
 import CustomDatePicker from './formFields/CustomDatePicker'
 import { CalculateComponentTotal } from './unitCostSheetCalculator'
+import { ToastBar } from 'react-hot-toast'
 
 const CostBreakUpEditor = ({
   projectDetails,
@@ -606,7 +607,8 @@ console.log('saved data is===>', dataObj)
       selUnitDetails?.id,
       dataObj,
       user.email,
-      enqueueSnackbar
+      // enqueueSnackbar
+      ToastBar
     )
 
 

@@ -18,6 +18,9 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
+
+
+
 const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookCurentStep }) => {
   const { user } = useAuth()
   const { orgId } = user
@@ -51,6 +54,7 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
 
     console.log('status is', selUnitDetails)
 
+    // return
     if (['customer_blocked'].includes(selUnitDetails?.status)) {
       const unitUpdate = {
         status: 'available',

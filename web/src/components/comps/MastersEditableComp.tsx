@@ -35,6 +35,7 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { userAccessRolesArray } from 'src/constants/userAccess'
+import { ToastBar } from 'react-hot-toast'
 
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
   fontSize: '13px',
@@ -540,15 +541,15 @@ const MastersEditableTable = ({ phase, partAData, fullCs, source, type }) => {
       const myId = selcDelRow?.id
       if (myId) setRows(rows.filter((item) => item.id !== myId))
       const newSet = rows.filter((item) => item.id !== myId)
-      addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', enqueueSnackbar)
+      addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', ToastBar)
       const defaultSqftCost= {  area_cost_persqft: costPerSqft,
         const_cost_persqft: constructionPerSqft,
         area_tax:gst,
         const_tax: constGst}
-        addPhaseDefaultSqftCost(orgId, uid, defaultSqftCost, 'partATaxObj', enqueueSnackbar)
+        addPhaseDefaultSqftCost(orgId, uid, defaultSqftCost, 'partATaxObj', ToastBar)
 
     } else {
-      addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
+      addCostSheetMaster(orgId, `${type}_cs`, data, ToastBar)
     }
   }
 
@@ -1539,7 +1540,7 @@ if (title === 'Villa Type Category') {
                         order: i,
                     };
                     console.log('data2 ==>', data2);
-                    addMastersFull(orgId, uId, data2, enqueueSnackbar);
+                    addMastersFull(orgId, uId, data2, ToastBar);
                     return data2;
                 }
             });

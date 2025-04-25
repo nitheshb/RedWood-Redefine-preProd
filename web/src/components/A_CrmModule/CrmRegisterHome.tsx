@@ -1613,79 +1613,54 @@ showLabels={true}
                                                       )}
 
                                                       {/* section 3*/}
+
                                                       <div
-                                                        className={`cursor-pointer border border-[#E7E7E9] rounded-[36px]  p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1${finData?.kyc_status == 'approved'
-                                                          ? 'text-green-700'
-                                                          : finData?.kyc_status == 'rejected'
-                                                            // ? 'bg-[#ffdbdb]'
-                                                            // : 'bg-[#FFFFFF] '
-                                                            ? 'text-red-700'
-                                                            : 'text-black'
-                                                          } `}
-                                                        // style={{
-                                                        //   display: 'inline-block',
-                                                        //   alignSelf: 'flex-end',
-                                                        // }}
-                                                        onClick={() => {
-                                                          setSelUnitDetails(finData)
-                                                          setIsSubTopicOpen(true)
-                                                          setIsSubTopic('crm_KYC')
-                                                        }}
-                                                      >
-                                                        <div className="flex  items-center justify-center gap-1">
-                                                          <div className="flex items-center justify-center ">
-                                                            {/* <NewspaperIcon
-                                      className={`h-4 w-4 text-gray-600 group-hover:text-indigo-600 hover:text-green-600 ${
-                                        finData?.kyc_status == 'approved'
-                                          ? 'bg-[#CCC5F7]'
-                                          : finData?.kyc_status ==
-                                            'rejected'
-                                          ? 'bg-[#ffdbdb]'
-                                          : 'bg-[#F1F5F9] '
-                                      }`}
-                                      aria-hidden="true"
-                                    /> */}
-                                                            {/* <img
-alt="CRM Background"
-src="/IconSets.svg"
-className="w-4 h-4"
-/> */}
+  className={`cursor-pointer border border-[#E7E7E9] rounded-[36px]  p-[2px] pl-[3px] pr-[7px] inline-flex items-center gap-1 ${
+    finData?.kyc_status === 'approved'
+      ? 'text-green-700'
+      : finData?.kyc_status === 'rejected'
+        ? 'text-red-700'
+        : 'text-black'
+  }`}
+  onClick={() => {
+    setSelUnitDetails(finData);
+    setIsSubTopicOpen(true);
+    setIsSubTopic('crm_KYC');
+  }}
+>
+  <div className="flex items-center justify-center gap-1">
+    <div className="flex items-center justify-center">
+      <span
+        className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${
+          finData?.kyc_status === 'approved'
+            ? 'bg-[#DFF6E0]'
+            : finData?.kyc_status === 'rejected'
+              ? 'bg-[#F5E6E6]'
+              : 'bg-gray-100'
+        }`}
+      >
+        <img
+          alt="Status Icon"
+          src={
+            finData?.kyc_status === 'approved'
+              ? '/crmc.svg'
+              : finData?.kyc_status === 'rejected'
+                ? '/crmw.svg'
+                : '/crmp.svg'
+          }
+          className="w-4 h-4"
+        />
+      </span>
+    </div>
+    <span className="text-xs">KYC box</span>
+  </div>
+</div>
 
 
 
-                                                            <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full ${finData?.man_cs_approval == 'approved'
-                                                              ? 'bg-[#DFF6E0]'
-                                                              : finData?.man_cs_approval == 'rejected'
-                                                                ? 'bg-[#F5E6E6]'
-                                                                : 'bg-gray-100'
-                                                              }`}>
 
 
-                                                              {/* <img
-                                                                alt="CRM Background"
-                                                                src="/timebox.svg"
-                                                                className="w-4 h-4"
-                                                              /> */}
 
-                                                              <img
-                                                                alt="Status Icon"
-                                                                src={
-                                                                  finData?.man_cs_approval === 'approved'
-                                                                    ? '/crmc.svg'
-                                                                    : finData?.man_cs_approval === 'rejected'
-                                                                      ? '/crmw.svg'
-                                                                      : '/crmp.svg'
-                                                                }
-                                                                className="w-4 h-4"
-                                                              />
-                                                            </span>
-
-                                                          </div>
-                                                          <span className="text-xs">
-                                                            KYC
-                                                          </span>
-                                                        </div>
-                                                      </div>
                                                     </section>}
                                                   {['agreement_pipeline'].includes(selCategory) &&
                                                     <section className='flex gap-2'>

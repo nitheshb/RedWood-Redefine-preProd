@@ -37,6 +37,7 @@ import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import UserAvatarUpload from '../comps/userAvatarUplaod'
 import ProjectLogoUploader from '../comps/projectLogoUploader'
 import { CustomRadioGroupProject } from 'src/util/formFields/CustomRadioGroupProject'
+import { ToastBar } from 'react-hot-toast'
 
 
 
@@ -209,7 +210,8 @@ const DialogFormBody = ({
         updatedData,
         existingBuildBankId,
         existingLandBankId,
-        enqueueSnackbar
+        // enqueueSnackba
+        ToastBar,
       )
       setLoading1(false)
     } else {
@@ -237,7 +239,8 @@ const DialogFormBody = ({
             orgId,
             uid,
             updatedData,
-            enqueueSnackbar,
+            // enqueueSnackbar,
+            ToastBar,
             resetForm
           )
           const additionalUserInfo = await getProject(orgId, uid)

@@ -2604,7 +2604,7 @@ Loan details
 
       {selFeature === 'cancel_booking' && <>
 
-      <CancelUnitForm openUserProfile={openUserProfile} selUnitDetails={selCustomerPayload} /> </>}
+      <CancelUnitForm  openUserProfile={openUserProfile} selUnitDetails={selCustomerPayload} /> </>}
 
       {selFeature === 'unblock_Unit' && <>
 
