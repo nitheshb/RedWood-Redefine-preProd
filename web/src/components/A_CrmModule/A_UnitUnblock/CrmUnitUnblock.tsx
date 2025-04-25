@@ -849,7 +849,7 @@ export default function UnitBookingUnblockCRM({
 
             <div className="flex flex-col justify-between">
               <section className="flex flex-row justify-between bg-white px-3 py-1 h-[50px] ">
-                {/* <section>
+                <section>
                   <section className="flex flex-row">
                     <img
                       src="https://static.ambitionbox.com/static/benefits/WFH.svg"
@@ -949,7 +949,7 @@ export default function UnitBookingUnblockCRM({
                       )}
                     </div>
                   </section>
-                </section> */}
+                </section>
               </section>
             </div>
           </div>
@@ -1016,15 +1016,19 @@ export default function UnitBookingUnblockCRM({
         selCustomerPayload={selCustomerPayload}
         source={"cancelBooking"}
         selSubMenu={"cancel_booking"}
+        // unitsViewMode={true}
       />    </>}
 
       {selFeature === 'unblock_Unit' && <>
         <UnitFullSummary
         openUserProfile={openUserProfile}
         customerDetails={customerDetails}
+          // widthClass="max-w-xl"
         selCustomerPayload={selCustomerPayload}
         source={"cancelBooking"}
         selSubMenu={"unblock_Unit"}
+   
+          
       />
       </>}
 

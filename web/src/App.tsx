@@ -13,6 +13,7 @@ import Routes from 'src/Routes'
 import store from 'src/state/store'
 
 import './index.css'
+import { Toaster } from 'react-hot-toast'
 
 // const firebaseConfig = {
 //   // apiKey: process.env.FIREBASE_API_KEY,
@@ -62,6 +63,41 @@ const App = () => (
           <AuthProvider>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Routes />
+              {/* <Toaster
+              autoClose={10000} 
+              position="top-right"
+                
+              /> */}
+
+<Toaster
+  position="top-right"
+  reverseOrder={false}
+  gutter={8}
+  containerClassName=""
+  containerStyle={{}}
+  toastOptions={{
+
+    className: '',
+    duration: 5000,
+    removeDelay: 1000,
+
+
+
+
+    // @ts-ignore
+    warning: {
+      duration: 3000,
+      iconTheme: {
+        primary: 'yellow',
+        secondary: 'black',
+      },
+    },
+  }}
+  
+/>
+
+
+
             </LocalizationProvider>
           </AuthProvider>
         </SnackbarProvider>

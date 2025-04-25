@@ -33,6 +33,7 @@ import { db } from './firebaseConfig'
 import { supabase } from './supabase'
 import LeadTaskFooter from 'src/components/Comp_CustomerProfileSideView/LeadTaskFooter'
 import { firebase } from '@redwoodjs/auth/dist/authClients/firebase'
+import toast from 'react-hot-toast'
 // import { admin } from './adnim'
 
 // import { userAccessRoles } from 'src/constants/userAccess'
@@ -2995,11 +2996,42 @@ export const addCpLead = async (orgId, data, by, msg) => {
   return
 }
 
+// export const addCustomer = async (
+//   orgId,
+//   data,
+//   by,
+//   enqueueSnackbar,
+//   resetForm
+// ) => {
+//   try {
+//     const did = uuidv4()
+//     data.id = did
+//     console.log('error in customer creation')
+
+
+//       await setDoc(doc(db, `${orgId}_customers`, did), data)
+
+//     enqueueSnackbar('Customer Details added successfully', {
+//       variant: 'success',
+//     })
+//     resetForm()
+//     return
+//   } catch (error) {
+//     console.log('error in customer creation', error)
+//     enqueueSnackbar('Customer Details added successfully', {
+//       variant: 'success',
+//     })
+//   }
+
+// }
+
+
+
+
 export const addCustomer = async (
   orgId,
   data,
   by,
-  enqueueSnackbar,
   resetForm
 ) => {
   try {
@@ -3007,22 +3039,19 @@ export const addCustomer = async (
     data.id = did
     console.log('error in customer creation')
 
+    await setDoc(doc(db, `${orgId}_customers`, did), data)
 
-      await setDoc(doc(db, `${orgId}_customers`, did), data)
-
-    enqueueSnackbar('Customer Details added successfully', {
-      variant: 'success',
-    })
+    toast.success('Customer Details added successfully')
     resetForm()
     return
   } catch (error) {
     console.log('error in customer creation', error)
-    enqueueSnackbar('Customer Details added successfully', {
-      variant: 'success',
-    })
+    toast.error('Something went wrong while adding customer')
   }
-
 }
+
+
+
 export const addUserAccessMaster = async (
   orgId,
   data,
@@ -4358,13 +4387,13 @@ export const createProject = async (
       'nithe.nithesh@gmail.com',
       'its virtual Account'
     )
-    enqueueSnackbar('Project added successfully', {
-      variant: 'success',
+    toast.success('Project added successfully', {
+      // variant: 'success',
     })
     // resetForm()
   } catch (e) {
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+    toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -4481,9 +4510,12 @@ export const addPaymentReceivedEntrySup = async (
     //     to: 'review',
     //   },
     // ])
-    enqueueSnackbar('Payment Captured..!', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('Payment Captured..!', {
+    //   variant: 'success',
+    // })
+
+    toast.success('Customer details added successfully')
+
     return x.id
   } catch (e) {
     console.log('error is', e)
@@ -4608,12 +4640,12 @@ export const createAdditonalCharges = async (element, enqueueSnackbar) => {
     }
     const ref = doc(db, 'additionalCharges', uid)
     await setDoc(ref, updated, { merge: true })
-    enqueueSnackbar('Charges added successfully', {
-      variant: 'success',
+    toast.success('Charges added successfully', {
+      // variant: 'success',
     })
   } catch (e) {
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+    toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -4684,12 +4716,12 @@ export const createUserToAttendance = async (element, enqueueSnackbar) => {
     }
     const ref = doc(db, 'additionalCharges', uid)
     await setDoc(ref, updated, { merge: true })
-    enqueueSnackbar('Charges added successfully', {
-      variant: 'success',
+    toast.success('Charges added successfully', {
+      // variant: 'success',
     })
   } catch (e) {
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+    toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -4867,13 +4899,13 @@ export const addPhaseAdditionalCharges = async (
     await updateDoc(doc(db, `${orgId}_phases`, uid), {
       [type]: arrayUnion(chargePayload),
     })
-    enqueueSnackbar('Charges added successfully', {
-      variant: 'success',
+    toast.success('Charges added successfully', {
+      // variant: 'success',
     })
   } catch (e) {
     console.log(' error is here', e)
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+    toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -4893,13 +4925,13 @@ export const addPhasePartAtax = async (
     await updateDoc(doc(db, `${orgId}_phases`, uid), {
       [type]: arrayUnion(chargePayload),
     })
-    enqueueSnackbar('Charges added successfully', {
-      variant: 'success',
+    toast.success('Charges added successfully', {
+      // variant: 'success',
     })
   } catch (e) {
     console.log(' error is here', e)
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+    toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -4954,13 +4986,13 @@ export const addPhaseFullCs = async (
         [],
       fullCs: fullCsA,
     })
-    enqueueSnackbar('Charges added successfully', {
-      variant: 'success',
+    toast.success('Charges added successfully', {
+      // variant: 'success',
     })
   } catch (e) {
     console.log(' error is here', e)
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+    toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -4968,13 +5000,13 @@ export const addMastersFull = async (orgId, uid, data, enqueueSnackbar) => {
   // return
   try {
     await setDoc(doc(db, `${orgId}_Masters`, uid), data)
-    // enqueueSnackbar('Charges added successfully', {
-    //   variant: 'success',
-    // })
+    toast.success('Charges added successfully', {
+      // variant: 'success',
+    })
   } catch (e) {
     console.log(' error is here', e)
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+    toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -5049,13 +5081,13 @@ export const updatePhasePartACharges = async (
       [type]: chargePayloadA,
     })
 
-    enqueueSnackbar('Charges added successfully', {
-      variant: 'success',
+    toast.success('Charges added successfully', {
+      // variant: 'success',
     })
   } catch (e) {
     console.log(' error is here', e)
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+    toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -5076,13 +5108,13 @@ export const addPhasePaymentScheduleCharges = async (
     await updateDoc(doc(db, `${orgId}_phases`, uid), {
       [type]: chargePayload,
     })
-    enqueueSnackbar('Schedule added successfully', {
-      variant: 'success',
+    toast.success('Schedule added successfully', {
+      // variant: 'success',
     })
   } catch (e) {
     console.log(' error is here', e, chargePayload, uid)
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+    toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -5098,13 +5130,13 @@ export const updatePaymentScheduleCharges = async (
       [type]: chargePayloadA,
     })
 
-    enqueueSnackbar('Charges added successfully', {
-      variant: 'success',
+    toast.success('Charges added successfully', {
+      // variant: 'success',
     })
   } catch (e) {
     console.log(' error is here', e, orgId, uid, chargePayloadA, type)
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+     toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -5166,12 +5198,12 @@ export const updateProject = async (
       )
     }
 
-    enqueueSnackbar('Project updated successfully', {
-      variant: 'success',
+    toast.success('Project updated successfully', {
+      // variant: 'success',
     })
   } catch (e) {
-    enqueueSnackbar(e.message, {
-      variant: 'error',
+    toast.error(e.message, {
+      // variant: 'error',
     })
   }
 }
@@ -5932,16 +5964,19 @@ export const updateLeadCustomerDetailsTo = async (
     await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
       ...data,
     })
-    enqueueSnackbar('Customer Details added successfully', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('Customer Details added successfully', {
+    //   variant: 'success',
+    // })
+    toast.success('Customer Details added successfully')
   } catch (error) {
     console.log('customer details creation failed', error, {
       ...data,
     })
-    enqueueSnackbar('Customer Details creation failed BBB', {
-      variant: 'error',
-    })
+    // enqueueSnackbar('Customer Details creation failed BBB', {
+    //   variant: 'error',
+    // })
+    toast.error('Customer Details creation failed BBB')
+
   }
 
   return
@@ -5960,16 +5995,20 @@ export const updateUnitCustomerDetailsTo = async (
     await updateDoc(doc(db, `${orgId}_units`, unitId), {
       ...data,
     })
-    enqueueSnackbar('Customer Details added successfully', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('Customer Details added successfully', {
+    //   variant: 'success',
+    // })
+    toast.success('Customer Details added successfully')
+
   } catch (error) {
     console.log('customer details updation failed', error, {
       ...data,
     })
-    enqueueSnackbar('Customer Details updation failed BBB', {
-      variant: 'error',
-    })
+    // enqueueSnackbar('Customer Details updation failed BBB', {
+    //   variant: 'error',
+    // })
+    toast.error('Customer Details updation failed BBB')
+
   }
 
   return
@@ -6600,19 +6639,23 @@ let payload= status==='approved'? approveBody: rejectBody
         },
       ])
       if(status==="approved"){
-      enqueueSnackbar('Cost Sheet Approved..!', {
-      variant: 'success',
-    })}else{
-      enqueueSnackbar('Cost Sheet Rejected..!', {
-        variant: 'error',
+      toast.success('Cost Sheet Approved..!', {
+      // variant: 'success',
+    }
+
+
+  
+  )}else{
+      toast.error('Cost Sheet Rejected..!', {
+        // variant: 'error',
       })
     }
   } catch (error) {
     console.log('CS Approved Updation Failed', error, {
       ...data,
     })
-    enqueueSnackbar('CS Approved Updation Failed .', {
-      variant: 'error',
+    toast.error('CS Approved Updation Failed .', {
+      // variant: 'error',
     })
   }
   return
@@ -7233,6 +7276,8 @@ export const updateSDApproval = async (
   }
   return
 }
+
+
 export const updateUnitCrmOwner = async (
   orgId,
   unitId,
@@ -7249,16 +7294,20 @@ export const updateUnitCrmOwner = async (
       AssignedBy: by,
       assignT: Timestamp.now().toMillis(),
     })
-    enqueueSnackbar('Unit Crm Owner Updated successfully', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('Unit Crm Owner Updated successfully', {
+    //   variant: 'success',
+    // })
+    toast.success('Customer details added successfully')
+
   } catch (error) {
     console.log('Unit Crm Owner Updated failed', error, {
       ...assignedTo,
     })
-    enqueueSnackbar('Unit Crm Owner Updated failed BBB', {
-      variant: 'error',
-    })
+    // enqueueSnackbar('Unit Crm Owner Updated failed BBB', {
+    //   variant: 'error',
+    // })
+    toast.error('Customer details added successfully')
+
   }
 
   return
@@ -7277,16 +7326,19 @@ export const updateLeadCostSheetDetailsTo = async (
     await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
       ...data,
     })
-    enqueueSnackbar('Cost Sheet Updated for Customer', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('Cost Sheet Updated for Customer', {
+    //   variant: 'success',
+    // })
+    toast.success('Cost Sheet Updated for Customer')
   } catch (error) {
     console.log('Filed updated Cost sheet', error, {
       ...data,
     })
-    enqueueSnackbar('Failed to update Cost sheet', {
-      variant: 'error',
-    })
+    // enqueueSnackbar('Failed to update Cost sheet', {
+    //   variant: 'error',
+    // })
+    toast.error('Failed to update Cost sheet')
+
   }
 
   return
@@ -7312,16 +7364,20 @@ export const updateUnitsCostSheetDetailsTo = async (
     await updateDoc(doc(db, `${orgId}_units`, leadDocId), {
       ...data,
     })
-    enqueueSnackbar('Cost Sheet Updated for Customer', {
-      variant: 'success',
-    })
+    // enqueueSnackbar('Cost Sheet Updated for Customer', {
+    //   variant: 'success',
+    // })
+    toast.success('Cost Sheet Updated for Customer')
+
   } catch (error) {
     console.log('Filed updated Cost sheet', error, {
       ...data,
     })
-    enqueueSnackbar('Failed to update Cost sheet', {
-      variant: 'error',
-    })
+    // enqueueSnackbar('Failed to update Cost sheet', {
+    //   variant: 'error',
+    // })
+    toast.error('Failed to update Cost sheet')
+
   }
 
   return

@@ -18,6 +18,7 @@ import {
   updatePhaseAdditionalCharges,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import { ToastBar } from 'react-hot-toast'
 
 const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
   const { user } = useAuth()
@@ -635,7 +636,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         blocksViewFeature === 'Construction_Other_Charges'
           ? 'ConstructOtherChargesObj'
           : 'additonalChargesObj',
-        enqueueSnackbar
+        // enqueueSnackbar
+        ToastBar
       )
     } else {
       setErrorMessages(errorList)
@@ -659,7 +661,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         uid,
         additonalChargesObj,
         'partATaxObj',
-        enqueueSnackbar
+        // enqueueSnackbar
+        ToastBar
       )
     } else {
       setErrorMessages(errorList)
@@ -693,7 +696,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         uid,
         additonalChargesObj,
         'partCTaxObj',
-        enqueueSnackbar
+        // enqueueSnackbar
+        ToastBar
       )
     } else {
       setErrorMessages(errorList)

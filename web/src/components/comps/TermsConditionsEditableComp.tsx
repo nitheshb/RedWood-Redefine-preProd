@@ -17,6 +17,7 @@ import {
   deleteMasterOption,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
+import { ToastBar } from 'react-hot-toast'
 
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
 
@@ -783,7 +784,7 @@ const TermsConditionsEditableTable = ({
           order: i,
         }
         console.log('data2 ==>', data2)
-        addMastersFull(orgId, uId, data2, enqueueSnackbar)
+        addMastersFull(orgId, uId, data2, ToastBar)
         return data2
       })
     })

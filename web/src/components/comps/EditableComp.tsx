@@ -22,6 +22,7 @@ import { formatIndianNumber } from 'src/util/formatIndianNumberTextBox'
 
 
 import WarningModel from './warnPopUp'
+import { ToastBar } from 'react-hot-toast'
 const StyledSelect = styled(SelectMAT)(({ theme }) => ({
   fontSize: '13px',
   '&.MuiInputBase-root': {
@@ -478,10 +479,10 @@ const [paymentScheduleA, setPaymentSchedule] = useState([]);
       const_cost_persqft: constructionPerSqft,
       area_tax:gst,
       const_tax: constGst}
-      addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', enqueueSnackbar)
-      addPhaseDefaultSqftCost(orgId, uid, defaultSqftCost, 'partATaxObj', enqueueSnackbar)
+      addPhaseFullCs(orgId, uid, newSet, 'partATaxObj', ToastBar)
+      addPhaseDefaultSqftCost(orgId, uid, defaultSqftCost, 'partATaxObj', ToastBar)
     } else {
-      addCostSheetMaster(orgId, `${type}_cs`, data, enqueueSnackbar)
+      addCostSheetMaster(orgId, `${type}_cs`, data, ToastBar)
     }
   }
 

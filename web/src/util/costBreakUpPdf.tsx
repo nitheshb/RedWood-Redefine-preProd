@@ -13,6 +13,7 @@ import '../styles/myStyles.css'
 import CustomDatePicker from './formFields/CustomDatePicker'
 import { CalculateComponentTotal, UpdateComponentCalTotal } from './unitCostSheetCalculator'
 import { plotCS_Dummy_A } from 'src/constants/projects'
+import { ToastBar } from 'react-hot-toast'
 
 const CostBreakUpPdf = ({
   formik,
@@ -729,7 +730,8 @@ const CostBreakUpPdf = ({
       id,
       xData,
       'nitheshreddy.email@gmail.com',
-      enqueueSnackbar,
+      // enqueueSnackbar,
+      ToastBar,
       resetForm
     )
   }

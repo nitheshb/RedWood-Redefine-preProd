@@ -141,6 +141,9 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
     x.cancelledBy = user?.email
     x.cancelReason = data?.payReason
     cancelUnitDbFun(orgId, x, user,enqueueSnackbar)
+
+    
+    
     }
 
 
@@ -151,6 +154,7 @@ const CancelUnitForm = ({openUserProfile,selUnitDetails, bookCompSteps, bookCure
       setShowConfirmation(false)
       if (formValues && resetFormFn) {
         setBookingProgress(true)
+        // setOpen(false)
         onSubmitSupabase(formValues, resetFormFn)
       }
     }
@@ -539,6 +543,10 @@ Unit Cancellation
               </button>
               <button 
                 onClick={handleConfirmationYes}
+ 
+                
+
+
                 className="flex-1 py-3 bg-white border border-[#0E0A1F] hover:bg-gray-50 text-gray-800 rounded-md font-medium"
               >
                 Yes

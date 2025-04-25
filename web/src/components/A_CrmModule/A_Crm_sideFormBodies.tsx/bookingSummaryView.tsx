@@ -18,6 +18,7 @@ import CostBreakUpPdfPreview from 'src/util/costBreakUpPdfPreview'
 import { TextFieldFlat } from 'src/util/formFields/TextFieldFlatType'
 import { prettyDate } from 'src/util/dateConverter'
 import { CalculateComponentTotal } from 'src/util/unitCostSheetCalculator'
+import { ToastBar } from 'react-hot-toast'
 
 const BookingSummaryView = ({
   projectDetails,
@@ -412,7 +413,8 @@ const BookingSummaryView = ({
       id,
       xData,
       'nitheshreddy.email@gmail.com',
-      enqueueSnackbar,
+      // enqueueSnackbar,
+      ToastBar,
       resetForm
     )
   }

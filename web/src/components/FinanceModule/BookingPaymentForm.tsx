@@ -24,6 +24,7 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 
 import CaptureUnitPayment from './CapturePayment'
+import { ToastBar } from 'react-hot-toast'
 
 const AddPaymentDetailsForm = ({
   title,
@@ -545,6 +546,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
       uploadPayload,
       user?.email,
       enqueueSnackbar,
+      // ToastBar,
       resetForm
     )
     const s3 = await bookCompSteps

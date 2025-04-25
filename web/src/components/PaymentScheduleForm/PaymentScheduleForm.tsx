@@ -15,6 +15,7 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 
 import EditablePaymentTable from '../comps/EditablePaymentComp'
+import { ToastBar } from 'react-hot-toast'
 
 const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
   const { user } = useAuth()
@@ -209,7 +210,8 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
         blocksViewFeature === 'Construction_Payment_Schedule'
           ? 'ConstructPayScheduleObj'
           : 'paymentScheduleObj',
-        enqueueSnackbar
+        // enqueueSnackbar
+        ToastBar
       )
     } else {
       setErrorMessages(errorList)
@@ -232,7 +234,8 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
       blocksViewFeature === 'Construction_Payment_Schedule'
         ? 'ConstructPayScheduleObj'
         : 'paymentScheduleObj',
-      enqueueSnackbar
+      // enqueueSnackbar
+      ToastBar
     )
   }
 
@@ -255,7 +258,8 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
         blocksViewFeature === 'Construction_Payment_Schedule'
           ? 'ConstructPayScheduleObj'
           : 'paymentScheduleObj',
-        enqueueSnackbar
+        // enqueueSnackbar
+        ToastBar
       )
     } else {
       setErrorMessages(errorList)
