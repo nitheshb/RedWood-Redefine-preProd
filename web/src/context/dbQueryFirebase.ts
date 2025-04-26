@@ -2336,7 +2336,7 @@ export const getAllProjects = async (orgId, snapshot, error) => {
     collection(db, `${orgId}_projects`),
     orderBy('created', 'desc')
   )
-  console.log(getAllProjectsQuery, 'dcavlvblasfjv')
+
   return onSnapshot(getAllProjectsQuery, snapshot, error)
 }
 export const getAllCampaigns = async (orgId, snapshot, error) => {
@@ -2345,7 +2345,6 @@ export const getAllCampaigns = async (orgId, snapshot, error) => {
     collection(db, `${orgId}_campaigns`),
     orderBy('start_date', 'desc')
   )
-  console.log(getAllProjectsQuery, 'dcavlvblasfjv')
   return onSnapshot(getAllProjectsQuery, snapshot, error)
 }
 export const getSalesReportsData = async (orgId, snapshot, error) => {
@@ -6644,7 +6643,7 @@ let payload= status==='approved'? approveBody: rejectBody
     }
 
 
-  
+
   )}else{
       toast.error('Cost Sheet Rejected..!', {
         // variant: 'error',
@@ -7651,6 +7650,41 @@ export const updateLeadRemarks_VisitDone = async (
 
   return
 }
+export const updateLeadsStrength = async (
+  orgId,
+  leadDocId,
+  data,
+  by
+) => {
+  try {
+    console.log('data is visit done', leadDocId, data)
+    const { leadstrength,  } = data
+
+    await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
+      ...data,
+    })
+    const { data:data1, error:error1 } = await supabase.from(`${orgId}_lead_logs`).insert([
+      {
+        type: 'leadstrength',
+        subtype: 'LeadStrength',
+        T: Timestamp.now().toMillis(),
+        Luid: leadDocId,
+        by,
+        payload: {},
+        from: 0,
+        to: leadstrength,
+      },
+    ])
+    toast.success('Lead Strength Updated')
+  } catch (error) {
+    console.log('Lead Strength failed', error, {
+      ...data,
+    })
+    toast.error('Lead Strength failed', )
+  }
+
+  return
+}
 export const updateLeadLastUpdateTime = async (
   orgId,
   leadDocId,
@@ -7930,6 +7964,7 @@ export const editAddTaskCommentDB = async (
     const { c } = comments[0]
     await updateDoc(doc(db, `${orgId}_leads`, uid), {
       Remarks: c,
+      Remarks_T: Timestamp.now().toMillis(),
     })
   }
 }

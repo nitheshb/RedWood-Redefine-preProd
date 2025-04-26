@@ -53,6 +53,7 @@ import {
   IncrementTastTotalCount,
   decreCountOnResheduleOtherDay,
   sendCallNotification,
+  updateLeadsStrength,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { db, storage } from 'src/context/firebaseConfig'
@@ -90,6 +91,8 @@ import RoundedProgressBar from './A_SalesModule/Reports/charts/horizontalProgres
 import ProjectManagement from './A_SalesModule/ProjectManagement'
 import { ChevronDown, ChevronRight, ChevronUp, Clock, IndianRupee, MessageSquare, Phone, Plus, PlusCircle } from 'lucide-react'
 import SemicircleProgressChart from './A_SalesModule/Reports/charts/SemiCircleProgress'
+import toast, { ToastBar } from 'react-hot-toast'
+import { use } from 'i18next'
 
 // interface iToastInfo {
 //   open: boolean
@@ -251,6 +254,8 @@ export default function LeadProfileSideView({
   const [leadNotesFetchedData, setLeadsFetchedNotesData] = useState([])
   const [showVisitFeedBackStatus, setShowVisitFeedBackStatus] = useState(false)
   const [leadSchFilteredData, setLeadsFilteredSchData] = useState([])
+  const [leadNextTaskObj, setLeadNextTaskObj] = useState({})
+
   const [takTitle, setTakTitle] = useState('')
   const [takNotes, setNotesTitle] = useState('')
   const [fbTitle, setFbTitle] = useState('')
@@ -286,6 +291,10 @@ export default function LeadProfileSideView({
   const [closeTask, setCloseTask] = useState(false)
 
   const [selProjectIs, setSelProjectIs] = useState({
+    projectName: '',
+    uid: '',
+  })
+  const [selProjectFullDetails, setSelProjectFullDetails] = useState({
     projectName: '',
     uid: '',
   })
@@ -381,7 +390,19 @@ export default function LeadProfileSideView({
     }
     setSelProjectIs(z1)
     console.log('my stuff ', z, selProjectIs, z1, ProjectId)
+    setopstr(customerDetails?.leadstrength || 0)
+    setoptionvalues(customerDetails?.optionvalues || optionvalues)
   }, [projectList, customerDetails])
+
+  useEffect(() => {
+    const z = projectList.filter((da) => {
+      return da.uid == (selProjectIs?.uid || ProjectId)
+    })
+    const z1 = {
+      ...z[0],
+    }
+    setSelProjectFullDetails(z1)
+  }, [selProjectIs])
 
   useEffect(() => {
     const { schTime } = addTaskCommentObj
@@ -416,7 +437,9 @@ export default function LeadProfileSideView({
   }
 
   useEffect(() => {
+
     const { coveredA, Status, from } = leadDetailsObj
+    console.log('lead changed 2',Status, leadDetailsObj)
     if (coveredA) {
       setStreamCoveredA(coveredA)
     } else {
@@ -464,7 +487,14 @@ export default function LeadProfileSideView({
     console.log('xo xo xo', x)
     setLeadsFilteredSchData(x)
   }, [leadSchFetchedData, selFilterVal])
-
+useEffect(() => {
+  if(leadSchFilteredData?.length>0){
+    const x = leadSchFilteredData[0]
+    let y = Math.abs(getDifferenceInHours(x?.schTime, ''))<=24 && Math.abs(getDifferenceInHours(x?.schTime, ''))>=0 ? true : false
+    x.comingSoon = y
+    setLeadNextTaskObj(x)
+  }
+  }, [leadSchFilteredData])
   useEffect(() => {
     setAssignedTo(customerDetails?.assignedTo)
     setAssignerName(customerDetails?.assignedToObj?.label)
@@ -655,29 +685,31 @@ export default function LeadProfileSideView({
     cancelResetStatusFun()
     setLoader(true)
     setClosePrevious(true)
-    if (newStatus == 'visitdone') {
-      enqueueSnackbar(`Create VISIT-FIXED Task`, {
-        variant: 'error',
-      })
-
+    if (newStatus == 'visitdone' && streamCurrentStatus !='visitfixed') {
+      toast.error('No recent site visit found.Create it.')
+      setStatusFun(leadDocId, 'visitfixed')
       return
     }
 
     setLeadStatus(newStatus)
 
     const arr = ['visitdone', 'visitcancel']
-    if (newStatus === 'visitdone') {
-      setFeature('visitDoneNotes')
-    } else if (newStatus === 'visitcancel') {
+
+    if (newStatus === 'visitcancel') {
       setFeature('visitCancelNotes')
     } else if (newStatus === 'notinterested') {
+      setFeature('appointments')
       setShowNotInterestedFun({}, '')
     } else if (newStatus === 'junk') {
+      setFeature('appointments')
       setLoader(false)
       setShowJunk(true)
-    } else {
-      arr.includes(newStatus) ? setFeature('notes') : setFeature('appointments')
-      arr.includes(newStatus) ? setAddNote(true) : setAddSch(true)
+    }
+    else {
+      // arr.includes(newStatus) ? setFeature('notes') : setFeature('appointments')
+      // arr.includes(newStatus) ? setAddNote(true) : setAddSch(true)
+      setFeature('appointments')
+      arr.includes(newStatus) ? null: setAddSch(true)
       if (newStatus === 'followup') {
         await setTakTitle(
           `Make a followup Call to ${customerDetails?.Name || 'Customer'} `
@@ -688,7 +720,14 @@ export default function LeadProfileSideView({
             customerDetails?.Name || 'Customer'
           }   `
         )
-      } else if (newStatus === 'booked') {
+      }
+      else if (newStatus === 'visitdone') {
+        toast.success('Please fill site visit feedback form')
+        let visitFixTaskA =leadSchFilteredData.filter((d) => d?.stsType === 'visitfixed' && d?.sts != 'completed' )
+        visitFixTaskA.length > 0 ? setShowVisitFeedBackStatusFun(visitFixTaskA[0], 'visitdone') : null
+
+      }
+      else if (newStatus === 'booked') {
         setLeadStatus('booked')
         await setTakTitle('Share the Details with CRM team')
       } else {
@@ -912,7 +951,7 @@ export default function LeadProfileSideView({
     setShowVisitFeedBackStatus(false)
     setAddSch(false)
     setAddNote(false)
-    setLeadStatus(streamCurrentStatus)
+    setLeadStatus(tempLeadStatus)
     setLoader(false)
   }
   const fUpdateSchedule = async (data, actionType, count) => {
@@ -1050,6 +1089,7 @@ export default function LeadProfileSideView({
       msgPayload
     )
     await cancelResetStatusFun()
+
     return
     data.comments = [
       {
@@ -1127,6 +1167,7 @@ export default function LeadProfileSideView({
     }
   }
   const addFeedbackFun = async (data) => {
+
     const inx = schStsMA.indexOf(data.ct)
 
     data.comments = [
@@ -1152,6 +1193,7 @@ export default function LeadProfileSideView({
     const x = schStsA
     x[inx] = 'pending'
     setschStsA(x)
+    setLeadStatus('negotiation')
   }
   const undoFun = (data) => {
     const inx = schStsMA.indexOf(data.ct)
@@ -1227,6 +1269,7 @@ export default function LeadProfileSideView({
         notInterestedNotes: takNotes === '' ? fbNotes : takNotes,
         stsUpT: Timestamp.now().toMillis(),
         Remarks: `${notInterestType}-${takNotes}`,
+        Remarks_T: Timestamp.now().toMillis(),
       }
       updateLeadRemarks_NotIntrested(
         orgId,
@@ -1243,6 +1286,7 @@ export default function LeadProfileSideView({
         Status: tempLeadStatus,
         stsUpT: Timestamp.now().toMillis(),
         Remarks: `${junkReason}`,
+        Remarks_T: Timestamp.now().toMillis(),
       }
       updateLeadRemarks_NotIntrested(
         orgId,
@@ -1255,7 +1299,7 @@ export default function LeadProfileSideView({
       cancelResetStatusFun()
     } else if (tempLeadStatus === 'visitdone') {
       const covA = [
-        ...(customerDetails?.coveredA || []),
+        ...(streamCoveredA),
         ...['visitfixed', 'visitdone'],
       ]
 
@@ -1267,6 +1311,7 @@ export default function LeadProfileSideView({
         VisitDoneNotes: fbNotes,
         stsUpT: Timestamp.now().toMillis(),
         Remarks: `${fbTitle}-${fbNotes}`,
+        Remarks_T: Timestamp.now().toMillis(),
       }
       updateLeadRemarks_VisitDone(orgId, id, dat, user.email, enqueueSnackbar)
       doneFun(selSchGrpO)
@@ -1483,9 +1528,9 @@ async function handleCallButtonClick(uid, name, number) {
     }
 
     const { fcmToken } = userSnap.data();
-
+    console.error("Date", userSnap.data());
     if (!fcmToken) {
-      console.error("FCM Token not found for user!");
+        toast.error("No Sales App exits for you");
       return;
     }
 
@@ -1526,7 +1571,7 @@ async function handleCallButtonClick(uid, name, number) {
 
   const [isProjectsExpanded, setIsProjectsExpanded] = useState(false);
   const [isAssignedExpanded, setIsAssignedExpanded] = useState(false);
-  
+
 
   const projectData = {
     projects: [
@@ -1600,32 +1645,15 @@ async function handleCallButtonClick(uid, name, number) {
 
 
   const [isExpanded, setIsExpanded] = useState(false);
-  
+
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
-
-
-
-
-
-  const RupeeIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-      <path d="M18 4H8a4 4 0 0 0-4 4"></path>
-      <path d="M6 12h12"></path>
-      <path d="M6 12a4 4 0 0 0 4 4h4"></path>
-      <path d="M14 20l-4-8"></path>
-    </svg>
-  );
-
-
-
-
-
-
-
-
+   const LeadStrengthFun= async()=>{
+    const x = {leadstrength : opstr, optionvalues }
+    updateLeadsStrength(orgId, id, x, user.email)
+   }
 
   return (
     <>
@@ -1650,7 +1678,7 @@ async function handleCallButtonClick(uid, name, number) {
           <div className="flex flex-col">
             <div className="flex items-center gap-1">
               <div className="flex items-center gap-2">
-   
+
                 <span className="text-[16px] uppercase">{Name}</span>
               </div>
               <img
@@ -1679,38 +1707,38 @@ async function handleCallButtonClick(uid, name, number) {
                 <span className='font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0.06em] text-[#0E0A1F]'>{Email}</span>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+
   <div className="mt-3">
     <div className="ml-2">
       <div className="flex flex-row p-4 py-2">
         <section>
-          <div className="flex flex-col items-center  justify-center bg-white px-2.5 py-3 rounded-[14px] mx-auto">
+          <div className="flex flex-col justify-center bg-white px-2.5 py-3 rounded-[14px] mx-auto">
             <div className="flex items-center gap-3">
               <div className="flex items-center cursor-pointer">
-                <div 
+                <div
                   className="bg-purple-100 p-2 rounded-lg flex items-center justify-center"
                   onClick={() => {
                     console.log('Call button clicked for lead:', Name, Mobile);
-                    handleCallButtonClick(assignedTo, Name, Mobile);
+                    handleCallButtonClick(user?.uid, Name, Mobile);
                   }}
                 >
-                  <img 
-                    src="/call.svg" 
-                    alt="Call Icon" 
+                  <img
+                    src="/call.svg"
+                    alt="Call Icon"
                     className="w-[18px] h-[18px] min-w-[18px]"
                   />
                 </div>
               </div>
 
               <div >
-                <h2 className="font-semibold text-[14px] leading-[100%] tracking-[6%] mb-1 text-[#696990]">Negotiation</h2>
-                <p className="font-normal text-[12px] leading-[100%]  cursor-pointer text-[#960000] decoration-solid">
+                <h2 className="font-semibold text-[14px] leading-[100%] tracking-[6%] mb-1 text-[#696990]">{streamCurrentStatus}</h2>
+                <p className="font-normal whitespace-nowrap text-[12px] leading-[100%]  cursor-pointer text-[#960000] decoration-solid">
                   Starts in 3min
                 </p>
               </div>
@@ -1727,71 +1755,6 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
-          {/* <div className="flex flex-row justify-between">
-            <div className=" py-0 flex flex-row  text-xs font-thin  text-[12px]  py-[6px] px-2 ">
-              Recent Comments:{' '}
-              <span className="text-[#867777] ml-1 ">
-                {' '}
-                {leadDetailsObj?.Remarks || 'NA'}
-              </span>
-            </div>
-            <div
-              className="relative flex flex-col  group"
-            >
-              <div
-                className="absolute bottom-0 right-0 flex-col items-center hidden mb-6 group-hover:flex"
-                style={{ zIndex: '9999' }}
-              >
-                <span
-                  className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
-                  style={{
-                    color: 'black',
-                    background: '#e2c062',
-                    maxWidth: '300px',
-                  }}
-                >
-                  <div className="italic flex flex-col">
-                    <div className="font-bodyLato">
-                      {Source?.toString() || 'NA'}
-                    </div>
-                  </div>
-                </span>
-                <div
-                  className="w-3 h-3  -mt-2 rotate-45 bg-black"
-                  style={{ background: '#e2c062', marginRight: '12px' }}
-                ></div>
-              </div>
-              <div className=" flex flex-row ">
-                <span className="font-bodyLato text-[#867777] text-xs mt-2">
-
-
-                  {Source?.toString() || 'NA'}
-                </span>
-                <div
-                  className=" cursor-pointer hover:underline"
-                  onClickCapture={() => {
-                    setTimeHide(!timeHide)
-                  }}
-                >
-                  {selProjectIs?.uid?.length > 4 &&
-                    (timeHide ? (
-                      <XIcon
-                        className="h-4 w-4  inline text-green"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <span className="px-[3px]  ml-1  text-[#318896]  text-[10px] text-[#] font-semibold">
-                        {' '}
-                        <AdjustmentsIcon
-                          className="h-4 w-4  inline text-[#318896] "
-                          aria-hidden="true"
-                        />
-                      </span>
-                    ))}
-                </div>
-              </div>
-            </div>
-          </div>
 
           {timeHide && (
             <>
@@ -1830,7 +1793,7 @@ async function handleCallButtonClick(uid, name, number) {
                 </section>
               </div>
             </>
-          )} */}
+          )}
 
 
         </div>
@@ -1865,13 +1828,14 @@ async function handleCallButtonClick(uid, name, number) {
             cursor: 'pointer',
           }}
         >
-          {streamCoveredA.includes(statusFlowObj.value) ? (
+
+            {(statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus) ? (
+            <div className="h-2 w-2 bg-black  rounded-full" />
+          ) : streamCoveredA.includes(statusFlowObj.value) ? (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white " fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-          ) : statusFlowObj.value === streamCurrentStatus || statusFlowObj.value === tempLeadStatus ? (
-            <div className="h-2 w-2 bg-black  rounded-full" />
-          ) : i >= StatusListA.length - 2 ? null : (
+          ): i >= StatusListA.length - 2 ? null : (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -2011,7 +1975,7 @@ async function handleCallButtonClick(uid, name, number) {
                         className=" px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] text-[#5B5FC7] cursor-pointer"
                         onClick={() => setFeature('lead_strength')}
                       >
-                        Lead requirement                 
+                        Lead requirement
                              </span>
                     )}
                     {selFeature == 'lead_strength' && (
@@ -2029,9 +1993,12 @@ async function handleCallButtonClick(uid, name, number) {
                         enableReinitialize={true}
 
                         initialValues={{
-                          assetPossesed: {},
+                          accountName:  '',
+                          reasonPurchase: '',
+                          preferredArea: ''
                         }}
                         onSubmit={(values, { resetForm }) => {
+
 
                         }}
                       >
@@ -2058,8 +2025,8 @@ async function handleCallButtonClick(uid, name, number) {
 
                                   <div className="flex items-center">
   <div className="w-16 mr-2">
-    <RoundedProgressBar 
-      progress={optionvalues.asstr} 
+    <RoundedProgressBar
+      progress={optionvalues.asstr}
       height={8}
       fillColor="#7BD2EA"
       showLabels={false}
@@ -2068,12 +2035,12 @@ async function handleCallButtonClick(uid, name, number) {
   <span className="text-xs font-medium">{`${optionvalues.asstr}%`}</span>
 </div>
 
-                                  
 
-                          
+
+
                                 </div>
                                 <CustomSelect
-                                  name="assetPossesed"
+                                  name="accountName"
                                   label="Existing Asset"
                                   className="input"
                                   onChange={(value) => {
@@ -2093,8 +2060,8 @@ async function handleCallButtonClick(uid, name, number) {
 
                                   <div className="flex items-center">
   <div className="w-16 mr-2">
-    <RoundedProgressBar 
-      progress={optionvalues.pstr} 
+    <RoundedProgressBar
+      progress={optionvalues.pstr}
       height={8}
       fillColor="#7BD2EA"
       showLabels={false}
@@ -2125,8 +2092,8 @@ async function handleCallButtonClick(uid, name, number) {
                                   <div>Preferred Area ?*</div>
                                   <div className="flex items-center">
   <div className="w-16 mr-2">
-    <RoundedProgressBar 
-      progress={optionvalues.astr} 
+    <RoundedProgressBar
+      progress={optionvalues.astr}
       height={8}
       fillColor="#7BD2EA"
       showLabels={false}
@@ -2156,7 +2123,7 @@ async function handleCallButtonClick(uid, name, number) {
                             <div className="flex flex-row justify-end mt-6">
                               <section className="flex flex-row">
                                 <button
-                                  onClick={() => fAddNotes()}
+                                  onClick={() => LeadStrengthFun()}
                                   className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium  bg-[#7bd2ea] text-black hover:bg-gray-700 hover:text-white   `}
                                 >
                                   <span className="ml-1 ">Save</span>
@@ -2938,7 +2905,7 @@ async function handleCallButtonClick(uid, name, number) {
     </div>
   </div> */}
 
-{/* 
+{/*
   <div className="bg-white rounded-2xl shadow-lg overflow-visible p-6">
     <div>
       <div className="flex items-center gap-2 overflow-visible mb-4">
@@ -3037,7 +3004,7 @@ async function handleCallButtonClick(uid, name, number) {
 
 
             <div className=" bg-[#F9F9FB] rounded-[16px] p-4  border border-[#E7E7E9] flex flex-col gap-3"
-            
+
 
             // style={{
             //   transition: 'transform 200ms ease-in-out',
@@ -3045,28 +3012,47 @@ async function handleCallButtonClick(uid, name, number) {
             // }}
             // onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.01)'}
             // onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            
+
             >
 
               <div>
 
               <div className="flex items-center justify-between">
-        <h2 className="font-[Outfit] font-medium text-[16px] leading-[100%] tracking-[0%] text-[#0E0A1F]">Get into Introduction Call with customer</h2>
-        <div className="bg-white border border-red-700 text-red-700 rounded-full px-3 py-1 flex items-center gap-1">
+        <h2 className="font-[Outfit] font-medium text-[16px] leading-[100%] tracking-[0%] text-[#0E0A1F]">{leadNextTaskObj?.notes}</h2>
+        <div className={`bg-white border rounded-full px-3 py-1 flex items-center gap-1 ${leadNextTaskObj?.comingSoon  ? 'bg-green-400': 'border-red-700 text-red-700 '}`}>
           <Phone size={14} />
-          <span className="font-medium text-[12px] leading-[100%] cursor-pointer tracking-[0%]">Starts in 3min</span>
+          <span className="font-medium text-[12px] leading-[100%] cursor-pointer tracking-[0%]"> {(leadNextTaskObj?.sts != 'completed' || Math.abs(
+                                                                    getDifferenceInHours(leadNextTaskObj?.schTime, '')
+                                                                  )<=24)  && <span className={`  py-1 ml-6 mb-2 ${ leadNextTaskObj?.comingSoon  ? 'bg-green-400': 'bg-red-400'}  text-white text-[12px] text-center`}>
+                                                            {leadNextTaskObj?.comingSoon
+                                                              ? 'Starts in'
+                                                              : 'Delayed by'}{' '}
+                                                            {'  '}
+                                                            {Math.abs(getDifferenceInMinutes(leadNextTaskObj?.schTime, '')) > 60
+                                                              ? Math.abs(getDifferenceInMinutes(leadNextTaskObj?.schTime, '')) >
+                                                                8640
+                                                                ? `${Math.abs(
+                                                                    getDifferenceInDays(leadNextTaskObj?.schTime, '')
+                                                                  )} Days `
+                                                                : `${Math.abs(
+                                                                    getDifferenceInHours(leadNextTaskObj?.schTime, '')
+                                                                  )} Hours `
+                                                              : `${Math.abs(
+                                                                  getDifferenceInMinutes(leadNextTaskObj?.schTime, '')
+                                                                )} Min`}{' '}
+                                                          </span>}</span>
         </div>
       </div>
-      
+
       <div className="flex items-center gap-2">
         <div className="text-gray-500">
-  
+
           <img src="/comment.svg" alt="" className='w-5 h-5' />
         </div>
         <div className="flex items-center gap-2">
           <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#0E0A1F]">Recent Comments:</span>
           <span className="font-[Outfit] font-normal text-[14px] leading-[100%] tracking-[0%] text-[#606062]">{' '} {leadDetailsObj?.Remarks || 'NA'}</span>
-          <span className="font-[Outfit] font-normal text-[10px] leading-[100%] tracking-[0%] text-[#606062] ml-2">27 Mar 2025, 11:30 am</span>
+          <span className="font-[Outfit] font-normal text-[10px] leading-[100%] tracking-[0%] text-[#606062] ml-2">{leadDetailsObj?.Remarks_T && prettyDateTime(leadDetailsObj?.Remarks_T)}</span>
         </div>
       </div>
 
@@ -3076,7 +3062,7 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
- 
+
 
     <div className="flex flex-col md:flex-row rounded-[16px]  bg-[#F9F9FB] overflow-visible border border-[#E7E7E9]">
   {/* Section 1 - Project Dropdown */}
@@ -3090,7 +3076,7 @@ async function handleCallButtonClick(uid, name, number) {
         align="right"
         setAssigner={setNewProject}
         usersList={projectList}
-        className="z-[999]" 
+        className="z-[999]"
       />
     </div>
   </div>
@@ -3156,13 +3142,13 @@ async function handleCallButtonClick(uid, name, number) {
         <img src="/fire.svg" alt="" className='w-[18px] h-[18px]' />
 
       </div>
-     
+
         <span className="font-semibold text-[12px] leading-[100%] tracking-[0.06em] text-[#696990]">LEAD STRENGTH</span>
       </div>
-      
+
 
       {/* <div className="relative h-3 bg-gray-100 rounded-full mb-6">
-        <div 
+        <div
           className="absolute top-0 left-0 h-full bg-indigo-500 rounded-full"
           style={{ width: '50%' }}
         >
@@ -3223,7 +3209,7 @@ async function handleCallButtonClick(uid, name, number) {
             height: 24,
             backgroundColor: '#5B5FC7',
             // border: '2px solid #5a5acc',
-            
+
             '&:hover, &.Mui-focusVisible': {
               boxShadow: '0px 0px 0px 8px rgba(90, 90, 204, 0.16)',
             },
@@ -3255,11 +3241,11 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
-{/* 
+{/*
 
 <div className="mb-6 relative">
   <Slider
-    onChange={(e) => setopstr(e.target.value)} 
+    onChange={(e) => setopstr(e.target.value)}
     value={opstr}
     defaultValue={opstr}
     aria-label="Lead Strength Slider"
@@ -3267,7 +3253,7 @@ async function handleCallButtonClick(uid, name, number) {
     min={20}
     max={100}
     sx={{
-      height: '14px', 
+      height: '14px',
       '& .MuiSlider-rail': {
         backgroundColor: '#e0e0e0',
       },
@@ -3275,9 +3261,9 @@ async function handleCallButtonClick(uid, name, number) {
         backgroundColor: '#3f51b5',
       },
       '& .MuiSlider-thumb': {
-        width: 20,  
+        width: 20,
         height: 20,
-        backgroundColor: '#3f51b5', 
+        backgroundColor: '#3f51b5',
       }
     }}
   />
@@ -3285,7 +3271,7 @@ async function handleCallButtonClick(uid, name, number) {
   <div
     className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
     style={{
-      width: `${opstr}%`, 
+      width: `${opstr}%`,
     }}
   >
     <span className="text-xs font-medium text-white">{`${opstr}%`}</span>
@@ -3300,14 +3286,14 @@ async function handleCallButtonClick(uid, name, number) {
 
 
 
-      
-  
+
+
       <div className="flex justify-between items-center mb-6">
         <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">Requirement : 10/12</div>
         <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">Updated : 27 Mar, 4:30 pm</div>
       </div>
-      
-  
+
+
       <div className="flex flex-wrap gap-3">
 
         <div className="bg-white rounded-[4px] border border-[#E7E7E9]  px-2 py-1 flex items-center">
@@ -3315,31 +3301,31 @@ async function handleCallButtonClick(uid, name, number) {
           <img src="/costR.svg" alt="" className='w-5 h-5' />
           <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Shuba Ecosone Ph 2</span>
         </div>
-        
-  
+
+
         <div className="bg-white rounded-[4px] border border-[#E7E7E9] px-2 py-1 flex items-center">
         <img src="/costR.svg" alt="" className='w-5 h-5' />
           <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Min: 2.12cr</span>
         </div>
-        
-       
+
+
         <div className="bg-white rounded-[4px] border border-[#E7E7E9] px-2 py-1 flex items-center">
         <img src="/costR.svg" alt="" className='w-5 h-5' />
           <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Max: 5.12cr</span>
         </div>
-        
- 
+
+
 
 {[1, 2, 3, 4, 5].map((index) => (
-  <div 
-    key={index} 
+  <div
+    key={index}
     className="bg-white border border-[#E7E7E9] rounded-[4px] px-2 py-1 flex items-center h-[28px]"
   >
     <img src="/costR.svg" alt="" className='w-5 h-5 mr-1' />
     <span className="font-[Outfit] font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#606062]">Call</span>
   </div>
 ))}
-        
+
         {/* Add button */}
         <div className="border border-indigo-500 rounded-md p-1 flex items-center justify-center">
           <Plus className="w-5 h-5 text-[#5B5FC7]" />
@@ -3394,7 +3380,7 @@ async function handleCallButtonClick(uid, name, number) {
       </div>
       <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">SITE VISIT ({projectData.siteVisit.count})</span>
     </div>
-    
+
   <div>
     <p className="font-normal text-[14px] text-[#606062]">Visit Date: {projectData.siteVisit.date}</p>
     <p className="font-normal text-[14px] text-[#606062]">Site In-charge: {projectData.siteVisit.inCharge}</p>
@@ -3425,7 +3411,7 @@ async function handleCallButtonClick(uid, name, number) {
   </div>
 
 
-{/* 
+{/*
   <div className="border border-[#E7E7E9] bg-[#F9F9FB] p-4 rounded-[16px]">
   <div className="flex items-center mb-4">
     <div className="bg-[#EDE9FE] p-1.5 rounded-lg mr-3">
@@ -3453,7 +3439,7 @@ async function handleCallButtonClick(uid, name, number) {
   </div>
 </div>
 
-  
+
 
 </div> */}
 
@@ -3540,16 +3526,16 @@ async function handleCallButtonClick(uid, name, number) {
     </div>
         <span className="font-semibold text-[12px] text-[#696990] leading-[100%] tracking-[0.06em] uppercase">PROJECT</span>
       </div>
-      
+
       <div className="mb-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="font-medium text-base leading-tight tracking-normal text-[#404040]">Shuba Ecosone Ph 2</h2>
-          <a href="#" className="font-medium text-xs leading-tight tracking-normal text-[#7746E0] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto">View Units (24/100)</a>
+          <h2 className="font-medium text-base leading-tight tracking-normal text-[#404040]"> {selProjectFullDetails?.projectName}</h2>
+          <a href="#" className="font-medium text-xs leading-tight tracking-normal text-[#7746E0] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto" onClick={()=>{setUnitsViewMode(!unitsViewMode)}}>View Units ({selProjectFullDetails?.availableCount}/{selProjectFullDetails?.totalUnitCount})</a>
         </div>
-        
+
         <div className="flex flex-wrap gap-2">
           <div className="border bg-white rounded-lg py-1 px-2 flex items-center">
-            <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F]">Planning Approval</span>
+            <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F]">Planning Approval-{selProjectFullDetails?.planningApproval}</span>
             <div className="">
               {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -3557,9 +3543,9 @@ async function handleCallButtonClick(uid, name, number) {
               <img src="/yes1.svg" alt="" className='w-5 h-5' />
             </div>
           </div>
-          
+
           <div className="border bg-white rounded-lg py-1 px-2 flex items-center">
-            <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F]">Rera Approval</span>
+            <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F]">Rera Approval-{selProjectFullDetails?.planningApproval}</span>
             <div className=" ">
               {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -3568,20 +3554,20 @@ async function handleCallButtonClick(uid, name, number) {
 
             </div>
           </div>
-          
+
           <div className="border bg-white rounded-lg py-1 px-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#0E0A1F] flex items-center justify-center">
   +21 Amenities
 </div>
 
         </div>
       </div>
-      
+
       {isExpanded && (
         <div className="mt-4 pt-4 border-t">
           <h3 className="font-medium text-base leading-tight tracking-normal text-[#404040] mb-2">Additional Information</h3>
           <p className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#606062]">
-            This is the second phase of the Shuba Ecosone development featuring eco-friendly design, 
-            sustainable materials, and energy-efficient construction. The project includes studio, 
+            This is the second phase of the Shuba Ecosone development featuring eco-friendly design,
+            sustainable materials, and energy-efficient construction. The project includes studio,
             1 BHK, and 2 BHK apartments with modern amenities.
           </p>
           <div className="mt-3">
@@ -3595,22 +3581,22 @@ async function handleCallButtonClick(uid, name, number) {
           </div>
         </div>
       )}
-      
-      <button 
-        onClick={toggleExpand} 
+
+      <button
+        onClick={toggleExpand}
         className="mt-4 font-medium text-xs leading-tight tracking-normal text-[#7746E0] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto flex items-center"
       >
         View {isExpanded ? 'less' : 'more'}
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          width="20" 
-          height="20" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className={`ml-1 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
         >
           <polyline points="6 9 12 15 18 9"></polyline>
@@ -3637,7 +3623,7 @@ async function handleCallButtonClick(uid, name, number) {
             </button>
           </div>
         </div>
-        
+
         <div className="mb-2">
           <div className="flex justify-between items-center">
             <div>
@@ -3650,8 +3636,8 @@ async function handleCallButtonClick(uid, name, number) {
           </div>
         </div>
 
-        <button 
-          onClick={toggleProjectsExpand} 
+        <button
+          onClick={toggleProjectsExpand}
           className="flex items-center font-medium text-[12px] leading-[100%] tracking-[0em] text-[#7746E0] mt-2"
         >
           +7 more <ChevronDown size={16} className="ml-1" />
@@ -3674,7 +3660,7 @@ async function handleCallButtonClick(uid, name, number) {
             </button>
           </div>
         </div>
-        
+
         {projectData.projects.map((project, index) => (
           <div key={index} className="mb-4">
             <div className="flex justify-between items-center">
@@ -3687,8 +3673,8 @@ async function handleCallButtonClick(uid, name, number) {
           </div>
         ))}
 
-        <button 
-          onClick={toggleProjectsExpand} 
+        <button
+          onClick={toggleProjectsExpand}
           className="flex items-center text-purple-600 mt-2 font-medium"
         >
           Less <ChevronUp size={16} className="ml-1" />
@@ -3727,7 +3713,7 @@ async function handleCallButtonClick(uid, name, number) {
           {assignerName}
         </span>
       )}
-      
+
       {isAssignedExpanded ? (
         <ChevronUp size={20} className="text-gray-500" />
       ) : (
@@ -4429,12 +4415,7 @@ async function handleCallButtonClick(uid, name, number) {
                                                 }
                                                 addFeedbackFun(data)
                                               } else {
-                                                enqueueSnackbar(
-                                                  'Please Enter Notes',
-                                                  {
-                                                    variant: 'warning',
-                                                  }
-                                                )
+                                               toast.error('Please Enter Notes')
                                               }
                                             }}
                                             className={`flex mt-2 rounded-lg items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-balck  bg-[#7bd2ea]  hover:bg-gray-700 hover:text-white `}
@@ -4520,7 +4501,7 @@ async function handleCallButtonClick(uid, name, number) {
                       </time>
                     </div>
                   )}
-             
+
 
              <div className="text-gray-600 font-medium mr-6 text-[12px] uppercase tracking-wide mb-4 ">
                     Timeline
@@ -4529,13 +4510,13 @@ async function handleCallButtonClick(uid, name, number) {
                   <div className='mx-4'>
 
 
-     
+
 
 
 
                   <ol className="col-span-12 space-y-2 relative pl-4 sm:col-span-8  sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:bg-gray-200">
 
-                    
+
 
                     {filterData?.map((data, i) => (
                       <section key={i} className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-[#7BD2EA] bg-white  rounded-lg">
@@ -4643,7 +4624,7 @@ async function handleCallButtonClick(uid, name, number) {
                                 <div className="w-[2px] mx-2 mt-[4px] h-[8px] border-0 border-r"></div>
 
 
-                                
+
                                 <span className="text-xs  text-gray-500">by:</span>
                                 <span className="text-xs  text-gray-500 ml-1 ">
                                   {data?.by}
@@ -4658,9 +4639,9 @@ async function handleCallButtonClick(uid, name, number) {
 
                   </div>
 
-             
 
-                  
+
+
                 </div>
               )}
             </section>

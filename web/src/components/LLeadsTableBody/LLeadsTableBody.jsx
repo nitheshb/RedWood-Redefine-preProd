@@ -316,7 +316,7 @@ const [headers, setHeaders] = React.useState(headCells)
                 maxHeight: '10px',
                 lineHeight: '7px',
                 borderLeft: 'none',
-                borderRight: 'none', 
+                borderRight: 'none',
 
                 display: displayHeadersFun(headCell.id)
               }}
@@ -407,6 +407,7 @@ const EnhancedTableToolbar = (props) => {
       row.Email = data?.Email
       row.AssignedTo = data?.assignedToObj?.name
       row.Source = data?.Source
+      row.strength= data?.leadstrength || 0
       row.Status = data?.Status
       row.Project = data?.Project
       row.Remarks = remark
@@ -471,7 +472,7 @@ React.useEffect(()=>{
 
       </span>
 
-  
+
       <span style={{ display: 'flex' }}>
         <section className="pt-1">
           <DropCompUnitStatus
@@ -927,10 +928,10 @@ export default function LLeadsTableBody({
                         <TableCell align="left">{row.Project}</TableCell>
                         { leadsTyper === 'booked' &&<TableCell align="left">{row?.UnitNo}</TableCell>}
 
-      
+
                         {viewUnitStatusA.includes('Assigned To') && (
                           <TableCell align="left">
-            
+
                             <span className="font-bodyLato">
                               {row?.assignedToObj?.label}
                             </span>
@@ -942,7 +943,7 @@ export default function LLeadsTableBody({
                             <span className="px-2 uppercase inline-flex text-[11px] text-black-900  ">
                               {row?.Source?.toString() || 'NA'}
                             </span>
-                            <Rating name="size-small half-rating-read" defaultValue={2.5} size="small" precision={0.5} readOnly />
+                            <Rating name="size-small half-rating-read" value={(row?.leadstrength/100) * 5} size="small" precision={0.5} readOnly />
 
                           </section>
                         </TableCell>
@@ -965,7 +966,7 @@ export default function LLeadsTableBody({
                             padding="none"
                           >
                             <>
-                
+
                               <span className="px- py-[1px]  min-w-[100px] inline-flex text-xs leading-5 tracking-wide  rounded-full  text-green-800">
                                 {Math.abs(
                                   getDifferenceInMinutes(
@@ -1008,7 +1009,7 @@ export default function LLeadsTableBody({
                           padding="none"
                         >
                           <>
-               
+
                             <span className="px- py-[1px]  min-w-[100px] inline-flex text-xs leading-5 tracking-wide  rounded-full  text-green-800">
                               {Math.abs(
                                 getDifferenceInMinutes(
