@@ -15,7 +15,7 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import SiderForm from './SiderForm/SiderForm'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
-import TaskManagementDashboard from './A_CrmModule/ToDoList'
+import TaskManagementDashboard from './A_CrmModule/T_UnitTasks/ToDoList'
 const AllBankDetailsView = ({ title, pId, data }) => {
   const { user } = useAuth()
   const { orgId } = user
@@ -93,7 +93,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  
+
   const [accountToDelete, setAccountToDelete] = useState(null);
 
 
@@ -110,9 +110,9 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
   const openDeleteDialog = (bankDe: any) => {
     setSelectedBankDe(bankDe);
-    setIsDialogOpen(true);  
+    setIsDialogOpen(true);
   };
-  
+
 
 
   const closeDeleteDialog = () => {
@@ -120,7 +120,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
     setAccountToDelete(null);
   };
 
-  
+
   const confirmDelete = () => {
     if (accountToDelete) {
       deleteAssetFun(
@@ -137,11 +137,11 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
   const maskAccountNumber = (accountNo) => {
     if (!accountNo) return "••••••••";
-    
+
     const accountStr = String(accountNo);
-    
+
     if (accountStr.length <= 4) return "•".repeat(accountStr.length);
-    
+
     const lastFour = accountStr.slice(-4);
     const maskedPart = "•".repeat(accountStr.length - 4);
     return maskedPart + lastFour;
@@ -156,7 +156,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
   //     </svg>
   //   );
   // }
-  
+
 
 
 
@@ -179,7 +179,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
               </span> */}
 
                  <section className='flex flex-row'>
-                <img className="w-11 h-11" alt=""                    
+                <img className="w-11 h-11" alt=""
                 src="/paymentsbank.svg"
                 ></img>
 
@@ -215,7 +215,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
           </section>
 
 
-          
+
           <div className="p-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {bankDetialsA.map((bankDe, i) => {
               return (
@@ -257,7 +257,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
 
                           {/* <span
-            
+
                           >
                             <TrashIcon
                              onClick={() => openDeleteDialog(bankDe)}
@@ -266,28 +266,28 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                             />
                           </span> */}
                         </div>
-            
+
                       </div>
                       {/* <div className="text-right">
                         <p className="text-lg  text-transparent">
                           <span>{'h'}</span>
                         </p>
-             
+
                         <span className="text-green-600  text-sm  rounded-lg font">
                           {bankDe?.preferredtype}
                         </span>
                       </div> */}
                     </div>
 
-  
+
                     <div className="space-y-4 py-3">
                       <div className="grid grid-cols-2 gap-4">
 
-                        
+
 
                       <div>
                         <span className="">
-                       
+
                             </span>
                         </div>
 
@@ -306,18 +306,18 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
 <div className="flex items-center">
                             <p className="text-sm font-medium text-gray-700">
-                              {visibleAccounts[bankDe.docId] 
-                                ? bankDe?.accountNo 
+                              {visibleAccounts[bankDe.docId]
+                                ? bankDe?.accountNo
                                 // : bankDe?.accountNo?.replace(/\d(?=\d{4})/g, "•")}
                                 : maskAccountNumber(bankDe?.accountNo)}
 
                             </p>
-                            <button 
-                              onClick={() => toggleAccountVisibility(bankDe.docId)} 
+                            <button
+                              onClick={() => toggleAccountVisibility(bankDe.docId)}
                               className="ml-2 text-gray-400 hover:text-gray-700"
                             >
-                              {visibleAccounts[bankDe.docId] 
-                                ? <EyeOffIcon className="h-4 w-4" /> 
+                              {visibleAccounts[bankDe.docId]
+                                ? <EyeOffIcon className="h-4 w-4" />
                                 : <EyeIcon className="h-4 w-4" />}
                             </button>
                           </div>
@@ -377,7 +377,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
                         </div>
                       </div>
                     </div>
-        
+
                   </div>
                 </section>
 
@@ -404,12 +404,12 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
 <button
           onClick={() => {
-            confirmDelete();  
+            confirmDelete();
             deleteAssetFun(
               selectedBankDe?.docId,
               selectedBankDe?.accountName,
               selectedBankDe?.usedInA?.length || 0
-            );  
+            );
           }}
           className="px-4 py-2 bg-red-600 text-white rounded-md"
         >
@@ -424,8 +424,8 @@ const AllBankDetailsView = ({ title, pId, data }) => {
       )}
 
 
-        
-  
+
+
           </div>
         </div>
         {bankDetialsA.length === 0 && (
@@ -461,7 +461,7 @@ const AllBankDetailsView = ({ title, pId, data }) => {
 
 
 
-{/* 
+{/*
       <TaskManagementDashboard/> */}
 
 

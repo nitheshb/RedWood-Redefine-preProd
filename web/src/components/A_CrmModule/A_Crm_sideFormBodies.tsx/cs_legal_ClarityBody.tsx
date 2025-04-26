@@ -20,8 +20,6 @@ import LeadTaskFooter from 'src/components/Comp_CustomerProfileSideView/LeadTask
 import SelectDropDownComp from 'src/components/comps/dropDownhead'
 import { USER_ROLES } from 'src/constants/userRoles'
 import {
-  addLegalClarificationTicket,
-  steamUnitTasks,
   updateLegalClarityApproval,
 } from 'src/context/dbQueryFirebase'
 import {
@@ -51,6 +49,7 @@ import {
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import CrmActivityLog from '../CrmActivityLog'
+import { addLegalClarificationTicket, steamUnitTasks } from '../T_UnitTasks/Query'
 
 // import BankSelectionSwitchDrop from './BankSelectionDroopDown'
 const torrowDate = new Date(

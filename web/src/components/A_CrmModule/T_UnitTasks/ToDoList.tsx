@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ErrorMessage, Form, Formik, useFormik } from 'formik'
 import * as Yup from 'yup'
 import { v4 as uuidv4 } from 'uuid'
-import { addLegalClarificationTicket, steamUnitTasks } from 'src/context/dbQueryFirebase';
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker';
 import { setHours, setMinutes } from 'date-fns'
 import { supabase } from 'src/context/supabase';
 import { useAuth } from 'src/context/firebase-auth-context';
 import { prettyDateTime } from 'src/util/dateConverter';
 import { CheckCircleIcon } from '@heroicons/react/solid'
+import { addLegalClarificationTicket, steamUnitTasks } from './Query';
 
 const ToDoList = ({selUnitPayload}) => {
   const d = new window.Date()
@@ -314,13 +314,11 @@ const ToDoList = ({selUnitPayload}) => {
                   initialValues={initialState}
                   validationSchema={validateSchema}
                   onSubmit={async (data, { resetForm }) => {
-
                     data.due_date = startDate
                     data.priorities = prior ? 'high' : 'medium'
                     // data.attachments = files
                     data.Uuid = selUnitPayload?.id
                     await addLegalClarificationTicket(orgId, data, user)
-
                     setShowAddTask(false)
                     return
                   }}
