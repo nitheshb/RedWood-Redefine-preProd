@@ -2813,6 +2813,9 @@ export const addLegalClarificationTicket = async (orgId, dta, user) => {
         to: 'InProgress',
       },
     ])
+    await updateDoc(doc(db, `${orgId}_units`, Uuid), {
+     T_pending_tasks: increment(1),
+    })
   x.map(async (userId) => {
     // get phone no's
     const additionalUserInfo = await getUser(userId)
@@ -8327,6 +8330,8 @@ export const addCostSheetMaster = async (
   }
   return
 }
+
+
 
 // reports
 

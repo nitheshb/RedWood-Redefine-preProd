@@ -180,16 +180,7 @@ const ToDoList = ({selUnitPayload}) => {
     );
   };
 
-  const filteredTasks = () => {
-    switch (activeTab) {
-      case 'TO DO':
-        return tasks.filter(task => !task.completed);
-      case 'COMPLETED':
-        return tasks.filter(task => task.completed);
-      default:
-        return tasks;
-    }
-  };
+
   const initialState = {
     taskTitle: takTitle || '',
   }
@@ -198,12 +189,11 @@ const ToDoList = ({selUnitPayload}) => {
         .max(180, 'Must be 180 characters or less')
         .required('Task Title Required'),
     })
+
+    const updateTaskStatus=(d)=>{
+  // write query to update task status in supabase
+    }
   return (
-
-
-
-
-
     <div className='overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
     <div className="relative min-h-screen mr-6">
       <div className="relative z-0">
@@ -256,7 +246,7 @@ const ToDoList = ({selUnitPayload}) => {
                     <span className="mr-1 text-[13px] ">All</span>
 
                     <span className="mr-1 text-[12px] ">{
-                      leadSchFetchedData.filter((d) => d?.schTime != undefined)
+                      unitFetchedActivityData.filter((d) => d?.due_date != undefined)
                         .length
                     }</span>
                   </div>
@@ -273,7 +263,7 @@ const ToDoList = ({selUnitPayload}) => {
                     >
                       {' '}
                       {
-                        leadSchFetchedData?.filter((d) => d?.sts === 'pending')
+                        unitFetchedActivityData?.filter((d) => d?.status === 'InProgress')
                           .length
                       }
                     </span>
@@ -498,14 +488,23 @@ const ToDoList = ({selUnitPayload}) => {
                     </div>
                   </div>
                 </div>
+                <input
+                                           type="checkbox"
+                                           checked={false}
+                                          onChange={() => updateTaskStatus(d1)}
+                                           className="h-5 w-5 text-black accent-black  border-gray-300 rounded focus:ring-black"
+                                         />
                 <div
                   className={`w-6 h-6 border-2 rounded cursor-pointer ${task.completed ? 'bg-blue-500 border-blue-500' : 'border-gray-300'}`}
                   onClick={() => toggleTaskCompletion(task.id)}
                 >
                   {task.completed && (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
+                                           <input
+                                           type="checkbox"
+                                           checked={false}
+                                          //  onChange={() => triggerPaymentScheudlefun(d1)}
+                                           className="h-5 w-5 text-black accent-black  border-gray-300 rounded focus:ring-black"
+                                         />
                   )}
                 </div>
               </div>

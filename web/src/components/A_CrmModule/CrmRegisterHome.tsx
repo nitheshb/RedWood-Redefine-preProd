@@ -1307,7 +1307,7 @@ showLabels={true}
 
 
 
- 
+
 <RadialChartSemi
                                   progress={
                                     (((finData?.T_review || 0) +
@@ -1652,7 +1652,7 @@ showLabels={true}
         />
       </span>
     </div>
-    <span className="text-xs">KYC box</span>
+    <span className="text-xs">KYC</span>
   </div>
 </div>
 
@@ -2143,7 +2143,7 @@ showLabels={true}
                                               className="w-4 h-4"
                                             />
                                           </span>
-                                          <span className="font-bodyLato text-xs">Call</span>
+                                          <span className="font-bodyLato text-xs whitespace-nowrap">Tasks ({finData?.T_pending_tasks || 0})</span>
                                         </div>
 
 
