@@ -458,28 +458,9 @@ export const streamGetAllUnitTransactions = async (
   // return onSnapshot(itemsQuery, snapshot, error)
 }
 
-// start-1
 
-export const fetchBrokerageDetails = async (orgId, projectId, unitId) => {
-  try {
-    const unitRef = doc(db, `${orgId}_projects`, projectId, 'units', unitId)
-    console.log('Fetching document from path:', unitRef.path)
 
-    const unitDoc = await getDoc(unitRef)
-    console.log('Document data:', unitDoc.data())
 
-    if (unitDoc.exists() && unitDoc.data().brokerageDetails) {
-      console.log('Brokerage details found:', unitDoc.data().brokerageDetails)
-      return unitDoc.data().brokerageDetails
-    } else {
-      console.log('No brokerage details found.')
-      return null
-    }
-  } catch (error) {
-    console.error('Error fetching brokerage details:', error)
-    throw error
-  }
-}
 
 export const updateBrokerageDetails = async (
   orgId,
@@ -491,28 +472,22 @@ export const updateBrokerageDetails = async (
   resetForm
 ) => {
   try {
-    const unitRef = doc(db, `${orgId}_projects`, projectId, 'units', unitId)
-    console.log('Updating document at path:', unitRef.path)
-    console.log('New brokerage details:', brokerageDetails)
-
+    // unit table updation
+    const unitRef = doc(db, `${orgId}_units`,  unitId)
     await updateDoc(unitRef, {
       brokerageDetails: {
         ...brokerageDetails,
         updatedBy,
-        updatedAt: new Date().toISOString(),
+        updatedAt: Timestamp.now().toMillis(),
       },
     })
-
-    console.log('Brokerage details updated successfully!')
 
     enqueueSnackbar('Brokerage details updated successfully!', {
       variant: 'success',
     })
-
     resetForm()
   } catch (error) {
     console.error('Error updating brokerage details:', error)
-
     enqueueSnackbar('Failed to update brokerage details.', {
       variant: 'error',
     })
@@ -8343,3 +8318,7 @@ export const steamLeadsVsSources = async (orgId, snapshot, data, error) => {
   return lead_logs
   // return onSnapshot(itemsQuery, snapshot, error)
 }
+
+// unit Brokerage details
+
+// add brokerage details

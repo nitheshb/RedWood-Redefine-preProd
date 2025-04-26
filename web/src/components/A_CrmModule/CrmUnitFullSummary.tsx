@@ -71,6 +71,7 @@ import DocumentManagement from '../LegalModule/Docu_row'
 import { computeTotal } from 'src/util/computeCsTotals'
 import { crmActivieLogNamer } from 'src/util/CrmActivityLogHelper'
 import UnitDocsWidget from '../LegalModule/UnitDocsWidget'
+import toast from 'react-hot-toast'
 
 // interface iToastInfo {
 //   open: boolean
@@ -3526,8 +3527,19 @@ export default function UnitFullSummary({
                     className={`flex items-center text-[#0E0A1F] hover:bg-[#EEEAFE] p-3 my-1 font-bold rounded-r-md cursor-pointer  ${
                       selFeature === d.val ? 'bg-[#EDE9FE]' : ''
                     }`}
-                    onClick={() => setFeature(d.val)}
-                  >
+                    onClick={() => {
+                      if(d.val == 'cancel_booking' ){
+                          if(['booked','agreement_pipeline', 'allotment', 'ATS', 'sd_pipeline'].includes(selCustomerPayload?.status)){
+                      setFeature(d.val)
+                    }else{
+                      toast.error('You can not cancel booking for this status')
+                    }
+                    }
+                      else{
+                        setFeature(d.val)
+                      }
+                      }}>
+
                     <span
                       className={` ml-6 hover:text-[#484848] font-bold ${
                         selFeature === d.val

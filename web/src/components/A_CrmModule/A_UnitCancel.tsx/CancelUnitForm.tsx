@@ -263,16 +263,10 @@ const CancelUnitForm = ({
                                                       <div className="flex flex-row   border-b border-gray-200 justify-between">
                                                         <section className="flex p-4 flex-row">
                                                           <div className="inline">
-                                                            {/* <div className="mt-[7px]">
-                                              <label className="text-[20px] font-medium text-[#000000]    mb-[2px]  ">
-                                                Cancel Booking
-                                                <abbr title="required"></abbr>
-                                              </label>
-                                            </div> */}
                                                             <div>
                                                               <h2 className="text-[#000000] font-outfit font-medium  text-[16px]">
                                                                 Add Cancellation
-                                                                Details{' '}
+                                                                Details
                                                               </h2>
                                                             </div>
                                                           </div>
@@ -415,7 +409,7 @@ const CancelUnitForm = ({
                       </span>
                     </div>
                   </section>
-            
+
                   <section className="ml-3 w-[300px]">
                     <div className="flex items-center">
                       {bookCompSteps?.includes('CS_updated') && (
@@ -452,7 +446,7 @@ const CancelUnitForm = ({
                       </span>
                     </div>
                   </section>
-              
+
                   <section className="ml-3 w-[300px]">
                     <div className="flex items-center">
                       {bookCompSteps?.includes('customer_created') && (
@@ -493,7 +487,7 @@ const CancelUnitForm = ({
                       </span>
                     </div>
                   </section>
-                  
+
                   <section className="ml-4 w-[300px]">
                     <div className="flex items-center">
                       {bookCompSteps?.includes('notify_to_manager') && (
