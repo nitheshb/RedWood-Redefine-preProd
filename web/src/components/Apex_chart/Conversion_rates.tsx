@@ -40,18 +40,21 @@ const Conversion_rates = () => {
   })
   return (
     <div id="chart3">
-       <Card >
-      <CardHeader title="Conversion Rates" subheader="(+43%) than last year" />
+      <Card>
+        <CardHeader
+          title="Conversion Rates"
+          subheader="(+43%) than last year"
+        />
 
-      <Box sx={{ mx: 3 }}>
-      <ReactApexChart
-        options={state.options}
-        series={state.series}
-        type="bar"
-        height={350}
-      />
-      </Box>
-    </Card>
+        <Box sx={{ mx: 3 }}>
+          <ReactApexChart
+            options={state.options}
+            series={state.series}
+            type="bar"
+            height={350}
+          />
+        </Box>
+      </Card>
     </div>
   )
 }

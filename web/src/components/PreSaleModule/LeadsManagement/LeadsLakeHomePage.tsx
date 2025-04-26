@@ -1,6 +1,5 @@
 // /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -52,13 +51,10 @@ const LeadsLakeHomePage = ({ taskType }) => {
     setValue(newValue)
   }
 
-
   useEffect(() => {
     console.log('check if this is loading on new page check', user?.uid)
     getLeadsDataFun()
   }, [taskType, user])
-
-
 
   const getLeadsDataFun = async () => {
     const uid = user?.uid
@@ -180,8 +176,7 @@ const LeadsLakeHomePage = ({ taskType }) => {
     }
   }
 
-  useEffect(() => {
-  }, [todaySchL])
+  useEffect(() => {}, [todaySchL])
 
   const handleDelete = async (ids) => {
     const { data } = await axios.post('/api/tableData1/delete', {

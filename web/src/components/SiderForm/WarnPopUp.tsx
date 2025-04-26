@@ -20,7 +20,6 @@ const WarnPopUpNew = ({
   setisImportLeadsOpen,
   selUnitStatus,
 }) => {
-
   const dispatch = useDispatch()
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -43,8 +42,9 @@ const WarnPopUpNew = ({
             <Dialog.Overlay className="absolute inset-0 max-w-2xl bg-green-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
           <div
-            className={`fixed inset-0 flex items-center justify-center  ${(widthClass ==
-              'max-w-2xl' ? 'ml-[10%]' : 'ml-[60%]')}`}
+            className={`fixed inset-0 flex items-center justify-center  ${
+              widthClass == 'max-w-2xl' ? 'ml-[10%]' : 'ml-[60%]'
+            }`}
           >
             <div className="pl-10 max-w-full w-[calc(100%-300px)] bg-red-600">
               <Transition.Child

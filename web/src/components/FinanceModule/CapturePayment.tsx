@@ -29,15 +29,13 @@ import { TextField2 } from 'src/util/formFields/TextField2'
 import PdfReceiptGenerator from 'src/util/PdfReceiptGenerator'
 import RupeeInWords from 'src/util/rupeeWords'
 import Loader from '../Loader/Loader'
-import { validate_capturePayment, validate_captureWalletPayment } from '../Schemas'
+import {
+  validate_capturePayment,
+  validate_captureWalletPayment,
+} from '../Schemas'
 import sendEmail from 'src/util/sendEmail'
 
 // import sendEmail from '../../../../web/src/util/sendEmail'
-
-
-
-
-
 
 const CaptureUnitPayment = ({
   title,
@@ -75,13 +73,6 @@ const CaptureUnitPayment = ({
   const [projectDetails, setProject] = useState({})
   const [limitError, setLimitError] = useState(false)
 
-
-
-
-
-
-
-
   const getProjectDetails = async (id) => {
     const unsubscribe = await getProjectByUid(
       orgId,
@@ -103,12 +94,15 @@ const CaptureUnitPayment = ({
     getProjectDetails(selUnitDetails?.pId)
   }, [selUnitDetails])
   const formatIndianNumber = function (num) {
-    const [integerPart, decimalPart] = num.toString().replace(/,/g, '').split('.');
-    const lastThree = integerPart.slice(-3);
-    const otherNumbers = integerPart.slice(0, -3);
-    const formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
-    const result = formattedNumber + (formattedNumber ? ',' : '') + lastThree;
-    return decimalPart ? `${result}.${decimalPart}` : result;
+    const [integerPart, decimalPart] = num
+      .toString()
+      .replace(/,/g, '')
+      .split('.')
+    const lastThree = integerPart.slice(-3)
+    const otherNumbers = integerPart.slice(0, -3)
+    const formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',')
+    const result = formattedNumber + (formattedNumber ? ',' : '') + lastThree
+    return decimalPart ? `${result}.${decimalPart}` : result
   }
   const [startDate, setStartDate] = useState(d)
   const [paymentModex, setPaymentModex] = useState('cheque')
@@ -127,7 +121,7 @@ const CaptureUnitPayment = ({
     confettiRef.current.fire()
   }
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     console.log('unit details are ', selUnitDetails, newPlotPS)
@@ -213,8 +207,17 @@ const CaptureUnitPayment = ({
 
           return x
         })
-        console.log('fetched users list is', selUnitDetails?.custObj1?.customerName1)
-        let x = bankA.filter((u) => u?.Name === (selUnitDetails?.custObj1?.customerName1 || selUnitDetails?.customerDetailsObj?.customerName1 || selUnitDetails?.secondaryCustomerDetailsObj?.customerName1))
+        console.log(
+          'fetched users list is',
+          selUnitDetails?.custObj1?.customerName1
+        )
+        let x = bankA.filter(
+          (u) =>
+            u?.Name ===
+            (selUnitDetails?.custObj1?.customerName1 ||
+              selUnitDetails?.customerDetailsObj?.customerName1 ||
+              selUnitDetails?.secondaryCustomerDetailsObj?.customerName1)
+        )
         x.map((user) => {
           user.label = user?.Name
           user.value = user?.id
@@ -243,23 +246,27 @@ const CaptureUnitPayment = ({
           uploadTask.on(
             'state_changed',
             (snapshot) => {
-              const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+              const prog = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              )
               // setProgress(prog)
               file.isUploading = false
             },
             (err) => reject(err), // Reject the promise if there's an error during upload
             () => {
-              getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                file.url = url
-                console.log('url is ', url)
+              getDownloadURL(uploadTask.snapshot.ref)
+                .then((url) => {
+                  file.url = url
+                  console.log('url is ', url)
 
-                let x1 = { url: url, fileName: file.name }
-                setCommentAttachUrl(x1)
+                  let x1 = { url: url, fileName: file.name }
+                  setCommentAttachUrl(x1)
 
-                resolve(x1)
-              }).catch((err) => {
-                reject(err)
-              })
+                  resolve(x1)
+                })
+                .catch((err) => {
+                  reject(err)
+                })
             }
           )
         } catch (error) {
@@ -267,14 +274,15 @@ const CaptureUnitPayment = ({
           reject(error)
         }
       })
-    } catch (error) {
-
-    }
-
+    } catch (error) {}
   }
 
   const onSubmitSupabase = async (data, resetForm) => {
-    console.log('inside supabase supports', data?.fileUploader, data?.fileUploader != "")
+    console.log(
+      'inside supabase supports',
+      data?.fileUploader,
+      data?.fileUploader != ''
+    )
     if (data?.fileUploader) {
       let x = await handleFileUploadFun(data?.fileUploader, 'panCard1')
       const z = await commentAttachUrl
@@ -283,43 +291,43 @@ const CaptureUnitPayment = ({
     let y = {}
     y = data
 
-
-    await console.log('data is ', commentAttachUrl, data, data?.fileUploader, data?.fileUploader[0], data?.fileUploader.File, data?.fileUploader.url, commentAttachUrl)
+    await console.log(
+      'data is ',
+      commentAttachUrl,
+      data,
+      data?.fileUploader,
+      data?.fileUploader[0],
+      data?.fileUploader.File,
+      data?.fileUploader.url,
+      commentAttachUrl
+    )
 
     await setPayementDetails(data)
-
 
     await onSubmitFun(y, resetForm)
 
     await confettiRef?.current?.fire()
 
-
-
-
     try {
       const emailData = {
         email: customerInfo?.email,
         userFirstname: customerInfo?.name,
-        resetPasswordLink: "https://yourdomain.com/reset-password",
-      };
+        resetPasswordLink: 'https://yourdomain.com/reset-password',
+      }
 
-      await sendEmail(emailData.email, emailData.userFirstname, emailData.resetPasswordLink);
-      console.log('Email sent successfully!');
+      await sendEmail(
+        emailData.email,
+        emailData.userFirstname,
+        emailData.resetPasswordLink
+      )
+      console.log('Email sent successfully!')
     } catch (error) {
-      console.error('Failed to send email:', error);
+      console.error('Failed to send email:', error)
     }
 
-
-
-
-
-
-    return;
-
-
+    return
 
     const { uid } = selUnitDetails
-
 
     console.log('check this value ', user, leadDetailsObj2)
     const { Status } = leadDetailsObj2
@@ -345,9 +353,7 @@ const CaptureUnitPayment = ({
       'nitheshreddy.email@gmail.com',
       enqueueSnackbar
     )
-
   }
-
 
   const datee = new Date().getTime()
   const initialState = {
@@ -366,8 +372,6 @@ const CaptureUnitPayment = ({
     selCustomerWallet: {},
   }
 
-
-
   const submitFormFun = (formik) => {
     formik.handleSubmit()
   }
@@ -382,57 +386,100 @@ const CaptureUnitPayment = ({
   //   backgroundSize: 'cover',
   // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // const [isOpen, setIsOpen] = useState(false);
-
-
-
 
   const PaymentIcons = {
     cheque: (
-      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+      <svg
+        className="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+        />
       </svg>
     ),
     Rtgs: (
-      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+      <svg
+        className="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+        />
       </svg>
     ),
     DD: (
-      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <svg
+        className="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
       </svg>
     ),
     online: (
-      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+      <svg
+        className="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+        />
       </svg>
     ),
     credit_note: (
-      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
+      <svg
+        className="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"
+        />
       </svg>
     ),
     wallet: (
-      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+      <svg
+        className="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+        />
       </svg>
     ),
-  };
+  }
   return (
     <div className="bg-[#F6F5F8]">
       <div className="flex items-center justify-center">
@@ -444,15 +491,17 @@ const CaptureUnitPayment = ({
             </section>
           )} */}
           <div className="relative  max-h-[65%]  rounded-xl">
-
-
             <div className="grid gap-8 grid-cols-1">
               <div className="flex flex-col ">
                 <div className="mt-0">
                   <Formik
                     enableReinitialize={true}
                     initialValues={initialState}
-                    validationSchema={paymentModex === 'wallet' ? validate_captureWalletPayment : validate_capturePayment}
+                    validationSchema={
+                      paymentModex === 'wallet'
+                        ? validate_captureWalletPayment
+                        : validate_capturePayment
+                    }
                     onSubmit={(values, { resetForm }) => {
                       console.log(values)
                       setBookingProgress(true)
@@ -467,7 +516,6 @@ const CaptureUnitPayment = ({
 
                           <section className="relative flex flex-col h-screen">
                             <div className=" flex-1">
-
                               <div className="w-full mx-auto">
                                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6  rounded-lg bg-[#F6F5F8]">
                                   <div className=" flex flex-row px-0 py-2  overflow-auto ">
@@ -493,182 +541,192 @@ const CaptureUnitPayment = ({
                                           <section className="flex flex-row justify-between">
                                             <div className="flex flex-col  mr-3">
                                               <span className="text-right text-[13px] font-normal">
-                                                {format(new Date(), 'dd-MMMM-yy')}
+                                                {format(
+                                                  new Date(),
+                                                  'dd-MMMM-yy'
+                                                )}
                                               </span>
-
                                             </div>
                                           </section>
                                         </div>
                                         {/* <hr className="mt-1 border-b-1 border-blueGray-300" /> */}
                                         <hr className="h-[1px]  bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 mt-3" />
-
                                       </article>
 
-
-
-
-
-                                      <section className="relative mb-4">  {/* Make container relative for absolute child positioning */}
+                                      <section className="relative mb-4">
+                                        {' '}
+                                        {/* Make container relative for absolute child positioning */}
                                         <img
                                           alt="CRM Background"
                                           src="/Bgcp.svg"
                                           className="w-full h-auto object-cover"
                                         />
-
                                         {/* Centered text (both horizontally & vertically) */}
                                         <div className="absolute inset-0 flex items-center justify-center">
-                                          <div className='flex flex-col text-center'>
-                                            <span className="text-[13px] font-normal  ">  {/* Optional: Slight bg for readability */}
+                                          <div className="flex flex-col text-center">
+                                            <span className="text-[13px] font-normal  ">
+                                              {' '}
+                                              {/* Optional: Slight bg for readability */}
                                               Unit Balance
                                             </span>
-                                            <span className='text-[24px]'>
-                                              {selUnitDetails?.T_balance?.toLocaleString('en-IN') || myBookingPayload?.T_balance?.toLocaleString('en-IN')}
-
+                                            <span className="text-[24px]">
+                                              {selUnitDetails?.T_balance?.toLocaleString(
+                                                'en-IN'
+                                              ) ||
+                                                myBookingPayload?.T_balance?.toLocaleString(
+                                                  'en-IN'
+                                                )}
                                             </span>
                                           </div>
-
                                         </div>
                                       </section>
 
-                                      <section className='h-[calc(100vh-300px)] overflow-y-auto pb-20   scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
-
-
+                                      <section className="h-[calc(100vh-300px)] overflow-y-auto pb-20   scroll-smooth scrollbar-thin scrollbar-thumb-gray-300">
                                         {!bookingProgress && (
-                                          <section className='mx-3'>
+                                          <section className="mx-3">
                                             <div className="flex flex-wrap mt-3">
                                               <div className="justify-center w-full mx-auto"></div>
 
-                                              {false && <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
-                                                <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md flex flex-row justify-between">
-                                                  <span className="text-sm font-semibold text-gray-500 w-2/3">
-                                                    Paying For
-                                                  </span>
-                                                  <span className="text-sm font-semibold text-gray-500 w-1/3 text-right">
-                                                    Total
-                                                  </span>
-                                                  <span className="text-sm font-semibold text-gray-500 w-1/3 text-right">
-                                                    Balance
-                                                  </span>
-                                                  <span className="text-sm font-semibold text-gray-500 w-1/3 text-right">
-                                                    Paying Now
-                                                  </span>
-                                                </article>
+                                              {false && (
+                                                <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
+                                                  <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md flex flex-row justify-between">
+                                                    <span className="text-sm font-semibold text-gray-500 w-2/3">
+                                                      Paying For
+                                                    </span>
+                                                    <span className="text-sm font-semibold text-gray-500 w-1/3 text-right">
+                                                      Total
+                                                    </span>
+                                                    <span className="text-sm font-semibold text-gray-500 w-1/3 text-right">
+                                                      Balance
+                                                    </span>
+                                                    <span className="text-sm font-semibold text-gray-500 w-1/3 text-right">
+                                                      Paying Now
+                                                    </span>
+                                                  </article>
 
-                                                {paymentModex != 'credit_note' && (
-                                                  <section className="flex flex-row">
-                                                    <div className="w-full  px-3 mt-3">
-                                                      <div className=" mb-4 w-full">
-                                                        {payingForA?.map(
-                                                          (paying, i) => {
-                                                            return (
-                                                              <div
-                                                                className="flex flex-row border-b pb-2 justify-between"
-                                                                key={i}
-                                                              >
-                                                                <span className="w-2/3">
-                                                                  {
-                                                                    paying?.stage
-                                                                      ?.label
-                                                                  }
-                                                                </span>{' '}
-                                                                <span className="w-1/3  text-right">
-                                                                  {paying?.value?.toLocaleString(
-                                                                    'en-IN'
-                                                                  )}
-                                                                </span>
-                                                                <span className="w-1/3 text-right">
-                                                                  {paying?.balance?.toLocaleString(
-                                                                    'en-IN'
-                                                                  ) ||
-                                                                    paying?.value?.toLocaleString(
+                                                  {paymentModex !=
+                                                    'credit_note' && (
+                                                    <section className="flex flex-row">
+                                                      <div className="w-full  px-3 mt-3">
+                                                        <div className=" mb-4 w-full">
+                                                          {payingForA?.map(
+                                                            (paying, i) => {
+                                                              return (
+                                                                <div
+                                                                  className="flex flex-row border-b pb-2 justify-between"
+                                                                  key={i}
+                                                                >
+                                                                  <span className="w-2/3">
+                                                                    {
+                                                                      paying
+                                                                        ?.stage
+                                                                        ?.label
+                                                                    }
+                                                                  </span>{' '}
+                                                                  <span className="w-1/3  text-right">
+                                                                    {paying?.value?.toLocaleString(
                                                                       'en-IN'
                                                                     )}
-                                                                </span>
-                                                                <span className="w-1/3 text-right">
-                                                                  {paying?.balance?.toLocaleString(
-                                                                    'en-IN'
-                                                                  ) || 0}
-                                                                </span>
-                                                              </div>
-                                                            )
-                                                          }
-                                                        )}
-                                                      </div>
-                                                    </div>
-                                                    {bankAccounts.length > 0 && (
-                                                      <div className="flex  space-x-2 w-full text-xs">
-                                                        {bankAccounts.map(
-                                                          (data, i) => (
-                                                            <section
-                                                              key={i}
-                                                              className="border px-4 py-2 rounded-lg"
-                                                            >
-                                                              <div>
-                                                                {data?.label}
-                                                              </div>
-                                                              <div>
-                                                                {data?.accountName}
-                                                              </div>
-                                                            </section>
-                                                          )
-                                                        )}
-                                                      </div>
-                                                    )}
-                                                    <div className="w-full  px-3 mt-3">
-                                                      <div className=" mb-4 w-full">
-                                                        <MultiSelectMultiLineField
-                                                          label="Select Paying For"
-                                                          name="towardsBankDocId"
-                                                          onChange={(payload) => {
-
-                                                            console.log(
-                                                              'changed value is ',
-                                                              payload
-                                                            )
-                                                            const {
-                                                              value,
-                                                              id,
-                                                              accountName,
-                                                            } = payload
-                                                            console.log(
-                                                              'selected value is ',
-                                                              payload
-                                                            )
-
-                                                            const x = payingForA
-                                                            const exists =
-                                                              payingForA.find(
-                                                                (item) =>
-                                                                  item.id ===
-                                                                  payload.id
+                                                                  </span>
+                                                                  <span className="w-1/3 text-right">
+                                                                    {paying?.balance?.toLocaleString(
+                                                                      'en-IN'
+                                                                    ) ||
+                                                                      paying?.value?.toLocaleString(
+                                                                        'en-IN'
+                                                                      )}
+                                                                  </span>
+                                                                  <span className="w-1/3 text-right">
+                                                                    {paying?.balance?.toLocaleString(
+                                                                      'en-IN'
+                                                                    ) || 0}
+                                                                  </span>
+                                                                </div>
                                                               )
-                                                            if (
-                                                              !exists &&
-                                                              value !=
-                                                              'addNewOption'
-                                                            ) {
-                                                              x.push(payload)
-                                                              setPayingForA(x)
                                                             }
-
-                                                            formik.setFieldValue(
-                                                              'towardsBankDocId',
-                                                              ''
-                                                            )
-                                                          }}
-                                                          value={
-                                                            formik.values
-                                                              .towardsBankDocId
-                                                          }
-                                                          options={paymentScheduleA}
-                                                        />
+                                                          )}
+                                                        </div>
                                                       </div>
-                                                    </div>
-                                                  </section>
-                                                )}
-                                              </section>}
+                                                      {bankAccounts.length >
+                                                        0 && (
+                                                        <div className="flex  space-x-2 w-full text-xs">
+                                                          {bankAccounts.map(
+                                                            (data, i) => (
+                                                              <section
+                                                                key={i}
+                                                                className="border px-4 py-2 rounded-lg"
+                                                              >
+                                                                <div>
+                                                                  {data?.label}
+                                                                </div>
+                                                                <div>
+                                                                  {
+                                                                    data?.accountName
+                                                                  }
+                                                                </div>
+                                                              </section>
+                                                            )
+                                                          )}
+                                                        </div>
+                                                      )}
+                                                      <div className="w-full  px-3 mt-3">
+                                                        <div className=" mb-4 w-full">
+                                                          <MultiSelectMultiLineField
+                                                            label="Select Paying For"
+                                                            name="towardsBankDocId"
+                                                            onChange={(
+                                                              payload
+                                                            ) => {
+                                                              console.log(
+                                                                'changed value is ',
+                                                                payload
+                                                              )
+                                                              const {
+                                                                value,
+                                                                id,
+                                                                accountName,
+                                                              } = payload
+                                                              console.log(
+                                                                'selected value is ',
+                                                                payload
+                                                              )
 
+                                                              const x =
+                                                                payingForA
+                                                              const exists =
+                                                                payingForA.find(
+                                                                  (item) =>
+                                                                    item.id ===
+                                                                    payload.id
+                                                                )
+                                                              if (
+                                                                !exists &&
+                                                                value !=
+                                                                  'addNewOption'
+                                                              ) {
+                                                                x.push(payload)
+                                                                setPayingForA(x)
+                                                              }
 
+                                                              formik.setFieldValue(
+                                                                'towardsBankDocId',
+                                                                ''
+                                                              )
+                                                            }}
+                                                            value={
+                                                              formik.values
+                                                                .towardsBankDocId
+                                                            }
+                                                            options={
+                                                              paymentScheduleA
+                                                            }
+                                                          />
+                                                        </div>
+                                                      </div>
+                                                    </section>
+                                                  )}
+                                                </section>
+                                              )}
 
                                               {/* <section className='overflow-y-auto  scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
 
@@ -681,7 +739,6 @@ const CaptureUnitPayment = ({
                                                     Mode of Payment
                                                   </span>
                                                 </article>
-
 
                                                 {/* <div className="bg-[#FFFFFF] rounded-2xl">
   {paymentMode.map((dat, i) => {
@@ -743,33 +800,50 @@ const CaptureUnitPayment = ({
   })}
 </div> */}
 
-
-
                                                 <div className="relative">
                                                   <button
                                                     type="button"
                                                     className=" w-full flex justify-between items-center p-1 px-2 rounded-md border border-[#E7E7E9]"
-                                                    onClick={() => setIsOpen(!isOpen)}
+                                                    onClick={() =>
+                                                      setIsOpen(!isOpen)
+                                                    }
                                                   >
                                                     <div className="flex items-center">
                                                       {paymentModex ? (
                                                         <>
                                                           <img
-                                                            src={paymentMode.find(mode => mode.value === paymentModex)?.img}
+                                                            src={
+                                                              paymentMode.find(
+                                                                (mode) =>
+                                                                  mode.value ===
+                                                                  paymentModex
+                                                              )?.img
+                                                            }
                                                             alt="selected payment"
                                                             className="h-8 w-8"
                                                           />
                                                           <span className="ml-2 text-[14px] text-[#0E0A1F]">
-                                                            {paymentMode.find(mode => mode.value === paymentModex)?.label}
+                                                            {
+                                                              paymentMode.find(
+                                                                (mode) =>
+                                                                  mode.value ===
+                                                                  paymentModex
+                                                              )?.label
+                                                            }
                                                           </span>
                                                         </>
                                                       ) : (
-                                                        <span className="text-[14px] text-[#606062]">Select Payment Mode</span>
+                                                        <span className="text-[14px] text-[#606062]">
+                                                          Select Payment Mode
+                                                        </span>
                                                       )}
                                                     </div>
                                                     <svg
-                                                      className={`h-5 w-5 text-[#606062] transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''
-                                                        }`}
+                                                      className={`h-5 w-5 text-[#606062] transition-transform duration-200 ${
+                                                        isOpen
+                                                          ? 'transform rotate-180'
+                                                          : ''
+                                                      }`}
                                                       xmlns="http://www.w3.org/2000/svg"
                                                       viewBox="0 0 20 20"
                                                       fill="currentColor"
@@ -785,54 +859,66 @@ const CaptureUnitPayment = ({
                                                   {isOpen && (
                                                     <div className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg border border-[#E7E7E9]">
                                                       <div className="py-1">
-                                                        {paymentMode.map((dat, i) => (
-                                                          <div
-                                                            key={i}
-                                                            className="flex items-center justify-between px-4 py-2 hover:bg-gray-50 cursor-pointer"
-                                                            onClick={() => {
-                                                              setPaymentModex(dat.value);
-                                                              formik.setFieldValue('mode', dat.value);
-                                                              setIsOpen(false);
-                                                            }}
-                                                          >
-                                                            <div className="flex items-center">
-                                                              <img src={dat.img} alt={dat.label} className="h-8 w-8" />
-                                                              {/* <span className="ml-2 text-[14px] text-[#606062]">
+                                                        {paymentMode.map(
+                                                          (dat, i) => (
+                                                            <div
+                                                              key={i}
+                                                              className="flex items-center justify-between px-4 py-2 hover:bg-gray-50 cursor-pointer"
+                                                              onClick={() => {
+                                                                setPaymentModex(
+                                                                  dat.value
+                                                                )
+                                                                formik.setFieldValue(
+                                                                  'mode',
+                                                                  dat.value
+                                                                )
+                                                                setIsOpen(false)
+                                                              }}
+                                                            >
+                                                              <div className="flex items-center">
+                                                                <img
+                                                                  src={dat.img}
+                                                                  alt={
+                                                                    dat.label
+                                                                  }
+                                                                  className="h-8 w-8"
+                                                                />
+                                                                {/* <span className="ml-2 text-[14px] text-[#606062]">
                 {dat.label}
               </span> */}
-                                                              <span
-                                                                className={`ml-2 text-[14px] ${paymentModex === dat.value ? 'text-black' : 'text-[#606062]'
+                                                                <span
+                                                                  className={`ml-2 text-[14px] ${
+                                                                    paymentModex ===
+                                                                    dat.value
+                                                                      ? 'text-black'
+                                                                      : 'text-[#606062]'
                                                                   }`}
-                                                              >
-                                                                {dat.label}
-                                                              </span>
-
+                                                                >
+                                                                  {dat.label}
+                                                                </span>
+                                                              </div>
+                                                              {paymentModex ===
+                                                                dat.value && (
+                                                                <svg
+                                                                  className="h-5 w-5 text-[#606062]"
+                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                                  viewBox="0 0 20 20"
+                                                                  fill="currentColor"
+                                                                >
+                                                                  <path
+                                                                    fillRule="evenodd"
+                                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                                    clipRule="evenodd"
+                                                                  />
+                                                                </svg>
+                                                              )}
                                                             </div>
-                                                            {paymentModex === dat.value && (
-                                                              <svg
-                                                                className="h-5 w-5 text-[#606062]"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                viewBox="0 0 20 20"
-                                                                fill="currentColor"
-                                                              >
-                                                                <path
-                                                                  fillRule="evenodd"
-                                                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                                  clipRule="evenodd"
-                                                                />
-                                                              </svg>
-                                                            )}
-                                                          </div>
-                                                        ))}
+                                                          )
+                                                        )}
                                                       </div>
                                                     </div>
                                                   )}
                                                 </div>
-
-
-
-
-
 
                                                 <div className="flex flex-col md:flex-row gap-4 py-4 items-start">
                                                   {/* Paying Towards Account Field - Left Side */}
@@ -840,39 +926,62 @@ const CaptureUnitPayment = ({
                                                     'credit_note',
                                                     'wallet',
                                                   ].includes(paymentModex) && (
-                                                      <div className="w-full md:w-8/12">
-                                                        <label className="block text-[12px] font-normal text-[#616162]  tracking-[0.06em] mb-1">
-                                                          Paying Towards Account
-                                                        </label>
-                                                        <MultiSelectMultiLineField
-                                                          name="towardsBankDocId"
-                                                          onChange={(payload) => {
-                                                            console.log('changed value is ', payload);
-                                                            const { value, id, accountName } = payload;
-                                                            formik.setFieldValue('builderName', accountName);
-                                                            formik.setFieldValue('landlordBankDocId', id);
-                                                            formik.setFieldValue('towardsBankDocId', id);
-                                                          }}
-                                                          value={formik.values.towardsBankDocId}
-                                                          options={bankDetailsA}
-                                                          // className="w-full bg-transparent border border-[#606062]"
-                                                          customStyles={{
-                                                            control: (provided) => ({
-                                                              ...provided,
-                                                              backgroundColor: 'transparent',
-                                                              // borderColor: '#606062',
-                                                              // '&:hover': {
-                                                              //   borderColor: '#606062',
-                                                              // },
-                                                            }),
-                                                            menu: (provided) => ({
-                                                              ...provided,
-                                                              backgroundColor: '#FFFFFF',
-                                                            }),
-                                                          }}
-                                                        />
-                                                      </div>
-                                                    )}
+                                                    <div className="w-full md:w-8/12">
+                                                      <label className="block text-[12px] font-normal text-[#616162]  tracking-[0.06em] mb-1">
+                                                        Paying Towards Account
+                                                      </label>
+                                                      <MultiSelectMultiLineField
+                                                        name="towardsBankDocId"
+                                                        onChange={(payload) => {
+                                                          console.log(
+                                                            'changed value is ',
+                                                            payload
+                                                          )
+                                                          const {
+                                                            value,
+                                                            id,
+                                                            accountName,
+                                                          } = payload
+                                                          formik.setFieldValue(
+                                                            'builderName',
+                                                            accountName
+                                                          )
+                                                          formik.setFieldValue(
+                                                            'landlordBankDocId',
+                                                            id
+                                                          )
+                                                          formik.setFieldValue(
+                                                            'towardsBankDocId',
+                                                            id
+                                                          )
+                                                        }}
+                                                        value={
+                                                          formik.values
+                                                            .towardsBankDocId
+                                                        }
+                                                        options={bankDetailsA}
+                                                        // className="w-full bg-transparent border border-[#606062]"
+                                                        customStyles={{
+                                                          control: (
+                                                            provided
+                                                          ) => ({
+                                                            ...provided,
+                                                            backgroundColor:
+                                                              'transparent',
+                                                            // borderColor: '#606062',
+                                                            // '&:hover': {
+                                                            //   borderColor: '#606062',
+                                                            // },
+                                                          }),
+                                                          menu: (provided) => ({
+                                                            ...provided,
+                                                            backgroundColor:
+                                                              '#FFFFFF',
+                                                          }),
+                                                        }}
+                                                      />
+                                                    </div>
+                                                  )}
 
                                                   {/* Date Field - Right Side */}
                                                   <div className="w-full md:w-4/12">
@@ -882,35 +991,44 @@ const CaptureUnitPayment = ({
                                                     <CustomDatePicker
                                                       className="w-full h-[36px] px-2 text-[12px] border bg-transparent  rounded-md "
                                                       name="dated"
-                                                      selected={formik.values.dated}
+                                                      selected={
+                                                        formik.values.dated
+                                                      }
                                                       onChange={(date) => {
-                                                        formik.setFieldValue('dated', date.getTime());
-                                                        console.log(startDate);
+                                                        formik.setFieldValue(
+                                                          'dated',
+                                                          date.getTime()
+                                                        )
+                                                        console.log(startDate)
                                                       }}
                                                       dateFormat="dd/MM/yyyy"
                                                       showYearDropdown
-
                                                       customStyles={{
-                                                        control: (provided) => ({
+                                                        control: (
+                                                          provided
+                                                        ) => ({
                                                           ...provided,
-                                                          backgroundColor: 'transparent',
-                                                          borderColor: '##606062',
+                                                          backgroundColor:
+                                                            'transparent',
+                                                          borderColor:
+                                                            '##606062',
                                                           '&:hover': {
-                                                            borderColor: '##606062',
+                                                            borderColor:
+                                                              '##606062',
                                                           },
                                                         }),
                                                         menu: (provided) => ({
                                                           ...provided,
-                                                          backgroundColor: '#2d2d2d',
+                                                          backgroundColor:
+                                                            '#2d2d2d',
                                                         }),
                                                       }}
                                                     />
                                                   </div>
                                                 </div>
 
-
-
-                                                {paymentModex === 'credit_note' && (
+                                                {paymentModex ===
+                                                  'credit_note' && (
                                                   <div className="w-full  px-3 mt-3">
                                                     <div className=" mb-4 w-full">
                                                       <MultiSelectMultiLineField
@@ -1003,17 +1121,16 @@ const CaptureUnitPayment = ({
                                                           formik.values
                                                             .towardsBankDocId
                                                         }
-                                                        options={walletCustomers}
+                                                        options={
+                                                          walletCustomers
+                                                        }
                                                       />
                                                     </div>
                                                   </div>
                                                 )}
 
-
-                                                <section className='flex flex-col py-4 gap-4'>
+                                                <section className="flex flex-col py-4 gap-4">
                                                   <div className="flex flex-col md:flex-row gap-4">
-
-
                                                     <div className="w-full md:w-7/12">
                                                       <div className=" mb-3">
                                                         <TextField2
@@ -1021,20 +1138,28 @@ const CaptureUnitPayment = ({
                                                           name="amount_commas"
                                                           type="text"
                                                           value={
-                                                            formik.values.amount_commas !== null
-                                                              ? formatIndianNumber(formik.values.amount_commas)
+                                                            formik.values
+                                                              .amount_commas !==
+                                                            null
+                                                              ? formatIndianNumber(
+                                                                  formik.values
+                                                                    .amount_commas
+                                                                )
                                                               : 0
                                                           }
                                                           onChange={(e) => {
                                                             console.log(
                                                               'changed value is ',
-                                                              e.target.value, formik.values
+                                                              e.target.value,
+                                                              formik.values
                                                                 .selCustomerWallet
-                                                              ?.walletAmount, (e.target.value > 0 &&
+                                                                ?.walletAmount,
+                                                              e.target.value >
+                                                                0 &&
                                                                 e.target.value >
-                                                                formik.values
-                                                                  .selCustomerWallet
-                                                                  ?.walletAmount),
+                                                                  formik.values
+                                                                    .selCustomerWallet
+                                                                    ?.walletAmount,
                                                               paymentModex
                                                             )
                                                             if (
@@ -1042,69 +1167,144 @@ const CaptureUnitPayment = ({
                                                               'wallet'
                                                             ) {
                                                               if (
-                                                                e.target.value > 0 &&
                                                                 e.target.value >
-                                                                formik.values
-                                                                  .selCustomerWallet
-                                                                  ?.walletAmount
+                                                                  0 &&
+                                                                e.target.value >
+                                                                  formik.values
+                                                                    .selCustomerWallet
+                                                                    ?.walletAmount
                                                               ) {
-
-
                                                                 formik.setFieldValue(
                                                                   'amount',
-                                                                  Number((formik.values
-                                                                    .selCustomerWallet
-                                                                    ?.walletAmount || '').replace(/,/g, ''))
+                                                                  Number(
+                                                                    (
+                                                                      formik
+                                                                        .values
+                                                                        .selCustomerWallet
+                                                                        ?.walletAmount ||
+                                                                      ''
+                                                                    ).replace(
+                                                                      /,/g,
+                                                                      ''
+                                                                    )
+                                                                  )
                                                                 )
                                                                 formik.setFieldValue(
                                                                   'amount_commas',
-                                                                  (String(Number(formik.values
-                                                                    .selCustomerWallet
-                                                                    ?.walletAmount)))
+                                                                  String(
+                                                                    Number(
+                                                                      formik
+                                                                        .values
+                                                                        .selCustomerWallet
+                                                                        ?.walletAmount
+                                                                    )
+                                                                  )
                                                                 )
                                                               } else {
                                                                 formik.setFieldValue(
                                                                   'amount',
-                                                                  Number((e.target.value || '').replace(/,/g, ''))
+                                                                  Number(
+                                                                    (
+                                                                      e.target
+                                                                        .value ||
+                                                                      ''
+                                                                    ).replace(
+                                                                      /,/g,
+                                                                      ''
+                                                                    )
+                                                                  )
                                                                 )
                                                                 formik.setFieldValue(
                                                                   'amount_commas',
-                                                                  (String(Number(e.target.value.replace(/[^0-9]/g, ''))))
+                                                                  String(
+                                                                    Number(
+                                                                      e.target.value.replace(
+                                                                        /[^0-9]/g,
+                                                                        ''
+                                                                      )
+                                                                    )
+                                                                  )
                                                                 )
                                                               }
                                                             } else {
-
-                                                              let x = Number((e.target.value || '').replace(/,/g, ''))
+                                                              let x = Number(
+                                                                (
+                                                                  e.target
+                                                                    .value || ''
+                                                                ).replace(
+                                                                  /,/g,
+                                                                  ''
+                                                                )
+                                                              )
                                                               console.log(
                                                                 'changed value is ',
-                                                                e.target.value, x)
+                                                                e.target.value,
+                                                                x
+                                                              )
                                                               if (
                                                                 x > 0 &&
-                                                                (x <= selUnitDetails?.T_balance || x <= myBookingPayload?.T_balance)
-
+                                                                (x <=
+                                                                  selUnitDetails?.T_balance ||
+                                                                  x <=
+                                                                    myBookingPayload?.T_balance)
                                                               ) {
                                                                 formik.setFieldValue(
                                                                   'amount',
-                                                                  Number((e.target.value || '').replace(/,/g, ''))
+                                                                  Number(
+                                                                    (
+                                                                      e.target
+                                                                        .value ||
+                                                                      ''
+                                                                    ).replace(
+                                                                      /,/g,
+                                                                      ''
+                                                                    )
+                                                                  )
                                                                 )
                                                                 formik.setFieldValue(
                                                                   'amount_commas',
-                                                                  (String(Number(e.target.value.replace(/[^0-9]/g, ''))))
+                                                                  String(
+                                                                    Number(
+                                                                      e.target.value.replace(
+                                                                        /[^0-9]/g,
+                                                                        ''
+                                                                      )
+                                                                    )
+                                                                  )
                                                                 )
-                                                                setLimitError(false)
-                                                              }
-                                                              else if (x > 0) {
-
-                                                                setLimitError(true)
-
+                                                                setLimitError(
+                                                                  false
+                                                                )
+                                                              } else if (
+                                                                x > 0
+                                                              ) {
+                                                                setLimitError(
+                                                                  true
+                                                                )
                                                               } else {
                                                                 formik.setFieldValue(
                                                                   'amount',
-                                                                  Number((e.target.value || '').replace(/,/g, ''))
+                                                                  Number(
+                                                                    (
+                                                                      e.target
+                                                                        .value ||
+                                                                      ''
+                                                                    ).replace(
+                                                                      /,/g,
+                                                                      ''
+                                                                    )
+                                                                  )
                                                                 )
                                                                 formik.setFieldValue(
                                                                   'amount_commas',
-                                                                  (String(Number(e.target.value.replace(/[^0-9]/g, ''))))
+                                                                  String(
+                                                                    Number(
+                                                                      e.target.value.replace(
+                                                                        /[^0-9]/g,
+                                                                        ''
+                                                                      )
+                                                                    )
+                                                                  )
                                                                 )
                                                               }
                                                             }
@@ -1116,14 +1316,21 @@ const CaptureUnitPayment = ({
                                                         Paying{' '}
                                                         <RupeeInWords
                                                           amount={
-                                                            Number(formik?.values?.amount) || 0
+                                                            Number(
+                                                              formik?.values
+                                                                ?.amount
+                                                            ) || 0
                                                           }
                                                         />
                                                       </div>
-                                                      {limitError && <div className="text-xs text-red-700">
-                                                        {' '}
-                                                        Amount cannot be greater than Unit Balance {' '}
-                                                      </div>}
+                                                      {limitError && (
+                                                        <div className="text-xs text-red-700">
+                                                          {' '}
+                                                          Amount cannot be
+                                                          greater than Unit
+                                                          Balance{' '}
+                                                        </div>
+                                                      )}
                                                     </div>
                                                     <div className="w-full md:w-5/12">
                                                       <div className="">
@@ -1134,11 +1341,8 @@ const CaptureUnitPayment = ({
                                                         />
                                                       </div>
                                                     </div>
-
-
                                                   </div>
                                                 </section>
-
 
                                                 <div className="w-full   pb-4">
                                                   <div className="relative w-full mb-3">
@@ -1156,7 +1360,6 @@ const CaptureUnitPayment = ({
                                                 htmlFor="formFile1"
                                                 className="form-label cursor-pointer  tracking-[0.06em] inline-flex items-center mt-2 ml-2 text-[#606062] font-regular text-[12px] rounded-2xl py-1"
                                               >
-
                                                 Add attachment
                                                 <AttachFile
                                                   className="w-4 h-4 mr-1"
@@ -1171,8 +1374,14 @@ const CaptureUnitPayment = ({
                                                 name="fileUploader"
                                                 accept="image/*"
                                                 onChange={(e) => {
-                                                  if (e.target.files && e.target.files[0]) {
-                                                    formik.setFieldValue('fileUploader', e.target.files[0]);
+                                                  if (
+                                                    e.target.files &&
+                                                    e.target.files[0]
+                                                  ) {
+                                                    formik.setFieldValue(
+                                                      'fileUploader',
+                                                      e.target.files[0]
+                                                    )
                                                   }
                                                 }}
                                               />
@@ -1180,14 +1389,21 @@ const CaptureUnitPayment = ({
                                               {formik.values.fileUploader && (
                                                 <div className="mt-2 relative w-24 h-24 border border-gray-200 rounded-lg overflow-hidden">
                                                   <img
-                                                    src={URL.createObjectURL(formik.values.fileUploader)}
+                                                    src={URL.createObjectURL(
+                                                      formik.values.fileUploader
+                                                    )}
                                                     alt="Uploaded File"
                                                     className="w-full h-full object-contain"
                                                   />
                                                   <button
                                                     type="button"
                                                     className="absolute top-0 right-0 bg-black text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
-                                                    onClick={() => formik.setFieldValue('fileUploader', null)}
+                                                    onClick={() =>
+                                                      formik.setFieldValue(
+                                                        'fileUploader',
+                                                        null
+                                                      )
+                                                    }
                                                   >
                                                     ×
                                                   </button>
@@ -1205,10 +1421,10 @@ const CaptureUnitPayment = ({
                                                     {bookCompSteps.includes(
                                                       'payment_captured'
                                                     ) && (
-                                                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
-                                                          <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
-                                                        </div>
-                                                      )}
+                                                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
+                                                        <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
+                                                      </div>
+                                                    )}
                                                     {!bookCompSteps.includes(
                                                       'payment_captured'
                                                     ) &&
@@ -1231,10 +1447,10 @@ const CaptureUnitPayment = ({
                                                     {bookCompSteps.includes(
                                                       'CS_updated'
                                                     ) && (
-                                                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
-                                                          <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
-                                                        </div>
-                                                      )}
+                                                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
+                                                        <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
+                                                      </div>
+                                                    )}
                                                     {!bookCompSteps.includes(
                                                       'CS_updated'
                                                     ) &&
@@ -1247,7 +1463,8 @@ const CaptureUnitPayment = ({
                                                       'CS_updated'
                                                     ) && <Loader />}
                                                     <span className="ml-4 text-md font-bold text-navy-700 ">
-                                                      Costsheet & Payment Updated
+                                                      Costsheet & Payment
+                                                      Updated
                                                     </span>
                                                   </div>
                                                 </section>
@@ -1258,10 +1475,10 @@ const CaptureUnitPayment = ({
                                                     {bookCompSteps.includes(
                                                       'unit_booked'
                                                     ) && (
-                                                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
-                                                          <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
-                                                        </div>
-                                                      )}
+                                                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
+                                                        <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
+                                                      </div>
+                                                    )}
                                                     {!bookCompSteps.includes(
                                                       'unit_booked'
                                                     ) &&
@@ -1284,10 +1501,10 @@ const CaptureUnitPayment = ({
                                                     {bookCompSteps.includes(
                                                       'customer_created'
                                                     ) && (
-                                                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
-                                                          <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
-                                                        </div>
-                                                      )}
+                                                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
+                                                        <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
+                                                      </div>
+                                                    )}
                                                     {!bookCompSteps.includes(
                                                       'customer_created'
                                                     ) &&
@@ -1311,10 +1528,10 @@ const CaptureUnitPayment = ({
                                                     {bookCompSteps.includes(
                                                       'customer_email_send'
                                                     ) && (
-                                                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
-                                                          <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
-                                                        </div>
-                                                      )}
+                                                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
+                                                        <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
+                                                      </div>
+                                                    )}
                                                     {!bookCompSteps.includes(
                                                       'customer_email_send'
                                                     ) &&
@@ -1337,10 +1554,10 @@ const CaptureUnitPayment = ({
                                                     {bookCompSteps.includes(
                                                       'notify_to_manager'
                                                     ) && (
-                                                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
-                                                          <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
-                                                        </div>
-                                                      )}
+                                                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 ">
+                                                        <CheckCircleIcon className="h-6 w-6 text-violet-500 " />
+                                                      </div>
+                                                    )}
                                                     {!bookCompSteps.includes(
                                                       'notify_to_manager'
                                                     ) &&
@@ -1362,15 +1579,8 @@ const CaptureUnitPayment = ({
                                           )}
                                         {formik?.file?.fileUploader}
 
-
-
-
-
                                         <Confetti ref={confettiRef} />
-
                                       </section>
-
-
                                     </section>
                                   </div>
                                 </div>
@@ -1383,20 +1593,14 @@ const CaptureUnitPayment = ({
                                     myObj={newPlotCostSheetA}
                                     newPlotPS={newPlotPS}
                                     payementDetails={payementDetails}
-
                                     projectDetails={projectDetails}
                                   />
                                 </div>
                               )}
-
                             </div>
 
-
-
                             {!bookingProgress && (
-
                               <div className="sticky bottom-0 bg-white  border-t border-gray-200">
-
                                 <div className="text-center my-3">
                                   <button
                                     className="bg-[#EDE9FE] translate-y-1 text-[#0E0A1F] text-[12px] font-medium py-2.5 px-8  rounded-md inline-flex items-center"
@@ -1426,13 +1630,7 @@ const CaptureUnitPayment = ({
                                 </div>
                               </div>
                             )}
-
-
                           </section>
-
-
-
-
                         </div>
                       </Form>
                     )}
@@ -1444,8 +1642,6 @@ const CaptureUnitPayment = ({
         </div>
       </div>
     </div>
-
-
   )
 }
 
@@ -1453,4 +1649,3 @@ export default CaptureUnitPayment
 // function triggerBookingEmail(email: any, userFirstname: any, resetPasswordLink: string) {
 //   throw new Error('Function not implemented.')
 // }
-

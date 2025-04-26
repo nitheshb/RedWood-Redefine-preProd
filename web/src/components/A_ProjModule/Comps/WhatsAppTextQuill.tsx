@@ -67,9 +67,7 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
     }
 
     fetchDbValue()
-
   }, [selProjectIs])
-
 
   useEffect(() => {
     console.log('retrieve this value ', wbPayload)
@@ -281,20 +279,15 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
         </span>
       </section>
       <section className="bg-teal-50 mt-2 h-[400px]  rounded-md">
-
-
         <ReactQuill
           theme="snow"
           value={editorState}
           onChange={setEditorState}
         />
-
-
       </section>
 
       <div className="sticky bottom-0 bg-white p-4 shadow-lg z-10">
-      <div className="flex justify-end space-x-3">
-
+        <div className="flex justify-end space-x-3">
           <button
             className="mb-2 md:mb-0 bg-green-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
             onClick={() => checkIt()}
@@ -307,8 +300,8 @@ const WhatsAppTextQuillForm = ({ wbPayload }) => {
           >
             Test
           </button>
-          </div>
         </div>
+      </div>
     </div>
   )
 }

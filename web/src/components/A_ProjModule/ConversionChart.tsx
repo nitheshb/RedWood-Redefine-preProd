@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   AreaChart,
   Area,
@@ -7,13 +7,13 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
+} from 'recharts'
 
 const data = [
   { name: 'Added to Cart', value: 10, percentage: 0.33 },
   { name: 'Reached Checkout', value: 2, percentage: 0.33 },
   { name: 'Purchased', value: 0, percentage: 0 },
-];
+]
 
 export function ConversionChart() {
   return (
@@ -39,9 +39,9 @@ export function ConversionChart() {
                       {payload[0].payload.value} customers
                     </p>
                   </div>
-                );
+                )
               }
-              return null;
+              return null
             }}
           />
           <Area
@@ -54,5 +54,5 @@ export function ConversionChart() {
         </AreaChart>
       </ResponsiveContainer>
     </div>
-  );
+  )
 }

@@ -9,7 +9,6 @@ export default function WarningModel({
   subtext,
   actionBtnTxt,
 }) {
-
   return (
     <Dialog
       open={open}
@@ -31,7 +30,9 @@ export default function WarningModel({
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div
-                  className={`mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full ${type==='Success'? 'bg-green-100':'bg-red-100' }  sm:mx-0 sm:h-10 sm:w-10`}
+                  className={`mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full ${
+                    type === 'Success' ? 'bg-green-100' : 'bg-red-100'
+                  }  sm:mx-0 sm:h-10 sm:w-10`}
                 >
                   <ExclamationCircleIcon
                     aria-hidden="true"
@@ -60,7 +61,9 @@ export default function WarningModel({
                   proceedAction()
                   setOpen(false)
                 }}
-                className={`inline-flex w-full justify-center rounded-sm ${type==='Success'? 'bg-cyan-600':'bg-red-600' }  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
+                className={`inline-flex w-full justify-center rounded-sm ${
+                  type === 'Success' ? 'bg-cyan-600' : 'bg-red-600'
+                }  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
               >
                 {actionBtnTxt}
               </button>

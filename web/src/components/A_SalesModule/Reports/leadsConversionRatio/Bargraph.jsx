@@ -1,7 +1,4 @@
-import {
-  BarChart,
-  Bar,
-} from 'recharts'
+import { BarChart, Bar } from 'recharts'
 
 const Bargraph = () => {
   const renderCustomBarLabel = ({ payload, x, y, width, height, value }) => {
@@ -16,7 +13,7 @@ const Bargraph = () => {
     )
   }
   const data = [
-    { name: 'Adventures', uv: 100, pv: 200, amt: 400, value:'newone' },
+    { name: 'Adventures', uv: 100, pv: 200, amt: 400, value: 'newone' },
     { name: 'CP Skagen', uv: 400, pv: 200, amt: 240 },
     { name: 'Direct Contact', uv: 200, pv: 200, amt: 400 },
     { name: 'FB', uv: 500, pv: 500, amt: 240 },

@@ -9,13 +9,11 @@ import {
 
 import { prettyDate } from 'src/util/dateConverter'
 
-const ProjectDocRow = ({ id, fileName,url,  date, amount, status, key }) => {
+const ProjectDocRow = ({ id, fileName, url, date, amount, status, key }) => {
   const [showModel, setShoModel] = useState(false)
   const [dateIs, setDate] = useState('NA')
   const toggle = () => setShoModel(!showModel)
-  const deleteDocument = async (id) => {
-
-  }
+  const deleteDocument = async (id) => {}
   useEffect(() => {
     if (date) {
       setDate(prettyDate(date))
@@ -56,7 +54,6 @@ const ProjectDocRow = ({ id, fileName,url,  date, amount, status, key }) => {
           <TrashIcon name="delete" className="w-4 h-4" />
         </button>
       </div>
-     
     </>
   )
 }

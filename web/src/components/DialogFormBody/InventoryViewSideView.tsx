@@ -3,7 +3,6 @@ import { useSnackbar } from 'notistack'
 import ProjPhaseHome from '../ProjPhaseHome/ProjPhaseHome'
 
 const InventoryViewSideForm = ({ title, projectDetails }) => {
-  
   const { enqueueSnackbar } = useSnackbar()
 
   return (

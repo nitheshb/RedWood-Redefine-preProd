@@ -25,9 +25,7 @@ export default function LegalDocsUplaodHome({
     bookedBy: '',
   }
 
-  const validateSchema = Yup.object({
-
-  })
+  const validateSchema = Yup.object({})
 
   return (
     <div className="h-full flex flex-col pb-6 bg-white shadow-xl overflow-y-scroll">
@@ -131,7 +129,6 @@ export default function LegalDocsUplaodHome({
                                 <div className="w-full lg:w-6/12 px-4">
                                   <div className="relative w-full mb-3">
                                     <TextField2
-                                      
                                       label="Document Name"
                                       name="chequeno"
                                       type="text"
@@ -191,7 +188,6 @@ export default function LegalDocsUplaodHome({
         <div className="flex flex-col  my-10 rounded-lg  px-4 m-4 mt-12">
           <Formik
             initialValues={{ files: null }}
-
             onSubmit={async (values) => {
               console.log('ehcek1', {
                 fileName: values.files[0].file.name,
@@ -218,7 +214,7 @@ export default function LegalDocsUplaodHome({
                       ...existing,
                       ...input.data,
                     ])
-              
+
                     console.log('Finished:', existingCols)
                   },
                 })
@@ -237,8 +233,6 @@ export default function LegalDocsUplaodHome({
                     myPhase={myPhase}
                     myBlock={myBlock}
                   />
-
-    
                 </Grid>
               </Form>
             )}

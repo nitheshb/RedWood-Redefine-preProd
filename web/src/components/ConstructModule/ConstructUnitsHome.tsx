@@ -90,7 +90,6 @@ const ConstructUnitsHome = ({ project }) => {
           })
           setPhasesList(phases)
           if (phases.length > 0) {
-
             setSelPhaseObj(phases?.[0])
           }
           console.log('myphases are', phases)
@@ -111,8 +110,6 @@ const ConstructUnitsHome = ({ project }) => {
     <div>
       <section className=" m-1 py-4   leading-7 text-gray-900 bg-white  rounded-lg  ">
         <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
-
-
           <div className="   ">
             <form className="">
               <div className="flex flex-row justify-between">
@@ -231,7 +228,6 @@ const ConstructUnitsHome = ({ project }) => {
                       </div>
                     </div>
                   </>
-
                 ))
               ) : (
                 <></>
@@ -243,8 +239,6 @@ const ConstructUnitsHome = ({ project }) => {
             selBlock={{}}
             dispSideView={dispDoc}
           />
-
-
         </div>
       </section>
       <SiderForm

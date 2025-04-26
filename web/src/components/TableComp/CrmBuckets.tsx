@@ -109,17 +109,10 @@ const CrmBucketList = ({ leadsTyper }) => {
       )
       return unsubscribe
     }
-
   }
 
   const serealizeData = (array) => {
-    const x = [
-      'new',
-      'review',
-      'cleared',
-      'rejected',
-      '',
-    ].map((status) => {
+    const x = ['new', 'review', 'cleared', 'rejected', ''].map((status) => {
       const items = array.filter((data) => data.Status.toLowerCase() == status)
 
       return { name: status, items }
@@ -385,7 +378,6 @@ const CrmBucketList = ({ leadsTyper }) => {
         title={'CrmUnitSideView'}
         customerDetails={selUserProfile}
         widthClass="max-w-4xl"
-
       />
     </>
   )

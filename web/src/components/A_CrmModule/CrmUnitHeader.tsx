@@ -12,12 +12,9 @@ const CrmUnitHeader = ({ projectDetails }) => {
   return (
     <>
       <div className="flex flex-row justify-between ">
-
-
         <img className="w-[80px]" src={'/nirvana_logo.png'} alt="" />
 
         <div className="pt-2 flex flex-row">
-
           <img
             className="w-[98px] h-[51px] mt-[8px]"
             alt="barcode"
@@ -28,7 +25,6 @@ const CrmUnitHeader = ({ projectDetails }) => {
             alt="barcode"
             src="/maahomes_logo.png"
           />
-
         </div>
       </div>
     </>

@@ -173,7 +173,6 @@ const SiderForm = ({
                   />
                 )}
                 {(title === 'Create Project' || title === 'Edit Project') && (
-
                   <ProjectDetailsFlowBody
                     title={title}
                     dialogOpen={setOpen}
@@ -186,7 +185,6 @@ const SiderForm = ({
                     title={title}
                     dialogOpen={setOpen}
                     project={data}
-
                   />
                 )}
                 {(title === 'Add Phase' || title === 'Edit Phase') && (
@@ -205,14 +203,14 @@ const SiderForm = ({
                 )}
                 {(title === 'Import Villas' ||
                   title === 'Import Apartment Units') && (
-                    <LeadsDropHomes
-                      title={title}
-                      dialogOpen={setOpen}
-                      pId={pId}
-                      myPhase={phaseDetails}
-                      myBlock={myBlock}
-                    />
-                  )}
+                  <LeadsDropHomes
+                    title={title}
+                    dialogOpen={setOpen}
+                    pId={pId}
+                    myPhase={phaseDetails}
+                    myBlock={myBlock}
+                  />
+                )}
 
                 {title === 'Import Plot Units' && (
                   <LeadsDropHomes
@@ -223,11 +221,11 @@ const SiderForm = ({
                     myBlock={myBlock}
                   />
                 )}
-                 { [
-        'Import Booked Villas',
-        'Import Booked Plots',
-        'Import Booked Apartments',
-      ].includes(title) && (
+                {[
+                  'Import Booked Villas',
+                  'Import Booked Plots',
+                  'Import Booked Apartments',
+                ].includes(title) && (
                   <LeadsDropHomes
                     title={title}
                     dialogOpen={setOpen}
@@ -311,7 +309,6 @@ const SiderForm = ({
                 )}
                 {title === 'disp_project_docs' && (
                   <>
-
                     <LegalHomeList
                       title={'Finance'}
                       dialogOpen={'false'}
@@ -380,9 +377,6 @@ const SiderForm = ({
                   <AddLeadForm title={title} dialogOpen={setOpen} />
                 )}
 
-
-
-
                 {title === 'Edit to Push Lead' && (
                   <AddLeadForm
                     title={title}
@@ -391,7 +385,7 @@ const SiderForm = ({
                     leadDetailsObj={leadDetailsObj}
                   />
                 )}
-                     {title === 'Edit Lead' && (
+                {title === 'Edit Lead' && (
                   <AddLeadForm
                     title={title}
                     dialogOpen={setOpen}
@@ -420,7 +414,6 @@ const SiderForm = ({
                     title={title}
                     projectDetails={projectDetails}
                   />
-
                 )}
                 {title === 'Additional Charges' && (
                   <AdditionalChargesForm
@@ -532,7 +525,6 @@ const SiderForm = ({
                 )}
                 {title === 'unblock_Unit' && (
                   <UnitBookingUnblockCRM
-
                     openUserProfile={setOpen}
                     customerDetails={customerDetails}
                     unitViewerrr={unitViewerrr}
@@ -547,7 +539,6 @@ const SiderForm = ({
                 )}
                 {title === 'Cancel_Unit' && (
                   <UnitBookingCancelCRM
-
                     openUserProfile={setOpen}
                     customerDetails={customerDetails}
                     unitViewerrr={unitViewerrr}
@@ -567,10 +558,13 @@ const SiderForm = ({
                     onSubmitFun={paymentCaptureFun}
                   />
                 )}
-                  {title === 'addWallet' && (
-                  <AddCustomerWallet title={title} dialogOpen={setOpen}
-                  selUnitDetails={selUnitDetails}
-                  onSubmitFun={paymentCaptureFun} />
+                {title === 'addWallet' && (
+                  <AddCustomerWallet
+                    title={title}
+                    dialogOpen={setOpen}
+                    selUnitDetails={selUnitDetails}
+                    onSubmitFun={paymentCaptureFun}
+                  />
                 )}
                 {title === 'newDemand' && (
                   <AddNewDemand

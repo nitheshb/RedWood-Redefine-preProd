@@ -3,10 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useEffect, useState } from 'react'
-import {
-  PaperClipIcon,
-  UsersIcon,
-} from '@heroicons/react/outline'
+import { PaperClipIcon, UsersIcon } from '@heroicons/react/outline'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid'
 import { startOfDay } from 'date-fns'
 import { useSnackbar } from 'notistack'
@@ -25,16 +22,12 @@ import {
   getDifferenceInMinutes,
   prettyDateTime,
 } from 'src/util/dateConverter'
-import {
-  VerySlimSelectBox,
-} from 'src/util/formFields/slimSelectBoxField'
+import { VerySlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 
 import SiderForm from '../SiderForm/SiderForm'
 
-
 import ProjectSummaryReport from './ProjectSummaryReport'
 import AnalyticsDashboard from './AnalyticsDashboard'
-
 
 const ProjectReportsBody = ({ title, pId, data }) => {
   const d = new window.Date()
@@ -92,75 +85,76 @@ const ProjectReportsBody = ({ title, pId, data }) => {
 
     // Subscribe to real-time changes in the `${orgId}_accounts` table
     const channel = supabase
-        .channel('org-TM-Tasks-channel')
-        .on(
-          'postgres_changes',
-          {
-            event: '*',
-            schema: 'public',
-            table: `${orgId}_TM_Tasks`,
-          },
-          (payload) => {
-    // const subscription = supabase
-    //   .from(`maahomes_TM_Tasks`)
-    //   .on('*', (payload) => {
-        // When a change occurs, update the 'leadLogs' state with the latest data
-        console.log('account records', payload)
-        // Check if the updated data has the id 12
-        const updatedData = payload.new
-        const { id } = payload.old
-        const updatedLeadLogs = [...businessData_F]
-        if (
-          updatedData.by_uid === selUserId ||
-          updatedData?.to_uid === selUserId ||
-          updatedData?.followersUid.includes(selUserId)
-        ) {
+      .channel('org-TM-Tasks-channel')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: `${orgId}_TM_Tasks`,
+        },
+        (payload) => {
+          // const subscription = supabase
+          //   .from(`maahomes_TM_Tasks`)
+          //   .on('*', (payload) => {
+          // When a change occurs, update the 'leadLogs' state with the latest data
+          console.log('account records', payload)
+          // Check if the updated data has the id 12
+          const updatedData = payload.new
+          const { id } = payload.old
+          const updatedLeadLogs = [...businessData_F]
           if (
-            updatedData.by_uid === selUserId &&
-            updatedData.to_uid === selUserId
+            updatedData.by_uid === selUserId ||
+            updatedData?.to_uid === selUserId ||
+            updatedData?.followersUid.includes(selUserId)
           ) {
-            setPersonalData_F((prevLogs) => {
-              const existingLog = prevLogs.find((log) => log.id === id)
+            if (
+              updatedData.by_uid === selUserId &&
+              updatedData.to_uid === selUserId
+            ) {
+              setPersonalData_F((prevLogs) => {
+                const existingLog = prevLogs.find((log) => log.id === id)
 
-              if (existingLog) {
-                console.log('Existing record found!')
-                if (payload.new.status === 'Done') {
-                  const updatedLogs = prevLogs.filter((log) => log.id != id)
-                  return [...updatedLogs]
+                if (existingLog) {
+                  console.log('Existing record found!')
+                  if (payload.new.status === 'Done') {
+                    const updatedLogs = prevLogs.filter((log) => log.id != id)
+                    return [...updatedLogs]
+                  } else {
+                    const updatedLogs = prevLogs.map((log) =>
+                      log.id === id ? payload.new : log
+                    )
+                    return [...updatedLogs]
+                  }
                 } else {
-                  const updatedLogs = prevLogs.map((log) =>
-                    log.id === id ? payload.new : log
-                  )
-                  return [...updatedLogs]
+                  console.log('New record added!')
+                  return [payload.new, ...prevLogs]
                 }
-              } else {
-                console.log('New record added!')
-                return [payload.new,...prevLogs]
-              }
-            })
-          } else {
-            setBusinessData_F((prevLogs) => {
-              const existingLog = prevLogs.find((log) => log.id === id)
+              })
+            } else {
+              setBusinessData_F((prevLogs) => {
+                const existingLog = prevLogs.find((log) => log.id === id)
 
-              if (existingLog) {
-                console.log('Existing record found!')
-                if (payload.new.status === 'Done') {
-                  const updatedLogs = prevLogs.filter((log) => log.id != id)
-                  return [...updatedLogs]
+                if (existingLog) {
+                  console.log('Existing record found!')
+                  if (payload.new.status === 'Done') {
+                    const updatedLogs = prevLogs.filter((log) => log.id != id)
+                    return [...updatedLogs]
+                  } else {
+                    const updatedLogs = prevLogs.map((log) =>
+                      log.id === id ? payload.new : log
+                    )
+                    return [...updatedLogs]
+                  }
                 } else {
-                  const updatedLogs = prevLogs.map((log) =>
-                    log.id === id ? payload.new : log
-                  )
-                  return [...updatedLogs]
+                  console.log('New record added!')
+                  return [payload.new, ...prevLogs]
                 }
-              } else {
-                console.log('New record added!')
-                return [payload.new,...prevLogs]
-              }
-            })
+              })
+            }
           }
         }
-      })
+      )
       .subscribe()
 
     return () => {
@@ -168,7 +162,6 @@ const ProjectReportsBody = ({ title, pId, data }) => {
     }
   }, [])
   useEffect(() => {
-
     console.log('is my value changed, sortType', sortType, searchText)
 
     if (subSection == 'all_business') {
@@ -200,7 +193,6 @@ const ProjectReportsBody = ({ title, pId, data }) => {
       setBusinessSection_D(x)
       bootBusinessFun(x)
     } else if (subSection == 'participants') {
-
       setParticipantsData_D(ParticipantsData_D)
       bootBusinessFun(ParticipantsData_D)
     }
@@ -508,38 +500,35 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
       )
       data.push(dataUser)
     }
-
   }
   return (
     <>
-
-
-<div className="flex overflow-x-auto ml-2 border-b border-gray-300">
-  {[
-    { label: 'Task Man', value: 'enquiry_journey_status' },
-    // { label: 'Project Finance', value: 'CRM_status' },
-    // { label: 'Sale Projections', value: 'Legal_status' },
-    // { label: 'Home', value: 'project_home' },
-  ].map((data, i) => {
-    return (
-      <button
-        key={i}
-        className={`flex items-center py-2 px-4 text-sm border-b-2 ${
-          selCat === data.value
-            ? 'font-semibold text-green-800 border-black'
-            : 'font-medium text-gray-500 border-transparent'
-        }`}
-        onClick={() => {
-          console.log('am i clicked', data.value);
-          setSelCat(data.value);
-        }}
-      >
-        <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
-        {data.label}
-      </button>
-    );
-  })}
-</div>
+      <div className="flex overflow-x-auto ml-2 border-b border-gray-300">
+        {[
+          { label: 'Task Man', value: 'enquiry_journey_status' },
+          // { label: 'Project Finance', value: 'CRM_status' },
+          // { label: 'Sale Projections', value: 'Legal_status' },
+          // { label: 'Home', value: 'project_home' },
+        ].map((data, i) => {
+          return (
+            <button
+              key={i}
+              className={`flex items-center py-2 px-4 text-sm border-b-2 ${
+                selCat === data.value
+                  ? 'font-semibold text-green-800 border-black'
+                  : 'font-medium text-gray-500 border-transparent'
+              }`}
+              onClick={() => {
+                console.log('am i clicked', data.value)
+                setSelCat(data.value)
+              }}
+            >
+              <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
+              {data.label}
+            </button>
+          )
+        })}
+      </div>
 
       {selCat === 'enquiry_journey_status' && (
         <div className="w-full flex  flex-row">
@@ -556,163 +545,174 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
                 </span>
               </div>
               <section className=" h-screen overflow-y-auto overflow-auto no-scrollbar">
-              <span className="text-[10px] ml-2 ">Super User</span>
-              {empsFetchedData
-                .filter((d) => d.department == 'admin')
-                ?.map((data, i) => (
-                  <section
-                    key={i}
-                    className={` cursor-pointer flex flex-row ${
-                      selUserId === data?.uid
-                        ? 'bg-[#E3BDFF] text-white rounded-xl'
-                        : ''
-                    }`}
-                    onClick={() => {
-                      console.log('user is ', data)
-                      setSelUserObj(data)
-                      setSelUserId(data?.uid)
-                    }}
-                  >
-                    <section className="py-2 pr-2  font-medium text-xs leading-6  whitespace-nowrap">
-                      <div className="flex flex-row ">
-                        <div className="rounded-sm h-5 w-5 mt-2 flex flex-shrink-0 justify-center items-center text-xs relative">
-                          {/* {i + 1} */}
+                <span className="text-[10px] ml-2 ">Super User</span>
+                {empsFetchedData
+                  .filter((d) => d.department == 'admin')
+                  ?.map((data, i) => (
+                    <section
+                      key={i}
+                      className={` cursor-pointer flex flex-row ${
+                        selUserId === data?.uid
+                          ? 'bg-[#E3BDFF] text-white rounded-xl'
+                          : ''
+                      }`}
+                      onClick={() => {
+                        console.log('user is ', data)
+                        setSelUserObj(data)
+                        setSelUserId(data?.uid)
+                      }}
+                    >
+                      <section className="py-2 pr-2  font-medium text-xs leading-6  whitespace-nowrap">
+                        <div className="flex flex-row ">
+                          <div className="rounded-sm h-5 w-5 mt-2 flex flex-shrink-0 justify-center items-center text-xs relative">
+                            {/* {i + 1} */}
+                          </div>
+                          <div className=" w-7 h-7 mr-2 mt-[5px] rounded-full ">
+                            <img src="/avatar_1.png" alt="" className="mr-2" />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="leading-[19px] font-bold text-[12px] ">
+                              {data.name}
+                            </span>
+                            <span className="leading-[12px] text-[10px] text-[#6c6969]">
+                              {/* {data?.roles[0]} */} Super User
+                            </span>{' '}
+                          </div>
                         </div>
-                        <div className=" w-7 h-7 mr-2 mt-[5px] rounded-full ">
-                          <img src="/avatar_1.png" alt="" className="mr-2" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="leading-[19px] font-bold text-[12px] ">
-                            {data.name}
-                          </span>
-                          <span className="leading-[12px] text-[10px] text-[#6c6969]">
-                            {/* {data?.roles[0]} */} Super User
-                          </span>{' '}
-                        </div>
-                      </div>
+                      </section>
                     </section>
-                  </section>
-                ))}
+                  ))}
 
-
-
-
-              {[{value: 'hr', label: 'HR'},{value: 'admin_support', label: 'Admin Team'},{value: 'marketing', label: 'Marketing'},{value: 'crm', label: 'CRM'},{value: 'legal', label: 'Legal'},{value: 'finance', label: 'Finance'}].map((dataV, indexx)=> {
-                return <section  key={indexx}><section
-                className="flex flex-row justify-between"
-                onClick={() => expandFun(dataV.value)}
-              >
-                {' '}
-                <div className="text-[10px] ml-2 ">{dataV.label}</div>{' '}
-                {expandedModulesA.includes(dataV.label) ? (
-                  <ChevronUpIcon className="w-4 h-4 mr-1 mt-[7px] cursor-pointer inline" />
-                ) : (
-                  <ChevronDownIcon className="w-4 h-4 mr-1 mt-[7px] cursor-pointer inline" />
-                )}
-              </section>
-              {expandedModulesA.includes(dataV.value) ? (
-                <span>
-                  {empsFetchedData
-                    .filter((d) => d.department == dataV.value)
-                    ?.map((data, i) => (
+                {[
+                  { value: 'hr', label: 'HR' },
+                  { value: 'admin_support', label: 'Admin Team' },
+                  { value: 'marketing', label: 'Marketing' },
+                  { value: 'crm', label: 'CRM' },
+                  { value: 'legal', label: 'Legal' },
+                  { value: 'finance', label: 'Finance' },
+                ].map((dataV, indexx) => {
+                  return (
+                    <section key={indexx}>
                       <section
-                        key={i}
-                        className={` cursor-pointer flex flex-row ${
-                          selUserId === data?.uid
-                            ? 'bg-red-800 text-white rounded-xl'
-                            : ''
-                        }`}
-                        onClick={() => {
-                          console.log('user is ', data)
-                          setSelUserObj(data)
-                          setSelUserId(data?.uid)
-                        }}
+                        className="flex flex-row justify-between"
+                        onClick={() => expandFun(dataV.value)}
                       >
-                        <section className="py-2 pr-2  font-medium text-xs leading-6  whitespace-nowrap">
-                          <div className="flex flex-row ">
-                            <div className="rounded-sm h-5 w-5 mt-2 flex flex-shrink-0 justify-center items-center text-xs relative">
-                              {/* {i + 1} */}
-                            </div>
-                            <div className=" w-7 h-7 mr-2 mt-[5px] rounded-full ">
-                              <img
-                                src="/avatar_1.png"
-                                alt=""
-                                className="mr-2"
-                              />
-                            </div>
-                            <div className="flex flex-col mt-[9px]">
-                              <span className="leading-[19px] font-bold text-[12px]">
-                                {data.name}
-                              </span>
-                              <span className="leading-[12px] text-[10px] text-[#6c6969]">
-                                {data?.roles[0]}
-                              </span>{' '}
-                            </div>
-                          </div>
-                        </section>
+                        {' '}
+                        <div className="text-[10px] ml-2 ">
+                          {dataV.label}
+                        </div>{' '}
+                        {expandedModulesA.includes(dataV.label) ? (
+                          <ChevronUpIcon className="w-4 h-4 mr-1 mt-[7px] cursor-pointer inline" />
+                        ) : (
+                          <ChevronDownIcon className="w-4 h-4 mr-1 mt-[7px] cursor-pointer inline" />
+                        )}
                       </section>
-                    ))}
-                </span>
-              ) : null}
-              </section>
-              })}
-              <section
-                className="flex flex-row justify-between"
-                onClick={() => expandFun('sales')}
-              >
-                {' '}
-                <div className="text-[10px] ml-2 ">Sales</div>{' '}
+                      {expandedModulesA.includes(dataV.value) ? (
+                        <span>
+                          {empsFetchedData
+                            .filter((d) => d.department == dataV.value)
+                            ?.map((data, i) => (
+                              <section
+                                key={i}
+                                className={` cursor-pointer flex flex-row ${
+                                  selUserId === data?.uid
+                                    ? 'bg-red-800 text-white rounded-xl'
+                                    : ''
+                                }`}
+                                onClick={() => {
+                                  console.log('user is ', data)
+                                  setSelUserObj(data)
+                                  setSelUserId(data?.uid)
+                                }}
+                              >
+                                <section className="py-2 pr-2  font-medium text-xs leading-6  whitespace-nowrap">
+                                  <div className="flex flex-row ">
+                                    <div className="rounded-sm h-5 w-5 mt-2 flex flex-shrink-0 justify-center items-center text-xs relative">
+                                      {/* {i + 1} */}
+                                    </div>
+                                    <div className=" w-7 h-7 mr-2 mt-[5px] rounded-full ">
+                                      <img
+                                        src="/avatar_1.png"
+                                        alt=""
+                                        className="mr-2"
+                                      />
+                                    </div>
+                                    <div className="flex flex-col mt-[9px]">
+                                      <span className="leading-[19px] font-bold text-[12px]">
+                                        {data.name}
+                                      </span>
+                                      <span className="leading-[12px] text-[10px] text-[#6c6969]">
+                                        {data?.roles[0]}
+                                      </span>{' '}
+                                    </div>
+                                  </div>
+                                </section>
+                              </section>
+                            ))}
+                        </span>
+                      ) : null}
+                    </section>
+                  )
+                })}
+                <section
+                  className="flex flex-row justify-between"
+                  onClick={() => expandFun('sales')}
+                >
+                  {' '}
+                  <div className="text-[10px] ml-2 ">Sales</div>{' '}
+                  {expandedModulesA.includes('sales') ? (
+                    <ChevronUpIcon className="w-4 h-4 mr-1 mt-[7px] cursor-pointer inline" />
+                  ) : (
+                    <ChevronDownIcon className="w-4 h-4 mr-1 mt-[7px] cursor-pointer inline" />
+                  )}
+                </section>
                 {expandedModulesA.includes('sales') ? (
-                  <ChevronUpIcon className="w-4 h-4 mr-1 mt-[7px] cursor-pointer inline" />
-                ) : (
-                  <ChevronDownIcon className="w-4 h-4 mr-1 mt-[7px] cursor-pointer inline" />
-                )}
-              </section>
-                 {expandedModulesA.includes('sales') ? (
-                <span>
-                  {empsFetchedData
-                    .filter((d) => d.department == 'sales' && d?.roles[0] != 'cp-agent')
-                    ?.map((data, i) => (
-                      <section
-                        key={i}
-                        className={` cursor-pointer flex flex-row ${
-                          selUserId === data?.uid
-                            ? 'bg-red-800 text-white rounded-xl'
-                            : ''
-                        }`}
-                        onClick={() => {
-                          console.log('user is ', data)
-                          setSelUserObj(data)
-                          setSelUserId(data?.uid)
-                        }}
-                      >
-                        <section className="py-2 pr-2  font-medium text-xs leading-6  whitespace-nowrap">
-                          <div className="flex flex-row ">
-                            <div className="rounded-sm h-5 w-5 mt-2 flex flex-shrink-0 justify-center items-center text-xs relative">
-                              {/* {i + 1} */}
+                  <span>
+                    {empsFetchedData
+                      .filter(
+                        (d) =>
+                          d.department == 'sales' && d?.roles[0] != 'cp-agent'
+                      )
+                      ?.map((data, i) => (
+                        <section
+                          key={i}
+                          className={` cursor-pointer flex flex-row ${
+                            selUserId === data?.uid
+                              ? 'bg-red-800 text-white rounded-xl'
+                              : ''
+                          }`}
+                          onClick={() => {
+                            console.log('user is ', data)
+                            setSelUserObj(data)
+                            setSelUserId(data?.uid)
+                          }}
+                        >
+                          <section className="py-2 pr-2  font-medium text-xs leading-6  whitespace-nowrap">
+                            <div className="flex flex-row ">
+                              <div className="rounded-sm h-5 w-5 mt-2 flex flex-shrink-0 justify-center items-center text-xs relative">
+                                {/* {i + 1} */}
+                              </div>
+                              <div className=" w-7 h-7 mr-2 mt-[5px] rounded-full ">
+                                <img
+                                  src="/avatar_1.png"
+                                  alt=""
+                                  className="mr-2"
+                                />
+                              </div>
+                              <div className="flex flex-col mt-[9px]">
+                                <span className="leading-[19px] font-bold text-[12px]">
+                                  {data.name}
+                                </span>
+                                <span className="leading-[12px] text-[10px] text-[#6c6969]">
+                                  {data?.roles[0]}
+                                </span>{' '}
+                              </div>
                             </div>
-                            <div className=" w-7 h-7 mr-2 mt-[5px] rounded-full ">
-                              <img
-                                src="/avatar_1.png"
-                                alt=""
-                                className="mr-2"
-                              />
-                            </div>
-                            <div className="flex flex-col mt-[9px]">
-                              <span className="leading-[19px] font-bold text-[12px]">
-                                {data.name}
-                              </span>
-                              <span className="leading-[12px] text-[10px] text-[#6c6969]">
-                                {data?.roles[0]}
-                              </span>{' '}
-                            </div>
-                          </div>
+                          </section>
                         </section>
-                      </section>
-                    ))}
-                </span>
-              ) : null}
-
+                      ))}
+                  </span>
+                ) : null}
               </section>
             </div>
           </section>
@@ -742,7 +742,6 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
                         setShowOnlyDone(false)
                         setShowCompletedTasks(true)
                       }
-
                     }}
                     value={selTaskDispType}
                     options={[
@@ -964,17 +963,9 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
         </div>
       )}
 
-
-{/* {selCat === 'project_home' && (
+      {/* {selCat === 'project_home' && (
             <ProjectSummaryReport/>
           )} */}
-
-
-
-
-
-
-
 
       <SiderForm
         open={isOpenSideView}

@@ -19,11 +19,7 @@ import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 import CreditNoteSummaryTableLayout from './CreditNoteSummary/CreditNoteSummaryTableLayout'
 import { ArrowUpDown, MoveDown, MoveUp } from 'lucide-react'
 
-const CreditNoteSummaryHomePage = ({
-  leadsTyper,
-  isClicked,
-  setIsClicked,
-}) => {
+const CreditNoteSummaryHomePage = ({ leadsTyper, isClicked, setIsClicked }) => {
   const uid = uuidv4()
 
   const { user } = useAuth()
@@ -59,10 +55,6 @@ const CreditNoteSummaryHomePage = ({
   const [finFetchedLength, setFinFetchedLength] = useState(0)
   const [finCompLength, setFinCompLength] = useState(0)
 
-
-
-
-
   const [searchValue, setSearchValue] = useState('')
   const [selProjectIs, setSelProject] = useState({
     label: 'All Projects',
@@ -88,19 +80,12 @@ const CreditNoteSummaryHomePage = ({
     boot()
   }, [])
 
-
-
-
-
-
   const selUserProfileF = (title, data) => {
     setAddLeadsTypes(title)
     setUnitsViewMode(false)
     setisImportLeadsOpen(true)
     setSelUserProfile(data)
   }
-
-
 
   const boot = async () => {
     await getProjectsListFun()
@@ -120,9 +105,8 @@ const CreditNoteSummaryHomePage = ({
           return x
         })
 
-        console.log('values are',usersListA )
+        console.log('values are', usersListA)
         await setUnitsFetchData(usersListA)
-
       },
       {
         status: ['booked', 'agreement_pipeline', 'sd_pipeline', 'registered'],
@@ -132,15 +116,16 @@ const CreditNoteSummaryHomePage = ({
     return unsubscribe
   }
   useEffect(() => {
-console.log('values are', unitsFetchData.length, selProjectIs?.uid)
-switch (selProjectIs?.value) {
-  case 'allprojects':
-    return setTableData(unitsFetchData)
-  default :
-    return setTableData(unitsFetchData.filter((dat) => dat?.pId === selProjectIs?.uid))
-
-}
-  }, [unitsFetchData,selProjectIs])
+    console.log('values are', unitsFetchData.length, selProjectIs?.uid)
+    switch (selProjectIs?.value) {
+      case 'allprojects':
+        return setTableData(unitsFetchData)
+      default:
+        return setTableData(
+          unitsFetchData.filter((dat) => dat?.pId === selProjectIs?.uid)
+        )
+    }
+  }, [unitsFetchData, selProjectIs])
 
   const getProjectsListFun = () => {
     const unsubscribe = getAllProjects(
@@ -154,7 +139,7 @@ switch (selProjectIs?.value) {
           user.value = user.projectName
         })
         console.log('fetched proejcts list is', projectsListA)
-        let z = [ ...projectsListA]
+        let z = [...projectsListA]
         setprojectList(z)
       },
       (error) => setprojectList([])
@@ -162,88 +147,142 @@ switch (selProjectIs?.value) {
     return unsubscribe
   }
 
+  const [projects, setProjects] = useState([
+    {
+      name: 'z',
+      totalUnits: 100,
+      available: 20,
+      sold: 60,
+      blocked: 10,
+      mortgaged: 10,
+    },
+    {
+      name: 'A',
+      totalUnits: 80,
+      available: 10,
+      sold: 50,
+      blocked: 15,
+      mortgaged: 5,
+    },
+    {
+      name: 'B',
+      totalUnits: 90,
+      available: 30,
+      sold: 40,
+      blocked: 10,
+      mortgaged: 10,
+    },
+    {
+      name: 'C',
+      totalUnits: 75,
+      available: 25,
+      sold: 40,
+      blocked: 5,
+      mortgaged: 5,
+    },
+    {
+      name: 'D',
+      totalUnits: 110,
+      available: 35,
+      sold: 50,
+      blocked: 15,
+      mortgaged: 10,
+    },
+    {
+      name: 'E',
+      totalUnits: 95,
+      available: 20,
+      sold: 55,
+      blocked: 10,
+      mortgaged: 10,
+    },
+    {
+      name: 'F',
+      totalUnits: 85,
+      available: 15,
+      sold: 50,
+      blocked: 15,
+      mortgaged: 5,
+    },
+    {
+      name: 'G',
+      totalUnits: 70,
+      available: 10,
+      sold: 50,
+      blocked: 5,
+      mortgaged: 5,
+    },
+    {
+      name: 'H',
+      totalUnits: 60,
+      available: 15,
+      sold: 30,
+      blocked: 10,
+      mortgaged: 5,
+    },
+    {
+      name: 'I',
+      totalUnits: 100,
+      available: 20,
+      sold: 60,
+      blocked: 15,
+      mortgaged: 5,
+    },
+  ])
 
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' })
 
+  const sortedProjects = React.useMemo(() => {
+    if (!sortConfig.key) return projects
 
-const [projects, setProjects] = useState([
-  { name: 'z', totalUnits: 100, available: 20, sold: 60, blocked: 10, mortgaged: 10 },
-  { name: 'A', totalUnits: 80, available: 10, sold: 50, blocked: 15, mortgaged: 5 },
-  { name: 'B', totalUnits: 90, available: 30, sold: 40, blocked: 10, mortgaged: 10 },
-  { name: 'C', totalUnits: 75, available: 25, sold: 40, blocked: 5, mortgaged: 5 },
-  { name: 'D', totalUnits: 110, available: 35, sold: 50, blocked: 15, mortgaged: 10 },
-  { name: 'E', totalUnits: 95, available: 20, sold: 55, blocked: 10, mortgaged: 10 },
-  { name: 'F', totalUnits: 85, available: 15, sold: 50, blocked: 15, mortgaged: 5 },
-  { name: 'G', totalUnits: 70, available: 10, sold: 50, blocked: 5, mortgaged: 5 },
-  { name: 'H', totalUnits: 60, available: 15, sold: 30, blocked: 10, mortgaged: 5 },
-  { name: 'I', totalUnits: 100, available: 20, sold: 60, blocked: 15, mortgaged: 5 },
-]);
+    return [...projects].sort((a, b) => {
+      const aValue = a[sortConfig.key]
+      const bValue = b[sortConfig.key]
 
-const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return sortConfig.direction === 'asc'
+          ? aValue - bValue
+          : bValue - aValue
+      }
 
-const sortedProjects = React.useMemo(() => {
-  if (!sortConfig.key) return projects;
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return sortConfig.direction === 'asc'
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue)
+      }
 
-  return [...projects].sort((a, b) => {
-    const aValue = a[sortConfig.key];
-    const bValue = b[sortConfig.key];
+      return 0
+    })
+  }, [projects, sortConfig])
 
-    if (typeof aValue === 'number' && typeof bValue === 'number') {
-      return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
-    }
+  const handleSort = (key) => {
+    setSortConfig((prev) => ({
+      key,
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
+    }))
+  }
 
-    if (typeof aValue === 'string' && typeof bValue === 'string') {
-      return sortConfig.direction === 'asc'
-        ? aValue.localeCompare(bValue)
-        : bValue.localeCompare(aValue);
-    }
-
-    return 0;
-  });
-}, [projects, sortConfig]);
-
-const handleSort = (key) => {
-  setSortConfig((prev) => ({
-    key,
-    direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
-  }));
-};
-
-
-
-
-
-const triggerCollectionsAudit = async () => {
-
-  setLoader(true)
-  getTransactionsDataFun()
-
-}
+  const triggerCollectionsAudit = async () => {
+    setLoader(true)
+    getTransactionsDataFun()
+  }
 
   const getTransactionsDataFun = async () => {
-    const { access, uid , email} = user
+    const { access, uid, email } = user
     const steamLeadLogs = await streamGetAllTransactions(
       orgId,
       'snap',
-      {
-
-      },
+      {},
       (error) => []
     )
     setFinFetchedData(steamLeadLogs)
     setFinFetchedLength(steamLeadLogs.length)
     steamLeadLogs.map((item, i) => {
-      updateCrmReportAmountAgreeNew(orgId, item,email)
-      setFinCompLength(i+1)
+      updateCrmReportAmountAgreeNew(orgId, item, email)
+      setFinCompLength(i + 1)
       console.log('item is ', i)
     })
   }
-
-
-
-
-
-
-
 
   return (
     <>
@@ -253,114 +292,104 @@ const triggerCollectionsAudit = async () => {
             className="
             px-3 py-6"
           >
-
-
-
-
             <div className=" w-full max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl font-medium text-gray-800">Credit Note Summary</h1>
+              <div className="flex items-center justify-between mb-4">
+                <h1 className="text-xl font-medium text-gray-800">
+                  Credit Note Summary
+                </h1>
 
-
-
-        <div className="flex">
-                <div className=" flex flex-col mr-5  w-40">
-                  <SlimSelectBox
-                    name="project"
-                    label=""
-                    className="input "
-                    onChange={(value) => {
-                      console.log('changed value is ', value.value)
-                      setSelProject(value)
-                    }}
-                    value={selProjectIs?.value}
-                    options={[
-                      ...[{ label: 'All Projects', value: 'allprojects' }],
-                      ...projectList,
-                    ]}
-                  />
+                <div className="flex">
+                  <div className=" flex flex-col mr-5  w-40">
+                    <SlimSelectBox
+                      name="project"
+                      label=""
+                      className="input "
+                      onChange={(value) => {
+                        console.log('changed value is ', value.value)
+                        setSelProject(value)
+                      }}
+                      value={selProjectIs?.value}
+                      options={[
+                        ...[{ label: 'All Projects', value: 'allprojects' }],
+                        ...projectList,
+                      ]}
+                    />
+                  </div>
                 </div>
-
-
               </div>
-      </div>
 
-      <div className="w-full bg-white rounded-lg overflow-hidden shadow-md">
-        <div className="bg-[#F8F9FC] p-4 rounded-t-lg">
-          <h2 className="text-lg text-center font-medium text-[#000000]">
-          Credit Note Summary By Project
-          </h2>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full table-fixed border-collapse rounded-lg">
-            <thead>
-              <tr className="bg-[#F8F9FC] border-t border-b border-[#E8ECF4]">
-                {['name', 'totalUnits', 'available', 'sold', 'blocked', 'mortgaged'].map((key) => (
-                  <th
-                    key={key}
-                    className="text-left p-2 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4] cursor-pointer"
-                    onClick={() => handleSort(key)}
-                  >
-                    {key === 'name' ? 'Project Name' : key.charAt(0).toUpperCase() + key.slice(1)}
-                    <span className="inline-block ml-2">
-                      {sortConfig.key === key ? (
-                        sortConfig.direction === 'asc' ? (
-                          <MoveUp  className="w-4 h-4 text-gray-600" />
-                        ) : (
-                          <MoveDown  className="w-4 h-4 text-gray-600" />
-                        )
-                      ) : (
-                        <ArrowUpDown  className="w-4 h-4 text-gray-400" />
-                      )}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {sortedProjects.map((project, index) => (
-                <tr
-                  key={`${project.name}-${index}`} // Unique key
-                  className="hover:bg-gray-50 border-b border-[#E8ECF4]"
-                >
-                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{project.name}</td>
-                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
-                    {project.totalUnits}
-                  </td>
-                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
-                    {project.available}
-                  </td>
-                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{project.sold}</td>
-                  <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">{project.blocked}</td>
-                  <td className="p-4 text-gray-700">{project.mortgaged}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+              <div className="w-full bg-white rounded-lg overflow-hidden shadow-md">
+                <div className="bg-[#F8F9FC] p-4 rounded-t-lg">
+                  <h2 className="text-lg text-center font-medium text-[#000000]">
+                    Credit Note Summary By Project
+                  </h2>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full table-fixed border-collapse rounded-lg">
+                    <thead>
+                      <tr className="bg-[#F8F9FC] border-t border-b border-[#E8ECF4]">
+                        {[
+                          'name',
+                          'totalUnits',
+                          'available',
+                          'sold',
+                          'blocked',
+                          'mortgaged',
+                        ].map((key) => (
+                          <th
+                            key={key}
+                            className="text-left p-2 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4] cursor-pointer"
+                            onClick={() => handleSort(key)}
+                          >
+                            {key === 'name'
+                              ? 'Project Name'
+                              : key.charAt(0).toUpperCase() + key.slice(1)}
+                            <span className="inline-block ml-2">
+                              {sortConfig.key === key ? (
+                                sortConfig.direction === 'asc' ? (
+                                  <MoveUp className="w-4 h-4 text-gray-600" />
+                                ) : (
+                                  <MoveDown className="w-4 h-4 text-gray-600" />
+                                )
+                              ) : (
+                                <ArrowUpDown className="w-4 h-4 text-gray-400" />
+                              )}
+                            </span>
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sortedProjects.map((project, index) => (
+                        <tr
+                          key={`${project.name}-${index}`} // Unique key
+                          className="hover:bg-gray-50 border-b border-[#E8ECF4]"
+                        >
+                          <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                            {project.name}
+                          </td>
+                          <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                            {project.totalUnits}
+                          </td>
+                          <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                            {project.available}
+                          </td>
+                          <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                            {project.sold}
+                          </td>
+                          <td className="p-4 text-gray-700 border-r border-[#E8ECF4]">
+                            {project.blocked}
+                          </td>
+                          <td className="p-4 text-gray-700">
+                            {project.mortgaged}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
 
             <MetaTags title="ExecutiveHome" description="ExecutiveHome page" />
             {!ready && (
@@ -373,10 +402,13 @@ const triggerCollectionsAudit = async () => {
                 leadsTyper={leadsTyper}
                 searchVal={searchValue}
               />
-
             )}
-            <div>{finCompLength}/{finFetchedLength}</div>
-            <button onClick={()=> triggerCollectionsAudit()}>Collections Audit</button>
+            <div>
+              {finCompLength}/{finFetchedLength}
+            </div>
+            <button onClick={() => triggerCollectionsAudit()}>
+              Collections Audit
+            </button>
           </div>
         </div>
       </div>
@@ -390,7 +422,7 @@ const triggerCollectionsAudit = async () => {
         setUnitsViewMode={setUnitsViewMode}
         setIsClicked={setIsClicked}
       />
-       <SiderForm
+      <SiderForm
         open={isImportLeadsOpen}
         setOpen={setisImportLeadsOpen}
         title={'unitDetails_crm_view'}

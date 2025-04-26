@@ -13,14 +13,11 @@ const PaymentDocUtility = ({ id, fileName, date }) => {
   const [showModel, setShoModel] = useState(false)
   const [dateIs, setDate] = useState('NA')
   const toggle = () => setShoModel(!showModel)
-  const deleteDocument = async (id) => {
-
-  }
+  const deleteDocument = async (id) => {}
   useEffect(() => {
-    if(date){
+    if (date) {
       setDate(prettyDate(date))
-    }
-    else{
+    } else {
       setDate('NA')
     }
   }, [date])
@@ -64,7 +61,6 @@ const PaymentDocUtility = ({ id, fileName, date }) => {
           <TrashIcon name="delete" className="w-4 h-4" />
         </button>
       </div>
-
     </>
   )
 }

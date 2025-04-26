@@ -23,7 +23,6 @@ import { setHours, setMinutes } from 'date-fns'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { useSnackbar } from 'notistack'
 
-
 const SUserSignupBody = ({ title, dialogOpen, empData }) => {
   const d = new window.Date()
   const { enqueueSnackbar } = useSnackbar()
@@ -31,12 +30,9 @@ const SUserSignupBody = ({ title, dialogOpen, empData }) => {
   const { register, user } = useAuth()
   const { orgId, orgName } = user
 
-
-
   const customPhoneNoFieldStyles = {
     border: 'none',
     fontSize: '13px',
-
   }
 
   const formMethods = useForm()
@@ -59,7 +55,7 @@ const SUserSignupBody = ({ title, dialogOpen, empData }) => {
     department,
     uid,
     roles: rolees,
-    userStatus
+    userStatus,
   } = empData
   console.log('empData is ', empData)
 
@@ -78,8 +74,6 @@ const SUserSignupBody = ({ title, dialogOpen, empData }) => {
     }
   }, [empData])
 
-
-
   const changed = async (data) => {
     console.log('i was changed', data, data)
     setdeptIs(data.value)
@@ -88,13 +82,14 @@ const SUserSignupBody = ({ title, dialogOpen, empData }) => {
     }
     const filRoles = ROLES_LIST.filter((item) => item.dept === data.value)
 
-console.log('rolws are ', filRoles)
+    console.log('rolws are ', filRoles)
     setroles(filRoles)
   }
   const onSubmit = async (data) => {
     console.log('check fo this ', data)
     setLoading(true)
-    const { empId, email, myRole, deptVal, name, offPh, perPh, userStatus } = data
+    const { empId, email, myRole, deptVal, name, offPh, perPh, userStatus } =
+      data
 
     if (editMode) {
       updateUserRole(
@@ -224,7 +219,6 @@ console.log('rolws are ', filRoles)
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   const validate = Yup.object({
-
     name: Yup.string()
       .max(15, 'Must be 15 characters or less')
       .required('Name is required'),
@@ -235,18 +229,16 @@ console.log('rolws are ', filRoles)
       .matches(phoneRegExp, 'Phone number is not valid')
       .min(10, 'Phone no is to short')
       .max(10, 'Phone no is to long')
-      .required('Phone no is required')
-      ,
+      .required('Phone no is required'),
     perPh: Yup.string()
       .matches(phoneRegExp, 'Phone number is not valid')
       .min(10, 'Phone no is to short')
       .max(10, 'Phone no is to long')
       .required('Phone no is required'),
 
-
     empId: Yup.string()
-    // .oneOf(['Admin', 'CRM'], 'Required Dept')
-    .required('Employee Id is required'),
+      // .oneOf(['Admin', 'CRM'], 'Required Dept')
+      .required('Employee Id is required'),
     deptVal: Yup.string()
       // .oneOf(['Admin', 'CRM'], 'Required Dept')
       .required('Department is required'),
@@ -303,12 +295,11 @@ console.log('rolws are ', filRoles)
                   type="text"
                   disabled={editMode}
                   onChange={(e) => {
-                    const value = e.target.value;
+                    const value = e.target.value
 
-                    const validatedValue = value.replace(/[^a-zA-Z\s]/g, '');
-                    e.target.value = validatedValue;
+                    const validatedValue = value.replace(/[^a-zA-Z\s]/g, '')
+                    e.target.value = validatedValue
                     formik.setFieldValue('name', validatedValue)
-
                   }}
                 />
                 <TextField
@@ -317,10 +308,14 @@ console.log('rolws are ', filRoles)
                   type="email"
                   disabled={editMode}
                 />
- 
+
                 <PhoneNoField
                   name="offPh"
-                  label={<span className="text-[12px] font-regular  text-gray-700">Official Phone Number*</span>}
+                  label={
+                    <span className="text-[12px] font-regular  text-gray-700">
+                      Official Phone Number*
+                    </span>
+                  }
                   className="input  text-[13px] placeholder-gray-700 placeholder:opacity-80 "
                   value={formik.values.offPh}
                   onChange={(value) => {
@@ -336,7 +331,11 @@ console.log('rolws are ', filRoles)
                 <PhoneNoField
                   name="perPh"
                   //label="Personal Phone Number*"
-                  label={<span className=" font-regular  text-gray-700 text-[12px]">Personal Phone Number*</span>}
+                  label={
+                    <span className=" font-regular  text-gray-700 text-[12px]">
+                      Personal Phone Number*
+                    </span>
+                  }
                   className="input  text-[13px] placeholder-gray-700 placeholder:opacity-80"
                   value={formik.values.perPh}
                   onChange={(value) => {
@@ -388,67 +387,52 @@ console.log('rolws are ', filRoles)
                     formik.setFieldValue('userStatus', value.value)
                   }
                   value={formik.values.userStatus || ''}
-                  options={[{label:'Active', value: 'active'}, {label:'Inactive', value: 'Inactive'}]}
+                  options={[
+                    { label: 'Active', value: 'active' },
+                    { label: 'Inactive', value: 'Inactive' },
+                  ]}
                 />
 
                 <div className="md:flex md:flex-row md:space-x-4 w-full text-xs mt-5">
-
-
                   <div className="w-full flex flex-col mb-3">
-  <TextField
-    label="Aadhar No"
-    name="aadharNo"
-    type="text"
-    disabled={editMode}
-    inputProps={{
-      inputMode: "numeric",
-      pattern: "[0-9]*", 
-    }}
-    onInput={(e) => {
-      e.target.value = e.target.value.replace(/[^0-9]/g, ''); 
-    }}
-  />
-</div>
-
-                  <div className="w-full flex flex-col mb-3">
-
-
-
-<span className="">
-  <label className="label font-regular block mb-1">
-    Date of Birth
-  </label>
-  <CustomDatePicker
-    className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
-    selected={startDate}
-    onChange={(date) => {
-      formik.setFieldValue('dob', date.getTime());
-      setStartDate(date);
-    }}
-    timeFormat="HH:mm"
-    injectTimes={[
-      setHours(setMinutes(d, 1), 0),
-      setHours(setMinutes(d, 5), 12),
-      setHours(setMinutes(d, 59), 23),
-    ]}
-
-    dateFormat="MMM dd, yyyy"
-    name="dob"
-  />
-</span>
-
-
-
-
+                    <TextField
+                      label="Aadhar No"
+                      name="aadharNo"
+                      type="text"
+                      disabled={editMode}
+                      inputProps={{
+                        inputMode: 'numeric',
+                        pattern: '[0-9]*',
+                      }}
+                      onInput={(e) => {
+                        e.target.value = e.target.value.replace(/[^0-9]/g, '')
+                      }}
+                    />
                   </div>
 
-
-
-
-
-
-
-
+                  <div className="w-full flex flex-col mb-3">
+                    <span className="">
+                      <label className="label font-regular block mb-1">
+                        Date of Birth
+                      </label>
+                      <CustomDatePicker
+                        className="pl- px-1 h-8 rounded-md min-w-[200px] inline text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-2"
+                        selected={startDate}
+                        onChange={(date) => {
+                          formik.setFieldValue('dob', date.getTime())
+                          setStartDate(date)
+                        }}
+                        timeFormat="HH:mm"
+                        injectTimes={[
+                          setHours(setMinutes(d, 1), 0),
+                          setHours(setMinutes(d, 5), 12),
+                          setHours(setMinutes(d, 59), 23),
+                        ]}
+                        dateFormat="MMM dd, yyyy"
+                        name="dob"
+                      />
+                    </span>
+                  </div>
                 </div>
 
                 <p className="text-xs text-red-500 text-right my-3">
@@ -476,8 +460,6 @@ console.log('rolws are ', filRoles)
           )}
         </Formik>
       </div>
-
-    
     </div>
   )
 }

@@ -5,7 +5,6 @@ import { getLeadsByStatus } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import SiderForm from './SiderForm/SiderForm'
 
-
 const LeadsManagementHome = () => {
   const { user } = useAuth()
   const { orgId } = user
@@ -30,7 +29,6 @@ const LeadsManagementHome = () => {
     setAddLeadsTypes(title)
     setisImportLeadsOpen(true)
   }
-
 
   useEffect(() => {
     getLeadsDataFun()
@@ -76,7 +74,6 @@ const LeadsManagementHome = () => {
       if (item.Source.toLowerCase().includes(selStatus.toLowerCase())) {
         return item
       }
-
     })
     await setRows(x)
     await console.log('xo', x)
@@ -164,7 +161,7 @@ const LeadsManagementHome = () => {
             </div>
 
             <MetaTags title="ExecutiveHome" description="ExecutiveHome page" />
- 
+
             {leadsFetchedData.length === 0 && (
               <div className="py-8 px-8 mt-10 flex flex-col items-center bg-red-100 rounded">
                 <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
@@ -185,7 +182,6 @@ const LeadsManagementHome = () => {
             <div>
               <div className="flex justify-center items-center text-gray-900 h-12"></div>
               <div className=" p-16 justify-center items-center text-gray-900">
-  
                 {leadsFetchedData
                   .filter((item) => {
                     if (searchKey == '' || !searchKey) {
@@ -216,7 +212,6 @@ const LeadsManagementHome = () => {
                   .slice()
                   .sort(getComparator(order, orderBy))
                   .map((listing, index) => {
-                
                     return (
                       <>
                         <div

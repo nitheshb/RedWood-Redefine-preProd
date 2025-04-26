@@ -20,10 +20,8 @@ const ProjectAuditHome = ({ title, dialogOpen, data, projectDetails }) => {
     console.log('audit begin')
     setLoading(true)
 
-
     await setInvalidUnitStatus()
     await setProjectComputedCounts()
-
   }
 
   const setInvalidUnitStatus = async () => {
@@ -112,7 +110,7 @@ const ProjectAuditHome = ({ title, dialogOpen, data, projectDetails }) => {
       soldArea: 0,
       custBlockArea: 0,
       mangBlockArea: 0,
-      blockedArea:0
+      blockedArea: 0,
     }
     await unitDetailsA.map((data) => {
       yo.totalUnitCount = yo.totalUnitCount + 1
@@ -124,7 +122,7 @@ const ProjectAuditHome = ({ title, dialogOpen, data, projectDetails }) => {
         yo.availableCount = yo.availableCount + 1
       } else if (data?.status == 'management_blocked') {
         yo.blockedUnitCount = yo.blockedUnitCount + 1
-        yo.mangBlockArea = yo.mangBlockArea  + (data?.area || 0)
+        yo.mangBlockArea = yo.mangBlockArea + (data?.area || 0)
         yo.management_blocked = yo.management_blocked + 1
       } else if (data?.status == 'booked') {
         yo.bookUnitCount = yo.bookUnitCount + 1
@@ -139,23 +137,17 @@ const ProjectAuditHome = ({ title, dialogOpen, data, projectDetails }) => {
         yo.soldArea = yo.soldArea + (data?.area || 0)
       }
 
-      if (
-        ['customer_blocked', 'management_blocked'].includes(
-          data?.status
-        )
-      ) {
+      if (['customer_blocked', 'management_blocked'].includes(data?.status)) {
         yo.blockedArea = yo.blockedArea + (data?.area || 0)
       }
     })
 
     await updateProjectComputedData(orgId, projectDetails?.uid, yo)
     return unsubscribe
-
   }
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4   z-10">
-
         <div className="flex flex-row ">
           <div className="mr-4 templateList flex flex-row">
             <button

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-
 import {
   getBookedUnitsByProject,
   getUnitsAgreeByProject,
@@ -13,8 +12,6 @@ import { getNextThreeMonths } from 'src/util/dateConverter'
 import TableSkeleton from './_mock/comps/table/table-skeleton'
 import EmpCollectionSummary from './empCollectionReport'
 
-
-
 import {
   LineChart,
   Line,
@@ -26,21 +23,10 @@ import {
   Cell,
   ResponsiveContainer,
   CartesianGrid,
-} from 'recharts';
-import { Calendar, ChevronRight, TrendingUp } from 'lucide-react';
-
-
-
-
-
-
-
-
-
-
+} from 'recharts'
+import { Calendar, ChevronRight, TrendingUp } from 'lucide-react'
 
 {
-
 }
 
 const capitalizeFirstLetter = (str) => {
@@ -48,7 +34,6 @@ const capitalizeFirstLetter = (str) => {
 }
 
 {
-
 }
 const getDateForWeek = (weekNumber) => {
   const today = new Date()
@@ -64,7 +49,6 @@ const getDateForWeek = (weekNumber) => {
 }
 
 {
-
 }
 
 const styles = {
@@ -74,57 +58,41 @@ const styles = {
   },
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
-    const time = payload[0].payload.time;
+    const time = payload[0].payload.time
 
     return (
       <div className="bg-white p-3 rounded-md">
         <p className="text-black">Time: {time}</p>
 
         {payload.map((entry, index) => {
-          const { value, prevValue } = entry.payload;
-          const strokeColor = entry.stroke;
-
+          const { value, prevValue } = entry.payload
+          const strokeColor = entry.stroke
 
           return (
             <div key={index} className="flex items-center gap-2">
-
               <div
                 style={{ backgroundColor: strokeColor }}
                 className="w-4 h-4 "
               ></div>
 
               <p className="text-black">
-                {entry.dataKey === "value"
+                {entry.dataKey === 'value'
                   ? `Current Value: ${value}`
-                  : entry.dataKey === "prevValue"
+                  : entry.dataKey === 'prevValue'
                   ? `Previous Value: ${prevValue}`
                   : null}
               </p>
             </div>
-          );
+          )
         })}
       </div>
-    );
+    )
   }
 
-  return null;
-};
-
-
+  return null
+}
 
 const timeSeriesData = [
   { time: '12', value: 5, prevValue: 5 },
@@ -134,35 +102,20 @@ const timeSeriesData = [
   { time: '16', value: 5, prevValue: 5 },
   { time: '17', value: 90, prevValue: 30 },
   { time: '18', value: 5, prevValue: 5 },
-];
+]
 
 const channelData = [
   { name: 'Make an offer', value1: 80, value2: 120, value3: 0 },
   { name: 'Online store', value1: 20, value2: 0, value3: 0 },
-];
-
-
-
-
+]
 
 const progressData = [
   { name: 'completed', value: 50 },
   { name: 'inProgress', value: 30 },
-  { name: 'remaining', value: 20 }
-];
+  { name: 'remaining', value: 20 },
+]
 
-const COLORS = ['#0EA5E9', '#93C5FD', '#DBEAFE'];
-
-
-
-
-
-
-
-
-
-
-
+const COLORS = ['#0EA5E9', '#93C5FD', '#DBEAFE']
 
 const reportData = [
   {
@@ -220,18 +173,18 @@ const CRMCollectionReportKPI = ({ projects }) => {
   const [tableData, setTableData] = useState([])
   const [unitsFetchData, setUnitsFetchData] = useState([])
 
-  const [totalSaleValue, setTotalSaleValue] = useState(0);
-  const [totalReceived, setTotalReceived] = useState(0);
-  const [selTotalBalance, setTotalBalance] = useState(0);
+  const [totalSaleValue, setTotalSaleValue] = useState(0)
+  const [totalReceived, setTotalReceived] = useState(0)
+  const [selTotalBalance, setTotalBalance] = useState(0)
   const [projectList, setprojectList] = useState([])
 
-  const [totalLandValue, setTotalLandValue] = useState(0);
+  const [totalLandValue, setTotalLandValue] = useState(0)
 
-  const [totalChargesIValue, setTotalChargesIValue] = useState(0);
+  const [totalChargesIValue, setTotalChargesIValue] = useState(0)
 
-  const [totalChargesIIValue, setTotalChargesIIValue] = useState(0);
-  const [totalPossessionValue, setTotalPossessionValue] = useState(0);
-  const [totalConstructValue, setTotalConstructValue] = useState(0);
+  const [totalChargesIIValue, setTotalChargesIIValue] = useState(0)
+  const [totalPossessionValue, setTotalPossessionValue] = useState(0)
+  const [totalConstructValue, setTotalConstructValue] = useState(0)
   const [projectsPayload, setProjectsPayload] = useState([])
   const [projectBookingsData, setProjectBookingsData] = useState([
     { time: 'Jan', value: 0, prevValue: 7 },
@@ -244,7 +197,8 @@ const CRMCollectionReportKPI = ({ projects }) => {
     { time: 'Sep', value: 0, prevValue: 7 },
     { time: 'Oct', value: 0, prevValue: 7 },
     { time: 'Nov', value: 0, prevValue: 7 },
-    { time: 'Dec', value: 0, prevValue: 7 },]);
+    { time: 'Dec', value: 0, prevValue: 7 },
+  ])
 
   const [selProjectIs, setSelProject] = useState({
     label: 'All Projects',
@@ -253,7 +207,8 @@ const CRMCollectionReportKPI = ({ projects }) => {
   const [unitStatusPayload, setUnitStatusPayload] = useState([
     { day: 'Booked', count: 10 },
     { day: 'Allotment', count: 10 },
-    { day: 'ATS', count: 10 },])
+    { day: 'ATS', count: 10 },
+  ])
   const rowsCounter = (parent, searchKey) => {
     return searchKey === 'all'
       ? parent
@@ -286,34 +241,55 @@ const CRMCollectionReportKPI = ({ projects }) => {
     { day: 'Available', count: 0 },
     { day: 'Booked', count: 0 },
     { day: 'Blocked', count: 0 },
-
-  ]);
+  ])
 
   useEffect(() => {
     boot()
   }, [projectList])
   useEffect(() => {
-
-
     console.log('valure are', leadsFetchedData)
-    const totalSale = leadsFetchedData.reduce((total, row) => total + Number(row?.T_total || 0), 0);
-    setTotalSaleValue(totalSale);
+    const totalSale = leadsFetchedData.reduce(
+      (total, row) => total + Number(row?.T_total || 0),
+      0
+    )
+    setTotalSaleValue(totalSale)
 
-    const totalLand = leadsFetchedData.reduce((total, row) => total + Number(row?.T_A || 0), 0);
-    setTotalLandValue(totalLand);
-    const totalChargesI = leadsFetchedData.reduce((total, row) => total + Number(row?.T_B || 0), 0);
-    setTotalChargesIValue(totalChargesI);
-    const totalConstruction = leadsFetchedData.reduce((total, row) => total + Number(row?.T_C || 0), 0);
-    setTotalConstructValue(totalConstruction);
-    const totalChargesII = leadsFetchedData.reduce((total, row) => total + Number(row?.T_D || 0), 0);
-    setTotalChargesIIValue(totalChargesII);
-    const totalPossessionII = leadsFetchedData.reduce((total, row) => total + Number(row?.T_E || 0), 0);
-    setTotalPossessionValue(totalPossessionII);
+    const totalLand = leadsFetchedData.reduce(
+      (total, row) => total + Number(row?.T_A || 0),
+      0
+    )
+    setTotalLandValue(totalLand)
+    const totalChargesI = leadsFetchedData.reduce(
+      (total, row) => total + Number(row?.T_B || 0),
+      0
+    )
+    setTotalChargesIValue(totalChargesI)
+    const totalConstruction = leadsFetchedData.reduce(
+      (total, row) => total + Number(row?.T_C || 0),
+      0
+    )
+    setTotalConstructValue(totalConstruction)
+    const totalChargesII = leadsFetchedData.reduce(
+      (total, row) => total + Number(row?.T_D || 0),
+      0
+    )
+    setTotalChargesIIValue(totalChargesII)
+    const totalPossessionII = leadsFetchedData.reduce(
+      (total, row) => total + Number(row?.T_E || 0),
+      0
+    )
+    setTotalPossessionValue(totalPossessionII)
 
-    const totalReceived = leadsFetchedData.reduce((total, row) => total + Number(row.T_approved || 0), 0);
-    setTotalReceived(totalReceived);
-    const totalBalance = leadsFetchedData.reduce((total, row) => total + Number(row.T_balance || 0), 0);
-    setTotalBalance(totalBalance);
+    const totalReceived = leadsFetchedData.reduce(
+      (total, row) => total + Number(row.T_approved || 0),
+      0
+    )
+    setTotalReceived(totalReceived)
+    const totalBalance = leadsFetchedData.reduce(
+      (total, row) => total + Number(row.T_balance || 0),
+      0
+    )
+    setTotalBalance(totalBalance)
 
     const bookedCount = rowsCounter(leadsFetchedData, 'booked').length
     const allotment = rowsCounter(leadsFetchedData, 'allotment').length
@@ -322,50 +298,76 @@ const CRMCollectionReportKPI = ({ projects }) => {
     const construction = rowsCounter(leadsFetchedData, 'construction').length
     const possession = rowsCounter(leadsFetchedData, 'possession').length
 
-    const x = [{day:'Booked', count:bookedCount}, {day:'Allotment', count:allotment}, {day:'Agreement', count:ATS}, {day:'Registered', count:registered}, {day:'Construction', count:construction}, {day:'Possession', count:possession}]
+    const x = [
+      { day: 'Booked', count: bookedCount },
+      { day: 'Allotment', count: allotment },
+      { day: 'Agreement', count: ATS },
+      { day: 'Registered', count: registered },
+      { day: 'Construction', count: construction },
+      { day: 'Possession', count: possession },
+    ]
 
     setUnitStatusPayload(x)
-  }, [leadsFetchedData]);
+  }, [leadsFetchedData])
   function updateInventoryData(myDbDataIs) {
     const monthNames = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "July", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
-  let x = []
-  let y = {available: 0, booked: 0, blocked: 0}
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'July',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ]
+    let x = []
+    let y = { available: 0, booked: 0, blocked: 0 }
     myDbDataIs.map((record, i) => {
-
       console.log('project details are', record)
 
-
-
-      y.available += record?.availableCount || 0;
-      y.booked += record?.bookUnitCount || 0;
-      y.blocked += record?.blockedUnitCount || 0;
-
-
-    });
-    setInventoryPayload([{day: 'Available', count: y.available}, {day: 'Booked', count: y.booked}, {day: 'Blocked', count: y.blocked}])
-    console.log('booking details values are',projectBookingsData )
-    return projectBookingsData;
+      y.available += record?.availableCount || 0
+      y.booked += record?.bookUnitCount || 0
+      y.blocked += record?.blockedUnitCount || 0
+    })
+    setInventoryPayload([
+      { day: 'Available', count: y.available },
+      { day: 'Booked', count: y.booked },
+      { day: 'Blocked', count: y.blocked },
+    ])
+    console.log('booking details values are', projectBookingsData)
+    return projectBookingsData
   }
   function updateBookingData(myDbDataIs) {
     const monthNames = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "July", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'July',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ]
 
-    myDbDataIs.forEach(record => {
-      const date = new Date(record.Date);
-      const month = monthNames[date.getUTCMonth()];
-      const booking = projectBookingsData.find(entry => entry.time === month);
+    myDbDataIs.forEach((record) => {
+      const date = new Date(record.Date)
+      const month = monthNames[date.getUTCMonth()]
+      const booking = projectBookingsData.find((entry) => entry.time === month)
       if (booking) {
-        booking.value += 1;
+        booking.value += 1
       }
-    });
+    })
     setProjectBookingsData(projectBookingsData)
-    console.log('booking details values are',projectBookingsData )
-    return projectBookingsData;
+    console.log('booking details values are', projectBookingsData)
+    return projectBookingsData
   }
   const boot = async () => {
     const unsubscribe = await getBookedUnitsByProject(
@@ -386,7 +388,6 @@ const CRMCollectionReportKPI = ({ projects }) => {
         console.log('booking details values are', usersListA)
         await setUnitsFetchData(usersListA)
         await updateBookingData(usersListA)
-
       },
       {
         status: [
@@ -419,9 +420,7 @@ const CRMCollectionReportKPI = ({ projects }) => {
         await updateInventoryData(usersListA)
       },
       {
-        status: [
-
-        ],
+        status: [],
       },
       () => setProjectsPayload([])
     )
@@ -458,9 +457,6 @@ const CRMCollectionReportKPI = ({ projects }) => {
       (dataView === 'monthly' || dataView === 'weekly')
     )
   })
-
-
-
 
   const calMonthlyValueNew = async (projects) => {
     try {
@@ -509,61 +505,59 @@ const CRMCollectionReportKPI = ({ projects }) => {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <div className="  bg-white ">
+      <div className="max-w-7xl  mt-4 mx-auto">
+        <div className="grid grid-cols-4 gap-6 mb-8">
+          <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
+            <h3 className="text-gray-600 mb-2">Sold Units</h3>
+            <p className="text-2xl font-bold mb-2">
+              {' '}
+              {unitsFetchData?.length?.toLocaleString('en-IN')}
+            </p>
+            <div className="flex items-center gap-2 text-red-500">
+              <span className="text-gray-500">
+                {leadsFetchedData?.length} Units
+              </span>
+            </div>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
+            <h3 className="text-gray-600 mb-2">Sales</h3>
+            <p className="text-2xl font-bold mb-2">
+              ₹ {Math.round(totalSaleValue)?.toLocaleString('en-IN')}
+            </p>
+            <div className="flex items-center gap-2 text-red-500">
+              <span className="text-gray-500">
+                {leadsFetchedData?.length} Units
+              </span>
+            </div>
+          </div>
 
-<div className='max-w-7xl  mt-4 mx-auto'>
-<div className="grid grid-cols-4 gap-6 mb-8">
-  <div className="bg-white rounded-xl p-6  shadow-inner drop-shadow-md">
-    <h3 className="text-gray-600 mb-2">Sold Units</h3>
-    <p className="text-2xl font-bold mb-2">  {unitsFetchData?.length?.toLocaleString('en-IN')}</p>
-    <div className="flex items-center gap-2 text-red-500">
+          <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
+            <h3 className="text-gray-600 mb-2">Recieved</h3>
+            <p className="text-2xl font-bold mb-2">
+              ₹ {Math.round(totalReceived)?.toLocaleString('en-IN')}
+            </p>
+            <div className="flex items-center gap-2 text-red-500">
+              <span className="text-gray-500">
+                {leadsFetchedData?.length} Units
+              </span>
+            </div>
+          </div>
 
-      <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
-    </div>
-  </div>
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md ">
-    <h3 className="text-gray-600 mb-2">Sales</h3>
-    <p className="text-2xl font-bold mb-2">₹ {Math.round(totalSaleValue)?.toLocaleString('en-IN')}</p>
-    <div className="flex items-center gap-2 text-red-500">
-
-      <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
-    </div>
-  </div>
-
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
-    <h3 className="text-gray-600 mb-2">Recieved</h3>
-    <p className="text-2xl font-bold mb-2">₹ {Math.round(totalReceived)?.toLocaleString('en-IN')}</p>
-    <div className="flex items-center gap-2 text-red-500">
-
-      <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
-    </div>
-  </div>
-
-  <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
-    <h3 className="text-gray-600 mb-2">Balance</h3>
-    <p className="text-2xl font-bold mb-2">₹ {Math.round(selTotalBalance)?.toLocaleString('en-IN')}</p>
-    <div className="flex items-center gap-2 text-red-500">
-
-      <span className="text-gray-500">{leadsFetchedData?.length} Units</span>
-    </div>
-  </div>
-</div>
-</div>
-
+          <div className="bg-white rounded-xl p-6 shadow-inner drop-shadow-md">
+            <h3 className="text-gray-600 mb-2">Balance</h3>
+            <p className="text-2xl font-bold mb-2">
+              ₹ {Math.round(selTotalBalance)?.toLocaleString('en-IN')}
+            </p>
+            <div className="flex items-center gap-2 text-red-500">
+              <span className="text-gray-500">
+                {leadsFetchedData?.length} Units
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

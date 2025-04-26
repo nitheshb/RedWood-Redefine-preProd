@@ -13,7 +13,8 @@
         "os": false
     },
     "scripts": {
-        "email": "email dev ./web/src/emails"
+        "email": "email dev ./web/src/emails",
+        "format": "prettier --write \"{api,web}/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
     },
     "devDependencies": {
         "@redwoodjs/core": "^2.2.4",

@@ -3,9 +3,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react'
-import {
-  DocumentIcon,
-} from '@heroicons/react/solid'
+import { DocumentIcon } from '@heroicons/react/solid'
 import { DownloadIcon } from '@heroicons/react/solid'
 import ClockIcon from '@heroicons/react/solid/ClockIcon'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
@@ -27,7 +25,6 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import { prettyDate, prettyDateTime, timeConv } from 'src/util/dateConverter'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
-
 
 import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
@@ -672,7 +669,6 @@ export default function CrmUnitSideView({
                   <span className="font-md text-xs text-gray-600 tracking-wide uppercase">
                     Area(sft)
                   </span>
-      
                 </div>
                 <div className="p-3 text-center">
                   <span className="text-sm font-semibold  block uppercase tracking-wide text-gray-900">
@@ -695,8 +691,6 @@ export default function CrmUnitSideView({
           </div>
         </div>
 
-
-
         {unitsViewMode && (
           <>
             <ProjPhaseHome
@@ -709,8 +703,6 @@ export default function CrmUnitSideView({
           <>
             <div className="">
               <div className="">
-
-
                 <div className=" border-gray-200 ">
                   <ul
                     className="flex   bg-[#F9FAFB] rounded-t-lg"
@@ -745,7 +737,6 @@ export default function CrmUnitSideView({
                             onClick={() => setFeature(d.val)}
                           >
                             {`${d.lab} `}
-               
                           </button>
                         </li>
                       )
@@ -1546,7 +1537,6 @@ export default function CrmUnitSideView({
                           {leadNotesFetchedData.map((data, i) => (
                             <section key={i} className="">
                               <span className="flex absolute -left-3 justify-center items-center w-6 h-6 bg-green-200 rounded-full ring-8 ring-white  ">
-           
                                 <DocumentIcon className=" w-3 h-3" />
                               </span>
                               <div className="text-gray-600  m-3 ml-6">
@@ -1659,7 +1649,6 @@ export default function CrmUnitSideView({
                           </button>
                         </div>
                       </form>
-
                     </div>
                   </div>
                 )}
@@ -1720,8 +1709,6 @@ export default function CrmUnitSideView({
                                   </td>
                                   <td className="px-5 py-5 bg-white text-sm">
                                     <>
-                    
-
                                       <DownloadIcon
                                         onClick={() => downloadFile(dat.url)}
                                         className="w-5 h-5 text-gray-400 ml-3 cursor-pointer"
@@ -1933,8 +1920,6 @@ export default function CrmUnitSideView({
                               {data?.txt}
                             </div>
                             <span className="inline-flex items-center text-xs font-normal text-gray-500 ">
-
-
                               <ClockIcon className="mr-1 w-3 h-3" />
                               {data?.type == 'ph'
                                 ? timeConv(Number(data?.time)).toLocaleString()

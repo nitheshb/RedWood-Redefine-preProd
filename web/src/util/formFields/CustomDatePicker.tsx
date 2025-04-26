@@ -5,13 +5,15 @@ import range from 'lodash/range'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-
-
-
-
-const CustomDatePicker = ({ selected, onChange,  customStyles = {},  width = "100%", ...props }) => {
-  let leadYear = 1;
-  if(props?.leadYears){
+const CustomDatePicker = ({
+  selected,
+  onChange,
+  customStyles = {},
+  width = '100%',
+  ...props
+}) => {
+  let leadYear = 1
+  if (props?.leadYears) {
     leadYear = props?.leadYears
   }
   const years = range(1850, getYear(new Date()) + leadYear, 1)
@@ -40,11 +42,8 @@ const CustomDatePicker = ({ selected, onChange,  customStyles = {},  width = "10
         increaseMonth,
         prevMonthButtonDisabled,
         nextMonthButtonDisabled,
-        styles={customStyles}
+        styles = { customStyles },
       }) => (
-
-
-
         <div
           style={{
             display: 'flex',
@@ -55,7 +54,6 @@ const CustomDatePicker = ({ selected, onChange,  customStyles = {},  width = "10
             background: '#f2f2f2',
             borderRadius: '5px',
             ...(customStyles?.container || {}),
-          
           }}
         >
           <button
@@ -83,7 +81,6 @@ const CustomDatePicker = ({ selected, onChange,  customStyles = {},  width = "10
               border: '1px solid #ccc',
               borderRadius: '3px',
               cursor: 'pointer',
-              
             }}
           >
             {months.map((option) => (
@@ -125,8 +122,6 @@ const CustomDatePicker = ({ selected, onChange,  customStyles = {},  width = "10
             {'>'}
           </button>
         </div>
-
-
       )}
       selected={selected}
       onChange={onChange}

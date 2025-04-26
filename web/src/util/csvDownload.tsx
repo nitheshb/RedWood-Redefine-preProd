@@ -83,7 +83,6 @@ export default function CSVDownloader({
       delete x.plotCS
       delete x.blockId
 
-
       return x
     })
   }

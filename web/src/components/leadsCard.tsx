@@ -12,7 +12,6 @@ function CardItem({ data, index }) {
           {...provided.dragHandleProps}
           className="bg-white max-w-[200px] rounded-lg p-3 mb-1 mt-0 last:mb-0  cursor-pointer bg-opacity-90 group hover:bg-opacity-100 hover:bg-red-200 "
         >
-       
           <span
             className={`items-center h-6 px-3 py-1 text-xs font-semibold text-white bg-pink-100 rounded-full ${
               data.priority === 0

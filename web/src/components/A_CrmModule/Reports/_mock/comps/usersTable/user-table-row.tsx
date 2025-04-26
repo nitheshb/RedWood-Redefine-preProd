@@ -111,7 +111,10 @@ export default function UserTableRow({
       (partialSum, obj) =>
         partialSum +
         Number(
-          computeTotal(obj, super_built_up_area || area?.toString()?.replace(',', ''))
+          computeTotal(
+            obj,
+            super_built_up_area || area?.toString()?.replace(',', '')
+          )
         ),
       0
     ) || 0
@@ -145,7 +148,6 @@ export default function UserTableRow({
               color: 'text.disabled',
             }}
           />
-
         </TableCell>
 
         <TableCell align="center" sx={{ whiteSpace: 'nowrap' }}>
@@ -185,31 +187,31 @@ export default function UserTableRow({
           ₹{partACost?.toLocaleString('en-IN')}
         </TableCell>
         <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-        ₹{infraCharges?.toLocaleString('en-IN')}
+          ₹{infraCharges?.toLocaleString('en-IN')}
         </TableCell>
         <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-        ₹{clubHouseCharges?.toLocaleString('en-IN')}
+          ₹{clubHouseCharges?.toLocaleString('en-IN')}
         </TableCell>
         <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-        ₹{maintenanceCharges?.toLocaleString('en-IN')}
+          ₹{maintenanceCharges?.toLocaleString('en-IN')}
         </TableCell>
         <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-        ₹{legalCharge?.toLocaleString('en-IN')}
+          ₹{legalCharge?.toLocaleString('en-IN')}
         </TableCell>
         <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-        ₹{(partACost + partBCost)?.toLocaleString('en-IN')}
+          ₹{(partACost + partBCost)?.toLocaleString('en-IN')}
         </TableCell>
         <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-        ₹{sqft_rate?.toLocaleString('en-IN')}
+          ₹{sqft_rate?.toLocaleString('en-IN')}
         </TableCell>
         <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-        ₹{sqft_rate?.toLocaleString('en-IN')}
+          ₹{sqft_rate?.toLocaleString('en-IN')}
         </TableCell>
         <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-        ₹{T_review?.toLocaleString('en-IN')}
+          ₹{T_review?.toLocaleString('en-IN')}
         </TableCell>
         <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-        ₹{T_balance?.toLocaleString('en-IN')}
+          ₹{T_balance?.toLocaleString('en-IN')}
         </TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{by}</TableCell>

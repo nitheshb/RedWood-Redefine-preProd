@@ -34,9 +34,7 @@ export default function ConstructUnitsDetails({
     }
   }, [fullPs])
 
-  const validateSchema = Yup.object({
-
-  })
+  const validateSchema = Yup.object({})
 
   return (
     <div className="h-full flex flex-col pb-6 bg-white  overflow-y-scroll">
@@ -47,13 +45,11 @@ export default function ConstructUnitsDetails({
               enableReinitialize={true}
               initialValues={initialState}
               validationSchema={validateSchema}
-              onSubmit={(values, { resetForm }) => {
-              }}
+              onSubmit={(values, { resetForm }) => {}}
             >
               {(formik) => (
                 <Form>
                   <div className="form">
-
                     <section className="  bg-blueGray-50">
                       <div className="w-full mx-auto ">
                         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-[#F9FBFB] border-0">
@@ -435,7 +431,6 @@ export default function ConstructUnitsDetails({
                                             Upload image
                                           </h3>
                                         </div>
-                  
                                       </div>
                                       <div className="flex flex-wrap w-1/3">
                                         <div className="w-full p-1 md:p-2">
@@ -456,7 +451,7 @@ export default function ConstructUnitsDetails({
                                           />
                                         </div>
                                       </div>
-         
+
                                       <div className="flex flex-wrap w-1/3">
                                         <div className="w-full p-1 md:p-2">
                                           <img

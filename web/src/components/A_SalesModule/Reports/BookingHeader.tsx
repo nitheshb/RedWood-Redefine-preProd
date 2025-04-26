@@ -2,11 +2,7 @@
 // import { PieChart, Pie, Cell } from 'recharts';
 // import { BellIcon, ChevronDownIcon } from 'lucide-react';
 
-
 // const BookingSummaryHeader = () => {
-
-
-
 
 //   const [query, setQuery] = useState('');
 
@@ -14,19 +10,12 @@
 //     setQuery(e.target.value);
 //   };
 
-
 //   const data = [
 //     { name: 'Paid', value: 10198 },
 //     { name: 'Remaining', value: 6723523 - 10198 }
 //   ];
 
-
-
-
-
-
 //   const COLORS = ['#4CAF50', '#FF6347'];
-
 
 //   const menuItems = [
 //     {    icon: (
@@ -44,7 +33,6 @@
 // <path d="M8.15039 6.03467C6.59459 6.08134 5.667 6.25451 5.02516 6.89694C4.14648 7.77644 4.14648 9.19197 4.14648 12.023V18.5291C4.14648 21.3602 4.14648 22.7757 5.02516 23.6552C5.90384 24.5347 7.31806 24.5347 10.1465 24.5347H15.1465C17.9749 24.5347 19.3891 24.5347 20.2678 23.6552C21.1465 22.7757 21.1465 21.3602 21.1465 18.5291V12.023C21.1465 9.19197 21.1465 7.77644 20.2678 6.89695C19.626 6.25451 18.6984 6.08134 17.1426 6.03467" stroke="#A6A6A6" stroke-width="1.5"/>
 // <path d="M8.64453 17.868H12.6445M8.64453 12.4513H16.6445" stroke="#A6A6A6" stroke-width="1.5" stroke-linecap="round"/>
 // </svg>
-
 
 //     ), text: "Applicant Details" },
 //     { icon: (
@@ -136,7 +124,6 @@
 //       {/* Header Section */}
 //       <div className="flex gap-8 items-center mb-6">
 
-
 // <div className="bg-[#E6F3FC] p-4 rounded-lg flex items-center space-x-4">
 //     <div className="bg-white p-4 rounded-[18px] flex flex-col items-center justify-center w-20 h-20">
 //       <span className="text-2xl font-bold">11</span>
@@ -167,9 +154,6 @@
 //       </div>
 //     </div>
 //   </div>
-
-
-
 
 //   <div className="flex space-x-4 bg-[#E6F3FC] p-8 rounded-lg">
 //     <div className="relative inline-block text-left">
@@ -231,8 +215,6 @@
 //     </button>
 //   </div>
 //       </div>
-
-
 
 // <div className='bg-[#E6F3FC] p-8  rounded-lg'>
 
@@ -331,11 +313,7 @@
 //     </div>
 //   </div>
 
-
-
 // </div>
-
-
 
 // <div className="bg-white   rounded-xl shadow-sm">
 //       <div className="border rounded-xl">
@@ -389,15 +367,7 @@
 //       </div>
 //     </div>
 
-
-
-
-
 // </div>
-
-
-
-
 
 //       <div className="bg-[#E6F3FC] p-4 rounded-lg mt-5">
 //         <div className="space-y-4">

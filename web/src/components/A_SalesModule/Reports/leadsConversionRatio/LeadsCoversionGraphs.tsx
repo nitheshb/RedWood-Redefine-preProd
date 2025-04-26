@@ -19,7 +19,11 @@ const LeadsCoversionGraphs = ({
   })
 
   useEffect(() => {
-    console.log('full data for projects with raw is =>', projectFilList, sourceRawFilData)
+    console.log(
+      'full data for projects with raw is =>',
+      projectFilList,
+      sourceRawFilData
+    )
   }, [projectFilList])
 
   useEffect(() => {
@@ -69,7 +73,7 @@ const LeadsCoversionGraphs = ({
   console.log(show)
   return (
     <div
-    className='rounded-xl'
+      className="rounded-xl"
       style={{
         padding: '1rem',
         backgroundColor: 'white',
@@ -78,7 +82,10 @@ const LeadsCoversionGraphs = ({
       {show && (
         <div style={{ display: 'flex' }}>
           <div style={{ width: '15rem' }}>
-            <div style={{ height: '12.5rem' }} className="bg-[#ffe0bb] p-6 rounded-t-lg">
+            <div
+              style={{ height: '12.5rem' }}
+              className="bg-[#ffe0bb] p-6 rounded-t-lg"
+            >
               <span className=" text-lg ">Lead Conversion Ratio</span>
               <div className=" text-[44px] my-5">
                 {`${
@@ -153,11 +160,12 @@ const LeadsCoversionGraphs = ({
                     (datObj) => datObj?.Status == 'junk'
                   ),
                 },
-
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`bg-[#ffefdb] my-[0.5px] cursor-pointer ${i === 5 ? 'rounded-b-lg' : ''}`}
+                  className={`bg-[#ffefdb] my-[0.5px] cursor-pointer ${
+                    i === 5 ? 'rounded-b-lg' : ''
+                  }`}
                   style={{
                     height: '4rem',
                     display: 'flex',
@@ -179,16 +187,14 @@ const LeadsCoversionGraphs = ({
           </div>
 
           <div style={{ width: '50rem' }}>
-
             <div
-            className=''
+              className=""
               style={{
                 padding: '1.5rem',
-
               }}
             >
               <div
-                className='shadow rounded-xl p-2 pl-4'
+                className="shadow rounded-xl p-2 pl-4"
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -200,7 +206,6 @@ const LeadsCoversionGraphs = ({
                     width: '14rem',
                     height: '12rem',
                     position: 'relative',
-
                   }}
                 >
                   <PieChartComp pieVal={pieVals.val1} />
@@ -300,11 +305,8 @@ const LeadsCoversionGraphs = ({
                   </div>
                 </div>
               </div>
-       
 
-              <section className="flex flex-row justify-between mt-[18px]">
-              
-              </section>
+              <section className="flex flex-row justify-between mt-[18px]"></section>
               <table className="min-w-full cardborder text-center">
                 <thead className="border-b">
                   <tr>
@@ -315,7 +317,6 @@ const LeadsCoversionGraphs = ({
                       { label: 'Booked', id: 'booked' },
                       { label: 'Archieve', id: 'archieve' },
                       { label: 'Others', id: 'others' },
-
                     ].map((d, i) => (
                       <th
                         key={i}
@@ -323,10 +324,8 @@ const LeadsCoversionGraphs = ({
                         className={`text-sm font-semibold font-medium text-gray-900 px-6 py-4 border ${
                           ['Source'].includes(d.label) ? 'text-left' : ''
                         }`}
-
                       >
                         {d.label}
-
                       </th>
                     ))}
                   </tr>
@@ -334,10 +333,7 @@ const LeadsCoversionGraphs = ({
                 <tbody>
                   {projectFilList.map((data, i) => {
                     return (
-                      <tr
-
-                        key={i}
-                      >
+                      <tr key={i}>
                         <td className="text-sm text-gray-900 font-medium px-6 py-2 whitespace-nowrap text-left border">
                           {data?.label}
                         </td>
@@ -473,16 +469,11 @@ const LeadsCoversionGraphs = ({
                       }
                     </td>
                     <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap border">
-
                       0
                     </td>
                   </tr>
-              
                 </tbody>
               </table>
-
-
-
             </div>
           </div>
         </div>

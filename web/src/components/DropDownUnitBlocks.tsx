@@ -5,7 +5,6 @@ import { Menu, Transition } from '@headlessui/react'
 
 import { useNavigate } from 'react-router-dom'
 
-
 import { useState } from 'react'
 // import { useNavigate } from '@redwoodjs/router'
 
@@ -34,14 +33,7 @@ export default function DropDownUnitBlocks({
   totalunits: totalUnits,
   filteredUnits,
   pickedValue,
-
 }) {
-
-
-
- 
-
-
   // const [selectedBlock, setSelectedBlock] = useState(null)
   // const navigate = useNavigate()
 
@@ -59,7 +51,7 @@ export default function DropDownUnitBlocks({
                 <ChevronDownIcon className="w-5 h-5 mr-3 mt-[1px] inline text-white" />
               </>
             )}
-             {type == 'blocks' && (
+            {type == 'blocks' && (
               <>
                 <span className=" text-[11px] tracking-wide text-[#0091ae] mt-[5px]">
                   {pickedValue?.blockName || type?.toLocaleUpperCase()}
@@ -67,22 +59,25 @@ export default function DropDownUnitBlocks({
                 <ChevronDownIcon className="w-5 h-5 mr- ml-1 mt-[5px] inline text-[#058527]" />
               </>
             )}
-             {type == 'floors' && (
+            {type == 'floors' && (
               <>
                 <span className=" text-[11px] tracking-wide text-[#0091ae] mt-[5px]">
-                  Floor-{pickedValue||'All'}
+                  Floor-{pickedValue || 'All'}
                 </span>
                 <ChevronDownIcon className="w-5 h-5 mr- ml-1 mt-[5px] inline text-[#058527]" />
               </>
             )}
-            {type != 'unitMode' && type != 'View' && type != 'blocks' && type != 'floors' && (
-              <>
-                <span className=" text-[11px] tracking-wide text-[#0091ae] mt-[5px]">
-                  {type?.toLocaleUpperCase()}
-                </span>
-                <ChevronDownIcon className="w-5 h-5 mr- ml-1 mt-[5px] inline text-[#058527]" />
-              </>
-            )}
+            {type != 'unitMode' &&
+              type != 'View' &&
+              type != 'blocks' &&
+              type != 'floors' && (
+                <>
+                  <span className=" text-[11px] tracking-wide text-[#0091ae] mt-[5px]">
+                    {type?.toLocaleUpperCase()}
+                  </span>
+                  <ChevronDownIcon className="w-5 h-5 mr- ml-1 mt-[5px] inline text-[#058527]" />
+                </>
+              )}
 
             {type === 'unitMode' && (
               <>
@@ -211,85 +206,89 @@ export default function DropDownUnitBlocks({
               )}
               {type === 'blocks' && (
                 <>
-                  {filteredUnits?.sort((a, b) => a.blockName - b.blockName).map((viewData, i) => (
-                    <Menu.Item key={i}>
+                  {filteredUnits
+                    ?.sort((a, b) => a.blockName - b.blockName)
+                    .map((viewData, i) => (
+                      <Menu.Item key={i}>
+                        {({ active }) => (
+                          <section className="flex flex-row justify-between">
+                            <button
+                              className={`${
+                                active
+                                  ? 'bg-violet-500 text-white'
+                                  : 'text-gray-900'
+                              } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                              onClick={() => setStatusFun(viewData)}
+                            >
+                              {active ? (
+                                <DuplicateActiveIcon
+                                  className="w-5 h-5 mr-2"
+                                  aria-hidden="true"
+                                />
+                              ) : (
+                                <DuplicateInactiveIcon
+                                  className="w-5 h-5 mr-2 text-violet-500"
+                                  aria-hidden="true"
+                                />
+                              )}
+                              {viewData?.blockName}
+                            </button>
+                            {source === 'projectManagement' && (
+                              <div
+                                className={`${
+                                  active ? ' text-white' : 'text-gray-900'
+                                } group flex rounded-md items-center px- py-2 text-sm`}
+                                onClick={() =>
+                                  setOpenEditBlock({
+                                    open: true,
+                                    title: 'Edit Block',
+                                    sliderData: {
+                                      data: viewData,
+                                    },
+                                    widthClass: 'max-w-2xl',
+                                  })
+                                }
+                              >
+                                <PencilIcon className="w-5 h-5 mt-[3px] text-gray-500 cursor-pointer mr-2" />
+                              </div>
+                            )}
+                          </section>
+                        )}
+                      </Menu.Item>
+                    ))}
+                  {source === 'projectManagement' && (
+                    <Menu.Item>
                       {({ active }) => (
-                        <section className="flex flex-row justify-between">
+                        <section className="flex flex-row ">
                           <button
                             className={`${
                               active
                                 ? 'bg-violet-500 text-white'
                                 : 'text-gray-900'
-                            } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                            onClick={() => setStatusFun(viewData)}
-
-
-                          >
-                            {active ? (
-                              <DuplicateActiveIcon
-                                className="w-5 h-5 mr-2"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <DuplicateInactiveIcon
-                                className="w-5 h-5 mr-2 text-violet-500"
-                                aria-hidden="true"
-                              />
-                            )}
-                            {viewData?.blockName}
-                          </button>
-                         {source === 'projectManagement' &&  <div
-                            className={`${
-                              active ? ' text-white' : 'text-gray-900'
-                            } group flex rounded-md items-center px- py-2 text-sm`}
+                            }  flex rounded-md items-center w-full px-2 py-2 text-sm`}
                             onClick={() =>
                               setOpenEditBlock({
                                 open: true,
-                                title: 'Edit Block',
+                                title: 'Add Block',
                                 sliderData: {
-                                  data: viewData,
+                                  data: { projectId: selProject?.uid },
                                 },
                                 widthClass: 'max-w-2xl',
                               })
                             }
                           >
-                            <PencilIcon className="w-5 h-5 mt-[3px] text-gray-500 cursor-pointer mr-2" />
-                          </div>}
+                            <PlusIcon
+                              className={`h-3 w-3 mr-1 ${
+                                active ? 'text-white' : 'text-gray-900 '
+                              }`}
+                              aria-hidden="true"
+                            />
+                            Add New Block
+                          </button>
                         </section>
                       )}
                     </Menu.Item>
-                  ))}
-                 {source === 'projectManagement' && ( <Menu.Item>
-                    {({ active }) => (
-                      <section className="flex flex-row ">
-                        <button
-                          className={`${
-                            active
-                              ? 'bg-violet-500 text-white'
-                              : 'text-gray-900'
-                          }  flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                          onClick={() =>
-                            setOpenEditBlock({
-                              open: true,
-                              title: 'Add Block',
-                              sliderData: {
-                                data: {projectId: selProject?.uid },
-                              },
-                              widthClass: 'max-w-2xl',
-                            })
-                          }
-                        >
-                          <PlusIcon
-                            className={`h-3 w-3 mr-1 ${
-                              active ? 'text-white' : 'text-gray-900 '
-                            }`}
-                            aria-hidden="true"
-                          />
-                          Add New Block
-                        </button>
-                      </section>
-                    )}
-                  </Menu.Item>)}
+                  )}
                 </>
               )}
               {type === 'floors' && (
@@ -305,8 +304,6 @@ export default function DropDownUnitBlocks({
                                 : 'text-gray-900'
                             } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                             onClick={() => setStatusFun(viewData)}
-
-
                           >
                             {active ? (
                               <DuplicateActiveIcon
@@ -356,7 +353,7 @@ export default function DropDownUnitBlocks({
                               open: true,
                               title: 'Add Block',
                               sliderData: {
-                                data: {projectId: selProject?.uid },
+                                data: { projectId: selProject?.uid },
                               },
                               widthClass: 'max-w-2xl',
                             })
@@ -839,5 +836,3 @@ function DuplicateActiveIcon(props) {
     </svg>
   )
 }
-
-

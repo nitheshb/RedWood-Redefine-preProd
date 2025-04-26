@@ -7,9 +7,7 @@ import { ErrorMessage, Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
 
-import {
-  updateUnitAsBlocked,
-} from 'src/context/dbQueryFirebase'
+import { updateUnitAsBlocked } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
 const BlockingUnitForm = ({
@@ -110,8 +108,6 @@ const BlockingUnitForm = ({
                 >
                   {(formik) => (
                     <Form className="mt-8 ">
-
-
                       <div className="flex justify-center gap-4">
                         <input
                           type="text"
@@ -132,30 +128,25 @@ const BlockingUnitForm = ({
                           className="error-message text-red-700 text-xs p-1 mx-auto"
                         />
 
-
-<button
+                        <button
                           type="submit"
                           className=" bg-[#EDE9FE] rounded-[8px] px-[5px] text-[12px] py-[8px] gap-[10px]  h-9 w-[70px]"
                         >
                           Block
                         </button>
-
-
                       </div>
 
-
-
-<div className="text-center mt-10">
-        <div className="inline-block border border-gray-200 text-center py-4 px-4  rounded-[10px] border-[#E7E7E9] block mt-6 font-outfit font-normal text-[14px] leading-[100%] tracking-[0.06em]">
-          <p className="text-[12px">Blocking Unit for {selDays} days</p>
-        </div>
-      </div>
-
+                      <div className="text-center mt-10">
+                        <div className="inline-block border border-gray-200 text-center py-4 px-4  rounded-[10px] border-[#E7E7E9] block mt-6 font-outfit font-normal text-[14px] leading-[100%] tracking-[0.06em]">
+                          <p className="text-[12px">
+                            Blocking Unit for {selDays} days
+                          </p>
+                        </div>
+                      </div>
                     </Form>
                   )}
                 </Formik>
               </div>
-
             </div>
           </div>
         </div>

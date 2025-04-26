@@ -4,13 +4,9 @@
 
 import { useState, useEffect } from 'react'
 
-import {
-  useTheme,
-} from '@mui/material'
+import { useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import {
-  getAllProjects,
-} from 'src/context/dbQueryFirebase'
+import { getAllProjects } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
 import 'flowbite'
@@ -59,87 +55,78 @@ const CrmAnalyticsHome = ({ project }) => {
   }
 
   return (
-    <div className='bg-white rounded-md border-[40px] border-white mx-1 mt-1'>
+    <div className="bg-white rounded-md border-[40px] border-white mx-1 mt-1">
+      <div className="flex    w-[100%]  flex-row justify-between border-b ">
+        <ul
+          className="flex flex-wrap -mb-px "
+          id="myTab"
+          data-tabs-toggle="#myTabContent"
+          role="tablist"
+        >
+          {[
+            { label: 'Booking Summary', value: 'booking_summary-v1' },
+            { label: 'Collections', value: 'collection_performance' },
+            { label: 'CRM Inventory', value: 'crm_table' },
+            {
+              label: 'Collection Projections',
+              value: 'crm_projection_report',
+            },
 
-<div className='flex    w-[100%]  flex-row justify-between border-b '>
-      <ul
-                className="flex flex-wrap -mb-px "
-                id="myTab"
-                data-tabs-toggle="#myTabContent"
-                role="tablist"
+            { label: 'Project Summary', value: 'proj_summary' },
+            { label: 'Mortgage Details', value: 'mortgage_details' },
+            { label: 'Credit Note', value: 'creditnote_summary' },
+          ].map((d, i) => {
+            return (
+              <ul
+                value={selCat}
+                key={i}
+                // onChange={handleChange}
+                textColor="secondary"
+                indicatorColor="secondary"
+                aria-label="secondary tabs example"
               >
-                {[
-          { label: 'Booking Summary', value: 'booking_summary-v1' },
-          { label: 'Collections', value: 'collection_performance' },
-          { label: 'CRM Inventory', value: 'crm_table' },
-          {
-            label: 'Collection Projections',
-            value: 'crm_projection_report',
-          },
-
-          { label: 'Project Summary', value: 'proj_summary' },
-          { label: 'Mortgage Details', value: 'mortgage_details' },
-          { label: 'Credit Note', value: 'creditnote_summary' },].map((d, i) => {
-                  return (
-                    <ul
-                      value={selCat}
-                      key={i}
-                      // onChange={handleChange}
-                      textColor="secondary"
-                      indicatorColor="secondary"
-                      aria-label="secondary tabs example"
-
+                <li key={i} className="mr-3 ml-3" role="presentation">
+                  <button
+                    className={`px-4 py-2  ${
+                      selCat === d.value
+                        ? 'border-b-2 border-black text-black '
+                        : 'text-gray-500 hover:text-black'
+                    }`}
+                    type="button"
+                    role="tab"
+                    onClick={() => {
+                      setSelCat(d.value)
+                    }}
+                  >
+                    <span
+                      className={`flex items-center   text-sm   ${
+                        selCat === d.value
+                          ? 'font-semibold text-green-800 '
+                          : 'font-medium text-black-100 '
+                      }  rounded-full`}
                     >
-                      <li key={i} className="mr-3 ml-3" role="presentation">
-                        <button
-                          className={`px-4 py-2  ${
-                            selCat === d.value
-                              ? 'border-b-2 border-black text-black '
-                              : 'text-gray-500 hover:text-black'
-                          }`}
-                          type="button"
-                          role="tab"
-                          onClick={() => {
-                            setSelCat(d.value)
-                          }}
-                        >
-
-<span
-                  className={`flex items-center   text-sm   ${
-                    selCat === d.value
-                      ? 'font-semibold text-green-800 '
-                      : 'font-medium text-black-100 '
-                  }  rounded-full`}
-                >
-                  <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
-                  {d?.label}
-                </span>
-
-                        </button>
-                      </li>
-                    </ul>
-                  )
-                })}
+                      <img alt="" src="/temp2.png" className="h-5 w-5 mr-1" />
+                      {d?.label}
+                    </span>
+                  </button>
+                </li>
               </ul>
-              </div>
+            )
+          })}
+        </ul>
+      </div>
       {selCat === 'proj_summary' && (
         <section className="  py-4 mb-2 leading-7 text-gray-900 bg-white  rounded-lg  ">
-
-
           <div className="">
             {projects.map((project) => (
-              <CrmAnalyticsUnitHome
-                key={project.uid}
-                project={project}
-
-              />
+              <CrmAnalyticsUnitHome key={project.uid} project={project} />
             ))}
             {projects.length === 0 && <DummyBodyLayout />}
           </div>
         </section>
       )}
 
-       {selCat === 'booking_summary-v1' && (
+      {selCat === 'booking_summary-v1' && (
         <div className="">
           <UnitBookingSummaryHomePage1 />
 

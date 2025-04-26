@@ -3,7 +3,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { storage } from 'src/context/firebaseConfig'
 import { v4 as uuidv4 } from 'uuid'
 
-export default function FileUpload  ({ files, setFiles, removeFile }) {
+export default function FileUpload({ files, setFiles, removeFile }) {
   const [progress, setProgress] = useState(0)
   const docUploadHandler = async (e) => {
     e.preventDefault()
@@ -23,7 +23,6 @@ export default function FileUpload  ({ files, setFiles, removeFile }) {
 
           setProgress(prog)
           file.isUploading = false
-
         },
         (err) => console.log(err),
         () => {
@@ -55,18 +54,12 @@ export default function FileUpload  ({ files, setFiles, removeFile }) {
       <div className="file-card ">
         <div className="file-inputs">
           <input type="file" onChange={uploadHandler} />
-          <button className=''>
-
-            Upload
-          </button>
+          <button className="">Upload</button>
         </div>
 
         <p className="main">Supported files</p>
         <p className="info">PDF, JPG, PNG</p>
       </div>
-      
     </>
   )
 }
-
-

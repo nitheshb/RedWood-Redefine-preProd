@@ -5,7 +5,7 @@ import WhatsAppTextQuillForm from './Comps/WhatsAppTextQuill'
 
 const NotificationsSetupForm = ({ title, projectDetails, wbPayload }) => {
   const { enqueueSnackbar } = useSnackbar()
-console.log('am insidenofof')
+  console.log('am insidenofof')
   return (
     <div className="h-full flex flex-col pt-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4 sm:px-4  z-10 ">
@@ -13,10 +13,9 @@ console.log('am insidenofof')
           {title}
         </Dialog.Title>
         <span className="text-gray-600 text-xs mt-3">
-          Design WhatsApp template for {' '}
+          Design WhatsApp template for{' '}
           <span className="text-[#0080ff]"> {wbPayload?.target}</span>{' '}
           <span className="text-[#0080ff]"> {wbPayload?.event}</span>{' '}
-
         </span>
       </div>
       <section className="bg-teal-50">

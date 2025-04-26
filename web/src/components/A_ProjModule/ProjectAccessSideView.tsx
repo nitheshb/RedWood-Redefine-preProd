@@ -3,13 +3,17 @@
 import { useState, useEffect } from 'react'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
-import { deleteProject, getPlanDiagramByPhase, updateMoreDetails, updateProjectPayload } from 'src/context/dbQueryFirebase'
+import {
+  deleteProject,
+  getPlanDiagramByPhase,
+  updateMoreDetails,
+  updateProjectPayload,
+} from 'src/context/dbQueryFirebase'
 import { getAllProjects } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import PaymentLeadAccess from '../PaymentScheduleForm/ProjectLeadAccess'
 import SiderForm from '../SiderForm/SiderForm'
 import { Checkbox } from '@mui/material'
-
 
 const ProjectAccessSideView = ({
   title,
@@ -36,15 +40,13 @@ const ProjectAccessSideView = ({
   const [isAccessSideView, setIsAccessSideView] = useState(false)
   const [planDiagramsA, setPlanDiagramsA] = useState([])
 
-  useEffect(()=>{
+  useEffect(() => {
     setAllowCrmStatusOnDue(projectDetails?.allowCrmStatusChangeOnDue || false)
     setAllowSalesExCsEdit(projectDetails?.allowSalesExCsEdit || false)
-
   }, [projectDetails])
   useEffect(() => {
     getPlanDiagrams(data?.uid, 'plan_diagram')
     console.log('plan_diagram', data, projectDetails)
-
   }, [pId, data])
   const getPlanDiagrams = async (phaseId, type) => {
     const unsubscribe = getPlanDiagramByPhase(
@@ -138,120 +140,123 @@ const ProjectAccessSideView = ({
     setIsDocViewOpenSideView(!isDocViewOpenSideView)
   }
   const updateCrmStatusAcess = (status) => {
-
-    updateProjectPayload(orgId, projectDetails?.uid, { allowCrmStatusChangeOnDue: status.target.checked })
-    setAllowCrmStatusOnDue(status.target.checked )
+    updateProjectPayload(orgId, projectDetails?.uid, {
+      allowCrmStatusChangeOnDue: status.target.checked,
+    })
+    setAllowCrmStatusOnDue(status.target.checked)
   }
   const updateAllowSalesExCsEdit = (status) => {
-
-    updateProjectPayload(orgId, projectDetails?.uid, { allowSalesExCsEdit: status.target.checked })
-    setAllowSalesExCsEdit(status.target.checked )
+    updateProjectPayload(orgId, projectDetails?.uid, {
+      allowSalesExCsEdit: status.target.checked,
+    })
+    setAllowSalesExCsEdit(status.target.checked)
   }
   return (
     <div className="h-full flex flex-col  bg-white shadow-xl">
       <div className="   z-10">
- 
-
         <div className="flex flex-row ">
-        <div className="flex flex-col w-full gap-4">
-          {subView === 'salesAccess' && (
-            <PaymentLeadAccess
-              title={'Leads Access'}
-              data={{ phase: data, project: projectDetails }}
-              dept="sales"
-              source={source}
-            />
-          )}
-          {subView === 'salesAccess' && (  <div className='ml-4'>
-                            <Checkbox
-                              color="primary"
-                              checked={allowSalesExCsEdit}
-                              onChange={(e) => {
+          <div className="flex flex-col w-full gap-4">
+            {subView === 'salesAccess' && (
+              <PaymentLeadAccess
+                title={'Leads Access'}
+                data={{ phase: data, project: projectDetails }}
+                dept="sales"
+                source={source}
+              />
+            )}
+            {subView === 'salesAccess' && (
+              <div className="ml-4">
+                <Checkbox
+                  color="primary"
+                  checked={allowSalesExCsEdit}
+                  onChange={(e) => {
+                    updateAllowSalesExCsEdit(e)
+                  }}
+                  inputProps={{
+                    'aria-label': 'select all desserts',
+                  }}
+                />
+                <span className="mt-1">
+                  {' '}
+                  Allow Costsheet Edit feature for Sales Executive
+                </span>
+              </div>
+            )}
 
-                                updateAllowSalesExCsEdit(e)
-                              }}
-                              inputProps={{
-                                'aria-label': 'select all desserts',
-                              }}
-                            />
-                            <span className="mt-1"> Allow Costsheet Edit feature for Sales Executive</span>
-                          </div>)}
+            {subView === 'creditNoteIssuers' && (
+              <PaymentLeadAccess
+                title={'Credit Note Issuers'}
+                data={{ phase: data, project: projectDetails }}
+                dept="admin"
+                source={source}
+              />
+            )}
 
-          {subView === 'creditNoteIssuers' && (
-            <PaymentLeadAccess
-              title={'Credit Note Issuers'}
-              data={{ phase: data, project: projectDetails }}
-              dept="admin"
-              source={source}
-            />
-          )}
+            {subView === 'marketingAccess' && (
+              <PaymentLeadAccess
+                title={'Marketing Access'}
+                data={{ phase: data, project: projectDetails }}
+                dept="marketing"
+                source={source}
+              />
+            )}
 
-          {subView === 'marketingAccess' && (
-            <PaymentLeadAccess
-              title={'Marketing Access'}
-              data={{ phase: data, project: projectDetails }}
-              dept="marketing"
-              source={source}
-            />
-          )}
+            {subView === 'crmAccess' && (
+              <PaymentLeadAccess
+                title={'CRM Access'}
+                data={{ phase: data, project: projectDetails }}
+                dept="crm"
+                source={source}
+              />
+            )}
+            {subView === 'crmAccess' && (
+              <div className="ml-4">
+                <Checkbox
+                  color="primary"
+                  checked={allowCrmStausOnDue}
+                  onChange={(e) => {
+                    // console.log('earnet')
+                    // addRemoveProjectAccessFun(salesPerson)
+                    updateCrmStatusAcess(e)
+                  }}
+                  inputProps={{
+                    'aria-label': 'select all desserts',
+                  }}
+                />
+                <span className="mt-1">
+                  {' '}
+                  Allow Unit status change on Elgible Balance exists
+                </span>
+              </div>
+            )}
 
-
-          {subView === 'crmAccess' && (
-            <PaymentLeadAccess
-              title={'CRM Access'}
-              data={{ phase: data, project: projectDetails }}
-              dept="crm"
-              source={source}
-            />
-          )}
-                   {subView === 'crmAccess' && (  <div className='ml-4'>
-                            <Checkbox
-                              color="primary"
-                              checked={allowCrmStausOnDue}
-                              onChange={(e) => {
-                                // console.log('earnet')
-                                // addRemoveProjectAccessFun(salesPerson)
-                                updateCrmStatusAcess(e)
-                              }}
-                              inputProps={{
-                                'aria-label': 'select all desserts',
-                              }}
-                            />
-                            <span className="mt-1"> Allow Unit status change on Elgible Balance exists</span>
-                          </div>)}
-
-
-
-          {subView === 'FinAccess' && (
-            <PaymentLeadAccess
-              title={'Finance Access'}
-              data={{ phase: data, project: projectDetails }}
-              dept="finance"
-              source={source}
-            />
-          )}
-          {subView === 'legalAccess' && (
-            <PaymentLeadAccess
-              title={'Legal Access'}
-              data={{ phase: data, project: projectDetails }}
-              dept="legal"
-              source={source}
-            />
-          )}
-          {subView === 'constructAccess' && (
-            <PaymentLeadAccess
-              title={'Contruction Access'}
-              data={{ phase: data, project: projectDetails }}
-              dept="construction"
-              source={source}
-            />
-          )}
-             </div>
+            {subView === 'FinAccess' && (
+              <PaymentLeadAccess
+                title={'Finance Access'}
+                data={{ phase: data, project: projectDetails }}
+                dept="finance"
+                source={source}
+              />
+            )}
+            {subView === 'legalAccess' && (
+              <PaymentLeadAccess
+                title={'Legal Access'}
+                data={{ phase: data, project: projectDetails }}
+                dept="legal"
+                source={source}
+              />
+            )}
+            {subView === 'constructAccess' && (
+              <PaymentLeadAccess
+                title={'Contruction Access'}
+                data={{ phase: data, project: projectDetails }}
+                dept="construction"
+                source={source}
+              />
+            )}
+          </div>
         </div>
       </div>
-
-
-
 
       <SiderForm
         open={isOpenSideView}
@@ -262,7 +267,7 @@ const ProjectAccessSideView = ({
         widthClass="max-w-2xl"
         projectsList={projects}
       />
-       <SiderForm
+      <SiderForm
         open={isDocViewOpenSideView}
         setOpen={setIsDocViewOpenSideView}
         title={'disp_project_docs'}
@@ -278,7 +283,6 @@ const ProjectAccessSideView = ({
         setOpen={setIsAccessSideView}
         title={'disp_project_access'}
         subView={subView}
-
         phaseDetails={data}
         projectDetails={projectDetails}
         unitsViewMode={false}
@@ -291,9 +295,3 @@ const ProjectAccessSideView = ({
 }
 
 export default ProjectAccessSideView
-
-
-
-
-
-

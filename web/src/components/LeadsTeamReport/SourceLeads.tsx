@@ -92,7 +92,6 @@ export function serialMyData(sourceListItemsA, fullData, mode) {
       )
       x.others = []
     } else {
-
       x.Total = fullData.filter((datObj) =>
         souceObj?.rep.includes(datObj?.Source)
       )

@@ -11,7 +11,6 @@ import {
   BanIcon,
 } from '@heroicons/react/solid'
 
-
 export default function StatusDropComp({ leadStatus, id, setStatusFun }) {
   return (
     <div className="text-right inline-block ">

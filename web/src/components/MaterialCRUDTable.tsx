@@ -18,7 +18,20 @@ import ViewColumn from '@material-ui/icons/ViewColumn'
 export const MaterialCRUDTable = (props) => {
   const tableIcons = {
     Add: forwardRef((props, ref) => (
-     <div fontSize="small" {...props} ref={ref} style={{fontSize: '12px', fontWeight: 'bold',  borderRadius: '8px',   color: 'blue'}} > Add New Component</div>
+      <div
+        fontSize="small"
+        {...props}
+        ref={ref}
+        style={{
+          fontSize: '12px',
+          fontWeight: 'bold',
+          borderRadius: '8px',
+          color: 'blue',
+        }}
+      >
+        {' '}
+        Add New Component
+      </div>
       // <AddBox fontSize="small" {...props} ref={ref} />
     )),
     Check: forwardRef((props, ref) => (

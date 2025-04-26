@@ -1,18 +1,17 @@
-import React from 'react';
-import { BarChart, Bar, Cell, ResponsiveContainer } from 'recharts';
+import React from 'react'
+import { BarChart, Bar, Cell, ResponsiveContainer } from 'recharts'
 
 const CollectionsDashboard = () => {
   const progressData = [
     { name: 'completed', value: 50 },
     { name: 'inProgress', value: 30 },
-    { name: 'remaining', value: 20 }
-  ];
+    { name: 'remaining', value: 20 },
+  ]
 
-  const COLORS = ['#0EA5E9', '#93C5FD', '#DBEAFE'];
+  const COLORS = ['#0EA5E9', '#93C5FD', '#DBEAFE']
 
   return (
     <div className="w-full max-w-3xl mx-auto p-8 bg-white rounded-3xl shadow-sm">
-
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-normal">Collections</h1>
         <span className="text-gray-500">Month</span>
@@ -24,11 +23,7 @@ const CollectionsDashboard = () => {
 
       <div className="h-8 mb-12">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={progressData}
-            layout="vertical"
-            barSize={32}
-          >
+          <BarChart data={progressData} layout="vertical" barSize={32}>
             <Bar
               dataKey="value"
               fill="#0EA5E9"
@@ -81,7 +76,7 @@ const CollectionsDashboard = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CollectionsDashboard;
+export default CollectionsDashboard

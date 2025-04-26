@@ -1,13 +1,11 @@
 import { forwardRef } from 'react'
 
 // @mui
-import { BoxProps } from '@mui/material/Box';
+import { BoxProps } from '@mui/material/Box'
 import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
 // @mui
-import { alpha, Theme, styled } from '@mui/material/styles';
-
-
+import { alpha, Theme, styled } from '@mui/material/styles'
 
 //
 // import { LabelColor, LabelVariant } from './types';
@@ -64,7 +62,6 @@ const Label = forwardRef<HTMLSpanElement, LabelProps>(
 
 export default Label
 
-
 // ----------------------------------------------------------------------
 
 export type LabelColor =
@@ -74,18 +71,16 @@ export type LabelColor =
   | 'info'
   | 'success'
   | 'warning'
-  | 'error';
+  | 'error'
 
-export type LabelVariant = 'filled' | 'outlined' | 'soft';
+export type LabelVariant = 'filled' | 'outlined' | 'soft'
 
 export interface LabelProps extends BoxProps {
-  startIcon?: React.ReactElement | null;
-  endIcon?: React.ReactElement | null;
-  color?: LabelColor;
-  variant?: LabelVariant;
+  startIcon?: React.ReactElement | null
+  endIcon?: React.ReactElement | null
+  color?: LabelColor
+  variant?: LabelVariant
 }
-
-
 
 // ----------------------------------------------------------------------
 
@@ -94,19 +89,19 @@ export const StyledLabel = styled(Box)(
     theme,
     ownerState,
   }: {
-    theme: Theme;
+    theme: Theme
     ownerState: {
-      color: LabelColor;
-      variant: LabelVariant;
-    };
+      color: LabelColor
+      variant: LabelVariant
+    }
   }) => {
-    const isLight = theme.palette.mode === 'light';
+    const isLight = theme.palette.mode === 'light'
 
-    const filledVariant = ownerState.variant === 'filled';
+    const filledVariant = ownerState.variant === 'filled'
 
-    const outlinedVariant = ownerState.variant === 'outlined';
+    const outlinedVariant = ownerState.variant === 'outlined'
 
-    const softVariant = ownerState.variant === 'soft';
+    const softVariant = ownerState.variant === 'soft'
 
     const defaultStyle = {
       ...(ownerState.color === 'default' && {
@@ -127,7 +122,7 @@ export const StyledLabel = styled(Box)(
           backgroundColor: alpha(theme.palette.grey[500], 0.16),
         }),
       }),
-    };
+    }
 
     const colorStyle = {
       ...(ownerState.color !== 'default' && {
@@ -148,7 +143,7 @@ export const StyledLabel = styled(Box)(
           backgroundColor: alpha(theme.palette[ownerState.color].main, 0.16),
         }),
       }),
-    };
+    }
 
     return {
       height: 24,
@@ -169,9 +164,6 @@ export const StyledLabel = styled(Box)(
       }),
       ...defaultStyle,
       ...colorStyle,
-    };
+    }
   }
-);
-
-
-
+)

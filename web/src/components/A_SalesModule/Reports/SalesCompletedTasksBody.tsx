@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSnackbar } from 'notistack'
 import LogSkelton from 'src/components/shimmerLoaders/logSkelton'
-import {
-  streamSalesActitvityLogReportData,
-} from 'src/context/dbQueryFirebase'
+import { streamSalesActitvityLogReportData } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { prettyDateTime } from 'src/util/dateConverter'
 
@@ -37,15 +35,12 @@ const SalesCompletedTasksBody = ({
   }, [projectPayload])
 
   const getLeadsData = async () => {
-    console.log('count is ', projectPayload);
-    const unsubscribe = await streamSalesActitvityLogReportData(
-      orgId,
-      {
-        pId: projectPayload?.uid,
-        startTime: projectPayload.thisMonth['startOfMonth'],
-        endTime: projectPayload.thisMonth['endOfMonth'],
-      },
-    )
+    console.log('count is ', projectPayload)
+    const unsubscribe = await streamSalesActitvityLogReportData(orgId, {
+      pId: projectPayload?.uid,
+      startTime: projectPayload.thisMonth['startOfMonth'],
+      endTime: projectPayload.thisMonth['endOfMonth'],
+    })
     const y = await unsubscribe
     setLeadsFetchedData(y)
     return unsubscribe
@@ -58,14 +53,12 @@ const SalesCompletedTasksBody = ({
   return (
     <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
       <div className="px-4 sm:px-6  z-10 flex flex-row justify-between">
-
         {subtitle || title} ({leadsFilA.length || 0})
       </div>
 
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col m-4">
           <div className="flex flex-col mt-2 rounded-lg bg-white border border-gray-100 p-4 ">
-
             {loadingIcon ? (
               <LogSkelton />
             ) : (
@@ -81,7 +74,6 @@ const SalesCompletedTasksBody = ({
                       { label: 'To', id: 'all' },
                       { label: 'Time', id: 'all' },
                       { label: 'Lead Id', id: 'new' },
-                     
                     ].map((d, i) => (
                       <th
                         key={i}
@@ -100,7 +92,7 @@ const SalesCompletedTasksBody = ({
 
                 <tbody>
                   {leadsFetchedData?.map((data, i) => {
-                    console.log('Employee Tasks', data);
+                    console.log('Employee Tasks', data)
                     return (
                       <tr
                         className={`  ${
@@ -124,7 +116,7 @@ const SalesCompletedTasksBody = ({
                           {data?.from}
                         </td>
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
-                        {data?.to}
+                          {data?.to}
                         </td>
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
                           {prettyDateTime(data?.T)}
@@ -133,14 +125,9 @@ const SalesCompletedTasksBody = ({
                         <td className="text-sm text-gray-900  px-6 py-2 whitespace-nowrap">
                           {data?.Luid}
                         </td>
-
-
-
                       </tr>
                     )
                   })}
-
-                  
                 </tbody>
               </table>
             )}

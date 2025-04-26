@@ -59,10 +59,6 @@ const AddCustomerWallet = ({
   const [creditNotersA, setCreditNoters] = useState([])
   const [bankAccounts, setBankAccounts] = useState([])
 
-
-
-
-
   const [startDate, setStartDate] = useState(d)
 
   const [paymentModex, setPaymentModex] = useState('cheque')
@@ -108,7 +104,6 @@ const AddCustomerWallet = ({
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             file.url = url
- 
 
             setCommentAttachUrl(url)
             return url
@@ -137,7 +132,6 @@ const AddCustomerWallet = ({
 
     const { uid } = selUnitDetails
 
-
     console.log('check this value ', user, leadDetailsObj2)
     const { Status } = leadDetailsObj2
     createNewCustomerS(
@@ -162,10 +156,7 @@ const AddCustomerWallet = ({
       'nitheshreddy.email@gmail.com',
       enqueueSnackbar
     )
-
   }
-
-
 
   const datee = new Date().getTime()
   const initialState = {
@@ -182,8 +173,6 @@ const AddCustomerWallet = ({
     fileUploader: '',
   }
 
-
-
   const submitFormFun = (formik) => {
     formik.handleSubmit()
   }
@@ -198,28 +187,25 @@ const AddCustomerWallet = ({
     backgroundSize: 'cover',
   }
   const getProjectFun = async () => {
+    const unsubscribe = steamBankDetailsList(
+      orgId,
+      (querySnapshot) => {
+        const bankA = querySnapshot.docs.map((docSnapshot) => {
+          const x = docSnapshot.data()
+          x.id = docSnapshot.id
+          return x
+        })
+        bankA.map((user) => {
+          user.label = user?.accountName
+          user.value = user?.accountNo
+        })
+        console.log('fetched users list is', bankA)
+        setBankDetailsA([...bankA])
+      },
+      (error) => setBankDetailsA([])
+    )
 
-      const unsubscribe = steamBankDetailsList(
-        orgId,
-        (querySnapshot) => {
-
-          const bankA = querySnapshot.docs.map((docSnapshot) => {
-            const x = docSnapshot.data()
-            x.id = docSnapshot.id
-            return x
-          })
-          bankA.map((user) => {
-            user.label = user?.accountName
-            user.value = user?.accountNo
-          })
-          console.log('fetched users list is', bankA)
-          setBankDetailsA([ ...bankA])
-        },
-        (error) => setBankDetailsA([])
-      )
-
-      return unsubscribe
-
+    return unsubscribe
   }
   return (
     <div className="bg-white h-full">
@@ -232,8 +218,6 @@ const AddCustomerWallet = ({
             </section>
           )}
           <div className="relative mx-4 max-h-[65%]  rounded-xl  px-2 pb-14 border ">
- 
-
             <div className="grid gap-8 grid-cols-1">
               <div className="flex flex-col ">
                 <div className="mt-0">
@@ -298,12 +282,11 @@ const AddCustomerWallet = ({
                                               </span>
                                             </article>
                                             <div className="w-full lg:w-12/12 px-3">
-                                              < div className="relative w-full mb-3">
+                                              <div className="relative w-full mb-3">
                                                 <TextField2
                                                   label="Amount"
                                                   name="amount"
                                                   type="number"
-       
                                                 />
                                               </div>
                                             </div>
@@ -317,8 +300,6 @@ const AddCustomerWallet = ({
                                                 }
                                               />
                                             </div>
-
-
                                           </section>
                                           <section className="border rounded-md w-full lg:w-12/12 mx-3 mb-3">
                                             <article className="border-b w-full bg-[#F9FAFB] px-3 py-1 rounded-t-md">
@@ -329,7 +310,6 @@ const AddCustomerWallet = ({
                                             <div className="w-full px-3 mb-4 mt-8 flex flex-row gap-x-6">
                                               {walletMode.map((dat, i) => {
                                                 return (
-
                                                   <div
                                                     className="flex items-center gap-x-1"
                                                     key={i}
@@ -401,7 +381,6 @@ const AddCustomerWallet = ({
                                                 </div>
                                               </div>
                                             )}
-
 
                                             <section className="flex flex-row">
                                               <div className="w-full lg:w-10/12 px-3">
@@ -476,11 +455,8 @@ const AddCustomerWallet = ({
                                               className="w-4 h-4 text-[18px]"
                                               style={{ fontSize: '18px' }}
                                             />
-
-
-                         
                                           </label>
-  
+
                                           <input
                                             type="file"
                                             className="hidden"
@@ -491,7 +467,6 @@ const AddCustomerWallet = ({
                                                 'fileUploader',
                                                 e.target.files[0]
                                               )
-                               
                                             }}
                                           />
                                         </div>
@@ -512,21 +487,16 @@ const AddCustomerWallet = ({
                                           <div className="mx-auto flex mt-6 flex-row  ">
                                             <section className="ml-3 w-[300px]">
                                               <div className="flex items-center">
-
                                                 <span className="ml-2 text-md font-bold text-navy-700 ">
                                                   Payment Confirmed
                                                 </span>
                                               </div>
                                             </section>
                                             {/*  */}
-
                                           </div>
-
-
                                         </section>
                                       )}
                                     {formik?.file?.fileUploader}
-
 
                                     {!bookingProgress && (
                                       <div className="text-center space-x-4 mt-6">
@@ -548,11 +518,7 @@ const AddCustomerWallet = ({
                                             />
                                           </svg>
                                           &nbsp; &nbsp;
-                                          <span>
-                                            {' '}
-                                            Add To Wallet
-                                          {' '}
-                                          </span>
+                                          <span> Add To Wallet </span>
                                         </button>
                                       </div>
                                     )}
@@ -570,13 +536,10 @@ const AddCustomerWallet = ({
                                   myObj={newPlotCostSheetA}
                                   newPlotPS={newPlotPS}
                                   payementDetails={payementDetails}
- 
                                   projectDetails={projectDetails}
                                 />
                               </div>
                             )}
-
-
                           </section>
                         </div>
                       </Form>

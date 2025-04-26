@@ -13,11 +13,9 @@ const UnitOverView = ({ data }) => {
       customerDetailsObj,
       data?.customerDetailsObj
     )
-
   }, [data])
 
   return (
- 
     <div className="w-full px-1 mt-1 mb-1 bg-white   pt-2 ">
       <div className="relative z-10 my-1 bg-white">
         <div className="py-3 grid grid-cols-2 mb-4">
@@ -56,10 +54,10 @@ const UnitOverView = ({ data }) => {
             </section>
             <section className="flex flow-row justify-between mb-1">
               <div className="font-md text-xs text-gray-500  tracking-wide">
-              Aadhar no
+                Aadhar no
               </div>
               <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-              {customerDetails?.aadharNo1 || '-'}
+                {customerDetails?.aadharNo1 || '-'}
               </div>
             </section>
 
@@ -72,10 +70,7 @@ const UnitOverView = ({ data }) => {
               </div>
             </section>
           </section>
-
-
         </div>
-
       </div>
     </div>
   )

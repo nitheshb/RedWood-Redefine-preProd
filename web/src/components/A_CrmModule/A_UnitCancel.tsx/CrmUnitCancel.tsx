@@ -321,9 +321,7 @@ export default function UnitBookingCancelCRM({
 
     if (fet === 'appoint') {
       return
-    }
-
-    else {
+    } else {
       leadsActivityFetchedData.map((data) => {
         console.log('value of filtered feature count before', data)
       })
@@ -477,7 +475,6 @@ export default function UnitBookingCancelCRM({
   const setNewProject = (leadDocId, value) => {
     console.log('sel pROJECT DETAILS ', value)
 
-
     const x = {
       Project: value.projectName,
       ProjectId: value.uid,
@@ -594,8 +591,6 @@ export default function UnitBookingCancelCRM({
     } else {
       setTakTitle(' ')
     }
-
-
   }
 
   const downloadFile = (url) => {
@@ -615,7 +610,6 @@ export default function UnitBookingCancelCRM({
           usersListA.push(value)
           console.log('my total fetched list is 3', `${key}: ${value}`)
         })
-
 
         console.log('my total fetched list is', usersListA.length)
         setLeadsFetchedActivityData(usersListA)
@@ -649,10 +643,8 @@ export default function UnitBookingCancelCRM({
             }
           } else {
             usersListA.push(value)
-  
           }
         })
-
 
         console.log('my total fetched list is', usersListA.length)
         usersListA.sort((a, b) => {
@@ -844,13 +836,10 @@ export default function UnitBookingCancelCRM({
     )
   }
   return (
-    <div
-      className={`bg-white   h-screen   } `}
-    >
+    <div className={`bg-white   h-screen   } `}>
       <div className=" pb-[2px] px-3 mt-0 rounded-xs border-b bg-[#F8E7E3]">
         <div className="-mx-3 flex  sm:-mx-4 px-3">
           <div className="w-full   ">
-
             <div className="flex flex-col justify-between">
               <section className="flex flex-row justify-between bg-[#F8E7E3] px-3 py-1 border border-[#e5e7f8] rounded-md ">
                 <section>
@@ -1019,8 +1008,8 @@ export default function UnitBookingCancelCRM({
       <UnitFullSummary
         customerDetails={customerDetails}
         selCustomerPayload={selCustomerPayload}
-        source={"cancelBooking"}
-        selSubMenu={"cancel_booking"}
+        source={'cancelBooking'}
+        selSubMenu={'cancel_booking'}
         // unitsViewMode={true}
       />
 

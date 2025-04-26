@@ -13,12 +13,9 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
-import {
-  timeConv,
-} from 'src/util/dateConverter'
+import { timeConv } from 'src/util/dateConverter'
 import 'react-datepicker/dist/react-datepicker.css'
 import { setHours, setMinutes } from 'date-fns'
-
 
 import { useSnackbar } from 'notistack'
 
@@ -83,16 +80,9 @@ export default function TransactionUpdateSideView({
   const [loader, setLoader] = useState(false)
   const [viewDetails, setViewDetails] = useState(false)
 
-
-
-
-
   const [rejection, setRejection] = useState(false)
   const [rejectionReason, setRejectionReason] = useState('')
   const [fillError, showFillError] = useState(false)
-
-
-
 
   const [projectList, setprojectList] = useState([])
 
@@ -126,14 +116,9 @@ export default function TransactionUpdateSideView({
     toAccount,
   } = customerDetails
 
-
-
-
-
   const downloadFile = (url) => {
     window.location.href = url
   }
-
 
   const selFun = () => {
     console.log('i was selcted')
@@ -143,8 +128,6 @@ export default function TransactionUpdateSideView({
   const showAddAttachF = () => {
     setAttach(true)
   }
-
-
 
   const docUploadHandler = async (e) => {
     e.preventDefault()
@@ -182,41 +165,42 @@ export default function TransactionUpdateSideView({
     const data = transactionData
     data.Uuid = data?.unit_id
     data.status = status
-    console.log('transactionData', transactionData);
+    console.log('transactionData', transactionData)
 
-console.log('status', status);
+    console.log('status', status)
 
     if (status === 'Rejected') {
       // enqueueSnackbar('Transaction status updated to Rejected', { variant: 'error' });
 
       if (rejectionReason !== '') {
         data.rejectionReason = rejectionReason
-        enqueueSnackbar('Transaction status updated to Rejected', { variant: 'error' })
-        if(data?.unit_id === 'wallet'){
-          updateWalletTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
+        enqueueSnackbar('Transaction status updated to Rejected', {
+          variant: 'error',
+        })
+        if (data?.unit_id === 'wallet') {
+          updateWalletTransactionStatus(
+            orgId,
+            data,
+            user?.email,
+            enqueueSnackbar
+          )
         } else {
           updateTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
         }
       } else {
         showFillError(true)
       }
-    }else if(status === 'received'){
-      if(data?.unit_id === 'wallet'){
+    } else if (status === 'received') {
+      if (data?.unit_id === 'wallet') {
         updateWalletTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
       } else {
         updateTransactionStatus(orgId, data, user?.email, enqueueSnackbar)
       }
     }
-
-
-
-
-
- 
   }
 
   useEffect(() => {
-  console.log('value si ', transactionData)
+    console.log('value si ', transactionData)
   }, [])
 
   return (
@@ -238,17 +222,14 @@ console.log('status', status);
                       `}
               >
                 {'In-Review'}
-
-
               </span>
             </div>
           </section>
         </div>
       </div>
       <div>
-      {transactionData?.rejectionReason && (
+        {transactionData?.rejectionReason && (
           <p className="text-md text-[15px] mr-2 ml-4 mt-1">
-
             <span>Rejected Reason: </span>
             {transactionData?.rejectionReason}
           </p>
@@ -322,28 +303,24 @@ console.log('status', status);
           </section>
         </div>
         <div className="my-2  grid grid-cols-2 mt-4 border-t border-[#e5e7f8]">
-
-        {rejection && (
-          <div className="col-span-2 mt-4 mb-4">
-            <div className="flex justify-center border-2 py-2 px-6 rounded-xl">
-              <input
-                type="text"
-                name="rejectionReason"
-                placeholder="Write Rejection Comments"
-                className="w-full outline-none text-gray-700 text-sm"
-                onChange={(e) => setRejectionReason(e.target.value)}
-              />
-              {fillError && (
-                <div className="error-message text-red-700 text-xs p-1 mx-auto">
-                  Please enter rejection reason
-                </div>
-              )}
+          {rejection && (
+            <div className="col-span-2 mt-4 mb-4">
+              <div className="flex justify-center border-2 py-2 px-6 rounded-xl">
+                <input
+                  type="text"
+                  name="rejectionReason"
+                  placeholder="Write Rejection Comments"
+                  className="w-full outline-none text-gray-700 text-sm"
+                  onChange={(e) => setRejectionReason(e.target.value)}
+                />
+                {fillError && (
+                  <div className="error-message text-red-700 text-xs p-1 mx-auto">
+                    Please enter rejection reason
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        )}
-
-
-
+          )}
 
           <button
             className="mb-2 md:mb-0 mr-2 hover:scale-110 focus:outline-none           hover:bg-green-100
@@ -354,13 +331,10 @@ console.log('status', status);
                                   border-green-700 transition
                                    px-5  text-sm shadow-sm font-medium tracking-wider text-black rounded hover:shadow-lg hover:bg-green-500"
             onClick={() => {
-       
-
               setRejection(!rejection)
               if (rejection && rejectionReason !== '') {
                 updateTnxStatus('Rejected', transactionData?.id)
               }
-
             }}
           >
             Reject
@@ -374,15 +348,12 @@ console.log('status', status);
                                   border-green-700 transition
                                    px-5  text-sm shadow-sm font-medium tracking-wider text-white rounded hover:shadow-lg hover:bg-green-500"
             onClick={() => {
-
               updateTnxStatus('received', transactionData?.id)
             }}
-
           >
             Received
           </button>
         </div>
-
       </div>
     </div>
   )

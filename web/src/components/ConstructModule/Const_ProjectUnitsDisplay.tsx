@@ -48,45 +48,41 @@ export default function ConstructProjectUnitsDisplay({
     <ul className="">
       <li className="py-2">
         <section>
-
           <div className=" mt-">
-            {unitsFeed
-              .map((data, index) => {
-                return unitShrink ? (
-                  <div
-                    className=" mb-1  mx-1 inline-block"
-                    key={index}
-                    onClick={() => {
-                      console.log('i as clicked here 0')
-                      dispSideView(data)
-
-                    }}
-                  >
-                    <ConstructUnitCardSmall
-                      kind={data}
-                      feedData={unitsFeed}
-                      bg="#CCFBF1"
-          
-                    />
-                  </div>
-                ) : (
-                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-                  <div
-                    className="p-2 mb-1  mx-1 inline-block cursor-pointer"
-                    key={index}
-                    onClick={() => {
-                      console.log('i as clicked here 0')
-                      dispSideView(data)
-                    }}
-                  >
-                    <UnitsStatsCard
-                      kind={data}
-                      feedData={unitsFeed}
-                      bg="#fef7f7"
-                    />
-                  </div>
-                )
-              })}
+            {unitsFeed.map((data, index) => {
+              return unitShrink ? (
+                <div
+                  className=" mb-1  mx-1 inline-block"
+                  key={index}
+                  onClick={() => {
+                    console.log('i as clicked here 0')
+                    dispSideView(data)
+                  }}
+                >
+                  <ConstructUnitCardSmall
+                    kind={data}
+                    feedData={unitsFeed}
+                    bg="#CCFBF1"
+                  />
+                </div>
+              ) : (
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+                <div
+                  className="p-2 mb-1  mx-1 inline-block cursor-pointer"
+                  key={index}
+                  onClick={() => {
+                    console.log('i as clicked here 0')
+                    dispSideView(data)
+                  }}
+                >
+                  <UnitsStatsCard
+                    kind={data}
+                    feedData={unitsFeed}
+                    bg="#fef7f7"
+                  />
+                </div>
+              )
+            })}
           </div>
         </section>
       </li>

@@ -55,7 +55,7 @@ const data = [
   },
 ]
 const CustomTooltip = ({ active, payload, label }) => {
-  if (active)  {
+  if (active) {
     return (
       <div className="custom-tooltip bg-[#fff] py-[4px] shadow  rounded-lg border-[#90a4ae] text-[#373d3f] w-full  flex flex-col">
         <div className="label border-b border-[#90a4ae] ">
@@ -66,11 +66,14 @@ const CustomTooltip = ({ active, payload, label }) => {
         </div>
 
         <section className="px-[10px] py-2">
-
-          {payload?.length >0 && <div className="flex flex-row">
-            <div className="w-3 h-3 mt-2 mr-3 rounded-full bg-[#8884d8]"> </div>{' '}
-            <div>{`Booked: ${payload[0].value}`}</div>
-          </div> }
+          {payload?.length > 0 && (
+            <div className="flex flex-row">
+              <div className="w-3 h-3 mt-2 mr-3 rounded-full bg-[#8884d8]">
+                {' '}
+              </div>{' '}
+              <div>{`Booked: ${payload[0].value}`}</div>
+            </div>
+          )}
         </section>
       </div>
     )
@@ -78,7 +81,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 
   return null
 }
-const BookingsMonthlyStackedChart = ({source, payload,}) => {
+const BookingsMonthlyStackedChart = ({ source, payload }) => {
   console.log('payload is ', payload)
   return (
     <ResponsiveContainer width="100%" height="90%">
@@ -91,20 +94,23 @@ const BookingsMonthlyStackedChart = ({source, payload,}) => {
           bottom: 0,
         }}
       >
-       {source=== 'full-view' && (
-
-       <><CartesianGrid strokeDasharray="3 3" />
-        <XAxis
-          dataKey="name"
-          axisLine={{ stroke: 'transparent' }}
-          tickLine={false}
-          tick={{ fill: '#9ca3af' }}
-
-        />
-        <YAxis axisLine={{ stroke: 'transparent' }} tickLine={false}   tick={{ fill: '#9ca3af' }} />
-        </>)}
+        {source === 'full-view' && (
+          <>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="name"
+              axisLine={{ stroke: 'transparent' }}
+              tickLine={false}
+              tick={{ fill: '#9ca3af' }}
+            />
+            <YAxis
+              axisLine={{ stroke: 'transparent' }}
+              tickLine={false}
+              tick={{ fill: '#9ca3af' }}
+            />
+          </>
+        )}
         <Tooltip content={<CustomTooltip />} />
-
 
         <Area
           type="linear"

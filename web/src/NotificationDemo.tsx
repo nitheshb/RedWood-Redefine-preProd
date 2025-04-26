@@ -2,7 +2,6 @@
 // import { getMessaging, onMessage } from 'firebase/messaging';
 // import { generateToken, messaging } from 'src/context/firebaseConfig';
 
-
 // const NotificationDemo = () => {
 //   const [token, setToken] = useState(null);
 //   const [message, setMessage] = useState(null);

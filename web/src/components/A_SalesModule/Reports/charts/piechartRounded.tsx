@@ -1,7 +1,11 @@
-const DoughnutChartWithRoundedSegments = ({ progress = 0, size = 60, strokeWidth = 15 }) => {
-  const radius = (size - strokeWidth) / 2;
-  const circumference = radius * 2 * Math.PI;
-  const strokeDashoffset = circumference - (progress / 100) * circumference;
+const DoughnutChartWithRoundedSegments = ({
+  progress = 0,
+  size = 60,
+  strokeWidth = 15,
+}) => {
+  const radius = (size - strokeWidth) / 2
+  const circumference = radius * 2 * Math.PI
+  const strokeDashoffset = circumference - (progress / 100) * circumference
 
   return (
     <div className="relative" style={{ width: size, height: size }}>
@@ -33,11 +37,14 @@ const DoughnutChartWithRoundedSegments = ({ progress = 0, size = 60, strokeWidth
         {progress < 100 ? (
           <span className="text-[7px] font-bold">{Math.round(progress)}%</span>
         ) : (
-          <DoughnutChartWithRoundedSegments className="text-green-500" size={size / 3} />
+          <DoughnutChartWithRoundedSegments
+            className="text-green-500"
+            size={size / 3}
+          />
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default DoughnutChartWithRoundedSegments

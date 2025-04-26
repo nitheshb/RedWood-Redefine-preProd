@@ -34,7 +34,6 @@ const SourceAddTable = ({ title, data, source, blocksViewFeature }) => {
   }, [source, data, tableData])
 
   useEffect(() => {
-
     getSourcesListFun()
   }, [])
   const getSourcesListFun = () => {
@@ -61,7 +60,6 @@ const SourceAddTable = ({ title, data, source, blocksViewFeature }) => {
     )
   }
   const columns = [
-   
     {
       title: 'Source*',
       field: 'label',
@@ -107,7 +105,6 @@ const SourceAddTable = ({ title, data, source, blocksViewFeature }) => {
     },
   ]
 
-
   const errors = (formData) => {
     const errorList = []
     if (!formData.label) {
@@ -116,7 +113,6 @@ const SourceAddTable = ({ title, data, source, blocksViewFeature }) => {
     if (!formData.value) {
       errorList.push("Try Again, You didn't enter the source Keyword field")
     }
-
 
     return errorList
   }
@@ -142,23 +138,20 @@ const SourceAddTable = ({ title, data, source, blocksViewFeature }) => {
     const c = tableData.filter((e) => e.myId != oldData.myId)
     console.log('check this stuff', c)
     await deleteSourceList(orgId, myId, enqueueSnackbar)
-
   }
 
   const handleRowAdd = async (newData) => {
     console.log('newData is', newData)
 
-      setIserror(false)
-      setErrorMessages([])
-      const errorList = errors(newData)
-      if (errorList.length < 1) {
-
-         addNewSourceComp(orgId, newData, enqueueSnackbar)
-      } else {
-        setErrorMessages(errorList)
-        setIserror(true)
-      }
-
+    setIserror(false)
+    setErrorMessages([])
+    const errorList = errors(newData)
+    if (errorList.length < 1) {
+      addNewSourceComp(orgId, newData, enqueueSnackbar)
+    } else {
+      setErrorMessages(errorList)
+      setIserror(true)
+    }
   }
 
   return (

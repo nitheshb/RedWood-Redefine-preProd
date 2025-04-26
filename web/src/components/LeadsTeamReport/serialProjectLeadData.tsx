@@ -99,7 +99,6 @@ export function serialProjectLeadData(projectListA, fullData) {
       )
       x.others = []
     } else {
-
       x.Total = fullData.filter(
         (datObj) => datObj?.ProjectId == souceObj?.value
       )
@@ -208,7 +207,7 @@ export function serialProjectLeadData(projectListA, fullData) {
           datObj?.ProjectId === souceObj?.value && datObj?.Status == ''
       )
     }
-    console.log('full data for projects with raw is ',x.Total.length , x, )
+    console.log('full data for projects with raw is ', x.Total.length, x)
     return x
   })
 }

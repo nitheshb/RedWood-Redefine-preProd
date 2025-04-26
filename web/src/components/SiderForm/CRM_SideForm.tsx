@@ -58,7 +58,6 @@ const CrmSiderForm = ({
   wbPayload,
   widthClass,
 }) => {
-
   const dispatch = useDispatch()
   return (
     <Transition.Root show={open || false} as={Fragment}>
@@ -127,42 +126,77 @@ const CrmSiderForm = ({
                   </div>
                 </Transition.Child>
                 {title === 'crm_booking_payment' && (
-                  <BookingPaymentFlow title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />
+                  <BookingPaymentFlow
+                    title={title}
+                    dialogOpen={setOpen}
+                    selUnitPayload={selUnitPayload}
+                  />
                 )}
-                  {title === 'crm_cs_approval' && (
-                  <CsMangerApprovalFlow title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />
+                {title === 'crm_cs_approval' && (
+                  <CsMangerApprovalFlow
+                    title={title}
+                    dialogOpen={setOpen}
+                    selUnitPayload={selUnitPayload}
+                  />
                 )}
-                  {title === 'crm_show_cs' && (
-                  <CsMangerApprovalFlow title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />
+                {title === 'crm_show_cs' && (
+                  <CsMangerApprovalFlow
+                    title={title}
+                    dialogOpen={setOpen}
+                    selUnitPayload={selUnitPayload}
+                  />
                 )}
 
                 {title === 'crm_KYC' && (
-                  <Cs_customerKyc title={title} dialogOpen={setOpen} selUnitPayload={customerDetails} />
+                  <Cs_customerKyc
+                    title={title}
+                    dialogOpen={setOpen}
+                    selUnitPayload={customerDetails}
+                  />
                 )}
                 {title === 'crm_loan' && (
-                    <div className="bg-white pl-6">
-
-                  <LoanApplyFlowHome customerDetails={customerDetails} setCustomerDetails={setCustomerDetails}  />
+                  <div className="bg-white pl-6">
+                    <LoanApplyFlowHome
+                      customerDetails={customerDetails}
+                      setCustomerDetails={setCustomerDetails}
+                    />
                   </div>
-
                 )}
                 {title === 'crm_legal_clarity' && (
-                  <Crm_legal_Clarity title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />
+                  <Crm_legal_Clarity
+                    title={title}
+                    dialogOpen={setOpen}
+                    selUnitPayload={selUnitPayload}
+                  />
                 )}
                 {title === 'crm_ATS_Draft' && (
-                  <Crm_ATS_Draft title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />
+                  <Crm_ATS_Draft
+                    title={title}
+                    dialogOpen={setOpen}
+                    selUnitPayload={selUnitPayload}
+                  />
                 )}
                 {title === 'crm_SD_Approval' && (
-                  <Crm_Sd_approval title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />
+                  <Crm_Sd_approval
+                    title={title}
+                    dialogOpen={setOpen}
+                    selUnitPayload={selUnitPayload}
+                  />
                 )}
-                   {title === 'crm_ATS_Approval' && (
-                  <Crm_ATS_approval title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />
+                {title === 'crm_ATS_Approval' && (
+                  <Crm_ATS_approval
+                    title={title}
+                    dialogOpen={setOpen}
+                    selUnitPayload={selUnitPayload}
+                  />
                 )}
-                  {title === 'crm_posession' && (
-                  <Crm_Unit_Posession title={title} dialogOpen={setOpen} selUnitPayload={selUnitPayload} />
+                {title === 'crm_posession' && (
+                  <Crm_Unit_Posession
+                    title={title}
+                    dialogOpen={setOpen}
+                    selUnitPayload={selUnitPayload}
+                  />
                 )}
-
-
               </div>
             </Transition.Child>
           </div>

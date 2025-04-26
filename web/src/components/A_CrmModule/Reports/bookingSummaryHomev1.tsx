@@ -17,7 +17,6 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import LogSkelton from 'src/components/shimmerLoaders/logSkelton'
 import UnitSummaryTableBodyV1 from './UnitBookingSummary.tsx/BookingSummaryTableV1'
 
-
 const UnitBookingSummaryHomePage1 = ({
   leadsTyper,
   isClicked,
@@ -67,8 +66,6 @@ const UnitBookingSummaryHomePage1 = ({
     'Last Activity',
   ])
   const [filLeadsA, setFilLeadsA] = useState([])
-
-
 
   const [selProjectIs, setSelProject] = useState({
     label: 'All Projects',
@@ -164,8 +161,6 @@ const UnitBookingSummaryHomePage1 = ({
   }
 
   useEffect(() => {
-
-
     const tabHeadFieldsA1 = [
       { value: 'all', lab: 'All', val: 'all' },
       { value: 'booked', lab: 'Booked' },
@@ -288,50 +283,43 @@ const UnitBookingSummaryHomePage1 = ({
   }
   return (
     <>
-
-
       <div className="bg-white max-w-7xl mx-auto ">
         <div className="">
-          <div
-           
-          >
-
+          <div>
             {!ready && (
               <>
-                    {fetchLeadsLoader &&
-              [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
-  {statusSepA[0]?.[value].length === 0 && (
-              <div className="flex items-center py-6">
-                <span
-                  className="text-xs text-gray-500"
-                  style={{
-                    display: 'block',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                >
-                  No Records
-                </span>
-              </div>
-            )}
-            {statusSepA[0]?.[value].length != 0 && (
-              <UnitSummaryTableBodyV1
-
-                leadsTyper={leadsTyper}
-                fetchLeadsLoader={fetchLeadsLoader}
-                selStatus={value}
-                rowsParent={statusSepA[0]}
-                selUserProfileF={selUserProfileF}
-                viewUnitStatusA={viewUnitStatusA}
-                newArray={statusSepA[0]?.[value]}
-                leadsFetchedData={filLeadsA}
-                mySelRows={mySelRows}
-                searchVal={searchVal}
-              />
-            )}
+                {fetchLeadsLoader &&
+                  [1, 2, 3].map((data, i) => <LogSkelton key={i} />)}
+                {statusSepA[0]?.[value].length === 0 && (
+                  <div className="flex items-center py-6">
+                    <span
+                      className="text-xs text-gray-500"
+                      style={{
+                        display: 'block',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                      }}
+                    >
+                      No Records
+                    </span>
+                  </div>
+                )}
+                {statusSepA[0]?.[value].length != 0 && (
+                  <UnitSummaryTableBodyV1
+                    leadsTyper={leadsTyper}
+                    fetchLeadsLoader={fetchLeadsLoader}
+                    selStatus={value}
+                    rowsParent={statusSepA[0]}
+                    selUserProfileF={selUserProfileF}
+                    viewUnitStatusA={viewUnitStatusA}
+                    newArray={statusSepA[0]?.[value]}
+                    leadsFetchedData={filLeadsA}
+                    mySelRows={mySelRows}
+                    searchVal={searchVal}
+                  />
+                )}
               </>
             )}
-
           </div>
         </div>
       </div>

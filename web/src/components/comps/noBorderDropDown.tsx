@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import Select from 'react-select'
 import { ErrorMessage } from 'formik'
@@ -12,8 +10,8 @@ const customStyles = {
     boxShadow: state.isFocused ? null : null,
     border: '0px solid #000',
     fontSize: '12px',
-    borderRadius: '0', 
-    boxShadow: 'none', 
+    borderRadius: '0',
+    boxShadow: 'none',
   }),
 
   valueContainer: (provided, state) => ({
@@ -21,15 +19,14 @@ const customStyles = {
     height: '31px',
     padding: '0px',
     fontSize: '12px',
-    margin: '0px'
-
+    margin: '0px',
   }),
 
   input: (provided, state) => ({
     ...provided,
     margin: '0px',
   }),
-  indicatorSeparator: state => ({
+  indicatorSeparator: (state) => ({
     display: 'none',
   }),
   indicatorsContainer: (provided, state) => ({
@@ -38,29 +35,24 @@ const customStyles = {
     paddingLeft: '0px',
     paddingRight: '0px',
     // background: '#E5E7EB'
-
   }),
   singleValue: (provided, state) => ({
     ...provided,
 
     fontSize: '12px',
-
   }),
   placeHolder: (provided, state) => ({
     ...provided,
 
     fontSize: '12px',
-
   }),
   placeholder: (provided, state) => ({
     ...provided,
 
     fontSize: '12px',
-
   }),
   menu: (provided) => ({ ...provided, zIndex: 9999 }),
 }
-
 
 export const NoBorderDropDown = ({
   onChange,
@@ -80,14 +72,18 @@ export const NoBorderDropDown = ({
     <label>
       <div className={className}>
         {(label != '' || label != 'Assigned To') && (
-          <label className=" font-regular text-[10px] block text-gray-500 bg-red">{label}</label>
+          <label className=" font-regular text-[10px] block text-gray-500 bg-red">
+            {label}
+          </label>
         )}
         <label>
           <Select
             maxMenuHeight={150}
             name={name}
             value={defaultValue(options, value)}
-            placeholder={label=== "Maritual Status" ? 'Married' : label ||  'S/O'}
+            placeholder={
+              label === 'Maritual Status' ? 'Married' : label || 'S/O'
+            }
             onChange={(value) => {
               onChange(value)
             }}
@@ -99,14 +95,13 @@ export const NoBorderDropDown = ({
           />
         </label>
         <ErrorMessage
-        component="div"
-        name={name}
-        className="error-message text-red-700 text-xs px-2 "
-      />
-
+          component="div"
+          name={name}
+          className="error-message text-red-700 text-xs px-2 "
+        />
       </div>
     </label>
   )
 }
 
-export default NoBorderDropDown;
+export default NoBorderDropDown

@@ -79,7 +79,7 @@ const formatOptionLabel = ({ value, label, dept }) => (
         paddingBottom: '0px',
         borderRadius: '10px',
         fontSize: '10px',
-        height: '18px'
+        height: '18px',
       }}
     >
       {dept}
@@ -312,7 +312,6 @@ const AddTaskForm = ({ title, dialogOpen }) => {
     taskTitle: Yup.string().required('Task Title is Required'),
 
     assignedTo: Yup.string().required('Required'),
-  
   })
   const resetter = () => {
     setSelected({})
@@ -324,7 +323,6 @@ const AddTaskForm = ({ title, dialogOpen }) => {
   }
   return (
     <div className="h-full flex flex-col pb-6 bg-white shadow-xl overflow-y-scroll no-scrollbar bg-gradient-to-r from-blue-200 to-cyan-200">
-
       <div className="">
         <section className="flex flex-row justify-between mx-4 pt-2 pb-2">
           <span className="ml-1 mt-[1px] ">
@@ -377,7 +375,6 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                                   value.target.value
                                 )
                               }}
-
                               placeholder="Things to do"
                               className={`w-full  pb-2 pt-1 outline-none text-[18px] font-bodyLato focus:border-blue-600 hover:border-blue-600  ${
                                 true ? ' text-[33475b] ' : ' text-[33475b]'
@@ -398,9 +395,9 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                                 console.log('is this checked ', priorTxt)
                               }}
                             />
-                          <div className="w-[85px] ml-1 mt-[8px] text-sm text-[#00000080]">
-                            High Priority
-                          </div>
+                            <div className="w-[85px] ml-1 mt-[8px] text-sm text-[#00000080]">
+                              High Priority
+                            </div>
                             <FireIcon
                               className={`w-4 h-4 mt-[11px] ${
                                 prior ? 'text-[#f36b00]' : 'text-[#00000080] '
@@ -437,8 +434,6 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                             <label className="label mt-3 w-[92px] font-regular text-[12px] block mb-1 text-gray-700">
                               {'Responsible Person*'}
                             </label>
-
-                          
 
                             <div className="w-full flex flex-col mt-1 ">
                               <CustomSelectNew
@@ -500,7 +495,6 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                           </section>
 
                           <div className="md:flex flex-row md:space-x-4 mt-3 w-full text-xs mt-3 ">
-                  
                             <div className="flex flex-row">
                               <label className="label font-regular text-[12px] block mb-1 text-gray-700">
                                 Deadline
@@ -520,7 +514,6 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                                       setHours(setMinutes(d, 59), 23),
                                     ]}
                                     dateFormat="MMM d, yyyy h:mm aa"
-                                    
                                   />
                                 </span>
                               </div>
@@ -536,9 +529,7 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                             />
                           </div>
                         </section>
-
                       </div>
-         
                     </div>
                   </div>
                   <div className="z-10 flex flex-row justify-between mt-4 pb-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
@@ -562,10 +553,8 @@ const AddTaskForm = ({ title, dialogOpen }) => {
                       >
                         <span className="ml-1 ">Add Task</span>
                       </button>
-           
 
                       <button
-
                         onClick={() => dialogOpen(false)}
                         className={`flex mt-2 ml- rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium `}
                       >

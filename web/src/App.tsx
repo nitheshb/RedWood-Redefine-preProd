@@ -69,35 +69,27 @@ const App = () => (
                 
               /> */}
 
-<Toaster
-  position="top-right"
-  reverseOrder={false}
-  gutter={8}
-  containerClassName=""
-  containerStyle={{}}
-  toastOptions={{
+              <Toaster
+                position="top-right"
+                reverseOrder={false}
+                gutter={8}
+                containerClassName=""
+                containerStyle={{}}
+                toastOptions={{
+                  className: '',
+                  duration: 5000,
+                  removeDelay: 1000,
 
-    className: '',
-    duration: 5000,
-    removeDelay: 1000,
-
-
-
-
-    // @ts-ignore
-    warning: {
-      duration: 3000,
-      iconTheme: {
-        primary: 'yellow',
-        secondary: 'black',
-      },
-    },
-  }}
-  
-/>
-
-
-
+                  // @ts-ignore
+                  warning: {
+                    duration: 3000,
+                    iconTheme: {
+                      primary: 'yellow',
+                      secondary: 'black',
+                    },
+                  },
+                }}
+              />
             </LocalizationProvider>
           </AuthProvider>
         </SnackbarProvider>

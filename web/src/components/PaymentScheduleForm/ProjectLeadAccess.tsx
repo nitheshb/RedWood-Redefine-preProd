@@ -8,7 +8,7 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
-const PaymentLeadAccess = ({ title, data, dept, source, }) => {
+const PaymentLeadAccess = ({ title, data, dept, source }) => {
   const { user } = useAuth()
   const { orgId, email } = user
   const [tableData, setTableData] = useState([])
@@ -21,16 +21,14 @@ const PaymentLeadAccess = ({ title, data, dept, source, }) => {
   const [selProjId, setProjId] = useState('')
   const [selKeyName, setSelKeyName] = useState('')
 
-
   useEffect(() => {
     const { project } = data
     setProjId(project?.uid)
-    if(dept === 'admin'){
+    if (dept === 'admin') {
       setSelKeyName('creditNoteIssuersA')
-    } else if(dept === 'sales'){
+    } else if (dept === 'sales') {
       setSelKeyName('projAccessA')
     }
-
   }, [data])
 
   useEffect(() => {
@@ -54,7 +52,7 @@ const PaymentLeadAccess = ({ title, data, dept, source, }) => {
     return unsubscribe
   }, [])
 
-  const addRemoveProjectAccessFun = async(value) => {
+  const addRemoveProjectAccessFun = async (value) => {
     console.log('value is', value, data, source)
     const { uid, email: empEmailId, projAccessA } = value
     const { project } = data
@@ -70,10 +68,10 @@ const PaymentLeadAccess = ({ title, data, dept, source, }) => {
       newAccessA = value?.[`${selKeyName}`]?.filter((d) => d != projiD)
       console.log('new project Access is', newAccessA)
     } else {
-      newAccessA = [...(value?.[`${selKeyName}`]  || []), ...[projiD]]
+      newAccessA = [...(value?.[`${selKeyName}`] || []), ...[projiD]]
     }
     // projectName
-   await  updateUserAccessProject(
+    await updateUserAccessProject(
       orgId,
       uid,
       { [`${selKeyName}`]: newAccessA },
@@ -82,14 +80,12 @@ const PaymentLeadAccess = ({ title, data, dept, source, }) => {
       email,
       enqueueSnackbar
     )
-
   }
 
   return (
     <>
       <div className="h-full w-full shadow-xl flex flex-col pt-6 mb-6  bg-[#F1F5F9] rounded-t overflow-y-scroll">
         <div className="z-10">
-
           <span className="mr-auto ml-3  text-md font-extrabold tracking-tight uppercase font-body ">
             {title}
           </span>
@@ -114,7 +110,9 @@ const PaymentLeadAccess = ({ title, data, dept, source, }) => {
                 <div key={i}>
                   <Checkbox
                     color="primary"
-                    checked={salesPerson?.[`${selKeyName}`]?.includes(selProjId)}
+                    checked={salesPerson?.[`${selKeyName}`]?.includes(
+                      selProjId
+                    )}
                     onChange={(e) => {
                       console.log('earnet')
                       addRemoveProjectAccessFun(salesPerson)

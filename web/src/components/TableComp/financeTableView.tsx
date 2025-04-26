@@ -437,7 +437,6 @@ const FinanceTableView = ({
   leadsFetchedData,
   leadsTyper,
 }) => {
-
   const { t } = useTranslation()
   const [value, setValue] = useState('new')
   const [tableData, setTableData] = useState([])
@@ -453,7 +452,6 @@ const FinanceTableView = ({
     console.log('table data is ', tableData2)
     setTableData(tableData2)
 
-
     const tabHeadFieldsA1 =
       leadsTyper === 'inProgress'
         ? [
@@ -466,7 +464,6 @@ const FinanceTableView = ({
             { lab: 'Negotiation', val: 'negotiation' },
             { lab: 'Reassign', val: 'reassign' },
             { lab: 'Un Assigned', val: 'unassigned' },
-       
           ]
         : leadsTyper === 'archieveLeads'
         ? archieveTab
@@ -537,7 +534,6 @@ const FinanceTableView = ({
                         <span className="bg-gray-100 px-2 py-1 rounded-full">
                           {rowsCounter(leadsFetchedData, d.val).length}
                         </span>
-      
                       </button>
                     </li>
                   )

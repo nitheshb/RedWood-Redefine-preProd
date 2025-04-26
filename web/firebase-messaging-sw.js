@@ -1,5 +1,7 @@
-importScripts('https://www.gstatic.com/firebasejs/9.4.0/firebase-app-compat.js');
-self.importScripts('https://www.gstatic.com/firebasejs/9.4.0/firebase-messaging-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.4.0/firebase-app-compat.js')
+self.importScripts(
+  'https://www.gstatic.com/firebasejs/9.4.0/firebase-messaging-compat.js'
+)
 
 firebase.initializeApp({
   // Your Firebase configuration
@@ -10,18 +12,20 @@ firebase.initializeApp({
   messagingSenderId: '805525655781',
   appId: '1:805525655781:web:dfa846398899fe3ddc840c',
   measurementId: 'G-C2BJ3N02SQ',
-});
+})
 
-const messaging = firebase.messaging();
+const messaging = firebase.messaging()
 
 // Customize notification behavior
 messaging.setBackgroundMessageHandler((payload) => {
-  const notificationTitle = 'Background Message Title';
+  const notificationTitle = 'Background Message Title'
   const notificationOptions = {
     body: 'Background Message body.',
     // Additional options can be added here
-  };
+  }
 
-  return self.registration.showNotification(notificationTitle, notificationOptions);
-});
-
+  return self.registration.showNotification(
+    notificationTitle,
+    notificationOptions
+  )
+})

@@ -134,8 +134,6 @@ const AddPhase = () => {
         },
       }}
     >
-
-
       <Box
         sx={{
           '& .apexcharts-tooltip *': {

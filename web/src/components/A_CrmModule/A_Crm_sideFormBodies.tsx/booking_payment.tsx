@@ -4,15 +4,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useEffect, useState } from 'react'
 
-import {
-  PlusIcon,
-} from '@heroicons/react/outline'
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-} from '@heroicons/react/solid'
+import { PlusIcon } from '@heroicons/react/outline'
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/solid'
 import { useSnackbar } from 'notistack'
-
 
 import CaptureUnitPayment from 'src/components/FinanceModule/CapturePayment'
 import DocRow from 'src/components/LegalModule/Docu_row'
@@ -31,7 +25,6 @@ import PaymentDocUtility from './paymentDocUtility'
 import CrmUnitPaymentSchedule from '../CrmPaymentSchedule'
 import CrmUnitFinanceHistory from '../CrmUnitFinanceHistory'
 import SiderForm from 'src/components/SiderForm/SiderForm'
-
 
 export default function BookingPaymentFlow({
   type,
@@ -57,8 +50,6 @@ export default function BookingPaymentFlow({
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
-
-
 
   useEffect(() => {
     console.log('yo yo yo', selUnitPayload)
@@ -86,42 +77,43 @@ export default function BookingPaymentFlow({
     return
   }
   const streamTransactions = () => {
-     const channel = supabase
-        .channel('accounts-channel')
-        .on(
-          'postgres_changes',
-          {
-            event: '*',
-            schema: 'public',
-            table: `${orgId}_accounts`,
-          },
-          (payload) => {
-    // const subscription = supabase
-    //   .from(`${orgId}_accounts`)
-    //   .on('*', (payload) => {
-        console.log('account records', payload)
-        const updatedData = payload.new
-        const { id } = payload.old
-        const updatedLeadLogs = [...unitTransactionsA]
-        setUnitTransactionsA((prevLogs) => {
-          const existingLog = prevLogs.find(
-            (log) => log.id === id && log.unit_id === selUnitPayload?.id
-          )
-
-          if (existingLog) {
-            console.log('Existing record found!')
-            const updatedLogs = prevLogs.map((log) =>
-              log.id === id ? payload.new : log
+    const channel = supabase
+      .channel('accounts-channel')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: `${orgId}_accounts`,
+        },
+        (payload) => {
+          // const subscription = supabase
+          //   .from(`${orgId}_accounts`)
+          //   .on('*', (payload) => {
+          console.log('account records', payload)
+          const updatedData = payload.new
+          const { id } = payload.old
+          const updatedLeadLogs = [...unitTransactionsA]
+          setUnitTransactionsA((prevLogs) => {
+            const existingLog = prevLogs.find(
+              (log) => log.id === id && log.unit_id === selUnitPayload?.id
             )
-            return [...updatedLogs]
-          } else {
-            console.log('New record added!', [...prevLogs, payload.new])
-            if (payload?.new.unit_id === selUnitPayload?.id) {
-              return [payload.new,...prevLogs]
+
+            if (existingLog) {
+              console.log('Existing record found!')
+              const updatedLogs = prevLogs.map((log) =>
+                log.id === id ? payload.new : log
+              )
+              return [...updatedLogs]
+            } else {
+              console.log('New record added!', [...prevLogs, payload.new])
+              if (payload?.new.unit_id === selUnitPayload?.id) {
+                return [payload.new, ...prevLogs]
+              }
             }
-          }
-        })
-      })
+          })
+        }
+      )
       .subscribe()
 
     return () => {
@@ -156,7 +148,6 @@ export default function BookingPaymentFlow({
   return (
     <section className="bg-white w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll">
       <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
-
         <div className="mt-1">
           <div className="p-2 bg-gradient-to-r from-violet-50 to-pink-50 rounded-md flex flex-row justify-between">
             <h2 className="font-medium flex-grow">Payments</h2>
@@ -188,8 +179,6 @@ export default function BookingPaymentFlow({
           onClick={() => {
             SetAllPayment('new_payments')
             openPaymentFun()
-
-
           }}
         >
           <div
@@ -213,24 +202,18 @@ export default function BookingPaymentFlow({
               {'New Payment'}
               <span className="absolute inset-0" />
             </a>
-
           </div>
         </div>
       </div>
 
       <div>
-
-      <div>
-          <CrmUnitPaymentSchedule
-            selCustomerPayload={selUnitPayload}
-
-          />
+        <div>
+          <CrmUnitPaymentSchedule selCustomerPayload={selUnitPayload} />
         </div>
         {/* Finance History */}
         <div>
           <CrmUnitFinanceHistory
             selCustomerPayload={selUnitPayload}
-
             unitTransactionsA={unitTransactionsA}
           />
         </div>
@@ -299,7 +282,6 @@ export default function BookingPaymentFlow({
                     {'All Demands'}
                     <span className="absolute inset-0" />
                   </a>
-
                 </div>
               </div>
               <div
@@ -335,7 +317,6 @@ export default function BookingPaymentFlow({
                     {'Active Demand'}
                     <span className="absolute inset-0" />
                   </a>
-
                 </div>
               </div>
               <div
@@ -369,7 +350,6 @@ export default function BookingPaymentFlow({
                     {'Add Modification'}
                     <span className="absolute inset-0" />
                   </a>
-
                 </div>
               </div>
             </div>
@@ -514,7 +494,6 @@ export default function BookingPaymentFlow({
                     {'All Payments'}
                     <span className="absolute inset-0" />
                   </a>
-
                 </div>
               </div>
               <div
@@ -550,7 +529,6 @@ export default function BookingPaymentFlow({
                     {'Active Payments'}
                     <span className="absolute inset-0" />
                   </a>
-
                 </div>
               </div>
               <div
@@ -584,7 +562,6 @@ export default function BookingPaymentFlow({
                     {'New Payment'}
                     <span className="absolute inset-0" />
                   </a>
-
                 </div>
               </div>
             </div>

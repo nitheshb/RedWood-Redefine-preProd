@@ -344,7 +344,6 @@ const CrmHomePage = () => {
 
   return (
     <>
-
       <div className="flex w-screen h-screen  text-gray-700">
         <div className="flex  flex-col flex-grow">
           {/* <HeadNavBar /> */}
@@ -365,7 +364,11 @@ const CrmHomePage = () => {
               viewable={viewable}
             /> */}
             <div className="flex-grow  items-center overflow-y-auto  h-[98%]  px-300  py-300">
-              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}  setViewable={setViewable} />
+              <HeadNavBar2
+                selModule={selModule}
+                setSelModule={setSelModule}
+                setViewable={setViewable}
+              />
               <div className="p-0 ">
                 {/* {viewable === 'crmDashboard' && (
                   <CrmDashboardHome
@@ -377,7 +380,7 @@ const CrmHomePage = () => {
                 )} */}
                 {viewable === 'userProfile' && <ProfileSummary />}
 
-                 {viewable === 'crmAnalytics' && (
+                {viewable === 'crmAnalytics' && (
                   <CrmAnalyticsHome
                     project={{
                       projectName: 'Projects',
@@ -392,7 +395,6 @@ const CrmHomePage = () => {
                 {(viewable === 'CrmTasks' || viewable === 'Home') && (
                   <CrmHome leadsTyper={undefined} />
                 )}
-
 
                 {viewable === 'unitsInventory' && (
                   <ProjectsUnitInventory
@@ -432,7 +434,7 @@ const CrmHomePage = () => {
                     isEdit={undefined}
                   />
                 )}
-                   {viewable === 'units_inventory' && (
+                {viewable === 'units_inventory' && (
                   <UnitsInventoryHome
                     project={{
                       projectName: 'Projects',
@@ -695,7 +697,6 @@ const CrmHomePage = () => {
           <MetaTags title="ExecutiveHome" description="ExecutiveHome page" />
         </div>
       </div>
-
     </>
   )
 }

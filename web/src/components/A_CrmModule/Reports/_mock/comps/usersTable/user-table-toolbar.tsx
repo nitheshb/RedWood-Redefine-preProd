@@ -175,10 +175,10 @@ export default function UserTableToolbar({
   )
 }
 
-export type IUserTableFilterValue = string | string[];
+export type IUserTableFilterValue = string | string[]
 
 export type IUserTableFilters = {
-  name: string;
-  projects: string[];
-  status: string;
-};
+  name: string
+  projects: string[]
+  status: string
+}

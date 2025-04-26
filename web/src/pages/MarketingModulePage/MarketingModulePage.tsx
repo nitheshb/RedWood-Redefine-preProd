@@ -43,7 +43,6 @@ const MarketingModulePage = (props) => {
     }
   }, [user])
 
-
   return (
     <>
       <div className="flex w-screen h-screen text-gray-700">
@@ -77,7 +76,11 @@ const MarketingModulePage = (props) => {
             </div>
 
             <div className="flex-grow  items-center overflow-y-auto  overflow-auto no-scrollbar px-300  py-300">
-              <HeadNavBar2 selModule={selModule} setSelModule={setSelModule}  setViewable={setViewable} />
+              <HeadNavBar2
+                selModule={selModule}
+                setSelModule={setSelModule}
+                setViewable={setViewable}
+              />
               {viewable === 'userProfile' && <ProfileSummary />}
 
               {viewable === 'Today1' && (
@@ -88,9 +91,7 @@ const MarketingModulePage = (props) => {
                 <MarketingLeadsList taskType={viewable} />
               )}
 
-
-
-                {viewable === 'Team Lead Report' && (
+              {viewable === 'Team Lead Report' && (
                 <>
                   {/* <ReportMain /> */}
                   <LeadsTeamReportBody
@@ -103,7 +104,7 @@ const MarketingModulePage = (props) => {
                     }}
                     isEdit={false}
                   />
-                    {/* <CrmDashboardHome
+                  {/* <CrmDashboardHome
                     project={{
                       projectName: 'Projects',
                     }}
@@ -111,10 +112,7 @@ const MarketingModulePage = (props) => {
                   /> */}
                 </>
               )}
-
-
             </div>
-
           </div>
         </div>
       </div>
@@ -123,4 +121,3 @@ const MarketingModulePage = (props) => {
 }
 
 export default MarketingModulePage
-

@@ -40,7 +40,6 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
     { k: 'Phases', v: 0, pic: '/p1.png' },
   ]
 
-  
   const bgColors = [
     'bg-blue-100 border-blue-200',
     'bg-purple-100 border-purple-200',
@@ -69,9 +68,7 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
           </div>
 
           <div className="grid grid-cols-2 gap-7 mt-10">
-            <span
-         
-            >
+            <span>
               {/* sec 1 */}
               <span>
                 <div
@@ -101,11 +98,7 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
               </span>
             </span>
 
-            <span
-          
-            >
-              
-
+            <span>
               <span>
                 <div
                   className="drop-shadow-md min-w-full z-10 flex flex-col  max-w-md p-4 mx-auto my-0 rounded-lg "
@@ -142,7 +135,6 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
                 style={{ backgroundColor: '#f3f5ff' }}
               >
                 <div className="flex items-center flex-row px-0  pl-0 mb-2 ">
-       
                   <div className="relative z-10 flex items-center w-auto text-md font-bold leading-none pl-0 ml-1 ">
                     {'Payslips'}
                   </div>
@@ -203,7 +195,6 @@ const MyPayHomeBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
               </div>
             </span>
           </div>
-        
         </div>
       </section>
     </div>

@@ -1,4 +1,3 @@
-
 import { Download } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { getProjectByUid } from 'src/context/dbQueryFirebase'
@@ -17,9 +16,6 @@ const CrmUnitFinanceHistory = ({
 }) => {
   const { user } = useAuth()
   const { orgId } = user
-
-
-
 
   const [projectDetails, setProject] = useState({})
   const getProjectDetails = async (id) => {
@@ -43,17 +39,9 @@ const CrmUnitFinanceHistory = ({
     getProjectDetails(selCustomerPayload?.pId)
   }, [selCustomerPayload])
 
-
-
-
-
-
   return (
     <>
-
-
-
-{/* 
+      {/* 
 <div className="relative w-full h-[220px] bg-white flex items-center justify-center">
   <div className="absolute inset-0 pointer-events-none">
   
@@ -156,60 +144,49 @@ const CrmUnitFinanceHistory = ({
   </div>
 </div>  */}
 
-
-
-
-
-
       <div className="">
-
-
         <section className="mr-2 flex flex-col rounded-md ">
           <div>
             <div className="flex flex-row px-3 justify-between items-center ">
-              <div className='flex items-center'>
-              {/* <img
+              <div className="flex items-center">
+                {/* <img
                   src="https://static.ambitionbox.com/static/benefits/JobTraining.svg"
                   alt=""
                 /> */}
                 <h1 className="  text-left text-[#606062]  uppercase font-outfit font-medium text-[12px] mb-2 mt-1 ml-1">
-                Payment History
+                  Payment History
                 </h1>
-              </div> 
+              </div>
               <div>
-                
-    <span>
-      <PdfTransactionsGenerator
-        user={user}
-        unitTransactionsA={unitTransactionsA}
-        selCustomerPayload={selCustomerPayload}
-        projectDetails={projectDetails}
-        selUnitDetails={undefined}
-        myObj={undefined}
-        newPlotPS={undefined}
-        myAdditionalCharges={undefined}
-        streamUnitDetails={undefined}
-        myBookingPayload={undefined}
-        netTotal={undefined}
-        setNetTotal={undefined}
-        partATotal={undefined}
-        partBTotal={undefined}
-        setPartATotal={undefined}
-        setPartBTotal={undefined}
-        leadDetailsObj1={undefined}
-        PSa={undefined}
-        totalIs={undefined}
-        custObj1={undefined}
-        customerDetails={undefined}
-      />
-    </span>
+                <span>
+                  <PdfTransactionsGenerator
+                    user={user}
+                    unitTransactionsA={unitTransactionsA}
+                    selCustomerPayload={selCustomerPayload}
+                    projectDetails={projectDetails}
+                    selUnitDetails={undefined}
+                    myObj={undefined}
+                    newPlotPS={undefined}
+                    myAdditionalCharges={undefined}
+                    streamUnitDetails={undefined}
+                    myBookingPayload={undefined}
+                    netTotal={undefined}
+                    setNetTotal={undefined}
+                    partATotal={undefined}
+                    partBTotal={undefined}
+                    setPartATotal={undefined}
+                    setPartBTotal={undefined}
+                    leadDetailsObj1={undefined}
+                    PSa={undefined}
+                    totalIs={undefined}
+                    custObj1={undefined}
+                    customerDetails={undefined}
+                  />
+                </span>
               </div>
-
-
-          
-              </div>
+            </div>
             <table className="w-full    rounded-2xl overflow-hidden">
-              <thead className=''>
+              <thead className="">
                 {' '}
                 <tr className=" h-9 ">
                   <th className="w-[15%] text-[12px]  text-left font-medium text-[#0E0A1F]    bg-[#EDE9FE]  tracking-wide  pl-4 ">
@@ -224,11 +201,10 @@ const CrmUnitFinanceHistory = ({
                   <th className="w-[10%] text-[12px] text-right font-medium text-[#0E0A1F] bg-[#EDE9FE]   tracking-wide ">
                     Amount
                   </th>
-    
+
                   <th className="w-[10%] text-[12px] text-center font-medium text-[#0E0A1F] bg-[#EDE9FE]   tracking-wide  ">
                     Status
                   </th>
-
 
                   <th className="w-[17%] text-[12px] text font-medium text-[#0E0A1F] bg-[#EDE9FE]   tracking-wide  ">
                     Accounts
@@ -246,14 +222,19 @@ const CrmUnitFinanceHistory = ({
                 </tr>
               </thead>
 
-              <tbody className='bg-[#fff]'>
+              <tbody className="bg-[#fff]">
                 {unitTransactionsA?.map((d1, inx) => {
                   totalIs = 0
-                    // selCustomerPayload?.[`${assets[0]}_T_review`] - d1?.value
+                  // selCustomerPayload?.[`${assets[0]}_T_review`] - d1?.value
                   return (
-                    <tr key={inx} className={` border-b border-dashed h-[45px] ${inx%2 === 0 ? '': ' '}`}>
+                    <tr
+                      key={inx}
+                      className={` border-b border-dashed h-[45px] ${
+                        inx % 2 === 0 ? '' : ' '
+                      }`}
+                    >
                       <th className=" text-[12px] text-left text-blue-700   pl-4">
-                        {prettyDate(d1?.txt_dated ||d1?.dated) }
+                        {prettyDate(d1?.txt_dated || d1?.dated)}
                       </th>
                       <td className="text-[12px] text-center  text-[#606062] font-normal ">
                         {d1?.mode}
@@ -262,54 +243,58 @@ const CrmUnitFinanceHistory = ({
                         {d1?.bank_ref || d1?.chequeno}
                       </td>
                       <td className="text-[12px] text-right text-[#606062] font-normal ">
-                        ₹{d1?.totalAmount?.toLocaleString('en-IN') || d1?.amount?.toLocaleString('en-IN')}
+                        ₹
+                        {d1?.totalAmount?.toLocaleString('en-IN') ||
+                          d1?.amount?.toLocaleString('en-IN')}
                       </td>
                       {/* <td className="text-[10px] text-center text-[#606062] ">
                         {d1?.payReason}
                       </td> */}
 
                       <td className="text-[12px] text-center text-[#606062] ">
-                      <span className="bg-[#D9D8FF] text-[10px] px-2 py-[2px] rounded-2xl  font-normal">{d1?.status}</span>
+                        <span className="bg-[#D9D8FF] text-[10px] px-2 py-[2px] rounded-2xl  font-normal">
+                          {d1?.status}
+                        </span>
                       </td>
 
-
                       <td className="text-[12px] text-center text-[#606062] font-normal ">
-
-                        {d1?.towards ||d1?.builderName}
-                        <div>  {d1?.customerName}</div>
+                        {d1?.towards || d1?.builderName}
+                        <div> {d1?.customerName}</div>
                       </td>
                       {/* <td className="text-[10px] text-center text-[#606062] ">
                         {d1?.created}
                       </td> */}
                       <td className="text-[12px] text-center text-[#606062]  font-normal">
-                        {d1?.Reviewer || "No Data"}
+                        {d1?.Reviewer || 'No Data'}
                       </td>
 
-                      <td className={` text-[12px] text-center flex justify-center items-center`}>
-                      <button
-          color="gray"
-          className="border-0 block rounded ml-2"
-          onClick={() => { downloadImage(
-            JSON.parse(d1?.attchUrl)?.url,
-            `${JSON.parse(d1?.attchUrl)?.fileName}`
-          )}}
-        >
-  <Download className={`text-center w-[13px] h-6 mt-[8px]  ${d1?.attchUrl.length>1 ? 'text-[#606062] ' : 'text-gray-400 ' }`} />
-  </button>
-
-</td>
-
+                      <td
+                        className={` text-[12px] text-center flex justify-center items-center`}
+                      >
+                        <button
+                          color="gray"
+                          className="border-0 block rounded ml-2"
+                          onClick={() => {
+                            downloadImage(
+                              JSON.parse(d1?.attchUrl)?.url,
+                              `${JSON.parse(d1?.attchUrl)?.fileName}`
+                            )
+                          }}
+                        >
+                          <Download
+                            className={`text-center w-[13px] h-6 mt-[8px]  ${
+                              d1?.attchUrl.length > 1
+                                ? 'text-[#606062] '
+                                : 'text-gray-400 '
+                            }`}
+                          />
+                        </button>
+                      </td>
                     </tr>
                   )
                 })}
-
               </tbody>
             </table>
-
-
-
-
-
           </div>
         </section>
       </div>

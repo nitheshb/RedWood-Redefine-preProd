@@ -8,7 +8,7 @@ export const sqmtConverter = (value: number, unit: string) => {
       return Math.floor(value * 0.83612809913659)
     case 'square-meter':
       return Math.floor(value * 10.764)
-   case 'square-feet':
+    case 'square-feet':
       return Math.floor(value * 0.092903)
     case 'gunta':
       return value * 101

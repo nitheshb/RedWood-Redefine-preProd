@@ -12,7 +12,6 @@ const HeadSideBarDetailView2 = ({
   setViewable,
   viewable,
 }) => {
-
   const { user } = useAuth()
 
   const [access, setUserAccess] = useState([])
@@ -86,9 +85,7 @@ const HeadSideBarDetailView2 = ({
                       </span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                   <li className="relative ">
@@ -134,8 +131,6 @@ const HeadSideBarDetailView2 = ({
                       </span>
                     </span>
                   </li>
-                
-              
                 </>
               )}
             {['crmModule'].includes(sourceLink) && (
@@ -150,9 +145,7 @@ const HeadSideBarDetailView2 = ({
                     <span className="text-md font-bold pl-1 ">My Schedule</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </span>
                 <li className="relative ">
@@ -228,9 +221,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">Team Tasks</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -244,9 +235,7 @@ const HeadSideBarDetailView2 = ({
                     <span className="text-md font-bold pl-1 ">My CRM</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </span>
                 <li className="relative">
@@ -279,9 +268,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">Dashboard</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -315,9 +302,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">CRM Space</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -351,9 +336,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">CRM Space-I</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -387,9 +370,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">CRM Space-II</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -423,9 +404,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">My Customers</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -459,9 +438,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">My Customers-II</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -495,9 +472,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">Loan Dept</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -515,9 +490,7 @@ const HeadSideBarDetailView2 = ({
                     <span className="text-md font-bold pl-1 ">Finance</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </span>
                 <li className="relative">
@@ -550,9 +523,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">Transactions</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -587,9 +558,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">Dashboard</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -607,9 +576,7 @@ const HeadSideBarDetailView2 = ({
                     <span className="text-md font-bold pl-1 ">My Projects</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </span>
 
@@ -643,9 +610,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">Ongoing Projects</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -679,9 +644,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">Completed</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -715,9 +678,7 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">Hold</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
@@ -735,9 +696,7 @@ const HeadSideBarDetailView2 = ({
                     <span className="text-md font-bold pl-1 ">My Schedule</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </span>
                 <li className="relative ">
@@ -779,16 +738,13 @@ const HeadSideBarDetailView2 = ({
                       <span className="text-sm pl-1">My Tasks</span>
                     </span>
                     <span className="flex ml-auto items-bottom">
-                      <span
-                        className="flex ml-auto items-bottom text-xs mt-2"
-                      ></span>
+                      <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                     </span>
                   </span>
                 </li>
-               
               </>
             )}
-           
+
             {sourceLink === 'leadsScreen' && !access?.includes('manage_leads') && (
               <li className="relative">
                 <span
@@ -805,9 +761,7 @@ const HeadSideBarDetailView2 = ({
                     <span className="text-md font-bold pl-1 ">My Leads</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </span>
                 <ul className="px-1 pt-2">
@@ -844,9 +798,7 @@ const HeadSideBarDetailView2 = ({
                           <span className="text-sm pl-[4px]">{data}</span>
                         </span>
                         <span className="flex ml-auto items-bottom">
-                          <span
-                            className="flex ml-auto items-bottom text-xs mt-2"
-                          ></span>
+                          <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                         </span>
                       </span>
                     </li>
@@ -905,9 +857,7 @@ const HeadSideBarDetailView2 = ({
                           <span className="text-sm pl-[4px]">{data}</span>
                         </span>
                         <span className="flex ml-auto items-bottom">
-                          <span
-                            className="flex ml-auto items-bottom text-xs mt-2"
-                          ></span>
+                          <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                         </span>
                       </span>
                     </li>
@@ -932,9 +882,7 @@ const HeadSideBarDetailView2 = ({
                     <span className="text-md font-bold pl-1 ">Inventory</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </Link>
                 <ul className="px-1">
@@ -979,9 +927,7 @@ const HeadSideBarDetailView2 = ({
                         </span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                       </span>
                     </span>
                   </li>
@@ -1000,9 +946,7 @@ const HeadSideBarDetailView2 = ({
                     <span className="text-md font-bold pl-1 ">Add-ons</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </Link>
                 <ul className="px-1">
@@ -1045,9 +989,7 @@ const HeadSideBarDetailView2 = ({
                         <span className="text-sm pl-[6px]">Bank Accounts</span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                       </span>
                     </span>
                   </li>
@@ -1091,9 +1033,7 @@ const HeadSideBarDetailView2 = ({
                         </span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                       </span>
                     </span>
                   </li>
@@ -1108,7 +1048,6 @@ const HeadSideBarDetailView2 = ({
                     >
                       <span className="flex items-center">
                         <span style={{ color: '#058527' }}>
-      
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-6"
@@ -1130,9 +1069,7 @@ const HeadSideBarDetailView2 = ({
                         </span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                       </span>
                     </span>
                   </li>
@@ -1174,9 +1111,7 @@ const HeadSideBarDetailView2 = ({
                     </span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </Link>
                 <ul className="px-1">
@@ -1247,9 +1182,7 @@ const HeadSideBarDetailView2 = ({
                   <span className="text-md font-bold pl-1 ">Reports</span>
                 </span>
                 <span className="flex ml-auto items-bottom">
-                  <span
-                    className="flex ml-auto items-bottom text-xs mt-2"
-                  ></span>
+                  <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                 </span>
               </Link>
               <ul className="px-1 pt-1">
@@ -1413,9 +1346,7 @@ const HeadSideBarDetailView2 = ({
                     <span className="text-md font-bold pl-1 ">HR</span>
                   </span>
                   <span className="flex ml-auto items-bottom">
-                    <span
-                      className="flex ml-auto items-bottom text-xs mt-2"
-                    ></span>
+                    <span className="flex ml-auto items-bottom text-xs mt-2"></span>
                   </span>
                 </Link>
                 <ul className="px-1">
@@ -1456,9 +1387,7 @@ const HeadSideBarDetailView2 = ({
                           <span className="text-sm pl-[6px]">Attendance</span>
                         </span>
                         <span className="flex ml-auto items-bottom">
-                          <span
-                            className="flex ml-auto items-bottom text-xs mt-1"
-                          ></span>
+                          <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                         </span>
                       </span>
                     </li>
@@ -1498,9 +1427,7 @@ const HeadSideBarDetailView2 = ({
                         <span className="text-sm pl-[6px]">My Incentives</span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                       </span>
                     </span>
                   </li>
@@ -1540,9 +1467,7 @@ const HeadSideBarDetailView2 = ({
                           <span className="text-sm pl-[6px]">Pay Slips</span>
                         </span>
                         <span className="flex ml-auto items-bottom">
-                          <span
-                            className="flex ml-auto items-bottom text-xs mt-1"
-                          ></span>
+                          <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                         </span>
                       </span>
                     </li>
@@ -1648,7 +1573,6 @@ const HeadSideBarDetailView2 = ({
                     >
                       <span className="flex items-center">
                         <span style={{ color: '#058527' }}>
-              
                           <svg
                             width="24"
                             height="24"
@@ -1671,9 +1595,7 @@ const HeadSideBarDetailView2 = ({
                         </span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                       </span>
                     </span>
                   </li>
@@ -1687,7 +1609,6 @@ const HeadSideBarDetailView2 = ({
                     >
                       <span className="flex items-center">
                         <span style={{ color: '#058527' }}>
-      
                           <svg
                             width="24"
                             height="24"
@@ -1710,9 +1631,7 @@ const HeadSideBarDetailView2 = ({
                         </span>
                       </span>
                       <span className="flex ml-auto items-bottom">
-                        <span
-                          className="flex ml-auto items-bottom text-xs mt-1"
-                        ></span>
+                        <span className="flex ml-auto items-bottom text-xs mt-1"></span>
                       </span>
                     </span>
                   </li>
@@ -1727,5 +1646,3 @@ const HeadSideBarDetailView2 = ({
 }
 
 export default HeadSideBarDetailView2
-
-

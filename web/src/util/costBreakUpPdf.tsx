@@ -11,7 +11,10 @@ import { computeTotal } from './computeCsTotals'
 import { TextFieldFlat } from './formFields/TextFieldFlatType'
 import '../styles/myStyles.css'
 import CustomDatePicker from './formFields/CustomDatePicker'
-import { CalculateComponentTotal, UpdateComponentCalTotal } from './unitCostSheetCalculator'
+import {
+  CalculateComponentTotal,
+  UpdateComponentCalTotal,
+} from './unitCostSheetCalculator'
 import { plotCS_Dummy_A } from 'src/constants/projects'
 import { ToastBar } from 'react-hot-toast'
 
@@ -55,8 +58,7 @@ const CostBreakUpPdf = ({
   showOnly,
   stepIndx,
   StatusListA,
-  setStepIndx
-
+  setStepIndx,
 }) => {
   const d = new window.Date()
 
@@ -96,19 +98,17 @@ const CostBreakUpPdf = ({
   const [partETotal, setPartETotal] = useState(0)
 
   const handlePSdateChange = (index, newDate, type) => {
-
-    if(type == 'constructPS'){
+    if (type == 'constructPS') {
       const updatedRows = [...psConstructPayload]
       updatedRows[index].schDate = newDate
       setConstructPSPayload(updatedRows)
       setNewPS([...updatedRows, ...psConstructPayload])
     }
-    if(type == 'plotPs'){
+    if (type == 'plotPs') {
       const updatedRows = [...psPayload]
       updatedRows[index].schDate = newDate
       setPSPayload(updatedRows)
       setNewPS([...updatedRows, ...psConstructPayload])
-
     }
   }
 
@@ -138,15 +138,15 @@ const CostBreakUpPdf = ({
       ].includes(x)
 
       const gstPercent =
-      Number(data4?.gst?.value) > 1
-        ? Number(data4?.gst?.value) * 0.01
-        : Number(data4?.gst?.value)
+        Number(data4?.gst?.value) > 1
+          ? Number(data4?.gst?.value) * 0.01
+          : Number(data4?.gst?.value)
       total = isChargedPerSqft
-      ? Number(
-          selUnitDetails?.construct_area ||
-            selUnitDetails?.area?.toString()?.replace(',', '')
-        ) * Number(data4?.charges)
-      : Number(data4?.charges)
+        ? Number(
+            selUnitDetails?.construct_area ||
+              selUnitDetails?.area?.toString()?.replace(',', '')
+          ) * Number(data4?.charges)
+        : Number(data4?.charges)
       gstTotal = Math.round(total * gstPercent)
       dataNewObj.TotalSaleValue = total
       dataNewObj.gstValue = gstTotal
@@ -194,13 +194,12 @@ const CostBreakUpPdf = ({
     }
   }, [])
   useEffect(() => {
-
-    let x = {...myBookingPayload}
+    let x = { ...myBookingPayload }
     x.plotPS = psPayload || []
     x.constructPS = psConstructPayload || []
-    x.fullPs = [...psPayload || [], ...psConstructPayload || []]
+    x.fullPs = [...(psPayload || []), ...(psConstructPayload || [])]
     setMyBookingPayload(x)
-    console.log('values are ',x?.fullPs)
+    console.log('values are ', x?.fullPs)
   }, [psPayload, psConstructPayload])
 
   useEffect(() => {
@@ -216,12 +215,11 @@ const CostBreakUpPdf = ({
     let y = selUnitDetails?.sqft_rate
     let z = selUnitDetails?.plc_per_sqft
 
-    if(leadDetailsObj1 && leadDetailsObj1[`${uid}_cs`]) {
-      y= leadDetailsObj1[`${uid}_cs`]?.newSqftPrice || selUnitDetails?.sqft_rate
+    if (leadDetailsObj1 && leadDetailsObj1[`${uid}_cs`]) {
+      y =
+        leadDetailsObj1[`${uid}_cs`]?.newSqftPrice || selUnitDetails?.sqft_rate
       z = leadDetailsObj1[`${uid}_cs`]?.newPLC || selUnitDetails?.plc_per_sqft
-
     }
-
 
     // const plotSaleValue =
     //   costSheetA.length > 0
@@ -234,14 +232,17 @@ const CostBreakUpPdf = ({
     //       )
 
     const plotSaleValue =
-      costSheetA.length > 0?
-      // 1000 : Number.isFinite(y)
-        // ? 1001
-        // : 10002
-        Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
+      costSheetA.length > 0
+        ? // 1000 : Number.isFinite(y)
+          // ? 1001
+          // : 10002
+          Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
           Number(costSheetA[0]['charges'])
         : Number.isFinite(y)
-        ? Number(Number(selUnitDetails?.area?.toString()?.replace(',', '')) * Number(y.toString()?.replace(',', '')))
+        ? Number(
+            Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
+              Number(y.toString()?.replace(',', ''))
+          )
         : Number(
             Number(selUnitDetails?.area?.toString()?.replace(',', '')) *
               (selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate)
@@ -257,12 +258,28 @@ const CostBreakUpPdf = ({
     //           (selUnitDetails?.rate_per_sqft || selUnitDetails?.sqft_rate)
     //       )
 
-    const constSaleValue =Number.isFinite(y)
-    ? Number( (selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0 )* y)
-    : Number((selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0) * selUnitDetails?.construct_price_sqft || 0)
-    const constPlcSaleValue =Number.isFinite(y)
-    ? Number( (selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0 )* y)
-    : Number((selUnitDetails?.builtup_area || selUnitDetails?.construct_area || 0) * (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft || 0))
+    const constSaleValue = Number.isFinite(y)
+      ? Number(
+          (selUnitDetails?.builtup_area ||
+            selUnitDetails?.construct_area ||
+            0) * y
+        )
+      : Number(
+          (selUnitDetails?.builtup_area ||
+            selUnitDetails?.construct_area ||
+            0) * selUnitDetails?.construct_price_sqft || 0
+        )
+    const constPlcSaleValue = Number.isFinite(y)
+      ? Number(
+          (selUnitDetails?.builtup_area ||
+            selUnitDetails?.construct_area ||
+            0) * y
+        )
+      : Number(
+          (selUnitDetails?.builtup_area ||
+            selUnitDetails?.construct_area ||
+            0) * (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft || 0)
+        )
     const plcSaleValue =
       costSheetA.length > 1
         ? selUnitDetails?.area?.toString()?.replace(',', '') *
@@ -273,14 +290,14 @@ const CostBreakUpPdf = ({
                 (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
           )
     const plcConstructSaleValue =
-          costSheetA.length > 1
-            ? selUnitDetails?.area?.toString()?.replace(',', '') *
-              Number(costSheetA[1]['charges'])
-            : Math.round(
-                selUnitDetails?.construct_area ||
-                  selUnitDetails?.area?.toString()?.replace(',', '') *
-                    (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
-              )
+      costSheetA.length > 1
+        ? selUnitDetails?.area?.toString()?.replace(',', '') *
+          Number(costSheetA[1]['charges'])
+        : Math.round(
+            selUnitDetails?.construct_area ||
+              selUnitDetails?.area?.toString()?.replace(',', '') *
+                (selUnitDetails?.plc || selUnitDetails?.plc_per_sqft)
+          )
     const gstTaxForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'sqft_cost_tax'
     )
@@ -290,7 +307,7 @@ const CostBreakUpPdf = ({
     //       ? Number(gstTaxForProjA[0]?.gst?.value) * 0.01
     //       : Number(gstTaxForProjA[0]?.gst?.value)
     //     : 0
-    const gstTaxIs =(selPhaseObj?.area_tax / 100)
+    const gstTaxIs = selPhaseObj?.area_tax / 100
 
     const plcGstForProjA = selPhaseObj?.partATaxObj?.filter(
       (d) => d?.component.value === 'plc_tax'
@@ -313,14 +330,13 @@ const CostBreakUpPdf = ({
     //     : 0
 
     const constTaxPercent = selPhaseObj?.const_tax
-    const gstConstTaxIs = (constTaxPercent/100)
+    const gstConstTaxIs = constTaxPercent / 100
     const CplcGstIsPercent = 0
-    const  gstPlcConstTaxIs = CplcGstIsPercent/100
+    const gstPlcConstTaxIs = CplcGstIsPercent / 100
     const plot_gstValue = Math.round(plotSaleValue) * gstTaxIs
     const plc_gstValue = Math.round(plcSaleValue * plcGstIs)
-    const const_gstValue = Math.round(constSaleValue * gstConstTaxIs )
-    const const_plc_gstValue = Math.round(constPlcSaleValue * gstPlcConstTaxIs )
-
+    const const_gstValue = Math.round(constSaleValue * gstConstTaxIs)
+    const const_plc_gstValue = Math.round(constPlcSaleValue * gstPlcConstTaxIs)
 
     console.log(
       'gen costSheetA values are ',
@@ -335,12 +351,23 @@ const CostBreakUpPdf = ({
     // if (csMode === 'plot_cs') {
     if ('plot_cs' === 'plot_cs') {
       additonalChargesObj?.map((data, inx) => {
-        return CalculateComponentTotal(data,selUnitDetails?.area?.toString()?.replace(',', ''),selPhaseObj?.area_tax, data?.charges)
+        return CalculateComponentTotal(
+          data,
+          selUnitDetails?.area?.toString()?.replace(',', ''),
+          selPhaseObj?.area_tax,
+          data?.charges
+        )
       })
       constructOtherChargesObj?.map((data, inx) => {
         console.log('myvalue is', data)
-        let gstPercentIs= Number(data?.gst?.value || 0)
-       return  CalculateComponentTotal(data,selUnitDetails?.construct_area || selUnitDetails?.area?.toString()?.replace(',', ''),gstPercentIs, data?.charges)
+        let gstPercentIs = Number(data?.gst?.value || 0)
+        return CalculateComponentTotal(
+          data,
+          selUnitDetails?.construct_area ||
+            selUnitDetails?.area?.toString()?.replace(',', ''),
+          gstPercentIs,
+          data?.charges
+        )
       })
       setPartBPayload(additonalChargesObj)
       setAddiChargesObj(additonalChargesObj)
@@ -403,9 +430,7 @@ const CostBreakUpPdf = ({
           },
           TotalNetSaleValueGsT: plcSaleValue + plc_gstValue,
         },
-
       ]
-
 
       const constructionSqftRate = selUnitDetails?.construct_price_sqft || 0
       const constructionArea =
@@ -507,7 +532,7 @@ const CostBreakUpPdf = ({
   const CreateNewPsFun = (netTotal, plotBookingAdv, csMode) => {
     const flatCost = Number(partATotal + partBTotal)
     const flatSchTotalCost = Number(partATotal + partBTotal)
-    const constCost = Number((partCTotal || 0) + (partDTotal || 0) )
+    const constCost = Number((partCTotal || 0) + (partDTotal || 0))
     console.log('flat fixed values ', psPayload)
     const flatFixedCosts = psPayload?.reduce(
       (acc, item) =>
@@ -533,38 +558,42 @@ const CostBreakUpPdf = ({
     )
     let flatLegalFixedCosts = 0
     let bookingAdvanceCost = 0
-    if(filLegalCharges && filLegalCharges?.length > 0){
-      flatLegalFixedCosts =filLegalCharges[0]?.TotalNetSaleValueGsT || 0
+    if (filLegalCharges && filLegalCharges?.length > 0) {
+      flatLegalFixedCosts = filLegalCharges[0]?.TotalNetSaleValueGsT || 0
     }
     console.log('booking advance is', bookingAdvance)
-    if(bookingAdvance && bookingAdvance?.length > 0){
+    if (bookingAdvance && bookingAdvance?.length > 0) {
       console.log('booking advance is', bookingAdvance)
-      bookingAdvanceCost =bookingAdvance[0]?.percentage || 10
+      bookingAdvanceCost = bookingAdvance[0]?.percentage || 10
     }
-    const newPs = psPayload?.map( (d1, inx) => {
+    const newPs = psPayload?.map((d1, inx) => {
       const z = d1
       // if (csMode === 'plot_cs') {
       if ('plot_cs' === 'plot_cs') {
-       let applicablePlotCost = flatCost- flatLegalFixedCosts
-      //  if(inx ==1){
-      //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
-      //  }
+        let applicablePlotCost = flatCost - flatLegalFixedCosts
+        //  if(inx ==1){
+        //   applicablePlotCost = (applicablePlotCost-bookingAdvanceCost)
+        //  }
 
-      if(!['costpersqft'].includes(d1?.units?.value)){
-
-        z.value = ['fixedcost'].includes(d1?.units?.value)
-          ? Number(d1?.percentage)
-          : inx ==1 ? Number(
-            (((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2) - bookingAdvanceCost))
-
-          :  Number(
-              ((applicablePlotCost) * (d1?.percentage / 100)).toFixed(2)
-            )
-            // z.value = applicablePlotCost
-          }else {
-            let calc =  CalculateComponentTotal(d1,selUnitDetails?.area?.toString()?.replace(',', '') ,0,Number(d1?.percentage))
-            z.value = calc?.TotalNetSaleValueGsT
-          }
+        if (!['costpersqft'].includes(d1?.units?.value)) {
+          z.value = ['fixedcost'].includes(d1?.units?.value)
+            ? Number(d1?.percentage)
+            : inx == 1
+            ? Number(
+                (applicablePlotCost * (d1?.percentage / 100)).toFixed(2) -
+                  bookingAdvanceCost
+              )
+            : Number((applicablePlotCost * (d1?.percentage / 100)).toFixed(2))
+          // z.value = applicablePlotCost
+        } else {
+          let calc = CalculateComponentTotal(
+            d1,
+            selUnitDetails?.area?.toString()?.replace(',', ''),
+            0,
+            Number(d1?.percentage)
+          )
+          z.value = calc?.TotalNetSaleValueGsT
+        }
         if (['fixedcost'].includes(d1?.units?.value)) {
           z.elgible = true
           z.elgFrom = Timestamp.now().toMillis()
@@ -579,29 +608,26 @@ const CostBreakUpPdf = ({
       console.log('d1 is', d1)
       const z = d1
 
-        z.value = ['fixedcost'].includes(d1?.units?.value)
-          ? Number(d1?.percentage)
-          :
-            Number(
-              ((constCost - constFixedCosts) * (d1?.percentage / 100)).toFixed(
-                2
-              )
-            )
-        if(i=== selPhaseObj?.ConstructPayScheduleObj?.length-1){
-          z.value = z.value  + partETotal
-        }
-        if (['fixedcost'].includes(d1?.units?.value)) {
-          z.elgible = true
-          z.elgFrom = Timestamp.now().toMillis()
-          return z
-        }
+      z.value = ['fixedcost'].includes(d1?.units?.value)
+        ? Number(d1?.percentage)
+        : Number(
+            ((constCost - constFixedCosts) * (d1?.percentage / 100)).toFixed(2)
+          )
+      if (i === selPhaseObj?.ConstructPayScheduleObj?.length - 1) {
+        z.value = z.value + partETotal
+      }
+      if (['fixedcost'].includes(d1?.units?.value)) {
+        z.elgible = true
+        z.elgFrom = Timestamp.now().toMillis()
         return z
-
+      }
+      return z
     })
 
     console.log('sel unti id => ', newPs, psPayload)
     setConstructPSPayload(newPs1)
-    const netValue = partATotal + partBTotal + partCTotal + partDTotal + partETotal
+    const netValue =
+      partATotal + partBTotal + partCTotal + partDTotal + partETotal
 
     const currentBookingPayload = {
       T_total: netValue,
@@ -639,7 +665,7 @@ const CostBreakUpPdf = ({
       // ats_target_date: data['ats_target_date'],
       // sd_target_date: data['sd_target_date'],
     }
-    setMyBookingPayload({...myBookingPayload,...currentBookingPayload})
+    setMyBookingPayload({ ...myBookingPayload, ...currentBookingPayload })
   }
 
   useEffect(() => {
@@ -680,7 +706,8 @@ const CostBreakUpPdf = ({
       (partATotal || 0) +
         (partBTotal || 0) +
         (partCTotal || 0) +
-        (partDTotal || 0) +  (partETotal || 0)
+        (partDTotal || 0) +
+        (partETotal || 0)
     )
     selPhaseObj?.paymentScheduleObj?.map((data) => {
       if (data.stage?.value === 'on_booking') {
@@ -736,10 +763,15 @@ const CostBreakUpPdf = ({
     )
   }
   const changeOverallPartACostFun = async (inx, payload, newValue) => {
-
-    const area = selUnitDetails?.area?.toString()?.replace(',', '');
-    const taxPercent =selPhaseObj?.area_tax
-    let y = await UpdateComponentCalTotal(costSheetA,inx,area, taxPercent, newValue)
+    const area = selUnitDetails?.area?.toString()?.replace(',', '')
+    const taxPercent = selPhaseObj?.area_tax
+    let y = await UpdateComponentCalTotal(
+      costSheetA,
+      inx,
+      area,
+      taxPercent,
+      newValue
+    )
     // const y = costSheetA
     // let total = 0
     // let gstTotal = 0
@@ -778,10 +810,15 @@ const CostBreakUpPdf = ({
     setTotalFun()
   }
   const changeOverallConstructCostFun = async (inx, payload, newValue) => {
-
-    const area = selUnitDetails?.construct_area?.toString()?.replace(',', '');
-    const taxPercent =payload?.gst?.value
-    let  z = await UpdateComponentCalTotal(constructCostSheetA,inx,area, taxPercent, newValue)
+    const area = selUnitDetails?.construct_area?.toString()?.replace(',', '')
+    const taxPercent = payload?.gst?.value
+    let z = await UpdateComponentCalTotal(
+      constructCostSheetA,
+      inx,
+      area,
+      taxPercent,
+      newValue
+    )
     // const y = constructCostSheetA
 
     // let total = 0
@@ -801,7 +838,6 @@ const CostBreakUpPdf = ({
     //   )
     //   gstTotal = Math.round(total * (gstTaxIs / 100))
 
-
     // y[inx].charges = newValue
     // y[inx].TotalSaleValue = total
     // y[inx].gst.label = gstTaxIs
@@ -817,47 +853,45 @@ const CostBreakUpPdf = ({
   return (
     <div className="">
       {!pdfPreview && (
-        <div >
+        <div>
           <PDFExport
-
             paperSize="A4"
             margin="0.5cm"
             fileName={`${selUnitDetails?.unit_no}_${leadDetailsObj1?.Name}_Nirvana`}
             ref={pdfExportComponent}
           >
             {' '}
-
             <section className="flex bg-[#EDEDED] p-4 rounded-t-[20px]  flex-row">
-                {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
-                <div className="w-full flex flex-col">
-                  <div className=" flex flex-row gap-2 ">
-                    <div>
-                      <section className="flex flex-row">
-                        <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
-                        {showOnly === 'payment_schedule' ? 'Payment Schedule' : 'Cost Sheet'}
-                        </h6>
-                      </section>
-                      <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
+              {/* <div className="w-[53.80px] h-[58px] bg-zinc-100 rounded-[5px] mr-2"></div> */}
+              <div className="w-full flex flex-col">
+                <div className=" flex flex-row gap-2 ">
+                  <div>
+                    <section className="flex flex-row">
+                      <h6 className="text-black text-[14px] mt-[2px] mb- font-bold">
+                        {showOnly === 'payment_schedule'
+                          ? 'Payment Schedule'
+                          : 'Cost Sheet'}
+                      </h6>
+                    </section>
+                    <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
                       {showOnly === 'payment_schedule'
-                      ? 'Schedule of payments and timelines'
-                      : 'Quotation,Unit Cost Calculation.'}
-                      </div>
-
+                        ? 'Schedule of payments and timelines'
+                        : 'Quotation,Unit Cost Calculation.'}
                     </div>
-
-                    <div></div>
                   </div>
 
-                  {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
+                  <div></div>
+                </div>
+
+                {/* <div className="w-[455.80px] opacity-50 text-white  text-[12px] font-normal ">
                                             Details of applicant is mandatory
                                           </div> */}
-                </div>
-              </section>
+              </div>
+            </section>
             <section
               className="w-full flex flex-col px-4   rounded-t-[20px]"
               style={{ boxShadow: '0 1px 12px #f2f2f2' }}
             >
-
               <div className="mt-6">
                 <div>
                   <div>
@@ -936,53 +970,61 @@ const CostBreakUpPdf = ({
                                         {d1?.component?.label}
                                       </th>
                                       <td className="w-[15%]  px-2 text-[12px] text-right  ">
-                                      {!((role.includes('sales') && projectDetails?.allowSalesExCsEdit) || (role.includes('admin')) ||  (role.includes('crm')) || false) && Number(d1?.charges)?.toLocaleString(
-                                          'en-IN'
+                                        {!(
+                                          (role.includes('sales') &&
+                                            projectDetails?.allowSalesExCsEdit) ||
+                                          role.includes('admin') ||
+                                          role.includes('crm') ||
+                                          false
+                                        ) &&
+                                          Number(d1?.charges)?.toLocaleString(
+                                            'en-IN'
+                                          )}
+                                        {((role.includes('sales') &&
+                                          projectDetails?.allowSalesExCsEdit) ||
+                                          role.includes('admin') ||
+                                          role.includes('crm') ||
+                                          false) && (
+                                          <TextFieldFlat
+                                            label=""
+                                            className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
+                                            name="ratePerSqft"
+                                            onChange={(e) => {
+                                              console.log('iam hre')
+                                              if (
+                                                d1?.component?.value ===
+                                                'unit_cost_charges'
+                                              ) {
+                                                formik.setFieldValue(
+                                                  'unit_cost_charges',
+                                                  e.target.value
+                                                )
+                                              }
+                                              if (
+                                                d1?.component?.value ===
+                                                'plc_cost_sqft'
+                                              ) {
+                                                formik.setFieldValue(
+                                                  'plc_cost_sqft',
+                                                  e.target.value
+                                                )
+                                              }
+                                              setNewSqftPrice(
+                                                Number(e.target.value)
+                                              )
+                                              changeOverallPartACostFun(
+                                                inx,
+                                                d1,
+                                                e.target.value
+                                              )
+                                            }}
+                                            value={d1?.charges}
+                                          />
                                         )}
-                                     {((role.includes('sales') && projectDetails?.allowSalesExCsEdit) || (role.includes('admin')) ||  (role.includes('crm'))|| false) &&   <TextFieldFlat
-                                          label=""
-                                          className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
-                                          name="ratePerSqft"
-                                          onChange={(e) => {
-
-                                            console.log('iam hre')
-                                            if (
-                                              d1?.component?.value ===
-                                              'unit_cost_charges'
-                                            ) {
-                                              formik.setFieldValue(
-                                                'unit_cost_charges',
-                                                e.target.value
-                                              )
-                                            }
-                                            if (
-                                              d1?.component?.value ===
-                                              'plc_cost_sqft'
-                                            ) {
-                                              formik.setFieldValue(
-                                                'plc_cost_sqft',
-                                                e.target.value
-                                              )
-                                            }
-                                            setNewSqftPrice(
-                                              Number(e.target.value)
-                                            )
-                                            changeOverallPartACostFun(
-                                              inx,
-                                              d1,
-                                              e.target.value
-                                            )
-
-                                          }}
-
-                                          value={d1?.charges}
-
-                                        />}
                                         <TextFieldFlat
                                           className=" hidden  "
                                           label=""
                                           name={d1?.component?.value}
-
                                           type="number"
                                         />
                                       </td>
@@ -1212,64 +1254,75 @@ const CostBreakUpPdf = ({
                                             {d1?.component?.label}
                                           </th>
                                           <td className="w-[15%]  px-2 text-[12px] text-right  ">
-                                          {!((role.includes('sales') && projectDetails?.allowSalesExCsEdit) || (role.includes('admin')) ||  (role.includes('crm')) || false)  && Number(d1?.charges)?.toLocaleString(
-                                          'en-IN'
-                                        )}
+                                            {!(
+                                              (role.includes('sales') &&
+                                                projectDetails?.allowSalesExCsEdit) ||
+                                              role.includes('admin') ||
+                                              role.includes('crm') ||
+                                              false
+                                            ) &&
+                                              Number(
+                                                d1?.charges
+                                              )?.toLocaleString('en-IN')}
 
-                                         { ((role.includes('sales') && projectDetails?.allowSalesExCsEdit) || (role.includes('admin')) ||  (role.includes('crm')) || false)
-                                   && <TextFieldFlat
-                                              label=""
-                                              className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
-                                              name="constRatePerSqft"
-                                              onChange={(e) => {
-                                                // setNewSqftPrice(e.target.value)
-                                                console.log(
-                                                  'iam hre',
-                                                  d1?.component?.value,
-                                                  e.target.value
-                                                )
-
-                                                if (
-                                                  d1?.component?.value ===
-                                                  'villa_construct_cost'
-                                                ) {
-                                                  formik.setFieldValue(
-                                                    'villa_construct_cost',
+                                            {((role.includes('sales') &&
+                                              projectDetails?.allowSalesExCsEdit) ||
+                                              role.includes('admin') ||
+                                              role.includes('crm') ||
+                                              false) && (
+                                              <TextFieldFlat
+                                                label=""
+                                                className="w-[90%] text-[12px] text-right font-semibold border-b  border-[#B76E00]  pr-1 py-[4px] text-[#B76E00]"
+                                                name="constRatePerSqft"
+                                                onChange={(e) => {
+                                                  // setNewSqftPrice(e.target.value)
+                                                  console.log(
+                                                    'iam hre',
+                                                    d1?.component?.value,
                                                     e.target.value
                                                   )
-                                                }
 
-                                                setConstNewSqftPrice(
-                                                  Number(e.target.value)
-                                                )
-                                                changeOverallConstructCostFun(
-                                                  inx,
-                                                  d1,
-                                                  e.target.value
-                                                )
-                                                // formik.setFieldValue(
-                                                //   'ratePerSqft',
-                                                //   e.target.value
-                                                // )
-                                                // console.log(
-                                                //   'what is =it',
-                                                //   value.value
-                                                // )
-                                                // formik.setFieldValue(
-                                                //   `${d1?.component?.value}`,
-                                                //   value
-                                                // )
-                                              }}
-                                              // value={formik.values[`unit_cost_charges`]}
-                                              value={d1?.charges}
-                                              // value={newSqftPrice}
-                                              // type="number"
-                                            />}
+                                                  if (
+                                                    d1?.component?.value ===
+                                                    'villa_construct_cost'
+                                                  ) {
+                                                    formik.setFieldValue(
+                                                      'villa_construct_cost',
+                                                      e.target.value
+                                                    )
+                                                  }
+
+                                                  setConstNewSqftPrice(
+                                                    Number(e.target.value)
+                                                  )
+                                                  changeOverallConstructCostFun(
+                                                    inx,
+                                                    d1,
+                                                    e.target.value
+                                                  )
+                                                  // formik.setFieldValue(
+                                                  //   'ratePerSqft',
+                                                  //   e.target.value
+                                                  // )
+                                                  // console.log(
+                                                  //   'what is =it',
+                                                  //   value.value
+                                                  // )
+                                                  // formik.setFieldValue(
+                                                  //   `${d1?.component?.value}`,
+                                                  //   value
+                                                  // )
+                                                }}
+                                                // value={formik.values[`unit_cost_charges`]}
+                                                value={d1?.charges}
+                                                // value={newSqftPrice}
+                                                // type="number"
+                                              />
+                                            )}
                                             <TextFieldFlat
                                               className=" hidden  "
                                               label=""
                                               name={d1?.component?.value}
-
                                               type="number"
                                             />
                                           </td>
@@ -1412,7 +1465,9 @@ const CostBreakUpPdf = ({
                                           <td className="text-[12px] px-2 text-right   ">
                                             {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
                                             ₹
-                                            {d1?.TotalNetSaleValueGsT?.toLocaleString('en-IN')}
+                                            {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                              'en-IN'
+                                            )}
                                           </td>
                                         </tr>
                                       ))}
@@ -1460,132 +1515,136 @@ const CostBreakUpPdf = ({
                                 </div>
 
                                 <div className=" border-y-1 overflow-hidden mt-4">
-                            <table className="w-full">
-                              <thead>
-                                <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
-                                  <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide ">
-                                    Possession Charges
-                                  </th>
-                                  <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
-                                    Rate/Sqft
-                                  </th>
-                                  <th
-                                    className={`${
-                                      !showGstCol ? 'hidden' : ''
-                                    } w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide `}
-                                  >
-                                    Cost
-                                  </th>
-                                  <th
-                                    className={`${
-                                      !showGstCol ? 'hidden' : ''
-                                    }  w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide `}
-                                  >
-                                    GST
-                                  </th>
-                                  <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide  ">
-                                    Total
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {possessAdditionalCS?.map((d1, inx) => (
-                                  <tr
-                                    key={inx}
-                                    className="h-[32px] border-b border-dashed"
-                                  >
-                                    <th className=" text-[12px] px-2 text-left  font-normal ">
-                                      {d1?.component?.label}
-                                      {/* {d1?.units?.value === 'costpersqft' && `(${d1?.charges}% on Sale value)`} */}
-                                    </th>
-                                    <td className="w-[15%]  px-2 text-[12px] text-right   ">
-                                      {Number(d1?.charges)?.toLocaleString(
-                                        'en-IN'
-                                      )}
-                                    </td>
-                                    <td
-                                      className={`${
-                                        !showGstCol ? 'hidden' : ''
-                                      } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
-                                    >
-                                      ₹
-                                      {d1?.TotalSaleValue?.toLocaleString(
-                                        'en-IN'
-                                      )}
-                                    </td>
-                                    <td
-                                      className={`${
-                                        !showGstCol ? 'hidden' : ''
-                                      } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
-                                    >
-                                      ₹{d1?.gstValue?.toLocaleString('en-IN')}
-                                    </td>
-                                    <td className="text-[12px] px-2 text-right   ">
-                                      {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
-                                      ₹
-                                      {d1?.TotalNetSaleValueGsT?.toLocaleString(
-                                        'en-IN'
-                                      )}
-                                    </td>
-                                  </tr>
-                                ))}
-                                <tr className=" h-[32px] ">
-                                  <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
-                                    Total (E)
-                                  </th>
-                                  <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
-                                  <td
-                                    className={`${
-                                      !showGstCol ? 'hidden' : ''
-                                    } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
-                                  >
-                                    ₹
-                                    {possessAdditionalCS
-                                      ?.reduce(
-                                        (partialSum, obj) =>
-                                          partialSum +
-                                          Number(obj?.TotalSaleValue),
-                                        0
-                                      )
-                                      ?.toLocaleString('en-IN')}
-                                  </td>
-                                  <td
-                                    className={`${
-                                      !showGstCol ? 'hidden' : ''
-                                    } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
-                                  >
-                                    ₹
-                                    {possessAdditionalCS
-                                      ?.reduce(
-                                        (partialSum, obj) =>
-                                          partialSum + Number(obj?.gstValue),
-                                        0
-                                      )
-                                      ?.toLocaleString('en-IN')}
-                                  </td>
-                                  <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
-                                    ₹{partETotal?.toLocaleString('en-IN')}
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
+                                  <table className="w-full">
+                                    <thead>
+                                      <tr className="h-8 mb-1 border-none w-[100%]  bg-[#E8E6FE] text-[#0D027D] text-[#0D027D]  font-[600] ">
+                                        <th className="min-w-[35%] px-2  text-[12px] text-left font-bold tracking-wide ">
+                                          Possession Charges
+                                        </th>
+                                        <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide ">
+                                          Rate/Sqft
+                                        </th>
+                                        <th
+                                          className={`${
+                                            !showGstCol ? 'hidden' : ''
+                                          } w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide `}
+                                        >
+                                          Cost
+                                        </th>
+                                        <th
+                                          className={`${
+                                            !showGstCol ? 'hidden' : ''
+                                          }  w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide `}
+                                        >
+                                          GST
+                                        </th>
+                                        <th className="w-[15%] px-2 text-[12px] text-left font-bold text-right  tracking-wide  ">
+                                          Total
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {possessAdditionalCS?.map((d1, inx) => (
+                                        <tr
+                                          key={inx}
+                                          className="h-[32px] border-b border-dashed"
+                                        >
+                                          <th className=" text-[12px] px-2 text-left  font-normal ">
+                                            {d1?.component?.label}
+                                            {/* {d1?.units?.value === 'costpersqft' && `(${d1?.charges}% on Sale value)`} */}
+                                          </th>
+                                          <td className="w-[15%]  px-2 text-[12px] text-right   ">
+                                            {Number(
+                                              d1?.charges
+                                            )?.toLocaleString('en-IN')}
+                                          </td>
+                                          <td
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                          >
+                                            ₹
+                                            {d1?.TotalSaleValue?.toLocaleString(
+                                              'en-IN'
+                                            )}
+                                          </td>
+                                          <td
+                                            className={`${
+                                              !showGstCol ? 'hidden' : ''
+                                            } w-[15%] px-2 text-[12px] text-right text-slate-500   `}
+                                          >
+                                            ₹
+                                            {d1?.gstValue?.toLocaleString(
+                                              'en-IN'
+                                            )}
+                                          </td>
+                                          <td className="text-[12px] px-2 text-right   ">
+                                            {/* {Number(d1?.charges)?.toLocaleString('en-IN')} */}
+                                            ₹
+                                            {d1?.TotalNetSaleValueGsT?.toLocaleString(
+                                              'en-IN'
+                                            )}
+                                          </td>
+                                        </tr>
+                                      ))}
+                                      <tr className=" h-[32px] ">
+                                        <th className="w-[40%] text-[11px] px-2 font-semibold text-left  text-[#0D027D] ">
+                                          Total (E)
+                                        </th>
+                                        <td className="w-[15%] px-2 font-semibold text-[12px] text-right text-gray-600 pr-3"></td>
+                                        <td
+                                          className={`${
+                                            !showGstCol ? 'hidden' : ''
+                                          } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
+                                        >
+                                          ₹
+                                          {possessAdditionalCS
+                                            ?.reduce(
+                                              (partialSum, obj) =>
+                                                partialSum +
+                                                Number(obj?.TotalSaleValue),
+                                              0
+                                            )
+                                            ?.toLocaleString('en-IN')}
+                                        </td>
+                                        <td
+                                          className={`${
+                                            !showGstCol ? 'hidden' : ''
+                                          } w-[15%] px-2 font-semibold  text-[12px] text-right text-gray-800 `}
+                                        >
+                                          ₹
+                                          {possessAdditionalCS
+                                            ?.reduce(
+                                              (partialSum, obj) =>
+                                                partialSum +
+                                                Number(obj?.gstValue),
+                                              0
+                                            )
+                                            ?.toLocaleString('en-IN')}
+                                        </td>
+                                        <td className="text-[12px] px-2 text-right text-[#0D027D] font-semibold">
+                                          ₹{partETotal?.toLocaleString('en-IN')}
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
                               </section>
                             )}
                           </section>
 
-                          <div className='mt-5 mb-10'>
+                          <div className="mt-5 mb-10">
                             <section className="flex flex-row justify-between mb-8 mt-4">
                               <div></div>
 
                               <div className="border rounded-lg shadow-lg  mt-4">
                                 <section className="flex flex-row justify-between mt-2   ">
                                   <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal ">
-                                  {selPhaseObj?.projectType?.name ===
-                                      'Apartment'
-                                        ? 'Flat'
-                                        : 'Plot'}{' '}
-                                      Charges
+                                    {selPhaseObj?.projectType?.name ===
+                                    'Apartment'
+                                      ? 'Flat'
+                                      : 'Plot'}{' '}
+                                    Charges
                                   </h1>
                                   <section className="flex flex-row mt-1">
                                     <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
@@ -1618,7 +1677,7 @@ const CostBreakUpPdf = ({
                                     </section>
                                     <section className="flex flex-row justify-between  mt-2">
                                       <h1 className="px-3 text-[12px] text-left  text-[12px] font-normal mr-9 ">
-                                      Construction Additional Charges
+                                        Construction Additional Charges
                                       </h1>
                                       <section className="flex flex-row mt-1">
                                         <section className="px-2 d-md font-semibold text-[12px] text-[#000000e6] leading-none">
@@ -1652,8 +1711,6 @@ const CostBreakUpPdf = ({
                               </div>
                             </section>
                           </div>
-
-
                         </section>
                       )}
                       {showOnly === 'payment_schedule' && (
@@ -1745,11 +1802,10 @@ const CostBreakUpPdf = ({
                                         ]}
                                         dateFormat="MMM dd, yyyy"
                                         leadYears={10}
-
                                       />
                                     </td>
                                     <td className="text-[12px] px-2  text-right tracking-wide uppercase ">
-                                     ₹{d1?.value?.toLocaleString('en-IN')}
+                                      ₹{d1?.value?.toLocaleString('en-IN')}
                                     </td>
                                   </tr>
                                 ))}
@@ -1867,7 +1923,9 @@ const CostBreakUpPdf = ({
                                     <th className="text-[12px] px-2  text-right text-gray-800 ">
                                       ₹
                                       {(
-                                        (partCTotal || 0) + (partDTotal || 0) + (partETotal || 0)
+                                        (partCTotal || 0) +
+                                        (partDTotal || 0) +
+                                        (partETotal || 0)
                                       )?.toLocaleString('en-IN')}
                                     </th>
                                   </tr>
@@ -1913,8 +1971,3 @@ const CostBreakUpPdf = ({
 }
 
 export default CostBreakUpPdf
-
-
-
-
-

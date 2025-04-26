@@ -3,9 +3,6 @@ import React from 'react'
 import NumberFormat from 'react-number-format'
 import Select from 'react-select'
 
-
-
-
 export const PhoneNoField = ({
   onChange,
   options,
@@ -16,11 +13,17 @@ export const PhoneNoField = ({
   labelSize,
   textSize,
   txtPad,
-  customStyles
+  customStyles,
 }) => {
   return (
     <div className={className}>
-      <label className={`label font-regular  mb-2 ${labelSize === undefined ? 'text-sm': labelSize}`}>{label}</label>
+      <label
+        className={`label font-regular  mb-2 ${
+          labelSize === undefined ? 'text-sm' : labelSize
+        }`}
+      >
+        {label}
+      </label>
       <NumberFormat
         // label="Mobile No*"
         className={`w-full min-w-full flex bg-grey-lighter text-grey-darker border border-[#cccccc] rounded-md h-[2rem] px-4  ${textSize} ${txtPad}`}
@@ -28,7 +31,7 @@ export const PhoneNoField = ({
         value={value}
         //value={value || '+91'}
         onValueChange={(value) => {
-          console.log('PhoneNoField value:', value);
+          console.log('PhoneNoField value:', value)
 
           onChange(value)
         }}
@@ -46,8 +49,3 @@ export const PhoneNoField = ({
     </div>
   )
 }
-
-
-
-
-

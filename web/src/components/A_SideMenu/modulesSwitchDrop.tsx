@@ -8,9 +8,7 @@ import {
   ScaleIcon,
   PuzzleIcon,
 } from '@heroicons/react/outline'
-import {
-  ChevronDownIcon,
-} from '@heroicons/react/solid'
+import { ChevronDownIcon } from '@heroicons/react/solid'
 
 import { Link, routes } from '@redwoodjs/router'
 
@@ -60,7 +58,7 @@ export default function ModuleSwitchDrop({
             }  absolute w-[594px]   origin-top-left bg-white rounded-[6px] shadow-[0px_20px_35px_-10px_#2f32643b]`}
             style={{ zIndex: '12' }}
           >
-            <div className="px-3 py-6 " >
+            <div className="px-3 py-6 ">
               <>
                 <div className="flex flex-row">
                   <div className="flex flex-col">
@@ -308,8 +306,6 @@ export default function ModuleSwitchDrop({
                     </Menu.Item>
                   </div>
                 </div>
-
-              
               </>
             </div>
           </Menu.Items>

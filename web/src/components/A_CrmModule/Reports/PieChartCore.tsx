@@ -15,8 +15,6 @@ const PieChartCRMCore = ({ pieVal }) => {
   const oR = 75
   const value = 100
 
-
-
   return (
     <div>
       <PieChart width={400} height={500}>

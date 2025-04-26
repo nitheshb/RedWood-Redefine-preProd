@@ -164,10 +164,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
         />
       ),
     },
-  
   ]
-
- 
 
   const errors = (formData, isEdit) => {
     const errorList = []
@@ -177,7 +174,6 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
     if (!formData.percentage) {
       errorList.push("Try Again, You didn't enter the Percentage field")
     }
-
 
     return errorList
   }
@@ -249,7 +245,6 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
       const update = {
         ...newData,
       }
-     
 
       await addPhasePaymentScheduleCharges(
         orgId,
@@ -273,7 +268,8 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
         <EditablePaymentTable
           blocksViewFeature={'Plot_Payment_Schedule'}
           title={
-            data?.projectType?.name === 'Apartment' || data?.phase?.projectType?.name === 'Apartment'
+            data?.projectType?.name === 'Apartment' ||
+            data?.phase?.projectType?.name === 'Apartment'
               ? 'Flat Payment Schedule'
               : 'Plot Payment Schedule'
           }
@@ -289,7 +285,7 @@ const PaymentScheduleForm = ({ title, data, source, blocksViewFeature }) => {
               projData={data}
             />
           ))}
-     
+
         <div>
           {iserror && (
             <Alert severity="error">

@@ -1,4 +1,3 @@
-
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
@@ -26,7 +25,7 @@ const ReportSideWindow = ({
   setIsClicked,
   setCustomerDetails,
   setisImportLeadsOpen,
-  selUnitStatus
+  selUnitStatus,
 }) => {
   // dont write too many here
   //  this is for customerProfileSideView
@@ -104,52 +103,41 @@ const ReportSideWindow = ({
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
 
-                   {title === 'Bookings' && (
+                {title === 'Bookings' && (
                   <BookedLeadsSideViewBody
                     title={title}
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
 
-
-                  {title === 'Source Bookings' && (
+                {title === 'Source Bookings' && (
                   <SourceBookedLeadsSideViewBody
                     title={title}
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
 
-
-
-
-
-
-
-                  {title === 'Employee Tasks' && (
+                {title === 'Employee Tasks' && (
                   <SalesCompletedTasksBody
                     title={title}
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
                 {title === 'Employee Bookings' && (
@@ -158,9 +146,8 @@ const ReportSideWindow = ({
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
-
                   />
                 )}
 
@@ -170,10 +157,9 @@ const ReportSideWindow = ({
                     subtitle={subtitle}
                     dialogOpen={setOpen}
                     leadsLogsPayload={leadsLogsPayload}
-                    setCustomerDetails= {setCustomerDetails}
+                    setCustomerDetails={setCustomerDetails}
                     setisImportLeadsOpen={setisImportLeadsOpen}
                     selUnitStatus={selUnitStatus}
-
                   />
                 )}
               </div>

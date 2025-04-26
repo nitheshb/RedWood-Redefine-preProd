@@ -32,9 +32,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { sendWhatAppTextSms1 } from 'src/util/axiosWhatAppApi'
 import CSVDownloader from 'src/util/csvDownload'
 import { prettyDate } from 'src/util/dateConverter'
-import {
-  SlimSelectBox,
-} from 'src/util/formFields/slimSelectBoxField'
+import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 
 import MarketingAnalyticsHome from '../../components/A_MarketingModule/MarketinAnalyticsHome'
 import StackedBarChart from '../../components/A_MarketingModule/Reports/Charts/marketingStackedBarChart'
@@ -266,7 +264,6 @@ const LeadsTransferBody = ({
     }
   }, [projectList, viewProjs])
 
-
   useEffect(() => {
     setProjectListTuned(serialProjectLeadData(projectList, leadsFetchedRawData))
   }, [projectList, leadsFetchedRawData])
@@ -326,7 +323,6 @@ const LeadsTransferBody = ({
   }, [usersList, leadsFetchedRawData, selProjectEmpIs])
   const insertTodaySourcePerformance = () => {
     console.log('insertTodaySourcePerformance')
-
 
     updateTodaySourceStatsDB(orgId, 'snap', {}, (error) => [])
   }
@@ -552,30 +548,32 @@ const LeadsTransferBody = ({
   }
 
   const getTransferLeadsDB = async () => {
-
-
     const unsubscribe = getLeadsTransfer(
       orgId,
       async (querySnapshot) => {
         const usersListA = querySnapshot.docs.map((docSnapshot) => {
           const x = docSnapshot.data()
           x.id = docSnapshot.id
-          if(coveredStatus.includes('visitfixed')){
-            console.log('hello inside it ', coveredStatus.includes('visitfixed'), x.coveredA.any((elementA) => coveredStatus.contains(elementA)))
-if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
-          return x
-}else { return}
-          }else{
+          if (coveredStatus.includes('visitfixed')) {
+            console.log(
+              'hello inside it ',
+              coveredStatus.includes('visitfixed'),
+              x.coveredA.any((elementA) => coveredStatus.contains(elementA))
+            )
+            if (
+              x.coveredA.any((elementA) => coveredStatus.contains(elementA))
+            ) {
+              return x
+            } else {
+              return
+            }
+          } else {
             return x
-
           }
+        })
 
-})
-
-
-       await setLeadsSearchRawDB(usersListA)
+        await setLeadsSearchRawDB(usersListA)
         await console.log('hello valure are ', usersListA)
-
       },
       {
         uid: 'VIzMzz5rl0NAywdnpHpb',
@@ -584,7 +582,9 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
         dateRange: dateRange,
         leadAssignedTo: leadAssignedTo,
         coveredStatus: coveredStatus,
-        currentStatus: currentStatus.includes('all') ? ['new', 'followup', 'visitfixed', 'visitdone',  'notinterested'] : currentStatus
+        currentStatus: currentStatus.includes('all')
+          ? ['new', 'followup', 'visitfixed', 'visitdone', 'notinterested']
+          : currentStatus,
       },
       () => {}
     )
@@ -689,8 +689,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
     )
   }
   const getRestEmpTodayTasksCount = async (empID, name) => {
-
-
     return await getTodayTodoLeadsDataByUser(
       orgId,
       async (querySnapshot) => {
@@ -714,7 +712,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
           }
         }
         if (userTodoTasksList.length > 0) {
-
           Promise.all(userTodoTasksList).then(function (results) {
             results.filter((data) => data != 'remove')
             filterTodayTodoFun(
@@ -859,13 +856,11 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
       others_comp: 0,
     }
 
-
     updateTodayTasksTotal(orgId, `${empID}DD${ddMy}`, taskCounts)
 
     console.log('whole is ', name, whole)
   }
   const updateLeadsLastUpdatetimeFun = async () => {
-   
     getTodayTodoLeadsData(
       orgId,
       (querySnapshot) => {
@@ -880,11 +875,8 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
           y = staDA
 
           if (y.length > 0 && y[indi]) {
-
-
             const { comments, ct, schTime } = x[y[indi]]
             if (comments) {
-  
             } else if (ct) {
               try {
                 updateLeadLastUpdateTime(orgId, docSnapshot.id, ct, schTime)
@@ -905,8 +897,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
     )
   }
   const updateProjectNameInlogs = async () => {
-
-
     const steamLeadLogs = await streamLeadLogdWithNullProj(
       orgId,
       'snap',
@@ -1066,39 +1056,35 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
     <div>
       <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900">
         <div className="box-border  border-solid  ">
-          <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
-
-          
-          </div>
-          {selCat === 'lead_perf' && (
-           leadsSearchRawDB.length>0 ? <LeadsTransferTableBody
-              title={'Site Visit Leads'}
-
-              leadsLogsPayload={leadsSearchRawDB}
-              setCustomerDetails={setCustomerDetails}
-              setisImportLeadsOpen={setisImportLeadsOpen}
-              setSelectedIds={setSelectedIds}
-              selectedIds={selectedIds}
-            />
-
-            :        <div className="py-8 px-8 mt-2 flex flex-col items-center  rounded">
-            <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-              <img
-                className="w-[180px] h-[180px] inline"
-                alt=""
-                src="/templates.svg"
+          <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 "></div>
+          {selCat === 'lead_perf' &&
+            (leadsSearchRawDB.length > 0 ? (
+              <LeadsTransferTableBody
+                title={'Site Visit Leads'}
+                leadsLogsPayload={leadsSearchRawDB}
+                setCustomerDetails={setCustomerDetails}
+                setisImportLeadsOpen={setisImportLeadsOpen}
+                setSelectedIds={setSelectedIds}
+                selectedIds={selectedIds}
               />
-            </div>
-            <h3 className="mb-1 text-sm font-semibold text-gray-900">
-              No Leads found with above selection
-            </h3>
-            <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-              <span className="text-blue-600"></span>
-            </time>
-          </div>
-          )}
+            ) : (
+              <div className="py-8 px-8 mt-2 flex flex-col items-center  rounded">
+                <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                  <img
+                    className="w-[180px] h-[180px] inline"
+                    alt=""
+                    src="/templates.svg"
+                  />
+                </div>
+                <h3 className="mb-1 text-sm font-semibold text-gray-900">
+                  No Leads found with above selection
+                </h3>
+                <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                  <span className="text-blue-600"></span>
+                </time>
+              </div>
+            ))}
 
-        
           {selCat === 'emp_tasks' && (
             <div className="flex flex-col  mt-4 drop-shadow-md rounded-lg  px-4">
               <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -1142,7 +1128,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                               Send WhatsApp Notification
                             </span>
                           </button>
-
                         </div>
                       </section>
                     </div>
@@ -1248,7 +1233,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                             Total
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-
                             {}
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
@@ -1310,14 +1294,11 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
 
           {selCat === 'profile_tasks' && <ProfileSummary />}
 
-
           {selCat === 'bar_tasks' && <CampaingsTopBarsComponent />}
-
 
           {selCat === 'site_visits' && (
             <LeadsTransferTableBody
               title={'Site Visit Leads'}
-
               leadsLogsPayload={leadLogsRawData}
               setCustomerDetails={setCustomerDetails}
               setisImportLeadsOpen={setisImportLeadsOpen}
@@ -1526,7 +1507,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                             </button>
                           )}
                         </section>
-
                       </section>
                       <SiteVisitM
                         leadLogsRawData={leadLogsRawData}
@@ -3715,8 +3695,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                             Alert Tasks Counts
                           </span>
                         </button>
-
-        
                       </div>
                     </section>
                     <table className="min-w-full  font-semibold text-center mt-6">
@@ -3797,7 +3775,6 @@ if(x.coveredA.any((elementA) => coveredStatus.contains(elementA))){
                             Total
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">
-        
                             {empTaskListTunedTotal?.TotalSum}
                           </td>
                           <td className="text-sm text-white font-medium px-6 py-2 whitespace-nowrap">

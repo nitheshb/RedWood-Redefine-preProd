@@ -13,7 +13,6 @@ import TableSkeleton from './_mock/comps/table/table-skeleton'
 import { ChevronDown } from 'lucide-react'
 
 {
- 
 }
 
 const capitalizeFirstLetter = (str) => {
@@ -21,7 +20,6 @@ const capitalizeFirstLetter = (str) => {
 }
 
 {
- 
 }
 const getDateForWeek = (weekNumber) => {
   const today = new Date()
@@ -37,7 +35,6 @@ const getDateForWeek = (weekNumber) => {
 }
 
 {
- 
 }
 
 const styles = {
@@ -200,330 +197,238 @@ const EmpCollectionSummary = ({ projects, crmEmployeesA }) => {
     // get values matched to db
   }
   return (
-
-
-    <div className='bg-white max-w-7xl mx-auto rounded-2xl shadow-xl mt-2 '>
-
-
-
-<div className="overflow-x-auto">
-      <table className="w-full p-4 bg-white  rounded-2xl">
-        <thead>
-          <tr
-            className={
-              dataView === 'monthly'
-                ? 'bg-[#E0E4EB] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
-                : 'bg-[#E0E4EB] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
-            }
-          >
-            <th
-              className="py-1 px-6 text-center border-0  rounded-tl-2xl"
-              colSpan="1"
-            ></th>
-            <th
-              className="py-1 px-6 text-center border-0  border-gray-100"
-              colSpan="1"
-            ></th>
-            <th
-              className="py-1 px-6 text-center border-0  border-gray-100"
-              colSpan="1"
-            ></th>
-            {dataView === 'weekly' && (
-              <th
-                className="py-1 px-6 text-center border  border-gray-100 rounded-tr-2xl"
-                colSpan="4"
-              >
-                Weekly
-              </th>
-            )}
-            {dataView === 'monthly' && (
-              <>
-                {monthsA.map((month, i) => {
-                  return (
-                    <th
-                      key={i}
-                      className={`py-1 px-6 text-center border-l   border-[#d3d1d1] ${
-                        i+1 === monthsA.length ? 'rounded-tr-2xl' : ''
-                      }`}
-                      colSpan="4"
-                    >
-                      {month?.name}
-                    </th>
-                  )
-                })}
-              </>
-            )}
-          </tr>
-          <tr className="bg-[#F0F2F5] border-t border-b border-[#E8ECF4]">
-            <th className="text-left pl-3 p-1 py-2 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]">
-              CRM Executive
-            </th>
-            <th className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]">
-              Units
-            </th>
-            <th className="text-right p-1 px-4  font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]">
-              Total Amount
-            </th>
-            {dataView === 'monthly' ? (
-              <>
-                {['Target', 'Collection', 'Pending', 'Other Collection'].map(
-                  (month, i) => {
-                    return (
-                      <th
-                        key={i}
-                        className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
-                      >
-                        {month}
-                      </th>
-                    )
-                  }
-                )}
-                {['Target', 'Collection', 'Pending', 'Other Collection'].map(
-                  (month, i) => {
-                    return (
-                      <th
-                        key={i}
-                        className="text-right p-1  px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
-                      >
-                        {month}
-                      </th>
-                    )
-                  }
-                )}{' '}
-                {['Target', 'Collection', 'Pending', 'Other Collection'].map(
-                  (month, i) => {
-                    return (
-                      <th
-                        key={i}
-                        className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
-                      >
-                        {month}
-                      </th>
-                    )
-                  }
-                )}
-                {['Target', 'Collection', 'Pending', 'Other Collection'].map(
-                  (month, i) => {
-                    return (
-                      <th
-                        key={i}
-                        className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
-                      >
-                        {month}
-                      </th>
-                    )
-                  }
-                )}
-              </>
-            ) : (
-              <>
-
-
-               {[1, 2, 3, 4].map((week) => (
-              <th
-                key={week}
-                className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
-              >
-                Week {week} <br /> ({getDateForWeek(week)})
-              </th>
-            ))}
-              </>
-            )}
-          </tr>
-        </thead>
-
-        {loader && [1, 2, 3].map((d, i) => <TableSkeleton key={i} />)}
-
-
-
-<tbody className="text-gray-600 text-sm font-light">
-
-      {projectAValues?.length === 0 ? (
-        <tr>
-
-<td
-  colSpan={dataView === 'monthly' ? monthsA.length * 4 + 3 : 7}
-  className="text-center text-[20px]  py-10 text-gray-500 h-[250px] w-[100%]"
->
-  No data
-</td>
-
-
-        </tr>
-      ) : (
-        projectAValues?.map((data, index) => {
-          let totalAmount = 0;
-          if (dataView === 'monthly') {
-            totalAmount =
-              data?.monthly?.june + data?.monthly?.may + data?.monthly?.april;
-          } else {
-            totalAmount =
-              data?.weekly?.week1 +
-              data?.weekly?.week2 +
-              data?.weekly?.week3 +
-              data?.weekly?.week4;
-          }
-          return (
-
+    <div className="bg-white max-w-7xl mx-auto rounded-2xl shadow-xl mt-2 ">
+      <div className="overflow-x-auto">
+        <table className="w-full p-4 bg-white  rounded-2xl">
+          <thead>
             <tr
-            key={index}
-            className="border-t border-gray-100 hover:bg-gray-100 text-[#33393d] font-[400]"
-          >
-            <td className="py- px-3 text-left whitespace-nowrap border-t  border-gray-100">
-              {capitalizeFirstLetter(data?.name)}
-            </td>
-            <td className="py- px-6 pr-10 text-right border-t border-l  border-gray-100">
-              {data?.soldUnitCount?.toLocaleString('en-IN')}
-            </td>
-            <td className="py- px-6  border text-right  border-t border-l border-gray-100">
-        
-              {data?.months
-                ?.reduce((accumulator, currentValue) => {
-                  return accumulator + (currentValue?.receive || 0)
-                }, 0)
-                ?.toLocaleString('en-IN')}
-            </td>
-            {dataView === 'monthly' ? (
-              <>
-                {data?.months?.map((month, i) => {
-                  console.log('what is this', month)
-                  const x = month
-                  console.log('what is this', month)
-                  return (
-                    <>
-                      <td
+              className={
+                dataView === 'monthly'
+                  ? 'bg-[#E0E4EB] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
+                  : 'bg-[#E0E4EB] text-gray-600 text-sm leading-normal border-0 border-gray-100 shadow-3xl'
+              }
+            >
+              <th
+                className="py-1 px-6 text-center border-0  rounded-tl-2xl"
+                colSpan="1"
+              ></th>
+              <th
+                className="py-1 px-6 text-center border-0  border-gray-100"
+                colSpan="1"
+              ></th>
+              <th
+                className="py-1 px-6 text-center border-0  border-gray-100"
+                colSpan="1"
+              ></th>
+              {dataView === 'weekly' && (
+                <th
+                  className="py-1 px-6 text-center border  border-gray-100 rounded-tr-2xl"
+                  colSpan="4"
+                >
+                  Weekly
+                </th>
+              )}
+              {dataView === 'monthly' && (
+                <>
+                  {monthsA.map((month, i) => {
+                    return (
+                      <th
                         key={i}
-                        className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                        className={`py-1 px-6 text-center border-l   border-[#d3d1d1] ${
+                          i + 1 === monthsA.length ? 'rounded-tr-2xl' : ''
+                        }`}
+                        colSpan="4"
                       >
-                        {`${x?.receive?.toLocaleString('en-IN')}`}
-                      </td>
-                      <td
-                        key={i}
-                        className="py-1 px-6 text-right border-t border-l  border-gray-100"
-                      >
-                        {`${x?.collected?.toLocaleString('en-IN')}`}
-                      </td>
-                      <td
-                        key={i}
-                        className="py-1 px-6 text-right border-t border-l  border-gray-100"
-                      >
-                        {`${x?.pending?.toLocaleString('en-IN')}`}
-                      </td>
-                      <td
-                        key={i}
-                        className="py-1 px-6 text-right border-t border-l  border-gray-100"
-                      >
-                        {`${x?.otherCollection?.toLocaleString('en-IN')}`}
-                      </td>
-                    </>
-                  )
-                })}
+                        {month?.name}
+                      </th>
+                    )
+                  })}
+                </>
+              )}
+            </tr>
+            <tr className="bg-[#F0F2F5] border-t border-b border-[#E8ECF4]">
+              <th className="text-left pl-3 p-1 py-2 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]">
+                CRM Executive
+              </th>
+              <th className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]">
+                Units
+              </th>
+              <th className="text-right p-1 px-4  font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]">
+                Total Amount
+              </th>
+              {dataView === 'monthly' ? (
+                <>
+                  {['Target', 'Collection', 'Pending', 'Other Collection'].map(
+                    (month, i) => {
+                      return (
+                        <th
+                          key={i}
+                          className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
+                        >
+                          {month}
+                        </th>
+                      )
+                    }
+                  )}
+                  {['Target', 'Collection', 'Pending', 'Other Collection'].map(
+                    (month, i) => {
+                      return (
+                        <th
+                          key={i}
+                          className="text-right p-1  px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
+                        >
+                          {month}
+                        </th>
+                      )
+                    }
+                  )}{' '}
+                  {['Target', 'Collection', 'Pending', 'Other Collection'].map(
+                    (month, i) => {
+                      return (
+                        <th
+                          key={i}
+                          className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
+                        >
+                          {month}
+                        </th>
+                      )
+                    }
+                  )}
+                  {['Target', 'Collection', 'Pending', 'Other Collection'].map(
+                    (month, i) => {
+                      return (
+                        <th
+                          key={i}
+                          className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#d3d1d1]"
+                        >
+                          {month}
+                        </th>
+                      )
+                    }
+                  )}
+                </>
+              ) : (
+                <>
+                  {[1, 2, 3, 4].map((week) => (
+                    <th
+                      key={week}
+                      className="text-right p-1 px-4 font-medium text-[#000000] whitespace-nowrap border-r border-[#E8ECF4]"
+                    >
+                      Week {week} <br /> ({getDateForWeek(week)})
+                    </th>
+                  ))}
+                </>
+              )}
+            </tr>
+          </thead>
 
-              </>
+          {loader && [1, 2, 3].map((d, i) => <TableSkeleton key={i} />)}
+
+          <tbody className="text-gray-600 text-sm font-light">
+            {projectAValues?.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={dataView === 'monthly' ? monthsA.length * 4 + 3 : 7}
+                  className="text-center text-[20px]  py-10 text-gray-500 h-[250px] w-[100%]"
+                >
+                  No data
+                </td>
+              </tr>
             ) : (
-              <>
-                <td className="py- px-6 text-right border border-black">
-                  {data?.weekly?.week1.toLocaleString('en-IN')}
-                </td>
-                <td className="py- px-6 text-right border border-black">
-                  {data?.weekly?.week2.toLocaleString('en-IN')}
-                </td>
-                <td className="py- px-6 text-right border border-black">
-                  {data?.weekly?.week3.toLocaleString('en-IN')}
-                </td>
-                <td className="py- px-6 text-right border border-black">
-                  {data?.weekly?.week4.toLocaleString('en-IN')}
-                </td>
-              </>
+              projectAValues?.map((data, index) => {
+                let totalAmount = 0
+                if (dataView === 'monthly') {
+                  totalAmount =
+                    data?.monthly?.june +
+                    data?.monthly?.may +
+                    data?.monthly?.april
+                } else {
+                  totalAmount =
+                    data?.weekly?.week1 +
+                    data?.weekly?.week2 +
+                    data?.weekly?.week3 +
+                    data?.weekly?.week4
+                }
+                return (
+                  <tr
+                    key={index}
+                    className="border-t border-gray-100 hover:bg-gray-100 text-[#33393d] font-[400]"
+                  >
+                    <td className="py- px-3 text-left whitespace-nowrap border-t  border-gray-100">
+                      {capitalizeFirstLetter(data?.name)}
+                    </td>
+                    <td className="py- px-6 pr-10 text-right border-t border-l  border-gray-100">
+                      {data?.soldUnitCount?.toLocaleString('en-IN')}
+                    </td>
+                    <td className="py- px-6  border text-right  border-t border-l border-gray-100">
+                      {data?.months
+                        ?.reduce((accumulator, currentValue) => {
+                          return accumulator + (currentValue?.receive || 0)
+                        }, 0)
+                        ?.toLocaleString('en-IN')}
+                    </td>
+                    {dataView === 'monthly' ? (
+                      <>
+                        {data?.months?.map((month, i) => {
+                          console.log('what is this', month)
+                          const x = month
+                          console.log('what is this', month)
+                          return (
+                            <>
+                              <td
+                                key={i}
+                                className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                              >
+                                {`${x?.receive?.toLocaleString('en-IN')}`}
+                              </td>
+                              <td
+                                key={i}
+                                className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                              >
+                                {`${x?.collected?.toLocaleString('en-IN')}`}
+                              </td>
+                              <td
+                                key={i}
+                                className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                              >
+                                {`${x?.pending?.toLocaleString('en-IN')}`}
+                              </td>
+                              <td
+                                key={i}
+                                className="py-1 px-6 text-right border-t border-l  border-gray-100"
+                              >
+                                {`${x?.otherCollection?.toLocaleString(
+                                  'en-IN'
+                                )}`}
+                              </td>
+                            </>
+                          )
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        <td className="py- px-6 text-right border border-black">
+                          {data?.weekly?.week1.toLocaleString('en-IN')}
+                        </td>
+                        <td className="py- px-6 text-right border border-black">
+                          {data?.weekly?.week2.toLocaleString('en-IN')}
+                        </td>
+                        <td className="py- px-6 text-right border border-black">
+                          {data?.weekly?.week3.toLocaleString('en-IN')}
+                        </td>
+                        <td className="py- px-6 text-right border border-black">
+                          {data?.weekly?.week4.toLocaleString('en-IN')}
+                        </td>
+                      </>
+                    )}
+                  </tr>
+                )
+              })
             )}
-          </tr>
-        
-          );
-        })
-      )}
-    </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   )
 }
 

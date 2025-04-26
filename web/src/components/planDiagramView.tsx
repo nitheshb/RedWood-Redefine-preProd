@@ -62,17 +62,16 @@ const PlanDiagramView = ({
   useEffect(() => {
     if (pId && title === 'Plan Diagram') {
       getPlanDiagrams(data?.uid, 'plan_diagram')
-    } else if (pId && (title === 'Brouchers' || category === 'Brouchers') ) {
+    } else if (pId && (title === 'Brouchers' || category === 'Brouchers')) {
       getPlanDiagrams(data?.uid, 'broucher')
-    }  else if (
+    } else if (
       pId &&
       (title === 'projectApprovals' || category === 'projectApprovals')
     ) {
       getPlanDiagrams(data?.uid, 'approval')
     } else if (pId && category === 'legalDocs') {
       getPlanDiagrams(data?.uid, 'approval')
-    }
-    else if (pId && category === 'others') {
+    } else if (pId && category === 'others') {
       getPlanDiagrams(data?.uid, 'others')
     }
   }, [pId, title])
@@ -95,7 +94,7 @@ const PlanDiagramView = ({
   }
   const deleteAssetFun = async (docId) => {
     console.log('assert details ', docId)
-    
+
     deleteAsset(orgId, docId, '', '', '')
   }
 
@@ -213,7 +212,7 @@ const PlanDiagramView = ({
                   </section>
                 )
               })}
-    
+
             {formats === 'grid' && (
               <section className="grid gap-4 grid-cols-2">
                 {planDiagramsA.map((planDiagram, i) => {
@@ -286,7 +285,6 @@ const PlanDiagramView = ({
                           )}
                         </section>
                       </div>
-     
                     </li>
                   )
                 })}
@@ -294,11 +292,7 @@ const PlanDiagramView = ({
             )}
           </ul>
         </div>
-        {planDiagramsA.length > 0 && (
-          <>
-           
-          </>
-        )}
+        {planDiagramsA.length > 0 && <></>}
         {planDiagramsA.length === 0 && (
           <div className="py-8 px-8 flex flex-col items-center mt-5 w-full">
             <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
@@ -323,9 +317,12 @@ const PlanDiagramView = ({
             >
               <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
                 Better always attach a string
-                <br/>
+                <br />
                 {editOpitionsObj && (
-                  <span className="text-blue-600 inline-block pt-2"> Add {title}</span>
+                  <span className="text-blue-600 inline-block pt-2">
+                    {' '}
+                    Add {title}
+                  </span>
                 )}
               </time>
             </button>

@@ -20,7 +20,6 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import WarningModel from '../comps/warnPopUp'
 import SiderForm from '../SiderForm/SiderForm'
 
-
 const ProjectAccessHomeList = ({
   title,
   dialogOpen,
@@ -46,7 +45,6 @@ const ProjectAccessHomeList = ({
   useEffect(() => {
     getPlanDiagrams(data?.uid, 'plan_diagram')
     console.log('plan_diagram', data, projectDetails)
-
   }, [pId, data])
   const getPlanDiagrams = async (phaseId, type) => {
     const unsubscribe = getPlanDiagramByPhase(
@@ -143,7 +141,7 @@ const ProjectAccessHomeList = ({
           return b?.booked_on || 0 - b?.booked_on || 0
         })
 
-        console.log('total units are ', usersListA);
+        console.log('total units are ', usersListA)
         setUnitDetailsA(usersListA)
 
         setLoading(false)
@@ -163,11 +161,10 @@ const ProjectAccessHomeList = ({
       soldArea: 0,
       custBlockArea: 0,
       mangBlockArea: 0,
-      blockedArea:0,
-      release_count: 0
-
+      blockedArea: 0,
+      release_count: 0,
     }
-    console.log('total units are ', unitDetailsA);
+    console.log('total units are ', unitDetailsA)
 
     await unitDetailsA.map((data) => {
       yo.totalUnitCount = yo.totalUnitCount + 1
@@ -179,34 +176,35 @@ const ProjectAccessHomeList = ({
         // yo.availableCount = yo.availableCount + 1
       } else if (data?.status == 'management_blocked') {
         yo.blockedUnitCount = yo.blockedUnitCount + 1
-        yo.mangBlockArea = yo.mangBlockArea  + (data?.area || 0)
+        yo.mangBlockArea = yo.mangBlockArea + (data?.area || 0)
         // yo.management_blocked = yo.management_blocked + 1
       } else if (data?.status == 'booked') {
         yo.bookUnitCount = yo.bookUnitCount + 1
       }
 
       if (
-        ['sold', 'ats_pipeline', 'agreement_pipeline', 'booked','ATS', 'registered'].includes(
-          data?.status
-        )
+        [
+          'sold',
+          'ats_pipeline',
+          'agreement_pipeline',
+          'booked',
+          'ATS',
+          'registered',
+        ].includes(data?.status)
       ) {
         yo.soldUnitCount = yo.soldUnitCount + 1
         yo.soldArea = yo.soldArea + (data?.area || 0)
       }
 
-      if (
-        ['customer_blocked', 'management_blocked'].includes(
-          data?.status
-        )
-      ) {
+      if (['customer_blocked', 'management_blocked'].includes(data?.status)) {
         yo.blockedArea = yo.blockedArea + (data?.area || 0)
       }
-      if(['released', 'yes'].includes(data?.release_status  || '') ){
-        yo.release_count= yo.release_count+1
+      if (['released', 'yes'].includes(data?.release_status || '')) {
+        yo.release_count = yo.release_count + 1
       }
     })
 
-    console.log('Total Unit details are ', yo);
+    console.log('Total Unit details are ', yo)
     await AuditProjectComputedData(orgId, projectDetails?.uid, yo)
     return unsubscribe
 
@@ -263,7 +261,6 @@ const ProjectAccessHomeList = ({
         projectDetails,
         enqueueSnackbar
       )
-
     } else {
       enqueueSnackbar(
         `Cannot delete: ${projectDetails?.bookUnitCount} Booked unit exists `,
@@ -289,7 +286,9 @@ const ProjectAccessHomeList = ({
     <div className="h-full flex flex-col py-2  rounded-2xl  mx-4 my-4 ">
       {/* documents page */}
       <div className="mx-4 my-4 py-2  bg-white  rounded-2xl flex flex-col justify-between">
-        <div className="ml-3 my-2 font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">Project Documents</div>
+        <div className="ml-3 my-2 font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">
+          Project Documents
+        </div>
         <ul className="">
           <li className="">
             <section className="flex flex-row mt- grid grid-cols-4 ">
@@ -314,8 +313,9 @@ const ProjectAccessHomeList = ({
                             className="h-6 w-5 bg-white "
                             src={project.img}
                           />
-                          <div className="font-semibold text-[12px] ml-2 mt-[-1.5px]">{project.name}</div>
-          
+                          <div className="font-semibold text-[12px] ml-2 mt-[-1.5px]">
+                            {project.name}
+                          </div>
                         </Card>
                       </div>
                     </>
@@ -327,7 +327,9 @@ const ProjectAccessHomeList = ({
         </ul>
       </div>
       <div className="mx-4   py-2 bg-white rounded-2xl flex flex-col justify-between">
-        <div className="ml-3 my-2 font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">Module Access Management</div>
+        <div className="ml-3 my-2 font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">
+          Module Access Management
+        </div>
         <ul className="">
           <li className="">
             <section className="flex flex-row mt- grid grid-cols-4 ">
@@ -352,8 +354,9 @@ const ProjectAccessHomeList = ({
                             className="h-6 w-5 bg-white "
                             src={project.img}
                           />
-                          <div className="font-semibold	text-[12px] ml-2 mt-[-1.5px]">{project.name}</div>
-       
+                          <div className="font-semibold	text-[12px] ml-2 mt-[-1.5px]">
+                            {project.name}
+                          </div>
                         </Card>
                       </div>
                     </>
@@ -391,7 +394,6 @@ const ProjectAccessHomeList = ({
           <button
             type="button"
             onClick={() => {
-   
               auditFun()
             }}
             className={`inline-flex w-full justify-center rounded-sm mt-3 px-3 py-2 bg-cyan-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
@@ -431,7 +433,6 @@ const ProjectAccessHomeList = ({
           <button
             type="button"
             onClick={() => {
-
               setOpen(true)
             }}
             className={`inline-flex w-full justify-center rounded-sm mt-3 px-3 py-2 bg-cyan-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}

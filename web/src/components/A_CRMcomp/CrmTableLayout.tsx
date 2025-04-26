@@ -165,7 +165,6 @@ const CRMTableView = ({
             { lab: 'Negotiation', val: 'negotiation' },
             { lab: 'Reassign', val: 'reassign' },
             { lab: 'Un Assigned', val: 'unassigned' },
-      
           ]
         : leadsTyper === 'archieveLeads'
         ? archieveTab
@@ -501,8 +500,6 @@ const CRMTableView = ({
           </div>
         </div>
       </div>
-
-
     </Box>
   )
 }

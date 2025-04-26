@@ -117,7 +117,6 @@ const ViewUnitDetails = ({
     { label: 'Nakshatra Township', value: 'nakshatratownship' },
   ]
 
-
   const devTypeA = [
     {
       name: 'Outright',
@@ -159,31 +158,30 @@ const ViewUnitDetails = ({
     streamUnitDataFun()
   }, [data])
 
-
   useEffect(() => {
     console.log('stream details', streamUnitDetails)
-  },[streamUnitDetails])
+  }, [streamUnitDetails])
   const streamUnitDataFun = () => {
     console.log('hello==>', data)
-    if(data.unitDetail?.id){
-    const { uid } = data.unitDetail
-    console.log('hello', data)
-    const z = streamUnitById(
-      orgId,
-      (querySnapshot) => {
-        const SnapData = querySnapshot.data()
-        // SnapData.id = id
-        // SnapData.uid = id
-        console.log('hello', SnapData)
-        setStreamUnitDetails(SnapData)
-      },
-      { uid: uid },
-      () => {
-        console.log('error')
-      }
-    )
+    if (data.unitDetail?.id) {
+      const { uid } = data.unitDetail
+      console.log('hello', data)
+      const z = streamUnitById(
+        orgId,
+        (querySnapshot) => {
+          const SnapData = querySnapshot.data()
+          // SnapData.id = id
+          // SnapData.uid = id
+          console.log('hello', SnapData)
+          setStreamUnitDetails(SnapData)
+        },
+        { uid: uid },
+        () => {
+          console.log('error')
+        }
+      )
+    }
   }
-}
   const onSubmitFun = async (data, resetForm) => {
     console.log(data)
 
@@ -315,8 +313,6 @@ const ViewUnitDetails = ({
   }
   return (
     <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll ">
-      
-
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col  mb-2  bg-[#f1f1f1] border border-gray-100">
           <div className="mt-0">
@@ -363,7 +359,6 @@ const ViewUnitDetails = ({
                             </span>
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-               
                             {data?.unitDetail?.area?.toLocaleString('en-IN')}
                           </div>
                         </section>
@@ -380,9 +375,12 @@ const ViewUnitDetails = ({
                             BUA
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                 
-                            {data?.unitDetail?.builtup_area?.toLocaleString('en-IN') || data?.unitDetail?.construct_area?.toLocaleString('en-IN')}
-
+                            {data?.unitDetail?.builtup_area?.toLocaleString(
+                              'en-IN'
+                            ) ||
+                              data?.unitDetail?.construct_area?.toLocaleString(
+                                'en-IN'
+                              )}
                           </div>
                         </section>
                       </section>
@@ -421,48 +419,21 @@ const ViewUnitDetails = ({
                         </section>
                       </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                       <section className="flex flex-col bg-[#F6F7FF] p-3 border border-[#e5e7f8] rounded-md ">
                         <section className="flex flow-row justify-between mb-1">
                           <div className="font-md text-xs text-gray-700 tracking-wide">
-                          Release Status
+                            Release Status
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {(
-
-                              data?.unitDetail?.release_status
-                            )}
+                            {data?.unitDetail?.release_status}
                           </div>
                         </section>
                         <section className="flex flow-row justify-between mb-1">
                           <div className="font-md text-xs text-gray-500  tracking-wide">
-                          Survey No
+                            Survey No
                           </div>
                           <div className="font-md text-xs tracking-wide font-semibold text-slate-900 ">
-                            {data?.unitDetail?.survey_no
-                            }
+                            {data?.unitDetail?.survey_no}
                           </div>
                         </section>
                         <section className="flex flow-row justify-between mb-1">

@@ -1,7 +1,7 @@
 // services/db.js
 
 // Firebase
-import { db } from './firebaseConfig'; // adjust path
+import { db } from './firebaseConfig' // adjust path
 import {
   setDoc,
   doc,
@@ -22,10 +22,10 @@ import {
   deleteField,
   arrayRemove,
   serverTimestamp,
-} from 'firebase/firestore';
+} from 'firebase/firestore'
 
 // Supabase
-import { supabase } from './supabase';
+import { supabase } from './supabase'
 
 // Export everything you want to use globally
 export {
@@ -50,4 +50,4 @@ export {
   deleteField,
   arrayRemove,
   serverTimestamp,
-};
+}

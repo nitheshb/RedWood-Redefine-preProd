@@ -105,16 +105,13 @@ const AddPaymentDetailsForm = ({
     // enter customer details too
     const { Status } = leadDetailsObj2
 
-
-console.log('customer details are', customerInfo, selUnitDetails)
+    console.log('customer details are', customerInfo, selUnitDetails)
     //
     const { custObj1, custObj2 } = selUnitDetails
 
     if (custObj1) {
       const customerD = {
-        Name:
-          leadDetailsObj2?.Name ||
-          custObj1?.customerName1,
+        Name: leadDetailsObj2?.Name || custObj1?.customerName1,
         my_assets: [selUnitDetails?.uid],
         T: Timestamp.now().toMillis(),
         Luid: leadDetailsObj2.id || '',
@@ -125,7 +122,13 @@ console.log('customer details are', customerInfo, selUnitDetails)
         remaining_money: 0,
         utilized_money: 0,
       }
-      addCustomer(orgId, customerD, email, () => ({}), () => ({}))
+      addCustomer(
+        orgId,
+        customerD,
+        email,
+        () => ({}),
+        () => ({})
+      )
     }
     if (custObj2) {
       const customerD = {
@@ -140,7 +143,13 @@ console.log('customer details are', customerInfo, selUnitDetails)
         remaining_money: 0,
         utilized_money: 0,
       }
-      addCustomer(orgId, customerD, email, () => ({}), () => ({}))
+      addCustomer(
+        orgId,
+        customerD,
+        email,
+        () => ({}),
+        () => ({})
+      )
     }
     return await createNewCustomerS(
       orgId,
@@ -167,7 +176,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
       leadDetailsObj2,
       data,
       user?.email,
-      ()=>({})
+      () => ({})
     )
   }
   const updateCS = async (data, resetForm) => {}
@@ -178,7 +187,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
       orgId,
       true,
       projectDetails?.uid,
-      selUnitDetails?.uid ,
+      selUnitDetails?.uid,
       custNo,
       leadDetailsObj2,
       data,
@@ -223,7 +232,6 @@ console.log('customer details are', customerInfo, selUnitDetails)
     )
 
     const { partBPayload, costSheetA } = selUnitDetails
-
 
     const T_total = bookingPayloadFinal?.T_total
 
@@ -276,7 +284,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
 
     let primaryCustomerName
     let phoneNo
-    if(customerInfo?.length > 0){
+    if (customerInfo?.length > 0) {
       const { customerName1, phoneNo1 } = customerInfo[0]
       primaryCustomerName = customerName1
       phoneNo = phoneNo1
@@ -303,12 +311,10 @@ console.log('customer details are', customerInfo, selUnitDetails)
       y = [{ id: 'wallet' }]
     } else {
       // update customer wallet in db
-      data.customerName = selUnitDetails.customerDetailsObj
-      ?.customerName1
+      data.customerName = selUnitDetails.customerDetailsObj?.customerName1
 
       y = await capturePayment(custNo, data, resetForm)
     }
-
 
     // get paymentTxn id
     let txId
@@ -353,11 +359,10 @@ console.log('customer details are', customerInfo, selUnitDetails)
         user?.email,
         `lead created directly from booking`
       )
-      leadData.id = await createResp?.id || ''
+      leadData.id = (await createResp?.id) || ''
     }
 
     const { id } = leadData
-
 
     const { customerDetailsObj, secondaryCustomerDetailsObj } = customerInfo
 
@@ -439,10 +444,6 @@ console.log('customer details are', customerInfo, selUnitDetails)
       data.assignedTo
     )
 
-
-
-
-
     const x2 = await createBookedCustomer(
       orgId,
       uid,
@@ -493,7 +494,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
     const unitUpdate = {
       leadId: id || '',
       status: 'booked',
-   
+
       booked_on: data?.dated,
       ct: Timestamp.now().toMillis(),
       Date: Timestamp.now().toMillis(),
@@ -562,19 +563,19 @@ console.log('customer details are', customerInfo, selUnitDetails)
       selUnitDetails?.pId,
       { soldVal: T_elgible, t_collect: amount },
       user?.email,
-      ()=>({})
+      () => ({})
     )
-    if(id){
+    if (id) {
       updateLeadBookedStatus(
-      orgId,
-      leadDetailsObj2?.ProjectId || '',
-      id,
-      leadDetailsObj2?.Status || '',
-      'booked',
-      user?.email,
-      enqueueSnackbar
-    )
-  }
+        orgId,
+        leadDetailsObj2?.ProjectId || '',
+        id,
+        leadDetailsObj2?.Status || '',
+        'booked',
+        user?.email,
+        enqueueSnackbar
+      )
+    }
 
     handleClick()
     const updatedData = {
@@ -594,9 +595,7 @@ console.log('customer details are', customerInfo, selUnitDetails)
     bookedBy: '',
   }
 
-  const validateSchema = Yup.object({
-
-  })
+  const validateSchema = Yup.object({})
 
   const submitFormFun = (formik) => {
     formik.handleSubmit()
@@ -608,7 +607,6 @@ console.log('customer details are', customerInfo, selUnitDetails)
       style={{ height: `calc(100vh - 120px)` }}
     >
       <div className=" w-full  flex flex-row justify-between mb-0 p-4 pb-0 bg-white-100 rounded-t-md">
-
         <section className="flex flex-row">
           <div className="w-full flex flex-col">
             <div className=" flex flex-row justify-between gap-2 ">
@@ -621,17 +619,19 @@ console.log('customer details are', customerInfo, selUnitDetails)
                 <div className="w-[455.80px] opacity-50 text-blue-950  text-[12px] font-normal ">
                   Unit will be allocated on manager approval.
                 </div>
-
               </div>
 
               <div className="flex flex-col">
-                <div>{selUnitDetails.customerDetailsObj?.customerName1 }</div>
-                <div>Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}</div>
-                <div>Balance: {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}</div>
+                <div>{selUnitDetails.customerDetailsObj?.customerName1}</div>
+                <div>
+                  Total: {bookingPayloadFinal?.T_total?.toLocaleString('en-IN')}
+                </div>
+                <div>
+                  Balance:{' '}
+                  {bookingPayloadFinal?.T_balance?.toLocaleString('en-IN')}
+                </div>
               </div>
             </div>
-
-
           </div>
         </section>
       </div>

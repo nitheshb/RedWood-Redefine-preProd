@@ -26,7 +26,7 @@ const customStyles = {
     ...provided,
     margin: '0px',
   }),
-  indicatorSeparator: state => ({
+  indicatorSeparator: (state) => ({
     display: 'none',
   }),
   indicatorsContainer: (provided, state) => ({
@@ -36,7 +36,6 @@ const customStyles = {
   menu: (provided) => ({ ...provided, zIndex: 9999 }),
 }
 
-
 export const CustomSelect = ({
   onChange,
   options,
@@ -45,8 +44,7 @@ export const CustomSelect = ({
   name,
   label,
   className,
-  labelClassName = "text-gray-700",
-
+  labelClassName = 'text-gray-700',
 }) => {
   const defaultValue = (options, value) => {
     return (
@@ -59,9 +57,11 @@ export const CustomSelect = ({
       <div className={className}>
         {(label != '' || label != 'Assigned To') && (
           // <label className="label font-regular text-[12px] block pb-1 text-gray-700">
-          <label className={`label font-regular text-[12px] block pb-1 ${labelClassName}`}>
-
-            {label}</label>
+          <label
+            className={`label font-regular text-[12px] block pb-1 ${labelClassName}`}
+          >
+            {label}
+          </label>
         )}
         <label>
           <Select
@@ -80,11 +80,10 @@ export const CustomSelect = ({
           />
         </label>
         <ErrorMessage
-        component="div"
-        name={name}
-        className="error-message text-red-700 text-xs px-2 "
-      />
-
+          component="div"
+          name={name}
+          className="error-message text-red-700 text-xs px-2 "
+        />
       </div>
     </label>
   )

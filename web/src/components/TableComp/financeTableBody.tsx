@@ -17,8 +17,6 @@ import CSVDownloader from '../../util/csvDownload'
 
 import EventNoteTwoToneIcon from '@mui/icons-material/EventNoteTwoTone'
 
-
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1
@@ -35,7 +33,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
@@ -49,7 +46,6 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-
   {
     id: 'Date',
     numeric: false,
@@ -120,7 +116,6 @@ function EnhancedTableHead(props) {
           size="small"
           style={{ backgroundColor: '#efedfe' }}
         >
-
           <TableSortLabel>S.No</TableSortLabel>
         </TableCell>
         {headCells.map((headCell) => (
@@ -178,7 +173,6 @@ const EnhancedTableToolbar = (props) => {
         console.log('ami here')
         return item
       } else if (
-
         item.Email.toLowerCase().includes(searchString.toLowerCase()) ||
         item.Mobile.toLowerCase().includes(searchString.toLowerCase()) ||
         item.Name.toLowerCase().includes(searchString.toLowerCase()) ||
@@ -250,7 +244,6 @@ const EnhancedTableToolbar = (props) => {
       )}
       <span style={{ display: 'flex' }}>
         <Tooltip title={`Download ${rowsAfterSearchKey.length} Rows`}>
- 
           <IconButton className="bg-gray-200">
             <EventNoteTwoToneIcon />
           </IconButton>
@@ -264,7 +257,6 @@ const EnhancedTableToolbar = (props) => {
           </Tooltip>
         ) : (
           <Tooltip title={`Download ${rowsAfterSearchKey.length} Rows`}>
-
             <CSVDownloader className="mr-6" downloadRows={rowsAfterSearchKey} />
           </Tooltip>
         )}
@@ -311,7 +303,6 @@ export default function FinanceTableBody({
   React.useEffect(() => {
     console.log('send values is', rowsParent, selStatus)
     filterStuff(rowsParent)
-
   }, [selStatus, rowsParent])
 
   React.useEffect(() => {
@@ -337,7 +328,6 @@ export default function FinanceTableBody({
       if (item.Source.toLowerCase().includes(selStatus.toLowerCase())) {
         return item
       }
-
     })
     await setRows(x)
     await console.log('xo', x)
@@ -472,7 +462,6 @@ export default function FinanceTableBody({
                 <span className="font-semibold text-sm app-color-black border p-2 rounded-2xl rounded-tl-none px-6">
                   Cleared
                 </span>
-   
               </div>
             </div>
           )

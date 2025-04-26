@@ -142,19 +142,15 @@ const EachProjectDashboard = ({ project, onSliderOpen = () => {}, isEdit }) => {
                     </div>
                   </section>
                 </section>
-                <ProjectMetrics2 project={project}/>
+                <ProjectMetrics2 project={project} />
                 <section>
-                  <ModularProjectMetrics  project={project}/>
+                  <ModularProjectMetrics project={project} />
                 </section>
 
                 <ProjectMetrics3 project={project} />
               </section>
-
             </div>
           </div>
-
-
-
         </section>
       </Link>
     </>

@@ -39,9 +39,7 @@ export default function LegalDocsViewHome({
     bookedBy: '',
   }
 
-  const validateSchema = Yup.object({
-
-  })
+  const validateSchema = Yup.object({})
 
   return (
     <div className="h-full flex flex-col pb-6 bg-white  overflow-y-scroll overflow-auto no-scrollbar">
@@ -52,9 +50,7 @@ export default function LegalDocsViewHome({
               enableReinitialize={true}
               initialValues={initialState}
               validationSchema={validateSchema}
-              onSubmit={(values, { resetForm }) => {
-
-              }}
+              onSubmit={(values, { resetForm }) => {}}
             >
               {(formik) => (
                 <Form>
@@ -338,7 +334,6 @@ export default function LegalDocsViewHome({
                                     <h2 className="font-medium flex-grow">
                                       Unit Document
                                     </h2>
-    
                                   </div>
                                   <p className="mr4">Date Created</p>
                                 </div>
@@ -378,7 +373,7 @@ export default function LegalDocsViewHome({
                                 <section
                                   key={i}
                                   onClick={() => {
-                                    setSliderInfo(  {
+                                    setSliderInfo({
                                       open: true,
                                       title: 'viewDocx',
                                       sliderData: {},

@@ -31,15 +31,6 @@ const customStyles = {
   menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999 }),
 }
 
-
-
-
-
-
-
-
-
-
 const customStylesVerySmall = {
   control: (base) => ({
     ...base,
@@ -123,7 +114,6 @@ export const VerySlimSelectBox = ({
   customStyles,
   placeholder,
   className,
-
 }) => {
   const defaultValue = (options, value) => {
     return (

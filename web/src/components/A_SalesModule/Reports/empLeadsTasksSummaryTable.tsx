@@ -139,7 +139,7 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
   }
   const handleDecreaseMonth = () => {
     setStartMonthOffset((prevOffset) => prevOffset - 1)
-    setMonthCount((prevCount) => prevCount + 1);
+    setMonthCount((prevCount) => prevCount + 1)
   }
 
   const filteredData = reportData.filter((item) => {
@@ -233,7 +233,6 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
           Employee Tasks Report
         </div>
 
-
         <div className="flex mb-2 space-x-2">
           <button
             onClick={handleDecreaseMonth}
@@ -300,8 +299,6 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-
-
           {loader && <TableSkeleton rows={3} columns={7} />}
           {projectAValues
             ?.sort((a, b) => {
@@ -351,12 +348,14 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
                             key={i}
                             className="py-3 px-6 text-right font-medium text-gray-900"
                             onClick={() => {
-
-                              showDrillDownFun(`Employee Tasks of ${data.email}`, {
-                                uid: data.email,
-                                months: data?.months,
-                                thisMonth: month,
-                              })
+                              showDrillDownFun(
+                                `Employee Tasks of ${data.email}`,
+                                {
+                                  uid: data.email,
+                                  months: data?.months,
+                                  thisMonth: month,
+                                }
+                              )
                             }}
                           >
                             {`${month?.receive?.toLocaleString('en-IN')}`}
@@ -386,8 +385,6 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
               }
 
               return (
-
-
                 <tr
                   key={index}
                   className="border-b border-gray-200 hover:bg-gray-100"
@@ -396,26 +393,22 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
                     {data?.projectName} {data?.name}
                   </td>
 
-
-
-
-<td
-  className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900"
-  onClick={(month) => {
-    showDrillDownFun(`Employee Tasks of ${data.email}`, {
-      uid: data.email,
-      months: data?.months,
-      thisMonth: {
-        startOfMonth: data?.months[0]['startOfMonth'],
-        endOfMonth:
-          data?.months[data?.months.length - 1]['endOfMonth'],
-      },
-    });
-  }}
->
-  {data?.totalCount?.toLocaleString('en-IN')}
-</td>
-
+                  <td
+                    className="py-3 px-6  border text-right bg-white border-b font-medium text-gray-900"
+                    onClick={(month) => {
+                      showDrillDownFun(`Employee Tasks of ${data.email}`, {
+                        uid: data.email,
+                        months: data?.months,
+                        thisMonth: {
+                          startOfMonth: data?.months[0]['startOfMonth'],
+                          endOfMonth:
+                            data?.months[data?.months.length - 1]['endOfMonth'],
+                        },
+                      })
+                    }}
+                  >
+                    {data?.totalCount?.toLocaleString('en-IN')}
+                  </td>
 
                   <td className=" pl-2  border text-center bg-white border-b">
                     <section className="w-[100px] h-[30px]">
@@ -424,9 +417,6 @@ const EmpLeadsTasksSummaryTable = ({ projects }) => {
                   </td>
                   {monthData()}
                 </tr>
-
-
-
               )
             })}
         </tbody>

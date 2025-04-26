@@ -18,10 +18,12 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
-
-
-
-const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookCurentStep }) => {
+const UnblockUnitForm = ({
+  openUserProfile,
+  selUnitDetails,
+  bookCompSteps,
+  bookCurentStep,
+}) => {
   const { user } = useAuth()
   const { orgId } = user
   const { enqueueSnackbar } = useSnackbar()
@@ -50,8 +52,6 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
     return
   }
   const onSubmitFun = async (data, resetForm) => {
-
-
     console.log('status is', selUnitDetails)
 
     // return
@@ -73,9 +73,14 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
         resetForm
       )
 
-      await updateUnblockProjectCounts(   orgId,
-        selUnitDetails?.pId,selUnitDetails, user?.email, enqueueSnackbar)
-        openUserProfile(false)
+      await updateUnblockProjectCounts(
+        orgId,
+        selUnitDetails?.pId,
+        selUnitDetails,
+        user?.email,
+        enqueueSnackbar
+      )
+      openUserProfile(false)
     } else {
       console.log('cannot be cancelled')
       enqueueSnackbar(`${selUnitDetails?.status} unit cannot be Unblocked`, {
@@ -123,7 +128,6 @@ const UnblockUnitForm = ({openUserProfile,  selUnitDetails, bookCompSteps, bookC
                 </h1>
 
                 <hr className="h-[1px] w-[300px] bg-gradient-to-r from-[#F6F5F8]/100 via-[#B1B1B1] to-[#F6F5F8]/100 border-0 my-4 mx-auto" />
-
 
                 <Formik
                   initialValues={initialState}

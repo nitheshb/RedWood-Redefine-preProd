@@ -10,7 +10,6 @@ import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import * as Yup from 'yup'
 
-
 import {
   leadBinReasonList,
   sourceList,
@@ -44,7 +43,12 @@ import Loader from './Loader/Loader'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { use } from 'i18next'
 
-const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => {
+const AddLeadForm = ({
+  title,
+  dialogOpen,
+  customerDetails,
+  leadDetailsObj,
+}) => {
   const d = new window.Date()
   const torrowDate = new Date(
     +new Date().setHours(0, 0, 0, 0) + 86400000
@@ -62,10 +66,10 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
   const customPhoneNoFieldStyles = {
     border: 'none',
     borderRadius: '10px',
-    outline: 'none'
+    outline: 'none',
 
     // Add any other custom styles you want to apply
-  };
+  }
 
   const [startDate, setStartDate] = useState(d)
   const [customerDetailsTuned, setCustomerDetailsTuned] = useState({})
@@ -73,19 +77,15 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
     console.log('my project data is ', customerDetails)
     loadDataFun(customerDetails, sourceList, projectList)
     getLeadScheduleLog()
-  }, [customerDetails,leadDetailsObj,  sourceList, projectList])
+  }, [customerDetails, leadDetailsObj, sourceList, projectList])
 
   useEffect(() => {
-  //  if(leadDetailsObj?.id){
-
-  //  }
-
-
+    //  if(leadDetailsObj?.id){
+    //  }
   }, [])
 
-  const loadDataFun = async (customerDetails,  sourceList, projectList) => {
-
-    if (title!='Edit Lead' && customerDetails) {
+  const loadDataFun = async (customerDetails, sourceList, projectList) => {
+    if (title != 'Edit Lead' && customerDetails) {
       const custObj = customerDetails
       const {
         responderName,
@@ -130,7 +130,7 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
       await setCustomerDetailsTuned(custObj)
       await console.log('my project data is ', customerDetailsTuned, custObj)
     }
-     if(title==='Edit Lead'){
+    if (title === 'Edit Lead') {
       const custObj = customerDetails
       custObj.name = leadDetailsObj?.Name
       custObj.email = leadDetailsObj?.Email
@@ -189,7 +189,6 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
 
     return unsubscribe
   }, [])
-
 
   const budgetList = [
     { label: 'Select Customer Budget', value: '' },
@@ -260,17 +259,15 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
   }
 
   useEffect(() => {
-   if(leadDetailsObj?.preferredType){
-    setSelected(leadDetailsObj?.preferredType)
-   }
+    if (leadDetailsObj?.preferredType) {
+      setSelected(leadDetailsObj?.preferredType)
+    }
   }, [leadDetailsObj])
 
   const onSubmitFun = async (data, resetForm) => {
-
     //console.log(data)
     setLoading(true)
-    if(title==='Edit Lead'){
-
+    if (title === 'Edit Lead') {
       const leadData = {
         Date: startDate.getTime(),
         Email: data?.email,
@@ -296,9 +293,12 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
         preferredType: selected || {},
       }
 
-      if(leadDetailsObj?.Status === 'unassigned' && data?.assignedToObj?.value != leadDetailsObj?.Status){
+      if (
+        leadDetailsObj?.Status === 'unassigned' &&
+        data?.assignedToObj?.value != leadDetailsObj?.Status
+      ) {
         leadData.Status = 'New'
-        leadData.coveredA = [...leadDetailsObj?.coveredA || [],...['New']]
+        leadData.coveredA = [...(leadDetailsObj?.coveredA || []), ...['New']]
         const todayTasksIncre = leadSchFetchedData?.filter(
           (d) => d?.sts === 'pending' && d?.schTime < torrowDate
         ).length
@@ -317,192 +317,167 @@ const AddLeadForm = ({ title, dialogOpen, customerDetails, leadDetailsObj }) => 
         )
       }
       // update lead data
-      await updateLeadData(
-        orgId,
-        leadDetailsObj.id,
-        leadData,
-        user?.email,
-
-      )
+      await updateLeadData(orgId, leadDetailsObj.id, leadData, user?.email)
       setFormMessage('Saved Successfully..!')
       setLoading(false)
       if (closeWindowMode) {
         console.log('am cloded')
         dialogOpen()
       }
-
-    }else{
-    if (user?.role?.includes(USER_ROLES.CP_AGENT)) {
-      const { uid, email, displayName, department, role, orgId, phone } = user
-      data.assignedTo = uid
-      data.assignedToObj = {
-        department: department || [],
-        email: email || '',
-        label: displayName || '',
-        name: displayName || '',
-        namespace: orgId,
-        roles: role || [],
-        uid: uid || '',
-        value: uid || '',
-        offPh: phone || '',
-      }
-    }
-
-    const {
-      email,
-      name,
-      mobileNo,
-      countryCode,
-      assignedTo,
-      assignedToObj,
-      source,
-      project,
-      projectId,
-    } = data
-
-
-
-
-
-    const foundLength = await checkIfLeadAlreadyExists(
-      `${orgId}_leads`,
-       mobileNo
-    )
-
-
-
-
-
-
-
-
-    const leadData = {
-      Date: startDate.getTime(),
-      Email: email,
-      Mobile: mobileNo,
-      //budget: budget,
-      countryCode: countryCode,
-      Name: name,
-      Note: '',
-      Project: project,
-      ProjectId: projectId,
-      Source: source,
-      Status: assignedTo === '' ? 'unassigned' : 'new',
-      intype: 'Form',
-      budget: data.budget,
-      assignedTo: assignedToObj?.value || '',
-      assignedToObj: {
-        department: assignedToObj?.department || [],
-        email: assignedToObj?.email || '',
-        label: assignedToObj?.label || '',
-        name: assignedToObj?.name || '',
-        namespace: orgId,
-        roles: assignedToObj?.roles || [],
-        uid: assignedToObj?.value || '',
-        value: assignedToObj?.value || '',
-        offPh: assignedToObj?.offPh || '',
-      },
-      preferredType: selected || {},
-      by: user?.email,
-    }
-
-
-    if (foundLength?.length > 0) {
-      console.log('foundLENGTH IS ', foundLength)
-      setFoundDocs(foundLength)
-      setFormMessage('Lead Already Exists with Ph No')
-      setLoading(false)
     } else {
-      console.log('foundLENGTH IS empty ', foundLength)
-
       if (user?.role?.includes(USER_ROLES.CP_AGENT)) {
-        await addCpLead(
-          orgId,
-          leadData,
-          user?.email,
-          `lead created and assidged to ${assignedToObj?.email || assignedTo}`
-        )
-      } else {
-
-        await addLead(
-          orgId,
-          leadData,
-          user?.email,
-          `lead created and assidged to ${assignedToObj?.email || assignedTo}`
-        )
-        if (customerDetailsTuned?.id && title == 'Edit to Push Lead') {
-          await updateLeadLakeStatus(orgId, customerDetailsTuned?.id, {
-            status: 'added',
-          })
+        const { uid, email, displayName, department, role, orgId, phone } = user
+        data.assignedTo = uid
+        data.assignedToObj = {
+          department: department || [],
+          email: email || '',
+          label: displayName || '',
+          name: displayName || '',
+          namespace: orgId,
+          roles: role || [],
+          uid: uid || '',
+          value: uid || '',
+          offPh: phone || '',
         }
-
       }
 
-      await sendWhatAppTextSms(
+      const {
+        email,
+        name,
         mobileNo,
-        `Thank you ${name} for choosing the world class ${project || 'project'}`
+        countryCode,
+        assignedTo,
+        assignedToObj,
+        source,
+        project,
+        projectId,
+      } = data
+
+      const foundLength = await checkIfLeadAlreadyExists(
+        `${orgId}_leads`,
+        mobileNo
       )
 
+      const leadData = {
+        Date: startDate.getTime(),
+        Email: email,
+        Mobile: mobileNo,
+        //budget: budget,
+        countryCode: countryCode,
+        Name: name,
+        Note: '',
+        Project: project,
+        ProjectId: projectId,
+        Source: source,
+        Status: assignedTo === '' ? 'unassigned' : 'new',
+        intype: 'Form',
+        budget: data.budget,
+        assignedTo: assignedToObj?.value || '',
+        assignedToObj: {
+          department: assignedToObj?.department || [],
+          email: assignedToObj?.email || '',
+          label: assignedToObj?.label || '',
+          name: assignedToObj?.name || '',
+          namespace: orgId,
+          roles: assignedToObj?.roles || [],
+          uid: assignedToObj?.value || '',
+          value: assignedToObj?.value || '',
+          offPh: assignedToObj?.offPh || '',
+        },
+        preferredType: selected || {},
+        by: user?.email,
+      }
 
-      await sendWhatAppMediaSms(mobileNo)
-      const smg =
-        assignedTo === ''
-          ? 'You Interested will be addressed soon... U can contact 9123456789 mean while'
-          : 'we have assigned dedicated manager to you. Mr.Ram as ur personal manager'
+      if (foundLength?.length > 0) {
+        console.log('foundLENGTH IS ', foundLength)
+        setFoundDocs(foundLength)
+        setFormMessage('Lead Already Exists with Ph No')
+        setLoading(false)
+      } else {
+        console.log('foundLENGTH IS empty ', foundLength)
 
-      // msg3
-      sendWhatAppTextSms(mobileNo, smg)
-      resetForm()
-      setFormMessage('Saved Successfully..!')
-      setLoading(false)
-      if (closeWindowMode) {
-        console.log('am cloded')
-        dialogOpen()
+        if (user?.role?.includes(USER_ROLES.CP_AGENT)) {
+          await addCpLead(
+            orgId,
+            leadData,
+            user?.email,
+            `lead created and assidged to ${assignedToObj?.email || assignedTo}`
+          )
+        } else {
+          await addLead(
+            orgId,
+            leadData,
+            user?.email,
+            `lead created and assidged to ${assignedToObj?.email || assignedTo}`
+          )
+          if (customerDetailsTuned?.id && title == 'Edit to Push Lead') {
+            await updateLeadLakeStatus(orgId, customerDetailsTuned?.id, {
+              status: 'added',
+            })
+          }
+        }
+
+        await sendWhatAppTextSms(
+          mobileNo,
+          `Thank you ${name} for choosing the world class ${
+            project || 'project'
+          }`
+        )
+
+        await sendWhatAppMediaSms(mobileNo)
+        const smg =
+          assignedTo === ''
+            ? 'You Interested will be addressed soon... U can contact 9123456789 mean while'
+            : 'we have assigned dedicated manager to you. Mr.Ram as ur personal manager'
+
+        // msg3
+        sendWhatAppTextSms(mobileNo, smg)
+        resetForm()
+        setFormMessage('Saved Successfully..!')
+        setLoading(false)
+        if (closeWindowMode) {
+          console.log('am cloded')
+          dialogOpen()
+        }
       }
     }
   }
-  }
 
- const getLeadScheduleLog = async () => {
-if(leadDetailsObj.id){
- steamLeadScheduleLog(
-    orgId,
-    (doc) => {
+  const getLeadScheduleLog = async () => {
+    if (leadDetailsObj.id) {
+      steamLeadScheduleLog(
+        orgId,
+        (doc) => {
+          const usersList = doc.data()
+          const usersListA = []
 
-      const usersList = doc.data()
-      const usersListA = []
+          const sMapStsA = []
+          const { staA, staDA } = usersList
 
-      const sMapStsA = []
-      const { staA, staDA } = usersList
+          Object.entries(usersList).forEach((entry) => {
+            const [key, value] = entry
+            if (['staA', 'staDA'].includes(key)) {
+              if (key === 'staA') {
+              } else if (key === 'staDA') {
+              }
+            } else {
+              usersListA.push(value)
+            }
+          })
 
-
-      Object.entries(usersList).forEach((entry) => {
-        const [key, value] = entry
-        if (['staA', 'staDA'].includes(key)) {
-          if (key === 'staA') {
-          } else if (key === 'staDA') {
-          }
-        } else {
-          usersListA.push(value)
-
-        }
-      })
-
-
-      setLeadsFetchedSchData(
-        usersListA.sort((a, b) => {
-          return b.schTime - a.schTime
-        })
+          setLeadsFetchedSchData(
+            usersListA.sort((a, b) => {
+              return b.schTime - a.schTime
+            })
+          )
+        },
+        {
+          uid: leadDetailsObj?.id,
+        },
+        (error) => setLeadsFetchedSchData([])
       )
-
-    },
-    {
-      uid: leadDetailsObj?.id,
-    },
-    (error) => setLeadsFetchedSchData([])
-  )
-}
-}
+    }
+  }
 
   const validate = Yup.object({
     name: Yup.string()
@@ -513,21 +488,18 @@ if(leadDetailsObj.id){
       .min(3, 'Project Selection is required')
       .required('Project is Required'),
     assignedTo: Yup.string(),
-      // .min(3, 'Project Selection is required')
-      // .required('Assigner is Required'),
+    // .min(3, 'Project Selection is required')
+    // .required('Assigner is Required'),
 
     email: Yup.string().email('Email is invalid'),
 
     countryCode: Yup.string().required('Country Code is required'),
-
 
     mobileNo: Yup.string()
       .required('Phone number is required')
       .matches(phoneRegExp, 'Phone number is not valid')
       .min(10, 'too short')
       .max(10, 'too long'),
-
-
   })
   const resetter = () => {
     setSelected({})
@@ -544,7 +516,6 @@ if(leadDetailsObj.id){
             <span
               className="cursor-pointer"
               onClick={() => {
-
                 setTrashMode(true)
               }}
             >
@@ -560,16 +531,14 @@ if(leadDetailsObj.id){
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col  my-10 rounded-lg bg-white border border-gray-100 px-4 m-4 mt-4">
           <div className="mt-0">
-
-
             <Formik
               enableReinitialize={true}
               initialValues={{
                 name: customerDetailsTuned?.name || '',
                 cDate: customerDetailsTuned?.Date || '',
-                mobileNo: customerDetailsTuned?.phone ||'',
+                mobileNo: customerDetailsTuned?.phone || '',
                 countryCode: customerDetailsTuned?.countryCode || '+91',
-                email: customerDetailsTuned?.email ||'',
+                email: customerDetailsTuned?.email || '',
                 source: customerDetailsTuned?.source || '',
                 project: customerDetailsTuned?.projectName || '',
                 projectId: customerDetailsTuned?.projectId || '',
@@ -609,49 +578,48 @@ if(leadDetailsObj.id){
                         />
                       </div>
 
+                      <div className=" space-y-1 w-full text-xs">
+                        <label htmlFor="countryCode" className="inline-block">
+                          Mobile No
+                        </label>
+                        <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md ">
+                          <div className="inline-block">
+                            <input
+                              type="text"
+                              id="countryCode"
+                              name="countryCode"
+                              value={formik.values.countryCode}
+                              onChange={(e) => {
+                                formik.setFieldValue(
+                                  'countryCode',
+                                  e.target.value
+                                )
+                              }}
+                              onBlur={formik.handleBlur}
+                              className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none  rounded-l-md focus:outline-none"
+                            />
+                            {formik.errors.countryCode &&
+                              formik.touched.countryCode && (
+                                <div className="text-red-500 text-xs">
+                                  {formik.errors.countryCode}
+                                </div>
+                              )}
+                          </div>
 
+                          <div className="border-l border-gray-400 mt-1 mb-1 mr-2"></div>
 
-
-<div className=" space-y-1 w-full text-xs">
-<label htmlFor="countryCode" className="inline-block">
-Mobile No
-    </label>
-  <div className="flex border mb-6 mt-0 border-[#cccccc] rounded-md ">
-
-    <div className="inline-block">
-
-      <input
-        type="text"
-        id="countryCode"
-        name="countryCode"
-        value={formik.values.countryCode}
-        onChange={(e) => {
-          formik.setFieldValue('countryCode', e.target.value);
-        }}
-        onBlur={formik.handleBlur}
-        className="w-11 bg-grey-lighter text-grey-darker h-7 px-2 border-none  rounded-l-md focus:outline-none"
-      />
-      {formik.errors.countryCode && formik.touched.countryCode && (
-        <div className="text-red-500 text-xs">{formik.errors.countryCode}</div>
-      )}
-    </div>
-
-    <div className='border-l border-gray-400 mt-1 mb-1 mr-2'></div>
-
-    <PhoneNoField
-      name="mobileNo"
-      className="input w-full h-8 !rounded-none !rounded-r-md focus:outline-none my-custom-class"
-      customStyles={customPhoneNoFieldStyles}
-      onChange={(value) => {
-        formik.setFieldValue('mobileNo', value.value)
-      }}
-      value={formik.values.mobileNo}
-      options={sourceList}
-    />
-  </div>
-</div>
-
-
+                          <PhoneNoField
+                            name="mobileNo"
+                            className="input w-full h-8 !rounded-none !rounded-r-md focus:outline-none my-custom-class"
+                            customStyles={customPhoneNoFieldStyles}
+                            onChange={(value) => {
+                              formik.setFieldValue('mobileNo', value.value)
+                            }}
+                            value={formik.values.mobileNo}
+                            options={sourceList}
+                          />
+                        </div>
+                      </div>
                     </div>
                     {/* 2 */}
 
@@ -665,25 +633,22 @@ Mobile No
                             Enquiry Date
                           </label>
 
-
-<CustomDatePicker
-  className="h-8 w-[400px]  rounded-md text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
-  selected={startDate}
-  onChange={(date) => {
-    formik.setFieldValue('enquiryDat', date.getTime())
-    setStartDate(date)
-  }}
-  timeFormat="HH:mm"
-  injectTimes={[
-    setHours(setMinutes(d, 1), 0),
-    setHours(setMinutes(d, 5), 12),
-    setHours(setMinutes(d, 59), 23),
-  ]}
-
-  dateFormat="MMM dd, yyyy"
-  maxDate={new Date()}
-/>
-
+                          <CustomDatePicker
+                            className="h-8 w-[400px]  rounded-md text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
+                            selected={startDate}
+                            onChange={(date) => {
+                              formik.setFieldValue('enquiryDat', date.getTime())
+                              setStartDate(date)
+                            }}
+                            timeFormat="HH:mm"
+                            injectTimes={[
+                              setHours(setMinutes(d, 1), 0),
+                              setHours(setMinutes(d, 5), 12),
+                              setHours(setMinutes(d, 59), 23),
+                            ]}
+                            dateFormat="MMM dd, yyyy"
+                            maxDate={new Date()}
+                          />
                         </span>
                       </div>
                     </div>
@@ -791,7 +756,6 @@ Mobile No
                           </div>
 
                           <div className="w-full flex flex-col mb-3 mt-2">
-
                             <CustomSelect
                               name="project"
                               label="Select Project"
@@ -1099,7 +1063,6 @@ Mobile No
                                                         assignedToObj?.label
                                                       }
                                                       id={id}
-
                                                       usersList={usersList}
                                                       align={undefined}
                                                     />
@@ -1115,7 +1078,6 @@ Mobile No
                                                 ].includes(Status) && (
                                                   <div className="font-semibold text-[#053219] text-sm  mt- px-[3px] pt-[2px] rounded ">
                                                     {assignedToObj?.label}{' '}
-
                                                   </div>
                                                 )}
                                               {user?.role?.includes(
@@ -1133,7 +1095,6 @@ Mobile No
                                               </div>
                                               <div className="font-semibold text-[#053219] text-sm  mt- px-[3px] pt-[2px] rounded ">
                                                 {currentStatusDispFun(Status)}{' '}
-
                                               </div>
                                             </section>
                                           </div>
@@ -1215,8 +1176,6 @@ Mobile No
                                           ></div>
                                         </div>
                                         <span className="font-bodyLato text-[#867777] text-xs mt-2">
-
-
                                           {Source?.toString() || 'NA'}
                                         </span>
                                       </div>
@@ -1227,69 +1186,57 @@ Mobile No
                             </p>
                           )}
 
+                          <div className="mr-10">
+                            {title === 'Edit Lead' && (
+                              <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4">
+                                <button
+                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+                                  type="reset"
+                                  onClick={() => resetter()}
+                                >
+                                  Reset
+                                </button>
+                                <button
+                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                  type="submit"
+                                  disabled={loading}
+                                >
+                                  {loading && <Loader />}
+                                  Save
+                                </button>
+                              </div>
+                            )}
 
-
-
-                          <div className='mr-10'>
-                          {title==='Edit Lead' && <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4" >
-
-
-
-<button
-     className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
-     type="reset"
-     onClick={() => resetter()}
-   >
-     Reset
-   </button>
-   <button
-     className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
-     type="submit"
-     disabled={loading}
-   >
-     {loading && <Loader />}
-     Save
-   </button>
-
-</div>}
-
-                        {title!='Edit Lead' && <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4" >
-
-
-
-                              <button
-                                   className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
-                                   type="reset"
-                                   onClick={() => resetter()}
-                                 >
-                                   Reset
-                                 </button>
-                                 <button
-                                   className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
-                                   type="submit"
-                                   disabled={loading}
-                                 >
-                                   {loading && <Loader />}
-                                   Add Lead
-                                 </button>
-                                 <button
-                                   className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
-                                   type="submit"
-                                   onClick={() => setCloseWindowMode(true)}
-                                   disabled={loading}
-                                 >
-                                   {loading && <Loader />}
-                                   Add Lead & Close
-                                 </button>
-                              </div>}
-
+                            {title != 'Edit Lead' && (
+                              <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4">
+                                <button
+                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+                                  type="reset"
+                                  onClick={() => resetter()}
+                                >
+                                  Reset
+                                </button>
+                                <button
+                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                  type="submit"
+                                  disabled={loading}
+                                >
+                                  {loading && <Loader />}
+                                  Add Lead
+                                </button>
+                                <button
+                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                  type="submit"
+                                  onClick={() => setCloseWindowMode(true)}
+                                  disabled={loading}
+                                >
+                                  {loading && <Loader />}
+                                  Add Lead & Close
+                                </button>
+                              </div>
+                            )}
                           </div>
-
-
-
-
-                          </div>
-
+                        </div>
                       </>
                     )}
                   </Form>

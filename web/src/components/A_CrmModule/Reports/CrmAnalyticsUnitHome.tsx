@@ -2,12 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-
-import {
-  Box,
-  LinearProgress,
-  useTheme,
-} from '@mui/material'
+import { Box, LinearProgress, useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from 'src/context/firebase-auth-context'
 import 'flowbite'
@@ -24,7 +19,6 @@ const CrmAnalyticsUnitHome = ({ project }) => {
   const { user } = useAuth()
 
   const { orgId } = user
-
 
   const {
     totalEstValue,
@@ -63,12 +57,8 @@ const CrmAnalyticsUnitHome = ({ project }) => {
     t_refund,
   } = project
 
-
-
   return (
     <div>
-
-
       <div className="   mb-2 leading-7 text-gray-900  rounded-lg flex flex-row justify-between">
         <div className="bg-white h-[422px] w-[20%]  rounded-lg flex flex-col">
           <div className="bg-[#023E8A] h-[24%] w-full rounded-t-lg px-2 py-3 flex flex-col">
@@ -115,15 +105,14 @@ const CrmAnalyticsUnitHome = ({ project }) => {
           <div>
             <CircleBar />
           </div>
-         <div>
-         <TransactionCard projectDetails={project} />
-         </div>
-
+          <div>
+            <TransactionCard projectDetails={project} />
+          </div>
         </div>
         {/* section - 2 */}
         <section className=" flex flex-col   w-[60%] mx-1">
-             {/* lower section */}
-             <div className="bg-white h-[70px]  w-full rounded-lg">
+          {/* lower section */}
+          <div className="bg-white h-[70px]  w-full rounded-lg">
             <div className="bg-[#023E8A] w-full rounded-t-lg px-2 py-3 flex flex-col">
               <div className="flex flex-row">
                 <svg
@@ -205,7 +194,13 @@ const CrmAnalyticsUnitHome = ({ project }) => {
             </div>
             <div className="px-4 mb-4 ">
               {[
-                { item: 'Sold', value: soldUnitCount || 0, sqft: 72851, bua: 127195, price: 0 },
+                {
+                  item: 'Sold',
+                  value: soldUnitCount || 0,
+                  sqft: 72851,
+                  bua: 127195,
+                  price: 0,
+                },
                 {
                   item: 'Available',
                   value: availableCount || 0,
@@ -213,10 +208,16 @@ const CrmAnalyticsUnitHome = ({ project }) => {
                   bua: 37051,
                   price: 0,
                 },
-                { item: 'Blocked', value:  blockedUnitCount || 0, sqft: 2312, bua: 3127, price: 0 },
+                {
+                  item: 'Blocked',
+                  value: blockedUnitCount || 0,
+                  sqft: 2312,
+                  bua: 3127,
+                  price: 0,
+                },
                 {
                   item: 'Management Blocked',
-                  value: blockedUnitCount || 0 ,
+                  value: blockedUnitCount || 0,
                   sqft: 28903,
                   bua: 41612,
                   price: 0,
@@ -232,9 +233,8 @@ const CrmAnalyticsUnitHome = ({ project }) => {
                         {/* {userTodayPerfA?.followup_comp || 0}/{userTodayPerfA?.followup} */}
                         <section className="leading-[0px]">
                           <span className="font-light text-xs ">
-                          <CountUpComp
-                                            value={data?.value}
-                                          /> Units - {data?.sqft} sqft
+                            <CountUpComp value={data?.value} /> Units -{' '}
+                            {data?.sqft} sqft
                           </span>
                         </section>
                       </span>
@@ -305,37 +305,35 @@ const CrmAnalyticsUnitHome = ({ project }) => {
             </div>
           </div>
 
-
           <div className="flex flex-col bg-white shadow rounded-md mt-  px-2  py-2">
-      <h6 className="font-bodyLato font-semibold text-xs m-1 mb-4">
-        {'Transactions'}
-      </h6>
-      <div className="flex flex-row justify-between px-1">
-        {[
-          { item: 'Total Leads', value: soldValue || 0 },
-          { item: 'Conversion Rate', value: t_collect || 0 },
-          { item: 'Legal Issues ', value: t_mtd || 0 },
-          { item: 'Construction ', value: t_mtd || 0 },
-          { item: 'CP ', value: t_mtd || 0 },
-        ].map((data, i) => (
-          <div
-            className=" w-1/4  mx-1"
-            style={{ display: 'inline-block', alignSelf: 'flex-end' }}
-            key={i}
-          >
-            <div className="flex flex-col  justify-center mr-1  mb-1 mt[2px]">
-              <h6 className="font-bodyLato font-semibold text-xs mt-1">
-                {data.value}
-              </h6>
-              <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
-                {data.item}
-              </h6>
+            <h6 className="font-bodyLato font-semibold text-xs m-1 mb-4">
+              {'Transactions'}
+            </h6>
+            <div className="flex flex-row justify-between px-1">
+              {[
+                { item: 'Total Leads', value: soldValue || 0 },
+                { item: 'Conversion Rate', value: t_collect || 0 },
+                { item: 'Legal Issues ', value: t_mtd || 0 },
+                { item: 'Construction ', value: t_mtd || 0 },
+                { item: 'CP ', value: t_mtd || 0 },
+              ].map((data, i) => (
+                <div
+                  className=" w-1/4  mx-1"
+                  style={{ display: 'inline-block', alignSelf: 'flex-end' }}
+                  key={i}
+                >
+                  <div className="flex flex-col  justify-center mr-1  mb-1 mt[2px]">
+                    <h6 className="font-bodyLato font-semibold text-xs mt-1">
+                      {data.value}
+                    </h6>
+                    <h6 className="font-bodyLato text-[#828d9e] text-xs mt-1">
+                      {data.item}
+                    </h6>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
-
-    </div>
         </section>
         {/* section - 3 */}
         <div className="bg-white h-[300px] w-[20%] rounded-lg">
@@ -384,58 +382,59 @@ const CrmAnalyticsUnitHome = ({ project }) => {
             <ReportBars />
           </div> */}
           <section className="flex flex-col">
-          <section className="mt-2 flex flex-row justify-between px-2">
-            {[
-              { lab: 'JUN', value: '2' },
-              { lab: 'JUL', value: '5' },
-              { lab: 'AUG', value: '3' },
-              { lab: 'SEP', value: '10' },
-            ].map((d, i) => (
-              <section className=" flex flex-col" key={i}>
-                <span className="text-[10px] text-center font-bold">
-                  {d?.value}
-                </span>
-                <LinearProgress
-                  sx={{
-                    backgroundColor: 'white',
-                    '& .MuiLinearProgress-bar': {
-                      backgroundColor: '#0077B6',
-                    },
-                  }}
-                  variant="determinate"
-                  value={100}
-                  style={{
-                    backgroundColor: '#ADE8F4',
-                    borderRadius: '3px',
-                    borderTopRightRadius: '3px',
-                    borderBottomRightRadius: '0px',
-                    borderBottomLeftRadius: '0px',
-                    height: `100px`,
-                    width: `38px`,
-                  }}
-                />
+            <section className="mt-2 flex flex-row justify-between px-2">
+              {[
+                { lab: 'JUN', value: '2' },
+                { lab: 'JUL', value: '5' },
+                { lab: 'AUG', value: '3' },
+                { lab: 'SEP', value: '10' },
+              ].map((d, i) => (
+                <section className=" flex flex-col" key={i}>
+                  <span className="text-[10px] text-center font-bold">
+                    {d?.value}
+                  </span>
+                  <LinearProgress
+                    sx={{
+                      backgroundColor: 'white',
+                      '& .MuiLinearProgress-bar': {
+                        backgroundColor: '#0077B6',
+                      },
+                    }}
+                    variant="determinate"
+                    value={100}
+                    style={{
+                      backgroundColor: '#ADE8F4',
+                      borderRadius: '3px',
+                      borderTopRightRadius: '3px',
+                      borderBottomRightRadius: '0px',
+                      borderBottomLeftRadius: '0px',
+                      height: `100px`,
+                      width: `38px`,
+                    }}
+                  />
 
-                <span className="text-[10px] text-center">{d?.lab}</span>
-              </section>
-            ))}
+                  <span className="text-[10px] text-center">{d?.lab}</span>
+                </section>
+              ))}
+            </section>
+            <div
+              style={{
+                top: '80%',
+                left: '40%',
+                padding: '0 0.5rem',
+                fontSize: '0.9rem',
+                color: '#4fa183',
+                textAlign: 'center',
+              }}
+              className="bg-[#57c0d0] text-center"
+            >
+              <span className="text-white">SEP</span>
+            </div>
           </section>
-          <div
-      style={{
 
-        top: '80%',
-        left: '40%',
-        padding: '0 0.5rem',
-        fontSize: '0.9rem',
-        color: '#4fa183',
-        textAlign: 'center',
-      }}
-      className="bg-[#57c0d0] text-center"
-    >
-      <span className="text-white">SEP</span>
-    </div>
+          <section className="bg-[EFFCFF]">
+            <UnitStatusCardReport project={project} />
           </section>
-
-          <section className="bg-[EFFCFF]"><UnitStatusCardReport project={project} /></section>
         </div>
       </div>
     </div>

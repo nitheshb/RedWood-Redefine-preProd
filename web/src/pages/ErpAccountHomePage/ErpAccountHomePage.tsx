@@ -7,7 +7,8 @@ const ErpAccountHomePage = () => {
 
       <h1>ErpAccountHomePage</h1>
       <p>
-        Find me in <code>./web/src/pages/ErpAccountHomePage/ErpAccountHomePage.tsx</code>
+        Find me in{' '}
+        <code>./web/src/pages/ErpAccountHomePage/ErpAccountHomePage.tsx</code>
       </p>
       <p>
         My default route is named <code>erpAccountHome</code>, link to me with `

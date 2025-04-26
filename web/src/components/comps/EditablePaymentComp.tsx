@@ -5,9 +5,7 @@ import { useSnackbar } from 'notistack'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { v4 as uuidv4 } from 'uuid'
 
-import {
-  unitsCancellation,
-} from 'src/constants/projects'
+import { unitsCancellation } from 'src/constants/projects'
 import {
   streamProjectCSMaster,
   addPhasePaymentScheduleCharges,
@@ -19,7 +17,7 @@ const StyledSelect = styled(SelectMAT)(({ theme }) => ({
   fontSize: '13px',
   '&.MuiInputBase-root': {
     width: '100%',
-    fontSize: '13px', 
+    fontSize: '13px',
   },
   '&.MuiOutlinedInput-root': {
     width: '100%',
@@ -257,7 +255,6 @@ const EditablePaymentTable = ({
   const categories = ['Food', 'Drink', 'Electronics', 'Clothing']
 
   const handleChange = (id, field, value) => {
-
     setData(
       data.map((item) =>
         item.id === id
@@ -303,7 +300,6 @@ const EditablePaymentTable = ({
   }
 
   const addRow = () => {
-
     const uid = uuidv4()
 
     const newRow = {
@@ -337,41 +333,41 @@ const EditablePaymentTable = ({
     // })
 
     const sum = rows.reduce((accumulator, current) => {
-      return current.units.value === 'percentage' ? accumulator + parseFloat(current.percentage) : accumulator;
+      return current.units.value === 'percentage'
+        ? accumulator + parseFloat(current.percentage)
+        : accumulator
     }, 0)
-    if(sum !== 100){
-    enqueueSnackbar(`Total payment percentage should be 100% ${sum}`, {
-      variant: 'error',
-    })}else{
-
-
-    const data = { fullCs: rows, type: type }
-    const { projectId, uid } = phase || {}
-    if (source === 'project') {
-      await addPhasePaymentScheduleCharges(
-        orgId,
-        uid || projData?.phase?.uid,
-        rows,
-        blocksViewFeature === 'Construction_Payment_Schedule'
-          ? 'ConstructPayScheduleObj'
-          : 'paymentScheduleObj',
-        enqueueSnackbar
-      )
+    if (sum !== 100) {
+      enqueueSnackbar(`Total payment percentage should be 100% ${sum}`, {
+        variant: 'error',
+      })
     } else {
-      await addPhasePaymentScheduleCharges(
-        orgId,
-        uid || projData?.phase?.uid,
-        rows,
-        blocksViewFeature === 'Construction_Payment_Schedule'
-          ? 'ConstructPayScheduleObj'
-          : 'paymentScheduleObj',
-        enqueueSnackbar
-      )
+      const data = { fullCs: rows, type: type }
+      const { projectId, uid } = phase || {}
+      if (source === 'project') {
+        await addPhasePaymentScheduleCharges(
+          orgId,
+          uid || projData?.phase?.uid,
+          rows,
+          blocksViewFeature === 'Construction_Payment_Schedule'
+            ? 'ConstructPayScheduleObj'
+            : 'paymentScheduleObj',
+          enqueueSnackbar
+        )
+      } else {
+        await addPhasePaymentScheduleCharges(
+          orgId,
+          uid || projData?.phase?.uid,
+          rows,
+          blocksViewFeature === 'Construction_Payment_Schedule'
+            ? 'ConstructPayScheduleObj'
+            : 'paymentScheduleObj',
+          enqueueSnackbar
+        )
+      }
     }
   }
-  }
   const [rows, setRows] = useState([
-
     {
       id: '0',
       myId: '2c7bcd74-d334-471e-9138-5de5c96ee484',
@@ -387,16 +383,16 @@ const EditablePaymentTable = ({
       },
     },
   ])
-  useEffect(() => {
-
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <>
       <div className="py-2 px-4  rounded-2xl bg-[#FFFFFF]  mx-4 my-4">
         <div className="">
           <div className="py-2 pb-1 mb-4">
-            <p className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">{title}</p>
+            <p className="font-medium text-[12px] leading-[100%] tracking-[0.06em] uppercase text-[#606062]">
+              {title}
+            </p>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <DragDropContext onDragEnd={onDragEnd}>
@@ -416,165 +412,169 @@ const EditablePaymentTable = ({
                 <Droppable droppableId="table">
                   {(provided) => (
                     <tbody {...provided.droppableProps} ref={provided.innerRef}>
-                      {rows
-                        ?.map((row, index) => (
-                          <Draggable
-                            key={row.id}
-                            draggableId={row.id}
-                            index={index}
-                          >
-                            {(provided) => (
-                              <tr
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                className="hover:bg-gray-100 transition-colors duration-150 ease-in-out"
-                              >
-                                <td className="border-b border-[#e0e0e0] px-2 w-[300px]">
-                                  <section className="flex flex-row">
-                                    <input
-                                      type="text"
-                                      value={row?.stage?.label}
-                                      onChange={(e) => {
-                                        const rawValue = e.target.value.replace(
-                                          /,/g,
-                                          ''
-                                        )
-                                        const chargesForDropDown = {label: rawValue, value: rawValue}
-                                        handleChange1(row.id, 'stage', chargesForDropDown)
-                                      }}
-                                      className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                                    />
-
-                                  </section>
-
-                                </td>
-                                <td className="border-b border-[#e0e0e0]">
-                                  <StyledSelect
-                                    disableUnderline={true}
-                                    defaultValue={row?.units?.value}
-                                    value={row?.units?.value}
-                                    onChange={(e) => {
-                                      const selectedOptionObject =
-                                        unitsCancellation.find(
-                                          (option) =>
-                                            option.value === e.target.value
-                                        )
-                                      handleChange1(
-                                        row.id,
-                                        'units',
-                                        selectedOptionObject
-                                      )
-                                    }}
-                                  >
-                                    {unitsCancellation.map((option) => (
-                                      <MenuItem
-                                        key={option.value}
-                                        value={option.value}
-                                      >
-                                        {option.label}
-                                      </MenuItem>
-                                    ))}
-                                  </StyledSelect>
-                                </td>
-                                <td className="border-b border-[#e0e0e0] mr-2 pr-4">
-                                  <section className="flex flex-row">
-                                    <input
-                                      type="text"
-                                      value={formatIndianNumber(
-                                        row?.percentage || 0
-                                      )}
-                                      onChange={(e) => {
-                                        const rawValue = e.target.value.replace(
-                                          /,/g,
-                                          ''
-                                        )
-                                        const numValue = parseFloat(rawValue)
-                                        if (!isNaN(numValue)) {
-                                          handleChange1(
-                                            row.id,
-                                            'percentage',
-                                            numValue
-                                          )
-                                        } else {
-                                          handleChange1(row.id, 'percentage', 0)
-                                        }
-                                      }}
-                                      className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                                    />
-                                    <span className="mt-1">
-                                      {row?.units?.value === 'percentage'
-                                        ? '%'
-                                        : '₹'}
-                                    </span>
-                                  </section>
-                                </td>{' '}
-                                <td className="border-b border-[#e0e0e0] mr-2 pr-4">
-                                  <section className="flex flex-row">
-                                    <input
-                                      type="text"
-                                      value={formatIndianNumber(
-                                        row?.zeroDay || 0
-                                      )}
-                                      onChange={(e) => {
-                                        const rawValue = e.target.value.replace(
-                                          /,/g,
-                                          ''
-                                        )
-                                        const numValue = parseFloat(rawValue)
-                                        if (!isNaN(numValue)) {
-                                          handleChange1(
-                                            row.id,
-                                            'zeroDay',
-                                            numValue
-                                          )
-                                        } else {
-                                          handleChange1(row.id, 'zeroDay', 0)
-                                        }
-                                      }}
-                                      className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                                    />
-                                    <span className="mt-1">Days</span>
-                                  </section>
-                                </td>
-                                <td className="border-b border-[#e0e0e0]">
+                      {rows?.map((row, index) => (
+                        <Draggable
+                          key={row.id}
+                          draggableId={row.id}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <tr
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className="hover:bg-gray-100 transition-colors duration-150 ease-in-out"
+                            >
+                              <td className="border-b border-[#e0e0e0] px-2 w-[300px]">
+                                <section className="flex flex-row">
                                   <input
                                     type="text"
-                                    value={row?.description}
-                                    onChange={(e) =>
-                                      // handleChange(row.id, 'unit', e.target.value)
+                                    value={row?.stage?.label}
+                                    onChange={(e) => {
+                                      const rawValue = e.target.value.replace(
+                                        /,/g,
+                                        ''
+                                      )
+                                      const chargesForDropDown = {
+                                        label: rawValue,
+                                        value: rawValue,
+                                      }
                                       handleChange1(
                                         row.id,
-                                        'description',
-                                        e.target.value
+                                        'stage',
+                                        chargesForDropDown
                                       )
-                                    }
-                                    className="w-full p-1 border  border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                    }}
+                                    className="w-full p-1 border text-left border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                                   />
-                                </td>
-                                <td className="border-b border-[#e0e0e0] text-center">
-                                  <button
-                                    onClick={() => handleDelete(row.id)}
-                                    className="text-gray-500 hover:text-red-700"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      className="h-5 w-5"
-                                      viewBox="0 0 20 20"
-                                      fill="currentColor"
+                                </section>
+                              </td>
+                              <td className="border-b border-[#e0e0e0]">
+                                <StyledSelect
+                                  disableUnderline={true}
+                                  defaultValue={row?.units?.value}
+                                  value={row?.units?.value}
+                                  onChange={(e) => {
+                                    const selectedOptionObject =
+                                      unitsCancellation.find(
+                                        (option) =>
+                                          option.value === e.target.value
+                                      )
+                                    handleChange1(
+                                      row.id,
+                                      'units',
+                                      selectedOptionObject
+                                    )
+                                  }}
+                                >
+                                  {unitsCancellation.map((option) => (
+                                    <MenuItem
+                                      key={option.value}
+                                      value={option.value}
                                     >
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                        clipRule="evenodd"
-                                      />
-                                    </svg>
-                                  </button>
-                                </td>
-                              </tr>
-                            )}
-                          </Draggable>
-                        ))}
+                                      {option.label}
+                                    </MenuItem>
+                                  ))}
+                                </StyledSelect>
+                              </td>
+                              <td className="border-b border-[#e0e0e0] mr-2 pr-4">
+                                <section className="flex flex-row">
+                                  <input
+                                    type="text"
+                                    value={formatIndianNumber(
+                                      row?.percentage || 0
+                                    )}
+                                    onChange={(e) => {
+                                      const rawValue = e.target.value.replace(
+                                        /,/g,
+                                        ''
+                                      )
+                                      const numValue = parseFloat(rawValue)
+                                      if (!isNaN(numValue)) {
+                                        handleChange1(
+                                          row.id,
+                                          'percentage',
+                                          numValue
+                                        )
+                                      } else {
+                                        handleChange1(row.id, 'percentage', 0)
+                                      }
+                                    }}
+                                    className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                  />
+                                  <span className="mt-1">
+                                    {row?.units?.value === 'percentage'
+                                      ? '%'
+                                      : '₹'}
+                                  </span>
+                                </section>
+                              </td>{' '}
+                              <td className="border-b border-[#e0e0e0] mr-2 pr-4">
+                                <section className="flex flex-row">
+                                  <input
+                                    type="text"
+                                    value={formatIndianNumber(
+                                      row?.zeroDay || 0
+                                    )}
+                                    onChange={(e) => {
+                                      const rawValue = e.target.value.replace(
+                                        /,/g,
+                                        ''
+                                      )
+                                      const numValue = parseFloat(rawValue)
+                                      if (!isNaN(numValue)) {
+                                        handleChange1(
+                                          row.id,
+                                          'zeroDay',
+                                          numValue
+                                        )
+                                      } else {
+                                        handleChange1(row.id, 'zeroDay', 0)
+                                      }
+                                    }}
+                                    className="w-full p-1 border text-right border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                  />
+                                  <span className="mt-1">Days</span>
+                                </section>
+                              </td>
+                              <td className="border-b border-[#e0e0e0]">
+                                <input
+                                  type="text"
+                                  value={row?.description}
+                                  onChange={(e) =>
+                                    // handleChange(row.id, 'unit', e.target.value)
+                                    handleChange1(
+                                      row.id,
+                                      'description',
+                                      e.target.value
+                                    )
+                                  }
+                                  className="w-full p-1 border  border-0 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                />
+                              </td>
+                              <td className="border-b border-[#e0e0e0] text-center">
+                                <button
+                                  onClick={() => handleDelete(row.id)}
+                                  className="text-gray-500 hover:text-red-700"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-5"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                  >
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                </button>
+                              </td>
+                            </tr>
+                          )}
+                        </Draggable>
+                      ))}
                       {provided.placeholder}
                     </tbody>
                   )}

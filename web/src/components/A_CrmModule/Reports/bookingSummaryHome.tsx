@@ -4,12 +4,7 @@
 // // src/App.js
 // import React from 'react'
 
-
-
-
-
 import { useState, useCallback, useEffect } from 'react'
-
 
 import { SearchIcon } from '@heroicons/react/solid'
 import Button from '@mui/material/Button'
@@ -26,17 +21,13 @@ import Tooltip from '@mui/material/Tooltip'
 import { startOfDay } from 'date-fns'
 import isEqual from 'lodash/isEqual'
 
-
-
 import {
   getAllProjects,
   getBookedUnitsByProject,
 } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import CSVDownloader from 'src/util/csvDownload'
-import {
-  SlimSelectBox,
-} from 'src/util/formFields/slimSelectBoxField'
+import { SlimSelectBox } from 'src/util/formFields/slimSelectBoxField'
 
 import { _userList, _roles } from './_mock'
 import ConfirmDialog from './_mock/comps/confirm-dialog'
@@ -129,11 +120,6 @@ export default function UserListView() {
   })
   const [filters, setFilters] = useState(defaultFilters)
 
-
-
-
-
-
   const dataFiltered = applyFilter({
     inputData: tableData,
     comparator: getComparator(table.order, table.orderBy),
@@ -145,7 +131,7 @@ export default function UserListView() {
     table.page * table.rowsPerPage + table.rowsPerPage
   )
   useEffect(() => {
-    const z = dataFiltered.filter((data)=>  data?.pId == selProject?.value)
+    const z = dataFiltered.filter((data) => data?.pId == selProject?.value)
     console.log('filtered values are', z, dataFiltered)
     setDispRows(z)
   }, [dataFiltered, selProject])
@@ -178,8 +164,6 @@ export default function UserListView() {
         })
 
         await setTableData(usersListA)
-
-
       },
       {
         status: ['booked', 'agreement_pipeline', 'sd_pipeline', 'registered'],
@@ -200,7 +184,10 @@ export default function UserListView() {
           user.value = user.projectName
         })
         console.log('fetched proejcts list is', projectsListA)
-        let z = [{'label': 'All Projects', value: 'allprojects'}, ...projectsListA]
+        let z = [
+          { label: 'All Projects', value: 'allprojects' },
+          ...projectsListA,
+        ]
         setprojectList(z)
       },
       (error) => setprojectList([])
@@ -241,8 +228,6 @@ export default function UserListView() {
     })
   }, [dataFiltered.length, dataInPage.length, table, tableData])
 
-
-
   const handleFilterStatus = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
       handleFilters('status', newValue)
@@ -261,8 +246,6 @@ export default function UserListView() {
           maxWidth={settings.themeStretch ? false : 'lg'}
           sx={{ width: '100%', px: 0, '!important': { px: 0 } }}
         >
-
-
           <Card sx={{ px: 0 }}>
             <div className="flex flex-row ">
               <Tabs
@@ -392,8 +375,6 @@ export default function UserListView() {
               </span>
             </div>
 
-
-
             <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
               <TableSelectedAction
                 dense={table.dense}
@@ -435,17 +416,15 @@ export default function UserListView() {
                     />
 
                     <TableBody>
-                      {dispRows
-
-                        .map((row) => (
-                          <UserTableRow
-                            key={row.id}
-                            row={row}
-                            selected={table.selected.includes(row.id)}
-                            onSelectRow={() => table.onSelectRow(row.id)}
-                            onDeleteRow={() => handleDeleteRow(row.id)}
-                          />
-                        ))}
+                      {dispRows.map((row) => (
+                        <UserTableRow
+                          key={row.id}
+                          row={row}
+                          selected={table.selected.includes(row.id)}
+                          onSelectRow={() => table.onSelectRow(row.id)}
+                          onDeleteRow={() => handleDeleteRow(row.id)}
+                        />
+                      ))}
 
                       <TableEmptyRows
                         height={denseHeight}
@@ -503,7 +482,6 @@ export default function UserListView() {
     </>
   )
 }
-
 
 function applyFilter({
   inputData,

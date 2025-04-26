@@ -5,8 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { logout as logoutAction } from 'src/state/actions/user'
 
-
-const HeadNavBarAccounts = ({selModule, setSelModule}) => {
+const HeadNavBarAccounts = ({ selModule, setSelModule }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,7 +35,9 @@ const HeadNavBarAccounts = ({selModule, setSelModule}) => {
         <span
           style={{ marginLeft: '10px' }}
           className="relative z-10 flex items-center text-md font-extrabold leading-none text-black select-none pl-0 ml-4"
-        >REDEFINE ERP .</span>
+        >
+          REDEFINE ERP .
+        </span>
 
         <button className="flex items-center justify-center h-10 px-4 ml-auto "></button>
         <button className="flex items-center justify-center h-10 text-sm font-medium "></button>
@@ -63,13 +64,15 @@ const HeadNavBarAccounts = ({selModule, setSelModule}) => {
             </div>
           </button>
           <Box display="flex" flexDirection="column" mr={2}>
-            <Typography variant="body2" className='text-black'>{user?.displayName}</Typography>
+            <Typography variant="body2" className="text-black">
+              {user?.displayName}
+            </Typography>
             <Typography variant="caption" className="text-gray-900">
-            {user?.roles?.length > 0
-                  ? user?.roles[0] === 'admin'
-                    ? 'Super User'
-                    : user?.roles[0]
-                  : user?.department}
+              {user?.roles?.length > 0
+                ? user?.roles[0] === 'admin'
+                  ? 'Super User'
+                  : user?.roles[0]
+                : user?.department}
             </Typography>
           </Box>
         </Box>

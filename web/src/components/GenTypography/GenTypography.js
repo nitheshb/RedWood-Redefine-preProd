@@ -1,5 +1,3 @@
-
-
 import { Box, styled } from '@mui/material'
 import clsx from 'clsx'
 import React from 'react'

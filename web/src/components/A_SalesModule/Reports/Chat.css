@@ -1,72 +1,59 @@
 /* Chat.css */
 
-
 .chat-container {
-    @apply bg-[#0F172A] text-white w-full h-screen flex flex-col;
+  @apply bg-[#0F172A] text-white w-full h-screen flex flex-col;
 }
-
 
 .messages {
-    @apply flex-1 overflow-y-auto p-5;
+  @apply flex-1 overflow-y-auto p-5;
 }
-
 
 .bottom-bar {
-    @apply flex items-center justify-between bg-[#1E293B] p-2;
+  @apply flex items-center justify-between bg-[#1E293B] p-2;
 }
 
-
 .question-chips {
-    @apply flex flex-wrap p-2;
+  @apply flex flex-wrap p-2;
 }
 
 .question-chip {
-    @apply mr-2 mb-2 px-4 py-2 bg-[#1E293B] text-white border border-white rounded-full cursor-pointer;
+  @apply mr-2 mb-2 px-4 py-2 bg-[#1E293B] text-white border border-white rounded-full cursor-pointer;
 }
-
 
 .question-chip:hover {
-    @apply bg-[#0F172A];
+  @apply bg-[#0F172A];
 }
-
 
 .input-text {
-    @apply flex-1 px-3 py-2 mr-2 border border-white rounded bg-blue-800 text-white;
+  @apply flex-1 px-3 py-2 mr-2 border border-white rounded bg-blue-800 text-white;
 }
-
 
 .input-text::placeholder {
-    @apply text-white;
+  @apply text-white;
 }
-
 
 .send-button,
 .clear-button {
-    @apply px-4 py-2 bg-blue-900 text-white border border-white rounded cursor-pointer mr-2;
+  @apply px-4 py-2 bg-blue-900 text-white border border-white rounded cursor-pointer mr-2;
 }
-
 
 .clear-button:last-child {
-    @apply mr-0;
+  @apply mr-0;
 }
-
 
 .send-button:hover,
 .clear-button:hover {
-    @apply bg-blue-900;
+  @apply bg-blue-900;
 }
-
 
 .user-message {
-    @apply text-right mb-2;
+  @apply text-right mb-2;
 }
-
 
 .bot-message {
-    @apply text-left mb-2 bg-[#1E293B] p-2 rounded inline-block;
+  @apply text-left mb-2 bg-[#1E293B] p-2 rounded inline-block;
 }
 
-
 input {
-    color: black;
+  color: black;
 }

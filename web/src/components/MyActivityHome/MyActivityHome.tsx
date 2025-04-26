@@ -9,7 +9,6 @@ import {
 import LeadsTeamReportBody from '../LeadsTeamReportBody'
 import { useAuth } from 'src/context/firebase-auth-context'
 
-
 const MyActivityHome = ({ source }) => {
   const { user } = useAuth()
   const { orgId } = user
@@ -47,7 +46,6 @@ const MyActivityHome = ({ source }) => {
     }
   }, [selDept, leadsFetchedData])
   const getLeadsDataFun = async (source) => {
- 
     if (source === 'team') {
       const unsubscribe = steamUsersActivityLog(
         orgId,
@@ -62,7 +60,7 @@ const MyActivityHome = ({ source }) => {
       return unsubscribe
     } else {
       const unsubscribe = steamUsersActivityOfUser(
-        orgId, 
+        orgId,
         (querySnapshot) => {
           const usersListA = querySnapshot.docs.map((docSnapshot) =>
             docSnapshot.data()
@@ -79,9 +77,8 @@ const MyActivityHome = ({ source }) => {
     setSelDept(category)
   }
   return (
-
     <div className="flex flex-col">
-     <LeadsTeamReportBody project={undefined} isEdit={undefined} />
+      <LeadsTeamReportBody project={undefined} isEdit={undefined} />
     </div>
   )
 }

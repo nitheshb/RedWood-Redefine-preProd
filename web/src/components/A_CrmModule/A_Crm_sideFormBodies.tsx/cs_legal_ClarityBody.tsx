@@ -19,9 +19,7 @@ import LeadTaskDisplayHead from 'src/components/Comp_CustomerProfileSideView/Lea
 import LeadTaskFooter from 'src/components/Comp_CustomerProfileSideView/LeadTaskFooter'
 import SelectDropDownComp from 'src/components/comps/dropDownhead'
 import { USER_ROLES } from 'src/constants/userRoles'
-import {
-  updateLegalClarityApproval,
-} from 'src/context/dbQueryFirebase'
+import { updateLegalClarityApproval } from 'src/context/dbQueryFirebase'
 import {
   addLeadScheduler,
   updateSch,
@@ -43,13 +41,14 @@ import {
 import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 import { supabase } from 'src/context/supabase'
-import {
-  prettyDateTime,
-} from 'src/util/dateConverter'
+import { prettyDateTime } from 'src/util/dateConverter'
 import { getWhatsAppTemplates } from 'src/util/TuneWhatsappMsg'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import CrmActivityLog from '../CrmActivityLog'
-import { addLegalClarificationTicket, steamUnitTasks } from '../T_UnitTasks/Query'
+import {
+  addLegalClarificationTicket,
+  steamUnitTasks,
+} from '../T_UnitTasks/Query'
 
 // import BankSelectionSwitchDrop from './BankSelectionDroopDown'
 const torrowDate = new Date(
@@ -219,61 +218,41 @@ export default function Crm_legal_Clarity({
     console.log('unit dta is ', selUnitPayload, selUnitPayload?.id)
     boot()
     const channel = supabase
-        .channel('unit-tasks-channel')
-        .on(
-          'postgres_changes',
-          {
-            event: '*',
-            schema: 'public',
-            table: `${orgId}_unit_tasks`,
-          },
-          (payload) => {
-    // const subscription = supabase
-    //   .from(`${orgId}_unit_tasks`)
-    //   .on('*', (payload) => {
-        console.log('account records', payload)
-        const updatedData = payload.new
-        const { id } = payload.old
-        const eventType = payload.eventType
-        console.log('account records', updatedData.Uuid, selUnitPayload?.id)
+      .channel('unit-tasks-channel')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: `${orgId}_unit_tasks`,
+        },
+        (payload:any) => {
+          // const subscription = supabase
+          //   .from(`${orgId}_unit_tasks`)
+          //   .on('*', (payload) => {
+          console.log('account records', payload)
+          const updatedData = payload.new
+          const { id } = payload.old
+          const eventType = payload.eventType
+          console.log('account records', updatedData.Uuid, selUnitPayload?.id)
 
-        if (updatedData.Uuid === selUnitPayload?.id) {
           if (updatedData.Uuid === selUnitPayload?.id) {
-            console.log('account records', updatedData.Uuid, selUnitPayload?.id)
-            setUnitFetchedActivityData((prevLogs) => {
-              const existingLog = prevLogs.find((log) => log.id === id)
+            if (updatedData.Uuid === selUnitPayload?.id) {
               console.log(
                 'account records',
-                prevLogs,
-                existingLog,
-                id,
-                payload.old,
-                id
+                updatedData.Uuid,
+                selUnitPayload?.id
               )
-              if (existingLog) {
-                console.log('Existing record found!')
-                if (payload.new.status === 'Done') {
-                  const updatedLogs = prevLogs.filter((log) => log.id != id)
-                  return [...updatedLogs]
-                } else {
-                  const updatedLogs = prevLogs.map((log) =>
-                    log.id === id ? payload.new : log
-                  )
-                  return [...updatedLogs]
-                }
-              } else {
-                console.log('New record added!')
-                return [payload.new,...prevLogs]
-              }
-            })
-          } else {
-            if (
-              updatedData.by_uid === user?.uid ||
-              updatedData?.to_uid === user?.uid
-            ) {
               setUnitFetchedActivityData((prevLogs) => {
                 const existingLog = prevLogs.find((log) => log.id === id)
-
+                console.log(
+                  'account records',
+                  prevLogs,
+                  existingLog,
+                  id,
+                  payload.old,
+                  id
+                )
                 if (existingLog) {
                   console.log('Existing record found!')
                   if (payload.new.status === 'Done') {
@@ -287,13 +266,38 @@ export default function Crm_legal_Clarity({
                   }
                 } else {
                   console.log('New record added!')
-                  return [payload.new,...prevLogs]
+                  return [payload.new, ...prevLogs]
                 }
               })
+            } else {
+              if (
+                updatedData.by_uid === user?.uid ||
+                updatedData?.to_uid === user?.uid
+              ) {
+                setUnitFetchedActivityData((prevLogs) => {
+                  const existingLog = prevLogs.find((log) => log.id === id)
+
+                  if (existingLog) {
+                    console.log('Existing record found!')
+                    if (payload.new.status === 'Done') {
+                      const updatedLogs = prevLogs.filter((log) => log.id != id)
+                      return [...updatedLogs]
+                    } else {
+                      const updatedLogs = prevLogs.map((log) =>
+                        log.id === id ? payload.new : log
+                      )
+                      return [...updatedLogs]
+                    }
+                  } else {
+                    console.log('New record added!')
+                    return [payload.new, ...prevLogs]
+                  }
+                })
+              }
             }
           }
         }
-      })
+      )
       .subscribe()
 
     // Clean up the subscription when the component unmounts
@@ -505,8 +509,6 @@ export default function Crm_legal_Clarity({
     setEditTaskObj(data)
     setTakTitle(data?.notes || '')
     setStartDate(setHours(setMinutes(data?.schTime, 30), 16))
-
-
   }
   const editTaskFun = (data) => {
     const inx = schStsMA.indexOf(data.ct)
@@ -959,612 +961,614 @@ export default function Crm_legal_Clarity({
     },
   }
   return (
-    <div className='flex flex-row bg-white '>
-    <section className="bg-[#EFF8F1] w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll" style={{ height: `calc(100vh - 60px)` }}>
-      <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
-        <div className="mt-1">
-          <div className="py-2 rounded-md flex flex-row justify-between">
-            <div className="flex flex-col">
-              <h2 className="font-medium flex-grow text-[16px]">
-                Unit Legal Clarity
-              </h2>
+    <div className="flex flex-row bg-white ">
+      <section
+        className="bg-[#EFF8F1] w-full md:px-10 md:mb-20 pb-[250px] overflow-auto no-scrollbar  h-[100%] overflow-y-scroll"
+        style={{ height: `calc(100vh - 60px)` }}
+      >
+        <div className="max-w-3xl mx-auto py-4 text-sm text-gray-700">
+          <div className="mt-1">
+            <div className="py-2 rounded-md flex flex-row justify-between">
+              <div className="flex flex-col">
+                <h2 className="font-medium flex-grow text-[16px]">
+                  Unit Legal Clarity
+                </h2>
+                <p className="text-md text-[10px] flex-grow text-right">
+                  Legal Team will answers the questions{' '}
+                </p>
+              </div>
               <p className="text-md text-[10px] flex-grow text-right">
-                Legal Team will answers the questions{' '}
+                Legal Section{' '}
               </p>
             </div>
-            <p className="text-md text-[10px] flex-grow text-right">
-              Legal Section{' '}
-            </p>
           </div>
         </div>
-      </div>
 
-      <Formik
-        initialValues={initialState1}
+        <Formik
+          initialValues={initialState1}
         //  validationSchema={validateSchema1}
         // onSubmit={(values, { resetForm }) => {
         //   console.log('values of form is ', values)
         // }}
-      >
-        {(formik2) => (
-          <div className=" h-screen ">
-            {(showNotInterested || showVisitFeedBackStatus || showJunk) &&
-              selSchGrpO?.ct === undefined && (
-                <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
-                  {!showJunk && (
-                    <div className="  outline-none border  rounded p-4 mt-4">
-                      <textarea
-                        value={takNotes}
-                        onChange={(e) => setNotesTitle(e.target.value)}
-                        placeholder="Type & make a notes"
-                        className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFF9F2] "
-                      ></textarea>
+        >
+          {(formik2) => (
+            <div className=" h-screen ">
+              {(showNotInterested || showVisitFeedBackStatus || showJunk) &&
+                selSchGrpO?.ct === undefined && (
+                  <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
+                    {!showJunk && (
+                      <div className="  outline-none border  rounded p-4 mt-4">
+                        <textarea
+                          value={takNotes}
+                          onChange={(e) => setNotesTitle(e.target.value)}
+                          placeholder="Type & make a notes"
+                          className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFF9F2] "
+                        ></textarea>
+                      </div>
+                    )}
+                    <div className="flex flex-row mt-1">
+                      <button
+                        onClick={() => notInterestedFun()}
+                        className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                      >
+                        <span className="ml-1 ">Save</span>
+                      </button>
+                      <button
+                        onClick={() => notInterestedFun()}
+                        className={`flex mt-2 ml-4 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                      >
+                        <span className="ml-1 ">Save & Whats App</span>
+                      </button>
+                      <button
+                        // onClick={() => fSetLeadsType('Add Lead')}
+                        onClick={() => cancelResetStatusFun()}
+                        className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
+                      >
+                        <span className="ml-1 ">Cancel</span>
+                      </button>
                     </div>
-                  )}
-                  <div className="flex flex-row mt-1">
-                    <button
-                      onClick={() => notInterestedFun()}
-                      className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
-                    >
-                      <span className="ml-1 ">Save</span>
-                    </button>
-                    <button
-                      onClick={() => notInterestedFun()}
-                      className={`flex mt-2 ml-4 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
-                    >
-                      <span className="ml-1 ">Save & Whats App</span>
-                    </button>
-                    <button
-                      // onClick={() => fSetLeadsType('Add Lead')}
-                      onClick={() => cancelResetStatusFun()}
-                      className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
-                    >
-                      <span className="ml-1 ">Cancel</span>
-                    </button>
                   </div>
+                )}
+
+              <div className="font-md font-medium text-xs  ml-2 text-gray-800 flex flex-row justify-between py-2">
+                <section className="flex flex-row py-1"></section>
+                <div className="flex flex-row ">
+                  <div className="flex flex-row bg-white rounded-xl border ">
+                    <div
+                      className={` py-1 pr-4 pl-4 min-w-[62px] ${selFilterVal === 'all' ? 'bg-[#c6fff0]' : ''
+                        } rounded-xl rounded-r-none`}
+                      onClick={() => setSelFilterVal('all')}
+                    >
+                      <span className="mr-1 text-[10px] ">All</span>
+
+                      {
+                        leadSchFetchedData.filter(
+                          (d) => d?.schTime != undefined
+                        ).length
+                      }
+                    </div>
+                    <div
+                      className={` py-1 pr-4 pl-4 min-w-[62px] border-x ${selFilterVal === 'pending' ? 'bg-[#c6fff0]' : ''
+                        } `}
+                      onClick={() => setSelFilterVal('pending')}
+                    >
+                      <CheckCircleIcon className="w-4 h-3  inline text-[#cdcdcd]" />
+                      <span className="mr-1 text-[10px] ">Pending</span>
+                      <span
+                        className=" text-[11
+                              px] "
+                      >
+                        {' '}
+                        {
+                          leadSchFetchedData?.filter(
+                            (d) => d?.sts === 'pending'
+                          ).length
+                        }
+                      </span>
+                    </div>
+                    <div
+                      className={` py-1 pr-4 pl-4 min-w-[62px] ${selFilterVal === 'completed' ? 'bg-[#c6fff0]' : ''
+                        }  rounded-xl rounded-l-none`}
+                      onClick={() => setSelFilterVal('completed')}
+                    >
+                      <CheckCircleIcon className="w-4 h-3 inline text-[#058527]" />
+                      <span className="mr-1 text-[10px] ">Completed</span>
+
+                      {
+                        leadSchFetchedData?.filter(
+                          (d) => d?.sts === 'completed'
+                        ).length
+                      }
+                    </div>
+                  </div>
+                  {!showAddTask && (
+                    <span
+                      className="ml-2 mt-1 text-blue-800 cursor-pointer w-[70px]"
+                      onClick={() => {
+                        setShowAddTask(!showAddTask)
+                      }}
+                    >
+                      Create Task
+                    </span>
+                  )}
+                  {showAddTask && (
+                    <span
+                      className="ml-2 mt-1 text-blue-800 cursor-pointer w-[70px]"
+                      onClick={() => {
+                        setShowAddTask(!showAddTask)
+                      }}
+                    >
+                      Close Task
+                    </span>
+                  )}
+                </div>
+              </div>
+              {showAddTask && (
+                <div
+                  id="toast-success"
+                  className="flex items-center  mx-  p-2 text-white
+                     bg-[#516F90]"
+                  role="alert"
+                >
+                  <div className=" text-sm font-normal font-bodyLato tight-wider">
+                    Hey, Post your Legal Query{' '}
+                    <span className="text-xs  tight-wider ">
+                      {tempLeadStatus.toLocaleUpperCase()}{' '}
+                    </span>
+                    ..!
+                  </div>
+                  <button
+                    type="button"
+                    className="ml-auto -mx-0.5 -my-0.5  text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 "
+                    data-dismiss-target="#toast-success"
+                    aria-label="Close"
+                  >
+                    <span className="sr-only">Close</span>
+                    <svg
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                  </button>
                 </div>
               )}
+              {showAddTask && (
+                <div className="flex flex-col pt-0 my-10  mt-[0px] ">
+                  <Formik
+                    enableReinitialize={true}
+                    initialValues={initialState}
+                    validationSchema={validateSchema}
+                    onSubmit={async (data, { resetForm }) => {
+                      data.due_date = startDate
+                      data.priorities = prior ? 'high' : 'medium'
+                      data.attachments = files
+                      data.Uuid = selUnitPayload?.id
+                      await addLegalClarificationTicket(orgId, data, user)
 
-            <div className="font-md font-medium text-xs  ml-2 text-gray-800 flex flex-row justify-between py-2">
-              <section className="flex flex-row py-1"></section>
-              <div className="flex flex-row ">
-                <div className="flex flex-row bg-white rounded-xl border ">
-                  <div
-                    className={` py-1 pr-4 pl-4 min-w-[62px] ${
-                      selFilterVal === 'all' ? 'bg-[#c6fff0]' : ''
-                    } rounded-xl rounded-r-none`}
-                    onClick={() => setSelFilterVal('all')}
-                  >
-                    <span className="mr-1 text-[10px] ">All</span>
-
-                    {
-                      leadSchFetchedData.filter((d) => d?.schTime != undefined)
-                        .length
-                    }
-                  </div>
-                  <div
-                    className={` py-1 pr-4 pl-4 min-w-[62px] border-x ${
-                      selFilterVal === 'pending' ? 'bg-[#c6fff0]' : ''
-                    } `}
-                    onClick={() => setSelFilterVal('pending')}
-                  >
-                    <CheckCircleIcon className="w-4 h-3  inline text-[#cdcdcd]" />
-                    <span className="mr-1 text-[10px] ">Pending</span>
-                    <span
-                      className=" text-[11
-                              px] "
-                    >
-                      {' '}
-                      {
-                        leadSchFetchedData?.filter((d) => d?.sts === 'pending')
-                          .length
-                      }
-                    </span>
-                  </div>
-                  <div
-                    className={` py-1 pr-4 pl-4 min-w-[62px] ${
-                      selFilterVal === 'completed' ? 'bg-[#c6fff0]' : ''
-                    }  rounded-xl rounded-l-none`}
-                    onClick={() => setSelFilterVal('completed')}
-                  >
-                    <CheckCircleIcon className="w-4 h-3 inline text-[#058527]" />
-                    <span className="mr-1 text-[10px] ">Completed</span>
-
-                    {
-                      leadSchFetchedData?.filter((d) => d?.sts === 'completed')
-                        .length
-                    }
-                  </div>
-                </div>
-                {!showAddTask && (
-                  <span
-                    className="ml-2 mt-1 text-blue-800 cursor-pointer w-[70px]"
-                    onClick={() => {
-                      setShowAddTask(!showAddTask)
+                      return
                     }}
                   >
-                    Create Task
-                  </span>
-                )}
-                {showAddTask && (
-                  <span
-                    className="ml-2 mt-1 text-blue-800 cursor-pointer w-[70px]"
-                    onClick={() => {
-                      setShowAddTask(!showAddTask)
-                    }}
-                  >
-                    Close Task
-                  </span>
-                )}
-              </div>
-            </div>
-            {showAddTask && (
-              <div
-                id="toast-success"
-                className="flex items-center  mx-  p-2 text-white
-                     bg-[#516F90]"
-                role="alert"
-              >
-                <div className=" text-sm font-normal font-bodyLato tight-wider">
-                  Hey, Post your Legal Query{' '}
-                  <span className="text-xs  tight-wider ">
-                    {tempLeadStatus.toLocaleUpperCase()}{' '}
-                  </span>
-                  ..!
-                </div>
-                <button
-                  type="button"
-                  className="ml-auto -mx-0.5 -my-0.5  text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 "
-                  data-dismiss-target="#toast-success"
-                  aria-label="Close"
-                >
-                  <span className="sr-only">Close</span>
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
-            )}
-            {showAddTask && (
-              <div className="flex flex-col pt-0 my-10  mt-[0px] ">
-                <Formik
-                  enableReinitialize={true}
-                  initialValues={initialState}
-                  validationSchema={validateSchema}
-                  onSubmit={async (data, { resetForm }) => {
-
-                    data.due_date = startDate
-                    data.priorities = prior ? 'high' : 'medium'
-                    data.attachments = files
-                    data.Uuid = selUnitPayload?.id
-                    await addLegalClarificationTicket(orgId, data, user)
-
-
-                    return
-                  }}
-                >
-                  {(formik) => (
-                    <Form>
-                      <div className=" form outline-none border  py-4">
-                        <section className=" px-4">
-
-                          <div className="text-xs font-bodyLato text-[#516f90]">
-                            Task Title
-                            <ErrorMessage
-                              component="div"
+                    {(formik) => (
+                      <Form>
+                        <div className=" form outline-none border  py-4">
+                          <section className=" px-4">
+                            <div className="text-xs font-bodyLato text-[#516f90]">
+                              Task Title
+                              <ErrorMessage
+                                component="div"
+                                name="taskTitle"
+                                className="error-message text-red-700 text-xs p-1"
+                              />
+                            </div>
+                            <input
+                              autoFocus
                               name="taskTitle"
-                              className="error-message text-red-700 text-xs p-1"
-                            />
-                          </div>
-                          <input
-                            autoFocus
-                            name="taskTitle"
-                            type="text"
-                            value={takTitle}
-                            onChange={(e) => {
-                              formik.setFieldValue('taskTitle', e.target.value)
-                              setTitleFun(e)
-                            }}
-                            placeholder="Enter a short title"
-                            className="w-full h-full pb-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd] text-[33475b] bg-[#F2F5F8] "
-                          ></input>
-                          <div className="flex flex-row ">
-                            <div className="flex flex-row mt-3">
-                              <section>
-                                <span className="text-xs font-bodyLato text-[#516f90]">
-                                  <span className="">
-                                    {tempLeadStatus.charAt(0).toUpperCase() +
-                                      tempLeadStatus.slice(1)}{' '}
+                              type="text"
+                              value={takTitle}
+                              onChange={(e) => {
+                                formik.setFieldValue(
+                                  'taskTitle',
+                                  e.target.value
+                                )
+                                setTitleFun(e)
+                              }}
+                              placeholder="Enter a short title"
+                              className="w-full h-full pb-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd] text-[33475b] bg-[#F2F5F8] "
+                            ></input>
+                            <div className="flex flex-row ">
+                              <div className="flex flex-row mt-3">
+                                <section>
+                                  <span className="text-xs font-bodyLato text-[#516f90]">
+                                    <span className="">
+                                      {tempLeadStatus.charAt(0).toUpperCase() +
+                                        tempLeadStatus.slice(1)}{' '}
+                                    </span>
+                                    Due Date
                                   </span>
-                                  Due Date
-                                </span>
-                                <div className="bg-green   pl-   flex flex-row ">
-                                  <span className="inline">
-                                    <CustomDatePicker
-                                      className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] bg-[#F2F5F8]"
-                                      selected={startDate}
-                                      onChange={(date) => setStartDate(date)}
-                                      showTimeSelect
-                                      timeFormat="HH:mm"
-                                      injectTimes={[
-                                        setHours(setMinutes(d, 1), 0),
-                                        setHours(setMinutes(d, 5), 12),
-                                        setHours(setMinutes(d, 59), 23),
-                                      ]}
-                                      dateFormat="MMM d, yyyy h:mm aa"
-
-                                    />
-                                  </span>
-                                </div>
-                              </section>
-                            </div>
-                            <div className="flex flex-row mt-3">
-                              <section>
-                                <span className="text-xs font-bodyLato text-[#516f90]">
-                                  <span className="">
-                                    {tempLeadStatus.charAt(0).toUpperCase() +
-                                      tempLeadStatus.slice(1)}{' '}
-                                  </span>
-                                  Priority
-                                </span>
-                                <div className="bg-green   pl-   flex flex-row  ">
-                                  <span className="inline">
-                                    <input
-                                      data-bx-id="task-edit-priority-cb"
-                                      type="checkbox"
-                                      name="priorities"
-                                      value={prior}
-                                      className="mb-[5px]"
-                                      onChange={(value) => {
-                                        setPrior(!prior)
-                                        const priorTxt = prior
-                                          ? 'high'
-                                          : 'medium'
-                                        formik.setFieldValue(
-                                          'priorities',
-                                          priorTxt
-                                        )
-                                        console.log(
-                                          'is this checked ',
-                                          priorTxt
-                                        )
-                                      }}
-                                    />
-                                  </span>
-                                  <div className="w-[85px] ml-1 mt-[1px] text-sm text-[#00000080]">
-                                    High Priority
+                                  <div className="bg-green   pl-   flex flex-row ">
+                                    <span className="inline">
+                                      <CustomDatePicker
+                                        className=" mt-[2px] pl- px- min-w-[240px] inline text-xs text-[#0091ae] bg-[#F2F5F8]"
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        showTimeSelect
+                                        timeFormat="HH:mm"
+                                        injectTimes={[
+                                          setHours(setMinutes(d, 1), 0),
+                                          setHours(setMinutes(d, 5), 12),
+                                          setHours(setMinutes(d, 59), 23),
+                                        ]}
+                                        dateFormat="MMM d, yyyy h:mm aa"
+                                      />
+                                    </span>
                                   </div>
-                                </div>
-                              </section>
+                                </section>
+                              </div>
+                              <div className="flex flex-row mt-3">
+                                <section>
+                                  <span className="text-xs font-bodyLato text-[#516f90]">
+                                    <span className="">
+                                      {tempLeadStatus.charAt(0).toUpperCase() +
+                                        tempLeadStatus.slice(1)}{' '}
+                                    </span>
+                                    Priority
+                                  </span>
+                                  <div className="bg-green   pl-   flex flex-row  ">
+                                    <span className="inline">
+                                      <input
+                                        data-bx-id="task-edit-priority-cb"
+                                        type="checkbox"
+                                        name="priorities"
+                                        value={prior}
+                                        className="mb-[5px]"
+                                        onChange={(value) => {
+                                          setPrior(!prior)
+                                          const priorTxt = prior
+                                            ? 'high'
+                                            : 'medium'
+                                          formik.setFieldValue(
+                                            'priorities',
+                                            priorTxt
+                                          )
+                                          console.log(
+                                            'is this checked ',
+                                            priorTxt
+                                          )
+                                        }}
+                                      />
+                                    </span>
+                                    <div className="w-[85px] ml-1 mt-[1px] text-sm text-[#00000080]">
+                                      High Priority
+                                    </div>
+                                  </div>
+                                </section>
+                              </div>
                             </div>
+                          </section>
+                          <div className="flex flex-row mt-4 justify-between pr-4 border-t">
+                            <section>
+                              <span>{''}</span>
+                            </section>
+                            <section className="flex">
+                              <button
+                                type="submit"
+                                className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                              >
+                                <span className="ml-1 ">
+                                  Create{' '}
+                                  {tempLeadStatus != streamCurrentStatus &&
+                                    tempLeadStatus}{' '}
+                                  Task
+                                </span>
+                              </button>
+                              <button
+                                onClick={() => cancelResetStatusFun()}
+                                className={`flex mt-2 ml-4 rounded items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
+                              >
+                                <span className="ml-1 ">Cancel</span>
+                              </button>
+                            </section>
                           </div>
-                        </section>
-                        <div className="flex flex-row mt-4 justify-between pr-4 border-t">
-                          <section>
-                            <span>{''}</span>
-                          </section>
-                          <section className="flex">
-                            <button
-                              type="submit"
-                              className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
-                            >
-                              <span className="ml-1 ">
-                                Create{' '}
-                                {tempLeadStatus != streamCurrentStatus &&
-                                  tempLeadStatus}{' '}
-                                Task
-                              </span>
-                            </button>
-                            <button
-                              onClick={() => cancelResetStatusFun()}
-                              className={`flex mt-2 ml-4 rounded items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
-                            >
-                              <span className="ml-1 ">Cancel</span>
-                            </button>
-                          </section>
                         </div>
-                      </div>
-                    </Form>
-                  )}
-                </Formik>
-              </div>
-            )}
-            <div className="flex flex-col mb-3">
-              {unitFetchedActivityData?.map((d, i) => {
-                return (
-                  <div key={i} className="">
-                    <span className="inline-block bg-[#BDE5B3] rounded-t-md px-2 py-[4px] text-[10px] font-bold">
-                      #80418
-                    </span>
-                    <div className="py-1   px-2 rounded-tr-md rounded-b-md px-2 flex flex-row justify-between bg-white">
-                      <div className="flex flex-col ">
-                        <h2 className="font-medium flex-grow text-[12px]">
-                          {d?.title}
-                        </h2>
+                      </Form>
+                    )}
+                  </Formik>
+                </div>
+              )}
+              <div className="flex flex-col mb-3">
+                {unitFetchedActivityData?.map((d, i) => {
+                  return (
+                    <div key={i} className="">
+                      <span className="inline-block bg-[#BDE5B3] rounded-t-md px-2 py-[4px] text-[10px] font-bold">
+                        #80418
+                      </span>
+                      <div className="py-1   px-2 rounded-tr-md rounded-b-md px-2 flex flex-row justify-between bg-white">
+                        <div className="flex flex-col ">
+                          <h2 className="font-medium flex-grow text-[12px]">
+                            {d?.title}
+                          </h2>
+                          <p className="text-md text-[10px] flex-grow text-right">
+                            {d?.desc}
+                          </p>
+                        </div>
                         <p className="text-md text-[10px] flex-grow text-right">
-                          {d?.desc}
+                          {d?.status}
                         </p>
                       </div>
-                      <p className="text-md text-[10px] flex-grow text-right">
-                        {d?.status}
-                      </p>
                     </div>
+                  )
+                })}
+                {unitFetchedActivityData?.length == 0 && !showAddTask && (
+                  <div className="py-8 px-8 flex flex-col items-center mt-8">
+                    <div className="font-md font-medium text-xs mb-4  text-gray-800 items-center">
+                      <img
+                        className="w-[200px] h-[200px] inline"
+                        alt=""
+                        src="/target.svg"
+                      />
+                    </div>
+                    <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+                      No Tasks
+                    </h3>
+                    <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                      Legal Clarifications always bring more trust{' '}
+                      <span
+                        className="text-blue-600"
+                        onClick={() => setShowAddTask(!showAddTask)}
+                      >
+                        Create New Task
+                      </span>
+                    </time>
                   </div>
-                )
-              })}
-              {unitFetchedActivityData?.length == 0 && !showAddTask && (
-                        <div className="py-8 px-8 flex flex-col items-center mt-8">
-                        <div className="font-md font-medium text-xs mb-4  text-gray-800 items-center">
-                          <img
-                            className="w-[200px] h-[200px] inline"
-                            alt=""
-                            src="/target.svg"
-                          />
-                        </div>
-                        <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
-                          No Tasks
-                        </h3>
-                        <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                          Legal Clarifications always bring more trust{' '}
-                          <span
-                            className="text-blue-600"
-                            onClick={() => setShowAddTask(!showAddTask)}
-                          >
-                              Create New Task
-                          </span>
-                        </time>
-                      </div>
-
-              )}
-            </div>
-
-            {!leadSchLoading && leadSchFetchedData.length == 0 && !addSch && (
-              <div className="py-8 px-8 flex flex-col items-center">
-                <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
-                  <img
-                    className="w-[200px] h-[200px] inline"
-                    alt=""
-                    src="/target.svg"
-                  />
-                </div>
-                <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
-                  No Appointmentss
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
-                  Appointments always bring more suprises{' '}
-                  <span
-                    className="text-blue-600"
-                    onClick={() => setAddSch(true)}
-                  >
-                    Add new
-                  </span>
-                </time>
+                )}
               </div>
-            )}
-            <div className="max-h-[60%]">
-              <ol className="relative  border-gray-200 ">
-                {leadSchFilteredData.map((data, i) => (
-                  <section
-                    key={i}
-                    className=" mx-2 bg-[#FFF] mb-[1px]  px-3 py-3"
-                    onMouseEnter={() => {
-                      hoverEffectTaskFun(data?.ct)
-                      // setHover(true)
-                    }}
-                    onMouseLeave={() => {
-                      hoverEffectTaskFun(2000)
-                      // setHover(false)
-                    }}
-                  >
-                    {editTaskObj?.ct === data?.ct ? (
-                      <EditLeadTask
-                        editTaskObj={editTaskObj}
-                        setStartDate={setStartDate}
-                        startDate={startDate}
-                        takTitle={takTitle}
-                        setTitleFun={setTitleFun}
-                        cancelResetStatusFun={cancelResetStatusFun}
-                        editTaskFun={editTaskFun}
-                        d={d}
-                      />
-                    ) : null}
-                    <>
-                      {' '}
-                      <LeadTaskDisplayHead
-                        data={data}
-                        setAddTaskCommentObj={setAddTaskCommentObj}
-                        closeTaskFun={closeTaskFun}
-                        hoverTasId={hoverTasId}
-                        undoFun={undoFun}
-                        setShowVisitFeedBackStatusFun={
-                          setShowVisitFeedBackStatusFun
-                        }
-                      />
-                      {addTaskCommentObj?.ct === data?.ct && (
 
-                        <AddLeadTaskComment
-                          closeTask={closeTask}
+              {!leadSchLoading && leadSchFetchedData.length == 0 && !addSch && (
+                <div className="py-8 px-8 flex flex-col items-center">
+                  <div className="font-md font-medium text-xs mb-4 text-gray-800 items-center">
+                    <img
+                      className="w-[200px] h-[200px] inline"
+                      alt=""
+                      src="/target.svg"
+                    />
+                  </div>
+                  <h3 className="mb-1 text-sm font-semibold text-gray-900 ">
+                    No Appointmentss
+                  </h3>
+                  <time className="block mb-2 text-sm font-normal leading-none text-gray-400 ">
+                    Appointments always bring more suprises{' '}
+                    <span
+                      className="text-blue-600"
+                      onClick={() => setAddSch(true)}
+                    >
+                      Add new
+                    </span>
+                  </time>
+                </div>
+              )}
+              <div className="max-h-[60%]">
+                <ol className="relative  border-gray-200 ">
+                  {leadSchFilteredData.map((data, i) => (
+                    <section
+                      key={i}
+                      className=" mx-2 bg-[#FFF] mb-[1px]  px-3 py-3"
+                      onMouseEnter={() => {
+                        hoverEffectTaskFun(data?.ct)
+                        // setHover(true)
+                      }}
+                      onMouseLeave={() => {
+                        hoverEffectTaskFun(2000)
+                        // setHover(false)
+                      }}
+                    >
+                      {editTaskObj?.ct === data?.ct ? (
+                        <EditLeadTask
+                          editTaskObj={editTaskObj}
+                          setStartDate={setStartDate}
+                          startDate={startDate}
+                          takTitle={takTitle}
+                          setTitleFun={setTitleFun}
+                          cancelResetStatusFun={cancelResetStatusFun}
+                          editTaskFun={editTaskFun}
+                          d={d}
+                        />
+                      ) : null}
+                      <>
+                        {' '}
+                        <LeadTaskDisplayHead
                           data={data}
+                          setAddTaskCommentObj={setAddTaskCommentObj}
+                          closeTaskFun={closeTaskFun}
+                          hoverTasId={hoverTasId}
+                          undoFun={undoFun}
                           setShowVisitFeedBackStatusFun={
                             setShowVisitFeedBackStatusFun
                           }
-                          setShowNotInterestedFun={setShowNotInterestedFun}
-                          setAddCommentTitle={setAddCommentTitle}
-                          addCommentTitle={addCommentTitle}
-                          addCommentTime={addCommentTime}
-                          setPostPoneToFuture={setPostPoneToFuture}
-                          setClosePrevious={setClosePrevious}
-                          setAddCommentPlusTask={setAddCommentPlusTask}
-                          setAddCommentTime={setAddCommentTime}
-                          cancelResetStatusFun={cancelResetStatusFun}
-                          addTaskCommentFun={addTaskCommentFun}
-                          addCommentPlusTask={addCommentPlusTask}
-                          setSelType={setSelType}
-                          selType={selType}
-                          d={d}
                         />
-                      )}
-                      {data?.comments?.map((commentObj, k) => {
-                        return (
-                          <li
-                            key={k}
-                            className={`ml-6 text-[13px] text-[#7E92A2] tracking-wide ${
-                              data?.comments?.length - 1 === k ? 'mb-1' : ''
-                            }`}
-                          >
-                            <section className="flex flex-row justify-between">
-                              <span>
-                                {' '}
-                                <svg
-                                  viewBox="0 0 12 12"
-                                  className="notes_icon inline w-2 h-2 mr-1"
-                                  aria-label="2 comments"
-                                >
-                                  <g fill="none" fillRule="evenodd">
-                                    <path
-                                      fill="currentColor"
-                                      fillRule="nonzero"
-                                      d="M9.5 1A1.5 1.5 0 0 1 11 2.5v5A1.5 1.5 0 0 1 9.5 9H7.249L5.28 10.97A.75.75 0 0 1 4 10.44V9H2.5A1.5 1.5 0 0 1 1 7.5v-5A1.5 1.5 0 0 1 2.5 1h7zm0 1h-7a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5H5v1.836L6.835 8H9.5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5z"
-                                    ></path>
-                                  </g>
-                                </svg>{' '}
-                                {commentObj?.c}
-                              </span>
-                              <span> {prettyDateTime(commentObj?.t)}</span>
-                            </section>
-                          </li>
-                        )
-                      })}
-                      {(showNotInterested || showVisitFeedBackStatus) &&
-                        selSchGrpO?.ct === data?.ct && (
-                          <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
-                            {showNotInterested && (
-                              <div className="w-full flex flex-col mb-3 mt-2">
-                                <SelectDropDownComp
-                                  label={`Why  ${
-                                    customerDetails?.Name?.toLocaleUpperCase() ||
-                                    'Customer'
-                                  } is  not Interested*`}
-                                  options={notInterestOptions}
-                                  value={fbTitle}
-                                  onChange={(value) => {
-                                    setFbTitle(value.value)
-                                  }}
-                                />
-                              </div>
-                            )}
+                        {addTaskCommentObj?.ct === data?.ct && (
+                          <AddLeadTaskComment
+                            closeTask={closeTask}
+                            data={data}
+                            setShowVisitFeedBackStatusFun={
+                              setShowVisitFeedBackStatusFun
+                            }
+                            setShowNotInterestedFun={setShowNotInterestedFun}
+                            setAddCommentTitle={setAddCommentTitle}
+                            addCommentTitle={addCommentTitle}
+                            addCommentTime={addCommentTime}
+                            setPostPoneToFuture={setPostPoneToFuture}
+                            setClosePrevious={setClosePrevious}
+                            setAddCommentPlusTask={setAddCommentPlusTask}
+                            setAddCommentTime={setAddCommentTime}
+                            cancelResetStatusFun={cancelResetStatusFun}
+                            addTaskCommentFun={addTaskCommentFun}
+                            addCommentPlusTask={addCommentPlusTask}
+                            setSelType={setSelType}
+                            selType={selType}
+                            d={d}
+                          />
+                        )}
+                        {data?.comments?.map((commentObj, k) => {
+                          return (
+                            <li
+                              key={k}
+                              className={`ml-6 text-[13px] text-[#7E92A2] tracking-wide ${data?.comments?.length - 1 === k ? 'mb-1' : ''
+                                }`}
+                            >
+                              <section className="flex flex-row justify-between">
+                                <span>
+                                  {' '}
+                                  <svg
+                                    viewBox="0 0 12 12"
+                                    className="notes_icon inline w-2 h-2 mr-1"
+                                    aria-label="2 comments"
+                                  >
+                                    <g fill="none" fillRule="evenodd">
+                                      <path
+                                        fill="currentColor"
+                                        fillRule="nonzero"
+                                        d="M9.5 1A1.5 1.5 0 0 1 11 2.5v5A1.5 1.5 0 0 1 9.5 9H7.249L5.28 10.97A.75.75 0 0 1 4 10.44V9H2.5A1.5 1.5 0 0 1 1 7.5v-5A1.5 1.5 0 0 1 2.5 1h7zm0 1h-7a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5H5v1.836L6.835 8H9.5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5z"
+                                      ></path>
+                                    </g>
+                                  </svg>{' '}
+                                  {commentObj?.c}
+                                </span>
+                                <span> {prettyDateTime(commentObj?.t)}</span>
+                              </section>
+                            </li>
+                          )
+                        })}
+                        {(showNotInterested || showVisitFeedBackStatus) &&
+                          selSchGrpO?.ct === data?.ct && (
+                            <div className="flex flex-col pt-0 my-10 mt-[10px] rounded bg-[#FFF9F2] mx-4 p-4">
+                              {showNotInterested && (
+                                <div className="w-full flex flex-col mb-3 mt-2">
+                                  <SelectDropDownComp
+                                    label={`Why  ${customerDetails?.Name?.toLocaleUpperCase() ||
+                                      'Customer'
+                                      } is  not Interested*`}
+                                    options={notInterestOptions}
+                                    value={fbTitle}
+                                    onChange={(value) => {
+                                      setFbTitle(value.value)
+                                    }}
+                                  />
+                                </div>
+                              )}
 
-                            <div className="  outline-none border  rounded p-4 mt-4">
-                              <textarea
-                                value={fbNotes}
-                                onChange={(e) => setfbNotes(e.target.value)}
-                                placeholder="Type & make a notes *"
-                                className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFF9F2] "
-                              ></textarea>
-                            </div>
-                            <div className="flex flex-row mt-1">
-                              <button
-                                onClick={() => {
-                                  if (fbNotes != '') {
+                              <div className="  outline-none border  rounded p-4 mt-4">
+                                <textarea
+                                  value={fbNotes}
+                                  onChange={(e) => setfbNotes(e.target.value)}
+                                  placeholder="Type & make a notes *"
+                                  className="w-full h-full pb-10 outline-none  focus:border-blue-600 hover:border-blue-600 rounded bg-[#FFF9F2] "
+                                ></textarea>
+                              </div>
+                              <div className="flex flex-row mt-1">
+                                <button
+                                  onClick={() => {
+                                    if (fbNotes != '') {
+                                      setLeadStatus('visitdone')
+                                      if (showNotInterested) {
+                                        notInterestedFun()
+                                        return
+                                      }
+                                      addFeedbackFun(data)
+                                    } else {
+                                      enqueueSnackbar('Please Enter Notes', {
+                                        variant: 'warning',
+                                      })
+                                    }
+                                  }}
+                                  className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                                >
+                                  <span className="ml-1 ">Save</span>
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    console.log('am i clicked')
+
                                     setLeadStatus('visitdone')
                                     if (showNotInterested) {
                                       notInterestedFun()
                                       return
                                     }
                                     addFeedbackFun(data)
-                                  } else {
-                                    enqueueSnackbar('Please Enter Notes', {
-                                      variant: 'warning',
-                                    })
-                                  }
-                                }}
-                                className={`flex mt-2 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
-                              >
-                                <span className="ml-1 ">Save</span>
-                              </button>
-                              <button
-                                onClick={() => {
-                                  console.log('am i clicked')
 
-                                  setLeadStatus('visitdone')
-                                  if (showNotInterested) {
-                                    notInterestedFun()
-                                    return
-                                  }
-                                  addFeedbackFun(data)
-
-                                  getWhatsAppTemplates(
-                                    'on_sitevisit_done',
-                                    'wa',
-                                    'customer',
-                                    ProjectId,
-                                    receiverDetails,
-                                    msgPayload
-                                  )
-                                }}
-                                className={`flex mt-2 ml-4 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
-                              >
-                                <span className="ml-1 ">Save & Whats App</span>
-                              </button>
-                              <button
-                                onClick={() => cancelResetStatusFun()}
-                                className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
-                              >
-                                <span className="ml-1 ">Cancel</span>
-                              </button>
+                                    getWhatsAppTemplates(
+                                      'on_sitevisit_done',
+                                      'wa',
+                                      'customer',
+                                      ProjectId,
+                                      receiverDetails,
+                                      msgPayload
+                                    )
+                                  }}
+                                  className={`flex mt-2 ml-4 rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-white bg-[#FF7A53]  hover:bg-gray-700  `}
+                                >
+                                  <span className="ml-1 ">
+                                    Save & Whats App
+                                  </span>
+                                </button>
+                                <button
+                                  onClick={() => cancelResetStatusFun()}
+                                  className={`flex mt-2 ml-4  rounded items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white  `}
+                                >
+                                  <span className="ml-1 ">Cancel</span>
+                                </button>
+                              </div>
                             </div>
-                          </div>
+                          )}
+                        {addTaskCommentObj?.ct != data?.ct && (
+                          <LeadTaskFooter
+                            data={data}
+                            hoverTasId={hoverTasId}
+                            EditTaskOpenWindowFun={EditTaskOpenWindowFun}
+                            delFun={delFun}
+                          />
                         )}
-                      {addTaskCommentObj?.ct != data?.ct && (
-                        <LeadTaskFooter
-                          data={data}
-                          hoverTasId={hoverTasId}
-                          EditTaskOpenWindowFun={EditTaskOpenWindowFun}
-                          delFun={delFun}
-                        />
-                      )}
-                    </>
-                  </section>
-                ))}{' '}
-              </ol>
+                      </>
+                    </section>
+                  ))}{' '}
+                </ol>
+              </div>
             </div>
+          )}
+        </Formik>
 
-          </div>
-        )}
-      </Formik>
-
-      <div className="mt-5 left-0 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
-        <button
-          className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-          type="submit"
-          onClick={() => {
-            submitManagerApproval('rejected')
-          }}
-        >
-          {'Reject'}
-        </button>
-        <button
-          className="bg-green-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-          type="submit"
-          onClick={() => {
-            submitManagerApproval('approved')
-          }}
-        >
-          {'Approve'}
-        </button>
-      </div>
-    </section>
-    <CrmActivityLog selUnitPayload={selUnitPayload} title="Legal Activity" type={['legal_approval']}/>
-
-</div>
+        <div className="mt-5 left-0 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
+          <button
+            className="bg-red-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+            type="submit"
+            onClick={() => {
+              submitManagerApproval('rejected')
+            }}
+          >
+            {'Reject'}
+          </button>
+          <button
+            className="bg-green-400 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+            type="submit"
+            onClick={() => {
+              submitManagerApproval('approved')
+            }}
+          >
+            {'Approve'}
+          </button>
+        </div>
+      </section>
+      <CrmActivityLog
+        selUnitPayload={selUnitPayload}
+        title="Legal Activity"
+        type={['legal_approval']}
+      />
+    </div>
   )
 }

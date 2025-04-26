@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { updateProfile } from 'firebase/auth'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@material-ui/icons/Edit'
 import { storage, auth } from 'src/context/firebaseConfig'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { updateUserAvatar } from 'src/context/dbQueryFirebase'
@@ -24,7 +24,7 @@ const UserAvatarUpload = () => {
     // 3. Get the download URL
     // Here's a simulation for demo purposes:
     setIsUploading(true)
-    console.log('file test', file);
+    console.log('file test', file)
     try {
       const uid = uuidv4()
 
@@ -36,38 +36,33 @@ const UserAvatarUpload = () => {
         (snapshot) => {
           const prog =
             Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100
-console.log('iam here')
-     
+          console.log('iam here')
         },
         (err) => console.log(err),
         async () => {
           const url = await getDownloadURL(uploadTask.snapshot.ref)
 
-          updateUserAvatar(orgId, user.uid,user.email, url, user.email)
-          await updateProfile( auth.currentUser, {
-            photoURL: url
-          });
+          updateUserAvatar(orgId, user.uid, user.email, url, user.email)
+          await updateProfile(auth.currentUser, {
+            photoURL: url,
+          })
 
           // await auth.currentUser.getIdToken(true)
           const currentUser = auth.currentUser
 
           console.log('uploaded profile pic is', url, currentUser, user)
-        setImageUrl(url)
-        setIsUploading(true)
+          setImageUrl(url)
+          setIsUploading(true)
 
-
-       window.location.reload()
-
+          window.location.reload()
 
           return url
-    
         }
       )
     } catch (error) {
       return ''
       console.log('upload error is ', error)
     }
-
   }
 
   const handleFileSelect = async (event) => {
@@ -124,9 +119,7 @@ console.log('iam here')
           className="absolute bottom-0 right-0 p-2        text-[#fff]  bg-[#f56565] rounded-full shadow-lg"
           disabled={isUploading}
         >
-
-            <EditIcon className="w-3 h-3"/>
-
+          <EditIcon className="w-3 h-3" />
         </button>
 
         <input
@@ -138,7 +131,9 @@ console.log('iam here')
         />
       </div>
 
-      {isUploading && <div className="text-sm mt-r text-green-600">Uploading...</div>}
+      {isUploading && (
+        <div className="text-sm mt-r text-green-600">Uploading...</div>
+      )}
       {error && <div className="text-sm text-red-600">{error}</div>}
     </div>
   )

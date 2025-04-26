@@ -9,10 +9,7 @@ import LeadBankSourceStats from 'src/components/Charts_Graphs/LeadBankSourceStat
 import RecentActivity from 'src/components/Charts_Graphs/RecentActivity'
 import LogSkelton from 'src/components/shimmerLoaders/logSkelton'
 import SiderForm from 'src/components/SiderForm/SiderForm'
-import {
-  getAllProjects,
-  getLeadsDataLake,
-} from 'src/context/dbQueryFirebase'
+import { getAllProjects, getLeadsDataLake } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 import LeadsDisplayTable from './LeadsDisplayTable'
 
@@ -64,7 +61,7 @@ export default function LeadsLakeHomeComponent({ todaySch, schLoading }) {
         setLeadsRawList(projectsListA)
       },
       (error) => setLeadsRawList([]),
-      {dateRange}
+      { dateRange }
     )
 
     return unsubscribe
@@ -123,13 +120,12 @@ export default function LeadsLakeHomeComponent({ todaySch, schLoading }) {
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((data, i) => (
               <LogSkelton key={i} />
             ))}
-         
+
           {!schLoading && !leadByViewLayout && todaySch && (
             <>
               <div className=" ">
                 <div className="flex flex-wrap">
                   <div className="w-10/12">
-
                     <LeadsDisplayTable
                       leadsRawList={leadsRawList}
                       searchKey={searchKey}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   BarChart,
   Bar,
@@ -7,9 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
-
-
+} from 'recharts'
 
 const data = [
   { name: 'Jan', value: 120 },
@@ -19,7 +17,7 @@ const data = [
   { name: 'May', value: 160 },
   { name: 'Jun', value: 190 },
   { name: 'Jul', value: 199.98 },
-];
+]
 
 export function SalesChart() {
   return (
@@ -27,8 +25,8 @@ export function SalesChart() {
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <XAxis 
-            dataKey="name" 
+          <XAxis
+            dataKey="name"
             axisLine={false}
             tickLine={false}
             tick={{ fontSize: 12, fill: '#9CA3AF' }}
@@ -43,14 +41,14 @@ export function SalesChart() {
                       ${payload[0].value.toFixed(2)}
                     </p>
                   </div>
-                );
+                )
               }
-              return null;
+              return null
             }}
           />
           <Bar dataKey="value" fill="#10B981" radius={[2, 2, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>
-  );
+  )
 }

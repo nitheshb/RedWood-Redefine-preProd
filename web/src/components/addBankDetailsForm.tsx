@@ -7,20 +7,14 @@ import { useParams } from '@redwoodjs/router'
 import Loader from 'src/components/Loader/Loader'
 import { TextField } from 'src/util/formFields/TextField'
 import { CustomSelect } from 'src/util/formFields/selectBoxField'
-import {
-  bankPreferredType,
-  banksList,
-} from 'src/constants/projects'
-import {
-  addBankAccount,
-  addVirtualAccount,
-} from 'src/context/dbQueryFirebase'
+import { bankPreferredType, banksList } from 'src/constants/projects'
+import { addBankAccount, addVirtualAccount } from 'src/context/dbQueryFirebase'
 import { useAuth } from 'src/context/firebase-auth-context'
 
 const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
   const { user } = useAuth()
 
- const { orgId } = user
+  const { orgId } = user
   const [loading, setLoading] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
   const { uid } = useParams()
@@ -52,7 +46,6 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
       )
       await setLoading(false)
     }
-  
   }
 
   const initialState = {
@@ -164,7 +157,6 @@ const AddBankDetailsForm = ({ title, dialogOpen, phase: bankData }) => {
                             </div>
                           </div>
                           <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
-   
                             <div className="w-[49%]">
                               <CustomSelect
                                 name="preferredtype"

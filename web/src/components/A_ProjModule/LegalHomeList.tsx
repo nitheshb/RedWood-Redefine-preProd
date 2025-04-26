@@ -42,12 +42,8 @@ const LegalHomeList = ({
 
   return (
     <div className="h-full flex flex-col  bg-white shadow-xl overflow-y-scroll">
-
       <div className="  z-10">
-
-
         <div className="flex flex-row">
-     
           {subView === 'legalTeamAccess' && (
             <PaymentLeadAccess
               title={'Leads Access'}
@@ -64,7 +60,8 @@ const LegalHomeList = ({
               source={source}
               category={subView}
             />
-          )}      {subView === 'legalDocs' && (
+          )}{' '}
+          {subView === 'legalDocs' && (
             <PlanDiagramView
               title={'LegalDocs'}
               data={data}
@@ -72,7 +69,6 @@ const LegalHomeList = ({
               pId={pId}
               source={source}
               category={subView}
-
             />
           )}
           {subView === 'planDiagram' && (
@@ -83,7 +79,6 @@ const LegalHomeList = ({
               pId={pId}
               source={source}
               category={subView}
-
             />
           )}
           {subView === 'Brouchers' && (
@@ -94,18 +89,16 @@ const LegalHomeList = ({
               pId={pId}
               source={source}
               category={subView}
-
             />
           )}
-           {subView === 'others' && (
+          {subView === 'others' && (
             <PlanDiagramView
-            title={'Plan Diagram'}
+              title={'Plan Diagram'}
               data={data}
               blocks={[]}
               pId={pId}
               source={source}
               category={subView}
-
             />
           )}
         </div>

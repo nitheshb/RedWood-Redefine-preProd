@@ -1,5 +1,3 @@
-
-
 // import nodemailer from "nodemailer";
 
 // const EMAIL_USER = "chaitanyakrishna7330@gmail.com";
@@ -41,12 +39,4 @@
 //   }
 // };
 
-
 // export default sendEmail;
-
-
-
-
-
-
-

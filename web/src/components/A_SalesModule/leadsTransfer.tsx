@@ -106,11 +106,10 @@ const LeadsTransferHome = ({ project }) => {
     },
   ]
 
-
   useEffect(() => {
     const unsubscribe = steamUsersListByDeptWithInactive(
       orgId,
-      ['sales','sales-manager', 'sales-executive'],
+      ['sales', 'sales-manager', 'sales-executive'],
       (querySnapshot) => {
         const usersListA = querySnapshot.docs.map((docSnapshot) =>
           docSnapshot.data()
@@ -252,9 +251,9 @@ const LeadsTransferHome = ({ project }) => {
 
   const tranferLeads = () => {
     console.log('hello it', selectedIds, selLeadTransferTo, user)
-    selectedIds.map((data)=>{
+    selectedIds.map((data) => {
       const projId = data?.ProjectId
-      const {id:leadDocId, assignedTo, Status} = data;
+      const { id: leadDocId, assignedTo, Status } = data
       const txt = `A New Lead is assigned to ${selLeadTransferTo?.name}`
       updateLeadAssigTo(
         orgId,
@@ -270,7 +269,6 @@ const LeadsTransferHome = ({ project }) => {
       )
     })
     setSelectedIds([])
-
   }
 
   return (
@@ -279,9 +277,7 @@ const LeadsTransferHome = ({ project }) => {
         <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
           <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
             <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-1">
-              <Link
-                className="flex items-center"
-              >
+              <Link className="flex items-center">
                 <span className="relative z-10 flex items-center w-auto text-md font-medium leading-none pl-0">
                   Leads Transfer
                 </span>
@@ -293,90 +289,55 @@ const LeadsTransferHome = ({ project }) => {
             <form className="">
               <div className="flex">
                 <div className="relative w-full  pb-6 rounded-lg">
-
-
-
                   <div className="flex items-center justify-between">
-
-          
                     <section className="flex gap-2 flex-row">
-
                       <section>
-
-                      {/* <div className="font-semibold">Transfer From</div> */}
-                    <VerySlimSelectBox
-                      name="project"
-                      label=""
-                      placeholder="Transfer From"
-                      className="input w-[30%]  placeholder-black text-black "
-                      onChange={(value) => {
-                        console.log('changed value is ', value.value)
-                        selProjctFun(value)
-                      }}
-                      value={selLeadsOf?.value}
-                      options={[
-
-                        ...usersAllList,
-                      ]}
-                    />
-
+                        {/* <div className="font-semibold">Transfer From</div> */}
+                        <VerySlimSelectBox
+                          name="project"
+                          label=""
+                          placeholder="Transfer From"
+                          className="input w-[30%]  placeholder-black text-black "
+                          onChange={(value) => {
+                            console.log('changed value is ', value.value)
+                            selProjctFun(value)
+                          }}
+                          value={selLeadsOf?.value}
+                          options={[...usersAllList]}
+                        />
                       </section>
 
-
-
-
                       <section>
-                      {/* <div className="font-semibold">{'Transfer To'}</div> */}
+                        {/* <div className="font-semibold">{'Transfer To'}</div> */}
 
-
-
-
-                    <VerySlimSelectBox
-                      name="project"
-                      label=""
-                      placeholder="Transfer To"
-                      className="input w-[30%] placeholder-black text-black  "
-                      onChange={(value) => {
-                        console.log('changed value is ', value.value)
-                        setSelLeadTransferTo(value)
-                      }}
-                      value={selLeadTransferTo?.value}
-                      options={[
-                        ...usersList,
-                      ]}
-                    />
-                    </section>
-                    </section>
-             
-                  
-                  <section>
-
-                    
-<section
-    className="text-[#0E0A1F] bg-[#EDE9FE]  text-[12px] rounded-md px-3 py-3 font-medium leading-[100%]  cursor-pointer"
-    onClick={() => tranferLeads()}
-  >
-    Apply Lead Transfer
-  </section>
+                        <VerySlimSelectBox
+                          name="project"
+                          label=""
+                          placeholder="Transfer To"
+                          className="input w-[30%] placeholder-black text-black  "
+                          onChange={(value) => {
+                            console.log('changed value is ', value.value)
+                            setSelLeadTransferTo(value)
+                          }}
+                          value={selLeadTransferTo?.value}
+                          options={[...usersList]}
+                        />
+                      </section>
                     </section>
 
-
-
+                    <section>
+                      <section
+                        className="text-[#0E0A1F] bg-[#EDE9FE]  text-[12px] rounded-md px-3 py-3 font-medium leading-[100%]  cursor-pointer"
+                        onClick={() => tranferLeads()}
+                      >
+                        Apply Lead Transfer
+                      </section>
+                    </section>
                   </div>
-
-
-
-
-
-
- 
-
-
                 </div>
               </div>
             </form>
           </div>
-
 
           {selLeadsOf == undefined && (
             <div className="py-8 px-8 mt-10 flex flex-col items-center bg-red-100 rounded">
@@ -397,126 +358,109 @@ const LeadsTransferHome = ({ project }) => {
           )}
 
           <div className="">
-
             <div>
-            <div className=" rounded px-1 mb-3">
-                      {/* <div className="font-semibold">Current Lead Status</div> */}
-                      <div className="sm:flex items-center justify-between rounded  ">
-                        <div className="flex items-center">
-                          {[
-                            {
-                              lab: 'All',
-                              val: 'all',
-                              match: ['all'],
-                            },
-                            {
-                              lab: 'New',
-                              val: 'new',
-                              match: ['new'],
-                            },
-                            {
-                              lab: 'Followup',
-                              val: 'followup',
-                              match: ['followup'],
-                            },
-                            {
-                              lab: 'Visit Fixed',
-                              val: 'visitfixed',
-                              match: ['visitfixed'],
-                            },
-                            {
-                              lab: 'Visit Done',
-                              val: 'visitdone',
-                              match: ['visitdone'],
-                            },
-      
-                            {
-                              lab: 'Not Interested',
-                              val: 'notinterested',
-                              match: ['notinterested'],
-                            },
-                          ].map((d, i) => {
-                            return (
-                              // <a
-                              //   key={i}
-                              //   className=" focus:outline-none mr-2"
-                              //   href="javascript:void(0)"
-                              //   onClick={() => setCurrentStatus(d.match)}
-                              // >
-                              //   <div
-                              //     className={`px-3  pt-[2px] pb-[4px] text-[14px]  ${
-                              //       currentStatus.includes(d.val)
-                              //         ? 'border-b-2 border-black'
-                              //         : ''
-                              //     }`}
-                              //   >
-                              //     {d.lab}
-                              //   </div>
+              <div className=" rounded px-1 mb-3">
+                {/* <div className="font-semibold">Current Lead Status</div> */}
+                <div className="sm:flex items-center justify-between rounded  ">
+                  <div className="flex items-center">
+                    {[
+                      {
+                        lab: 'All',
+                        val: 'all',
+                        match: ['all'],
+                      },
+                      {
+                        lab: 'New',
+                        val: 'new',
+                        match: ['new'],
+                      },
+                      {
+                        lab: 'Followup',
+                        val: 'followup',
+                        match: ['followup'],
+                      },
+                      {
+                        lab: 'Visit Fixed',
+                        val: 'visitfixed',
+                        match: ['visitfixed'],
+                      },
+                      {
+                        lab: 'Visit Done',
+                        val: 'visitdone',
+                        match: ['visitdone'],
+                      },
 
-                              //   <div className="h-12 border-r rounded-sm border-[#E7E7E9] mx-4 last:border-none"></div>
+                      {
+                        lab: 'Not Interested',
+                        val: 'notinterested',
+                        match: ['notinterested'],
+                      },
+                    ].map((d, i) => {
+                      return (
+                        // <a
+                        //   key={i}
+                        //   className=" focus:outline-none mr-2"
+                        //   href="javascript:void(0)"
+                        //   onClick={() => setCurrentStatus(d.match)}
+                        // >
+                        //   <div
+                        //     className={`px-3  pt-[2px] pb-[4px] text-[14px]  ${
+                        //       currentStatus.includes(d.val)
+                        //         ? 'border-b-2 border-black'
+                        //         : ''
+                        //     }`}
+                        //   >
+                        //     {d.lab}
+                        //   </div>
 
-                              // </a>
+                        //   <div className="h-12 border-r rounded-sm border-[#E7E7E9] mx-4 last:border-none"></div>
 
+                        // </a>
 
-                              <div key={i} className="flex items-center">
-                              <a
-                                className="focus:outline-none"
-                                href="javascript:void(0)"
-                                onClick={() => setCurrentStatus(d.match)}
-                              >
-                                <div
-                                  className={` flex flex-col items-center ${
-                                    currentStatus.includes(d.val)
-                                      ? 'border-b-2 border-black text-[#0E0A1F]'
-                                      : 'text-[#606062]'
-                                  }`}
-                                >
-                                  <span className="text-sm font-normal">{d.lab}</span>
-                                  {/* <span className="text-xs mt-1">{d.count}</span> */}
-                                </div>
-                              </a>
-                              {i !== 5 && (
-                                <div className="h-4 border-r mx-4 border-gray-200"></div>
-                              )}
+                        <div key={i} className="flex items-center">
+                          <a
+                            className="focus:outline-none"
+                            href="javascript:void(0)"
+                            onClick={() => setCurrentStatus(d.match)}
+                          >
+                            <div
+                              className={` flex flex-col items-center ${
+                                currentStatus.includes(d.val)
+                                  ? 'border-b-2 border-black text-[#0E0A1F]'
+                                  : 'text-[#606062]'
+                              }`}
+                            >
+                              <span className="text-sm font-normal">
+                                {d.lab}
+                              </span>
+                              {/* <span className="text-xs mt-1">{d.count}</span> */}
                             </div>
-
-                              
-                            )
-                          })}
+                          </a>
+                          {i !== 5 && (
+                            <div className="h-4 border-r mx-4 border-gray-200"></div>
+                          )}
                         </div>
-
-
-
-                      </div>
-                    </div>
-                  
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
             </div>
-
-
-
 
             <div>
-            {!false && (
-              <LeadsTransferBody
-            leadAssignedTo={selLeadsOf?.value}
-            coveredStatus={searchKey}
-            currentStatus={currentStatus}
-            setSelectedIds={setSelectedIds}
-            selectedIds={selectedIds}
-          />
-            )}
+              {!false && (
+                <LeadsTransferBody
+                  leadAssignedTo={selLeadsOf?.value}
+                  coveredStatus={searchKey}
+                  currentStatus={currentStatus}
+                  setSelectedIds={setSelectedIds}
+                  selectedIds={selectedIds}
+                />
+              )}
             </div>
-
-
-
-
-
-
-
           </div>
         </div>
       </section>
-
     </>
   )
 }

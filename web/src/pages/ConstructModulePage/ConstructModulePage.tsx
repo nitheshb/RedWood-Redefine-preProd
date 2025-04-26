@@ -51,24 +51,22 @@ const ConstructModulePage = () => {
               }`}
             >
               <SlimSideMenuBar
-              pgName={'constructModule'}
-              sourceLink={'constructModule'}
-              showSideView1={undefined}
-              setViewable={setViewable}
-              viewable={viewable}
-            />
-
+                pgName={'constructModule'}
+                sourceLink={'constructModule'}
+                showSideView1={undefined}
+                setViewable={setViewable}
+                viewable={viewable}
+              />
             </div>
 
             <div className="flex-grow  items-center overflow-y-auto  px-300  py-300">
-            <HeadNavBar2
-              selModule ={selModule}
-              setSelModule={setSelModule}
-              setViewable={setViewable}
+              <HeadNavBar2
+                selModule={selModule}
+                setSelModule={setSelModule}
+                setViewable={setViewable}
+              />
 
-            />
-
-{viewable === 'userProfile' && <ProfileSummary />}
+              {viewable === 'userProfile' && <ProfileSummary />}
 
               {viewable === 'ConstructUnits' && (
                 <ConstructUnitsHome

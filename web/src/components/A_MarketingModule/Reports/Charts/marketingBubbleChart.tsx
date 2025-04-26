@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import BubbleChart from '@weknow/react-bubble-chart-d3';
+import React, { useEffect, useState } from 'react'
+import BubbleChart from '@weknow/react-bubble-chart-d3'
 
 const BubbleChartComponent = () => {
   const data = [
     { label: 'Desktop', value: 20, color: '#ff6347' },
     { label: 'Mobile', value: 30, color: '#4682b4' },
     { label: 'Others', value: 40, color: '#32cd32' },
-  ];
-  const [chartData, setChartData] = useState([]);
+  ]
+  const [chartData, setChartData] = useState([])
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true
 
     const fetchData = async () => {
       try {
@@ -17,22 +17,22 @@ const BubbleChartComponent = () => {
           { label: 'Desktop', value: 20, color: '#ff6347' },
           { label: 'Mobile', value: 30, color: '#4682b4' },
           { label: 'Others', value: 40, color: '#32cd32' },
-        ];
+        ]
 
         if (isMounted) {
-          setChartData(data);
+          setChartData(data)
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error)
       }
-    };
+    }
 
-    fetchData();
+    fetchData()
 
     return () => {
-      isMounted = false; // Cleanup function to prevent state update on unmounted component
-    };
-  }, []);
+      isMounted = false // Cleanup function to prevent state update on unmounted component
+    }
+  }, [])
   return (
     <div style={{ width: '600px', height: '400px' }}>
       <BubbleChart
@@ -60,7 +60,7 @@ const BubbleChartComponent = () => {
         data={chartData}
       />
     </div>
-  );
-};
+  )
+}
 
-export default BubbleChartComponent;
+export default BubbleChartComponent

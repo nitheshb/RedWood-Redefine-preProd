@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect } from 'react'
-import * as React from 'react';
+import * as React from 'react'
 import { Timestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { useSnackbar } from 'notistack'
@@ -22,7 +22,7 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import { storage } from 'src/context/firebaseConfig'
 
 import { useFileUpload } from './useFileUpload'
-import CloneableEmailForm from './ApplicantDetailsFormReuse';
+import CloneableEmailForm from './ApplicantDetailsFormReuse'
 
 const AddApplicantDetails = ({
   source,
@@ -56,51 +56,34 @@ const AddApplicantDetails = ({
   const [startDate, setStartDate] = useState(d)
   const [showLeadLink, setShowLeadLink] = useState(false)
 
+  const [statesListA, setStatesList] = useState([])
 
+  useEffect(() => {
+    const unsubscribe = streamMasters(orgId, (querySnapshot) => {
+      const bankA = querySnapshot.docs.map((docSnapshot) => {
+        const x = docSnapshot.data()
+        return x
+      })
 
+      console.log('fetched users list is', bankA)
+      // step 3: filter and set values to each title
+      if (bankA?.length > 0) {
+        const dA = bankA.filter((item) => item.title == 'State')
 
-
-  const [statesListA, setStatesList] = useState([]);
-
-
- useEffect(() => {
-    const unsubscribe = streamMasters(
-      orgId,
-      (querySnapshot) => {
-        const bankA = querySnapshot.docs.map((docSnapshot) => {
-          const x = docSnapshot.data()
-          return x
-        })
-
-        console.log('fetched users list is', bankA)
-        // step 3: filter and set values to each title
-        if (bankA?.length > 0) {
-          const dA = bankA.filter((item) => item.title == 'State')
-
-
-          setStatesList(dA.sort((a, b) => {
+        setStatesList(
+          dA.sort((a, b) => {
             return a.order - b.order
-          }))
-
-
-
-
-
-
-        }
-      },
-
-    )
+          })
+        )
+      }
+    })
 
     return unsubscribe
   }, [])
 
-
-
-
-useEffect(() => {
-  console.log('selUnitDetails',selUnitDetails, customerInfo)
-}, [customerInfo,selUnitDetails])
+  useEffect(() => {
+    console.log('selUnitDetails', selUnitDetails, customerInfo)
+  }, [customerInfo, selUnitDetails])
 
   const customPhoneNoFieldStyles = {
     border: 'none',
@@ -109,35 +92,28 @@ useEffect(() => {
     margin: '0',
     padding: '0',
     paddingLeft: '0.5rem',
+  }
 
+  const [income, setIncome] = useState<{
+    annualIncome1: number | null
+    annualIncome2: number | null
+  }>({
+    annualIncome1: null,
+    annualIncome2: null,
+  })
 
+  const handleIncomeChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: keyof typeof income
+  ) => {
+    const rawValue = e.target.value.replace(/,/g, '')
+    const numValue = parseFloat(rawValue)
 
-  };
-
-
-
-
-
-
-
-
-const [income, setIncome] = useState<{ annualIncome1: number | null; annualIncome2: number | null }>({
-  annualIncome1: null,
-  annualIncome2: null,
-});
-
-const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof typeof income) => {
-  const rawValue = e.target.value.replace(/,/g, '');
-  const numValue = parseFloat(rawValue);
-
-  setIncome((prev) => ({
-    ...prev,
-    [field]: !isNaN(numValue) ? numValue : null,
-  }));
-};
-
-
-
+    setIncome((prev) => ({
+      ...prev,
+      [field]: !isNaN(numValue) ? numValue : null,
+    }))
+  }
 
   useEffect(() => {
     console.log('yo yo ', selUnitDetails, leadPayload)
@@ -207,7 +183,6 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
         const link = document.createElement('a')
         link.href = url
 
-
         link.setAttribute('download', filename)
         document.body.appendChild(link)
         console.log('fetcher url ', filename)
@@ -244,8 +219,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
 
   useEffect(() => {
     console.log('leads payload is ', leadPayload)
-  },[])
-
+  }, [])
 
   const onSubmitFun = async (data, updateDoc, resetForm) => {
     console.log(data)
@@ -375,19 +349,18 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
       customerInfo?.secondaryCustomerDetailsObj?.customerName2 ||
       '',
     relation1: leadPayload?.customerDetailsObj?.relation1 ||
-    selUnitDetails?.customerDetailsObj?.relation1 ||
-    customerInfo?.customerDetailsObj?.relation1 || {
+      selUnitDetails?.customerDetailsObj?.relation1 ||
+      customerInfo?.customerDetailsObj?.relation1 || {
       label: 'S/O',
       value: 'S/O',
     },
 
-    relation2:     customerInfo?.secondaryCustomerDetailsObj?.relation2 || selUnitDetails?.secondaryCustomerDetailsObj?.relation2 ||   leadPayload?.secondaryCustomerDetailsObj?.relation2 ||
-
- {
+    relation2: customerInfo?.secondaryCustomerDetailsObj?.relation2 ||
+      selUnitDetails?.secondaryCustomerDetailsObj?.relation2 ||
+      leadPayload?.secondaryCustomerDetailsObj?.relation2 || {
       label: 'S/O',
       value: 'S/O',
     },
-
 
     co_Name1:
       leadPayload?.customerDetailsObj?.co_Name1 ||
@@ -438,8 +411,8 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     dob1: isValidDate(selUnitDetails?.customerDetailsObj?.dob1)
       ? selUnitDetails.customerDetailsObj.dob1
       : leadPayload?.customerDetailsObj?.dob1 ||
-        customerInfo?.customerDetailsObj?.dob1 ||
-        datee,
+      customerInfo?.customerDetailsObj?.dob1 ||
+      datee,
     dob2:
       leadPayload?.secondaryCustomerDetailsObj?.dob2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.dob2 ||
@@ -448,15 +421,15 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     marital1: leadPayload?.customerDetailsObj?.marital1 ||
       selUnitDetails?.customerDetailsObj?.marital1 ||
       customerInfo?.customerDetailsObj?.marital1 || {
-        label: 'Single',
-        value: 'Single',
-      },
+      label: 'Single',
+      value: 'Single',
+    },
     marital2: leadPayload?.secondaryCustomerDetailsObj?.marital2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.marital2 ||
       customerInfo?.secondaryCustomerDetailsObj?.marital2 || {
-        label: 'Single',
-        value: 'Single',
-      },
+      label: 'Single',
+      value: 'Single',
+    },
     address1:
       leadPayload?.customerDetailsObj?.address1 ||
       selUnitDetails?.customerDetailsObj?.address1 ||
@@ -473,14 +446,11 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
       customerInfo?.customerDetailsObj?.city1 ||
       '',
 
-
-
     countryName1:
       leadPayload?.customerDetailsObj?.countryName1 ||
       selUnitDetails?.customerDetailsObj?.countryName1 ||
       customerInfo?.customerDetailsObj?.countryName1 ||
       '',
-
 
     pincode1:
       leadPayload?.customerDetailsObj?.pincode1 ||
@@ -488,29 +458,17 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
       customerInfo?.customerDetailsObj?.pincode1 ||
       '',
 
-
     countryCode1:
-      leadPayload?.customerDetailsObj?. countryCode1 ||
-      selUnitDetails?.customerDetailsObj?. countryCode1 ||
-      customerInfo?.customerDetailsObj?. countryCode1 ||
+      leadPayload?.customerDetailsObj?.countryCode1 ||
+      selUnitDetails?.customerDetailsObj?.countryCode1 ||
+      customerInfo?.customerDetailsObj?.countryCode1 ||
       '',
-
-
-
 
     countryCode2:
-      leadPayload?.customerDetailsObj?. countryCode2 ||
-      selUnitDetails?.customerDetailsObj?. countryCode2 ||
-      customerInfo?.customerDetailsObj?. countryCode2 ||
+      leadPayload?.customerDetailsObj?.countryCode2 ||
+      selUnitDetails?.customerDetailsObj?.countryCode2 ||
+      customerInfo?.customerDetailsObj?.countryCode2 ||
       '',
-
-
-
-
-
-
-
-
 
     city2:
       leadPayload?.secondaryCustomerDetailsObj?.city2 ||
@@ -524,43 +482,36 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
       customerInfo?.secondaryCustomerDetailsObj?.countryName2 ||
       '',
 
-
-      pincode2:
+    pincode2:
       leadPayload?.secondaryCustomerDetailsObj?.pincode2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.pincode2 ||
       customerInfo?.secondaryCustomerDetailsObj?.pincode2 ||
       '',
 
-
-
-
-      countryCode3:
+    countryCode3:
       leadPayload?.secondaryCustomerDetailsObj?.countryCode3 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.countryCode3 ||
       customerInfo?.secondaryCustomerDetailsObj?.countryCode3 ||
       '',
 
-
-      countryCode4:
+    countryCode4:
       leadPayload?.secondaryCustomerDetailsObj?.countryCode4 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.countryCode4 ||
       customerInfo?.secondaryCustomerDetailsObj?.countryCode4 ||
       '',
 
-
-
     state1: leadPayload?.customerDetailsObj?.state1 ||
       selUnitDetails?.customerDetailsObj?.state1 ||
       customerInfo?.customerDetailsObj?.state1 || {
-        value: 'KA',
-        label: 'Karnataka',
-      },
+      value: 'KA',
+      label: 'Karnataka',
+    },
     state2: leadPayload?.secondaryCustomerDetailsObj?.state2 ||
       selUnitDetails?.secondaryCustomerDetailsObj?.state2 ||
       customerInfo?.secondaryCustomerDetailsObj?.state2 || {
-        value: 'KA',
-        label: 'Karnataka',
-      },
+      value: 'KA',
+      label: 'Karnataka',
+    },
 
     panNo1:
       leadPayload?.customerDetailsObj?.panNo1 ||
@@ -693,7 +644,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     customerName1: Yup.string().required('Required'),
     panNo1: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
     panNo2: Yup.string().test('pan', 'Invalid PAN card number', isValidPAN),
- 
+
     aadharNo2: Yup.string().test(
       'aadhar',
       'Invalid Aadhar card number',
@@ -771,7 +722,7 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
       phoneNo1: phoneNo1,
       phoneNo3: phoneNo3,
       countryCode1: countryCode1,
-      countryCode2 : countryCode2,
+      countryCode2: countryCode2,
       pincode1: pincode1,
       countryName1: countryName1,
       email1: email1,
@@ -833,10 +784,8 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     setCustomerInfo(updateDoc)
 
     if (source === 'fromBookedUnit' || source === 'Booking') {
-
       await onSubmitFun(data, updateDoc, resetForm)
       console.log('am here', leadPayload)
-
     } else {
       updateLeadCustomerDetailsTo(
         orgId,
@@ -848,16 +797,14 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
       )
     }
     moveNextStep()
-
   }
 
-  const moveNextStep =  () => {
+  const moveNextStep = () => {
     if (currentMode == 'unitBookingMode') {
       setOnStep('additonalInfo')
     } else if (currentMode == 'unitBlockMode') {
       setOnStep('blocksheet')
     }
-
   }
   const handleFileUploadFun = async (file, type, formik) => {
     if (!file) return
@@ -909,23 +856,25 @@ const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof
     backgroundSize: 'cover',
   }
   useEffect(() => {
-
     console.log('customer info', customerInfo)
-   },[customerInfo])
+  }, [customerInfo])
   return (
     <>
-      <div className="flex flex-col   mx-0   overflow-y-scroll no-scrollbar" style={{ height: `calc(100vh - 120px)` }}>
-        <div className="z-10">
-      
-        </div>
-<CloneableEmailForm selUnitDetails={selUnitDetails} customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} leadPayload={leadPayload} />
-{source != "fromBookedUnit" &&<div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full w-[680px]">
-
-
-
-
-                              <button
-                                className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
+      <div
+        className="flex flex-col   mx-0   overflow-y-scroll no-scrollbar"
+        style={{ height: `calc(100vh - 120px)` }}
+      >
+        <div className="z-10"></div>
+        <CloneableEmailForm
+          selUnitDetails={selUnitDetails}
+          customerInfo={customerInfo}
+          setCustomerInfo={setCustomerInfo}
+          leadPayload={leadPayload}
+        />
+        {source != 'fromBookedUnit' && (
+          <div className="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full w-[680px]">
+            <button
+              className="mb-2 mr-0 md:mb-0  hover:scale-110 focus:outline-none              hover:bg-[#5671fc]
 bg-gradient-to-r from-violet-600 to-indigo-600
 text-black
 
@@ -934,14 +883,13 @@ transition
  px-5 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-500
  bg-cyan-600 px-5 py-[6px] text-sm shadow-sm font-medium mr-3 tracking-wider text-white  rounded-md hover:shadow-lg
  "
-
-                                disabled={loading}
-                                onClick={() => moveNextStep()}
-                              >
-                                <span> {' Next'}</span>
-                              </button>
-
-                          </div>}
+              disabled={loading}
+              onClick={() => moveNextStep()}
+            >
+              <span> {' Next'}</span>
+            </button>
+          </div>
+        )}
         {/* <div className="">
           <div className="flex flex-col rounded-lg bg-white ">
             <div className="mt-0">

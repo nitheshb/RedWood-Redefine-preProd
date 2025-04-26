@@ -50,13 +50,14 @@ const LegalHomePage = () => {
 
         <div className="flex flex-col flex-grow">
           {/* <HeadNavBar /> */}
-          { }
+          {}
           <div className="flex flex-row  h-[100vh]  text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
             <div
-              className={`${showDetailedSideBar
+              className={`${
+                showDetailedSideBar
                   ? 'flex flex-row overflow-auto w-[20vw]   text-gray-700 '
                   : 'flex flex-row overflow-auto   text-gray-700 '
-                }`}
+              }`}
             >
               <SlimSideMenuBar
                 pgName={'legalModule'}
@@ -65,7 +66,6 @@ const LegalHomePage = () => {
                 setViewable={setViewable}
                 viewable={viewable}
               />
-
             </div>
 
             <div className="flex-grow  items-center overflow-y-auto  px-300  py-300">
@@ -74,7 +74,7 @@ const LegalHomePage = () => {
                 setSelModule={setSelModule}
                 setViewable={setViewable}
               />
-{viewable === 'userProfile' && <ProfileSummary />}
+              {viewable === 'userProfile' && <ProfileSummary />}
 
               {viewable === 'legalDocuments' && (
                 <LegalDocsHome
@@ -87,9 +87,7 @@ const LegalHomePage = () => {
               {viewable === 'legalQueries' && (
                 <ExecutiveHomeViewerPage leadsTyper={'inProgress'} />
               )}
-              {viewable === 'Today1' && (
-                <LegalHome taskType={viewable} />
-              )}
+              {viewable === 'Today1' && <LegalHome taskType={viewable} />}
               {viewable === 'Upcoming' && (
                 <TodayLeadsHomePage taskType={viewable} />
               )}

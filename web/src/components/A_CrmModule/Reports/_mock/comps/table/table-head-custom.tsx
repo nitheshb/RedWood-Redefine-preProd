@@ -1,11 +1,11 @@
 // @mui
-import { Theme, SxProps } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
-import TableHead from '@mui/material/TableHead';
-import TableCell from '@mui/material/TableCell';
-import TableSortLabel from '@mui/material/TableSortLabel';
+import { Theme, SxProps } from '@mui/material/styles'
+import Box from '@mui/material/Box'
+import TableRow from '@mui/material/TableRow'
+import Checkbox from '@mui/material/Checkbox'
+import TableHead from '@mui/material/TableHead'
+import TableCell from '@mui/material/TableCell'
+import TableSortLabel from '@mui/material/TableSortLabel'
 
 // ----------------------------------------------------------------------
 
@@ -19,21 +19,21 @@ const visuallyHidden = {
   position: 'absolute',
   whiteSpace: 'nowrap',
   clip: 'rect(0 0 0 0)',
-} as const;
+} as const
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  order?: 'asc' | 'desc';
-  orderBy?: string;
-  headLabel: any[];
-  rowCount?: number;
-  numSelected?: number;
-  onSort?: (id: string) => void;
-  onSelectAllRows?: (checked: boolean) => void;
-  sx?: SxProps<Theme>;
-  align: string;
-};
+  order?: 'asc' | 'desc'
+  orderBy?: string
+  headLabel: any[]
+  rowCount?: number
+  numSelected?: number
+  onSort?: (id: string) => void
+  onSelectAllRows?: (checked: boolean) => void
+  sx?: SxProps<Theme>
+  align: string
+}
 
 export default function TableHeadCustom({
   order,
@@ -64,7 +64,7 @@ export default function TableHeadCustom({
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.align || align ||  'left'}
+            align={headCell.align || align || 'left'}
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{ width: headCell.width, minWidth: headCell.minWidth }}
           >
@@ -79,7 +79,9 @@ export default function TableHeadCustom({
 
                 {orderBy === headCell.id ? (
                   <Box sx={{ ...visuallyHidden }}>
-                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                    {order === 'desc'
+                      ? 'sorted descending'
+                      : 'sorted ascending'}
                   </Box>
                 ) : null}
               </TableSortLabel>
@@ -90,5 +92,5 @@ export default function TableHeadCustom({
         ))}
       </TableRow>
     </TableHead>
-  );
+  )
 }

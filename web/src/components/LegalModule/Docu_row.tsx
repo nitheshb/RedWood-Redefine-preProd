@@ -10,18 +10,24 @@ import { prettyDate } from 'src/util/dateConverter'
 import { AttachFile } from '@mui/icons-material'
 import { v4 as uuidv4 } from 'uuid'
 import { storage } from 'src/context/firebaseConfig'
-import {
-  ref,
-  getDownloadURL,
-  uploadBytesResumable,
-} from 'firebase/storage'
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
 import { useAuth } from 'src/context/firebase-auth-context'
 import { useSnackbar } from 'notistack'
 import { updateUnitDocs } from 'src/context/dbQueryFirebase'
 import { Timestamp } from 'firebase/firestore'
 import { ChevronDownIcon, ChevronUpIcon, Loader } from 'lucide-react'
 
-const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploadedCount  }) => {
+const DocRow = ({
+  id,
+  fileName,
+  date,
+  amount,
+  status,
+  data,
+  key,
+  totalDocs,
+  uploadedCount,
+}) => {
   const { user } = useAuth()
   const { orgId } = user
   const [showModel, setShoModel] = useState(false)
@@ -43,8 +49,6 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
   }, [date])
 
   const handleFileUploadFun = async (file, type) => {
-
-
     setUplaoding(true)
     if (!file) return
     try {
@@ -59,23 +63,36 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
 
           setProgress(prog)
           file.isUploading = false
-
         },
         (err) => {
           setUplaoding(false)
-          console.log(err)},
+          console.log(err)
+        },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             file.url = url
             setCmntFileType(file.name.split('.').pop())
 
             console.log('data is ===>', file)
-            const x1 = {[`${type}DocUrl`] : url, [`${type}FilName`]: file.name,[`${type}DocUpDate`]: Timestamp.now().toMillis()}
+            const x1 = {
+              [`${type}DocUrl`]: url,
+              [`${type}FilName`]: file.name,
+              [`${type}DocUpDate`]: Timestamp.now().toMillis(),
+            }
             console.log('data is ===> @@@', data?.type, type, x1)
-            updateUnitDocs(orgId,id,'Uploaded',fileName,x1,user.email,'Doc Uploaded Successfully','success',enqueueSnackbar )
+            updateUnitDocs(
+              orgId,
+              id,
+              'Uploaded',
+              fileName,
+              x1,
+              user.email,
+              'Doc Uploaded Successfully',
+              'success',
+              enqueueSnackbar
+            )
             setUplaoding(false)
             return url
-
           })
         }
       )
@@ -85,7 +102,6 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
   }
 
   const downloadImage = (imageUrl, filename) => {
-
     console.error('Error downloading image:', imageUrl)
     fetch(imageUrl)
       .then((response) => response.blob())
@@ -93,7 +109,6 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
         const url = window.URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = url
-
 
         link.setAttribute('download', filename)
         document.body.appendChild(link)
@@ -111,29 +126,36 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
 
   const deleteDoc = () => {
     console.log('delete')
-    const x= {[`${data?.type}DocUrl`] : '', [`${data?.type}FilName`]: '',[`${data?.type}DocUpDate`]: 0}
-        updateUnitDocs(orgId,id,'Deleted doc',fileName, x,user.email,'Doc Deleted Successfully','error',enqueueSnackbar)
-   }
+    const x = {
+      [`${data?.type}DocUrl`]: '',
+      [`${data?.type}FilName`]: '',
+      [`${data?.type}DocUpDate`]: 0,
+    }
+    updateUnitDocs(
+      orgId,
+      id,
+      'Deleted doc',
+      fileName,
+      x,
+      user.email,
+      'Doc Deleted Successfully',
+      'error',
+      enqueueSnackbar
+    )
+  }
 
-
-
-   const [showDropdown, setShowDropdown] = useState(false)
-
-
+  const [showDropdown, setShowDropdown] = useState(false)
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown)
   }
 
-
   return (
     <>
-    <div className=" justify-between max-w-3xl items-center  rounded-lg cursor-pointer text-gray-700 text-sm">
-
+      <div className=" justify-between max-w-3xl items-center  rounded-lg cursor-pointer text-gray-700 text-sm">
         {/* <DocumentTextIcon className="w-4 h-4 text-blue-500" /> */}
 
-
-{/*
+        {/*
         <div className='flex gap-1  flex-col'>
 
           <div>
@@ -183,199 +205,130 @@ const DocRow = ({ id, fileName, date, amount, status,data, key, totalDocs, uploa
         </div>
        */}
 
-
-
-
-
-<div className="flex items-center justify-between bg-white rounded-md p-3 w-full">
-
-  <div className="flex items-center gap-2">
-    <img
-      alt="Document icon"
-      src="/IconSetsdoc.svg"
-      className="w-5 h-5"
-    />
-    <p className="text-[#0E0A1F] text-[14px] font-medium  font-outfit">
-      {fileName}
-    </p>
-  </div>
-
-
-  <div className="flex items-center gap-3">
-
-    {uploadedCount > 0 && (
-      <span className="text-[12px] font-outfit text-[#606062]">
-        {uploadedCount} Documents
-      </span>
-    )}
-
-
-    <div className="flex items-center">
-      <label
-        htmlFor={data?.id}
-        className="cursor-pointer"
-      >
-        <img
-          alt="Add document"
-          src="/docplus.svg"
-          className="w-5 h-5"
-        />
-      </label>
-      <input
-        type="file"
-        className="hidden"
-        id={data?.id}
-        onChange={(e) => {
-          handleFileUploadFun(e.target.files[0], data.type);
-        }}
-      />
-    </div>
-
-    <button onClick={toggleDropdown} className="flex items-center justify-center">
-      {showDropdown ? (
-        <ChevronUpIcon className="w-4 h-4" />
-      ) : (
-        <ChevronDownIcon className="w-4 h-4" />
-      )}
-    </button>
-  </div>
-</div>
-
-
-<div className='my-4'>
-{showDropdown && (
-
-<div className=' w-[100%] flex justify-between items-center  bg-[#FFFFFF] rounded-md p-4'>
-
-
-
-<div className='flex items-center gap-2 '>
-
-
-
-
-<img
-    alt="CRM Background"
-    src="/IconSetsdoc.svg"
-    className="w-5 h-5"
-  />
-
-
-
-
-  <div className='flex-col'>
-  <p className="font-outfit font-medium text-[#606062] text-[12px]">
-      {prettyDate(data?.time) || 'NA'}
-    </p>
-{uploading && <Loader className="w-4 h-4 mr-2" />}
-<p className="pr-3 font-medium  truncate font-outfit text-[14px] text-[#0E0A1F]">{data?.filName}</p>
-  </div>
-
-</div>
-
-
-
-
-<div className=''>
-
-<div className='flex items-center'>
-
-
-
-
-
-  <div>
-  <img
-    alt="CRM Background"
-    src="/docv.svg"
-    className="w-5 h-5"
-  />
-
-  </div>
-
-<button
-  color="gray"
-  className="border-0 block rounded ml-2"
-  onClick={() => { downloadImage(
-    data?.url,
-    `${data?.filName}`
-  )}}
->
-  {/* <DownloadIcon name="delete" className="w-4 mt-2 h-4" /> */}
-
-
-<img
-    alt="CRM Background"
-    src="/docd.svg"
-    className="w-5 h-5"
-  />
-
-</button>
-
-
-
-<button
-  color="gray"
-  className="border-0 block rounded ml-2"
-  onClick={() => {deleteDoc()}}
->
-  {/* <TrashIcon name="delete" className="w-4 h-4" /> */}
-
-
-  <img
-    alt="CRM Background"
-    src="/docdd.svg"
-    className="w-5 h-5"
-  />
-
-
-</button>
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-</div>
-)}
-
-</div>
-
-
-
-
+        <div className="flex items-center justify-between bg-white rounded-md p-3 w-full">
+          <div className="flex items-center gap-2">
+            <img
+              alt="Document icon"
+              src="/IconSetsdoc.svg"
+              className="w-5 h-5"
+            />
+            <p className="text-[#0E0A1F] text-[14px] font-medium  font-outfit">
+              {fileName}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {uploadedCount > 0 && (
+              <span className="text-[12px] font-outfit text-[#606062]">
+                {uploadedCount} Documents
+              </span>
+            )}
+
+            <div className="flex items-center">
+              <label htmlFor={data?.id} className="cursor-pointer">
+                <img
+                  alt="Add document"
+                  src="/docplus.svg"
+                  className="w-5 h-5"
+                />
+              </label>
+              <input
+                type="file"
+                className="hidden"
+                id={data?.id}
+                onChange={(e) => {
+                  handleFileUploadFun(e.target.files[0], data.type)
+                }}
+              />
+            </div>
+
+            <button
+              onClick={toggleDropdown}
+              className="flex items-center justify-center"
+            >
+              {showDropdown ? (
+                <ChevronUpIcon className="w-4 h-4" />
+              ) : (
+                <ChevronDownIcon className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div className="my-4">
+          {showDropdown && (
+            <div className=" w-[100%] flex justify-between items-center  bg-[#FFFFFF] rounded-md p-4">
+              <div className="flex items-center gap-2 ">
+                <img
+                  alt="CRM Background"
+                  src="/IconSetsdoc.svg"
+                  className="w-5 h-5"
+                />
+
+                <div className="flex-col">
+                  <p className="font-outfit font-medium text-[#606062] text-[12px]">
+                    {prettyDate(data?.time) || 'NA'}
+                  </p>
+                  {uploading && <Loader className="w-4 h-4 mr-2" />}
+                  <p className="pr-3 font-medium  truncate font-outfit text-[14px] text-[#0E0A1F]">
+                    {data?.filName}
+                  </p>
+                </div>
+              </div>
+
+              <div className="">
+                <div className="flex items-center">
+                  <div>
+                    <img
+                      alt="CRM Background"
+                      src="/docv.svg"
+                      className="w-5 h-5"
+                    />
+                  </div>
+
+                  <button
+                    color="gray"
+                    className="border-0 block rounded ml-2"
+                    onClick={() => {
+                      downloadImage(data?.url, `${data?.filName}`)
+                    }}
+                  >
+                    {/* <DownloadIcon name="delete" className="w-4 mt-2 h-4" /> */}
+
+                    <img
+                      alt="CRM Background"
+                      src="/docd.svg"
+                      className="w-5 h-5"
+                    />
+                  </button>
+
+                  <button
+                    color="gray"
+                    className="border-0 block rounded ml-2"
+                    onClick={() => {
+                      deleteDoc()
+                    }}
+                  >
+                    {/* <TrashIcon name="delete" className="w-4 h-4" /> */}
+
+                    <img
+                      alt="CRM Background"
+                      src="/docdd.svg"
+                      className="w-5 h-5"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* <p className="mr-3 px-2 py-1 rounded-2xl text-xs truncate bg-green-200 text-green-900">{status}</p> */}
 
-
-
-
-
-
         {/* {data?.type} */}
-
-
-
-
-
-
-
       </div>
-
     </>
   )
 }
 
 export default DocRow
-
-
-

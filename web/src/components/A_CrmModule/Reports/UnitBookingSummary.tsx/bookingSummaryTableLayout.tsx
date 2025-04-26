@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import {
-  Box as Section,
-  Grid,
-  Tooltip,
-} from '@mui/material'
+import { Box as Section, Grid, Tooltip } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import DropCompUnitStatus from 'src/components/dropDownUnitStatus'
@@ -32,7 +28,6 @@ const UnitBookingSummaryTableLayout = ({
   leadsTyper,
   searchVal,
 }) => {
-
   const { t } = useTranslation()
   const [value, setValue] = useState('all')
   const [tableData, setTableData] = useState([])
@@ -43,8 +38,6 @@ const UnitBookingSummaryTableLayout = ({
   const [finalKeyA, setFinalKeyA] = useState([])
 
   useEffect(() => {
-
-
     const tabHeadFieldsA1 = [
       { value: 'all', lab: 'All', val: 'all' },
       { value: 'booked', lab: 'Booked' },
@@ -166,14 +159,10 @@ const UnitBookingSummaryTableLayout = ({
             { lab: 'Negotiation', val: 'negotiation' },
 
             { lab: 'Un Assigned', val: 'unassigned' },
-
           ]
         : leadsTyper === 'archieveLeads'
         ? archieveTab
-        : [
-            { lab: 'Booked', val: 'booked' },
-
-          ]
+        : [{ lab: 'Booked', val: 'booked' }]
     const y = {}
 
     const z1 = []
@@ -381,9 +370,7 @@ const UnitBookingSummaryTableLayout = ({
                         >
                           <span
                             className={`font-PlayFair  text-gray-500 ${
-                              value === d.value
-                                ? ' text-gray-800 '
-                                : ''
+                              value === d.value ? ' text-gray-800 ' : ''
                             }`}
                           >
                             {' '}
@@ -420,7 +407,6 @@ const UnitBookingSummaryTableLayout = ({
                       className="mr-6 h-[20px] w-[20px]"
                       downloadRows={leadsFetchedData}
                       sourceTab="Booking Summary"
-
                       style={{ height: '20px', width: '20px' }}
                     />
                   </Tooltip>

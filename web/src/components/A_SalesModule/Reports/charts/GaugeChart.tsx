@@ -23,7 +23,7 @@
 //             const radian = (angle * Math.PI) / 180;
 //             const x = 150 + 120 * Math.cos(radian);
 //             const y = 200 - 120 * Math.sin(radian);
-            
+
 //             return (
 //               <circle
 //                 key={`indicator-${index}`}
@@ -35,7 +35,7 @@
 //             );
 //           })}
 //         </g>
-        
+
 //         {/* Gauge segments */}
 //         <Pie
 //           data={data}
@@ -53,7 +53,7 @@
 //           ))}
 //         </Pie>
 //       </PieChart>
-      
+
 //       {/* Percentage text in center */}
 //       <div style={{
 //         position: 'absolute',
@@ -73,31 +73,28 @@
 
 // export default GaugeChart;
 
-
-
-
-
-import React from 'react';
-import { PieChart, Pie, Cell } from 'recharts';
+import React from 'react'
+import { PieChart, Pie, Cell } from 'recharts'
 
 const HalfSemiCircleGauge = ({ value = 75, max = 100 }) => {
-
-  const remaining = max - value;
+  const remaining = max - value
 
   const data = [
     { name: 'Active', value, color: '#8884d8' },
     { name: 'Inactive', value: remaining, color: '#f0f0f0' },
-    { name: 'Hidden', value: max, color: 'transparent' } 
-  ];
+    { name: 'Hidden', value: max, color: 'transparent' },
+  ]
 
   return (
-    <div style={{ 
-      position: 'relative', 
-      width: '100%', 
-      maxWidth: '300px', 
-      margin: '0 auto',
-      textAlign: 'center'
-    }}>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        maxWidth: '300px',
+        margin: '0 auto',
+        textAlign: 'center',
+      }}
+    >
       <PieChart width={300} height={150}>
         <Pie
           data={data}
@@ -115,20 +112,22 @@ const HalfSemiCircleGauge = ({ value = 75, max = 100 }) => {
           ))}
         </Pie>
       </PieChart>
-      
-      <div style={{
-        position: 'absolute',
-        bottom: '40px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        fontSize: '2rem',
-        fontWeight: 'bold',
-        color: '#8884d8'
-      }}>
+
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '40px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontSize: '2rem',
+          fontWeight: 'bold',
+          color: '#8884d8',
+        }}
+      >
         {value}%
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default HalfSemiCircleGauge;
+export default HalfSemiCircleGauge

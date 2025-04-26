@@ -44,37 +44,29 @@
 
 // export default FinanceBarChart;
 
-
-
-
-
-
-
-
-
-
-
-
-import { BellIcon } from "lucide-react"; 
-import React from "react";
+import { BellIcon } from 'lucide-react'
+import React from 'react'
 
 const UnitPaymentsWithFinance = ({ selCustomerPayload }) => {
-  const totalPaid = Math.round((selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0));
-  const totalCost = Math.round(selCustomerPayload?.T_total || 0);
-  const paidPercentage = Math.min((totalPaid / totalCost) * 100, 100);
-  const remainingPercentage = 100 - paidPercentage;
+  const totalPaid = Math.round(
+    (selCustomerPayload?.T_review || 0) + (selCustomerPayload?.T_approved || 0)
+  )
+  const totalCost = Math.round(selCustomerPayload?.T_total || 0)
+  const paidPercentage = Math.min((totalPaid / totalCost) * 100, 100)
+  const remainingPercentage = 100 - paidPercentage
 
-  const bankDispatch = 22122232000;
-  const distributed = 22122232000;
-  const balance = 12232000;
-  const distributedPercent = (distributed / bankDispatch) * 100;
+  const bankDispatch = 22122232000
+  const distributed = 22122232000
+  const balance = 12232000
+  const distributedPercent = (distributed / bankDispatch) * 100
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md flex flex-col lg:flex-row justify-between gap-8">
-    
       <div className="w-full lg:w-1/2">
         <div className="flex justify-between items-center">
-          <span className="font-semibold text-gray-800 text-lg">Unit Payments</span>
+          <span className="font-semibold text-gray-800 text-lg">
+            Unit Payments
+          </span>
           <BellIcon size={18} className="ml-2 text-gray-600" />
         </div>
 
@@ -84,7 +76,6 @@ const UnitPaymentsWithFinance = ({ selCustomerPayload }) => {
             ₹ {totalPaid.toLocaleString('en-IN')}
           </div>
 
-      
           <div className="w-full bg-gray-200 h-6 rounded-full mb-6 overflow-hidden flex">
             <div
               className="bg-[#DBD3FD] h-6"
@@ -103,12 +94,12 @@ const UnitPaymentsWithFinance = ({ selCustomerPayload }) => {
         </div>
       </div>
 
-
       <div className="w-full lg:w-1/2">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Finance Balance</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+          Finance Balance
+        </h2>
 
         <div className="space-y-3">
-
           <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-purple-300"
@@ -133,22 +124,27 @@ const UnitPaymentsWithFinance = ({ selCustomerPayload }) => {
           <div className="mt-4 space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-500">Bank Dispatch:</span>
-              <span className="font-semibold text-gray-800">₹ {bankDispatch.toLocaleString('en-IN')}</span>
+              <span className="font-semibold text-gray-800">
+                ₹ {bankDispatch.toLocaleString('en-IN')}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">Distributed:</span>
-              <span className="font-semibold text-gray-800">₹ {distributed.toLocaleString('en-IN')}</span>
+              <span className="font-semibold text-gray-800">
+                ₹ {distributed.toLocaleString('en-IN')}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">Balance:</span>
-              <span className="font-semibold text-gray-800">₹ {balance.toLocaleString('en-IN')}</span>
+              <span className="font-semibold text-gray-800">
+                ₹ {balance.toLocaleString('en-IN')}
+              </span>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UnitPaymentsWithFinance;
-
+export default UnitPaymentsWithFinance

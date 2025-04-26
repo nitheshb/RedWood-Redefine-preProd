@@ -76,7 +76,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         ? ConstructOtherChargesObj
         : additonalChargesObj
     setTableData(x)
-    console.log('helolo',phase?.fullCs )
+    console.log('helolo', phase?.fullCs)
     setFullCs(phase?.fullCs || [])
     setPartAData(phase?.partATaxObj || [])
     setPartCData(phase?.partCTaxObj || [])
@@ -118,7 +118,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       },
       editComponent: ({ value, onChange, rowData }) => {
         return (
- 
           <SelectMAT
             defaultValue={'Car Parking'}
             onChange={(e) => {
@@ -148,10 +147,8 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
                   </MenuItem>
                 ))}
           </SelectMAT>
-
         )
       },
-
     },
     {
       title: 'Units*',
@@ -178,7 +175,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
               menu: (provided) => ({
                 ...provided,
                 zIndex: 9,
-                position: 'absolute', 
+                position: 'absolute',
               }),
             }}
           />
@@ -264,7 +261,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
     },
   ]
 
-
   const partAcolumns = [
     {
       title: 'Charges For*',
@@ -300,7 +296,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
           />
         )
       },
-
     },
     {
       title: 'GST*',
@@ -327,7 +322,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       },
     },
   ]
-
 
   const partCcolumns = [
     {
@@ -364,7 +358,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
           />
         )
       },
-
     },
     {
       title: 'Units*',
@@ -469,7 +462,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
   ]
 
   const errors = (formData) => {
-
     const errorList = []
     if (!formData.component) {
       errorList.push("Try Again, You didn't enter the Charges For field")
@@ -483,7 +475,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
     if (!formData.gst) {
       errorList.push("Try Again, You didn't enter the gst field")
     }
-
 
     return errorList
   }
@@ -521,7 +512,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         : 'additonalChargesObj',
       enqueueSnackbar
     )
-  } 
+  }
   const handleRowUpdatePartA = async (newData, oldData) => {
     const { uid, additonalChargesObj } = data?.phase || {}
 
@@ -548,7 +539,6 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       enqueueSnackbar
     )
   }
-
 
   const handleRowUpdatePartC = async (newData, oldData) => {
     const { uid, additonalChargesObj } = data?.phase || {}
@@ -590,8 +580,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
         : 'additonalChargesObj',
       enqueueSnackbar
     )
-    
-  } 
+  }
   const handleRowDeletePartA = async (oldData) => {
     const { uid } = data?.phase || {}
     const c = partAData.filter((e) => e.myId != oldData.myId)
@@ -603,7 +592,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       'partATaxObj',
       enqueueSnackbar
     )
-  } 
+  }
   const handleRowDeletePartC = async (oldData) => {
     const { uid } = data?.phase || {}
     const c = partAData.filter((e) => e.myId != oldData.myId)
@@ -615,9 +604,7 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
       'partCTaxObj',
       enqueueSnackbar
     )
-
   }
-
 
   const handleRowAdd = async (newData) => {
     setIserror(false)
@@ -730,17 +717,16 @@ const AdditionalChargesForm = ({ title, data, source, blocksViewFeature }) => {
 
   return (
     <section className="">
-    
-
-   
-   
       <div className="py-2 px-4  rounded-2xl bg-[#FFFFFF]  mx-4 my-4">
-      <EditableTable  phase={data?.phase || {}}  partAData={partAData} fullCs= {fullCs} source={'project'} type={data?.phase?.projectType.name}/>
+        <EditableTable
+          phase={data?.phase || {}}
+          partAData={partAData}
+          fullCs={fullCs}
+          source={'project'}
+          type={data?.phase?.projectType.name}
+        />
       </div>
 
- 
-
- 
       {/* <div className="h-full shadow-xl flex flex-col  mb-6 bg-[#F1F5F9] rounded-t overflow-y-scroll"></div> */}
     </section>
   )

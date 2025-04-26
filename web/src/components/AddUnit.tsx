@@ -6,9 +6,7 @@ import { Timestamp } from 'firebase/firestore'
 import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 
-
 import { useLocation } from '@redwoodjs/router'
-
 
 import {
   plotTypeList,
@@ -457,7 +455,7 @@ const AddUnit = ({
       bedrooms_c: bedrooms_c,
       construct_price_sqft: construct_price_sqft,
       min_rate_per_sqft_c: min_rate_per_sqft_c,
-      construction_plc_sqft_c:construction_plc_sqft_c,
+      construction_plc_sqft_c: construction_plc_sqft_c,
       min_rate_per_sqft: min_rate_per_sqft,
       size: size,
       facing: facing,
@@ -623,7 +621,7 @@ const AddUnit = ({
       construct_price_sqft: construct_price_sqft,
       min_rate_per_sqft: min_rate_per_sqft,
       min_rate_per_sqft_c: min_rate_per_sqft_c,
-      construction_plc_sqft_c:construction_plc_sqft_c,
+      construction_plc_sqft_c: construction_plc_sqft_c,
       size: size,
       facing: facing,
       unit_d,
@@ -659,13 +657,10 @@ const AddUnit = ({
       enqueueSnackbar
     )
 
-    
     await setFormMessage('Unit Saved Successfully..!')
     await setLoading(false)
     return
   }
-
-
 
   const resetter = () => {
     setSelected({})
@@ -676,12 +671,10 @@ const AddUnit = ({
     throw new Error('Function not implemented.')
   }
 
-
   const [blockName, setBlockName] = useState('')
 
   useEffect(() => {
     const fetchBlockName = async () => {
-
       const savedBlock = localStorage.getItem('selectedBlock')
       if (savedBlock) {
         setBlockName(savedBlock)
@@ -692,16 +685,11 @@ const AddUnit = ({
     fetchBlockName()
   }, [formik])
 
-
-
   return (
     <div className="h-full flex flex-col pb-6 bg-white shadow-xl overflow-y-scroll">
-
       <div className="grid  gap-8 grid-cols-1">
         <div className="flex flex-col ">
           <div className="mt-0">
-         
-
             <Formik
               enableReinitialize={true}
               initialValues={{
@@ -716,21 +704,23 @@ const AddUnit = ({
                 construct_area: unitDetails?.construct_area || 0,
                 cartpet_area_sqft: unitDetails?.cartpet_area_sqft || 0,
 
-                 uds_sqft: unitDetails?.uds_sqft || 0,
+                uds_sqft: unitDetails?.uds_sqft || 0,
                 floor_plan: unitDetails?.floor_plan || 0,
-                bedrooms_c: (unitDetails?.bedrooms_c?.toString()?.replace(/\D/g, "")) || 0,
-                bathrooms_c: (unitDetails?.bathrooms_c?.toString()?.replace(/\D/g, "")) || 0,
-                car_parkings_c: (unitDetails?.car_parkings_c?.toString()?.replace(/\D/g, "")) || 0,
+                bedrooms_c:
+                  unitDetails?.bedrooms_c?.toString()?.replace(/\D/g, '') || 0,
+                bathrooms_c:
+                  unitDetails?.bathrooms_c?.toString()?.replace(/\D/g, '') || 0,
+                car_parkings_c:
+                  unitDetails?.car_parkings_c?.toString()?.replace(/\D/g, '') ||
+                  0,
                 tower_no: unitDetails?.tower_no || 0,
                 block_no: unitDetails?.block_no || 0,
                 floor_no: unitDetails?.floor_no || 0,
                 dimension: unitDetails?.dimension || 0,
                 min_rate_per_sqft_c: unitDetails?.min_rate_per_sqft_c || 0,
 
-                construction_plc_sqft_c: unitDetails?.construction_plc_sqft_c || 0,
-
-
-
+                construction_plc_sqft_c:
+                  unitDetails?.construction_plc_sqft_c || 0,
 
                 size: unitDetails?.size || '',
                 facing: unitDetails?.facing?.toLowerCase() || '',
@@ -750,14 +740,12 @@ const AddUnit = ({
                 status: unitDetails?.status || '',
                 release_status: unitDetails?.release_status || '',
                 mortgage_type: unitDetails?.mortgage_type || '',
-                inventory_type: unitDetails?. inventory_type || '',
+                inventory_type: unitDetails?.inventory_type || '',
 
-
-               
                 landOwnerName: unitDetails?.landOwnerName || '',
                 investorName: unitDetails?.investorName || '',
-                sharingType: unitDetails?.sharingType ||  unitDetails?.sharing || '',
-
+                sharingType:
+                  unitDetails?.sharingType || unitDetails?.sharing || '',
               }}
               validationSchema={validate_AddUnit}
               onSubmit={(values, { resetForm }) => {
@@ -782,9 +770,6 @@ const AddUnit = ({
                                   {title === 'Add Unit'
                                     ? 'Add Unit'
                                     : 'Edit Unit'}
-
-
-
 
                                   <abbr title="required"></abbr>
                                 </label>
@@ -830,14 +815,13 @@ const AddUnit = ({
                                   label="Block"
                                   name="block_no"
                                   type="text"
-
-
                                   value={formik.values.block_no || blockName}
                                   onChange={(e) =>
-                                    formik.setFieldValue('block_no', e.target.value.replace(/[^0-9]/g, ''))
+                                    formik.setFieldValue(
+                                      'block_no',
+                                      e.target.value.replace(/[^0-9]/g, '')
+                                    )
                                   }
-
-
                                 />
                               </div>
                             )}
@@ -848,16 +832,19 @@ const AddUnit = ({
                                   label="Tower"
                                   name="tower_no"
                                   type="text"
-
-
-
                                   onChange={(value) => {
-                                    formik.setFieldValue('tower_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
-
+                                    formik.setFieldValue(
+                                      'tower_no',
+                                      String(
+                                        Number(
+                                          value.target.value.replace(
+                                            /[^0-9]/g,
+                                            ''
+                                          )
+                                        )
+                                      )
+                                    )
                                   }}
-
-
-
                                 />
                               </div>
                             )}
@@ -870,13 +857,21 @@ const AddUnit = ({
                                   name="floor_no"
                                   type="text"
                                   onChange={(value) => {
-                                    formik.setFieldValue('floor_no', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
-
+                                    formik.setFieldValue(
+                                      'floor_no',
+                                      String(
+                                        Number(
+                                          value.target.value.replace(
+                                            /[^0-9]/g,
+                                            ''
+                                          )
+                                        )
+                                      )
+                                    )
                                   }}
                                 />
                               </div>
                             )}
-
 
                             {projectDetails?.projectType?.name === 'Plots' && (
                               <div className="w-full flex flex-col mt-2">
@@ -894,29 +889,19 @@ const AddUnit = ({
                                       ? plotTypeList
                                       : unitTypeListA
                                   }
-
                                 />
                               </div>
                             )}
                             {(projectDetails?.projectType?.name === 'Villas' ||
                               projectDetails?.projectType?.name ===
                                 'Plots') && (
-
-   
-
-
-
                               <div className="mb-3 space-y-2 w-full text-xs mt-2">
-  <TextField
-    label="Dimension"
-    name="dimension"
-    type="text"
-
-  />
-</div>
-
-
-
+                                <TextField
+                                  label="Dimension"
+                                  name="dimension"
+                                  type="text"
+                                />
+                              </div>
                             )}
                             {projectDetails?.projectType?.name === 'Villas' && (
                               <div className="w-full flex flex-col mt-2">
@@ -935,7 +920,6 @@ const AddUnit = ({
                                       ? plotTypeList
                                       : unitTypeList
                                   }
-
                                 />
                               </div>
                             )}
@@ -967,7 +951,6 @@ const AddUnit = ({
                               </span>
                             </section>
                             <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
-         
                               <div className="w-full flex flex-col mt-">
                                 <CustomSelect
                                   name="bedrooms_c"
@@ -978,17 +961,13 @@ const AddUnit = ({
                                       'bedrooms_c',
                                       value.value
                                     )
-
                                   }}
                                   value={formik.values.bedrooms_c}
-            
-
                                   options={bedRoomsListA}
                                 />
                               </div>
 
                               <div className="space-y-2 w-full text-xs mt-">
-      
                                 <CustomSelect
                                   name="bathrooms_c"
                                   label="Bathrooms"
@@ -1005,7 +984,6 @@ const AddUnit = ({
                               </div>
 
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
-       
                                 <CustomSelect
                                   name="car_parkings_c"
                                   label="Car Parking"
@@ -1021,8 +999,6 @@ const AddUnit = ({
                                 />
                               </div>
 
-
-
                               {projectDetails?.projectType?.name ===
                                 'Apartment' && (
                                 <div className="space-y-2 w-full text-xs mt-">
@@ -1031,7 +1007,17 @@ const AddUnit = ({
                                     name="cartpet_area_sqft"
                                     type="number"
                                     onChange={(value) => {
-                                      formik.setFieldValue('cartpet_area_sqft', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                      formik.setFieldValue(
+                                        'cartpet_area_sqft',
+                                        String(
+                                          Number(
+                                            value.target.value.replace(
+                                              /[^0-9]/g,
+                                              ''
+                                            )
+                                          )
+                                        )
+                                      )
                                     }}
                                   />
                                 </div>
@@ -1045,7 +1031,17 @@ const AddUnit = ({
                                     name="uds_sqft"
                                     type="number"
                                     onChange={(value) => {
-                                      formik.setFieldValue('uds_sqft', String(Number(value.target.value.replace(/[^0-9]/g, ''))))
+                                      formik.setFieldValue(
+                                        'uds_sqft',
+                                        String(
+                                          Number(
+                                            value.target.value.replace(
+                                              /[^0-9]/g,
+                                              ''
+                                            )
+                                          )
+                                        )
+                                      )
                                     }}
                                   />
                                 </div>
@@ -1064,8 +1060,6 @@ const AddUnit = ({
                             </span>
                           </section>
                           <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2 ">
-     
-
                             <div className="space-y-2 w-full text-xs ">
                               <TextField
                                 label={`${
@@ -1077,15 +1071,19 @@ const AddUnit = ({
                                 }`}
                                 name="area"
                                 type="number"
-
                                 onChange={(value) => {
-                                  formik.setFieldValue('area', String(
-                                    Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))
-                                  ))
+                                  formik.setFieldValue(
+                                    'area',
+                                    String(
+                                      Number(
+                                        value.target.value
+                                          .replace(/[^0-9.]/g, '')
+                                          .replace(/(\..*?)\..*/g, '$1')
+                                      )
+                                    )
+                                  )
                                 }}
                               />
-
-
                             </div>
 
                             <div className=" space-y-2 w-full text-xs mt-">
@@ -1094,10 +1092,16 @@ const AddUnit = ({
                                 name="sqft_rate"
                                 type="number"
                                 onChange={(value) => {
-                                  formik.setFieldValue('sqft_rate',String(
-                                    Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))
-                                  ))
-
+                                  formik.setFieldValue(
+                                    'sqft_rate',
+                                    String(
+                                      Number(
+                                        value.target.value
+                                          .replace(/[^0-9.]/g, '')
+                                          .replace(/(\..*?)\..*/g, '$1')
+                                      )
+                                    )
+                                  )
                                 }}
                               />
                             </div>
@@ -1107,10 +1111,16 @@ const AddUnit = ({
                                 name="plc_per_sqft"
                                 type="number"
                                 onChange={(value) => {
-                                  formik.setFieldValue('plc_per_sqft', String(
-                                    Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))
-                                  ))
-
+                                  formik.setFieldValue(
+                                    'plc_per_sqft',
+                                    String(
+                                      Number(
+                                        value.target.value
+                                          .replace(/[^0-9.]/g, '')
+                                          .replace(/(\..*?)\..*/g, '$1')
+                                      )
+                                    )
+                                  )
                                 }}
                               />
                             </div>
@@ -1121,17 +1131,25 @@ const AddUnit = ({
                                 name="min_rate_per_sqft"
                                 type="number"
                                 onChange={(value) => {
-                                  formik.setFieldValue('min_rate_per_sqft', String(
-                                    Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))
-                                  ))
-
+                                  formik.setFieldValue(
+                                    'min_rate_per_sqft',
+                                    String(
+                                      Number(
+                                        value.target.value
+                                          .replace(/[^0-9.]/g, '')
+                                          .replace(/(\..*?)\..*/g, '$1')
+                                      )
+                                    )
+                                  )
                                 }}
                               />
                             </div>
                           </div>
                         </section>
 
-                        { ['Villas', 'WeekendVillas'].includes(projectDetails?.projectType?.name) && (
+                        {['Villas', 'WeekendVillas'].includes(
+                          projectDetails?.projectType?.name
+                        ) && (
                           <section className="mt-1 px-4 rounded-lg bg-white border border-gray-100 shadow">
                             <section className="flex flex-row  pt-2 ">
                               <div className="border-2  h-3 rounded-xl  mt-[2px] w-1  border-cyan-200"></div>
@@ -1149,10 +1167,16 @@ const AddUnit = ({
                                   name="construct_area"
                                   type="number"
                                   onChange={(value) => {
-                                    formik.setFieldValue('construct_area',String(
-                                      Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))
-                                    ))
-
+                                    formik.setFieldValue(
+                                      'construct_area',
+                                      String(
+                                        Number(
+                                          value.target.value
+                                            .replace(/[^0-9.]/g, '')
+                                            .replace(/(\..*?)\..*/g, '$1')
+                                        )
+                                      )
+                                    )
                                   }}
                                 />
                               </div>
@@ -1163,13 +1187,19 @@ const AddUnit = ({
                                   name="construct_price_sqft"
                                   type="number"
                                   onChange={(value) => {
-                                    formik.setFieldValue('construct_price_sqft',String(
-                                      Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))
-                                    ))
+                                    formik.setFieldValue(
+                                      'construct_price_sqft',
+                                      String(
+                                        Number(
+                                          value.target.value
+                                            .replace(/[^0-9.]/g, '')
+                                            .replace(/(\..*?)\..*/g, '$1')
+                                        )
+                                      )
+                                    )
                                   }}
                                 />
                               </div>
-
 
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
                                 <TextField
@@ -1177,13 +1207,19 @@ const AddUnit = ({
                                   name="cartpet_area_sqft"
                                   type="number"
                                   onChange={(value) => {
-                                    formik.setFieldValue('cartpet_area_sqft', String(
-                                      Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))
-                                    ))
+                                    formik.setFieldValue(
+                                      'cartpet_area_sqft',
+                                      String(
+                                        Number(
+                                          value.target.value
+                                            .replace(/[^0-9.]/g, '')
+                                            .replace(/(\..*?)\..*/g, '$1')
+                                        )
+                                      )
+                                    )
                                   }}
                                 />
                               </div>
-
 
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
                                 <TextField
@@ -1191,13 +1227,19 @@ const AddUnit = ({
                                   name="min_rate_per_sqft_c"
                                   type="number"
                                   onChange={(value) => {
-                                    formik.setFieldValue('min_rate_per_sqft_c', String(
-                                      Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))
-                                    ))
+                                    formik.setFieldValue(
+                                      'min_rate_per_sqft_c',
+                                      String(
+                                        Number(
+                                          value.target.value
+                                            .replace(/[^0-9.]/g, '')
+                                            .replace(/(\..*?)\..*/g, '$1')
+                                        )
+                                      )
+                                    )
                                   }}
                                 />
                               </div>
-
 
                               <div className="mb-3 space-y-2 w-full text-xs mt-">
                                 <TextField
@@ -1205,17 +1247,19 @@ const AddUnit = ({
                                   name="construction_plc_sqft_c"
                                   type="number"
                                   onChange={(value) => {
-                                    formik.setFieldValue('construction_plc_sqft_c', String(
-                                      Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))
-                                    ))
+                                    formik.setFieldValue(
+                                      'construction_plc_sqft_c',
+                                      String(
+                                        Number(
+                                          value.target.value
+                                            .replace(/[^0-9.]/g, '')
+                                            .replace(/(\..*?)\..*/g, '$1')
+                                        )
+                                      )
+                                    )
                                   }}
                                 />
                               </div>
-
-
-
-
-
                             </div>
                           </section>
                         )}
@@ -1237,8 +1281,16 @@ const AddUnit = ({
                                 name="east_d"
                                 type="number"
                                 onChange={(value) => {
-                                  formik.setFieldValue('east_d',  String(
-                                    Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))))
+                                  formik.setFieldValue(
+                                    'east_d',
+                                    String(
+                                      Number(
+                                        value.target.value
+                                          .replace(/[^0-9.]/g, '')
+                                          .replace(/(\..*?)\..*/g, '$1')
+                                      )
+                                    )
+                                  )
                                 }}
                               />
                             </div>
@@ -1248,8 +1300,16 @@ const AddUnit = ({
                                 name="west_d"
                                 type="number"
                                 onChange={(value) => {
-                                  formik.setFieldValue('west_d', String(
-                                    Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))))
+                                  formik.setFieldValue(
+                                    'west_d',
+                                    String(
+                                      Number(
+                                        value.target.value
+                                          .replace(/[^0-9.]/g, '')
+                                          .replace(/(\..*?)\..*/g, '$1')
+                                      )
+                                    )
+                                  )
                                 }}
                               />
                             </div>
@@ -1262,8 +1322,16 @@ const AddUnit = ({
                                   name="north_d"
                                   type="number"
                                   onChange={(value) => {
-                                    formik.setFieldValue('north_d', String(
-                                      Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))))
+                                    formik.setFieldValue(
+                                      'north_d',
+                                      String(
+                                        Number(
+                                          value.target.value
+                                            .replace(/[^0-9.]/g, '')
+                                            .replace(/(\..*?)\..*/g, '$1')
+                                        )
+                                      )
+                                    )
                                   }}
                                 />
                               </div>
@@ -1274,8 +1342,16 @@ const AddUnit = ({
                                 name="south_d"
                                 type="number"
                                 onChange={(value) => {
-                                  formik.setFieldValue('south_d', String(
-                                    Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))))
+                                  formik.setFieldValue(
+                                    'south_d',
+                                    String(
+                                      Number(
+                                        value.target.value
+                                          .replace(/[^0-9.]/g, '')
+                                          .replace(/(\..*?)\..*/g, '$1')
+                                      )
+                                    )
+                                  )
                                 }}
                               />
                             </div>
@@ -1285,8 +1361,16 @@ const AddUnit = ({
                                 name="east_west_d"
                                 type="number"
                                 onChange={(value) => {
-                                  formik.setFieldValue('east_west_d', String(
-                                    Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))))
+                                  formik.setFieldValue(
+                                    'east_west_d',
+                                    String(
+                                      Number(
+                                        value.target.value
+                                          .replace(/[^0-9.]/g, '')
+                                          .replace(/(\..*?)\..*/g, '$1')
+                                      )
+                                    )
+                                  )
                                 }}
                               />
                             </div>
@@ -1296,8 +1380,16 @@ const AddUnit = ({
                                 name="north_south_d"
                                 type="number"
                                 onChange={(value) => {
-                                  formik.setFieldValue('north_south_d', String(
-                                    Number(value.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1'))))
+                                  formik.setFieldValue(
+                                    'north_south_d',
+                                    String(
+                                      Number(
+                                        value.target.value
+                                          .replace(/[^0-9.]/g, '')
+                                          .replace(/(\..*?)\..*/g, '$1')
+                                      )
+                                    )
+                                  )
                                 }}
                               />
                             </div>
@@ -1403,22 +1495,21 @@ const AddUnit = ({
                               />
                             </div>
 
-                      
-
-
-<div className="w-full flex flex-col mb-3">
-  <TextField
-    name="sharingType"
-    label="Sharing Type"
-    type="text"
-    value={formik.values.sharingType}
-    onChange={(e) => {
-      formik.setFieldValue('sharingType', e.target.value);
-      setSelectedSharingType(e.target.value);
-    }}
-  />
-</div>
-
+                            <div className="w-full flex flex-col mb-3">
+                              <TextField
+                                name="sharingType"
+                                label="Sharing Type"
+                                type="text"
+                                value={formik.values.sharingType}
+                                onChange={(e) => {
+                                  formik.setFieldValue(
+                                    'sharingType',
+                                    e.target.value
+                                  )
+                                  setSelectedSharingType(e.target.value)
+                                }}
+                              />
+                            </div>
                           </div>
                         </section>
 
@@ -1439,7 +1530,10 @@ const AddUnit = ({
                                 name="survey_no"
                                 type="text"
                                 onInput={(e) => {
-                                  e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                                  e.target.value = e.target.value.replace(
+                                    /[^0-9]/g,
+                                    ''
+                                  )
                                 }}
                               />
                             </div>
@@ -1449,7 +1543,10 @@ const AddUnit = ({
                                 name="Katha_no"
                                 type="text"
                                 onInput={(e) => {
-                                  e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                                  e.target.value = e.target.value.replace(
+                                    /[^0-9]/g,
+                                    ''
+                                  )
                                 }}
                               />
                             </div>
@@ -1459,7 +1556,10 @@ const AddUnit = ({
                                 name="PID_no"
                                 type="text"
                                 onInput={(e) => {
-                                  e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                                  e.target.value = e.target.value.replace(
+                                    /[^0-9]/g,
+                                    ''
+                                  )
                                 }}
                               />
                             </div>
@@ -1479,18 +1579,20 @@ const AddUnit = ({
                               />
                             </div> */}
                             <div className="w-full flex flex-col mb-3">
-  <CustomSelect
-    name="inventory_type"
-    label="Inventory Type"
-    className="input mt-"
-    onChange={(value) => {
-      formik.setFieldValue('inventory_type', value.value);
-    }}
-    value={formik.values.inventory_type}
-    options={inventorytypeList}
-  />
-</div>
-
+                              <CustomSelect
+                                name="inventory_type"
+                                label="Inventory Type"
+                                className="input mt-"
+                                onChange={(value) => {
+                                  formik.setFieldValue(
+                                    'inventory_type',
+                                    value.value
+                                  )
+                                }}
+                                value={formik.values.inventory_type}
+                                options={inventorytypeList}
+                              />
+                            </div>
                           </div>
                         </section>
                       </section>

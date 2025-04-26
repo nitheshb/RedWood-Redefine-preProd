@@ -8,7 +8,8 @@ const EditProjectPage = () => {
 
       <h1>EditProjectPage</h1>
       <p>
-        Find me in <code>./web/src/pages/EditProjectPage/EditProjectPage.tsx</code>
+        Find me in{' '}
+        <code>./web/src/pages/EditProjectPage/EditProjectPage.tsx</code>
       </p>
       <p>
         My default route is named <code>editProject</code>, link to me with `
