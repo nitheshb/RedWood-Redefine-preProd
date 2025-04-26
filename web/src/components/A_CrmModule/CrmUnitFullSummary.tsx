@@ -144,6 +144,7 @@ const notInterestOptions = [
 ]
 export default function UnitFullSummary({
   openUserProfile,
+  setOpen,
   rustomerDetails,
   unitViewerrr,
   unitsViewMode,
@@ -3063,6 +3064,7 @@ export default function UnitFullSummary({
           {selFeature === 'cancel_booking' && (
             <>
               <CancelUnitForm
+                setOpen={setOpen}
                 openUserProfile={openUserProfile}
                 selUnitDetails={selCustomerPayload}
               />{' '}

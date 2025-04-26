@@ -512,6 +512,7 @@ const SiderForm = ({
                 {title === 'unitDetails_crm_view' && (
                   <UnitSideViewCRM
                     openUserProfile={false}
+                    setOpen={setOpen}
                     customerDetails={customerDetails}
                     unitViewerrr={unitViewerrr}
                     unitsViewMode={unitsViewMode}

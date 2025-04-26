@@ -308,22 +308,22 @@ const CaptureUnitPayment = ({
 
     await confettiRef?.current?.fire()
 
-    try {
-      const emailData = {
-        email: customerInfo?.email,
-        userFirstname: customerInfo?.name,
-        resetPasswordLink: 'https://yourdomain.com/reset-password',
-      }
+    // try {
+    //   const emailData = {
+    //     email: customerInfo?.email,
+    //     userFirstname: customerInfo?.name,
+    //     resetPasswordLink: 'https://yourdomain.com/reset-password',
+    //   }
 
-      await sendEmail(
-        emailData.email,
-        emailData.userFirstname,
-        emailData.resetPasswordLink
-      )
-      console.log('Email sent successfully!')
-    } catch (error) {
-      console.error('Failed to send email:', error)
-    }
+    //   await sendEmail(
+    //     emailData.email,
+    //     emailData.userFirstname,
+    //     emailData.resetPasswordLink
+    //   )
+    //   console.log('Email sent successfully!')
+    // } catch (error) {
+    //   console.error('Failed to send email:', error)
+    // }
 
     return
 
@@ -763,7 +763,7 @@ const CaptureUnitPayment = ({
 
         <div className='flex gap-2 '>
         <img src={dat.img} alt={dat.label} className="h-8 w-8" />
-        
+
         <label
           htmlFor={`dropdown-checkbox-${i}`}
           className="block text-[14px] mt-0 font-medium leading-6 text-[#606062] font-normal ml-2"

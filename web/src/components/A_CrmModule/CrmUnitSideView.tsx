@@ -50,7 +50,7 @@ import { BellIcon } from 'lucide-react'
 import { ChevronDownIcon } from 'lucide-react'
 import { calculatePercentages } from 'src/util/areaConverter'
 import AssigedToDropCompCrm from '../assignedToDropCompCrm'
-import { ToastBar, useToaster } from 'react-hot-toast'
+import toast, { ToastBar, useToaster } from 'react-hot-toast'
 
 const data = [
   { name: 'Paid', value: 10 },
@@ -154,6 +154,7 @@ const notInterestOptions = [
 ]
 export default function UnitSideViewCRM({
   openUserProfile,
+  setOpen,
   rustomerDetails,
   unitViewerrr,
   unitsViewMode,
@@ -171,7 +172,6 @@ export default function UnitSideViewCRM({
   console.log('my user is ', user)
   const { enqueueSnackbar } = useSnackbar()
 
-  const { toast } = useToaster
 
   const { orgId } = user
   const [fetchedUsersList, setfetchedUsersList] = useState([])
@@ -512,19 +512,38 @@ export default function UnitSideViewCRM({
       // enqueueSnackbar
       ToastBar
     )
-    selCustomerPayload?.fullPs.map((ps) => {
-      console.log('my values are', ps)
-      const newPayload = ps
-      newPayload.assignedTo = value?.value
-      newPayload.oldAssignedTo = selCustomerPayload?.assignedTo
+    return toast.promise(
+      (async () => {
+        try{
+          await Promise.all(
+            selCustomerPayload?.fullPs.map(async (ps) => {
+              console.log('my values are', ps)
+              const newPayload = ps
+              newPayload.assignedTo = value?.value
+              newPayload.oldAssignedTo = selCustomerPayload?.assignedTo
 
-      updateCrmExecutiveReAssignAgreegations(
-        orgId,
-        newPayload,
-        user.email,
-        enqueueSnackbar
-      )
-    })
+              await updateCrmExecutiveReAssignAgreegations(
+                orgId,
+                newPayload,
+                user.email,
+                enqueueSnackbar
+              )
+              return 'Employee projection updated'
+            })
+          )
+}
+    catch (error) {
+      console.log('error in uploading file with data', error);
+      throw error; // Rethrow to let toast.promise handle it
+    }
+  })(),
+  {
+    loading: 'Updating projections to new CRM Owner...',
+    success: (message) => message,
+    error: 'Employee projections updation failed'
+  }
+);
+
 
     const msgPayload = {
       projectName: Project,
@@ -1659,6 +1678,7 @@ changed her */}
       {/* changed her end */}
 
       <UnitFullSummary
+        setOpen={setOpen}
         customerDetails={customerDetails}
         selCustomerPayload={selCustomerPayload}
       />

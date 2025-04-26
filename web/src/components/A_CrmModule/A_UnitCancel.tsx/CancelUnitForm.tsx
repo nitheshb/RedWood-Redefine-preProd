@@ -21,8 +21,10 @@ import { useAuth } from 'src/context/firebase-auth-context'
 import CustomDatePicker from 'src/util/formFields/CustomDatePicker'
 import { TextField2 } from 'src/util/formFields/TextField2'
 import { format, setHours, setMinutes } from 'date-fns'
+import toast from 'react-hot-toast'
 
 const CancelUnitForm = ({
+  setOpen,
   openUserProfile,
   selUnitDetails,
   bookCompSteps,
@@ -136,21 +138,18 @@ const CancelUnitForm = ({
   }
 
   const onSubmitSupabase = async (data, resetForm) => {
-    console.log('inside supabase support', data)
-
     const x = selUnitDetails
     x.cancellationCharges = data.amount
     x.cancelledDate = datee
     x.cancelledBy = user?.email
     x.cancelReason = data?.payReason
-    cancelUnitDbFun(orgId, x, user, enqueueSnackbar)
+    cancelUnitDbFun(orgId, x, user,()=>{setOpen(false)},enqueueSnackbar)
   }
 
   const handleConfirmationYes = () => {
     setShowConfirmation(false)
     if (formValues && resetFormFn) {
       setBookingProgress(true)
-      // setOpen(false)
       onSubmitSupabase(formValues, resetFormFn)
     }
   }

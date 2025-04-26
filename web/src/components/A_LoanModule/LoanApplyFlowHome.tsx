@@ -14,6 +14,7 @@ import {
 } from 'src/context/dbQueryFirebase'
 import { useSnackbar } from 'notistack'
 import CrmActivityLog from '../A_CrmModule/CrmActivityLog'
+import toast from 'react-hot-toast'
 
 export default function LoanApplyFlowHome({
   type,
@@ -150,7 +151,9 @@ export default function LoanApplyFlowHome({
       loanPercentage: loanPercentage,
     }
 
-    try {
+    return toast.promise(
+      (async () => {
+        try {
       await updateBankLoanApprovals(
         orgId,
         customerDetails?.id,
@@ -160,16 +163,18 @@ export default function LoanApplyFlowHome({
         'success',
         enqueueSnackbar
       )
-
-      enqueueSnackbar('Loan details saved successfully!', {
-        variant: 'success',
-      })
+      return 'Loan details saved!'
     } catch (error) {
       console.error('Failed to save loan details:', error)
-      enqueueSnackbar('Failed to save loan details.', {
-        variant: 'error',
-      })
+     throw error
     }
+  })(),
+  {
+    loading: 'Processing updation...',
+    success: (message) => message,
+    error: 'Loan details updation failed'
+  }
+    )
   }
 
   return (
@@ -949,7 +954,7 @@ export default function LoanApplyFlowHome({
                         {'In-Review'}
                         <span className="absolute inset-0" />
                       </a>
-        
+
                     </div>
                   </div>
 
@@ -990,7 +995,7 @@ export default function LoanApplyFlowHome({
                         {'Approved'}
                         <span className="absolute inset-0" />
                       </a>
-          
+
                     </div>
                   </div>
                   <div
@@ -1030,7 +1035,7 @@ export default function LoanApplyFlowHome({
                         {'Rejected'}
                         <span className="absolute inset-0" />
                       </a>
-           
+
                     </div>
                   </div>
                 </div>
@@ -1067,7 +1072,7 @@ export default function LoanApplyFlowHome({
             />
           </div>
         </div>
-   
+
         <div className="mt-4">
           <button
             onClick={handleSaveLoanDetails}

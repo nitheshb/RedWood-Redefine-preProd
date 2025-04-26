@@ -3437,105 +3437,112 @@ export const getAllProjectMonthlyBookingsSum = async (orgId, data) => {
   console.log('total is ', receivable)
   return receivable
 }
-export const cancelUnitDbFun = async (orgId, data, by, enqueueSnackbar) => {
-  console.log('my values is ', data)
-  try {
-    const x = await addDoc(collection(db, `${orgId}_cancelled_unit`), data)
-    await console.log('cancelled  Unit value is ', x, x.id, data)
+export const cancelUnitDbFun = async (orgId, unitData, by,closeFun, enqueueSnackbar) => {
+  return toast.promise(
+    (async () => {
+      try {
+        const x = await addDoc(collection(db, `${orgId}_cancelled_unit`), unitData);
+        console.log('cancelled Unit value is ', x, x.id, unitData);
+        // const customerId = unitData?.custObj1?.uid;
+        // const y = updateDoc(doc(db, `${orgId}_customers`, unitData.uid), {
+        //   input_money: increment(unitData?.T_total),
+        //   remaining_money:increment(unitData?.T_received),
+        //   my_assets: arrayRemove(unitData?.uid),
+        // })
+        await updateDoc(doc(db, `${orgId}_units`, unitData.uid), {
+          T_A: 0,
+          T_B: 0,
+          T_C: 0,
+          T_D: 0,
+          T_E: 0,
+          T_F: 0,
+          T_approved: 0,
+          T_balance: 0,
+          LpreStatus: 0,
+          status: 'available',
+          Bank: '',
+          Date: '',
+          Katha_no: '',
+          T_Total: 0,
+          T_cancelled: 0,
+          T_elgible: 0,
+          T_elgible_balance: 0,
+          T_received: 0,
+          T_review: 0,
+          T_total: 0,
+          T_transaction: 0,
+          addChargesCS: [],
+          addOnCS: [],
+          aggrementDetailsObj: {},
+          annualIncome: '',
+          applicantCount: 0,
+          atb_date: '',
+          ats_date: '',
+          ats_target_date: '',
+          bookedBy: '',
+          booked_on: '',
+          bookingSource: '',
+          by: '',
+          car_parkings_c: 0,
+          constAdditionalChargesCS: [],
+          constructCS: [],
+          constructPS: [],
+          custObj1: {},
+          customerDetailsObj: {},
+          designation: '',
+          fullCs: [],
+          fullPs: [],
+          fund_type: '',
+          industry: '',
+          kyc_rejection_reason: '',
+          kyc_status: '',
+          leadId: '',
+          leadSource: '',
+          loanStatus: '',
+          loan_rejection_reason: '',
+          man_cs_approval: '',
+          man_cs_rej_reason: '',
+          mode: '',
+          mortgage_type: '',
+          plotCS: [],
+          plotPS: [],
+          possessionAdditionalCostCS: [],
+          purchasePurpose: '',
+          purpose: '',
+          referralName: '',
+          release_status: '',
+          remarks: '',
+          sd_date: '',
+          sd_target_date: '',
+          source: '',
+          sourceOfPay: '',
+          stepsComp: '',
+          sub_source: '',
+        });
 
-    //   const customerId = custObj1?.
-    // const y = updateDoc(doc(db, `${orgId}_customers`, data.uid), {
-    //   input_money: increment(data?.T_total),
-    //   remaining_money:increment(data?.T_received),
-    //   my_assets: arrayRemove(data?.uid),
-    // })
-    const z = await updateDoc(doc(db, `${orgId}_units`, data.uid), {
-      T_A: 0,
-      T_B: 0,
-      T_C: 0,
-      T_D: 0,
-      T_E: 0,
-      T_F: 0,
-      T_approved: 0,
-      T_balance: 0,
-      LpreStatus: 0,
-      status: 'available',
-      Bank: '',
-      Date: '',
-      Katha_no: '',
-      T_Total: 0,
-      T_cancelled: 0,
-      T_elgible: 0,
-      T_elgible_balance: 0,
-      T_received: 0,
-      T_review: 0,
-      T_total: 0,
-      T_transaction: 0,
-      addChargesCS: [],
-      addOnCS: [],
-      aggrementDetailsObj: {},
-      annualIncome: '',
-      applicantCount: 0,
-      atb_date: '',
-      ats_date: '',
-      ats_target_date: '',
-      bookedBy: '',
-      booked_on: '',
-      bookingSource: '',
-      by: '',
-      car_parkings_c: 0,
-      constAdditionalChargesCS: [],
-      constructCS: [],
-      constructPS: [],
-      custObj1: {},
-      customerDetailsObj: {},
-      designation: '',
-      fullCs: [],
-      fullPs: [],
-      fund_type: '',
-      industry: '',
-      kyc_rejection_reason: '',
-      kyc_status: '',
-      leadId: '',
-      leadSource: '',
-      loanStatus: '',
-      loan_rejection_reason: '',
-      man_cs_approval: '',
-      man_cs_rej_reason: '',
-      mode: '',
-      mortgage_type: '',
-      plotCS: [],
-      plotPS: [],
-      possessionAdditionalCostCS: [],
-      purchasePurpose: '',
-      purpose: '',
-      referralName: '',
-      release_status: '',
-      remarks: '',
-      sd_date: '',
-      sd_target_date: '',
-      source: '',
-      sourceOfPay: '',
-      stepsComp: '',
-      sub_source: '',
-    })
+        await updateDoc(doc(db, `${orgId}_projects`, unitData?.pId), {
+          t_collect: increment(-unitData?.T_approved),
+          bookUnitCount: increment(-1),
+          cancelUnitCount: increment(1),
+          soldUnitCount: increment(-1),
+          soldValue: increment(unitData?.T_total),
+        });
 
-    await updateDoc(doc(db, `${orgId}_projects`, data?.pId), {
-      t_collect: increment(-data?.T_approved),
-      bookUnitCount: increment(-1),
-      cancelUnitCount: increment(1),
-      soldUnitCount: increment(-1),
-      soldValue: increment(data?.T_total),
-    })
-    await enqueueSnackbar(`Unit booking is cancelled`, {
-      variant: 'success',
-    })
-  } catch (error) {
-    enqueueSnackbar('Cancellation Failed', {
-      variant: 'error',
-    })
-    console.log('error in uploading file with data', data, error)
-  }
+        closeFun(false);
+        return 'Unit booking is cancelled';
+      } catch (error) {
+        console.log('error in uploading file with data', unitData, error);
+        throw error; // Rethrow to let toast.promise handle it
+      }
+    })(),
+    {
+      loading: 'Processing cancellation...',
+      success: (message) => message,
+      error: 'Cancellation failed'
+    }
+  );
+
+
 }
 export const streamBookedLeads = async (orgId, data, snapshot, error) => {
   const { pId, startTime, endTime } = data
@@ -5914,8 +5921,10 @@ export const updateUnitStatus = async (
   selCustomerPayload,
   data,
   by,
-  enqueueSnackbar
+  enqueueSnackbar1
 ) => {
+  return toast.promise(
+    (async () => {
   try {
     const unitId = selCustomerPayload?.id
     console.log('data is===>', selCustomerPayload?.id, data)
@@ -5997,18 +6006,20 @@ export const updateUnitStatus = async (
           to: data?.status,
         },
       ])
-    enqueueSnackbar('Unit Status Updated', {
-      variant: 'success',
-    })
+    return 'Unit updation successful'
   } catch (error) {
-    console.log('Unit Status  updation failed', error, {
+    console.log('Unit updation failed', error, {
       ...data,
     })
-    enqueueSnackbar('Unit Status updation failed BBB', {
-      variant: 'error',
-    })
+    throw error
   }
-  return
+})(),
+{
+  loading: 'Processing updation...',
+  success: (message) => message,
+  error: 'Updation failed'
+}
+  )
 }
 
 export const updateUnitStatusDates = async (
@@ -6258,14 +6269,14 @@ export const updateCrmExecutiveReAssignAgreegations = async (
     receivable: increment(-newPrice),
     // receivable: 0,
   }
-  console.log('Employee  updation failed', docId_d, payload)
+
   try {
     await updateDoc(doc(db, `${orgId}_emp_collections`, old_doc_Id), oldPayload)
   } catch (error) {
     console.log('Employee  updation failed', error, {
       ...data,
     })
-    enqueueSnackbar('Emp Projections updation failed BBB', {
+    enqueueSnackbar("Old Projection doesn't exits", {
       variant: 'error',
     })
   }
@@ -6275,13 +6286,15 @@ export const updateCrmExecutiveReAssignAgreegations = async (
     console.log('Employee  updation failed', error, {
       ...data,
     })
-    await setDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
-    enqueueSnackbar('Emp Projections updation failed BBB', {
-      variant: 'error',
-    })
+    try {
+      await setDoc(doc(db, `${orgId}_emp_collections`, docId_d), payload)
+    } catch (error) {
+      enqueueSnackbar('New Projection updation failed', {
+        variant: 'error',
+      })
+    }
   }
-
-  return
+  
 }
 
 export const updateCrmReportAmountAgreeNew = async (orgId, data, by) => {
@@ -6846,10 +6859,7 @@ export const updateBankLoanApprovals = async (
           to: '',
         },
       ])
-    enqueueSnackbar(msg, {
-      variant: color,
-    })
-    console.log('data is ===> @@@', data)
+    toast.success('Loan Status Updated')
   } catch (error) {
     console.log('Doc Uplaod failed', error, unitId, {
       ...data,
