@@ -24,8 +24,5 @@
     "../.redwood/types/includes/all-*",
     "../.redwood/types/includes/web-*",
     "../types",
-    "src/util/sendEmail.js",
-    "src/NotificationDemo.tsx",
-    "firebase-messaging-sw.js"
   ]
 }

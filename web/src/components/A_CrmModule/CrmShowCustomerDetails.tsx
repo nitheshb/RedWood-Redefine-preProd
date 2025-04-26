@@ -24,7 +24,7 @@ import {
 import { prettyDate } from 'src/util/dateConverter'
 import { useFileUpload } from '../useFileUpload'
 import Profileimg from '../../../public/Profileimg.png'
-import NotificationDemo from '../../NotificationDemo'
+
 import { ToastBar, useToaster } from 'react-hot-toast'
 
 const ShowCustomerDetails = ({

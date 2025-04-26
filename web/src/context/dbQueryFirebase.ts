@@ -734,7 +734,7 @@ export const updateWalletTransactionStatus = async (
         to: status,
         projectId: projectId || '',
       },
-    ])
+    ]).select()
   console.log('error value is', {
     type: 'accounts',
     subtype: data1?.subtype || 'wallet_reviewer',
@@ -826,7 +826,7 @@ export const updateTransactionStatus = async (
         to: status,
         projectId: projectId || '',
       },
-    ])
+    ]).select()
   console.log(
     'check it ',
     status,
@@ -2659,7 +2659,7 @@ export const addTaskBusiness = async (orgId, dta, user) => {
       attachmentsCount: attachA?.length || 0,
       attachmentsA: attachA,
     },
-  ])
+  ]).select()
   x.map(async (userId) => {
     // get phone no's
     const additionalUserInfo = await getUser(userId)
@@ -2722,7 +2722,7 @@ export const addLead = async (orgId, data, by, msg) => {
               by,
               payload: {},
             },
-          ])
+          ]).select()
         if (Project) {
           // await sendWhatAppTextSms1(
           //   '7760959579',
@@ -2806,7 +2806,7 @@ export const addCpLead = async (orgId, data, by, msg) => {
         by,
         payload: {},
       },
-    ])
+    ]).select()
   if (assignedTo) {
     const { offPh } = assignedToObj
     await sendWhatAppTextSms1(
@@ -2876,7 +2876,7 @@ export const addCustomer = async (orgId, data, by, resetForm) => {
   try {
     const did = uuidv4()
     data.id = did
-    console.log('error in customer creation')
+
 
     await setDoc(doc(db, `${orgId}_customers`, did), data)
 
@@ -2893,7 +2893,6 @@ export const addUserAccessMaster = async (orgId, data, by, enqueueSnackbar) => {
   try {
     const did = uuidv4()
     data.id = did
-    console.log('error in customer creation')
 
     await setDoc(doc(db, `${orgId}_roles_access`, data?.uid), data)
 
@@ -5257,7 +5256,7 @@ export const updateLeadAssigTo = async (
         to: value,
         projectId: projectId,
       },
-    ])
+    ]).select()
   if (newSt != '') {
     try {
       const todaydate = new Date()
@@ -5378,6 +5377,8 @@ export const createNewCustomerS = async (
     // const { Name } = leadDetailsObj2
 
     console.log('wow it should be here', leadDocId, newStatus)
+try {
+
 
     const { data, error } = await supabase.from(`${orgId}_customers`).insert([
       {
@@ -5392,7 +5393,9 @@ export const createNewCustomerS = async (
         added_by: by,
         projects: [projectId],
       },
-    ])
+    ]).select();
+    console.log('supabase customer details saving success',)
+
     // const customerD =     {
     //   Name:
     //     leadDetailsObj2?.Name || customerInfo?.customerDetailsObj?.customerName1,
@@ -5418,7 +5421,10 @@ export const createNewCustomerS = async (
       projects: [projectId],
     })
     return data
+  } catch (error) {
 
+    console.log('supabase customer details saving error', error)
+      }
     return
     // await updateDoc(doc(db, `${orgId}_leads`, leadDocId), {
     //   Status: newStatus,
@@ -5490,7 +5496,7 @@ export const insertPSS = async (
           zeroDay,
           order,
         },
-      ])
+      ]).select()
     enqueueSnackbar(`Insert Ps`, {
       variant: 'success',
     })
@@ -5571,7 +5577,7 @@ export const captureWalletPayment = async (
         bank_ref: bank_ref_no,
         attchUrl: payload?.fileUploader?.url || payload?.attchUrl || '',
       },
-    ])
+    ]).select()
     const paymentCB = await addPaymentReceivedEntry(
       orgId,
       'wallet',
@@ -5632,7 +5638,7 @@ export const captureWalletPayment = async (
           by,
           payload: {},
         },
-      ])
+      ]).select()
 
     enqueueSnackbar(`Captured Payment`, {
       variant: 'success',
@@ -5713,7 +5719,7 @@ export const capturePaymentS = async (
           payload?.attchUrl ||
           '',
       },
-    ])
+    ]).select()
     const paymentCB = await addPaymentReceivedEntry(
       orgId,
       unitId,
@@ -5787,7 +5793,7 @@ export const capturePaymentS = async (
           from: 'review',
           to: 'review',
         },
-      ])
+      ]).select()
     const reportPayload = {
       txt_dated: dated,
       receive_by: payload?.bookedBy || payload?.receive_by,
@@ -5838,7 +5844,7 @@ export const addAccountslogS = async (
           unitId,
           amount: 10.0,
         },
-      ])
+      ]).select()
 
     await console.log('data is ', data, error)
     enqueueSnackbar(`Captured Payment`, {
@@ -6005,7 +6011,7 @@ export const updateUnitStatus = async (
           from: 'sts_change',
           to: data?.status,
         },
-      ])
+      ]).select()
     return 'Unit updation successful'
   } catch (error) {
     console.log('Unit updation failed', error, {
@@ -6048,7 +6054,7 @@ export const updateUnitStatusDates = async (
           from: data?.oldDate,
           to: data?.time,
         },
-      ])
+      ]).select()
     enqueueSnackbar('Unit Status Updated', {
       variant: 'success',
     })
@@ -6294,7 +6300,7 @@ export const updateCrmExecutiveReAssignAgreegations = async (
       })
     }
   }
-  
+
 }
 
 export const updateCrmReportAmountAgreeNew = async (orgId, data, by) => {
@@ -6635,7 +6641,7 @@ export const updateManagerApproval = async (
           from: 'cs_review',
           to: status,
         },
-      ])
+      ]).select()
     if (status === 'approved') {
       toast.success('Cost Sheet Approved..!', {
         // variant: 'success',
@@ -6700,7 +6706,7 @@ export const AddUnitDocs = async (
           from: 'docUploaded',
           to: docName,
         },
-      ])
+      ]).select()
     enqueueSnackbar(msg, {
       variant: color,
     })
@@ -6768,7 +6774,7 @@ export const DeleteUnitDocs = async (
           from: 'docDeleted',
           to: docName,
         },
-      ])
+      ]).select()
     enqueueSnackbar(msg, {
       variant: color,
     })
@@ -6814,7 +6820,7 @@ export const updateUnitDocs = async (
           from: 'docUploaded',
           to: docName,
         },
-      ])
+      ]).select()
     enqueueSnackbar(msg, {
       variant: color,
     })
@@ -6858,7 +6864,7 @@ export const updateBankLoanApprovals = async (
           from: 'docUploaded',
           to: '',
         },
-      ])
+      ]).select()
     toast.success('Loan Status Updated')
   } catch (error) {
     console.log('Doc Uplaod failed', error, unitId, {
@@ -6915,7 +6921,7 @@ export const addNewUnitModification = async (
           from: 'cs_review',
           to: status,
         },
-      ])
+      ]).select()
     fullPs.map((d, i) => {
       //
       // this will set the previous date immutable as current date
@@ -6990,7 +6996,7 @@ export const addNewUnitDemand = async (
           from: 'cs_review',
           to: status,
         },
-      ])
+      ]).select()
     fullPs.map((d, i) => {
       //
       // this will set the previous date immutable as current date
@@ -7050,7 +7056,7 @@ export const updateLegalClarityApproval = async (
           from: 'legal_review',
           to: status,
         },
-      ])
+      ]).select()
     enqueueSnackbar('Legal Clarified..!', {
       variant: 'success',
     })
@@ -7094,7 +7100,7 @@ export const updateATSApproval = async (
           from: 'ats_review',
           to: status,
         },
-      ])
+      ]).select()
     // enqueueSnackbar('ATS Approved..!', {
     //   variant: 'success',
     // })
@@ -7147,7 +7153,7 @@ export const updateKycApproval = async (
           from: 'kyc_review',
           to: status,
         },
-      ])
+      ]).select()
     // enqueueSnackbar('KYC Approved..!', {
     //   variant: 'success',
     // })
@@ -7199,7 +7205,7 @@ export const updatePosessionApproval = async (
           from: 'cs_review',
           to: 'posession',
         },
-      ])
+      ]).select()
     // enqueueSnackbar('Posession Approved..!', {
     //   variant: 'success',
     // })
@@ -7248,7 +7254,7 @@ export const updateSDApproval = async (
           from: 'sd_review',
           to: status,
         },
-      ])
+      ]).select()
     enqueueSnackbar(msg, {
       variant: status == 'approved' ? 'success' : 'error',
     })
@@ -7409,7 +7415,7 @@ export const uploadBookedUnitToDb = async (
           from: data?.oldStatus || 'lead',
           to: data?.status || 'booked',
         },
-      ])
+      ]).select()
   } catch (error) {
     console.log('Unit Status Updation Failed', error, {
       ...data,
@@ -7447,7 +7453,7 @@ export const updateUnitAsBooked = async (
           from: data?.oldStatus || 'lead',
           to: data?.status || 'booked',
         },
-      ])
+      ]).select()
     if (enqueueSnackbar) {
       enqueueSnackbar(`Unit updated as ${data?.status}`, {
         variant: 'success',
@@ -7502,7 +7508,7 @@ export const updateUnitAsBlocked = async (
           from: 'lead',
           to: 'blocked',
         },
-      ])
+      ]).select()
     enqueueSnackbar('Unit is blocked..!', {
       variant: 'success',
     })
@@ -7552,7 +7558,7 @@ export const updateLeadRemarks_NotIntrested = async (
           from: from,
           to: Status,
         },
-      ])
+      ]).select()
     enqueueSnackbar('Updated Successfully', {
       variant: 'success',
     })
@@ -7623,7 +7629,7 @@ export const updateLeadRemarks_VisitDone = async (
           from: from,
           to: Status,
         },
-      ])
+      ]).select()
     enqueueSnackbar('Updated Successfully', {
       variant: 'success',
     })
@@ -7659,7 +7665,7 @@ export const updateLeadsStrength = async (orgId, leadDocId, data, by) => {
           from: 0,
           to: leadstrength,
         },
-      ])
+      ]).select()
     toast.success('Lead Strength Updated')
   } catch (error) {
     console.log('Lead Strength failed', error, {
@@ -7718,7 +7724,7 @@ export const updateLeadBookedStatus = async (
         to: newStatus,
         projectId: projectId,
       },
-    ])
+    ]).select()
 
     console.log('chek if ther is any erro in supa', data, error)
     enqueueSnackbar(`Status Updated to ${newStatus}`, {
@@ -7767,7 +7773,7 @@ export const updateLeadStatus = async (
         to: newStatus,
         projectId: projectId,
       },
-    ])
+    ]).select()
 
     console.log('chek if ther is any erro in supa', data, error)
     enqueueSnackbar(`Status Updated to ${newStatus}`, {

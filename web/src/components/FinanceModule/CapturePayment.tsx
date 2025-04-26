@@ -33,9 +33,9 @@ import {
   validate_capturePayment,
   validate_captureWalletPayment,
 } from '../Schemas'
-import sendEmail from 'src/util/sendEmail'
 
-// import sendEmail from '../../../../web/src/util/sendEmail'
+
+
 
 const CaptureUnitPayment = ({
   title,
@@ -308,22 +308,7 @@ const CaptureUnitPayment = ({
 
     await confettiRef?.current?.fire()
 
-    // try {
-    //   const emailData = {
-    //     email: customerInfo?.email,
-    //     userFirstname: customerInfo?.name,
-    //     resetPasswordLink: 'https://yourdomain.com/reset-password',
-    //   }
-
-    //   await sendEmail(
-    //     emailData.email,
-    //     emailData.userFirstname,
-    //     emailData.resetPasswordLink
-    //   )
-    //   console.log('Email sent successfully!')
-    // } catch (error) {
-    //   console.error('Failed to send email:', error)
-    // }
+  
 
     return
 

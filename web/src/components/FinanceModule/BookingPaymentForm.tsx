@@ -126,7 +126,6 @@ const AddPaymentDetailsForm = ({
         orgId,
         customerD,
         email,
-        () => ({}),
         () => ({})
       )
     }
@@ -148,7 +147,6 @@ const AddPaymentDetailsForm = ({
         customerD,
         email,
         () => ({}),
-        () => ({})
       )
     }
     return await createNewCustomerS(
@@ -269,14 +267,17 @@ const AddPaymentDetailsForm = ({
     console.log('newPlotPS', newPlotPS, newConstructPS, fullPs, T_elgible)
 
     const customerfbA = await createNewCustoreSupa(data)
+
     fullPs?.map((dataObj, i) => {
       dataObj.order = i
       updatePS(dataObj, resetForm)
     })
     const { uid } = selUnitDetails
+
     // customerfbA
+console.log('customerfbA', customerfbA)
     let custNo
-    if ((await customerfbA?.length) > 0) {
+    if (await(customerfbA?.length) > 0) {
       custNo = customerfbA[0].id
     } else {
       return
@@ -289,6 +290,8 @@ const AddPaymentDetailsForm = ({
       primaryCustomerName = customerName1
       phoneNo = phoneNo1
     }
+
+  console.log('check if mode is not equal to wallet', data)
     await setBookCurentStep(['payment_captured'])
     let y
     // check if mode is not equal to 'wallet'
