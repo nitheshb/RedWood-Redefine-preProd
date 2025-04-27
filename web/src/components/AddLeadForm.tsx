@@ -1190,14 +1190,14 @@ const AddLeadForm = ({
                             {title === 'Edit Lead' && (
                               <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4">
                                 <button
-                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-[8px]"
                                   type="reset"
                                   onClick={() => resetter()}
                                 >
                                   Reset
                                 </button>
                                 <button
-                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-[8px]"
                                   type="submit"
                                   disabled={loading}
                                 >
@@ -1210,14 +1210,14 @@ const AddLeadForm = ({
                             {title != 'Edit Lead' && (
                               <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4">
                                 <button
-                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-800 rounded-[8px] cursor-pointer"
                                   type="reset"
                                   onClick={() => resetter()}
                                 >
                                   Reset
                                 </button>
                                 <button
-                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-[8px]"
                                   type="submit"
                                   disabled={loading}
                                 >
@@ -1225,7 +1225,7 @@ const AddLeadForm = ({
                                   Add Lead
                                 </button>
                                 <button
-                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-[8px]"
                                   type="submit"
                                   onClick={() => setCloseWindowMode(true)}
                                   disabled={loading}

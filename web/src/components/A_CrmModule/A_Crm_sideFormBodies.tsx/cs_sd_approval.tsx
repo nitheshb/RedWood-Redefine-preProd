@@ -65,24 +65,24 @@ export default function Crm_Sd_approval({
         <div className="mt-5 left-0 text-right md:space-x-3 md:block flex flex-col-reverse py-3 mr-6 flex flex-col mt-2 z-10 flex flex-row justify-between mt-2 pr-6 bg-white shadow-lg absolute bottom-0  w-full">
           {rejection && (
             <div className="mt-">
-              <div className="flex justify-center border-2 py-2 px-6 px-10 mb-2 rounded-xl">
+              <div className="flex justify-center border-2  mb-2 rounded-[8px]">
                 <input
                   type="text"
                   name="blockReason"
                   placeholder="Write Rejection Comments"
-                  className="w-full outline-none text-gray-700 text-lg"
+                  className="w-full outline-none text-gray-700 px-1 text-lg "
                   onChange={(e) => {
                     setRejectionReason(e.target.value)
                   }}
                 />
                 {fillError && (
-                  <div className="error-message text-red-700 text-xs p-1 mx-auto" />
+                  <div className="error-message text-red-700 text-xs p-1 max-w-6xl" />
                 )}
                 <button
                   type="submit"
                   className={`${
-                    rejectionReason.length > 0 ? 'bg-[#ff9f87]' : 'bg-[#f9eeeb]'
-                  }  text-gray-700 font-semibold px-6 py-2 rounded-xl text-md`}
+                    rejectionReason.length > 0 ? 'bg-[#EDE9FE]' : 'bg-[#EDE9FE]'
+                  }  text-gray-700 font-semibold px-6 py-2  text-md`}
                   onClick={() => {
                     if (rejectionReason !== '') {
                       showFillError(false)
@@ -99,7 +99,7 @@ export default function Crm_Sd_approval({
           )}
 
           <button
-            className=" text-black   border  border-[#E3BDFF] active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+            className=" text-black   border  border-[#E3BDFF] active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded-[8px] shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
             type="submit"
             onClick={() => {
               setRejection(!rejection)
@@ -108,7 +108,7 @@ export default function Crm_Sd_approval({
             {'Reject'}
           </button>
           <button
-            className="bg-[#e3bdff] text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+            className="bg-[#e3bdff] text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded-[8px] shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
             type="submit"
             onClick={() => {
               submitManagerApproval('approved')

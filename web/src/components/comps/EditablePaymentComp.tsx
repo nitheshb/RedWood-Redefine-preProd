@@ -585,13 +585,13 @@ const EditablePaymentTable = ({
           <div className="flex justify-between">
             <button
               onClick={addRow}
-              className="mt-4 bg-[#57C0D0]  text-white font-md py-1 px-2 rounded focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className="mt-4 bg-[#D3F0F8]  text-black font-md py-1 px-2 rounded-[8px] focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
             >
               Add Schedule
             </button>
             <button
               onClick={saveSetup}
-              className="mt-4 bg-[#57C0D0] text-white font-md py-1 px-2 rounded focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className="mt-4 bg-[#D3F0F8] text-black font-md py-1 px-2 rounded-[8px] focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
             >
               Save
             </button>

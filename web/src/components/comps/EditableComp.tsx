@@ -1134,13 +1134,13 @@ const EditableTable = ({ phase, partAData, fullCs, source, type }) => {
           <div className="flex justify-between">
             <button
               onClick={addRow}
-              className="mt-4 bg-[#0891B2]  text-white font-md py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className="mt-4 bg-[#D3F0F8]  text-black  font-sm py-1 px-2 rounded-[8px] focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
             >
               Add Charges
             </button>
             <button
               onClick={saveSetup}
-              className="mt-4 bg-[#0891B2] text-white font-md py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
+              className="mt-4 bg-[#D3F0F8] text-black font-sm py-1 px-2 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-150 ease-in-out"
             >
               Save
             </button>

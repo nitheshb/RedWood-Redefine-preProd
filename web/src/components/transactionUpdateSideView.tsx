@@ -305,12 +305,12 @@ export default function TransactionUpdateSideView({
         <div className="my-2  grid grid-cols-2 mt-4 border-t border-[#e5e7f8]">
           {rejection && (
             <div className="col-span-2 mt-4 mb-4">
-              <div className="flex justify-center border-2 py-2 px-6 rounded-xl">
+              <div className="flex justify-center border-2  rounded-[8px]">
                 <input
                   type="text"
                   name="rejectionReason"
                   placeholder="Write Rejection Comments"
-                  className="w-full outline-none text-gray-700 text-sm"
+                  className="w-full outline-none  px-1 text-gray-700 text-sm"
                   onChange={(e) => setRejectionReason(e.target.value)}
                 />
                 {fillError && (

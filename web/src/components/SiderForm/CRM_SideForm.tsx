@@ -155,12 +155,31 @@ const CrmSiderForm = ({
                   />
                 )}
                 {title === 'crm_loan' && (
-                  <div className="bg-white pl-6">
+
+                  <div className='bg-white'> 
+
+
+<div className='w-full max-w-5xl px-4 mx-auto  h-full items-center justify-center  flex  z-10 relative  overflow-y-scroll max-h-screen scroll-smooth scrollbar-thin scrollbar-thumb-gray-300'>
+
+
+<div className="">
                     <LoanApplyFlowHome
                       customerDetails={customerDetails}
                       setCustomerDetails={setCustomerDetails}
                     />
                   </div>
+
+
+                  </div>
+
+
+                  </div>
+
+
+
+
+
+
                 )}
                 {title === 'crm_legal_clarity' && (
                   <Crm_legal_Clarity

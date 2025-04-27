@@ -100,7 +100,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
   return (
     <>
       <div className="flex flex-col h-screen relative overflow-hidden  bg-[#F6F5F8] ">
-        <div className="sticky top-0 z-30 p-4 py-2 bg-[linear-gradient(to_bottom,_#D3F0F8,_#F6F5F8)]">
+        <div className="sticky top-0 z-30 p-4 py-2 bg-[#D3F0F8]">
           <Dialog.Title className="font-medium text-[#0E0A1F] text-[16px] leading-[100%] tracking-[0.06em] uppercase py-4">
             Project Information
           </Dialog.Title>
@@ -219,7 +219,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
               // onClick={() => dialogOpen(false)}
               onClick={() => goToPrevious()}
               type="button"
-              className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+              className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm  font-medium tracking-wider border text-black rounded-[8px] hover:shadow-[8px] hover:bg-[#D3F0F8]"
             >
               <section className="flex flex-row">
                 <ArrowLeftIcon className={` w-4 h-4 mt-[2px] mr-1`} />
@@ -234,7 +234,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
           <div className="mt-5 w-full text-right md:space-x-3 md:block flex flex-row mb-6 justify-between w-full ">
             {selFlow.value === 'projectDetails' && (
               <button
-                className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
+                className="mb-2 md:mb-0 bg-[#D3F0F8] px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-black  rounded-[8px] hover:shadow-[8px]  "
                 type="submit"
                 onClick={() => {
                   setLoading(true)
@@ -248,7 +248,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
 
             {selFlow?.indx + 1 === projectDetailFlow.length && (
               <button
-                className="mb-2 md:mb-0 bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium mr- tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500 "
+                className="mb-2 md:mb-0 bg-[#D3F0F8] px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-black  rounded-[8px] hover:shadow-[8px] "
                 type="submit"
                 onClick={() => {
                   dialogOpen(false)
@@ -261,7 +261,7 @@ const ProjectDetailsFlowBody = ({ setProject, title, dialogOpen, project }) => {
             <button
               className={` ${
                 selFlow?.indx + 1 === projectDetailFlow.length ? 'hidden' : ''
-              }   mb-2 md:mb-0  bg-cyan-600 px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-white  rounded-sm hover:shadow-lg `}
+              }   mb-2 md:mb-0  bg-[#D3F0F8] px-5 py-2 text-sm shadow-sm font-medium  tracking-wider text-black  rounded-[8px] hover:shadow-[8px] `}
               disabled={loading}
               onClick={() => {
                 if (project?.uid) {

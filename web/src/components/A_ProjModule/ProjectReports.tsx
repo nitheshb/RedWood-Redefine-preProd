@@ -553,7 +553,7 @@ ${x?.length > 0 ? `${personalFinalText}` : ''}\n \n
                       key={i}
                       className={` cursor-pointer flex flex-row ${
                         selUserId === data?.uid
-                          ? 'bg-[#E3BDFF] text-white rounded-xl'
+                          ? 'bg-[#D3F0F8] text-black rounded-xl'
                           : ''
                       }`}
                       onClick={() => {

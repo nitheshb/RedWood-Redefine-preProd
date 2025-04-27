@@ -396,10 +396,10 @@ const ProjectAccessHomeList = ({
             onClick={() => {
               auditFun()
             }}
-            className={`inline-flex w-full justify-center rounded-sm mt-3 px-3 py-2 bg-cyan-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
+            className={`inline-flex w-full justify-center rounded-[8px] mt-3 px-3 py-2 bg-[#D3F0F8] text-sm font-medium text-black shadow-sm  sm:ml-3 sm:w-auto`}
           >
             <TrashIcon
-              className="h-4 w-4 mr-1 ml- mt-[1px] inline text-white"
+              className="h-4 w-4 mr-1 ml- mt-[1px] inline text-black"
               aria-hidden="true"
             />{' '}
             Audit
@@ -435,10 +435,10 @@ const ProjectAccessHomeList = ({
             onClick={() => {
               setOpen(true)
             }}
-            className={`inline-flex w-full justify-center rounded-sm mt-3 px-3 py-2 bg-cyan-600 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto`}
+            className={`inline-flex w-full justify-center rounded-[8px] mt-3 px-3 py-2 bg-[#D3F0F8] text-sm font-medium text-black shadow-sm hover:bg-[#D3F0F8] sm:ml-3 sm:w-auto`}
           >
             <TrashIcon
-              className="h-4 w-4 mr-1 ml- mt-[1px] inline text-white"
+              className="h-4 w-4 mr-1 ml- mt-[1px] inline text-black"
               aria-hidden="true"
             />{' '}
             Delete Project

@@ -2976,9 +2976,9 @@ export default function LeadProfileSideView({
                                 <div
                                   className={`bg-white border rounded-full px-3 py-1 flex items-center gap-1 ${
                                     leadNextTaskObj?.comingSoon
-                                      ? 'bg-green-400'
-                                      : 'border-red-700 text-red-700 '
-                                  }`}
+                                      ? 'text-green-400 border-green-400'
+                                      : 'border-[#DC3C3C] text-[#DC3C3C] '
+                                  } text-[12px]`}
                                 >
                                   <Phone size={14} />
                                   <span className="font-medium text-[12px] leading-[100%] cursor-pointer tracking-[0%]">
@@ -2991,11 +2991,11 @@ export default function LeadProfileSideView({
                                         )
                                       ) <= 24) && (
                                       <span
-                                        className={`  py-1 ml-6 mb-2 ${
+                                        className={`  py-1  mb-2 ${
                                           leadNextTaskObj?.comingSoon
-                                            ? 'bg-green-400'
-                                            : 'bg-red-400'
-                                        }  text-white text-[12px] text-center`}
+                                            ? 'text-green-400 border-green-400'
+                                            : 'text-[#DC3C3C]'
+                                        }  text-black text-[12px] text-center`}
                                       >
                                         {leadNextTaskObj?.comingSoon
                                           ? 'Starts in'

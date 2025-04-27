@@ -349,7 +349,7 @@ const AddNewDemand = ({
       <div className="flex items-center justify-center">
         <div
           id="bg-img"
-          className="flex h-[664px] w-full flex-col bg-purple-200 h-screen"
+          className="flex h-[664px] w-full flex-col bg-[#F6F5F8] h-screen"
           style={bgImgStyle}
         >
           {StatusListA?.length > 0 && (
@@ -660,7 +660,7 @@ const AddNewDemand = ({
 
                                     <div className="text-center space-x-4 mt-6">
                                       <button
-                                        className="bg-[#00ADB4] translate-y-1 text-[#fff]  text-[12px]  py-2.5 px-6  font-medium  rounded-full inline-flex items-center"
+                                        className="bg-[#EDE9FE] translate-y-1 text-black  text-[12px]  py-2.5 px-6  font-medium  rounded-lg inline-flex items-center"
                                         type="submit"
                                         disabled={loading}
                                       >

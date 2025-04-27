@@ -1566,12 +1566,12 @@ const CostBreakUpEditor = ({
 
                 {rejection && (
                   <div className="mt-">
-                    <div className="flex justify-center border-2 py-2 px-6 px-10 mb-2 rounded-xl">
+                    <div className="flex justify-center border-2  mb-2 rounded-xl">
                       <input
                         type="text"
                         name="blockReason"
                         placeholder="Write Rejection Comments"
-                        className="w-full outline-none text-gray-700 text-lg"
+                        className="w-full outline-none text-gray-700 px-1 text-lg"
                         onChange={(e) => {
                           setRejectionReason(e.target.value)
                           // formik.setFieldValue('blockReason', e.target.value)
@@ -1589,9 +1589,9 @@ const CostBreakUpEditor = ({
                         type="submit"
                         className={`${
                           rejectionReason.length > 0
-                            ? 'bg-[#ff9f87]'
-                            : 'bg-[#f9eeeb]'
-                        }  text-gray-700 font-semibold px-6 py-2 rounded-xl text-md`}
+                            ? 'bg-[#EDE9FE]'
+                            : 'bg-[#EDE9FE]'
+                        }  text-black font-semibold px-6 py-2  text-md`}
                         onClick={() => {
                           if (rejectionReason !== '') {
                             showFillError(false)
@@ -1607,7 +1607,7 @@ const CostBreakUpEditor = ({
                   </div>
                 )}
                 <button
-                  className=" text-black active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded  border  border-[#E3BDFF] shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  className=" text-black active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded-[8px]  border  border-[#E3BDFF] shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                   type="submit"
                   onClick={() => {
                     setRejection(!rejection)
@@ -1619,7 +1619,7 @@ const CostBreakUpEditor = ({
                 </button>
 
                 <button
-                  className="bg-[#e3bdff] text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  className="bg-[#e3bdff] text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded-[8px] shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                   type="submit"
                   // disabled={loading}
                   onClick={() => {
