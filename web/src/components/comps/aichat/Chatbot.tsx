@@ -1,27 +1,27 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react'
 
 const Chatbot = () => {
   const settings = window?.chatbotSettings || {
-    position: "right",
-    top: "5px",
-    right: "150px",
+    position: 'right',
+    top: '5px',
+    right: '150px',
     // showOnRoutes: ["/"],
-  };
+  }
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [messages, setMessages] = useState([])
+  const [inputValue, setInputValue] = useState('')
+  const [isTyping, setIsTyping] = useState(false)
+  const messagesEndRef = useRef(null)
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping]);
+    scrollToBottom()
+  }, [messages, isTyping])
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   // const currentPath = window?.location?.pathname;
   // if (
@@ -32,50 +32,50 @@ const Chatbot = () => {
   // }
 
   const containerStyle = {
-    position: "fixed",
+    position: 'fixed',
     zIndex: 9999,
-    ...(settings.position === "left" && {
+    ...(settings.position === 'left' && {
       left: settings.left,
       top: settings.top,
     }),
-    ...(settings.position === "right" && {
+    ...(settings.position === 'right' && {
       right: settings.right,
       top: settings.top,
     }),
-    ...(settings.position === "center" && {
-      left: "50%",
-      transform: "translateX(-50%)",
+    ...(settings.position === 'center' && {
+      left: '50%',
+      transform: 'translateX(-50%)',
     }),
-    ...(settings.position === "bottom" && {
+    ...(settings.position === 'bottom' && {
       bottom: settings.bottom,
-      left: "50%",
-      transform: "translateX(-50%)",
+      left: '50%',
+      transform: 'translateX(-50%)',
     }),
-  };
+  }
 
   const chatWindowStyle = {
-    display: isOpen ? "flex" : "none",
-    position: "fixed",
+    display: isOpen ? 'flex' : 'none',
+    position: 'fixed',
     top: 0,
     right: 0,
     bottom: 0,
-    width: isExpanded ? "100%" : "360px",
+    width: isExpanded ? '100%' : '360px',
     zIndex: 10000,
-    borderRadius: "0.5rem",
-  };
+    borderRadius: '0.5rem',
+  }
 
   const toggleChat = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
   const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
+    setIsExpanded(!isExpanded)
+  }
 
   const handleClose = () => {
-    setIsOpen(false);
-    setIsExpanded(false);
-  };
+    setIsOpen(false)
+    setIsExpanded(false)
+  }
 
   const createTypingIndicator = () => (
     <div className="flex flex-col max-w-[75%]">
@@ -87,78 +87,77 @@ const Chatbot = () => {
           <div className="w-2 h-2 rounded-full bg-pink-300 animate-pulse"></div>
           <div
             className="w-2 h-2 rounded-full bg-pink-400 animate-pulse"
-            style={{ animationDelay: "0.2s" }}
+            style={{ animationDelay: '0.2s' }}
           ></div>
           <div
             className="w-2 h-2 rounded-full bg-pink-500 animate-pulse"
-            style={{ animationDelay: "0.4s" }}
+            style={{ animationDelay: '0.4s' }}
           ></div>
         </div>
       </div>
     </div>
-  );
+  )
 
   const appendMessage = (sender, text) => {
-    setMessages((prev) => [...prev, { sender, text }]);
-  };
+    setMessages((prev) => [...prev, { sender, text }])
+  }
 
   const handleUserMessage = async (userPrompt) => {
-    if (!userPrompt.trim()) return;
+    if (!userPrompt.trim()) return
 
-    setInputValue("");
-    appendMessage("user", userPrompt);
-    setIsTyping(true);
+    setInputValue('')
+    appendMessage('user', userPrompt)
+    setIsTyping(true)
 
     try {
-      const response = await fetch("https://your-api-endpoint/chat", {
-        method: "POST",
+      const response = await fetch('https://your-api-endpoint/chat', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           message: userPrompt,
         }),
-      });
+      })
 
       if (!response.ok) {
-        throw new Error("API request failed");
+        throw new Error('API request failed')
       }
 
-      const data = await response.json();
-      setIsTyping(false);
+      const data = await response.json()
+      setIsTyping(false)
       appendMessage(
-        "bot",
+        'bot',
         data.response ||
           "Of course! What's your query? How can I assist you today?"
-      );
+      )
     } catch (err) {
-      console.error("Error generating response:", err);
-      setIsTyping(false);
+      console.error('Error generating response:', err)
+      setIsTyping(false)
       appendMessage(
-        "bot",
+        'bot',
         "I apologize, but I'm having trouble connecting right now. Please try again later."
-      );
+      )
     }
-  };
+  }
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleUserMessage(inputValue);
+    if (e.key === 'Enter') {
+      handleUserMessage(inputValue)
     }
-  };
+  }
 
   return (
     <div>
       {/* Toggle Button */}
       <div id="chatbot-container" style={containerStyle}>
-      <div className="p-[2px] rounded-lg bg-gradient-to-r from-[#69499F] to-[#FCAE42] inline-block">
-
-        <button
-          id="chatbot-toggle"
-          onClick={toggleChat}
-          className="text-white rounded-lg bg-gradient-to-r from-[#69499F] to-[#FCAE42] px-4 py-2 flex items-center justify-center cursor-pointer transition "
-        >
-          {/* <svg
+        <div className="p-[2px] rounded-lg bg-gradient-to-r from-[#69499F] to-[#FCAE42] inline-block">
+          <button
+            id="chatbot-toggle"
+            onClick={toggleChat}
+            className="text-white rounded-lg bg-gradient-to-r from-[#69499F] to-[#FCAE42] px-4 py-2 flex items-center justify-center cursor-pointer transition "
+          >
+            {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5 mr-2"
             fill="none"
@@ -172,13 +171,9 @@ const Chatbot = () => {
               d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
             />
           </svg> */}
-          Copilot
-        </button>
+            Copilot
+          </button>
         </div>
-
-
-
-
       </div>
 
       {/* Chat Window */}
@@ -201,7 +196,9 @@ const Chatbot = () => {
               >
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
               </svg>
-              <span className="ml-2 font-semibold text-gray-900">Breeze</span>
+              <span className="ml-2 font-semibold text-gray-900">
+                Redefine Erp
+              </span>
             </div>
           </div>
           <div className="flex items-center space-x-2">
@@ -280,16 +277,16 @@ const Chatbot = () => {
             </div>
             <div className="flex flex-col items-center">
               <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-semibold">Breeze Copilot</h2>
+                <h2 className="text-2xl font-semibold">Redefine Erp Copilot</h2>
                 <span
                   className="text-[10px] px-1.5 py-0.5 bg-pink-500 text-white rounded"
-                  style={{ borderRadius: "4px" }}
+                  style={{ borderRadius: '4px' }}
                 >
                   Beta
                 </span>
               </div>
               <p className="text-gray-600 text-center mt-2">
-                How can Breeze Copilot help you?
+                How can Redefine Erp Copilot help you?
               </p>
             </div>
           </div>
@@ -302,10 +299,10 @@ const Chatbot = () => {
               <div
                 key={index}
                 className={`flex ${
-                  msg.sender === "user" ? "justify-end" : "justify-start"
+                  msg.sender === 'user' ? 'justify-end' : 'justify-start'
                 }`}
               >
-                {msg.sender === "user" ? (
+                {msg.sender === 'user' ? (
                   <div className="message-bubble bg-pink-500 text-white rounded-lg px-4 py-2 text-sm max-w-[75%]">
                     {msg.text}
                   </div>
@@ -386,7 +383,7 @@ const Chatbot = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Chatbot;
+export default Chatbot
