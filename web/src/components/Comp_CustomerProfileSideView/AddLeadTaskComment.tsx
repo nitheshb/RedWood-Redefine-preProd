@@ -101,8 +101,8 @@ export default function AddLeadTaskComment({
 
   return (
     <div className=" form outline-none   py-2 mx-4  max-h-[72px] min-h-[72px] mb-4">
-      <div className="flex flex-row justify-between px-4">
-        <section className="w-full flex flex-col">
+      <div className="flex flex-row justify-between ">
+        <section className="w-full flex  flex-col gap-4">
           {addCommentTitle === '' && !clicked && !addCommentPlusTask && (
             <section className="flex flex-row mt-2">
               {[
@@ -146,17 +146,16 @@ export default function AddLeadTaskComment({
                       dataObj?.type === 'visitdone')) && (
                     <>
                       <span
-                        className={`text-xs font-Playfair italic cursor-pointer   mr-4 text-[#5c6575] hover:border-b h-[16px] ${
-                          addCommentTitle === dataObj?.desc ? 'border-b' : ''
-                        } `}
+                        className={`font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] cursor-pointer hover:text-[#2B2B2B] mr-4 ${addCommentTitle === dataObj?.desc ? 'border-b' : ''
+                          }  ${i !== 0 ? 'pl-4 border-l border-[#E7E7E9]' : ''}`}
                         onClick={() => {
                           setClicked(true)
                           setHover(false)
                           setSelType(dataObj?.type)
                           setAddCommentTitle(dataObj?.desc)
                         }}
-                        onMouseEnter={() => {}}
-                        onMouseLeave={() => {}}
+                        onMouseEnter={() => { }}
+                        onMouseLeave={() => { }}
                       >
                         {' '}
                         {dataObj?.label}
@@ -167,14 +166,14 @@ export default function AddLeadTaskComment({
             </section>
           )}
           {clicked && selType === 'reschedule' && !addCommentPlusTask && (
-            <section className="flex flex-row ">
-              <span className="text-xs font-Playfair  text-[#5c6575] font-bold mt-2">
+            <section className="flex flex-row items-center">
+              <span className="font-outfit font-normal text-sm leading-tight tracking-tight text-[#0E0A1F]">
                 {' '}
                 Reschedule to:
               </span>
-              <span className="inline mt-[4px] pl-2">
+              <span className="pl-2">
                 <DatePicker
-                  className=" pl- px- min-w-[151px] inline text-xs text-[#0091ae] bg-white cursor-pointer"
+                  className=" px-2 min-w-[80px] inline font-outfit font-normal text-sm leading-tight tracking-tight text-[font-outfit font-normal text-sm  leading-tight tracking-tight text-[#F25533] h-[24px]"
                   selected={pickerDate}
                   onChange={(date) => {
                     console.log(
@@ -201,71 +200,92 @@ export default function AddLeadTaskComment({
                 />
               </span>
 
-              {[
-                {
-                  type: 'time',
-                  label: '+30min',
-                  value: 30 * 60000,
-                },
-                {
-                  type: 'time',
-                  label: '+45min',
-                  value: 45 * 60000,
-                },
-                {
-                  type: 'time',
-                  label: '+1hr',
-                  value: 60 * 60000,
-                },
+              <div className="flex flex-row items-center ml-2 space-x-3">
 
-                {
-                  type: 'time',
-                  label: '+2hr',
-                  value: 120 * 60000,
-                },
-                {
-                  type: 'time',
-                  label: '+3hr',
-                  value: 180 * 60000,
-                },
-                {
-                  type: 'time',
-                  label: '+1day',
-                  value: 60 * 24 * 60000,
-                },
-                {
-                  type: 'time',
-                  label: '+2day',
-                  value: 60 * 24 * 2 * 60000,
-                },
-                {
-                  type: 'time',
-                  label: '+5day',
-                  value: 60 * 24 * 5 * 60000,
-                },
-              ].map((dataObj, i) => (
-                <>
-                  <span
-                    className={`text-xs font-Playfair italic cursor-pointer   ml-2 mt-2 text-[#5c6575] hover:border-b h-[16px] ${
-                      addCommentTitle === dataObj?.label ? 'border-b' : ''
-                    } `}
-                    onClick={() => {
-                      console.log('am i coming here clicked')
-                      setAddCommentTime(d.getTime() + dataObj.value)
-                      setPostPoneCounterFun(d.getTime() + dataObj.value)
-                    }}
-                    onMouseEnter={() => {}}
-                    onMouseLeave={() => {}}
-                  >
-                    {' '}
-                    {dataObj?.label}
-                  </span>
-                </>
-              ))}
+
+                {[
+                  {
+                    type: 'time',
+                    label: '+30min',
+                    value: 30 * 60000,
+                  },
+                  {
+                    type: 'time',
+                    label: '+45min',
+                    value: 45 * 60000,
+                  },
+                  {
+                    type: 'time',
+                    label: '+1hr',
+                    value: 60 * 60000,
+                  },
+
+                  {
+                    type: 'time',
+                    label: '+2hr',
+                    value: 120 * 60000,
+                  },
+                  {
+                    type: 'time',
+                    label: '+3hr',
+                    value: 180 * 60000,
+                  },
+                  {
+                    type: 'time',
+                    label: '+1day',
+                    value: 60 * 24 * 60000,
+                  },
+                  {
+                    type: 'time',
+                    label: '+2day',
+                    value: 60 * 24 * 2 * 60000,
+                  },
+                  {
+                    type: 'time',
+                    label: '+5day',
+                    value: 60 * 24 * 5 * 60000,
+                  },
+                ].map((dataObj, i) => (
+                  <>
+                    <span
+                      className={`font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062] cursor-pointer hover:text-[#2B2B2B]  ${addCommentTitle === dataObj?.label ? 'border-b' : ''
+                        }  ${i !== 0 ? 'pl-2 border-l border-[#E7E7E9]' : ''} `}
+                      onClick={() => {
+                        console.log('am i coming here clicked')
+                        setAddCommentTime(d.getTime() + dataObj.value)
+                        setPostPoneCounterFun(d.getTime() + dataObj.value)
+                      }}
+                      onMouseEnter={() => { }}
+                      onMouseLeave={() => { }}
+                    >
+                      {' '}
+                      {dataObj?.label}
+                    </span>
+                  </>
+                ))}
+
+              </div>
             </section>
+
           )}
-          <section className="w-full flex flex-row min-h-[36px]">
-            <input
+          <section className="w-full flex flex-row  min-h-[36px]">
+
+{/* 
+          {!(addCommentTitle === 'undefined' || addCommentTitle === '') && (
+              <XIcon
+                className="h-4 w-4 mt-2 inline cursor-pointer"
+                onClick={() => {
+                  setClicked(false)
+                  setSelType('')
+                  setAddCommentTitle('')
+                }}
+              />
+            )} */}
+
+
+
+
+            {/* <input
               name="commentTitle"
               type="text"
               value={addCommentTitle}
@@ -278,23 +298,44 @@ export default function AddLeadTaskComment({
                 }
                 setAddCommentTitle(e.target.value)
               }}
-              placeholder="Type here"
-              className={`w-full  pb-1 pt-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd]${
-                hover ? ' text-[33475b] ' : ' text-[33475b]'
-              } bg-white`}
-            ></input>
-            {!(addCommentTitle === 'undefined' || addCommentTitle === '') && (
-              <XIcon
-                className="h-4 w-4 mt-2 inline cursor-pointer"
-                onClick={() => {
-                  setClicked(false)
-                  setSelType('')
-                  setAddCommentTitle('')
-                }}
-              />
-            )}
 
-            {!addCommentPlusTask && (
+
+ 
+              placeholder="Add Comment"
+              className={`w-full flex justify-between px-2 py-2 text-[12px] rounded-[8px] border border-solid border-[1px]${hover ? ' text-[33475b] ' : ' text-[33475b]'
+                } bg-white`}
+            ></input> */}
+
+
+
+<div className="relative w-full flex  bg-[#FAFAFA] border rounded-[8px] border-solid border-[1px]">
+  <div className='w-full flex justify-between px-1 py-1  text-[12px] '>
+
+  <input
+    name="commentTitle"
+    type="text"
+    value={addCommentTitle}
+    onChange={(e) => {
+      console.log('any error ', e, e.target.value)
+
+      if (e.target.value === '') {
+        setClicked(false)
+        setHover(true)
+      }
+      setAddCommentTitle(e.target.value)
+    }}
+    placeholder="Add Comment"
+    className={`w-full flex justify-between  text-[12px]${
+      hover ? ' text-[33475b] ' : ' text-[33475b]'
+    } bg-[#FAFAFA] focus:outline-none px-2 py-2`}
+  />
+
+
+  </div>
+
+
+
+{!addCommentPlusTask && (
               <button
                 type="submit"
                 onClick={() => {
@@ -313,11 +354,10 @@ export default function AddLeadTaskComment({
                     addTaskCommentFun(data)
                   }
                 }}
-                className={`flex mt-2 ml-4 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[28px] pr-2 rounded py-1 text-xs font-medium  ${
-                  addCommentTitle === 'undefined' || addCommentTitle === ''
-                    ? 'bg-[#FFC5C5]'
-                    : 'bg-[#21C55D]'
-                }  `}
+                className={` flex justify-between  px-2 py-2 text-[12px] rounded-[8px] ${addCommentTitle === 'undefined' || addCommentTitle === ''
+                    ? 'bg-[#FAFAFA]'
+                    : 'bg-[#FAFAFA]'
+                  }  `}
               >
                 <span className="text-md">
                   {(addCommentTitle === 'undefined' ||
@@ -340,6 +380,69 @@ export default function AddLeadTaskComment({
                 </span>
               </button>
             )}
+
+
+
+</div>
+
+
+
+            {!(addCommentTitle === 'undefined' || addCommentTitle === '') && (
+              <XIcon
+                className="h-4 w-4 mt-2 inline cursor-pointer"
+                onClick={() => {
+                  setClicked(false)
+                  setSelType('')
+                  setAddCommentTitle('')
+                }}
+              />
+            )}
+
+            {/* {!addCommentPlusTask && (
+              <button
+                type="submit"
+                onClick={() => {
+                  if (
+                    addCommentTitle === 'undefined' ||
+                    addCommentTitle === ''
+                  ) {
+                    cancelResetStatusFun()
+                    setError(true)
+                  }
+                  if (
+                    !error &&
+                    !(addCommentTitle === 'undefined' || addCommentTitle === '')
+                  ) {
+                    setClosePrevious(false)
+                    addTaskCommentFun(data)
+                  }
+                }}
+                className={`flex mt-2 ml-4 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[28px] pr-2 rounded py-1 text-xs font-medium  ${addCommentTitle === 'undefined' || addCommentTitle === ''
+                    ? 'bg-[#FFC5C5]'
+                    : 'bg-[#21C55D]'
+                  }  `}
+              >
+                <span className="text-md">
+                  {(addCommentTitle === 'undefined' ||
+                    addCommentTitle === '') && <CloseTwoToneIcon />}
+                  {!closeTask &&
+                    !addCommentPlusTask &&
+                    selType != 'reschedule' &&
+                    !(
+                      addCommentTitle === 'undefined' || addCommentTitle === ''
+                    ) && <SendTwoToneIcon />}{' '}
+                  {!closeTask &&
+                    selType === 'reschedule' &&
+                    !(
+                      addCommentTitle === 'undefined' || addCommentTitle === ''
+                    ) && <ScheduleSendTwoToneIcon />}
+                  {closeTask &&
+                    !(
+                      addCommentTitle === 'undefined' || addCommentTitle === ''
+                    ) && <CheckTwoToneIcon />}
+                </span>
+              </button>
+            )} */}
           </section>
         </section>
       </div>

@@ -18,9 +18,9 @@ export default function LeadTaskFooter({
   return (
     <section className="flex flex-row justify-between mt-[2px]">
       <section className="flex flex-row">
-        <span className="text-xs  font-normal text-[#b03d32] text-gray-500 ml-6 ">
+        <span className="text-xs  font-normal text-[#b03d32] text-gray-500">
           {data?.sts === 'completed' && (
-            <span className="text-xs  text-gray-500  flex flex-row">
+            <span className="text-xs  text-gray-500  flex flex-row justify-center items-center">
               <div className="relative flex flex-col  group">
                 <div
                   className="absolute bottom-0 right-0 flex-col items-center hidden mb-6 group-hover:flex"
@@ -48,7 +48,7 @@ export default function LeadTaskFooter({
                     }}
                   ></div>
                 </div>
-                <span className="font-bodyLato">
+                <span className="flex items-center font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
                   <svg
                     width="12"
                     height="12"
@@ -67,6 +67,9 @@ export default function LeadTaskFooter({
                   {prettyDateTime(data?.schTime)}{' '}
                 </span>
               </div>
+
+              <div className="w-px h-3 bg-gray-300 mx-2"></div>
+
               <div className="relative flex flex-col  group">
                 <div
                   className="absolute bottom-0 right-0 flex-col items-center hidden mb-6 group-hover:flex"
@@ -94,9 +97,17 @@ export default function LeadTaskFooter({
                     }}
                   ></div>
                 </div>
-                <span className="font-bodyLato">
-                  <span className="text-xs  text-gray-500 ml-2">
-                    <CheckIcon className="w-4 h-4 inline text-gray-500" />{' '}
+                <span className="">
+                  <span className="flex items-center gap-1 font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
+
+                  <img
+                src="/hugeicons_note-done.svg"
+                alt="Completed"
+                className="w-4 h-4"
+              
+              />
+                    {/* <CheckIcon className="w-4 h-4 inline text-gray-500" />{' '} */}
+                    
                     {'   '}
                     {prettyDateTime(data?.comT)}{' '}
                   </span>
@@ -118,7 +129,7 @@ export default function LeadTaskFooter({
                     }}
                   >
                     <div className="italic flex flex-col">
-                      <div className="font-bodyLato">
+                      <div className="font-bodyLato ">
                         {prettyDateTime(data?.schTime)}
                       </div>
                     </div>
@@ -132,13 +143,12 @@ export default function LeadTaskFooter({
                   ></div>
                 </div>
                 <span
-                  className={`font-bodyLato flex flex-row ${
-                    getDifferenceInMinutes(data?.schTime, '') >= 0
+                  className={`font-bodyLato flex  gap-1 flex-row ${getDifferenceInMinutes(data?.schTime, '') >= 0
                       ? 'text-xs  text-gray-500'
                       : 'text-xs  text-gray-500'
-                  }`}
+                    }`}
                 >
-                  <svg
+                  {/* <svg
                     width="12"
                     height="12"
                     viewBox="0 0 12 12"
@@ -152,7 +162,13 @@ export default function LeadTaskFooter({
                       d="M9.5 1h-7A1.5 1.5 0 001 2.5v7A1.5 1.5 0 002.5 11h7A1.5 1.5 0 0011 9.5v-7A1.5 1.5 0 009.5 1zM2 2.5a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v7a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5v-7zM8.75 8a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM3.5 4a.5.5 0 000 1h5a.5.5 0 000-1h-5z"
                       fill="currentColor"
                     ></path>
-                  </svg>
+                  </svg> */}
+                                    <img
+                src="/gg_calendar-due.svg"
+                alt="date"
+                className="w-4 h-4"
+              
+              />
                   <div className=" mr-2 inline">
                     <div className="font-bodyLato">
                       {prettyDateTime(data?.schTime)}
@@ -163,7 +179,7 @@ export default function LeadTaskFooter({
             </div>
           )}
         </span>
-        <div className="relative flex flex-col  group">
+        <div className="relative flex flex-row items-center group">
           <div
             className="absolute bottom-0 right-0 flex-col items-center hidden mb-6 group-hover:flex"
             style={{ zIndex: '9999' }}
@@ -177,7 +193,7 @@ export default function LeadTaskFooter({
               }}
             >
               <div className="italic flex flex-col">
-                <div className="font-bodyLato">Assigned To {data?.by}</div>
+                <div className="font-bodyLato">Assigned To  {data?.by}</div>
               </div>
             </span>
             <div
@@ -189,8 +205,11 @@ export default function LeadTaskFooter({
             ></div>
           </div>
 
-          <span className="text-xs  text-gray-500  ml-2">
-            <svg
+          <div className="w-px h-3 bg-gray-300 mx-2 "></div>
+
+
+          <span className="flex items-center font-outfit font-normal text-xs leading-tight tracking-tight text-[#606062]">
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               width="12"
               height="12"
@@ -202,7 +221,7 @@ export default function LeadTaskFooter({
                 fill="currentColor"
                 fillRule="evenodd"
               ></path>
-            </svg>
+            </svg> */}
             {data?.by}
           </span>
         </div>

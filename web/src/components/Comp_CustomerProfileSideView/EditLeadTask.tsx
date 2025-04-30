@@ -34,9 +34,9 @@ export default function EditLeadTask({
   }, [takTitle])
 
   return (
-    <div className=" form outline-none border  py-4">
+    <div className=" form outline-none  py-4">
       <section className=" px-4">
-        <div className="text-xs font-bodyLato text-[#516f90]">
+        <div className="font-[Outfit] py-2 font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
           Edit Title
           {error && (
             <div className="error-message text-red-700 text-xs p-1">
@@ -53,37 +53,39 @@ export default function EditLeadTask({
             setTitleFun(e)
           }}
           placeholder="Enter a short title"
-          className="w-full h-full pb-1 outline-none text-sm font-bodyLato focus:border-blue-600 hover:border-blue-600  border-b border-[#cdcdcd] text-[33475b] bg-[#F5F8FA] "
+          className="w-full h-full pb-1 outline-none text-sm    border-b border-[#cdcdcd] text-[33475b]  "
         ></input>
         <div className="flex flex-row mt-3">
           <section>
-            <span className="text-xs font-bodyLato text-[#516f90]">
+            <span className="font-[Outfit] py-2 font-normal text-[12px] leading-[100%] tracking-[0.06em] text-[#616162]">
               Edit Due Date
             </span>
-            <div className="bg-green   pl-   flex flex-row ">
-              <span className="inline">
-                <DatePicker
-                  className=" mt-[2px] pl- px-   min-w-[151px] inline text-xs text-[#0091ae] bg-[#F5F8FA]"
-                  selected={pickerDate}
-                  onChange={(date) => {
-                    console.log('am i coming here', date, date.getTime())
-                    setStartDate(date.getTime())
-                  }}
-                  showTimeSelect
-                  timeFormat="HH:mm"
-                  injectTimes={[
-                    setHours(setMinutes(d, 1), 0),
-                    setHours(setMinutes(d, 5), 12),
-                    setHours(setMinutes(d, 59), 23),
-                  ]}
-                  dateFormat="MMMM d, yyyy h:mm aa"
-                />
-              </span>
-            </div>
+      
+
+            <div className="w-full border-b border-gray-300">
+  <DatePicker
+    className="w-full text-xs text-[#0091ae] outline-none bg-transparent py-1"
+    selected={pickerDate}
+    onChange={(date) => {
+      console.log('am i coming here', date, date.getTime())
+      setStartDate(date.getTime())
+    }}
+    showTimeSelect
+    timeFormat="HH:mm"
+    injectTimes={[
+      setHours(setMinutes(d, 1), 0),
+      setHours(setMinutes(d, 5), 12),
+      setHours(setMinutes(d, 59), 23),
+    ]}
+    dateFormat="MMMM d, yyyy h:mm aa"
+  />
+</div>
+
+       
           </section>
         </div>
       </section>
-      <div className="flex flex-row mt-4 justify-between pr-4 border-t">
+      <div className="flex flex-row mt-4 justify-between pr-4">
         <section>
           <span>{''}</span>
         </section>
@@ -96,16 +98,16 @@ export default function EditLeadTask({
                 editTaskFun(editTaskObj)
               }
             }}
-            className={`flex mt-2 cursor-pointer rounded-xs text-bodyLato items-center  pl-2 h-[36px] pr-4 py-2 text-sm font-medium text-[#054861] bg-[#5cebdf]  hover:bg-[#9ff9e1]  `}
+            className={`flex mt-2 cursor-pointer rounded-lg items-center justify-center  h-[36px]  py-2 px-6 text-sm font-medium bg-[#F25533] text-white    `}
           >
-            <span className="ml-1 ">Save Task</span>
+            <span className="">Save Task</span>
           </button>
           <button
             // onClick={() => fSetLeadsType('Add Lead')}
             onClick={() => cancelResetStatusFun()}
-            className={`flex mt-2 ml-4 rounded items-center text-bodyLato pl-2 h-[36px] pr-4 py-2 text-sm font-medium border  hover:bg-gray-700 hover:text-white `}
+            className={`flex mt-2 ml-4 rounded-lg  items-center   justify-center h-[36px]  py-2 px-6 text-sm font-medium border `}
           >
-            <span className="ml-1 ">Cancel</span>
+            <span className="">Cancel</span>
           </button>
         </section>
       </div>

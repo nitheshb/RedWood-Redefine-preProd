@@ -286,7 +286,11 @@ function EnhancedTableHead(props) {
             marginRight: '10px',
           }}
         >
-          <TableSortLabel>S.No</TableSortLabel>
+          <TableSortLabel
+                      style={{
+                        color: '#2B2B2B',
+                      }}
+          >S.No</TableSortLabel>
         </TableCell>
         {headers.map((headCell) => (
           <>

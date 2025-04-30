@@ -724,7 +724,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
 
                   <button
                     onClick={() => fSetLeadsType('Add Lead')}
-                    className={`flex items-center px-2 rounded-lg  text-sm font-medium text-balck border-solid border-2 border-[#0891B2] bg-[#0891B2]  hover:bg-transparent  group`}
+                    className={`flex items-center px-4 rounded-[8px]  text-sm font-medium text-balck  bg-[#F25533]  group`}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -740,18 +740,18 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                       />
                     </svg>
 
-                    <span className="ml-1  text-white group-hover:text-black">
+                    <span className="ml-1 text-white text-[12px]">
                       Add lead
                     </span>
                   </button>
                   {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                     <button
                       onClick={() => fSetLeadsType('Import Leads')}
-                      className={`flex items-center rounded-lg  pl-2 pr-4 py-1  border-solid border-2 border-[#0891B2]  group text-sm font-medium text-black  rounded-lg hover:bg-[#0891B2]  `}
+                      className={`flex items-center rounded-[8px]  pl-2 pr-4 py-1 px-4  border-solid border-2 border-[#F25533]  group text-sm font-medium text-black  `}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 stroke-[#0891B2] group-hover:stroke-white"
+                        className="h-4 w-4 stroke-[#F25533]"
                         fill="none"
                         viewBox="0 0 22 22"
                       >
@@ -763,7 +763,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         />
                       </svg>
 
-                      <span className="ml-1 group-hover:text-white">
+                      <span className="ml-1 text-[#2B2B2B]">
                         Import Lead
                       </span>
                     </button>

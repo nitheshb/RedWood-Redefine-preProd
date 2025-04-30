@@ -952,3 +952,159 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
 }
+
+
+
+
+
+
+
+
+/* 
+
+
+
+
+
+.bgline {
+  --transition: 0.25s;
+  --spark: 3s;
+  --bg: black;
+  background: var(--bg);
+  padding: 6px 18px;
+  display: grid;
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1000px 0 0 hsl(0 0% 20%) inset;
+  transition: box-shadow var(--transition), background var(--transition),
+    transform var(--transition);
+}
+
+.bgline:hover .backdrop {
+  background: rgb(20 20 20);
+}
+
+.bgline:hover {
+  transform: scale(1.05);
+}
+
+.spark {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  rotate: 0deg;
+  overflow: hidden;
+  mask: linear-gradient(white, transparent 50%);
+  animation: flip calc(var(--spark) * 2) infinite steps(2, end);
+}
+
+@keyframes flip {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.spark:before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  aspect-ratio: 1;
+  inset: 0 auto auto 50%;
+  z-index: -1;
+  translate: -50% -15%;
+  rotate: 0;
+  transform: rotate(-90deg);
+  opacity: 1;
+  background: conic-gradient(from 0deg, transparent 0 340deg, white 360deg);
+  transition: opacity var(--transition);
+  animation: rotate var(--spark) linear infinite both;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 1px;
+  background: #fff;
+  border-radius: 9999px;
+  transition: background var(--transition) opacity var(--transition);
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+.bgtext {
+  z-index: 1;
+  color: rgb(203 213 225);
+} */
+
+
+
+
+
+/* @keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin { animation: spin 3s linear infinite; } */
+
+
+
+
+
+
+
+
+
+.box__bg {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+
+}
+
+
+
+.box__bg::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%, 50% 50%;
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  background-image: 
+   
+    linear-gradient(
+      to right, 
+      #9C0C93 19.71%, 
+      rgba(123, 13, 154, 0) 49.04%, 
+      rgba(93, 14, 160, 0) 92.5%, 
+      #1010B0 100%
+    );
+  animation: bgRotate 4s linear infinite;
+}
+
+
+.box__bg::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 1px;
+  top: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+ 
+
+}
+
+@keyframes bgRotate {
+  100% {
+    transform: rotate(1turn);
+  }
+}
