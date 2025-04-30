@@ -634,9 +634,8 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                   <img
                     className="w-10 h-10"
                     alt=""
-                    src={
-                      'https://static.hsappstatic.net/ui-images/static-2.758/optimized/tickets.svg'
-                    }
+                    src="/folder-library.svg"
+               
                   ></img>
 
                   <h2 className="ml-2 mt-2 text-md font-semibold text-black leading-light font-Playfair">

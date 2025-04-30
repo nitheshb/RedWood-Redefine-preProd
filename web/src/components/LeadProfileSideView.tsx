@@ -1839,7 +1839,7 @@ export default function LeadProfileSideView({
                     >
                       {statusFlowObj.value === streamCurrentStatus ||
                         statusFlowObj.value === tempLeadStatus ? (
-                        <div className="h-2 w-2 bg-white  rounded-full" />
+                        <div className="h-2 w-2 bg-black  rounded-full" />
                       ) : streamCoveredA.includes(statusFlowObj.value) ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
