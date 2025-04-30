@@ -630,9 +630,9 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           <div className=" bg-white rounded-lg ">
             <div className="bg-white rounded-lg  ">
               <div className="flex   items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
-                <section className="flex flex-row">
+                <section className="flex items-center justify-center flex-row">
                   <img
-                    className="w-10 h-10"
+                    className="w-8 h-8"
                     alt=""
                     src="/folder-library.svg"
                
