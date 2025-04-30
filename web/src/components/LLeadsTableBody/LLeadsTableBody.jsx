@@ -758,7 +758,7 @@ export default function LLeadsTableBody({
                       >
                         <section>
                           <span className="font-bodyLato">
-                            {prettyDate(row.Date).toLocaleString()}
+                            {prettyDate(row?.Date)?.toLocaleString()}
                           </span>
                         </section>
                       </TableCell>
@@ -772,8 +772,8 @@ export default function LLeadsTableBody({
                         <section>
                           <span className="font-bodyLato">
                             {row.assignT != undefined
-                              ? prettyDate(row.assignT)
-                              : prettyDate(row.Date)}
+                              ? prettyDate(row?.assignT)
+                              : prettyDate(row?.Date)}
                           </span>
                         </section>
                       </TableCell>
