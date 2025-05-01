@@ -173,7 +173,7 @@ export default function AddLeadTaskComment({
               </span>
               <span className="pl-2">
                 <DatePicker
-                  className=" px-2 min-w-[80px] inline font-outfit font-normal text-sm leading-tight tracking-tight text-[font-outfit font-normal text-sm  leading-tight tracking-tight text-[#F25533] h-[24px]"
+                  className=" px-2 min-w-[80px] inline font-outfit font-normal text-sm leading-tight tracking-tight text-[font-outfit font-normal text-sm  leading-tight tracking-tight sale_text_color h-[24px]"
                   selected={pickerDate}
                   onChange={(date) => {
                     console.log(

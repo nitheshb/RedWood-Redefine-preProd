@@ -139,7 +139,7 @@ export default function LeadTaskDisplayHead({
               <div className='flex gap-2'> */}
                 
   <span
-    className="text-[12px] font-medium px-2 py-[2px] rounded-[13px] bg-[#FDEFE7] text-[#F25533]"
+    className="text-[12px] font-medium px-2 py-[2px] rounded-[13px] bg-[#FDEFE7] sale_text_color"
   >
     {/* {data?.stsType === 'visitfixed' ? 'Visit Fixed' : data?.sts} */}
     Status 

@@ -920,7 +920,7 @@ export default function LLeadsTableBody({
                       </TableCell>
 
                       <TableCell align="left">
-                        <span className="px-3 py-2 uppercase inline-flex  font-[500] text-[12px] leading-[100%] tracking-[0%] font-outfit rounded-[13px] leading-5  bg-[#FDEFE7] text-[#F25533]">
+                        <span className="px-3 py-2 uppercase inline-flex  font-[500] text-[12px] leading-[100%] tracking-[0%] font-outfit rounded-[13px] leading-5  bg-[#FDEFE7] sale_text_color">
                           <HighlighterStyle
                             searchKey={searchKey}
                             source={row.Status.toString()}

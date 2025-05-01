@@ -864,7 +864,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                       </svg>
-                      <span className="text-sm text-[#F25533]">Import Lead</span>
+                      <span className="text-sm sale_text_color">Import Lead</span>
                     </button>
                   )}
                 </div>

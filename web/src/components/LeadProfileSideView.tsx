@@ -1663,7 +1663,7 @@ export default function LeadProfileSideView({
                     <div className="font-semibold text-[#053219] text-sm mt-3 mb-1 tracking-wide">
                       <div className="flex gap-4 flex-row">
                         <div>
-                          <span className="w-12 h-12 bg-[#F8F5F0] rounded-full flex items-center justify-center font-semibold text-[#F25533] uppercase text-[21px]">
+                          <span className="w-12 h-12 bg-[#F8F5F0] rounded-full flex items-center justify-center font-semibold sale_text_color uppercase text-[21px]">
                             {Name?.[0]}
                           </span>
                         </div>
@@ -2005,7 +2005,7 @@ export default function LeadProfileSideView({
                       </ul>
                       {selFeature != 'lead_strength' && (
                         <span
-                          className=" px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] text-[#F25533] cursor-pointer"
+                          className=" px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] sale_text_color cursor-pointer"
                           onClick={() => setFeature('lead_strength')}
                         >
                           Lead requirement
@@ -2013,7 +2013,7 @@ export default function LeadProfileSideView({
                       )}
                       {selFeature == 'lead_strength' && (
                         <span
-                          className="px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] text-[#F25533] cursor-pointer"
+                          className="px-[10px] py-[11px] gap-[8px] font-outfit font-semibold text-[14px] leading-[100%] underline underline-offset-[25%] decoration-[0%] sale_text_color cursor-pointer"
                           onClick={() => setFeature('appointments')}
                         >
                           Close
@@ -2220,7 +2220,7 @@ export default function LeadProfileSideView({
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '10-50' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533]' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '10-50' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setBudget('10-50')}
                                         >
@@ -2228,7 +2228,7 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '50-1' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '50-1' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setBudget('50-1')}
                                         >
@@ -2238,7 +2238,7 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '1-2' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '1-2' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setBudget('1-2')}
                                         >
@@ -2246,7 +2246,7 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '2+' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${budget === '2+' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setBudget('2+')}
                                         >
@@ -2275,7 +2275,7 @@ export default function LeadProfileSideView({
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '1BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '1BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setConfiguration('1BHK')}
                                         >
@@ -2283,7 +2283,7 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '2BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '2BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setConfiguration('2BHK')}
                                         >
@@ -2293,7 +2293,7 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-3 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '3BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '3BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setConfiguration('3BHK')}
                                         >
@@ -2301,7 +2301,7 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '4BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === '4BHK' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setConfiguration('4BHK')}
                                         >
@@ -2309,7 +2309,7 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === 'Others' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${configuration === 'Others' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setConfiguration('Others')}
                                         >
@@ -2336,7 +2336,7 @@ export default function LeadProfileSideView({
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Apartment & Villas' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Apartment & Villas' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setReasonLeft('Apartment & Villas')}
                                         >
@@ -2344,7 +2344,7 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Plot' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Plot' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setReasonLeft('Plot')}
                                         >
@@ -2354,7 +2354,7 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Apartment' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Apartment' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setReasonLeft('Apartment')}
                                         >
@@ -2362,7 +2362,7 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Villa' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonLeft === 'Villa' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setReasonLeft('Villa')}
                                         >
@@ -2388,7 +2388,7 @@ export default function LeadProfileSideView({
                                     <div className="grid grid-cols-1 gap-4">
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Apartment & Villas' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-6 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Apartment & Villas' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setReasonRight('Apartment & Villas')}
                                         >
@@ -2396,7 +2396,7 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Plot' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Plot' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setReasonRight('Plot')}
                                         >
@@ -2406,7 +2406,7 @@ export default function LeadProfileSideView({
 
                                       <div className="grid grid-cols-2 gap-4">
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Apartment' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Apartment' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setReasonRight('Apartment')}
                                         >
@@ -2414,7 +2414,7 @@ export default function LeadProfileSideView({
                                         </button>
 
                                         <button
-                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Villa' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] text-[#F25533] ' : 'bg-white hover:bg-gray-50'
+                                          className={`py-3 px-4 font-normal text-[12px] leading-[100%] tracking-[0%] text-[#0E0A1F] rounded-md border text-center transition-colors ${reasonRight === 'Villa' ? 'bg-[#FCE6D9] font-medium text-[14px] leading-[100%] tracking-[0] sale_text_color ' : 'bg-white hover:bg-gray-50'
                                             }`}
                                           onClick={() => setReasonRight('Villa')}
                                         >
@@ -3543,15 +3543,15 @@ export default function LeadProfileSideView({
                                         value={opstr}
                                         defaultValue={opstr}
                                         aria-label="Default"
-                                        valueLabelDisplay="auto"
+                                        valueLabelDisplay="on"
                                         sx={{
-                                          color: '#F25533', // Active track color
-                                          height: 8, // Increase overall slider height
+                                          color: '#F25533',
+                                          height: 8,
                                           '& .MuiSlider-track': {
-                                            height: 8, // Height of the selected (active) part
+                                            height: 8,
                                           },
                                           '& .MuiSlider-rail': {
-                                            height: 8, // Height of the background (unselected) part
+                                            height: 8,
                                           },
                                           '& .MuiSlider-thumb': {
                                             width: 24,
@@ -3571,125 +3571,8 @@ export default function LeadProfileSideView({
                                     </div>
 
 
-                                    {/* <Box
-                                      sx={{
-                                        position: 'relative',
-                                        width: '100%',
-                                      }}
-                                    >
-                                      <Slider
-                                        value={opstr}
-                                        min={0}
-                                        max={100}
-                                        onChange={(e) =>
-                                          setopstr(e.target.value)
-                                        }
-                                        aria-label="Lead Strength Slider"
-                                        sx={{
-                                          height: 20,
-                                          paddingRight: 0,
-                                          '& .MuiSlider-track': {
-                                            // backgroundColor: '#5a5acc',
-                                            // height: 20,
-                                            // borderRadius: 10,
-                                            backgroundColor: '#F25533',
-                                            height: 20,
-                                            borderRadius: 10,
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            color: '#fff', // optional, for visibility
-                                            fontSize: 12, // optional
-                                          },
-                                          '& .MuiSlider-rail': {
-                                            backgroundColor: '#cfd0ff',
-                                            height: 20,
-                                            borderRadius: 10,
-                                          },
-                                          // '& .MuiSlider-thumb': {
-                                          //   display: 'none', // Hide the thumb
-                                          // },
-                                          '& .MuiSlider-thumb': {
-                                            width: 24,
-                                            height: 24,
-                                            backgroundColor: '#F25533',
-                                            // border: '2px solid #5a5acc',
-
-                                            '&:hover, &.Mui-focusVisible': {
-                                              boxShadow:
-                                                '0px 0px 0px 8px rgba(90, 90, 204, 0.16)',
-                                            },
-                                          },
-                                        }}
-                                      />
-                                      <Box
-                                        sx={{
-                                          position: 'absolute',
-                                          top: 0,
-                                          left: `${opstr}%`,
-                                          transform: 'translateX(-100%)',
-                                          height: '100%',
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                          pr: 1,
-                                        }}
-                                      >
-                                        <Typography
-                                          variant="caption"
-                                          sx={{
-                                            color: '#fff',
-                                            fontWeight: 'bold',
-                                            fontSize: '0.75rem',
-                                          }}
-                                        >
-                                          {opstr}%
-                                        </Typography>
-                                      </Box>
-                                    </Box> */}
                                   </div>
 
-                                  {/*
-
-<div className="mb-6 relative">
-  <Slider
-    onChange={(e) => setopstr(e.target.value)}
-    value={opstr}
-    defaultValue={opstr}
-    aria-label="Lead Strength Slider"
-    valueLabelDisplay="auto"
-    min={20}
-    max={100}
-    sx={{
-      height: '14px',
-      '& .MuiSlider-rail': {
-        backgroundColor: '#e0e0e0',
-      },
-      '& .MuiSlider-track': {
-        backgroundColor: '#3f51b5',
-      },
-      '& .MuiSlider-thumb': {
-        width: 20,
-        height: 20,
-        backgroundColor: '#3f51b5',
-      }
-    }}
-  />
-
-  <div
-    className="absolute top-0 left-0 w-full h-full flex items-center justify-center"
-    style={{
-      width: `${opstr}%`,
-    }}
-  >
-    <span className="text-xs font-medium text-white">{`${opstr}%`}</span>
-  </div>
-
-
-  <div className="flex justify-between mt-2">
-    <span className="text-xs font-medium text-[#606062]">0%</span>
-    <span className="text-xs font-medium text-[#606062]">100%</span>
-  </div>
-</div> */}
 
                                   <div className="flex justify-between items-center mb-6">
                                     <div className="font-normal text-[12px] leading-[100%] tracking-[0%] text-[#606062]">
@@ -3949,7 +3832,7 @@ export default function LeadProfileSideView({
                                       </h2>
                                       <a
                                         href="#"
-                                        className="font-medium text-xs leading-tight tracking-normal text-[#F25533] underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto"
+                                        className="font-medium text-xs leading-tight tracking-normal sale_text_color underline decoration-solid decoration-0 decoration-offset-[25%] decoration-thick decoration-skip-ink-auto"
                                         onClick={() => {
                                           setUnitsViewMode(!unitsViewMode)
                                         }}
@@ -3966,7 +3849,7 @@ export default function LeadProfileSideView({
 
                                     <div className="flex flex-wrap gap-2">
 
-                                
+
                                       <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
 
                                         <div>
@@ -3986,7 +3869,7 @@ export default function LeadProfileSideView({
                                         </span>
                                       </div>
 
-                                
+
                                       <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
 
                                         <div>
@@ -4001,7 +3884,7 @@ export default function LeadProfileSideView({
                                           />
                                         </div>
 
-                                      <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
+                                        <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
                                           RERA Approval
                                         </span>
                                       </div>
@@ -4110,7 +3993,7 @@ export default function LeadProfileSideView({
                                             </span>
                                           </div>
                                           <div className="flex items-center ml-auto">
-                                            <button className="font-outfit text-[#F25533] font-normal text-[12px] leading-[100%] tracking-[0em] underline decoration-solid decoration-[0px] underline-offset-[0%]">
+                                            <button className="font-outfit sale_text_color font-normal text-[12px] leading-[100%] tracking-[0em] underline decoration-solid decoration-[0px] underline-offset-[0%]">
                                               View units
                                             </button>
                                           </div>

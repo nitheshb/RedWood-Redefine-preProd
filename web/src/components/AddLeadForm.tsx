@@ -634,7 +634,7 @@ const AddLeadForm = ({
                           </label>
 
                           <CustomDatePicker
-                            className="h-8 w-[400px]  rounded-md text-[#F25533] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
+                            className="h-8 w-[400px]  rounded-md sale_text_color flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
                             selected={startDate}
                             onChange={(date) => {
                               formik.setFieldValue('enquiryDat', date.getTime())
