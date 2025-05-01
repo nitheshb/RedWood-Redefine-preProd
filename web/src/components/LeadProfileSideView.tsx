@@ -3966,11 +3966,9 @@ export default function LeadProfileSideView({
 
                                     <div className="flex flex-wrap gap-2">
 
-                                      {/* Planning Approval */}
-                                      <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex items-center">
-                                        <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
-                                          Planning Approval - {selProjectFullDetails?.planningApproval}
-                                        </span>
+                                
+                                      <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
+
                                         <div>
                                           <img
                                             src={
@@ -3979,16 +3977,18 @@ export default function LeadProfileSideView({
                                                 : '/nosale.svg'
                                             }
                                             alt=""
-                                            className="w-4 h-4"
+                                            className="w-3 h-3"
                                           />
                                         </div>
+
+                                        <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
+                                          Planning Approval
+                                        </span>
                                       </div>
 
-                                      {/* RERA Approval */}
-                                      <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex items-center">
-                                        <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
-                                          RERA Approval - {selProjectFullDetails?.reraApproval}
-                                        </span>
+                                
+                                      <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex gap-2 items-center">
+
                                         <div>
                                           <img
                                             src={
@@ -3997,9 +3997,13 @@ export default function LeadProfileSideView({
                                                 : '/nosale.svg'
                                             }
                                             alt=""
-                                            className="w-4 h-4"
+                                            className="w-3 h-3"
                                           />
                                         </div>
+
+                                      <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
+                                          RERA Approval
+                                        </span>
                                       </div>
 
 
