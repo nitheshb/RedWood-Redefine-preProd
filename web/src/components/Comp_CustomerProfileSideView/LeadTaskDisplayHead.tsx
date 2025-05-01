@@ -35,6 +35,8 @@ export default function LeadTaskDisplayHead({
 
 
       <div className='flex '>
+
+{/*         
         <div className=''>
 
           {data?.sts === 'completed' && (
@@ -46,34 +48,8 @@ export default function LeadTaskDisplayHead({
             />
           )}
 
-
-
-
-
-
-
-
-
 {data?.sts != 'completed' &&  data?.stsType !== 'visitfixed' &&  (
-                // <span
-                //   className="px-[2px] py-[2px]  rounded-full border border-2 cursor-pointer text-[#cdcdcd] hover:text-green-800 hover:border-green-700 hover:bg-green-100"
-                //   onClick={() => closeTaskFun(data)}
-                // >
-                //   <svg
-                //     xmlns="http://www.w3.org/2000/svg"
-                //     className="h-2 w-2"
-                //     fill="none"
-                //     viewBox="0 0 24 24"
-                //     stroke="currentColor"
-                //     strokeWidth="2"
-                //   >
-                //     <path
-                //       strokeLinecap="round"
-                //       strokeLinejoin="round"
-                //       d="M5 13l4 4L19 7"
-                //     />
-                //   </svg>
-                // </span>
+ 
 
                 <img
                 src="/UnCheck.svg"
@@ -83,7 +59,32 @@ export default function LeadTaskDisplayHead({
               />
               )}
 
-        </div>
+        </div> */}
+
+
+
+  <div className={`${(data?.sts === 'completed' || Math.abs(getDifferenceInHours(data?.schTime, '')) > 24) ? 'mt-1 ml-0' : ''}`}>
+  {data?.sts === 'completed' && (
+    <img
+      src="/Checked.svg"
+      alt="Completed"
+      className="w-5 h-5 inline align-middle"
+    />
+  )}
+
+  {data?.sts != 'completed' && data?.stsType !== 'visitfixed' && (
+    <img
+      src="/UnCheck.svg"
+      alt="Completed"
+      className="w-5 h-5 inline align-middle"
+      onClick={() => closeTaskFun(data)}
+    />
+  )}
+</div>
+
+
+
+
 
 
 
