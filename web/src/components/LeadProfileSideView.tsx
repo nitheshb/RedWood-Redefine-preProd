@@ -5570,7 +5570,7 @@ export default function LeadProfileSideView({
                       <div className="max-w-4xl mx-auto bg-white  rounded-[14px] border border-[#E7E7E9] p-[20px] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.05)]">
                         <div className="relative">
 
-                          <div className="absolute top-0 bottom-0 left-6 w-0.5 bg-[#000000]" style={{ height: "100%" }}></div>
+                          <div className="absolute top-0 bottom-0 left-[22px] w-0.5 bg-[#E17059]" style={{ height: "100%" }}></div>
 
 
                           <div className="space-y-3">
@@ -5579,11 +5579,11 @@ export default function LeadProfileSideView({
 
                                 <div className="absolute left-0 top-0">
                                   <div className="w-12 h-12 flex items-center justify-center">
-                                    <div className="w-8 h-8 bg-[#FFFFFF] rounded-md flex items-center justify-center  rounded-[7.5px] border-[0.38px] border-[#E7E7E9] shadow-[0px_0.75px_4px_0px_rgba(0,0,0,0.1)] z-10">
+                                    <div className="w-8 h-8  rounded-md flex items-center justify-center  z-10">
                                       {data?.type === "ph" ? (
 
                                         <img
-                                          src="/Timeline.svg"
+                                          src="/timelineo.svg"
                                           alt="Completed"
                                           className="w-4 h-4"
 
@@ -5596,7 +5596,7 @@ export default function LeadProfileSideView({
                                       ) : (
 
                                         <img
-                                          src="/Timeline.svg"
+                                          src="/timelineo.svg"
                                           alt="Completed"
                                           className="w-4 h-4"
 
