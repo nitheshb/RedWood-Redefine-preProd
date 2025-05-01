@@ -98,7 +98,7 @@ export default function EditLeadTask({
                 editTaskFun(editTaskObj)
               }
             }}
-            className={`flex mt-2 cursor-pointer rounded-lg items-center justify-center  h-[36px]  py-2 px-6 text-sm font-medium bg-[#F25533] text-white    `}
+            className={`flex mt-2 cursor-pointer rounded-lg items-center justify-center  h-[36px]  py-2 px-6 text-sm font-medium sale_bg_color text-white    `}
           >
             <span className="">Save Task</span>
           </button>

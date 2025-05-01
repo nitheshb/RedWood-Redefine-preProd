@@ -561,12 +561,12 @@ const AddLeadForm = ({
                     <div className="mb-4 ">
                       <div className="inline">
                         <div className="">
-                          <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+                          <label className="font-semibold text-[#2B2B2B]  text-sm  mb-1  ">
                             Client Details<abbr title="required"></abbr>
                           </label>
                         </div>
 
-                        <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
+                        <div className="border-t-4 rounded-xl w-16 mt-1 border-[#F25533]"></div>
                       </div>
                     </div>
                     <div className="md:flex flex-row md:space-x-4 w-full text-xs mt-2">
@@ -634,7 +634,7 @@ const AddLeadForm = ({
                           </label>
 
                           <CustomDatePicker
-                            className="h-8 w-[400px]  rounded-md text-[#0091ae] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
+                            className="h-8 w-[400px]  rounded-md text-[#F25533] flex bg-grey-lighter text-grey-darker border border-[#cccccc] px-4"
                             selected={startDate}
                             onChange={(date) => {
                               formik.setFieldValue('enquiryDat', date.getTime())
@@ -656,7 +656,7 @@ const AddLeadForm = ({
                     {trashMode && (
                       <>
                         <div className="mt-8">
-                          <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+                          <label className="font-semibold text-[#2B2B2B]  text-sm  mb-1  ">
                             More Details<abbr title="required">*</abbr>
                           </label>
                         </div>
@@ -676,7 +676,7 @@ const AddLeadForm = ({
                         </div>
                         <div className="mt-5 mt-8 text-right md:space-x-3 md:block flex flex-col-reverse">
                           <button
-                            className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+                            className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm "
                             type="reset"
                             onClick={() => {
                               setTrashMode(false)
@@ -685,7 +685,7 @@ const AddLeadForm = ({
                             Reset
                           </button>
                           <button
-                            className="mb-2 md:mb-0 bg-green-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                            className="mb-2 md:mb-0  px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm "
                             type="reset"
                             disabled={loading}
                             onClick={async () => {
@@ -735,11 +735,11 @@ const AddLeadForm = ({
                     {!trashMode && (
                       <>
                         <div className="mt-8">
-                          <label className="font-semibold text-[#053219]  text-sm  mb-1  ">
+                          <label className="font-semibold text-[#2B2B2B]  text-sm  mb-1  ">
                             More Details<abbr title="required">*</abbr>
                           </label>
                         </div>
-                        <div className="border-t-4 rounded-xl w-16 mt-1  border-[#0891B2]"></div>
+                        <div className="border-t-4 rounded-xl w-16 mt-1  border-[#F25533]"></div>
                         {/* 3 */}
                         <div className="md:flex md:flex-row md:space-x-4 w-full text-xs ">
                           <div className="w-full flex flex-col mb-3 mt-2">
@@ -802,11 +802,11 @@ const AddLeadForm = ({
 
                         {/* 6 */}
                         <div className=" mt-8 ">
-                          <label className="font-semibold text-[#053219]  text-sm  mb-1 ">
+                          <label className="font-semibold text-[#2B2B2B]  text-sm  mb-1 ">
                             Advanced<abbr title="required"></abbr>
                           </label>
                         </div>
-                        <div className="border-t-4 rounded-xl w-16 mt-1 border-[#0891B2]"></div>
+                        <div className="border-t-4 rounded-xl w-16 mt-1 border-[#F25533]"></div>
 
                         <div className="">
                           <div className=" flex flex-col  mt-4  px-1 py-1 ">
@@ -1210,14 +1210,14 @@ const AddLeadForm = ({
                             {title != 'Edit Lead' && (
                               <div className="mt-8 z-10 w-[93%]  text-right md:block flex absolute bottom-0 pb-2 bg-white p-4 space-y-4 md:space-y-0 md:space-x-4">
                                 <button
-                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-sm hover:shadow-lg hover:bg-gray-100"
+                                  className="mb-4 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-[8px] "
                                   type="reset"
                                   onClick={() => resetter()}
                                 >
                                   Reset
                                 </button>
                                 <button
-                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                  className="mb-2 md:mb-0 sale_bg_color px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white  rounded-[8px] "
                                   type="submit"
                                   disabled={loading}
                                 >
@@ -1225,7 +1225,7 @@ const AddLeadForm = ({
                                   Add Lead
                                 </button>
                                 <button
-                                  className="mb-2 md:mb-0 bg-[#0891B2] px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-sm hover:shadow-lg hover:bg-green-500"
+                                  className="mb-2 md:mb-0 sale_bg_color px-5 py-2 text-sm shadow-sm font-medium mr-10 tracking-wider text-white  rounded-[8px] "
                                   type="submit"
                                   onClick={() => setCloseWindowMode(true)}
                                   disabled={loading}

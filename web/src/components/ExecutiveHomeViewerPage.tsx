@@ -242,17 +242,17 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           status:
             leadsTyper === 'inProgress'
               ? [
-                  'new',
-                  'followup',
-                  'unassigned',
-                  'visitfixed',
-                  '',
+                'new',
+                'followup',
+                'unassigned',
+                'visitfixed',
+                '',
 
-                  'negotiation',
-                ]
+                'negotiation',
+              ]
               : leadsTyper === 'booked'
-              ? ['booked']
-              : archieveFields,
+                ? ['booked']
+                : archieveFields,
           projAccessA: projAccessA,
         },
         (error) => setLeadsFetchedData([])
@@ -276,21 +276,21 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
         status:
           leadsTyper === 'inProgress'
             ? [
-                'new',
-                'followup',
-                'unassigned',
-                'visitfixed',
-                '',
-                'visitdone',
-                'visitcancel',
-                'negotiation',
-                'reassign',
-                'RNR',
-                // 'booked',
-              ]
+              'new',
+              'followup',
+              'unassigned',
+              'visitfixed',
+              '',
+              'visitdone',
+              'visitcancel',
+              'negotiation',
+              'reassign',
+              'RNR',
+              // 'booked',
+            ]
             : leadsTyper === 'booked'
-            ? ['booked']
-            : archieveFields,
+              ? ['booked']
+              : archieveFields,
         projAccessA: projAccessA,
         isCp: user?.role?.includes(USER_ROLES.CP_AGENT),
       },
@@ -317,21 +317,21 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
         status:
           leadsTyper === 'inProgress'
             ? [
-                'new',
-                'followup',
-                'unassigned',
-                'visitfixed',
-                'visitcancel',
-                '',
-                'visitdone',
-                'negotiation',
-                'reassign',
-                'RNR',
-                // 'booked',
-              ]
+              'new',
+              'followup',
+              'unassigned',
+              'visitfixed',
+              'visitcancel',
+              '',
+              'visitdone',
+              'negotiation',
+              'reassign',
+              'RNR',
+              // 'booked',
+            ]
             : leadsTyper === 'booked'
-            ? ['booked']
-            : archieveFields,
+              ? ['booked']
+              : archieveFields,
       },
       (error) => setLeadsFetchedData([])
     )
@@ -378,18 +378,18 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           status:
             leadsTyper === 'inProgress'
               ? [
-                  'new',
-                  'followup',
-                  'unassigned',
-                  'visitfixed',
-                  '',
-                  'visitdone',
-                  'visitcancel',
-                  'negotiation',
-                ]
+                'new',
+                'followup',
+                'unassigned',
+                'visitfixed',
+                '',
+                'visitdone',
+                'visitcancel',
+                'negotiation',
+              ]
               : leadsTyper === 'booked'
-              ? ['booked']
-              : archieveFields,
+                ? ['booked']
+                : archieveFields,
           projAccessA: projAccessA,
         },
         (error) => setLeadsFetchedData([])
@@ -411,20 +411,20 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           status:
             leadsTyper === 'inProgress'
               ? [
-                  'new',
-                  'followup',
-                  'unassigned',
-                  'visitfixed',
-                  '',
-                  'visitdone',
-                  'visitcancel',
-                  'negotiation',
-                  'reassign',
-                  'RNR',
-                ]
+                'new',
+                'followup',
+                'unassigned',
+                'visitfixed',
+                '',
+                'visitdone',
+                'visitcancel',
+                'negotiation',
+                'reassign',
+                'RNR',
+              ]
               : leadsTyper === 'booked'
-              ? ['booked']
-              : archieveFields,
+                ? ['booked']
+                : archieveFields,
           projAccessA: projAccessA,
           isCp: true,
         },
@@ -629,124 +629,82 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
         <div className=" bg-white mb-10 rounded-lg mt-1 mx-1 z-10">
           <div className=" bg-white rounded-lg ">
             <div className="bg-white rounded-lg  ">
-              <div className="flex   items-center flex-row flex-wrap justify-between  pb-5  px-3 py-3 bg-gray-50 rounded-t-md ">
-                <section className="flex items-center justify-center flex-row">
-                  <img
-                    className="w-8 h-8"
-                    alt=""
-                    src="/folder-library.svg"
-               
-                  ></img>
-
-                  <h2 className="ml-2 mt-2 text-md font-semibold text-black leading-light font-Playfair">
+              <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-gray-50 rounded-t-md">
+           
+                <section className="flex items-center">
+                  <img className="w-8 h-8" alt="folder icon" src="/folder-library.svg" />
+                  <h2 className="ml-2 text-md font-semibold text-[#2B2B2B] ">
                     Leads Management
                   </h2>
                 </section>
 
-                <div className="flex flex-row flex-wrap gap-2">
-                  <div className=" flex flex-col   w-40">
-                    <VerySlimSelectBox
-                      name="project"
-                      label=""
-                      className="input rounded-lg"
-                      onChange={(value) => {
-                        console.log('changed value is ', value.value)
-                        setSelProject(value)
-                      }}
-                      value={selProjectIs?.value}
-                      options={[
-                        ...[{ label: 'All Projects', value: 'allprojects' }],
-                        ...projectList,
-                      ]}
-                    />
-                  </div>
+     
+                <div className="flex flex-wrap items-center gap-3">
+             
+                  <VerySlimSelectBox
+                    name="project"
+                    label=""
+                    className="w-40 rounded-lg"
+                    onChange={(value) => {
+                      console.log('changed value is ', value.value);
+                      setSelProject(value);
+                    }}
+                    value={selProjectIs?.value}
+                    options={[{ label: 'All Projects', value: 'allprojects' }, ...projectList]}
+                  />
+
 
                   {access?.includes('manage_leads') && (
-                    <div className=" flex flex-col w-40">
-                      <VerySlimSelectBox
-                        name="project"
-                        label=""
-                        placeholder="My Leads"
-                        className="input rounded-lg"
-                        onChange={(value) => {
-                          console.log('changed value is ', value.value)
-                          setSelLeadsOf(value)
-                          // formik.setFieldValue('project', value.value)
-                        }}
-                        value={selLeadsOf?.value}
-                        // options={aquaticCreatures}
-                        options={[
-                          ...[
-                            { label: 'Team Leads', value: 'teamleads' },
-                            { label: 'My Leads', value: 'myleads' },
-                            { label: 'Cp Leads', value: 'cpleads' },
-                          ],
-                          ...usersList,
-                        ]}
-                      />
-                    </div>
+                    <VerySlimSelectBox
+                      name="leadType"
+                      label=""
+                      placeholder="My Leads"
+                      className="w-40 rounded-lg"
+                      onChange={(value) => {
+                        console.log('changed value is ', value.value);
+                        setSelLeadsOf(value);
+                      }}
+                      value={selLeadsOf?.value}
+                      options={[
+                        { label: 'Team Leads', value: 'teamleads' },
+                        { label: 'My Leads', value: 'myleads' },
+                        { label: 'Cp Leads', value: 'cpleads' },
+                        ...usersList,
+                      ]}
+                    />
                   )}
 
-                  <div className="flex flex-col">
-                    <SmartCalendarSelect
-                      onChange={async (value) => {
-                        console.log(value, 'ksdvnlfkjv')
-                        setShortDateRange(value)
-                      }}
-                      label="All Dates"
-                      defaultForTeamLeads={selLeadsOf?.value === 'teamleads'}
-                    />
-                  </div>
+            
+                  <SmartCalendarSelect
+                    onChange={(value) => {
+                      console.log(value, 'Selected Date Range');
+                      setShortDateRange(value);
+                    }}
+                    label="All Dates"
+                    defaultForTeamLeads={selLeadsOf?.value === 'teamleads'}
+                  />
 
-                  <div className="hidden max-h-[42px] mt-[2px] ml-3 bg-white pl-[2px] rounded-[4px] h-[19px] ">
-                    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                    <label className="bg-green   pl-[2px] h-[28px]  flex flex-row cursor-pointer border border-[#ccc] rounded-[4px]">
-                      <CalendarMonthTwoToneIcon className="mr-1 mt-[2px] h-4 w-4" />
-                      <span className="inline">
-                        <CustomDatePicker
-                          className="z-[11] pl- py- rounded-[4px]  inline text-xs text-[#0091ae] bg-white cursor-pointer min-w-[170px] border-l-[#cccccc]"
-                          onCalendarOpen={() => setIsOpened(true)}
-                          onCalendarClose={() => setIsOpened(false)}
-                          onChange={(update) => {
-                            console.log('muy selected value is 1', update)
-                            setDateRange(update)
-                          }}
-                          selectsRange={true}
-                          startDate={startDate}
-                          endDate={endDate}
-                          isClearable={true}
-                          dateFormat="MMM dd, yyyy"
-                        />
-                      </span>
-                    </label>
-                  </div>
-
+      
                   <button
                     onClick={() => fSetLeadsType('Add Lead')}
-                    className={`flex items-center px-4 rounded-[8px]  text-sm font-medium text-balck  bg-[#F25533]  group`}
+                    className="flex items-center px-4 py-1 gap-1 text-sm font-medium text-white sale_bg_color border-2 border-[#F25533] rounded-lg"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 stroke-[#fff] group-hover:stroke-black"
+                      className="h-4 w-4 stroke-white"
                       fill="none"
                       viewBox="0 0 22 22"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-
-                    <span className="ml-1 text-white text-[12px]">
-                      Add lead
-                    </span>
+                    <span className="text-sm">Add Lead</span>
                   </button>
+
+        
                   {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                     <button
                       onClick={() => fSetLeadsType('Import Leads')}
-                      className={`flex items-center rounded-[8px]  pl-2 pr-4 py-1 px-4  border-solid border-2 border-[#F25533]  group text-sm font-medium text-black  `}
+                      className="flex items-center gap-1 px-4 py-1 text-sm font-medium text-black border-2 border-[#F25533] rounded-lg"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -754,21 +712,14 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         fill="none"
                         viewBox="0 0 22 22"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                        />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                       </svg>
-
-                      <span className="ml-1 text-[#2B2B2B]">
-                        Import Lead
-                      </span>
+                      <span className="text-sm text-[#F25533]">Import Lead</span>
                     </button>
                   )}
                 </div>
               </div>
+
 
               <MetaTags
                 title="ExecutiveHome"

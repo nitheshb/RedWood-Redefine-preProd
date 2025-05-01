@@ -1053,7 +1053,14 @@ body {
 
 
 
+.sale_bg_color{
+  background-color: #F25533;
+}
 
+
+.sale_empty_page_bg_color{
+  background-color: #FEE2E2;
+}
 
 
 
