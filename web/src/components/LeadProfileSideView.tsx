@@ -3965,41 +3965,43 @@ export default function LeadProfileSideView({
 
 
                                     <div className="flex flex-wrap gap-2">
+
                                       {/* Planning Approval */}
-                                      <div className=" bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex items-center">
+                                      <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex items-center">
                                         <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
-                                          Planning Approval - {selProjectFullDetails?.planningApproval?.name}
+                                          Planning Approval - {selProjectFullDetails?.planningApproval}
                                         </span>
                                         <div>
                                           <img
                                             src={
-                                              selProjectFullDetails?.planningApproval?.status === 'yes'
-                                                ? '/yes1.svg'
-                                                : '/no.svg'
+                                              selProjectFullDetails?.planningApproval?.toLowerCase() === 'yes'
+                                                ? '/yessale.svg'
+                                                : '/nosale.svg'
                                             }
                                             alt=""
-                                            className="w-5 h-5"
+                                            className="w-4 h-4"
                                           />
                                         </div>
                                       </div>
 
                                       {/* RERA Approval */}
-                                      <div className=" bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex items-center">
+                                      <div className="bg-[#F3E1D8] rounded-[15px] py-1 px-2 flex items-center">
                                         <span className="mr-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062]">
-                                          RERA Approval - {selProjectFullDetails?.reraApproval?.name}
+                                          RERA Approval - {selProjectFullDetails?.reraApproval}
                                         </span>
                                         <div>
                                           <img
                                             src={
-                                              selProjectFullDetails?.reraApproval?.status === 'yes'
-                                                ? '/yes1.svg'
-                                                : '/no.svg'
+                                              selProjectFullDetails?.reraApproval?.toLowerCase() === 'yes'
+                                                ? '/yessale.svg'
+                                                : '/nosale.svg'
                                             }
                                             alt=""
-                                            className="w-5 h-5"
+                                            className="w-4 h-4"
                                           />
                                         </div>
                                       </div>
+
 
                                       {/* Amenities */}
                                       <div className="border bg-[#F3E1D8] rounded-[15px] py-1 px-2 font-outfit font-normal text-xs leading-tight tracking-normal text-[#606062] flex items-center justify-center">
