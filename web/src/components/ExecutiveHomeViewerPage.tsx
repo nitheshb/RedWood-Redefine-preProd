@@ -630,7 +630,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
           <div className=" bg-white rounded-lg ">
             <div className="bg-white rounded-lg  ">
               <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-gray-50 rounded-t-md">
-           
+
                 <section className="flex items-center">
                   <img className="w-8 h-8" alt="folder icon" src="/folder-library.svg" />
                   <h2 className="ml-2 text-md font-semibold text-[#2B2B2B] ">
@@ -638,9 +638,9 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                   </h2>
                 </section>
 
-     
+
                 <div className="flex flex-wrap items-center gap-3">
-             
+
                   <VerySlimSelectBox
                     name="project"
                     label=""
@@ -651,7 +651,64 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                     }}
                     value={selProjectIs?.value}
                     options={[{ label: 'All Projects', value: 'allprojects' }, ...projectList]}
+                    customStyles={{
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isSelected
+                          ? '#F25533'
+                          : state.isFocused
+                            ? '#FDEFE7' 
+                            : provided.backgroundColor,
+                        color: state.isSelected
+                          ? 'white'
+                          : state.isFocused
+                            ? '#2B2B2B' 
+                            : provided.color,
+                      }),
+                      control: (base) => ({
+                        ...base,
+                        height: 30,
+                        minHeight: 30,
+                        padding: 0,
+                        borderRadius: 8,
+                      }),
+                      valueContainer: (base) => ({
+                        ...base,
+                        alignItems: 'initial',
+                        paddingTop: 0,
+                        marginTop: 3,
+                      }),
+                      dropdownIndicator: (base) => ({
+                        ...base,
+                        paddingTop: 5,
+                      }),
+                      indicatorSeparator: (base) => ({
+                        ...base,
+                        marginTop: 6,
+                        marginBottom: 10,
+                      }),
+                      menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                      menuList: (provided, state) => ({
+                        ...provided,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        borderRadius: 8, 
+                      }),
+                    }}
                   />
+{/* 
+                  <VerySlimSelectBox
+                    name="project"
+                    label=""
+                    className="w-40 rounded-lg"
+                    onChange={(value) => {
+                      console.log('changed value is ', value.value);
+                      setSelProject(value);
+                    }}
+                    value={selProjectIs?.value}
+                    options={[{ label: 'All Projects', value: 'allprojects' }, ...projectList]}
+
+                  /> */}
 
 
                   {access?.includes('manage_leads') && (
@@ -671,10 +728,55 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                         { label: 'Cp Leads', value: 'cpleads' },
                         ...usersList,
                       ]}
+
+                      customStyles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isSelected
+                            ? '#F25533'
+                            : state.isFocused
+                              ? '#FDEFE7' 
+                              : provided.backgroundColor,
+                          color: state.isSelected
+                            ? 'white'
+                            : state.isFocused
+                              ? '#2B2B2B' 
+                              : provided.color,
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          height: 30,
+                          minHeight: 30,
+                          padding: 0,
+                          borderRadius: 8,
+                        }),
+                        valueContainer: (base) => ({
+                          ...base,
+                          alignItems: 'initial',
+                          paddingTop: 0,
+                          marginTop: 3,
+                        }),
+                        dropdownIndicator: (base) => ({
+                          ...base,
+                          paddingTop: 5,
+                        }),
+                        indicatorSeparator: (base) => ({
+                          ...base,
+                          marginTop: 6,
+                          marginBottom: 10,
+                        }),
+                        menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                        menuList: (provided, state) => ({
+                          ...provided,
+                          paddingTop: 0,
+                          paddingBottom: 0,
+                          borderRadius: 8, 
+                        }),
+                      }}
                     />
                   )}
 
-            
+
                   <SmartCalendarSelect
                     onChange={(value) => {
                       console.log(value, 'Selected Date Range');
@@ -682,9 +784,57 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                     }}
                     label="All Dates"
                     defaultForTeamLeads={selLeadsOf?.value === 'teamleads'}
+
+                            customStyles={{
+                        option: (provided, state) => ({
+                          ...provided,
+                          backgroundColor: state.isSelected
+                            ? '#F25533'
+                            : state.isFocused
+                              ? '#FDEFE7' 
+                              : provided.backgroundColor,
+                          color: state.isSelected
+                            ? 'white'
+                            : state.isFocused
+                              ? '#2B2B2B' 
+                              : provided.color,
+                        }),
+                        control: (base) => ({
+                          ...base,
+                          height: 30,
+                          minHeight: 30,
+                          padding: 0,
+                          borderRadius: 8,
+                        }),
+                        valueContainer: (base) => ({
+                          ...base,
+                          alignItems: 'initial',
+                          paddingTop: 0,
+                          marginTop: 3,
+                        }),
+                        dropdownIndicator: (base) => ({
+                          ...base,
+                          paddingTop: 5,
+                        }),
+                        indicatorSeparator: (base) => ({
+                          ...base,
+                          marginTop: 6,
+                          marginBottom: 10,
+                        }),
+                        menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                        menuList: (provided, state) => ({
+                          ...provided,
+                          paddingTop: 0,
+                          paddingBottom: 0,
+                          borderRadius: 8, 
+                        }),
+                      }}
+
+
+
                   />
 
-      
+
                   <button
                     onClick={() => fSetLeadsType('Add Lead')}
                     className="flex items-center px-4 py-1 gap-1 text-sm font-medium text-white sale_bg_color border-2 border-[#F25533] rounded-lg"
@@ -700,7 +850,7 @@ const ExecutiveHomeViewerPage = ({ leadsTyper, isClicked, setIsClicked }) => {
                     <span className="text-sm">Add Lead</span>
                   </button>
 
-        
+
                   {!user?.role?.includes(USER_ROLES.CP_AGENT) && (
                     <button
                       onClick={() => fSetLeadsType('Import Leads')}

@@ -319,7 +319,7 @@ function EnhancedTableHead(props) {
                   fontFamily: 'inherit',
                 }}
               >
-                <span className="text-black font-bodyLato whitespace-nowrap">
+                <span className="text-black font-outfit whitespace-nowrap">
                   {headCell.label}
                 </span>
                 {orderBy === headCell.id ? (
@@ -481,7 +481,7 @@ const EnhancedTableToolbar = (props) => {
         ) : (
           <Tooltip title={`Download ${leadsFetchedData?.length} Row`}>
             <CSVDownloader
-              className="mr-6 h-[20px] w-[20px]"
+              className="mr-6 h-[20px] bg-[#FDEFE7] w-[20px]"
               downloadRows={leadsFetchedData}
               sourceTab={'leadsList'}
               style={{ height: '20px', width: '20px' }}
@@ -761,7 +761,7 @@ export default function LLeadsTableBody({
                         padding="none"
                       >
                         <section>
-                          <span className="font-bodyLato">
+                          <span className="font-outfit">
                             {prettyDate(row.Date).toLocaleString()}
                           </span>
                         </section>
@@ -774,7 +774,7 @@ export default function LLeadsTableBody({
                         padding="none"
                       >
                         <section>
-                          <span className="font-bodyLato">
+                          <span className="font-outfit">
                             {row.assignT != undefined
                               ? prettyDate(row.assignT)
                               : prettyDate(row.Date)}
@@ -797,32 +797,32 @@ export default function LLeadsTableBody({
                                 <span
                                   className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                                   style={{
-                                    color: 'black',
-                                    background: '#e2c062',
+                                    color: '#F25533',
+                                    background: '#FCE6D9',
                                     maxWidth: '300px',
                                   }}
                                 >
                                   <div className="italic flex flex-col">
-                                    <div className="font-bodyLato">
+                                    <div className="font-outfit">
                                       <HighlighterStyle
                                         searchKey={searchKey}
                                         source={row.Name.toString()}
                                       />
                                     </div>
-                                    <div className="font-bodyLato">
+                                    <div className="font-outfit">
                                       <HighlighterStyle
                                         searchKey={searchKey}
                                         source={row.Email.toString()}
                                       />
                                     </div>
                                     <div>
-                                      <span className="font-bodyLato">
+                                      <span className="font-outfit">
                                         <HighlighterStyle
                                           searchKey={searchKey}
                                           source={row?.countryCode}
                                         />
                                       </span>{' '}
-                                      <span className="font-bodyLato">
+                                      <span className="font-outfit">
                                         <HighlighterStyle
                                           searchKey={searchKey}
                                           source={row?.Mobile?.toString()?.replace(
@@ -837,12 +837,12 @@ export default function LLeadsTableBody({
                                 <div
                                   className="w-3 h-3  -mt-2 rotate-45 bg-black"
                                   style={{
-                                    background: '#e2c062',
+                                    background: '#FCE6D9',
                                     marginRight: '12px',
                                   }}
                                 ></div>
                               </div>
-                              <span className="font-bodyLato">
+                              <span className="font-outfit">
                                 <HighlighterStyle
                                   searchKey={searchKey}
                                   source={row.Name.toString()}
@@ -852,7 +852,7 @@ export default function LLeadsTableBody({
                           </div>
                           {viewUnitStatusA.includes('Email Id') && (
                             <div>
-                              <span className="font-bodyLato">
+                              <span className="font-outfit">
                                 <HighlighterStyle
                                   searchKey={searchKey}
                                   source={row.Email.toString()}
@@ -862,13 +862,13 @@ export default function LLeadsTableBody({
                           )}
                           {viewUnitStatusA.includes('Phone No') && (
                             <div>
-                              <span className="font-bodyLato">
+                              <span className="font-outfit">
                                 <HighlighterStyle
                                   searchKey={searchKey}
                                   source={row?.countryCode}
                                 />
                               </span>{' '}
-                              <span className="font-bodyLato">
+                              <span className="font-outfit">
                                 <HighlighterStyle
                                   searchKey={searchKey}
                                   source={row?.Mobile?.toString()?.replace(
@@ -889,7 +889,7 @@ export default function LLeadsTableBody({
 
                       {viewUnitStatusA.includes('Assigned To') && (
                         <TableCell align="left">
-                          <span className="font-bodyLato">
+                          <span className="font-outfit">
                             {row?.assignedToObj?.label}
                           </span>
                         </TableCell>
@@ -1019,7 +1019,7 @@ export default function LLeadsTableBody({
                       >
                         {' '}
                         <span
-                          className="font-bodyLato"
+                          className="font-outfit"
                           style={{
                             maxWidth: '100px',
                             maxHeight: '100px',

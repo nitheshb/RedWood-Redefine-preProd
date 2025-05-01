@@ -103,14 +103,16 @@ const LeadsDisplayTable = ({
 
 
 
-        <div className="flex items-center justify-between flex-wrap pb-5 px-3 py-3 bg-gray-50 rounded-t-md">
+        <div className="flex items-center justify-between flex-wrap pb-5 px-4 py-4 bg-gray-50 rounded-t-md">
 
           <section className="flex flex-row items-center">
-            <img
+            {/* <img
               className="w-10 h-10"
               alt=""
               src="https://static.hsappstatic.net/ui-images/static-2.758/optimized/categories-color.svg"
-            />
+            /> */}
+
+            <img className="w-8 h-8" alt="folder icon" src="/folder-library.svg" />
             <h2 className="ml-2 text-md font-semibold text-[#2B2B2B]">
               Leads Bank box
             </h2>
@@ -124,6 +126,56 @@ const LeadsDisplayTable = ({
                 setDateRange(value)
               }}
               label="This Month"
+
+
+              customStyles={{
+                option: (provided, state) => ({
+                  ...provided,
+                  backgroundColor: state.isSelected
+                    ? '#F25533'
+                    : state.isFocused
+                      ? '#FDEFE7' 
+                      : provided.backgroundColor,
+                  color: state.isSelected
+                    ? 'white'
+                    : state.isFocused
+                      ? '#2B2B2B' 
+                      : provided.color,
+                }),
+                control: (base) => ({
+                  ...base,
+                  height: 30,
+                  minHeight: 30,
+                  padding: 0,
+                  borderRadius: 8,
+                }),
+                valueContainer: (base) => ({
+                  ...base,
+                  alignItems: 'initial',
+                  paddingTop: 0,
+                  marginTop: 3,
+                }),
+                dropdownIndicator: (base) => ({
+                  ...base,
+                  paddingTop: 5,
+                }),
+                indicatorSeparator: (base) => ({
+                  ...base,
+                  marginTop: 6,
+                  marginBottom: 10,
+                }),
+                menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                menuList: (provided, state) => ({
+                  ...provided,
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  borderRadius: 8, 
+                }),
+              }}
+
+              
+
+
             />
 
             <div className="w-40 mt-1">
@@ -140,6 +192,53 @@ const LeadsDisplayTable = ({
                   { label: 'All Projects', value: 'allprojects' },
                   ...allProjectsA,
                 ]}
+
+
+
+                customStyles={{
+                  option: (provided, state) => ({
+                    ...provided,
+                    backgroundColor: state.isSelected
+                      ? '#F25533'
+                      : state.isFocused
+                        ? '#FDEFE7' 
+                        : provided.backgroundColor,
+                    color: state.isSelected
+                      ? 'white'
+                      : state.isFocused
+                        ? '#2B2B2B' 
+                        : provided.color,
+                  }),
+                  control: (base) => ({
+                    ...base,
+                    height: 30,
+                    minHeight: 30,
+                    padding: 0,
+                    borderRadius: 8,
+                  }),
+                  valueContainer: (base) => ({
+                    ...base,
+                    alignItems: 'initial',
+                    paddingTop: 0,
+                    marginTop: 3,
+                  }),
+                  dropdownIndicator: (base) => ({
+                    ...base,
+                    paddingTop: 5,
+                  }),
+                  indicatorSeparator: (base) => ({
+                    ...base,
+                    marginTop: 6,
+                    marginBottom: 10,
+                  }),
+                  menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                  menuList: (provided, state) => ({
+                    ...provided,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    borderRadius: 8, 
+                  }),
+                }}
               />
             </div>
 

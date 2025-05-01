@@ -273,16 +273,22 @@ const LeadsTransferHome = ({ project }) => {
 
   return (
     <>
-      <section className=" mt-1 mx-1 py-6 mb-8 leading-7 text-gray-900 bg-[#FFFFFF]  rounded-lg  ">
-        <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
-          <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
-            <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-1">
+      <section className=" mt-1 mx-1  mb-8 leading-7 text-gray-900 bg-[#FFFFFF]  rounded-lg  ">
+        <div className="box-border px-4 mx-auto border-solid  py-4 max-w-full ">
+          <div className="flex flex-col  leading-7   text-gray-900 border-0 border-gray-200 ">
+            {/* <div className="flex items-center flex-shrink-0  px-0  pl-0   mb-1">
               <Link className="flex items-center">
                 <span className="relative z-10 flex items-center w-auto text-md font-medium leading-none pl-0">
                   Leads Transfer
                 </span>
               </Link>
-            </div>
+            </div> */}
+                            <section className="flex items-center">
+                  <img className="w-8 h-8" alt="folder icon" src="/folder-library.svg" />
+                  <h2 className=" ml-2 text-md font-semibold text-[#2B2B2B] ">
+                  Leads Transfer
+                  </h2>
+                </section>
           </div>
 
           <div className="mt-2">
@@ -304,6 +310,51 @@ const LeadsTransferHome = ({ project }) => {
                           }}
                           value={selLeadsOf?.value}
                           options={[...usersAllList]}
+
+                          customStyles={{
+                            option: (provided, state) => ({
+                              ...provided,
+                              backgroundColor: state.isSelected
+                                ? '#F25533'
+                                : state.isFocused
+                                  ? '#FDEFE7' 
+                                  : provided.backgroundColor,
+                              color: state.isSelected
+                                ? 'white'
+                                : state.isFocused
+                                  ? '#2B2B2B' 
+                                  : provided.color,
+                            }),
+                            control: (base) => ({
+                              ...base,
+                              height: 30,
+                              minHeight: 30,
+                              padding: 0,
+                              borderRadius: 8,
+                            }),
+                            valueContainer: (base) => ({
+                              ...base,
+                              alignItems: 'initial',
+                              paddingTop: 0,
+                              marginTop: 3,
+                            }),
+                            dropdownIndicator: (base) => ({
+                              ...base,
+                              paddingTop: 5,
+                            }),
+                            indicatorSeparator: (base) => ({
+                              ...base,
+                              marginTop: 6,
+                              marginBottom: 10,
+                            }),
+                            menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                            menuList: (provided, state) => ({
+                              ...provided,
+                              paddingTop: 0,
+                              paddingBottom: 0,
+                              borderRadius: 8, 
+                            }),
+                          }}
                         />
                       </section>
 
@@ -321,6 +372,51 @@ const LeadsTransferHome = ({ project }) => {
                           }}
                           value={selLeadTransferTo?.value}
                           options={[...usersList]}
+
+                          customStyles={{
+                            option: (provided, state) => ({
+                              ...provided,
+                              backgroundColor: state.isSelected
+                                ? '#F25533'
+                                : state.isFocused
+                                  ? '#FDEFE7' 
+                                  : provided.backgroundColor,
+                              color: state.isSelected
+                                ? 'white'
+                                : state.isFocused
+                                  ? '#2B2B2B' 
+                                  : provided.color,
+                            }),
+                            control: (base) => ({
+                              ...base,
+                              height: 30,
+                              minHeight: 30,
+                              padding: 0,
+                              borderRadius: 8,
+                            }),
+                            valueContainer: (base) => ({
+                              ...base,
+                              alignItems: 'initial',
+                              paddingTop: 0,
+                              marginTop: 3,
+                            }),
+                            dropdownIndicator: (base) => ({
+                              ...base,
+                              paddingTop: 5,
+                            }),
+                            indicatorSeparator: (base) => ({
+                              ...base,
+                              marginTop: 6,
+                              marginBottom: 10,
+                            }),
+                            menu: (provided) => ({ ...provided, marginTop: 0, zIndex: 9999, borderRadius: 8,  }),
+                            menuList: (provided, state) => ({
+                              ...provided,
+                              paddingTop: 0,
+                              paddingBottom: 0,
+                              borderRadius: 8, 
+                            }),
+                          }}
                         />
                       </section>
                     </section>

@@ -1022,7 +1022,7 @@ const LeadsTeamReportBody = ({ project, onSliderOpen = () => {}, isEdit }) => {
   return (
     <div>
       <section className="pb-8 pt-1 mb-8 leading-7 text-gray-900 bg-white mt-1 mx-1 rounded-lg ">
-        <div className="box-border px-4 mx-auto border-solid sm:px-6 md:px-6 lg:px-8 max-w-full ">
+        <div className="box-border px-4 mx-auto border-solid sm:px-4 md:px-4 lg:px-4 max-w-full ">
           <div className="flex flex-col  leading-7  text-gray-900 border-0 border-gray-200 ">
             <div className="flex justify-between items-center mb-6">
               <div>

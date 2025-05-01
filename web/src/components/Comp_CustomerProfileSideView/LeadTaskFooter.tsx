@@ -29,8 +29,8 @@ export default function LeadTaskFooter({
                   <span
                     className="rounded  relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                     style={{
-                      color: 'black',
-                      background: '#e2c062',
+                      color: '#F25533',
+                      background: '#FCE6D9',
                       maxWidth: '100%',
                     }}
                   >
@@ -43,7 +43,7 @@ export default function LeadTaskFooter({
                   <div
                     className="w-3 h-3  -mt-2 rotate-45 bg-black"
                     style={{
-                      background: '#e2c062',
+                      background: '#FCE6D9',
                       marginRight: '12px',
                     }}
                   ></div>
@@ -78,8 +78,8 @@ export default function LeadTaskFooter({
                   <span
                     className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                     style={{
-                      color: 'black',
-                      background: '#e2c062',
+                      color: '#F25533',
+                      background: '#FCE6D9',
                       maxWidth: '100%',
                     }}
                   >
@@ -92,7 +92,7 @@ export default function LeadTaskFooter({
                   <div
                     className="w-3 h-3  -mt-2 rotate-45 bg-black"
                     style={{
-                      background: '#e2c062',
+                      background: '#FCE6D9',
                       marginRight: '12px',
                     }}
                   ></div>
@@ -123,8 +123,8 @@ export default function LeadTaskFooter({
                   <span
                     className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
                     style={{
-                      color: 'black',
-                      background: '#e2c062',
+                      color: '#F25533',
+                      background: '#FCE6D9',
                       width: '100%',
                     }}
                   >
@@ -137,7 +137,7 @@ export default function LeadTaskFooter({
                   <div
                     className="w-3 h-3  -mt-2 rotate-45 bg-black"
                     style={{
-                      background: '#e2c062',
+                      background: '#FCE6D9',
                       marginRight: '12px',
                     }}
                   ></div>
@@ -187,8 +187,8 @@ export default function LeadTaskFooter({
             <span
               className="rounded italian relative mr-2 z-100000 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg"
               style={{
-                color: 'black',
-                background: '#e2c062',
+                color: '#F25533',
+                background: '#FCE6D9',
                 maxWidth: '100%',
               }}
             >
@@ -199,7 +199,7 @@ export default function LeadTaskFooter({
             <div
               className="w-3 h-3  -mt-2 rotate-45 bg-black"
               style={{
-                background: '#e2c062',
+                background: '#FCE6D9',
                 marginRight: '12px',
               }}
             ></div>

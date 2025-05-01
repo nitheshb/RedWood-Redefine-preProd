@@ -340,7 +340,7 @@ export default function DropCompUnitStatus({
                         <button
                           className={`${
                             active
-                              ? 'bg-violet-500 text-white rounded-sm'
+                              ? 'sale_bg_color text-white rounded-sm'
                               : 'text-gray-900'
                           } group flex  items-center w-full px-2 py-2 text-sm`}
                           onClick={() => pickCustomViewer(viewData)}
